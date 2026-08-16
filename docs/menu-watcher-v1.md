@@ -51,8 +51,20 @@ PDF, image/OCR, JavaScript browser rendering and source-specific adapters are fu
 
 Fysen stores hashes, normalized menu evidence and bounded source excerpts for accepted menu items. It does not persist the full raw HTML body in the v1 database. This keeps the searchable index traceable without making the database a wholesale copy of every crawled page.
 
-## CI versus live pilot
+## Production scheduling
+
+Production sources are selected only when `enabled = true` and `next_check_at <= now()`. The GitHub Actions workflow `Watch Fysen menus` runs hourly at minute 17 and after a successful database deployment. It processes a bounded batch sequentially so Fysen does not fan out uncontrolled requests to restaurant sites.
+
+A source controls its own `check_interval_minutes`. Successful checks advance `next_check_at`; failures back off before the next attempt. GitHub serializes production watcher jobs with `cancel-in-progress: false` so two scheduled runs cannot overlap.
+
+## First production source
+
+Rodeo, Sannergata 2 in Oslo, is the first production source. It is created by the versioned migration `0002_seed_rodeo_pilot.sql`, points to the restaurant-owned public website, and starts with a six-hour check interval and a conservative minimum of five extracted menu items.
+
+The first live observation is accepted only if all ordinary watcher gates pass, including network validation, robots policy, extraction minimum and publication safety checks. A failed or quarantined observation is recorded but does not become a searchable accepted snapshot.
+
+## CI versus live production
 
 CI tests extraction with deterministic fixtures and tests migrations against PostgreSQL/PostGIS. It deliberately does not depend on a restaurant website being available during a build.
 
-The Oslo pilot is a separate manual command. A live pilot result is not considered production-approved until the extracted items are reviewed against the source page.
+Live crawling runs only from the production watcher workflow against sources that already exist in the canonical database. CI and pull requests never require a third-party restaurant site to be online.

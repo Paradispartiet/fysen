@@ -2,6 +2,7 @@ import { normalizeDishName } from "@fysen/menu-core";
 import { extractHtmlMenu } from "./html-extractor.js";
 import { HttpMenuClient } from "./http-client.js";
 import { runRodeoPilot } from "./pilot.js";
+import { runDueMenuSources } from "./run-due.js";
 
 function print(value: unknown): void {
   process.stdout.write(`${JSON.stringify(value, null, 2)}\n`);
@@ -47,6 +48,13 @@ async function main(): Promise<void> {
   }
   if (command === "pilot:rodeo") {
     print(await runRodeoPilot());
+    return;
+  }
+  if (command === "run:due") {
+    const configuredLimit = Number.parseInt(process.env.FYSEN_MENU_WATCH_BATCH_SIZE ?? "25", 10);
+    const summary = await runDueMenuSources(configuredLimit);
+    print(summary);
+    if (summary.failedCount > 0) process.exitCode = 1;
     return;
   }
   throw new Error(`Unknown menu-worker command: ${command}`);

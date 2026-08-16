@@ -9,6 +9,7 @@
     "start": "node dist/index.js",
     "probe": "tsx src/index.ts probe",
     "pilot:rodeo": "tsx src/index.ts pilot:rodeo",
+    "run:due": "node dist/index.js run:due",
     "lint": "eslint src --ext .ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
