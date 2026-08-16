@@ -1,0 +1,64 @@
+name: Watch Fysen menus
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Deploy Fysen database"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-production-menu-watcher
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    if: >-
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
+      DATABASE_SSL: "verify-full"
+      NODE_ENV: production
+      FYSEN_MENU_WATCH_BATCH_SIZE: "25"
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - name: Require production database secret
+        shell: bash
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "FYSEN_PRODUCTION_DATABASE_URL is not configured." >&2
+            exit 1
+          fi
+
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build menu worker and dependencies
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Watch due menu sources
+        run: pnpm --filter @fysen/menu-worker run:due
