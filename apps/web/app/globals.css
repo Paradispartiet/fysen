@@ -8,6 +8,7 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; min-height: 100%; }
 body { min-height: 100vh; }
+a { color: inherit; }
 button, input { font: inherit; }
 
 .shell {
@@ -82,7 +83,147 @@ h1 {
   border: 0;
 }
 
+.resultsShell {
+  min-height: 100vh;
+  padding: 28px clamp(20px, 5vw, 72px) 72px;
+}
+
+.resultsHeader {
+  width: min(1120px, 100%);
+  margin: 0 auto 64px;
+  display: grid;
+  grid-template-columns: auto minmax(280px, 680px);
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.brandLink {
+  margin: 0;
+  text-decoration: none;
+}
+
+.searchCompact {
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(22, 22, 17, 0.06);
+}
+
+.resultsContent {
+  width: min(920px, 100%);
+  margin: 0 auto;
+}
+
+.resultsIntro { margin-bottom: 32px; }
+.eyebrow {
+  margin: 0 0 10px;
+  color: #65655d;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.resultsTitle {
+  font-size: clamp(42px, 7vw, 72px);
+  line-height: 0.98;
+}
+
+.resultsCount {
+  margin: 18px 0 0;
+  color: #65655d;
+  font-size: 17px;
+}
+
+.searchError {
+  margin: 18px 0 0;
+  padding: 14px 16px;
+  border: 1px solid rgba(22, 22, 17, 0.18);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.resultList {
+  display: grid;
+  gap: 16px;
+}
+
+.resultCard {
+  padding: clamp(20px, 4vw, 30px);
+  border: 1px solid rgba(22, 22, 17, 0.12);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 14px 40px rgba(22, 22, 17, 0.055);
+}
+
+.resultTopline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.restaurantName {
+  margin: 0 0 6px;
+  color: #65655d;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.resultCard h2 {
+  margin: 0;
+  font-size: clamp(26px, 4vw, 38px);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.price {
+  margin: 0;
+  white-space: nowrap;
+  font-size: 19px;
+  font-weight: 850;
+}
+
+.dishDescription {
+  max-width: 680px;
+  margin: 14px 0 0;
+  color: #3f3f39;
+  line-height: 1.5;
+}
+
+.resultMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 20px;
+  color: #65655d;
+  font-size: 13px;
+}
+
+.resultActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin-top: 22px;
+}
+
+.resultActions a {
+  font-size: 14px;
+  font-weight: 800;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 720px) {
+  .resultsHeader {
+    grid-template-columns: 1fr;
+    margin-bottom: 44px;
+  }
+
+  .brandLink { width: max-content; }
+}
+
 @media (max-width: 560px) {
   .search { grid-template-columns: 1fr; }
   .search button { width: 100%; }
+  .resultTopline { flex-direction: column; gap: 10px; }
+  .price { font-size: 17px; }
 }
