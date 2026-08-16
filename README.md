@@ -20,8 +20,9 @@ Fysen skal svare med høy presisjon, ferskhet og kildebelegg. En rett skal aldri
 - **Search foundation:** `pg_trgm` + geografisk GIST-indeks
 - **HTTP ingestion:** robots-aware HTTP først, strukturert JSON-LD før heuristikk
 - **Browser crawling:** Playwright kommer senere som kontrollert fallback for JavaScript-menyer
+- **Production database deploy:** GitHub Actions etter grønn `main`-CI, med serialiserte migrasjoner og post-deploy-verifisering
 
-Se [`docs/architecture.md`](docs/architecture.md), [`docs/menu-watcher-v1.md`](docs/menu-watcher-v1.md) og arkitekturbeslutningene under [`docs/adr`](docs/adr).
+Se [`docs/architecture.md`](docs/architecture.md), [`docs/menu-watcher-v1.md`](docs/menu-watcher-v1.md), [`docs/deployment.md`](docs/deployment.md) og arkitekturbeslutningene under [`docs/adr`](docs/adr).
 
 ## Kom i gang
 
@@ -78,5 +79,6 @@ packages/
 - en dramatisk nedgang i ekstraherte retter går i karantene i stedet for å bli publisert
 - rå HTML er transportbelegg, ikke canonical domenedata
 - live restaurantnettsteder er aldri en nødvendig avhengighet for CI
+- produksjonsskjema endres bare gjennom versjonerte migrasjoner fra repoet
 
 Fysen er foreløpig et privat kommersielt prosjekt. Ingen lisens er gitt for gjenbruk av kildekoden.
