@@ -1,0 +1,11 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+engineStrict: true
+strictPeerDependencies: true
+saveExact: true
+
+allowBuilds:
+  esbuild: true
+  sharp: true
