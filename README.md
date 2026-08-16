@@ -22,7 +22,7 @@ Fysen skal svare med høy presisjon, ferskhet og kildebelegg. En rett skal aldri
 - **Browser crawling:** Playwright kommer senere som kontrollert fallback for JavaScript-menyer
 - **Production database deploy:** GitHub Actions etter grønn `main`-CI, med serialiserte migrasjoner og post-deploy-verifisering
 
-Se [`docs/architecture.md`](docs/architecture.md), [`docs/menu-watcher-v1.md`](docs/menu-watcher-v1.md), [`docs/deployment.md`](docs/deployment.md) og arkitekturbeslutningene under [`docs/adr`](docs/adr).
+Se [`docs/architecture.md`](docs/architecture.md), [`docs/design-v1.md`](docs/design-v1.md), [`docs/menu-watcher-v1.md`](docs/menu-watcher-v1.md), [`docs/deployment.md`](docs/deployment.md) og arkitekturbeslutningene under [`docs/adr`](docs/adr).
 
 ## Kom i gang
 
