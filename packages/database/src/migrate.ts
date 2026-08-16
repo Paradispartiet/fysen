@@ -1,10 +1,14 @@
 import { readdir, readFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
-import type { Pool } from "pg";
+import type { Pool, QueryResultRow } from "pg";
 import { createDatabasePool } from "./client.js";
 
 const migrationDirectory = new URL("../migrations/", import.meta.url);
 const migrationLockName = "fysen-schema-migrations-v1";
+
+interface MigrationRow extends QueryResultRow {
+  version: string;
+}
 
 export async function listMigrationFiles(): Promise<readonly string[]> {
   const entries = await readdir(migrationDirectory, { withFileTypes: true });
@@ -29,9 +33,7 @@ export async function runMigrations(pool: Pool): Promise<readonly string[]> {
 
     await client.query("SELECT pg_advisory_lock(hashtext($1))", [migrationLockName]);
     try {
-      const appliedResult = await client.query<{ version: string }>(
-        "SELECT version FROM fysen.schema_migrations",
-      );
+      const appliedResult = await client.query<MigrationRow>("SELECT version FROM fysen.schema_migrations");
       const applied = new Set(appliedResult.rows.map((row) => row.version));
 
       for (const fileName of await listMigrationFiles()) {

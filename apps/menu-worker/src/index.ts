@@ -1,9 +1,59 @@
 import { normalizeDishName } from "@fysen/menu-core";
+import { extractHtmlMenu } from "./html-extractor.js";
+import { HttpMenuClient } from "./http-client.js";
+import { runRodeoPilot } from "./pilot.js";
 
-const workerIdentity = {
-  service: "fysen-menu-worker",
-  status: "ready",
-  normalizationProbe: normalizeDishName("  Biff-tartar  "),
-} as const;
+function print(value: unknown): void {
+  process.stdout.write(`${JSON.stringify(value, null, 2)}\n`);
+}
 
-process.stdout.write(`${JSON.stringify(workerIdentity)}\n`);
+async function probe(url: string): Promise<void> {
+  const userAgent = process.env.FYSEN_MENU_BOT_USER_AGENT?.trim() || "FysenMenuBot/0.1";
+  const client = new HttpMenuClient();
+  const result = await client.fetchSource({ url, userAgent, etag: null, lastModified: null });
+  if (result.kind === "not_modified") {
+    print(result);
+    return;
+  }
+  const extracted = extractHtmlMenu(result.body);
+  print({
+    url,
+    status: result.status,
+    method: extracted.method,
+    itemCount: extracted.items.length,
+    sample: extracted.items.slice(0, 10).map((item) => ({
+      name: item.name,
+      priceMinor: item.priceMinor,
+      currency: item.currency,
+    })),
+  });
+}
+
+async function main(): Promise<void> {
+  const command = process.argv[2] ?? "status";
+  if (command === "status") {
+    print({
+      service: "fysen-menu-worker",
+      status: "ready",
+      normalizationProbe: normalizeDishName("  Biff-tartar  "),
+    });
+    return;
+  }
+  if (command === "probe") {
+    const url = process.argv[3];
+    if (!url) throw new Error("Usage: pnpm --filter @fysen/menu-worker probe -- <url>");
+    await probe(url);
+    return;
+  }
+  if (command === "pilot:rodeo") {
+    print(await runRodeoPilot());
+    return;
+  }
+  throw new Error(`Unknown menu-worker command: ${command}`);
+}
+
+void main().catch((error: unknown) => {
+  const message = error instanceof Error ? error.stack ?? error.message : String(error);
+  process.stderr.write(`${message}\n`);
+  process.exitCode = 1;
+});

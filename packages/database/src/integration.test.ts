@@ -16,6 +16,7 @@ integrationDescribe("MenuIndexRepository integration", () => {
   let pool: Pool;
 
   beforeAll(async () => {
+    if (!databaseUrl) throw new Error("DATABASE_URL is required for integration tests");
     pool = createDatabasePool({ connectionString: databaseUrl });
     await runMigrations(pool);
     await pool.query("TRUNCATE fysen.restaurants CASCADE");
