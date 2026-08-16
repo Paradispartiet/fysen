@@ -8,6 +8,7 @@
 Fysen is TypeScript-first.
 
 - Node.js 24 LTS
+- TypeScript 5.9 (latest toolchain-compatible stable line at foundation time)
 - React 19 + Next.js 16 for consumer web
 - NestJS 11 + Fastify for the versioned API
 - pnpm workspace + Turborepo
@@ -19,6 +20,8 @@ Fysen is TypeScript-first.
 ## Why
 
 The product is dominated by web ingestion, API contracts, search-facing types and UI. One strict TypeScript codebase reduces translation boundaries and allows domain contracts to be shared safely without coupling the domain to the transport or database.
+
+TypeScript is pinned to the newest stable line supported by the lint/parser toolchain rather than forcing a newer compiler by disabling peer-dependency safety.
 
 ## Explicit non-decisions
 
