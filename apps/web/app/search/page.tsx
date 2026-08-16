@@ -1,5 +1,5 @@
 import type { DishSearchResponse } from "@fysen/contracts";
-import { searchDishes } from "../../lib/fysen-api.js";
+import { searchDishes } from "../../lib/fysen-api";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
