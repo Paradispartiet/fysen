@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { HttpMenuClient, MenuFetchError } from "./http-client.js";
+import { HttpMenuClient, type MenuFetchError } from "./http-client.js";
 
 const publicResolver = async (): Promise<readonly { address: string }[]> => [
   { address: "93.184.216.34" },
