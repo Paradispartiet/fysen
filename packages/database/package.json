@@ -17,6 +17,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run src/migration.test.ts",
     "migrate": "node dist/migrate.js",
+    "verify:production": "node dist/verify-production.js",
     "test:integration": "vitest run src/integration.test.ts"
   },
   "dependencies": {
