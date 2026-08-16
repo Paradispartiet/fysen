@@ -1,7 +1,16 @@
+import { createRequire } from "node:module";
 import { performance } from "node:perf_hooks";
-import robotsParser from "robots-parser";
 import { sha256 } from "@fysen/menu-core";
 import { assertPublicHttpUrl, type HostResolver } from "./security.js";
+
+interface RobotsRules {
+  isAllowed(url: string, userAgent?: string): boolean | undefined;
+}
+
+type RobotsParserFactory = (url: string, robotsText: string) => RobotsRules;
+
+const nodeRequire = createRequire(import.meta.url);
+const robotsParser = nodeRequire("robots-parser") as RobotsParserFactory;
 
 export interface MenuHttpSourceState {
   readonly url: string;
@@ -142,9 +151,7 @@ export class HttpMenuClient {
   }
 
   private async validate(value: string | URL): Promise<URL> {
-    return this.resolver
-      ? assertPublicHttpUrl(value, this.resolver)
-      : assertPublicHttpUrl(value);
+    return this.resolver ? assertPublicHttpUrl(value, this.resolver) : assertPublicHttpUrl(value);
   }
 
   private async safeFetch(initialUrl: URL, init: RequestInit): Promise<Response> {
