@@ -90,5 +90,8 @@ jobs:
       - name: Apply migrations
         run: pnpm --filter @fysen/database migrate
 
+      - name: Verify deployment contract
+        run: pnpm --filter @fysen/database verify:production
+
       - name: Database integration tests
         run: pnpm --filter @fysen/database test:integration
