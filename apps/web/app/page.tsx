@@ -8,9 +8,10 @@ export default function HomePage() {
         <form className="search" role="search" action="/search">
           <label className="srOnly" htmlFor="dish-query">Retten du vil spise</label>
           <input id="dish-query" name="q" type="search" placeholder="Biff tartar, ramen, carbonara …" autoComplete="off" />
+          <input type="hidden" name="city" value="Oslo" />
           <button type="submit">Finn retten</button>
         </form>
-        <p className="proof">Treffene skal være ferske og sporbare tilbake til restaurantens meny.</p>
+        <p className="proof">Treffene er ferske og sporbare tilbake til restaurantens meny.</p>
       </section>
     </main>
   );
