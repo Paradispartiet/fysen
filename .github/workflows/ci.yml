@@ -45,3 +45,50 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgis/postgis:17-3.5
+        env:
+          POSTGRES_USER: fysen
+          POSTGRES_PASSWORD: fysen
+          POSTGRES_DB: fysen
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U fysen -d fysen"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://fysen:fysen@localhost:5432/fysen
+      DATABASE_SSL: "0"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build database package
+        run: pnpm --filter @fysen/database build
+
+      - name: Apply migrations
+        run: pnpm --filter @fysen/database migrate
+
+      - name: Database integration tests
+        run: pnpm --filter @fysen/database test:integration
