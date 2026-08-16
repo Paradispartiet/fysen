@@ -31,7 +31,7 @@ jobs:
     timeout-minutes: 10
     env:
       DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
-      DATABASE_SSL: "1"
+      DATABASE_SSL: "verify-full"
       NODE_ENV: production
     steps:
       - name: Require production database secret
@@ -47,6 +47,18 @@ jobs:
         with:
           ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || 'main' }}
           persist-credentials: false
+
+      - name: Validate bundled Supabase root CA
+        shell: bash
+        run: |
+          certificate="packages/database/certs/supabase-root-2021-ca.crt"
+          openssl x509 -in "$certificate" -noout -checkend 2592000
+          fingerprint="$(openssl x509 -in "$certificate" -noout -fingerprint -sha256 | cut -d= -f2)"
+          expected="80:70:25:AD:50:D4:ED:21:9D:2C:9C:7D:29:9C:00:4F:82:4E:B0:0C:F7:F6:5A:FE:F6:07:D0:7B:72:E6:CA:FA"
+          if [ "$fingerprint" != "$expected" ]; then
+            echo "Bundled Supabase root CA fingerprint mismatch." >&2
+            exit 1
+          fi
 
       - name: pnpm
         uses: pnpm/action-setup@v4
