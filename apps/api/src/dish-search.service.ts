@@ -6,13 +6,14 @@ import {
 } from "@fysen/contracts";
 import { createDatabasePool, searchDishes } from "@fysen/database";
 import { normalizeDishName } from "@fysen/menu-core";
-import type { Pool } from "pg";
+
+type DatabasePool = ReturnType<typeof createDatabasePool>;
 
 @Injectable()
 export class DishSearchService implements OnApplicationShutdown {
-  private pool: Pool | null = null;
+  private pool: DatabasePool | null = null;
 
-  private database(): Pool {
+  private database(): DatabasePool {
     this.pool ??= createDatabasePool({ maxConnections: 10 });
     return this.pool;
   }
