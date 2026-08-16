@@ -15,7 +15,7 @@
     "build": "tsc -p tsconfig.json",
     "lint": "eslint src --ext .ts",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run src/migration.test.ts",
+    "test": "vitest run src/migration.test.ts src/client.test.ts",
     "migrate": "node dist/migrate.js",
     "verify:production": "node dist/verify-production.js",
     "test:integration": "vitest run src/integration.test.ts"
