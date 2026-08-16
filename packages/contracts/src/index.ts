@@ -92,6 +92,57 @@ export const menuWatchOutcomeSchema = z.enum([
   "quarantined",
 ]);
 
+export const dishSearchQuerySchema = z.object({
+  q: z.string().trim().min(2).max(80),
+  city: z.string().trim().min(1).max(120).default("Oslo"),
+  limit: z.coerce.number().int().min(1).max(50).default(20),
+});
+
+export const dishSearchMatchTypeSchema = z.enum(["exact", "prefix", "contains", "fuzzy"]);
+
+export const dishSearchResultSchema = z.object({
+  menuItemId: uuid,
+  snapshotId: uuid,
+  menuSourceId: uuid,
+  dish: z.object({
+    name: z.string().trim().min(1).max(300),
+    normalizedName: z.string().trim().min(1).max(300),
+    description: z.string().trim().max(2000).nullable(),
+    sectionName: z.string().trim().max(300).nullable(),
+    priceMinor: z.number().int().nonnegative().nullable(),
+    currency: z.string().length(3),
+    confidence: z.number().min(0).max(1),
+  }),
+  restaurant: z.object({
+    id: uuid,
+    slug: z.string().trim().min(1).max(160),
+    name: z.string().trim().min(1).max(200),
+    websiteUrl: z.string().url().nullable(),
+    address: z.string().trim().min(1).max(500),
+    city: z.string().trim().min(1).max(120),
+    latitude: z.number().min(-90).max(90),
+    longitude: z.number().min(-180).max(180),
+  }),
+  menu: z.object({
+    sourceUrl: z.string().url(),
+    observedAt: isoDateTime,
+    lastCheckedAt: isoDateTime,
+    freshUntil: isoDateTime,
+  }),
+  match: z.object({
+    type: dishSearchMatchTypeSchema,
+    score: z.number().min(0).max(1),
+  }),
+});
+
+export const dishSearchResponseSchema = z.object({
+  query: z.string().trim().min(2).max(80),
+  normalizedQuery: z.string().trim().min(1).max(300),
+  city: z.string().trim().min(1).max(120),
+  count: z.number().int().nonnegative(),
+  results: z.array(dishSearchResultSchema),
+});
+
 export type Restaurant = z.infer<typeof restaurantSchema>;
 export type MenuSource = z.infer<typeof menuSourceSchema>;
 export type MenuSnapshot = z.infer<typeof menuSnapshotSchema>;
@@ -99,3 +150,7 @@ export type Dish = z.infer<typeof dishSchema>;
 export type MenuItem = z.infer<typeof menuItemSchema>;
 export type MenuChange = z.infer<typeof menuChangeSchema>;
 export type MenuWatchOutcome = z.infer<typeof menuWatchOutcomeSchema>;
+export type DishSearchQuery = z.infer<typeof dishSearchQuerySchema>;
+export type DishSearchMatchType = z.infer<typeof dishSearchMatchTypeSchema>;
+export type DishSearchResult = z.infer<typeof dishSearchResultSchema>;
+export type DishSearchResponse = z.infer<typeof dishSearchResponseSchema>;
