@@ -1,10 +1,12 @@
-import { readFileSync } from "node:fs";
 import { X509Certificate } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { afterEach, describe, expect, it } from "vitest";
 import { createDatabasePool, sanitizeDatabaseUrl } from "./client.js";
 
 const originalDatabaseSsl = process.env.DATABASE_SSL;
 const originalDatabaseSslCaPath = process.env.DATABASE_SSL_CA_PATH;
+const expectedSupabaseRootFingerprint =
+  "80:70:25:AD:50:D4:ED:21:9D:2C:9C:7D:29:9C:00:4F:82:4E:B0:0C:F7:F6:5A:FE:F6:07:D0:7B:72:E6:CA:FA";
 
 function restoreEnv(name: string, value: string | undefined): void {
   if (value === undefined) delete process.env[name];
@@ -28,7 +30,7 @@ describe("database client TLS", () => {
     expect(url.searchParams.get("application_name")).toBe("fysen");
   });
 
-  it("uses the bundled Supabase root CA with certificate verification enabled", async () => {
+  it("uses the pinned Supabase root CA with certificate verification enabled", async () => {
     process.env.DATABASE_SSL = "verify-full";
     delete process.env.DATABASE_SSL_CA_PATH;
 
@@ -45,6 +47,7 @@ describe("database client TLS", () => {
 
     const certificate = new X509Certificate(String(ssl.ca));
     expect(certificate.subject).toContain("Supabase Root 2021 CA");
+    expect(certificate.fingerprint256).toBe(expectedSupabaseRootFingerprint);
     expect(new Date(certificate.validTo).getTime()).toBeGreaterThan(Date.now());
 
     await pool.end();
