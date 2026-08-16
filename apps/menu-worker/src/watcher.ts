@@ -152,6 +152,7 @@ export async function watchMenuSourceOnce(
   const changes = diffMenuItems(previousItems, extracted.items);
   const snapshotId = await repository.recordSnapshot({
     menuSourceId,
+    expectedPreviousSnapshotId: previous?.id ?? null,
     startedAt,
     fetchedAt: fetched.fetchedAt,
     httpStatus: fetched.status,

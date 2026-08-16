@@ -24,7 +24,7 @@ CREATE INDEX IF NOT EXISTS restaurants_location_gist_idx
 CREATE TABLE IF NOT EXISTS fysen.menu_sources (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id uuid NOT NULL REFERENCES fysen.restaurants(id) ON DELETE CASCADE,
-  url text NOT NULL UNIQUE CHECK (url ~ '^https?://'),
+  url text NOT NULL CHECK (url ~ '^https?://'),
   source_type text NOT NULL CHECK (source_type IN ('html', 'json_ld', 'pdf', 'image', 'api')),
   enabled boolean NOT NULL DEFAULT true,
   user_agent text NOT NULL DEFAULT 'FysenMenuBot/0.1',
@@ -39,7 +39,8 @@ CREATE TABLE IF NOT EXISTS fysen.menu_sources (
   next_check_at timestamptz NOT NULL DEFAULT now(),
   consecutive_failures integer NOT NULL DEFAULT 0 CHECK (consecutive_failures >= 0),
   created_at timestamptz NOT NULL DEFAULT now(),
-  updated_at timestamptz NOT NULL DEFAULT now()
+  updated_at timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (restaurant_id, url)
 );
 
 CREATE INDEX IF NOT EXISTS menu_sources_due_idx
@@ -60,12 +61,14 @@ CREATE TABLE IF NOT EXISTS fysen.menu_snapshots (
   robots_allowed boolean NOT NULL,
   fetch_duration_ms integer NOT NULL CHECK (fetch_duration_ms >= 0),
   extractor_version text NOT NULL,
-  created_at timestamptz NOT NULL DEFAULT now(),
-  UNIQUE (menu_source_id, raw_sha256)
+  created_at timestamptz NOT NULL DEFAULT now()
 );
 
 CREATE INDEX IF NOT EXISTS menu_snapshots_source_fetched_idx
   ON fysen.menu_snapshots (menu_source_id, fetched_at DESC);
+
+CREATE INDEX IF NOT EXISTS menu_snapshots_source_raw_sha_idx
+  ON fysen.menu_snapshots (menu_source_id, raw_sha256);
 
 CREATE TABLE IF NOT EXISTS fysen.menu_items (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),

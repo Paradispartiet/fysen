@@ -10,6 +10,19 @@ export type WatchOutcome =
   | "extraction_error"
   | "quarantined";
 
+export class ConcurrentMenuUpdateError extends Error {
+  constructor(
+    readonly menuSourceId: string,
+    readonly expectedPreviousSnapshotId: string | null,
+    readonly actualPreviousSnapshotId: string | null,
+  ) {
+    super(
+      `Menu source ${menuSourceId} changed concurrently: expected previous snapshot ${expectedPreviousSnapshotId ?? "none"}, found ${actualPreviousSnapshotId ?? "none"}`,
+    );
+    this.name = "ConcurrentMenuUpdateError";
+  }
+}
+
 export interface UpsertRestaurantInput {
   readonly slug: string;
   readonly name: string;
@@ -68,6 +81,7 @@ export interface StoredSnapshot {
 
 export interface SnapshotWriteInput {
   readonly menuSourceId: string;
+  readonly expectedPreviousSnapshotId: string | null;
   readonly fetchedAt: string;
   readonly startedAt: string;
   readonly httpStatus: number;
@@ -227,8 +241,7 @@ export class MenuIndexRepository {
         INSERT INTO fysen.menu_sources (
           restaurant_id, url, source_type, user_agent, check_interval_minutes, minimum_expected_items
         ) VALUES ($1, $2, $3, $4, $5, $6)
-        ON CONFLICT (url) DO UPDATE SET
-          restaurant_id = EXCLUDED.restaurant_id,
+        ON CONFLICT (restaurant_id, url) DO UPDATE SET
           source_type = EXCLUDED.source_type,
           user_agent = EXCLUDED.user_agent,
           check_interval_minutes = EXCLUDED.check_interval_minutes,
@@ -292,7 +305,21 @@ export class MenuIndexRepository {
     const client = await this.pool.connect();
     try {
       await client.query("BEGIN");
-      const previousSnapshotId = await this.getLatestSnapshotIdForUpdate(client, input.menuSourceId);
+      const sourceLock = await client.query<IdRow>(
+        "SELECT id FROM fysen.menu_sources WHERE id = $1 FOR UPDATE",
+        [input.menuSourceId],
+      );
+      firstRow(sourceLock.rows, "menu source lock");
+
+      const previousSnapshotId = await this.getLatestSnapshotId(client, input.menuSourceId);
+      if (previousSnapshotId !== input.expectedPreviousSnapshotId) {
+        throw new ConcurrentMenuUpdateError(
+          input.menuSourceId,
+          input.expectedPreviousSnapshotId,
+          previousSnapshotId,
+        );
+      }
+
       const snapshotResult = await client.query<IdRow>(
         `
           INSERT INTO fysen.menu_snapshots (
@@ -488,7 +515,7 @@ export class MenuIndexRepository {
     }
   }
 
-  private async getLatestSnapshotIdForUpdate(client: PoolClient, menuSourceId: string): Promise<string | null> {
+  private async getLatestSnapshotId(client: PoolClient, menuSourceId: string): Promise<string | null> {
     const result = await client.query<IdRow>(
       `
         SELECT id
