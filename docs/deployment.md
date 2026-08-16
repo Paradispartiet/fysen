@@ -28,7 +28,11 @@ Configure these once in `Paradispartiet/fysen` under **Settings -> Secrets and v
 
 Use the Fysen Supabase project's **Session pooler** PostgreSQL connection URI. Keep the URI only in GitHub Secrets; never commit it, paste it into issues, or put it in workflow YAML.
 
-The production workflow sets `DATABASE_SSL=1` and uses the existing `@fysen/database` migrator.
+The production workflow sets `DATABASE_SSL=verify-full`. The database client verifies both the certificate authority and server hostname against the bundled public Supabase Root 2021 CA at `packages/database/certs/supabase-root-2021-ca.crt`. The certificate is a public trust anchor, not a credential. The workflow also pins its SHA-256 certificate fingerprint and rejects a changed or near-expiry certificate.
+
+Connection-string TLS query parameters (`sslmode`, `sslcert`, `sslkey`, `sslrootcert`) are stripped before creating the Node `pg` pool. TLS policy therefore has one canonical owner: the explicit `ssl` object in `@fysen/database`.
+
+`DATABASE_SSL_CA_PATH` can override the bundled CA during a future Supabase CA rotation. A rotation must be handled as a reviewed code/config change, never by setting `rejectUnauthorized=false`.
 
 ### Repository variable
 
@@ -43,8 +47,9 @@ After the secret is configured:
 1. Open **Actions -> Deploy Fysen database**.
 2. Choose **Run workflow**.
 3. Enter `DEPLOY` in the confirmation input.
-4. Confirm that `Apply pending production migrations` succeeds.
-5. Confirm that `Verify production database` succeeds.
+4. Confirm that `Validate bundled Supabase root CA` succeeds.
+5. Confirm that `Apply pending production migrations` succeeds.
+6. Confirm that `Verify production database` succeeds.
 
 After the first successful deployment, set `FYSEN_DATABASE_DEPLOY_ENABLED=true` if it is not already set. Future successful `main` CI runs will deploy pending migrations automatically.
 
@@ -53,6 +58,7 @@ After the first successful deployment, set `FYSEN_DATABASE_DEPLOY_ENABLED=true` 
 - Production deploy never starts from a failed CI run.
 - Pull-request CI never touches production.
 - Production database deploys are serialized with `cancel-in-progress: false`.
+- Database transport uses certificate and hostname verification; TLS verification is never disabled to work around provider certificates.
 - The database migrator uses an advisory lock, so concurrent schema migration attempts cannot apply the same pending migration in parallel.
 - Every migration is transactional and recorded in `fysen.schema_migrations`.
 - Post-deploy verification fails if repository migrations and remote migration history diverge.
