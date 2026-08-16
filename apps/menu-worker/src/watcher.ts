@@ -1,8 +1,4 @@
-import {
-  MenuIndexRepository,
-  type StoredMenuItem,
-  type WatchOutcome,
-} from "@fysen/database";
+import type { MenuIndexRepository, StoredMenuItem, WatchOutcome } from "@fysen/database";
 import {
   assessExtraction,
   createMenuFingerprint,
