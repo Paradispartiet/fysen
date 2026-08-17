@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "roll-sushi-majorstua-oslo",
+    "name": "Roll Sushi Majorstua",
+    "websiteUrl": "https://rollsushi.no/",
+    "address": "Sørkedalsveien 5C",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9307465,
+    "longitude": 10.7120741
+  },
+  "menuSource": {
+    "url": "https://rollsushi.no/",
+    "sourceType": "json_ld",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 70
+  },
+  "hoursSource": {
+    "url": "https://rollsushi.no/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "actions": [
+    {
+      "type": "order",
+      "url": "https://rollsushi.no/",
+      "sourceUrl": "https://rollsushi.no/",
+      "provider": "Roll Sushi"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "43. Crispy Scampi 12 biter",
+      "50. Edamame Soy Beans",
+      "01. Sushi Kombo Medium 17 biter",
+      "Roll's Nigiri 2 stk",
+      "Party Deluxe 50 biter (4-5 pers)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "43. Crispy Scampi 12 biter",
+        "priceMinor": 16900
+      },
+      {
+        "name": "50. Edamame Soy Beans",
+        "priceMinor": 8900
+      },
+      {
+        "name": "01. Sushi Kombo Medium 17 biter",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Roll's Nigiri 2 stk",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Party Deluxe 50 biter (4-5 pers)",
+        "priceMinor": 105000
+      }
+    ]
+  }
+}
