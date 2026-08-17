@@ -3,6 +3,18 @@ import { createHash } from "node:crypto";
 export type MenuExtractionMethod = "json_ld" | "html_heuristic" | "pdf_text" | "manual" | "api";
 export type MenuPriceKind = "exact" | "from" | "multiple";
 
+export interface MenuPriceSemanticsInput {
+  readonly priceMinor: number | null;
+  readonly priceKind?: MenuPriceKind;
+  readonly priceMaxMinor?: number | null;
+}
+
+export interface MenuPriceSemantics {
+  readonly priceMinor: number | null;
+  readonly priceKind: MenuPriceKind;
+  readonly priceMaxMinor: number | null;
+}
+
 export interface MenuObservedItem {
   readonly sourceKey: string;
   readonly name: string;
@@ -61,6 +73,44 @@ function normalizeOptionalText(value: string | null | undefined): string | null 
   return normalized.length > 0 ? normalized : null;
 }
 
+function assertMinorPrice(value: number | null, field: string): void {
+  if (value !== null && (!Number.isInteger(value) || value < 0)) {
+    throw new Error(`${field} must be a non-negative integer or null`);
+  }
+}
+
+export function normalizeMenuPriceSemantics(input: MenuPriceSemanticsInput): MenuPriceSemantics {
+  const priceKind = input.priceKind ?? "exact";
+  const priceMaxMinor = input.priceMaxMinor ?? null;
+  assertMinorPrice(input.priceMinor, "priceMinor");
+  assertMinorPrice(priceMaxMinor, "priceMaxMinor");
+
+  if (priceKind === "exact") {
+    if (priceMaxMinor !== null) {
+      throw new Error("exact price semantics cannot include priceMaxMinor");
+    }
+    return { priceMinor: input.priceMinor, priceKind, priceMaxMinor: null };
+  }
+
+  if (priceKind === "from") {
+    if (input.priceMinor === null) {
+      throw new Error("from price semantics require priceMinor");
+    }
+    if (priceMaxMinor !== null) {
+      throw new Error("from price semantics cannot include priceMaxMinor");
+    }
+    return { priceMinor: input.priceMinor, priceKind, priceMaxMinor: null };
+  }
+
+  if (input.priceMinor === null || priceMaxMinor === null) {
+    throw new Error("multiple price semantics require priceMinor and priceMaxMinor");
+  }
+  if (priceMaxMinor < input.priceMinor) {
+    throw new Error("multiple price semantics require priceMaxMinor >= priceMinor");
+  }
+  return { priceMinor: input.priceMinor, priceKind, priceMaxMinor };
+}
+
 export function menuPriceKind(item: Pick<MenuObservedItem, "priceKind">): MenuPriceKind {
   return item.priceKind ?? "exact";
 }
@@ -78,16 +128,15 @@ export function createMenuItemSourceKey(name: string, sectionName: string | null
 export function createMenuFingerprint(items: readonly MenuFingerprintItem[]): string {
   const canonical = items
     .map((item) => {
-      const priceKind = item.priceKind ?? "exact";
-      const priceMaxMinor = item.priceMaxMinor ?? null;
+      const price = normalizeMenuPriceSemantics(item);
       return {
         name: normalizeDishName(item.name),
         description: normalizeOptionalText(item.description),
         sectionName: normalizeOptionalText(item.sectionName),
-        priceMinor: item.priceMinor,
+        priceMinor: price.priceMinor,
         currency: item.currency.toUpperCase(),
-        ...(priceKind !== "exact" ? { priceKind } : {}),
-        ...(priceMaxMinor !== null ? { priceMaxMinor } : {}),
+        ...(price.priceKind !== "exact" ? { priceKind: price.priceKind } : {}),
+        ...(price.priceMaxMinor !== null ? { priceMaxMinor: price.priceMaxMinor } : {}),
       };
     })
     .sort((left, right) => {
@@ -119,11 +168,13 @@ export function diffMenuItems(
       continue;
     }
 
+    const beforePrice = normalizeMenuPriceSemantics(before);
+    const afterPrice = normalizeMenuPriceSemantics(item);
     if (
-      before.priceMinor !== item.priceMinor ||
+      beforePrice.priceMinor !== afterPrice.priceMinor ||
       before.currency !== item.currency ||
-      menuPriceKind(before) !== menuPriceKind(item) ||
-      menuPriceMaxMinor(before) !== menuPriceMaxMinor(item)
+      beforePrice.priceKind !== afterPrice.priceKind ||
+      beforePrice.priceMaxMinor !== afterPrice.priceMaxMinor
     ) {
       changes.push({ kind: "price_changed", sourceKey: item.sourceKey, before, after: item });
     }
