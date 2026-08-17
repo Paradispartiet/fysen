@@ -35,6 +35,11 @@ function previewSearchUrl(query: QueryState): string {
   return `${previewApiBaseUrl}/v1/dishes/search?${params.toString()}`;
 }
 
+function productionSearchUrl(query: QueryState): string {
+  const params = new URLSearchParams({ q: query.q, city: query.city });
+  return `https://fysen.vercel.app/search?${params.toString()}`;
+}
+
 export function StaticPreviewSearchPage() {
   const [query, setQuery] = useState<QueryState | null>(null);
   const [data, setData] = useState<DishSearchResponse | null>(null);
@@ -58,13 +63,13 @@ export function StaticPreviewSearchPage() {
     }
 
     if (!previewApiBaseUrl) {
-      setLoading(false);
-      setError("Søket er ikke konfigurert i denne previewen.");
+      window.location.replace(productionSearchUrl(query));
       return;
     }
 
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 7_000);
+    let disposed = false;
     setLoading(true);
 
     void fetch(previewSearchUrl(query), {
@@ -78,21 +83,20 @@ export function StaticPreviewSearchPage() {
         return dishSearchResponseSchema.parse(await response.json());
       })
       .then((response) => {
+        if (disposed) return;
         setData(response);
       })
-      .catch((cause: unknown) => {
-        if (cause instanceof DOMException && cause.name === "AbortError") {
-          setError("Søket tok for lang tid. Prøv igjen.");
-          return;
-        }
-        setError("Søket virker ikke akkurat nå.");
+      .catch(() => {
+        if (disposed) return;
+        window.location.replace(productionSearchUrl(query));
       })
       .finally(() => {
         window.clearTimeout(timeout);
-        setLoading(false);
+        if (!disposed) setLoading(false);
       });
 
     return () => {
+      disposed = true;
       window.clearTimeout(timeout);
       controller.abort();
     };
