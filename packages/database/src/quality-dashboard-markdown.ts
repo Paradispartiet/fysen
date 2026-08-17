@@ -3,6 +3,7 @@ import type {
   QualityDashboardReport,
   QualityHealth,
   QualityRestaurantReport,
+  QualitySafeMatchType,
 } from "./quality-dashboard.js";
 
 const healthLabel: Readonly<Record<QualityHealth, string>> = {
@@ -11,6 +12,13 @@ const healthLabel: Readonly<Record<QualityHealth, string>> = {
   stale: "🕒 stale",
   unverified: "❔ unverified",
   disabled: "⏸️ disabled",
+};
+
+const resolutionLabel: Readonly<Record<QualitySafeMatchType, string>> = {
+  exact: "exact",
+  canonical: "canonical",
+  prefix: "prefix",
+  contains: "contains",
 };
 
 function shortTime(value: string | null): string {
@@ -133,20 +141,51 @@ export function renderQualityDashboardMarkdown(report: QualityDashboardReport): 
     }
   }
 
+  const unresolvedFuzzy = report.matching.topFuzzyQueries7d.filter((query) => query.currentResolution === null);
+  const resolvedFuzzy = report.matching.topFuzzyQueries7d.filter((query) => query.currentResolution !== null);
+
   lines.push("", "### Fuzzy queries til manuell vurdering", "");
-  if (report.matching.topFuzzyQueries7d.length === 0) {
-    lines.push("Ingen fuzzy-treff de siste 7 dagene.");
+  if (unresolvedFuzzy.length === 0) {
+    lines.push(
+      report.matching.topFuzzyQueries7d.length === 0
+        ? "Ingen fuzzy-treff de siste 7 dagene."
+        : "Ingen uløste fuzzy-signaler etter replay mot dagens søkbare indeks.",
+    );
   } else {
     lines.push(
-      "| Query | Searches 7d | Fuzzy impressions 7d | Avg score | Best score |",
-      "|---|---:|---:|---:|---:|",
+      "| Query | City | Searches 7d | Fuzzy impressions 7d | Avg score | Best score |",
+      "|---|---|---:|---:|---:|---:|",
     );
-    for (const query of report.matching.topFuzzyQueries7d) {
+    for (const query of unresolvedFuzzy) {
       lines.push(
-        `| ${escapeCell(query.normalizedQuery)} | ${query.searches7d} | ${query.impressions7d} | ${score(query.averageScore)} | ${score(query.bestScore)} |`,
+        `| ${escapeCell(query.normalizedQuery)} | ${escapeCell(query.city)} | ${query.searches7d} | ${query.impressions7d} | ${score(query.averageScore)} | ${score(query.bestScore)} |`,
       );
     }
-    lines.push("", "> Fuzzy-listen er et review-signal. Den oppretter aldri aliaser automatisk.");
+  }
+  lines.push(
+    "",
+    "> Fuzzy-listen er et review-signal. Den oppretter aldri aliaser automatisk. Replay bruker bare dagens sikre exact/canonical/prefix/contains-treff i samme by.",
+  );
+
+  if (resolvedFuzzy.length > 0) {
+    lines.push(
+      "",
+      "### Historiske fuzzy-signaler løst av dagens indeks",
+      "",
+      "| Query | City | Historical searches 7d | Fuzzy impressions 7d | Current resolution |",
+      "|---|---|---:|---:|---|",
+    );
+    for (const query of resolvedFuzzy) {
+      const resolution = query.currentResolution;
+      if (!resolution) continue;
+      lines.push(
+        `| ${escapeCell(query.normalizedQuery)} | ${escapeCell(query.city)} | ${query.searches7d} | ${query.impressions7d} | ✅ ${resolutionLabel[resolution]} |`,
+      );
+    }
+    lines.push(
+      "",
+      "> Disse radene hadde fuzzy impressions tidligere i 7-dagersvinduet, men trenger ikke alias-review så lenge dagens ferske indeks gir et sikkert treff.",
+    );
   }
 
   lines.push("", "## Nulltreff som peker på coverage", "");
