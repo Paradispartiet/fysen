@@ -63,6 +63,32 @@ describe("opening hours extractor", () => {
     expect(extracted.sourceExcerpt).not.toContain("Tirsdag til Lørdag: 17:00");
   });
 
+  it("uses canonical source hints when the page identity mentions multiple branches", () => {
+    const html = `
+      <html><body>
+        <h1>Hrimnir Ramen</h1>
+        <p>Besøk oss på Fredensborg eller Storgata.</p>
+        <p>Booking Fredensborg · Booking Storgata</p>
+        <h3>Åpningstider Fredensborg:</h3>
+        <p>Tirsdag til Lørdag: 17:00 - 23.00 (Kjøkken til 21:30)</p>
+        <h3>Åpningstider Storgata:</h3>
+        <p>Søndag til Torsdag: 12:00 - 22.00 (Kjøkken til 21:00)</p>
+        <p>Fredag - Lørdag: 12:00 - 23.00 (Kjøkken til 21:00)</p>
+      </body></html>
+    `;
+
+    const extracted = extractKitchenOpeningHours(html, [
+      "https://www.hrimnir-ramen.no/meny-storgata",
+      "hrimnir-ramen-storgata",
+      "Hrimnir Ramen Storgata",
+    ]);
+
+    expect(extracted.intervals).toHaveLength(7);
+    expect(extracted.intervals.every((item) => item.opensAt === "12:00" && item.closesAt === "21:00")).toBe(true);
+    expect(extracted.sourceExcerpt).toContain("Søndag til Torsdag");
+    expect(extracted.sourceExcerpt).not.toContain("Tirsdag til Lørdag: 17:00");
+  });
+
   it("fails closed when a multi-branch page cannot be scoped to exactly one branch", () => {
     expect(() =>
       extractKitchenOpeningHours(`
