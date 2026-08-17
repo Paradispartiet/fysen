@@ -69,6 +69,8 @@ interface SnapshotAssertionItem {
   readonly normalizedName: string;
   readonly sectionName: string | null;
   readonly priceMinor: number | null;
+  readonly priceKind?: "exact" | "from" | "multiple";
+  readonly priceMaxMinor?: number | null;
 }
 
 function accepted(summary: MenuWatchSummary): boolean {
@@ -82,7 +84,9 @@ function acceptedHours(summary: OpeningHoursWatchResult): boolean {
 function variantLabel(variant: RestaurantOnboardingManifest["qualityAssertions"]["requiredDishVariants"][number]): string {
   const section = variant.sectionName ? ` [${variant.sectionName}]` : "";
   const price = variant.priceMinor !== undefined ? ` @ ${variant.priceMinor}` : "";
-  return `${variant.name}${section}${price}`;
+  const priceKind = variant.priceKind ? ` ${variant.priceKind}` : "";
+  const priceMax = variant.priceMaxMinor !== undefined ? `..${variant.priceMaxMinor}` : "";
+  return `${variant.name}${section}${price}${priceKind}${priceMax}`;
 }
 
 function missingDishAssertions(
@@ -101,6 +105,8 @@ function missingDishAssertions(
         if (item.normalizedName !== normalizedName) return false;
         if (normalizedSection !== null && normalizeDishName(item.sectionName ?? "") !== normalizedSection) return false;
         if (variant.priceMinor !== undefined && item.priceMinor !== variant.priceMinor) return false;
+        if (variant.priceKind !== undefined && (item.priceKind ?? "exact") !== variant.priceKind) return false;
+        if (variant.priceMaxMinor !== undefined && (item.priceMaxMinor ?? null) !== variant.priceMaxMinor) return false;
         return true;
       });
     })

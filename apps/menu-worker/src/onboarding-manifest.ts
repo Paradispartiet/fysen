@@ -4,11 +4,41 @@ import { z } from "zod";
 
 const httpsUrl = z.string().url().refine((value) => value.startsWith("https://"), "URL must use HTTPS");
 
-const requiredDishVariantSchema = z.object({
-  name: z.string().trim().min(2).max(300),
-  sectionName: z.string().trim().min(1).max(300).optional(),
-  priceMinor: z.number().int().nonnegative().optional(),
-});
+const requiredDishVariantSchema = z
+  .object({
+    name: z.string().trim().min(2).max(300),
+    sectionName: z.string().trim().min(1).max(300).optional(),
+    priceMinor: z.number().int().nonnegative().optional(),
+    priceKind: z.enum(["exact", "from", "multiple"]).optional(),
+    priceMaxMinor: z.number().int().nonnegative().optional(),
+  })
+  .superRefine((variant, context) => {
+    if (variant.priceKind === "multiple") {
+      if (variant.priceMinor === undefined) {
+        context.addIssue({ code: "custom", path: ["priceMinor"], message: "multiple price assertion requires priceMinor" });
+      }
+      if (variant.priceMaxMinor === undefined) {
+        context.addIssue({ code: "custom", path: ["priceMaxMinor"], message: "multiple price assertion requires priceMaxMinor" });
+      }
+      if (
+        variant.priceMinor !== undefined &&
+        variant.priceMaxMinor !== undefined &&
+        variant.priceMaxMinor < variant.priceMinor
+      ) {
+        context.addIssue({ code: "custom", path: ["priceMaxMinor"], message: "priceMaxMinor must be >= priceMinor" });
+      }
+    } else if (variant.priceMaxMinor !== undefined) {
+      context.addIssue({
+        code: "custom",
+        path: ["priceMaxMinor"],
+        message: "priceMaxMinor is only valid for multiple price assertions",
+      });
+    }
+
+    if (variant.priceKind === "from" && variant.priceMinor === undefined) {
+      context.addIssue({ code: "custom", path: ["priceMinor"], message: "from price assertion requires priceMinor" });
+    }
+  });
 
 export const restaurantOnboardingManifestSchema = z
   .object({

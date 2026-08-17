@@ -66,6 +66,62 @@ describe("restaurant onboarding manifest", () => {
     });
   });
 
+  it("accepts strict multiple-price assertions", () => {
+    const parsed = restaurantOnboardingManifestSchema.parse({
+      ...validManifest,
+      qualityAssertions: {
+        requiredDishNames: ["Bambus Signatur"],
+        requiredDishVariants: [
+          {
+            name: "Bambus Signatur",
+            priceMinor: 28500,
+            priceKind: "multiple",
+            priceMaxMinor: 30900,
+          },
+        ],
+      },
+    });
+    expect(parsed.qualityAssertions.requiredDishVariants[0]).toMatchObject({
+      priceMinor: 28500,
+      priceKind: "multiple",
+      priceMaxMinor: 30900,
+    });
+  });
+
+  it("rejects incomplete or contradictory price semantics assertions", () => {
+    expect(() =>
+      restaurantOnboardingManifestSchema.parse({
+        ...validManifest,
+        qualityAssertions: {
+          requiredDishNames: ["Bambus Signatur"],
+          requiredDishVariants: [{ name: "Bambus Signatur", priceKind: "multiple", priceMinor: 28500 }],
+        },
+      }),
+    ).toThrow("multiple price assertion requires priceMaxMinor");
+
+    expect(() =>
+      restaurantOnboardingManifestSchema.parse({
+        ...validManifest,
+        qualityAssertions: {
+          requiredDishNames: ["Bambus Signatur"],
+          requiredDishVariants: [
+            { name: "Bambus Signatur", priceKind: "multiple", priceMinor: 30900, priceMaxMinor: 28500 },
+          ],
+        },
+      }),
+    ).toThrow("priceMaxMinor must be >= priceMinor");
+
+    expect(() =>
+      restaurantOnboardingManifestSchema.parse({
+        ...validManifest,
+        qualityAssertions: {
+          requiredDishNames: ["Bambus Signatur"],
+          requiredDishVariants: [{ name: "Bambus Signatur", priceKind: "exact", priceMaxMinor: 30900 }],
+        },
+      }),
+    ).toThrow("priceMaxMinor is only valid for multiple price assertions");
+  });
+
   it("rejects browser fetch for PDF sources", () => {
     expect(() =>
       restaurantOnboardingManifestSchema.parse({
