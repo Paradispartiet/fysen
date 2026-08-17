@@ -2,23 +2,30 @@ html {
   color-scheme: dark;
 }
 
+body {
+  background:
+    radial-gradient(circle at 74% 18%, rgba(255, 255, 255, 0.025), transparent 28%),
+    radial-gradient(circle at 18% 42%, rgba(225, 91, 54, 0.025), transparent 30%),
+    var(--color-bg);
+}
+
 .globalHeaderResults {
   background: var(--color-header);
 }
 
 .fysenLogo {
-  font-weight: 870;
-  letter-spacing: -0.045em;
+  font-weight: 860;
+  letter-spacing: -0.042em;
 }
 
 .locationText {
-  font-weight: 620;
+  font-weight: 610;
   letter-spacing: 0.01em;
 }
 
 .dishSearch {
   min-height: 74px;
-  background: var(--color-paper);
+  background: linear-gradient(180deg, #141414 0%, #101010 100%);
   border-color: var(--color-search-line);
   box-shadow: var(--shadow-search);
 }
@@ -32,10 +39,37 @@ html {
   box-shadow: var(--shadow-search-focus);
 }
 
+.dishSearchField {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 14px;
+  padding-left: 16px;
+}
+
+.dishSearchIcon {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  color: var(--color-soft);
+}
+
+.dishSearchIcon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .dishSearch input {
+  width: 100%;
+  padding-left: 0;
   font-size: 18px;
-  font-weight: 480;
-  letter-spacing: -0.012em;
+  font-weight: 470;
+  letter-spacing: -0.01em;
 }
 
 .dishSearch button {
@@ -64,17 +98,37 @@ html {
   border-color: var(--color-line-strong);
 }
 
+.dishSearchCompact .dishSearchField {
+  gap: 10px;
+  padding-left: 10px;
+}
+
+.dishSearchCompact .dishSearchIcon {
+  width: 17px;
+  height: 17px;
+}
+
 .homeHero {
+  position: relative;
+  isolation: isolate;
   width: min(var(--content-hero), calc(100% - 96px));
-  padding: clamp(56px, 8vh, 96px) 0 112px;
+  min-height: min(680px, calc(100dvh - 96px));
+  padding: clamp(54px, 7vh, 84px) 0 112px;
+  overflow: hidden;
+}
+
+.homeHeroContent {
+  position: relative;
+  z-index: 2;
+  max-width: 860px;
 }
 
 .homeHero h1 {
   max-width: 760px;
-  font-size: clamp(64px, 6.7vw, 96px);
-  font-weight: 810;
-  line-height: 0.97;
-  letter-spacing: -0.042em;
+  font-size: clamp(64px, 6.5vw, 94px);
+  font-weight: 770;
+  line-height: 0.99;
+  letter-spacing: -0.028em;
 }
 
 .homeHero h1 span {
@@ -82,11 +136,11 @@ html {
 }
 
 .homeHero h1 span + span {
-  margin-top: 0.055em;
+  margin-top: 0.07em;
 }
 
 .homeSearchWrap {
-  width: min(840px, 100%);
+  width: min(850px, 100%);
   margin-top: 42px;
 }
 
@@ -108,13 +162,67 @@ html {
   background: var(--color-accent);
   border-radius: 50%;
   content: "";
-  opacity: 0.82;
+  opacity: 0.9;
+}
+
+.foodSketches {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.foodSketch {
+  position: absolute;
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.foodSketchAccent {
+  stroke: rgba(225, 91, 54, 0.72);
+}
+
+.foodSketchRamen {
+  width: 230px;
+  top: 6px;
+  right: 14px;
+  opacity: 0.72;
+  transform: rotate(3deg);
+}
+
+.foodSketchPizza {
+  width: 175px;
+  top: 225px;
+  right: 46px;
+  opacity: 0.55;
+  transform: rotate(8deg);
+}
+
+.foodSketchPasta {
+  width: 185px;
+  left: 42px;
+  bottom: 18px;
+  opacity: 0.34;
+  transform: rotate(-5deg);
+}
+
+.foodSketchPlate {
+  width: 250px;
+  right: 270px;
+  bottom: -78px;
+  opacity: 0.22;
+  transform: rotate(-7deg);
 }
 
 .resultsIntro h1 {
-  font-weight: 800;
-  line-height: 0.98;
-  letter-spacing: -0.04em;
+  font-weight: 790;
+  line-height: 0.99;
+  letter-spacing: -0.034em;
 }
 
 .dishResultIdentity h2 {
@@ -130,21 +238,42 @@ html {
   background: var(--color-skeleton);
 }
 
+@media (max-width: 900px) {
+  .foodSketchRamen {
+    width: 190px;
+    top: 10px;
+    right: -24px;
+    opacity: 0.52;
+  }
+
+  .foodSketchPizza {
+    width: 145px;
+    top: 250px;
+    right: -8px;
+    opacity: 0.4;
+  }
+
+  .foodSketchPlate {
+    right: 120px;
+  }
+}
+
 @media (max-width: 767px) {
   .homeHero {
     width: calc(100% - 40px);
-    padding: clamp(56px, 9vh, 88px) 0 76px;
+    min-height: min(660px, calc(100dvh - 70px));
+    padding: clamp(52px, 8vh, 78px) 0 76px;
   }
 
   .homeHero h1 {
     max-width: 560px;
     font-size: clamp(50px, 13vw, 62px);
-    line-height: 0.99;
-    letter-spacing: -0.035em;
+    line-height: 1;
+    letter-spacing: -0.026em;
   }
 
   .homeHero h1 span + span {
-    margin-top: 0.065em;
+    margin-top: 0.075em;
   }
 
   .homeSearchWrap {
@@ -158,10 +287,52 @@ html {
   .searchProof {
     margin-top: 16px;
   }
+
+  .foodSketchRamen {
+    width: 150px;
+    top: 0;
+    right: -48px;
+    opacity: 0.38;
+  }
+
+  .foodSketchPizza {
+    width: 118px;
+    top: 215px;
+    right: -26px;
+    opacity: 0.28;
+  }
+
+  .foodSketchPasta {
+    width: 130px;
+    left: -42px;
+    bottom: 66px;
+    opacity: 0.22;
+  }
+
+  .foodSketchPlate {
+    width: 160px;
+    right: 28px;
+    bottom: -42px;
+    opacity: 0.16;
+  }
 }
 
 @media (max-width: 520px) {
   .dishSearch:not(.dishSearchCompact) button:hover {
     transform: none;
+  }
+
+  .dishSearch:not(.dishSearchCompact) .dishSearchField {
+    min-height: 54px;
+    padding: 0 14px;
+  }
+
+  .dishSearch:not(.dishSearchCompact) input {
+    min-height: 0;
+    padding: 0;
+  }
+
+  .foodSketchPizza {
+    display: none;
   }
 }
