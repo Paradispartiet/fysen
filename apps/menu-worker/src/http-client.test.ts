@@ -74,6 +74,57 @@ describe("HttpMenuClient", () => {
     expect(result.contentType).toBe("application/pdf");
   });
 
+  it("allows an explicit bounded source-specific body limit without changing the client default", async () => {
+    const fetchImpl = asFetch(async (input) => {
+      if (input.pathname === "/robots.txt") {
+        return new Response("User-agent: *\nAllow: /\n", { status: 200 });
+      }
+      return new Response("0123456789", {
+        status: 200,
+        headers: { "Content-Length": "10", "Content-Type": "application/pdf" },
+      });
+    });
+    const client = new HttpMenuClient({
+      fetchImpl,
+      resolver: publicResolver,
+      minHostDelayMs: 1,
+      timeoutMs: 1000,
+      maxResponseBytes: 5,
+    });
+    const source = {
+      url: "https://restaurant.test/menu.pdf",
+      userAgent: "FysenMenuBot/0.1",
+      etag: null,
+      lastModified: null,
+    };
+
+    await expect(client.fetchSource(source)).rejects.toMatchObject<MenuFetchError>({ code: "BODY_TOO_LARGE" });
+    const result = await client.fetchSource(source, { maxResponseBytes: 16 });
+    expect(result.kind).toBe("content");
+    if (result.kind !== "content") throw new Error("Expected content response");
+    expect(result.bodyBytes.byteLength).toBe(10);
+  });
+
+  it("rejects unsafe explicit body-limit overrides above the hard cap", async () => {
+    const client = new HttpMenuClient({
+      fetchImpl: asFetch(async () => new Response("never fetched", { status: 200 })),
+      resolver: publicResolver,
+      minHostDelayMs: 1,
+      timeoutMs: 1000,
+    });
+    await expect(
+      client.fetchSource(
+        {
+          url: "https://restaurant.test/menu.pdf",
+          userAgent: "FysenMenuBot/0.1",
+          etag: null,
+          lastModified: null,
+        },
+        { maxResponseBytes: 26 * 1024 * 1024 },
+      ),
+    ).rejects.toMatchObject<MenuFetchError>({ code: "INVALID_BODY_LIMIT" });
+  });
+
   it("does not fetch the menu when robots.txt disallows the target", async () => {
     let calls = 0;
     const fetchImpl = asFetch(async (input) => {
