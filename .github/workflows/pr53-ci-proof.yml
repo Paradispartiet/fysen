@@ -1,0 +1,94 @@
+name: PR53 CI proof
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/pr53-ci-proof.yml"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  proof:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgis/postgis:17-3.5
+        env:
+          POSTGRES_USER: fysen
+          POSTGRES_PASSWORD: fysen
+          POSTGRES_DB: fysen
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U fysen -d fysen"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://fysen:fysen@localhost:5432/fysen
+      DATABASE_SSL: "0"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+      - name: Run proof
+        id: proof
+        shell: bash
+        run: |
+          set +e
+          : > /tmp/pr53-proof.txt
+          run_step() {
+            label="$1"
+            shift
+            echo "## $label" >> /tmp/pr53-proof.txt
+            "$@" >> /tmp/pr53-proof.txt 2>&1
+            code=$?
+            echo "exit=$code" >> /tmp/pr53-proof.txt
+            echo >> /tmp/pr53-proof.txt
+            return $code
+          }
+
+          overall=0
+          run_step lint pnpm lint || overall=1
+          run_step typecheck pnpm typecheck || overall=1
+          run_step test pnpm test || overall=1
+          run_step build pnpm build || overall=1
+          run_step database-build pnpm --filter @fysen/database build || overall=1
+          run_step migrations pnpm --filter @fysen/database migrate || overall=1
+          run_step deploy-contract pnpm --filter @fysen/database verify:production || overall=1
+          run_step database-integration pnpm --filter @fysen/database test:integration || overall=1
+          run_step browser-smoke pnpm --filter @fysen/menu-worker browser:smoke || overall=1
+
+          echo "overall=$overall" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Publish result in PR body
+        if: always()
+        uses: actions/github-script@v7
+        env:
+          PROOF_STATUS: ${{ steps.proof.outputs.overall }}
+        with:
+          script: |
+            const fs = require('fs');
+            const result = fs.existsSync('/tmp/pr53-proof.txt')
+              ? fs.readFileSync('/tmp/pr53-proof.txt', 'utf8').slice(0, 55000)
+              : 'Proof did not produce output.';
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              body: `Midlertidig, **skal ikke merges**. Tester eksakt runtime-kode fra PR #53.\n\n## CI proof\n\nOverall: ${process.env.PROOF_STATUS || 'unknown'}\n\n\`\`\`text\n${result}\n\`\`\``,
+            });
+            if (process.env.PROOF_STATUS !== '0') core.setFailed('PR #53 proof failed; see PR body.');
