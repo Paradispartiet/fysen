@@ -24,6 +24,37 @@ describe("PDF menu extractor", () => {
     expect(carbonara.every((item) => item.extractionMethod === "pdf_text")).toBe(true);
   });
 
+  it("stops descriptions before the next standalone name and price candidate", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "PRIMI PIATTI",
+      "Pasta carbonara",
+      "260",
+      "Guanciale, pecorino og egg",
+      "Pasta di manzo",
+      "299",
+      "Tagliatelle med indrefilet",
+      "BAMBINI For barn opp til 12 år",
+      "Pasta carbonara h, m, e",
+      "125",
+      "Pasta pollo ubriaco h, m",
+      "125",
+    ]);
+
+    const carbonara = items.filter((item) => item.normalizedName === "pasta carbonara");
+    expect(carbonara).toHaveLength(2);
+    expect(carbonara[0]).toMatchObject({
+      sectionName: "PRIMI PIATTI",
+      priceMinor: 26000,
+      description: "Guanciale, pecorino og egg",
+    });
+    expect(carbonara[0]?.description).not.toContain("Pasta di manzo");
+    expect(carbonara[1]).toMatchObject({
+      sectionName: "BAMBINI",
+      priceMinor: 12500,
+      description: null,
+    });
+  });
+
   it("uses PDF.js text extraction without OCR", async () => {
     const bytes = new Uint8Array(Buffer.from(syntheticPdfBase64, "base64"));
     const extracted = await extractPdfMenu(bytes);
