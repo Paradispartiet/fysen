@@ -92,11 +92,43 @@ export const menuWatchOutcomeSchema = z.enum([
   "quarantined",
 ]);
 
-export const dishSearchQuerySchema = z.object({
-  q: z.string().trim().min(2).max(80),
-  city: z.string().trim().min(1).max(120).default("Oslo"),
-  limit: z.coerce.number().int().min(1).max(50).default(20),
-});
+const optionalCoordinate = (minimum: number, maximum: number) =>
+  z.preprocess(
+    (value) => (value === "" || value === null ? undefined : value),
+    z.coerce.number().finite().min(minimum).max(maximum).optional(),
+  );
+
+export const dishSearchSortSchema = z.enum(["relevance", "distance"]);
+
+export const dishSearchQuerySchema = z
+  .object({
+    q: z.string().trim().min(2).max(80),
+    city: z.string().trim().min(1).max(120).default("Oslo"),
+    limit: z.coerce.number().int().min(1).max(50).default(20),
+    lat: optionalCoordinate(-90, 90),
+    lon: optionalCoordinate(-180, 180),
+    sort: dishSearchSortSchema.default("relevance"),
+  })
+  .superRefine((value, context) => {
+    const hasLatitude = value.lat !== undefined;
+    const hasLongitude = value.lon !== undefined;
+
+    if (hasLatitude !== hasLongitude) {
+      context.addIssue({
+        code: "custom",
+        path: hasLatitude ? ["lon"] : ["lat"],
+        message: "Latitude and longitude must be supplied together.",
+      });
+    }
+
+    if (value.sort === "distance" && (!hasLatitude || !hasLongitude)) {
+      context.addIssue({
+        code: "custom",
+        path: ["sort"],
+        message: "Distance sorting requires latitude and longitude.",
+      });
+    }
+  });
 
 export const dishSearchMatchTypeSchema = z.enum(["exact", "prefix", "contains", "fuzzy"]);
 
@@ -113,6 +145,7 @@ export const dishSearchResultSchema = z.object({
   menuItemId: uuid,
   snapshotId: uuid,
   menuSourceId: uuid,
+  distanceMeters: z.number().nonnegative().nullable().default(null),
   dish: z.object({
     name: z.string().trim().min(1).max(300),
     normalizedName: z.string().trim().min(1).max(300),
@@ -138,10 +171,12 @@ export const dishSearchResultSchema = z.object({
     lastCheckedAt: isoDateTime,
     freshUntil: isoDateTime,
   }),
-  actions: z.object({
-    booking: restaurantActionSchema.nullable(),
-    order: restaurantActionSchema.nullable(),
-  }).default({ booking: null, order: null }),
+  actions: z
+    .object({
+      booking: restaurantActionSchema.nullable(),
+      order: restaurantActionSchema.nullable(),
+    })
+    .default({ booking: null, order: null }),
   match: z.object({
     type: dishSearchMatchTypeSchema,
     score: z.number().min(0).max(1),
@@ -153,6 +188,7 @@ export const dishSearchResponseSchema = z.object({
   query: z.string().trim().min(2).max(80),
   normalizedQuery: z.string().trim().min(1).max(300),
   city: z.string().trim().min(1).max(120),
+  sort: dishSearchSortSchema.default("relevance"),
   count: z.number().int().nonnegative(),
   results: z.array(dishSearchResultSchema),
 });
@@ -184,6 +220,7 @@ export type MenuItem = z.infer<typeof menuItemSchema>;
 export type MenuChange = z.infer<typeof menuChangeSchema>;
 export type MenuWatchOutcome = z.infer<typeof menuWatchOutcomeSchema>;
 export type DishSearchQuery = z.infer<typeof dishSearchQuerySchema>;
+export type DishSearchSort = z.infer<typeof dishSearchSortSchema>;
 export type DishSearchMatchType = z.infer<typeof dishSearchMatchTypeSchema>;
 export type RestaurantAction = z.infer<typeof restaurantActionSchema>;
 export type DishSearchResult = z.infer<typeof dishSearchResultSchema>;
