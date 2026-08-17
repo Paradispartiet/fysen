@@ -1,7 +1,7 @@
 import { load } from "cheerio";
 import type { RestaurantHoursIntervalInput } from "@fysen/database";
 
-export const OPENING_HOURS_EXTRACTOR_VERSION = "hours-visible-v7";
+export const OPENING_HOURS_EXTRACTOR_VERSION = "hours-visible-v8";
 
 const weekdayByName: Readonly<Record<string, number>> = {
   monday: 1,
@@ -33,6 +33,7 @@ const weekdayByName: Readonly<Record<string, number>> = {
 
 const dayToken = "(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Mandag|Tirsdag|Onsdag|Torsdag|Fredag|Lørdag|Lordag|Søndag|Sondag|Man|Tir|Ons|Tor|Fre|Lør|Lor|Søn|Son)";
 const timeToken = "(?:(?:1[0-2]|0?[1-9])(?:[.:][0-5]\\d)?\\s*(?:am|pm)|(?:2[0-3]|[01]?\\d)(?:[.:][0-5]\\d)?)";
+const clockPrefix = "(?:(?:kl\\.?|klokka)\\s*)?";
 const dayRangeConnector = "(?:[-–]|til|to)";
 
 export class OpeningHoursExtractionError extends Error {
@@ -186,7 +187,7 @@ function markerMatchesHints(marker: HoursMarker, scopeHints: readonly string[]):
 function standardHoursMatchCount(candidate: string): number {
   const compact = candidate.replace(/\s+/g, " ").trim();
   const pattern = new RegExp(
-    `(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?\\s*(?:[:|])?\\s+(${timeToken})\\s*[-–]\\s*(${timeToken})`,
+    `(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?\\s*(?:[:|])?\\s+${clockPrefix}(${timeToken})\\s*[-–]\\s*${clockPrefix}(${timeToken})`,
     "giu",
   );
   return [...compact.matchAll(pattern)].length;
@@ -241,7 +242,7 @@ function selectStandardHoursCandidate(visibleText: string, scopeHints: readonly 
 function kitchenCutoffFromSuffix(suffix: string | undefined): string | null {
   if (!suffix) return null;
   return new RegExp(
-    `(?:kitchen(?:\\s+closes)?(?:\\s+at)?|kjøkken(?:et)?\\s+(?:til|stenger(?:\\s+kl\\.?)?))\\s*(${timeToken})`,
+    `(?:kitchen(?:\\s+closes)?(?:\\s+at)?|kjøkken(?:et)?\\s+(?:til|stenger))\\s*${clockPrefix}(${timeToken})`,
     "iu",
   ).exec(suffix)?.[1] ?? null;
 }
@@ -256,7 +257,7 @@ function globalKitchenCutoffs(candidate: string): { readonly byWeekday: Readonly
 
   const result = new Map<number, string>();
   const groupPattern = new RegExp(
-    `(${timeToken})\\s+(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?`,
+    `${clockPrefix}(${timeToken})\\s+(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?`,
     "giu",
   );
   for (const match of phrase.matchAll(groupPattern)) {
@@ -284,7 +285,7 @@ function extractStandardHours(
   const candidate = selectStandardHoursCandidate(visibleText, scopeHints).replace(/\s+/g, " ").trim();
   const globalCutoff = globalKitchenCutoffs(candidate);
   const pattern = new RegExp(
-    `(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?\\s*(?:[:|])?\\s+(${timeToken})\\s*[-–]\\s*(${timeToken})(?:\\s*\\(([^)]{1,120})\\))?`,
+    `(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?\\s*(?:[:|])?\\s+${clockPrefix}(${timeToken})\\s*[-–]\\s*${clockPrefix}(${timeToken})(?:\\s*\\(([^)]{1,120})\\))?`,
     "giu",
   );
   const intervals: RestaurantHoursIntervalInput[] = [];
