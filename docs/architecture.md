@@ -20,6 +20,7 @@ Product execution is currently governed by two complementary plans:
 7. **Bad extraction fails closed.** A suspicious menu collapse is quarantined instead of being interpreted as mass removal.
 8. **Organic relevance is not for sale.** Commercial placement must never fabricate eligibility or change what counts as an organic dish match.
 9. **Revenue telemetry is data-minimal.** Demand measurement does not require IP, user-agent, account identity or permanent user profiles in v1.
+10. **Commercial destinations are verified data.** Booking/order buttons require an active, unexpired canonical destination with source provenance; stale destinations fail closed.
 
 ## Runtime topology
 
@@ -31,7 +32,7 @@ React/Next.js web
   PostgreSQL/PostGIS
         ^
         |
- canonical menu writes
+ canonical menu/action writes
         ^
         |
  Menu Worker
@@ -43,6 +44,7 @@ React/Next.js web
     +-- controlled HTML heuristic fallback
     +-- extraction quality gate
     +-- fingerprint + diff
+    +-- booking/order destination re-verification
 ```
 
 The API and worker share domain contracts, but the worker is not hosted inside the public API process.
@@ -53,6 +55,8 @@ The backend-owned tables live in the dedicated PostgreSQL schema `fysen` rather 
 
 ```text
 restaurants
+   |\
+   | restaurant_actions -------- restaurant_action_verification_runs
    |
 menu_sources
    |
@@ -70,6 +74,8 @@ conversion_events
 ```
 
 `menu_snapshots` are immutable successful menu observations. `menu_sources` hold current operational state such as ETag, Last-Modified, last menu fingerprint and next check time. `menu_watch_runs` retain both successful and failed checks.
+
+`restaurant_actions` contain canonical booking/order destinations with source URL, verification method, `verified_at` and `expires_at`. Search publishes only enabled actions whose verification has not expired. `restaurant_action_verification_runs` retain both successful and failed rechecks so the later quality dashboard can explain why an action is present, stale or missing.
 
 The revenue funnel is deliberately separate from evidence ingestion. `search_events` capture normalized demand and result count. `search_result_impressions` establish which concrete menu items were shown and at what rank. `conversion_events` attribute explicit outbound actions to an impression with a deduplicating client event ID.
 
@@ -90,6 +96,23 @@ HTTP 200
 ```
 
 A page can therefore be reachable while its extraction is still rejected or quarantined.
+
+## Restaurant action publication rule
+
+Booking/order destinations use an independent fail-closed rule:
+
+```text
+source evidence
+  -> canonical action URL
+  -> verified_at + expires_at
+  -> publish while enabled and unexpired
+  -> reverify seven days before expiry
+  -> successful safe fetch extends 30 days
+  -> failure does not extend expiry
+  -> expiry removes the action from search automatically
+```
+
+The re-verifier deliberately reuses the worker's SSRF, robots, redirect, timeout and response-size protections.
 
 ## Search order
 
@@ -118,7 +141,7 @@ search query
   -> deduplicated conversion_event
 ```
 
-The first supported action types are menu, restaurant website and directions clicks. Booking and order clicks become active only when canonical verified destinations exist.
+The supported action types are menu, restaurant website, directions, booking and order. Booking/order actions are returned only when a canonical verified destination is currently publishable.
 
 ## Data-quality bias
 
