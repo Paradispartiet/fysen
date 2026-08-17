@@ -235,25 +235,26 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
     throw new Error("PDF source did not start with a PDF signature");
   }
 
-  const loadingTask = getDocument({ data: bytes, useSystemFonts: true, isEvalSupported: false });
+  const loadingTask = getDocument({ data: bytes, useSystemFonts: true });
   const document = await loadingTask.promise;
+  const pageCount = document.numPages;
   const lines: PdfLine[] = [];
   try {
-    for (let pageNumber = 1; pageNumber <= document.numPages; pageNumber += 1) {
+    for (let pageNumber = 1; pageNumber <= pageCount; pageNumber += 1) {
       const page = await document.getPage(pageNumber);
       const content = await page.getTextContent();
       lines.push(...reconstructLines(content.items, pageNumber));
       page.cleanup();
     }
   } finally {
-    await document.destroy();
+    await loadingTask.destroy();
   }
 
   const items = buildItems(lines);
   return {
     items,
     visibleText: lines.map((line) => line.text).join("\n").slice(0, 200_000),
-    pageCount: document.numPages,
+    pageCount,
     method: "pdf_text",
   };
 }
