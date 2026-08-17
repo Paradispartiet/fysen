@@ -226,6 +226,7 @@ async function onboardOne(
       restaurantId: candidate.id,
       url: manifest.menuSource.url,
       sourceType: manifest.menuSource.sourceType,
+      fetchMode: manifest.menuSource.fetchMode,
       userAgent: manifest.menuSource.userAgent,
       checkIntervalMinutes: manifest.menuSource.checkIntervalMinutes,
       minimumExpectedItems: manifest.menuSource.minimumExpectedItems,
