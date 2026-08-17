@@ -78,7 +78,8 @@ export function renderQualityDashboardMarkdown(report: QualityDashboardReport): 
     `- Candidate restaurants: **${report.totals.candidateRestaurants}**`,
     `- Menu sources: **${report.totals.menuSources}** (${report.totals.healthyMenuSources} healthy, ${report.totals.degradedMenuSources} needing attention)`,
     `- Current menu items: **${report.totals.currentMenuItems}**`,
-    `- Zero-result searches, 7d: **${report.totals.zeroResultSearches7d}**`,
+    `- Historical zero-result searches, 7d: **${report.totals.zeroResultSearches7d}**`,
+    `- Unresolved zero-result searches, 7d: **${report.totals.unresolvedZeroResultSearches7d}**`,
     `- Conversion events, 7d: **${report.totals.conversions7d}**`,
     "",
     "## Restaurants",
@@ -188,14 +189,48 @@ export function renderQualityDashboardMarkdown(report: QualityDashboardReport): 
     );
   }
 
-  lines.push("", "## Nulltreff som peker på coverage", "");
-  if (report.topZeroResultQueries7d.length === 0) {
-    lines.push("Ingen nulltreff de siste 7 dagene.");
+  const unresolvedZeroResults = report.topZeroResultQueries7d.filter((query) => query.currentResolution === null);
+  const resolvedZeroResults = report.topZeroResultQueries7d.filter((query) => query.currentResolution !== null);
+
+  lines.push("", "## Nulltreff som fortsatt peker på coverage", "");
+  if (unresolvedZeroResults.length === 0) {
+    lines.push(
+      report.topZeroResultQueries7d.length === 0
+        ? "Ingen nulltreff de siste 7 dagene."
+        : "Ingen uløste nulltreff etter replay mot dagens søkbare indeks.",
+    );
   } else {
-    lines.push("| Query | Nulltreff 7d | Sist sett |", "|---|---:|---|");
-    for (const query of report.topZeroResultQueries7d) {
-      lines.push(`| ${escapeCell(query.normalizedQuery)} | ${query.count7d} | ${shortTime(query.lastSeenAt)} |`);
+    lines.push("| Query | City | Nulltreff 7d | Sist sett |", "|---|---|---:|---|");
+    for (const query of unresolvedZeroResults) {
+      lines.push(
+        `| ${escapeCell(query.normalizedQuery)} | ${escapeCell(query.city)} | ${query.count7d} | ${shortTime(query.lastSeenAt)} |`,
+      );
     }
+  }
+  lines.push(
+    "",
+    "> Coverage-listen replayes mot dagens ferske indeks i samme by. Bare exact/canonical/prefix/contains kan markere et historisk nulltreff som løst; fuzzy alene teller fortsatt som uløst.",
+  );
+
+  if (resolvedZeroResults.length > 0) {
+    lines.push(
+      "",
+      "### Historiske nulltreff løst av dagens indeks",
+      "",
+      "| Query | City | Historical null results 7d | Sist sett | Current resolution |",
+      "|---|---|---:|---|---|",
+    );
+    for (const query of resolvedZeroResults) {
+      const resolution = query.currentResolution;
+      if (!resolution) continue;
+      lines.push(
+        `| ${escapeCell(query.normalizedQuery)} | ${escapeCell(query.city)} | ${query.count7d} | ${shortTime(query.lastSeenAt)} | ✅ ${resolutionLabel[resolution]} |`,
+      );
+    }
+    lines.push(
+      "",
+      "> Historiske nulltreff beholdes som etterspørselsdata, men brukes ikke lenger som coverage-prioritet når dagens indeks allerede gir et sikkert treff.",
+    );
   }
 
   lines.push(
