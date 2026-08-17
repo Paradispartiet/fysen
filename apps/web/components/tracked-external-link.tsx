@@ -14,6 +14,8 @@ interface TrackedExternalLinkProps {
 }
 
 function emitConversionEvent(impressionId: string, eventType: ConversionEventType): void {
+  if (process.env.NEXT_PUBLIC_DISABLE_FUNNEL_TRACKING === "1") return;
+
   const payload = JSON.stringify({
     clientEventId: crypto.randomUUID(),
     impressionId,

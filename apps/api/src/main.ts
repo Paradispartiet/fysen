@@ -8,6 +8,12 @@ async function bootstrap(): Promise<void> {
   });
 
   app.setGlobalPrefix("v1");
+  app.enableCors({
+    origin: ["https://paradispartiet.github.io", /^http:\/\/localhost(?::\d+)?$/],
+    methods: ["GET", "HEAD", "OPTIONS"],
+    allowedHeaders: ["Accept", "Content-Type"],
+    maxAge: 86_400,
+  });
   app.enableShutdownHooks();
 
   const port = Number(process.env.PORT ?? 3001);

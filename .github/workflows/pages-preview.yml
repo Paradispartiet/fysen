@@ -41,22 +41,31 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Prepare static visual preview
+      - name: Prepare functional static preview
         shell: bash
         run: |
-          # The public preview contains only the statically exported homepage.
-          # Server-only API/search routes stay private and are not exported.
-          rm -rf apps/web/app/api apps/web/app/search
+          # GitHub Pages has no server runtime. Keep the canonical UI and result
+          # components, replace only the server search route with the dedicated
+          # client adapter, and never export the server-only web API routes.
+          rm -rf apps/web/app/api
+
+          cat > apps/web/app/search/page.tsx <<'EOF'
+          import { StaticPreviewSearchPage } from "../../components/static-preview-search-page";
+
+          export default function SearchPage() {
+            return <StaticPreviewSearchPage />;
+          }
+          EOF
 
           python - <<'PY'
           from pathlib import Path
 
           replacements = {
               "apps/web/components/dish-search.tsx": [
-                  ('action="/search"', 'action="/fysen-preview/"'),
+                  ('action="/search"', 'action="/fysen-preview/search/"'),
               ],
               "apps/web/components/suggestion-rail.tsx": [
-                  ('return `/search?${params.toString()}`;', 'return `/fysen-preview/?${params.toString()}`;'),
+                  ('return `/search?${params.toString()}`;', 'return `/fysen-preview/search/?${params.toString()}`;'),
               ],
               "apps/web/components/fysen-logo.tsx": [
                   ('href="/"', 'href="/fysen-preview/"'),
@@ -94,7 +103,16 @@ jobs:
       - name: Build static Fysen preview
         env:
           NEXT_TELEMETRY_DISABLED: "1"
+          NEXT_PUBLIC_FYSEN_API_BASE_URL: "https://fysen-api.vercel.app"
+          NEXT_PUBLIC_DISABLE_FUNNEL_TRACKING: "1"
         run: pnpm turbo run build --filter=@fysen/web...
+
+      - name: Verify functional search export
+        run: |
+          test -f apps/web/out/index.html
+          test -f apps/web/out/search/index.html
+          grep -q '/fysen-preview/search/' apps/web/out/index.html
+          grep -q 'fysen-api.vercel.app' apps/web/out/search/index.html || grep -R -q 'fysen-api.vercel.app' apps/web/out/_next
 
       - name: Keep Next assets out of Jekyll processing
         run: touch apps/web/out/.nojekyll
