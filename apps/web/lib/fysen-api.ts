@@ -1,6 +1,10 @@
 import {
+  conversionEventInputSchema,
+  conversionEventReceiptSchema,
   dishSearchQuerySchema,
   dishSearchResponseSchema,
+  type ConversionEventInput,
+  type ConversionEventReceipt,
   type DishSearchQuery,
   type DishSearchResponse,
 } from "@fysen/contracts";
@@ -31,4 +35,24 @@ export async function searchDishes(input: DishSearchQuery): Promise<DishSearchRe
   }
 
   return dishSearchResponseSchema.parse(await response.json());
+}
+
+export async function recordConversionEvent(input: ConversionEventInput): Promise<ConversionEventReceipt> {
+  const event = conversionEventInputSchema.parse(input);
+  const response = await fetch(`${apiBaseUrl()}/v1/funnel/events`, {
+    method: "POST",
+    cache: "no-store",
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(event),
+    signal: AbortSignal.timeout(5_000),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Fysen API conversion event failed with HTTP ${response.status}`);
+  }
+
+  return conversionEventReceiptSchema.parse(await response.json());
 }
