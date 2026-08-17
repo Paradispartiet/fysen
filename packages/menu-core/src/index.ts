@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 
 export type MenuExtractionMethod = "json_ld" | "html_heuristic" | "pdf_text" | "manual" | "api";
+export type MenuPriceKind = "exact" | "from" | "multiple";
 
 export interface MenuObservedItem {
   readonly sourceKey: string;
@@ -9,6 +10,8 @@ export interface MenuObservedItem {
   readonly description: string | null;
   readonly sectionName: string | null;
   readonly priceMinor: number | null;
+  readonly priceKind?: MenuPriceKind;
+  readonly priceMaxMinor?: number | null;
   readonly currency: string;
   readonly position: number;
   readonly extractionMethod: MenuExtractionMethod;
@@ -21,6 +24,8 @@ export interface MenuFingerprintItem {
   readonly description?: string | null;
   readonly sectionName?: string | null;
   readonly priceMinor: number | null;
+  readonly priceKind?: MenuPriceKind;
+  readonly priceMaxMinor?: number | null;
   readonly currency: string;
 }
 
@@ -56,25 +61,44 @@ function normalizeOptionalText(value: string | null | undefined): string | null 
   return normalized.length > 0 ? normalized : null;
 }
 
+export function menuPriceKind(item: Pick<MenuObservedItem, "priceKind">): MenuPriceKind {
+  return item.priceKind ?? "exact";
+}
+
+export function menuPriceMaxMinor(
+  item: Pick<MenuObservedItem, "priceMaxMinor">,
+): number | null {
+  return item.priceMaxMinor ?? null;
+}
+
 export function createMenuItemSourceKey(name: string, sectionName: string | null = null): string {
   return sha256(`${normalizeDishName(sectionName ?? "")}\u0000${normalizeDishName(name)}`);
 }
 
 export function createMenuFingerprint(items: readonly MenuFingerprintItem[]): string {
   const canonical = items
-    .map((item) => ({
-      name: normalizeDishName(item.name),
-      description: normalizeOptionalText(item.description),
-      sectionName: normalizeOptionalText(item.sectionName),
-      priceMinor: item.priceMinor,
-      currency: item.currency.toUpperCase(),
-    }))
+    .map((item) => {
+      const priceKind = item.priceKind ?? "exact";
+      const priceMaxMinor = item.priceMaxMinor ?? null;
+      return {
+        name: normalizeDishName(item.name),
+        description: normalizeOptionalText(item.description),
+        sectionName: normalizeOptionalText(item.sectionName),
+        priceMinor: item.priceMinor,
+        currency: item.currency.toUpperCase(),
+        ...(priceKind !== "exact" ? { priceKind } : {}),
+        ...(priceMaxMinor !== null ? { priceMaxMinor } : {}),
+      };
+    })
     .sort((left, right) => {
       const byName = left.name.localeCompare(right.name, "nb-NO");
       if (byName !== 0) return byName;
       const bySection = (left.sectionName ?? "").localeCompare(right.sectionName ?? "", "nb-NO");
       if (bySection !== 0) return bySection;
-      return (left.priceMinor ?? -1) - (right.priceMinor ?? -1);
+      const byPrice = (left.priceMinor ?? -1) - (right.priceMinor ?? -1);
+      if (byPrice !== 0) return byPrice;
+      return ("priceMaxMinor" in left ? left.priceMaxMinor ?? -1 : -1)
+        - ("priceMaxMinor" in right ? right.priceMaxMinor ?? -1 : -1);
     });
 
   return sha256(JSON.stringify(canonical));
@@ -95,7 +119,12 @@ export function diffMenuItems(
       continue;
     }
 
-    if (before.priceMinor !== item.priceMinor || before.currency !== item.currency) {
+    if (
+      before.priceMinor !== item.priceMinor ||
+      before.currency !== item.currency ||
+      menuPriceKind(before) !== menuPriceKind(item) ||
+      menuPriceMaxMinor(before) !== menuPriceMaxMinor(item)
+    ) {
       changes.push({ kind: "price_changed", sourceKey: item.sourceKey, before, after: item });
     }
 

@@ -14,6 +14,7 @@ describe("database migrations", () => {
       "0007_pdf_text_extraction.sql",
       "0008_menu_source_fetch_mode.sql",
       "0009_remove_blocked_tunco_candidate.sql",
+      "0010_menu_item_price_semantics.sql",
     ]);
 
     const schemaSql = await readFile(
@@ -103,5 +104,14 @@ describe("database migrations", () => {
     );
     expect(tuncoCleanupSql).toContain("slug = 'tunco-st-hanshaugen-oslo'");
     expect(tuncoCleanupSql).toContain("active = false");
+
+    const priceSemanticsSql = await readFile(
+      new URL("../migrations/0010_menu_item_price_semantics.sql", import.meta.url),
+      "utf8",
+    );
+    expect(priceSemanticsSql).toContain("price_kind text NOT NULL DEFAULT 'exact'");
+    expect(priceSemanticsSql).toContain("price_kind IN ('exact', 'from', 'multiple')");
+    expect(priceSemanticsSql).toContain("price_max_minor >= price_minor");
+    expect(priceSemanticsSql).toContain("VALIDATE CONSTRAINT menu_items_price_shape_check");
   });
 });
