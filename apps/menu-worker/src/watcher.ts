@@ -9,6 +9,9 @@ import { extractHtmlMenu, HTML_EXTRACTOR_VERSION } from "./html-extractor.js";
 import { HttpMenuClient, MenuFetchError } from "./http-client.js";
 import { extractPdfMenu, PDF_EXTRACTOR_VERSION } from "./pdf-extractor.js";
 
+const DEFAULT_MAX_PDF_RESPONSE_BYTES = 8 * 1024 * 1024;
+const MAX_PDF_RESPONSE_BYTES = 25 * 1024 * 1024;
+
 export interface MenuWatchSummary {
   readonly menuSourceId: string;
   readonly outcome: WatchOutcome;
@@ -29,6 +32,12 @@ function storedToObserved(item: StoredMenuItem): MenuObservedItem {
 
 function evidenceText(items: readonly MenuObservedItem[]): string {
   return items.map((item) => item.sourceExcerpt ?? item.name).join("\n");
+}
+
+function pdfResponseByteLimit(): number {
+  const configured = Number(process.env.FYSEN_MAX_PDF_RESPONSE_BYTES);
+  if (!Number.isInteger(configured) || configured <= 0) return DEFAULT_MAX_PDF_RESPONSE_BYTES;
+  return Math.min(configured, MAX_PDF_RESPONSE_BYTES);
 }
 
 async function extractSource(
@@ -59,7 +68,10 @@ export async function watchMenuSourceOnce(
 
   let fetched;
   try {
-    fetched = await httpClient.fetchSource(source);
+    fetched = await httpClient.fetchSource(
+      source,
+      source.sourceType === "pdf" ? { maxResponseBytes: pdfResponseByteLimit() } : {},
+    );
   } catch (error) {
     const completedAt = new Date().toISOString();
     const fetchError = error instanceof MenuFetchError ? error : null;
@@ -76,7 +88,10 @@ export async function watchMenuSourceOnce(
       extractedItemCount: null,
       errorCode: fetchError?.code ?? "UNKNOWN_FETCH_ERROR",
       errorMessage: error instanceof Error ? error.message : String(error),
-      details: { url: source.url },
+      details: {
+        url: source.url,
+        maxResponseBytes: source.sourceType === "pdf" ? pdfResponseByteLimit() : null,
+      },
     });
     throw error;
   }
