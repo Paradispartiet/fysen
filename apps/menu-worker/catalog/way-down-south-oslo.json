@@ -17,6 +17,20 @@
     "checkIntervalMinutes": 360,
     "minimumExpectedItems": 8
   },
+  "hoursSource": {
+    "url": "https://www.waydownsouth.no/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedIntervals": 5
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://www.waydownsouth.no/booking",
+      "sourceUrl": "https://www.waydownsouth.no/booking",
+      "provider": null
+    }
+  ],
   "qualityAssertions": {
     "requiredDishNames": [
       "Chicken Ceasar Burger",
