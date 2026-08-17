@@ -1,3 +1,4 @@
-queued-through=d5dc59bdc7c56079ed571241a3ad3ac92fd4c229
-release-reason=post-gate-marker-release
-release-attempt=2
+queued-through=latest-main
+release-reason=manual-user-request
+release-attempt=3
+release-requested-at=2026-08-17T17:54:00+02:00
