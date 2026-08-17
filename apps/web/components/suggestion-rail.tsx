@@ -27,17 +27,20 @@ export function SuggestionRail({ suggestions = defaultSuggestions }: { suggestio
           <p className="suggestionRailEyebrow">Matlyst</p>
           <h2 id="suggestion-rail-title">Forslag akkurat nå</h2>
         </div>
-        <p>Snarveier til retter du kan søke etter.</p>
       </div>
 
       <div className="suggestionRailList">
         {suggestions.map((suggestion) => (
-          <a className="suggestionCard" href={suggestionHref(suggestion.query)} key={`${suggestion.kind ?? "editorial"}-${suggestion.query}`}>
-            <span className="suggestionCardMeta">
-              {suggestion.kind === "sponsored" ? "Sponset" : "Forslag"}
+          <a
+            className="suggestionCard"
+            href={suggestionHref(suggestion.query)}
+            key={`${suggestion.kind ?? "editorial"}-${suggestion.query}`}
+          >
+            {suggestion.kind === "sponsored" ? <span className="suggestionCardMeta">Sponset</span> : null}
+            <span className="suggestionCardTopline">
+              <strong>{suggestion.label}</strong>
+              <span className="suggestionCardAction" aria-hidden="true">→</span>
             </span>
-            <strong>{suggestion.label}</strong>
-            <span className="suggestionCardAction">Finn retten <span aria-hidden="true">→</span></span>
             {suggestion.kind === "sponsored" && suggestion.sponsorName ? (
               <span className="suggestionSponsor">Fra {suggestion.sponsorName}</span>
             ) : null}
