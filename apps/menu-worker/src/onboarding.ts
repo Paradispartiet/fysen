@@ -2,7 +2,9 @@ import {
   createDatabasePool,
   getRestaurantActionState,
   MenuIndexRepository,
+  quiesceRestaurantCandidate,
   recordRestaurantActionVerificationSuccess,
+  setMenuSourceEnabled,
   setRestaurantCoverageActive,
   upsertRestaurantAction,
   upsertRestaurantCandidate,
@@ -210,6 +212,7 @@ async function onboardOne(
 ): Promise<RestaurantOnboardingResult> {
   const pool = createDatabasePool({ maxConnections: 2 });
   let restaurantId: string | null = null;
+  let candidateWasActive: boolean | null = null;
   let menuSourceId: string | null = null;
   let hoursSourceId: string | null = null;
   let hoursWatch: OpeningHoursWatchResult | null = null;
@@ -220,6 +223,7 @@ async function onboardOne(
   try {
     const candidate = await upsertRestaurantCandidate(pool, manifest.restaurant);
     restaurantId = candidate.id;
+    candidateWasActive = candidate.active;
 
     const repository = new MenuIndexRepository(pool);
     const source = await repository.upsertMenuSource({
@@ -232,6 +236,10 @@ async function onboardOne(
       minimumExpectedItems: manifest.menuSource.minimumExpectedItems,
     });
     menuSourceId = source.id;
+
+    if (!candidate.active && !source.enabled) {
+      await setMenuSourceEnabled(pool, source.id, true);
+    }
 
     if (candidate.active) {
       const previousSnapshot = await repository.getLatestSnapshotWithItems(source.id);
@@ -344,6 +352,16 @@ async function onboardOne(
       error: null,
     };
   } catch (error) {
+    let errorMessage = error instanceof Error ? error.message : String(error);
+    if (candidateWasActive === false && restaurantId) {
+      try {
+        const quiesced = await quiesceRestaurantCandidate(pool, restaurantId);
+        errorMessage += `; candidate sources disabled: menu=${quiesced.menuSourcesDisabled}, hours=${quiesced.hoursSourcesDisabled}, actions=${quiesced.actionsDisabled}`;
+      } catch (quiesceError) {
+        errorMessage += `; candidate quiesce failed: ${quiesceError instanceof Error ? quiesceError.message : String(quiesceError)}`;
+      }
+    }
+
     return {
       slug: manifest.restaurant.slug,
       outcome: "failed",
@@ -356,7 +374,7 @@ async function onboardOne(
       secondWatch,
       itemCount: null,
       missingRequiredDishes: [],
-      error: error instanceof Error ? error.message : String(error),
+      error: errorMessage,
     };
   } finally {
     await pool.end();
