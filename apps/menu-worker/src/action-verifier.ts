@@ -42,7 +42,7 @@ export async function runRestaurantActionVerification(
 ): Promise<RestaurantActionVerificationSummary> {
   const pool = createDatabasePool({ maxConnections: 2 });
   const client = options.client ?? new HttpMenuClient();
-  const userAgent = options.userAgent ?? process.env.FYSEN_MENU_BOT_USER_AGENT?.trim() || "FysenMenuBot/0.1";
+  const userAgent = (options.userAgent ?? process.env.FYSEN_MENU_BOT_USER_AGENT?.trim()) || "FysenMenuBot/0.1";
 
   try {
     const due = await listRestaurantActionsForReverification(pool, limit);
