@@ -21,7 +21,17 @@ on:
         required: false
         type: string
       expected_price_minor:
-        description: Optional exact price in minor units (for example 20900)
+        description: Optional exact/minimum price in minor units (for example 20900)
+        required: false
+        type: string
+      expected_price_kind:
+        description: Optional price semantic
+        required: false
+        default: any
+        type: choice
+        options: [any, exact, from, multiple]
+      expected_price_max_minor:
+        description: Optional maximum observed price in minor units
         required: false
         type: string
       expected_match_type:
@@ -68,6 +78,8 @@ jobs:
       SMOKE_EXPECTED_RESTAURANT_SLUG: ${{ inputs.expected_restaurant_slug }}
       SMOKE_EXPECTED_DISH_NAME: ${{ inputs.expected_dish_name }}
       SMOKE_EXPECTED_PRICE_MINOR: ${{ inputs.expected_price_minor }}
+      SMOKE_EXPECTED_PRICE_KIND: ${{ inputs.expected_price_kind }}
+      SMOKE_EXPECTED_PRICE_MAX_MINOR: ${{ inputs.expected_price_max_minor }}
       SMOKE_EXPECTED_MATCH_TYPE: ${{ inputs.expected_match_type }}
       SMOKE_EXPECTED_OPENING: ${{ inputs.expected_opening }}
       SMOKE_EXPECTED_ACTION: ${{ inputs.expected_action }}
