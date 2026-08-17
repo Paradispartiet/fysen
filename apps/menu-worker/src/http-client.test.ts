@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { sha256 } from "@fysen/menu-core";
 import { HttpMenuClient, type MenuFetchError } from "./http-client.js";
 
 const publicResolver = async (): Promise<readonly { address: string }[]> => [
@@ -42,6 +43,37 @@ describe("HttpMenuClient", () => {
     expect(calls[1]?.headers.get("if-modified-since")).toBe("Sat, 15 Aug 2026 12:00:00 GMT");
   });
 
+  it("preserves binary response bytes and hashes the exact bytes", async () => {
+    const bytes = Uint8Array.from([0x25, 0x50, 0x44, 0x46, 0x00, 0xff, 0x0a]);
+    const fetchImpl = asFetch(async (input) => {
+      if (input.pathname === "/robots.txt") {
+        return new Response("User-agent: *\nAllow: /\n", { status: 200 });
+      }
+      return new Response(bytes, {
+        status: 200,
+        headers: { "Content-Type": "application/pdf" },
+      });
+    });
+    const client = new HttpMenuClient({
+      fetchImpl,
+      resolver: publicResolver,
+      minHostDelayMs: 1,
+      timeoutMs: 1000,
+    });
+    const result = await client.fetchSource({
+      url: "https://restaurant.test/menu.pdf",
+      userAgent: "FysenMenuBot/0.1",
+      etag: null,
+      lastModified: null,
+    });
+
+    expect(result.kind).toBe("content");
+    if (result.kind !== "content") throw new Error("Expected content response");
+    expect([...result.bodyBytes]).toEqual([...bytes]);
+    expect(result.rawSha256).toBe(sha256(bytes));
+    expect(result.contentType).toBe("application/pdf");
+  });
+
   it("does not fetch the menu when robots.txt disallows the target", async () => {
     let calls = 0;
     const fetchImpl = asFetch(async (input) => {
@@ -78,14 +110,12 @@ describe("HttpMenuClient", () => {
         headers: { Location: "https://other-restaurant.test/menu" },
       });
     });
-
     const client = new HttpMenuClient({
       fetchImpl,
       resolver: publicResolver,
       minHostDelayMs: 1,
       timeoutMs: 1000,
     });
-
     await expect(
       client.fetchSource({
         url: "https://restaurant.test/menu",
@@ -106,7 +136,6 @@ describe("HttpMenuClient", () => {
         headers: { "Content-Length": "10", "Content-Type": "text/html" },
       });
     });
-
     const client = new HttpMenuClient({
       fetchImpl,
       resolver: publicResolver,
@@ -114,7 +143,6 @@ describe("HttpMenuClient", () => {
       timeoutMs: 1000,
       maxResponseBytes: 5,
     });
-
     await expect(
       client.fetchSource({
         url: "https://restaurant.test/menu",
