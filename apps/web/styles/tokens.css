@@ -1,13 +1,17 @@
 :root {
-  --color-bg: #f4f0e8;
-  --color-paper: #fcfaf5;
-  --color-ink: #171713;
-  --color-muted: #69675f;
-  --color-soft: #89867c;
-  --color-line: rgba(23, 23, 19, 0.14);
-  --color-line-strong: rgba(23, 23, 19, 0.26);
-  --color-accent: #c84a31;
-  --color-fresh: #3f674e;
+  --color-bg: #0b0b09;
+  --color-paper: #161613;
+  --color-ink: #f4f0e8;
+  --color-muted: #b8b3a8;
+  --color-soft: #8c887f;
+  --color-line: rgba(244, 240, 232, 0.14);
+  --color-line-strong: rgba(244, 240, 232, 0.28);
+  --color-accent: #e06445;
+  --color-fresh: #72a982;
+  --color-body-copy: rgba(244, 240, 232, 0.84);
+  --color-header: rgba(11, 11, 9, 0.94);
+  --color-skeleton: rgba(244, 240, 232, 0.1);
+  --shadow-search-focus: 0 8px 28px rgba(0, 0, 0, 0.28), 0 0 0 2px rgba(224, 100, 69, 0.18);
 
   --space-1: 4px;
   --space-2: 8px;
