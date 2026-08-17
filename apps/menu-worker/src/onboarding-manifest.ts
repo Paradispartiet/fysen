@@ -4,6 +4,12 @@ import { z } from "zod";
 
 const httpsUrl = z.string().url().refine((value) => value.startsWith("https://"), "URL must use HTTPS");
 
+const requiredDishVariantSchema = z.object({
+  name: z.string().trim().min(2).max(300),
+  sectionName: z.string().trim().min(1).max(300).optional(),
+  priceMinor: z.number().int().nonnegative().optional(),
+});
+
 export const restaurantOnboardingManifestSchema = z.object({
   version: z.literal(1),
   restaurant: z.object({
@@ -18,7 +24,7 @@ export const restaurantOnboardingManifestSchema = z.object({
   }),
   menuSource: z.object({
     url: httpsUrl,
-    sourceType: z.enum(["html", "json_ld"]),
+    sourceType: z.enum(["html", "json_ld", "pdf"]),
     userAgent: z.string().trim().min(1).max(300).default("FysenMenuBot/0.1"),
     checkIntervalMinutes: z.number().int().min(60).max(10080),
     minimumExpectedItems: z.number().int().min(1).max(500),
@@ -44,6 +50,7 @@ export const restaurantOnboardingManifestSchema = z.object({
     .default([]),
   qualityAssertions: z.object({
     requiredDishNames: z.array(z.string().trim().min(2).max(300)).min(1).max(20),
+    requiredDishVariants: z.array(requiredDishVariantSchema).max(20).default([]),
   }),
 });
 

@@ -37,6 +37,60 @@ describe("opening hours extractor", () => {
     ]);
   });
 
+  it("uses an explicit global kitchen-close schedule instead of later venue closing times", () => {
+    const extracted = extractKitchenOpeningHours(`
+      <html><body>
+        <h2>Åpningstider</h2>
+        <p>Kjøkkenet stenger 23:00 mandag-lørdag og 22:00 søndag.</p>
+        <p>mandag</p><p>11:00 - 00:00</p>
+        <p>tirsdag</p><p>11:00 - 00:00</p>
+        <p>onsdag</p><p>11:00 - 00:00</p>
+        <p>torsdag</p><p>11:00 - 00:00</p>
+        <p>fredag</p><p>11:00 - 01:00</p>
+        <p>lørdag</p><p>11:00 - 01:00</p>
+        <p>søndag</p><p>12:00 - 23:00</p>
+        <p>mandag</p><p>11:00 - 00:00</p>
+        <p>tirsdag</p><p>11:00 - 00:00</p>
+      </body></html>
+    `);
+
+    expect(extracted.intervals).toEqual([
+      { isoWeekday: 1, opensAt: "11:00", closesAt: "23:00", closesNextDay: false },
+      { isoWeekday: 2, opensAt: "11:00", closesAt: "23:00", closesNextDay: false },
+      { isoWeekday: 3, opensAt: "11:00", closesAt: "23:00", closesNextDay: false },
+      { isoWeekday: 4, opensAt: "11:00", closesAt: "23:00", closesNextDay: false },
+      { isoWeekday: 5, opensAt: "11:00", closesAt: "23:00", closesNextDay: false },
+      { isoWeekday: 6, opensAt: "11:00", closesAt: "23:00", closesNextDay: false },
+      { isoWeekday: 7, opensAt: "12:00", closesAt: "22:00", closesNextDay: false },
+    ]);
+    expect(extracted.sourceExcerpt).toContain("Kjøkkenet stenger 23:00 mandag-lørdag og 22:00 søndag");
+  });
+
+  it("fails closed when an explicit global kitchen-close regime misses a parsed weekday", () => {
+    expect(() =>
+      extractKitchenOpeningHours(`
+        <html><body>
+          <h2>Åpningstider</h2>
+          <p>Kjøkkenet stenger 23:00 mandag-lørdag.</p>
+          <p>mandag 11:00 - 00:00</p>
+          <p>søndag 12:00 - 23:00</p>
+        </body></html>
+      `),
+    ).toThrow(OpeningHoursExtractionError);
+    try {
+      extractKitchenOpeningHours(`
+        <html><body>
+          <h2>Åpningstider</h2>
+          <p>Kjøkkenet stenger 23:00 mandag-lørdag.</p>
+          <p>mandag 11:00 - 00:00</p>
+          <p>søndag 12:00 - 23:00</p>
+        </body></html>
+      `);
+    } catch (error) {
+      expect(error).toMatchObject({ code: "INCOMPLETE_KITCHEN_CUTOFF" });
+    }
+  });
+
   it("scopes a multi-branch page to the branch identified by the page itself", () => {
     const extracted = extractKitchenOpeningHours(`
       <html><body>

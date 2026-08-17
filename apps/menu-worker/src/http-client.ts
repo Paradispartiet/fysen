@@ -34,6 +34,7 @@ export type MenuHttpFetchResult =
       readonly status: number;
       readonly contentType: string | null;
       readonly body: string;
+      readonly bodyBytes: Uint8Array;
       readonly rawSha256: string;
       readonly etag: string | null;
       readonly lastModified: string | null;
@@ -92,7 +93,7 @@ export class HttpMenuClient {
     }
 
     const headers = new Headers({
-      Accept: "text/html,application/xhtml+xml;q=0.9,*/*;q=0.1",
+      Accept: "text/html,application/xhtml+xml,application/pdf;q=0.9,*/*;q=0.1",
       "User-Agent": source.userAgent,
     });
     if (source.etag) headers.set("If-None-Match", source.etag);
@@ -111,14 +112,15 @@ export class HttpMenuClient {
       throw new MenuFetchError("HTTP_STATUS", `Menu fetch returned HTTP ${response.status}`, response.status);
     }
 
-    const body = await this.readLimitedBody(response, this.maxResponseBytes);
+    const bodyBytes = await this.readLimitedBytes(response, this.maxResponseBytes);
     return {
       kind: "content",
       fetchedAt,
       status: response.status,
       contentType: response.headers.get("content-type"),
-      body,
-      rawSha256: sha256(body),
+      body: Buffer.from(bodyBytes).toString("utf8"),
+      bodyBytes,
+      rawSha256: sha256(bodyBytes),
       etag,
       lastModified,
       durationMs,
@@ -134,8 +136,8 @@ export class HttpMenuClient {
     });
 
     if (response.status >= 200 && response.status < 300) {
-      const body = await this.readLimitedBody(response, 256 * 1024);
-      const parser = robotsParser(robotsUrl.href, body);
+      const bodyBytes = await this.readLimitedBytes(response, 256 * 1024);
+      const parser = robotsParser(robotsUrl.href, Buffer.from(bodyBytes).toString("utf8"));
       return parser.isAllowed(target.href, userAgent) !== false;
     }
 
@@ -196,12 +198,12 @@ export class HttpMenuClient {
     this.nextAllowedAt.set(origin, Date.now() + this.minHostDelayMs);
   }
 
-  private async readLimitedBody(response: Response, maxBytes: number): Promise<string> {
+  private async readLimitedBytes(response: Response, maxBytes: number): Promise<Uint8Array> {
     const contentLength = Number(response.headers.get("content-length"));
     if (Number.isFinite(contentLength) && contentLength > maxBytes) {
       throw new MenuFetchError("BODY_TOO_LARGE", `Response exceeds ${maxBytes} bytes`, response.status);
     }
-    if (!response.body) return "";
+    if (!response.body) return new Uint8Array();
 
     const reader = response.body.getReader();
     const chunks: Uint8Array[] = [];
@@ -221,6 +223,6 @@ export class HttpMenuClient {
       reader.releaseLock();
     }
 
-    return Buffer.concat(chunks.map((chunk) => Buffer.from(chunk))).toString("utf8");
+    return new Uint8Array(Buffer.concat(chunks.map((chunk) => Buffer.from(chunk))));
   }
 }

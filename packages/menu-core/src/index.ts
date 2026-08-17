@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 
-export type MenuExtractionMethod = "json_ld" | "html_heuristic" | "manual" | "api";
+export type MenuExtractionMethod = "json_ld" | "html_heuristic" | "pdf_text" | "manual" | "api";
 
 export interface MenuObservedItem {
   readonly sourceKey: string;

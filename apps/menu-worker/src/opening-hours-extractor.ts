@@ -1,7 +1,7 @@
 import { load } from "cheerio";
 import type { RestaurantHoursIntervalInput } from "@fysen/database";
 
-export const OPENING_HOURS_EXTRACTOR_VERSION = "hours-visible-v4";
+export const OPENING_HOURS_EXTRACTOR_VERSION = "hours-visible-v5";
 
 const weekdayByName: Readonly<Record<string, number>> = {
   monday: 1,
@@ -199,17 +199,49 @@ function kitchenCutoffFromSuffix(suffix: string | undefined): string | null {
   ).exec(suffix)?.[1] ?? null;
 }
 
+function globalKitchenCutoffs(candidate: string): { readonly byWeekday: ReadonlyMap<number, string>; readonly excerpt: string | null } {
+  const intro = new RegExp(
+    `(?:kjøkken(?:et)?\\s+stenger|kitchen\\s+closes(?:\\s+at)?)\\s+([^.!?]{1,260})`,
+    "iu",
+  ).exec(candidate);
+  const phrase = intro?.[1]?.trim();
+  if (!phrase) return { byWeekday: new Map(), excerpt: null };
+
+  const result = new Map<number, string>();
+  const groupPattern = new RegExp(
+    `(${timeToken})\\s+(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?`,
+    "giu",
+  );
+  for (const match of phrase.matchAll(groupPattern)) {
+    const clock = match[1];
+    const start = match[2];
+    const end = match[3] ?? start;
+    if (!clock || !start || !end) continue;
+    const parsedClock = parseClock(clock);
+    for (const day of expandWeekdayRange(weekday(start), weekday(end))) result.set(day, parsedClock);
+  }
+
+  if (result.size === 0) {
+    throw new OpeningHoursExtractionError(
+      "INVALID_GLOBAL_KITCHEN_CUTOFF",
+      "An explicit global kitchen-close sentence was present but no weekday cutoffs could be parsed",
+    );
+  }
+  return { byWeekday: result, excerpt: intro?.[0]?.trim() ?? null };
+}
+
 function extractStandardHours(
   visibleText: string,
   scopeHints: readonly string[],
 ): { intervals: readonly RestaurantHoursIntervalInput[]; excerpt: string } | null {
   const candidate = selectStandardHoursCandidate(visibleText, scopeHints).replace(/\s+/g, " ").trim();
+  const globalCutoff = globalKitchenCutoffs(candidate);
   const pattern = new RegExp(
-    `(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?\\s*:\\s*(${timeToken})\\s*[-–]\\s*(${timeToken})(?:\\s*\\(([^)]{1,120})\\))?`,
+    `(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?\\s*:?[\\s]+(${timeToken})\\s*[-–]\\s*(${timeToken})(?:\\s*\\(([^)]{1,120})\\))?`,
     "giu",
   );
   const intervals: RestaurantHoursIntervalInput[] = [];
-  const excerptParts: string[] = [];
+  const excerptParts: string[] = globalCutoff.excerpt ? [globalCutoff.excerpt] : [];
 
   for (const match of candidate.matchAll(pattern)) {
     const startText = match[1];
@@ -218,10 +250,18 @@ function extractStandardHours(
     const venueClosesText = match[4];
     const suffix = match[5];
     if (!startText || !endText || !opensText || !venueClosesText) continue;
-    const kitchenClose = kitchenCutoffFromSuffix(suffix);
-    const closesText = kitchenClose ?? venueClosesText;
     const days = expandWeekdayRange(weekday(startText), weekday(endText));
-    intervals.push(...days.map((isoWeekday) => interval(isoWeekday, opensText, closesText)));
+    const localCutoff = kitchenCutoffFromSuffix(suffix);
+    for (const day of days) {
+      const globalClose = globalCutoff.byWeekday.get(day) ?? null;
+      if (globalCutoff.byWeekday.size > 0 && !localCutoff && !globalClose) {
+        throw new OpeningHoursExtractionError(
+          "INCOMPLETE_KITCHEN_CUTOFF",
+          `Explicit global kitchen hours did not cover ISO weekday ${day}`,
+        );
+      }
+      intervals.push(interval(day, opensText, localCutoff ?? globalClose ?? venueClosesText));
+    }
     excerptParts.push(match[0]);
   }
 

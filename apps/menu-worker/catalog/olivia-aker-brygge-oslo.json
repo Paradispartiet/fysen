@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "olivia-aker-brygge-oslo",
+    "name": "Olivia Aker Brygge",
+    "websiteUrl": "https://oliviarestauranter.no/restauranter/aker-brygge/",
+    "address": "Stranden 3",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9101713,
+    "longitude": 10.7278081
+  },
+  "menuSource": {
+    "url": "https://oliviarestauranter.no/wp-content/uploads/2020/10/Felles-NO-mat-web-sommer26.pdf",
+    "sourceType": "pdf",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 25
+  },
+  "hoursSource": {
+    "url": "https://oliviarestauranter.no/restauranter/aker-brygge/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://oliviarestauranter.no/restauranter/aker-brygge/booking/",
+      "sourceUrl": "https://oliviarestauranter.no/restauranter/aker-brygge/booking/",
+      "provider": "Olivia"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pasta carbonara",
+      "Linguine ai frutti di mare",
+      "Margherita",
+      "Tiramisù"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pasta carbonara",
+        "sectionName": "PRIMI PIATTI",
+        "priceMinor": 26000
+      },
+      {
+        "name": "Pasta carbonara",
+        "sectionName": "BAMBINI",
+        "priceMinor": 12500
+      }
+    ]
+  }
+}

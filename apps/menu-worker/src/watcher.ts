@@ -7,6 +7,7 @@ import {
 } from "@fysen/menu-core";
 import { extractHtmlMenu, HTML_EXTRACTOR_VERSION } from "./html-extractor.js";
 import { HttpMenuClient, MenuFetchError } from "./http-client.js";
+import { extractPdfMenu, PDF_EXTRACTOR_VERSION } from "./pdf-extractor.js";
 
 export interface MenuWatchSummary {
   readonly menuSourceId: string;
@@ -16,12 +17,34 @@ export interface MenuWatchSummary {
   readonly snapshotId: string | null;
 }
 
+interface ExtractedMenu {
+  readonly items: readonly MenuObservedItem[];
+  readonly method: string;
+  readonly extractorVersion: string;
+}
+
 function storedToObserved(item: StoredMenuItem): MenuObservedItem {
   return { ...item };
 }
 
 function evidenceText(items: readonly MenuObservedItem[]): string {
   return items.map((item) => item.sourceExcerpt ?? item.name).join("\n");
+}
+
+async function extractSource(
+  sourceType: string,
+  body: string,
+  bodyBytes: Uint8Array,
+): Promise<ExtractedMenu> {
+  if (sourceType === "html" || sourceType === "json_ld") {
+    const extracted = extractHtmlMenu(body);
+    return { items: extracted.items, method: extracted.method, extractorVersion: HTML_EXTRACTOR_VERSION };
+  }
+  if (sourceType === "pdf") {
+    const extracted = await extractPdfMenu(bodyBytes);
+    return { items: extracted.items, method: extracted.method, extractorVersion: PDF_EXTRACTOR_VERSION };
+  }
+  throw new Error(`HTTP watcher does not extract source type ${sourceType}`);
 }
 
 export async function watchMenuSourceOnce(
@@ -75,8 +98,12 @@ export async function watchMenuSourceOnce(
     return { menuSourceId, outcome: "not_modified", itemCount: null, changeCount: 0, snapshotId: null };
   }
 
-  if (source.sourceType !== "html" && source.sourceType !== "json_ld") {
-    const message = `HTTP watcher v1 does not extract source type ${source.sourceType}`;
+  let extracted: ExtractedMenu;
+  try {
+    extracted = await extractSource(source.sourceType, fetched.body, fetched.bodyBytes);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const errorCode = source.sourceType === "pdf" ? "PDF_EXTRACTION_ERROR" : "UNSUPPORTED_SOURCE_TYPE";
     await repository.recordFailure({
       menuSourceId,
       outcome: "extraction_error",
@@ -86,13 +113,13 @@ export async function watchMenuSourceOnce(
       etag: fetched.etag,
       lastModified: fetched.lastModified,
       extractedItemCount: null,
-      errorCode: "UNSUPPORTED_SOURCE_TYPE",
+      errorCode,
       errorMessage: message,
+      details: { sourceType: source.sourceType },
     });
-    throw new Error(message);
+    throw error;
   }
 
-  const extracted = extractHtmlMenu(fetched.body);
   const previous = await repository.getLatestSnapshotWithItems(menuSourceId);
   const previousItems = previous?.items.map(storedToObserved) ?? [];
   const assessment = assessExtraction(
@@ -164,8 +191,8 @@ export async function watchMenuSourceOnce(
     lastModified: fetched.lastModified,
     robotsAllowed: fetched.robotsAllowed,
     fetchDurationMs: fetched.durationMs,
-    extractorVersion: HTML_EXTRACTOR_VERSION,
-    items: extracted.items,
+    extractorVersion: extracted.extractorVersion,
+    items: extracted.items as unknown as readonly StoredMenuItem[],
     changes: changes.map((change) => ({
       itemSourceKey: change.sourceKey,
       kind: change.kind,
