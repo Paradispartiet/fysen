@@ -4,7 +4,7 @@ import { assertPublicHttpUrl } from "./security.js";
 import {
   HttpMenuClient,
   MenuFetchError,
-  type SuccessfulFetch,
+  type MenuHttpFetchResult,
 } from "./http-client.js";
 
 const MAX_RENDERED_HTML_BYTES = 2 * 1024 * 1024;
@@ -20,6 +20,8 @@ const blockedResourceTypes = new Set([
   "eventsource",
   "websocket",
 ]);
+
+type RenderedMenuFetch = Extract<MenuHttpFetchResult, { readonly kind: "content" }>;
 
 export interface BrowserMenuSource {
   readonly url: string;
@@ -122,7 +124,7 @@ async function installNetworkPolicy(
 export class BrowserMenuClient {
   constructor(private readonly httpClient = new HttpMenuClient()) {}
 
-  async fetchSource(source: BrowserMenuSource): Promise<SuccessfulFetch> {
+  async fetchSource(source: BrowserMenuSource): Promise<RenderedMenuFetch> {
     const started = Date.now();
     const target = await assertPublicHttpUrl(source.url);
 
@@ -132,7 +134,7 @@ export class BrowserMenuClient {
       etag: null,
       lastModified: null,
     });
-    if (preflight.kind !== "success") {
+    if (preflight.kind !== "content") {
       throw new MenuFetchError(
         "BROWSER_PREFLIGHT_NOT_MODIFIED",
         "Rendered source preflight unexpectedly returned HTTP 304",
@@ -187,8 +189,7 @@ export class BrowserMenuClient {
 
       const fetchedAt = new Date().toISOString();
       return {
-        kind: "success",
-        url: finalUrl.toString(),
+        kind: "content",
         status: response?.status() ?? preflight.status,
         contentType: "text/html; charset=utf-8",
         body,
