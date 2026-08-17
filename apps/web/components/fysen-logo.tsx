@@ -1,5 +1,5 @@
 export function FysenLogo({ linked = true }: { linked?: boolean }) {
-  const mark = <span className="fysenLogo">fysen.</span>;
+  const mark = <span className="fysenLogo">fysen</span>;
 
   if (!linked) return mark;
 
