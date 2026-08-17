@@ -12,13 +12,17 @@ import {
   type RestaurantActionType,
   type WatchOutcome,
 } from "@fysen/database";
-import { normalizeDishName } from "@fysen/menu-core";
+import { verifyActionSource } from "./action-source-runtime.js";
 import { HttpMenuClient } from "./http-client.js";
 import {
   listRestaurantOnboardingManifests,
   readRestaurantOnboardingManifest,
   type RestaurantOnboardingManifest,
 } from "./onboarding-manifest.js";
+import {
+  evaluateManifestMenuQuality,
+  type ManifestMenuQualityResult,
+} from "./manifest-quality.js";
 import {
   watchRestaurantHoursSourceOnce,
   type OpeningHoursWatchResult,
@@ -54,6 +58,7 @@ export interface RestaurantOnboardingResult {
   readonly secondWatch: MenuWatchSummary | null;
   readonly itemCount: number | null;
   readonly missingRequiredDishes: readonly string[];
+  readonly forbiddenDishesPresent: readonly string[];
   readonly error: string | null;
 }
 
@@ -65,14 +70,6 @@ export interface RestaurantCatalogOnboardingSummary {
   readonly results: readonly RestaurantOnboardingResult[];
 }
 
-interface SnapshotAssertionItem {
-  readonly normalizedName: string;
-  readonly sectionName: string | null;
-  readonly priceMinor: number | null;
-  readonly priceKind?: "exact" | "from" | "multiple";
-  readonly priceMaxMinor?: number | null;
-}
-
 function accepted(summary: MenuWatchSummary): boolean {
   return acceptedOutcomes.has(summary.outcome);
 }
@@ -81,59 +78,17 @@ function acceptedHours(summary: OpeningHoursWatchResult): boolean {
   return summary.outcome === "changed" || summary.outcome === "unchanged" || summary.outcome === "not_modified";
 }
 
-function variantLabel(variant: RestaurantOnboardingManifest["qualityAssertions"]["requiredDishVariants"][number]): string {
-  const section = variant.sectionName ? ` [${variant.sectionName}]` : "";
-  const price = variant.priceMinor !== undefined ? ` @ ${variant.priceMinor}` : "";
-  const priceKind = variant.priceKind ? ` ${variant.priceKind}` : "";
-  const priceMax = variant.priceMaxMinor !== undefined ? `..${variant.priceMaxMinor}` : "";
-  return `${variant.name}${section}${price}${priceKind}${priceMax}`;
-}
-
-function missingDishAssertions(
-  manifest: RestaurantOnboardingManifest,
-  items: readonly SnapshotAssertionItem[],
-): readonly string[] {
-  const normalizedNames = new Set(items.map((item) => item.normalizedName));
-  const missingNames = manifest.qualityAssertions.requiredDishNames.filter(
-    (name) => !normalizedNames.has(normalizeDishName(name)),
-  );
-  const missingVariants = manifest.qualityAssertions.requiredDishVariants
-    .filter((variant) => {
-      const normalizedName = normalizeDishName(variant.name);
-      const normalizedSection = variant.sectionName ? normalizeDishName(variant.sectionName) : null;
-      return !items.some((item) => {
-        if (item.normalizedName !== normalizedName) return false;
-        if (normalizedSection !== null && normalizeDishName(item.sectionName ?? "") !== normalizedSection) return false;
-        if (variant.priceMinor !== undefined && item.priceMinor !== variant.priceMinor) return false;
-        if (variant.priceKind !== undefined && (item.priceKind ?? "exact") !== variant.priceKind) return false;
-        if (variant.priceMaxMinor !== undefined && (item.priceMaxMinor ?? null) !== variant.priceMaxMinor) return false;
-        return true;
-      });
-    })
-    .map(variantLabel);
-  return [...missingNames, ...missingVariants];
+function qualityFailure(prefix: string, quality: ManifestMenuQualityResult): string {
+  return `${prefix}: items=${quality.itemCount}/${quality.minimumExpectedItems}, missing=${quality.missingRequiredDishes.join(",") || "none"}, forbidden=${quality.forbiddenDishesPresent.join(",") || "none"}`;
 }
 
 async function assertLatestSnapshot(
   repository: MenuIndexRepository,
   menuSourceId: string,
   manifest: RestaurantOnboardingManifest,
-): Promise<{ readonly itemCount: number; readonly missing: readonly string[] }> {
+): Promise<ManifestMenuQualityResult> {
   const snapshot = await repository.getLatestSnapshotWithItems(menuSourceId);
-  if (!snapshot) {
-    return {
-      itemCount: 0,
-      missing: [
-        ...manifest.qualityAssertions.requiredDishNames,
-        ...manifest.qualityAssertions.requiredDishVariants.map(variantLabel),
-      ],
-    };
-  }
-
-  return {
-    itemCount: snapshot.items.length,
-    missing: missingDishAssertions(manifest, snapshot.items),
-  };
+  return evaluateManifestMenuQuality(manifest, snapshot?.items ?? []);
 }
 
 async function ensureAction(
@@ -141,6 +96,7 @@ async function ensureAction(
   manifest: RestaurantOnboardingManifest,
   restaurantId: string,
   action: RestaurantOnboardingManifest["actions"][number],
+  client: HttpMenuClient,
 ): Promise<OnboardingActionResult> {
   const existing = await getRestaurantActionState(pool, restaurantId, action.type);
   const reverifyAfter = Date.now() + ACTION_REVERIFY_WINDOW_DAYS * 24 * 60 * 60 * 1000;
@@ -155,20 +111,13 @@ async function ensureAction(
   }
 
   const startedAt = new Date().toISOString();
-  const client = new HttpMenuClient();
-  const response = await client.fetchSource({
-    url: action.url,
-    userAgent: manifest.menuSource.userAgent,
-    etag: null,
-    lastModified: null,
-  });
-  if (response.kind === "not_modified") {
-    throw new Error(`Initial ${action.type} verification unexpectedly returned 304 for ${action.url}`);
-  }
+  const verified = await verifyActionSource(
+    { url: action.url, userAgent: manifest.menuSource.userAgent },
+    client,
+  );
   const completedAt = new Date().toISOString();
-  const verifiedAt = response.fetchedAt;
   const expiresAt = new Date(
-    new Date(verifiedAt).getTime() + ACTION_VERIFICATION_DAYS * 24 * 60 * 60 * 1000,
+    new Date(verified.fetchedAt).getTime() + ACTION_VERIFICATION_DAYS * 24 * 60 * 60 * 1000,
   ).toISOString();
   const actionId = await upsertRestaurantAction(pool, {
     restaurantId,
@@ -177,15 +126,15 @@ async function ensureAction(
     sourceUrl: action.sourceUrl,
     provider: action.provider,
     verificationMethod: "first_party_page",
-    verifiedAt,
+    verifiedAt: verified.fetchedAt,
     expiresAt,
   });
   await recordRestaurantActionVerificationSuccess(pool, {
     actionId,
     startedAt,
     completedAt,
-    httpStatus: response.status,
-    verifiedAt,
+    httpStatus: verified.httpStatus,
+    verifiedAt: verified.fetchedAt,
     expiresAt,
   });
   return { type: action.type, actionId, outcome: "verified" };
@@ -206,9 +155,10 @@ async function ensureMetadata(
       })
     : null;
 
+  const client = new HttpMenuClient();
   const actions: OnboardingActionResult[] = [];
   for (const action of manifest.actions) {
-    actions.push(await ensureAction(pool, manifest, restaurantId, action));
+    actions.push(await ensureAction(pool, manifest, restaurantId, action, client));
   }
   return { hoursSourceId, actions };
 }
@@ -225,6 +175,7 @@ async function onboardOne(
   let actions: readonly OnboardingActionResult[] = [];
   let firstWatch: MenuWatchSummary | null = null;
   let secondWatch: MenuWatchSummary | null = null;
+  let latestQuality: ManifestMenuQualityResult | null = null;
 
   try {
     const candidate = await upsertRestaurantCandidate(pool, manifest.restaurant);
@@ -261,11 +212,9 @@ async function onboardOne(
           throw new Error(`First extractor refresh watch was ${firstWatch.outcome}`);
         }
 
-        const afterFirst = await assertLatestSnapshot(repository, source.id, manifest);
-        if (afterFirst.itemCount < manifest.menuSource.minimumExpectedItems || afterFirst.missing.length > 0) {
-          throw new Error(
-            `First extractor refresh no longer satisfies onboarding assertions: items=${afterFirst.itemCount}, missing=${afterFirst.missing.join(",")}`,
-          );
+        latestQuality = await assertLatestSnapshot(repository, source.id, manifest);
+        if (!latestQuality.accepted) {
+          throw new Error(qualityFailure("First extractor refresh failed onboarding assertions", latestQuality));
         }
 
         secondWatch = await watchMenuSourceOnce(repository, source.id);
@@ -274,12 +223,10 @@ async function onboardOne(
         }
       }
 
-      const current = await assertLatestSnapshot(repository, source.id, manifest);
-      if (current.itemCount < manifest.menuSource.minimumExpectedItems || current.missing.length > 0) {
+      latestQuality = await assertLatestSnapshot(repository, source.id, manifest);
+      if (!latestQuality.accepted) {
         await setRestaurantCoverageActive(pool, candidate.id, false);
-        throw new Error(
-          `Published restaurant no longer satisfies onboarding assertions: items=${current.itemCount}, missing=${current.missing.join(",")}`,
-        );
+        throw new Error(qualityFailure("Published restaurant no longer satisfies onboarding assertions", latestQuality));
       }
       const metadata = await ensureMetadata(pool, manifest, candidate.id);
       hoursSourceId = metadata.hoursSourceId;
@@ -297,8 +244,9 @@ async function onboardOne(
         actions,
         firstWatch,
         secondWatch,
-        itemCount: current.itemCount,
-        missingRequiredDishes: current.missing,
+        itemCount: latestQuality.itemCount,
+        missingRequiredDishes: latestQuality.missingRequiredDishes,
+        forbiddenDishesPresent: latestQuality.forbiddenDishesPresent,
         error: null,
       };
     }
@@ -308,14 +256,9 @@ async function onboardOne(
       throw new Error(`First onboarding watch was ${firstWatch.outcome}`);
     }
 
-    const afterFirst = await assertLatestSnapshot(repository, source.id, manifest);
-    if (afterFirst.itemCount < manifest.menuSource.minimumExpectedItems) {
-      throw new Error(
-        `First onboarding snapshot has ${afterFirst.itemCount} items; expected at least ${manifest.menuSource.minimumExpectedItems}`,
-      );
-    }
-    if (afterFirst.missing.length > 0) {
-      throw new Error(`Required dishes missing after first watch: ${afterFirst.missing.join(", ")}`);
+    latestQuality = await assertLatestSnapshot(repository, source.id, manifest);
+    if (!latestQuality.accepted) {
+      throw new Error(qualityFailure("First onboarding snapshot failed assertions", latestQuality));
     }
 
     secondWatch = await watchMenuSourceOnce(repository, source.id);
@@ -323,14 +266,9 @@ async function onboardOne(
       throw new Error(`Second onboarding watch was ${secondWatch.outcome}`);
     }
 
-    const afterSecond = await assertLatestSnapshot(repository, source.id, manifest);
-    if (afterSecond.itemCount < manifest.menuSource.minimumExpectedItems) {
-      throw new Error(
-        `Second onboarding snapshot has ${afterSecond.itemCount} items; expected at least ${manifest.menuSource.minimumExpectedItems}`,
-      );
-    }
-    if (afterSecond.missing.length > 0) {
-      throw new Error(`Required dishes missing after second watch: ${afterSecond.missing.join(", ")}`);
+    latestQuality = await assertLatestSnapshot(repository, source.id, manifest);
+    if (!latestQuality.accepted) {
+      throw new Error(qualityFailure("Second onboarding snapshot failed assertions", latestQuality));
     }
 
     const metadata = await ensureMetadata(pool, manifest, candidate.id);
@@ -353,8 +291,9 @@ async function onboardOne(
       actions,
       firstWatch,
       secondWatch,
-      itemCount: afterSecond.itemCount,
-      missingRequiredDishes: [],
+      itemCount: latestQuality.itemCount,
+      missingRequiredDishes: latestQuality.missingRequiredDishes,
+      forbiddenDishesPresent: latestQuality.forbiddenDishesPresent,
       error: null,
     };
   } catch (error) {
@@ -378,8 +317,9 @@ async function onboardOne(
       actions,
       firstWatch,
       secondWatch,
-      itemCount: null,
-      missingRequiredDishes: [],
+      itemCount: latestQuality?.itemCount ?? null,
+      missingRequiredDishes: latestQuality?.missingRequiredDishes ?? [],
+      forbiddenDishesPresent: latestQuality?.forbiddenDishesPresent ?? [],
       error: errorMessage,
     };
   } finally {

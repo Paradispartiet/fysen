@@ -1,0 +1,70 @@
+name: Validate Fysen restaurant candidates
+
+on:
+  pull_request:
+    paths:
+      - "apps/menu-worker/candidates/*.json"
+  workflow_dispatch:
+    inputs:
+      manifest_path:
+        description: "Path relative to apps/menu-worker, e.g. candidates/example.json or candidates"
+        required: true
+        default: "candidates"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-candidate-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build menu-worker dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Validate changed candidate staging area
+        if: github.event_name == 'pull_request'
+        run: pnpm --filter @fysen/menu-worker validate:candidates
+
+      - name: Validate requested manifest or directory
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        env:
+          MANIFEST_PATH: ${{ inputs.manifest_path }}
+        run: |
+          case "$MANIFEST_PATH" in
+            /*|*".."*)
+              echo "manifest_path must stay inside apps/menu-worker" >&2
+              exit 1
+              ;;
+            *.json)
+              pnpm --filter @fysen/menu-worker validate:manifest -- "$MANIFEST_PATH"
+              ;;
+            *)
+              pnpm --filter @fysen/menu-worker validate:directory -- "$MANIFEST_PATH"
+              ;;
+          esac

@@ -5,16 +5,11 @@ import {
   recordRestaurantActionVerificationSuccess,
   type RestaurantActionVerificationTarget,
 } from "@fysen/database";
-import { HttpMenuClient, MenuFetchError, type MenuHttpFetchResult } from "./http-client.js";
-
-interface ActionHttpClient {
-  fetchSource(source: {
-    readonly url: string;
-    readonly userAgent: string;
-    readonly etag: null;
-    readonly lastModified: null;
-  }): Promise<MenuHttpFetchResult>;
-}
+import {
+  verifyActionSource,
+  type ActionHttpClient,
+} from "./action-source-runtime.js";
+import { HttpMenuClient, MenuFetchError } from "./http-client.js";
 
 export interface RestaurantActionVerificationSummary {
   readonly dueCount: number;
@@ -51,28 +46,21 @@ export async function runRestaurantActionVerification(
     for (const action of due) {
       const startedAt = new Date().toISOString();
       try {
-        const response = await client.fetchSource({
-          url: action.url,
-          userAgent,
-          etag: null,
-          lastModified: null,
-        });
+        const verified = await verifyActionSource({ url: action.url, userAgent }, client);
         const completedAt = new Date().toISOString();
-        const verifiedAt = response.fetchedAt;
-        const httpStatus = response.status;
         await recordRestaurantActionVerificationSuccess(pool, {
           actionId: action.id,
           startedAt,
           completedAt,
-          httpStatus,
-          verifiedAt,
-          expiresAt: addDays(verifiedAt, 30),
+          httpStatus: verified.httpStatus,
+          verifiedAt: verified.fetchedAt,
+          expiresAt: addDays(verified.fetchedAt, 30),
         });
         results.push({
           actionId: action.id,
           actionType: action.actionType,
           outcome: "verified",
-          httpStatus,
+          httpStatus: verified.httpStatus,
           errorCode: null,
         });
       } catch (error) {

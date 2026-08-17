@@ -83,6 +83,7 @@ export const restaurantOnboardingManifestSchema = z
     qualityAssertions: z.object({
       requiredDishNames: z.array(z.string().trim().min(2).max(300)).min(1).max(20),
       requiredDishVariants: z.array(requiredDishVariantSchema).max(20).default([]),
+      forbiddenDishNames: z.array(z.string().trim().min(2).max(300)).max(20).default([]),
     }),
   })
   .superRefine((manifest, context) => {

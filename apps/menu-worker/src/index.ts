@@ -2,6 +2,10 @@ import { normalizeDishName } from "@fysen/menu-core";
 import { runRestaurantActionVerification } from "./action-verifier.js";
 import { extractHtmlMenu } from "./html-extractor.js";
 import { HttpMenuClient } from "./http-client.js";
+import {
+  validateRestaurantManifestDirectory,
+  validateRestaurantManifestPath,
+} from "./manifest-validator.js";
 import { onboardRestaurantCatalog, onboardRestaurantManifest } from "./onboarding.js";
 import { runRodeoPilot } from "./pilot.js";
 import { runDueMenuSources } from "./run-due.js";
@@ -51,6 +55,22 @@ async function main(): Promise<void> {
   }
   if (command === "pilot:rodeo") {
     print(await runRodeoPilot());
+    return;
+  }
+  if (command === "validate:manifest") {
+    const path = process.argv[3];
+    if (!path) throw new Error("Usage: pnpm --filter @fysen/menu-worker validate:manifest -- <manifest.json>");
+    const result = await validateRestaurantManifestPath(path);
+    print(result);
+    if (!result.accepted) process.exitCode = 1;
+    return;
+  }
+  if (command === "validate:directory") {
+    const directory = process.argv[3];
+    if (!directory) throw new Error("Usage: pnpm --filter @fysen/menu-worker validate:directory -- <directory>");
+    const summary = await validateRestaurantManifestDirectory(directory);
+    print(summary);
+    if (summary.failedCount > 0) process.exitCode = 1;
     return;
   }
   if (command === "onboard:manifest") {
