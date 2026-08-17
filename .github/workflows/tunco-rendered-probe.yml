@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: read
-  issues: write
   pull-requests: write
 
 jobs:
@@ -90,7 +89,7 @@ jobs:
           echo "status=$status" >> "$GITHUB_OUTPUT"
           exit 0
 
-      - name: Comment probe result
+      - name: Publish probe result in PR body
         if: always()
         uses: actions/github-script@v7
         env:
@@ -99,14 +98,27 @@ jobs:
           script: |
             const fs = require('fs');
             const result = fs.existsSync('/tmp/tunco-probe.txt')
-              ? fs.readFileSync('/tmp/tunco-probe.txt', 'utf8').slice(0, 60000)
+              ? fs.readFileSync('/tmp/tunco-probe.txt', 'utf8').slice(0, 50000)
               : 'Probe did not produce an output file.';
-            await github.rest.issues.createComment({
+            const body = [
+              'Midlertidig, **skal ikke merges**. Kjørte samme `BrowserMenuClient` som produksjonswatcheren mot Tunco St. Hanshaugen.',
+              '',
+              '## Tunco rendered probe',
+              '',
+              `Status: ${process.env.PROBE_STATUS || 'unknown'}`,
+              '',
+              '```json',
+              result,
+              '```',
+              '',
+              'PR-en lukkes etter at feilen er diagnostisert.',
+            ].join('\n');
+            await github.rest.pulls.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: `## Tunco rendered probe\n\nStatus: ${process.env.PROBE_STATUS || 'unknown'}\n\n\`\`\`json\n${result}\n\`\`\``,
+              pull_number: context.issue.number,
+              body,
             });
             if (process.env.PROBE_STATUS !== '0') {
-              core.setFailed('Tunco rendered probe failed; see PR comment for the concrete browser error.');
+              core.setFailed('Tunco rendered probe failed; concrete browser error is written to the PR body.');
             }
