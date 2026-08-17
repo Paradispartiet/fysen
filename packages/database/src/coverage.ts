@@ -1,4 +1,4 @@
-import type { Pool, QueryResultRow } from "pg";
+import type { Pool, PoolClient, QueryResultRow } from "pg";
 
 export interface RestaurantCandidateInput {
   readonly slug: string;
@@ -17,6 +17,12 @@ export interface RestaurantCoverageState {
   readonly active: boolean;
 }
 
+export interface CandidateQuiesceResult {
+  readonly menuSourcesDisabled: number;
+  readonly hoursSourcesDisabled: number;
+  readonly actionsDisabled: number;
+}
+
 interface CoverageRow extends QueryResultRow {
   id: string;
   slug: string;
@@ -25,6 +31,21 @@ interface CoverageRow extends QueryResultRow {
 
 function mapCoverage(row: CoverageRow): RestaurantCoverageState {
   return { id: row.id, slug: row.slug, active: row.active };
+}
+
+async function inTransaction<T>(pool: Pool, work: (client: PoolClient) => Promise<T>): Promise<T> {
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+    const result = await work(client);
+    await client.query("COMMIT");
+    return result;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
 }
 
 export async function upsertRestaurantCandidate(
@@ -79,6 +100,54 @@ export async function setRestaurantCoverageActive(
   const row = result.rows[0];
   if (!row) throw new Error(`Unknown restaurant ${restaurantId}`);
   return mapCoverage(row);
+}
+
+export async function quiesceRestaurantCandidate(
+  pool: Pool,
+  restaurantId: string,
+): Promise<CandidateQuiesceResult> {
+  return inTransaction(pool, async (client) => {
+    const candidate = await client.query<{ active: boolean }>(
+      `SELECT active FROM fysen.restaurants WHERE id = $1 FOR UPDATE`,
+      [restaurantId],
+    );
+    const row = candidate.rows[0];
+    if (!row) throw new Error(`Unknown restaurant ${restaurantId}`);
+    if (row.active) {
+      return { menuSourcesDisabled: 0, hoursSourcesDisabled: 0, actionsDisabled: 0 };
+    }
+
+    const menuSources = await client.query(
+      `UPDATE fysen.menu_sources
+          SET enabled = false,
+              updated_at = now()
+        WHERE restaurant_id = $1
+          AND enabled = true`,
+      [restaurantId],
+    );
+    const hoursSources = await client.query(
+      `UPDATE fysen.restaurant_hours_sources
+          SET enabled = false,
+              updated_at = now()
+        WHERE restaurant_id = $1
+          AND enabled = true`,
+      [restaurantId],
+    );
+    const actions = await client.query(
+      `UPDATE fysen.restaurant_actions
+          SET enabled = false,
+              updated_at = now()
+        WHERE restaurant_id = $1
+          AND enabled = true`,
+      [restaurantId],
+    );
+
+    return {
+      menuSourcesDisabled: menuSources.rowCount ?? 0,
+      hoursSourcesDisabled: hoursSources.rowCount ?? 0,
+      actionsDisabled: actions.rowCount ?? 0,
+    };
+  });
 }
 
 export async function getRestaurantCoverageState(
