@@ -41,6 +41,23 @@ function restaurantActions(restaurant: QualityRestaurantReport): string {
   return restaurant.actions.map(actionLabel).join("<br>");
 }
 
+function escapeCell(value: string): string {
+  return value.replaceAll("|", "\\|");
+}
+
+function aliasList(values: readonly string[]): string {
+  return values.length === 0 ? "—" : values.map((value) => `\`${escapeCell(value)}\``).join(", ");
+}
+
+function percent(value: number, total: number): string {
+  if (total === 0) return "0.0%";
+  return `${((value / total) * 100).toFixed(1)}%`;
+}
+
+function score(value: number): string {
+  return value.toFixed(3);
+}
+
 export function renderQualityDashboardMarkdown(report: QualityDashboardReport): string {
   const lines: string[] = [
     "# Fysen Quality Dashboard",
@@ -69,8 +86,67 @@ export function renderQualityDashboardMarkdown(report: QualityDashboardReport): 
       .sort()
       .at(-1) ?? null;
     lines.push(
-      `| ${restaurant.name} | ${restaurant.active ? "✅ published" : "🧪 candidate"} | ${restaurantMenuSummary(restaurant)} | ${shortTime(latestMenuCheck)} | ${healthLabel[restaurant.hours.health]} · ${restaurant.hours.intervalCount} intervals${restaurant.hours.lastErrorCode ? ` · ${restaurant.hours.lastErrorCode}` : ""} | ${restaurantActions(restaurant)} | ${restaurant.impressions7d} | ${restaurant.conversions7d} |`,
+      `| ${escapeCell(restaurant.name)} | ${restaurant.active ? "✅ published" : "🧪 candidate"} | ${restaurantMenuSummary(restaurant)} | ${shortTime(latestMenuCheck)} | ${healthLabel[restaurant.hours.health]} · ${restaurant.hours.intervalCount} intervals${restaurant.hours.lastErrorCode ? ` · ${restaurant.hours.lastErrorCode}` : ""} | ${restaurantActions(restaurant)} | ${restaurant.impressions7d} | ${restaurant.conversions7d} |`,
     );
+  }
+
+  const matchTotal = report.matching.impressions7d;
+  lines.push(
+    "",
+    "## Matching quality, 7d",
+    "",
+    `- Result impressions: **${matchTotal}**`,
+    `- Exact: **${report.matching.byMatchType.exact}** (${percent(report.matching.byMatchType.exact, matchTotal)})`,
+    `- Canonical: **${report.matching.byMatchType.canonical}** (${percent(report.matching.byMatchType.canonical, matchTotal)})`,
+    `- Prefix: **${report.matching.byMatchType.prefix}** (${percent(report.matching.byMatchType.prefix, matchTotal)})`,
+    `- Contains: **${report.matching.byMatchType.contains}** (${percent(report.matching.byMatchType.contains, matchTotal)})`,
+    `- Fuzzy: **${report.matching.byMatchType.fuzzy}** (${percent(report.matching.byMatchType.fuzzy, matchTotal)})`,
+    "",
+    "### Canonical concepts",
+    "",
+    "| Concept | Query aliases | Menu aliases | Current menu items | Canonical impressions 7d |",
+    "|---|---|---|---:|---:|",
+  );
+
+  if (report.matching.canonicalConcepts.length === 0) {
+    lines.push("| — | — | — | 0 | 0 |");
+  } else {
+    for (const concept of report.matching.canonicalConcepts) {
+      lines.push(
+        `| ${escapeCell(concept.canonicalName)} (\`${escapeCell(concept.slug)}\`) | ${aliasList(concept.queryAliases)} | ${aliasList(concept.menuAliases)} | ${concept.currentMenuItemMatches} | ${concept.canonicalImpressions7d} |`,
+      );
+    }
+  }
+
+  lines.push("", "### Canonical queries", "");
+  if (report.matching.topCanonicalQueries7d.length === 0) {
+    lines.push("Ingen canonical-opprykk de siste 7 dagene.");
+  } else {
+    lines.push(
+      "| Query | Canonical dish | Searches 7d | Impressions 7d | Avg score |",
+      "|---|---|---:|---:|---:|",
+    );
+    for (const query of report.matching.topCanonicalQueries7d) {
+      lines.push(
+        `| ${escapeCell(query.normalizedQuery)} | ${escapeCell(query.canonicalDishName)} (\`${escapeCell(query.canonicalDishSlug)}\`) | ${query.searches7d} | ${query.impressions7d} | ${score(query.averageScore)} |`,
+      );
+    }
+  }
+
+  lines.push("", "### Fuzzy queries til manuell vurdering", "");
+  if (report.matching.topFuzzyQueries7d.length === 0) {
+    lines.push("Ingen fuzzy-treff de siste 7 dagene.");
+  } else {
+    lines.push(
+      "| Query | Searches 7d | Fuzzy impressions 7d | Avg score | Best score |",
+      "|---|---:|---:|---:|---:|",
+    );
+    for (const query of report.matching.topFuzzyQueries7d) {
+      lines.push(
+        `| ${escapeCell(query.normalizedQuery)} | ${query.searches7d} | ${query.impressions7d} | ${score(query.averageScore)} | ${score(query.bestScore)} |`,
+      );
+    }
+    lines.push("", "> Fuzzy-listen er et review-signal. Den oppretter aldri aliaser automatisk.");
   }
 
   lines.push("", "## Nulltreff som peker på coverage", "");
@@ -79,7 +155,7 @@ export function renderQualityDashboardMarkdown(report: QualityDashboardReport): 
   } else {
     lines.push("| Query | Nulltreff 7d | Sist sett |", "|---|---:|---|");
     for (const query of report.topZeroResultQueries7d) {
-      lines.push(`| ${query.normalizedQuery.replaceAll("|", "\\|")} | ${query.count7d} | ${shortTime(query.lastSeenAt)} |`);
+      lines.push(`| ${escapeCell(query.normalizedQuery)} | ${query.count7d} | ${shortTime(query.lastSeenAt)} |`);
     }
   }
 
