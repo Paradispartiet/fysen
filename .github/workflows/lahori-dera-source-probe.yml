@@ -1,0 +1,110 @@
+name: Lahori Dera source probe
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/lahori-dera-source-probe.yml"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+      - name: Build menu worker
+        run: pnpm --filter @fysen/menu-worker... build
+      - name: Probe Lahori Dera source gates
+        id: probe
+        continue-on-error: true
+        shell: bash
+        run: |
+          set +e
+          node --input-type=module <<'NODE' > /tmp/lahori-probe.txt 2>&1
+          import { HttpMenuClient } from "./apps/menu-worker/dist/http-client.js";
+          import { extractHtmlMenu } from "./apps/menu-worker/dist/html-extractor.js";
+          import { extractKitchenOpeningHours } from "./apps/menu-worker/dist/opening-hours-extractor.js";
+          import { normalizeDishName } from "./packages/menu-core/dist/index.js";
+
+          const menuUrl = "https://lahoridera.no/";
+          const orderUrl = "https://lahoridera.no/shop/";
+          const client = new HttpMenuClient();
+          const required = [
+            ["Kylling Tikka Masala", 20900],
+            ["Lahori Lam Karahi Fresh", 20900],
+            ["Chapli Kebab", 19400],
+            ["Saag Paneer", 16900],
+            ["Mix Grill", 37900],
+          ];
+
+          try {
+            const fetched = await client.fetchSource({ url: menuUrl, userAgent: "FysenMenuBot/0.1", etag: null, lastModified: null });
+            if (fetched.kind !== "content") throw new Error(`Unexpected menu fetch kind: ${fetched.kind}`);
+            const menu = extractHtmlMenu(fetched.body);
+            const hours = extractKitchenOpeningHours(fetched.body, ["Lahori Dera", "Norbygata 56", "lahori-dera-gronland-oslo"]);
+            const order = await client.fetchSource({ url: orderUrl, userAgent: "FysenMenuBot/0.1", etag: null, lastModified: null });
+            if (order.kind !== "content") throw new Error(`Unexpected order fetch kind: ${order.kind}`);
+            const checks = required.map(([name, priceMinor]) => {
+              const item = menu.items.find((candidate) => candidate.normalizedName === normalizeDishName(name));
+              return { name, expectedPriceMinor: priceMinor, found: Boolean(item), actualPriceMinor: item?.priceMinor ?? null, ok: Boolean(item) && item?.priceMinor === priceMinor };
+            });
+            console.log(JSON.stringify({
+              ok: menu.items.length >= 25 && checks.every((check) => check.ok) && hours.intervals.length >= 7 && order.status >= 200 && order.status < 300,
+              menu: {
+                status: fetched.status,
+                method: menu.method,
+                itemCount: menu.items.length,
+                checks,
+                sample: menu.items.slice(0, 40).map((item) => ({ name: item.name, priceMinor: item.priceMinor, sectionName: item.sectionName, description: item.description })),
+              },
+              hours: { intervalCount: hours.intervals.length, intervals: hours.intervals, sourceExcerpt: hours.sourceExcerpt },
+              order: { status: order.status, contentType: order.contentType, byteLength: order.bodyBytes.length },
+            }, null, 2));
+          } catch (error) {
+            console.log(JSON.stringify({
+              ok: false,
+              error: {
+                name: error instanceof Error ? error.name : typeof error,
+                message: error instanceof Error ? error.message : String(error),
+                code: typeof error === "object" && error !== null && "code" in error ? error.code : null,
+                httpStatus: typeof error === "object" && error !== null && "httpStatus" in error ? error.httpStatus : null,
+              },
+            }, null, 2));
+            process.exitCode = 1;
+          }
+          NODE
+          status=$?
+          cat /tmp/lahori-probe.txt
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Publish result in PR body
+        if: always()
+        uses: actions/github-script@v7
+        env:
+          PROBE_STATUS: ${{ steps.probe.outputs.status }}
+        with:
+          script: |
+            const fs = require('fs');
+            const result = fs.existsSync('/tmp/lahori-probe.txt') ? fs.readFileSync('/tmp/lahori-probe.txt', 'utf8').slice(0, 55000) : 'Probe did not produce an output file.';
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              body: `Midlertidig, **skal ikke merges**.\n\n## Lahori Dera source probe\n\nStatus: ${process.env.PROBE_STATUS || 'unknown'}\n\n\`\`\`json\n${result}\n\`\`\`\n\nPR-en lukkes etter diagnosen.`,
+            });
+            if (process.env.PROBE_STATUS !== '0') core.setFailed('Lahori Dera source probe failed; see PR body.');
