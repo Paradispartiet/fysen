@@ -1,10 +1,12 @@
 import type { DishSearchResponse, DishSearchSort } from "@fysen/contracts";
+import { DishKnowledgeNote } from "../../components/dish-knowledge-note";
 import { DishResult } from "../../components/dish-result";
 import { DishSearch } from "../../components/dish-search";
 import { GlobalHeader } from "../../components/global-header";
 import { LocationControls } from "../../components/location-controls";
 import { SearchState } from "../../components/search-state";
 import { searchDishes } from "../../lib/fysen-api";
+import { withPublicBasePath } from "../../lib/public-path";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
@@ -31,7 +33,7 @@ function searchHref(
     params.set("lat", String(latitude));
     params.set("lon", String(longitude));
   }
-  return `/search?${params.toString()}`;
+  return `${withPublicBasePath("/search")}?${params.toString()}`;
 }
 
 async function loadResults(
@@ -75,7 +77,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
 
   const countLabel = data
     ? primaryResults.length > 0
-      ? `${primaryResults.length} ${primaryResults.length === 1 ? "menytreff" : "menytreff"}`
+      ? `${primaryResults.length} menytreff`
       : nearResults.length > 0
         ? "Ingen sikre treff"
         : "Ingen ferske menytreff"
@@ -100,6 +102,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
             <p className="resultsCount">{countLabel}</p>
             {q.length >= 2 ? <LocationControls hasLocation={hasLocation} sort={sort} /> : null}
           </div>
+
+          <DishKnowledgeNote query={q} />
 
           {error ? (
             <SearchState

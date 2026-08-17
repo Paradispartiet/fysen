@@ -57,31 +57,6 @@ jobs:
           }
           EOF
 
-          python - <<'PY'
-          from pathlib import Path
-
-          replacements = {
-              "apps/web/components/dish-search.tsx": [
-                  ('action="/search"', 'action="/fysen-preview/search/"'),
-              ],
-              "apps/web/components/suggestion-rail.tsx": [
-                  ('return `/search?${params.toString()}`;', 'return `/fysen-preview/search/?${params.toString()}`;'),
-              ],
-              "apps/web/components/fysen-logo.tsx": [
-                  ('href="/"', 'href="/fysen-preview/"'),
-              ],
-          }
-
-          for filename, changes in replacements.items():
-              path = Path(filename)
-              text = path.read_text()
-              for old, new in changes:
-                  if old not in text:
-                      raise SystemExit(f"Expected preview patch target missing in {filename}: {old}")
-                  text = text.replace(old, new)
-              path.write_text(text)
-          PY
-
           cat > apps/web/next.config.ts <<'EOF'
           import type { NextConfig } from "next";
 
@@ -104,6 +79,7 @@ jobs:
         env:
           NEXT_TELEMETRY_DISABLED: "1"
           NEXT_PUBLIC_FYSEN_API_BASE_URL: "https://fysen-api.vercel.app"
+          NEXT_PUBLIC_FYSEN_BASE_PATH: "/fysen-preview"
           NEXT_PUBLIC_DISABLE_FUNNEL_TRACKING: "1"
         run: pnpm turbo run build --filter=@fysen/web...
 
@@ -111,7 +87,10 @@ jobs:
         run: |
           test -f apps/web/out/index.html
           test -f apps/web/out/search/index.html
-          grep -q '/fysen-preview/search/' apps/web/out/index.html
+          test -f apps/web/out/brand/fysen-mark.webp
+          grep -q '/fysen-preview/search' apps/web/out/index.html
+          grep -q '/fysen-preview/brand/fysen-mark.webp' apps/web/out/index.html
+          grep -q 'Utforsk kjøkken' apps/web/out/index.html
           grep -q 'fysen-api.vercel.app' apps/web/out/search/index.html || grep -R -q 'fysen-api.vercel.app' apps/web/out/_next
 
       - name: Keep Next assets out of Jekyll processing
