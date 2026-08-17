@@ -1,4 +1,4 @@
-queued-through=latest-main
-release-reason=manual-user-request
-release-attempt=3
-release-requested-at=2026-08-17T17:54:00+02:00
+queued-through=fc13be24d8dc80f01b2c2093453f3e76989247f3
+release-reason=manual-user-request-design-v2-1
+release-attempt=4
+release-requested-at=2026-08-17T21:34:00+02:00
