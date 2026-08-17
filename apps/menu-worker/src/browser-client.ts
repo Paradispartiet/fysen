@@ -21,8 +21,11 @@ const blockedResourceTypes = new Set([
   "websocket",
 ]);
 
-// Diagnostic-only allowance on this unmerged branch. Never merge this hardcoded origin.
-const diagnosticAllowedDataOrigins = new Set(["https://siteassets.parastorage.com"]);
+// Diagnostic-only allowances on this unmerged branch. Never merge these hardcoded origins.
+const diagnosticAllowedDataOrigins = new Set([
+  "https://siteassets.parastorage.com",
+  "https://static.parastorage.com",
+]);
 
 type RenderedMenuFetch = Extract<MenuHttpFetchResult, { readonly kind: "content" }>;
 
