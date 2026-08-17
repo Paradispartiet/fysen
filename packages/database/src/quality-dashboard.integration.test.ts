@@ -78,27 +78,74 @@ integrationDescribe("quality dashboard integration", () => {
     const menuItemId = menuItem.rows[0]?.id;
     if (!menuItemId) throw new Error("Expected menu item");
 
-    const search = await pool.query<{ id: string }>(
+    const concept = await pool.query<{ id: string }>(
+      `INSERT INTO fysen.dish_concepts (slug, canonical_name, normalized_name, active)
+       VALUES ('quality-burger', 'Quality Burger', 'quality burger', true)
+       ON CONFLICT (slug) DO UPDATE SET active = true, updated_at = now()
+       RETURNING id`,
+    );
+    const conceptId = concept.rows[0]?.id;
+    if (!conceptId) throw new Error("Expected quality dish concept");
+    await pool.query(
+      `INSERT INTO fysen.dish_aliases (
+         dish_concept_id, alias, normalized_alias, alias_scope, locale, curation_note
+       ) VALUES
+         ($1, 'Quality burger', 'quality burger', 'both', 'en', 'Integration menu alias'),
+         ($1, 'Quality sandwich', 'quality sandwich', 'query', 'en', 'Integration query alias')
+       ON CONFLICT (normalized_alias) DO NOTHING`,
+      [conceptId],
+    );
+
+    const exactSearch = await pool.query<{ id: string }>(
       `INSERT INTO fysen.search_events (normalized_query, city, result_count)
        VALUES ('quality burger', 'Oslo', 1)
        RETURNING id`,
     );
-    const searchId = search.rows[0]?.id;
-    if (!searchId) throw new Error("Expected search event");
-    const impression = await pool.query<{ id: string }>(
+    const exactSearchId = exactSearch.rows[0]?.id;
+    if (!exactSearchId) throw new Error("Expected exact search event");
+    const exactImpression = await pool.query<{ id: string }>(
       `INSERT INTO fysen.search_result_impressions (
          search_id, menu_item_id, restaurant_id, rank, match_type, match_score
        ) VALUES ($1, $2, $3, 1, 'exact', 1)
        RETURNING id`,
-      [searchId, menuItemId, restaurantId],
+      [exactSearchId, menuItemId, restaurantId],
     );
-    const impressionId = impression.rows[0]?.id;
-    if (!impressionId) throw new Error("Expected impression");
+    const exactImpressionId = exactImpression.rows[0]?.id;
+    if (!exactImpressionId) throw new Error("Expected exact impression");
     await pool.query(
       `INSERT INTO fysen.conversion_events (client_event_id, impression_id, event_type)
        VALUES (gen_random_uuid(), $1, 'menu_clicked')`,
-      [impressionId],
+      [exactImpressionId],
     );
+
+    const canonicalSearch = await pool.query<{ id: string }>(
+      `INSERT INTO fysen.search_events (normalized_query, city, result_count)
+       VALUES ('quality sandwich', 'Oslo', 1)
+       RETURNING id`,
+    );
+    const canonicalSearchId = canonicalSearch.rows[0]?.id;
+    if (!canonicalSearchId) throw new Error("Expected canonical search event");
+    await pool.query(
+      `INSERT INTO fysen.search_result_impressions (
+         search_id, menu_item_id, restaurant_id, rank, match_type, match_score
+       ) VALUES ($1, $2, $3, 1, 'canonical', 0.98)`,
+      [canonicalSearchId, menuItemId, restaurantId],
+    );
+
+    const fuzzySearch = await pool.query<{ id: string }>(
+      `INSERT INTO fysen.search_events (normalized_query, city, result_count)
+       VALUES ('qualty burger', 'Oslo', 1)
+       RETURNING id`,
+    );
+    const fuzzySearchId = fuzzySearch.rows[0]?.id;
+    if (!fuzzySearchId) throw new Error("Expected fuzzy search event");
+    await pool.query(
+      `INSERT INTO fysen.search_result_impressions (
+         search_id, menu_item_id, restaurant_id, rank, match_type, match_score
+       ) VALUES ($1, $2, $3, 1, 'fuzzy', 0.82)`,
+      [fuzzySearchId, menuItemId, restaurantId],
+    );
+
     await pool.query(
       `INSERT INTO fysen.search_events (normalized_query, city, result_count)
        VALUES ('ramen', 'Oslo', 0), ('ramen', 'Oslo', 0), ('dumplings', 'Oslo', 0)`,
@@ -109,7 +156,7 @@ integrationDescribe("quality dashboard integration", () => {
     await pool.end();
   });
 
-  it("reports fresh coverage, current item counts, demand and zero results", async () => {
+  it("reports fresh coverage, matching quality, demand and zero results", async () => {
     const report = await buildQualityDashboard(pool);
     expect(report.totals.activeRestaurants).toBe(1);
     expect(report.totals.menuSources).toBe(1);
@@ -126,9 +173,40 @@ integrationDescribe("quality dashboard integration", () => {
       consecutiveFailures: 0,
       lastOutcome: "changed",
     });
-    expect(restaurant?.impressions7d).toBe(1);
+    expect(restaurant?.impressions7d).toBe(3);
     expect(restaurant?.conversions7d).toBe(1);
     expect(restaurant?.hours.health).toBe("unverified");
+
+    expect(report.matching.impressions7d).toBe(3);
+    expect(report.matching.byMatchType).toEqual({
+      exact: 1,
+      canonical: 1,
+      prefix: 0,
+      contains: 0,
+      fuzzy: 1,
+    });
+    const concept = report.matching.canonicalConcepts.find((item) => item.slug === "quality-burger");
+    expect(concept).toMatchObject({
+      canonicalName: "Quality Burger",
+      queryAliases: ["quality burger", "quality sandwich"],
+      menuAliases: ["quality burger"],
+      currentMenuItemMatches: 1,
+      canonicalImpressions7d: 1,
+    });
+    expect(report.matching.topCanonicalQueries7d[0]).toMatchObject({
+      normalizedQuery: "quality sandwich",
+      canonicalDishSlug: "quality-burger",
+      searches7d: 1,
+      impressions7d: 1,
+      averageScore: 0.98,
+    });
+    expect(report.matching.topFuzzyQueries7d[0]).toMatchObject({
+      normalizedQuery: "qualty burger",
+      searches7d: 1,
+      impressions7d: 1,
+      averageScore: 0.82,
+      bestScore: 0.82,
+    });
 
     expect(report.topZeroResultQueries7d[0]).toMatchObject({ normalizedQuery: "ramen", count7d: 2 });
     expect(report.topZeroResultQueries7d[1]).toMatchObject({ normalizedQuery: "dumplings", count7d: 1 });
