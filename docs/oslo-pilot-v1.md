@@ -15,9 +15,11 @@ Piloten skal ikke optimaliseres for flest mulig restauranter. Den skal optimalis
 - Rodeo er golden live-kilde med produksjonsaktiv menyovervåkning.
 - Søket har exact/prefix/contains/trigram og skiller fuzzy «nære treff» fra sikrere treff.
 - Revenue funnel måler søk, impressions og attribuerte handlinger uten permanent brukerprofil.
-- Resultatflaten har meny, restaurant, veibeskrivelse og nå verifisert booking/bestilling når slike canonical handlinger finnes.
+- Resultatflaten har meny, restaurant, veibeskrivelse og verifisert booking/bestilling når slike canonical handlinger finnes.
 - Rodeos førsteparts booking-side er første verifiserte `Bestill bord`-handling og re-verifiseres automatisk før den utløper.
-- Avstand fra bruker, åpningstider, bredere coverage og quality dashboard er neste pilotarbeid.
+- Avstand og nærhet er implementert med eksplisitt posisjonssamtykke, PostGIS-avstand, meter/kilometer i resultatet og valg mellom `Beste treff` og `Nærmest`.
+- Presis posisjon lagres ikke i Revenue Layer search-events; koordinatene brukes i den konkrete søkeforespørselen og avrundes før søk.
+- Åpningstider, bredere coverage, videre dish matching og quality dashboard er neste pilotarbeid.
 
 ## Produktmål
 
@@ -69,14 +71,17 @@ Søkerangeringen bygges videre fra dagens exact/prefix/contains/trigram-modell m
 
 Semantisk likhet skal aldri alene gjøre en annen rett til et sikkert treff.
 
-### 3. Avstand og nærhet
+### 3. Avstand og nærhet — implementert
 
-PostGIS skal brukes som domeneinfrastruktur, ikke bare lagring. Piloten skal støtte:
+PostGIS brukes nå som aktiv domeneinfrastruktur. Leveransen støtter:
 
-- brukerposisjon etter eksplisitt samtykke;
-- avstand i meter/kilometer;
-- sortering/rangering på nærhet;
-- ingen skjult eller permanent posisjonssporing som standard.
+- brukerposisjon kun etter eksplisitt knappetrykk/samtykke;
+- koordinater avrundet til fire desimaler før søk;
+- avstand i meter/kilometer via `ST_Distance` på geography-punkter;
+- `Beste treff`, der matchrelevans fortsatt er primær og avstand kan bryte likhet;
+- `Nærmest`, der avstand rangerer treffene;
+- mulighet til å fjerne posisjonen igjen;
+- ingen lagring av koordinater i Revenue Layer search-events.
 
 ### 4. Åpningstider
 
