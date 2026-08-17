@@ -84,7 +84,11 @@ export async function runDueRestaurantHours(limit = 25): Promise<OpeningHoursWat
           throw new OpeningHoursExtractionError("UNSUPPORTED_EXTRACTOR", `Unsupported hours extractor: ${source.extractor}`);
         }
 
-        const extracted = extractKitchenOpeningHours(response.body);
+        const extracted = extractKitchenOpeningHours(response.body, [
+          source.url,
+          source.restaurantSlug,
+          source.restaurantName,
+        ]);
         const observed = await recordRestaurantHoursObservation(pool, {
           sourceId: source.id,
           startedAt,
