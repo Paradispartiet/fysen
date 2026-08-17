@@ -12,19 +12,21 @@ Piloten skal ikke optimaliseres for flest mulig restauranter. Den skal optimalis
 
 ## Implementasjonsstatus
 
-- Rodeo er golden live-kilde med produksjonsaktiv menyovervåkning.
-- Way Down South er andre produksjonsgodkjente Oslo-restaurant og første bevis på den generelle onboardingporten: 20 retter, første watch `changed`, andre watch `unchanged`, null manglende dish-assertions før publisering.
+- Rodeo er golden live-kilde med produksjonsaktiv menyovervåkning: 16 aktuelle retter, healthy kjøkkentider og verifisert booking.
+- Way Down South er andre produksjonsgodkjente Oslo-restaurant og første bevis på den generelle onboardingporten: 20 retter, to aksepterte watches, healthy kjøkkentider og verifisert booking.
+- Hrimnir Ramen Storgata er tredje produksjonsgodkjente restaurant og beviser både shared-section-price og branch-scoped hours: 12 aktuelle retter, konkrete ramen-retter arver eksplisitt fellespris på 260 kr, 7 healthy kjøkkenintervaller og verifisert DinnerBooking.
+- Produksjonsdashboardet har dermed 3 aktive restauranter, 3/3 healthy menykilder, 48 aktuelle retter og 0 degraded menykilder.
 - Nye coverage-kandidater registreres som `active=false` og blir ikke søkbare før to aksepterte watches, minimumskrav og eksplisitte dish smoke-assertions er bestått.
 - Søket har exact/prefix/contains/trigram og skiller fuzzy «nære treff» fra sikrere treff.
 - Revenue funnel måler søk, impressions og attribuerte handlinger uten permanent brukerprofil.
 - Resultatflaten har meny, restaurant, veibeskrivelse og verifisert booking/bestilling når slike canonical handlinger finnes.
-- Rodeos førsteparts booking-side er første verifiserte `Bestill bord`-handling og re-verifiseres automatisk før den utløper.
 - Avstand og nærhet er implementert med eksplisitt posisjonssamtykke, PostGIS-avstand, meter/kilometer i resultatet og valg mellom `Beste treff` og `Nærmest`.
 - Presis posisjon lagres ikke i Revenue Layer search-events; koordinatene brukes i den konkrete søkeforespørselen og avrundes før søk.
 - Åpningstider er implementert som en egen kildebelagt kjøkkentids-strøm med immutable snapshots, ferskhet og `open | closed | unknown` i dish search.
 - En ukjent eller utdatert åpningstidskilde gir alltid `unknown`; Fysen gjetter ikke «åpent nå».
+- Multi-branch hours bruker source-URL og canonical restaurantidentitet som eksplisitte scope-hints og feiler fortsatt lukket dersom én avdeling ikke kan bestemmes entydig.
 - Quality Dashboard v1 er en privat GitHub Actions-driftsoverflate med lesbar job summary og maskinlesbar JSON-artifact etter produksjonswatch.
-- Videre dish matching og bredere representativ Oslo-coverage er neste pilotarbeid.
+- Videre dish matching/canonical aliases og bredere representativ Oslo-coverage er neste pilotarbeid.
 
 ## Produktmål
 
@@ -52,7 +54,7 @@ Dekningen skal bygges kvalitativt, ikke som en vilkårlig tallkvote. Restaurante
 - mer krevende JavaScript-baserte kilder der Playwright-fallback faktisk er nødvendig;
 - restauranter med og uten direkte booking-/bestillingslenker.
 
-Rodeo er første produksjonsbevis og beholdes som golden live-kilde. Way Down South er første restaurant som er publisert gjennom den generelle onboardingporten.
+Rodeo er første produksjonsbevis og beholdes som golden live-kilde. Way Down South beviser den generelle onboardingporten. Hrimnir Ramen Storgata beviser felles seksjonspris, kjedeside-scope og canonical branch-hints uten restaurantspesialkode i søket.
 
 ## Arbeidspakker
 
@@ -73,6 +75,8 @@ Det betyr:
 - kandidatfeil skjer etter vedlikehold av eksisterende menu/hours/actions, så en ny dårlig kilde kan ikke hindre produksjonsvedlikeholdet for godkjente restauranter.
 
 Way Down South er første produksjonsbevis: 20 retter ble hentet, andre watch var uendret, alle obligatoriske dish-assertions ble funnet og restauranten ble deretter søkbar i offentlig Fysen.
+
+Hrimnir Ramen Storgata er neste produksjonsbevis: første watch publiserte 12 konkrete retter, andre watch bekreftet samme kilde, obligatoriske ramen-assertions var komplette, booking ble verifisert og shared-price-parseren knyttet den eksplisitte seksjonsprisen til de konkrete ramen-rettene i stedet for å publisere en falsk generisk «Ramen»-rett.
 
 ### 2. Dish matching v1
 
@@ -112,11 +116,13 @@ Implementasjonen har:
 - minimumsregel og suspicious-collapse quarantine før nye tider publiseres;
 - `open`, `closed` og `unknown` som eksplisitte API-tilstander;
 - rolling-deploy-safe default til `unknown` for eldre API-responser;
-- åpningstidskilde direkte tilgjengelig fra resultatkortet.
+- åpningstidskilde direkte tilgjengelig fra resultatkortet;
+- canonical restaurantnavn/slug og source-URL som scope-hints på multi-branch kilder;
+- umiddelbar requeue ved onboarding når en hours-kilde aldri har hatt en vellykket kontroll, slik at parserreparasjoner kan verifiseres uten å vente på failure-backoff.
 
-Parseren er bevisst konservativ. En tekst som sier «late» er ikke nok til å etablere matserveringens slutt. Dersom siden oppgir en eksakt kjøkkenstenging, brukes den; ellers feiler ekstraksjonen lukket.
+Parseren er bevisst konservativ. En tekst som sier «late» er ikke nok til å etablere matserveringens slutt. Dersom siden oppgir en eksakt kjøkkenstenging, brukes den; ellers feiler ekstraksjonen lukket. Dersom en kjedeside inneholder flere åpningstidsseksjoner, må nøyaktig én avdeling kunne bestemmes fra canonical scope-hints eller sideidentitet; ellers publiseres ingen åpningstilstand.
 
-Rodeos førsteside er pilotens første hours-source. Produksjonswatcheren har bevist fem canonical kjøkkenintervaller fra den levende kilden.
+Rodeo har fem canonical kjøkkenintervaller fra levende førstepartskilde. Way Down South har fem. Hrimnir Ramen Storgata har syv, publisert etter at en reell multi-branch scope-feil først ble fanget som `AMBIGUOUS_HOURS_SECTION` og deretter lukket med canonical hints. Feilen ga aldri en falsk `open`-tilstand i produksjon.
 
 ### 5. Resultatflate
 
@@ -154,6 +160,8 @@ Rapporten leverer:
 
 Rapporten beholder Revenue Layers dataminimering: ingen IP-adresser, user-agent, konto-ID eller permanent brukerprofil tilføres.
 
+Siste produksjonsbevis etter Hrimnir-hotfixen viser 3 aktive restauranter, 48 aktuelle retter, 3 healthy menykilder, 0 degraded menykilder og healthy hours for alle tre restaurantene.
+
 ### 7. Demand loop
 
 Søkeatferd brukes til å prioritere videre coverage. Fysen skal aggregere:
@@ -165,6 +173,21 @@ Søkeatferd brukes til å prioritere videre coverage. Fysen skal aggregere:
 - klikk/konverteringshandlinger.
 
 Første versjon skal ikke lagre IP-adresse, brukeragent, kontoidentitet eller permanent personlig profil for denne analysen.
+
+## Deploy- og produksjonsgate
+
+Database- og watcher-kjeden har eksplisitte GitHub Actions-porter, men offentlig API og web må i tillegg være på en Vercel-production deployment som er konsistent med den aktuelle `main`-kontrakten.
+
+Et produktsteg regnes derfor ikke som fullført offentlig før:
+
+- `main` CI er grønn;
+- produksjonsdatabasen er verifisert og eventuelle migrasjoner er anvendt;
+- produksjonswatcheren er grønn og eventuelle nye kilder har canonical snapshots;
+- Quality Dashboard er grønt uten uavklarte coverage-feil;
+- `fysen-api` production svarer med den forventede aktuelle responskontrakten;
+- `fysen` production rendrer samme kontrakt uten rolling-deploy-skjevhet.
+
+Vercel-preview er nyttig som buildbevis, men teller ikke som offentlig produksjonsbevis. Hvis Git-integrasjonen stopper på build-rate-limit, skal eksisterende production beholdes fungerende og deploy-avviket behandles eksplisitt i stedet for å late som ny funksjonalitet er offentlig.
 
 ## Kvalitetsporter
 
