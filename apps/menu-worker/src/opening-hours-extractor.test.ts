@@ -37,6 +37,59 @@ describe("opening hours extractor", () => {
     ]);
   });
 
+  it("scopes a multi-branch page to the branch identified by the page itself", () => {
+    const extracted = extractKitchenOpeningHours(`
+      <html><body>
+        <h1>Hrimnir Storgata</h1>
+        <p>Meny og booking</p>
+        <h3>Åpningstider Fredensborg:</h3>
+        <p>Tirsdag til Lørdag: 17:00 - 23.00 (Kjøkken til 21:30)</p>
+        <h3>Åpningstider Storgata:</h3>
+        <p>Søndag til Torsdag: 12:00 - 22.00 (Kjøkken til 21:00)</p>
+        <p>Fredag - Lørdag: 12:00 - 23.00 (Kjøkken til 21:00)</p>
+      </body></html>
+    `);
+
+    expect(extracted.intervals).toEqual([
+      { isoWeekday: 1, opensAt: "12:00", closesAt: "21:00", closesNextDay: false },
+      { isoWeekday: 2, opensAt: "12:00", closesAt: "21:00", closesNextDay: false },
+      { isoWeekday: 3, opensAt: "12:00", closesAt: "21:00", closesNextDay: false },
+      { isoWeekday: 4, opensAt: "12:00", closesAt: "21:00", closesNextDay: false },
+      { isoWeekday: 5, opensAt: "12:00", closesAt: "21:00", closesNextDay: false },
+      { isoWeekday: 6, opensAt: "12:00", closesAt: "21:00", closesNextDay: false },
+      { isoWeekday: 7, opensAt: "12:00", closesAt: "21:00", closesNextDay: false },
+    ]);
+    expect(extracted.sourceExcerpt).toContain("Søndag til Torsdag");
+    expect(extracted.sourceExcerpt).not.toContain("Tirsdag til Lørdag: 17:00");
+  });
+
+  it("fails closed when a multi-branch page cannot be scoped to exactly one branch", () => {
+    expect(() =>
+      extractKitchenOpeningHours(`
+        <html><body>
+          <h1>Hrimnir Ramen</h1>
+          <h3>Åpningstider Fredensborg:</h3>
+          <p>Tirsdag til Lørdag: 17:00 - 23.00</p>
+          <h3>Åpningstider Storgata:</h3>
+          <p>Søndag til Torsdag: 12:00 - 22.00</p>
+        </body></html>
+      `),
+    ).toThrow(OpeningHoursExtractionError);
+    try {
+      extractKitchenOpeningHours(`
+        <html><body>
+          <h1>Hrimnir Ramen</h1>
+          <h3>Åpningstider Fredensborg:</h3>
+          <p>Tirsdag til Lørdag: 17:00 - 23.00</p>
+          <h3>Åpningstider Storgata:</h3>
+          <p>Søndag til Torsdag: 12:00 - 22.00</p>
+        </body></html>
+      `);
+    } catch (error) {
+      expect(error).toMatchObject({ code: "AMBIGUOUS_HOURS_SECTION" });
+    }
+  });
+
   it("supports exact closing times and overnight intervals", () => {
     const extracted = extractKitchenOpeningHours(`
       <html><body><p>Dinner Friday - Saturday 18:00 - 01:00</p></body></html>
