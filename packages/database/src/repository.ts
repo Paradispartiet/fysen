@@ -1,6 +1,7 @@
 import type { Pool, PoolClient, QueryResultRow } from "pg";
 
 export type MenuSourceType = "html" | "json_ld" | "pdf" | "image" | "api";
+export type MenuSourceFetchMode = "http" | "browser";
 export type WatchOutcome =
   | "changed"
   | "unchanged"
@@ -38,6 +39,7 @@ export interface UpsertMenuSourceInput {
   readonly restaurantId: string;
   readonly url: string;
   readonly sourceType: MenuSourceType;
+  readonly fetchMode?: MenuSourceFetchMode;
   readonly userAgent: string;
   readonly checkIntervalMinutes: number;
   readonly minimumExpectedItems: number;
@@ -48,6 +50,7 @@ export interface StoredMenuSource {
   readonly restaurantId: string;
   readonly url: string;
   readonly sourceType: MenuSourceType;
+  readonly fetchMode: MenuSourceFetchMode;
   readonly enabled: boolean;
   readonly userAgent: string;
   readonly checkIntervalMinutes: number;
@@ -132,6 +135,7 @@ interface SourceRow extends QueryResultRow {
   restaurant_id: string;
   url: string;
   source_type: MenuSourceType;
+  fetch_mode: MenuSourceFetchMode;
   enabled: boolean;
   user_agent: string;
   check_interval_minutes: number;
@@ -175,6 +179,7 @@ function mapSource(row: SourceRow): StoredMenuSource {
     restaurantId: row.restaurant_id,
     url: row.url,
     sourceType: row.source_type,
+    fetchMode: row.fetch_mode,
     enabled: row.enabled,
     userAgent: row.user_agent,
     checkIntervalMinutes: row.check_interval_minutes,
@@ -241,10 +246,11 @@ export class MenuIndexRepository {
     const result = await this.pool.query<SourceRow>(
       `
         INSERT INTO fysen.menu_sources (
-          restaurant_id, url, source_type, user_agent, check_interval_minutes, minimum_expected_items
-        ) VALUES ($1, $2, $3, $4, $5, $6)
+          restaurant_id, url, source_type, fetch_mode, user_agent, check_interval_minutes, minimum_expected_items
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7)
         ON CONFLICT (restaurant_id, url) DO UPDATE SET
           source_type = EXCLUDED.source_type,
+          fetch_mode = EXCLUDED.fetch_mode,
           user_agent = EXCLUDED.user_agent,
           check_interval_minutes = EXCLUDED.check_interval_minutes,
           minimum_expected_items = EXCLUDED.minimum_expected_items,
@@ -255,6 +261,7 @@ export class MenuIndexRepository {
         input.restaurantId,
         input.url,
         input.sourceType,
+        input.fetchMode ?? "http",
         input.userAgent,
         input.checkIntervalMinutes,
         input.minimumExpectedItems,

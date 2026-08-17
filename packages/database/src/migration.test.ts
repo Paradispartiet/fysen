@@ -12,6 +12,7 @@ describe("database migrations", () => {
       "0005_restaurant_hours.sql",
       "0006_dish_concepts.sql",
       "0007_pdf_text_extraction.sql",
+      "0008_menu_source_fetch_mode.sql",
     ]);
 
     const schemaSql = await readFile(
@@ -87,5 +88,12 @@ describe("database migrations", () => {
     expect(pdfTextSql).toContain("menu_items_extraction_method_check");
     expect(pdfTextSql).toContain("'pdf_text'");
     expect(pdfTextSql).toContain("VALIDATE CONSTRAINT menu_items_extraction_method_check");
+
+    const fetchModeSql = await readFile(
+      new URL("../migrations/0008_menu_source_fetch_mode.sql", import.meta.url),
+      "utf8",
+    );
+    expect(fetchModeSql).toContain("fetch_mode text NOT NULL DEFAULT 'http'");
+    expect(fetchModeSql).toContain("fetch_mode IN ('http', 'browser')");
   });
 });

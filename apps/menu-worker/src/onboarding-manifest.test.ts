@@ -25,11 +25,21 @@ const validManifest = {
 } as const;
 
 describe("restaurant onboarding manifest", () => {
-  it("applies safe defaults for bot identity, actions and dish variants", () => {
+  it("applies safe defaults for bot identity, fetch mode, actions and dish variants", () => {
     const parsed = restaurantOnboardingManifestSchema.parse(validManifest);
     expect(parsed.menuSource.userAgent).toBe("FysenMenuBot/0.1");
+    expect(parsed.menuSource.fetchMode).toBe("http");
     expect(parsed.actions).toEqual([]);
     expect(parsed.qualityAssertions.requiredDishVariants).toEqual([]);
+  });
+
+  it("accepts explicit browser fetch for rendered HTML sources", () => {
+    const parsed = restaurantOnboardingManifestSchema.parse({
+      ...validManifest,
+      menuSource: { ...validManifest.menuSource, fetchMode: "browser" },
+    });
+    expect(parsed.menuSource.fetchMode).toBe("browser");
+    expect(parsed.menuSource.sourceType).toBe("html");
   });
 
   it("accepts PDF sources and explicit section/price assertions", () => {
@@ -54,6 +64,20 @@ describe("restaurant onboarding manifest", () => {
       sectionName: "PRIMI PIATTI",
       priceMinor: 26000,
     });
+  });
+
+  it("rejects browser fetch for PDF sources", () => {
+    expect(() =>
+      restaurantOnboardingManifestSchema.parse({
+        ...validManifest,
+        menuSource: {
+          ...validManifest.menuSource,
+          url: "https://example.com/menu.pdf",
+          sourceType: "pdf",
+          fetchMode: "browser",
+        },
+      }),
+    ).toThrow("Browser fetch mode only supports HTML/JSON-LD sources");
   });
 
   it("accepts source-backed hours and commercial actions", () => {
