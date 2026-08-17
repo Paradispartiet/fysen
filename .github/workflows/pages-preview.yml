@@ -97,7 +97,7 @@ jobs:
       - name: Build static Fysen preview
         env:
           NEXT_TELEMETRY_DISABLED: "1"
-        run: pnpm --filter @fysen/web build
+        run: pnpm turbo run build --filter=@fysen/web...
 
       - name: Keep Next assets out of Jekyll processing
         run: touch apps/web/out/.nojekyll
