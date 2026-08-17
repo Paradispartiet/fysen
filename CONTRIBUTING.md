@@ -33,6 +33,19 @@ Fysen batches Vercel production releases so rapid development cannot consume the
 
 This makes `main` the deployment queue while the release markers are the only production triggers. Preserve that separation unless Vercel is moved to a plan or CI/CD path where build-rate pressure is no longer relevant.
 
+## GitHub Pages preview
+
+The public preview is a compiled mirror, not a public source repository.
+
+- Relevant merges to `main` build the static web preview in `.github/workflows/pages-preview.yml`.
+- The completed `apps/web/out` snapshot is pushed to the `site` branch of `Paradispartiet/fysen-preview`.
+- The private repository then sends a `publish-fysen-preview` repository dispatch containing the exact private `main` source SHA.
+- `Paradispartiet/fysen-preview` deploys that `site` snapshot to GitHub Pages only after verifying `source-main-sha.txt` against the dispatch payload.
+- Cross-repository publication uses the private repository secret `FYSEN_PREVIEW_TOKEN`. The token must be restricted to `Paradispartiet/fysen-preview` with repository `Contents: Read and write`; it must not grant access to the private `fysen` repository.
+- If the secret is absent, the static build and artifact still complete, but public cross-repository publication is skipped safely.
+
+Do not commit a personal access token, generated credentials, private source code or server-only assets to `fysen-preview`.
+
 ## Domain rule
 
 Do not make source-specific fields canonical just because a provider exposes them. Add an adapter and preserve the Fysen domain boundary.
