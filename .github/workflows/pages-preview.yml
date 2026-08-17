@@ -9,7 +9,6 @@ on:
       - "packages/contracts/**"
       - ".github/workflows/pages-preview.yml"
       - "package.json"
-      - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
       - "turbo.json"
 
@@ -40,7 +39,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24.18.0
-          cache: pnpm
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
