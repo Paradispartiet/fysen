@@ -19,6 +19,24 @@ describe("opening hours extractor", () => {
     ]);
   });
 
+  it("supports standard weekday ranges and hour-only clocks", () => {
+    const extracted = extractKitchenOpeningHours(`
+      <html><body>
+        <h3>Opening Hours</h3>
+        <p>Tuesday-Friday: 16-22</p>
+        <p>Saturday: 14-22</p>
+        <p>Sunday & Monday: Closed</p>
+      </body></html>
+    `);
+    expect(extracted.intervals).toEqual([
+      { isoWeekday: 2, opensAt: "16:00", closesAt: "22:00", closesNextDay: false },
+      { isoWeekday: 3, opensAt: "16:00", closesAt: "22:00", closesNextDay: false },
+      { isoWeekday: 4, opensAt: "16:00", closesAt: "22:00", closesNextDay: false },
+      { isoWeekday: 5, opensAt: "16:00", closesAt: "22:00", closesNextDay: false },
+      { isoWeekday: 6, opensAt: "14:00", closesAt: "22:00", closesNextDay: false },
+    ]);
+  });
+
   it("supports exact closing times and overnight intervals", () => {
     const extracted = extractKitchenOpeningHours(`
       <html><body><p>Dinner Friday - Saturday 18:00 - 01:00</p></body></html>
