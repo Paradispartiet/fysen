@@ -18,15 +18,18 @@ Piloten skal ikke optimaliseres for flest mulig restauranter. Den skal optimalis
 - Olivia Aker Brygge beviser PDF-meny som produksjonskilde: 53 aktuelle retter, separat voksen- og barnevariant av Pasta carbonara, 7 healthy kjøkkenintervaller og verifisert booking. PDF-parseroppgraderinger er fail-closed og tvinger ny ekstraksjon før en stale parser får fortsette å være publisert.
 - Mathus Chicken på Vestli er første produksjonsverifiserte `order`-destinasjon og første ytre-øst-kilde i katalogen: 89 aktuelle retter, to aksepterte watches, verifisert bestill-mat-handling og 7 healthy kjøkkenintervaller.
 - Roll Sushi Majorstua er første produksjonsbevis for strukturert `json_ld`: 76 aktuelle retter, `confidence: 0.99` på item-nivå, eksplisitte prisassertions, verifisert `order` og 7 kjøkkenintervaller. Rå HTTP og Chromium ga samme 76 JSON-LD-items, så produksjonen bruker den billigere og sikrere HTTP-kilden i stedet for browser.
-- De publiserte snapshot-tallene summerer nå til **6 aktive restauranter og 266 aktuelle retter** (16 + 20 + 12 + 53 + 89 + 76).
+- Lahori Dera Tandoori på Grønland er produksjonsaktiv som første pakistanske/Grønland-kilde. Den passerte 30+-minimum, fem eksplisitte navn/priser, to aksepterte menu-watches, verifisert `order` og 7 kjøkkenintervaller. Offentlig API viser blant annet `Lahori Lam Karahi Fresh` som exact til 209 kr med fersk meny og åpningstilstand.
+- Den aktive produksjonskatalogen har nå **7 restauranter**. De seks foregående, eksplisitt dokumenterte snapshot-tallene summerte til 266 retter; Lahori er i tillegg produksjonsaktiv, men eksakt samlet item-count skal hentes fra fersk Quality Dashboard-artifact i stedet for å hardkodes fra kildeantakelser.
 - Nye coverage-kandidater registreres som `active=false` og blir ikke søkbare før to aksepterte menywatches, minimumskrav, eksplisitte dish/pris-assertions, deklarerte kommersielle handlinger og første kjøkkentids-watch er bestått.
 - Mislykkede kandidater som var inaktive ved onboardingstart går nå i operativ dvale: menu-, hours- og action-kilder deaktiveres slik at de ikke fortsetter som due/reverification-trafikk. Snapshot- og watch-historikken beholdes, og en senere eksplisitt onboarding kan reaktivere kandidaten kontrollert.
 - Browser-fetch finnes som eksplisitt `fetch_mode=browser` med system-Chrome, offentlig-IP-validering, service-worker-blokkering, request-/DOM-grenser og fail-closed origin-policy. Det brukes aldri som automatisk fallback. Ingen produksjonsrestaurant trenger browser-mode ennå: Tunco/Ninito ble avvist fordi canonical Ninito-kilde forbød Fysen i `robots.txt`, mens Hos Victoria/Wix viste en for tung multi-origin-rendering til å være et godt første produksjonscase.
-- HTML-ekstraksjonen støtter norske prisformater som `kr 70,00` uten å senke den etablerte sikkerhetsgrensen for plausible menypriser. Åpningstidsparseren støtter norske ukedagsforkortelser og day-ranges som `Man–Tor`, `Fre–Lør` og `Søn`.
+- HTML-ekstraksjonen støtter norske prisformater som `kr 70,00` uten å senke den etablerte sikkerhetsgrensen for plausible menypriser.
+- Åpningstidsparseren støtter norske ukedagsforkortelser/ranges og 12-timers klokke med `am/pm`. Når en side har flere ulabelede opening-hours-blokker, kan parseren velge én bare dersom nøyaktig én blokk inneholder en gyldig standard ukeplan; flere parsebare blokker forblir tvetydige og feiler lukket.
 - Søket har exact/prefix/contains/trigram og kuraterte canonical-konsepter. Quality Dashboard replay-er historiske fuzzy- og nulltreff mot dagens ferske, søkbare indeks før de brukes som arbeidskø.
-- Siste replay viser **0 uløste fuzzy-signaler**: `shoyu ramen` og `chicken ceasar burger` løses nå som `exact`, mens `biff tartar` løses som `canonical`.
-- Siste replay viser **1 historisk nulltreff, men 0 uløste nulltreff**: `carbonara` beholdes som historisk etterspørselsdata, men dagens Olivia-indeks løser søket sikkert som `contains` via `Pasta carbonara`.
-- Revenue funnel måler søk, impressions og attribuerte handlinger uten permanent brukerprofil.
+- Siste dokumenterte replay viste **0 uløste fuzzy-signaler**: `shoyu ramen` og `chicken ceasar burger` løses som `exact`, mens `biff tartar` løses som `canonical`.
+- Siste dokumenterte replay viste **1 historisk nulltreff, men 0 uløste nulltreff**: `carbonara` beholdes som historisk etterspørselsdata, men Olivia-indeksen løser søket sikkert som `contains` via `Pasta carbonara`.
+- Revenue funnel måler ekte brukersøk, impressions og attribuerte handlinger uten permanent brukerprofil.
+- Produksjons-QA har en separat, intern GitHub Actions-smoke som kjører `searchDishes` direkte mot production DB og aldri kaller `recordSearchFunnel`. QA-søk skal derfor ikke forurense fuzzy-/nulltreff-/coverage-signaler.
 - Resultatflaten har meny, restaurant, veibeskrivelse og verifisert booking/bestilling når slike canonical handlinger finnes.
 - Avstand og nærhet er implementert med eksplisitt posisjonssamtykke, PostGIS-avstand, meter/kilometer i resultatet og valg mellom `Beste treff` og `Nærmest`.
 - Presis posisjon lagres ikke i Revenue Layer search-events; koordinatene brukes i den konkrete søkeforespørselen og avrundes før søk.
@@ -34,7 +37,7 @@ Piloten skal ikke optimaliseres for flest mulig restauranter. Den skal optimalis
 - En ukjent eller utdatert åpningstidskilde gir alltid `unknown`; Fysen gjetter ikke «åpent nå».
 - Multi-branch hours bruker source-URL og canonical restaurantidentitet som eksplisitte scope-hints og feiler lukket dersom én avdeling ikke kan bestemmes entydig.
 - Quality Dashboard v1 er en privat GitHub Actions-driftsoverflate med lesbar job summary og maskinlesbar JSON-artifact etter produksjonswatch.
-- Fordi dagens demand-review ikke har uløste fuzzy- eller coverage-signaler, skal neste pilotutvidelse velges ut fra representativ Oslo-dekning, kildetyper og faktisk ny etterspørsel — ikke historiske problemer som allerede er løst.
+- Fordi siste dokumenterte demand-review ikke hadde uløste fuzzy- eller coverage-signaler, skal neste pilotutvidelse velges ut fra representativ Oslo-dekning, kildetyper og faktisk ny etterspørsel — ikke historiske problemer som allerede er løst.
 
 ## Produktmål
 
@@ -47,7 +50,7 @@ Ved avslutning av Oslo Pilot v1 skal Fysen kunne:
 5. vise rett, pris, restaurant, avstand, åpent/stengt, menyferskhet og kilde i én tydelig resultatflate;
 6. gjøre det lett å gå videre til meny, restaurant, veibeskrivelse, booking eller bestilling når slike handlinger finnes;
 7. gi intern oversikt over crawlerhelse, kildeferskhet, quarantine og dekning;
-8. måle hvilke retter brukerne søker etter, hvilke søk som gir null treff og hvilke treff som fører til handling.
+8. måle hvilke retter brukerne faktisk søker etter, hvilke søk som gir null treff og hvilke treff som fører til handling — uten at interne QA-søk blandes inn i etterspørselsdataene.
 
 ## Pilotdekning
 
@@ -62,7 +65,7 @@ Dekningen skal bygges kvalitativt, ikke som en vilkårlig tallkvote. Restaurante
 - mer krevende JavaScript-baserte kilder der Playwright/browser-fetch faktisk er nødvendig og tillatt;
 - restauranter med og uten direkte booking-/bestillingslenker.
 
-Rodeo er golden live-kilde. Way Down South beviser den generelle onboardingporten. Hrimnir Ramen Storgata beviser felles seksjonspris, kjedeside-scope og canonical branch-hints uten restaurantspesialkode i søket. Olivia Aker Brygge beviser bounded PDF-fetch, tekstbasert PDF-ekstraksjon og fail-closed parseroppgradering. Mathus Chicken beviser norsk desimalprisformat, forkortede ukedagsintervaller, ytre-øst-dekning og verifisert `order`-handling. Roll Sushi Majorstua beviser item-level JSON-LD via vanlig sikker HTTP og viser at browser ikke skal brukes når råkilden allerede gir samme strukturerte menydata.
+Rodeo er golden live-kilde. Way Down South beviser den generelle onboardingporten. Hrimnir Ramen Storgata beviser felles seksjonspris, kjedeside-scope og canonical branch-hints uten restaurantspesialkode i søket. Olivia Aker Brygge beviser bounded PDF-fetch, tekstbasert PDF-ekstraksjon og fail-closed parseroppgradering. Mathus Chicken beviser norsk desimalprisformat, forkortede ukedagsintervaller, ytre-øst-dekning og verifisert `order`-handling. Roll Sushi Majorstua beviser item-level JSON-LD via vanlig sikker HTTP og viser at browser ikke skal brukes når råkilden allerede gir samme strukturerte menydata. Lahori Dera Tandoori beviser Grønland-/pakistansk-dekning, en komplett førstegangs-HTML-meny, 12-timers åpningstider og verifisert first-party `order` uten restaurantspesialkode.
 
 Browser-foundationen er bygget og produksjonsmigrert, men et browser-case teller først som produksjonsbevis når en konkret tillatt kilde faktisk trenger rendering. Tunco/Ninito ble korrekt avvist av robots-porten, og Hos Victoria/Wix ble ikke valgt fordi en diagnose krevde flere Wix-origins og mer enn standard request-grense før menyen kunne evalueres.
 
@@ -98,6 +101,8 @@ Mathus Chicken beviste den strengere full-gaten i én produksjonskjøring: førs
 
 Roll Sushi Majorstua beviste samme full-gate med en annen kildetype: rå HTTP ga 76 `json_ld`-items, minimum 70 og fem eksplisitte navn/priser passerte, andre watch bekreftet kilden, `order` ble verifisert og hours-porten passerte før aktivering. Offentlig produksjons-API viser blant annet `43. Crispy Scampi 12 biter` til 169 kr og `Roll's Nigiri 2 stk` til 49 kr som exact-treff med `confidence: 0.99`.
 
+Lahori Dera Tandoori passerte full-gaten etter at et generisk hours-gap ble rettet i `hours-visible-v7`. Kilden måtte ha minst 30 retter og inneholde `Kylling Tikka Masala` 209 kr, `Lahori Lam Karahi Fresh` 209 kr, `Chapli Kebab` 194 kr, `Saag Paneer` 169 kr og `Mix Grill` 379 kr. Først etter to menu-watches, same-origin order-verifikasjon og 7 parsebare AM/PM-hours ble Grønland-kilden aktivert.
+
 ### 2. Dish matching v1
 
 Søkerangeringen bygges videre fra dagens exact/prefix/contains/trigram-modell med:
@@ -112,7 +117,7 @@ Semantisk likhet skal aldri alene gjøre en annen rett til et sikkert treff.
 
 De første canonical-konseptene er etablert for `beef-tartare` og `chicken-caesar-burger`, med kuraterte query- og menyaliaser. Historiske fuzzy impressions beholdes som etterspørsels- og kvalitetsdata, men Quality Dashboard replay-er dem mot dagens ferske indeks før de sendes til manuell review. Replay bruker bare `exact -> canonical -> prefix -> contains` som sikre løsningsnivåer; fuzzy kan aldri markere et problem som løst.
 
-Siste produksjonsbevis har 10 historiske fuzzy impressions, men **ingen uløste fuzzy-signaler**: `shoyu ramen -> exact`, `chicken ceasar burger -> exact` og `biff tartar -> canonical`. Det betyr at neste aliasarbeid ikke skal opprettes fra disse radene. Nye canonical aliases krever et fortsatt reproducerbart gap i dagens indeks og manuell kuratering.
+Siste dokumenterte produksjonsbevis hadde 10 historiske fuzzy impressions, men **ingen uløste fuzzy-signaler**: `shoyu ramen -> exact`, `chicken ceasar burger -> exact` og `biff tartar -> canonical`. Det betyr at neste aliasarbeid ikke skal opprettes fra disse radene. Nye canonical aliases krever et fortsatt reproducerbart gap i dagens indeks og manuell kuratering.
 
 ### 3. Avstand og nærhet — implementert
 
@@ -144,11 +149,13 @@ Implementasjonen har:
 - canonical restaurantnavn/slug og source-URL som scope-hints på multi-branch kilder;
 - umiddelbar requeue ved onboarding når en hours-kilde aldri har hatt en vellykket kontroll;
 - eksplisitt single-source-watch som kan kjøres inne i onboarding før en ny restaurant blir aktiv;
-- norske ukedagsforkortelser og ranges, blant annet `Man–Tor`, `Fre–Lør`, `Søn` og `Man - Søn`, i den canonical ukeparseren.
+- norske ukedagsforkortelser og ranges, blant annet `Man–Tor`, `Fre–Lør`, `Søn` og `Man - Søn`;
+- sikker 12-timers klokke med `am/pm`, inkludert korrekt `12am -> 00:00` og `12pm -> 12:00`;
+- fail-closed håndtering av dupliserte ulabelede opening-hours-blokker: én unik parsebar blokk kan velges, mens flere parsebare blokker forblir tvetydige.
 
-Parseren er bevisst konservativ. En tekst som sier «late» er ikke nok til å etablere matserveringens slutt. Dersom siden oppgir en eksakt kjøkkenstenging, brukes den; ellers feiler ekstraksjonen lukket. Dersom en kjedeside inneholder flere åpningstidsseksjoner, må nøyaktig én avdeling kunne bestemmes fra canonical scope-hints eller sideidentitet; ellers publiseres ingen åpningstilstand.
+Parseren er bevisst konservativ. En tekst som sier «late» er ikke nok til å etablere matserveringens slutt. Dersom siden oppgir en eksakt kjøkkenstenging, brukes den; ellers feiler ekstraksjonen lukket. Dersom en kjedeside inneholder flere åpningstidsseksjoner, må nøyaktig én avdeling kunne bestemmes fra canonical scope-hints, sideidentitet eller en unik parsebar standardplan; ellers publiseres ingen åpningstilstand.
 
-Rodeo og Way Down South har fem healthy kjøkkenintervaller hver. Hrimnir Ramen Storgata, Olivia Aker Brygge, Mathus Chicken og Roll Sushi Majorstua har syv hver. Hrimnir ble publisert etter at en reell multi-branch scope-feil først ble fanget som `AMBIGUOUS_HOURS_SECTION`; Mathus og Roll Sushi ble ikke aktivert før første 7-intervalls-watch var grønn.
+Rodeo og Way Down South har fem healthy kjøkkenintervaller hver. Hrimnir Ramen Storgata, Olivia Aker Brygge, Mathus Chicken, Roll Sushi Majorstua og Lahori Dera har syv hver. Hrimnir ble publisert etter at en reell multi-branch scope-feil først ble fanget som `AMBIGUOUS_HOURS_SECTION`; Mathus, Roll Sushi og Lahori ble ikke aktivert før første 7-intervalls-watch var grønn.
 
 ### 5. Resultatflate
 
@@ -165,7 +172,7 @@ Første handlinger er:
 - bestill bord, når verifisert booking-URL finnes;
 - bestill mat, når verifisert ordre-URL finnes.
 
-Booking-/ordrehandlinger er egne canonical records med kilde, verifikasjon og utløp. En utløpt handling skal ikke vises selv om URL-en fortsatt ligger i databasen. Mathus Chicken var første produksjonsbevis på den canonical `order`-handlingen; Roll Sushi Majorstua er andre live `order`-kilde og første som kombinerer den med JSON-LD-meny.
+Booking-/ordrehandlinger er egne canonical records med kilde, verifikasjon og utløp. En utløpt handling skal ikke vises selv om URL-en fortsatt ligger i databasen. Mathus Chicken var første produksjonsbevis på den canonical `order`-handlingen; Roll Sushi Majorstua er andre live `order`-kilde og første som kombinerer den med JSON-LD-meny; Lahori Dera er tredje og beviser first-party shop på Grønland.
 
 ### 6. Quality dashboard — implementert
 
@@ -191,7 +198,7 @@ Replay er byspesifikk og bruker bare ferske snapshots fra aktive restauranter og
 
 Rapporten beholder Revenue Layers dataminimering: ingen IP-adresser, user-agent, konto-ID eller permanent brukerprofil tilføres.
 
-Etter Roll Sushi består den aktive produksjonskatalogen av 6 restauranter. De publiserte, sist verifiserte per-restaurant snapshot-tallene summerer til **266 aktuelle retter**. Roll Sushi står offentlig med fersk JSON-LD-meny, `confidence: 0.99`, healthy opening-state og verifisert `order`. Det tidligere current-index replay-beviset hadde samtidig **0 uløste fuzzy-signaler og 0 uløste nulltreff**.
+Den aktive produksjonskatalogen består nå av 7 restauranter. Roll Sushi står offentlig med fersk JSON-LD-meny, `confidence: 0.99`, healthy opening-state og verifisert `order`; Lahori Dera står offentlig med exact 209-kroners Lam Karahi-treff, fersk opening-state og verifisert `order`. Eksakt samlet rettetall er dashboard-eid og skal ikke utledes fra kildeantall når ferskt artifact ikke er lest.
 
 ### 7. Demand loop
 
@@ -211,7 +218,7 @@ Historikk og aktiv arbeidskø er bevisst skilt. Et fuzzy impression eller nulltr
 - fuzzy alene kan aldri markere et signal som løst;
 - bare signaler som fortsatt er uløste i samme by prioriteres som aktive gap.
 
-Siste produksjonsdashboard har tre historiske fuzzy-grupper som alle nå er løst (`shoyu ramen -> exact`, `chicken ceasar burger -> exact`, `biff tartar -> canonical`) og ett historisk nulltreff (`carbonara`) som nå løses som `contains`. Den aktive review-køen er derfor tom på begge dimensjoner akkurat nå. Neste coverage-/matchingarbeid skal styres av nye signaler eller av pilotens representativitetsbehov, ikke av disse historiske radene.
+Siste dokumenterte produksjonsdashboard hadde tre historiske fuzzy-grupper som alle var løst (`shoyu ramen -> exact`, `chicken ceasar burger -> exact`, `biff tartar -> canonical`) og ett historisk nulltreff (`carbonara`) som ble løst som `contains`. Den aktive review-køen var dermed tom på begge dimensjoner. Nye produksjons-QA-søk skal ikke blandes inn i denne arbeidskøen: de kjøres gjennom intern non-recording smoke.
 
 Første versjon lagrer ikke IP-adresse, brukeragent, kontoidentitet eller permanent personlig profil for denne analysen.
 
@@ -225,10 +232,13 @@ Et produktsteg regnes derfor ikke som fullført offentlig før:
 - produksjonsdatabasen er verifisert og eventuelle migrasjoner er anvendt;
 - produksjonswatcheren er grønn og eventuelle nye kilder har canonical snapshots;
 - Quality Dashboard er grønt uten uavklarte coverage-feil;
+- intern production-search-smoke kan bekrefte aktuelle data uten å skrive Revenue-events når en slik smoke er nødvendig;
 - `fysen-api` production svarer med den forventede aktuelle responskontrakten;
 - `fysen` production rendrer samme kontrakt uten rolling-deploy-skjevhet.
 
 Vercel-preview er nyttig som buildbevis, men teller ikke som offentlig produksjonsbevis. Hvis Git-integrasjonen stopper på build-rate-limit, skal eksisterende production beholdes fungerende og deploy-avviket behandles eksplisitt i stedet for å late som ny funksjonalitet er offentlig.
+
+Offentlige API-søk skal ikke brukes som normal intern QA-loop fordi de med hensikt registrerer ekte search/impression-events. De brukes bare når selve den offentlige brukerflaten må bevises. Gjentatt intern QA går via den private GitHub Actions-smoken som leser production search-data direkte.
 
 ## Kvalitetsporter
 
@@ -241,6 +251,7 @@ Pilotdata publiseres bare når:
 - deklarert booking/order er verifisert og ikke utløpt;
 - en ny kandidat med hours-kilde har bestått første hours-watch og minimumsintervallene før `active=true`;
 - en mislykket inaktiv kandidat har fått operative menu-/hours-/action-kilder deaktivert før neste ordinære due/reverification-runde;
+- en eksplisitt `json_ld`-kilde faktisk ekstraheres som `json_ld` og ikke faller skjult tilbake til heuristisk HTML;
 - kilden er innenfor definert ferskhetsvindu;
 - retten kan spores til konkret snapshot og kilde;
 - åpningstilstand kan spores til et ferskt hours-snapshot, ellers vises `unknown`.
@@ -261,6 +272,6 @@ Følgende er bevisst utsatt:
 
 ## Suksesskriterium
 
-Piloten er vellykket når en ny bruker i Oslo kan åpne Fysen, søke en konkret rett og få et **troverdig, ferskt og handlingsklart resultat**, samtidig som vi kan måle hvilke søk som skaper etterspørsel og hvilke restauranttreff som faktisk sender brukeren videre.
+Piloten er vellykket når en ny bruker i Oslo kan åpne Fysen, søke en konkret rett og få et **troverdig, ferskt og handlingsklart resultat**, samtidig som vi kan måle hvilke ekte brukersøk som skaper etterspørsel og hvilke restauranttreff som faktisk sender brukeren videre.
 
 Revenue- og konverteringsdelen av piloten er spesifisert i [`revenue-layer-v1.md`](./revenue-layer-v1.md).
