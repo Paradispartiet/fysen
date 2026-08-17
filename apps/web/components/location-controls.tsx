@@ -3,6 +3,7 @@
 import type { DishSearchSort } from "@fysen/contracts";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import styles from "./location-controls.module.css";
 
 interface LocationControlsProps {
   readonly hasLocation: boolean;
@@ -71,17 +72,25 @@ export function LocationControls({ hasLocation, sort }: LocationControlsProps) {
     setStatus(null);
   }
 
+  const controlsClassName = styles.controls ?? "";
+  const primaryClassName = styles.primary ?? "";
+  const sortGroupClassName = styles.sortGroup ?? "";
+  const sortClassName = styles.sort ?? "";
+  const sortActiveClassName = styles.sortActive ?? "";
+  const clearClassName = styles.clear ?? "";
+  const statusClassName = styles.status ?? "";
+
   return (
-    <div className="locationControls" aria-label="Avstand og sortering">
+    <div className={controlsClassName} aria-label="Avstand og sortering">
       {!hasLocation ? (
-        <button className="locationAction" type="button" onClick={useLocation} disabled={locating}>
+        <button className={primaryClassName} type="button" onClick={useLocation} disabled={locating}>
           {locating ? "Henter posisjon …" : "Bruk min posisjon"}
         </button>
       ) : (
         <>
-          <div className="sortControls" aria-label="Sorter søkeresultater">
+          <div className={sortGroupClassName} aria-label="Sorter søkeresultater">
             <button
-              className={sort === "relevance" ? "sortAction isActive" : "sortAction"}
+              className={`${sortClassName} ${sort === "relevance" ? sortActiveClassName : ""}`.trim()}
               type="button"
               onClick={() => setSort("relevance")}
               aria-pressed={sort === "relevance"}
@@ -89,7 +98,7 @@ export function LocationControls({ hasLocation, sort }: LocationControlsProps) {
               Beste treff
             </button>
             <button
-              className={sort === "distance" ? "sortAction isActive" : "sortAction"}
+              className={`${sortClassName} ${sort === "distance" ? sortActiveClassName : ""}`.trim()}
               type="button"
               onClick={() => setSort("distance")}
               aria-pressed={sort === "distance"}
@@ -97,12 +106,12 @@ export function LocationControls({ hasLocation, sort }: LocationControlsProps) {
               Nærmest
             </button>
           </div>
-          <button className="locationClear" type="button" onClick={clearLocation}>
+          <button className={clearClassName} type="button" onClick={clearLocation}>
             Fjern posisjon
           </button>
         </>
       )}
-      {status ? <p className="locationStatus" role="status">{status}</p> : null}
+      {status ? <p className={statusClassName} role="status">{status}</p> : null}
     </div>
   );
 }
