@@ -128,8 +128,7 @@ export function StaticPreviewSearchPage() {
           key={`${q}-${city}`}
           defaultValue={q}
           city={city}
-          compact
-          buttonLabel="Søk"
+          buttonLabel="Finn retten"
           inputId="results-dish-query"
         />
       </GlobalHeader>
