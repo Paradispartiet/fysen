@@ -1,0 +1,121 @@
+name: Fysen production search smoke
+
+on:
+  workflow_dispatch:
+    inputs:
+      query:
+        description: Dish query to run directly against production search data
+        required: true
+        type: string
+      city:
+        description: City scope
+        required: true
+        default: Oslo
+        type: string
+      expected_restaurant_slug:
+        description: Optional restaurant slug that must be present
+        required: false
+        type: string
+      expected_dish_name:
+        description: Optional exact dish name for the target result
+        required: false
+        type: string
+      expected_price_minor:
+        description: Optional exact price in minor units (for example 20900)
+        required: false
+        type: string
+      expected_match_type:
+        description: Optional expected match type
+        required: false
+        default: any
+        type: choice
+        options: [any, exact, canonical, prefix, contains, fuzzy]
+      expected_opening:
+        description: Optional expected current opening state
+        required: false
+        default: any
+        type: choice
+        options: [any, open, closed, unknown]
+      expected_action:
+        description: Optional verified commercial action
+        required: false
+        default: none
+        type: choice
+        options: [none, booking, order]
+      min_count:
+        description: Minimum number of search results
+        required: true
+        default: "1"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-production-search-smoke
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
+      DATABASE_SSL: "verify-full"
+      NODE_ENV: production
+      SMOKE_QUERY: ${{ inputs.query }}
+      SMOKE_CITY: ${{ inputs.city }}
+      SMOKE_EXPECTED_RESTAURANT_SLUG: ${{ inputs.expected_restaurant_slug }}
+      SMOKE_EXPECTED_DISH_NAME: ${{ inputs.expected_dish_name }}
+      SMOKE_EXPECTED_PRICE_MINOR: ${{ inputs.expected_price_minor }}
+      SMOKE_EXPECTED_MATCH_TYPE: ${{ inputs.expected_match_type }}
+      SMOKE_EXPECTED_OPENING: ${{ inputs.expected_opening }}
+      SMOKE_EXPECTED_ACTION: ${{ inputs.expected_action }}
+      SMOKE_MIN_COUNT: ${{ inputs.min_count }}
+    steps:
+      - name: Require production database secret
+        shell: bash
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "FYSEN_PRODUCTION_DATABASE_URL is not configured." >&2
+            exit 1
+          fi
+
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build search dependencies
+        run: |
+          pnpm --filter @fysen/menu-core build
+          pnpm --filter @fysen/database build
+
+      - name: Search production without recording Revenue events
+        shell: bash
+        run: |
+          node scripts/production-search-smoke.mjs | tee /tmp/fysen-search-smoke.json
+          {
+            echo '## Production search smoke'
+            echo
+            echo 'This query runs `searchDishes` directly and does **not** call `recordSearchFunnel`.'
+            echo
+            echo '```json'
+            cat /tmp/fysen-search-smoke.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
