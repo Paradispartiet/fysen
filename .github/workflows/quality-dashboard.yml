@@ -50,8 +50,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Build database reporting package
-        run: pnpm --filter @fysen/database build
+      - name: Build database reporting dependency graph
+        run: pnpm --filter @fysen/database... build
 
       - name: Generate quality dashboard
         run: pnpm --filter @fysen/database quality:dashboard -- reports

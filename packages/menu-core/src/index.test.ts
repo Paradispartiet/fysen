@@ -5,12 +5,54 @@ import {
   createMenuItemSourceKey,
   diffMenuItems,
   normalizeDishName,
+  normalizeMenuPriceSemantics,
   type MenuObservedItem,
 } from "./index.js";
 
 describe("normalizeDishName", () => {
   it("normalizes punctuation and whitespace without destroying Norwegian letters", () => {
     expect(normalizeDishName("  Biff-tartar   med Østers  ")).toBe("biff tartar med østers");
+  });
+});
+
+describe("normalizeMenuPriceSemantics", () => {
+  it("normalizes omitted legacy semantics to exact", () => {
+    expect(normalizeMenuPriceSemantics({ priceMinor: 20900 })).toEqual({
+      priceMinor: 20900,
+      priceKind: "exact",
+      priceMaxMinor: null,
+    });
+  });
+
+  it("accepts canonical from and multiple price shapes", () => {
+    expect(normalizeMenuPriceSemantics({ priceMinor: 14000, priceKind: "from" })).toEqual({
+      priceMinor: 14000,
+      priceKind: "from",
+      priceMaxMinor: null,
+    });
+    expect(
+      normalizeMenuPriceSemantics({
+        priceMinor: 28500,
+        priceKind: "multiple",
+        priceMaxMinor: 30900,
+      }),
+    ).toEqual({
+      priceMinor: 28500,
+      priceKind: "multiple",
+      priceMaxMinor: 30900,
+    });
+  });
+
+  it("rejects contradictory price shapes before persistence or fingerprinting", () => {
+    expect(() =>
+      normalizeMenuPriceSemantics({ priceMinor: 20900, priceKind: "exact", priceMaxMinor: 22900 }),
+    ).toThrow("exact price semantics cannot include priceMaxMinor");
+    expect(() => normalizeMenuPriceSemantics({ priceMinor: null, priceKind: "from" })).toThrow(
+      "from price semantics require priceMinor",
+    );
+    expect(() =>
+      normalizeMenuPriceSemantics({ priceMinor: 30900, priceKind: "multiple", priceMaxMinor: 28500 }),
+    ).toThrow("multiple price semantics require priceMaxMinor >= priceMinor");
   });
 });
 
