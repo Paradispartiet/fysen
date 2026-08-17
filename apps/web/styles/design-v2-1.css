@@ -1,0 +1,512 @@
+:root {
+  --color-bg: #060706;
+  --color-paper: #090a09;
+  --color-surface-2: #0b0c0b;
+  --color-surface-3: #0e100e;
+  --color-line: rgba(121, 201, 135, 0.18);
+  --color-line-strong: rgba(121, 201, 135, 0.38);
+  --color-search-line: rgba(241, 244, 239, 0.16);
+  --color-search-line-strong: rgba(121, 201, 135, 0.34);
+  --color-header: rgba(6, 7, 6, 0.96);
+  --color-skeleton: rgba(255, 255, 255, 0.075);
+  --shadow-search: none;
+  --shadow-search-focus: 0 0 0 2px rgba(121, 201, 135, 0.11);
+}
+
+body {
+  background: var(--color-bg);
+}
+
+.fysenLogo {
+  font-size: 32px;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+}
+
+.globalHeaderInner {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.dishSearch {
+  min-height: 70px;
+  padding: 7px;
+  background: #090a09;
+  border-color: var(--color-search-line);
+  border-radius: 15px;
+  box-shadow: none;
+}
+
+.dishSearch:hover {
+  border-color: rgba(241, 244, 239, 0.24);
+}
+
+.dishSearch:focus-within {
+  border-color: rgba(121, 201, 135, 0.52);
+  box-shadow: var(--shadow-search-focus);
+}
+
+.dishSearch input {
+  font-size: 17px;
+  font-weight: 420;
+  letter-spacing: 0;
+}
+
+.dishSearch button {
+  min-width: 122px;
+  min-height: 50px;
+  padding-inline: 18px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.dishSearchCompact {
+  min-height: 52px;
+  border-radius: 12px;
+}
+
+.dishSearchCompact button {
+  min-height: 40px;
+  border-radius: 8px;
+}
+
+.homeMain {
+  padding-bottom: 80px;
+}
+
+.homeHero {
+  grid-template-columns: minmax(0, 1fr) 260px;
+  align-items: start;
+  gap: 64px;
+  width: min(var(--content-hero), calc(100% - 96px));
+  min-height: 520px;
+  padding: 50px 0 64px;
+}
+
+.homeHeroContent {
+  align-self: center;
+}
+
+.homeHero h1 {
+  max-width: 670px;
+  font-size: clamp(60px, 5.6vw, 80px);
+  font-weight: 580;
+  line-height: 1.075;
+  letter-spacing: -0.014em;
+}
+
+.homeHero h1 span + span {
+  margin-top: 0.05em;
+}
+
+.homeSearchWrap {
+  width: min(760px, 100%);
+  margin-top: 34px;
+}
+
+.foodHeroIllustration {
+  align-self: start;
+  min-height: 0;
+  margin-top: 14px;
+  overflow: hidden;
+  justify-content: flex-end;
+}
+
+.foodHeroIllustration::before {
+  display: none;
+}
+
+.foodHeroIllustration svg {
+  width: 248px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.foodHeroInk,
+.foodHeroGreen {
+  stroke-width: 2.8;
+}
+
+.foodHeroInk {
+  stroke: rgba(241, 244, 239, 0.58);
+}
+
+.foodHeroGreen {
+  stroke: rgba(121, 201, 135, 0.92);
+}
+
+.foodHeroAccent {
+  display: none;
+}
+
+.suggestionRail {
+  width: min(var(--content-hero), calc(100% - 96px));
+  padding: 24px;
+  background: #080908;
+  border: 1px solid rgba(121, 201, 135, 0.22);
+  border-radius: 14px;
+}
+
+.suggestionRailHeading {
+  align-items: start;
+  margin-bottom: 18px;
+}
+
+.suggestionRailHeading > p {
+  display: none;
+}
+
+.suggestionRailEyebrow {
+  margin-bottom: 5px;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.075em;
+}
+
+.suggestionRailHeading h2 {
+  font-size: 24px;
+  font-weight: 580;
+  line-height: 1.12;
+  letter-spacing: -0.012em;
+}
+
+.suggestionRailList {
+  gap: 10px;
+}
+
+.suggestionCard {
+  min-height: 88px;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  background: #070807;
+  border: 1px solid rgba(121, 201, 135, 0.22);
+  border-radius: 12px;
+}
+
+.suggestionCard:hover {
+  background: #070807;
+  border-color: rgba(121, 201, 135, 0.48);
+  transform: translateY(-1px);
+}
+
+.suggestionCardTopline {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.suggestionCard strong {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 570;
+  letter-spacing: -0.01em;
+}
+
+.suggestionCardAction {
+  flex: 0 0 auto;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.suggestionCardMeta {
+  color: var(--color-brand);
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.suggestionSponsor {
+  color: var(--color-muted);
+  font-size: 11px;
+}
+
+.resultsMain {
+  padding-top: 48px;
+}
+
+.resultsIntro {
+  margin-bottom: 30px;
+}
+
+.resultsIntro h1 {
+  font-size: clamp(44px, 4.7vw, 62px);
+  font-weight: 590;
+  line-height: 1.06;
+  letter-spacing: -0.016em;
+}
+
+.resultList {
+  gap: 14px;
+}
+
+.dishResult {
+  padding: 22px 24px;
+  background: #080908;
+  border: 1px solid rgba(121, 201, 135, 0.28);
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+.dishResult:hover {
+  background: #080908;
+  border-color: rgba(121, 201, 135, 0.5);
+}
+
+.dishResultTopline {
+  gap: 18px 28px;
+}
+
+.dishResultIdentity h2 {
+  font-size: 29px;
+  font-weight: 590;
+  line-height: 1.1;
+  letter-spacing: -0.014em;
+}
+
+.restaurantName {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 520;
+}
+
+.restaurantLink {
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.restaurantLink:hover {
+  color: var(--color-brand-hover);
+}
+
+.dishPrice {
+  margin-top: 3px;
+  color: #dfe4dd;
+  font-size: 19px;
+  font-weight: 590;
+}
+
+.dishDescription {
+  margin-top: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.dishComposition {
+  margin-top: 18px;
+  padding: 13px 14px 14px;
+  background: transparent;
+  border: 1px solid rgba(121, 201, 135, 0.24);
+  border-radius: 11px;
+}
+
+.dishCompositionHeading strong {
+  font-weight: 600;
+}
+
+.dishCompositionChips {
+  gap: 7px;
+}
+
+.dishCompositionChips > span {
+  min-height: 28px;
+  padding-inline: 10px;
+  color: #bdd8c0;
+  background: transparent;
+  border: 1px solid rgba(121, 201, 135, 0.3);
+  font-weight: 520;
+}
+
+.dishResultFacts {
+  gap: 7px 13px;
+  margin-top: 17px;
+  font-size: 12px;
+}
+
+.dishResultBottomline {
+  align-items: flex-end;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top-color: rgba(121, 201, 135, 0.14);
+}
+
+.dishResultSignals {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.freshnessStatus,
+.openingStatus {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  color: var(--color-muted);
+  background: transparent;
+  border: 1px solid rgba(121, 201, 135, 0.22);
+  border-radius: var(--radius-round);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.openingStatus[data-state="closed"],
+.openingStatus[data-state="unknown"] {
+  border-color: rgba(241, 244, 239, 0.14);
+}
+
+.openingStatus[data-state="open"] {
+  color: #bdd8c0;
+}
+
+.freshnessDot {
+  width: 7px;
+  height: 7px;
+  box-shadow: none;
+}
+
+.evidenceLink {
+  min-height: 36px;
+  font-size: 12px;
+  font-weight: 560;
+}
+
+.nearResults {
+  border-top-color: rgba(121, 201, 135, 0.18);
+}
+
+.searchState,
+.loadingResult {
+  background: #080908;
+  border-color: rgba(121, 201, 135, 0.24);
+  border-radius: 14px;
+}
+
+@media (max-width: 1100px) {
+  .homeHero {
+    grid-template-columns: minmax(0, 1fr) 220px;
+    gap: 36px;
+    width: min(var(--content-hero), calc(100% - 64px));
+  }
+
+  .foodHeroIllustration svg {
+    width: 208px;
+  }
+
+  .suggestionRail {
+    width: min(var(--content-hero), calc(100% - 64px));
+  }
+}
+
+@media (max-width: 900px) {
+  .homeHero {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-top: 44px;
+  }
+
+  .homeHeroContent {
+    order: 1;
+  }
+
+  .foodHeroIllustration {
+    order: 2;
+    width: 190px;
+    margin: 24px 0 -12px;
+    justify-content: flex-start;
+  }
+
+  .foodHeroIllustration svg {
+    width: 180px;
+  }
+}
+
+@media (max-width: 767px) {
+  .globalHeaderInner {
+    padding-inline: 20px;
+  }
+
+  .fysenLogo {
+    font-size: 27px;
+  }
+
+  .homeHero {
+    width: calc(100% - 40px);
+    padding: 38px 0 50px;
+  }
+
+  .homeHero h1 {
+    font-size: clamp(48px, 13.5vw, 58px);
+    line-height: 1.08;
+  }
+
+  .homeSearchWrap {
+    margin-top: 28px;
+  }
+
+  .suggestionRail {
+    width: calc(100% - 40px);
+    padding: 20px;
+  }
+
+  .suggestionRailList {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scroll-snap-type: x proximity;
+  }
+
+  .suggestionCard {
+    min-width: 156px;
+    min-height: 78px;
+    scroll-snap-align: start;
+  }
+
+  .dishResult {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .dishResultIdentity h2 {
+    font-size: 26px;
+  }
+
+  .dishPrice {
+    font-size: 18px;
+  }
+
+  .dishResultBottomline {
+    align-items: flex-start;
+  }
+
+  .dishResultSignals {
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .dishSearch {
+    min-height: 62px;
+  }
+
+  .dishSearch button {
+    min-width: 104px;
+    min-height: 46px;
+    padding-inline: 14px;
+  }
+
+  .foodHeroIllustration {
+    width: 156px;
+  }
+
+  .foodHeroIllustration svg {
+    width: 148px;
+  }
+}

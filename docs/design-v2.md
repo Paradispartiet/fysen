@@ -1,80 +1,100 @@
-# Fysen Design v2
+# Fysen Design v2.1
 
-Design v2 er den visuelle fasiten for Fysen.
+Design v2.1 er den visuelle fasiten for Fysen.
 
 ## Produktuttrykk
 
 Fysen skal føles som moderne matoppdagelse kombinert med en presis søkemotor: mørkt, rolig, appetittvekkende og lett å skanne. Det skal ikke se ut som en generisk tech-startup eller en ratingsdrevet restaurantguide.
 
+## Brand
+
+Ordmerket skrives alltid `fysen`, uten punktum. Punktum skal ikke brukes som del av logoen eller det visuelle ordmerket.
+
 ## Farger
 
-- Hovedbakgrunn: `#090B09`
-- Surface 1: `#101510`
-- Surface 2: `#151C16`
-- Surface 3: `#1B241C`
+- Hovedbakgrunn: nær sort, `#060706`
+- Kort/paneler: sort eller nesten sort, aldri brungrønne flater
 - Primærtekst: `#F1F4EF`
 - Sekundærtekst: `#ABB3AA`
 - Fysen-grønn: `#79C987`
 - Grønn hover: `#8BD999`
-- Mataksent: `#C96C48`, kun som liten illustrasjonsdetalj
 
-Grønt er primær identitets- og interaksjonsfarge. Oransje skal aldri brukes som generell fokusramme eller primær CTA.
+Grønt er en signalfarge, ikke en flatefarge. Det brukes på tynne rammer, fokus, ferskhet, enkelte etiketter, CTA og noen få illustrasjonsdetaljer. Resultatkort, forslag, ingrediensfelt og andre informasjonsbokser skal ikke ha grønn bakgrunn.
+
+Oransje skal ikke brukes som generell fokusramme, primær CTA eller dominerende dekorasjon.
 
 ## Typografi
 
-Primær font er DM Sans Variable. Hovedoverskriften skal være stor, men ikke kompakt eller tung: ca. 620–650 i vekt, linjehøyde rundt 1.02 og moderat negativ tracking. Resultattitler skal være 620–650, ikke 800+.
+Primær font er DM Sans Variable, men uttrykket skal være åpnere enn i v2. Hovedoverskriften skal ha lavere vekt, mer linjeavstand og mindre negativ tracking. Resultattitler og logo skal også være lettere. Målet er høy lesbarhet fremfor kompakt displaytypografi.
 
 ## Forside
 
 Forsiden består av:
 
-1. global header med `fysen.` og Oslo;
-2. stor «Hva har du lyst på?»-hero;
-3. tydelig, organisk matillustrasjon;
-4. stort søkefelt med grønn CTA og subtil grønn focus state;
+1. global header med `fysen` og Oslo;
+2. luftig «Hva har du lyst på?»-hero;
+3. én tydelig, ren matillustrasjon i sin egen plass, aldri over søkefelt eller CTA;
+4. stort, sort søkefelt med grønn CTA og subtil grønn focus state;
 5. proof-tekst om ferske, sporbare menyer;
 6. permanent `SuggestionRail` med «Forslag akkurat nå».
 
-Forslagsflaten er sponsor-klar. Betalte forslag skal alltid merkes eksplisitt som `Sponset`. Sponsing kan påvirke plassering, men aldri menybevis, pris, tilgjengelighet, ferskhet eller matchscore.
+Heroillustrasjonen skal være tydelig matspesifikk, ha færre og renere streker, lys hovedstrek og bare noen få grønne detaljer. Den skal ikke bruke tilfeldige doodle-elementer eller overlappe funksjonelle kontroller.
 
-## Matillustrasjon
+## SuggestionRail
 
-Bruk én tydelig heroillustrasjon og færre sekundære elementer. Illustrasjonen skal være organisk og matspesifikk, med lys strek, tydelig grønn detaljering og svært sparsom terracotta. Den gamle spredte doodle-komposisjonen er avviklet.
+Forslagsflaten skal være sort med en tynn grønn outline. Forslagskortene er kompakte, sorte og har tynn grønn outline. Editoriale forslag skal ikke repetere etiketten `Forslag` på hvert kort. Bare faktisk betalt innhold merkes `Sponset`.
+
+Forslagsflaten er sponsor-klar. Sponsing kan påvirke plassering, men aldri menybevis, pris, tilgjengelighet, ferskhet eller matchscore.
+
+## Søk
+
+Søkefeltet har mørk nøytral ramme i hvile. Først ved fokus blir rammen diskret grønn. Det skal aldri oppstå en oransje fokusramme. `Finn retten` er grønn, men skal være mindre og mindre avrundet enn i v2.
 
 ## Søkeresultater
 
-Hvert resultat skal være et tydelig kort:
+Hvert resultat er et tydelig, sort kort med:
 
-- mørk grønnsvart surface;
-- synlig, men rolig kant;
-- 18 px radius;
-- god intern padding;
-- klar header med rett, restaurant og pris;
+- sort bakgrunn uten grønn fill;
+- tynn grønn outline;
+- 12–14 px radius;
+- klar topp-rad med rett og pris;
+- restaurant som tydelig sekundærinformasjon;
 - beskrivelse;
 - eventuell `DishComposition`;
-- metadata;
-- egen footer for ferskhet og handlinger.
+- ryddig metadata;
+- separate statusindikatorer for ferskhet og åpning;
+- egen handlingfooter.
 
-Resultatkortene skal være visuelt separerte; resultatsiden skal ikke oppleves som én flytende tekstkolonne.
+Kortene kan få en sterkere grønn outline ved hover, men bakgrunnen forblir sort.
 
 ## DishComposition
 
-`I denne retten` kan bare vises når menybeskrivelsen selv gir et tilstrekkelig strukturerbart grunnlag. Komponenten skal aldri fylle inn generelle oppskriftsingredienser som om de var restaurantens faktiske ingredienser. UI-et skal eksplisitt vise at informasjonen kommer fra menybeskrivelsen.
+`I denne retten` kan bare vises når menybeskrivelsen selv gir et tilstrekkelig strukturerbart grunnlag. Komponenten skal aldri fylle inn generelle oppskriftsingredienser som om de var restaurantens faktiske ingredienser.
+
+Selve boksen og ingrediens-chips skal være sorte/transparente med tynne grønne rammer, ikke grønne flater.
+
+## Metadata og status
+
+Adresse, avstand og menyseksjon vises som vanlig metadata uten unødvendig understreking. Åpent/stengt-status og ferskhet vises som kompakte status-pills med sort bakgrunn og tynn kant. Grønt brukes sterkest når statusen faktisk er positiv eller fersk.
 
 ## Handlinger
 
-Primær konverteringshandling, som `Bestill bord` eller `Bestill mat`, bruker Fysen-grønn. Sekundære evidens- og navigasjonslenker er teksthandlinger i kortets footer.
+Primær konverteringshandling, som `Bestill bord` eller `Bestill mat`, bruker Fysen-grønn. Sekundære handlinger skal være færre og roligere: `Meny`, `Åpningstider` og `Gå dit`. Restaurantens navn kan selv være lenke til restaurantens nettsted når en verifisert URL finnes.
+
+## Rytme og radius
+
+Bruk et konsekvent spacing-system basert på 8/12/16/24/32/48/64 px. Kort og paneler skal generelt ha mindre radius enn v2; Fysen skal føles mer editorial/gastronomisk og mindre som et generisk SaaS-grensesnitt.
 
 ## Responsivitet
 
-Design v2 skal behandles som tre reelle viewport-klasser:
+Design v2.1 skal behandles som tre reelle viewport-klasser:
 
 - desktop ca. 1440×900;
 - iPad ca. 1024×1366;
 - mobil ca. 390×844.
 
-På mobil kan forslag scrolles horisontalt, resultathandlinger wrappe, og heroen viser kun hovedillustrasjonen.
+På iPad skal heroillustrasjonen ha sin egen kolonne og ikke kunne krysse søkefeltet. På mobil flyttes illustrasjonen til en egen plass under hovedinnholdet. Forslag kan scrolles horisontalt og resultathandlinger kan wrappe.
 
 ## Skal ikke brukes
 
-Ingen kremgul/beige hovedpalett, ratings/stjerner, stockfoto, glassmorphism, neon, store tilfeldige shadows, skjult sponsing, generiske AI-markedsføringspåstander eller udokumenterte «beste»-påstander.
+Ingen kremgul/beige hovedpalett, brungrønne kortflater, grønne fills i informasjonsbokser, ratings/stjerner, stockfoto, glassmorphism, neon, store tilfeldige shadows, skjult sponsing, generiske AI-markedsføringspåstander eller udokumenterte «beste»-påstander.
