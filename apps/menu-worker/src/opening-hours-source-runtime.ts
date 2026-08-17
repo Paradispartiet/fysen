@@ -4,7 +4,7 @@ import {
   OPENING_HOURS_EXTRACTOR_VERSION,
   OpeningHoursExtractionError,
   extractKitchenOpeningHours,
-  type KitchenOpeningHoursExtraction,
+  type ExtractedOpeningHours,
 } from "./opening-hours-extractor.js";
 
 export interface OpeningHoursSourceRuntimeInput {
@@ -23,7 +23,7 @@ export type OpeningHoursSourceResolution =
   | {
       readonly kind: "content";
       readonly fetched: OpeningHoursContentFetch;
-      readonly extracted: KitchenOpeningHoursExtraction;
+      readonly extracted: ExtractedOpeningHours;
       readonly scheduleFingerprint: string;
       readonly extractorVersion: string;
     };
