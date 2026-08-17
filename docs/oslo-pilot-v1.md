@@ -13,23 +13,25 @@ Piloten skal ikke optimaliseres for flest mulig restauranter. Den skal optimalis
 ## Implementasjonsstatus
 
 - Rodeo er golden live-kilde med produksjonsaktiv menyovervåkning: 16 aktuelle retter, healthy kjøkkentider og verifisert booking.
-- Way Down South er andre produksjonsgodkjente Oslo-restaurant og første bevis på den generelle onboardingporten: 20 retter, to aksepterte watches, healthy kjøkkentider og verifisert booking.
+- Way Down South er produksjonsgodkjent med 20 retter, to aksepterte watches, healthy kjøkkentider og verifisert booking.
 - Hrimnir Ramen Storgata beviser shared-section-price og branch-scoped hours: 12 aktuelle retter, eksplisitt fellespris på 260 kr, 7 healthy kjøkkenintervaller og verifisert booking.
 - Olivia Aker Brygge beviser PDF-meny som produksjonskilde: 53 aktuelle retter, separat voksen- og barnevariant av Pasta carbonara, 7 healthy kjøkkenintervaller og verifisert booking. PDF-parseroppgraderinger er fail-closed og tvinger ny ekstraksjon før en stale parser får fortsette å være publisert.
 - Mathus Chicken på Vestli er første produksjonsverifiserte `order`-destinasjon og første ytre-øst-kilde i katalogen: 89 aktuelle retter, to aksepterte watches, verifisert bestill-mat-handling og 7 healthy kjøkkenintervaller.
 - Siste produksjonsdashboard viser **5 aktive restauranter, 5/5 healthy menykilder, 190 aktuelle retter, 0 candidate-restauranter og 0 degraded menykilder**.
 - Nye coverage-kandidater registreres som `active=false` og blir ikke søkbare før to aksepterte menywatches, minimumskrav, eksplisitte dish/pris-assertions, deklarerte kommersielle handlinger og første kjøkkentids-watch er bestått.
-- HTML-ekstraksjonen støtter nå også norske prisformater som `kr 70,00` uten å senke den etablerte sikkerhetsgrensen for plausible menypriser. Åpningstidsparseren støtter norske ukedagsforkortelser som `Man - Søn`.
-- Søket har exact/prefix/contains/trigram og skiller fuzzy «nære treff» fra sikrere treff. Canonical matching har kuraterte konsepter for blant annet Biff tartar og Chicken Caesar Burger, men fuzzy-review-signalet viser at `shoyu ramen` er neste tydelige matching-gap.
+- HTML-ekstraksjonen støtter norske prisformater som `kr 70,00` uten å senke den etablerte sikkerhetsgrensen for plausible menypriser. Åpningstidsparseren støtter norske ukedagsforkortelser som `Man - Søn`.
+- Søket har exact/prefix/contains/trigram og kuraterte canonical-konsepter. Quality Dashboard replay-er historiske fuzzy- og nulltreff mot dagens ferske, søkbare indeks før de brukes som arbeidskø.
+- Siste replay viser **0 uløste fuzzy-signaler**: `shoyu ramen` og `chicken ceasar burger` løses nå som `exact`, mens `biff tartar` løses som `canonical`.
+- Siste replay viser **1 historisk nulltreff, men 0 uløste nulltreff**: `carbonara` beholdes som historisk etterspørselsdata, men dagens Olivia-indeks løser søket sikkert som `contains` via `Pasta carbonara`.
 - Revenue funnel måler søk, impressions og attribuerte handlinger uten permanent brukerprofil.
 - Resultatflaten har meny, restaurant, veibeskrivelse og verifisert booking/bestilling når slike canonical handlinger finnes.
 - Avstand og nærhet er implementert med eksplisitt posisjonssamtykke, PostGIS-avstand, meter/kilometer i resultatet og valg mellom `Beste treff` og `Nærmest`.
 - Presis posisjon lagres ikke i Revenue Layer search-events; koordinatene brukes i den konkrete søkeforespørselen og avrundes før søk.
-- Åpningstider er implementert som en egen kildebelagt kjøkkentids-strøm med immutable snapshots, ferskhet og `open | closed | unknown` i dish search.
+- Åpningstider er en egen kildebelagt kjøkkentids-strøm med immutable snapshots, ferskhet og `open | closed | unknown` i dish search.
 - En ukjent eller utdatert åpningstidskilde gir alltid `unknown`; Fysen gjetter ikke «åpent nå».
-- Multi-branch hours bruker source-URL og canonical restaurantidentitet som eksplisitte scope-hints og feiler fortsatt lukket dersom én avdeling ikke kan bestemmes entydig.
+- Multi-branch hours bruker source-URL og canonical restaurantidentitet som eksplisitte scope-hints og feiler lukket dersom én avdeling ikke kan bestemmes entydig.
 - Quality Dashboard v1 er en privat GitHub Actions-driftsoverflate med lesbar job summary og maskinlesbar JSON-artifact etter produksjonswatch.
-- Videre dish matching/canonical aliases og bredere representativ Oslo-coverage er neste pilotarbeid.
+- Fordi dagens demand-review ikke har uløste fuzzy- eller coverage-signaler, skal neste pilotutvidelse velges ut fra representativ Oslo-dekning, kildetyper og faktisk ny etterspørsel — ikke historiske problemer som allerede er løst.
 
 ## Produktmål
 
@@ -99,7 +101,9 @@ Søkerangeringen bygges videre fra dagens exact/prefix/contains/trigram-modell m
 
 Semantisk likhet skal aldri alene gjøre en annen rett til et sikkert treff.
 
-De første canonical-konseptene er etablert for `beef-tartare` og `chicken-caesar-burger`, med kuraterte query- og menyaliaser. Quality Dashboard viser fortsatt 0 canonical impressions i det målte 7-dagersvinduet, mens `shoyu ramen` er største fuzzy-review-signal med 3 søk og 6 fuzzy impressions. Neste matchingport skal derfor ta utgangspunkt i denne faktiske etterspørselen, ikke opprette aliaser automatisk fra fuzzy-data.
+De første canonical-konseptene er etablert for `beef-tartare` og `chicken-caesar-burger`, med kuraterte query- og menyaliaser. Historiske fuzzy impressions beholdes som etterspørsels- og kvalitetsdata, men Quality Dashboard replay-er dem mot dagens ferske indeks før de sendes til manuell review. Replay bruker bare `exact -> canonical -> prefix -> contains` som sikre løsningsnivåer; fuzzy kan aldri markere et problem som løst.
+
+Siste produksjonsbevis har 10 historiske fuzzy impressions, men **ingen uløste fuzzy-signaler**: `shoyu ramen -> exact`, `chicken ceasar burger -> exact` og `biff tartar -> canonical`. Det betyr at neste aliasarbeid ikke skal opprettes fra disse radene. Nye canonical aliases krever et fortsatt reproducerbart gap i dagens indeks og manuell kuratering.
 
 ### 3. Avstand og nærhet — implementert
 
@@ -169,13 +173,16 @@ Rapporten leverer:
 - booking-/ordrehandlingers `verified | expiring | expired | disabled`;
 - impressions og conversions siste 7 dager per restaurant;
 - matching-fordeling på exact/canonical/prefix/contains/fuzzy;
-- canonical concepts og fuzzy queries til manuell vurdering;
-- toppliste over normaliserte nulltreff siste 7 dager som signal for videre coverage;
+- canonical concepts og fuzzy-history med separat current-index resolution;
+- historiske nulltreff og separat antall/nulltreff som fortsatt er uløst i dagens indeks;
+- egne seksjoner for «til manuell vurdering» og «historisk løst» i både fuzzy- og coverage-review;
 - en lesbar GitHub Actions Summary og JSON-artifact med 14 dagers retention.
+
+Replay er byspesifikk og bruker bare ferske snapshots fra aktive restauranter og enabled menykilder. `exact`, kuratert `canonical`, `prefix` og `contains` kan løse et historisk signal; fuzzy alene kan ikke gjøre det.
 
 Rapporten beholder Revenue Layers dataminimering: ingen IP-adresser, user-agent, konto-ID eller permanent brukerprofil tilføres.
 
-Siste produksjonsbevis etter Mathus-onboarding viser 5 aktive restauranter, 190 aktuelle retter, 5 healthy menykilder, 0 degraded menykilder og healthy hours for alle fem. Mathus står med 89 retter, 7 intervaller, 0 consecutive failures og verifisert `order`.
+Siste produksjonsbevis viser 5 aktive restauranter, 190 aktuelle retter, 5 healthy menykilder, 0 degraded menykilder og healthy hours for alle fem. Mathus står med 89 retter, 7 intervaller, 0 consecutive failures og verifisert `order`. Dashboardet viser samtidig **0 uløste fuzzy-signaler og 0 uløste nulltreff**.
 
 ### 7. Demand loop
 
@@ -188,7 +195,14 @@ Søkeatferd brukes til å prioritere videre coverage og matching. Fysen aggreger
 - match type;
 - klikk/konverteringshandlinger.
 
-Fuzzy-listen er bare et review-signal. Den oppretter aldri aliaser automatisk. Siste dashboard peker konkret på `shoyu ramen` som neste matching-review, mens nulltrefflisten har ett eldre `carbonara`-nulltreff fra før Olivia-dekningen kom på plass.
+Historikk og aktiv arbeidskø er bevisst skilt. Et fuzzy impression eller nulltreff blir ikke slettet når produktet senere forbedres. I stedet replayes signalet mot dagens ferske indeks:
+
+- historisk fuzzy med sikkert treff flyttes ut av alias-review;
+- historisk nulltreff med sikkert treff flyttes ut av coverage-review;
+- fuzzy alene kan aldri markere et signal som løst;
+- bare signaler som fortsatt er uløste i samme by prioriteres som aktive gap.
+
+Siste produksjonsdashboard har tre historiske fuzzy-grupper som alle nå er løst (`shoyu ramen -> exact`, `chicken ceasar burger -> exact`, `biff tartar -> canonical`) og ett historisk nulltreff (`carbonara`) som nå løses som `contains`. Den aktive review-køen er derfor tom på begge dimensjoner akkurat nå. Neste coverage-/matchingarbeid skal styres av nye signaler eller av pilotens representativitetsbehov, ikke av disse historiske radene.
 
 Første versjon lagrer ikke IP-adresse, brukeragent, kontoidentitet eller permanent personlig profil for denne analysen.
 
