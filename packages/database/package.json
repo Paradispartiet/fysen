@@ -15,10 +15,11 @@
     "build": "tsc -p tsconfig.json",
     "lint": "eslint src --ext .ts",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run src/migration.test.ts src/client.test.ts src/due-sources.test.ts",
+    "test": "vitest run src/migration.test.ts src/client.test.ts src/due-sources.test.ts src/quality-dashboard-markdown.test.ts",
     "migrate": "node dist/migrate.js",
     "verify:production": "node dist/verify-production.js",
-    "test:integration": "vitest run src/integration.test.ts && vitest run src/search.integration.test.ts && vitest run src/funnel.integration.test.ts && vitest run src/restaurant-actions.integration.test.ts && vitest run src/restaurant-hours.integration.test.ts && vitest run src/coverage.integration.test.ts"
+    "quality:dashboard": "node dist/quality-dashboard-cli.js",
+    "test:integration": "vitest run src/integration.test.ts && vitest run src/search.integration.test.ts && vitest run src/funnel.integration.test.ts && vitest run src/restaurant-actions.integration.test.ts && vitest run src/restaurant-hours.integration.test.ts && vitest run src/coverage.integration.test.ts && vitest run src/quality-dashboard.integration.test.ts"
   },
   "dependencies": {
     "pg": "8.22.0"
