@@ -10,6 +10,15 @@ Pilotens north star er fortsatt dish-first:
 
 Piloten skal ikke optimaliseres for flest mulig restauranter. Den skal optimaliseres for **pålitelige treff, nyttig dekning og målbar brukerintensjon**.
 
+## Implementasjonsstatus
+
+- Rodeo er golden live-kilde med produksjonsaktiv menyovervåkning.
+- Søket har exact/prefix/contains/trigram og skiller fuzzy «nære treff» fra sikrere treff.
+- Revenue funnel måler søk, impressions og attribuerte handlinger uten permanent brukerprofil.
+- Resultatflaten har meny, restaurant, veibeskrivelse og nå verifisert booking/bestilling når slike canonical handlinger finnes.
+- Rodeos førsteparts booking-side er første verifiserte `Bestill bord`-handling og re-verifiseres automatisk før den utløper.
+- Avstand fra bruker, åpningstider, bredere coverage og quality dashboard er neste pilotarbeid.
+
 ## Produktmål
 
 Ved avslutning av Oslo Pilot v1 skal Fysen kunne:
@@ -93,6 +102,8 @@ Første handlinger er:
 - bestill bord, når verifisert booking-URL finnes;
 - bestill mat, når verifisert ordre-URL finnes.
 
+Booking-/ordrehandlinger er egne canonical records med kilde, verifikasjon og utløp. En utløpt handling skal ikke vises selv om URL-en fortsatt ligger i databasen.
+
 ### 6. Quality dashboard
 
 Intern driftsoverflate skal minst vise:
@@ -104,6 +115,7 @@ Intern driftsoverflate skal minst vise:
 - consecutive failures;
 - quarantine-status og årsak;
 - neste kontroll;
+- booking-/ordrehandlingers verifikasjonsstatus;
 - nulltreff/etterspørsel som peker på manglende dekning.
 
 ### 7. Demand loop
@@ -126,7 +138,8 @@ Pilotdata publiseres bare når:
 - fetch og parser passerer sikkerhetsportene;
 - snapshotet passerer minimums- og suspicious-drop-regler;
 - kilden er innenfor definert ferskhetsvindu;
-- retten kan spores til konkret snapshot og kilde.
+- retten kan spores til konkret snapshot og kilde;
+- kommersielle handlinger har ikke utløpt verifikasjon.
 
 False positives er fortsatt dyrere enn false negatives.
 
