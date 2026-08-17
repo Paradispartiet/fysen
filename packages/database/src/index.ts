@@ -2,6 +2,7 @@ export * from "./client.js";
 export * from "./coverage.js";
 export * from "./due-sources.js";
 export * from "./funnel.js";
+export * from "./menu-source-state.js";
 export * from "./migrate.js";
 export * from "./quality-dashboard.js";
 export * from "./quality-dashboard-markdown.js";
