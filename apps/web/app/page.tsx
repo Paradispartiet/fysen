@@ -1,18 +1,19 @@
+import { DishSearch } from "../components/dish-search";
+import { GlobalHeader } from "../components/global-header";
+
 export default function HomePage() {
   return (
-    <main className="shell">
-      <section className="hero" aria-labelledby="fysen-title">
-        <p className="brand">fysen.</p>
-        <h1 id="fysen-title">Hva har du lyst på?</h1>
-        <p className="lede">Søk på retten. Finn restauranter som faktisk har den på menyen nå.</p>
-        <form className="search" role="search" action="/search">
-          <label className="srOnly" htmlFor="dish-query">Retten du vil spise</label>
-          <input id="dish-query" name="q" type="search" placeholder="Biff tartar, ramen, carbonara …" autoComplete="off" />
-          <input type="hidden" name="city" value="Oslo" />
-          <button type="submit">Finn retten</button>
-        </form>
-        <p className="proof">Treffene er ferske og sporbare tilbake til restaurantens meny.</p>
-      </section>
-    </main>
+    <div className="homePage">
+      <GlobalHeader />
+      <main className="homeMain">
+        <section className="homeHero" aria-labelledby="fysen-title">
+          <h1 id="fysen-title">Hva har du<br className="desktopBreak" /> lyst på?</h1>
+          <div className="homeSearchWrap">
+            <DishSearch />
+            <p className="searchProof">Søk i ferske, sporbare restaurantmenyer.</p>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }
