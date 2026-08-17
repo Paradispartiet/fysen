@@ -1,7 +1,7 @@
 import { load } from "cheerio";
 import type { RestaurantHoursIntervalInput } from "@fysen/database";
 
-export const OPENING_HOURS_EXTRACTOR_VERSION = "hours-visible-v2";
+export const OPENING_HOURS_EXTRACTOR_VERSION = "hours-visible-v3";
 
 const weekdayByName: Readonly<Record<string, number>> = {
   monday: 1,
@@ -24,6 +24,7 @@ const weekdayByName: Readonly<Record<string, number>> = {
 
 const dayToken = "(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Mandag|Tirsdag|Onsdag|Torsdag|Fredag|Lørdag|Lordag|Søndag|Sondag)";
 const timeToken = "(?:2[0-3]|[01]?\\d)(?:[.:][0-5]\\d)?";
+const dayRangeConnector = "(?:[-–]|til|to)";
 
 export class OpeningHoursExtractionError extends Error {
   constructor(readonly code: string, message: string) {
@@ -94,7 +95,7 @@ function interval(isoWeekday: number, opensText: string, closesText: string): Re
 
 function extractDinnerHours(compact: string): { intervals: readonly RestaurantHoursIntervalInput[]; excerpt: string } | null {
   const range = new RegExp(
-    `\\bDinner\\s+(${dayToken})\\s*[-–]\\s*(${dayToken})\\s+(${timeToken})\\s*[-–]\\s*(late|${timeToken})`,
+    `\\bDinner\\s+(${dayToken})\\s*${dayRangeConnector}\\s*(${dayToken})\\s+(${timeToken})\\s*[-–]\\s*(late|${timeToken})`,
     "iu",
   ).exec(compact);
   if (!range) return null;
@@ -128,12 +129,55 @@ function extractDinnerHours(compact: string): { intervals: readonly RestaurantHo
   };
 }
 
+interface HoursMarker {
+  readonly index: number;
+  readonly label: string | null;
+}
+
+function selectStandardHoursCandidate(visibleText: string): string {
+  const lines = visibleText.split("\n");
+  const markerPattern = /^(?:opening\s+hours|hours|åpningstider)(?:\s+([^:]{1,80}))?:?$/iu;
+  const markers: HoursMarker[] = [];
+  for (const [index, line] of lines.entries()) {
+    const match = line.trim().match(markerPattern);
+    if (match) markers.push({ index, label: match[1]?.trim() || null });
+  }
+
+  if (markers.length === 0) return visibleText;
+  if (markers.length === 1) {
+    return lines.slice(markers[0]?.index ?? 0).join(" ");
+  }
+
+  const pageIdentity = lines.slice(0, 12).join(" ").toLocaleLowerCase("nb-NO");
+  const matching = markers.filter(
+    (marker) => marker.label && pageIdentity.includes(marker.label.toLocaleLowerCase("nb-NO")),
+  );
+  if (matching.length !== 1) {
+    throw new OpeningHoursExtractionError(
+      "AMBIGUOUS_HOURS_SECTION",
+      `Found ${markers.length} opening-hours sections and could not resolve exactly one from the page identity`,
+    );
+  }
+
+  const selected = matching[0];
+  if (!selected) throw new OpeningHoursExtractionError("AMBIGUOUS_HOURS_SECTION", "Missing selected hours marker");
+  const nextMarker = markers.find((marker) => marker.index > selected.index);
+  const end = nextMarker?.index ?? lines.length;
+  return lines.slice(selected.index, end).join(" ");
+}
+
+function kitchenCutoffFromSuffix(suffix: string | undefined): string | null {
+  if (!suffix) return null;
+  return new RegExp(
+    `(?:kitchen(?:\\s+closes)?(?:\\s+at)?|kjøkken(?:et)?\\s+(?:til|stenger(?:\\s+kl\\.?)?))\\s*(${timeToken})`,
+    "iu",
+  ).exec(suffix)?.[1] ?? null;
+}
+
 function extractStandardHours(visibleText: string): { intervals: readonly RestaurantHoursIntervalInput[]; excerpt: string } | null {
-  const compact = visibleText.replace(/\n+/g, " ").replace(/\s+/g, " ").trim();
-  const marker = /\b(?:opening\s+hours|hours)\b/iu.exec(compact);
-  const candidate = marker ? compact.slice(marker.index, Math.min(compact.length, marker.index + 700)) : compact;
+  const candidate = selectStandardHoursCandidate(visibleText).replace(/\s+/g, " ").trim();
   const pattern = new RegExp(
-    `(${dayToken})(?:\\s*[-–]\\s*(${dayToken}))?\\s*:\\s*(${timeToken})\\s*[-–]\\s*(${timeToken})`,
+    `(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?\\s*:\\s*(${timeToken})\\s*[-–]\\s*(${timeToken})(?:\\s*\\(([^)]{1,120})\\))?`,
     "giu",
   );
   const intervals: RestaurantHoursIntervalInput[] = [];
@@ -143,8 +187,11 @@ function extractStandardHours(visibleText: string): { intervals: readonly Restau
     const startText = match[1];
     const endText = match[2] ?? startText;
     const opensText = match[3];
-    const closesText = match[4];
-    if (!startText || !endText || !opensText || !closesText) continue;
+    const venueClosesText = match[4];
+    const suffix = match[5];
+    if (!startText || !endText || !opensText || !venueClosesText) continue;
+    const kitchenClose = kitchenCutoffFromSuffix(suffix);
+    const closesText = kitchenClose ?? venueClosesText;
     const days = expandWeekdayRange(weekday(startText), weekday(endText));
     intervals.push(...days.map((isoWeekday) => interval(isoWeekday, opensText, closesText)));
     excerptParts.push(match[0]);
