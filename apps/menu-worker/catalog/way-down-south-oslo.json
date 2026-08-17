@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "way-down-south-oslo",
+    "name": "Way Down South",
+    "websiteUrl": "https://www.waydownsouth.no/",
+    "address": "Østre Elvebakke 7",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.919208,
+    "longitude": 10.754419
+  },
+  "menuSource": {
+    "url": "https://www.waydownsouth.no/menu",
+    "sourceType": "html",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 8
+  },
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chicken Ceasar Burger",
+      "Beef Cheek Burger - 130g",
+      "Pecorino & Truffle Mac 'N' Cheese"
+    ]
+  }
+}

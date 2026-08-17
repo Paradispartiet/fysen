@@ -5,7 +5,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EXTRACTOR_VERSION = "html-v1";
+export const HTML_EXTRACTOR_VERSION = "html-v2";
 
 export interface ExtractedHtmlMenu {
   readonly items: readonly MenuObservedItem[];
@@ -132,6 +132,12 @@ function looksLikeNonDish(name: string): boolean {
   );
 }
 
+function looksLikeDescriptor(line: string): boolean {
+  return /^(allergens?|allergener|with|topped|served|ask for|choose|velg|med|contains?|including|inkludert|accompanied)\b/iu.test(
+    line.trim(),
+  );
+}
+
 function splitHeuristicName(value: string): { readonly name: string; readonly description: string | null } {
   const withoutAllergens = value
     .replace(/\s+\((?:[\p{L}\d]{1,5}\s*,?\s*){1,20}\)$/u, "")
@@ -145,12 +151,19 @@ function splitHeuristicName(value: string): { readonly name: string; readonly de
   return { name: withoutAllergens, description: null };
 }
 
+function validPriceKroner(rawPrice: string): number | null {
+  const value = Number(rawPrice);
+  return Number.isInteger(value) && value >= 40 && value <= 10_000 ? value : null;
+}
+
 function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[] {
   const unique = new Map<string, MenuObservedItem>();
-  const priceLine = /^(.{2,280}?)\s+([1-9]\d{1,3})(?:\s*(?:,-|kr\.?|nok))?$/iu;
+  const lines = visibleText.split("\n");
+  const inlinePriceLine = /^(.{2,280}?)\s+([1-9]\d{1,3})(?:\s*(?:,-|kr\.?|nok))?$/iu;
+  const standalonePriceLine = /^([1-9]\d{1,3})(?:\s*(?:,-|kr\.?|nok))?$/iu;
 
-  for (const [position, line] of visibleText.split("\n").entries()) {
-    const match = line.match(priceLine);
+  for (const [position, line] of lines.entries()) {
+    const match = line.match(inlinePriceLine);
     if (!match) continue;
     const rawName = match[1]?.trim();
     const rawPrice = match[2];
@@ -158,8 +171,8 @@ function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[]
 
     const { name, description } = splitHeuristicName(rawName.replace(/^\*+/, "").trim());
     if (name.length < 2 || name.length > 300) continue;
-    const priceKroner = Number(rawPrice);
-    if (!Number.isInteger(priceKroner) || priceKroner < 40 || priceKroner > 10_000) continue;
+    const priceKroner = validPriceKroner(rawPrice);
+    if (priceKroner === null) continue;
 
     const sourceKey = createMenuItemSourceKey(name);
     unique.set(sourceKey, {
@@ -177,7 +190,56 @@ function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[]
     });
   }
 
-  return [...unique.values()];
+  for (const [position, line] of lines.entries()) {
+    const priceMatch = line.match(standalonePriceLine);
+    const rawPrice = priceMatch?.[1];
+    if (!rawPrice) continue;
+    const priceKroner = validPriceKroner(rawPrice);
+    if (priceKroner === null) continue;
+
+    let nameIndex: number | null = null;
+    for (let offset = 1; offset <= 4; offset += 1) {
+      const candidateIndex = position - offset;
+      if (candidateIndex < 0) break;
+      const candidate = lines[candidateIndex]?.trim();
+      if (!candidate) continue;
+      if (standalonePriceLine.test(candidate) || inlinePriceLine.test(candidate)) break;
+      if (looksLikeNonDish(candidate) || looksLikeDescriptor(candidate)) continue;
+      if (candidate.length < 2 || candidate.length > 180 || !/\p{L}/u.test(candidate)) continue;
+      nameIndex = candidateIndex;
+      break;
+    }
+    if (nameIndex === null) continue;
+
+    const rawName = lines[nameIndex]?.replace(/^\*+/, "").trim();
+    if (!rawName) continue;
+    const { name } = splitHeuristicName(rawName);
+    if (looksLikeNonDish(name) || name.length < 2 || name.length > 300) continue;
+    const sourceKey = createMenuItemSourceKey(name);
+    if (unique.has(sourceKey)) continue;
+
+    const descriptionLines = lines
+      .slice(nameIndex + 1, position)
+      .filter((value) => !/^allergens?:/iu.test(value) && !/^allergener:/iu.test(value));
+    const description = descriptionLines.join(" ").trim() || null;
+    const sourceExcerpt = lines.slice(nameIndex, position + 1).join(" — ").slice(0, 1000);
+
+    unique.set(sourceKey, {
+      sourceKey,
+      name,
+      normalizedName: normalizeDishName(name),
+      description,
+      sectionName: null,
+      priceMinor: priceKroner * 100,
+      currency: "NOK",
+      position,
+      extractionMethod: "html_heuristic",
+      confidence: 0.72,
+      sourceExcerpt,
+    });
+  }
+
+  return [...unique.values()].sort((a, b) => a.position - b.position);
 }
 
 export function extractHtmlMenu(html: string): ExtractedHtmlMenu {

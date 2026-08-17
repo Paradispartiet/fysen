@@ -11,6 +11,8 @@
     "pilot:rodeo": "tsx src/index.ts pilot:rodeo",
     "run:due": "node dist/index.js run:due",
     "watch:hours": "node dist/index.js watch:hours",
+    "onboard:catalog": "node dist/index.js onboard:catalog",
+    "onboard:manifest": "node dist/index.js onboard:manifest",
     "verify:actions": "node dist/index.js verify:actions",
     "lint": "eslint src --ext .ts",
     "typecheck": "tsc --noEmit",
@@ -22,7 +24,8 @@
     "@fysen/menu-core": "workspace:*",
     "cheerio": "1.2.0",
     "ipaddr.js": "2.4.0",
-    "robots-parser": "3.0.1"
+    "robots-parser": "3.0.1",
+    "zod": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

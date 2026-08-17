@@ -70,3 +70,6 @@ jobs:
 
       - name: Reverify expiring restaurant actions
         run: pnpm --filter @fysen/menu-worker verify:actions
+
+      - name: Onboard catalog candidates
+        run: pnpm --filter @fysen/menu-worker onboard:catalog

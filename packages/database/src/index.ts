@@ -1,4 +1,5 @@
 export * from "./client.js";
+export * from "./coverage.js";
 export * from "./due-sources.js";
 export * from "./funnel.js";
 export * from "./migrate.js";
