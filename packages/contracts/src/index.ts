@@ -130,7 +130,12 @@ export const dishSearchQuerySchema = z
     }
   });
 
-export const dishSearchMatchTypeSchema = z.enum(["exact", "prefix", "contains", "fuzzy"]);
+export const dishSearchMatchTypeSchema = z.enum(["exact", "canonical", "prefix", "contains", "fuzzy"]);
+
+export const dishSearchCanonicalDishSchema = z.object({
+  slug: z.string().trim().min(1).max(160),
+  name: z.string().trim().min(1).max(200),
+});
 
 export const restaurantActionSchema = z.object({
   url: z.string().url(),
@@ -197,6 +202,7 @@ export const dishSearchResultSchema = z.object({
   match: z.object({
     type: dishSearchMatchTypeSchema,
     score: z.number().min(0).max(1),
+    canonicalDish: dishSearchCanonicalDishSchema.nullable().default(null),
   }),
 });
 
@@ -239,6 +245,7 @@ export type MenuWatchOutcome = z.infer<typeof menuWatchOutcomeSchema>;
 export type DishSearchQuery = z.infer<typeof dishSearchQuerySchema>;
 export type DishSearchSort = z.infer<typeof dishSearchSortSchema>;
 export type DishSearchMatchType = z.infer<typeof dishSearchMatchTypeSchema>;
+export type DishSearchCanonicalDish = z.infer<typeof dishSearchCanonicalDishSchema>;
 export type RestaurantAction = z.infer<typeof restaurantActionSchema>;
 export type RestaurantOpeningState = z.infer<typeof restaurantOpeningStateSchema>;
 export type RestaurantOpening = z.infer<typeof restaurantOpeningSchema>;

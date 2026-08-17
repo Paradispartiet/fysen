@@ -1,6 +1,6 @@
 import type { Pool, QueryResultRow } from "pg";
 
-export type DishSearchMatchType = "exact" | "prefix" | "contains" | "fuzzy";
+export type DishSearchMatchType = "exact" | "canonical" | "prefix" | "contains" | "fuzzy";
 export type DishSearchSort = "relevance" | "distance";
 export type RestaurantOpeningState = "open" | "closed" | "unknown";
 
@@ -27,6 +27,11 @@ export interface RestaurantOpeningDatabaseResult {
   readonly sourceUrl: string | null;
   readonly verifiedAt: string | null;
   readonly freshUntil: string | null;
+}
+
+export interface DishSearchCanonicalDishResult {
+  readonly slug: string;
+  readonly name: string;
 }
 
 export interface DishSearchDatabaseResult {
@@ -58,6 +63,7 @@ export interface DishSearchDatabaseResult {
   readonly orderAction: RestaurantActionDatabaseResult | null;
   readonly matchType: DishSearchMatchType;
   readonly score: number;
+  readonly canonicalDish: DishSearchCanonicalDishResult | null;
 }
 
 interface DishSearchRow extends QueryResultRow {
@@ -100,6 +106,8 @@ interface DishSearchRow extends QueryResultRow {
   order_expires_at: Date | null;
   match_type: DishSearchMatchType;
   score: number;
+  canonical_dish_slug: string | null;
+  canonical_dish_name: string | null;
 }
 
 function mapAction(
@@ -167,6 +175,10 @@ function mapRow(row: DishSearchRow): DishSearchDatabaseResult {
     ),
     matchType: row.match_type,
     score: Number(row.score),
+    canonicalDish:
+      row.canonical_dish_slug && row.canonical_dish_name
+        ? { slug: row.canonical_dish_slug, name: row.canonical_dish_name }
+        : null,
   };
 }
 
@@ -212,6 +224,30 @@ export async function searchDishes(
           hours_source.restaurant_id,
           hours_snapshot.fetched_at DESC,
           hours_snapshot.created_at DESC
+      ),
+      query_concept AS (
+        SELECT
+          concept.id,
+          concept.slug,
+          concept.canonical_name
+        FROM fysen.dish_aliases AS query_alias
+        JOIN fysen.dish_concepts AS concept
+          ON concept.id = query_alias.dish_concept_id
+         AND concept.active = true
+        WHERE query_alias.normalized_alias = $1
+          AND query_alias.alias_scope IN ('query', 'both')
+        LIMIT 1
+      ),
+      canonical_menu_aliases AS (
+        SELECT
+          menu_alias.normalized_alias,
+          concept.id AS concept_id,
+          concept.slug,
+          concept.canonical_name
+        FROM query_concept AS concept
+        JOIN fysen.dish_aliases AS menu_alias
+          ON menu_alias.dish_concept_id = concept.id
+         AND menu_alias.alias_scope IN ('menu', 'both')
       )
       SELECT
         item.id AS menu_item_id,
@@ -295,16 +331,20 @@ export async function searchDishes(
         order_action.expires_at AS order_expires_at,
         CASE
           WHEN item.normalized_name = $1 THEN 'exact'
+          WHEN canonical.concept_id IS NOT NULL THEN 'canonical'
           WHEN item.normalized_name LIKE $1 || '%' THEN 'prefix'
           WHEN item.normalized_name LIKE '%' || $1 || '%' THEN 'contains'
           ELSE 'fuzzy'
         END AS match_type,
         CASE
           WHEN item.normalized_name = $1 THEN 1.0
+          WHEN canonical.concept_id IS NOT NULL THEN 0.98
           WHEN item.normalized_name LIKE $1 || '%' THEN 0.95
           WHEN item.normalized_name LIKE '%' || $1 || '%' THEN 0.90
           ELSE LEAST(0.89, GREATEST(0.0, similarity(item.normalized_name, $1)))
-        END AS score
+        END AS score,
+        canonical.slug AS canonical_dish_slug,
+        canonical.canonical_name AS canonical_dish_name
       FROM latest_snapshots AS latest
       JOIN fysen.menu_items AS item ON item.snapshot_id = latest.id
       JOIN fysen.menu_sources AS source ON source.id = latest.menu_source_id
@@ -313,6 +353,8 @@ export async function searchDishes(
       LEFT JOIN LATERAL (
         SELECT timezone(hours.time_zone, now()) AS local_now
       ) AS hours_clock ON hours.snapshot_id IS NOT NULL
+      LEFT JOIN canonical_menu_aliases AS canonical
+        ON canonical.normalized_alias = item.normalized_name
       LEFT JOIN fysen.restaurant_actions AS booking_action
         ON booking_action.restaurant_id = restaurant.id
        AND booking_action.action_type = 'booking'
@@ -326,6 +368,7 @@ export async function searchDishes(
       WHERE lower(restaurant.city) = lower($2)
         AND (
           item.normalized_name = $1
+          OR canonical.concept_id IS NOT NULL
           OR item.normalized_name LIKE $1 || '%'
           OR item.normalized_name LIKE '%' || $1 || '%'
           OR item.normalized_name % $1

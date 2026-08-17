@@ -1,6 +1,6 @@
 import type { Pool, PoolClient, QueryResultRow } from "pg";
 
-export type FunnelMatchType = "exact" | "prefix" | "contains" | "fuzzy";
+export type FunnelMatchType = "exact" | "canonical" | "prefix" | "contains" | "fuzzy";
 export type ConversionEventType =
   | "menu_clicked"
   | "restaurant_clicked"
