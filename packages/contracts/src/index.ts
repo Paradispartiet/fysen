@@ -140,6 +140,16 @@ export const restaurantActionSchema = z.object({
   expiresAt: isoDateTime,
 });
 
+export const restaurantOpeningStateSchema = z.enum(["open", "closed", "unknown"]);
+
+export const restaurantOpeningSchema = z.object({
+  state: restaurantOpeningStateSchema,
+  serviceType: z.literal("kitchen"),
+  sourceUrl: z.string().url().nullable(),
+  verifiedAt: isoDateTime.nullable(),
+  freshUntil: isoDateTime.nullable(),
+});
+
 export const dishSearchResultSchema = z.object({
   impressionId: uuid.nullable(),
   menuItemId: uuid,
@@ -170,6 +180,13 @@ export const dishSearchResultSchema = z.object({
     observedAt: isoDateTime,
     lastCheckedAt: isoDateTime,
     freshUntil: isoDateTime,
+  }),
+  opening: restaurantOpeningSchema.default({
+    state: "unknown",
+    serviceType: "kitchen",
+    sourceUrl: null,
+    verifiedAt: null,
+    freshUntil: null,
   }),
   actions: z
     .object({
@@ -223,6 +240,8 @@ export type DishSearchQuery = z.infer<typeof dishSearchQuerySchema>;
 export type DishSearchSort = z.infer<typeof dishSearchSortSchema>;
 export type DishSearchMatchType = z.infer<typeof dishSearchMatchTypeSchema>;
 export type RestaurantAction = z.infer<typeof restaurantActionSchema>;
+export type RestaurantOpeningState = z.infer<typeof restaurantOpeningStateSchema>;
+export type RestaurantOpening = z.infer<typeof restaurantOpeningSchema>;
 export type DishSearchResult = z.infer<typeof dishSearchResultSchema>;
 export type DishSearchResponse = z.infer<typeof dishSearchResponseSchema>;
 export type ConversionEventType = z.infer<typeof conversionEventTypeSchema>;
