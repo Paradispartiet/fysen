@@ -23,6 +23,9 @@ function directionsUrl(latitude: number, longitude: number): string {
 }
 
 export function DishResult({ result }: { result: DishSearchResult }) {
+  const actionsClassName = styles.actions ?? "";
+  const primaryActionClassName = styles.primaryAction ?? "";
+
   return (
     <article className="dishResult">
       <div className="dishResultTopline">
@@ -44,10 +47,10 @@ export function DishResult({ result }: { result: DishSearchResult }) {
 
       <div className="dishResultBottomline">
         <FreshnessStatus checkedAt={result.menu.lastCheckedAt} freshUntil={result.menu.freshUntil} />
-        <div className={styles.actions}>
+        <div className={actionsClassName}>
           {result.actions.booking ? (
             <TrackedExternalLink
-              className={styles.primaryAction}
+              className={primaryActionClassName}
               href={result.actions.booking.url}
               impressionId={result.impressionId}
               eventType="booking_clicked"
@@ -59,7 +62,7 @@ export function DishResult({ result }: { result: DishSearchResult }) {
           ) : null}
           {result.actions.order ? (
             <TrackedExternalLink
-              className={styles.primaryAction}
+              className={primaryActionClassName}
               href={result.actions.order.url}
               impressionId={result.impressionId}
               eventType="order_clicked"
