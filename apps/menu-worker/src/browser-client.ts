@@ -21,6 +21,9 @@ const blockedResourceTypes = new Set([
   "websocket",
 ]);
 
+// Diagnostic-only allowance on this unmerged branch. Never merge this hardcoded origin.
+const diagnosticAllowedDataOrigins = new Set(["https://siteassets.parastorage.com"]);
+
 type RenderedMenuFetch = Extract<MenuHttpFetchResult, { readonly kind: "content" }>;
 
 export interface BrowserMenuSource {
@@ -56,7 +59,8 @@ export function browserRequestDecision(input: BrowserRequestPolicyInput): Browse
 
   if (
     (input.resourceType === "document" || input.resourceType === "xhr" || input.resourceType === "fetch") &&
-    requestUrl.origin !== input.sourceOrigin
+    requestUrl.origin !== input.sourceOrigin &&
+    !diagnosticAllowedDataOrigins.has(requestUrl.origin)
   ) {
     return {
       action: "block",
