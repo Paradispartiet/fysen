@@ -4,18 +4,37 @@ import { FreshnessStatus } from "./freshness-status";
 import styles from "./dish-result.module.css";
 import { TrackedExternalLink } from "./tracked-external-link";
 
-function formatPrice(priceMinor: number | null, currency: string): string {
-  if (priceMinor === null) return "Pris ikke oppgitt";
+function formatNokAmount(priceMinor: number): string {
+  return new Intl.NumberFormat("nb-NO", {
+    maximumFractionDigits: priceMinor % 100 === 0 ? 0 : 2,
+  }).format(priceMinor / 100);
+}
 
-  if (currency === "NOK") {
-    return `${new Intl.NumberFormat("nb-NO", { maximumFractionDigits: priceMinor % 100 === 0 ? 0 : 2 }).format(priceMinor / 100)} kr`;
-  }
+function formatExactPrice(priceMinor: number, currency: string): string {
+  if (currency === "NOK") return `${formatNokAmount(priceMinor)} kr`;
 
   return new Intl.NumberFormat("nb-NO", {
     style: "currency",
     currency,
     maximumFractionDigits: priceMinor % 100 === 0 ? 0 : 2,
   }).format(priceMinor / 100);
+}
+
+function formatPrice(dish: DishSearchResult["dish"]): string {
+  if (dish.priceMinor === null) return "Pris ikke oppgitt";
+
+  if (dish.priceKind === "from") {
+    return `fra ${formatExactPrice(dish.priceMinor, dish.currency)}`;
+  }
+
+  if (dish.priceKind === "multiple" && dish.priceMaxMinor !== null) {
+    if (dish.currency === "NOK") {
+      return `${formatNokAmount(dish.priceMinor)}–${formatNokAmount(dish.priceMaxMinor)} kr`;
+    }
+    return `${formatExactPrice(dish.priceMinor, dish.currency)}–${formatExactPrice(dish.priceMaxMinor, dish.currency)}`;
+  }
+
+  return formatExactPrice(dish.priceMinor, dish.currency);
 }
 
 function formatDistance(distanceMeters: number): string {
@@ -50,7 +69,7 @@ export function DishResult({ result }: { result: DishSearchResult }) {
           <p className="restaurantName">{result.restaurant.name}</p>
         </div>
         <p className={result.dish.priceMinor === null ? "dishPrice isMissing" : "dishPrice"}>
-          {formatPrice(result.dish.priceMinor, result.dish.currency)}
+          {formatPrice(result.dish)}
         </p>
       </div>
 
