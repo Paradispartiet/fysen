@@ -4,6 +4,11 @@
 
 Fysen is a **dish-first** product. The primary entity in search is a dish occurrence on a current restaurant menu, not a restaurant review or a recommendation generated at query time.
 
+Product execution is currently governed by two complementary plans:
+
+- [`oslo-pilot-v1.md`](./oslo-pilot-v1.md) — make Fysen genuinely useful in Oslo;
+- [`revenue-layer-v1.md`](./revenue-layer-v1.md) — make demand and restaurant value measurable without corrupting organic search.
+
 ## Hard boundaries
 
 1. **Source ingestion is evidence.** HTTP/PDF/image/API observations are source material, not the product model.
@@ -13,6 +18,8 @@ Fysen is a **dish-first** product. The primary entity in search is a dish occurr
 5. **Crawler and API are separate processes.** Slow or hostile websites cannot consume public API capacity.
 6. **External providers are adapters, not domain models.** Fysen must survive replacement of any map, AI, crawling or restaurant-data provider.
 7. **Bad extraction fails closed.** A suspicious menu collapse is quarantined instead of being interpreted as mass removal.
+8. **Organic relevance is not for sale.** Commercial placement must never fabricate eligibility or change what counts as an organic dish match.
+9. **Revenue telemetry is data-minimal.** Demand measurement does not require IP, user-agent, account identity or permanent user profiles in v1.
 
 ## Runtime topology
 
@@ -54,9 +61,17 @@ menu_snapshots -------- menu_watch_runs
 menu_items
    |
 menu_changes
+
+search_events
+   |
+search_result_impressions
+   |
+conversion_events
 ```
 
 `menu_snapshots` are immutable successful menu observations. `menu_sources` hold current operational state such as ETag, Last-Modified, last menu fingerprint and next check time. `menu_watch_runs` retain both successful and failed checks.
+
+The revenue funnel is deliberately separate from evidence ingestion. `search_events` capture normalized demand and result count. `search_result_impressions` establish which concrete menu items were shown and at what rank. `conversion_events` attribute explicit outbound actions to an impression with a deduplicating client event ID.
 
 PostGIS stores restaurant position as `geography(Point, 4326)`. `pg_trgm` is enabled as the first lexical-search primitive; canonical Dish identity will be layered on top rather than inferred directly from fuzzy text.
 
@@ -87,6 +102,23 @@ Planned v1 ranking pipeline:
 5. freshness + open-now + distance ranking
 
 Semantic similarity never overrides an explicit incompatible dish identity.
+
+## Revenue attribution rule
+
+Search must remain available even if analytics persistence is temporarily unavailable. Funnel attribution is therefore **fail-open for search availability** while conversion persistence remains explicit and validated.
+
+A successful attributed flow is:
+
+```text
+search query
+  -> search_event
+  -> result impression(s)
+  -> impression id returned with result
+  -> explicit outbound action
+  -> deduplicated conversion_event
+```
+
+The first supported action types are menu, restaurant website and directions clicks. Booking and order clicks become active only when canonical verified destinations exist.
 
 ## Data-quality bias
 
