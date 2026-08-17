@@ -3,30 +3,33 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
-  gap: 6px 16px;
+  gap: 8px 18px;
 }
 
 .primaryAction {
   display: inline-flex;
-  min-height: 40px;
+  min-height: 42px;
   align-items: center;
   justify-content: center;
-  padding: 0 14px;
-  color: var(--color-paper);
+  padding: 0 16px;
+  color: var(--color-action-ink);
   font-size: 14px;
-  font-weight: 760;
+  font-weight: 700;
   text-decoration: none;
-  background: var(--color-ink);
-  border-radius: 10px;
-  transition: opacity var(--motion-fast) var(--ease-fysen);
+  background: var(--color-action);
+  border-radius: 11px;
+  transition:
+    background var(--motion-fast) var(--ease-fysen),
+    transform var(--motion-fast) var(--ease-fysen);
 }
 
 .primaryAction:hover {
-  opacity: 0.86;
+  background: var(--color-action-hover);
+  transform: translateY(-1px);
 }
 
 .primaryAction:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-brand);
   outline-offset: 3px;
 }
 
