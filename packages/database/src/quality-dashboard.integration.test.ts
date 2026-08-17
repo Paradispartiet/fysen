@@ -176,7 +176,12 @@ integrationDescribe("quality dashboard integration", () => {
 
     await pool.query(
       `INSERT INTO fysen.search_events (normalized_query, city, result_count)
-       VALUES ('ramen', 'Oslo', 0), ('ramen', 'Oslo', 0), ('dumplings', 'Oslo', 0)`,
+       VALUES
+         ('ramen', 'Oslo', 0),
+         ('ramen', 'Oslo', 0),
+         ('dumplings', 'Oslo', 0),
+         ('quality burger', 'Oslo', 0),
+         ('quality sandwich', 'Oslo', 0)`,
     );
   });
 
@@ -184,13 +189,14 @@ integrationDescribe("quality dashboard integration", () => {
     await pool.end();
   });
 
-  it("reports fresh coverage, matching quality, demand and zero results", async () => {
+  it("reports fresh coverage, current-index demand review and matching quality", async () => {
     const report = await buildQualityDashboard(pool);
     expect(report.totals.activeRestaurants).toBe(1);
     expect(report.totals.menuSources).toBe(1);
     expect(report.totals.healthyMenuSources).toBe(1);
     expect(report.totals.currentMenuItems).toBe(1);
-    expect(report.totals.zeroResultSearches7d).toBe(3);
+    expect(report.totals.zeroResultSearches7d).toBe(5);
+    expect(report.totals.unresolvedZeroResultSearches7d).toBe(3);
     expect(report.totals.conversions7d).toBe(1);
 
     const restaurant = report.restaurants[0];
@@ -229,8 +235,8 @@ integrationDescribe("quality dashboard integration", () => {
       averageScore: 0.98,
     });
 
-    const unresolved = report.matching.topFuzzyQueries7d.find((item) => item.normalizedQuery === "qualty burger");
-    expect(unresolved).toMatchObject({
+    const unresolvedFuzzy = report.matching.topFuzzyQueries7d.find((item) => item.normalizedQuery === "qualty burger");
+    expect(unresolvedFuzzy).toMatchObject({
       city: "Oslo",
       searches7d: 1,
       impressions7d: 1,
@@ -238,14 +244,28 @@ integrationDescribe("quality dashboard integration", () => {
       bestScore: 0.82,
       currentResolution: null,
     });
-    const resolvedExact = report.matching.topFuzzyQueries7d.find((item) => item.normalizedQuery === "quality burger");
-    expect(resolvedExact).toMatchObject({ city: "Oslo", currentResolution: "exact" });
-    const resolvedCanonical = report.matching.topFuzzyQueries7d.find(
+    const resolvedExactFuzzy = report.matching.topFuzzyQueries7d.find(
+      (item) => item.normalizedQuery === "quality burger",
+    );
+    expect(resolvedExactFuzzy).toMatchObject({ city: "Oslo", currentResolution: "exact" });
+    const resolvedCanonicalFuzzy = report.matching.topFuzzyQueries7d.find(
       (item) => item.normalizedQuery === "quality sandwich",
     );
-    expect(resolvedCanonical).toMatchObject({ city: "Oslo", currentResolution: "canonical" });
+    expect(resolvedCanonicalFuzzy).toMatchObject({ city: "Oslo", currentResolution: "canonical" });
 
-    expect(report.topZeroResultQueries7d[0]).toMatchObject({ normalizedQuery: "ramen", count7d: 2 });
-    expect(report.topZeroResultQueries7d[1]).toMatchObject({ normalizedQuery: "dumplings", count7d: 1 });
+    const unresolvedZeroRamen = report.topZeroResultQueries7d.find((item) => item.normalizedQuery === "ramen");
+    expect(unresolvedZeroRamen).toMatchObject({ city: "Oslo", count7d: 2, currentResolution: null });
+    const unresolvedZeroDumplings = report.topZeroResultQueries7d.find(
+      (item) => item.normalizedQuery === "dumplings",
+    );
+    expect(unresolvedZeroDumplings).toMatchObject({ city: "Oslo", count7d: 1, currentResolution: null });
+    const resolvedExactZero = report.topZeroResultQueries7d.find(
+      (item) => item.normalizedQuery === "quality burger",
+    );
+    expect(resolvedExactZero).toMatchObject({ city: "Oslo", count7d: 1, currentResolution: "exact" });
+    const resolvedCanonicalZero = report.topZeroResultQueries7d.find(
+      (item) => item.normalizedQuery === "quality sandwich",
+    );
+    expect(resolvedCanonicalZero).toMatchObject({ city: "Oslo", count7d: 1, currentResolution: "canonical" });
   });
 });

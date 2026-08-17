@@ -53,8 +53,10 @@ export interface QualityRestaurantReport {
 
 export interface QualityZeroResultQuery {
   readonly normalizedQuery: string;
+  readonly city: string;
   readonly count7d: number;
   readonly lastSeenAt: string;
+  readonly currentResolution: QualitySafeMatchType | null;
 }
 
 export interface QualityCanonicalConceptReport {
@@ -103,6 +105,7 @@ export interface QualityDashboardReport {
     readonly degradedMenuSources: number;
     readonly currentMenuItems: number;
     readonly zeroResultSearches7d: number;
+    readonly unresolvedZeroResultSearches7d: number;
     readonly conversions7d: number;
   };
   readonly restaurants: readonly QualityRestaurantReport[];
@@ -149,8 +152,10 @@ interface ActionRow extends QueryResultRow {
 
 interface ZeroQueryRow extends QueryResultRow {
   normalized_query: string;
+  city: string;
   count_7d: number;
   last_seen_at: Date;
+  current_resolution: string | null;
 }
 
 interface CountRow extends QueryResultRow {
@@ -352,16 +357,93 @@ export async function buildQualityDashboard(pool: Pool): Promise<QualityDashboar
       ORDER BY restaurant_id, action_type
     `),
     pool.query<ZeroQueryRow>(`
+      WITH zero_history AS (
+        SELECT
+          normalized_query,
+          city,
+          count(*)::integer AS count_7d,
+          max(occurred_at) AS last_seen_at
+        FROM fysen.search_events
+        WHERE result_count = 0
+          AND occurred_at >= now() - interval '7 days'
+        GROUP BY normalized_query, city
+      ),
+      latest_searchable_snapshot AS (
+        SELECT DISTINCT ON (snapshot.menu_source_id)
+          snapshot.id,
+          snapshot.menu_source_id,
+          source.restaurant_id
+        FROM fysen.menu_snapshots AS snapshot
+        JOIN fysen.menu_sources AS source ON source.id = snapshot.menu_source_id
+        JOIN fysen.restaurants AS restaurant ON restaurant.id = source.restaurant_id
+        WHERE source.enabled = true
+          AND restaurant.active = true
+          AND source.last_checked_at IS NOT NULL
+          AND now() <= source.last_checked_at
+            + make_interval(mins => GREATEST(source.check_interval_minutes * 3, 1440))
+        ORDER BY snapshot.menu_source_id, snapshot.fetched_at DESC, snapshot.created_at DESC
+      ),
+      current_searchable_items AS (
+        SELECT item.normalized_name, restaurant.city
+        FROM latest_searchable_snapshot AS latest
+        JOIN fysen.menu_items AS item ON item.snapshot_id = latest.id
+        JOIN fysen.restaurants AS restaurant ON restaurant.id = latest.restaurant_id
+      ),
+      replayed AS (
+        SELECT
+          history.*,
+          CASE
+            WHEN EXISTS (
+              SELECT 1
+              FROM current_searchable_items AS current_item
+              WHERE lower(current_item.city) = lower(history.city)
+                AND current_item.normalized_name = history.normalized_query
+            ) THEN 'exact'
+            WHEN EXISTS (
+              SELECT 1
+              FROM fysen.dish_aliases AS query_alias
+              JOIN fysen.dish_concepts AS concept
+                ON concept.id = query_alias.dish_concept_id
+               AND concept.active = true
+              JOIN fysen.dish_aliases AS menu_alias
+                ON menu_alias.dish_concept_id = concept.id
+               AND menu_alias.alias_scope IN ('menu', 'both')
+              JOIN current_searchable_items AS current_item
+                ON current_item.normalized_name = menu_alias.normalized_alias
+               AND lower(current_item.city) = lower(history.city)
+              WHERE query_alias.normalized_alias = history.normalized_query
+                AND query_alias.alias_scope IN ('query', 'both')
+            ) THEN 'canonical'
+            WHEN EXISTS (
+              SELECT 1
+              FROM current_searchable_items AS current_item
+              WHERE lower(current_item.city) = lower(history.city)
+                AND current_item.normalized_name LIKE history.normalized_query || '%'
+            ) THEN 'prefix'
+            WHEN EXISTS (
+              SELECT 1
+              FROM current_searchable_items AS current_item
+              WHERE lower(current_item.city) = lower(history.city)
+                AND current_item.normalized_name LIKE '%' || history.normalized_query || '%'
+            ) THEN 'contains'
+            ELSE NULL
+          END AS current_resolution
+        FROM zero_history AS history
+      )
       SELECT
         normalized_query,
-        count(*)::integer AS count_7d,
-        max(occurred_at) AS last_seen_at
-      FROM fysen.search_events
-      WHERE result_count = 0
-        AND occurred_at >= now() - interval '7 days'
-      GROUP BY normalized_query
-      ORDER BY count_7d DESC, last_seen_at DESC, normalized_query ASC
-      LIMIT 20
+        city,
+        count_7d,
+        last_seen_at,
+        current_resolution
+      FROM replayed
+      ORDER BY
+        (current_resolution IS NULL) DESC,
+        count_7d DESC,
+        last_seen_at DESC,
+        normalized_query ASC,
+        city ASC
+      LIMIT 40
     `),
     pool.query<CountRow>(`
       SELECT count(*)::integer AS count
@@ -650,6 +732,13 @@ export async function buildQualityDashboard(pool: Pool): Promise<QualityDashboar
 
   const restaurants = [...restaurantsById.values()];
   const menuSources = restaurants.flatMap((restaurant) => restaurant.menuSources);
+  const zeroResultQueries = zeroQueryResult.rows.map((row) => ({
+    normalizedQuery: row.normalized_query,
+    city: row.city,
+    count7d: Number(row.count_7d),
+    lastSeenAt: row.last_seen_at.toISOString(),
+    currentResolution: safeMatchType(row.current_resolution),
+  }));
   const byMatchType: Record<QualityMatchType, number> = {
     exact: 0,
     canonical: 0,
@@ -671,14 +760,13 @@ export async function buildQualityDashboard(pool: Pool): Promise<QualityDashboar
       degradedMenuSources: menuSources.filter((source) => source.health !== "healthy" && source.health !== "disabled").length,
       currentMenuItems: menuSources.reduce((sum, source) => sum + source.currentItemCount, 0),
       zeroResultSearches7d: Number(zeroCountResult.rows[0]?.count ?? 0),
+      unresolvedZeroResultSearches7d: zeroResultQueries
+        .filter((query) => query.currentResolution === null)
+        .reduce((sum, query) => sum + query.count7d, 0),
       conversions7d: Number(conversionCountResult.rows[0]?.count ?? 0),
     },
     restaurants,
-    topZeroResultQueries7d: zeroQueryResult.rows.map((row) => ({
-      normalizedQuery: row.normalized_query,
-      count7d: Number(row.count_7d),
-      lastSeenAt: row.last_seen_at.toISOString(),
-    })),
+    topZeroResultQueries7d: zeroResultQueries,
     matching: {
       impressions7d: Object.values(byMatchType).reduce((sum, count) => sum + count, 0),
       byMatchType,
