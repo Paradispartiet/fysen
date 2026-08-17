@@ -17,6 +17,15 @@ function formatPrice(priceMinor: number | null, currency: string): string {
   }).format(priceMinor / 100);
 }
 
+function formatDistance(distanceMeters: number): string {
+  if (distanceMeters < 1_000) {
+    const rounded = Math.max(10, Math.round(distanceMeters / 10) * 10);
+    return `${new Intl.NumberFormat("nb-NO").format(rounded)} m unna`;
+  }
+
+  return `${new Intl.NumberFormat("nb-NO", { maximumFractionDigits: 1 }).format(distanceMeters / 1_000)} km unna`;
+}
+
 function directionsUrl(latitude: number, longitude: number): string {
   const destination = encodeURIComponent(`${latitude},${longitude}`);
   return `https://www.google.com/maps/dir/?api=1&destination=${destination}`;
@@ -42,6 +51,7 @@ export function DishResult({ result }: { result: DishSearchResult }) {
 
       <div className="dishResultFacts">
         <span>{result.restaurant.address}, {result.restaurant.city}</span>
+        {result.distanceMeters !== null ? <span>{formatDistance(result.distanceMeters)}</span> : null}
         {result.dish.sectionName ? <span>{result.dish.sectionName}</span> : null}
       </div>
 
