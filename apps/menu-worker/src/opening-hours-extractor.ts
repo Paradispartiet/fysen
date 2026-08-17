@@ -1,7 +1,7 @@
 import { load } from "cheerio";
 import type { RestaurantHoursIntervalInput } from "@fysen/database";
 
-export const OPENING_HOURS_EXTRACTOR_VERSION = "hours-visible-v6";
+export const OPENING_HOURS_EXTRACTOR_VERSION = "hours-visible-v7";
 
 const weekdayByName: Readonly<Record<string, number>> = {
   monday: 1,
@@ -32,7 +32,7 @@ const weekdayByName: Readonly<Record<string, number>> = {
 };
 
 const dayToken = "(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Mandag|Tirsdag|Onsdag|Torsdag|Fredag|Lørdag|Lordag|Søndag|Sondag|Man|Tir|Ons|Tor|Fre|Lør|Lor|Søn|Son)";
-const timeToken = "(?:2[0-3]|[01]?\\d)(?:[.:][0-5]\\d)?";
+const timeToken = "(?:(?:1[0-2]|0?[1-9])(?:[.:][0-5]\\d)?\\s*(?:am|pm)|(?:2[0-3]|[01]?\\d)(?:[.:][0-5]\\d)?)";
 const dayRangeConnector = "(?:[-–]|til|to)";
 
 export class OpeningHoursExtractionError extends Error {
@@ -52,6 +52,9 @@ function extractVisibleText(html: string): string {
   const $ = load(html);
   $("script, style, noscript, svg, template").remove();
   $("br").replaceWith("\n");
+  $("td, th").each((_, element) => {
+    $(element).append(" ");
+  });
   $("p, li, h1, h2, h3, h4, h5, h6, tr, div, section, article").each((_, element) => {
     $(element).append("\n");
   });
@@ -64,10 +67,29 @@ function extractVisibleText(html: string): string {
 }
 
 function parseClock(value: string): string {
-  const normalized = value.replace(".", ":");
-  const [hourText, minuteText = "0"] = normalized.split(":");
-  const hour = Number(hourText);
+  const normalized = value
+    .trim()
+    .toLocaleLowerCase("en-US")
+    .replace(".", ":")
+    .replace(/\s+/g, "");
+  const match = normalized.match(/^(\d{1,2})(?::([0-5]\d))?(am|pm)?$/u);
+  const hourText = match?.[1];
+  const minuteText = match?.[2] ?? "0";
+  const meridiem = match?.[3] ?? null;
+  if (!hourText) {
+    throw new OpeningHoursExtractionError("INVALID_CLOCK", `Invalid opening-hours clock value: ${value}`);
+  }
+
+  let hour = Number(hourText);
   const minute = Number(minuteText);
+  if (meridiem) {
+    if (!Number.isInteger(hour) || hour < 1 || hour > 12) {
+      throw new OpeningHoursExtractionError("INVALID_CLOCK", `Invalid opening-hours clock value: ${value}`);
+    }
+    if (meridiem === "am" && hour === 12) hour = 0;
+    if (meridiem === "pm" && hour < 12) hour += 12;
+  }
+
   if (!Number.isInteger(hour) || hour < 0 || hour > 23 || !Number.isInteger(minute) || minute < 0 || minute > 59) {
     throw new OpeningHoursExtractionError("INVALID_CLOCK", `Invalid opening-hours clock value: ${value}`);
   }
@@ -161,6 +183,15 @@ function markerMatchesHints(marker: HoursMarker, scopeHints: readonly string[]):
   });
 }
 
+function standardHoursMatchCount(candidate: string): number {
+  const compact = candidate.replace(/\s+/g, " ").trim();
+  const pattern = new RegExp(
+    `(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?\\s*(?:[:|])?\\s+(${timeToken})\\s*[-–]\\s*(${timeToken})`,
+    "giu",
+  );
+  return [...compact.matchAll(pattern)].length;
+}
+
 function selectStandardHoursCandidate(visibleText: string, scopeHints: readonly string[]): string {
   const lines = visibleText.split("\n");
   const markerPattern = /^(?:opening\s+hours|hours|åpningstider)(?:\s+([^:]{1,80}))?:?$/iu;
@@ -170,10 +201,14 @@ function selectStandardHoursCandidate(visibleText: string, scopeHints: readonly 
     if (match) markers.push({ index, label: match[1]?.trim() || null });
   }
 
+  const sectionForMarker = (marker: HoursMarker): string => {
+    const nextMarker = markers.find((candidate) => candidate.index > marker.index);
+    const end = nextMarker?.index ?? lines.length;
+    return lines.slice(marker.index, end).join(" ");
+  };
+
   if (markers.length === 0) return visibleText;
-  if (markers.length === 1) {
-    return lines.slice(markers[0]?.index ?? 0).join(" ");
-  }
+  if (markers.length === 1) return sectionForMarker(markers[0] as HoursMarker);
 
   const hinted = markers.filter((marker) => markerMatchesHints(marker, scopeHints));
   let selected: HoursMarker | undefined;
@@ -189,15 +224,18 @@ function selectStandardHoursCandidate(visibleText: string, scopeHints: readonly 
   }
 
   if (!selected) {
+    const parseable = markers.filter((marker) => standardHoursMatchCount(sectionForMarker(marker)) > 0);
+    if (parseable.length === 1) selected = parseable[0];
+  }
+
+  if (!selected) {
     throw new OpeningHoursExtractionError(
       "AMBIGUOUS_HOURS_SECTION",
-      `Found ${markers.length} opening-hours sections and could not resolve exactly one from source scope hints or page identity`,
+      `Found ${markers.length} opening-hours sections and could not resolve exactly one from source scope hints, page identity or a unique parseable schedule`,
     );
   }
 
-  const nextMarker = markers.find((marker) => marker.index > selected.index);
-  const end = nextMarker?.index ?? lines.length;
-  return lines.slice(selected.index, end).join(" ");
+  return sectionForMarker(selected);
 }
 
 function kitchenCutoffFromSuffix(suffix: string | undefined): string | null {
@@ -246,7 +284,7 @@ function extractStandardHours(
   const candidate = selectStandardHoursCandidate(visibleText, scopeHints).replace(/\s+/g, " ").trim();
   const globalCutoff = globalKitchenCutoffs(candidate);
   const pattern = new RegExp(
-    `(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?\\s*:?[\\s]+(${timeToken})\\s*[-–]\\s*(${timeToken})(?:\\s*\\(([^)]{1,120})\\))?`,
+    `(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?\\s*(?:[:|])?\\s+(${timeToken})\\s*[-–]\\s*(${timeToken})(?:\\s*\\(([^)]{1,120})\\))?`,
     "giu",
   );
   const intervals: RestaurantHoursIntervalInput[] = [];
