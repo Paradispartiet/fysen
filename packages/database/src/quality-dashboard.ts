@@ -200,7 +200,7 @@ export async function buildQualityDashboard(pool: Pool): Promise<QualityDashboar
       demand AS (
         SELECT
           impression.restaurant_id,
-          count(impression.id)::integer AS impressions_7d,
+          count(DISTINCT impression.id)::integer AS impressions_7d,
           count(conversion.id)::integer AS conversions_7d
         FROM fysen.search_result_impressions AS impression
         LEFT JOIN fysen.conversion_events AS conversion
