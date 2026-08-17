@@ -1,7 +1,8 @@
-import type { DishSearchResponse } from "@fysen/contracts";
+import type { DishSearchResponse, DishSearchSort } from "@fysen/contracts";
 import { DishResult } from "../../components/dish-result";
 import { DishSearch } from "../../components/dish-search";
 import { GlobalHeader } from "../../components/global-header";
+import { LocationControls } from "../../components/location-controls";
 import { SearchState } from "../../components/search-state";
 import { searchDishes } from "../../lib/fysen-api";
 
@@ -11,7 +12,35 @@ function first(value: string | string[] | undefined): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
-async function loadResults(q: string, city: string): Promise<{
+function coordinate(value: string | string[] | undefined, minimum: number, maximum: number): number | null {
+  const raw = first(value);
+  if (!raw) return null;
+  const parsed = Number(raw);
+  return Number.isFinite(parsed) && parsed >= minimum && parsed <= maximum ? parsed : null;
+}
+
+function searchHref(
+  q: string,
+  city: string,
+  latitude: number | null,
+  longitude: number | null,
+  sort: DishSearchSort,
+): string {
+  const params = new URLSearchParams({ q, city, sort });
+  if (latitude !== null && longitude !== null) {
+    params.set("lat", String(latitude));
+    params.set("lon", String(longitude));
+  }
+  return `/search?${params.toString()}`;
+}
+
+async function loadResults(
+  q: string,
+  city: string,
+  latitude: number | null,
+  longitude: number | null,
+  sort: DishSearchSort,
+): Promise<{
   data: DishSearchResponse | null;
   error: string | null;
 }> {
@@ -20,7 +49,8 @@ async function loadResults(q: string, city: string): Promise<{
   }
 
   try {
-    const data = await searchDishes({ q, city, limit: 20 });
+    const location = latitude !== null && longitude !== null ? { lat: latitude, lon: longitude } : {};
+    const data = await searchDishes({ q, city, limit: 20, sort, ...location });
     return { data, error: null };
   } catch {
     return {
@@ -34,7 +64,12 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   const params = await searchParams;
   const q = first(params.q);
   const city = first(params.city) || "Oslo";
-  const { data, error } = await loadResults(q, city);
+  const latitude = coordinate(params.lat, -90, 90);
+  const longitude = coordinate(params.lon, -180, 180);
+  const hasLocation = latitude !== null && longitude !== null;
+  const requestedSort = first(params.sort);
+  const sort: DishSearchSort = requestedSort === "distance" && hasLocation ? "distance" : "relevance";
+  const { data, error } = await loadResults(q, city, latitude, longitude, sort);
   const primaryResults = data?.results.filter((result) => result.match.type !== "fuzzy") ?? [];
   const nearResults = data?.results.filter((result) => result.match.type === "fuzzy") ?? [];
 
@@ -64,13 +99,18 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
             <p className="eyebrow">{city}</p>
             <h1>{q || "Finn en rett"}</h1>
             <p className="resultsCount">{countLabel}</p>
+            {q.length >= 2 ? <LocationControls hasLocation={hasLocation} sort={sort} /> : null}
           </div>
 
           {error ? (
             <SearchState
               title={error}
               body={q.length === 1 ? undefined : "Prøv igjen om litt."}
-              actionHref={q.length > 1 ? `/search?q=${encodeURIComponent(q)}&city=${encodeURIComponent(city)}` : undefined}
+              actionHref={
+                q.length > 1
+                  ? searchHref(q, city, latitude, longitude, sort)
+                  : undefined
+              }
               actionLabel={q.length > 1 ? "Prøv igjen" : undefined}
             />
           ) : null}

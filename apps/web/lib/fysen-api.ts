@@ -22,7 +22,12 @@ export async function searchDishes(input: DishSearchQuery): Promise<DishSearchRe
     q: query.q,
     city: query.city,
     limit: String(query.limit),
+    sort: query.sort,
   });
+  if (query.lat !== undefined && query.lon !== undefined) {
+    params.set("lat", String(query.lat));
+    params.set("lon", String(query.lon));
+  }
 
   const response = await fetch(`${apiBaseUrl()}/v1/dishes/search?${params.toString()}`, {
     cache: "no-store",

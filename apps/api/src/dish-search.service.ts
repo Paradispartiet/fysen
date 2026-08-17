@@ -25,6 +25,9 @@ export class DishSearchService {
       normalizedQuery,
       city: input.city,
       limit: input.limit,
+      latitude: input.lat ?? null,
+      longitude: input.lon ?? null,
+      sort: input.sort,
     });
 
     let searchId: string | null = null;
@@ -52,12 +55,14 @@ export class DishSearchService {
       query: input.q,
       normalizedQuery,
       city: input.city,
+      sort: input.sort,
       count: rows.length,
       results: rows.map((row) => ({
         impressionId: impressionIdsByMenuItemId[row.menuItemId] ?? null,
         menuItemId: row.menuItemId,
         snapshotId: row.snapshotId,
         menuSourceId: row.menuSourceId,
+        distanceMeters: row.distanceMeters,
         dish: {
           name: row.dishName,
           normalizedName: row.normalizedName,

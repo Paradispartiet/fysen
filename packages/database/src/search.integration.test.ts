@@ -4,10 +4,25 @@ import { createDatabasePool } from "./client.js";
 import { runMigrations } from "./migrate.js";
 import { MenuIndexRepository } from "./repository.js";
 import { upsertRestaurantAction } from "./restaurant-actions.js";
-import { searchDishes } from "./search.js";
+import { searchDishes, type DishSearchDatabaseInput } from "./search.js";
 
 const databaseUrl = process.env.DATABASE_URL;
 const integrationDescribe = databaseUrl ? describe : describe.skip;
+
+function searchInput(
+  normalizedQuery: string,
+  overrides: Partial<DishSearchDatabaseInput> = {},
+): DishSearchDatabaseInput {
+  return {
+    normalizedQuery,
+    city: "Oslo",
+    limit: 20,
+    latitude: null,
+    longitude: null,
+    sort: "relevance",
+    ...overrides,
+  };
+}
 
 integrationDescribe("dish search integration", () => {
   let pool: Pool;
@@ -134,23 +149,24 @@ integrationDescribe("dish search integration", () => {
   });
 
   it("returns exact and partial matches from only the latest fresh snapshot", async () => {
-    const exact = await searchDishes(pool, { normalizedQuery: "biff tartar", city: "Oslo", limit: 20 });
+    const exact = await searchDishes(pool, searchInput("biff tartar"));
     expect(exact).toHaveLength(1);
     expect(exact[0]?.dishName).toBe("Biff tartar");
     expect(exact[0]?.restaurantName).toBe("Search Bistro");
     expect(exact[0]?.matchType).toBe("exact");
     expect(exact[0]?.score).toBe(1);
+    expect(exact[0]?.distanceMeters).toBeNull();
 
-    const partial = await searchDishes(pool, { normalizedQuery: "tartar", city: "Oslo", limit: 20 });
+    const partial = await searchDishes(pool, searchInput("tartar"));
     expect(partial).toHaveLength(1);
     expect(partial[0]?.matchType).toBe("contains");
 
-    const oldSnapshot = await searchDishes(pool, { normalizedQuery: "ramen", city: "Oslo", limit: 20 });
+    const oldSnapshot = await searchDishes(pool, searchInput("ramen"));
     expect(oldSnapshot).toEqual([]);
   });
 
   it("publishes only enabled, unexpired restaurant actions", async () => {
-    const result = await searchDishes(pool, { normalizedQuery: "biff tartar", city: "Oslo", limit: 20 });
+    const result = await searchDishes(pool, searchInput("biff tartar"));
     expect(result[0]?.bookingAction).toMatchObject({
       url: "https://example.com/book",
       sourceUrl: "https://example.com/book",
@@ -160,12 +176,88 @@ integrationDescribe("dish search integration", () => {
   });
 
   it("supports typo-tolerant trigram matching and city scoping", async () => {
-    const fuzzy = await searchDishes(pool, { normalizedQuery: "bif tartar", city: "Oslo", limit: 20 });
+    const fuzzy = await searchDishes(pool, searchInput("bif tartar"));
     expect(fuzzy).toHaveLength(1);
     expect(fuzzy[0]?.dishName).toBe("Biff tartar");
     expect(fuzzy[0]?.matchType).toBe("fuzzy");
 
-    const otherCity = await searchDishes(pool, { normalizedQuery: "biff tartar", city: "Bergen", limit: 20 });
+    const otherCity = await searchDishes(pool, searchInput("biff tartar", { city: "Bergen" }));
     expect(otherCity).toEqual([]);
+  });
+
+  it("calculates geography distance and can rank nearby matches before stronger distant matches", async () => {
+    const repository = new MenuIndexRepository(pool);
+    const farRestaurantId = await repository.upsertRestaurant({
+      slug: "far-tartar-oslo",
+      name: "Far Tartar",
+      websiteUrl: "https://far.example.com/",
+      address: "Langtvekk 2",
+      city: "Oslo",
+      countryCode: "NO",
+      latitude: 59.9539,
+      longitude: 10.7522,
+    });
+    const farSource = await repository.upsertMenuSource({
+      restaurantId: farRestaurantId,
+      url: "https://far.example.com/menu",
+      sourceType: "html",
+      userAgent: "FysenMenuBot/0.1",
+      checkIntervalMinutes: 360,
+      minimumExpectedItems: 1,
+    });
+    const fetchedAt = new Date().toISOString();
+    await repository.recordSnapshot({
+      menuSourceId: farSource.id,
+      expectedPreviousSnapshotId: null,
+      fetchedAt,
+      startedAt: fetchedAt,
+      httpStatus: 200,
+      responseContentType: "text/html",
+      rawSha256: "7".repeat(64),
+      normalizedSha256: "8".repeat(64),
+      normalizedText: "Tartar 250",
+      etag: null,
+      lastModified: null,
+      robotsAllowed: true,
+      fetchDurationMs: 8,
+      extractorVersion: "search-distance-integration",
+      items: [
+        {
+          sourceKey: "9".repeat(64),
+          name: "Tartar",
+          normalizedName: "tartar",
+          description: null,
+          sectionName: "Forretter",
+          priceMinor: 25000,
+          currency: "NOK",
+          position: 0,
+          extractionMethod: "html_heuristic",
+          confidence: 0.99,
+          sourceExcerpt: "Tartar 250",
+        },
+      ],
+      changes: [],
+    });
+
+    const userLocation = { latitude: 59.914, longitude: 10.7522 };
+    const relevance = await searchDishes(
+      pool,
+      searchInput("tartar", { ...userLocation, sort: "relevance" }),
+    );
+    expect(relevance).toHaveLength(2);
+    expect(relevance[0]?.restaurantName).toBe("Far Tartar");
+    expect(relevance[0]?.matchType).toBe("exact");
+    expect(relevance[1]?.restaurantName).toBe("Search Bistro");
+
+    const distance = await searchDishes(
+      pool,
+      searchInput("tartar", { ...userLocation, sort: "distance" }),
+    );
+    expect(distance).toHaveLength(2);
+    expect(distance[0]?.restaurantName).toBe("Search Bistro");
+    expect(distance[0]?.distanceMeters).not.toBeNull();
+    expect(distance[0]!.distanceMeters!).toBeLessThan(50);
+    expect(distance[1]?.restaurantName).toBe("Far Tartar");
+    expect(distance[1]!.distanceMeters!).toBeGreaterThan(4_000);
   });
 });
