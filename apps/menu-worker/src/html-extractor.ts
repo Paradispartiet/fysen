@@ -5,7 +5,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EXTRACTOR_VERSION = "html-v2";
+export const HTML_EXTRACTOR_VERSION = "html-v3";
 
 export interface ExtractedHtmlMenu {
   readonly items: readonly MenuObservedItem[];
@@ -125,7 +125,9 @@ function looksLikeNonDish(name: string): boolean {
     name.startsWith("+") ||
     name.includes("@") ||
     /https?:\/\//i.test(name) ||
-    /^(hours|opening|åpning|booking|contact|kontakt|address|adresse|where to find|allerg)/i.test(name) ||
+    /^(hours|opening|åpning|booking|contact|kontakt|address|adresse|where to find|allerg|drinks?|drikke|wine|vin|beer|øl|sake|alkoholfritt)/iu.test(
+      name,
+    ) ||
     /^(monday|tuesday|wednesday|thursday|friday|saturday|sunday|mandag|tirsdag|onsdag|torsdag|fredag|lørdag|søndag)\b/i.test(
       normalized,
     )
@@ -136,6 +138,30 @@ function looksLikeDescriptor(line: string): boolean {
   return /^(allergens?|allergener|with|topped|served|ask for|choose|velg|med|contains?|including|inkludert|accompanied)\b/iu.test(
     line.trim(),
   );
+}
+
+function looksLikeMetadataBoundary(line: string): boolean {
+  return /^(menyforklaring|menu explanation|drikke|drinks?|kontakt|contact|opening|åpning|booking|adresse|address|jobb|job|gavekort|gift card)\b/iu.test(
+    line.trim(),
+  );
+}
+
+function looksLikeSharedChildHeading(line: string): boolean {
+  const trimmed = line.trim();
+  if (
+    trimmed.startsWith("*") ||
+    trimmed.length < 3 ||
+    trimmed.length > 140 ||
+    looksLikeNonDish(trimmed) ||
+    looksLikeDescriptor(trimmed) ||
+    looksLikeMetadataBoundary(trimmed) ||
+    !/\p{L}/u.test(trimmed)
+  ) {
+    return false;
+  }
+
+  const lettersOnly = trimmed.replace(/[^\p{L}]+/gu, "");
+  return lettersOnly.length >= 3 && trimmed === trimmed.toLocaleUpperCase("nb-NO");
 }
 
 function splitHeuristicName(value: string): { readonly name: string; readonly description: string | null } {
@@ -156,13 +182,131 @@ function validPriceKroner(rawPrice: string): number | null {
   return Number.isInteger(value) && value >= 40 && value <= 10_000 ? value : null;
 }
 
+interface SharedPriceSection {
+  readonly headerPosition: number;
+  readonly sectionName: string;
+  readonly priceKroner: number;
+  readonly childPositions: readonly number[];
+  readonly boundaryPosition: number;
+}
+
+function detectSharedPriceSections(
+  lines: readonly string[],
+  inlinePriceLine: RegExp,
+  standalonePriceLine: RegExp,
+): readonly SharedPriceSection[] {
+  const sections: SharedPriceSection[] = [];
+
+  for (const [headerPosition, line] of lines.entries()) {
+    const match = line.match(inlinePriceLine);
+    const rawSectionName = match?.[1]?.trim();
+    const rawPrice = match?.[2];
+    if (!rawSectionName || !rawPrice || looksLikeNonDish(rawSectionName)) continue;
+
+    const parsedSection = splitHeuristicName(rawSectionName);
+    const sectionName = parsedSection.name;
+    const priceKroner = validPriceKroner(rawPrice);
+    if (
+      priceKroner === null ||
+      parsedSection.description !== null ||
+      sectionName.length > 60 ||
+      sectionName.split(/\s+/).length > 5 ||
+      /[,;:]/.test(sectionName)
+    ) {
+      continue;
+    }
+
+    const childPositions: number[] = [];
+    let boundaryPosition = Math.min(lines.length, headerPosition + 31);
+    const scanEnd = Math.min(lines.length, headerPosition + 31);
+    for (let index = headerPosition + 1; index < scanEnd; index += 1) {
+      const candidate = lines[index]?.trim();
+      if (!candidate) continue;
+      if (
+        candidate.startsWith("*") ||
+        looksLikeMetadataBoundary(candidate) ||
+        inlinePriceLine.test(candidate) ||
+        standalonePriceLine.test(candidate)
+      ) {
+        boundaryPosition = index;
+        break;
+      }
+      if (looksLikeSharedChildHeading(candidate)) childPositions.push(index);
+    }
+
+    if (childPositions.length < 2) continue;
+    sections.push({
+      headerPosition,
+      sectionName,
+      priceKroner,
+      childPositions,
+      boundaryPosition,
+    });
+  }
+
+  return sections;
+}
+
+function sharedSectionItems(
+  lines: readonly string[],
+  section: SharedPriceSection,
+): readonly MenuObservedItem[] {
+  return section.childPositions.map((position, childIndex) => {
+    const name = lines[position]?.trim() ?? "";
+    const nextChild = section.childPositions[childIndex + 1] ?? section.boundaryPosition;
+    const description = lines
+      .slice(position + 1, nextChild)
+      .filter(
+        (value) =>
+          !value.startsWith("*") &&
+          !/^allergens?:/iu.test(value) &&
+          !/^allergener:/iu.test(value) &&
+          !looksLikeMetadataBoundary(value),
+      )
+      .join(" ")
+      .trim() || null;
+    const sourceKey = createMenuItemSourceKey(name);
+    const excerpt = [
+      `${section.sectionName} ${section.priceKroner}`,
+      name,
+      description,
+    ]
+      .filter((value): value is string => Boolean(value))
+      .join(" — ")
+      .slice(0, 1000);
+
+    return {
+      sourceKey,
+      name,
+      normalizedName: normalizeDishName(name),
+      description,
+      sectionName: section.sectionName,
+      priceMinor: section.priceKroner * 100,
+      currency: "NOK",
+      position,
+      extractionMethod: "html_heuristic" as const,
+      confidence: 0.76,
+      sourceExcerpt: excerpt,
+    };
+  });
+}
+
 function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[] {
   const unique = new Map<string, MenuObservedItem>();
   const lines = visibleText.split("\n");
   const inlinePriceLine = /^(.{2,280}?)\s+([1-9]\d{1,3})(?:\s*(?:,-|kr\.?|nok))?$/iu;
   const standalonePriceLine = /^([1-9]\d{1,3})(?:\s*(?:,-|kr\.?|nok))?$/iu;
+  const sharedSections = detectSharedPriceSections(lines, inlinePriceLine, standalonePriceLine);
+  const sharedHeaderPositions = new Set(sharedSections.map((section) => section.headerPosition));
+
+  for (const section of sharedSections) {
+    for (const item of sharedSectionItems(lines, section)) {
+      unique.set(item.sourceKey, item);
+    }
+  }
 
   for (const [position, line] of lines.entries()) {
+    if (sharedHeaderPositions.has(position)) continue;
     const match = line.match(inlinePriceLine);
     if (!match) continue;
     const rawName = match[1]?.trim();
