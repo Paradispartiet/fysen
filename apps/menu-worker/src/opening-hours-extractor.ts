@@ -1,7 +1,7 @@
 import { load } from "cheerio";
 import type { RestaurantHoursIntervalInput } from "@fysen/database";
 
-export const OPENING_HOURS_EXTRACTOR_VERSION = "hours-visible-v8";
+export const OPENING_HOURS_EXTRACTOR_VERSION = "hours-visible-v9";
 
 const weekdayByName: Readonly<Record<string, number>> = {
   monday: 1,
@@ -35,6 +35,7 @@ const dayToken = "(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Ma
 const timeToken = "(?:(?:1[0-2]|0?[1-9])(?:[.:][0-5]\\d)?\\s*(?:am|pm)|(?:2[0-3]|[01]?\\d)(?:[.:][0-5]\\d)?)";
 const clockPrefix = "(?:(?:kl\\.?|klokka)\\s*)?";
 const dayRangeConnector = "(?:[-–]|til|to)";
+const dayTimeSeparator = "(?:\\s*[:|]\\s*|\\s+)";
 
 export class OpeningHoursExtractionError extends Error {
   constructor(readonly code: string, message: string) {
@@ -187,7 +188,7 @@ function markerMatchesHints(marker: HoursMarker, scopeHints: readonly string[]):
 function standardHoursMatchCount(candidate: string): number {
   const compact = candidate.replace(/\s+/g, " ").trim();
   const pattern = new RegExp(
-    `(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?\\s*(?:[:|])?\\s+${clockPrefix}(${timeToken})\\s*[-–]\\s*${clockPrefix}(${timeToken})`,
+    `(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?${dayTimeSeparator}${clockPrefix}(${timeToken})\\s*[-–]\\s*${clockPrefix}(${timeToken})`,
     "giu",
   );
   return [...compact.matchAll(pattern)].length;
@@ -285,7 +286,7 @@ function extractStandardHours(
   const candidate = selectStandardHoursCandidate(visibleText, scopeHints).replace(/\s+/g, " ").trim();
   const globalCutoff = globalKitchenCutoffs(candidate);
   const pattern = new RegExp(
-    `(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?\\s*(?:[:|])?\\s+${clockPrefix}(${timeToken})\\s*[-–]\\s*${clockPrefix}(${timeToken})(?:\\s*\\(([^)]{1,120})\\))?`,
+    `(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?${dayTimeSeparator}${clockPrefix}(${timeToken})\\s*[-–]\\s*${clockPrefix}(${timeToken})(?:\\s*\\(([^)]{1,120})\\))?`,
     "giu",
   );
   const intervals: RestaurantHoursIntervalInput[] = [];
