@@ -166,6 +166,28 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
       continue;
     }
 
+    const standalone = line.match(standalonePrice);
+    if (standalone?.[1]) {
+      const price = parsedPrice(standalone[1], standalone[2]);
+      if (price && index > 0) {
+        const previous = lines[index - 1]?.text ?? "";
+        if (looksLikeDishName(previous)) {
+          const rawName = stripAllergenSuffix(previous);
+          if (looksLikeDishName(rawName)) {
+            candidates.push({
+              nameLineIndex: index - 1,
+              priceLineIndex: index,
+              page: lines[index - 1]?.page ?? lines[index]?.page ?? 1,
+              sectionName: currentSection,
+              rawName,
+              ...price,
+            });
+          }
+        }
+      }
+      continue;
+    }
+
     const inline = line.match(inlinePrice);
     if (inline?.[1] && inline[2]) {
       const price = parsedPrice(inline[2], inline[3]);
@@ -180,25 +202,7 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
           ...price,
         });
       }
-      continue;
     }
-
-    const standalone = line.match(standalonePrice);
-    if (!standalone?.[1]) continue;
-    const price = parsedPrice(standalone[1], standalone[2]);
-    if (!price || index === 0) continue;
-    const previous = lines[index - 1]?.text ?? "";
-    if (!looksLikeDishName(previous)) continue;
-    const rawName = stripAllergenSuffix(previous);
-    if (!looksLikeDishName(rawName)) continue;
-    candidates.push({
-      nameLineIndex: index - 1,
-      priceLineIndex: index,
-      page: lines[index - 1]?.page ?? lines[index]?.page ?? 1,
-      sectionName: currentSection,
-      rawName,
-      ...price,
-    });
   }
 
   return candidates;
