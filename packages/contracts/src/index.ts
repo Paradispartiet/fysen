@@ -141,7 +141,7 @@ export const dishSearchResultSchema = z.object({
   actions: z.object({
     booking: restaurantActionSchema.nullable(),
     order: restaurantActionSchema.nullable(),
-  }),
+  }).default({ booking: null, order: null }),
   match: z.object({
     type: dishSearchMatchTypeSchema,
     score: z.number().min(0).max(1),
