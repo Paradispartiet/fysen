@@ -54,17 +54,43 @@ export interface RestaurantCatalogOnboardingSummary {
   readonly results: readonly RestaurantOnboardingResult[];
 }
 
+interface SnapshotAssertionItem {
+  readonly normalizedName: string;
+  readonly sectionName: string | null;
+  readonly priceMinor: number | null;
+}
+
 function accepted(summary: MenuWatchSummary): boolean {
   return acceptedOutcomes.has(summary.outcome);
 }
 
+function variantLabel(variant: RestaurantOnboardingManifest["qualityAssertions"]["requiredDishVariants"][number]): string {
+  const section = variant.sectionName ? ` [${variant.sectionName}]` : "";
+  const price = variant.priceMinor !== undefined ? ` @ ${variant.priceMinor}` : "";
+  return `${variant.name}${section}${price}`;
+}
+
 function missingDishAssertions(
   manifest: RestaurantOnboardingManifest,
-  normalizedNames: ReadonlySet<string>,
+  items: readonly SnapshotAssertionItem[],
 ): readonly string[] {
-  return manifest.qualityAssertions.requiredDishNames.filter(
+  const normalizedNames = new Set(items.map((item) => item.normalizedName));
+  const missingNames = manifest.qualityAssertions.requiredDishNames.filter(
     (name) => !normalizedNames.has(normalizeDishName(name)),
   );
+  const missingVariants = manifest.qualityAssertions.requiredDishVariants
+    .filter((variant) => {
+      const normalizedName = normalizeDishName(variant.name);
+      const normalizedSection = variant.sectionName ? normalizeDishName(variant.sectionName) : null;
+      return !items.some((item) => {
+        if (item.normalizedName !== normalizedName) return false;
+        if (normalizedSection !== null && normalizeDishName(item.sectionName ?? "") !== normalizedSection) return false;
+        if (variant.priceMinor !== undefined && item.priceMinor !== variant.priceMinor) return false;
+        return true;
+      });
+    })
+    .map(variantLabel);
+  return [...missingNames, ...missingVariants];
 }
 
 async function assertLatestSnapshot(
@@ -76,14 +102,16 @@ async function assertLatestSnapshot(
   if (!snapshot) {
     return {
       itemCount: 0,
-      missing: manifest.qualityAssertions.requiredDishNames,
+      missing: [
+        ...manifest.qualityAssertions.requiredDishNames,
+        ...manifest.qualityAssertions.requiredDishVariants.map(variantLabel),
+      ],
     };
   }
 
-  const normalizedNames = new Set(snapshot.items.map((item) => item.normalizedName));
   return {
     itemCount: snapshot.items.length,
-    missing: missingDishAssertions(manifest, normalizedNames),
+    missing: missingDishAssertions(manifest, snapshot.items),
   };
 }
 
