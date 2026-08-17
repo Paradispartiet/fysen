@@ -85,17 +85,17 @@ integrationDescribe("revenue funnel integration", () => {
     await pool.end();
   });
 
-  it("records search demand and result impressions without a user profile", async () => {
+  it("records canonical search demand and result impressions without a user profile", async () => {
     const recorded = await recordSearchFunnel(pool, {
-      normalizedQuery: "tartar",
+      normalizedQuery: "beef tartare",
       city: "Oslo",
       impressions: [
         {
           menuItemId,
           restaurantId,
           rank: 1,
-          matchType: "prefix",
-          matchScore: 0.95,
+          matchType: "canonical",
+          matchScore: 0.98,
         },
       ],
     });
@@ -110,10 +110,18 @@ integrationDescribe("revenue funnel integration", () => {
     }>("SELECT normalized_query, city, result_count FROM fysen.search_events WHERE id = $1", [recorded.searchId]);
 
     expect(search.rows[0]).toEqual({
-      normalized_query: "tartar",
+      normalized_query: "beef tartare",
       city: "Oslo",
       result_count: 1,
     });
+
+    const impression = await pool.query<{ match_type: string; match_score: number }>(
+      `SELECT match_type, match_score
+         FROM fysen.search_result_impressions
+        WHERE search_id = $1`,
+      [recorded.searchId],
+    );
+    expect(impression.rows[0]).toEqual({ match_type: "canonical", match_score: 0.98 });
   });
 
   it("deduplicates retried conversion events by client event id", async () => {
