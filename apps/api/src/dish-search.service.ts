@@ -96,6 +96,7 @@ export class DishSearchService {
         match: {
           type: row.matchType,
           score: row.score,
+          canonicalDish: row.canonicalDish,
         },
       })),
     });
