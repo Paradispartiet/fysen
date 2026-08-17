@@ -158,7 +158,9 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
 
   for (let index = 0; index < lines.length; index += 1) {
     const line = lines[index]?.text ?? "";
-    const section = sectionHeading(line);
+    const nextLine = lines[index + 1]?.text ?? "";
+    const isStandalonePricedDishName = looksLikeDishName(line) && standalonePrice.test(nextLine);
+    const section = isStandalonePricedDishName ? null : sectionHeading(line);
     if (section) {
       currentSection = section;
       continue;
@@ -186,7 +188,7 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
     const price = parsedPrice(standalone[1], standalone[2]);
     if (!price || index === 0) continue;
     const previous = lines[index - 1]?.text ?? "";
-    if (sectionHeading(previous) || !looksLikeDishName(previous)) continue;
+    if (!looksLikeDishName(previous)) continue;
     const rawName = stripAllergenSuffix(previous);
     if (!looksLikeDishName(rawName)) continue;
     candidates.push({
