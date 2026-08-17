@@ -18,6 +18,10 @@ import {
   type RestaurantOnboardingManifest,
 } from "./onboarding-manifest.js";
 import {
+  watchRestaurantHoursSourceOnce,
+  type OpeningHoursWatchResult,
+} from "./run-opening-hours.js";
+import {
   shouldForceReextract,
   watchMenuSourceOnce,
   type MenuWatchSummary,
@@ -42,6 +46,7 @@ export interface RestaurantOnboardingResult {
   readonly restaurantId: string | null;
   readonly menuSourceId: string | null;
   readonly hoursSourceId: string | null;
+  readonly hoursWatch: OpeningHoursWatchResult | null;
   readonly actions: readonly OnboardingActionResult[];
   readonly firstWatch: MenuWatchSummary | null;
   readonly secondWatch: MenuWatchSummary | null;
@@ -66,6 +71,10 @@ interface SnapshotAssertionItem {
 
 function accepted(summary: MenuWatchSummary): boolean {
   return acceptedOutcomes.has(summary.outcome);
+}
+
+function acceptedHours(summary: OpeningHoursWatchResult): boolean {
+  return summary.outcome === "changed" || summary.outcome === "unchanged" || summary.outcome === "not_modified";
 }
 
 function variantLabel(variant: RestaurantOnboardingManifest["qualityAssertions"]["requiredDishVariants"][number]): string {
@@ -203,6 +212,7 @@ async function onboardOne(
   let restaurantId: string | null = null;
   let menuSourceId: string | null = null;
   let hoursSourceId: string | null = null;
+  let hoursWatch: OpeningHoursWatchResult | null = null;
   let actions: readonly OnboardingActionResult[] = [];
   let firstWatch: MenuWatchSummary | null = null;
   let secondWatch: MenuWatchSummary | null = null;
@@ -268,6 +278,7 @@ async function onboardOne(
         restaurantId,
         menuSourceId,
         hoursSourceId,
+        hoursWatch,
         actions,
         firstWatch,
         secondWatch,
@@ -310,6 +321,12 @@ async function onboardOne(
     const metadata = await ensureMetadata(pool, manifest, candidate.id);
     hoursSourceId = metadata.hoursSourceId;
     actions = metadata.actions;
+    if (hoursSourceId) {
+      hoursWatch = await watchRestaurantHoursSourceOnce(pool, hoursSourceId);
+      if (!acceptedHours(hoursWatch)) {
+        throw new Error(`Initial onboarding hours watch was ${hoursWatch.outcome}${hoursWatch.errorCode ? ` (${hoursWatch.errorCode})` : ""}`);
+      }
+    }
     await setRestaurantCoverageActive(pool, candidate.id, true);
     return {
       slug: manifest.restaurant.slug,
@@ -317,6 +334,7 @@ async function onboardOne(
       restaurantId,
       menuSourceId,
       hoursSourceId,
+      hoursWatch,
       actions,
       firstWatch,
       secondWatch,
@@ -331,6 +349,7 @@ async function onboardOne(
       restaurantId,
       menuSourceId,
       hoursSourceId,
+      hoursWatch,
       actions,
       firstWatch,
       secondWatch,
