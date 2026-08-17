@@ -148,7 +148,8 @@ function selectStandardHoursCandidate(visibleText: string): string {
     return lines.slice(markers[0]?.index ?? 0).join(" ");
   }
 
-  const pageIdentity = lines.slice(0, 12).join(" ").toLocaleLowerCase("nb-NO");
+  const firstMarkerIndex = markers[0]?.index ?? lines.length;
+  const pageIdentity = lines.slice(0, firstMarkerIndex).join(" ").toLocaleLowerCase("nb-NO");
   const matching = markers.filter(
     (marker) => marker.label && pageIdentity.includes(marker.label.toLocaleLowerCase("nb-NO")),
   );
