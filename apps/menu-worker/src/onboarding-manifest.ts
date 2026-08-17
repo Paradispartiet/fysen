@@ -25,6 +25,7 @@ export const restaurantOnboardingManifestSchema = z.object({
   menuSource: z.object({
     url: httpsUrl,
     sourceType: z.enum(["html", "json_ld", "pdf"]),
+    fetchMode: z.enum(["http", "browser"]).default("http"),
     userAgent: z.string().trim().min(1).max(300).default("FysenMenuBot/0.1"),
     checkIntervalMinutes: z.number().int().min(60).max(10080),
     minimumExpectedItems: z.number().int().min(1).max(500),
