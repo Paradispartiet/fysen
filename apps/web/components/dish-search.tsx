@@ -1,3 +1,5 @@
+import { withPublicBasePath } from "../lib/public-path";
+
 export function DishSearch({
   defaultValue = "",
   city = "Oslo",
@@ -12,7 +14,11 @@ export function DishSearch({
   inputId?: string;
 }) {
   return (
-    <form className={compact ? "dishSearch dishSearchCompact" : "dishSearch"} role="search" action="/search">
+    <form
+      className={compact ? "dishSearch dishSearchCompact" : "dishSearch"}
+      role="search"
+      action={withPublicBasePath("/search")}
+    >
       <label className="srOnly" htmlFor={inputId}>Retten du vil spise</label>
       <div className="dishSearchField">
         <span className="dishSearchIcon" aria-hidden="true">

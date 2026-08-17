@@ -6,6 +6,7 @@ import "./globals.css";
 import "../styles/theme.css";
 import "../styles/design-v2-1.css";
 import "../styles/results-v2-1.css";
+import "../styles/design-v2-2.css";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],

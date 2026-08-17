@@ -1,0 +1,490 @@
+/* Fysen Design v2.2 — food discovery, brand mark and learning */
+
+.fysenLogoLink {
+  align-items: center;
+}
+
+.fysenBrandLockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.fysenBrandMark {
+  display: block;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  object-fit: contain;
+}
+
+.fysenLogo {
+  font-size: 31px;
+  font-weight: 620;
+  letter-spacing: -0.02em;
+}
+
+.homeHero {
+  display: block;
+  min-height: 0;
+  padding-top: 46px;
+  padding-bottom: 58px;
+}
+
+.homeHeroTopline {
+  display: grid;
+  grid-template-columns: minmax(0, 720px) 220px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.homeHeroContent {
+  align-self: auto;
+}
+
+.homeHero h1 {
+  max-width: 720px;
+}
+
+.foodHeroIllustration {
+  width: 220px;
+  min-height: 0;
+  margin: 0;
+  align-self: center;
+  justify-self: end;
+  justify-content: flex-end;
+  overflow: visible;
+}
+
+.foodHeroIllustration svg {
+  width: 205px;
+  max-width: 100%;
+  overflow: visible;
+}
+
+.homeSearchWrap {
+  width: min(820px, 100%);
+  margin-top: 26px;
+}
+
+.cuisineExplorer,
+.dishLearningSection {
+  width: min(var(--content-hero), calc(100% - 96px));
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.foodSectionHeading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 28px;
+  margin-bottom: 22px;
+}
+
+.foodSectionHeading > div {
+  min-width: 0;
+}
+
+.foodSectionEyebrow {
+  margin: 0 0 6px;
+  color: var(--color-brand);
+  font-size: 11px;
+  font-weight: 680;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.foodSectionHeading h2 {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 590;
+  line-height: 1.08;
+  letter-spacing: -0.016em;
+}
+
+.foodSectionHeading > p {
+  max-width: 420px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.55;
+  text-align: right;
+}
+
+.cuisineGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.cuisineCard {
+  display: flex;
+  min-height: 228px;
+  flex-direction: column;
+  padding: 21px;
+  background: #070807;
+  border: 1px solid rgba(121, 201, 135, 0.22);
+  border-radius: 14px;
+  transition:
+    border-color var(--motion-fast) var(--ease-fysen),
+    transform var(--motion-fast) var(--ease-fysen);
+}
+
+.cuisineCard:hover {
+  border-color: rgba(121, 201, 135, 0.46);
+  transform: translateY(-1px);
+}
+
+.cuisineCardHeading h3 {
+  margin: 0;
+  font-size: 23px;
+  font-weight: 590;
+  line-height: 1.08;
+  letter-spacing: -0.014em;
+}
+
+.cuisineCardHeading p {
+  margin: 7px 0 0;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.cuisineDishList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.cuisineDishList a {
+  display: inline-flex;
+  min-height: 31px;
+  align-items: center;
+  padding: 0 10px;
+  color: #dbe4da;
+  font-size: 12px;
+  font-weight: 520;
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid rgba(121, 201, 135, 0.24);
+  border-radius: var(--radius-round);
+  transition:
+    color var(--motion-fast) var(--ease-fysen),
+    border-color var(--motion-fast) var(--ease-fysen);
+}
+
+.cuisineDishList a:hover,
+.cuisineDishList a:focus-visible {
+  color: var(--color-brand-hover);
+  border-color: rgba(121, 201, 135, 0.58);
+}
+
+.cuisineDishList a:focus-visible,
+.dishLearningCard a:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+.cuisineFact {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(121, 201, 135, 0.13);
+}
+
+.cuisineFact span {
+  color: var(--color-brand);
+  font-size: 10px;
+  font-weight: 680;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+.cuisineFact p {
+  margin: 7px 0 0;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.dishLearningSection {
+  margin-top: 70px;
+  padding-bottom: 28px;
+}
+
+.foodSectionHeadingLearning {
+  margin-bottom: 20px;
+}
+
+.dishLearningGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid rgba(121, 201, 135, 0.2);
+  border-bottom: 1px solid rgba(121, 201, 135, 0.2);
+}
+
+.dishLearningCard {
+  min-width: 0;
+  padding: 24px 22px 26px;
+}
+
+.dishLearningCard + .dishLearningCard {
+  border-left: 1px solid rgba(121, 201, 135, 0.16);
+}
+
+.dishLearningRegion {
+  color: var(--color-brand);
+  font-size: 10px;
+  font-weight: 680;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+.dishLearningCard h3 {
+  margin: 8px 0 0;
+  font-size: 24px;
+  font-weight: 590;
+  letter-spacing: -0.014em;
+}
+
+.dishLearningCard p {
+  margin: 10px 0 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.dishLearningCard a {
+  display: inline-flex;
+  margin-top: 17px;
+  color: var(--color-brand);
+  font-size: 12px;
+  font-weight: 620;
+  text-decoration: none;
+}
+
+.dishLearningCard a:hover {
+  color: var(--color-brand-hover);
+}
+
+.dishKnowledgeNote {
+  margin: -8px 0 28px;
+  padding: 17px 18px 18px;
+  background: #070807;
+  border-top: 1px solid rgba(121, 201, 135, 0.16);
+  border-right: 1px solid rgba(121, 201, 135, 0.16);
+  border-bottom: 1px solid rgba(121, 201, 135, 0.16);
+  border-left: 2px solid rgba(121, 201, 135, 0.72);
+  border-radius: 0 11px 11px 0;
+}
+
+.dishKnowledgeTopline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--color-brand);
+  font-size: 10px;
+  font-weight: 680;
+  letter-spacing: 0.065em;
+  text-transform: uppercase;
+}
+
+.dishKnowledgeTopline span:last-child {
+  color: var(--color-soft);
+  font-weight: 560;
+  text-align: right;
+}
+
+.dishKnowledgeNote h2 {
+  margin: 8px 0 0;
+  font-size: 20px;
+  font-weight: 590;
+  letter-spacing: -0.01em;
+}
+
+.dishKnowledgeNote > p {
+  max-width: 720px;
+  margin: 8px 0 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.dishKnowledgeNote small {
+  display: block;
+  margin-top: 11px;
+  color: var(--color-soft);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+@media (max-width: 1100px) {
+  .homeHeroTopline {
+    grid-template-columns: minmax(0, 1fr) 180px;
+  }
+
+  .foodHeroIllustration {
+    width: 180px;
+  }
+
+  .foodHeroIllustration svg {
+    width: 172px;
+  }
+
+  .cuisineExplorer,
+  .dishLearningSection {
+    width: min(var(--content-hero), calc(100% - 64px));
+  }
+
+  .cuisineGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .homeHero {
+    display: block;
+  }
+
+  .homeHeroTopline {
+    grid-template-columns: minmax(0, 1fr) 140px;
+    gap: 20px;
+  }
+
+  .foodHeroIllustration {
+    order: initial;
+    width: 140px;
+    margin: 0;
+    justify-content: flex-end;
+  }
+
+  .foodHeroIllustration svg {
+    width: 132px;
+  }
+
+  .foodSectionHeading {
+    align-items: start;
+  }
+
+  .foodSectionHeading > p {
+    max-width: 340px;
+  }
+}
+
+@media (max-width: 767px) {
+  .fysenBrandLockup {
+    gap: 7px;
+  }
+
+  .fysenBrandMark {
+    width: 32px;
+    height: 32px;
+    flex-basis: 32px;
+  }
+
+  .fysenLogo {
+    font-size: 27px;
+  }
+
+  .homeHero {
+    padding-top: 36px;
+    padding-bottom: 50px;
+  }
+
+  .homeHeroTopline {
+    grid-template-columns: minmax(0, 1fr) 104px;
+    gap: 12px;
+  }
+
+  .homeHero h1 {
+    font-size: clamp(46px, 12.7vw, 58px);
+  }
+
+  .foodHeroIllustration {
+    width: 104px;
+  }
+
+  .foodHeroIllustration svg {
+    width: 100px;
+  }
+
+  .homeSearchWrap {
+    margin-top: 24px;
+  }
+
+  .cuisineExplorer,
+  .dishLearningSection {
+    width: calc(100% - 40px);
+  }
+
+  .foodSectionHeading {
+    display: block;
+  }
+
+  .foodSectionHeading > p {
+    max-width: 520px;
+    margin-top: 10px;
+    text-align: left;
+  }
+
+  .cuisineGrid {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 0 1px 8px;
+    scroll-snap-type: x proximity;
+  }
+
+  .cuisineCard {
+    min-width: min(286px, 82vw);
+    min-height: 232px;
+    scroll-snap-align: start;
+  }
+
+  .dishLearningSection {
+    margin-top: 58px;
+  }
+
+  .dishLearningGrid {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+  }
+
+  .dishLearningCard {
+    min-width: min(286px, 82vw);
+    scroll-snap-align: start;
+  }
+
+  .dishLearningCard + .dishLearningCard {
+    border-left: 1px solid rgba(121, 201, 135, 0.16);
+  }
+
+  .dishKnowledgeTopline {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .dishKnowledgeTopline span:last-child {
+    text-align: left;
+  }
+}
+
+@media (max-width: 520px) {
+  .homeHeroTopline {
+    grid-template-columns: minmax(0, 1fr) 82px;
+  }
+
+  .foodHeroIllustration {
+    width: 82px;
+  }
+
+  .foodHeroIllustration svg {
+    width: 78px;
+  }
+}

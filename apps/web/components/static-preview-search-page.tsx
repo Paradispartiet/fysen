@@ -5,6 +5,7 @@ import {
   type DishSearchResponse,
 } from "@fysen/contracts";
 import { useEffect, useMemo, useState } from "react";
+import { DishKnowledgeNote } from "./dish-knowledge-note";
 import { DishResult } from "./dish-result";
 import { DishSearch } from "./dish-search";
 import { GlobalHeader } from "./global-header";
@@ -140,6 +141,8 @@ export function StaticPreviewSearchPage() {
             <h1>{q || "Finn en rett"}</h1>
             <p className="resultsCount">{loading ? "Søker i ferske menyer …" : countLabel}</p>
           </div>
+
+          <DishKnowledgeNote query={q} />
 
           {loading ? (
             <div className="loadingResults" aria-label="Søker etter menytreff">
