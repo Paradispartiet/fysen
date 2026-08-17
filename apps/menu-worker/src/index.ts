@@ -1,4 +1,5 @@
 import { normalizeDishName } from "@fysen/menu-core";
+import { runRestaurantActionVerification } from "./action-verifier.js";
 import { extractHtmlMenu } from "./html-extractor.js";
 import { HttpMenuClient } from "./http-client.js";
 import { runRodeoPilot } from "./pilot.js";
@@ -53,6 +54,13 @@ async function main(): Promise<void> {
   if (command === "run:due") {
     const configuredLimit = Number.parseInt(process.env.FYSEN_MENU_WATCH_BATCH_SIZE ?? "25", 10);
     const summary = await runDueMenuSources(configuredLimit);
+    print(summary);
+    if (summary.failedCount > 0) process.exitCode = 1;
+    return;
+  }
+  if (command === "verify:actions") {
+    const configuredLimit = Number.parseInt(process.env.FYSEN_ACTION_VERIFY_BATCH_SIZE ?? "25", 10);
+    const summary = await runRestaurantActionVerification(configuredLimit);
     print(summary);
     if (summary.failedCount > 0) process.exitCode = 1;
     return;
