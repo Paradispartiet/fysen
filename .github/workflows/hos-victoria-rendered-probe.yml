@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
+      - name: Raise request cap for diagnostic only
+        run: sed -i 's/const MAX_BROWSER_REQUESTS = 120;/const MAX_BROWSER_REQUESTS = 300;/' apps/menu-worker/src/browser-client.ts
+
       - name: Build menu worker
         run: pnpm --filter @fysen/menu-worker... build
 
