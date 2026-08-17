@@ -45,6 +45,7 @@ describe("database migrations", () => {
       "utf8",
     );
     expect(actionsSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_actions");
+    expect(actionsSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_action_verification_runs");
     expect(actionsSql).toContain("action_type IN ('booking', 'order')");
     expect(actionsSql).toContain("expires_at > verified_at");
     expect(actionsSql).toContain("'https://www.rodeooslo.no/booking'");
