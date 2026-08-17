@@ -1,11 +1,17 @@
 import {
   createDatabasePool,
+  getRestaurantActionState,
   MenuIndexRepository,
+  recordRestaurantActionVerificationSuccess,
   setRestaurantCoverageActive,
+  upsertRestaurantAction,
   upsertRestaurantCandidate,
+  upsertRestaurantHoursSource,
+  type RestaurantActionType,
   type WatchOutcome,
 } from "@fysen/database";
 import { normalizeDishName } from "@fysen/menu-core";
+import { HttpMenuClient } from "./http-client.js";
 import {
   listRestaurantOnboardingManifests,
   readRestaurantOnboardingManifest,
@@ -14,14 +20,25 @@ import {
 import { watchMenuSourceOnce, type MenuWatchSummary } from "./watcher.js";
 
 const acceptedOutcomes = new Set<WatchOutcome>(["changed", "unchanged", "not_modified"]);
+const ACTION_VERIFICATION_DAYS = 30;
+const ACTION_REVERIFY_WINDOW_DAYS = 7;
 
 export type RestaurantOnboardingOutcome = "published" | "already_published" | "failed";
+export type OnboardingActionOutcome = "verified" | "already_verified";
+
+export interface OnboardingActionResult {
+  readonly type: RestaurantActionType;
+  readonly actionId: string;
+  readonly outcome: OnboardingActionOutcome;
+}
 
 export interface RestaurantOnboardingResult {
   readonly slug: string;
   readonly outcome: RestaurantOnboardingOutcome;
   readonly restaurantId: string | null;
   readonly menuSourceId: string | null;
+  readonly hoursSourceId: string | null;
+  readonly actions: readonly OnboardingActionResult[];
   readonly firstWatch: MenuWatchSummary | null;
   readonly secondWatch: MenuWatchSummary | null;
   readonly itemCount: number | null;
@@ -70,12 +87,91 @@ async function assertLatestSnapshot(
   };
 }
 
+async function ensureAction(
+  pool: ReturnType<typeof createDatabasePool>,
+  manifest: RestaurantOnboardingManifest,
+  restaurantId: string,
+  action: RestaurantOnboardingManifest["actions"][number],
+): Promise<OnboardingActionResult> {
+  const existing = await getRestaurantActionState(pool, restaurantId, action.type);
+  const reverifyAfter = Date.now() + ACTION_REVERIFY_WINDOW_DAYS * 24 * 60 * 60 * 1000;
+  if (
+    existing?.enabled &&
+    existing.url === action.url &&
+    existing.sourceUrl === action.sourceUrl &&
+    existing.provider === action.provider &&
+    new Date(existing.expiresAt).getTime() > reverifyAfter
+  ) {
+    return { type: action.type, actionId: existing.id, outcome: "already_verified" };
+  }
+
+  const startedAt = new Date().toISOString();
+  const client = new HttpMenuClient();
+  const response = await client.fetchSource({
+    url: action.url,
+    userAgent: manifest.menuSource.userAgent,
+    etag: null,
+    lastModified: null,
+  });
+  if (response.kind === "not_modified") {
+    throw new Error(`Initial ${action.type} verification unexpectedly returned 304 for ${action.url}`);
+  }
+  const completedAt = new Date().toISOString();
+  const verifiedAt = response.fetchedAt;
+  const expiresAt = new Date(
+    new Date(verifiedAt).getTime() + ACTION_VERIFICATION_DAYS * 24 * 60 * 60 * 1000,
+  ).toISOString();
+  const actionId = await upsertRestaurantAction(pool, {
+    restaurantId,
+    actionType: action.type,
+    url: action.url,
+    sourceUrl: action.sourceUrl,
+    provider: action.provider,
+    verificationMethod: "first_party_page",
+    verifiedAt,
+    expiresAt,
+  });
+  await recordRestaurantActionVerificationSuccess(pool, {
+    actionId,
+    startedAt,
+    completedAt,
+    httpStatus: response.status,
+    verifiedAt,
+    expiresAt,
+  });
+  return { type: action.type, actionId, outcome: "verified" };
+}
+
+async function ensureMetadata(
+  pool: ReturnType<typeof createDatabasePool>,
+  manifest: RestaurantOnboardingManifest,
+  restaurantId: string,
+): Promise<{ readonly hoursSourceId: string | null; readonly actions: readonly OnboardingActionResult[] }> {
+  const hoursSourceId = manifest.hoursSource
+    ? await upsertRestaurantHoursSource(pool, {
+        restaurantId,
+        url: manifest.hoursSource.url,
+        timeZone: manifest.hoursSource.timeZone,
+        checkIntervalMinutes: manifest.hoursSource.checkIntervalMinutes,
+        minimumExpectedIntervals: manifest.hoursSource.minimumExpectedIntervals,
+      })
+    : null;
+
+  const actions: OnboardingActionResult[] = [];
+  for (const action of manifest.actions) {
+    actions.push(await ensureAction(pool, manifest, restaurantId, action));
+  }
+  return { hoursSourceId, actions };
+}
+
 async function onboardOne(
   manifest: RestaurantOnboardingManifest,
 ): Promise<RestaurantOnboardingResult> {
   const pool = createDatabasePool({ maxConnections: 2 });
   let restaurantId: string | null = null;
   let menuSourceId: string | null = null;
+  let hoursSourceId: string | null = null;
+  let actions: readonly OnboardingActionResult[] = [];
   let firstWatch: MenuWatchSummary | null = null;
   let secondWatch: MenuWatchSummary | null = null;
 
@@ -96,11 +192,21 @@ async function onboardOne(
 
     if (candidate.active) {
       const current = await assertLatestSnapshot(repository, source.id, manifest);
+      if (current.itemCount < manifest.menuSource.minimumExpectedItems || current.missing.length > 0) {
+        throw new Error(
+          `Published restaurant no longer satisfies onboarding assertions: items=${current.itemCount}, missing=${current.missing.join(",")}`,
+        );
+      }
+      const metadata = await ensureMetadata(pool, manifest, candidate.id);
+      hoursSourceId = metadata.hoursSourceId;
+      actions = metadata.actions;
       return {
         slug: manifest.restaurant.slug,
         outcome: "already_published",
         restaurantId,
         menuSourceId,
+        hoursSourceId,
+        actions,
         firstWatch: null,
         secondWatch: null,
         itemCount: current.itemCount,
@@ -139,12 +245,17 @@ async function onboardOne(
       throw new Error(`Required dishes missing after second watch: ${afterSecond.missing.join(", ")}`);
     }
 
+    const metadata = await ensureMetadata(pool, manifest, candidate.id);
+    hoursSourceId = metadata.hoursSourceId;
+    actions = metadata.actions;
     await setRestaurantCoverageActive(pool, candidate.id, true);
     return {
       slug: manifest.restaurant.slug,
       outcome: "published",
       restaurantId,
       menuSourceId,
+      hoursSourceId,
+      actions,
       firstWatch,
       secondWatch,
       itemCount: afterSecond.itemCount,
@@ -157,6 +268,8 @@ async function onboardOne(
       outcome: "failed",
       restaurantId,
       menuSourceId,
+      hoursSourceId,
+      actions,
       firstWatch,
       secondWatch,
       itemCount: null,

@@ -73,3 +73,6 @@ jobs:
 
       - name: Onboard catalog candidates
         run: pnpm --filter @fysen/menu-worker onboard:catalog
+
+      - name: Watch newly onboarded restaurant hours
+        run: pnpm --filter @fysen/menu-worker watch:hours
