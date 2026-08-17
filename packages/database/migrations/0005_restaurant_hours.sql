@@ -74,8 +74,6 @@ INSERT INTO fysen.restaurant_hours_sources (
   restaurant_id,
   service_type,
   url,
-  source_url,
-  provider,
   time_zone,
   extractor,
   check_interval_minutes,
@@ -87,8 +85,6 @@ SELECT
   restaurant.id,
   'kitchen',
   'https://www.rodeooslo.no/',
-  'https://www.rodeooslo.no/',
-  NULL,
   'Europe/Oslo',
   'visible_text_v1',
   720,
@@ -99,8 +95,6 @@ FROM fysen.restaurants AS restaurant
 WHERE restaurant.slug = 'rodeo-oslo'
 ON CONFLICT (restaurant_id, service_type) DO UPDATE SET
   url = EXCLUDED.url,
-  source_url = EXCLUDED.source_url,
-  provider = EXCLUDED.provider,
   time_zone = EXCLUDED.time_zone,
   extractor = EXCLUDED.extractor,
   check_interval_minutes = EXCLUDED.check_interval_minutes,
