@@ -157,6 +157,9 @@ integrationDescribe("dish search integration", () => {
     expect(exact[0]?.score).toBe(1);
     expect(exact[0]?.canonicalDish).toEqual({ slug: "beef-tartare", name: "Biff tartar" });
     expect(exact[0]?.distanceMeters).toBeNull();
+    expect(exact[0]?.priceMinor).toBe(22500);
+    expect(exact[0]?.priceKind).toBe("exact");
+    expect(exact[0]?.priceMaxMinor).toBeNull();
 
     const partial = await searchDishes(pool, searchInput("tartar"));
     expect(partial).toHaveLength(1);
