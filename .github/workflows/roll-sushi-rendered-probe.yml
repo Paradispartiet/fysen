@@ -29,7 +29,7 @@ jobs:
         run: pnpm install --no-frozen-lockfile
       - name: Build menu worker
         run: pnpm --filter @fysen/menu-worker... build
-      - name: Probe Roll Sushi rendered source
+      - name: Compare raw and rendered Roll Sushi source
         id: probe
         continue-on-error: true
         shell: bash
@@ -37,18 +37,32 @@ jobs:
           set +e
           node --input-type=module <<'NODE' > /tmp/roll-sushi-probe.txt 2>&1
           import { BrowserMenuClient } from "./apps/menu-worker/dist/browser-client.js";
+          import { HttpMenuClient } from "./apps/menu-worker/dist/http-client.js";
           import { extractHtmlMenu } from "./apps/menu-worker/dist/html-extractor.js";
-          const source = { url: "https://rollsushi.no/", userAgent: "FysenMenuBot/0.1" };
+          const source = { url: "https://rollsushi.no/", userAgent: "FysenMenuBot/0.1", etag: null, lastModified: null };
           try {
-            const fetched = await new BrowserMenuClient().fetchSource(source);
-            const extracted = extractHtmlMenu(fetched.body);
+            const rawFetch = await new HttpMenuClient().fetchSource(source);
+            if (rawFetch.kind !== "content") throw new Error(`Unexpected raw fetch kind: ${rawFetch.kind}`);
+            const raw = extractHtmlMenu(rawFetch.body);
+            const renderedFetch = await new BrowserMenuClient().fetchSource(source);
+            const rendered = extractHtmlMenu(renderedFetch.body);
+            const sample = (items) => items.slice(0, 12).map((item) => ({ name: item.name, priceMinor: item.priceMinor, sectionName: item.sectionName }));
             console.log(JSON.stringify({
               ok: true,
-              fetched: { status: fetched.status, byteLength: fetched.bodyBytes.length, durationMs: fetched.durationMs },
-              extraction: {
-                method: extracted.method,
-                itemCount: extracted.items.length,
-                items: extracted.items.slice(0, 100).map((item) => ({ name: item.name, priceMinor: item.priceMinor, sectionName: item.sectionName, description: item.description })),
+              raw: {
+                status: rawFetch.status,
+                byteLength: rawFetch.bodyBytes.length,
+                method: raw.method,
+                itemCount: raw.items.length,
+                sample: sample(raw.items),
+              },
+              rendered: {
+                status: renderedFetch.status,
+                byteLength: renderedFetch.bodyBytes.length,
+                durationMs: renderedFetch.durationMs,
+                method: rendered.method,
+                itemCount: rendered.items.length,
+                sample: sample(rendered.items),
               },
             }, null, 2));
           } catch (error) {
@@ -81,6 +95,6 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number,
-              body: `Midlertidig, **skal ikke merges**.\n\n## Roll Sushi rendered probe\n\nStatus: ${process.env.PROBE_STATUS || 'unknown'}\n\n\`\`\`json\n${result}\n\`\`\`\n\nPR-en lukkes etter diagnosen.`,
+              body: `Midlertidig, **skal ikke merges**.\n\n## Roll Sushi raw vs rendered probe\n\nStatus: ${process.env.PROBE_STATUS || 'unknown'}\n\n\`\`\`json\n${result}\n\`\`\`\n\nPR-en lukkes etter diagnosen.`,
             });
             if (process.env.PROBE_STATUS !== '0') core.setFailed('Roll Sushi probe failed; see PR body.');
