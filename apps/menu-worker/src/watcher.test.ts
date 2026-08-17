@@ -1,7 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { HTML_EXTRACTOR_VERSION } from "./html-extractor.js";
 import { PDF_EXTRACTOR_VERSION } from "./pdf-extractor.js";
-import { extractorVersionForSourceType, shouldForceReextract } from "./watcher.js";
+import {
+  assertExtractionMethodForSourceType,
+  extractorVersionForSourceType,
+  shouldForceReextract,
+} from "./watcher.js";
 
 describe("menu watcher extractor refresh policy", () => {
   it("forces a fresh PDF fetch when the stored snapshot used an older extractor", () => {
@@ -19,5 +23,17 @@ describe("menu watcher extractor refresh policy", () => {
   it("does not invent a refresh policy when there is no prior extraction", () => {
     expect(shouldForceReextract("pdf", null)).toBe(false);
     expect(shouldForceReextract("image", "legacy")).toBe(false);
+  });
+
+  it("requires declared JSON-LD sources to actually extract JSON-LD", () => {
+    expect(() => assertExtractionMethodForSourceType("json_ld", "json_ld")).not.toThrow();
+    expect(() => assertExtractionMethodForSourceType("json_ld", "html_heuristic")).toThrow(
+      /declared json_ld/,
+    );
+  });
+
+  it("allows ordinary HTML sources to use whichever safe HTML extractor wins", () => {
+    expect(() => assertExtractionMethodForSourceType("html", "html_heuristic")).not.toThrow();
+    expect(() => assertExtractionMethodForSourceType("html", "json_ld")).not.toThrow();
   });
 });
