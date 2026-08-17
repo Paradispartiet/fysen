@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - ".github/workflows/hos-victoria-rendered-probe.yml"
+      - "apps/menu-worker/src/browser-client.ts"
 
 permissions:
   contents: read
