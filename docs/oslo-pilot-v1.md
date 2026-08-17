@@ -13,6 +13,8 @@ Piloten skal ikke optimaliseres for flest mulig restauranter. Den skal optimalis
 ## Implementasjonsstatus
 
 - Rodeo er golden live-kilde med produksjonsaktiv menyovervåkning.
+- Way Down South er andre produksjonsgodkjente Oslo-restaurant og første bevis på den generelle onboardingporten: 20 retter, første watch `changed`, andre watch `unchanged`, null manglende dish-assertions før publisering.
+- Nye coverage-kandidater registreres som `active=false` og blir ikke søkbare før to aksepterte watches, minimumskrav og eksplisitte dish smoke-assertions er bestått.
 - Søket har exact/prefix/contains/trigram og skiller fuzzy «nære treff» fra sikrere treff.
 - Revenue funnel måler søk, impressions og attribuerte handlinger uten permanent brukerprofil.
 - Resultatflaten har meny, restaurant, veibeskrivelse og verifisert booking/bestilling når slike canonical handlinger finnes.
@@ -21,7 +23,8 @@ Piloten skal ikke optimaliseres for flest mulig restauranter. Den skal optimalis
 - Presis posisjon lagres ikke i Revenue Layer search-events; koordinatene brukes i den konkrete søkeforespørselen og avrundes før søk.
 - Åpningstider er implementert som en egen kildebelagt kjøkkentids-strøm med immutable snapshots, ferskhet og `open | closed | unknown` i dish search.
 - En ukjent eller utdatert åpningstidskilde gir alltid `unknown`; Fysen gjetter ikke «åpent nå».
-- Bredere coverage, videre dish matching og quality dashboard er neste pilotarbeid.
+- Quality Dashboard v1 er en privat GitHub Actions-driftsoverflate med lesbar job summary og maskinlesbar JSON-artifact etter produksjonswatch.
+- Videre dish matching og bredere representativ Oslo-coverage er neste pilotarbeid.
 
 ## Produktmål
 
@@ -49,17 +52,27 @@ Dekningen skal bygges kvalitativt, ikke som en vilkårlig tallkvote. Restaurante
 - mer krevende JavaScript-baserte kilder der Playwright-fallback faktisk er nødvendig;
 - restauranter med og uten direkte booking-/bestillingslenker.
 
-Rodeo er første produksjonsbevis og beholdes som golden live-kilde.
+Rodeo er første produksjonsbevis og beholdes som golden live-kilde. Way Down South er første restaurant som er publisert gjennom den generelle onboardingporten.
 
 ## Arbeidspakker
 
-### 1. Restaurant onboarding og coverage
+### 1. Restaurant onboarding og coverage — implementert
 
-Bygg en eksplisitt onboardingflyt for nye kilder:
+Onboardingflyten er nå eksplisitt og manifestbasert:
 
-`restaurant -> kilde -> robots/sikkerhet -> første watch -> kvalitetsport -> publiserbar meny`
+`candidate manifest -> active=false -> kilde -> robots/sikkerhet -> første watch -> minimum + dish assertions -> andre watch -> kvalitetsport -> active=true`
 
-Ingen restaurant regnes som dekket før minst ett akseptert snapshot finnes og watcheren kan kjøre gjentatte ganger uten manuell spesialbehandling.
+Det betyr:
+
+- en kandidat kan ha et lagret snapshot uten å være søkbar;
+- første watch må være `changed`, `unchanged` eller `not_modified`;
+- siste accepted snapshot må ha minst manifestets minimum antall retter;
+- konkrete, normaliserte dish smoke-assertions må finnes i snapshotet;
+- en andre watch må også passere for å bevise gjentakbarhet;
+- først deretter åpnes coverage-gaten ved å sette restauranten aktiv;
+- kandidatfeil skjer etter vedlikehold av eksisterende menu/hours/actions, så en ny dårlig kilde kan ikke hindre produksjonsvedlikeholdet for godkjente restauranter.
+
+Way Down South er første produksjonsbevis: 20 retter ble hentet, andre watch var uendret, alle obligatoriske dish-assertions ble funnet og restauranten ble deretter søkbar i offentlig Fysen.
 
 ### 2. Dish matching v1
 
@@ -103,7 +116,7 @@ Implementasjonen har:
 
 Parseren er bevisst konservativ. En tekst som sier «late» er ikke nok til å etablere matserveringens slutt. Dersom siden oppgir en eksakt kjøkkenstenging, brukes den; ellers feiler ekstraksjonen lukket.
 
-Rodeos førsteside er pilotens første hours-source. Den publiseres først etter at worker har hentet og parsret den reelle siden; migrasjonen legger ikke inn et manuelt hours-snapshot.
+Rodeos førsteside er pilotens første hours-source. Produksjonswatcheren har bevist fem canonical kjøkkenintervaller fra den levende kilden.
 
 ### 5. Resultatflate
 
@@ -122,20 +135,24 @@ Første handlinger er:
 
 Booking-/ordrehandlinger er egne canonical records med kilde, verifikasjon og utløp. En utløpt handling skal ikke vises selv om URL-en fortsatt ligger i databasen.
 
-### 6. Quality dashboard
+### 6. Quality dashboard — implementert
 
-Intern driftsoverflate skal minst vise:
+Den interne driftsoverflaten ligger i det private GitHub-repoet og genereres etter produksjonswatch. Den eksponeres ikke som en ubeskyttet offentlig adminside.
 
-- restaurant og kilde;
-- siste kontroll;
-- siste endring;
-- antall aksepterte retter;
-- consecutive failures;
-- quarantine-status og årsak;
-- neste kontroll;
-- åpningstidskildens siste kontroll og status;
-- booking-/ordrehandlingers verifikasjonsstatus;
-- nulltreff/etterspørsel som peker på manglende dekning.
+Rapporten leverer:
+
+- restaurant og publiserings-/candidate-status;
+- alle menykilder med `healthy | degraded | stale | unverified | disabled`;
+- siste kontroll, siste endring, ferskhetsvindu og neste kontroll;
+- antall retter i siste snapshot;
+- consecutive failures, siste watcher-outcome og error code/quarantine;
+- hours-kildens helse, intervalltall og siste feil;
+- booking-/ordrehandlingers `verified | expiring | expired | disabled`;
+- impressions og conversions siste 7 dager per restaurant;
+- toppliste over normaliserte nulltreff siste 7 dager som signal for videre coverage;
+- en lesbar GitHub Actions Summary og JSON-artifact med 14 dagers retention.
+
+Rapporten beholder Revenue Layers dataminimering: ingen IP-adresser, user-agent, konto-ID eller permanent brukerprofil tilføres.
 
 ### 7. Demand loop
 
@@ -156,6 +173,7 @@ Pilotdata publiseres bare når:
 - menykilden er tillatt å hente;
 - fetch og parser passerer sikkerhetsportene;
 - snapshotet passerer minimums- og suspicious-drop-regler;
+- onboardingkandidaten har passert to aksepterte watches og sine dish-assertions;
 - kilden er innenfor definert ferskhetsvindu;
 - retten kan spores til konkret snapshot og kilde;
 - åpningstilstand kan spores til et ferskt hours-snapshot, ellers vises `unknown`;
