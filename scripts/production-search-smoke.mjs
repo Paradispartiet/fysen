@@ -29,6 +29,8 @@ const minCount = optionalInteger("SMOKE_MIN_COUNT") ?? 1;
 const expectedSlug = process.env.SMOKE_EXPECTED_RESTAURANT_SLUG?.trim() || null;
 const expectedDishName = process.env.SMOKE_EXPECTED_DISH_NAME?.trim() || null;
 const expectedPriceMinor = optionalInteger("SMOKE_EXPECTED_PRICE_MINOR");
+const expectedPriceKind = process.env.SMOKE_EXPECTED_PRICE_KIND?.trim() || null;
+const expectedPriceMaxMinor = optionalInteger("SMOKE_EXPECTED_PRICE_MAX_MINOR");
 const expectedMatchType = process.env.SMOKE_EXPECTED_MATCH_TYPE?.trim() || null;
 const expectedOpening = process.env.SMOKE_EXPECTED_OPENING?.trim() || null;
 const expectedAction = process.env.SMOKE_EXPECTED_ACTION?.trim() || null;
@@ -61,6 +63,10 @@ try {
   if (expectedPriceMinor !== null && target.priceMinor !== expectedPriceMinor) {
     throw new Error(`priceMinor: expected ${expectedPriceMinor}, got ${target.priceMinor ?? "null"}`);
   }
+  assertEqual(target.priceKind, expectedPriceKind, "price kind");
+  if (expectedPriceMaxMinor !== null && target.priceMaxMinor !== expectedPriceMaxMinor) {
+    throw new Error(`priceMaxMinor: expected ${expectedPriceMaxMinor}, got ${target.priceMaxMinor ?? "null"}`);
+  }
   assertEqual(target.matchType, expectedMatchType, "match type");
   assertEqual(target.opening.state, expectedOpening, "opening state");
 
@@ -82,6 +88,8 @@ try {
       dishName: target.dishName,
       normalizedName: target.normalizedName,
       priceMinor: target.priceMinor,
+      priceKind: target.priceKind,
+      priceMaxMinor: target.priceMaxMinor,
       currency: target.currency,
       confidence: target.confidence,
       restaurantSlug: target.restaurantSlug,
