@@ -2,6 +2,7 @@
   "name": "@fysen/api",
   "version": "0.0.0",
   "private": true,
+  "description": "Fysen public dish-search API",
   "type": "module",
   "scripts": {
     "dev": "nest start --watch",
