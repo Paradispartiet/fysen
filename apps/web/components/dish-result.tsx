@@ -1,5 +1,6 @@
 import type { DishSearchResult } from "@fysen/contracts";
 import { FreshnessStatus } from "./freshness-status";
+import { TrackedExternalLink } from "./tracked-external-link";
 
 function formatPrice(priceMinor: number | null, currency: string): string {
   if (priceMinor === null) return "Pris ikke oppgitt";
@@ -13,6 +14,11 @@ function formatPrice(priceMinor: number | null, currency: string): string {
     currency,
     maximumFractionDigits: priceMinor % 100 === 0 ? 0 : 2,
   }).format(priceMinor / 100);
+}
+
+function directionsUrl(latitude: number, longitude: number): string {
+  const destination = encodeURIComponent(`${latitude},${longitude}`);
+  return `https://www.google.com/maps/dir/?api=1&destination=${destination}`;
 }
 
 export function DishResult({ result }: { result: DishSearchResult }) {
@@ -37,9 +43,40 @@ export function DishResult({ result }: { result: DishSearchResult }) {
 
       <div className="dishResultBottomline">
         <FreshnessStatus checkedAt={result.menu.lastCheckedAt} freshUntil={result.menu.freshUntil} />
-        <a className="evidenceLink" href={result.menu.sourceUrl} target="_blank" rel="noreferrer">
-          Se meny <span aria-hidden="true">↗</span>
-        </a>
+        <div className="dishResultActions">
+          <TrackedExternalLink
+            className="evidenceLink"
+            href={result.menu.sourceUrl}
+            impressionId={result.impressionId}
+            eventType="menu_clicked"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Se meny <span aria-hidden="true">↗</span>
+          </TrackedExternalLink>
+          {result.restaurant.websiteUrl ? (
+            <TrackedExternalLink
+              className="evidenceLink"
+              href={result.restaurant.websiteUrl}
+              impressionId={result.impressionId}
+              eventType="restaurant_clicked"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Restaurant <span aria-hidden="true">↗</span>
+            </TrackedExternalLink>
+          ) : null}
+          <TrackedExternalLink
+            className="evidenceLink"
+            href={directionsUrl(result.restaurant.latitude, result.restaurant.longitude)}
+            impressionId={result.impressionId}
+            eventType="directions_clicked"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Gå dit <span aria-hidden="true">↗</span>
+          </TrackedExternalLink>
+        </div>
       </div>
     </article>
   );
