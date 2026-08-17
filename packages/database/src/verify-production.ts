@@ -16,6 +16,10 @@ const requiredTables = [
   "fysen.conversion_events",
   "fysen.restaurant_actions",
   "fysen.restaurant_action_verification_runs",
+  "fysen.restaurant_hours_sources",
+  "fysen.restaurant_hours_snapshots",
+  "fysen.restaurant_hours_intervals",
+  "fysen.restaurant_hours_watch_runs",
   "fysen.schema_migrations",
 ] as const;
 
