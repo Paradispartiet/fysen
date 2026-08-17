@@ -23,6 +23,25 @@ export const restaurantOnboardingManifestSchema = z.object({
     checkIntervalMinutes: z.number().int().min(60).max(10080),
     minimumExpectedItems: z.number().int().min(1).max(500),
   }),
+  hoursSource: z
+    .object({
+      url: httpsUrl,
+      timeZone: z.string().trim().min(1).max(100),
+      checkIntervalMinutes: z.number().int().min(60).max(10080),
+      minimumExpectedIntervals: z.number().int().min(1).max(14),
+    })
+    .optional(),
+  actions: z
+    .array(
+      z.object({
+        type: z.enum(["booking", "order"]),
+        url: httpsUrl,
+        sourceUrl: httpsUrl,
+        provider: z.string().trim().min(1).max(120).nullable().default(null),
+      }),
+    )
+    .max(2)
+    .default([]),
   qualityAssertions: z.object({
     requiredDishNames: z.array(z.string().trim().min(2).max(300)).min(1).max(20),
   }),
