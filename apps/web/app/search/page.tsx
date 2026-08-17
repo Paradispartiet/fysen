@@ -87,8 +87,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
         <DishSearch
           defaultValue={q}
           city={city}
-          compact
-          buttonLabel="Søk"
+          buttonLabel="Finn retten"
           inputId="results-dish-query"
         />
       </GlobalHeader>
