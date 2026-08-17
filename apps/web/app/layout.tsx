@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import "../styles/tokens.css";
 import "./globals.css";
 import "../styles/theme.css";
+import "../styles/design-v2-1.css";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
