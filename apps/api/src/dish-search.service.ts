@@ -1,22 +1,16 @@
-import { BadRequestException, Injectable, type OnApplicationShutdown } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import {
   dishSearchResponseSchema,
   type DishSearchQuery,
   type DishSearchResponse,
 } from "@fysen/contracts";
-import { createDatabasePool, searchDishes } from "@fysen/database";
+import { recordSearchFunnel, searchDishes } from "@fysen/database";
 import { normalizeDishName } from "@fysen/menu-core";
-
-type DatabasePool = ReturnType<typeof createDatabasePool>;
+import { DatabaseService } from "./database.service.js";
 
 @Injectable()
-export class DishSearchService implements OnApplicationShutdown {
-  private pool: DatabasePool | null = null;
-
-  private database(): DatabasePool {
-    this.pool ??= createDatabasePool({ maxConnections: 10 });
-    return this.pool;
-  }
+export class DishSearchService {
+  constructor(@Inject(DatabaseService) private readonly databaseService: DatabaseService) {}
 
   async search(input: DishSearchQuery): Promise<DishSearchResponse> {
     const normalizedQuery = normalizeDishName(input.q);
@@ -27,18 +21,40 @@ export class DishSearchService implements OnApplicationShutdown {
       });
     }
 
-    const rows = await searchDishes(this.database(), {
+    const rows = await searchDishes(this.databaseService.pool(), {
       normalizedQuery,
       city: input.city,
       limit: input.limit,
     });
 
+    let searchId: string | null = null;
+    let impressionIdsByMenuItemId: Readonly<Record<string, string>> = {};
+    try {
+      const recorded = await recordSearchFunnel(this.databaseService.pool(), {
+        normalizedQuery,
+        city: input.city,
+        impressions: rows.map((row, index) => ({
+          menuItemId: row.menuItemId,
+          restaurantId: row.restaurantId,
+          rank: index + 1,
+          matchType: row.matchType,
+          matchScore: row.score,
+        })),
+      });
+      searchId = recorded.searchId;
+      impressionIdsByMenuItemId = recorded.impressionIdsByMenuItemId;
+    } catch (error) {
+      console.error("Fysen revenue funnel search attribution failed", error);
+    }
+
     return dishSearchResponseSchema.parse({
+      searchId,
       query: input.q,
       normalizedQuery,
       city: input.city,
       count: rows.length,
       results: rows.map((row) => ({
+        impressionId: impressionIdsByMenuItemId[row.menuItemId] ?? null,
         menuItemId: row.menuItemId,
         snapshotId: row.snapshotId,
         menuSourceId: row.menuSourceId,
@@ -73,12 +89,5 @@ export class DishSearchService implements OnApplicationShutdown {
         },
       })),
     });
-  }
-
-  async onApplicationShutdown(): Promise<void> {
-    if (!this.pool) return;
-    const pool = this.pool;
-    this.pool = null;
-    await pool.end();
   }
 }

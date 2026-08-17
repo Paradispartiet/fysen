@@ -101,6 +101,7 @@ export const dishSearchQuerySchema = z.object({
 export const dishSearchMatchTypeSchema = z.enum(["exact", "prefix", "contains", "fuzzy"]);
 
 export const dishSearchResultSchema = z.object({
+  impressionId: uuid.nullable(),
   menuItemId: uuid,
   snapshotId: uuid,
   menuSourceId: uuid,
@@ -136,11 +137,31 @@ export const dishSearchResultSchema = z.object({
 });
 
 export const dishSearchResponseSchema = z.object({
+  searchId: uuid.nullable(),
   query: z.string().trim().min(2).max(80),
   normalizedQuery: z.string().trim().min(1).max(300),
   city: z.string().trim().min(1).max(120),
   count: z.number().int().nonnegative(),
   results: z.array(dishSearchResultSchema),
+});
+
+export const conversionEventTypeSchema = z.enum([
+  "menu_clicked",
+  "restaurant_clicked",
+  "directions_clicked",
+  "booking_clicked",
+  "order_clicked",
+]);
+
+export const conversionEventInputSchema = z.object({
+  clientEventId: uuid,
+  impressionId: uuid,
+  eventType: conversionEventTypeSchema,
+});
+
+export const conversionEventReceiptSchema = z.object({
+  accepted: z.literal(true),
+  eventId: uuid,
 });
 
 export type Restaurant = z.infer<typeof restaurantSchema>;
@@ -154,3 +175,6 @@ export type DishSearchQuery = z.infer<typeof dishSearchQuerySchema>;
 export type DishSearchMatchType = z.infer<typeof dishSearchMatchTypeSchema>;
 export type DishSearchResult = z.infer<typeof dishSearchResultSchema>;
 export type DishSearchResponse = z.infer<typeof dishSearchResponseSchema>;
+export type ConversionEventType = z.infer<typeof conversionEventTypeSchema>;
+export type ConversionEventInput = z.infer<typeof conversionEventInputSchema>;
+export type ConversionEventReceipt = z.infer<typeof conversionEventReceiptSchema>;

@@ -7,6 +7,7 @@ describe("database migrations", () => {
     expect(await listMigrationFiles()).toEqual([
       "0001_menu_index.sql",
       "0002_seed_rodeo_pilot.sql",
+      "0003_revenue_funnel.sql",
     ]);
 
     const schemaSql = await readFile(
@@ -27,5 +28,15 @@ describe("database migrations", () => {
     expect(seedSql).toContain("'rodeo-oslo'");
     expect(seedSql).toContain("'https://www.rodeooslo.no/'");
     expect(seedSql).toContain("next_check_at");
+
+    const revenueSql = await readFile(
+      new URL("../migrations/0003_revenue_funnel.sql", import.meta.url),
+      "utf8",
+    );
+    expect(revenueSql).toContain("CREATE TABLE IF NOT EXISTS fysen.search_events");
+    expect(revenueSql).toContain("CREATE TABLE IF NOT EXISTS fysen.search_result_impressions");
+    expect(revenueSql).toContain("CREATE TABLE IF NOT EXISTS fysen.conversion_events");
+    expect(revenueSql).toContain("WHERE result_count = 0");
+    expect(revenueSql).toContain("client_event_id uuid NOT NULL UNIQUE");
   });
 });

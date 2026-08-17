@@ -21,8 +21,9 @@ Fysen skal svare med høy presisjon, ferskhet og kildebelegg. En rett skal aldri
 - **HTTP ingestion:** robots-aware HTTP først, strukturert JSON-LD før heuristikk
 - **Browser crawling:** Playwright kommer senere som kontrollert fallback for JavaScript-menyer
 - **Production database deploy:** GitHub Actions etter grønn `main`-CI, med serialiserte migrasjoner og post-deploy-verifisering
+- **Revenue foundation:** anonymisert etterspørsel, result impressions og attribuerte konverteringshandlinger uten permanent brukerprofil
 
-Se [`docs/architecture.md`](docs/architecture.md), [`docs/design-v1.md`](docs/design-v1.md), [`docs/menu-watcher-v1.md`](docs/menu-watcher-v1.md), [`docs/deployment.md`](docs/deployment.md) og arkitekturbeslutningene under [`docs/adr`](docs/adr).
+Se [`docs/architecture.md`](docs/architecture.md), [`docs/oslo-pilot-v1.md`](docs/oslo-pilot-v1.md), [`docs/revenue-layer-v1.md`](docs/revenue-layer-v1.md), [`docs/design-v1.md`](docs/design-v1.md), [`docs/menu-watcher-v1.md`](docs/menu-watcher-v1.md), [`docs/deployment.md`](docs/deployment.md) og arkitekturbeslutningene under [`docs/adr`](docs/adr).
 
 ## Kom i gang
 
@@ -80,5 +81,6 @@ packages/
 - rå HTML er transportbelegg, ikke canonical domenedata
 - live restaurantnettsteder er aldri en nødvendig avhengighet for CI
 - produksjonsskjema endres bare gjennom versjonerte migrasjoner fra repoet
+- kommersiell plassering kan aldri gjøre en uverifisert rett til et organisk treff
 
 Fysen er foreløpig et privat kommersielt prosjekt. Ingen lisens er gitt for gjenbruk av kildekoden.
