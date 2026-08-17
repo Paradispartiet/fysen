@@ -19,7 +19,9 @@ Piloten skal ikke optimaliseres for flest mulig restauranter. Den skal optimalis
 - Rodeos førsteparts booking-side er første verifiserte `Bestill bord`-handling og re-verifiseres automatisk før den utløper.
 - Avstand og nærhet er implementert med eksplisitt posisjonssamtykke, PostGIS-avstand, meter/kilometer i resultatet og valg mellom `Beste treff` og `Nærmest`.
 - Presis posisjon lagres ikke i Revenue Layer search-events; koordinatene brukes i den konkrete søkeforespørselen og avrundes før søk.
-- Åpningstider, bredere coverage, videre dish matching og quality dashboard er neste pilotarbeid.
+- Åpningstider er implementert som en egen kildebelagt kjøkkentids-strøm med immutable snapshots, ferskhet og `open | closed | unknown` i dish search.
+- En ukjent eller utdatert åpningstidskilde gir alltid `unknown`; Fysen gjetter ikke «åpent nå».
+- Bredere coverage, videre dish matching og quality dashboard er neste pilotarbeid.
 
 ## Produktmål
 
@@ -83,15 +85,25 @@ PostGIS brukes nå som aktiv domeneinfrastruktur. Leveransen støtter:
 - mulighet til å fjerne posisjonen igjen;
 - ingen lagring av koordinater i Revenue Layer search-events.
 
-### 4. Åpningstider
+### 4. Åpningstider — implementert
 
-Åpningstider blir en egen kildebelagt datastrøm. Fysen skal skille mellom:
+Åpningstider er en egen kildebelagt datastrøm for **kjøkkenets serveringstid**, fordi det er dette som avgjør om et dish-treff faktisk kan spises nå.
 
-- kjent åpen;
-- kjent stengt;
-- ukjent.
+Implementasjonen har:
 
-«Åpent nå» skal ikke gjettes når kilden mangler eller er utdatert.
+- `restaurant_hours_sources` med kilde-URL, IANA-tidssone, extractor, kontrollintervall og operativ status;
+- immutable `restaurant_hours_snapshots` uten lagring av rå HTML;
+- canonical ukedagsintervaller i `restaurant_hours_intervals`;
+- `restaurant_hours_watch_runs` for suksess, feil og quarantine;
+- conditional HTTP, fingerprint og automatisk ny kontroll gjennom eksisterende sikre worker;
+- minimumsregel og suspicious-collapse quarantine før nye tider publiseres;
+- `open`, `closed` og `unknown` som eksplisitte API-tilstander;
+- rolling-deploy-safe default til `unknown` for eldre API-responser;
+- åpningstidskilde direkte tilgjengelig fra resultatkortet.
+
+Parseren er bevisst konservativ. En tekst som sier «late» er ikke nok til å etablere matserveringens slutt. Dersom siden oppgir en eksakt kjøkkenstenging, brukes den; ellers feiler ekstraksjonen lukket.
+
+Rodeos førsteside er pilotens første hours-source. Den publiseres først etter at worker har hentet og parsret den reelle siden; migrasjonen legger ikke inn et manuelt hours-snapshot.
 
 ### 5. Resultatflate
 
@@ -102,6 +114,7 @@ Et ordinært treff skal kunne vise:
 Første handlinger er:
 
 - se meny;
+- åpningstidskilde;
 - restaurantens nettside;
 - veibeskrivelse;
 - bestill bord, når verifisert booking-URL finnes;
@@ -120,6 +133,7 @@ Intern driftsoverflate skal minst vise:
 - consecutive failures;
 - quarantine-status og årsak;
 - neste kontroll;
+- åpningstidskildens siste kontroll og status;
 - booking-/ordrehandlingers verifikasjonsstatus;
 - nulltreff/etterspørsel som peker på manglende dekning.
 
@@ -144,6 +158,7 @@ Pilotdata publiseres bare når:
 - snapshotet passerer minimums- og suspicious-drop-regler;
 - kilden er innenfor definert ferskhetsvindu;
 - retten kan spores til konkret snapshot og kilde;
+- åpningstilstand kan spores til et ferskt hours-snapshot, ellers vises `unknown`;
 - kommersielle handlinger har ikke utløpt verifikasjon.
 
 False positives er fortsatt dyrere enn false negatives.
