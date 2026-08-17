@@ -31,4 +31,41 @@ describe("extractHtmlMenu", () => {
     expect(result.items.map((item) => item.name)).toEqual(["Tartar av okse", "Ricotta dumplings med trøffel"]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([26500, 29500]);
   });
+
+  it("conservatively links standalone prices to nearby dish names", () => {
+    const html = `
+      <html><body>
+        <section>
+          <h3>Chicken Ceasar Burger</h3>
+          <p>Allergens: wheat, milk, mustard, soy, egg</p>
+          <p>259 kr</p>
+        </section>
+        <section>
+          <h3>Beef Cheek Burger - 130g</h3>
+          <p>With Chimichurri Sauce, BBQ Sauce, Red Chilli Pickles</p>
+          <p>Allergens: wheat, milk, mustard, egg, sesame</p>
+          <p>259 kr</p>
+        </section>
+      </body></html>
+    `;
+    const result = extractHtmlMenu(html);
+    expect(result.method).toBe("html_heuristic");
+    expect(result.items.map((item) => item.name)).toEqual(["Chicken Ceasar Burger", "Beef Cheek Burger - 130g"]);
+    expect(result.items.map((item) => item.priceMinor)).toEqual([25900, 25900]);
+    expect(result.items[1]?.description).toBe("With Chimichurri Sauce, BBQ Sauce, Red Chilli Pickles");
+    expect(result.items[0]?.confidence).toBe(0.72);
+  });
+
+  it("does not turn standalone prices after non-dish metadata into menu items", () => {
+    const html = `
+      <html><body>
+        <p>Opening Hours</p>
+        <p>Tuesday-Friday</p>
+        <p>16-22</p>
+        <p>Contact</p>
+        <p>90226090</p>
+      </body></html>
+    `;
+    expect(extractHtmlMenu(html).items).toEqual([]);
+  });
 });
