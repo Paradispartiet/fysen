@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "hrimnir-ramen-storgata",
+    "name": "Hrimnir Ramen Storgata",
+    "websiteUrl": "https://www.hrimnir-ramen.no/",
+    "address": "Storgata 37",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9149557,
+    "longitude": 10.7541465
+  },
+  "menuSource": {
+    "url": "https://www.hrimnir-ramen.no/meny-storgata",
+    "sourceType": "html",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 10
+  },
+  "hoursSource": {
+    "url": "https://www.hrimnir-ramen.no/meny-storgata",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedIntervals": 7
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://book.dinnerbooking.com/no/nb-NO/book/index/4014/2",
+      "sourceUrl": "https://www.hrimnir-ramen.no/meny-storgata",
+      "provider": "DinnerBooking"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "SHOYU RAMEN",
+      "SPICY MISO RAMEN",
+      "KYLLING SHOYU PAITAN RAMEN"
+    ]
+  }
+}
