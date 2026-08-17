@@ -146,6 +146,34 @@ integrationDescribe("quality dashboard integration", () => {
       [fuzzySearchId, menuItemId, restaurantId],
     );
 
+    const staleExactFuzzySearch = await pool.query<{ id: string }>(
+      `INSERT INTO fysen.search_events (normalized_query, city, result_count)
+       VALUES ('quality burger', 'Oslo', 1)
+       RETURNING id`,
+    );
+    const staleExactFuzzySearchId = staleExactFuzzySearch.rows[0]?.id;
+    if (!staleExactFuzzySearchId) throw new Error("Expected stale exact fuzzy search event");
+    await pool.query(
+      `INSERT INTO fysen.search_result_impressions (
+         search_id, menu_item_id, restaurant_id, rank, match_type, match_score
+       ) VALUES ($1, $2, $3, 1, 'fuzzy', 0.65)`,
+      [staleExactFuzzySearchId, menuItemId, restaurantId],
+    );
+
+    const staleCanonicalFuzzySearch = await pool.query<{ id: string }>(
+      `INSERT INTO fysen.search_events (normalized_query, city, result_count)
+       VALUES ('quality sandwich', 'Oslo', 1)
+       RETURNING id`,
+    );
+    const staleCanonicalFuzzySearchId = staleCanonicalFuzzySearch.rows[0]?.id;
+    if (!staleCanonicalFuzzySearchId) throw new Error("Expected stale canonical fuzzy search event");
+    await pool.query(
+      `INSERT INTO fysen.search_result_impressions (
+         search_id, menu_item_id, restaurant_id, rank, match_type, match_score
+       ) VALUES ($1, $2, $3, 1, 'fuzzy', 0.66)`,
+      [staleCanonicalFuzzySearchId, menuItemId, restaurantId],
+    );
+
     await pool.query(
       `INSERT INTO fysen.search_events (normalized_query, city, result_count)
        VALUES ('ramen', 'Oslo', 0), ('ramen', 'Oslo', 0), ('dumplings', 'Oslo', 0)`,
@@ -173,17 +201,17 @@ integrationDescribe("quality dashboard integration", () => {
       consecutiveFailures: 0,
       lastOutcome: "changed",
     });
-    expect(restaurant?.impressions7d).toBe(3);
+    expect(restaurant?.impressions7d).toBe(5);
     expect(restaurant?.conversions7d).toBe(1);
     expect(restaurant?.hours.health).toBe("unverified");
 
-    expect(report.matching.impressions7d).toBe(3);
+    expect(report.matching.impressions7d).toBe(5);
     expect(report.matching.byMatchType).toEqual({
       exact: 1,
       canonical: 1,
       prefix: 0,
       contains: 0,
-      fuzzy: 1,
+      fuzzy: 3,
     });
     const concept = report.matching.canonicalConcepts.find((item) => item.slug === "quality-burger");
     expect(concept).toMatchObject({
@@ -200,13 +228,22 @@ integrationDescribe("quality dashboard integration", () => {
       impressions7d: 1,
       averageScore: 0.98,
     });
-    expect(report.matching.topFuzzyQueries7d[0]).toMatchObject({
-      normalizedQuery: "qualty burger",
+
+    const unresolved = report.matching.topFuzzyQueries7d.find((item) => item.normalizedQuery === "qualty burger");
+    expect(unresolved).toMatchObject({
+      city: "Oslo",
       searches7d: 1,
       impressions7d: 1,
       averageScore: 0.82,
       bestScore: 0.82,
+      currentResolution: null,
     });
+    const resolvedExact = report.matching.topFuzzyQueries7d.find((item) => item.normalizedQuery === "quality burger");
+    expect(resolvedExact).toMatchObject({ city: "Oslo", currentResolution: "exact" });
+    const resolvedCanonical = report.matching.topFuzzyQueries7d.find(
+      (item) => item.normalizedQuery === "quality sandwich",
+    );
+    expect(resolvedCanonical).toMatchObject({ city: "Oslo", currentResolution: "canonical" });
 
     expect(report.topZeroResultQueries7d[0]).toMatchObject({ normalizedQuery: "ramen", count7d: 2 });
     expect(report.topZeroResultQueries7d[1]).toMatchObject({ normalizedQuery: "dumplings", count7d: 1 });

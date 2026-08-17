@@ -2,6 +2,7 @@ import type { Pool, QueryResultRow } from "pg";
 
 export type QualityHealth = "healthy" | "degraded" | "stale" | "unverified" | "disabled";
 export type QualityMatchType = "exact" | "canonical" | "prefix" | "contains" | "fuzzy";
+export type QualitySafeMatchType = Exclude<QualityMatchType, "fuzzy">;
 
 export interface QualityMenuSourceReport {
   readonly sourceId: string;
@@ -76,10 +77,12 @@ export interface QualityCanonicalQueryReport {
 
 export interface QualityFuzzyQueryReport {
   readonly normalizedQuery: string;
+  readonly city: string;
   readonly searches7d: number;
   readonly impressions7d: number;
   readonly averageScore: number;
   readonly bestScore: number;
+  readonly currentResolution: QualitySafeMatchType | null;
 }
 
 export interface QualityMatchingReport {
@@ -179,10 +182,12 @@ interface CanonicalQueryRow extends QueryResultRow {
 
 interface FuzzyQueryRow extends QueryResultRow {
   normalized_query: string;
+  city: string;
   searches_7d: number;
   impressions_7d: number;
   average_score: number;
   best_score: number;
+  current_resolution: string | null;
 }
 
 function iso(value: Date | null): string | null {
@@ -227,6 +232,11 @@ function actionStatus(enabled: boolean, expiresAt: Date): QualityActionReport["s
 
 function isQualityMatchType(value: string): value is QualityMatchType {
   return value === "exact" || value === "canonical" || value === "prefix" || value === "contains" || value === "fuzzy";
+}
+
+function safeMatchType(value: string | null): QualitySafeMatchType | null {
+  if (value === "exact" || value === "canonical" || value === "prefix" || value === "contains") return value;
+  return null;
 }
 
 function finiteScore(value: number): number {
@@ -462,19 +472,98 @@ export async function buildQualityDashboard(pool: Pool): Promise<QualityDashboar
       LIMIT 20
     `),
     pool.query<FuzzyQueryRow>(`
+      WITH fuzzy_history AS (
+        SELECT
+          search.normalized_query,
+          search.city,
+          count(DISTINCT search.id)::integer AS searches_7d,
+          count(impression.id)::integer AS impressions_7d,
+          avg(impression.match_score)::double precision AS average_score,
+          max(impression.match_score)::double precision AS best_score
+        FROM fysen.search_result_impressions AS impression
+        JOIN fysen.search_events AS search ON search.id = impression.search_id
+        WHERE impression.match_type = 'fuzzy'
+          AND impression.created_at >= now() - interval '7 days'
+        GROUP BY search.normalized_query, search.city
+      ),
+      latest_searchable_snapshot AS (
+        SELECT DISTINCT ON (snapshot.menu_source_id)
+          snapshot.id,
+          snapshot.menu_source_id,
+          source.restaurant_id
+        FROM fysen.menu_snapshots AS snapshot
+        JOIN fysen.menu_sources AS source ON source.id = snapshot.menu_source_id
+        JOIN fysen.restaurants AS restaurant ON restaurant.id = source.restaurant_id
+        WHERE source.enabled = true
+          AND restaurant.active = true
+          AND source.last_checked_at IS NOT NULL
+          AND now() <= source.last_checked_at
+            + make_interval(mins => GREATEST(source.check_interval_minutes * 3, 1440))
+        ORDER BY snapshot.menu_source_id, snapshot.fetched_at DESC, snapshot.created_at DESC
+      ),
+      current_searchable_items AS (
+        SELECT item.normalized_name, restaurant.city
+        FROM latest_searchable_snapshot AS latest
+        JOIN fysen.menu_items AS item ON item.snapshot_id = latest.id
+        JOIN fysen.restaurants AS restaurant ON restaurant.id = latest.restaurant_id
+      ),
+      replayed AS (
+        SELECT
+          history.*,
+          CASE
+            WHEN EXISTS (
+              SELECT 1
+              FROM current_searchable_items AS current_item
+              WHERE lower(current_item.city) = lower(history.city)
+                AND current_item.normalized_name = history.normalized_query
+            ) THEN 'exact'
+            WHEN EXISTS (
+              SELECT 1
+              FROM fysen.dish_aliases AS query_alias
+              JOIN fysen.dish_concepts AS concept
+                ON concept.id = query_alias.dish_concept_id
+               AND concept.active = true
+              JOIN fysen.dish_aliases AS menu_alias
+                ON menu_alias.dish_concept_id = concept.id
+               AND menu_alias.alias_scope IN ('menu', 'both')
+              JOIN current_searchable_items AS current_item
+                ON current_item.normalized_name = menu_alias.normalized_alias
+               AND lower(current_item.city) = lower(history.city)
+              WHERE query_alias.normalized_alias = history.normalized_query
+                AND query_alias.alias_scope IN ('query', 'both')
+            ) THEN 'canonical'
+            WHEN EXISTS (
+              SELECT 1
+              FROM current_searchable_items AS current_item
+              WHERE lower(current_item.city) = lower(history.city)
+                AND current_item.normalized_name LIKE history.normalized_query || '%'
+            ) THEN 'prefix'
+            WHEN EXISTS (
+              SELECT 1
+              FROM current_searchable_items AS current_item
+              WHERE lower(current_item.city) = lower(history.city)
+                AND current_item.normalized_name LIKE '%' || history.normalized_query || '%'
+            ) THEN 'contains'
+            ELSE NULL
+          END AS current_resolution
+        FROM fuzzy_history AS history
+      )
       SELECT
-        search.normalized_query,
-        count(DISTINCT search.id)::integer AS searches_7d,
-        count(impression.id)::integer AS impressions_7d,
-        avg(impression.match_score)::double precision AS average_score,
-        max(impression.match_score)::double precision AS best_score
-      FROM fysen.search_result_impressions AS impression
-      JOIN fysen.search_events AS search ON search.id = impression.search_id
-      WHERE impression.match_type = 'fuzzy'
-        AND impression.created_at >= now() - interval '7 days'
-      GROUP BY search.normalized_query
-      ORDER BY searches_7d DESC, average_score DESC, search.normalized_query ASC
-      LIMIT 20
+        normalized_query,
+        city,
+        searches_7d,
+        impressions_7d,
+        average_score,
+        best_score,
+        current_resolution
+      FROM replayed
+      ORDER BY
+        (current_resolution IS NULL) DESC,
+        searches_7d DESC,
+        average_score DESC,
+        normalized_query ASC,
+        city ASC
+      LIMIT 40
     `),
   ]);
 
@@ -611,10 +700,12 @@ export async function buildQualityDashboard(pool: Pool): Promise<QualityDashboar
       })),
       topFuzzyQueries7d: fuzzyQueryResult.rows.map((row) => ({
         normalizedQuery: row.normalized_query,
+        city: row.city,
         searches7d: Number(row.searches_7d),
         impressions7d: Number(row.impressions_7d),
         averageScore: finiteScore(row.average_score),
         bestScore: finiteScore(row.best_score),
+        currentResolution: safeMatchType(row.current_resolution),
       })),
     },
   };
