@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bambus-lambertseter-oslo",
+    "name": "Bambus Sushi Lambertseter Senter",
+    "websiteUrl": "https://www.bambussushi.no/restauranter/lambertseter-senter/",
+    "address": "Cecilie Thoresens vei 21, 1153 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.87381,
+    "longitude": 10.811081
+  },
+  "menuSource": {
+    "url": "https://www.bambussushi.no/media/fdihneyo/meny-2.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 40
+  },
+  "hoursSource": {
+    "url": "https://www.bambussushi.no/restauranter/lambertseter-senter/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "actions": [
+    {
+      "type": "order",
+      "url": "https://bambussushi.munu.shop/articles/r200006483-lambertseter-senter--o200007464-take-away",
+      "sourceUrl": "https://www.bambussushi.no/restauranter/lambertseter-senter/",
+      "provider": "Bambus Sushi"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bambus Signatur",
+      "Kaeng Phet Gai",
+      "Spicy Tempura Scampi",
+      "Vegetar Vårruller 4 stk.",
+      "Crispy Duck for 2"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bambus Signatur",
+        "priceMinor": 28500,
+        "priceKind": "multiple",
+        "priceMaxMinor": 30900
+      },
+      {
+        "name": "Kaeng Phet Gai",
+        "priceMinor": 19500,
+        "priceKind": "multiple",
+        "priceMaxMinor": 22900
+      },
+      {
+        "name": "Spicy Tempura Scampi",
+        "priceMinor": 12500,
+        "priceKind": "multiple",
+        "priceMaxMinor": 13500
+      },
+      {
+        "name": "Vegetar Vårruller 4 stk.",
+        "priceMinor": 11900,
+        "priceKind": "multiple",
+        "priceMaxMinor": 12900
+      },
+      {
+        "name": "Crispy Duck for 2",
+        "priceMinor": 57000,
+        "priceKind": "multiple",
+        "priceMaxMinor": 59000
+      }
+    ],
+    "forbiddenDishNames": [
+      "SPICY",
+      "VEGETAR"
+    ]
+  }
+}
