@@ -11,6 +11,7 @@ describe("database migrations", () => {
       "0004_restaurant_actions.sql",
       "0005_restaurant_hours.sql",
       "0006_dish_concepts.sql",
+      "0007_pdf_text_extraction.sql",
     ]);
 
     const schemaSql = await readFile(
@@ -78,5 +79,13 @@ describe("database migrations", () => {
     expect(dishConceptsSql).toContain("'tartar av okse'");
     expect(dishConceptsSql).toContain("'chicken-caesar-burger'");
     expect(dishConceptsSql).not.toContain("('beef-tartare', 'Tartar', 'tartar'");
+
+    const pdfTextSql = await readFile(
+      new URL("../migrations/0007_pdf_text_extraction.sql", import.meta.url),
+      "utf8",
+    );
+    expect(pdfTextSql).toContain("menu_items_extraction_method_check");
+    expect(pdfTextSql).toContain("'pdf_text'");
+    expect(pdfTextSql).toContain("VALIDATE CONSTRAINT menu_items_extraction_method_check");
   });
 });

@@ -51,11 +51,17 @@ interface AliasRow extends QueryResultRow {
   normalized_alias: string;
 }
 
+interface ConstraintRow extends QueryResultRow {
+  definition: string;
+  validated: boolean;
+}
+
 export interface ProductionDatabaseVerification {
   readonly migrations: readonly string[];
   readonly extensions: readonly string[];
   readonly relations: readonly string[];
   readonly dishAliases: readonly string[];
+  readonly menuItemExtractionConstraint: string;
 }
 
 export async function verifyProductionDatabase(pool: Pool): Promise<ProductionDatabaseVerification> {
@@ -99,12 +105,26 @@ export async function verifyProductionDatabase(pool: Pool): Promise<ProductionDa
   const installedAliasSet = new Set(installedDishAliases);
   const missingDishAliases = requiredDishAliases.filter((alias) => !installedAliasSet.has(alias));
 
+  const constraintResult = await pool.query<ConstraintRow>(
+    `SELECT pg_get_constraintdef(constraint_row.oid) AS definition,
+            constraint_row.convalidated AS validated
+       FROM pg_constraint AS constraint_row
+      WHERE constraint_row.conrelid = 'fysen.menu_items'::regclass
+        AND constraint_row.conname = 'menu_items_extraction_method_check'`,
+  );
+  const extractionConstraint = constraintResult.rows[0] ?? null;
+  const invalidExtractionConstraint =
+    extractionConstraint === null ||
+    extractionConstraint.validated !== true ||
+    !extractionConstraint.definition.includes("pdf_text");
+
   if (
     missingMigrations.length > 0 ||
     unexpectedMigrations.length > 0 ||
     missingExtensions.length > 0 ||
     missingRelations.length > 0 ||
-    missingDishAliases.length > 0
+    missingDishAliases.length > 0 ||
+    invalidExtractionConstraint
   ) {
     throw new Error(
       `Production database verification failed: ${JSON.stringify({
@@ -113,6 +133,8 @@ export async function verifyProductionDatabase(pool: Pool): Promise<ProductionDa
         missingExtensions,
         missingRelations,
         missingDishAliases,
+        invalidExtractionConstraint,
+        extractionConstraint,
       })}`,
     );
   }
@@ -122,6 +144,7 @@ export async function verifyProductionDatabase(pool: Pool): Promise<ProductionDa
     extensions: installedExtensions,
     relations: relationsResult.rows.map((row) => row.resolved_name).filter((value): value is string => value !== null),
     dishAliases: installedDishAliases,
+    menuItemExtractionConstraint: extractionConstraint.definition,
   };
 }
 
