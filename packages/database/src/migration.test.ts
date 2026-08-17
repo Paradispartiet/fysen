@@ -8,6 +8,7 @@ describe("database migrations", () => {
       "0001_menu_index.sql",
       "0002_seed_rodeo_pilot.sql",
       "0003_revenue_funnel.sql",
+      "0004_restaurant_actions.sql",
     ]);
 
     const schemaSql = await readFile(
@@ -38,5 +39,15 @@ describe("database migrations", () => {
     expect(revenueSql).toContain("CREATE TABLE IF NOT EXISTS fysen.conversion_events");
     expect(revenueSql).toContain("WHERE result_count = 0");
     expect(revenueSql).toContain("client_event_id uuid NOT NULL UNIQUE");
+
+    const actionsSql = await readFile(
+      new URL("../migrations/0004_restaurant_actions.sql", import.meta.url),
+      "utf8",
+    );
+    expect(actionsSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_actions");
+    expect(actionsSql).toContain("action_type IN ('booking', 'order')");
+    expect(actionsSql).toContain("expires_at > verified_at");
+    expect(actionsSql).toContain("'https://www.rodeooslo.no/booking'");
+    expect(actionsSql).toContain("'first_party_page'");
   });
 });
