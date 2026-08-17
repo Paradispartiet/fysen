@@ -3,7 +3,7 @@ import { renderQualityDashboardMarkdown } from "./quality-dashboard-markdown.js"
 import type { QualityDashboardReport } from "./quality-dashboard.js";
 
 describe("quality dashboard markdown", () => {
-  it("renders health, demand and zero-result coverage signals", () => {
+  it("renders health, matching quality, demand and zero-result coverage signals", () => {
     const report: QualityDashboardReport = {
       generatedAt: "2026-08-17T08:00:00.000Z",
       totals: {
@@ -69,6 +69,45 @@ describe("quality dashboard markdown", () => {
           lastSeenAt: "2026-08-17T07:59:00.000Z",
         },
       ],
+      matching: {
+        impressions7d: 20,
+        byMatchType: {
+          exact: 8,
+          canonical: 4,
+          prefix: 3,
+          contains: 3,
+          fuzzy: 2,
+        },
+        canonicalConcepts: [
+          {
+            slug: "beef-tartare",
+            canonicalName: "Biff tartar",
+            queryAliases: ["beef tartare", "biff tartar", "steak tartare", "tartar av okse"],
+            menuAliases: ["beef tartare", "biff tartar", "tartar av okse"],
+            currentMenuItemMatches: 1,
+            canonicalImpressions7d: 4,
+          },
+        ],
+        topCanonicalQueries7d: [
+          {
+            normalizedQuery: "beef tartare",
+            canonicalDishSlug: "beef-tartare",
+            canonicalDishName: "Biff tartar",
+            searches7d: 2,
+            impressions7d: 2,
+            averageScore: 0.98,
+          },
+        ],
+        topFuzzyQueries7d: [
+          {
+            normalizedQuery: "bif tartar",
+            searches7d: 2,
+            impressions7d: 2,
+            averageScore: 0.82,
+            bestScore: 0.84,
+          },
+        ],
+      },
     };
 
     const markdown = renderQualityDashboardMarkdown(report);
@@ -76,6 +115,12 @@ describe("quality dashboard markdown", () => {
     expect(markdown).toContain("Rodeo");
     expect(markdown).toContain("✅ healthy · 16 items");
     expect(markdown).toContain("✅ booking");
+    expect(markdown).toContain("Matching quality, 7d");
+    expect(markdown).toContain("Canonical: **4** (20.0%)");
+    expect(markdown).toContain("Biff tartar (`beef-tartare`)");
+    expect(markdown).toContain("beef tartare");
+    expect(markdown).toContain("bif tartar");
+    expect(markdown).toContain("Fuzzy-listen er et review-signal");
     expect(markdown).toContain("ramen \\| spicy");
     expect(markdown).toContain("ingen IP-adresser");
   });
