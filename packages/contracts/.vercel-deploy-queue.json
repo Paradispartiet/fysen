@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "sourceSha": "18e3c5e1f9f0d255f8de89698ee4dbdbe972ce43",
+  "requestedAt": "2026-08-17T07:53:17Z",
+  "projects": ["fysen", "fysen-api"],
+  "reason": "Retry latest accumulated main after Vercel build-rate-limit"
+}
