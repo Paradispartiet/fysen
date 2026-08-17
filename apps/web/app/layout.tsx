@@ -3,6 +3,7 @@ import { Inter_Tight } from "next/font/google";
 import type { ReactNode } from "react";
 import "../styles/tokens.css";
 import "./globals.css";
+import "../styles/theme.css";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
