@@ -53,7 +53,7 @@ SELECT
   NULL,
   'first_party_page',
   now(),
-  now() + interval '30 days',
+  now() + interval '6 days',
   true
 FROM fysen.restaurants AS restaurant
 WHERE restaurant.slug = 'rodeo-oslo'
