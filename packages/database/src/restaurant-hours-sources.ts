@@ -31,7 +31,8 @@ export async function upsertRestaurantHoursSource(
        check_interval_minutes = EXCLUDED.check_interval_minutes,
        minimum_expected_intervals = EXCLUDED.minimum_expected_intervals,
        next_check_at = CASE
-         WHEN fysen.restaurant_hours_sources.url IS DISTINCT FROM EXCLUDED.url
+         WHEN fysen.restaurant_hours_sources.last_checked_at IS NULL
+           OR fysen.restaurant_hours_sources.url IS DISTINCT FROM EXCLUDED.url
            OR fysen.restaurant_hours_sources.time_zone IS DISTINCT FROM EXCLUDED.time_zone
            OR fysen.restaurant_hours_sources.minimum_expected_intervals IS DISTINCT FROM EXCLUDED.minimum_expected_intervals
          THEN now()
