@@ -51,6 +51,7 @@ export const dishSchema = z.object({
 });
 
 export const extractionMethodSchema = z.enum(["json_ld", "html_heuristic", "manual", "api"]);
+export const menuPriceKindSchema = z.enum(["exact", "from", "multiple"]);
 
 export const menuItemSchema = z.object({
   id: uuid,
@@ -61,6 +62,8 @@ export const menuItemSchema = z.object({
   description: z.string().trim().max(2000).nullable(),
   sectionName: z.string().trim().max(300).nullable(),
   priceMinor: z.number().int().nonnegative().nullable(),
+  priceKind: menuPriceKindSchema.default("exact"),
+  priceMaxMinor: z.number().int().nonnegative().nullable().default(null),
   currency: z.string().length(3).default("NOK"),
   position: z.number().int().nonnegative(),
   extractionMethod: extractionMethodSchema,
@@ -167,6 +170,8 @@ export const dishSearchResultSchema = z.object({
     description: z.string().trim().max(2000).nullable(),
     sectionName: z.string().trim().max(300).nullable(),
     priceMinor: z.number().int().nonnegative().nullable(),
+    priceKind: menuPriceKindSchema.default("exact"),
+    priceMaxMinor: z.number().int().nonnegative().nullable().default(null),
     currency: z.string().length(3),
     confidence: z.number().min(0).max(1),
   }),
@@ -239,6 +244,7 @@ export type Restaurant = z.infer<typeof restaurantSchema>;
 export type MenuSource = z.infer<typeof menuSourceSchema>;
 export type MenuSnapshot = z.infer<typeof menuSnapshotSchema>;
 export type Dish = z.infer<typeof dishSchema>;
+export type MenuPriceKind = z.infer<typeof menuPriceKindSchema>;
 export type MenuItem = z.infer<typeof menuItemSchema>;
 export type MenuChange = z.infer<typeof menuChangeSchema>;
 export type MenuWatchOutcome = z.infer<typeof menuWatchOutcomeSchema>;
