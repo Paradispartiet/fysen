@@ -11,12 +11,17 @@ type RobotsParserFactory = (url: string, robotsText: string) => RobotsRules;
 
 const nodeRequire = createRequire(import.meta.url);
 const robotsParser = nodeRequire("robots-parser") as RobotsParserFactory;
+const MAX_EXPLICIT_RESPONSE_BYTES = 25 * 1024 * 1024;
 
 export interface MenuHttpSourceState {
   readonly url: string;
   readonly userAgent: string;
   readonly etag: string | null;
   readonly lastModified: string | null;
+}
+
+export interface MenuHttpFetchOptions {
+  readonly maxResponseBytes?: number;
 }
 
 export type MenuHttpFetchResult =
@@ -66,6 +71,17 @@ function positiveIntegerFromEnv(name: string, fallback: number): number {
   return Number.isInteger(value) && value > 0 ? value : fallback;
 }
 
+function responseByteLimit(override: number | undefined, fallback: number): number {
+  if (override === undefined) return fallback;
+  if (!Number.isInteger(override) || override <= 0 || override > MAX_EXPLICIT_RESPONSE_BYTES) {
+    throw new MenuFetchError(
+      "INVALID_BODY_LIMIT",
+      `Explicit response byte limit must be between 1 and ${MAX_EXPLICIT_RESPONSE_BYTES}`,
+    );
+  }
+  return override;
+}
+
 export class HttpMenuClient {
   private readonly fetchImpl: typeof fetch;
   private readonly resolver: HostResolver | undefined;
@@ -84,7 +100,11 @@ export class HttpMenuClient {
       options.minHostDelayMs ?? positiveIntegerFromEnv("FYSEN_MIN_HOST_DELAY_MS", 1_000);
   }
 
-  async fetchSource(source: MenuHttpSourceState): Promise<MenuHttpFetchResult> {
+  async fetchSource(
+    source: MenuHttpSourceState,
+    options: MenuHttpFetchOptions = {},
+  ): Promise<MenuHttpFetchResult> {
+    const maxResponseBytes = responseByteLimit(options.maxResponseBytes, this.maxResponseBytes);
     const started = performance.now();
     const target = await this.validate(source.url);
     const robotsAllowed = await this.checkRobots(target, source.userAgent);
@@ -112,7 +132,7 @@ export class HttpMenuClient {
       throw new MenuFetchError("HTTP_STATUS", `Menu fetch returned HTTP ${response.status}`, response.status);
     }
 
-    const bodyBytes = await this.readLimitedBytes(response, this.maxResponseBytes);
+    const bodyBytes = await this.readLimitedBytes(response, maxResponseBytes);
     return {
       kind: "content",
       fetchedAt,
