@@ -1,0 +1,101 @@
+name: Roll Sushi onboarding gates
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/roll-sushi-onboarding-gates.yml"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+      - name: Build menu worker
+        run: pnpm --filter @fysen/menu-worker... build
+      - name: Probe source gates
+        id: probe
+        continue-on-error: true
+        shell: bash
+        run: |
+          set +e
+          node --input-type=module <<'NODE' > /tmp/roll-sushi-gates.txt 2>&1
+          import { HttpMenuClient } from "./apps/menu-worker/dist/http-client.js";
+          import { extractHtmlMenu } from "./apps/menu-worker/dist/html-extractor.js";
+          import { extractKitchenOpeningHours } from "./apps/menu-worker/dist/opening-hours-extractor.js";
+          import { normalizeDishName } from "./packages/menu-core/dist/index.js";
+
+          const source = { url: "https://rollsushi.no/", userAgent: "FysenMenuBot/0.1", etag: null, lastModified: null };
+          const required = [
+            ["43. Crispy Scampi 12 biter", 16900],
+            ["50. Edamame Soy Beans", 8900],
+            ["01. Sushi Kombo Medium 17 biter", 26900],
+            ["Roll's Nigiri 2 stk", 4900],
+            ["Party Deluxe 50 biter (4-5 pers)", 105000],
+          ];
+
+          try {
+            const fetched = await new HttpMenuClient().fetchSource(source);
+            if (fetched.kind !== "content") throw new Error(`Unexpected fetch kind: ${fetched.kind}`);
+            const menu = extractHtmlMenu(fetched.body);
+            const hours = extractKitchenOpeningHours(fetched.body, ["Roll Sushi Majorstua", "Sørkedalsveien 5C", "roll-sushi-majorstua-oslo"]);
+            const checks = required.map(([name, priceMinor]) => {
+              const item = menu.items.find((candidate) => candidate.normalizedName === normalizeDishName(name));
+              return { name, expectedPriceMinor: priceMinor, found: Boolean(item), actualPriceMinor: item?.priceMinor ?? null, ok: Boolean(item) && item?.priceMinor === priceMinor };
+            });
+            console.log(JSON.stringify({
+              ok: menu.items.length >= 70 && checks.every((check) => check.ok) && hours.intervals.length >= 7,
+              fetch: { status: fetched.status, contentType: fetched.contentType, byteLength: fetched.bodyBytes.length },
+              menu: { method: menu.method, itemCount: menu.items.length, checks },
+              hours: { intervalCount: hours.intervals.length, intervals: hours.intervals, sourceExcerpt: hours.sourceExcerpt },
+              order: { url: source.url, httpStatus: fetched.status, reachable: fetched.status >= 200 && fetched.status < 300 },
+            }, null, 2));
+          } catch (error) {
+            console.log(JSON.stringify({
+              ok: false,
+              error: {
+                name: error instanceof Error ? error.name : typeof error,
+                message: error instanceof Error ? error.message : String(error),
+                code: typeof error === "object" && error !== null && "code" in error ? error.code : null,
+                httpStatus: typeof error === "object" && error !== null && "httpStatus" in error ? error.httpStatus : null,
+              },
+            }, null, 2));
+            process.exitCode = 1;
+          }
+          NODE
+          status=$?
+          cat /tmp/roll-sushi-gates.txt
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Publish result in PR body
+        if: always()
+        uses: actions/github-script@v7
+        env:
+          PROBE_STATUS: ${{ steps.probe.outputs.status }}
+        with:
+          script: |
+            const fs = require('fs');
+            const result = fs.existsSync('/tmp/roll-sushi-gates.txt') ? fs.readFileSync('/tmp/roll-sushi-gates.txt', 'utf8').slice(0, 50000) : 'Probe did not produce an output file.';
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              body: `Midlertidig, **skal ikke merges**.\n\n## Roll Sushi source-only onboarding gates\n\nStatus: ${process.env.PROBE_STATUS || 'unknown'}\n\n\`\`\`json\n${result}\n\`\`\`\n\nPR-en lukkes etter diagnosen.`,
+            });
+            if (process.env.PROBE_STATUS !== '0') core.setFailed('Roll Sushi source gate probe failed; see PR body.');
