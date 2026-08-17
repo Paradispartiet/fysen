@@ -19,6 +19,21 @@ CREATE INDEX IF NOT EXISTS restaurant_actions_publishable_idx
   ON fysen.restaurant_actions (restaurant_id, action_type, expires_at)
   WHERE enabled = true;
 
+CREATE TABLE IF NOT EXISTS fysen.restaurant_action_verification_runs (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  restaurant_action_id uuid NOT NULL REFERENCES fysen.restaurant_actions(id) ON DELETE CASCADE,
+  outcome text NOT NULL CHECK (outcome IN ('verified', 'fetch_error')),
+  started_at timestamptz NOT NULL,
+  completed_at timestamptz NOT NULL,
+  http_status integer CHECK (http_status IS NULL OR http_status BETWEEN 100 AND 599),
+  error_code text,
+  error_message text,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS restaurant_action_verification_runs_action_started_idx
+  ON fysen.restaurant_action_verification_runs (restaurant_action_id, started_at DESC);
+
 INSERT INTO fysen.restaurant_actions (
   restaurant_id,
   action_type,
