@@ -24,6 +24,7 @@
     "@fysen/menu-core": "workspace:*",
     "cheerio": "1.2.0",
     "ipaddr.js": "2.4.0",
+    "pdfjs-dist": "6.2.108",
     "robots-parser": "3.0.1",
     "zod": "^4.0.0"
   },
