@@ -3,7 +3,7 @@ import { renderQualityDashboardMarkdown } from "./quality-dashboard-markdown.js"
 import type { QualityDashboardReport } from "./quality-dashboard.js";
 
 describe("quality dashboard markdown", () => {
-  it("renders health, matching quality, current fuzzy replay, demand and zero-result coverage signals", () => {
+  it("renders health, matching replay and current-index coverage review", () => {
     const report: QualityDashboardReport = {
       generatedAt: "2026-08-17T08:00:00.000Z",
       totals: {
@@ -13,7 +13,8 @@ describe("quality dashboard markdown", () => {
         healthyMenuSources: 2,
         degradedMenuSources: 0,
         currentMenuItems: 36,
-        zeroResultSearches7d: 3,
+        zeroResultSearches7d: 4,
+        unresolvedZeroResultSearches7d: 3,
         conversions7d: 4,
       },
       restaurants: [
@@ -65,8 +66,17 @@ describe("quality dashboard markdown", () => {
       topZeroResultQueries7d: [
         {
           normalizedQuery: "ramen | spicy",
+          city: "Oslo",
           count7d: 3,
           lastSeenAt: "2026-08-17T07:59:00.000Z",
+          currentResolution: null,
+        },
+        {
+          normalizedQuery: "carbonara",
+          city: "Oslo",
+          count7d: 1,
+          lastSeenAt: "2026-08-17T07:58:00.000Z",
+          currentResolution: "exact",
         },
       ],
       matching: {
@@ -123,6 +133,8 @@ describe("quality dashboard markdown", () => {
 
     const markdown = renderQualityDashboardMarkdown(report);
     expect(markdown).toContain("Active restaurants: **2**");
+    expect(markdown).toContain("Historical zero-result searches, 7d: **4**");
+    expect(markdown).toContain("Unresolved zero-result searches, 7d: **3**");
     expect(markdown).toContain("Rodeo");
     expect(markdown).toContain("✅ healthy · 16 items");
     expect(markdown).toContain("✅ booking");
@@ -132,12 +144,15 @@ describe("quality dashboard markdown", () => {
     expect(markdown).toContain("beef tartare");
     expect(markdown).toContain("Fuzzy queries til manuell vurdering");
     expect(markdown).toContain("bif tartar");
-    expect(markdown).toContain("Oslo");
     expect(markdown).toContain("Historiske fuzzy-signaler løst av dagens indeks");
     expect(markdown).toContain("shoyu ramen");
-    expect(markdown).toContain("✅ exact");
     expect(markdown).toContain("Replay bruker bare dagens sikre exact/canonical/prefix/contains-treff");
+    expect(markdown).toContain("Nulltreff som fortsatt peker på coverage");
     expect(markdown).toContain("ramen \\| spicy");
+    expect(markdown).toContain("Historiske nulltreff løst av dagens indeks");
+    expect(markdown).toContain("carbonara");
+    expect(markdown).toContain("✅ exact");
+    expect(markdown).toContain("fuzzy alene teller fortsatt som uløst");
     expect(markdown).toContain("ingen IP-adresser");
   });
 });
