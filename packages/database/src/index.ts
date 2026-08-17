@@ -3,6 +3,8 @@ export * from "./coverage.js";
 export * from "./due-sources.js";
 export * from "./funnel.js";
 export * from "./migrate.js";
+export * from "./quality-dashboard.js";
+export * from "./quality-dashboard-markdown.js";
 export * from "./repository.js";
 export * from "./restaurant-actions.js";
 export * from "./restaurant-hours.js";
