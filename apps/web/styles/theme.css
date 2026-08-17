@@ -1,0 +1,19 @@
+html {
+  color-scheme: dark;
+}
+
+.globalHeaderResults {
+  background: var(--color-header);
+}
+
+.dishSearch:focus-within {
+  box-shadow: var(--shadow-search-focus);
+}
+
+.dishDescription {
+  color: var(--color-body-copy);
+}
+
+.skeletonLine {
+  background: var(--color-skeleton);
+}
