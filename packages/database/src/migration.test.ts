@@ -10,6 +10,7 @@ describe("database migrations", () => {
       "0003_revenue_funnel.sql",
       "0004_restaurant_actions.sql",
       "0005_restaurant_hours.sql",
+      "0006_dish_concepts.sql",
     ]);
 
     const schemaSql = await readFile(
@@ -64,5 +65,18 @@ describe("database migrations", () => {
     expect(hoursSql).toContain("'Europe/Oslo'");
     expect(hoursSql).toContain("'https://www.rodeooslo.no/'");
     expect(hoursSql).toContain("minimum_expected_intervals");
+
+    const dishConceptsSql = await readFile(
+      new URL("../migrations/0006_dish_concepts.sql", import.meta.url),
+      "utf8",
+    );
+    expect(dishConceptsSql).toContain("CREATE TABLE IF NOT EXISTS fysen.dish_concepts");
+    expect(dishConceptsSql).toContain("CREATE TABLE IF NOT EXISTS fysen.dish_aliases");
+    expect(dishConceptsSql).toContain("normalized_alias text NOT NULL UNIQUE");
+    expect(dishConceptsSql).toContain("'canonical'");
+    expect(dishConceptsSql).toContain("'beef-tartare'");
+    expect(dishConceptsSql).toContain("'tartar av okse'");
+    expect(dishConceptsSql).toContain("'chicken-caesar-burger'");
+    expect(dishConceptsSql).not.toContain("('beef-tartare', 'Tartar', 'tartar'");
   });
 });
