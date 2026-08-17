@@ -5,9 +5,9 @@ export function SearchState({
   actionLabel,
 }: {
   title: string;
-  body?: string;
-  actionHref?: string;
-  actionLabel?: string;
+  body?: string | undefined;
+  actionHref?: string | undefined;
+  actionLabel?: string | undefined;
 }) {
   return (
     <section className="searchState" aria-live="polite">
