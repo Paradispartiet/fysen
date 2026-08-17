@@ -1,0 +1,71 @@
+name: Fysen quality dashboard
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Watch Fysen menus"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-production-quality-dashboard
+  cancel-in-progress: true
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
+      DATABASE_SSL: "verify-full"
+      NODE_ENV: production
+    steps:
+      - name: Require production database secret
+        shell: bash
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "FYSEN_PRODUCTION_DATABASE_URL is not configured." >&2
+            exit 1
+          fi
+
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build database reporting package
+        run: pnpm --filter @fysen/database build
+
+      - name: Generate quality dashboard
+        run: pnpm --filter @fysen/database quality:dashboard -- reports
+
+      - name: Publish dashboard to job summary
+        shell: bash
+        run: cat packages/database/reports/quality-dashboard.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload machine-readable dashboard
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-quality-dashboard
+          path: |
+            packages/database/reports/quality-dashboard.json
+            packages/database/reports/quality-dashboard.md
+          retention-days: 14
+          if-no-files-found: error
