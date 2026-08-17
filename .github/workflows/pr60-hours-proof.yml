@@ -1,0 +1,67 @@
+name: PR60 hours proof
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/pr60-hours-proof.yml"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  proof:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+      - name: Run proof
+        id: proof
+        shell: bash
+        run: |
+          set +e
+          : > /tmp/pr60-proof.txt
+          run_step() {
+            label="$1"
+            shift
+            echo "## $label" >> /tmp/pr60-proof.txt
+            "$@" >> /tmp/pr60-proof.txt 2>&1
+            code=$?
+            echo "exit=$code" >> /tmp/pr60-proof.txt
+            echo >> /tmp/pr60-proof.txt
+            return $code
+          }
+          overall=0
+          run_step build pnpm --filter @fysen/menu-worker... build || overall=1
+          run_step test pnpm --filter @fysen/menu-worker test || overall=1
+          run_step typecheck pnpm --filter @fysen/menu-worker typecheck || overall=1
+          echo "overall=$overall" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Publish result in PR body
+        if: always()
+        uses: actions/github-script@v7
+        env:
+          PROOF_STATUS: ${{ steps.proof.outputs.overall }}
+        with:
+          script: |
+            const fs = require('fs');
+            const result = fs.existsSync('/tmp/pr60-proof.txt') ? fs.readFileSync('/tmp/pr60-proof.txt', 'utf8').slice(0, 55000) : 'Proof did not produce output.';
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              body: `Midlertidig, **skal ikke merges**. Tester eksakt kode fra PR #60.\n\n## Hours v7 proof\n\nOverall: ${process.env.PROOF_STATUS || 'unknown'}\n\n\`\`\`text\n${result}\n\`\`\``,
+            });
+            if (process.env.PROOF_STATUS !== '0') core.setFailed('PR #60 proof failed; see PR body.');
