@@ -20,7 +20,18 @@ const requiredTables = [
   "fysen.restaurant_hours_snapshots",
   "fysen.restaurant_hours_intervals",
   "fysen.restaurant_hours_watch_runs",
+  "fysen.dish_concepts",
+  "fysen.dish_aliases",
   "fysen.schema_migrations",
+] as const;
+
+const requiredDishAliases = [
+  "biff tartar",
+  "beef tartare",
+  "steak tartare",
+  "tartar av okse",
+  "chicken caesar burger",
+  "chicken ceasar burger",
 ] as const;
 
 interface MigrationRow extends QueryResultRow {
@@ -36,10 +47,15 @@ interface RelationRow extends QueryResultRow {
   resolved_name: string | null;
 }
 
+interface AliasRow extends QueryResultRow {
+  normalized_alias: string;
+}
+
 export interface ProductionDatabaseVerification {
   readonly migrations: readonly string[];
   readonly extensions: readonly string[];
   readonly relations: readonly string[];
+  readonly dishAliases: readonly string[];
 }
 
 export async function verifyProductionDatabase(pool: Pool): Promise<ProductionDatabaseVerification> {
@@ -72,13 +88,31 @@ export async function verifyProductionDatabase(pool: Pool): Promise<ProductionDa
     .filter((row) => row.resolved_name === null)
     .map((row) => row.relation_name);
 
-  if (missingMigrations.length > 0 || unexpectedMigrations.length > 0 || missingExtensions.length > 0 || missingRelations.length > 0) {
+  const aliasesResult = await pool.query<AliasRow>(
+    `SELECT normalized_alias
+       FROM fysen.dish_aliases
+      WHERE normalized_alias = ANY($1::text[])
+      ORDER BY normalized_alias`,
+    [requiredDishAliases],
+  );
+  const installedDishAliases = aliasesResult.rows.map((row) => row.normalized_alias);
+  const installedAliasSet = new Set(installedDishAliases);
+  const missingDishAliases = requiredDishAliases.filter((alias) => !installedAliasSet.has(alias));
+
+  if (
+    missingMigrations.length > 0 ||
+    unexpectedMigrations.length > 0 ||
+    missingExtensions.length > 0 ||
+    missingRelations.length > 0 ||
+    missingDishAliases.length > 0
+  ) {
     throw new Error(
       `Production database verification failed: ${JSON.stringify({
         missingMigrations,
         unexpectedMigrations,
         missingExtensions,
         missingRelations,
+        missingDishAliases,
       })}`,
     );
   }
@@ -87,6 +121,7 @@ export async function verifyProductionDatabase(pool: Pool): Promise<ProductionDa
     migrations: appliedMigrations,
     extensions: installedExtensions,
     relations: relationsResult.rows.map((row) => row.resolved_name).filter((value): value is string => value !== null),
+    dishAliases: installedDishAliases,
   };
 }
 
