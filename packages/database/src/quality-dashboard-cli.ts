@@ -4,8 +4,12 @@ import { createDatabasePool } from "./client.js";
 import { buildQualityDashboard } from "./quality-dashboard.js";
 import { renderQualityDashboardMarkdown } from "./quality-dashboard-markdown.js";
 
+function outputDirectoryArgument(argv: readonly string[]): string {
+  return argv.find((value) => value !== "--" && !value.startsWith("-")) ?? "reports";
+}
+
 async function main(): Promise<void> {
-  const outputDirectory = resolve(process.argv[2] ?? "reports");
+  const outputDirectory = resolve(outputDirectoryArgument(process.argv.slice(2)));
   await mkdir(outputDirectory, { recursive: true });
 
   const pool = createDatabasePool({ maxConnections: 2 });
