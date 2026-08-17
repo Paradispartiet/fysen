@@ -5,6 +5,7 @@ import {
   diffMenuItems,
   type MenuObservedItem,
 } from "@fysen/menu-core";
+import { BrowserMenuClient } from "./browser-client.js";
 import { extractHtmlMenu, HTML_EXTRACTOR_VERSION } from "./html-extractor.js";
 import { HttpMenuClient, MenuFetchError } from "./http-client.js";
 import { extractPdfMenu, PDF_EXTRACTOR_VERSION } from "./pdf-extractor.js";
@@ -68,7 +69,7 @@ async function extractSource(
     const extracted = await extractPdfMenu(bodyBytes);
     return { items: extracted.items, method: extracted.method, extractorVersion: PDF_EXTRACTOR_VERSION };
   }
-  throw new Error(`HTTP watcher does not extract source type ${sourceType}`);
+  throw new Error(`Menu watcher does not extract source type ${sourceType}`);
 }
 
 export async function watchMenuSourceOnce(
@@ -80,6 +81,9 @@ export async function watchMenuSourceOnce(
   const source = await repository.getMenuSourceById(menuSourceId);
   if (!source) throw new Error(`Unknown menu source: ${menuSourceId}`);
   if (!source.enabled) throw new Error(`Menu source is disabled: ${menuSourceId}`);
+  if (source.fetchMode === "browser" && source.sourceType !== "html" && source.sourceType !== "json_ld") {
+    throw new Error(`Browser fetch mode only supports HTML sources, got ${source.sourceType}`);
+  }
 
   const previous = await repository.getLatestSnapshotWithItems(menuSourceId);
   const forceReextract = shouldForceReextract(source.sourceType, previous?.extractorVersion ?? null);
@@ -87,10 +91,15 @@ export async function watchMenuSourceOnce(
 
   let fetched;
   try {
-    fetched = await httpClient.fetchSource(
-      fetchSource,
-      source.sourceType === "pdf" ? { maxResponseBytes: pdfResponseByteLimit() } : {},
-    );
+    if (source.fetchMode === "browser") {
+      const browserClient = new BrowserMenuClient(httpClient);
+      fetched = await browserClient.fetchSource({ url: source.url, userAgent: source.userAgent });
+    } else {
+      fetched = await httpClient.fetchSource(
+        fetchSource,
+        source.sourceType === "pdf" ? { maxResponseBytes: pdfResponseByteLimit() } : {},
+      );
+    }
   } catch (error) {
     const completedAt = new Date().toISOString();
     const fetchError = error instanceof MenuFetchError ? error : null;
@@ -109,6 +118,7 @@ export async function watchMenuSourceOnce(
       errorMessage: error instanceof Error ? error.message : String(error),
       details: {
         url: source.url,
+        fetchMode: source.fetchMode,
         maxResponseBytes: source.sourceType === "pdf" ? pdfResponseByteLimit() : null,
         forceReextract,
       },
@@ -133,6 +143,7 @@ export async function watchMenuSourceOnce(
         details: {
           previousExtractorVersion: previous?.extractorVersion ?? null,
           currentExtractorVersion: extractorVersionForSourceType(source.sourceType),
+          fetchMode: source.fetchMode,
         },
       });
       throw new MenuFetchError("FORCED_REEXTRACT_NOT_MODIFIED", message, fetched.status);
@@ -147,7 +158,7 @@ export async function watchMenuSourceOnce(
         etag: fetched.etag,
         lastModified: fetched.lastModified,
         extractedItemCount: null,
-        details: { durationMs: fetched.durationMs },
+        details: { durationMs: fetched.durationMs, fetchMode: source.fetchMode },
       },
       "not_modified",
     );
@@ -171,7 +182,7 @@ export async function watchMenuSourceOnce(
       extractedItemCount: null,
       errorCode,
       errorMessage: message,
-      details: { sourceType: source.sourceType },
+      details: { sourceType: source.sourceType, fetchMode: source.fetchMode },
     });
     throw error;
   }
@@ -196,7 +207,11 @@ export async function watchMenuSourceOnce(
       extractedItemCount: extracted.items.length,
       errorCode: assessment.code.toUpperCase(),
       errorMessage: assessment.message,
-      details: { previousItemCount: previousItems.length, method: extracted.method },
+      details: {
+        previousItemCount: previousItems.length,
+        method: extracted.method,
+        fetchMode: source.fetchMode,
+      },
     });
     return {
       menuSourceId,
@@ -218,7 +233,7 @@ export async function watchMenuSourceOnce(
         etag: fetched.etag,
         lastModified: fetched.lastModified,
         extractedItemCount: extracted.items.length,
-        details: { durationMs: fetched.durationMs, method: extracted.method },
+        details: { durationMs: fetched.durationMs, method: extracted.method, fetchMode: source.fetchMode },
       },
       "unchanged",
     );
