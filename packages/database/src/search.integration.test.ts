@@ -104,6 +104,25 @@ integrationDescribe("dish search integration", () => {
       ],
       changes: [],
     });
+
+    const now = Date.now();
+    await pool.query(
+      `INSERT INTO fysen.restaurant_actions (
+         restaurant_id, action_type, url, source_url, provider,
+         verification_method, verified_at, expires_at, enabled
+       ) VALUES
+       ($1, 'booking', 'https://example.com/book', 'https://example.com/book', 'TestBook',
+        'first_party_page', $2, $3, true),
+       ($1, 'order', 'https://example.com/order', 'https://example.com/order', 'TestOrder',
+        'first_party_page', $4, $5, true)`,
+      [
+        restaurantId,
+        new Date(now - 60_000),
+        new Date(now + 3_600_000),
+        new Date(now - 7_200_000),
+        new Date(now - 3_600_000),
+      ],
+    );
   });
 
   afterAll(async () => {
@@ -124,6 +143,16 @@ integrationDescribe("dish search integration", () => {
 
     const oldSnapshot = await searchDishes(pool, { normalizedQuery: "ramen", city: "Oslo", limit: 20 });
     expect(oldSnapshot).toEqual([]);
+  });
+
+  it("publishes only enabled, unexpired restaurant actions", async () => {
+    const result = await searchDishes(pool, { normalizedQuery: "biff tartar", city: "Oslo", limit: 20 });
+    expect(result[0]?.bookingAction).toMatchObject({
+      url: "https://example.com/book",
+      sourceUrl: "https://example.com/book",
+      provider: "TestBook",
+    });
+    expect(result[0]?.orderAction).toBeNull();
   });
 
   it("supports typo-tolerant trigram matching and city scoping", async () => {
