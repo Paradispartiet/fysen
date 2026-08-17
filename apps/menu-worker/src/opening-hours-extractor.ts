@@ -23,7 +23,7 @@ const weekdayByName: Readonly<Record<string, number>> = {
 };
 
 const dayToken = "(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Mandag|Tirsdag|Onsdag|Torsdag|Fredag|Lørdag|Lordag|Søndag|Sondag)";
-const timeToken = "(?:[01]?\\d|2[0-3])(?:[.:][0-5]\\d)?";
+const timeToken = "(?:2[0-3]|[01]?\\d)(?:[.:][0-5]\\d)?";
 
 export class OpeningHoursExtractionError extends Error {
   constructor(readonly code: string, message: string) {
