@@ -69,6 +69,8 @@ export class DishSearchService {
           description: row.description,
           sectionName: row.sectionName,
           priceMinor: row.priceMinor,
+          priceKind: row.priceKind,
+          priceMaxMinor: row.priceMaxMinor,
           currency: row.currency,
           confidence: row.confidence,
         },
