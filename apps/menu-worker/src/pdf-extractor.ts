@@ -5,7 +5,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v1";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v2";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -27,7 +27,8 @@ interface PdfLine {
 }
 
 interface ItemCandidate {
-  readonly lineIndex: number;
+  readonly nameLineIndex: number;
+  readonly priceLineIndex: number;
   readonly page: number;
   readonly sectionName: string | null;
   readonly rawName: string;
@@ -139,7 +140,8 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
       const rawName = stripAllergenSuffix(inline[1]);
       if (priceKroner !== null && looksLikeDishName(rawName)) {
         candidates.push({
-          lineIndex: index,
+          nameLineIndex: index,
+          priceLineIndex: index,
           page: lines[index]?.page ?? 1,
           sectionName: currentSection,
           rawName,
@@ -158,8 +160,9 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
     const rawName = stripAllergenSuffix(previous);
     if (!looksLikeDishName(rawName)) continue;
     candidates.push({
-      lineIndex: index,
-      page: lines[index]?.page ?? 1,
+      nameLineIndex: index - 1,
+      priceLineIndex: index,
+      page: lines[index - 1]?.page ?? lines[index]?.page ?? 1,
       sectionName: currentSection,
       rawName,
       priceKroner,
@@ -175,7 +178,7 @@ function descriptionForCandidate(
   nextCandidateLine: number,
 ): string | null {
   const parts: string[] = [];
-  for (let index = candidate.lineIndex + 1; index < Math.min(nextCandidateLine, candidate.lineIndex + 7); index += 1) {
+  for (let index = candidate.priceLineIndex + 1; index < Math.min(nextCandidateLine, candidate.priceLineIndex + 7); index += 1) {
     const text = lines[index]?.text ?? "";
     if (!text || sectionHeading(text)) break;
     if (/^([1-9]\d{1,3})(?:\s*(?:,-|kr\.?|nok))?$/iu.test(text)) break;
@@ -202,7 +205,7 @@ function buildItems(lines: readonly PdfLine[]): readonly MenuObservedItem[] {
   const seen = new Set<string>();
 
   for (const [position, candidate] of candidates.entries()) {
-    const nextCandidateLine = candidates[position + 1]?.lineIndex ?? lines.length;
+    const nextCandidateLine = candidates[position + 1]?.nameLineIndex ?? lines.length;
     const name = normalizeLine(candidate.rawName);
     const sourceKey = createMenuItemSourceKey(name, candidate.sectionName);
     if (seen.has(sourceKey)) continue;

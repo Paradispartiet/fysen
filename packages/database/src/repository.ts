@@ -76,6 +76,7 @@ export interface StoredSnapshot {
   readonly menuSourceId: string;
   readonly fetchedAt: string;
   readonly normalizedSha256: string;
+  readonly extractorVersion: string;
   readonly items: readonly StoredMenuItem[];
 }
 
@@ -145,6 +146,7 @@ interface SnapshotRow extends QueryResultRow {
   menu_source_id: string;
   fetched_at: Date;
   normalized_sha256: string;
+  extractor_version: string;
 }
 
 interface ItemRow extends QueryResultRow {
@@ -270,7 +272,7 @@ export class MenuIndexRepository {
   async getLatestSnapshotWithItems(menuSourceId: string): Promise<StoredSnapshot | null> {
     const snapshotResult = await this.pool.query<SnapshotRow>(
       `
-        SELECT id, menu_source_id, fetched_at, normalized_sha256
+        SELECT id, menu_source_id, fetched_at, normalized_sha256, extractor_version
         FROM fysen.menu_snapshots
         WHERE menu_source_id = $1
         ORDER BY fetched_at DESC, created_at DESC
@@ -297,6 +299,7 @@ export class MenuIndexRepository {
       menuSourceId: snapshot.menu_source_id,
       fetchedAt: snapshot.fetched_at.toISOString(),
       normalizedSha256: snapshot.normalized_sha256,
+      extractorVersion: snapshot.extractor_version,
       items: itemResult.rows.map(mapItem),
     };
   }

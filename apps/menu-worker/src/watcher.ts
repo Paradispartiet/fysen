@@ -40,6 +40,21 @@ function pdfResponseByteLimit(): number {
   return Math.min(configured, MAX_PDF_RESPONSE_BYTES);
 }
 
+export function extractorVersionForSourceType(sourceType: string): string | null {
+  if (sourceType === "html" || sourceType === "json_ld") return HTML_EXTRACTOR_VERSION;
+  if (sourceType === "pdf") return PDF_EXTRACTOR_VERSION;
+  return null;
+}
+
+export function shouldForceReextract(sourceType: string, previousExtractorVersion: string | null): boolean {
+  const currentExtractorVersion = extractorVersionForSourceType(sourceType);
+  return (
+    currentExtractorVersion !== null &&
+    previousExtractorVersion !== null &&
+    previousExtractorVersion !== currentExtractorVersion
+  );
+}
+
 async function extractSource(
   sourceType: string,
   body: string,
@@ -66,10 +81,14 @@ export async function watchMenuSourceOnce(
   if (!source) throw new Error(`Unknown menu source: ${menuSourceId}`);
   if (!source.enabled) throw new Error(`Menu source is disabled: ${menuSourceId}`);
 
+  const previous = await repository.getLatestSnapshotWithItems(menuSourceId);
+  const forceReextract = shouldForceReextract(source.sourceType, previous?.extractorVersion ?? null);
+  const fetchSource = forceReextract ? { ...source, etag: null, lastModified: null } : source;
+
   let fetched;
   try {
     fetched = await httpClient.fetchSource(
-      source,
+      fetchSource,
       source.sourceType === "pdf" ? { maxResponseBytes: pdfResponseByteLimit() } : {},
     );
   } catch (error) {
@@ -91,12 +110,34 @@ export async function watchMenuSourceOnce(
       details: {
         url: source.url,
         maxResponseBytes: source.sourceType === "pdf" ? pdfResponseByteLimit() : null,
+        forceReextract,
       },
     });
     throw error;
   }
 
   if (fetched.kind === "not_modified") {
+    if (forceReextract) {
+      const message = "Source returned HTTP 304 while a newer extractor version required a full re-extraction";
+      await repository.recordFailure({
+        menuSourceId,
+        outcome: "fetch_error",
+        startedAt,
+        completedAt: fetched.fetchedAt,
+        httpStatus: fetched.status,
+        etag: fetched.etag,
+        lastModified: fetched.lastModified,
+        extractedItemCount: null,
+        errorCode: "FORCED_REEXTRACT_NOT_MODIFIED",
+        errorMessage: message,
+        details: {
+          previousExtractorVersion: previous?.extractorVersion ?? null,
+          currentExtractorVersion: extractorVersionForSourceType(source.sourceType),
+        },
+      });
+      throw new MenuFetchError("FORCED_REEXTRACT_NOT_MODIFIED", message, fetched.status);
+    }
+
     await repository.recordSuccessfulCheck(
       {
         menuSourceId,
@@ -135,7 +176,6 @@ export async function watchMenuSourceOnce(
     throw error;
   }
 
-  const previous = await repository.getLatestSnapshotWithItems(menuSourceId);
   const previousItems = previous?.items.map(storedToObserved) ?? [];
   const assessment = assessExtraction(
     previousItems.length,
@@ -168,7 +208,7 @@ export async function watchMenuSourceOnce(
   }
 
   const fingerprint = createMenuFingerprint(extracted.items);
-  if (fingerprint === source.lastMenuFingerprint || fingerprint === previous?.normalizedSha256) {
+  if (!forceReextract && (fingerprint === source.lastMenuFingerprint || fingerprint === previous?.normalizedSha256)) {
     await repository.recordSuccessfulCheck(
       {
         menuSourceId,
