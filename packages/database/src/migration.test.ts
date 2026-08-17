@@ -9,6 +9,7 @@ describe("database migrations", () => {
       "0002_seed_rodeo_pilot.sql",
       "0003_revenue_funnel.sql",
       "0004_restaurant_actions.sql",
+      "0005_restaurant_hours.sql",
     ]);
 
     const schemaSql = await readFile(
@@ -50,5 +51,18 @@ describe("database migrations", () => {
     expect(actionsSql).toContain("expires_at > verified_at");
     expect(actionsSql).toContain("'https://www.rodeooslo.no/booking'");
     expect(actionsSql).toContain("'first_party_page'");
+
+    const hoursSql = await readFile(
+      new URL("../migrations/0005_restaurant_hours.sql", import.meta.url),
+      "utf8",
+    );
+    expect(hoursSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_hours_sources");
+    expect(hoursSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_hours_snapshots");
+    expect(hoursSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_hours_intervals");
+    expect(hoursSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_hours_watch_runs");
+    expect(hoursSql).toContain("service_type IN ('kitchen')");
+    expect(hoursSql).toContain("'Europe/Oslo'");
+    expect(hoursSql).toContain("'https://www.rodeooslo.no/'");
+    expect(hoursSql).toContain("minimum_expected_intervals");
   });
 });
