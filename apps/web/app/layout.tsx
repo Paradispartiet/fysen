@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Inter_Tight } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import type { ReactNode } from "react";
 import "../styles/tokens.css";
 import "./globals.css";
 import "../styles/theme.css";
 
-const interTight = Inter_Tight({
+const dmSans = DM_Sans({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter-tight",
+  variable: "--font-fysen",
 });
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="nb">
-      <body className={interTight.variable}>{children}</body>
+      <body className={dmSans.variable}>{children}</body>
     </html>
   );
 }
