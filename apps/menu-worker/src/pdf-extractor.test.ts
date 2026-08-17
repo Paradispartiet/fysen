@@ -20,8 +20,47 @@ describe("PDF menu extractor", () => {
       ["PRIMI PIATTI", 26000],
       ["BAMBINI", 12500],
     ]);
+    expect(carbonara.every((item) => (item.priceKind ?? "exact") === "exact")).toBe(true);
+    expect(carbonara.every((item) => (item.priceMaxMinor ?? null) === null)).toBe(true);
     expect(carbonara[0]?.sourceKey).not.toBe(carbonara[1]?.sourceKey);
     expect(carbonara.every((item) => item.extractionMethod === "pdf_text")).toBe(true);
+  });
+
+  it("keeps two observed PDF prices on one dish instead of inventing one exact price", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "SIGNATUR",
+      "BAMBUS SIGNATUR 285 / 309",
+      "Biff, grønnsaker og saus",
+      "KAENG PHET GAI",
+      "195 / 229",
+      "Kylling i rød curry",
+    ]);
+
+    expect(items).toHaveLength(2);
+    expect(items[0]).toMatchObject({
+      name: "BAMBUS SIGNATUR",
+      priceMinor: 28500,
+      priceKind: "multiple",
+      priceMaxMinor: 30900,
+      description: "Biff, grønnsaker og saus",
+    });
+    expect(items[1]).toMatchObject({
+      name: "KAENG PHET GAI",
+      priceMinor: 19500,
+      priceKind: "multiple",
+      priceMaxMinor: 22900,
+      description: "Kylling i rød curry",
+    });
+    expect(items[0]?.sourceExcerpt).toContain("285 / 309 NOK");
+  });
+
+  it("collapses identical duplicate prices back to exact semantics", () => {
+    const items = extractMenuItemsFromPdfLines(["SIGNATUR", "BAMBUS SIGNATUR 285 / 285"]);
+    expect(items[0]).toMatchObject({
+      priceMinor: 28500,
+      priceKind: "exact",
+      priceMaxMinor: null,
+    });
   });
 
   it("stops descriptions before the next standalone name and price candidate", () => {
