@@ -2,7 +2,7 @@ import { dishSearchResponseSchema } from "@fysen/contracts";
 import { describe, expect, it } from "vitest";
 
 describe("dish search rolling deploy compatibility", () => {
-  it("defaults additive restaurant data from older API contracts", () => {
+  it("defaults additive restaurant and canonical data from older API contracts", () => {
     const response = dishSearchResponseSchema.parse({
       searchId: "d1a09b35-a225-45bf-9f74-d80fed5f919f",
       query: "tartar",
@@ -57,5 +57,6 @@ describe("dish search rolling deploy compatibility", () => {
       freshUntil: null,
     });
     expect(response.results[0]?.distanceMeters).toBeNull();
+    expect(response.results[0]?.match.canonicalDish).toBeNull();
   });
 });
