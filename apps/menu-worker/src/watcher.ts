@@ -56,6 +56,14 @@ export function shouldForceReextract(sourceType: string, previousExtractorVersio
   );
 }
 
+export function assertExtractionMethodForSourceType(sourceType: string, extractionMethod: string): void {
+  if (sourceType === "json_ld" && extractionMethod !== "json_ld") {
+    throw new Error(
+      `Source declared json_ld but extractor resolved ${extractionMethod}; refusing implicit HTML fallback`,
+    );
+  }
+}
+
 async function extractSource(
   sourceType: string,
   body: string,
@@ -63,6 +71,7 @@ async function extractSource(
 ): Promise<ExtractedMenu> {
   if (sourceType === "html" || sourceType === "json_ld") {
     const extracted = extractHtmlMenu(body);
+    assertExtractionMethodForSourceType(sourceType, extracted.method);
     return { items: extracted.items, method: extracted.method, extractorVersion: HTML_EXTRACTOR_VERSION };
   }
   if (sourceType === "pdf") {
@@ -170,7 +179,12 @@ export async function watchMenuSourceOnce(
     extracted = await extractSource(source.sourceType, fetched.body, fetched.bodyBytes);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    const errorCode = source.sourceType === "pdf" ? "PDF_EXTRACTION_ERROR" : "UNSUPPORTED_SOURCE_TYPE";
+    const errorCode =
+      source.sourceType === "pdf"
+        ? "PDF_EXTRACTION_ERROR"
+        : source.sourceType === "json_ld"
+          ? "JSON_LD_EXTRACTION_REQUIRED"
+          : "HTML_EXTRACTION_ERROR";
     await repository.recordFailure({
       menuSourceId,
       outcome: "extraction_error",
