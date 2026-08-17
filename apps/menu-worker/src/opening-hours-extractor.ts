@@ -1,28 +1,37 @@
 import { load } from "cheerio";
 import type { RestaurantHoursIntervalInput } from "@fysen/database";
 
-export const OPENING_HOURS_EXTRACTOR_VERSION = "hours-visible-v5";
+export const OPENING_HOURS_EXTRACTOR_VERSION = "hours-visible-v6";
 
 const weekdayByName: Readonly<Record<string, number>> = {
   monday: 1,
   mandag: 1,
+  man: 1,
   tuesday: 2,
   tirsdag: 2,
+  tir: 2,
   wednesday: 3,
   onsdag: 3,
+  ons: 3,
   thursday: 4,
   torsdag: 4,
+  tor: 4,
   friday: 5,
   fredag: 5,
+  fre: 5,
   saturday: 6,
   lørdag: 6,
   lordag: 6,
+  lør: 6,
+  lor: 6,
   sunday: 7,
   søndag: 7,
   sondag: 7,
+  søn: 7,
+  son: 7,
 };
 
-const dayToken = "(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Mandag|Tirsdag|Onsdag|Torsdag|Fredag|Lørdag|Lordag|Søndag|Sondag)";
+const dayToken = "(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Mandag|Tirsdag|Onsdag|Torsdag|Fredag|Lørdag|Lordag|Søndag|Sondag|Man|Tir|Ons|Tor|Fre|Lør|Lor|Søn|Son)";
 const timeToken = "(?:2[0-3]|[01]?\\d)(?:[.:][0-5]\\d)?";
 const dayRangeConnector = "(?:[-–]|til|to)";
 

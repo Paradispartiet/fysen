@@ -37,6 +37,25 @@ describe("opening hours extractor", () => {
     ]);
   });
 
+  it("supports Norwegian weekday abbreviations across a full-week range", () => {
+    const extracted = extractKitchenOpeningHours(`
+      <html><body>
+        <h3>Takeaway/Levering åpningstider</h3>
+        <p>Man - Søn 12:00 - 23:00</p>
+      </body></html>
+    `);
+
+    expect(extracted.intervals).toHaveLength(7);
+    expect(extracted.intervals).toEqual(
+      [1, 2, 3, 4, 5, 6, 7].map((isoWeekday) => ({
+        isoWeekday,
+        opensAt: "12:00",
+        closesAt: "23:00",
+        closesNextDay: false,
+      })),
+    );
+  });
+
   it("uses an explicit global kitchen-close schedule instead of later venue closing times", () => {
     const extracted = extractKitchenOpeningHours(`
       <html><body>

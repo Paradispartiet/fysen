@@ -5,7 +5,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EXTRACTOR_VERSION = "html-v3";
+export const HTML_EXTRACTOR_VERSION = "html-v4";
 
 export interface ExtractedHtmlMenu {
   readonly items: readonly MenuObservedItem[];
@@ -168,24 +168,25 @@ function splitHeuristicName(value: string): { readonly name: string; readonly de
   const withoutAllergens = value
     .replace(/\s+\((?:[\p{L}\d]{1,5}\s*,?\s*){1,20}\)$/u, "")
     .trim();
-  const commaIndex = withoutAllergens.indexOf(",");
+  const withoutMenuNumber = withoutAllergens.replace(/^\d{1,3}\s*[.)]\s*/u, "").trim();
+  const commaIndex = withoutMenuNumber.indexOf(",");
   if (commaIndex >= 3 && commaIndex <= 120) {
-    const name = withoutAllergens.slice(0, commaIndex).trim();
-    const description = withoutAllergens.slice(commaIndex + 1).trim();
+    const name = withoutMenuNumber.slice(0, commaIndex).trim();
+    const description = withoutMenuNumber.slice(commaIndex + 1).trim();
     return { name, description: description || null };
   }
-  return { name: withoutAllergens, description: null };
+  return { name: withoutMenuNumber, description: null };
 }
 
-function validPriceKroner(rawPrice: string): number | null {
-  const value = Number(rawPrice);
-  return Number.isInteger(value) && value >= 40 && value <= 10_000 ? value : null;
+function validHeuristicPriceMinor(rawPrice: string): number | null {
+  const priceMinor = parsePriceMinor(rawPrice);
+  return priceMinor !== null && priceMinor >= 4_000 && priceMinor <= 1_000_000 ? priceMinor : null;
 }
 
 interface SharedPriceSection {
   readonly headerPosition: number;
   readonly sectionName: string;
-  readonly priceKroner: number;
+  readonly priceMinor: number;
   readonly childPositions: readonly number[];
   readonly boundaryPosition: number;
 }
@@ -198,6 +199,7 @@ function detectSharedPriceSections(
   const sections: SharedPriceSection[] = [];
 
   for (const [headerPosition, line] of lines.entries()) {
+    if (standalonePriceLine.test(line)) continue;
     const match = line.match(inlinePriceLine);
     const rawSectionName = match?.[1]?.trim();
     const rawPrice = match?.[2];
@@ -205,9 +207,9 @@ function detectSharedPriceSections(
 
     const parsedSection = splitHeuristicName(rawSectionName);
     const sectionName = parsedSection.name;
-    const priceKroner = validPriceKroner(rawPrice);
+    const priceMinor = validHeuristicPriceMinor(rawPrice);
     if (
-      priceKroner === null ||
+      priceMinor === null ||
       parsedSection.description !== null ||
       sectionName.length > 60 ||
       sectionName.split(/\s+/).length > 5 ||
@@ -238,7 +240,7 @@ function detectSharedPriceSections(
     sections.push({
       headerPosition,
       sectionName,
-      priceKroner,
+      priceMinor,
       childPositions,
       boundaryPosition,
     });
@@ -267,7 +269,7 @@ function sharedSectionItems(
       .trim() || null;
     const sourceKey = createMenuItemSourceKey(name);
     const excerpt = [
-      `${section.sectionName} ${section.priceKroner}`,
+      `${section.sectionName} ${section.priceMinor / 100}`,
       name,
       description,
     ]
@@ -281,7 +283,7 @@ function sharedSectionItems(
       normalizedName: normalizeDishName(name),
       description,
       sectionName: section.sectionName,
-      priceMinor: section.priceKroner * 100,
+      priceMinor: section.priceMinor,
       currency: "NOK",
       position,
       extractionMethod: "html_heuristic" as const,
@@ -294,8 +296,9 @@ function sharedSectionItems(
 function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[] {
   const unique = new Map<string, MenuObservedItem>();
   const lines = visibleText.split("\n");
-  const inlinePriceLine = /^(.{2,280}?)\s+([1-9]\d{1,3})(?:\s*(?:,-|kr\.?|nok))?$/iu;
-  const standalonePriceLine = /^([1-9]\d{1,3})(?:\s*(?:,-|kr\.?|nok))?$/iu;
+  const priceToken = "(?:kr\\.?\\s*)?[1-9]\\d{1,3}(?:[.,]\\d{1,2})?(?:\\s*(?:,-|kr\\.?|nok))?";
+  const inlinePriceLine = new RegExp(`^(.{2,280}?)\\s+(${priceToken})$`, "iu");
+  const standalonePriceLine = new RegExp(`^(${priceToken})$`, "iu");
   const sharedSections = detectSharedPriceSections(lines, inlinePriceLine, standalonePriceLine);
   const sharedHeaderPositions = new Set(sharedSections.map((section) => section.headerPosition));
 
@@ -306,7 +309,7 @@ function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[]
   }
 
   for (const [position, line] of lines.entries()) {
-    if (sharedHeaderPositions.has(position)) continue;
+    if (sharedHeaderPositions.has(position) || standalonePriceLine.test(line)) continue;
     const match = line.match(inlinePriceLine);
     if (!match) continue;
     const rawName = match[1]?.trim();
@@ -315,8 +318,8 @@ function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[]
 
     const { name, description } = splitHeuristicName(rawName.replace(/^\*+/, "").trim());
     if (name.length < 2 || name.length > 300) continue;
-    const priceKroner = validPriceKroner(rawPrice);
-    if (priceKroner === null) continue;
+    const priceMinor = validHeuristicPriceMinor(rawPrice);
+    if (priceMinor === null) continue;
 
     const sourceKey = createMenuItemSourceKey(name);
     unique.set(sourceKey, {
@@ -325,7 +328,7 @@ function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[]
       normalizedName: normalizeDishName(name),
       description,
       sectionName: null,
-      priceMinor: priceKroner * 100,
+      priceMinor,
       currency: "NOK",
       position,
       extractionMethod: "html_heuristic",
@@ -338,8 +341,8 @@ function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[]
     const priceMatch = line.match(standalonePriceLine);
     const rawPrice = priceMatch?.[1];
     if (!rawPrice) continue;
-    const priceKroner = validPriceKroner(rawPrice);
-    if (priceKroner === null) continue;
+    const priceMinor = validHeuristicPriceMinor(rawPrice);
+    if (priceMinor === null) continue;
 
     let nameIndex: number | null = null;
     for (let offset = 1; offset <= 4; offset += 1) {
@@ -374,7 +377,7 @@ function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[]
       normalizedName: normalizeDishName(name),
       description,
       sectionName: null,
-      priceMinor: priceKroner * 100,
+      priceMinor,
       currency: "NOK",
       position,
       extractionMethod: "html_heuristic",

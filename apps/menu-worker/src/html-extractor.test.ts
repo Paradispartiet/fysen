@@ -56,6 +56,31 @@ describe("extractHtmlMenu", () => {
     expect(result.items[0]?.confidence).toBe(0.72);
   });
 
+  it("supports Norwegian kr prefixes, decimal commas, and numbered menu labels without lowering the price floor", () => {
+    const html = `
+      <html><body>
+        <section>
+          <h3>1. Crispy Tenders</h3>
+          <p>kr 35,00</p>
+        </section>
+        <section>
+          <h3>3. 5 Hot Wings</h3>
+          <p>kr 70,00</p>
+        </section>
+        <section>
+          <h3>45. CHICKEN TIKKA</h3>
+          <p>kr 219,00</p>
+        </section>
+        <p>61. PHAD THAI kr 169,00</p>
+      </body></html>
+    `;
+
+    const result = extractHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual(["5 Hot Wings", "CHICKEN TIKKA", "PHAD THAI"]);
+    expect(result.items.map((item) => item.priceMinor)).toEqual([7000, 21900, 16900]);
+    expect(result.items.some((item) => item.name === "Crispy Tenders")).toBe(false);
+  });
+
   it("propagates an explicit shared section price to multiple dish headings", () => {
     const html = `
       <html><body>

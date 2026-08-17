@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mathus-chicken-vestli-oslo",
+    "name": "Mathus Chicken",
+    "websiteUrl": "https://mathuschicken.no/",
+    "address": "Vestlisvingen 188",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9725082,
+    "longitude": 10.928369
+  },
+  "menuSource": {
+    "url": "https://mathuschicken.no/bestill-mat/",
+    "sourceType": "html",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 50
+  },
+  "hoursSource": {
+    "url": "https://mathuschicken.no/bestill-mat/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "actions": [
+    {
+      "type": "order",
+      "url": "https://mathuschicken.no/bestill-mat/",
+      "sourceUrl": "https://mathuschicken.no/bestill-mat/",
+      "provider": "Mathus Chicken"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "5 Hot Wings",
+      "CHICKEN TIKKA",
+      "KOTTU KYLLING",
+      "PHAD THAI",
+      "KEBAB PIZZA"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "5 Hot Wings",
+        "priceMinor": 7000
+      },
+      {
+        "name": "CHICKEN TIKKA",
+        "priceMinor": 21900
+      },
+      {
+        "name": "PHAD THAI",
+        "priceMinor": 16900
+      },
+      {
+        "name": "KEBAB PIZZA",
+        "priceMinor": 29900
+      }
+    ]
+  }
+}
