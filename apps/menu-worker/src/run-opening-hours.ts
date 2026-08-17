@@ -8,13 +8,9 @@ import {
   type RestaurantHoursSourceTarget,
   type RestaurantHoursWatchOutcome,
 } from "@fysen/database";
-import { sha256 } from "@fysen/menu-core";
 import { HttpMenuClient, MenuFetchError } from "./http-client.js";
-import {
-  OPENING_HOURS_EXTRACTOR_VERSION,
-  OpeningHoursExtractionError,
-  extractKitchenOpeningHours,
-} from "./opening-hours-extractor.js";
+import { OpeningHoursExtractionError } from "./opening-hours-extractor.js";
+import { resolveOpeningHoursSource } from "./opening-hours-source-runtime.js";
 
 export interface OpeningHoursWatchResult {
   readonly sourceId: string;
@@ -30,20 +26,6 @@ export interface OpeningHoursWatchSummary {
   readonly results: readonly OpeningHoursWatchResult[];
 }
 
-function fingerprint(intervals: readonly { isoWeekday: number; opensAt: string; closesAt: string; closesNextDay: boolean }[]): string {
-  return sha256(
-    JSON.stringify(
-      [...intervals].sort(
-        (a, b) =>
-          a.isoWeekday - b.isoWeekday ||
-          a.opensAt.localeCompare(b.opensAt) ||
-          a.closesAt.localeCompare(b.closesAt) ||
-          Number(a.closesNextDay) - Number(b.closesNextDay),
-      ),
-    ),
-  );
-}
-
 function menuBotUserAgent(): string {
   return process.env.FYSEN_MENU_BOT_USER_AGENT?.trim() || "FysenMenuBot/0.1";
 }
@@ -56,22 +38,27 @@ async function watchRestaurantHoursTargetOnce(
 ): Promise<OpeningHoursWatchResult> {
   const startedAt = new Date().toISOString();
   try {
-    const response = await client.fetchSource({
-      url: source.url,
-      userAgent,
-      etag: source.etag,
-      lastModified: source.lastModified,
-    });
+    const resolved = await resolveOpeningHoursSource(
+      {
+        url: source.url,
+        userAgent,
+        etag: source.etag,
+        lastModified: source.lastModified,
+        extractor: source.extractor,
+        scopeHints: [source.url, source.restaurantSlug, source.restaurantName],
+      },
+      client,
+    );
     const completedAt = new Date().toISOString();
 
-    if (response.kind === "not_modified") {
+    if (resolved.kind === "not_modified") {
       await recordRestaurantHoursNotModified(pool, {
         sourceId: source.id,
         startedAt,
         completedAt,
-        fetchedAt: response.fetchedAt,
-        etag: response.etag,
-        lastModified: response.lastModified,
+        fetchedAt: resolved.fetched.fetchedAt,
+        etag: resolved.fetched.etag,
+        lastModified: resolved.fetched.lastModified,
       });
       return {
         sourceId: source.id,
@@ -82,33 +69,24 @@ async function watchRestaurantHoursTargetOnce(
       };
     }
 
-    if (source.extractor !== "visible_text_v1") {
-      throw new OpeningHoursExtractionError("UNSUPPORTED_EXTRACTOR", `Unsupported hours extractor: ${source.extractor}`);
-    }
-
-    const extracted = extractKitchenOpeningHours(response.body, [
-      source.url,
-      source.restaurantSlug,
-      source.restaurantName,
-    ]);
     const observed = await recordRestaurantHoursObservation(pool, {
       sourceId: source.id,
       startedAt,
       completedAt,
-      fetchedAt: response.fetchedAt,
-      httpStatus: response.status,
-      rawSha256: response.rawSha256,
-      scheduleFingerprint: fingerprint(extracted.intervals),
-      extractorVersion: OPENING_HOURS_EXTRACTOR_VERSION,
-      sourceExcerpt: extracted.sourceExcerpt,
-      etag: response.etag,
-      lastModified: response.lastModified,
-      intervals: extracted.intervals,
+      fetchedAt: resolved.fetched.fetchedAt,
+      httpStatus: resolved.fetched.status,
+      rawSha256: resolved.fetched.rawSha256,
+      scheduleFingerprint: resolved.scheduleFingerprint,
+      extractorVersion: resolved.extractorVersion,
+      sourceExcerpt: resolved.extracted.sourceExcerpt,
+      etag: resolved.fetched.etag,
+      lastModified: resolved.fetched.lastModified,
+      intervals: resolved.extracted.intervals,
     });
     return {
       sourceId: source.id,
       outcome: observed.outcome,
-      intervalCount: extracted.intervals.length,
+      intervalCount: resolved.extracted.intervals.length,
       snapshotId: observed.snapshotId,
       errorCode: observed.outcome === "quarantined" ? "SUSPICIOUS_INTERVAL_COUNT" : null,
     };
