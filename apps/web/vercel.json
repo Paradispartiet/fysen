@@ -1,4 +1,15 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "corepack pnpm --version && corepack pnpm install --no-frozen-lockfile"
+  "installCommand": "corepack pnpm --version && corepack pnpm install --no-frozen-lockfile",
+  "ignoreCommand": "cd ../.. && turbo query affected --base=\"${VERCEL_GIT_PREVIOUS_SHA:-HEAD^1}\" --packages @fysen/web --exit-code",
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "preview-*": true,
+      "*": false
+    }
+  },
+  "github": {
+    "autoJobCancelation": true
+  }
 }
