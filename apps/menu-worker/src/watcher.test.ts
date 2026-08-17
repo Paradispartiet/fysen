@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { HTML_EXTRACTOR_VERSION } from "./html-extractor.js";
-import { PDF_EXTRACTOR_VERSION } from "./pdf-extractor.js";
 import {
   assertExtractionMethodForSourceType,
   extractorVersionForSourceType,
   shouldForceReextract,
-} from "./watcher.js";
+} from "./menu-source-runtime.js";
+import { PDF_EXTRACTOR_VERSION } from "./pdf-extractor.js";
 
-describe("menu watcher extractor refresh policy", () => {
+describe("menu source runtime extractor refresh policy", () => {
   it("forces a fresh PDF fetch when the stored snapshot used an older extractor", () => {
     expect(extractorVersionForSourceType("pdf")).toBe(PDF_EXTRACTOR_VERSION);
     expect(shouldForceReextract("pdf", "pdf-text-v1")).toBe(true);
