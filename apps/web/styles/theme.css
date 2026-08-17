@@ -6,8 +6,120 @@ html {
   background: var(--color-header);
 }
 
+.fysenLogo {
+  font-weight: 870;
+  letter-spacing: -0.045em;
+}
+
+.locationText {
+  font-weight: 620;
+  letter-spacing: 0.01em;
+}
+
+.dishSearch {
+  min-height: 74px;
+  background: var(--color-paper);
+  border-color: var(--color-search-line);
+  box-shadow: var(--shadow-search);
+}
+
+.dishSearch:hover {
+  border-color: var(--color-search-line-strong);
+}
+
 .dishSearch:focus-within {
+  border-color: var(--color-accent);
   box-shadow: var(--shadow-search-focus);
+}
+
+.dishSearch input {
+  font-size: 18px;
+  font-weight: 480;
+  letter-spacing: -0.012em;
+}
+
+.dishSearch button {
+  color: var(--color-action-ink);
+  background: var(--color-action);
+  border-radius: 13px;
+  font-weight: 710;
+  transition:
+    background var(--motion-fast) var(--ease-fysen),
+    transform var(--motion-fast) var(--ease-fysen);
+}
+
+.dishSearch button:hover {
+  background: var(--color-action-hover);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.dishSearchCompact {
+  min-height: 56px;
+  border-color: var(--color-line);
+  box-shadow: none;
+}
+
+.dishSearchCompact:hover {
+  border-color: var(--color-line-strong);
+}
+
+.homeHero {
+  width: min(var(--content-hero), calc(100% - 96px));
+  padding: clamp(56px, 8vh, 96px) 0 112px;
+}
+
+.homeHero h1 {
+  max-width: 760px;
+  font-size: clamp(64px, 6.7vw, 96px);
+  font-weight: 810;
+  line-height: 0.97;
+  letter-spacing: -0.042em;
+}
+
+.homeHero h1 span {
+  display: block;
+}
+
+.homeHero h1 span + span {
+  margin-top: 0.055em;
+}
+
+.homeSearchWrap {
+  width: min(840px, 100%);
+  margin-top: 42px;
+}
+
+.searchProof {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 4px 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 470;
+  letter-spacing: 0.005em;
+}
+
+.searchProof::before {
+  width: 5px;
+  height: 5px;
+  flex: 0 0 auto;
+  background: var(--color-accent);
+  border-radius: 50%;
+  content: "";
+  opacity: 0.82;
+}
+
+.resultsIntro h1 {
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.dishResultIdentity h2 {
+  line-height: 1.08;
+  letter-spacing: -0.025em;
 }
 
 .dishDescription {
@@ -16,4 +128,40 @@ html {
 
 .skeletonLine {
   background: var(--color-skeleton);
+}
+
+@media (max-width: 767px) {
+  .homeHero {
+    width: calc(100% - 40px);
+    padding: clamp(56px, 9vh, 88px) 0 76px;
+  }
+
+  .homeHero h1 {
+    max-width: 560px;
+    font-size: clamp(50px, 13vw, 62px);
+    line-height: 0.99;
+    letter-spacing: -0.035em;
+  }
+
+  .homeHero h1 span + span {
+    margin-top: 0.065em;
+  }
+
+  .homeSearchWrap {
+    margin-top: 34px;
+  }
+
+  .dishSearch:not(.dishSearchCompact) {
+    min-height: 70px;
+  }
+
+  .searchProof {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  .dishSearch:not(.dishSearchCompact) button:hover {
+    transform: none;
+  }
 }
