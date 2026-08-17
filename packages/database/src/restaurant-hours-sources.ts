@@ -1,4 +1,5 @@
-import type { Pool } from "pg";
+import type { Pool, QueryResultRow } from "pg";
+import type { RestaurantHoursSourceTarget } from "./restaurant-hours.js";
 
 export interface UpsertRestaurantHoursSourceInput {
   readonly restaurantId: string;
@@ -6,6 +7,69 @@ export interface UpsertRestaurantHoursSourceInput {
   readonly timeZone: string;
   readonly checkIntervalMinutes: number;
   readonly minimumExpectedIntervals: number;
+}
+
+interface RestaurantHoursSourceRow extends QueryResultRow {
+  id: string;
+  restaurant_id: string;
+  restaurant_slug: string;
+  restaurant_name: string;
+  service_type: "kitchen";
+  url: string;
+  time_zone: string;
+  extractor: "visible_text_v1";
+  check_interval_minutes: number;
+  minimum_expected_intervals: number;
+  etag: string | null;
+  last_modified: string | null;
+  last_schedule_fingerprint: string | null;
+}
+
+function mapRestaurantHoursSource(row: RestaurantHoursSourceRow): RestaurantHoursSourceTarget {
+  return {
+    id: row.id,
+    restaurantId: row.restaurant_id,
+    restaurantSlug: row.restaurant_slug,
+    restaurantName: row.restaurant_name,
+    serviceType: row.service_type,
+    url: row.url,
+    timeZone: row.time_zone,
+    extractor: row.extractor,
+    checkIntervalMinutes: Number(row.check_interval_minutes),
+    minimumExpectedIntervals: Number(row.minimum_expected_intervals),
+    etag: row.etag,
+    lastModified: row.last_modified,
+    lastScheduleFingerprint: row.last_schedule_fingerprint,
+  };
+}
+
+export async function getRestaurantHoursSourceById(
+  pool: Pool,
+  sourceId: string,
+): Promise<RestaurantHoursSourceTarget | null> {
+  const result = await pool.query<RestaurantHoursSourceRow>(
+    `SELECT s.id,
+            s.restaurant_id,
+            r.slug AS restaurant_slug,
+            r.name AS restaurant_name,
+            s.service_type,
+            s.url,
+            s.time_zone,
+            s.extractor,
+            s.check_interval_minutes,
+            s.minimum_expected_intervals,
+            s.etag,
+            s.last_modified,
+            s.last_schedule_fingerprint
+       FROM fysen.restaurant_hours_sources s
+       JOIN fysen.restaurants r ON r.id = s.restaurant_id
+      WHERE s.id = $1
+        AND s.enabled = true
+      LIMIT 1`,
+    [sourceId],
+  );
+  const row = result.rows[0];
+  return row ? mapRestaurantHoursSource(row) : null;
 }
 
 export async function upsertRestaurantHoursSource(
