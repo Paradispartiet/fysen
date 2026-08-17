@@ -18,7 +18,7 @@
     "test": "vitest run src/migration.test.ts src/client.test.ts src/due-sources.test.ts",
     "migrate": "node dist/migrate.js",
     "verify:production": "node dist/verify-production.js",
-    "test:integration": "vitest run src/integration.test.ts && vitest run src/search.integration.test.ts"
+    "test:integration": "vitest run src/integration.test.ts && vitest run src/search.integration.test.ts && vitest run src/funnel.integration.test.ts"
   },
   "dependencies": {
     "pg": "8.22.0"
