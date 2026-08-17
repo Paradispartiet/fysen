@@ -1,11 +1,15 @@
 import type { Pool, QueryResultRow } from "pg";
 
 export type DishSearchMatchType = "exact" | "prefix" | "contains" | "fuzzy";
+export type DishSearchSort = "relevance" | "distance";
 
 export interface DishSearchDatabaseInput {
   readonly normalizedQuery: string;
   readonly city: string;
   readonly limit: number;
+  readonly latitude: number | null;
+  readonly longitude: number | null;
+  readonly sort: DishSearchSort;
 }
 
 export interface RestaurantActionDatabaseResult {
@@ -35,6 +39,7 @@ export interface DishSearchDatabaseResult {
   readonly restaurantCity: string;
   readonly latitude: number;
   readonly longitude: number;
+  readonly distanceMeters: number | null;
   readonly sourceUrl: string;
   readonly observedAt: string;
   readonly lastCheckedAt: string;
@@ -64,6 +69,7 @@ interface DishSearchRow extends QueryResultRow {
   city: string;
   latitude: number;
   longitude: number;
+  distance_meters: number | null;
   source_url: string;
   observed_at: Date;
   last_checked_at: Date;
@@ -119,6 +125,7 @@ function mapRow(row: DishSearchRow): DishSearchDatabaseResult {
     restaurantCity: row.city,
     latitude: Number(row.latitude),
     longitude: Number(row.longitude),
+    distanceMeters: row.distance_meters === null ? null : Number(row.distance_meters),
     sourceUrl: row.source_url,
     observedAt: row.observed_at.toISOString(),
     lastCheckedAt: row.last_checked_at.toISOString(),
@@ -182,6 +189,14 @@ export async function searchDishes(
         restaurant.city,
         ST_Y(restaurant.location::geometry) AS latitude,
         ST_X(restaurant.location::geometry) AS longitude,
+        CASE
+          WHEN $4::double precision IS NOT NULL AND $5::double precision IS NOT NULL
+          THEN ST_Distance(
+            restaurant.location,
+            ST_SetSRID(ST_MakePoint($5::double precision, $4::double precision), 4326)::geography
+          )
+          ELSE NULL
+        END AS distance_meters,
         source.url AS source_url,
         latest.fetched_at AS observed_at,
         source.last_checked_at,
@@ -231,14 +246,34 @@ export async function searchDishes(
           OR item.normalized_name % $1
         )
       ORDER BY
+        CASE
+          WHEN $6 = 'distance'
+            AND $4::double precision IS NOT NULL
+            AND $5::double precision IS NOT NULL
+          THEN ST_Distance(
+            restaurant.location,
+            ST_SetSRID(ST_MakePoint($5::double precision, $4::double precision), 4326)::geography
+          )
+          ELSE NULL
+        END ASC NULLS LAST,
         score DESC,
+        CASE
+          WHEN $6 = 'relevance'
+            AND $4::double precision IS NOT NULL
+            AND $5::double precision IS NOT NULL
+          THEN ST_Distance(
+            restaurant.location,
+            ST_SetSRID(ST_MakePoint($5::double precision, $4::double precision), 4326)::geography
+          )
+          ELSE NULL
+        END ASC NULLS LAST,
         item.confidence DESC,
         latest.fetched_at DESC,
         restaurant.name ASC,
         item.position ASC
       LIMIT $3
     `,
-    [input.normalizedQuery, input.city, input.limit],
+    [input.normalizedQuery, input.city, input.limit, input.latitude, input.longitude, input.sort],
   );
 
   return result.rows.map(mapRow);
