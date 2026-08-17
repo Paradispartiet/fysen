@@ -1,4 +1,5 @@
 import type { DishSearchResult } from "@fysen/contracts";
+import { DishComposition } from "./dish-composition";
 import { FreshnessStatus } from "./freshness-status";
 import styles from "./dish-result.module.css";
 import { TrackedExternalLink } from "./tracked-external-link";
@@ -54,6 +55,7 @@ export function DishResult({ result }: { result: DishSearchResult }) {
       </div>
 
       {result.dish.description ? <p className="dishDescription">{result.dish.description}</p> : null}
+      <DishComposition description={result.dish.description} />
 
       <div className="dishResultFacts">
         <span>{result.restaurant.address}, {result.restaurant.city}</span>
