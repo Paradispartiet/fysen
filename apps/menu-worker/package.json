@@ -10,6 +10,7 @@
     "probe": "tsx src/index.ts probe",
     "pilot:rodeo": "tsx src/index.ts pilot:rodeo",
     "run:due": "node dist/index.js run:due",
+    "watch:hours": "node dist/index.js watch:hours",
     "verify:actions": "node dist/index.js verify:actions",
     "lint": "eslint src --ext .ts",
     "typecheck": "tsc --noEmit",

@@ -2,7 +2,7 @@ import { dishSearchResponseSchema } from "@fysen/contracts";
 import { describe, expect, it } from "vitest";
 
 describe("dish search rolling deploy compatibility", () => {
-  it("defaults missing restaurant actions from the pre-R2 API contract", () => {
+  it("defaults additive restaurant data from older API contracts", () => {
     const response = dishSearchResponseSchema.parse({
       searchId: "d1a09b35-a225-45bf-9f74-d80fed5f919f",
       query: "tartar",
@@ -49,5 +49,13 @@ describe("dish search rolling deploy compatibility", () => {
     });
 
     expect(response.results[0]?.actions).toEqual({ booking: null, order: null });
+    expect(response.results[0]?.opening).toEqual({
+      state: "unknown",
+      serviceType: "kitchen",
+      sourceUrl: null,
+      verifiedAt: null,
+      freshUntil: null,
+    });
+    expect(response.results[0]?.distanceMeters).toBeNull();
   });
 });

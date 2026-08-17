@@ -26,6 +26,12 @@ function formatDistance(distanceMeters: number): string {
   return `${new Intl.NumberFormat("nb-NO", { maximumFractionDigits: 1 }).format(distanceMeters / 1_000)} km unna`;
 }
 
+function openingLabel(result: DishSearchResult): string {
+  if (result.opening.state === "open") return "Kjøkkenet er åpent nå";
+  if (result.opening.state === "closed") return "Kjøkkenet er stengt nå";
+  return "Åpningstid ukjent";
+}
+
 function directionsUrl(latitude: number, longitude: number): string {
   const destination = encodeURIComponent(`${latitude},${longitude}`);
   return `https://www.google.com/maps/dir/?api=1&destination=${destination}`;
@@ -52,6 +58,7 @@ export function DishResult({ result }: { result: DishSearchResult }) {
       <div className="dishResultFacts">
         <span>{result.restaurant.address}, {result.restaurant.city}</span>
         {result.distanceMeters !== null ? <span>{formatDistance(result.distanceMeters)}</span> : null}
+        <span>{openingLabel(result)}</span>
         {result.dish.sectionName ? <span>{result.dish.sectionName}</span> : null}
       </div>
 
@@ -92,6 +99,11 @@ export function DishResult({ result }: { result: DishSearchResult }) {
           >
             Se meny <span aria-hidden="true">↗</span>
           </TrackedExternalLink>
+          {result.opening.sourceUrl ? (
+            <a className="evidenceLink" href={result.opening.sourceUrl} target="_blank" rel="noreferrer">
+              Åpningstider <span aria-hidden="true">↗</span>
+            </a>
+          ) : null}
           {result.restaurant.websiteUrl ? (
             <TrackedExternalLink
               className="evidenceLink"
