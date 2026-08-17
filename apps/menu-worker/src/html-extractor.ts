@@ -199,6 +199,7 @@ function detectSharedPriceSections(
   const sections: SharedPriceSection[] = [];
 
   for (const [headerPosition, line] of lines.entries()) {
+    if (standalonePriceLine.test(line)) continue;
     const match = line.match(inlinePriceLine);
     const rawSectionName = match?.[1]?.trim();
     const rawPrice = match?.[2];
@@ -308,7 +309,7 @@ function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[]
   }
 
   for (const [position, line] of lines.entries()) {
-    if (sharedHeaderPositions.has(position)) continue;
+    if (sharedHeaderPositions.has(position) || standalonePriceLine.test(line)) continue;
     const match = line.match(inlinePriceLine);
     if (!match) continue;
     const rawName = match[1]?.trim();
