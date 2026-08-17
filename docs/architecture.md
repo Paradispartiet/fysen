@@ -17,10 +17,11 @@ Product execution is currently governed by two complementary plans:
 4. **Freshness is first-class.** Every searchable occurrence must ultimately resolve to a source, snapshot and verification timestamp.
 5. **Crawler and API are separate processes.** Slow or hostile websites cannot consume public API capacity.
 6. **External providers are adapters, not domain models.** Fysen must survive replacement of any map, AI, crawling or restaurant-data provider.
-7. **Bad extraction fails closed.** A suspicious menu collapse is quarantined instead of being interpreted as mass removal.
+7. **Bad extraction fails closed.** A suspicious menu or opening-hours collapse is quarantined instead of being interpreted as a real-world mass change.
 8. **Organic relevance is not for sale.** Commercial placement must never fabricate eligibility or change what counts as an organic dish match.
 9. **Revenue telemetry is data-minimal.** Demand measurement does not require IP, user-agent, account identity or permanent user profiles in v1.
 10. **Commercial destinations are verified data.** Booking/order buttons require an active, unexpired canonical destination with source provenance; stale destinations fail closed.
+11. **Opening state is verified data.** `open` or `closed` requires a fresh, accepted kitchen-hours snapshot in the restaurant's canonical time zone. Missing or stale evidence is always `unknown`.
 
 ## Runtime topology
 
@@ -32,7 +33,7 @@ React/Next.js web
   PostgreSQL/PostGIS
         ^
         |
- canonical menu/action writes
+ canonical menu/action/hours writes
         ^
         |
  Menu Worker
@@ -41,9 +42,10 @@ React/Next.js web
     +-- robots.txt gate
     +-- polite HTTP fetch + conditional headers
     +-- JSON-LD MenuItem extraction
-    +-- controlled HTML heuristic fallback
-    +-- extraction quality gate
-    +-- fingerprint + diff
+    +-- controlled HTML menu heuristic fallback
+    +-- kitchen-hours extraction
+    +-- extraction quality gates
+    +-- fingerprints + change detection
     +-- booking/order destination re-verification
 ```
 
@@ -57,6 +59,12 @@ The backend-owned tables live in the dedicated PostgreSQL schema `fysen` rather 
 restaurants
    |\
    | restaurant_actions -------- restaurant_action_verification_runs
+   |
+   | restaurant_hours_sources -------- restaurant_hours_watch_runs
+   |          |
+   |          restaurant_hours_snapshots
+   |                    |
+   |          restaurant_hours_intervals
    |
 menu_sources
    |
@@ -77,6 +85,8 @@ conversion_events
 
 `restaurant_actions` contain canonical booking/order destinations with source URL, verification method, `verified_at` and `expires_at`. Search publishes only enabled actions whose verification has not expired. `restaurant_action_verification_runs` retain both successful and failed rechecks so the later quality dashboard can explain why an action is present, stale or missing.
 
+`restaurant_hours_sources` are independent evidence sources for kitchen service hours. They hold the source URL, IANA time zone, extractor, conditional-HTTP state, schedule fingerprint and next check time. `restaurant_hours_snapshots` are immutable accepted schedules and do not persist raw HTML. `restaurant_hours_intervals` contain canonical ISO-weekday intervals, including explicit next-day closes. `restaurant_hours_watch_runs` retain successes, extraction failures and quarantine outcomes.
+
 The revenue funnel is deliberately separate from evidence ingestion. `search_events` capture normalized demand and result count. `search_result_impressions` establish which concrete menu items were shown and at what rank. `conversion_events` attribute explicit outbound actions to an impression with a deduplicating client event ID.
 
 PostGIS stores restaurant position as `geography(Point, 4326)`. `pg_trgm` is enabled as the first lexical-search primitive; canonical Dish identity will be layered on top rather than inferred directly from fuzzy text.
@@ -96,6 +106,26 @@ HTTP 200
 ```
 
 A page can therefore be reachable while its extraction is still rejected or quarantined.
+
+## Restaurant hours publication rule
+
+Kitchen hours use the same evidence-first bias but have a separate lifecycle:
+
+```text
+source URL + canonical time zone
+  -> safe HTTP fetch / 304 handling
+  -> deterministic hours extraction
+  -> exact time requirement
+  -> minimum interval + suspicious-collapse gate
+  -> schedule fingerprint
+  -> immutable hours snapshot + intervals
+  -> fresh evidence => open / closed
+  -> missing or stale evidence => unknown
+```
+
+The worker reuses the menu crawler's SSRF, robots, redirect, timeout and response-size protections. A restaurant saying it is open “late” is not sufficient evidence of kitchen availability: when an exact food-service cutoff cannot be established, extraction fails closed rather than inventing a closing time.
+
+Opening state is evaluated in the source's canonical IANA time zone. Overnight intervals explicitly record whether the close occurs the next day. A failed or quarantined recheck does not refresh `last_checked_at`, so old evidence naturally ages into `unknown` instead of remaining authoritative indefinitely.
 
 ## Restaurant action publication rule
 
@@ -124,7 +154,7 @@ Planned v1 ranking pipeline:
 4. semantic fallback for candidate discovery
 5. freshness + open-now + distance ranking
 
-Semantic similarity never overrides an explicit incompatible dish identity.
+Semantic similarity never overrides an explicit incompatible dish identity. Opening state does not fabricate eligibility: it annotates a menu-qualified result as `open`, `closed` or `unknown` based on independent fresh evidence.
 
 ## Revenue attribution rule
 
