@@ -155,14 +155,34 @@ integrationDescribe("dish search integration", () => {
     expect(exact[0]?.restaurantName).toBe("Search Bistro");
     expect(exact[0]?.matchType).toBe("exact");
     expect(exact[0]?.score).toBe(1);
+    expect(exact[0]?.canonicalDish).toEqual({ slug: "beef-tartare", name: "Biff tartar" });
     expect(exact[0]?.distanceMeters).toBeNull();
 
     const partial = await searchDishes(pool, searchInput("tartar"));
     expect(partial).toHaveLength(1);
     expect(partial[0]?.matchType).toBe("contains");
+    expect(partial[0]?.canonicalDish).toBeNull();
 
     const oldSnapshot = await searchDishes(pool, searchInput("ramen"));
     expect(oldSnapshot).toEqual([]);
+  });
+
+  it("matches only explicitly curated full aliases to the same canonical dish concept", async () => {
+    const canonical = await searchDishes(pool, searchInput("beef tartare"));
+    expect(canonical).toHaveLength(1);
+    expect(canonical[0]?.dishName).toBe("Biff tartar");
+    expect(canonical[0]?.matchType).toBe("canonical");
+    expect(canonical[0]?.score).toBe(0.98);
+    expect(canonical[0]?.canonicalDish).toEqual({ slug: "beef-tartare", name: "Biff tartar" });
+
+    const queryOnlyAlias = await searchDishes(pool, searchInput("steak tartare"));
+    expect(queryOnlyAlias).toHaveLength(1);
+    expect(queryOnlyAlias[0]?.matchType).toBe("canonical");
+    expect(queryOnlyAlias[0]?.canonicalDish?.slug).toBe("beef-tartare");
+
+    const generic = await searchDishes(pool, searchInput("tartar"));
+    expect(generic[0]?.matchType).toBe("contains");
+    expect(generic[0]?.canonicalDish).toBeNull();
   });
 
   it("publishes only enabled, unexpired restaurant actions", async () => {
