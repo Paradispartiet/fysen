@@ -196,11 +196,9 @@ export async function validateRestaurantManifest(
   manifest: RestaurantOnboardingManifest,
 ): Promise<RestaurantManifestValidationResult> {
   const client = new HttpMenuClient();
-  const [menu, hours, actions] = await Promise.all([
-    validateMenu(manifest, client),
-    validateHours(manifest, client),
-    validateActions(manifest, client),
-  ]);
+  const menu = await validateMenu(manifest, client);
+  const hours = await validateHours(manifest, client);
+  const actions = await validateActions(manifest, client);
 
   const errors = [
     menu.error ? `menu: ${menu.error}` : null,
