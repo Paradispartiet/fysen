@@ -66,7 +66,22 @@ export function DishResult({ result }: { result: DishSearchResult }) {
       <div className="dishResultTopline">
         <div className="dishResultIdentity">
           <h2>{result.dish.name}</h2>
-          <p className="restaurantName">{result.restaurant.name}</p>
+          <p className="restaurantName">
+            {result.restaurant.websiteUrl ? (
+              <TrackedExternalLink
+                className="restaurantLink"
+                href={result.restaurant.websiteUrl}
+                impressionId={result.impressionId}
+                eventType="restaurant_clicked"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {result.restaurant.name} <span aria-hidden="true">↗</span>
+              </TrackedExternalLink>
+            ) : (
+              result.restaurant.name
+            )}
+          </p>
         </div>
         <p className={result.dish.priceMinor === null ? "dishPrice isMissing" : "dishPrice"}>
           {formatPrice(result.dish)}
@@ -79,12 +94,14 @@ export function DishResult({ result }: { result: DishSearchResult }) {
       <div className="dishResultFacts">
         <span>{result.restaurant.address}, {result.restaurant.city}</span>
         {result.distanceMeters !== null ? <span>{formatDistance(result.distanceMeters)}</span> : null}
-        <span>{openingLabel(result)}</span>
         {result.dish.sectionName ? <span>{result.dish.sectionName}</span> : null}
       </div>
 
       <div className="dishResultBottomline">
-        <FreshnessStatus checkedAt={result.menu.lastCheckedAt} freshUntil={result.menu.freshUntil} />
+        <div className="dishResultSignals">
+          <FreshnessStatus checkedAt={result.menu.lastCheckedAt} freshUntil={result.menu.freshUntil} />
+          <span className="openingStatus" data-state={result.opening.state}>{openingLabel(result)}</span>
+        </div>
         <div className={actionsClassName}>
           {result.actions.booking ? (
             <TrackedExternalLink
@@ -118,24 +135,12 @@ export function DishResult({ result }: { result: DishSearchResult }) {
             target="_blank"
             rel="noreferrer"
           >
-            Se meny <span aria-hidden="true">↗</span>
+            Meny <span aria-hidden="true">↗</span>
           </TrackedExternalLink>
           {result.opening.sourceUrl ? (
             <a className="evidenceLink" href={result.opening.sourceUrl} target="_blank" rel="noreferrer">
               Åpningstider <span aria-hidden="true">↗</span>
             </a>
-          ) : null}
-          {result.restaurant.websiteUrl ? (
-            <TrackedExternalLink
-              className="evidenceLink"
-              href={result.restaurant.websiteUrl}
-              impressionId={result.impressionId}
-              eventType="restaurant_clicked"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Restaurant <span aria-hidden="true">↗</span>
-            </TrackedExternalLink>
           ) : null}
           <TrackedExternalLink
             className="evidenceLink"
