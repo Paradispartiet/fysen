@@ -13,6 +13,7 @@ describe("database migrations", () => {
       "0006_dish_concepts.sql",
       "0007_pdf_text_extraction.sql",
       "0008_menu_source_fetch_mode.sql",
+      "0009_remove_blocked_tunco_candidate.sql",
     ]);
 
     const schemaSql = await readFile(
@@ -95,5 +96,12 @@ describe("database migrations", () => {
     );
     expect(fetchModeSql).toContain("fetch_mode text NOT NULL DEFAULT 'http'");
     expect(fetchModeSql).toContain("fetch_mode IN ('http', 'browser')");
+
+    const tuncoCleanupSql = await readFile(
+      new URL("../migrations/0009_remove_blocked_tunco_candidate.sql", import.meta.url),
+      "utf8",
+    );
+    expect(tuncoCleanupSql).toContain("slug = 'tunco-st-hanshaugen-oslo'");
+    expect(tuncoCleanupSql).toContain("active = false");
   });
 });
