@@ -48,11 +48,8 @@
 }
 
 .sortActive {
-  background: currentColor;
-}
-
-.sortActive > span {
-  color: var(--color-background, #fff);
+  box-shadow: inset 0 0 0 1px currentColor;
+  font-weight: 780;
 }
 
 .clear {
