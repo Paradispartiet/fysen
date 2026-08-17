@@ -2,6 +2,7 @@ import type { Pool } from "pg";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createDatabasePool } from "./client.js";
 import { runMigrations } from "./migrate.js";
+import { upsertRestaurantHoursSource } from "./restaurant-hours-sources.js";
 import {
   listDueRestaurantHoursSources,
   recordRestaurantHoursObservation,
@@ -84,20 +85,52 @@ integrationDescribe("restaurant hours integration", () => {
       changes: [],
     });
 
-    const hoursSource = await pool.query<{ id: string }>(
-      `INSERT INTO fysen.restaurant_hours_sources (
-         restaurant_id, service_type, url, time_zone, extractor,
-         check_interval_minutes, minimum_expected_intervals, next_check_at
-       ) VALUES ($1, 'kitchen', 'https://example.com/hours', 'Europe/Oslo', 'visible_text_v1', 60, 1, now())
-       RETURNING id`,
-      [restaurantId],
-    );
-    hoursSourceId = hoursSource.rows[0]?.id ?? "";
-    if (!hoursSourceId) throw new Error("Hours source insert failed");
+    hoursSourceId = await upsertRestaurantHoursSource(pool, {
+      restaurantId,
+      url: "https://example.com/hours",
+      timeZone: "Europe/Oslo",
+      checkIntervalMinutes: 60,
+      minimumExpectedIntervals: 1,
+    });
   });
 
   afterAll(async () => {
     await pool.end();
+  });
+
+  it("returns canonical scope identity and immediately retries a source with no successful check", async () => {
+    await pool.query(
+      `UPDATE fysen.restaurant_hours_sources
+          SET next_check_at = now() + interval '2 hours',
+              last_checked_at = NULL
+        WHERE id = $1`,
+      [hoursSourceId],
+    );
+
+    const repeatedId = await upsertRestaurantHoursSource(pool, {
+      restaurantId,
+      url: "https://example.com/hours",
+      timeZone: "Europe/Oslo",
+      checkIntervalMinutes: 60,
+      minimumExpectedIntervals: 1,
+    });
+    expect(repeatedId).toBe(hoursSourceId);
+
+    const state = await pool.query<{ next_check_at: Date; last_checked_at: Date | null }>(
+      `SELECT next_check_at, last_checked_at
+         FROM fysen.restaurant_hours_sources
+        WHERE id = $1`,
+      [hoursSourceId],
+    );
+    expect(state.rows[0]?.last_checked_at).toBeNull();
+    expect(state.rows[0]?.next_check_at.getTime()).toBeLessThanOrEqual(Date.now() + 30_000);
+
+    const due = await listDueRestaurantHoursSources(pool, 25);
+    expect(due.find((source) => source.id === hoursSourceId)).toMatchObject({
+      restaurantSlug: "hours-bistro-oslo",
+      restaurantName: "Hours Bistro",
+      url: "https://example.com/hours",
+    });
   });
 
   it("publishes open, closed and unknown from fresh source-backed snapshots", async () => {

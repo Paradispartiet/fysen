@@ -11,6 +11,8 @@ export type RestaurantHoursWatchOutcome =
 export interface RestaurantHoursSourceTarget {
   readonly id: string;
   readonly restaurantId: string;
+  readonly restaurantSlug: string;
+  readonly restaurantName: string;
   readonly serviceType: "kitchen";
   readonly url: string;
   readonly timeZone: string;
@@ -47,6 +49,8 @@ export interface RestaurantHoursObservationInput {
 interface SourceRow extends QueryResultRow {
   id: string;
   restaurant_id: string;
+  restaurant_slug: string;
+  restaurant_name: string;
   service_type: "kitchen";
   url: string;
   time_zone: string;
@@ -74,6 +78,8 @@ function mapSource(row: SourceRow): RestaurantHoursSourceTarget {
   return {
     id: row.id,
     restaurantId: row.restaurant_id,
+    restaurantSlug: row.restaurant_slug,
+    restaurantName: row.restaurant_name,
     serviceType: row.service_type,
     url: row.url,
     timeZone: row.time_zone,
@@ -141,13 +147,24 @@ export async function listDueRestaurantHoursSources(
 ): Promise<readonly RestaurantHoursSourceTarget[]> {
   const boundedLimit = Math.max(1, Math.min(100, Math.trunc(limit)));
   const result = await pool.query<SourceRow>(
-    `SELECT id, restaurant_id, service_type, url, time_zone, extractor,
-            check_interval_minutes, minimum_expected_intervals,
-            etag, last_modified, last_schedule_fingerprint
-       FROM fysen.restaurant_hours_sources
-      WHERE enabled = true
-        AND next_check_at <= now()
-      ORDER BY next_check_at ASC, id ASC
+    `SELECT s.id,
+            s.restaurant_id,
+            r.slug AS restaurant_slug,
+            r.name AS restaurant_name,
+            s.service_type,
+            s.url,
+            s.time_zone,
+            s.extractor,
+            s.check_interval_minutes,
+            s.minimum_expected_intervals,
+            s.etag,
+            s.last_modified,
+            s.last_schedule_fingerprint
+       FROM fysen.restaurant_hours_sources s
+       JOIN fysen.restaurants r ON r.id = s.restaurant_id
+      WHERE s.enabled = true
+        AND s.next_check_at <= now()
+      ORDER BY s.next_check_at ASC, s.id ASC
       LIMIT $1`,
     [boundedLimit],
   );

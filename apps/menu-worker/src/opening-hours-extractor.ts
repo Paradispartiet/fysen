@@ -1,7 +1,7 @@
 import { load } from "cheerio";
 import type { RestaurantHoursIntervalInput } from "@fysen/database";
 
-export const OPENING_HOURS_EXTRACTOR_VERSION = "hours-visible-v3";
+export const OPENING_HOURS_EXTRACTOR_VERSION = "hours-visible-v4";
 
 const weekdayByName: Readonly<Record<string, number>> = {
   monday: 1,
@@ -134,7 +134,25 @@ interface HoursMarker {
   readonly label: string | null;
 }
 
-function selectStandardHoursCandidate(visibleText: string): string {
+function normalizedScope(value: string): string {
+  return value
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
+    .toLocaleLowerCase("nb-NO")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function markerMatchesHints(marker: HoursMarker, scopeHints: readonly string[]): boolean {
+  if (!marker.label) return false;
+  const label = normalizedScope(marker.label);
+  return scopeHints.some((hint) => {
+    const normalizedHint = normalizedScope(hint);
+    return normalizedHint.includes(label) || label.includes(normalizedHint);
+  });
+}
+
+function selectStandardHoursCandidate(visibleText: string, scopeHints: readonly string[]): string {
   const lines = visibleText.split("\n");
   const markerPattern = /^(?:opening\s+hours|hours|åpningstider)(?:\s+([^:]{1,80}))?:?$/iu;
   const markers: HoursMarker[] = [];
@@ -148,20 +166,26 @@ function selectStandardHoursCandidate(visibleText: string): string {
     return lines.slice(markers[0]?.index ?? 0).join(" ");
   }
 
-  const firstMarkerIndex = markers[0]?.index ?? lines.length;
-  const pageIdentity = lines.slice(0, firstMarkerIndex).join(" ").toLocaleLowerCase("nb-NO");
-  const matching = markers.filter(
-    (marker) => marker.label && pageIdentity.includes(marker.label.toLocaleLowerCase("nb-NO")),
-  );
-  if (matching.length !== 1) {
+  const hinted = markers.filter((marker) => markerMatchesHints(marker, scopeHints));
+  let selected: HoursMarker | undefined;
+  if (hinted.length === 1) {
+    selected = hinted[0];
+  } else {
+    const firstMarkerIndex = markers[0]?.index ?? lines.length;
+    const pageIdentity = lines.slice(0, firstMarkerIndex).join(" ").toLocaleLowerCase("nb-NO");
+    const matching = markers.filter(
+      (marker) => marker.label && pageIdentity.includes(marker.label.toLocaleLowerCase("nb-NO")),
+    );
+    if (matching.length === 1) selected = matching[0];
+  }
+
+  if (!selected) {
     throw new OpeningHoursExtractionError(
       "AMBIGUOUS_HOURS_SECTION",
-      `Found ${markers.length} opening-hours sections and could not resolve exactly one from the page identity`,
+      `Found ${markers.length} opening-hours sections and could not resolve exactly one from source scope hints or page identity`,
     );
   }
 
-  const selected = matching[0];
-  if (!selected) throw new OpeningHoursExtractionError("AMBIGUOUS_HOURS_SECTION", "Missing selected hours marker");
   const nextMarker = markers.find((marker) => marker.index > selected.index);
   const end = nextMarker?.index ?? lines.length;
   return lines.slice(selected.index, end).join(" ");
@@ -175,8 +199,11 @@ function kitchenCutoffFromSuffix(suffix: string | undefined): string | null {
   ).exec(suffix)?.[1] ?? null;
 }
 
-function extractStandardHours(visibleText: string): { intervals: readonly RestaurantHoursIntervalInput[]; excerpt: string } | null {
-  const candidate = selectStandardHoursCandidate(visibleText).replace(/\s+/g, " ").trim();
+function extractStandardHours(
+  visibleText: string,
+  scopeHints: readonly string[],
+): { intervals: readonly RestaurantHoursIntervalInput[]; excerpt: string } | null {
+  const candidate = selectStandardHoursCandidate(visibleText, scopeHints).replace(/\s+/g, " ").trim();
   const pattern = new RegExp(
     `(${dayToken})(?:\\s*${dayRangeConnector}\\s*(${dayToken}))?\\s*:\\s*(${timeToken})\\s*[-–]\\s*(${timeToken})(?:\\s*\\(([^)]{1,120})\\))?`,
     "giu",
@@ -209,7 +236,10 @@ function extractStandardHours(visibleText: string): { intervals: readonly Restau
   };
 }
 
-export function extractKitchenOpeningHours(html: string): ExtractedOpeningHours {
+export function extractKitchenOpeningHours(
+  html: string,
+  scopeHints: readonly string[] = [],
+): ExtractedOpeningHours {
   const visibleText = extractVisibleText(html);
   const compact = visibleText.replace(/\n+/g, " ").replace(/\s+/g, " ").trim();
   const dinner = extractDinnerHours(compact);
@@ -221,7 +251,7 @@ export function extractKitchenOpeningHours(html: string): ExtractedOpeningHours 
     };
   }
 
-  const standard = extractStandardHours(visibleText);
+  const standard = extractStandardHours(visibleText, scopeHints);
   if (standard) {
     return {
       intervals: standard.intervals,
