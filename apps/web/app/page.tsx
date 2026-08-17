@@ -7,7 +7,10 @@ export default function HomePage() {
       <GlobalHeader />
       <main className="homeMain">
         <section className="homeHero" aria-labelledby="fysen-title">
-          <h1 id="fysen-title">Hva har du<br className="desktopBreak" /> lyst på?</h1>
+          <h1 id="fysen-title">
+            <span>Hva har du</span>
+            <span>lyst på?</span>
+          </h1>
           <div className="homeSearchWrap">
             <DishSearch />
             <p className="searchProof">Søk i ferske, sporbare restaurantmenyer.</p>
