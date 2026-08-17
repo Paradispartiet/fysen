@@ -25,12 +25,13 @@ const validManifest = {
 } as const;
 
 describe("restaurant onboarding manifest", () => {
-  it("applies safe defaults for bot identity, fetch mode, actions and dish variants", () => {
+  it("applies safe defaults for bot identity, fetch mode and quality assertions", () => {
     const parsed = restaurantOnboardingManifestSchema.parse(validManifest);
     expect(parsed.menuSource.userAgent).toBe("FysenMenuBot/0.1");
     expect(parsed.menuSource.fetchMode).toBe("http");
     expect(parsed.actions).toEqual([]);
     expect(parsed.qualityAssertions.requiredDishVariants).toEqual([]);
+    expect(parsed.qualityAssertions.forbiddenDishNames).toEqual([]);
   });
 
   it("accepts explicit browser fetch for rendered HTML sources", () => {
@@ -64,6 +65,17 @@ describe("restaurant onboarding manifest", () => {
       sectionName: "PRIMI PIATTI",
       priceMinor: 26000,
     });
+  });
+
+  it("accepts generic forbidden dish assertions for parser quality gates", () => {
+    const parsed = restaurantOnboardingManifestSchema.parse({
+      ...validManifest,
+      qualityAssertions: {
+        requiredDishNames: ["Spicy Tempura Scampi"],
+        forbiddenDishNames: ["SPICY", "VEGETAR"],
+      },
+    });
+    expect(parsed.qualityAssertions.forbiddenDishNames).toEqual(["SPICY", "VEGETAR"]);
   });
 
   it("accepts strict multiple-price assertions", () => {
