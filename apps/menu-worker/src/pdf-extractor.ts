@@ -3,9 +3,10 @@ import {
   createMenuItemSourceKey,
   normalizeDishName,
   type MenuObservedItem,
+  type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v2";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v3";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -26,13 +27,18 @@ interface PdfLine {
   readonly page: number;
 }
 
-interface ItemCandidate {
+interface ParsedPrice {
+  readonly priceKind: MenuPriceKind;
+  readonly priceKroner: number;
+  readonly priceMaxKroner: number | null;
+}
+
+interface ItemCandidate extends ParsedPrice {
   readonly nameLineIndex: number;
   readonly priceLineIndex: number;
   readonly page: number;
   readonly sectionName: string | null;
   readonly rawName: string;
-  readonly priceKroner: number;
 }
 
 function normalizeLine(value: string): string {
@@ -105,6 +111,22 @@ function validPriceKroner(value: string): number | null {
   return Number.isInteger(parsed) && parsed >= 40 && parsed <= 10_000 ? parsed : null;
 }
 
+function parsedPrice(first: string, second?: string): ParsedPrice | null {
+  const firstPrice = validPriceKroner(first);
+  if (firstPrice === null) return null;
+  if (!second) {
+    return { priceKind: "exact", priceKroner: firstPrice, priceMaxKroner: null };
+  }
+  const secondPrice = validPriceKroner(second);
+  if (secondPrice === null) return null;
+  const minimum = Math.min(firstPrice, secondPrice);
+  const maximum = Math.max(firstPrice, secondPrice);
+  if (minimum === maximum) {
+    return { priceKind: "exact", priceKroner: minimum, priceMaxKroner: null };
+  }
+  return { priceKind: "multiple", priceKroner: minimum, priceMaxKroner: maximum };
+}
+
 function stripAllergenSuffix(value: string): string {
   return value
     .replace(/\s+(?:[a-zæøå]{1,3}\s*,\s*){1,12}[a-zæøå]{1,3}$/iu, "")
@@ -120,10 +142,18 @@ function looksLikeDishName(value: string): boolean {
   return true;
 }
 
+const priceSuffix = "(?:\\s*(?:,-|kr\\.?|nok))?";
+const inlinePrice = new RegExp(
+  `^(.{2,260}?)\\s+([1-9]\\d{1,3})(?:\\s*\\/\\s*([1-9]\\d{1,3}))?${priceSuffix}$`,
+  "iu",
+);
+const standalonePrice = new RegExp(
+  `^([1-9]\\d{1,3})(?:\\s*\\/\\s*([1-9]\\d{1,3}))?${priceSuffix}$`,
+  "iu",
+);
+
 function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] {
   const candidates: ItemCandidate[] = [];
-  const inlinePrice = /^(.{2,260}?)\s+([1-9]\d{1,3})(?:\s*(?:,-|kr\.?|nok))?$/iu;
-  const standalonePrice = /^([1-9]\d{1,3})(?:\s*(?:,-|kr\.?|nok))?$/iu;
   let currentSection: string | null = null;
 
   for (let index = 0; index < lines.length; index += 1) {
@@ -136,16 +166,16 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
 
     const inline = line.match(inlinePrice);
     if (inline?.[1] && inline[2]) {
-      const priceKroner = validPriceKroner(inline[2]);
+      const price = parsedPrice(inline[2], inline[3]);
       const rawName = stripAllergenSuffix(inline[1]);
-      if (priceKroner !== null && looksLikeDishName(rawName)) {
+      if (price && looksLikeDishName(rawName)) {
         candidates.push({
           nameLineIndex: index,
           priceLineIndex: index,
           page: lines[index]?.page ?? 1,
           sectionName: currentSection,
           rawName,
-          priceKroner,
+          ...price,
         });
       }
       continue;
@@ -153,8 +183,8 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
 
     const standalone = line.match(standalonePrice);
     if (!standalone?.[1]) continue;
-    const priceKroner = validPriceKroner(standalone[1]);
-    if (priceKroner === null || index === 0) continue;
+    const price = parsedPrice(standalone[1], standalone[2]);
+    if (!price || index === 0) continue;
     const previous = lines[index - 1]?.text ?? "";
     if (sectionHeading(previous) || !looksLikeDishName(previous)) continue;
     const rawName = stripAllergenSuffix(previous);
@@ -165,7 +195,7 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
       page: lines[index - 1]?.page ?? lines[index]?.page ?? 1,
       sectionName: currentSection,
       rawName,
-      priceKroner,
+      ...price,
     });
   }
 
@@ -181,8 +211,8 @@ function descriptionForCandidate(
   for (let index = candidate.priceLineIndex + 1; index < Math.min(nextCandidateLine, candidate.priceLineIndex + 7); index += 1) {
     const text = lines[index]?.text ?? "";
     if (!text || sectionHeading(text)) break;
-    if (/^([1-9]\d{1,3})(?:\s*(?:,-|kr\.?|nok))?$/iu.test(text)) break;
-    if (/^(.{2,260}?)\s+([1-9]\d{1,3})(?:\s*(?:,-|kr\.?|nok))?$/iu.test(text)) break;
+    if (standalonePrice.test(text)) break;
+    if (inlinePrice.test(text)) break;
     if (/^(allergener|allergens|vegetariano|vegano)\b/iu.test(text)) break;
     if (/https?:\/\/|www\.|@/iu.test(text)) break;
     parts.push(text);
@@ -211,7 +241,10 @@ function buildItems(lines: readonly PdfLine[]): readonly MenuObservedItem[] {
     if (seen.has(sourceKey)) continue;
     seen.add(sourceKey);
     const description = descriptionForCandidate(lines, candidate, nextCandidateLine);
-    const excerpt = [candidate.sectionName, name, `${candidate.priceKroner} NOK`, description]
+    const observedPrice = candidate.priceMaxKroner === null
+      ? `${candidate.priceKroner} NOK`
+      : `${candidate.priceKroner} / ${candidate.priceMaxKroner} NOK`;
+    const excerpt = [candidate.sectionName, name, observedPrice, description]
       .filter((value): value is string => Boolean(value))
       .join(" — ")
       .slice(0, 1000);
@@ -223,10 +256,12 @@ function buildItems(lines: readonly PdfLine[]): readonly MenuObservedItem[] {
       description,
       sectionName: candidate.sectionName,
       priceMinor: candidate.priceKroner * 100,
+      priceKind: candidate.priceKind,
+      priceMaxMinor: candidate.priceMaxKroner === null ? null : candidate.priceMaxKroner * 100,
       currency: "NOK",
       position,
       extractionMethod: "pdf_text",
-      confidence: 0.86,
+      confidence: candidate.priceKind === "multiple" ? 0.84 : 0.86,
       sourceExcerpt: `page ${candidate.page}: ${excerpt}`,
     });
   }
