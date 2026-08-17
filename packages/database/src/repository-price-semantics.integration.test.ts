@@ -48,6 +48,7 @@ integrationDescribe("MenuIndexRepository price semantics", () => {
   function item(
     sourceKey: string,
     name: string,
+    position: number,
     price: Pick<MenuObservedItem, "priceMinor" | "priceKind" | "priceMaxMinor">,
   ): MenuObservedItem {
     return {
@@ -60,18 +61,18 @@ integrationDescribe("MenuIndexRepository price semantics", () => {
       ...(price.priceKind !== undefined ? { priceKind: price.priceKind } : {}),
       ...(price.priceMaxMinor !== undefined ? { priceMaxMinor: price.priceMaxMinor } : {}),
       currency: "NOK",
-      position: 0,
+      position,
       extractionMethod: "pdf_text",
       confidence: 0.9,
       sourceExcerpt: name,
     };
   }
 
-  it("persists and reads canonical exact and multiple semantics in the snapshot transaction", async () => {
+  it("persists and reads canonical exact and multiple semantics in menu position order", async () => {
     const { repository, source } = await createSource("canonical-price-roundtrip-oslo");
     const now = new Date().toISOString();
-    const exact = item("a".repeat(64), "Exact Rett", { priceMinor: 20900 });
-    const multiple = item("b".repeat(64), "Bambus Signatur", {
+    const exact = item("a".repeat(64), "Exact Rett", 0, { priceMinor: 20900 });
+    const multiple = item("b".repeat(64), "Bambus Signatur", 1, {
       priceMinor: 28500,
       priceKind: "multiple",
       priceMaxMinor: 30900,
@@ -101,12 +102,14 @@ integrationDescribe("MenuIndexRepository price semantics", () => {
     expect(stored?.items).toEqual([
       expect.objectContaining({
         name: "Exact Rett",
+        position: 0,
         priceMinor: 20900,
         priceKind: "exact",
         priceMaxMinor: null,
       }),
       expect.objectContaining({
         name: "Bambus Signatur",
+        position: 1,
         priceMinor: 28500,
         priceKind: "multiple",
         priceMaxMinor: 30900,
@@ -115,28 +118,31 @@ integrationDescribe("MenuIndexRepository price semantics", () => {
 
     const rows = await pool.query<{
       original_name: string;
+      position: number;
       price_minor: number | null;
       price_kind: string;
       price_max_minor: number | null;
     }>(
-      `SELECT original_name, price_minor, price_kind, price_max_minor
+      `SELECT original_name, position, price_minor, price_kind, price_max_minor
          FROM fysen.menu_items
         WHERE snapshot_id = $1
-        ORDER BY position, original_name`,
+        ORDER BY position, id`,
       [snapshotId],
     );
     expect(rows.rows).toEqual([
       {
-        original_name: "Bambus Signatur",
-        price_minor: 28500,
-        price_kind: "multiple",
-        price_max_minor: 30900,
-      },
-      {
         original_name: "Exact Rett",
+        position: 0,
         price_minor: 20900,
         price_kind: "exact",
         price_max_minor: null,
+      },
+      {
+        original_name: "Bambus Signatur",
+        position: 1,
+        price_minor: 28500,
+        price_kind: "multiple",
+        price_max_minor: 30900,
       },
     ]);
   });
@@ -144,7 +150,7 @@ integrationDescribe("MenuIndexRepository price semantics", () => {
   it("rolls back the entire snapshot when canonical price semantics are invalid", async () => {
     const { repository, source } = await createSource("invalid-price-rollback-oslo");
     const now = new Date().toISOString();
-    const invalid = item("e".repeat(64), "Ugyldig Rett", {
+    const invalid = item("e".repeat(64), "Ugyldig Rett", 0, {
       priceMinor: 30900,
       priceKind: "multiple",
       priceMaxMinor: 28500,
