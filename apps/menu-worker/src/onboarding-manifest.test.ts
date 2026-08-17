@@ -25,10 +25,35 @@ const validManifest = {
 } as const;
 
 describe("restaurant onboarding manifest", () => {
-  it("applies safe defaults for bot identity and actions", () => {
+  it("applies safe defaults for bot identity, actions and dish variants", () => {
     const parsed = restaurantOnboardingManifestSchema.parse(validManifest);
     expect(parsed.menuSource.userAgent).toBe("FysenMenuBot/0.1");
     expect(parsed.actions).toEqual([]);
+    expect(parsed.qualityAssertions.requiredDishVariants).toEqual([]);
+  });
+
+  it("accepts PDF sources and explicit section/price assertions", () => {
+    const parsed = restaurantOnboardingManifestSchema.parse({
+      ...validManifest,
+      menuSource: {
+        ...validManifest.menuSource,
+        url: "https://example.com/menu.pdf",
+        sourceType: "pdf",
+      },
+      qualityAssertions: {
+        requiredDishNames: ["Pasta carbonara"],
+        requiredDishVariants: [
+          { name: "Pasta carbonara", sectionName: "PRIMI PIATTI", priceMinor: 26000 },
+          { name: "Pasta carbonara", sectionName: "BAMBINI", priceMinor: 12500 },
+        ],
+      },
+    });
+    expect(parsed.menuSource.sourceType).toBe("pdf");
+    expect(parsed.qualityAssertions.requiredDishVariants).toHaveLength(2);
+    expect(parsed.qualityAssertions.requiredDishVariants[0]).toMatchObject({
+      sectionName: "PRIMI PIATTI",
+      priceMinor: 26000,
+    });
   });
 
   it("accepts source-backed hours and commercial actions", () => {
