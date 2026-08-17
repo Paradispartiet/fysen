@@ -56,6 +56,55 @@ describe("extractHtmlMenu", () => {
     expect(result.items[0]?.confidence).toBe(0.72);
   });
 
+  it("propagates an explicit shared section price to multiple dish headings", () => {
+    const html = `
+      <html><body>
+        <h2>Småretter</h2>
+        <p>KIMCHI 95,-</p>
+        <p>Vår hjemmelagde kimchi</p>
+        <p>Ramen 260,-</p>
+        <h3>SHOYU RAMEN</h3>
+        <p>Sellerirotsuppe med grønn olje og håndlagde nudler</p>
+        <h3>SPICY MISO RAMEN</h3>
+        <p>Langtidskokt kylling paitan suppe med chashu</p>
+        <h3>KYLLING SHOYU PAITAN RAMEN</h3>
+        <p>Shoyu paitan suppe med koji confitert kylling</p>
+        <h3>SPICY HASSELNØTT TAN TAN MEN</h3>
+        <p>Håndlagede ramennudler i spicy hasselnøttsaus</p>
+        <p>*Vegetarisk ramen kan gjøres vegansk uten egget</p>
+        <h3>Menyforklaring</h3>
+        <p>RAMEN: er en japansk nudelsuppe.</p>
+      </body></html>
+    `;
+
+    const result = extractHtmlMenu(html);
+    const ramenItems = result.items.filter((item) => item.sectionName === "Ramen");
+    expect(ramenItems.map((item) => item.name)).toEqual([
+      "SHOYU RAMEN",
+      "SPICY MISO RAMEN",
+      "KYLLING SHOYU PAITAN RAMEN",
+      "SPICY HASSELNØTT TAN TAN MEN",
+    ]);
+    expect(ramenItems.every((item) => item.priceMinor === 26000)).toBe(true);
+    expect(ramenItems.every((item) => item.confidence === 0.76)).toBe(true);
+    expect(result.items.some((item) => item.name === "Ramen")).toBe(false);
+    expect(result.items.find((item) => item.name === "SHOYU RAMEN")?.description).toContain("Sellerirotsuppe");
+  });
+
+  it("does not propagate a possible section price without at least two strong child headings", () => {
+    const html = `
+      <html><body>
+        <p>Dagens meny 450,-</p>
+        <h3>CHEF'S CHOICE</h3>
+        <p>Spør servitøren om dagens servering</p>
+        <h3>Kontakt</h3>
+      </body></html>
+    `;
+    const result = extractHtmlMenu(html);
+    expect(result.items.some((item) => item.name === "CHEF'S CHOICE")).toBe(false);
+    expect(result.items.some((item) => item.sectionName === "Dagens meny")).toBe(false);
+  });
+
   it("does not turn standalone prices after non-dish metadata into menu items", () => {
     const html = `
       <html><body>
