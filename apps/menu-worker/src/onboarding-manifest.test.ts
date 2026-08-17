@@ -25,8 +25,31 @@ const validManifest = {
 } as const;
 
 describe("restaurant onboarding manifest", () => {
-  it("applies a safe bot user-agent default", () => {
-    expect(restaurantOnboardingManifestSchema.parse(validManifest).menuSource.userAgent).toBe("FysenMenuBot/0.1");
+  it("applies safe defaults for bot identity and actions", () => {
+    const parsed = restaurantOnboardingManifestSchema.parse(validManifest);
+    expect(parsed.menuSource.userAgent).toBe("FysenMenuBot/0.1");
+    expect(parsed.actions).toEqual([]);
+  });
+
+  it("accepts source-backed hours and commercial actions", () => {
+    const parsed = restaurantOnboardingManifestSchema.parse({
+      ...validManifest,
+      hoursSource: {
+        url: "https://example.com/",
+        timeZone: "Europe/Oslo",
+        checkIntervalMinutes: 720,
+        minimumExpectedIntervals: 5,
+      },
+      actions: [
+        {
+          type: "booking",
+          url: "https://example.com/booking",
+          sourceUrl: "https://example.com/booking",
+        },
+      ],
+    });
+    expect(parsed.hoursSource?.timeZone).toBe("Europe/Oslo");
+    expect(parsed.actions[0]).toMatchObject({ type: "booking", provider: null });
   });
 
   it("requires HTTPS sources and explicit dish smoke assertions", () => {
@@ -34,6 +57,17 @@ describe("restaurant onboarding manifest", () => {
       restaurantOnboardingManifestSchema.parse({
         ...validManifest,
         menuSource: { ...validManifest.menuSource, url: "http://example.com/menu" },
+      }),
+    ).toThrow();
+    expect(() =>
+      restaurantOnboardingManifestSchema.parse({
+        ...validManifest,
+        hoursSource: {
+          url: "http://example.com/",
+          timeZone: "Europe/Oslo",
+          checkIntervalMinutes: 720,
+          minimumExpectedIntervals: 5,
+        },
       }),
     ).toThrow();
     expect(() =>
