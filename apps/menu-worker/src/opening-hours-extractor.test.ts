@@ -56,6 +56,75 @@ describe("opening hours extractor", () => {
     );
   });
 
+  it("supports AM/PM clocks and selects the sole parseable duplicate unlabeled hours block", () => {
+    const extracted = extractKitchenOpeningHours(`
+      <html><body>
+        <h2>Opening Hours</h2>
+        <p>EveryDay</p>
+        <p>12:00am – 11:00pm</p>
+        <h2>Opening Hours</h2>
+        <table>
+          <tr><td>Monday</td><td>12:00 pm - 11:00 pm</td></tr>
+          <tr><td>Tuesday</td><td>12:00 pm - 11:00 pm</td></tr>
+          <tr><td>Wednesday</td><td>12:00 pm - 11:00 pm</td></tr>
+          <tr><td>Thursday</td><td>12:00 pm - 11:00 pm</td></tr>
+          <tr><td>Friday</td><td>12:00 pm - 11:00 pm</td></tr>
+          <tr><td>Saturday</td><td>12:00 pm - 11:00 pm</td></tr>
+          <tr><td>Sunday</td><td>12:00 pm - 11:00 pm</td></tr>
+        </table>
+      </body></html>
+    `);
+
+    expect(extracted.intervals).toEqual(
+      [1, 2, 3, 4, 5, 6, 7].map((isoWeekday) => ({
+        isoWeekday,
+        opensAt: "12:00",
+        closesAt: "23:00",
+        closesNextDay: false,
+      })),
+    );
+    expect(extracted.sourceExcerpt).toContain("Monday 12:00 pm - 11:00 pm");
+  });
+
+  it("normalizes midnight in 12-hour clocks", () => {
+    const extracted = extractKitchenOpeningHours(`
+      <html><body>
+        <h3>Opening Hours</h3>
+        <p>Monday 12:00 am - 1:00 am</p>
+      </body></html>
+    `);
+
+    expect(extracted.intervals).toEqual([
+      { isoWeekday: 1, opensAt: "00:00", closesAt: "01:00", closesNextDay: false },
+    ]);
+  });
+
+  it("keeps duplicate unlabeled parseable hours blocks ambiguous", () => {
+    expect(() =>
+      extractKitchenOpeningHours(`
+        <html><body>
+          <h3>Opening Hours</h3>
+          <p>Monday 11:00 - 21:00</p>
+          <h3>Opening Hours</h3>
+          <p>Tuesday 12:00 - 22:00</p>
+        </body></html>
+      `),
+    ).toThrow(OpeningHoursExtractionError);
+
+    try {
+      extractKitchenOpeningHours(`
+        <html><body>
+          <h3>Opening Hours</h3>
+          <p>Monday 11:00 - 21:00</p>
+          <h3>Opening Hours</h3>
+          <p>Tuesday 12:00 - 22:00</p>
+        </body></html>
+      `);
+    } catch (error) {
+      expect(error).toMatchObject({ code: "AMBIGUOUS_HOURS_SECTION" });
+    }
+  });
+
   it("uses an explicit global kitchen-close schedule instead of later venue closing times", () => {
     const extracted = extractKitchenOpeningHours(`
       <html><body>
