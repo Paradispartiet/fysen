@@ -3,6 +3,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createDatabasePool } from "./client.js";
 import { runMigrations } from "./migrate.js";
 import { MenuIndexRepository } from "./repository.js";
+import { upsertRestaurantAction } from "./restaurant-actions.js";
 import { searchDishes } from "./search.js";
 
 const databaseUrl = process.env.DATABASE_URL;
@@ -106,23 +107,26 @@ integrationDescribe("dish search integration", () => {
     });
 
     const now = Date.now();
-    await pool.query(
-      `INSERT INTO fysen.restaurant_actions (
-         restaurant_id, action_type, url, source_url, provider,
-         verification_method, verified_at, expires_at, enabled
-       ) VALUES
-       ($1, 'booking', 'https://example.com/book', 'https://example.com/book', 'TestBook',
-        'first_party_page', $2, $3, true),
-       ($1, 'order', 'https://example.com/order', 'https://example.com/order', 'TestOrder',
-        'first_party_page', $4, $5, true)`,
-      [
-        restaurantId,
-        new Date(now - 60_000),
-        new Date(now + 3_600_000),
-        new Date(now - 7_200_000),
-        new Date(now - 3_600_000),
-      ],
-    );
+    await upsertRestaurantAction(pool, {
+      restaurantId,
+      actionType: "booking",
+      url: "https://example.com/book",
+      sourceUrl: "https://example.com/book",
+      provider: "TestBook",
+      verificationMethod: "first_party_page",
+      verifiedAt: new Date(now - 60_000).toISOString(),
+      expiresAt: new Date(now + 3_600_000).toISOString(),
+    });
+    await upsertRestaurantAction(pool, {
+      restaurantId,
+      actionType: "order",
+      url: "https://example.com/order",
+      sourceUrl: "https://example.com/order",
+      provider: "TestOrder",
+      verificationMethod: "first_party_page",
+      verifiedAt: new Date(now - 7_200_000).toISOString(),
+      expiresAt: new Date(now - 3_600_000).toISOString(),
+    });
   });
 
   afterAll(async () => {
