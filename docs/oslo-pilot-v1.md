@@ -17,9 +17,12 @@ Piloten skal ikke optimaliseres for flest mulig restauranter. Den skal optimalis
 - Hrimnir Ramen Storgata beviser shared-section-price og branch-scoped hours: 12 aktuelle retter, eksplisitt fellespris på 260 kr, 7 healthy kjøkkenintervaller og verifisert booking.
 - Olivia Aker Brygge beviser PDF-meny som produksjonskilde: 53 aktuelle retter, separat voksen- og barnevariant av Pasta carbonara, 7 healthy kjøkkenintervaller og verifisert booking. PDF-parseroppgraderinger er fail-closed og tvinger ny ekstraksjon før en stale parser får fortsette å være publisert.
 - Mathus Chicken på Vestli er første produksjonsverifiserte `order`-destinasjon og første ytre-øst-kilde i katalogen: 89 aktuelle retter, to aksepterte watches, verifisert bestill-mat-handling og 7 healthy kjøkkenintervaller.
-- Siste produksjonsdashboard viser **5 aktive restauranter, 5/5 healthy menykilder, 190 aktuelle retter, 0 candidate-restauranter og 0 degraded menykilder**.
+- Roll Sushi Majorstua er første produksjonsbevis for strukturert `json_ld`: 76 aktuelle retter, `confidence: 0.99` på item-nivå, eksplisitte prisassertions, verifisert `order` og 7 kjøkkenintervaller. Rå HTTP og Chromium ga samme 76 JSON-LD-items, så produksjonen bruker den billigere og sikrere HTTP-kilden i stedet for browser.
+- De publiserte snapshot-tallene summerer nå til **6 aktive restauranter og 266 aktuelle retter** (16 + 20 + 12 + 53 + 89 + 76).
 - Nye coverage-kandidater registreres som `active=false` og blir ikke søkbare før to aksepterte menywatches, minimumskrav, eksplisitte dish/pris-assertions, deklarerte kommersielle handlinger og første kjøkkentids-watch er bestått.
-- HTML-ekstraksjonen støtter norske prisformater som `kr 70,00` uten å senke den etablerte sikkerhetsgrensen for plausible menypriser. Åpningstidsparseren støtter norske ukedagsforkortelser som `Man - Søn`.
+- Mislykkede kandidater som var inaktive ved onboardingstart går nå i operativ dvale: menu-, hours- og action-kilder deaktiveres slik at de ikke fortsetter som due/reverification-trafikk. Snapshot- og watch-historikken beholdes, og en senere eksplisitt onboarding kan reaktivere kandidaten kontrollert.
+- Browser-fetch finnes som eksplisitt `fetch_mode=browser` med system-Chrome, offentlig-IP-validering, service-worker-blokkering, request-/DOM-grenser og fail-closed origin-policy. Det brukes aldri som automatisk fallback. Ingen produksjonsrestaurant trenger browser-mode ennå: Tunco/Ninito ble avvist fordi canonical Ninito-kilde forbød Fysen i `robots.txt`, mens Hos Victoria/Wix viste en for tung multi-origin-rendering til å være et godt første produksjonscase.
+- HTML-ekstraksjonen støtter norske prisformater som `kr 70,00` uten å senke den etablerte sikkerhetsgrensen for plausible menypriser. Åpningstidsparseren støtter norske ukedagsforkortelser og day-ranges som `Man–Tor`, `Fre–Lør` og `Søn`.
 - Søket har exact/prefix/contains/trigram og kuraterte canonical-konsepter. Quality Dashboard replay-er historiske fuzzy- og nulltreff mot dagens ferske, søkbare indeks før de brukes som arbeidskø.
 - Siste replay viser **0 uløste fuzzy-signaler**: `shoyu ramen` og `chicken ceasar burger` løses nå som `exact`, mens `biff tartar` løses som `canonical`.
 - Siste replay viser **1 historisk nulltreff, men 0 uløste nulltreff**: `carbonara` beholdes som historisk etterspørselsdata, men dagens Olivia-indeks løser søket sikkert som `contains` via `Pasta carbonara`.
@@ -56,10 +59,12 @@ Dekningen skal bygges kvalitativt, ikke som en vilkårlig tallkvote. Restaurante
 - vanlige HTML-menyer;
 - JSON-LD der det finnes;
 - PDF-menyer;
-- mer krevende JavaScript-baserte kilder der Playwright-fallback faktisk er nødvendig;
+- mer krevende JavaScript-baserte kilder der Playwright/browser-fetch faktisk er nødvendig og tillatt;
 - restauranter med og uten direkte booking-/bestillingslenker.
 
-Rodeo er golden live-kilde. Way Down South beviser den generelle onboardingporten. Hrimnir Ramen Storgata beviser felles seksjonspris, kjedeside-scope og canonical branch-hints uten restaurantspesialkode i søket. Olivia Aker Brygge beviser bounded PDF-fetch, tekstbasert PDF-ekstraksjon og fail-closed parseroppgradering. Mathus Chicken beviser norsk desimalprisformat, forkortede ukedagsintervaller, ytre-øst-dekning og verifisert `order`-handling.
+Rodeo er golden live-kilde. Way Down South beviser den generelle onboardingporten. Hrimnir Ramen Storgata beviser felles seksjonspris, kjedeside-scope og canonical branch-hints uten restaurantspesialkode i søket. Olivia Aker Brygge beviser bounded PDF-fetch, tekstbasert PDF-ekstraksjon og fail-closed parseroppgradering. Mathus Chicken beviser norsk desimalprisformat, forkortede ukedagsintervaller, ytre-øst-dekning og verifisert `order`-handling. Roll Sushi Majorstua beviser item-level JSON-LD via vanlig sikker HTTP og viser at browser ikke skal brukes når råkilden allerede gir samme strukturerte menydata.
+
+Browser-foundationen er bygget og produksjonsmigrert, men et browser-case teller først som produksjonsbevis når en konkret tillatt kilde faktisk trenger rendering. Tunco/Ninito ble korrekt avvist av robots-porten, og Hos Victoria/Wix ble ikke valgt fordi en diagnose krevde flere Wix-origins og mer enn standard request-grense før menyen kunne evalueres.
 
 ## Arbeidspakker
 
@@ -79,7 +84,9 @@ Det betyr:
 - deklarert booking/order verifiseres mot sin canonical førstepartskilde;
 - når kandidaten har hours-kilde, må første eksplisitte hours-watch passere før aktivering; manifestets minimumsintervaller håndheves av hours-laget;
 - først deretter åpnes coverage-gaten ved å sette restauranten aktiv;
-- kandidatfeil skjer etter vedlikehold av eksisterende menu/hours/actions, så en ny dårlig kilde kan ikke hindre produksjonsvedlikeholdet for godkjente restauranter.
+- kandidatfeil skjer etter vedlikehold av eksisterende menu/hours/actions, så en ny dårlig kilde kan ikke hindre produksjonsvedlikeholdet for godkjente restauranter;
+- en mislykket kandidat som var inaktiv ved start får sine operative menu-, hours- og action-kilder deaktivert etter feilen; historikken beholdes, mens en senere eksplisitt retry kan reaktivere kildene gjennom den normale onboardingflyten;
+- allerede publiserte restauranter er ikke omfattet av kandidat-dvale og beholder egne refresh/recovery-regler.
 
 Way Down South var første generelle produksjonsbevis: 20 retter ble hentet, andre watch var uendret, alle obligatoriske dish-assertions ble funnet og restauranten ble deretter åpnet for søk.
 
@@ -88,6 +95,8 @@ Hrimnir Ramen Storgata beviste shared-price-parseren: første watch publiserte 1
 Olivia Aker Brygge beviste PDF-løpet. En reell beskrivelsesgrensefeil ble fanget etter første produksjonskjøring. `pdf-text-v2` rettet grensen, extractor-versjonen ble gjort reindekserbar selv ved conditional HTTP, og aktive restauranter med stale extractor deaktiveres midlertidig og må bestå to nye watches før reaktivering.
 
 Mathus Chicken beviste den strengere full-gaten i én produksjonskjøring: første menu-watch ga 89 retter, andre watch bekreftet samme 89, alle obligatoriske dish/pris-assertions passerte, `order` ble verifisert og første hours-watch publiserte 7 intervaller før `active=true`.
+
+Roll Sushi Majorstua beviste samme full-gate med en annen kildetype: rå HTTP ga 76 `json_ld`-items, minimum 70 og fem eksplisitte navn/priser passerte, andre watch bekreftet kilden, `order` ble verifisert og hours-porten passerte før aktivering. Offentlig produksjons-API viser blant annet `43. Crispy Scampi 12 biter` til 169 kr og `Roll's Nigiri 2 stk` til 49 kr som exact-treff med `confidence: 0.99`.
 
 ### 2. Dish matching v1
 
@@ -135,11 +144,11 @@ Implementasjonen har:
 - canonical restaurantnavn/slug og source-URL som scope-hints på multi-branch kilder;
 - umiddelbar requeue ved onboarding når en hours-kilde aldri har hatt en vellykket kontroll;
 - eksplisitt single-source-watch som kan kjøres inne i onboarding før en ny restaurant blir aktiv;
-- norske ukedagsforkortelser, blant annet `Man - Søn`, i den canonical ukeparseren.
+- norske ukedagsforkortelser og ranges, blant annet `Man–Tor`, `Fre–Lør`, `Søn` og `Man - Søn`, i den canonical ukeparseren.
 
 Parseren er bevisst konservativ. En tekst som sier «late» er ikke nok til å etablere matserveringens slutt. Dersom siden oppgir en eksakt kjøkkenstenging, brukes den; ellers feiler ekstraksjonen lukket. Dersom en kjedeside inneholder flere åpningstidsseksjoner, må nøyaktig én avdeling kunne bestemmes fra canonical scope-hints eller sideidentitet; ellers publiseres ingen åpningstilstand.
 
-Rodeo og Way Down South har fem healthy kjøkkenintervaller hver. Hrimnir Ramen Storgata, Olivia Aker Brygge og Mathus Chicken har syv hver. Hrimnir ble publisert etter at en reell multi-branch scope-feil først ble fanget som `AMBIGUOUS_HOURS_SECTION`; Mathus ble ikke aktivert før første 7-intervalls-watch var grønn.
+Rodeo og Way Down South har fem healthy kjøkkenintervaller hver. Hrimnir Ramen Storgata, Olivia Aker Brygge, Mathus Chicken og Roll Sushi Majorstua har syv hver. Hrimnir ble publisert etter at en reell multi-branch scope-feil først ble fanget som `AMBIGUOUS_HOURS_SECTION`; Mathus og Roll Sushi ble ikke aktivert før første 7-intervalls-watch var grønn.
 
 ### 5. Resultatflate
 
@@ -156,7 +165,7 @@ Første handlinger er:
 - bestill bord, når verifisert booking-URL finnes;
 - bestill mat, når verifisert ordre-URL finnes.
 
-Booking-/ordrehandlinger er egne canonical records med kilde, verifikasjon og utløp. En utløpt handling skal ikke vises selv om URL-en fortsatt ligger i databasen. Mathus Chicken er første produksjonsbevis på den canonical `order`-handlingen.
+Booking-/ordrehandlinger er egne canonical records med kilde, verifikasjon og utløp. En utløpt handling skal ikke vises selv om URL-en fortsatt ligger i databasen. Mathus Chicken var første produksjonsbevis på den canonical `order`-handlingen; Roll Sushi Majorstua er andre live `order`-kilde og første som kombinerer den med JSON-LD-meny.
 
 ### 6. Quality dashboard — implementert
 
@@ -182,7 +191,7 @@ Replay er byspesifikk og bruker bare ferske snapshots fra aktive restauranter og
 
 Rapporten beholder Revenue Layers dataminimering: ingen IP-adresser, user-agent, konto-ID eller permanent brukerprofil tilføres.
 
-Siste produksjonsbevis viser 5 aktive restauranter, 190 aktuelle retter, 5 healthy menykilder, 0 degraded menykilder og healthy hours for alle fem. Mathus står med 89 retter, 7 intervaller, 0 consecutive failures og verifisert `order`. Dashboardet viser samtidig **0 uløste fuzzy-signaler og 0 uløste nulltreff**.
+Etter Roll Sushi består den aktive produksjonskatalogen av 6 restauranter. De publiserte, sist verifiserte per-restaurant snapshot-tallene summerer til **266 aktuelle retter**. Roll Sushi står offentlig med fersk JSON-LD-meny, `confidence: 0.99`, healthy opening-state og verifisert `order`. Det tidligere current-index replay-beviset hadde samtidig **0 uløste fuzzy-signaler og 0 uløste nulltreff**.
 
 ### 7. Demand loop
 
@@ -231,6 +240,7 @@ Pilotdata publiseres bare når:
 - onboardingkandidaten har passert to aksepterte menu-watches og sine dish/pris-assertions;
 - deklarert booking/order er verifisert og ikke utløpt;
 - en ny kandidat med hours-kilde har bestått første hours-watch og minimumsintervallene før `active=true`;
+- en mislykket inaktiv kandidat har fått operative menu-/hours-/action-kilder deaktivert før neste ordinære due/reverification-runde;
 - kilden er innenfor definert ferskhetsvindu;
 - retten kan spores til konkret snapshot og kilde;
 - åpningstilstand kan spores til et ferskt hours-snapshot, ellers vises `unknown`.
