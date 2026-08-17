@@ -1,23 +1,30 @@
 :root {
-  --color-bg: #080808;
-  --color-paper: #121212;
-  --color-ink: #f4f4f1;
-  --color-muted: #aaa9a5;
-  --color-soft: #767571;
-  --color-line: rgba(255, 255, 255, 0.1);
-  --color-line-strong: rgba(255, 255, 255, 0.18);
-  --color-search-line: rgba(255, 255, 255, 0.14);
-  --color-search-line-strong: rgba(255, 255, 255, 0.25);
-  --color-accent: #e15b36;
-  --color-fresh: #78ad88;
-  --color-body-copy: rgba(244, 244, 241, 0.78);
-  --color-header: rgba(8, 8, 8, 0.94);
-  --color-skeleton: rgba(255, 255, 255, 0.08);
-  --color-action: #f1f1ed;
-  --color-action-hover: #ffffff;
-  --color-action-ink: #0b0b0b;
-  --shadow-search: 0 14px 42px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.025);
-  --shadow-search-focus: 0 18px 54px rgba(0, 0, 0, 0.42), 0 0 0 2px rgba(225, 91, 54, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  --color-bg: #090b09;
+  --color-paper: #101510;
+  --color-surface-2: #151c16;
+  --color-surface-3: #1b241c;
+  --color-ink: #f1f4ef;
+  --color-muted: #abb3aa;
+  --color-soft: #7e897f;
+  --color-line: rgba(159, 184, 162, 0.16);
+  --color-line-strong: rgba(159, 184, 162, 0.3);
+  --color-search-line: #263128;
+  --color-search-line-strong: #344638;
+  --color-brand: #79c987;
+  --color-brand-hover: #8bd999;
+  --color-brand-dark: #31583a;
+  --color-brand-subtle: rgba(121, 201, 135, 0.14);
+  --color-food-accent: #c96c48;
+  --color-accent: var(--color-brand);
+  --color-fresh: var(--color-brand);
+  --color-body-copy: rgba(241, 244, 239, 0.82);
+  --color-header: rgba(9, 11, 9, 0.94);
+  --color-skeleton: rgba(159, 184, 162, 0.1);
+  --color-action: var(--color-brand);
+  --color-action-hover: var(--color-brand-hover);
+  --color-action-ink: #071008;
+  --shadow-search: 0 14px 42px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.025);
+  --shadow-search-focus: 0 16px 46px rgba(0, 0, 0, 0.3), 0 0 0 2px rgba(121, 201, 135, 0.13), inset 0 1px 0 rgba(255, 255, 255, 0.03);
 
   --space-1: 4px;
   --space-2: 8px;
@@ -39,9 +46,9 @@
   --radius-round: 999px;
 
   --content-wide: 1200px;
-  --content-results: 920px;
-  --content-text: 680px;
-  --content-hero: 980px;
+  --content-results: 980px;
+  --content-text: 700px;
+  --content-hero: 1040px;
 
   --motion-fast: 160ms;
   --motion-base: 200ms;
