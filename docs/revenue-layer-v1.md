@@ -4,6 +4,12 @@
 
 Fysen skal ikke være avhengig av at forbrukeren betaler for å søke etter mat. Det gratis dish-first-søket er distribusjonsmotoren. Revenue Layer v1 gjør brukerens høye kjøpsintensjon målbar og gjør restauranten til den naturlige betalende kunden.
 
+## Implementasjonsstatus
+
+- **R1 — Funnel foundation:** produksjonsaktiv. Search events, impressions og conversion events måles data-minimalt.
+- **R2 — Conversion destinations:** bygget med canonical booking-/ordrehandlinger, kildebevis, verifiseringstid, utløp og automatisk re-verifisering. Rodeos førsteparts booking-side er første produksjonsdestinasjon.
+- **R3–R5:** planlagt, men skal ikke forseres før de foregående lagene er produksjonsverifisert.
+
 ## Forretningsmodell
 
 Revenue Layer v1 bygges i fire lag.
@@ -61,6 +67,7 @@ En restaurant kan senere kjøpe tydelig merket plassering på et relevant retts�
 4. **Dataminimering først.** Første funnelversjon trenger ikke IP, user-agent, konto eller permanent brukerprofil.
 5. **Restaurantinnsikt skal bygge på aggregert etterspørsel og dokumenterte resultater.**
 6. **Claiming gir redigeringsrett til virksomhetsdata, ikke rett til å omskrive historiske kildebevis.**
+7. **Ingen kommersiell handling uten ferskt destinasjonsbevis.** Booking og bestilling skal forsvinne fra produktet når verifiseringen er utløpt.
 
 ## Revenue funnel v1
 
@@ -72,8 +79,8 @@ search
       -> menu click
       -> restaurant click
       -> directions click
-      -> booking click   (når URL finnes)
-      -> order click     (når URL finnes)
+      -> booking click   (når verifisert URL finnes)
+      -> order click     (når verifisert URL finnes)
 ```
 
 ### Search event
@@ -111,6 +118,36 @@ Et klikk peker på en konkret impression-ID og en eksplisitt handlingstype. Før
 
 Klienthendelser har en tilfeldig `client_event_id` slik at retry/sendBeacon ikke dobbeltteller samme handling.
 
+## Conversion destinations v1
+
+Booking og bestilling er egne canonical restaurant-handlinger i `fysen.restaurant_actions`, ikke tilfeldige lenker hardkodet i frontend.
+
+Hver handling har:
+
+- `action_type`: `booking` eller `order`;
+- canonical URL;
+- `source_url` som dokumenterer hvor lenken ble verifisert;
+- valgfri provider;
+- verifikasjonsmetode;
+- `verified_at`;
+- `expires_at`;
+- aktiv/inaktiv status.
+
+Søk returnerer bare handlinger som både er aktive og ikke utløpt. Utløpte handlinger er derfor fail-closed og kan ikke generere booking-/ordreknapp.
+
+### Automatisk re-verifisering
+
+Den eksisterende Menu Watcher-runtime gjenbrukes også til handlinger:
+
+1. syv dager før `expires_at` går handlingen i re-verifiseringskø;
+2. URL-en hentes gjennom samme SSRF-, robots-, redirect-, timeout- og størrelsesvern som menykilder;
+3. vellykket HTTP-kontroll forlenger verifikasjonen med 30 dager;
+4. feil forlenger **ikke** verifikasjonen;
+5. alle forsøk journalføres i `restaurant_action_verification_runs`;
+6. dersom problemet ikke løses før `expires_at`, forsvinner handlingen automatisk fra søkeresultatet.
+
+Rodeos `https://www.rodeooslo.no/booking` er første førsteparts bookingbevis. Det finnes foreløpig ingen ordrehandling for Rodeo fordi ingen tilsvarende verifisert ordre-URL er etablert.
+
 ## Privacy v1
 
 Første funnelversjon skal ikke lagre:
@@ -137,13 +174,11 @@ Målet er å forstå **etterspørsel og resultatytelse**, ikke å bygge en rekla
 
 ### R2 — Conversion destinations
 
-Utvid restaurantmodellen med canonical, verifiserte:
-
-- booking URL;
-- order URL;
-- eventuelt telefon/andre handlingskanaler senere.
-
-Kun tilgjengelige handlinger vises i produktet.
+- canonical booking-/ordrehandlinger;
+- kilde, verifikasjon og utløp per handling;
+- kun aktive og ferske handlinger publiseres;
+- automatisk re-verifisering og audit-logg;
+- `booking_clicked` og `order_clicked` bruker samme impression-attribusjon som resten av trakten.
 
 ### R3 — Claim restaurant
 
@@ -164,7 +199,8 @@ Første dashboard viser per restaurant:
 - CTR;
 - mest etterspurte retter;
 - nulltreff/etterspørselsgap;
-- menyferskhet og watcherhelse.
+- menyferskhet og watcherhelse;
+- booking-/ordrehandlingers verifikasjonsstatus.
 
 ### R5 — Commercial experiments
 

@@ -1,5 +1,6 @@
 import type { DishSearchResult } from "@fysen/contracts";
 import { FreshnessStatus } from "./freshness-status";
+import styles from "./dish-result.module.css";
 import { TrackedExternalLink } from "./tracked-external-link";
 
 function formatPrice(priceMinor: number | null, currency: string): string {
@@ -22,6 +23,9 @@ function directionsUrl(latitude: number, longitude: number): string {
 }
 
 export function DishResult({ result }: { result: DishSearchResult }) {
+  const actionsClassName = styles.actions ?? "";
+  const primaryActionClassName = styles.primaryAction ?? "";
+
   return (
     <article className="dishResult">
       <div className="dishResultTopline">
@@ -43,16 +47,31 @@ export function DishResult({ result }: { result: DishSearchResult }) {
 
       <div className="dishResultBottomline">
         <FreshnessStatus checkedAt={result.menu.lastCheckedAt} freshUntil={result.menu.freshUntil} />
-        <div
-          className="dishResultActions"
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            gap: "4px 18px",
-          }}
-        >
+        <div className={actionsClassName}>
+          {result.actions.booking ? (
+            <TrackedExternalLink
+              className={primaryActionClassName}
+              href={result.actions.booking.url}
+              impressionId={result.impressionId}
+              eventType="booking_clicked"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Bestill bord
+            </TrackedExternalLink>
+          ) : null}
+          {result.actions.order ? (
+            <TrackedExternalLink
+              className={primaryActionClassName}
+              href={result.actions.order.url}
+              impressionId={result.impressionId}
+              eventType="order_clicked"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Bestill mat
+            </TrackedExternalLink>
+          ) : null}
           <TrackedExternalLink
             className="evidenceLink"
             href={result.menu.sourceUrl}

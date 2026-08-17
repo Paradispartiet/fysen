@@ -27,6 +27,7 @@ jobs:
       DATABASE_SSL: "verify-full"
       NODE_ENV: production
       FYSEN_MENU_WATCH_BATCH_SIZE: "25"
+      FYSEN_ACTION_VERIFY_BATCH_SIZE: "25"
       FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
     steps:
       - name: Require production database secret
@@ -62,3 +63,6 @@ jobs:
 
       - name: Watch due menu sources
         run: pnpm --filter @fysen/menu-worker run:due
+
+      - name: Reverify expiring restaurant actions
+        run: pnpm --filter @fysen/menu-worker verify:actions

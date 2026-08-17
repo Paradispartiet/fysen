@@ -8,6 +8,14 @@ export interface DishSearchDatabaseInput {
   readonly limit: number;
 }
 
+export interface RestaurantActionDatabaseResult {
+  readonly url: string;
+  readonly sourceUrl: string;
+  readonly provider: string | null;
+  readonly verifiedAt: string;
+  readonly expiresAt: string;
+}
+
 export interface DishSearchDatabaseResult {
   readonly menuItemId: string;
   readonly snapshotId: string;
@@ -31,6 +39,8 @@ export interface DishSearchDatabaseResult {
   readonly observedAt: string;
   readonly lastCheckedAt: string;
   readonly freshUntil: string;
+  readonly bookingAction: RestaurantActionDatabaseResult | null;
+  readonly orderAction: RestaurantActionDatabaseResult | null;
   readonly matchType: DishSearchMatchType;
   readonly score: number;
 }
@@ -58,8 +68,35 @@ interface DishSearchRow extends QueryResultRow {
   observed_at: Date;
   last_checked_at: Date;
   fresh_until: Date;
+  booking_url: string | null;
+  booking_source_url: string | null;
+  booking_provider: string | null;
+  booking_verified_at: Date | null;
+  booking_expires_at: Date | null;
+  order_url: string | null;
+  order_source_url: string | null;
+  order_provider: string | null;
+  order_verified_at: Date | null;
+  order_expires_at: Date | null;
   match_type: DishSearchMatchType;
   score: number;
+}
+
+function mapAction(
+  url: string | null,
+  sourceUrl: string | null,
+  provider: string | null,
+  verifiedAt: Date | null,
+  expiresAt: Date | null,
+): RestaurantActionDatabaseResult | null {
+  if (!url || !sourceUrl || !verifiedAt || !expiresAt) return null;
+  return {
+    url,
+    sourceUrl,
+    provider,
+    verifiedAt: verifiedAt.toISOString(),
+    expiresAt: expiresAt.toISOString(),
+  };
 }
 
 function mapRow(row: DishSearchRow): DishSearchDatabaseResult {
@@ -86,6 +123,20 @@ function mapRow(row: DishSearchRow): DishSearchDatabaseResult {
     observedAt: row.observed_at.toISOString(),
     lastCheckedAt: row.last_checked_at.toISOString(),
     freshUntil: row.fresh_until.toISOString(),
+    bookingAction: mapAction(
+      row.booking_url,
+      row.booking_source_url,
+      row.booking_provider,
+      row.booking_verified_at,
+      row.booking_expires_at,
+    ),
+    orderAction: mapAction(
+      row.order_url,
+      row.order_source_url,
+      row.order_provider,
+      row.order_verified_at,
+      row.order_expires_at,
+    ),
     matchType: row.match_type,
     score: Number(row.score),
   };
@@ -136,6 +187,16 @@ export async function searchDishes(
         source.last_checked_at,
         source.last_checked_at
           + make_interval(mins => GREATEST(source.check_interval_minutes * 3, 1440)) AS fresh_until,
+        booking_action.url AS booking_url,
+        booking_action.source_url AS booking_source_url,
+        booking_action.provider AS booking_provider,
+        booking_action.verified_at AS booking_verified_at,
+        booking_action.expires_at AS booking_expires_at,
+        order_action.url AS order_url,
+        order_action.source_url AS order_source_url,
+        order_action.provider AS order_provider,
+        order_action.verified_at AS order_verified_at,
+        order_action.expires_at AS order_expires_at,
         CASE
           WHEN item.normalized_name = $1 THEN 'exact'
           WHEN item.normalized_name LIKE $1 || '%' THEN 'prefix'
@@ -152,6 +213,16 @@ export async function searchDishes(
       JOIN fysen.menu_items AS item ON item.snapshot_id = latest.id
       JOIN fysen.menu_sources AS source ON source.id = latest.menu_source_id
       JOIN fysen.restaurants AS restaurant ON restaurant.id = source.restaurant_id
+      LEFT JOIN fysen.restaurant_actions AS booking_action
+        ON booking_action.restaurant_id = restaurant.id
+       AND booking_action.action_type = 'booking'
+       AND booking_action.enabled = true
+       AND booking_action.expires_at > now()
+      LEFT JOIN fysen.restaurant_actions AS order_action
+        ON order_action.restaurant_id = restaurant.id
+       AND order_action.action_type = 'order'
+       AND order_action.enabled = true
+       AND order_action.expires_at > now()
       WHERE lower(restaurant.city) = lower($2)
         AND (
           item.normalized_name = $1

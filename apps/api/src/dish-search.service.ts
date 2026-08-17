@@ -83,6 +83,10 @@ export class DishSearchService {
           lastCheckedAt: row.lastCheckedAt,
           freshUntil: row.freshUntil,
         },
+        actions: {
+          booking: row.bookingAction,
+          order: row.orderAction,
+        },
         match: {
           type: row.matchType,
           score: row.score,

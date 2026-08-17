@@ -3,6 +3,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createDatabasePool } from "./client.js";
 import { runMigrations } from "./migrate.js";
 import { MenuIndexRepository } from "./repository.js";
+import { upsertRestaurantAction } from "./restaurant-actions.js";
 import { searchDishes } from "./search.js";
 
 const databaseUrl = process.env.DATABASE_URL;
@@ -104,6 +105,28 @@ integrationDescribe("dish search integration", () => {
       ],
       changes: [],
     });
+
+    const now = Date.now();
+    await upsertRestaurantAction(pool, {
+      restaurantId,
+      actionType: "booking",
+      url: "https://example.com/book",
+      sourceUrl: "https://example.com/book",
+      provider: "TestBook",
+      verificationMethod: "first_party_page",
+      verifiedAt: new Date(now - 60_000).toISOString(),
+      expiresAt: new Date(now + 3_600_000).toISOString(),
+    });
+    await upsertRestaurantAction(pool, {
+      restaurantId,
+      actionType: "order",
+      url: "https://example.com/order",
+      sourceUrl: "https://example.com/order",
+      provider: "TestOrder",
+      verificationMethod: "first_party_page",
+      verifiedAt: new Date(now - 7_200_000).toISOString(),
+      expiresAt: new Date(now - 3_600_000).toISOString(),
+    });
   });
 
   afterAll(async () => {
@@ -124,6 +147,16 @@ integrationDescribe("dish search integration", () => {
 
     const oldSnapshot = await searchDishes(pool, { normalizedQuery: "ramen", city: "Oslo", limit: 20 });
     expect(oldSnapshot).toEqual([]);
+  });
+
+  it("publishes only enabled, unexpired restaurant actions", async () => {
+    const result = await searchDishes(pool, { normalizedQuery: "biff tartar", city: "Oslo", limit: 20 });
+    expect(result[0]?.bookingAction).toMatchObject({
+      url: "https://example.com/book",
+      sourceUrl: "https://example.com/book",
+      provider: "TestBook",
+    });
+    expect(result[0]?.orderAction).toBeNull();
   });
 
   it("supports typo-tolerant trigram matching and city scoping", async () => {
