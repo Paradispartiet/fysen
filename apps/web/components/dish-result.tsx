@@ -43,7 +43,16 @@ export function DishResult({ result }: { result: DishSearchResult }) {
 
       <div className="dishResultBottomline">
         <FreshnessStatus checkedAt={result.menu.lastCheckedAt} freshUntil={result.menu.freshUntil} />
-        <div className="dishResultActions">
+        <div
+          className="dishResultActions"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "flex-end",
+            gap: "4px 18px",
+          }}
+        >
           <TrackedExternalLink
             className="evidenceLink"
             href={result.menu.sourceUrl}
