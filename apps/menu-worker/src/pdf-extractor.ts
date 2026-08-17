@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v4";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v5";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -31,6 +31,10 @@ interface ParsedPrice {
   readonly priceKind: MenuPriceKind;
   readonly priceKroner: number;
   readonly priceMaxKroner: number | null;
+}
+
+interface ParsedInlineDish extends ParsedPrice {
+  readonly rawName: string;
 }
 
 interface ItemCandidate extends ParsedPrice {
@@ -161,14 +165,24 @@ function isWrappedDishQualifier(value: string): boolean {
 }
 
 const priceSuffix = "(?:\\s*(?:,-|kr\\.?|nok))?";
-const inlinePrice = new RegExp(
-  `^(.{2,260}?)\\s+([1-9]\\d{1,3})(?:\\s*\\/\\s*([1-9]\\d{1,3}))?${priceSuffix}$`,
-  "iu",
-);
 const standalonePrice = new RegExp(
   `^([1-9]\\d{1,3})(?:\\s*\\/\\s*([1-9]\\d{1,3}))?${priceSuffix}$`,
   "iu",
 );
+const trailingPrice = new RegExp(
+  `\\s+([1-9]\\d{1,3})(?:\\s*\\/\\s*([1-9]\\d{1,3}))?${priceSuffix}$`,
+  "iu",
+);
+
+function parseInlineDish(line: string): ParsedInlineDish | null {
+  const match = trailingPrice.exec(line);
+  if (!match?.[1] || match.index <= 0) return null;
+  const price = parsedPrice(match[1], match[2]);
+  if (!price) return null;
+  const rawName = stripAllergenSuffix(line.slice(0, match.index));
+  if (!looksLikeDishName(rawName)) return null;
+  return { rawName, ...price };
+}
 
 function wrappedName(
   prefix: string,
@@ -178,7 +192,7 @@ function wrappedName(
   if (!isWrappedDishQualifier(prefix)) return null;
   const continuationIndex = prefixLineIndex + 1;
   const continuation = lines[continuationIndex]?.text ?? "";
-  if (!continuation || standalonePrice.test(continuation) || inlinePrice.test(continuation)) return null;
+  if (!continuation || standalonePrice.test(continuation) || parseInlineDish(continuation)) return null;
   if (!looksLikeDishName(continuation)) return null;
   if (lines[continuationIndex]?.page !== lines[prefixLineIndex]?.page) return null;
   return {
@@ -197,8 +211,9 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
 
     const line = lines[index]?.text ?? "";
     const nextLine = lines[index + 1]?.text ?? "";
+    const inline = parseInlineDish(line);
     const isStandalonePricedDishName = looksLikeDishName(line) && standalonePrice.test(nextLine);
-    const section = isStandalonePricedDishName ? null : sectionHeading(line);
+    const section = isStandalonePricedDishName || inline ? null : sectionHeading(line);
     if (section) {
       currentSection = section;
       continue;
@@ -231,24 +246,21 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
       continue;
     }
 
-    const inline = line.match(inlinePrice);
-    if (inline?.[1] && inline[2]) {
-      const price = parsedPrice(inline[2], inline[3]);
-      const rawName = stripAllergenSuffix(inline[1]);
-      if (price && looksLikeDishName(rawName)) {
-        const continuation = wrappedName(rawName, lines, index);
-        if (isWrappedDishQualifier(rawName) && !continuation) continue;
-        if (continuation) consumedWrappedNameLines.add(continuation.continuationLineIndex);
-        candidates.push({
-          nameLineIndex: index,
-          nameContinuationLineIndex: continuation?.continuationLineIndex ?? null,
-          priceLineIndex: index,
-          page: lines[index]?.page ?? 1,
-          sectionName: currentSection,
-          rawName: continuation?.name ?? rawName,
-          ...price,
-        });
-      }
+    if (inline) {
+      const continuation = wrappedName(inline.rawName, lines, index);
+      if (isWrappedDishQualifier(inline.rawName) && !continuation) continue;
+      if (continuation) consumedWrappedNameLines.add(continuation.continuationLineIndex);
+      candidates.push({
+        nameLineIndex: index,
+        nameContinuationLineIndex: continuation?.continuationLineIndex ?? null,
+        priceLineIndex: index,
+        page: lines[index]?.page ?? 1,
+        sectionName: currentSection,
+        rawName: continuation?.name ?? inline.rawName,
+        priceKind: inline.priceKind,
+        priceKroner: inline.priceKroner,
+        priceMaxKroner: inline.priceMaxKroner,
+      });
     }
   }
 
@@ -266,7 +278,7 @@ function descriptionForCandidate(
     const text = lines[index]?.text ?? "";
     if (!text || sectionHeading(text)) break;
     if (standalonePrice.test(text)) break;
-    if (inlinePrice.test(text)) break;
+    if (parseInlineDish(text)) break;
     if (/^(allergener|allergens|vegetariano|vegano)\b/iu.test(text)) break;
     if (/https?:\/\/|www\.|@/iu.test(text)) break;
     parts.push(text);
