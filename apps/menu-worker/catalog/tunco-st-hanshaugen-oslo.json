@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "tunco-st-hanshaugen-oslo",
+    "name": "TUNCO St. Hanshaugen",
+    "websiteUrl": "https://www.tunco.no/",
+    "address": "Bjerregaards gate 2A",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92368,
+    "longitude": 10.74076
+  },
+  "menuSource": {
+    "url": "https://order.ninito.no/group/tunco/st-hanshaugen",
+    "sourceType": "html",
+    "fetchMode": "browser",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 8
+  },
+  "hoursSource": {
+    "url": "https://order.ninito.no/group/tunco/st-hanshaugen",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "actions": [
+    {
+      "type": "order",
+      "url": "https://order.ninito.no/group/tunco/st-hanshaugen",
+      "sourceUrl": "https://www.tunco.no/menu",
+      "provider": "Ninito"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Red Curry Bowl",
+      "Gangnam Chicken",
+      "Ho Chi Minh",
+      "Koh Tao",
+      "Orange Chicken"
+    ],
+    "requiredDishVariants": []
+  }
+}
