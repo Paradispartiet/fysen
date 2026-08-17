@@ -14,6 +14,7 @@ const requiredTables = [
   "fysen.search_events",
   "fysen.search_result_impressions",
   "fysen.conversion_events",
+  "fysen.restaurant_actions",
   "fysen.schema_migrations",
 ] as const;
 
