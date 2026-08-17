@@ -1,17 +1,18 @@
-import type { MenuIndexRepository, StoredMenuItem, WatchOutcome } from "@fysen/database";
+import type { MenuIndexRepository, WatchOutcome } from "@fysen/database";
 import {
   assessExtraction,
   createMenuFingerprint,
   diffMenuItems,
   type MenuObservedItem,
 } from "@fysen/menu-core";
-import { BrowserMenuClient } from "./browser-client.js";
-import { extractHtmlMenu, HTML_EXTRACTOR_VERSION } from "./html-extractor.js";
 import { HttpMenuClient, MenuFetchError } from "./http-client.js";
-import { extractPdfMenu, PDF_EXTRACTOR_VERSION } from "./pdf-extractor.js";
-
-const DEFAULT_MAX_PDF_RESPONSE_BYTES = 8 * 1024 * 1024;
-const MAX_PDF_RESPONSE_BYTES = 25 * 1024 * 1024;
+import {
+  extractMenuSource,
+  extractorVersionForSourceType,
+  fetchMenuSource,
+  pdfResponseByteLimit,
+  shouldForceReextract,
+} from "./menu-source-runtime.js";
 
 export interface MenuWatchSummary {
   readonly menuSourceId: string;
@@ -21,65 +22,11 @@ export interface MenuWatchSummary {
   readonly snapshotId: string | null;
 }
 
-interface ExtractedMenu {
-  readonly items: readonly MenuObservedItem[];
-  readonly method: string;
-  readonly extractorVersion: string;
-}
-
-function storedToObserved(item: StoredMenuItem): MenuObservedItem {
-  return { ...item };
-}
-
 function evidenceText(items: readonly MenuObservedItem[]): string {
   return items.map((item) => item.sourceExcerpt ?? item.name).join("\n");
 }
 
-function pdfResponseByteLimit(): number {
-  const configured = Number(process.env.FYSEN_MAX_PDF_RESPONSE_BYTES);
-  if (!Number.isInteger(configured) || configured <= 0) return DEFAULT_MAX_PDF_RESPONSE_BYTES;
-  return Math.min(configured, MAX_PDF_RESPONSE_BYTES);
-}
-
-export function extractorVersionForSourceType(sourceType: string): string | null {
-  if (sourceType === "html" || sourceType === "json_ld") return HTML_EXTRACTOR_VERSION;
-  if (sourceType === "pdf") return PDF_EXTRACTOR_VERSION;
-  return null;
-}
-
-export function shouldForceReextract(sourceType: string, previousExtractorVersion: string | null): boolean {
-  const currentExtractorVersion = extractorVersionForSourceType(sourceType);
-  return (
-    currentExtractorVersion !== null &&
-    previousExtractorVersion !== null &&
-    previousExtractorVersion !== currentExtractorVersion
-  );
-}
-
-export function assertExtractionMethodForSourceType(sourceType: string, extractionMethod: string): void {
-  if (sourceType === "json_ld" && extractionMethod !== "json_ld") {
-    throw new Error(
-      `Source declared json_ld but extractor resolved ${extractionMethod}; refusing implicit HTML fallback`,
-    );
-  }
-}
-
-async function extractSource(
-  sourceType: string,
-  body: string,
-  bodyBytes: Uint8Array,
-): Promise<ExtractedMenu> {
-  if (sourceType === "html" || sourceType === "json_ld") {
-    const extracted = extractHtmlMenu(body);
-    assertExtractionMethodForSourceType(sourceType, extracted.method);
-    return { items: extracted.items, method: extracted.method, extractorVersion: HTML_EXTRACTOR_VERSION };
-  }
-  if (sourceType === "pdf") {
-    const extracted = await extractPdfMenu(bodyBytes);
-    return { items: extracted.items, method: extracted.method, extractorVersion: PDF_EXTRACTOR_VERSION };
-  }
-  throw new Error(`Menu watcher does not extract source type ${sourceType}`);
-}
+export { extractorVersionForSourceType, shouldForceReextract } from "./menu-source-runtime.js";
 
 export async function watchMenuSourceOnce(
   repository: MenuIndexRepository,
@@ -90,25 +37,21 @@ export async function watchMenuSourceOnce(
   const source = await repository.getMenuSourceById(menuSourceId);
   if (!source) throw new Error(`Unknown menu source: ${menuSourceId}`);
   if (!source.enabled) throw new Error(`Menu source is disabled: ${menuSourceId}`);
-  if (source.fetchMode === "browser" && source.sourceType !== "html" && source.sourceType !== "json_ld") {
-    throw new Error(`Browser fetch mode only supports HTML sources, got ${source.sourceType}`);
-  }
 
   const previous = await repository.getLatestSnapshotWithItems(menuSourceId);
   const forceReextract = shouldForceReextract(source.sourceType, previous?.extractorVersion ?? null);
-  const fetchSource = forceReextract ? { ...source, etag: null, lastModified: null } : source;
+  const fetchInput = {
+    url: source.url,
+    sourceType: source.sourceType,
+    fetchMode: source.fetchMode,
+    userAgent: source.userAgent,
+    etag: forceReextract ? null : source.etag,
+    lastModified: forceReextract ? null : source.lastModified,
+  } as const;
 
   let fetched;
   try {
-    if (source.fetchMode === "browser") {
-      const browserClient = new BrowserMenuClient(httpClient);
-      fetched = await browserClient.fetchSource({ url: source.url, userAgent: source.userAgent });
-    } else {
-      fetched = await httpClient.fetchSource(
-        fetchSource,
-        source.sourceType === "pdf" ? { maxResponseBytes: pdfResponseByteLimit() } : {},
-      );
-    }
+    fetched = await fetchMenuSource(fetchInput, httpClient);
   } catch (error) {
     const completedAt = new Date().toISOString();
     const fetchError = error instanceof MenuFetchError ? error : null;
@@ -174,9 +117,9 @@ export async function watchMenuSourceOnce(
     return { menuSourceId, outcome: "not_modified", itemCount: null, changeCount: 0, snapshotId: null };
   }
 
-  let extracted: ExtractedMenu;
+  let extracted;
   try {
-    extracted = await extractSource(source.sourceType, fetched.body, fetched.bodyBytes);
+    extracted = await extractMenuSource(source.sourceType, fetched);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     const errorCode =
@@ -201,7 +144,7 @@ export async function watchMenuSourceOnce(
     throw error;
   }
 
-  const previousItems = previous?.items.map(storedToObserved) ?? [];
+  const previousItems: readonly MenuObservedItem[] = previous?.items ?? [];
   const assessment = assessExtraction(
     previousItems.length,
     extracted.items.length,
@@ -276,7 +219,7 @@ export async function watchMenuSourceOnce(
     robotsAllowed: fetched.robotsAllowed,
     fetchDurationMs: fetched.durationMs,
     extractorVersion: extracted.extractorVersion,
-    items: extracted.items as unknown as readonly StoredMenuItem[],
+    items: extracted.items,
     changes: changes.map((change) => ({
       itemSourceKey: change.sourceKey,
       kind: change.kind,
