@@ -45,7 +45,7 @@ jobs:
           import { extractHtmlMenu } from "./apps/menu-worker/dist/html-extractor.js";
 
           const source = {
-            url: "https://order.ninito.no/group/tunco/st-hanshaugen",
+            url: "https://order.ninito.com/group/tunco/st-hanshaugen",
             userAgent: "FysenMenuBot/0.1",
           };
 
@@ -101,7 +101,7 @@ jobs:
               ? fs.readFileSync('/tmp/tunco-probe.txt', 'utf8').slice(0, 50000)
               : 'Probe did not produce an output file.';
             const body = [
-              'Midlertidig, **skal ikke merges**. Kjørte samme `BrowserMenuClient` som produksjonswatcheren mot Tunco St. Hanshaugen.',
+              'Midlertidig, **skal ikke merges**. Kjørte samme `BrowserMenuClient` som produksjonswatcheren mot canonical Ninito `.com` for Tunco St. Hanshaugen.',
               '',
               '## Tunco rendered probe',
               '',
