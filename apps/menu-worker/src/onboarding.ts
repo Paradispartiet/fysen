@@ -17,7 +17,11 @@ import {
   readRestaurantOnboardingManifest,
   type RestaurantOnboardingManifest,
 } from "./onboarding-manifest.js";
-import { watchMenuSourceOnce, type MenuWatchSummary } from "./watcher.js";
+import {
+  shouldForceReextract,
+  watchMenuSourceOnce,
+  type MenuWatchSummary,
+} from "./watcher.js";
 
 const acceptedOutcomes = new Set<WatchOutcome>(["changed", "unchanged", "not_modified"]);
 const ACTION_VERIFICATION_DAYS = 30;
@@ -219,8 +223,35 @@ async function onboardOne(
     menuSourceId = source.id;
 
     if (candidate.active) {
+      const previousSnapshot = await repository.getLatestSnapshotWithItems(source.id);
+      const requiresExtractorRefresh = previousSnapshot
+        ? shouldForceReextract(source.sourceType, previousSnapshot.extractorVersion)
+        : false;
+
+      if (requiresExtractorRefresh) {
+        await setRestaurantCoverageActive(pool, candidate.id, false);
+
+        firstWatch = await watchMenuSourceOnce(repository, source.id);
+        if (!accepted(firstWatch)) {
+          throw new Error(`First extractor refresh watch was ${firstWatch.outcome}`);
+        }
+
+        const afterFirst = await assertLatestSnapshot(repository, source.id, manifest);
+        if (afterFirst.itemCount < manifest.menuSource.minimumExpectedItems || afterFirst.missing.length > 0) {
+          throw new Error(
+            `First extractor refresh no longer satisfies onboarding assertions: items=${afterFirst.itemCount}, missing=${afterFirst.missing.join(",")}`,
+          );
+        }
+
+        secondWatch = await watchMenuSourceOnce(repository, source.id);
+        if (!accepted(secondWatch)) {
+          throw new Error(`Second extractor refresh watch was ${secondWatch.outcome}`);
+        }
+      }
+
       const current = await assertLatestSnapshot(repository, source.id, manifest);
       if (current.itemCount < manifest.menuSource.minimumExpectedItems || current.missing.length > 0) {
+        await setRestaurantCoverageActive(pool, candidate.id, false);
         throw new Error(
           `Published restaurant no longer satisfies onboarding assertions: items=${current.itemCount}, missing=${current.missing.join(",")}`,
         );
@@ -228,6 +259,9 @@ async function onboardOne(
       const metadata = await ensureMetadata(pool, manifest, candidate.id);
       hoursSourceId = metadata.hoursSourceId;
       actions = metadata.actions;
+      if (requiresExtractorRefresh) {
+        await setRestaurantCoverageActive(pool, candidate.id, true);
+      }
       return {
         slug: manifest.restaurant.slug,
         outcome: "already_published",
@@ -235,8 +269,8 @@ async function onboardOne(
         menuSourceId,
         hoursSourceId,
         actions,
-        firstWatch: null,
-        secondWatch: null,
+        firstWatch,
+        secondWatch,
         itemCount: current.itemCount,
         missingRequiredDishes: current.missing,
         error: null,
