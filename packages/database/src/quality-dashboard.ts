@@ -1,6 +1,7 @@
 import type { Pool, QueryResultRow } from "pg";
 
 export type QualityHealth = "healthy" | "degraded" | "stale" | "unverified" | "disabled";
+export type QualityMatchType = "exact" | "canonical" | "prefix" | "contains" | "fuzzy";
 
 export interface QualityMenuSourceReport {
   readonly sourceId: string;
@@ -55,6 +56,40 @@ export interface QualityZeroResultQuery {
   readonly lastSeenAt: string;
 }
 
+export interface QualityCanonicalConceptReport {
+  readonly slug: string;
+  readonly canonicalName: string;
+  readonly queryAliases: readonly string[];
+  readonly menuAliases: readonly string[];
+  readonly currentMenuItemMatches: number;
+  readonly canonicalImpressions7d: number;
+}
+
+export interface QualityCanonicalQueryReport {
+  readonly normalizedQuery: string;
+  readonly canonicalDishSlug: string;
+  readonly canonicalDishName: string;
+  readonly searches7d: number;
+  readonly impressions7d: number;
+  readonly averageScore: number;
+}
+
+export interface QualityFuzzyQueryReport {
+  readonly normalizedQuery: string;
+  readonly searches7d: number;
+  readonly impressions7d: number;
+  readonly averageScore: number;
+  readonly bestScore: number;
+}
+
+export interface QualityMatchingReport {
+  readonly impressions7d: number;
+  readonly byMatchType: Readonly<Record<QualityMatchType, number>>;
+  readonly canonicalConcepts: readonly QualityCanonicalConceptReport[];
+  readonly topCanonicalQueries7d: readonly QualityCanonicalQueryReport[];
+  readonly topFuzzyQueries7d: readonly QualityFuzzyQueryReport[];
+}
+
 export interface QualityDashboardReport {
   readonly generatedAt: string;
   readonly totals: {
@@ -69,6 +104,7 @@ export interface QualityDashboardReport {
   };
   readonly restaurants: readonly QualityRestaurantReport[];
   readonly topZeroResultQueries7d: readonly QualityZeroResultQuery[];
+  readonly matching: QualityMatchingReport;
 }
 
 interface SourceRow extends QueryResultRow {
@@ -118,6 +154,37 @@ interface CountRow extends QueryResultRow {
   count: number;
 }
 
+interface MatchTypeRow extends QueryResultRow {
+  match_type: string;
+  count_7d: number;
+}
+
+interface CanonicalConceptRow extends QueryResultRow {
+  slug: string;
+  canonical_name: string;
+  query_aliases: string[] | null;
+  menu_aliases: string[] | null;
+  current_menu_item_matches: number;
+  canonical_impressions_7d: number;
+}
+
+interface CanonicalQueryRow extends QueryResultRow {
+  normalized_query: string;
+  canonical_dish_slug: string;
+  canonical_dish_name: string;
+  searches_7d: number;
+  impressions_7d: number;
+  average_score: number;
+}
+
+interface FuzzyQueryRow extends QueryResultRow {
+  normalized_query: string;
+  searches_7d: number;
+  impressions_7d: number;
+  average_score: number;
+  best_score: number;
+}
+
 function iso(value: Date | null): string | null {
   return value?.toISOString() ?? null;
 }
@@ -158,8 +225,27 @@ function actionStatus(enabled: boolean, expiresAt: Date): QualityActionReport["s
   return "verified";
 }
 
+function isQualityMatchType(value: string): value is QualityMatchType {
+  return value === "exact" || value === "canonical" || value === "prefix" || value === "contains" || value === "fuzzy";
+}
+
+function finiteScore(value: number): number {
+  const score = Number(value);
+  return Number.isFinite(score) ? score : 0;
+}
+
 export async function buildQualityDashboard(pool: Pool): Promise<QualityDashboardReport> {
-  const [sourceResult, actionResult, zeroQueryResult, zeroCountResult, conversionCountResult] = await Promise.all([
+  const [
+    sourceResult,
+    actionResult,
+    zeroQueryResult,
+    zeroCountResult,
+    conversionCountResult,
+    matchTypeResult,
+    canonicalConceptResult,
+    canonicalQueryResult,
+    fuzzyQueryResult,
+  ] = await Promise.all([
     pool.query<SourceRow>(`
       WITH latest_menu_snapshot AS (
         SELECT DISTINCT ON (snapshot.menu_source_id)
@@ -278,6 +364,118 @@ export async function buildQualityDashboard(pool: Pool): Promise<QualityDashboar
       FROM fysen.conversion_events
       WHERE occurred_at >= now() - interval '7 days'
     `),
+    pool.query<MatchTypeRow>(`
+      SELECT match_type, count(*)::integer AS count_7d
+      FROM fysen.search_result_impressions
+      WHERE created_at >= now() - interval '7 days'
+      GROUP BY match_type
+      ORDER BY match_type
+    `),
+    pool.query<CanonicalConceptRow>(`
+      WITH latest_menu_snapshot AS (
+        SELECT DISTINCT ON (snapshot.menu_source_id)
+          snapshot.menu_source_id,
+          snapshot.id
+        FROM fysen.menu_snapshots AS snapshot
+        JOIN fysen.menu_sources AS source ON source.id = snapshot.menu_source_id
+        JOIN fysen.restaurants AS restaurant ON restaurant.id = source.restaurant_id
+        WHERE source.enabled = true
+          AND restaurant.active = true
+        ORDER BY snapshot.menu_source_id, snapshot.fetched_at DESC, snapshot.created_at DESC
+      ),
+      current_menu_coverage AS (
+        SELECT
+          menu_alias.dish_concept_id,
+          count(DISTINCT item.id)::integer AS current_menu_item_matches
+        FROM latest_menu_snapshot AS latest
+        JOIN fysen.menu_items AS item ON item.snapshot_id = latest.id
+        JOIN fysen.dish_aliases AS menu_alias
+          ON menu_alias.normalized_alias = item.normalized_name
+         AND menu_alias.alias_scope IN ('menu', 'both')
+        GROUP BY menu_alias.dish_concept_id
+      ),
+      canonical_demand AS (
+        SELECT
+          menu_alias.dish_concept_id,
+          count(impression.id)::integer AS canonical_impressions_7d
+        FROM fysen.search_result_impressions AS impression
+        JOIN fysen.search_events AS search ON search.id = impression.search_id
+        JOIN fysen.menu_items AS item ON item.id = impression.menu_item_id
+        JOIN fysen.dish_aliases AS menu_alias
+          ON menu_alias.normalized_alias = item.normalized_name
+         AND menu_alias.alias_scope IN ('menu', 'both')
+        JOIN fysen.dish_aliases AS query_alias
+          ON query_alias.dish_concept_id = menu_alias.dish_concept_id
+         AND query_alias.normalized_alias = search.normalized_query
+         AND query_alias.alias_scope IN ('query', 'both')
+        WHERE impression.match_type = 'canonical'
+          AND impression.created_at >= now() - interval '7 days'
+        GROUP BY menu_alias.dish_concept_id
+      )
+      SELECT
+        concept.slug,
+        concept.canonical_name,
+        array_agg(alias.normalized_alias ORDER BY alias.normalized_alias)
+          FILTER (WHERE alias.alias_scope IN ('query', 'both')) AS query_aliases,
+        array_agg(alias.normalized_alias ORDER BY alias.normalized_alias)
+          FILTER (WHERE alias.alias_scope IN ('menu', 'both')) AS menu_aliases,
+        coalesce(coverage.current_menu_item_matches, 0)::integer AS current_menu_item_matches,
+        coalesce(demand.canonical_impressions_7d, 0)::integer AS canonical_impressions_7d
+      FROM fysen.dish_concepts AS concept
+      LEFT JOIN fysen.dish_aliases AS alias ON alias.dish_concept_id = concept.id
+      LEFT JOIN current_menu_coverage AS coverage ON coverage.dish_concept_id = concept.id
+      LEFT JOIN canonical_demand AS demand ON demand.dish_concept_id = concept.id
+      WHERE concept.active = true
+      GROUP BY
+        concept.id,
+        concept.slug,
+        concept.canonical_name,
+        coverage.current_menu_item_matches,
+        demand.canonical_impressions_7d
+      ORDER BY concept.canonical_name ASC, concept.slug ASC
+    `),
+    pool.query<CanonicalQueryRow>(`
+      SELECT
+        search.normalized_query,
+        concept.slug AS canonical_dish_slug,
+        concept.canonical_name AS canonical_dish_name,
+        count(DISTINCT search.id)::integer AS searches_7d,
+        count(impression.id)::integer AS impressions_7d,
+        avg(impression.match_score)::double precision AS average_score
+      FROM fysen.search_result_impressions AS impression
+      JOIN fysen.search_events AS search ON search.id = impression.search_id
+      JOIN fysen.menu_items AS item ON item.id = impression.menu_item_id
+      JOIN fysen.dish_aliases AS menu_alias
+        ON menu_alias.normalized_alias = item.normalized_name
+       AND menu_alias.alias_scope IN ('menu', 'both')
+      JOIN fysen.dish_concepts AS concept
+        ON concept.id = menu_alias.dish_concept_id
+       AND concept.active = true
+      JOIN fysen.dish_aliases AS query_alias
+        ON query_alias.dish_concept_id = concept.id
+       AND query_alias.normalized_alias = search.normalized_query
+       AND query_alias.alias_scope IN ('query', 'both')
+      WHERE impression.match_type = 'canonical'
+        AND impression.created_at >= now() - interval '7 days'
+      GROUP BY search.normalized_query, concept.slug, concept.canonical_name
+      ORDER BY searches_7d DESC, impressions_7d DESC, search.normalized_query ASC
+      LIMIT 20
+    `),
+    pool.query<FuzzyQueryRow>(`
+      SELECT
+        search.normalized_query,
+        count(DISTINCT search.id)::integer AS searches_7d,
+        count(impression.id)::integer AS impressions_7d,
+        avg(impression.match_score)::double precision AS average_score,
+        max(impression.match_score)::double precision AS best_score
+      FROM fysen.search_result_impressions AS impression
+      JOIN fysen.search_events AS search ON search.id = impression.search_id
+      WHERE impression.match_type = 'fuzzy'
+        AND impression.created_at >= now() - interval '7 days'
+      GROUP BY search.normalized_query
+      ORDER BY searches_7d DESC, average_score DESC, search.normalized_query ASC
+      LIMIT 20
+    `),
   ]);
 
   const actionsByRestaurant = new Map<string, QualityActionReport[]>();
@@ -363,6 +561,17 @@ export async function buildQualityDashboard(pool: Pool): Promise<QualityDashboar
 
   const restaurants = [...restaurantsById.values()];
   const menuSources = restaurants.flatMap((restaurant) => restaurant.menuSources);
+  const byMatchType: Record<QualityMatchType, number> = {
+    exact: 0,
+    canonical: 0,
+    prefix: 0,
+    contains: 0,
+    fuzzy: 0,
+  };
+  for (const row of matchTypeResult.rows) {
+    if (isQualityMatchType(row.match_type)) byMatchType[row.match_type] = Number(row.count_7d);
+  }
+
   return {
     generatedAt: new Date().toISOString(),
     totals: {
@@ -381,5 +590,32 @@ export async function buildQualityDashboard(pool: Pool): Promise<QualityDashboar
       count7d: Number(row.count_7d),
       lastSeenAt: row.last_seen_at.toISOString(),
     })),
+    matching: {
+      impressions7d: Object.values(byMatchType).reduce((sum, count) => sum + count, 0),
+      byMatchType,
+      canonicalConcepts: canonicalConceptResult.rows.map((row) => ({
+        slug: row.slug,
+        canonicalName: row.canonical_name,
+        queryAliases: row.query_aliases ?? [],
+        menuAliases: row.menu_aliases ?? [],
+        currentMenuItemMatches: Number(row.current_menu_item_matches),
+        canonicalImpressions7d: Number(row.canonical_impressions_7d),
+      })),
+      topCanonicalQueries7d: canonicalQueryResult.rows.map((row) => ({
+        normalizedQuery: row.normalized_query,
+        canonicalDishSlug: row.canonical_dish_slug,
+        canonicalDishName: row.canonical_dish_name,
+        searches7d: Number(row.searches_7d),
+        impressions7d: Number(row.impressions_7d),
+        averageScore: finiteScore(row.average_score),
+      })),
+      topFuzzyQueries7d: fuzzyQueryResult.rows.map((row) => ({
+        normalizedQuery: row.normalized_query,
+        searches7d: Number(row.searches_7d),
+        impressions7d: Number(row.impressions_7d),
+        averageScore: finiteScore(row.average_score),
+        bestScore: finiteScore(row.best_score),
+      })),
+    },
   };
 }
