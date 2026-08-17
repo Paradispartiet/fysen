@@ -2,6 +2,7 @@ import type { Pool, QueryResultRow } from "pg";
 
 export type DishSearchMatchType = "exact" | "canonical" | "prefix" | "contains" | "fuzzy";
 export type DishSearchSort = "relevance" | "distance";
+export type DishSearchPriceKind = "exact" | "from" | "multiple";
 export type RestaurantOpeningState = "open" | "closed" | "unknown";
 
 export interface DishSearchDatabaseInput {
@@ -43,6 +44,8 @@ export interface DishSearchDatabaseResult {
   readonly description: string | null;
   readonly sectionName: string | null;
   readonly priceMinor: number | null;
+  readonly priceKind: DishSearchPriceKind;
+  readonly priceMaxMinor: number | null;
   readonly currency: string;
   readonly confidence: number;
   readonly restaurantId: string;
@@ -75,6 +78,8 @@ interface DishSearchRow extends QueryResultRow {
   description: string | null;
   section_name: string | null;
   price_minor: number | null;
+  price_kind: DishSearchPriceKind;
+  price_max_minor: number | null;
   currency: string;
   confidence: number;
   restaurant_id: string;
@@ -137,6 +142,8 @@ function mapRow(row: DishSearchRow): DishSearchDatabaseResult {
     description: row.description,
     sectionName: row.section_name,
     priceMinor: row.price_minor,
+    priceKind: row.price_kind,
+    priceMaxMinor: row.price_max_minor,
     currency: row.currency,
     confidence: Number(row.confidence),
     restaurantId: row.restaurant_id,
@@ -258,6 +265,8 @@ export async function searchDishes(
         item.description,
         item.section_name,
         item.price_minor,
+        item.price_kind,
+        item.price_max_minor,
         item.currency,
         item.confidence,
         restaurant.id AS restaurant_id,
