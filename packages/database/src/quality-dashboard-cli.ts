@@ -4,7 +4,7 @@ import { createDatabasePool } from "./client.js";
 import { buildQualityDashboard } from "./quality-dashboard.js";
 import { renderQualityDashboardMarkdown } from "./quality-dashboard-markdown.js";
 
-function outputDirectoryArgument(argv: readonly string[]): string {
+export function outputDirectoryArgument(argv: readonly string[]): string {
   return argv.find((value) => value !== "--" && !value.startsWith("-")) ?? "reports";
 }
 
