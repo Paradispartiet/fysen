@@ -2,6 +2,7 @@ import type { Pool, QueryResultRow } from "pg";
 
 export type DishSearchMatchType = "exact" | "prefix" | "contains" | "fuzzy";
 export type DishSearchSort = "relevance" | "distance";
+export type RestaurantOpeningState = "open" | "closed" | "unknown";
 
 export interface DishSearchDatabaseInput {
   readonly normalizedQuery: string;
@@ -18,6 +19,14 @@ export interface RestaurantActionDatabaseResult {
   readonly provider: string | null;
   readonly verifiedAt: string;
   readonly expiresAt: string;
+}
+
+export interface RestaurantOpeningDatabaseResult {
+  readonly state: RestaurantOpeningState;
+  readonly serviceType: "kitchen";
+  readonly sourceUrl: string | null;
+  readonly verifiedAt: string | null;
+  readonly freshUntil: string | null;
 }
 
 export interface DishSearchDatabaseResult {
@@ -40,6 +49,7 @@ export interface DishSearchDatabaseResult {
   readonly latitude: number;
   readonly longitude: number;
   readonly distanceMeters: number | null;
+  readonly opening: RestaurantOpeningDatabaseResult;
   readonly sourceUrl: string;
   readonly observedAt: string;
   readonly lastCheckedAt: string;
@@ -70,6 +80,10 @@ interface DishSearchRow extends QueryResultRow {
   latitude: number;
   longitude: number;
   distance_meters: number | null;
+  opening_state: RestaurantOpeningState;
+  opening_source_url: string | null;
+  opening_verified_at: Date | null;
+  opening_fresh_until: Date | null;
   source_url: string;
   observed_at: Date;
   last_checked_at: Date;
@@ -126,6 +140,13 @@ function mapRow(row: DishSearchRow): DishSearchDatabaseResult {
     latitude: Number(row.latitude),
     longitude: Number(row.longitude),
     distanceMeters: row.distance_meters === null ? null : Number(row.distance_meters),
+    opening: {
+      state: row.opening_state,
+      serviceType: "kitchen",
+      sourceUrl: row.opening_source_url,
+      verifiedAt: row.opening_verified_at?.toISOString() ?? null,
+      freshUntil: row.opening_fresh_until?.toISOString() ?? null,
+    },
     sourceUrl: row.source_url,
     observedAt: row.observed_at.toISOString(),
     lastCheckedAt: row.last_checked_at.toISOString(),
@@ -169,6 +190,28 @@ export async function searchDishes(
           AND now() <= source.last_checked_at
             + make_interval(mins => GREATEST(source.check_interval_minutes * 3, 1440))
         ORDER BY snapshot.menu_source_id, snapshot.fetched_at DESC, snapshot.created_at DESC
+      ),
+      latest_hours AS (
+        SELECT DISTINCT ON (hours_source.restaurant_id)
+          hours_source.restaurant_id,
+          hours_source.url AS source_url,
+          hours_source.time_zone,
+          hours_source.last_checked_at AS verified_at,
+          hours_source.last_checked_at
+            + make_interval(mins => GREATEST(hours_source.check_interval_minutes * 3, 1440)) AS fresh_until,
+          hours_snapshot.id AS snapshot_id
+        FROM fysen.restaurant_hours_sources AS hours_source
+        JOIN fysen.restaurant_hours_snapshots AS hours_snapshot
+          ON hours_snapshot.source_id = hours_source.id
+        WHERE hours_source.enabled = true
+          AND hours_source.service_type = 'kitchen'
+          AND hours_source.last_checked_at IS NOT NULL
+          AND now() <= hours_source.last_checked_at
+            + make_interval(mins => GREATEST(hours_source.check_interval_minutes * 3, 1440))
+        ORDER BY
+          hours_source.restaurant_id,
+          hours_snapshot.fetched_at DESC,
+          hours_snapshot.created_at DESC
       )
       SELECT
         item.id AS menu_item_id,
@@ -197,6 +240,44 @@ export async function searchDishes(
           )
           ELSE NULL
         END AS distance_meters,
+        CASE
+          WHEN hours.snapshot_id IS NULL THEN 'unknown'
+          WHEN EXISTS (
+            SELECT 1
+              FROM fysen.restaurant_hours_intervals AS hours_interval
+             WHERE hours_interval.snapshot_id = hours.snapshot_id
+               AND (
+                 (
+                   hours_interval.closes_next_day = false
+                   AND hours_interval.iso_weekday = EXTRACT(ISODOW FROM hours_clock.local_now)::integer
+                   AND hours_clock.local_now::time >= hours_interval.opens_at
+                   AND hours_clock.local_now::time < hours_interval.closes_at
+                 )
+                 OR
+                 (
+                   hours_interval.closes_next_day = true
+                   AND (
+                     (
+                       hours_interval.iso_weekday = EXTRACT(ISODOW FROM hours_clock.local_now)::integer
+                       AND hours_clock.local_now::time >= hours_interval.opens_at
+                     )
+                     OR
+                     (
+                       hours_interval.iso_weekday = CASE
+                         WHEN EXTRACT(ISODOW FROM hours_clock.local_now)::integer = 1 THEN 7
+                         ELSE EXTRACT(ISODOW FROM hours_clock.local_now)::integer - 1
+                       END
+                       AND hours_clock.local_now::time < hours_interval.closes_at
+                     )
+                   )
+                 )
+               )
+          ) THEN 'open'
+          ELSE 'closed'
+        END AS opening_state,
+        hours.source_url AS opening_source_url,
+        hours.verified_at AS opening_verified_at,
+        hours.fresh_until AS opening_fresh_until,
         source.url AS source_url,
         latest.fetched_at AS observed_at,
         source.last_checked_at,
@@ -228,6 +309,10 @@ export async function searchDishes(
       JOIN fysen.menu_items AS item ON item.snapshot_id = latest.id
       JOIN fysen.menu_sources AS source ON source.id = latest.menu_source_id
       JOIN fysen.restaurants AS restaurant ON restaurant.id = source.restaurant_id
+      LEFT JOIN latest_hours AS hours ON hours.restaurant_id = restaurant.id
+      LEFT JOIN LATERAL (
+        SELECT timezone(hours.time_zone, now()) AS local_now
+      ) AS hours_clock ON hours.snapshot_id IS NOT NULL
       LEFT JOIN fysen.restaurant_actions AS booking_action
         ON booking_action.restaurant_id = restaurant.id
        AND booking_action.action_type = 'booking'
