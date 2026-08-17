@@ -1,3 +1,3 @@
-queued-through=6ec27c1449c264226bd4d9bdc8c320959cb92544
-release-reason=manual-user-request-retry
-release-attempt=2026-08-17T21:58:00+02:00
+queued-through=3c71e44ff2f0f6331b9e28deb50874c5ed3947eb
+release-reason=manual-user-request-after-gate-fix
+release-attempt=2026-08-17T22:05:40+02:00
