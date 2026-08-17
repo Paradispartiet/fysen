@@ -54,6 +54,61 @@ describe("PDF menu extractor", () => {
     expect(items[0]?.sourceExcerpt).toContain("285 / 309 NOK");
   });
 
+  it("reconstructs strictly qualified wrapped dish names without publishing fragments", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "MAKI",
+      "SPICY 125 / 135",
+      "TEMPURA SCAMPI",
+      "Fritert scampi, avokado og chilimajones",
+      "VEGETAR 119 / 129",
+      "VÅRRULLER 4 stk.",
+      "Grønnsaker og sweet chili",
+    ]);
+
+    expect(items.map((item) => item.normalizedName)).toEqual([
+      "spicy tempura scampi",
+      "vegetar vårruller 4 stk",
+    ]);
+    expect(items[0]).toMatchObject({
+      name: "SPICY TEMPURA SCAMPI",
+      priceMinor: 12500,
+      priceKind: "multiple",
+      priceMaxMinor: 13500,
+      description: "Fritert scampi, avokado og chilimajones",
+    });
+    expect(items[1]).toMatchObject({
+      name: "VEGETAR VÅRRULLER 4 stk.",
+      priceMinor: 11900,
+      priceKind: "multiple",
+      priceMaxMinor: 12900,
+      description: "Grønnsaker og sweet chili",
+    });
+  });
+
+  it("does not merge an ordinary one-word dish into the following section", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "DESSERT",
+      "TIRAMISU 149",
+      "Kremet mascarpone og kaffe",
+      "KAKER",
+      "PANNA COTTA 159",
+      "Vanilje og bær",
+    ]);
+
+    expect(items.map((item) => item.name)).toEqual(["TIRAMISU", "PANNA COTTA"]);
+    expect(items[0]?.description).toBe("Kremet mascarpone og kaffe");
+  });
+
+  it("fails closed on a qualifier fragment when no safe continuation follows", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "MAKI",
+      "SPICY 125 / 135",
+      "129 / 139",
+      "TEMPURA SCAMPI",
+    ]);
+    expect(items.some((item) => item.normalizedName === "spicy")).toBe(false);
+  });
+
   it("collapses identical duplicate prices back to exact semantics", () => {
     const items = extractMenuItemsFromPdfLines(["SIGNATUR", "BAMBUS SIGNATUR 285 / 285"]);
     expect(items[0]).toMatchObject({

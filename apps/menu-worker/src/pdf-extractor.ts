@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v3";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v4";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -35,6 +35,7 @@ interface ParsedPrice {
 
 interface ItemCandidate extends ParsedPrice {
   readonly nameLineIndex: number;
+  readonly nameContinuationLineIndex: number | null;
   readonly priceLineIndex: number;
   readonly page: number;
   readonly sectionName: string | null;
@@ -142,6 +143,23 @@ function looksLikeDishName(value: string): boolean {
   return true;
 }
 
+const wrappedDishQualifiers = new Set([
+  "spicy",
+  "vegetar",
+  "vegetarian",
+  "vegansk",
+  "vegan",
+  "crispy",
+  "fritert",
+  "fried",
+  "grillet",
+  "grilled",
+]);
+
+function isWrappedDishQualifier(value: string): boolean {
+  return wrappedDishQualifiers.has(normalizeDishName(stripAllergenSuffix(value)));
+}
+
 const priceSuffix = "(?:\\s*(?:,-|kr\\.?|nok))?";
 const inlinePrice = new RegExp(
   `^(.{2,260}?)\\s+([1-9]\\d{1,3})(?:\\s*\\/\\s*([1-9]\\d{1,3}))?${priceSuffix}$`,
@@ -152,11 +170,31 @@ const standalonePrice = new RegExp(
   "iu",
 );
 
+function wrappedName(
+  prefix: string,
+  lines: readonly PdfLine[],
+  prefixLineIndex: number,
+): { readonly name: string; readonly continuationLineIndex: number } | null {
+  if (!isWrappedDishQualifier(prefix)) return null;
+  const continuationIndex = prefixLineIndex + 1;
+  const continuation = lines[continuationIndex]?.text ?? "";
+  if (!continuation || standalonePrice.test(continuation) || inlinePrice.test(continuation)) return null;
+  if (!looksLikeDishName(continuation)) return null;
+  if (lines[continuationIndex]?.page !== lines[prefixLineIndex]?.page) return null;
+  return {
+    name: normalizeLine(`${stripAllergenSuffix(prefix)} ${continuation}`),
+    continuationLineIndex: continuationIndex,
+  };
+}
+
 function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] {
   const candidates: ItemCandidate[] = [];
+  const consumedWrappedNameLines = new Set<number>();
   let currentSection: string | null = null;
 
   for (let index = 0; index < lines.length; index += 1) {
+    if (consumedWrappedNameLines.has(index)) continue;
+
     const line = lines[index]?.text ?? "";
     const nextLine = lines[index + 1]?.text ?? "";
     const isStandalonePricedDishName = looksLikeDishName(line) && standalonePrice.test(nextLine);
@@ -170,16 +208,21 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
     if (standalone?.[1]) {
       const price = parsedPrice(standalone[1], standalone[2]);
       if (price && index > 0) {
-        const previous = lines[index - 1]?.text ?? "";
+        const previousIndex = index - 1;
+        const previous = lines[previousIndex]?.text ?? "";
         if (looksLikeDishName(previous)) {
           const rawName = stripAllergenSuffix(previous);
           if (looksLikeDishName(rawName)) {
+            const continuation = wrappedName(rawName, lines, index);
+            if (isWrappedDishQualifier(rawName) && !continuation) continue;
+            if (continuation) consumedWrappedNameLines.add(continuation.continuationLineIndex);
             candidates.push({
-              nameLineIndex: index - 1,
+              nameLineIndex: previousIndex,
+              nameContinuationLineIndex: continuation?.continuationLineIndex ?? null,
               priceLineIndex: index,
-              page: lines[index - 1]?.page ?? lines[index]?.page ?? 1,
+              page: lines[previousIndex]?.page ?? lines[index]?.page ?? 1,
               sectionName: currentSection,
-              rawName,
+              rawName: continuation?.name ?? rawName,
               ...price,
             });
           }
@@ -193,12 +236,16 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
       const price = parsedPrice(inline[2], inline[3]);
       const rawName = stripAllergenSuffix(inline[1]);
       if (price && looksLikeDishName(rawName)) {
+        const continuation = wrappedName(rawName, lines, index);
+        if (isWrappedDishQualifier(rawName) && !continuation) continue;
+        if (continuation) consumedWrappedNameLines.add(continuation.continuationLineIndex);
         candidates.push({
           nameLineIndex: index,
+          nameContinuationLineIndex: continuation?.continuationLineIndex ?? null,
           priceLineIndex: index,
           page: lines[index]?.page ?? 1,
           sectionName: currentSection,
-          rawName,
+          rawName: continuation?.name ?? rawName,
           ...price,
         });
       }
@@ -214,7 +261,8 @@ function descriptionForCandidate(
   nextCandidateLine: number,
 ): string | null {
   const parts: string[] = [];
-  for (let index = candidate.priceLineIndex + 1; index < Math.min(nextCandidateLine, candidate.priceLineIndex + 7); index += 1) {
+  const contentStart = Math.max(candidate.priceLineIndex, candidate.nameContinuationLineIndex ?? candidate.priceLineIndex) + 1;
+  for (let index = contentStart; index < Math.min(nextCandidateLine, contentStart + 6); index += 1) {
     const text = lines[index]?.text ?? "";
     if (!text || sectionHeading(text)) break;
     if (standalonePrice.test(text)) break;
