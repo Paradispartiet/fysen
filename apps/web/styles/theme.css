@@ -3,29 +3,35 @@ html {
 }
 
 body {
+  font-family: var(--font-fysen), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background:
-    radial-gradient(circle at 74% 18%, rgba(255, 255, 255, 0.025), transparent 28%),
-    radial-gradient(circle at 18% 42%, rgba(225, 91, 54, 0.025), transparent 30%),
+    radial-gradient(circle at 78% 16%, rgba(121, 201, 135, 0.055), transparent 28%),
+    radial-gradient(circle at 18% 44%, rgba(121, 201, 135, 0.025), transparent 30%),
     var(--color-bg);
+}
+
+::selection {
+  background: rgba(121, 201, 135, 0.24);
 }
 
 .globalHeaderResults {
   background: var(--color-header);
+  border-bottom-color: var(--color-line);
 }
 
 .fysenLogo {
-  font-weight: 860;
-  letter-spacing: -0.042em;
+  font-weight: 700;
+  letter-spacing: -0.035em;
 }
 
 .locationText {
-  font-weight: 610;
+  font-weight: 560;
   letter-spacing: 0.01em;
 }
 
 .dishSearch {
-  min-height: 74px;
-  background: linear-gradient(180deg, #141414 0%, #101010 100%);
+  min-height: 76px;
+  background: var(--color-paper);
   border-color: var(--color-search-line);
   box-shadow: var(--shadow-search);
 }
@@ -35,7 +41,7 @@ body {
 }
 
 .dishSearch:focus-within {
-  border-color: var(--color-accent);
+  border-color: rgba(121, 201, 135, 0.48);
   box-shadow: var(--shadow-search-focus);
 }
 
@@ -68,15 +74,15 @@ body {
   width: 100%;
   padding-left: 0;
   font-size: 18px;
-  font-weight: 470;
-  letter-spacing: -0.01em;
+  font-weight: 430;
+  letter-spacing: -0.008em;
 }
 
 .dishSearch button {
   color: var(--color-action-ink);
   background: var(--color-action);
   border-radius: 13px;
-  font-weight: 710;
+  font-weight: 700;
   transition:
     background var(--motion-fast) var(--ease-fysen),
     transform var(--motion-fast) var(--ease-fysen);
@@ -86,6 +92,15 @@ body {
   background: var(--color-action-hover);
   opacity: 1;
   transform: translateY(-1px);
+}
+
+.dishSearch button:focus-visible,
+.evidenceLink:focus-visible,
+.searchState a:focus-visible,
+.fysenLogoLink:focus-visible,
+.suggestionCard:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
 }
 
 .dishSearchCompact {
@@ -108,27 +123,35 @@ body {
   height: 17px;
 }
 
+.homeMain {
+  padding-bottom: 96px;
+}
+
 .homeHero {
   position: relative;
   isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+  align-items: center;
+  gap: 24px 54px;
   width: min(var(--content-hero), calc(100% - 96px));
-  min-height: min(680px, calc(100dvh - 96px));
-  padding: clamp(54px, 7vh, 84px) 0 112px;
-  overflow: hidden;
+  min-height: 590px;
+  padding: clamp(48px, 6vh, 74px) 0 76px;
+  overflow: visible;
 }
 
 .homeHeroContent {
   position: relative;
   z-index: 2;
-  max-width: 860px;
+  min-width: 0;
 }
 
 .homeHero h1 {
-  max-width: 760px;
-  font-size: clamp(64px, 6.5vw, 94px);
-  font-weight: 770;
-  line-height: 0.99;
-  letter-spacing: -0.028em;
+  max-width: 720px;
+  font-size: clamp(68px, 6.25vw, 90px);
+  font-weight: 630;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
 }
 
 .homeHero h1 span {
@@ -136,102 +159,404 @@ body {
 }
 
 .homeHero h1 span + span {
-  margin-top: 0.07em;
+  margin-top: 0.03em;
 }
 
 .homeSearchWrap {
-  width: min(850px, 100%);
-  margin-top: 42px;
+  width: min(840px, 100%);
+  margin-top: 40px;
 }
 
 .searchProof {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 18px 4px 0;
+  margin: 16px 4px 0;
   color: var(--color-muted);
   font-size: 13px;
-  font-weight: 470;
+  font-weight: 430;
   letter-spacing: 0.005em;
 }
 
 .searchProof::before {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   flex: 0 0 auto;
-  background: var(--color-accent);
+  background: var(--color-brand);
   border-radius: 50%;
   content: "";
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
-.foodSketches {
-  position: absolute;
-  inset: 0;
+.foodHeroIllustration {
+  position: relative;
   z-index: 1;
+  align-self: stretch;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   pointer-events: none;
-  overflow: hidden;
 }
 
-.foodSketch {
+.foodHeroIllustration::before {
   position: absolute;
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.2);
-  stroke-width: 2;
+  width: 290px;
+  height: 290px;
+  background: radial-gradient(circle, rgba(121, 201, 135, 0.1), transparent 68%);
+  border-radius: 50%;
+  content: "";
+  filter: blur(2px);
+}
+
+.foodHeroIllustration svg {
+  position: relative;
+  width: min(100%, 360px);
+  overflow: visible;
+}
+
+.foodHeroInk,
+.foodHeroGreen,
+.foodHeroAccent {
+  stroke-width: 2.55;
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
 }
 
-.foodSketchAccent {
-  stroke: rgba(225, 91, 54, 0.72);
+.foodHeroInk {
+  stroke: rgba(241, 244, 239, 0.44);
 }
 
-.foodSketchRamen {
-  width: 230px;
-  top: 6px;
-  right: 14px;
-  opacity: 0.72;
-  transform: rotate(3deg);
+.foodHeroGreen {
+  stroke: rgba(121, 201, 135, 0.82);
 }
 
-.foodSketchPizza {
-  width: 175px;
-  top: 225px;
-  right: 46px;
-  opacity: 0.55;
-  transform: rotate(8deg);
+.foodHeroAccent {
+  stroke: rgba(201, 108, 72, 0.78);
 }
 
-.foodSketchPasta {
-  width: 185px;
-  left: 42px;
-  bottom: 18px;
-  opacity: 0.34;
-  transform: rotate(-5deg);
+.suggestionRail {
+  width: min(var(--content-hero), calc(100% - 96px));
+  margin: 0 auto;
+  padding: 28px;
+  background: linear-gradient(145deg, var(--color-paper), var(--color-surface-2));
+  border: 1px solid var(--color-line);
+  border-radius: 22px;
 }
 
-.foodSketchPlate {
-  width: 250px;
-  right: 270px;
-  bottom: -78px;
-  opacity: 0.22;
-  transform: rotate(-7deg);
+.suggestionRailHeading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+
+.suggestionRailEyebrow {
+  margin: 0 0 6px;
+  color: var(--color-brand);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.suggestionRailHeading h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 640;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.suggestionRailHeading > p {
+  max-width: 300px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.45;
+  text-align: right;
+}
+
+.suggestionRailList {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.suggestionCard {
+  position: relative;
+  display: flex;
+  min-height: 142px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px;
+  color: var(--color-ink);
+  text-decoration: none;
+  background: rgba(27, 36, 28, 0.72);
+  border: 1px solid rgba(121, 201, 135, 0.13);
+  border-radius: 16px;
+  transition:
+    border-color var(--motion-fast) var(--ease-fysen),
+    background var(--motion-fast) var(--ease-fysen),
+    transform var(--motion-fast) var(--ease-fysen);
+}
+
+.suggestionCard:hover {
+  background: var(--color-surface-3);
+  border-color: rgba(121, 201, 135, 0.35);
+  transform: translateY(-2px);
+}
+
+.suggestionCardMeta {
+  color: var(--color-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.suggestionCard strong {
+  margin-top: auto;
+  font-size: 22px;
+  font-weight: 640;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.suggestionCardAction {
+  color: var(--color-brand);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.suggestionSponsor {
+  color: var(--color-soft);
+  font-size: 11px;
+}
+
+.resultsMain {
+  padding-top: 54px;
+}
+
+.resultsIntro {
+  margin-bottom: 34px;
+}
+
+.eyebrow {
+  color: var(--color-brand);
+  font-weight: 700;
 }
 
 .resultsIntro h1 {
-  font-weight: 790;
-  line-height: 0.99;
-  letter-spacing: -0.034em;
-}
-
-.dishResultIdentity h2 {
-  line-height: 1.08;
+  font-weight: 640;
+  line-height: 1.02;
   letter-spacing: -0.025em;
 }
 
+.resultsCount {
+  color: var(--color-muted);
+  font-weight: 430;
+}
+
+.resultList {
+  display: grid;
+  gap: 16px;
+  border-top: 0;
+}
+
+.dishResult {
+  padding: 24px 26px;
+  background: linear-gradient(150deg, rgba(16, 21, 16, 0.98), rgba(21, 28, 22, 0.94));
+  border: 1px solid var(--color-line);
+  border-radius: 18px;
+}
+
+.dishResult:hover {
+  border-color: rgba(121, 201, 135, 0.23);
+}
+
+.dishResultTopline {
+  gap: 20px 32px;
+}
+
+.dishResultIdentity h2 {
+  font-size: 31px;
+  font-weight: 640;
+  line-height: 1.08;
+  letter-spacing: -0.022em;
+}
+
+.restaurantName {
+  margin-top: 7px;
+  color: var(--color-muted);
+  font-size: 14px;
+  font-weight: 620;
+}
+
+.dishPrice {
+  color: var(--color-ink);
+  font-size: 22px;
+  font-weight: 650;
+}
+
+.dishPrice.isMissing {
+  color: var(--color-soft);
+  font-weight: 520;
+}
+
 .dishDescription {
+  max-width: var(--content-text);
+  margin-top: 16px;
   color: var(--color-body-copy);
+  font-size: 16px;
+  font-weight: 420;
+  line-height: 1.55;
+}
+
+.dishComposition {
+  margin-top: 18px;
+  padding: 14px 16px 15px;
+  background: rgba(121, 201, 135, 0.055);
+  border: 1px solid rgba(121, 201, 135, 0.16);
+  border-radius: 14px;
+}
+
+.dishCompositionHeading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dishCompositionHeading strong {
+  font-size: 13px;
+  font-weight: 680;
+}
+
+.dishCompositionHeading span {
+  color: var(--color-soft);
+  font-size: 11px;
+}
+
+.dishCompositionChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 11px;
+}
+
+.dishCompositionChips > span {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  padding: 0 11px;
+  color: #c6dec9;
+  font-size: 12px;
+  font-weight: 560;
+  background: rgba(121, 201, 135, 0.08);
+  border: 1px solid rgba(121, 201, 135, 0.2);
+  border-radius: var(--radius-round);
+}
+
+.dishResultFacts {
+  gap: 8px 14px;
+  margin-top: 18px;
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.dishResultFacts span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.dishResultFacts span + span::before {
+  width: 3px;
+  height: 3px;
+  margin-right: 7px;
+  background: var(--color-soft);
+  border-radius: 50%;
+  content: "";
+}
+
+.dishResultBottomline {
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-line);
+}
+
+.freshnessStatus {
+  color: var(--color-muted);
+  font-weight: 520;
+}
+
+.freshnessDot {
+  width: 8px;
+  height: 8px;
+  box-shadow: 0 0 0 4px rgba(121, 201, 135, 0.08);
+}
+
+.evidenceLink {
+  min-height: 42px;
+  color: var(--color-ink);
+  font-size: 13px;
+  font-weight: 620;
+  text-decoration: none;
+}
+
+.evidenceLink:hover {
+  color: var(--color-brand-hover);
+  text-decoration: none;
+}
+
+.nearResults {
+  margin-top: 54px;
+  padding-top: 34px;
+  border-top: 1px solid var(--color-line);
+}
+
+.nearResults > h2 {
+  margin-bottom: 20px;
+  font-size: 29px;
+  font-weight: 640;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.nearResultsLead {
+  margin-bottom: 20px;
+  color: var(--color-muted);
+}
+
+.searchState {
+  padding: 24px;
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+}
+
+.searchState h2 {
+  font-weight: 640;
+  letter-spacing: -0.02em;
+}
+
+.loadingResults {
+  display: grid;
+  gap: 16px;
+  border-top: 0;
+}
+
+.loadingResult {
+  padding: 26px;
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-radius: 18px;
 }
 
 .skeletonLine {
@@ -239,87 +564,158 @@ body {
 }
 
 @media (max-width: 900px) {
-  .foodSketchRamen {
-    width: 190px;
-    top: 10px;
-    right: -24px;
-    opacity: 0.52;
+  .homeHero {
+    grid-template-columns: minmax(0, 1fr) 250px;
+    gap: 22px;
+    min-height: 560px;
   }
 
-  .foodSketchPizza {
-    width: 145px;
-    top: 250px;
-    right: -8px;
-    opacity: 0.4;
+  .foodHeroIllustration::before {
+    width: 230px;
+    height: 230px;
   }
 
-  .foodSketchPlate {
-    right: 120px;
+  .suggestionRailList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 767px) {
+  .homeMain {
+    padding-bottom: 64px;
+  }
+
   .homeHero {
+    grid-template-columns: minmax(0, 1fr) 150px;
+    align-items: start;
     width: calc(100% - 40px);
-    min-height: min(660px, calc(100dvh - 70px));
-    padding: clamp(52px, 8vh, 78px) 0 76px;
+    min-height: 520px;
+    padding: clamp(48px, 7vh, 68px) 0 54px;
   }
 
   .homeHero h1 {
-    max-width: 560px;
-    font-size: clamp(50px, 13vw, 62px);
-    line-height: 1;
-    letter-spacing: -0.026em;
-  }
-
-  .homeHero h1 span + span {
-    margin-top: 0.075em;
+    max-width: 520px;
+    font-size: clamp(50px, 12vw, 60px);
+    line-height: 1.03;
+    letter-spacing: -0.023em;
   }
 
   .homeSearchWrap {
-    margin-top: 34px;
+    width: calc(100% + 150px);
+    margin-top: 32px;
   }
 
-  .dishSearch:not(.dishSearchCompact) {
-    min-height: 70px;
+  .foodHeroIllustration {
+    min-height: 210px;
+    align-self: start;
+    margin-top: -16px;
   }
 
-  .searchProof {
-    margin-top: 16px;
+  .foodHeroIllustration svg {
+    width: 190px;
+    transform: translateX(18px);
   }
 
-  .foodSketchRamen {
-    width: 150px;
-    top: 0;
-    right: -48px;
-    opacity: 0.38;
+  .foodHeroIllustration::before {
+    width: 170px;
+    height: 170px;
   }
 
-  .foodSketchPizza {
-    width: 118px;
-    top: 215px;
-    right: -26px;
-    opacity: 0.28;
+  .suggestionRail {
+    width: calc(100% - 40px);
+    padding: 22px;
   }
 
-  .foodSketchPasta {
-    width: 130px;
-    left: -42px;
-    bottom: 66px;
-    opacity: 0.22;
+  .suggestionRailHeading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
   }
 
-  .foodSketchPlate {
-    width: 160px;
-    right: 28px;
-    bottom: -42px;
-    opacity: 0.16;
+  .suggestionRailHeading > p {
+    max-width: none;
+    text-align: left;
+  }
+
+  .suggestionRailList {
+    display: flex;
+    gap: 10px;
+    margin-right: -22px;
+    padding-right: 22px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+  }
+
+  .suggestionCard {
+    min-width: 190px;
+    scroll-snap-align: start;
+  }
+
+  .resultsMain {
+    padding-top: 38px;
+  }
+
+  .resultsIntro h1 {
+    font-size: clamp(40px, 11vw, 50px);
+    line-height: 1.04;
+  }
+
+  .dishResult {
+    padding: 21px;
+  }
+
+  .dishResultIdentity h2 {
+    font-size: 27px;
+  }
+
+  .dishResultBottomline {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dishCompositionHeading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
   }
 }
 
 @media (max-width: 520px) {
-  .dishSearch:not(.dishSearchCompact) button:hover {
+  .homeHero {
+    display: block;
+    min-height: 0;
+  }
+
+  .foodHeroIllustration {
+    position: absolute;
+    top: 8px;
+    right: -34px;
+    width: 150px;
+    min-height: 0;
+    opacity: 0.78;
+  }
+
+  .foodHeroIllustration svg {
+    width: 150px;
     transform: none;
+  }
+
+  .foodHeroIllustration::before {
+    width: 120px;
+    height: 120px;
+  }
+
+  .homeHeroContent {
+    padding-right: 48px;
+  }
+
+  .homeHero h1 {
+    font-size: clamp(48px, 14vw, 58px);
+  }
+
+  .homeSearchWrap {
+    width: calc(100vw - 40px);
+    margin-top: 30px;
   }
 
   .dishSearch:not(.dishSearchCompact) .dishSearchField {
@@ -332,7 +728,23 @@ body {
     padding: 0;
   }
 
-  .foodSketchPizza {
+  .dishSearch:not(.dishSearchCompact) button:hover {
+    transform: none;
+  }
+
+  .suggestionRail {
+    margin-top: 10px;
+  }
+
+  .dishResultTopline {
+    gap: 14px;
+  }
+
+  .dishPrice {
+    font-size: 19px;
+  }
+
+  .dishResultFacts span + span::before {
     display: none;
   }
 }
