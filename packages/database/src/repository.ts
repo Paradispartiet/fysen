@@ -1,3 +1,9 @@
+import {
+  normalizeMenuPriceSemantics,
+  type MenuExtractionMethod,
+  type MenuObservedItem,
+  type MenuPriceKind,
+} from "@fysen/menu-core";
 import type { Pool, PoolClient, QueryResultRow } from "pg";
 
 export type MenuSourceType = "html" | "json_ld" | "pdf" | "image" | "api";
@@ -60,18 +66,9 @@ export interface StoredMenuSource {
   readonly lastMenuFingerprint: string | null;
 }
 
-export interface StoredMenuItem {
-  readonly sourceKey: string;
-  readonly name: string;
-  readonly normalizedName: string;
-  readonly description: string | null;
-  readonly sectionName: string | null;
-  readonly priceMinor: number | null;
-  readonly currency: string;
-  readonly position: number;
-  readonly extractionMethod: "json_ld" | "html_heuristic" | "manual" | "api";
-  readonly confidence: number;
-  readonly sourceExcerpt: string | null;
+export interface StoredMenuItem extends Omit<MenuObservedItem, "priceKind" | "priceMaxMinor"> {
+  readonly priceKind: MenuPriceKind;
+  readonly priceMaxMinor: number | null;
 }
 
 export interface StoredSnapshot {
@@ -98,7 +95,7 @@ export interface SnapshotWriteInput {
   readonly robotsAllowed: boolean;
   readonly fetchDurationMs: number;
   readonly extractorVersion: string;
-  readonly items: readonly StoredMenuItem[];
+  readonly items: readonly MenuObservedItem[];
   readonly changes: readonly SnapshotChangeInput[];
 }
 
@@ -160,9 +157,11 @@ interface ItemRow extends QueryResultRow {
   description: string | null;
   section_name: string | null;
   price_minor: number | null;
+  price_kind: MenuPriceKind;
+  price_max_minor: number | null;
   currency: string;
   position: number;
-  extraction_method: StoredMenuItem["extractionMethod"];
+  extraction_method: MenuExtractionMethod;
   confidence: number;
   source_excerpt: string | null;
 }
@@ -198,6 +197,8 @@ function mapItem(row: ItemRow): StoredMenuItem {
     description: row.description,
     sectionName: row.section_name,
     priceMinor: row.price_minor,
+    priceKind: row.price_kind,
+    priceMaxMinor: row.price_max_minor,
     currency: row.currency,
     position: row.position,
     extractionMethod: row.extraction_method,
@@ -293,7 +294,8 @@ export class MenuIndexRepository {
     const itemResult = await this.pool.query<ItemRow>(
       `
         SELECT source_key, original_name, normalized_name, description, section_name,
-               price_minor, currency, position, extraction_method, confidence, source_excerpt
+               price_minor, price_kind, price_max_minor, currency, position,
+               extraction_method, confidence, source_excerpt
         FROM fysen.menu_items
         WHERE snapshot_id = $1
         ORDER BY position ASC, id ASC
@@ -357,12 +359,14 @@ export class MenuIndexRepository {
       const snapshotId = firstRow(snapshotResult.rows, "snapshot insert").id;
 
       for (const item of input.items) {
+        const price = normalizeMenuPriceSemantics(item);
         await client.query(
           `
             INSERT INTO fysen.menu_items (
               snapshot_id, source_key, original_name, normalized_name, description, section_name,
-              price_minor, currency, position, extraction_method, confidence, source_excerpt
-            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
+              price_minor, price_kind, price_max_minor, currency, position, extraction_method,
+              confidence, source_excerpt
+            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
           `,
           [
             snapshotId,
@@ -371,7 +375,9 @@ export class MenuIndexRepository {
             item.normalizedName,
             item.description,
             item.sectionName,
-            item.priceMinor,
+            price.priceMinor,
+            price.priceKind,
+            price.priceMaxMinor,
             item.currency,
             item.position,
             item.extractionMethod,
