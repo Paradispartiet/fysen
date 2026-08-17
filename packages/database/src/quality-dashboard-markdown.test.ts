@@ -3,7 +3,7 @@ import { renderQualityDashboardMarkdown } from "./quality-dashboard-markdown.js"
 import type { QualityDashboardReport } from "./quality-dashboard.js";
 
 describe("quality dashboard markdown", () => {
-  it("renders health, matching quality, demand and zero-result coverage signals", () => {
+  it("renders health, matching quality, current fuzzy replay, demand and zero-result coverage signals", () => {
     const report: QualityDashboardReport = {
       generatedAt: "2026-08-17T08:00:00.000Z",
       totals: {
@@ -101,10 +101,21 @@ describe("quality dashboard markdown", () => {
         topFuzzyQueries7d: [
           {
             normalizedQuery: "bif tartar",
+            city: "Oslo",
             searches7d: 2,
             impressions7d: 2,
             averageScore: 0.82,
             bestScore: 0.84,
+            currentResolution: null,
+          },
+          {
+            normalizedQuery: "shoyu ramen",
+            city: "Oslo",
+            searches7d: 3,
+            impressions7d: 6,
+            averageScore: 0.38,
+            bestScore: 0.44,
+            currentResolution: "exact",
           },
         ],
       },
@@ -119,8 +130,13 @@ describe("quality dashboard markdown", () => {
     expect(markdown).toContain("Canonical: **4** (20.0%)");
     expect(markdown).toContain("Biff tartar (`beef-tartare`)");
     expect(markdown).toContain("beef tartare");
+    expect(markdown).toContain("Fuzzy queries til manuell vurdering");
     expect(markdown).toContain("bif tartar");
-    expect(markdown).toContain("Fuzzy-listen er et review-signal");
+    expect(markdown).toContain("Oslo");
+    expect(markdown).toContain("Historiske fuzzy-signaler løst av dagens indeks");
+    expect(markdown).toContain("shoyu ramen");
+    expect(markdown).toContain("✅ exact");
+    expect(markdown).toContain("Replay bruker bare dagens sikre exact/canonical/prefix/contains-treff");
     expect(markdown).toContain("ramen \\| spicy");
     expect(markdown).toContain("ingen IP-adresser");
   });
