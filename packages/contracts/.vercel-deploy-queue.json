@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "sourceSha": "18e3c5e1f9f0d255f8de89698ee4dbdbe972ce43",
-  "requestedAt": "2026-08-17T07:53:17Z",
+  "sourceSha": "cef32c2e64d2683646a033ae014e99147e80293c",
+  "requestedAt": "2026-08-17T12:47:22Z",
   "projects": ["fysen", "fysen-api"],
-  "reason": "Retry latest accumulated main after Vercel build-rate-limit"
+  "reason": "Retry accumulated main once after Vercel build-rate-limit; current public production is stale"
 }
