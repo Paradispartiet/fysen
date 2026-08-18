@@ -100,12 +100,18 @@ describe("extractScopedHtmlMenu", () => {
         <h3>Smoked Duck</h3>
         <p>Sprøstekt and servert med wokede grønnsaker og husets fyldige saus.</p>
         <p>214,-</p>
+        <p>Ginger Beef</p>
+        <p>Woket oksekjøtt med ingefær, vårløk og grønnsaker.</p>
+        <p>229,-</p>
+        <p>Lemongrass Chicken</p>
+        <p>Kylling med sitrongress, chili, urter og friske grønnsaker.</p>
+        <p>199,-</p>
       </body></html>
     `;
 
     const result = extractScopedHtmlMenu(html);
-    expect(result.items.map((item) => item.name)).toEqual(["Smoked Duck"]);
-    expect(result.items.map((item) => item.priceMinor)).toEqual([21400]);
+    expect(result.items.map((item) => item.name)).toEqual(["Smoked Duck", "Ginger Beef", "Lemongrass Chicken"]);
+    expect(result.items.map((item) => item.priceMinor)).toEqual([21400, 22900, 19900]);
   });
 
   it("does not promote a unique section heading when the following title is not a strong description", () => {
@@ -114,12 +120,19 @@ describe("extractScopedHtmlMenu", () => {
         <h2>CHEF SPECIALS</h2>
         <p>Slow Braised Beef Noodles</p>
         <p>249,-</p>
+        <p>Charred Chicken</p>
+        <p>Grillet kylling med urter, lime og grønnsaker.</p>
+        <p>229,-</p>
+        <p>Garden Curry</p>
+        <p>Grønnsakscurry med kokosmelk, chili og friske urter.</p>
+        <p>209,-</p>
       </body></html>
     `;
 
     const result = extractScopedHtmlMenu(html);
-    expect(result.items.map((item) => item.name)).toEqual(["Slow Braised Beef Noodles"]);
-    expect(result.items.map((item) => item.priceMinor)).toEqual([24900]);
+    expect(result.items.map((item) => item.name)).toEqual(["Slow Braised Beef Noodles", "Charred Chicken", "Garden Curry"]);
+    expect(result.items.map((item) => item.priceMinor)).toEqual([24900, 22900, 20900]);
+    expect(result.items.some((item) => item.name === "CHEF SPECIALS")).toBe(false);
   });
 
   it("recovers repeated heading cards with multiline descriptions and strips trailing allergen codes", () => {
