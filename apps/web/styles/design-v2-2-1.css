@@ -1,0 +1,46 @@
+/* Fysen Design v2.2.1 — lock the selected mascot and hero geometry. */
+
+.fysenBrandMark {
+  width: 46px;
+  height: 32px;
+  flex: 0 0 46px;
+  object-fit: contain;
+}
+
+.homeHeroTopline > .homeHeroContent {
+  grid-column: 1;
+  order: 0;
+  min-width: 0;
+}
+
+.homeHeroTopline > .foodHeroIllustration {
+  grid-column: 2;
+  order: 0;
+  justify-self: end;
+}
+
+.homeSearchWrap {
+  width: 100%;
+  max-width: none;
+}
+
+@media (max-width: 900px) {
+  .homeHeroTopline > .homeHeroContent {
+    grid-column: 1;
+    order: 0;
+  }
+
+  .homeHeroTopline > .foodHeroIllustration {
+    grid-column: 2;
+    order: 0;
+    justify-self: end;
+  }
+}
+
+@media (max-width: 767px) {
+  .fysenBrandMark {
+    width: 39px;
+    height: 27px;
+    flex-basis: 39px;
+  }
+}
