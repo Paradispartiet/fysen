@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { HTML_EXTRACTOR_VERSION } from "./html-extractor.js";
+import { HTML_SOURCE_EXTRACTOR_VERSION } from "./html-source-extractor.js";
 import {
   assertExtractionMethodForSourceType,
   extractorVersionForSourceType,
@@ -15,9 +16,10 @@ describe("menu source runtime extractor refresh policy", () => {
   });
 
   it("uses the same version policy for supported HTML sources", () => {
-    expect(extractorVersionForSourceType("html")).toBe(HTML_EXTRACTOR_VERSION);
-    expect(extractorVersionForSourceType("json_ld")).toBe(HTML_EXTRACTOR_VERSION);
-    expect(shouldForceReextract("html", HTML_EXTRACTOR_VERSION)).toBe(false);
+    expect(extractorVersionForSourceType("html")).toBe(HTML_SOURCE_EXTRACTOR_VERSION);
+    expect(extractorVersionForSourceType("json_ld")).toBe(HTML_SOURCE_EXTRACTOR_VERSION);
+    expect(shouldForceReextract("html", HTML_EXTRACTOR_VERSION)).toBe(true);
+    expect(shouldForceReextract("html", HTML_SOURCE_EXTRACTOR_VERSION)).toBe(false);
   });
 
   it("does not invent a refresh policy when there is no prior extraction", () => {
