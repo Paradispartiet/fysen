@@ -6,13 +6,13 @@
 }
 
 .fysenBrandLockup {
-  min-height: 42px;
-  gap: 11px;
+  min-height: 48px;
+  gap: 12px;
 }
 
 .fysenBrandMark {
   display: block;
-  width: 58px;
+  width: 68px;
   height: auto;
   flex: 0 0 auto;
   object-fit: contain;
@@ -52,12 +52,12 @@
 
 @media (max-width: 767px) {
   .fysenBrandLockup {
-    min-height: 36px;
-    gap: 9px;
+    min-height: 40px;
+    gap: 10px;
   }
 
   .fysenBrandMark {
-    width: 48px;
+    width: 56px;
     height: auto;
   }
 }
