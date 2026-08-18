@@ -182,8 +182,6 @@ export function CuisineExplorer() {
                     <span className="cuisineRestaurantLoading">Ingen ferske treff på {preview.dish.label.toLowerCase()} akkurat nå.</span>
                   ) : null}
                 </span>
-
-                <span className="cuisineCardOpenHint">Åpne retter og restauranter <span aria-hidden="true">→</span></span>
               </button>
 
               <div className="cuisineAreaList" aria-label={`${cuisine.areasLabel} i ${cuisine.name}`}>
