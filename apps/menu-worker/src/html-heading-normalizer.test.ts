@@ -1,13 +1,14 @@
 import { load } from "cheerio";
 import { describe, expect, it } from "vitest";
-import { extractScopedHtmlMenu } from "./html-source-extractor.js";
+import { recoverDescriptionNamedHtmlItems } from "./html-description-title-recovery.js";
 import {
   HTML_HEADING_NORMALIZER_VERSION,
   normalizeHtmlHeadingLineBreaks,
 } from "./html-heading-normalizer.js";
+import { extractScopedHtmlMenu } from "./html-source-extractor.js";
 
 describe("HTML heading line-break normalizer", () => {
-  it("keeps a br-split dish heading semantically whole before menu extraction", () => {
+  it("keeps a br-split dish heading semantically whole through the canonical HTML runtime chain", () => {
     const html = `
       <html><body>
         <section>
@@ -27,9 +28,10 @@ describe("HTML heading line-break normalizer", () => {
 
     const normalized = normalizeHtmlHeadingLineBreaks(html);
     const extracted = extractScopedHtmlMenu(normalized);
+    const recovered = recoverDescriptionNamedHtmlItems(extracted.items, extracted.visibleText);
 
     expect(HTML_HEADING_NORMALIZER_VERSION).toBe("heading-v1");
-    expect(extracted.items.map((item) => [item.name, item.priceMinor])).toContainEqual([
+    expect(recovered.map((item) => [item.name, item.priceMinor])).toContainEqual([
       "Kofta (arabisk gryterett med kjøttboller)",
       31000,
     ]);
