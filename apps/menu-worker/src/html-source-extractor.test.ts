@@ -19,10 +19,46 @@ describe("extractScopedHtmlMenu", () => {
     `;
 
     const result = extractScopedHtmlMenu(html);
-    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v11");
+    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v12");
     expect(result.items.map((item) => item.name)).toEqual(["Falafel", "Bakalawa"]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([9800, 12900]);
     expect(result.visibleText).not.toContain("Husets Cabernet");
+  });
+
+  it("extracts repeated standalone-price blocks from the earliest plausible title inside each block", () => {
+    const html = `
+      <html><body>
+        <h2>Forretter</h2>
+        <p>Golden rolls</p>
+        <p>Sprøstekte vietnamesiske vårruller med salat og urter.</p>
+        <p>84,-</p>
+        <p>Green rolls</p>
+        <p>Ferske vietnamesiske vårruller med urter og grønnsaker.</p>
+        <p>Servert med vår egen peanøttsaus.</p>
+        <p>94,-</p>
+        <h2>Hovedretter</h2>
+        <p>Confusion Duck</p>
+        <p>Sprøstekt and servert med wokede grønnsaker.</p>
+        <p>Husets saus serveres ved siden av.</p>
+        <p>214,-</p>
+        <h2>Sushiruller</h2>
+        <p>Mrs. Fish</p>
+        <p>Fritert scampi og agurk toppet med laks.</p>
+        <p>Serveres med husets saus.</p>
+        <p>164,-</p>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual([
+      "Golden rolls",
+      "Green rolls",
+      "Confusion Duck",
+      "Mrs. Fish",
+    ]);
+    expect(result.items.map((item) => item.priceMinor)).toEqual([8400, 9400, 21400, 16400]);
+    expect(result.items[1]?.description).toContain("peanøttsaus");
+    expect(result.items.some((item) => /^(?:Forretter|Hovedretter|Sushiruller)$/u.test(item.name))).toBe(false);
   });
 
   it("recovers repeated heading cards with multiline descriptions and strips trailing allergen codes", () => {
