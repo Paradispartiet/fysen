@@ -24,10 +24,12 @@ export async function searchDishesClient(
 ): Promise<DishSearchResponse> {
   const city = options.city?.trim() || "Oslo";
   const limit = options.limit ?? 6;
-  const response = await fetch(clientSearchUrl(query, city, limit), {
+  const requestInit: RequestInit = {
     headers: { accept: "application/json" },
-    signal: options.signal,
-  });
+  };
+  if (options.signal) requestInit.signal = options.signal;
+
+  const response = await fetch(clientSearchUrl(query, city, limit), requestInit);
 
   if (!response.ok) {
     throw new Error(`Fysen dish exploration failed with HTTP ${response.status}`);
