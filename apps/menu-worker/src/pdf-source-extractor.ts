@@ -6,6 +6,7 @@ export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v6";
 function normalizeScopeLine(value: string): string {
   return value
     .normalize("NFKD")
+    .replace(/[Đđ]/gu, (letter) => (letter === "Đ" ? "D" : "d"))
     .replace(/\p{M}/gu, "")
     .toLocaleLowerCase("nb-NO")
     .replace(/[^\p{L}\p{N}]+/gu, " ")
