@@ -11,6 +11,7 @@ import "../styles/design-v2-2-1.css";
 import "../styles/dish-learning-dialog.css";
 import "../styles/cuisine-explorer-v2-3.css";
 import "../styles/food-knowledge-v1.css";
+import "../styles/dish-knowledge-restaurants.css";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
