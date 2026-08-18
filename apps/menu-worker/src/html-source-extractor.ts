@@ -126,13 +126,13 @@ function addonOptionNames(lines: readonly string[]): ReadonlySet<string> {
 
 interface FoodScopedText {
   readonly visibleText: string;
-  readonly headingPositions: ReadonlySet<number>;
+  readonly headingLevels: ReadonlyMap<number, number>;
 }
 
 function foodScopedText(lines: readonly string[]): FoodScopedText {
   const numberedMenu = isNumberedMenu(lines);
   const output: string[] = [];
-  const headingPositions = new Set<number>();
+  const headingLevels = new Map<number, number>();
   let blockedHeadingLevel: number | null = null;
   let skippingAddons = false;
   let sawFoodSignal = false;
@@ -154,7 +154,7 @@ function foodScopedText(lines: readonly string[]): FoodScopedText {
         blockedHeadingLevel = headingLevel;
       }
       if (blockedHeadingLevel === null && headingText) {
-        headingPositions.add(output.length);
+        headingLevels.set(output.length, headingLevel);
         output.push(headingText);
       }
       continue;
@@ -178,7 +178,7 @@ function foodScopedText(lines: readonly string[]): FoodScopedText {
     output.push(line);
   }
 
-  return { visibleText: output.join("\n"), headingPositions };
+  return { visibleText: output.join("\n"), headingLevels };
 }
 
 function parsePriceMinorAtEnd(value: string): number | null {
@@ -314,14 +314,14 @@ function dominantTitleScript(value: string): TitleScript | null {
 function recoveredTitle(
   lines: readonly string[],
   titleIndex: number,
-  headingPositions?: ReadonlySet<number>,
+  headingLevels?: ReadonlyMap<number, number>,
 ): string | null {
   const rawCurrent = lines[titleIndex]?.trim() ?? "";
   if (!plausibleCardTitle(rawCurrent)) return null;
   const current = canonicalCardTitle(rawCurrent);
   if (!current) return null;
 
-  if (headingPositions && !headingPositions.has(titleIndex - 1)) return current;
+  if (headingLevels && !headingLevels.has(titleIndex - 1)) return current;
   const rawPrevious = lines[titleIndex - 1]?.trim() ?? "";
   if (!plausibleCardTitle(rawPrevious) || looksLikeSectionHeading(rawPrevious)) return current;
   const previous = canonicalCardTitle(rawPrevious);
@@ -344,6 +344,18 @@ function looksLikeDescriptionLine(value: string): boolean {
   return words.length >= 4 || /[.!?]$/u.test(line);
 }
 
+function hasRepeatedHeadingLevel(headingLevels: ReadonlyMap<number, number>, position: number): boolean {
+  const level = headingLevels.get(position);
+  if (level === undefined) return false;
+  let count = 0;
+  for (const candidate of headingLevels.values()) {
+    if (candidate !== level) continue;
+    count += 1;
+    if (count >= 2) return true;
+  }
+  return false;
+}
+
 interface CardRecovery {
   readonly lineIndex: number;
   readonly title: string;
@@ -352,7 +364,7 @@ interface CardRecovery {
 
 function headingCardRecoveryAtItemPosition(
   lines: readonly string[],
-  headingPositions: ReadonlySet<number>,
+  headingLevels: ReadonlyMap<number, number>,
   item: MenuObservedItem,
 ): CardRecovery | null {
   const position = item.position;
@@ -364,16 +376,16 @@ function headingCardRecoveryAtItemPosition(
     const line = lines[index]?.trim() ?? "";
     if (!line) continue;
     if (STANDALONE_PRICE.test(line) || PRICE_AT_END.test(line)) return null;
-    if (headingPositions.has(index)) {
+    if (headingLevels.has(index)) {
       headingIndex = index;
       break;
     }
   }
-  if (headingIndex === null) return null;
+  if (headingIndex === null || !hasRepeatedHeadingLevel(headingLevels, headingIndex)) return null;
 
   const rawTitle = lines[headingIndex]?.trim() ?? "";
   if (looksLikeSectionHeading(rawTitle)) return null;
-  const title = recoveredTitle(lines, headingIndex, headingPositions);
+  const title = recoveredTitle(lines, headingIndex, headingLevels);
   if (!title) return null;
 
   const blockLines = lines.slice(headingIndex + 1, position);
@@ -447,7 +459,7 @@ function recoveredDescription(item: MenuObservedItem, recovery: CardRecovery): s
 
 function recoverRepeatedCardTitles(
   visibleText: string,
-  headingPositions: ReadonlySet<number>,
+  headingLevels: ReadonlyMap<number, number>,
   items: readonly MenuObservedItem[],
 ): readonly MenuObservedItem[] {
   if (items.length < 2) return items;
@@ -458,7 +470,7 @@ function recoverRepeatedCardTitles(
   for (const [itemIndex, item] of items.entries()) {
     if (!looksLikeCardDescription(item)) continue;
     const recovery =
-      headingCardRecoveryAtItemPosition(lines, headingPositions, item) ??
+      headingCardRecoveryAtItemPosition(lines, headingLevels, item) ??
       cardRecoveryAtItemPosition(lines, item) ??
       findFallbackCardRecovery(lines, item, searchFrom);
     if (!recovery) continue;
@@ -534,7 +546,7 @@ export function extractScopedHtmlMenu(html: string): ExtractedHtmlMenu {
   );
   const recovered = recoverRepeatedCardTitles(
     visibleText,
-    scopedText.headingPositions,
+    scopedText.headingLevels,
     foodItems,
   ).map(normalizeNumberedItem);
   return {
