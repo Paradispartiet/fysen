@@ -4,12 +4,13 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v5";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v6";
 
 const PRICE_LINE = /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
 const DESCRIPTION_LEAD = /^(?:serveres?|servert|served|with|kan\s+fås|can\s+be|blandet|mixed|godt\s+krydret|well\s+seasoned|marinert|marinated|grillet|grilled|bakt|baked|braisert|braised|tilberedt|prepared|toppet|topped|inneholder|contains?|inkludert|including|ekstra|extra|pr\.?\s*person|per\s+person)\b/iu;
 const PRICE_METADATA_LEAD = /^(?:pr\.?\s*person|per\s+person)\b/iu;
 const SPLIT_PARENTHETICAL_CONTINUATION = /^(?:med|with)\b.*\)$/iu;
+const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const SECTION_LABEL = /^(?:meny|menu|à\s+la\s+carte|a\s+la\s+carte|forretter?|starters?|appetizers?|småretter|hovedretter?|mains?|main\s+courses?|dessert(?:er|s)?|tilbehør|sides?|kylling\s+og\s+lam|mezah[- ]retter)$/iu;
 const ALLERGEN_PREFIX = /^(?:allergener?|allergens?)\s*:\s*/iu;
 const ALLERGEN_SEPARATOR = /\s*(?:,|\/|\+|;|\bog\b|\band\b)\s*/iu;
@@ -178,6 +179,53 @@ function recoverSplitParentheticalTitle(candidate: string, continuation: string)
   return parenthesisBalance(combined) === 0 && looksLikeRecoveredTitle(combined) ? combined : null;
 }
 
+function recoverForwardSplitParentheticalTitleFromSourceExcerpt(item: MenuObservedItem): string | null {
+  const current = normalizeVisibleLine(item.name);
+  const sourceExcerpt = item.sourceExcerpt?.trim() ?? "";
+  if (
+    !sourceExcerpt ||
+    parenthesisBalance(current) !== 1 ||
+    !looksLikeRecoveredTitle(current)
+  ) {
+    return null;
+  }
+
+  const segments = sourceExcerpt
+    .split(SOURCE_EXCERPT_SEPARATOR)
+    .map(normalizeVisibleLine)
+    .filter(Boolean);
+  const foldedCurrent = current.toLocaleLowerCase("nb-NO");
+  const candidates = new Set<string>();
+
+  for (let index = 0; index < segments.length; index += 1) {
+    const segment = segments[index] ?? "";
+    const foldedSegment = segment.toLocaleLowerCase("nb-NO");
+
+    if (
+      foldedSegment.startsWith(`${foldedCurrent} `) &&
+      parenthesisBalance(segment) === 0 &&
+      looksLikeRecoveredTitle(segment)
+    ) {
+      candidates.add(segment);
+      continue;
+    }
+
+    if (foldedSegment !== foldedCurrent) continue;
+    for (let offset = 1; offset <= 2; offset += 1) {
+      const next = segments[index + offset] ?? "";
+      if (!next) continue;
+      if (PRICE_LINE.test(next)) break;
+      const recovered = recoverSplitParentheticalTitle(segment, next);
+      if (recovered) {
+        candidates.add(recovered);
+        break;
+      }
+    }
+  }
+
+  return candidates.size === 1 ? [...candidates][0] ?? null : null;
+}
+
 function recoverForwardSplitParentheticalTitle(
   lines: readonly string[],
   observedName: string,
@@ -244,6 +292,9 @@ function recoverParentheticalQualifiedTitle(
   lines: readonly string[],
   item: MenuObservedItem,
 ): string | null {
+  const sourceExcerptTitle = recoverForwardSplitParentheticalTitleFromSourceExcerpt(item);
+  if (sourceExcerptTitle) return sourceExcerptTitle;
+
   const current = normalizeVisibleLine(item.name);
   const forwardSplitTitle = recoverForwardSplitParentheticalTitle(lines, current);
   if (forwardSplitTitle) return forwardSplitTitle;
