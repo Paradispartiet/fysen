@@ -1,0 +1,217 @@
+/* Fysen Food Knowledge v1 — richer canonical dish learning without turning the homepage into a wall of cards. */
+
+.dishLearningMoreWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.dishLearningMore {
+  min-height: 40px;
+  padding: 0 15px;
+  color: var(--color-brand);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 620;
+  background: #070807;
+  border: 1px solid rgba(121, 201, 135, 0.28);
+  border-radius: var(--radius-round);
+  cursor: pointer;
+}
+
+.dishLearningMore:hover {
+  color: var(--color-brand-hover);
+  border-color: rgba(121, 201, 135, 0.58);
+}
+
+.dishLearningMore:focus-visible,
+.dishKnowledgeRelated button:focus-visible,
+.dishKnowledgeRelated a:focus-visible,
+.dishKnowledgeSources a:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+.dishLearningGridExpanded {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  border: 0;
+}
+
+.dishLearningGridExpanded .dishLearningCard {
+  min-width: 0;
+  border: 1px solid rgba(121, 201, 135, 0.17);
+  border-radius: 11px;
+}
+
+.dishLearningGridExpanded .dishLearningCard + .dishLearningCard {
+  border-left: 1px solid rgba(121, 201, 135, 0.17);
+}
+
+.dishKnowledgeFocusGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.dishKnowledgeFocusGrid > section {
+  padding: 19px;
+  background: #090a09;
+  border: 1px solid rgba(121, 201, 135, 0.16);
+  border-radius: 12px;
+}
+
+.dishKnowledgeFocusGrid h3 {
+  margin: 5px 0 0;
+  font-size: 19px;
+  font-weight: 590;
+}
+
+.dishKnowledgeFocusGrid section > p:last-child {
+  margin: 9px 0 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.58;
+}
+
+.dishKnowledgeMiniEyebrow {
+  margin: 0;
+  color: var(--color-brand);
+  font-size: 9px;
+  font-weight: 680;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+.dishKnowledgeMistakes li::marker {
+  color: var(--color-soft);
+}
+
+.dishKnowledgeRelated {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.dishKnowledgeRelated button,
+.dishKnowledgeRelated a {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  padding: 0 11px;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 570;
+  text-decoration: none;
+  background: #060706;
+  border: 1px solid rgba(121, 201, 135, 0.24);
+  border-radius: var(--radius-round);
+  cursor: pointer;
+}
+
+.dishKnowledgeRelated button:hover,
+.dishKnowledgeRelated a:hover {
+  color: var(--color-brand-hover);
+  border-color: rgba(121, 201, 135, 0.52);
+}
+
+.dishKnowledgeSources {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(121, 201, 135, 0.14);
+}
+
+.dishKnowledgeSources h3 {
+  margin: 0;
+  color: var(--color-soft);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.dishKnowledgeSources ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 11px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dishKnowledgeSources a {
+  color: var(--color-muted);
+  font-size: 11px;
+  line-height: 1.45;
+  text-decoration: underline;
+  text-decoration-color: rgba(121, 201, 135, 0.32);
+  text-underline-offset: 3px;
+}
+
+.dishKnowledgeSources a:hover {
+  color: var(--color-brand-hover);
+}
+
+.cuisineExploreDishActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px 13px;
+}
+
+.cuisineExploreDishActions > a,
+.cuisineExploreDishActions > button {
+  color: var(--color-brand);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 620;
+  text-decoration: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.cuisineExploreDishActions > a:hover,
+.cuisineExploreDishActions > button:hover {
+  color: var(--color-brand-hover);
+}
+
+@media (max-width: 900px) {
+  .dishLearningGridExpanded {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .dishLearningGridExpanded {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 9px;
+    overflow: visible;
+    padding: 0;
+    scroll-snap-type: none;
+  }
+
+  .dishLearningGridExpanded .dishLearningCard {
+    min-width: 0;
+    scroll-snap-align: none;
+  }
+
+  .dishKnowledgeFocusGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .dishKnowledgeSources ul {
+    display: grid;
+    gap: 8px;
+  }
+
+  .cuisineExploreDishActions {
+    justify-content: flex-start;
+  }
+}
