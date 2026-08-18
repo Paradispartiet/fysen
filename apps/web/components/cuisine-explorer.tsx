@@ -172,11 +172,10 @@ export function CuisineExplorer() {
   }
 
   return (
-    <section className="cuisineExplorer" aria-labelledby="cuisine-explorer-title">
+    <section className="cuisineExplorer" aria-label="Matlyst">
       <div className="foodSectionHeading">
         <div>
           <p className="foodSectionEyebrow">Matlyst</p>
-          <h2 id="cuisine-explorer-title">Utforsk kjøkken</h2>
         </div>
         <p>Velg et kjøkken eller en region, oppdag relevante retter, og se hvem som faktisk har dem på en fersk meny.</p>
       </div>
