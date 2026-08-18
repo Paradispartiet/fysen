@@ -6,8 +6,8 @@ export function FysenLogo({ linked = true }: { linked?: boolean }) {
       <img
         className="fysenBrandMark"
         src={withPublicBasePath("/brand/fysen-mark-user.webp")}
-        width="68"
-        height="68"
+        width="84"
+        height="84"
         alt=""
         aria-hidden="true"
       />
