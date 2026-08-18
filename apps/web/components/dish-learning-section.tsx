@@ -68,11 +68,10 @@ export function DishLearningSection() {
   const visibleDishes = showAll ? learningDishes : learningDishes.slice(0, featuredLearningDishCount);
 
   return (
-    <section className="dishLearningSection" aria-labelledby="dish-learning-title">
+    <section className="dishLearningSection" aria-label="Fysen matleksikon">
       <div className="foodSectionHeading foodSectionHeadingLearning">
         <div>
           <p className="foodSectionEyebrow">Fysen matleksikon</p>
-          <h2 id="dish-learning-title">Lær en ny rett</h2>
         </div>
         <p>Forstå retten, smakene og teknikken, lær å lage den hjemme — og finn hvem som faktisk har den på menyen.</p>
       </div>
