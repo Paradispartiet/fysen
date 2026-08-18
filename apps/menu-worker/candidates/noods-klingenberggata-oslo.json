@@ -34,31 +34,31 @@
   ],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Creamy Chick-N Bowl 蒜⾹奶油鸡⾯",
-      "Tender Short Ribs 招牌⽜肋油泼⾯",
-      "Beijing ChaCha⽜⾁炸酱⾯",
-      "Szechuan Braised Beef 秘制红油⽜⾁粉",
-      "Kung Fu Beef Burger 红烧⽜⾁夾饃"
+      "Creamy Chick-N Bowl 蒜香奶油鸡面",
+      "Tender Short Ribs 招牌牛肋油泼面",
+      "Beijing ChaCha 牛肉炸酱面",
+      "Szechuan Braised Beef 秘制红油牛肉粉",
+      "Kung Fu Beef Burger 红烧牛肉夾饃"
     ],
     "requiredDishVariants": [
       {
-        "name": "Creamy Chick-N Bowl 蒜⾹奶油鸡⾯",
+        "name": "Creamy Chick-N Bowl 蒜香奶油鸡面",
         "priceMinor": 19500
       },
       {
-        "name": "Tender Short Ribs 招牌⽜肋油泼⾯",
+        "name": "Tender Short Ribs 招牌牛肋油泼面",
         "priceMinor": 24900
       },
       {
-        "name": "Beijing ChaCha⽜⾁炸酱⾯",
+        "name": "Beijing ChaCha 牛肉炸酱面",
         "priceMinor": 14900
       },
       {
-        "name": "Szechuan Braised Beef 秘制红油⽜⾁粉",
+        "name": "Szechuan Braised Beef 秘制红油牛肉粉",
         "priceMinor": 19500
       },
       {
-        "name": "Kung Fu Beef Burger 红烧⽜⾁夾饃",
+        "name": "Kung Fu Beef Burger 红烧牛肉夾饃",
         "priceMinor": 9300
       }
     ]
