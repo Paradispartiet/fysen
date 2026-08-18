@@ -6,7 +6,7 @@ import {
 } from "@fysen/menu-core";
 import { extractHtmlMenu, type ExtractedHtmlMenu } from "./html-extractor.js";
 
-export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v7";
+export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v8";
 
 const HEADING_MARKER = "__FYSEN_HEADING_LEVEL_";
 const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|bar(?:\s+menu)?|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
@@ -106,6 +106,45 @@ function plausibleCardTitle(value: string): boolean {
   return true;
 }
 
+function looksLikeSectionHeading(value: string): boolean {
+  const title = normalizeVisibleLine(value);
+  const letters = title.replace(/[^\p{L}]+/gu, "");
+  return letters.length >= 3 && title === title.toLocaleUpperCase("nb-NO") && title.split(/\s+/).length <= 5;
+}
+
+type TitleScript = "latin" | "han" | "hangul" | "kana" | "cyrillic" | "arabic" | "devanagari";
+
+function dominantTitleScript(value: string): TitleScript | null {
+  const scripts: readonly [TitleScript, RegExp][] = [
+    ["latin", /\p{Script=Latin}/gu],
+    ["han", /\p{Script=Han}/gu],
+    ["hangul", /\p{Script=Hangul}/gu],
+    ["kana", /[\p{Script=Hiragana}\p{Script=Katakana}]/gu],
+    ["cyrillic", /\p{Script=Cyrillic}/gu],
+    ["arabic", /\p{Script=Arabic}/gu],
+    ["devanagari", /\p{Script=Devanagari}/gu],
+  ];
+  let best: { script: TitleScript; count: number } | null = null;
+  for (const [script, pattern] of scripts) {
+    const count = value.match(pattern)?.length ?? 0;
+    if (count > (best?.count ?? 0)) best = { script, count };
+  }
+  return best && best.count >= 2 ? best.script : null;
+}
+
+function recoveredTitle(lines: readonly string[], titleIndex: number): string | null {
+  const current = lines[titleIndex]?.trim() ?? "";
+  if (!plausibleCardTitle(current)) return null;
+
+  const previous = lines[titleIndex - 1]?.trim() ?? "";
+  if (!plausibleCardTitle(previous) || looksLikeSectionHeading(previous)) return current;
+  const previousScript = dominantTitleScript(previous);
+  const currentScript = dominantTitleScript(current);
+  if (!previousScript || !currentScript || previousScript === currentScript) return current;
+
+  return normalizeVisibleLine(`${previous} ${current}`);
+}
+
 function looksLikeCardDescription(item: MenuObservedItem): boolean {
   const words = normalizeVisibleLine(item.name).split(/\s+/).filter(Boolean);
   return words.length >= 4 || /[.!?]$/u.test(item.name) || Boolean(item.description);
@@ -122,15 +161,15 @@ function cardRecoveryAtItemPosition(lines: readonly string[], item: MenuObserved
   const pricedLine = lines[position]?.trim() ?? "";
 
   if (PRICE_AT_END.test(pricedLine) && pricedLine.startsWith(item.name)) {
-    const title = lines[position - 1]?.trim() ?? "";
-    return plausibleCardTitle(title) ? { lineIndex: position, title } : null;
+    const title = recoveredTitle(lines, position - 1);
+    return title ? { lineIndex: position, title } : null;
   }
 
   if (STANDALONE_PRICE.test(pricedLine)) {
     const descriptionLine = lines[position - 1]?.trim() ?? "";
     if (!descriptionLine || !descriptionLine.startsWith(item.name)) return null;
-    const title = lines[position - 2]?.trim() ?? "";
-    return plausibleCardTitle(title) ? { lineIndex: position, title } : null;
+    const title = recoveredTitle(lines, position - 2);
+    return title ? { lineIndex: position, title } : null;
   }
 
   return null;
@@ -144,8 +183,8 @@ function findFallbackCardRecovery(
   for (let index = Math.max(0, startIndex); index < lines.length; index += 1) {
     const line = lines[index] ?? "";
     if (!PRICE_AT_END.test(line) || !line.startsWith(item.name)) continue;
-    const title = lines[index - 1]?.trim() ?? "";
-    if (plausibleCardTitle(title)) return { lineIndex: index, title };
+    const title = recoveredTitle(lines, index - 1);
+    if (title) return { lineIndex: index, title };
   }
   return null;
 }
