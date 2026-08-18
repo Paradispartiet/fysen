@@ -30,7 +30,7 @@ import { article as sushi } from "./articles/sushi";
 import { article as tacosAlPastor } from "./articles/tacos-al-pastor";
 import { article as tandoori } from "./articles/tandoori";
 import { article as tomYum } from "./articles/tom-yum";
-import { foodDishCatalog, getFoodDish } from "./catalog";
+import { getFoodDish } from "./catalog";
 import { featuredFoodKnowledgeDishIds, foodKnowledgeDishIds } from "./manifest";
 import type { FoodKnowledgeArticle, FoodKnowledgeDish } from "./types";
 
@@ -113,10 +113,10 @@ export const featuredFoodKnowledgeDishes: readonly FoodKnowledgeDish[] = feature
   return dish;
 });
 
-const featuredIds = new Set(featuredFoodKnowledgeDishIds);
+const featuredIds: ReadonlySet<string> = new Set(featuredFoodKnowledgeDishIds);
 export const orderedFoodKnowledgeDishes: readonly FoodKnowledgeDish[] = [
   ...featuredFoodKnowledgeDishes,
   ...foodKnowledgeDishes
-    .filter((dish) => !featuredIds.has(dish.id as never))
+    .filter((dish) => !featuredIds.has(dish.id))
     .sort((left, right) => right.explorerPriority - left.explorerPriority || left.name.localeCompare(right.name, "nb")),
 ];
