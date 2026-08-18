@@ -1,7 +1,6 @@
 import { CuisineExplorer } from "../components/cuisine-explorer";
 import { DishLearningSection } from "../components/dish-learning-section";
 import { DishSearch } from "../components/dish-search";
-import { FoodHeroIllustration } from "../components/food-hero-illustration";
 import { GlobalHeader } from "../components/global-header";
 
 export default function HomePage() {
@@ -17,7 +16,6 @@ export default function HomePage() {
                 <span>lyst på?</span>
               </h1>
             </div>
-            <FoodHeroIllustration />
           </div>
           <div className="homeSearchWrap">
             <DishSearch />
