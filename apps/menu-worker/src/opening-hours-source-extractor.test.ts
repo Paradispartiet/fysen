@@ -17,7 +17,7 @@ describe("canonical opening-hours source extractor", () => {
       </body></html>
     `);
 
-    expect(OPENING_HOURS_SOURCE_EXTRACTOR_VERSION).toBe("hours-visible-v10");
+    expect(OPENING_HOURS_SOURCE_EXTRACTOR_VERSION).toBe("hours-visible-v11");
     expect(extracted.intervals).toEqual([
       { isoWeekday: 1, opensAt: "11:30", closesAt: "20:30", closesNextDay: false },
       { isoWeekday: 2, opensAt: "11:30", closesAt: "20:30", closesNextDay: false },
@@ -28,6 +28,41 @@ describe("canonical opening-hours source extractor", () => {
       { isoWeekday: 7, opensAt: "14:00", closesAt: "20:30", closesNextDay: false },
     ]);
     expect(extracted.sourceExcerpt).toContain("Kjøkkenet stenger 30 min før stengetid");
+  });
+
+  it("normalizes common English weekday abbreviations without changing the canonical schedule grammar", () => {
+    const extracted = extractCanonicalOpeningHours(`
+      <html><body>
+        <h2>Opening Hours</h2>
+        <p>Mon–Thu: 11:00–20:00</p>
+        <p>Fri: 11:00–22:00</p>
+        <p>Sat: 12:00–22:00</p>
+        <p>Sun: 12:00–20:00</p>
+      </body></html>
+    `);
+
+    expect(extracted.intervals).toEqual([
+      { isoWeekday: 1, opensAt: "11:00", closesAt: "20:00", closesNextDay: false },
+      { isoWeekday: 2, opensAt: "11:00", closesAt: "20:00", closesNextDay: false },
+      { isoWeekday: 3, opensAt: "11:00", closesAt: "20:00", closesNextDay: false },
+      { isoWeekday: 4, opensAt: "11:00", closesAt: "20:00", closesNextDay: false },
+      { isoWeekday: 5, opensAt: "11:00", closesAt: "22:00", closesNextDay: false },
+      { isoWeekday: 6, opensAt: "12:00", closesAt: "22:00", closesNextDay: false },
+      { isoWeekday: 7, opensAt: "12:00", closesAt: "20:00", closesNextDay: false },
+    ]);
+  });
+
+  it("supports dotted and alternate English weekday abbreviations", () => {
+    const extracted = extractCanonicalOpeningHours(`
+      <html><body>
+        <p>Mon.-Thurs.: 10:00-19:00</p>
+        <p>Fri.-Sun.: 10:00-20:00</p>
+      </body></html>
+    `);
+
+    expect(extracted.intervals).toHaveLength(7);
+    expect(extracted.intervals.slice(0, 4).every((item) => item.closesAt === "19:00")).toBe(true);
+    expect(extracted.intervals.slice(4).every((item) => item.closesAt === "20:00")).toBe(true);
   });
 
   it("supports the equivalent English relative-close wording", () => {

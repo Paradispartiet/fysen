@@ -6,7 +6,7 @@ import {
   type ExtractedOpeningHours,
 } from "./opening-hours-extractor.js";
 
-export const OPENING_HOURS_SOURCE_EXTRACTOR_VERSION = "hours-visible-v10";
+export const OPENING_HOURS_SOURCE_EXTRACTOR_VERSION = "hours-visible-v11";
 
 const relativeKitchenClosePattern = /(?:kjøkken(?:et)?\s+stenger|kitchen\s+closes)\s+(\d{1,3})\s*(?:min\.?|minutter?|minutes?)\s+(?:før\s+stengetid|before\s+(?:closing|close)(?:\s+time)?)/giu;
 const relativeKitchenCloseLinePattern = /(?:kjøkken(?:et)?\s+stenger|kitchen\s+closes)\s+\d{1,3}\s*(?:min\.?|minutter?|minutes?)\s+(?:før\s+stengetid|before\s+(?:closing|close)(?:\s+time)?)/iu;
@@ -29,7 +29,7 @@ function extractVisibleLines(html: string): readonly string[] {
     .filter(Boolean);
 }
 
-function normalizeNorwegianWeekdayPlurals(value: string): string {
+function normalizeWeekdayAliases(value: string): string {
   return value
     .replace(/\bmandager\b/giu, "mandag")
     .replace(/\btirsdager\b/giu, "tirsdag")
@@ -40,7 +40,15 @@ function normalizeNorwegianWeekdayPlurals(value: string): string {
     .replace(/\blørdager\b/giu, "lørdag")
     .replace(/\blordager\b/giu, "lordag")
     .replace(/\bsøndager\b/giu, "søndag")
-    .replace(/\bsondager\b/giu, "sondag");
+    .replace(/\bsondager\b/giu, "sondag")
+    .replace(/\bmon\b\.?/giu, "Monday")
+    .replace(/\btues?\b\.?/giu, "Tuesday")
+    .replace(/\bweds?\b\.?/giu, "Wednesday")
+    .replace(/\bthurs?\b\.?/giu, "Thursday")
+    .replace(/\bthu\b\.?/giu, "Thursday")
+    .replace(/\bfri\b\.?/giu, "Friday")
+    .replace(/\bsat\b\.?/giu, "Saturday")
+    .replace(/\bsun\b\.?/giu, "Sunday");
 }
 
 function escapeHtml(value: string): string {
@@ -109,7 +117,7 @@ function sanitizedLines(lines: readonly string[]): readonly string[] {
   const output: string[] = [];
   for (const line of lines) {
     const withoutRelativeCutoff = line.replace(relativeKitchenClosePattern, "").replace(/\s+/g, " ").trim();
-    if (withoutRelativeCutoff) output.push(normalizeNorwegianWeekdayPlurals(withoutRelativeCutoff));
+    if (withoutRelativeCutoff) output.push(normalizeWeekdayAliases(withoutRelativeCutoff));
   }
   return output;
 }
@@ -121,7 +129,7 @@ export function extractCanonicalOpeningHours(
   const originalLines = extractVisibleLines(html);
   const relativeMinutes = relativeCutoffMinutes(originalLines);
   if (relativeMinutes === null) {
-    return extractKitchenOpeningHours(syntheticHtml(originalLines.map(normalizeNorwegianWeekdayPlurals)), scopeHints);
+    return extractKitchenOpeningHours(syntheticHtml(originalLines.map(normalizeWeekdayAliases)), scopeHints);
   }
 
   const textWithoutRelative = originalLines
