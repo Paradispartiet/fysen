@@ -5,7 +5,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EXTRACTOR_VERSION = "html-v4";
+export const HTML_EXTRACTOR_VERSION = "html-v5";
 
 export interface ExtractedHtmlMenu {
   readonly items: readonly MenuObservedItem[];
@@ -55,6 +55,10 @@ function firstOffer(record: JsonRecord): JsonRecord | null {
   return null;
 }
 
+function canonicalJsonLdName(value: string): string {
+  return value.normalize("NFKC").replace(/\s+/g, " ").trim().replace(/^\d{1,3}\s*[.)]?\s+/u, "").trim();
+}
+
 function extractJsonLdItems(html: string): readonly MenuObservedItem[] {
   const $ = load(html);
   const nodes: JsonRecord[] = [];
@@ -72,7 +76,8 @@ function extractJsonLdItems(html: string): readonly MenuObservedItem[] {
   const unique = new Map<string, MenuObservedItem>();
   for (const [position, node] of nodes.entries()) {
     if (typeof node.name !== "string" || !node.name.trim()) continue;
-    const name = node.name.trim();
+    const name = canonicalJsonLdName(node.name);
+    if (!name || looksLikeNonDish(name)) continue;
     const description = typeof node.description === "string" ? node.description.trim() || null : null;
     const offer = firstOffer(node);
     const priceMinor = parsePriceMinor(offer?.price ?? null);
@@ -125,7 +130,7 @@ function looksLikeNonDish(name: string): boolean {
     name.startsWith("+") ||
     name.includes("@") ||
     /https?:\/\//i.test(name) ||
-    /^(hours|opening|åpning|booking|contact|kontakt|address|adresse|where to find|allerg|drinks?|drikke|wine|vin|beer|øl|sake|alkoholfritt)/iu.test(
+    /^(hours|opening|åpning|booking|contact|kontakt|address|adresse|where to find|allerg|drinks?|drikke|beverages?|mineralvann|soft\s+drinks?|sodas?|brus(?:\s*\/\s*mineralvann)?|wine|vin|beer|øl|sake|alkoholfritt)$/iu.test(
       name,
     ) ||
     /^(monday|tuesday|wednesday|thursday|friday|saturday|sunday|mandag|tirsdag|onsdag|torsdag|fredag|lørdag|søndag)\b/i.test(
