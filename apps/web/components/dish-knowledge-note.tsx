@@ -1,58 +1,47 @@
+import { findFoodDishByQuery, getFoodKnowledgeDish } from "../content/food-knowledge";
+
 type DishKnowledge = {
-  aliases: string[];
-  name: string;
-  origin: string;
-  summary: string;
+  readonly name: string;
+  readonly origin: string;
+  readonly summary: string;
 };
 
-const dishKnowledge: DishKnowledge[] = [
-  {
-    aliases: ["tartar", "biff tartar", "beef tartare"],
+const legacyKnowledge: Readonly<Record<string, DishKnowledge>> = {
+  tartar: {
     name: "Tartar",
     origin: "Europeisk restauranttradisjon",
     summary: "Tartar serveres vanligvis rå og finhakket. Navnet brukes også om varianter med fisk eller andre råvarer.",
   },
-  {
-    aliases: ["ramen", "shoyu ramen", "miso ramen"],
-    name: "Ramen",
-    origin: "Japan",
-    summary: "Ramen er en japansk nudelsuppe med røtter i kinesiske nudeltradisjoner og mange regionale stiler.",
+  "biff tartar": {
+    name: "Tartar",
+    origin: "Europeisk restauranttradisjon",
+    summary: "Tartar serveres vanligvis rå og finhakket. Navnet brukes også om varianter med fisk eller andre råvarer.",
   },
-  {
-    aliases: ["carbonara", "pasta carbonara"],
-    name: "Carbonara",
-    origin: "Roma, Italia",
-    summary: "Carbonara forbindes særlig med Roma og bygges tradisjonelt rundt pasta, egg, hard ost, speket svinekjøtt og sort pepper.",
+  "beef tartare": {
+    name: "Tartar",
+    origin: "Europeisk restauranttradisjon",
+    summary: "Tartar serveres vanligvis rå og finhakket. Navnet brukes også om varianter med fisk eller andre råvarer.",
   },
-  {
-    aliases: ["biryani"],
-    name: "Biryani",
-    origin: "Sør-Asia",
-    summary: "Biryani er en aromatisk risrett med mange regionale varianter og ulike kombinasjoner av krydder og råvarer.",
-  },
-  {
-    aliases: ["falafel"],
-    name: "Falafel",
-    origin: "Midtøsten",
-    summary: "Falafel er friterte boller av kikerter eller favabønner. Hvilken råvare som brukes varierer mellom tradisjoner.",
-  },
-  {
-    aliases: ["pho", "phở"],
-    name: "Pho",
-    origin: "Vietnam",
-    summary: "Pho er en vietnamesisk nudelsuppe, vanligvis bygget rundt kraft, risnudler og aromatiske urter eller krydder.",
-  },
-];
+};
 
 function normalize(value: string): string {
   return value.trim().toLocaleLowerCase("nb-NO").replace(/\s+/g, " ");
 }
 
 function findKnowledge(query: string): DishKnowledge | null {
-  const normalizedQuery = normalize(query);
-  if (!normalizedQuery) return null;
+  const canonical = findFoodDishByQuery(query);
+  if (canonical) {
+    const knowledge = getFoodKnowledgeDish(canonical.id);
+    if (knowledge) {
+      return {
+        name: knowledge.name,
+        origin: `${knowledge.region} · ${knowledge.cuisine}`,
+        summary: knowledge.summary,
+      };
+    }
+  }
 
-  return dishKnowledge.find((knowledge) => knowledge.aliases.some((alias) => normalize(alias) === normalizedQuery)) ?? null;
+  return legacyKnowledge[normalize(query)] ?? null;
 }
 
 export function DishKnowledgeNote({ query }: { query: string }) {
