@@ -19,10 +19,42 @@ describe("extractScopedHtmlMenu", () => {
     `;
 
     const result = extractScopedHtmlMenu(html);
-    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v12");
+    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v13");
     expect(result.items.map((item) => item.name)).toEqual(["Falafel", "Bakalawa"]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([9800, 12900]);
     expect(result.visibleText).not.toContain("Husets Cabernet");
+  });
+
+  it("skips plain food-section labels before the first standalone-price dish in a section", () => {
+    const html = `
+      <html><body>
+        <p>Forretter</p>
+        <p>Golden rolls</p>
+        <p>Sprøstekte vietnamesiske vårruller med salat og urter.</p>
+        <p>84,-</p>
+        <p>Green rolls</p>
+        <p>Ferske vietnamesiske vårruller med urter og grønnsaker.</p>
+        <p>94,-</p>
+        <p>Hovedretter</p>
+        <p>Confusion Duck</p>
+        <p>Sprøstekt and servert med wokede grønnsaker.</p>
+        <p>214,-</p>
+        <p>Desserter</p>
+        <p>Dagens Dessert</p>
+        <p>Spør oss om dagens dessert.</p>
+        <p>99,-</p>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual([
+      "Golden rolls",
+      "Green rolls",
+      "Confusion Duck",
+      "Dagens Dessert",
+    ]);
+    expect(result.items.map((item) => item.priceMinor)).toEqual([8400, 9400, 21400, 9900]);
+    expect(result.items.some((item) => /^(?:Forretter|Hovedretter|Desserter)$/u.test(item.name))).toBe(false);
   });
 
   it("extracts repeated standalone-price blocks from the earliest plausible title inside each block", () => {
