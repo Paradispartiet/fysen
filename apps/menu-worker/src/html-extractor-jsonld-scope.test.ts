@@ -20,7 +20,7 @@ describe("JSON-LD menu scope", () => {
     `;
 
     const result = extractHtmlMenu(html);
-    expect(HTML_EXTRACTOR_VERSION).toBe("html-v5");
+    expect(HTML_EXTRACTOR_VERSION).toBe("html-v6");
     expect(result.method).toBe("json_ld");
     expect(result.items.map((item) => item.name)).toEqual([
       "MARGHERITA",
