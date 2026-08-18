@@ -15,6 +15,8 @@ export interface ExtractedHtmlMenu {
 
 type JsonRecord = Record<string, unknown>;
 
+const SHORT_ALLERGEN_SUFFIX = /\s+\((?:[\p{L}\d]{1,5}\s*(?:[,/+ ]\s*)?){1,20}\)$/u;
+
 function isRecord(value: unknown): value is JsonRecord {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
@@ -153,6 +155,19 @@ function looksLikeDescriptor(line: string): boolean {
   );
 }
 
+function looksLikeStandaloneDescription(line: string): boolean {
+  const trimmed = line.trim();
+  if (!trimmed || SHORT_ALLERGEN_SUFFIX.test(trimmed)) return false;
+  const words = trimmed.split(/\s+/).filter(Boolean);
+  return (
+    looksLikeDescriptor(trimmed) ||
+    /[,;]/u.test(trimmed) ||
+    /[.!?](?:\s|$)/u.test(trimmed) ||
+    words.length >= 5 ||
+    (words.length >= 3 && /\b(?:eller|or)\b/iu.test(trimmed))
+  );
+}
+
 function looksLikeMetadataBoundary(line: string): boolean {
   return /^(menyforklaring|menu explanation|drikke|drinks?|kontakt|contact|opening|åpning|booking|adresse|address|jobb|job|gavekort|gift card)\b/iu.test(
     line.trim(),
@@ -178,9 +193,7 @@ function looksLikeSharedChildHeading(line: string): boolean {
 }
 
 function splitHeuristicName(value: string): { readonly name: string; readonly description: string | null } {
-  const withoutAllergens = value
-    .replace(/\s+\((?:[\p{L}\d]{1,5}\s*(?:[,/+ ]\s*)?){1,20}\)$/u, "")
-    .trim();
+  const withoutAllergens = value.replace(SHORT_ALLERGEN_SUFFIX, "").trim();
   const withoutMenuNumber = withoutAllergens.replace(/^\d{1,3}\s*[.)]\s*/u, "").trim();
   const commaIndex = withoutMenuNumber.indexOf(",");
   if (commaIndex >= 3 && commaIndex <= 120) {
@@ -357,27 +370,23 @@ function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[]
     const priceMinor = validHeuristicPriceMinor(rawPrice);
     if (priceMinor === null) continue;
 
-    let blockStart = 0;
-    for (let index = position - 1; index >= 0; index -= 1) {
-      const boundary = lines[index]?.trim() ?? "";
-      if (!boundary) continue;
-      if (standalonePriceLine.test(boundary) || inlinePriceLine.test(boundary)) {
-        blockStart = index + 1;
-        break;
-      }
-    }
-
     let nameIndex: number | null = null;
-    for (let index = blockStart; index < position; index += 1) {
-      const candidate = lines[index]?.trim();
+    for (let offset = 1; offset <= 8; offset += 1) {
+      const candidateIndex = position - offset;
+      if (candidateIndex < 0) break;
+      const candidate = lines[candidateIndex]?.trim();
       if (!candidate) continue;
       if (standalonePriceLine.test(candidate) || inlinePriceLine.test(candidate)) break;
-      if (looksLikeNonDish(candidate) || looksLikeDescriptor(candidate) || looksLikeMetadataBoundary(candidate)) {
+      if (
+        looksLikeNonDish(candidate) ||
+        looksLikeStandaloneDescription(candidate) ||
+        looksLikeMetadataBoundary(candidate)
+      ) {
         continue;
       }
       const parsed = splitHeuristicName(candidate.replace(/^\*+/, "").trim());
       if (!parsed.name || parsed.name.length < 2 || parsed.name.length > 180 || !/\p{L}/u.test(parsed.name)) continue;
-      nameIndex = index;
+      nameIndex = candidateIndex;
       break;
     }
     if (nameIndex === null) continue;
