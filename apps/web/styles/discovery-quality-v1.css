@@ -1,0 +1,50 @@
+/* Fysen Discovery Quality v1 — coverage-aware discovery and direct learning from search. */
+
+.dishKnowledgeNoteBottomline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 15px;
+}
+
+.dishKnowledgeNoteBottomline > small {
+  margin: 0;
+}
+
+.dishKnowledgeNoteBottomline > button {
+  flex: 0 0 auto;
+  padding: 0;
+  color: var(--color-brand);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 650;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.dishKnowledgeNoteBottomline > button:hover {
+  color: var(--color-brand-hover);
+}
+
+.dishKnowledgeNoteBottomline > button:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 4px;
+}
+
+.cuisineExploreDish[data-has-coverage="false"] {
+  border-color: rgba(121, 201, 135, 0.11);
+}
+
+.cuisineExploreDish[data-has-coverage="false"] > p {
+  color: var(--color-soft);
+}
+
+@media (max-width: 767px) {
+  .dishKnowledgeNoteBottomline {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
