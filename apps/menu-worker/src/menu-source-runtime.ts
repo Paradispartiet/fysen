@@ -1,5 +1,9 @@
 import type { MenuObservedItem } from "@fysen/menu-core";
 import { BrowserMenuClient } from "./browser-client.js";
+import {
+  HTML_DESCRIPTION_TITLE_RECOVERY_VERSION,
+  recoverDescriptionNamedHtmlItems,
+} from "./html-description-title-recovery.js";
 import { HTML_EXTRACTOR_VERSION } from "./html-extractor.js";
 import {
   extractScopedHtmlMenu,
@@ -10,7 +14,7 @@ import { extractScopedPdfMenu, PDF_SOURCE_EXTRACTOR_VERSION } from "./pdf-source
 
 const DEFAULT_MAX_PDF_RESPONSE_BYTES = 8 * 1024 * 1024;
 const MAX_PDF_RESPONSE_BYTES = 25 * 1024 * 1024;
-const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}`;
+const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
 export type MenuSourceFetchMode = "http" | "browser";
@@ -100,8 +104,12 @@ export async function extractMenuSource(
   if (sourceType === "html" || sourceType === "json_ld") {
     const extracted = extractScopedHtmlMenu(fetched.body);
     assertExtractionMethodForSourceType(sourceType, extracted.method);
+    const items =
+      extracted.method === "html_heuristic"
+        ? recoverDescriptionNamedHtmlItems(extracted.items, extracted.visibleText)
+        : extracted.items;
     return {
-      items: extracted.items,
+      items,
       method: extracted.method,
       extractorVersion: HTML_RUNTIME_EXTRACTOR_VERSION,
     };
