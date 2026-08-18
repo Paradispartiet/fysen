@@ -6,12 +6,14 @@ import {
 } from "@fysen/menu-core";
 import { extractHtmlMenu, type ExtractedHtmlMenu } from "./html-extractor.js";
 
-export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v6";
+export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v7";
 
 const HEADING_MARKER = "__FYSEN_HEADING_LEVEL_";
 const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|bar(?:\s+menu)?|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
 const BEVERAGE_ITEM_NAME = /^(?:kaffe(?:\b|[-/])|coffee(?:\b|[-/])|filterkaffe\b|espresso\b|americano\b|cappuccino\b|latte\b|arabisk\s+kaffe\b|libanesisk\s+kaffe\b|te(?:\b|[-/])|tea(?:\b|[-/]))/iu;
-const PRICE_AT_END = /\s+(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
+const PRICE_TOKEN = "(?:(?:kr\\.?\\s*)?[1-9]\\d{1,3}(?:[.,]\\d{1,2})?(?:\\s*(?:,-|kr\\.?|nok))?)";
+const PRICE_AT_END = new RegExp(`\\s+${PRICE_TOKEN}$`, "iu");
+const STANDALONE_PRICE = new RegExp(`^${PRICE_TOKEN}$`, "iu");
 const CARD_TITLE_BOUNDARY = /^(?:menu|meny|opening|åpning|hours|contact|kontakt|address|adresse|booking|drinks?|drikke|wine|vin|beer|øl|allerg|meet the dishes|see the whole menu)\b/iu;
 
 function normalizeVisibleLine(value: string): string {
@@ -99,7 +101,7 @@ function syntheticHtmlFromVisibleText(visibleText: string): string {
 function plausibleCardTitle(value: string): boolean {
   const title = normalizeVisibleLine(value);
   if (title.length < 2 || title.length > 180 || !/\p{L}/u.test(title)) return false;
-  if (PRICE_AT_END.test(title) || CARD_TITLE_BOUNDARY.test(title)) return false;
+  if (PRICE_AT_END.test(title) || STANDALONE_PRICE.test(title) || CARD_TITLE_BOUNDARY.test(title)) return false;
   if (/^[*+]/u.test(title) || /https?:\/\/|@/iu.test(title)) return false;
   return true;
 }
@@ -109,12 +111,41 @@ function looksLikeCardDescription(item: MenuObservedItem): boolean {
   return words.length >= 4 || /[.!?]$/u.test(item.name) || Boolean(item.description);
 }
 
-function findPricedSourceLine(lines: readonly string[], item: MenuObservedItem, startIndex: number): number | null {
+interface CardRecovery {
+  readonly lineIndex: number;
+  readonly title: string;
+}
+
+function cardRecoveryAtItemPosition(lines: readonly string[], item: MenuObservedItem): CardRecovery | null {
+  const position = item.position;
+  if (!Number.isInteger(position) || position < 0 || position >= lines.length) return null;
+  const pricedLine = lines[position]?.trim() ?? "";
+
+  if (PRICE_AT_END.test(pricedLine) && pricedLine.startsWith(item.name)) {
+    const title = lines[position - 1]?.trim() ?? "";
+    return plausibleCardTitle(title) ? { lineIndex: position, title } : null;
+  }
+
+  if (STANDALONE_PRICE.test(pricedLine)) {
+    const descriptionLine = lines[position - 1]?.trim() ?? "";
+    if (!descriptionLine || !descriptionLine.startsWith(item.name)) return null;
+    const title = lines[position - 2]?.trim() ?? "";
+    return plausibleCardTitle(title) ? { lineIndex: position, title } : null;
+  }
+
+  return null;
+}
+
+function findFallbackCardRecovery(
+  lines: readonly string[],
+  item: MenuObservedItem,
+  startIndex: number,
+): CardRecovery | null {
   for (let index = Math.max(0, startIndex); index < lines.length; index += 1) {
     const line = lines[index] ?? "";
-    if (!PRICE_AT_END.test(line)) continue;
-    if (line.startsWith(item.name)) return index;
-    if (item.sourceExcerpt && item.sourceExcerpt.startsWith(line.slice(0, Math.min(line.length, 180)))) return index;
+    if (!PRICE_AT_END.test(line) || !line.startsWith(item.name)) continue;
+    const title = lines[index - 1]?.trim() ?? "";
+    if (plausibleCardTitle(title)) return { lineIndex: index, title };
   }
   return null;
 }
@@ -133,22 +164,19 @@ function recoverRepeatedCardTitles(
 ): readonly MenuObservedItem[] {
   if (items.length < 2) return items;
   const lines = visibleText.split("\n");
-  const recoveries = new Map<number, { readonly lineIndex: number; readonly title: string }>();
+  const recoveries = new Map<number, CardRecovery>();
   let searchFrom = 0;
 
   for (const [itemIndex, item] of items.entries()) {
     if (!looksLikeCardDescription(item)) continue;
-    const lineIndex = findPricedSourceLine(lines, item, searchFrom);
-    if (lineIndex === null) continue;
-    searchFrom = lineIndex + 1;
-    const titleIndex = lineIndex - 1;
-    const title = lines[titleIndex]?.trim() ?? "";
-    if (!plausibleCardTitle(title)) continue;
-    if (normalizeDishName(title) === item.normalizedName) continue;
-    recoveries.set(itemIndex, { lineIndex, title });
+    const recovery = cardRecoveryAtItemPosition(lines, item) ?? findFallbackCardRecovery(lines, item, searchFrom);
+    if (!recovery) continue;
+    searchFrom = recovery.lineIndex + 1;
+    if (normalizeDishName(recovery.title) === item.normalizedName) continue;
+    recoveries.set(itemIndex, recovery);
   }
 
-  // Only reinterpret the layout when the same title→description+price pattern repeats.
+  // Only reinterpret the layout when the same title→description→price pattern repeats.
   // This keeps isolated section headings from being promoted to dish names.
   if (recoveries.size < 2 || recoveries.size * 2 < items.length) return items;
 
