@@ -53,6 +53,10 @@
   max-width: none;
 }
 
+.homeSearchWrap > .searchProof {
+  margin: 0 2px 12px;
+}
+
 /* Keep section explanations directly below Matlyst / Fysen matleksikon. */
 .foodSectionHeading {
   display: block;
