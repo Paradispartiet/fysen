@@ -53,7 +53,7 @@ describe("HTML description-title recovery", () => {
       visibleText,
     );
 
-    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v5");
+    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v6");
     expect(result.map((entry) => entry.name)).toEqual([
       "Hummus (kikert-og sesampuré)",
       "Hvitløkmarinerte kyllingvinger",
@@ -128,6 +128,22 @@ describe("HTML description-title recovery", () => {
     const result = recoverDescriptionNamedHtmlItems(
       [item("Kofta (arabisk gryterett", 0, 31000)],
       visibleText,
+    );
+
+    expect(result).toHaveLength(1);
+    expect(result[0]?.name).toBe("Kofta (arabisk gryterett med kjøttboller)");
+  });
+
+  it("uses the item-anchored source excerpt when scoped visible text no longer exposes the continuation", () => {
+    const kofta = {
+      ...item("Kofta (arabisk gryterett", 99, 31000),
+      sourceExcerpt:
+        "Kofta (arabisk gryterett — med kjøttboller) — Godt krydret kjøtt av okse og lam. Serveres med salat — 310",
+    };
+
+    const result = recoverDescriptionNamedHtmlItems(
+      [kofta],
+      ["Hovedretter", "Gaza kebab", "350", "Lammegryte", "330"].join("\n"),
     );
 
     expect(result).toHaveLength(1);
