@@ -5,7 +5,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EXTRACTOR_VERSION = "html-v5";
+export const HTML_EXTRACTOR_VERSION = "html-v6";
 
 export interface ExtractedHtmlMenu {
   readonly items: readonly MenuObservedItem[];
@@ -133,6 +133,9 @@ function looksLikeNonDish(name: string): boolean {
     /^(hours|opening|åpning|booking|contact|kontakt|address|adresse|where to find|allerg|drinks?|drikke|beverages?|mineralvann|soft\s+drinks?|sodas?|brus(?:\s*\/\s*mineralvann)?|wine|vin|beer|øl|sake|alkoholfritt)/iu.test(
       name,
     ) ||
+    /^(?:menu|meny|take\s*away|takeaway|småretter(?:\s+og\s+forretter)?|forretter?|starters?|appetizers?|varmretter|hovedretter?|mains?|main\s+courses?|salater?|salads?|barnemeny|kids?\s+menu|mexikanske\s+retter|mexican(?:\s+dishes)?|grillretter|pizza|dessert(?:er)?|snacks?(?:\s*&\s*dip)?|sides?|tilbehør|tillegg\s+for\s+ekstra\s+tilbehør)$/iu.test(
+      name,
+    ) ||
     /^(monday|tuesday|wednesday|thursday|friday|saturday|sunday|mandag|tirsdag|onsdag|torsdag|fredag|lørdag|søndag)\b/i.test(
       normalized,
     )
@@ -140,8 +143,13 @@ function looksLikeNonDish(name: string): boolean {
 }
 
 function looksLikeDescriptor(line: string): boolean {
-  return /^(allergens?|allergener|with|topped|served|ask for|choose|velg|med|contains?|including|inkludert|accompanied)\b/iu.test(
-    line.trim(),
+  const trimmed = line.trim();
+  const words = trimmed.split(/\s+/).filter(Boolean);
+  return (
+    /^(allergens?|allergener|with|topped|served|ask for|choose|velg|med|contains?|including|inkludert|accompanied)\b/iu.test(
+      trimmed,
+    ) ||
+    (words.length >= 4 && /\b(?:served|serveres|comes\s+with|serveres\s+med|inkluderer)\b/iu.test(trimmed))
   );
 }
 
@@ -171,7 +179,7 @@ function looksLikeSharedChildHeading(line: string): boolean {
 
 function splitHeuristicName(value: string): { readonly name: string; readonly description: string | null } {
   const withoutAllergens = value
-    .replace(/\s+\((?:[\p{L}\d]{1,5}\s*,?\s*){1,20}\)$/u, "")
+    .replace(/\s+\((?:[\p{L}\d]{1,5}\s*(?:[,/+ ]\s*)?){1,20}\)$/u, "")
     .trim();
   const withoutMenuNumber = withoutAllergens.replace(/^\d{1,3}\s*[.)]\s*/u, "").trim();
   const commaIndex = withoutMenuNumber.indexOf(",");
@@ -349,16 +357,27 @@ function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[]
     const priceMinor = validHeuristicPriceMinor(rawPrice);
     if (priceMinor === null) continue;
 
+    let blockStart = 0;
+    for (let index = position - 1; index >= 0; index -= 1) {
+      const boundary = lines[index]?.trim() ?? "";
+      if (!boundary) continue;
+      if (standalonePriceLine.test(boundary) || inlinePriceLine.test(boundary)) {
+        blockStart = index + 1;
+        break;
+      }
+    }
+
     let nameIndex: number | null = null;
-    for (let offset = 1; offset <= 4; offset += 1) {
-      const candidateIndex = position - offset;
-      if (candidateIndex < 0) break;
-      const candidate = lines[candidateIndex]?.trim();
+    for (let index = blockStart; index < position; index += 1) {
+      const candidate = lines[index]?.trim();
       if (!candidate) continue;
       if (standalonePriceLine.test(candidate) || inlinePriceLine.test(candidate)) break;
-      if (looksLikeNonDish(candidate) || looksLikeDescriptor(candidate)) continue;
-      if (candidate.length < 2 || candidate.length > 180 || !/\p{L}/u.test(candidate)) continue;
-      nameIndex = candidateIndex;
+      if (looksLikeNonDish(candidate) || looksLikeDescriptor(candidate) || looksLikeMetadataBoundary(candidate)) {
+        continue;
+      }
+      const parsed = splitHeuristicName(candidate.replace(/^\*+/, "").trim());
+      if (!parsed.name || parsed.name.length < 2 || parsed.name.length > 180 || !/\p{L}/u.test(parsed.name)) continue;
+      nameIndex = index;
       break;
     }
     if (nameIndex === null) continue;
@@ -384,7 +403,7 @@ function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[]
       sectionName: null,
       priceMinor,
       currency: "NOK",
-      position,
+      position: nameIndex,
       extractionMethod: "html_heuristic",
       confidence: 0.72,
       sourceExcerpt,
