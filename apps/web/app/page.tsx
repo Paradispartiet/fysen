@@ -11,10 +11,7 @@ export default function HomePage() {
         <section className="homeHero" aria-labelledby="fysen-title">
           <div className="homeHeroTopline">
             <div className="homeHeroContent">
-              <h1 id="fysen-title">
-                <span>Hva har du</span>
-                <span>lyst på?</span>
-              </h1>
+              <h1 id="fysen-title">Hva har du lyst på?</h1>
             </div>
           </div>
           <div className="homeSearchWrap">
