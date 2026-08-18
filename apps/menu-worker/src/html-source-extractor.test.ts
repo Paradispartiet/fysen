@@ -19,10 +19,52 @@ describe("extractScopedHtmlMenu", () => {
     `;
 
     const result = extractScopedHtmlMenu(html);
-    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v8");
+    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v9");
     expect(result.items.map((item) => item.name)).toEqual(["Falafel", "Bakalawa"]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([9800, 12900]);
     expect(result.visibleText).not.toContain("Husets Cabernet");
+  });
+
+  it("normalizes numbered dish cards and removes repeated add-on price blocks", () => {
+    const html = `
+      <html><body>
+        <h2>NOODLES</h2>
+        <p>1 Satay</p>
+        <p>Chicken satay with peanut sauce</p>
+        <p>125 kr</p>
+        <p>Ekstra sulten?</p>
+        <p>Kylling</p><p>60 kr</p><p>Biff</p><p>80 kr</p><p>Vis mer</p>
+        <p>13 Phad Thai Kung</p>
+        <p>Fried rice noodles with king prawns, egg and peanuts</p>
+        <p>259 kr</p>
+        <p>Ekstra sulten?</p>
+        <p>Kylling</p><p>60 kr</p><p>Reker</p><p>80 kr</p>
+        <p>30 Tom Yum Kung</p>
+        <p>Tom yum soup with king prawns, coconut milk and lemongrass</p>
+        <p>259 kr</p>
+        <footer><p>Rice Bowl since 1972</p></footer>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual(["Satay", "Phad Thai Kung", "Tom Yum Kung"]);
+    expect(result.items.map((item) => item.priceMinor)).toEqual([12500, 25900, 25900]);
+    expect(result.items.some((item) => /^(?:Kylling|Biff|Reker|Ris)$/u.test(item.name))).toBe(false);
+    expect(result.items.some((item) => /Rice Bowl since/iu.test(item.name))).toBe(false);
+  });
+
+  it("does not treat an extras label as a block boundary on an unnumbered menu", () => {
+    const html = `
+      <html><body>
+        <h2>Small plates</h2>
+        <p>Extras</p>
+        <p>Halloumi 89 kr</p>
+        <p>Falafel 79 kr</p>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual(["Halloumi", "Falafel"]);
   });
 
   it("recovers repeated title-description-price cards with inline prices", () => {
@@ -140,12 +182,14 @@ describe("extractScopedHtmlMenu", () => {
         <p>Arabisk kaffe med kardemomme</p>
         <p>659 kr</p>
         <p>Te 45 kr</p>
+        <p>Iskaffe 99 kr</p>
+        <p>Thai Te 99 kr</p>
       </body></html>
     `;
 
     const result = extractScopedHtmlMenu(html);
     expect(result.items.some((item) => item.name === "Falafel")).toBe(true);
-    expect(result.items.some((item) => /kaffe|^te$/iu.test(item.name))).toBe(false);
+    expect(result.items.some((item) => /kaffe|^te$|thai te/iu.test(item.name))).toBe(false);
   });
 
   it("preserves structured MenuItem JSON-LD as the authoritative extraction method", () => {
