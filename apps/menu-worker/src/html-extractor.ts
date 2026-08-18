@@ -130,7 +130,7 @@ function looksLikeNonDish(name: string): boolean {
     name.startsWith("+") ||
     name.includes("@") ||
     /https?:\/\//i.test(name) ||
-    /^(hours|opening|åpning|booking|contact|kontakt|address|adresse|where to find|allerg|drinks?|drikke|beverages?|mineralvann|soft\s+drinks?|sodas?|brus(?:\s*\/\s*mineralvann)?|wine|vin|beer|øl|sake|alkoholfritt)$/iu.test(
+    /^(hours|opening|åpning|booking|contact|kontakt|address|adresse|where to find|allerg|drinks?|drikke|beverages?|mineralvann|soft\s+drinks?|sodas?|brus(?:\s*\/\s*mineralvann)?|wine|vin|beer|øl|sake|alkoholfritt)/iu.test(
       name,
     ) ||
     /^(monday|tuesday|wednesday|thursday|friday|saturday|sunday|mandag|tirsdag|onsdag|torsdag|fredag|lørdag|søndag)\b/i.test(
