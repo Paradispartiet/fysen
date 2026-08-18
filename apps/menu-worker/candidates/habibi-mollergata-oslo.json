@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "habibi-mollergata-oslo",
+    "name": "Habibi",
+    "websiteUrl": "https://www.habibi.no/",
+    "address": "Møllergata 10, 0179 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.914286,
+    "longitude": 10.747066
+  },
+  "menuSource": {
+    "url": "https://www.habibi.no/meny/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 18
+  },
+  "hoursSource": {
+    "url": "https://www.habibi.no/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://www.habibi.no/bestill-bord/",
+      "sourceUrl": "https://www.habibi.no/",
+      "provider": "Habibi"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hummus (kikert-og sesampuré)",
+      "Gresk salat",
+      "Hvitløkmarinerte kyllingvinger",
+      "Gaza kebab",
+      "Dønner kebab",
+      "Kofta (arabisk gryterett med kjøttboller)",
+      "Kylling Tawok",
+      "Mezah uten kjøtt (vegetar)",
+      "Mezah med kjøtt",
+      "Mezah med en grill rett",
+      "Baklawa med pistasjhonning",
+      "Ostekake",
+      "Creme Brulee"
+    ],
+    "requiredDishVariants": [
+      { "name": "Hummus (kikert-og sesampuré)", "priceMinor": 11900 },
+      { "name": "Gresk salat", "priceMinor": 22000 },
+      { "name": "Hvitløkmarinerte kyllingvinger", "priceMinor": 29000 },
+      { "name": "Gaza kebab", "priceMinor": 35000 },
+      { "name": "Dønner kebab", "priceMinor": 35000 },
+      { "name": "Kofta (arabisk gryterett med kjøttboller)", "priceMinor": 31000 },
+      { "name": "Kylling Tawok", "priceMinor": 31000 },
+      { "name": "Mezah uten kjøtt (vegetar)", "priceMinor": 35000 },
+      { "name": "Mezah med kjøtt", "priceMinor": 39900 },
+      { "name": "Mezah med en grill rett", "priceMinor": 45900 },
+      { "name": "Baklawa med pistasjhonning", "priceMinor": 13900 },
+      { "name": "Ostekake", "priceMinor": 13900 },
+      { "name": "Creme Brulee", "priceMinor": 14500 }
+    ],
+    "forbiddenDishNames": [
+      "MENY",
+      "À la carte",
+      "Kylling og Lam",
+      "Mezah-retter",
+      "Dessert",
+      "Drikkemeny",
+      "med kjøttboller)",
+      "Pr. person"
+    ]
+  }
+}
