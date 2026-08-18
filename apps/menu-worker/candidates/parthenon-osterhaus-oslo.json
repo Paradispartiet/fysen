@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "parthenon-osterhaus-oslo",
+    "name": "Parthenon Pizza & Grillbar",
+    "websiteUrl": "https://www.parthenon.no/",
+    "address": "Osterhaus' gate 14A, 0183 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9170957,
+    "longitude": 10.7530323
+  },
+  "menuSource": {
+    "url": "https://www.parthenon.no/meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 35
+  },
+  "hoursSource": {
+    "url": "https://www.parthenon.no/kontakt",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://www.parthenon.no/en/table-reservations",
+      "sourceUrl": "https://www.parthenon.no/",
+      "provider": "Parthenon"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "MARGHERITA",
+      "CALZONE KYLLING",
+      "BIFFSNADDER TALLERKEN",
+      "KYLLINGSNADDER TALLERKEN",
+      "FALAFEL TALLERKEN",
+      "MIX GRILL TALLERKEN",
+      "FISH & CHIPS TALLERKEN",
+      "LAKS TALLERKEN",
+      "KEBABTALLERKEN",
+      "FALAFEL I RULL"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "BIFFSNADDER TALLERKEN",
+        "priceMinor": 23900
+      },
+      {
+        "name": "KYLLINGSNADDER TALLERKEN",
+        "priceMinor": 22900
+      },
+      {
+        "name": "FALAFEL TALLERKEN",
+        "priceMinor": 13900
+      },
+      {
+        "name": "MIX GRILL TALLERKEN",
+        "priceMinor": 25900
+      },
+      {
+        "name": "FISH & CHIPS TALLERKEN",
+        "priceMinor": 16500
+      },
+      {
+        "name": "LAKS TALLERKEN",
+        "priceMinor": 18900
+      },
+      {
+        "name": "KEBABTALLERKEN",
+        "priceMinor": 24900
+      }
+    ],
+    "forbiddenDishNames": [
+      "DRIKKE",
+      "BRUS/ MINERALVANN"
+    ]
+  }
+}
