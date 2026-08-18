@@ -53,7 +53,7 @@ describe("HTML description-title recovery", () => {
       visibleText,
     );
 
-    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v2");
+    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v3");
     expect(result.map((entry) => entry.name)).toEqual([
       "Hummus (kikert-og sesampuré)",
       "Hvitløkmarinerte kyllingvinger",
@@ -95,6 +95,43 @@ describe("HTML description-title recovery", () => {
       "Pizza",
     ]);
     expect(result[0]?.description).toBe("Hvete, laktose");
+  });
+
+  it("joins a split parenthetical dish heading instead of keeping the continuation as a dish", () => {
+    const visibleText = [
+      "Kofta (arabisk gryterett",
+      "med kjøttboller)",
+      "Godt krydret kjøtt av okse og lam. Serveres med salat, oliven, pitabrød og bulgur",
+      "310",
+    ].join("\n");
+
+    const result = recoverDescriptionNamedHtmlItems(
+      [item("med kjøttboller)", 1, 31000)],
+      visibleText,
+    );
+
+    expect(result).toHaveLength(1);
+    expect(result[0]?.name).toBe("Kofta (arabisk gryterett med kjøttboller)");
+    expect(result[0]?.description).toBeNull();
+  });
+
+  it("recovers the canonical heading across several description lines for per-person pricing", () => {
+    const visibleText = [
+      "Mezah med en grill rett",
+      "Mini-mezah. Jo flere som best bestiller, jo større blir variasjonene",
+      "Serveres med hvitløksbrød og pitabrød",
+      "Grillede spyd med Gaza Kebab og marinert grillet kyllingbryst med hvitløk",
+      "Pr. person Kr. 459,-",
+    ].join("\n");
+
+    const result = recoverDescriptionNamedHtmlItems(
+      [item("Pr. person", 4, 45900)],
+      visibleText,
+    );
+
+    expect(result).toHaveLength(1);
+    expect(result[0]?.name).toBe("Mezah med en grill rett");
+    expect(result[0]?.description).toBeNull();
   });
 
   it("leaves ordinary short dish names unchanged", () => {
