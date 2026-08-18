@@ -6,18 +6,29 @@ import {
 } from "@fysen/menu-core";
 import { extractHtmlMenu, type ExtractedHtmlMenu } from "./html-extractor.js";
 
-export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v8";
+export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v9";
 
 const HEADING_MARKER = "__FYSEN_HEADING_LEVEL_";
 const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|bar(?:\s+menu)?|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
-const BEVERAGE_ITEM_NAME = /^(?:kaffe(?:\b|[-/])|coffee(?:\b|[-/])|filterkaffe\b|espresso\b|americano\b|cappuccino\b|latte\b|arabisk\s+kaffe\b|libanesisk\s+kaffe\b|te(?:\b|[-/])|tea(?:\b|[-/]))/iu;
+const BEVERAGE_ITEM_NAME = /^(?:kaffe(?:\b|[-/])|coffee(?:\b|[-/])|filterkaffe\b|iskaffe\b|iced\s+coffee\b|espresso\b|americano\b|cappuccino\b|latte\b|arabisk\s+kaffe\b|libanesisk\s+kaffe\b|te(?:\b|[-/])|tea(?:\b|[-/])|(?:grønn\s+|green\s+)?thai\s+(?:te|tea)\b)/iu;
 const PRICE_TOKEN = "(?:(?:kr\\.?\\s*)?[1-9]\\d{1,3}(?:[.,]\\d{1,2})?(?:\\s*(?:,-|kr\\.?|nok))?)";
 const PRICE_AT_END = new RegExp(`\\s+${PRICE_TOKEN}$`, "iu");
 const STANDALONE_PRICE = new RegExp(`^${PRICE_TOKEN}$`, "iu");
 const CARD_TITLE_BOUNDARY = /^(?:menu|meny|opening|åpning|hours|contact|kontakt|address|adresse|booking|drinks?|drikke|wine|vin|beer|øl|allerg|meet the dishes|see the whole menu)\b/iu;
+const NUMBERED_DISH_TITLE = /^\d{1,3}\s*[.)]?\s+\p{L}/u;
+const EXTRAS_TRIGGER = /^(?:ekstra\s+sulten\s*\??|extra\s+hungry\s*\??|extras?\s*\??|add[- ]?ons?\s*\??|tillegg\s*\??)$/iu;
+const MORE_LABEL = /^(?:vis\s+mer|show\s+more)$/iu;
 
 function normalizeVisibleLine(value: string): string {
   return value.normalize("NFKC").replace(/\s+/g, " ").trim();
+}
+
+function stripMenuNumber(value: string): string {
+  return normalizeVisibleLine(value).replace(/^\d{1,3}\s*[.)]?\s+/u, "").trim();
+}
+
+function canonicalNumberedTitle(value: string): string {
+  return stripMenuNumber(value).replace(PRICE_AT_END, "").trim();
 }
 
 function isBeverageSectionHeading(value: string): boolean {
@@ -26,6 +37,11 @@ function isBeverageSectionHeading(value: string): boolean {
 
 function isBeverageItemName(value: string): boolean {
   return BEVERAGE_ITEM_NAME.test(normalizeVisibleLine(value));
+}
+
+function isObviousMetadataItem(value: string): boolean {
+  const name = normalizeVisibleLine(value);
+  return /\b(?:since|est(?:ablished)?\.?)$/iu.test(name) || /^(?:©|™)/u.test(name);
 }
 
 function annotatedVisibleLines(html: string): readonly string[] {
@@ -54,13 +70,59 @@ function annotatedVisibleLines(html: string): readonly string[] {
     .filter(Boolean);
 }
 
-function foodScopedVisibleText(html: string): string {
+function numberedDishNames(lines: readonly string[]): ReadonlySet<string> {
+  const names = new Set<string>();
+  for (const line of lines) {
+    if (!NUMBERED_DISH_TITLE.test(line)) continue;
+    const name = canonicalNumberedTitle(line);
+    if (name && /\p{L}/u.test(name)) names.add(normalizeDishName(name));
+  }
+  return names;
+}
+
+function isNumberedMenu(lines: readonly string[]): boolean {
+  return numberedDishNames(lines).size >= 2;
+}
+
+function addonOptionNames(lines: readonly string[]): ReadonlySet<string> {
+  const names = new Set<string>();
+  if (!isNumberedMenu(lines)) return names;
+
+  let insideAddons = false;
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index]?.trim() ?? "";
+    if (!line) continue;
+
+    if (line.startsWith(HEADING_MARKER) || NUMBERED_DISH_TITLE.test(line) || MORE_LABEL.test(line)) {
+      insideAddons = false;
+      continue;
+    }
+    if (EXTRAS_TRIGGER.test(line)) {
+      insideAddons = true;
+      continue;
+    }
+    if (!insideAddons || STANDALONE_PRICE.test(line)) continue;
+
+    const next = lines[index + 1]?.trim() ?? "";
+    if (!next || !STANDALONE_PRICE.test(next)) continue;
+    const candidate = stripMenuNumber(line);
+    if (!candidate || !/\p{L}/u.test(candidate) || candidate.length > 120) continue;
+    names.add(normalizeDishName(candidate));
+  }
+
+  return names;
+}
+
+function foodScopedVisibleText(lines: readonly string[]): string {
+  const numberedMenu = isNumberedMenu(lines);
   const output: string[] = [];
   let blockedHeadingLevel: number | null = null;
+  let skippingAddons = false;
 
-  for (const line of annotatedVisibleLines(html)) {
+  for (const line of lines) {
     const headingMatch = line.match(/^__FYSEN_HEADING_LEVEL_([1-6])__\s*(.*)$/u);
     if (headingMatch) {
+      skippingAddons = false;
       const headingLevel = Number(headingMatch[1]);
       const headingText = normalizeVisibleLine(headingMatch[2] ?? "");
 
@@ -76,7 +138,21 @@ function foodScopedVisibleText(html: string): string {
       continue;
     }
 
-    if (blockedHeadingLevel === null) output.push(line);
+    if (blockedHeadingLevel !== null) continue;
+
+    if (numberedMenu && EXTRAS_TRIGGER.test(line)) {
+      skippingAddons = true;
+      continue;
+    }
+    if (skippingAddons) {
+      if (NUMBERED_DISH_TITLE.test(line)) {
+        skippingAddons = false;
+        output.push(line);
+      }
+      continue;
+    }
+    if (MORE_LABEL.test(line)) continue;
+    output.push(line);
   }
 
   return output.join("\n");
@@ -133,11 +209,15 @@ function dominantTitleScript(value: string): TitleScript | null {
 }
 
 function recoveredTitle(lines: readonly string[], titleIndex: number): string | null {
-  const current = lines[titleIndex]?.trim() ?? "";
-  if (!plausibleCardTitle(current)) return null;
+  const rawCurrent = lines[titleIndex]?.trim() ?? "";
+  if (!plausibleCardTitle(rawCurrent)) return null;
+  const current = canonicalNumberedTitle(rawCurrent);
+  if (!current) return null;
 
-  const previous = lines[titleIndex - 1]?.trim() ?? "";
-  if (!plausibleCardTitle(previous) || looksLikeSectionHeading(previous)) return current;
+  const rawPrevious = lines[titleIndex - 1]?.trim() ?? "";
+  if (!plausibleCardTitle(rawPrevious) || looksLikeSectionHeading(rawPrevious)) return current;
+  const previous = canonicalNumberedTitle(rawPrevious);
+  if (!previous) return current;
   const previousScript = dominantTitleScript(previous);
   const currentScript = dominantTitleScript(current);
   if (!previousScript || !currentScript || previousScript === currentScript) return current;
@@ -242,16 +322,41 @@ function recoverRepeatedCardTitles(
   return [...unique.values()].sort((a, b) => a.position - b.position);
 }
 
+function normalizeNumberedItem(item: MenuObservedItem): MenuObservedItem {
+  if (!NUMBERED_DISH_TITLE.test(item.name)) return item;
+  const name = canonicalNumberedTitle(item.name);
+  if (!name || normalizeDishName(name) === item.normalizedName) return item;
+  return {
+    ...item,
+    sourceKey: createMenuItemSourceKey(name, item.sectionName),
+    name,
+    normalizedName: normalizeDishName(name),
+  };
+}
+
 export function extractScopedHtmlMenu(html: string): ExtractedHtmlMenu {
   const firstPass = extractHtmlMenu(html);
   if (firstPass.method === "json_ld") return firstPass;
 
-  const visibleText = foodScopedVisibleText(html);
+  const sourceLines = annotatedVisibleLines(html);
+  const numberedNames = numberedDishNames(sourceLines);
+  const addons = addonOptionNames(sourceLines);
+  const visibleText = foodScopedVisibleText(sourceLines);
   const scoped = extractHtmlMenu(syntheticHtmlFromVisibleText(visibleText));
-  const foodItems = scoped.items.filter((item) => !isBeverageItemName(item.name));
+  const foodItems = scoped.items.filter(
+    (item) =>
+      !isBeverageItemName(item.name) &&
+      !isObviousMetadataItem(item.name) &&
+      !addons.has(item.normalizedName),
+  );
+  const recovered = recoverRepeatedCardTitles(visibleText, foodItems).map(normalizeNumberedItem);
+  const items =
+    numberedNames.size >= 2
+      ? recovered.filter((item) => numberedNames.has(item.normalizedName))
+      : recovered;
   return {
     ...scoped,
-    items: recoverRepeatedCardTitles(visibleText, foodItems),
+    items,
     visibleText,
   };
 }
