@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v4";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v5";
 
 const PRICE_LINE = /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
 const DESCRIPTION_LEAD = /^(?:serveres?|servert|served|with|kan\s+fås|can\s+be|blandet|mixed|godt\s+krydret|well\s+seasoned|marinert|marinated|grillet|grilled|bakt|baked|braisert|braised|tilberedt|prepared|toppet|topped|inneholder|contains?|inkludert|including|ekstra|extra|pr\.?\s*person|per\s+person)\b/iu;
@@ -178,6 +178,46 @@ function recoverSplitParentheticalTitle(candidate: string, continuation: string)
   return parenthesisBalance(combined) === 0 && looksLikeRecoveredTitle(combined) ? combined : null;
 }
 
+function recoverForwardSplitParentheticalTitle(
+  lines: readonly string[],
+  observedName: string,
+): string | null {
+  const current = normalizeVisibleLine(observedName);
+  if (parenthesisBalance(current) !== 1 || !looksLikeRecoveredTitle(current)) return null;
+
+  const foldedCurrent = current.toLocaleLowerCase("nb-NO");
+  const candidates = new Set<string>();
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = normalizeVisibleLine(lines[index] ?? "");
+    if (!line) continue;
+    const foldedLine = line.toLocaleLowerCase("nb-NO");
+
+    if (
+      foldedLine.startsWith(`${foldedCurrent} `) &&
+      parenthesisBalance(line) === 0 &&
+      looksLikeRecoveredTitle(line)
+    ) {
+      candidates.add(line);
+      continue;
+    }
+
+    if (foldedLine !== foldedCurrent) continue;
+    for (let offset = 1; offset <= 2; offset += 1) {
+      const next = normalizeVisibleLine(lines[index + offset] ?? "");
+      if (!next) continue;
+      if (PRICE_LINE.test(next)) break;
+      const recovered = recoverSplitParentheticalTitle(line, next);
+      if (recovered) {
+        candidates.add(recovered);
+        break;
+      }
+    }
+  }
+
+  return candidates.size === 1 ? [...candidates][0] ?? null : null;
+}
+
 function recoverTitle(
   lines: readonly string[],
   position: number,
@@ -204,10 +244,13 @@ function recoverParentheticalQualifiedTitle(
   lines: readonly string[],
   item: MenuObservedItem,
 ): string | null {
+  const current = normalizeVisibleLine(item.name);
+  const forwardSplitTitle = recoverForwardSplitParentheticalTitle(lines, current);
+  if (forwardSplitTitle) return forwardSplitTitle;
+
   const position = item.position;
   if (!Number.isInteger(position) || position < 0 || lines.length === 0) return null;
 
-  const current = normalizeVisibleLine(item.name);
   const foldedCurrent = current.toLocaleLowerCase("nb-NO");
   const scanStart = Math.max(0, position - 1);
   const scanEnd = Math.min(lines.length - 1, position + 2);
