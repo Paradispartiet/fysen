@@ -8,6 +8,7 @@ import {
   type FoodKnowledgeDish,
 } from "../content/food-knowledge";
 import { searchDishesClient } from "../lib/client-dish-search";
+import { formatDishPrice } from "../lib/dish-price";
 import { dishSearchHref } from "../lib/public-path";
 
 function primaryRestaurantResults(results: readonly DishSearchResult[], limit: number): DishSearchResult[] {
@@ -224,12 +225,15 @@ export function DishKnowledgeDialog({
                   <a href={dishSearchHref(dish.query)} key={result.restaurant.id}>
                     <strong>{result.restaurant.name}</strong>
                     <span>{result.dish.name}</span>
-                    <small>{result.restaurant.address}</small>
+                    <small>
+                      {result.dish.priceMinor !== null ? `${formatDishPrice(result.dish)} · ` : ""}
+                      {result.restaurant.address}
+                    </small>
                   </a>
                 ))}
               </div>
             ) : null}
-            <small className="dishKnowledgeRestaurantProof">Vises bare fra ferske, ikke-fuzzy Fysen-menytreff.</small>
+            <small className="dishKnowledgeRestaurantProof">Pris vises bare når den finnes i samme ferske menybevis. Restaurantene vises bare fra ikke-fuzzy treff.</small>
           </section>
 
           {dish.sources.length > 0 ? (
