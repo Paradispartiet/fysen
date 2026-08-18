@@ -5,9 +5,9 @@ export function FysenLogo({ linked = true }: { linked?: boolean }) {
     <span className="fysenBrandLockup">
       <img
         className="fysenBrandMark"
-        src={withPublicBasePath("/brand/fysen-mark.webp")}
-        width="42"
-        height="42"
+        src={withPublicBasePath("/brand/fysen-mark-exact.png")}
+        width="48"
+        height="31"
         alt=""
         aria-hidden="true"
       />
