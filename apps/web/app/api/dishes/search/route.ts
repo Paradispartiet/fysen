@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { searchDishes } from "../../../../../lib/fysen-api";
+import { searchDishes } from "../../../../lib/fysen-api";
 
 export async function GET(request: Request): Promise<NextResponse> {
   const url = new URL(request.url);
