@@ -6,7 +6,7 @@ import {
 } from "@fysen/menu-core";
 import { extractHtmlMenu, type ExtractedHtmlMenu } from "./html-extractor.js";
 
-export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v9";
+export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v10";
 
 const HEADING_MARKER = "__FYSEN_HEADING_LEVEL_";
 const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|bar(?:\s+menu)?|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
@@ -14,6 +14,7 @@ const BEVERAGE_ITEM_NAME = /^(?:kaffe(?:\b|[-/])|coffee(?:\b|[-/])|filterkaffe\b
 const PRICE_TOKEN = "(?:(?:kr\\.?\\s*)?[1-9]\\d{1,3}(?:[.,]\\d{1,2})?(?:\\s*(?:,-|kr\\.?|nok))?)";
 const PRICE_AT_END = new RegExp(`\\s+${PRICE_TOKEN}$`, "iu");
 const STANDALONE_PRICE = new RegExp(`^${PRICE_TOKEN}$`, "iu");
+const PRICE_VALUE_AT_END = /(?:^|\s)(?:kr\.?\s*)?([1-9]\d{1,3})(?:[.,](\d{1,2}))?(?:\s*(?:,-|kr\.?|nok))?$/iu;
 const CARD_TITLE_BOUNDARY = /^(?:menu|meny|opening|åpning|hours|contact|kontakt|address|adresse|booking|drinks?|drikke|wine|vin|beer|øl|allerg|meet the dishes|see the whole menu)\b/iu;
 const NUMBERED_DISH_TITLE = /^\d{1,3}\s*[.)]?\s+\p{L}/u;
 const EXTRAS_TRIGGER = /^(?:ekstra\s+sulten\s*\??|extra\s+hungry\s*\??|extras?\s*\??|add[- ]?ons?\s*\??|tillegg\s*\??)$/iu;
@@ -158,6 +159,86 @@ function foodScopedVisibleText(lines: readonly string[]): string {
   return output.join("\n");
 }
 
+function parsePriceMinorAtEnd(value: string): number | null {
+  const match = normalizeVisibleLine(value).match(PRICE_VALUE_AT_END);
+  if (!match?.[1]) return null;
+  const whole = Number(match[1]);
+  const decimals = (match[2] ?? "").padEnd(2, "0").slice(0, 2);
+  const priceMinor = whole * 100 + Number(decimals || "0");
+  return priceMinor >= 4_000 && priceMinor <= 1_000_000 ? priceMinor : null;
+}
+
+interface NumberedMenuExtraction {
+  readonly items: readonly MenuObservedItem[];
+  readonly titleCount: number;
+}
+
+function extractNumberedMenuItems(visibleText: string): NumberedMenuExtraction {
+  const lines = visibleText.split("\n").map(normalizeVisibleLine).filter(Boolean);
+  const titlePositions = lines
+    .map((line, index) => (NUMBERED_DISH_TITLE.test(line) ? index : -1))
+    .filter((index) => index >= 0);
+  const titleNames = numberedDishNames(lines);
+  if (titleNames.size < 2) return { items: [], titleCount: titleNames.size };
+
+  const unique = new Map<string, MenuObservedItem>();
+  for (const [titleOffset, position] of titlePositions.entries()) {
+    const rawTitle = lines[position] ?? "";
+    const name = canonicalNumberedTitle(rawTitle);
+    if (!name || isBeverageItemName(name) || isObviousMetadataItem(name)) continue;
+
+    const nextTitlePosition = titlePositions[titleOffset + 1] ?? lines.length;
+    const scanEnd = Math.min(nextTitlePosition, position + 9);
+    let priceMinor: number | null = null;
+    let pricePosition: number | null = null;
+    let pricedDescriptionTail: string | null = null;
+
+    for (let index = position + 1; index < scanEnd; index += 1) {
+      const line = lines[index] ?? "";
+      if (!line || EXTRAS_TRIGGER.test(line)) break;
+      const parsedPrice = parsePriceMinorAtEnd(line);
+      if (parsedPrice === null) continue;
+      priceMinor = parsedPrice;
+      pricePosition = index;
+      if (!STANDALONE_PRICE.test(line)) {
+        pricedDescriptionTail = line.replace(PRICE_AT_END, "").trim() || null;
+      }
+      break;
+    }
+    if (priceMinor === null || pricePosition === null) continue;
+
+    const descriptionParts = lines
+      .slice(position + 1, pricePosition)
+      .filter(
+        (line) =>
+          line &&
+          !line.startsWith(HEADING_MARKER) &&
+          !EXTRAS_TRIGGER.test(line) &&
+          !MORE_LABEL.test(line) &&
+          !STANDALONE_PRICE.test(line),
+      );
+    if (pricedDescriptionTail) descriptionParts.push(pricedDescriptionTail);
+    const description = descriptionParts.join(" ").trim() || null;
+    const sourceKey = createMenuItemSourceKey(name);
+
+    unique.set(sourceKey, {
+      sourceKey,
+      name,
+      normalizedName: normalizeDishName(name),
+      description,
+      sectionName: null,
+      priceMinor,
+      currency: "NOK",
+      position,
+      extractionMethod: "html_heuristic",
+      confidence: 0.92,
+      sourceExcerpt: lines.slice(position, pricePosition + 1).join(" — ").slice(0, 1000),
+    });
+  }
+
+  return { items: [...unique.values()].sort((a, b) => a.position - b.position), titleCount: titleNames.size };
+}
+
 function escapeHtml(value: string): string {
   return value
     .replace(/&/g, "&amp;")
@@ -295,8 +376,6 @@ function recoverRepeatedCardTitles(
     recoveries.set(itemIndex, recovery);
   }
 
-  // Only reinterpret the layout when the same title→description→price pattern repeats.
-  // This keeps isolated section headings from being promoted to dish names.
   if (recoveries.size < 2 || recoveries.size * 2 < items.length) return items;
 
   const unique = new Map<string, MenuObservedItem>();
@@ -339,9 +418,21 @@ export function extractScopedHtmlMenu(html: string): ExtractedHtmlMenu {
   if (firstPass.method === "json_ld") return firstPass;
 
   const sourceLines = annotatedVisibleLines(html);
-  const numberedNames = numberedDishNames(sourceLines);
   const addons = addonOptionNames(sourceLines);
   const visibleText = foodScopedVisibleText(sourceLines);
+  const numbered = extractNumberedMenuItems(visibleText);
+  if (
+    numbered.titleCount >= 2 &&
+    numbered.items.length >= 2 &&
+    numbered.items.length * 2 >= numbered.titleCount
+  ) {
+    return {
+      items: numbered.items,
+      method: "html_heuristic",
+      visibleText,
+    };
+  }
+
   const scoped = extractHtmlMenu(syntheticHtmlFromVisibleText(visibleText));
   const foodItems = scoped.items.filter(
     (item) =>
@@ -350,13 +441,9 @@ export function extractScopedHtmlMenu(html: string): ExtractedHtmlMenu {
       !addons.has(item.normalizedName),
   );
   const recovered = recoverRepeatedCardTitles(visibleText, foodItems).map(normalizeNumberedItem);
-  const items =
-    numberedNames.size >= 2
-      ? recovered.filter((item) => numberedNames.has(item.normalizedName))
-      : recovered;
   return {
     ...scoped,
-    items,
+    items: recovered,
     visibleText,
   };
 }
