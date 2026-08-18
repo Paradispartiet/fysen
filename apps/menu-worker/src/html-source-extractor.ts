@@ -4,31 +4,19 @@ import { extractHtmlMenu, type ExtractedHtmlMenu } from "./html-extractor.js";
 export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v5";
 
 const HEADING_MARKER = "__FYSEN_HEADING_LEVEL_";
+const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|bar(?:\s+menu)?|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
+const BEVERAGE_ITEM_NAME = /^(?:kaffe(?:\b|[-/])|coffee(?:\b|[-/])|filterkaffe\b|espresso\b|americano\b|cappuccino\b|latte\b|arabisk\s+kaffe\b|libanesisk\s+kaffe\b|te(?:\b|[-/])|tea(?:\b|[-/]))/iu;
 
 function normalizeVisibleLine(value: string): string {
   return value.normalize("NFKC").replace(/\s+/g, " ").trim();
 }
 
 function isBeverageSectionHeading(value: string): boolean {
-  const heading = normalizeVisibleLine(value);
-  return /^(?:
-    drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|bar(?:\s+menu)?|
-    vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|
-    cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|
-    scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|
-    calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|
-    vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|
-    øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|
-    kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*
-  )$/iux.test(heading);
+  return BEVERAGE_SECTION_HEADING.test(normalizeVisibleLine(value));
 }
 
 function isBeverageItemName(value: string): boolean {
-  const name = normalizeVisibleLine(value);
-  return /^(?:
-    kaffe(?:\b|[-/])|coffee(?:\b|[-/])|filterkaffe\b|espresso\b|americano\b|cappuccino\b|latte\b|
-    arabisk\s+kaffe\b|libanesisk\s+kaffe\b|te(?:\b|[-/])|tea(?:\b|[-/])
-  )/iux.test(name);
+  return BEVERAGE_ITEM_NAME.test(normalizeVisibleLine(value));
 }
 
 function annotatedVisibleLines(html: string): readonly string[] {
