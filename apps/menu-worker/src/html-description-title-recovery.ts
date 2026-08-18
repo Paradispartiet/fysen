@@ -4,10 +4,12 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v2";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v3";
 
 const PRICE_LINE = /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
 const DESCRIPTION_LEAD = /^(?:serveres?|servert|served|with|kan\s+fås|can\s+be|blandet|mixed|godt\s+krydret|well\s+seasoned|marinert|marinated|grillet|grilled|bakt|baked|braisert|braised|tilberedt|prepared|toppet|topped|inneholder|contains?|inkludert|including|ekstra|extra|pr\.?\s*person|per\s+person)\b/iu;
+const PRICE_METADATA_LEAD = /^(?:pr\.?\s*person|per\s+person)\b/iu;
+const SPLIT_PARENTHETICAL_CONTINUATION = /^(?:med|with)\b.*\)$/iu;
 const SECTION_LABEL = /^(?:meny|menu|à\s+la\s+carte|a\s+la\s+carte|forretter?|starters?|appetizers?|småretter|hovedretter?|mains?|main\s+courses?|dessert(?:er|s)?|tilbehør|sides?|kylling\s+og\s+lam|mezah[- ]retter)$/iu;
 const ALLERGEN_PREFIX = /^(?:allergener?|allergens?)\s*:\s*/iu;
 const ALLERGEN_SEPARATOR = /\s*(?:,|\/|\+|;|\bog\b|\band\b)\s*/iu;
@@ -82,6 +84,11 @@ const ALLERGEN_TERMS = new Set([
   "molluscs",
 ]);
 
+interface DescriptionTitleRecovery {
+  readonly title: string;
+  readonly observedNameIsTitleContinuation: boolean;
+}
+
 function normalizeVisibleLine(value: string): string {
   return value.normalize("NFKC").replace(/\s+/g, " ").trim();
 }
@@ -125,6 +132,7 @@ function looksLikeDescription(value: string): boolean {
   return (
     looksLikeAllergenMetadata(line) ||
     DESCRIPTION_LEAD.test(line) ||
+    SPLIT_PARENTHETICAL_CONTINUATION.test(line) ||
     words.length >= 9 ||
     /[.!?]$/u.test(line)
   );
@@ -146,12 +154,48 @@ function looksLikeRecoveredTitle(value: string): boolean {
   return words.length <= 10;
 }
 
-function recoverTitle(lines: readonly string[], position: number): string | null {
-  for (let index = position - 1; index >= Math.max(0, position - 3); index -= 1) {
+function parenthesisBalance(value: string): number {
+  let balance = 0;
+  for (const character of value) {
+    if (character === "(") balance += 1;
+    if (character === ")") balance -= 1;
+  }
+  return balance;
+}
+
+function recoverSplitParentheticalTitle(candidate: string, continuation: string): string | null {
+  const head = normalizeVisibleLine(candidate);
+  const tail = normalizeVisibleLine(continuation);
+  if (
+    parenthesisBalance(head) !== 1 ||
+    parenthesisBalance(tail) !== -1 ||
+    !SPLIT_PARENTHETICAL_CONTINUATION.test(tail)
+  ) {
+    return null;
+  }
+
+  const combined = normalizeVisibleLine(`${head} ${tail}`);
+  return parenthesisBalance(combined) === 0 && looksLikeRecoveredTitle(combined) ? combined : null;
+}
+
+function recoverTitle(
+  lines: readonly string[],
+  position: number,
+  observedName: string,
+): DescriptionTitleRecovery | null {
+  const continuation = normalizeVisibleLine(observedName);
+  for (let index = position - 1; index >= Math.max(0, position - 8); index -= 1) {
     const candidate = normalizeVisibleLine(lines[index] ?? "");
     if (!candidate) continue;
     if (PRICE_LINE.test(candidate)) break;
-    if (looksLikeRecoveredTitle(candidate)) return candidate;
+
+    const splitTitle = recoverSplitParentheticalTitle(candidate, continuation);
+    if (splitTitle) {
+      return { title: splitTitle, observedNameIsTitleContinuation: true };
+    }
+    if (looksLikeRecoveredTitle(candidate)) {
+      return { title: candidate, observedNameIsTitleContinuation: false };
+    }
   }
   return null;
 }
@@ -190,8 +234,11 @@ function recoverParentheticalQualifiedTitle(
   return null;
 }
 
-function recoveredDescription(item: MenuObservedItem): string | null {
-  const parts = [item.name, item.description]
+function recoveredDescription(
+  item: MenuObservedItem,
+  includeObservedName: boolean,
+): string | null {
+  const parts = [includeObservedName && !PRICE_METADATA_LEAD.test(item.name) ? item.name : null, item.description]
     .map((value) => value?.trim() ?? "")
     .filter(Boolean);
   return parts.length > 0 ? [...new Set(parts)].join(" ") : null;
@@ -206,10 +253,11 @@ export function recoverDescriptionNamedHtmlItems(
 
   for (const item of items) {
     const position = item.position;
-    const descriptionTitle =
+    const descriptionRecovery =
       looksLikeDescription(item.name) && Number.isInteger(position) && position >= 1
-        ? recoverTitle(lines, position)
+        ? recoverTitle(lines, position, item.name)
         : null;
+    const descriptionTitle = descriptionRecovery?.title ?? null;
     const qualifiedTitle = descriptionTitle ? null : recoverParentheticalQualifiedTitle(lines, item);
     const title = descriptionTitle ?? qualifiedTitle;
 
@@ -221,9 +269,11 @@ export function recoverDescriptionNamedHtmlItems(
             sourceKey,
             name: title,
             normalizedName: normalizeDishName(title),
-            description: descriptionTitle ? recoveredDescription(item) : item.description,
-            confidence: descriptionTitle ? Math.min(item.confidence, 0.84) : item.confidence,
-            sourceExcerpt: descriptionTitle
+            description: descriptionRecovery
+              ? recoveredDescription(item, !descriptionRecovery.observedNameIsTitleContinuation)
+              : item.description,
+            confidence: descriptionRecovery ? Math.min(item.confidence, 0.84) : item.confidence,
+            sourceExcerpt: descriptionRecovery
               ? `${title} — ${item.sourceExcerpt ?? item.name}`.slice(0, 1000)
               : item.sourceExcerpt,
           };
