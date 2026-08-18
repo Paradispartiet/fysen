@@ -31,15 +31,37 @@ function primaryRestaurantResults(results: readonly DishSearchResult[], limit: n
   return selected;
 }
 
-function cuisinePreviewDishes(cuisine: Cuisine): readonly DishSuggestion[] {
+function cuisineCandidates(cuisine: Cuisine): readonly DishSuggestion[] {
+  const seen = new Set<string>();
   return cuisine.areas
-    .map((area) => area.dishes[0])
-    .filter((dish): dish is DishSuggestion => Boolean(dish))
-    .slice(0, 4);
+    .flatMap((area) => area.dishes)
+    .sort((left, right) => right.explorerPriority - left.explorerPriority || left.label.localeCompare(right.label, "nb"))
+    .filter((dish) => {
+      if (seen.has(dish.id)) return false;
+      seen.add(dish.id);
+      return true;
+    });
+}
+
+function cuisinePreviewDishes(cuisine: Cuisine): readonly DishSuggestion[] {
+  return cuisineCandidates(cuisine).slice(0, 4);
+}
+
+function rankDishResults(results: readonly DishResults[]): DishResults[] {
+  return [...results].sort((left, right) => {
+    const leftHasCoverage = left.results.length > 0 ? 1 : 0;
+    const rightHasCoverage = right.results.length > 0 ? 1 : 0;
+    if (leftHasCoverage !== rightHasCoverage) return rightHasCoverage - leftHasCoverage;
+    if (left.results.length !== right.results.length) return right.results.length - left.results.length;
+    if (left.dish.explorerPriority !== right.dish.explorerPriority) {
+      return right.dish.explorerPriority - left.dish.explorerPriority;
+    }
+    return left.dish.label.localeCompare(right.dish.label, "nb");
+  });
 }
 
 async function findFeaturedRestaurants(cuisine: Cuisine, signal: AbortSignal): Promise<FeaturedRestaurants | null> {
-  const candidates = cuisinePreviewDishes(cuisine);
+  const candidates = cuisineCandidates(cuisine).slice(0, 6);
   const fallback = candidates[0];
   if (!fallback) return null;
 
@@ -110,7 +132,7 @@ export function CuisineExplorer() {
       }),
     )
       .then((results) => {
-        if (!controller.signal.aborted) setDishResults(results);
+        if (!controller.signal.aborted) setDishResults(rankDishResults(results));
       })
       .catch(() => {
         if (!controller.signal.aborted) setAreaError("Kunne ikke hente ferske restauranttreff akkurat nå.");
@@ -266,7 +288,7 @@ export function CuisineExplorer() {
                   <p>{selectedArea.name}</p>
                   <h3>Retter og hvor du kan få dem</h3>
                 </div>
-                <span>Ferske menytreff i Oslo</span>
+                <span>Ferske menytreff først · Oslo</span>
               </div>
 
               {loadingArea ? <p className="cuisineExploreStatus">Henter retter og restauranter …</p> : null}
@@ -275,7 +297,7 @@ export function CuisineExplorer() {
               {!loadingArea && !areaError ? (
                 <div className="cuisineExploreDishList">
                   {dishResults.map(({ dish, results }) => (
-                    <article className="cuisineExploreDish" key={dish.id}>
+                    <article className="cuisineExploreDish" key={dish.id} data-has-coverage={results.length > 0 ? "true" : "false"}>
                       <div className="cuisineExploreDishHeading">
                         <h4>{dish.label}</h4>
                         <div className="cuisineExploreDishActions">
@@ -308,7 +330,7 @@ export function CuisineExplorer() {
             </section>
 
             <footer className="cuisineExploreDialogFooter">
-              Restaurantene vises bare når Fysen har et ferskt, ikke-fuzzy menytreff på retten. Matkunnskap er et separat redaksjonelt lag.
+              Retter med sikre, ferske Oslo-treff vises først. Innen samme dekningsnivå brukes redaksjonell relevans. Restaurantene vises bare fra ikke-fuzzy menytreff.
             </footer>
           </div>
         ) : null}
