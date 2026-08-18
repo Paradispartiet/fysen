@@ -6,7 +6,7 @@ import {
 } from "@fysen/menu-core";
 import { extractHtmlMenu, type ExtractedHtmlMenu } from "./html-extractor.js";
 
-export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v13";
+export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v14";
 
 const HEADING_MARKER = "__FYSEN_HEADING_LEVEL_";
 const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
@@ -349,6 +349,12 @@ function looksLikeDescriptionLine(value: string): boolean {
   return words.length >= 4 || /[.!?]$/u.test(line);
 }
 
+function looksLikeStrongDescriptionLine(value: string): boolean {
+  const line = normalizeVisibleLine(value);
+  const words = line.split(/\s+/).filter(Boolean);
+  return /[.!?]$/u.test(line) || words.length >= 6;
+}
+
 function hasRepeatedHeadingLevel(headingLevels: ReadonlyMap<number, number>, position: number): boolean {
   const level = headingLevels.get(position);
   if (level === undefined) return false;
@@ -408,7 +414,7 @@ function extractStandalonePriceBlocks(
     let titleIndex: number | null = null;
     let name: string | null = null;
 
-    if (lastHeading !== null && hasRepeatedHeadingLevel(headingLevels, lastHeading)) {
+    if (lastHeading !== null) {
       const firstContentIndex = (() => {
         for (let index = lastHeading + 1; index < pricePosition; index += 1) {
           if (headingLevels.has(index)) continue;
@@ -418,7 +424,9 @@ function extractStandalonePriceBlocks(
         return null;
       })();
       const firstContent = firstContentIndex === null ? "" : lines[firstContentIndex] ?? "";
-      if (firstContent && looksLikeDescriptionLine(firstContent)) {
+      const repeatedLevel = hasRepeatedHeadingLevel(headingLevels, lastHeading);
+      const strongUniqueCard = !repeatedLevel && looksLikeStrongDescriptionLine(firstContent);
+      if (firstContent && looksLikeDescriptionLine(firstContent) && (repeatedLevel || strongUniqueCard)) {
         const headingTitle = recoveredTitle(lines, lastHeading, headingLevels);
         if (headingTitle && looksLikeStandaloneBlockTitle(headingTitle)) {
           titleIndex = lastHeading;
