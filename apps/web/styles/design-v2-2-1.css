@@ -37,6 +37,17 @@
   max-width: none;
 }
 
+/* Keep section explanations directly below Matlyst / Fysen matleksikon. */
+.foodSectionHeading {
+  display: block;
+}
+
+.foodSectionHeading > p {
+  max-width: 620px;
+  margin: 2px 0 0;
+  text-align: left;
+}
+
 @media (max-width: 900px) {
   .homeHeroTopline > .homeHeroContent {
     grid-column: 1;
