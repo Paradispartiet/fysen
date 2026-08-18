@@ -5,7 +5,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EXTRACTOR_VERSION = "html-v5";
+export const HTML_EXTRACTOR_VERSION = "html-v6";
 
 export interface ExtractedHtmlMenu {
   readonly items: readonly MenuObservedItem[];
@@ -14,6 +14,8 @@ export interface ExtractedHtmlMenu {
 }
 
 type JsonRecord = Record<string, unknown>;
+
+const SHORT_ALLERGEN_SUFFIX = /\s+\((?:[\p{L}\d]{1,5}\s*(?:[,/+ ]\s*)?){1,20}\)$/u;
 
 function isRecord(value: unknown): value is JsonRecord {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -133,6 +135,9 @@ function looksLikeNonDish(name: string): boolean {
     /^(hours|opening|åpning|booking|contact|kontakt|address|adresse|where to find|allerg|drinks?|drikke|beverages?|mineralvann|soft\s+drinks?|sodas?|brus(?:\s*\/\s*mineralvann)?|wine|vin|beer|øl|sake|alkoholfritt)/iu.test(
       name,
     ) ||
+    /^(?:menu|meny|take\s*away|takeaway|småretter(?:\s+og\s+forretter)?|forretter?|starters?|appetizers?|varmretter|hovedretter?|mains?|main\s+courses?|salater?|salads?|barnemeny|kids?\s+menu|mexikanske\s+retter|mexican(?:\s+dishes)?|grillretter|pizza|dessert(?:er)?|snacks?(?:\s*&\s*dip)?|sides?|tilbehør|tillegg\s+for\s+ekstra\s+tilbehør)$/iu.test(
+      name,
+    ) ||
     /^(monday|tuesday|wednesday|thursday|friday|saturday|sunday|mandag|tirsdag|onsdag|torsdag|fredag|lørdag|søndag)\b/i.test(
       normalized,
     )
@@ -140,8 +145,26 @@ function looksLikeNonDish(name: string): boolean {
 }
 
 function looksLikeDescriptor(line: string): boolean {
-  return /^(allergens?|allergener|with|topped|served|ask for|choose|velg|med|contains?|including|inkludert|accompanied)\b/iu.test(
-    line.trim(),
+  const trimmed = line.trim();
+  const words = trimmed.split(/\s+/).filter(Boolean);
+  return (
+    /^(allergens?|allergener|with|topped|served|ask for|choose|velg|med|contains?|including|inkludert|accompanied)\b/iu.test(
+      trimmed,
+    ) ||
+    (words.length >= 4 && /\b(?:served|serveres|comes\s+with|serveres\s+med|inkluderer)\b/iu.test(trimmed))
+  );
+}
+
+function looksLikeStandaloneDescription(line: string): boolean {
+  const trimmed = line.trim();
+  if (!trimmed || SHORT_ALLERGEN_SUFFIX.test(trimmed)) return false;
+  const withoutMenuNumber = trimmed.replace(/^\d{1,3}\s*[.)]\s*/u, "").trim();
+  const words = withoutMenuNumber.split(/\s+/).filter(Boolean);
+  return (
+    looksLikeDescriptor(withoutMenuNumber) ||
+    /[,;]/u.test(withoutMenuNumber) ||
+    /[.!?](?:\s|$)/u.test(withoutMenuNumber) ||
+    (words.length >= 3 && /\b(?:eller|or)\b/iu.test(withoutMenuNumber))
   );
 }
 
@@ -170,9 +193,7 @@ function looksLikeSharedChildHeading(line: string): boolean {
 }
 
 function splitHeuristicName(value: string): { readonly name: string; readonly description: string | null } {
-  const withoutAllergens = value
-    .replace(/\s+\((?:[\p{L}\d]{1,5}\s*,?\s*){1,20}\)$/u, "")
-    .trim();
+  const withoutAllergens = value.replace(SHORT_ALLERGEN_SUFFIX, "").trim();
   const withoutMenuNumber = withoutAllergens.replace(/^\d{1,3}\s*[.)]\s*/u, "").trim();
   const commaIndex = withoutMenuNumber.indexOf(",");
   if (commaIndex >= 3 && commaIndex <= 120) {
@@ -350,14 +371,21 @@ function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[]
     if (priceMinor === null) continue;
 
     let nameIndex: number | null = null;
-    for (let offset = 1; offset <= 4; offset += 1) {
+    for (let offset = 1; offset <= 8; offset += 1) {
       const candidateIndex = position - offset;
       if (candidateIndex < 0) break;
       const candidate = lines[candidateIndex]?.trim();
       if (!candidate) continue;
       if (standalonePriceLine.test(candidate) || inlinePriceLine.test(candidate)) break;
-      if (looksLikeNonDish(candidate) || looksLikeDescriptor(candidate)) continue;
-      if (candidate.length < 2 || candidate.length > 180 || !/\p{L}/u.test(candidate)) continue;
+      if (
+        looksLikeNonDish(candidate) ||
+        looksLikeStandaloneDescription(candidate) ||
+        looksLikeMetadataBoundary(candidate)
+      ) {
+        continue;
+      }
+      const parsed = splitHeuristicName(candidate.replace(/^\*+/, "").trim());
+      if (!parsed.name || parsed.name.length < 2 || parsed.name.length > 180 || !/\p{L}/u.test(parsed.name)) continue;
       nameIndex = candidateIndex;
       break;
     }
@@ -384,7 +412,7 @@ function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[]
       sectionName: null,
       priceMinor,
       currency: "NOK",
-      position,
+      position: nameIndex,
       extractionMethod: "html_heuristic",
       confidence: 0.72,
       sourceExcerpt,
