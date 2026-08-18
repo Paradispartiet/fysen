@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "noods-klingenberggata-oslo",
+    "name": "Noods Oslo",
+    "websiteUrl": "https://www.noodsnorway.no/",
+    "address": "Klingenberggata 4, 0161 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9137612,
+    "longitude": 10.7340311
+  },
+  "menuSource": {
+    "url": "https://www.noodsnorway.no/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 6
+  },
+  "hoursSource": {
+    "url": "https://www.noodsnorway.no/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "actions": [
+    {
+      "type": "order",
+      "url": "https://noods.munu.shop/ordertypes/r200075143-noods-webshop",
+      "sourceUrl": "https://www.noodsnorway.no/",
+      "provider": "Noods"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Creamy Chick-N Bowl 蒜⾹奶油鸡⾯",
+      "Tender Short Ribs 招牌⽜肋油泼⾯",
+      "Beijing ChaCha⽜⾁炸酱⾯",
+      "Szechuan Braised Beef 秘制红油⽜⾁粉",
+      "Kung Fu Beef Burger 红烧⽜⾁夾饃"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Creamy Chick-N Bowl 蒜⾹奶油鸡⾯",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Tender Short Ribs 招牌⽜肋油泼⾯",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Beijing ChaCha⽜⾁炸酱⾯",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Szechuan Braised Beef 秘制红油⽜⾁粉",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Kung Fu Beef Burger 红烧⽜⾁夾饃",
+        "priceMinor": 9300
+      }
+    ]
+  }
+}
