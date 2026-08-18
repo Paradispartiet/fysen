@@ -158,13 +158,13 @@ function looksLikeDescriptor(line: string): boolean {
 function looksLikeStandaloneDescription(line: string): boolean {
   const trimmed = line.trim();
   if (!trimmed || SHORT_ALLERGEN_SUFFIX.test(trimmed)) return false;
-  const words = trimmed.split(/\s+/).filter(Boolean);
+  const withoutMenuNumber = trimmed.replace(/^\d{1,3}\s*[.)]\s*/u, "").trim();
+  const words = withoutMenuNumber.split(/\s+/).filter(Boolean);
   return (
-    looksLikeDescriptor(trimmed) ||
-    /[,;]/u.test(trimmed) ||
-    /[.!?](?:\s|$)/u.test(trimmed) ||
-    words.length >= 5 ||
-    (words.length >= 3 && /\b(?:eller|or)\b/iu.test(trimmed))
+    looksLikeDescriptor(withoutMenuNumber) ||
+    /[,;]/u.test(withoutMenuNumber) ||
+    /[.!?](?:\s|$)/u.test(withoutMenuNumber) ||
+    (words.length >= 3 && /\b(?:eller|or)\b/iu.test(withoutMenuNumber))
   );
 }
 
