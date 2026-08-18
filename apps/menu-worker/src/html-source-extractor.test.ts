@@ -19,10 +19,99 @@ describe("extractScopedHtmlMenu", () => {
     `;
 
     const result = extractScopedHtmlMenu(html);
-    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v10");
+    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v11");
     expect(result.items.map((item) => item.name)).toEqual(["Falafel", "Bakalawa"]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([9800, 12900]);
     expect(result.visibleText).not.toContain("Husets Cabernet");
+  });
+
+  it("recovers repeated heading cards with multiline descriptions and strips trailing allergen codes", () => {
+    const html = `
+      <html><body>
+        <h2>Forretter</h2>
+        <div>
+          <h3>Green rolls (2,3,5)</h3>
+          <p>Ferske vietnamesiske vårruller med urter og grønnsaker.</p>
+          <p>Servert med vår egen peanøttsaus.</p>
+          <p>94,-</p>
+        </div>
+        <div>
+          <h3>Chicken Satay (2,5)</h3>
+          <p>Kyllingspyd marinert på vietnamesisk vis.</p>
+          <p>Servert med vår egen peanøttdippsaus.</p>
+          <p>129,-</p>
+        </div>
+        <div>
+          <h3>Pho Bo (1,3,6)</h3>
+          <p>Vietnamesisk tradisjonell biffsuppe med risnudler.</p>
+          <p>Serveres med friske urter og lime.</p>
+          <p>189,-</p>
+        </div>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual(["Green rolls", "Chicken Satay", "Pho Bo"]);
+    expect(result.items.map((item) => item.priceMinor)).toEqual([9400, 12900, 18900]);
+    expect(result.items[0]?.description).toContain("Ferske vietnamesiske vårruller");
+    expect(result.items[0]?.description).toContain("peanøttsaus");
+  });
+
+  it("blocks mineral-water and other beverage sections without leaking soft drinks", () => {
+    const html = `
+      <html><body>
+        <h2>Hovedretter</h2>
+        <p>Pho Bo</p><p>Tradisjonell vietnamesisk biffsuppe.</p><p>189 kr</p>
+        <p>Shaking Beef</p><p>Indrefilet ristet på vietnamesisk vis.</p><p>234 kr</p>
+        <h2>Mineralvann</h2>
+        <p>Coca-Cola</p><p>46 kr</p>
+        <p>Sprite</p><p>46 kr</p>
+        <h2>Cocktails</h2>
+        <p>Cuba Libre</p><p>159 kr</p>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual(["Pho Bo", "Shaking Beef"]);
+    expect(result.visibleText).not.toContain("Coca-Cola");
+    expect(result.visibleText).not.toContain("Cuba Libre");
+  });
+
+  it("ends menu scope at terminal allergen/reservation/contact headings after food has been seen", () => {
+    const html = `
+      <html><body>
+        <h2>Mat</h2>
+        <p>Golden Wontons 99 kr</p>
+        <p>Edamame 69 kr</p>
+        <h2>Allergenoversikt</h2>
+        <p>1 Gluten 2 Egg 3 Fisk 4 Peanøtter</p>
+        <h1>Reservasjoner</h1>
+        <p>Reservasjoner for opptil 8 personer.</p>
+        <h2>Kontakt oss</h2>
+        <p>Telefon: +47 940 89 000</p>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual(["Golden Wontons", "Edamame"]);
+    expect(result.visibleText).not.toContain("Allergenoversikt");
+    expect(result.visibleText).not.toContain("Reservasjoner for opptil 8 personer");
+    expect(result.visibleText).not.toContain("Telefon");
+  });
+
+  it("does not let a terminal heading before the menu suppress later food", () => {
+    const html = `
+      <html><body>
+        <h2>Reservasjoner</h2>
+        <p>Bestill bord før besøket.</p>
+        <h2>Meny</h2>
+        <p>Falafel 98 kr</p>
+        <p>Bakalawa 129 kr</p>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual(["Falafel", "Bakalawa"]);
   });
 
   it("normalizes numbered dish cards and removes repeated add-on price blocks", () => {

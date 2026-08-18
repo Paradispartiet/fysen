@@ -6,19 +6,21 @@ import {
 } from "@fysen/menu-core";
 import { extractHtmlMenu, type ExtractedHtmlMenu } from "./html-extractor.js";
 
-export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v10";
+export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v11";
 
 const HEADING_MARKER = "__FYSEN_HEADING_LEVEL_";
-const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|bar(?:\s+menu)?|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
+const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
+const MENU_END_SECTION_HEADING = /^(?:allergen(?:oversikt|er|s)?|reservasjoner?|reservations?|kontakt(?:\s+oss)?|contact(?:\s+us)?|booking|bordbestilling)$/iu;
 const BEVERAGE_ITEM_NAME = /^(?:kaffe(?:\b|[-/])|coffee(?:\b|[-/])|filterkaffe\b|iskaffe\b|iced\s+coffee\b|espresso\b|americano\b|cappuccino\b|latte\b|arabisk\s+kaffe\b|libanesisk\s+kaffe\b|te(?:\b|[-/])|tea(?:\b|[-/])|(?:grønn\s+|green\s+)?thai\s+(?:te|tea)\b)/iu;
 const PRICE_TOKEN = "(?:(?:kr\\.?\\s*)?[1-9]\\d{1,3}(?:[.,]\\d{1,2})?(?:\\s*(?:,-|kr\\.?|nok))?)";
 const PRICE_AT_END = new RegExp(`\\s+${PRICE_TOKEN}$`, "iu");
 const STANDALONE_PRICE = new RegExp(`^${PRICE_TOKEN}$`, "iu");
 const PRICE_VALUE_AT_END = /(?:^|\s)(?:kr\.?\s*)?([1-9]\d{1,3})(?:[.,](\d{1,2}))?(?:\s*(?:,-|kr\.?|nok))?$/iu;
-const CARD_TITLE_BOUNDARY = /^(?:menu|meny|opening|åpning|hours|contact|kontakt|address|adresse|booking|drinks?|drikke|wine|vin|beer|øl|allerg|meet the dishes|see the whole menu)\b/iu;
+const CARD_TITLE_BOUNDARY = /^(?:menu|meny|opening|åpning|hours|contact|kontakt|address|adresse|booking|reservasjoner?|mineralvann|drinks?|drikke|wine|vin|beer|øl|allerg|meet the dishes|see the whole menu)\b/iu;
 const NUMBERED_DISH_TITLE = /^(?!\d{1,4}\s*(?:kr\.?|nok)\b)\d{1,3}\s*[.)]?\s+\p{L}/iu;
 const EXTRAS_TRIGGER = /^(?:ekstra\s+sulten\s*\??|extra\s+hungry\s*\??|extras?\s*\??|add[- ]?ons?\s*\??|tillegg\s*\??)$/iu;
 const MORE_LABEL = /^(?:vis\s+mer|show\s+more)$/iu;
+const TRAILING_ALLERGEN_CODES = /\s+\((?:[\p{L}\d]{1,5}\s*,?\s*){1,20}\)$/u;
 
 function normalizeVisibleLine(value: string): string {
   return value.normalize("NFKC").replace(/\s+/g, " ").trim();
@@ -28,8 +30,16 @@ function stripMenuNumber(value: string): string {
   return normalizeVisibleLine(value).replace(/^\d{1,3}\s*[.)]?\s+/u, "").trim();
 }
 
+function stripTrailingAllergenCodes(value: string): string {
+  return value.replace(TRAILING_ALLERGEN_CODES, "").trim();
+}
+
 function canonicalNumberedTitle(value: string): string {
   return stripMenuNumber(value).replace(PRICE_AT_END, "").trim();
+}
+
+function canonicalCardTitle(value: string): string {
+  return stripTrailingAllergenCodes(canonicalNumberedTitle(value));
 }
 
 function isBeverageSectionHeading(value: string): boolean {
@@ -114,11 +124,18 @@ function addonOptionNames(lines: readonly string[]): ReadonlySet<string> {
   return names;
 }
 
-function foodScopedVisibleText(lines: readonly string[]): string {
+interface FoodScopedText {
+  readonly visibleText: string;
+  readonly headingLevels: ReadonlyMap<number, number>;
+}
+
+function foodScopedText(lines: readonly string[]): FoodScopedText {
   const numberedMenu = isNumberedMenu(lines);
   const output: string[] = [];
+  const headingLevels = new Map<number, number>();
   let blockedHeadingLevel: number | null = null;
   let skippingAddons = false;
+  let sawFoodSignal = false;
 
   for (const line of lines) {
     const headingMatch = line.match(/^__FYSEN_HEADING_LEVEL_([1-6])__\s*(.*)$/u);
@@ -130,10 +147,14 @@ function foodScopedVisibleText(lines: readonly string[]): string {
       if (blockedHeadingLevel !== null && headingLevel <= blockedHeadingLevel) {
         blockedHeadingLevel = null;
       }
+      if (blockedHeadingLevel === null && sawFoodSignal && MENU_END_SECTION_HEADING.test(headingText)) {
+        break;
+      }
       if (blockedHeadingLevel === null && isBeverageSectionHeading(headingText)) {
         blockedHeadingLevel = headingLevel;
       }
       if (blockedHeadingLevel === null && headingText) {
+        headingLevels.set(output.length, headingLevel);
         output.push(headingText);
       }
       continue;
@@ -153,10 +174,11 @@ function foodScopedVisibleText(lines: readonly string[]): string {
       continue;
     }
     if (MORE_LABEL.test(line)) continue;
+    if (STANDALONE_PRICE.test(line) || PRICE_AT_END.test(line)) sawFoodSignal = true;
     output.push(line);
   }
 
-  return output.join("\n");
+  return { visibleText: output.join("\n"), headingLevels };
 }
 
 function parsePriceMinorAtEnd(value: string): number | null {
@@ -289,15 +311,20 @@ function dominantTitleScript(value: string): TitleScript | null {
   return best && best.count >= 2 ? best.script : null;
 }
 
-function recoveredTitle(lines: readonly string[], titleIndex: number): string | null {
+function recoveredTitle(
+  lines: readonly string[],
+  titleIndex: number,
+  headingLevels?: ReadonlyMap<number, number>,
+): string | null {
   const rawCurrent = lines[titleIndex]?.trim() ?? "";
   if (!plausibleCardTitle(rawCurrent)) return null;
-  const current = canonicalNumberedTitle(rawCurrent);
+  const current = canonicalCardTitle(rawCurrent);
   if (!current) return null;
 
+  if (headingLevels && !headingLevels.has(titleIndex - 1)) return current;
   const rawPrevious = lines[titleIndex - 1]?.trim() ?? "";
   if (!plausibleCardTitle(rawPrevious) || looksLikeSectionHeading(rawPrevious)) return current;
-  const previous = canonicalNumberedTitle(rawPrevious);
+  const previous = canonicalCardTitle(rawPrevious);
   if (!previous) return current;
   const previousScript = dominantTitleScript(previous);
   const currentScript = dominantTitleScript(current);
@@ -311,9 +338,80 @@ function looksLikeCardDescription(item: MenuObservedItem): boolean {
   return words.length >= 4 || /[.!?]$/u.test(item.name) || Boolean(item.description);
 }
 
+function looksLikeDescriptionLine(value: string): boolean {
+  const line = normalizeVisibleLine(value);
+  const words = line.split(/\s+/).filter(Boolean);
+  return words.length >= 4 || /[.!?]$/u.test(line);
+}
+
+function hasRepeatedHeadingLevel(headingLevels: ReadonlyMap<number, number>, position: number): boolean {
+  const level = headingLevels.get(position);
+  if (level === undefined) return false;
+  let count = 0;
+  for (const candidate of headingLevels.values()) {
+    if (candidate !== level) continue;
+    count += 1;
+    if (count >= 2) return true;
+  }
+  return false;
+}
+
 interface CardRecovery {
   readonly lineIndex: number;
   readonly title: string;
+  readonly description?: string | null;
+}
+
+function headingCardRecoveryAtItemPosition(
+  lines: readonly string[],
+  headingLevels: ReadonlyMap<number, number>,
+  item: MenuObservedItem,
+): CardRecovery | null {
+  const position = item.position;
+  if (!Number.isInteger(position) || position < 1 || position >= lines.length) return null;
+
+  const scanStart = Math.max(0, position - 9);
+  let headingIndex: number | null = null;
+  for (let index = position - 1; index >= scanStart; index -= 1) {
+    const line = lines[index]?.trim() ?? "";
+    if (!line) continue;
+    if (STANDALONE_PRICE.test(line) || PRICE_AT_END.test(line)) return null;
+    if (headingLevels.has(index)) {
+      headingIndex = index;
+      break;
+    }
+  }
+  if (headingIndex === null || !hasRepeatedHeadingLevel(headingLevels, headingIndex)) return null;
+
+  const rawTitle = lines[headingIndex]?.trim() ?? "";
+  if (looksLikeSectionHeading(rawTitle)) return null;
+  const title = recoveredTitle(lines, headingIndex, headingLevels);
+  if (!title) return null;
+
+  const blockLines = lines.slice(headingIndex + 1, position);
+  const pricedLine = lines[position]?.trim() ?? "";
+  if (PRICE_AT_END.test(pricedLine) && !STANDALONE_PRICE.test(pricedLine)) {
+    const inlineDescription = pricedLine.replace(PRICE_AT_END, "").trim();
+    if (inlineDescription) blockLines.push(inlineDescription);
+  }
+
+  const normalizedBlock = normalizeDishName(blockLines.join(" "));
+  if (!item.normalizedName || !normalizedBlock.includes(item.normalizedName)) return null;
+
+  const descriptionLines = blockLines.filter(
+    (line) =>
+      line &&
+      !STANDALONE_PRICE.test(line) &&
+      !PRICE_AT_END.test(line) &&
+      !CARD_TITLE_BOUNDARY.test(line),
+  );
+  if (!descriptionLines.some(looksLikeDescriptionLine)) return null;
+
+  return {
+    lineIndex: position,
+    title,
+    description: descriptionLines.join(" ").trim() || null,
+  };
 }
 
 function cardRecoveryAtItemPosition(lines: readonly string[], item: MenuObservedItem): CardRecovery | null {
@@ -350,7 +448,8 @@ function findFallbackCardRecovery(
   return null;
 }
 
-function recoveredDescription(item: MenuObservedItem): string | null {
+function recoveredDescription(item: MenuObservedItem, recovery: CardRecovery): string | null {
+  if (recovery.description !== undefined) return recovery.description;
   const parts = [item.name, item.description]
     .map((value) => value?.trim() ?? "")
     .filter(Boolean);
@@ -360,6 +459,7 @@ function recoveredDescription(item: MenuObservedItem): string | null {
 
 function recoverRepeatedCardTitles(
   visibleText: string,
+  headingLevels: ReadonlyMap<number, number>,
   items: readonly MenuObservedItem[],
 ): readonly MenuObservedItem[] {
   if (items.length < 2) return items;
@@ -369,7 +469,10 @@ function recoverRepeatedCardTitles(
 
   for (const [itemIndex, item] of items.entries()) {
     if (!looksLikeCardDescription(item)) continue;
-    const recovery = cardRecoveryAtItemPosition(lines, item) ?? findFallbackCardRecovery(lines, item, searchFrom);
+    const recovery =
+      headingCardRecoveryAtItemPosition(lines, headingLevels, item) ??
+      cardRecoveryAtItemPosition(lines, item) ??
+      findFallbackCardRecovery(lines, item, searchFrom);
     if (!recovery) continue;
     searchFrom = recovery.lineIndex + 1;
     if (normalizeDishName(recovery.title) === item.normalizedName) continue;
@@ -390,8 +493,8 @@ function recoverRepeatedCardTitles(
             sourceKey,
             name,
             normalizedName: normalizeDishName(name),
-            description: recoveredDescription(item),
-            confidence: Math.min(item.confidence, 0.74),
+            description: recoveredDescription(item, recovery),
+            confidence: Math.min(item.confidence, recovery.description !== undefined ? 0.86 : 0.74),
             sourceExcerpt: `${name} — ${item.sourceExcerpt ?? lines[recovery.lineIndex] ?? ""}`.slice(0, 1000),
           };
         })()
@@ -419,7 +522,8 @@ export function extractScopedHtmlMenu(html: string): ExtractedHtmlMenu {
 
   const sourceLines = annotatedVisibleLines(html);
   const addons = addonOptionNames(sourceLines);
-  const visibleText = foodScopedVisibleText(sourceLines);
+  const scopedText = foodScopedText(sourceLines);
+  const visibleText = scopedText.visibleText;
   const numbered = extractNumberedMenuItems(visibleText);
   if (
     numbered.titleCount >= 2 &&
@@ -440,7 +544,11 @@ export function extractScopedHtmlMenu(html: string): ExtractedHtmlMenu {
       !isObviousMetadataItem(item.name) &&
       !addons.has(item.normalizedName),
   );
-  const recovered = recoverRepeatedCardTitles(visibleText, foodItems).map(normalizeNumberedItem);
+  const recovered = recoverRepeatedCardTitles(
+    visibleText,
+    scopedText.headingLevels,
+    foodItems,
+  ).map(normalizeNumberedItem);
   return {
     ...scoped,
     items: recovered,
