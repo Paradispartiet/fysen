@@ -57,20 +57,27 @@ Første kjøkkenfamilier er:
 - Midtøsten
 - Mexicansk
 
-Hver kjøkkenboks inneholder:
+Kjøkkenkortene er handlingsflater, ikke faktabokser. Hvert kort inneholder:
 
-- kjøkkentittel;
-- kort region-/kontekstlinje;
-- 3–5 konkrete rettforslag som leder til ekte Fysen-søk;
-- én liten faktalinje som lærer brukeren noe om tradisjonen.
+- kjøkkentittel og kort geografisk eller typologisk kontekst;
+- noen konkrete retteksempler;
+- `På menyen nå` med ferske restauranttreff fra Fysens egne menykilder;
+- egne knapper for regioner, land eller relevante kjøkkenvarianter;
+- en tydelig inngang til full utforsking.
 
-Brede samlebetegnelser skal ikke late som om de er én homogen matkultur. For eksempel skal «Asiatisk» eksplisitt vise at rettene kommer fra ulike kjøkkentradisjoner. `Fast food` beskrives som serveringsform, ikke som én kultur.
+Hele hovedflaten i kortet kan åpne kjøkkenet. Region-/variantknappene kan åpne samme utforsker direkte på valgt område. Utforskeren viser en liste over aktuelle retter og, per rett, opptil noen få restauranter som faktisk har et ferskt ikke-fuzzy menytreff. Hvis Fysen ikke har et sikkert treff, skal det stå eksplisitt i stedet for å gjette en restaurant.
 
-Kjøkkenkortene er sorte med tynn grønn outline. På mobil kan de scrolles horisontalt.
+Brede samlebetegnelser skal ikke late som om de er én homogen matkultur. «Asiatisk» brytes derfor ned i blant annet Japan, Kina, Thailand og Vietnam. `Fast food` brytes ned i typer og serveringsformer i stedet for å behandles som én geografisk kultur.
 
-## Lær en ny rett
+`Visste du?`-tekst skal ikke ligge i kjøkkenkortene. Slike fakta tilhører Matkunnskap.
 
-Forsiden har en egen editorial læringsseksjon. Første kort er Ramen, Biryani og Falafel.
+Kjøkkenkortene er sorte med tynn grønn outline. På mobil kan de scrolles horisontalt. Den interaktive utforskeren bruker native dialog-semantikk og skal fungere med tastatur, fokusretur og små skjermer.
+
+## Lær en ny rett og Matkunnskap
+
+Forsiden har en egen editorial læringsseksjon. Her ligger også de korte `Visste du?`-faktaene som tidligere lå i kjøkkenkortene. Faktaene er generell matkunnskap om kjøkken, regioner og mattradisjoner og skal visuelt og semantisk holdes adskilt fra restaurantens menybevis.
+
+Første fullverdige rettkort er Ramen, Biryani og Falafel.
 
 Rettens navn er en interaktiv læringsinngang. Når brukeren trykker på navnet, åpnes en kunnskapspopup som skal gi et reelt mini-oppslagsverk i stedet for bare en kort faktatekst. Popupen kan inneholde:
 
@@ -122,7 +129,7 @@ Design v2.2 behandles som tre reelle viewport-klasser:
 - iPad ca. 1024×1366;
 - mobil ca. 390×844.
 
-På desktop ligger heroillustrasjonen til høyre for overskriften. På iPad skaleres den ned i samme rad. På mobil forblir den i overskriftsraden i en liten, tydelig størrelse. Kjøkken- og læringskort kan bli horisontale scrolleflater på mobil. Kunnskapspopupen bruker bred desktopflate, men går over til én kolonne og nesten full skjermbredde på mobil.
+På desktop ligger heroillustrasjonen til høyre for overskriften. På iPad skaleres den ned i samme rad. På mobil forblir den i overskriftsraden i en liten, tydelig størrelse. Kjøkken-, matkunnskaps- og læringskort kan bli horisontale scrolleflater på mobil. Kunnskaps- og kjøkkenpopupene bruker bred desktopflate, men går over til én kolonne og nesten full skjermbredde på mobil.
 
 ## Skal ikke brukes
 
