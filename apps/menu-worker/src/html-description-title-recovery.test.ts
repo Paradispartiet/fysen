@@ -53,7 +53,7 @@ describe("HTML description-title recovery", () => {
       visibleText,
     );
 
-    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v1");
+    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v2");
     expect(result.map((entry) => entry.name)).toEqual([
       "Hummus (kikert-og sesampuré)",
       "Hvitløkmarinerte kyllingvinger",
@@ -62,6 +62,39 @@ describe("HTML description-title recovery", () => {
       "Kylling Tawok",
     ]);
     expect(result[0]?.description).toBe("Serveres med pitabrød");
+  });
+
+  it("recovers allergen-only metadata and a non-allergen parenthetical title qualifier", () => {
+    const visibleText = [
+      "Gaza kebab",
+      "Hvete, laktose",
+      "Kan fås gluten- og laktosefri",
+      "350",
+      "Mezah uten kjøtt (vegetar)",
+      "350",
+      "Egg og bacon",
+      "189",
+      "Pizza (H, M)",
+      "199",
+    ].join("\n");
+
+    const result = recoverDescriptionNamedHtmlItems(
+      [
+        item("Hvete, laktose", 1, 35000),
+        item("Mezah uten kjøtt", 4, 35000),
+        item("Egg og bacon", 6, 18900),
+        item("Pizza", 8, 19900),
+      ],
+      visibleText,
+    );
+
+    expect(result.map((entry) => entry.name)).toEqual([
+      "Gaza kebab",
+      "Mezah uten kjøtt (vegetar)",
+      "Egg og bacon",
+      "Pizza",
+    ]);
+    expect(result[0]?.description).toBe("Hvete, laktose");
   });
 
   it("leaves ordinary short dish names unchanged", () => {
