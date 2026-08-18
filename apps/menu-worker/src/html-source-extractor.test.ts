@@ -19,7 +19,7 @@ describe("extractScopedHtmlMenu", () => {
     `;
 
     const result = extractScopedHtmlMenu(html);
-    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v7");
+    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v8");
     expect(result.items.map((item) => item.name)).toEqual(["Falafel", "Bakalawa"]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([9800, 12900]);
     expect(result.visibleText).not.toContain("Husets Cabernet");
@@ -63,6 +63,38 @@ describe("extractScopedHtmlMenu", () => {
     ]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([19500, 24900, 14900]);
     expect(result.items[0]?.description).toBe("Ramen with creamy garlic pork broth and BBQ chicken.");
+  });
+
+  it("combines adjacent title lines from different writing systems in repeated cards", () => {
+    const html = `
+      <html><body>
+        <h2>Meet the dishes</h2>
+        <div><h3>Creamy Chick-N Bowl</h3><h4>蒜香奶油鸡面</h4><p>Ramen with creamy garlic pork broth and BBQ chicken.</p><p>195,-</p></div>
+        <div><h3>Tender Short Ribs</h3><h4>招牌牛肋油泼面🌶</h4><p>Homemade wide flat noodle with slow-cooked beef ribs and chilli oil.</p><p>249,-</p></div>
+        <div><h3>Beijing ChaCha</h3><h4>牛肉炸酱面</h4><p>Homemade wide flat noodle with spiced minced beef and soybean paste.</p><p>149,-</p></div>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual([
+      "Creamy Chick-N Bowl 蒜香奶油鸡面",
+      "Tender Short Ribs 招牌牛肋油泼面🌶",
+      "Beijing ChaCha 牛肉炸酱面",
+    ]);
+    expect(result.items.map((item) => item.priceMinor)).toEqual([19500, 24900, 14900]);
+  });
+
+  it("does not combine a section heading with a following title in another script", () => {
+    const html = `
+      <html><body>
+        <h2>NOODLES</h2>
+        <div><h3>牛肉面</h3><p>Slow-cooked beef noodle soup with herbs.</p><p>199,-</p></div>
+        <div><h3>鸡肉面</h3><p>Chicken noodle soup with herbs and greens.</p><p>189,-</p></div>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual(["牛肉面", "鸡肉面"]);
   });
 
   it("does not promote a one-off section label when a normal inline dish follows it", () => {
