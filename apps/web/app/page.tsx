@@ -15,8 +15,8 @@ export default function HomePage() {
             </div>
           </div>
           <div className="homeSearchWrap">
-            <DishSearch />
             <p className="searchProof">Søk etter en rett og se hvilke restauranter som har den på menyen nå.</p>
+            <DishSearch />
           </div>
         </section>
         <CuisineExplorer />
