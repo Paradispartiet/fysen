@@ -3,9 +3,9 @@ import { extractorVersionForSourceType, shouldForceReextract } from "./menu-sour
 
 describe("HTML runtime extractor version", () => {
   it("tracks both scoped HTML and JSON-LD extractor revisions", () => {
-    expect(extractorVersionForSourceType("html")).toBe("html-v14+html-v6");
-    expect(extractorVersionForSourceType("json_ld")).toBe("html-v14+html-v6");
-    expect(shouldForceReextract("html", "html-v14+html-v5")).toBe(true);
-    expect(shouldForceReextract("json_ld", "html-v14+html-v5")).toBe(true);
+    expect(extractorVersionForSourceType("html")).toBe("html-v14+html-v7");
+    expect(extractorVersionForSourceType("json_ld")).toBe("html-v14+html-v7");
+    expect(shouldForceReextract("html", "html-v14+html-v6")).toBe(true);
+    expect(shouldForceReextract("json_ld", "html-v14+html-v6")).toBe(true);
   });
 });

@@ -5,7 +5,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EXTRACTOR_VERSION = "html-v6";
+export const HTML_EXTRACTOR_VERSION = "html-v7";
 
 export interface ExtractedHtmlMenu {
   readonly items: readonly MenuObservedItem[];
@@ -164,7 +164,8 @@ function looksLikeStandaloneDescription(line: string): boolean {
     looksLikeDescriptor(withoutMenuNumber) ||
     /[,;]/u.test(withoutMenuNumber) ||
     /[.!?](?:\s|$)/u.test(withoutMenuNumber) ||
-    (words.length >= 3 && /\b(?:eller|or)\b/iu.test(withoutMenuNumber))
+    (words.length >= 7 && /\b(?:eller|or)\b/iu.test(withoutMenuNumber)) ||
+    (words.length >= 7 && /\b(?:med|with)\b/iu.test(withoutMenuNumber))
   );
 }
 
