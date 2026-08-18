@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "cafe-sara-hausmann-oslo",
+    "name": "Café Sara",
+    "websiteUrl": "https://cafesara.no/",
+    "address": "Hausmanns gate 29, 0182 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9176068,
+    "longitude": 10.754149
+  },
+  "menuSource": {
+    "url": "https://cafesara.no/meny/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 55
+  },
+  "hoursSource": {
+    "url": "https://cafesara.no/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://cafesara.no/reservasjon/",
+      "sourceUrl": "https://cafesara.no/",
+      "provider": "Café Sara"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kyllingburger",
+      "Stekt Laks – Glutenfri",
+      "Nachos",
+      "Fajitas m/biff",
+      "Mix Grill",
+      "Lammekoteletter",
+      "Pizza Khan",
+      "Sjokoladekake",
+      "Pommes Frites"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kyllingburger",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Stekt Laks – Glutenfri",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Nachos",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Fajitas m/biff",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Mix Grill",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Lammekoteletter",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Pizza Khan",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Sjokoladekake",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Pommes Frites",
+        "priceMinor": 6900
+      }
+    ],
+    "forbiddenDishNames": [
+      "MENY",
+      "Småretter og forretter",
+      "Varmretter",
+      "Tillegg for ekstra tilbehør"
+    ]
+  }
+}
