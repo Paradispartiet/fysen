@@ -32,7 +32,29 @@ function primaryRestaurantResults(results: readonly DishSearchResult[], limit: n
 }
 
 function cuisinePreviewDishes(cuisine: Cuisine): readonly DishSuggestion[] {
-  return cuisine.areas.map((area) => area.dishes[0]).filter((dish): dish is DishSuggestion => Boolean(dish)).slice(0, 4);
+  return cuisine.areas
+    .map((area) => area.dishes[0])
+    .filter((dish): dish is DishSuggestion => Boolean(dish))
+    .slice(0, 4);
+}
+
+async function findFeaturedRestaurants(cuisine: Cuisine, signal: AbortSignal): Promise<FeaturedRestaurants | null> {
+  const candidates = cuisinePreviewDishes(cuisine);
+  const fallback = candidates[0];
+  if (!fallback) return null;
+
+  for (const dish of candidates) {
+    if (signal.aborted) return null;
+    try {
+      const response = await searchDishesClient(dish.query, { limit: 5, signal });
+      const results = primaryRestaurantResults(response.results, 2);
+      if (results.length > 0) return { dish, results, loaded: true };
+    } catch {
+      if (signal.aborted) return null;
+    }
+  }
+
+  return { dish: fallback, results: [], loaded: true };
 }
 
 export function CuisineExplorer() {
@@ -54,27 +76,10 @@ export function CuisineExplorer() {
     const controller = new AbortController();
 
     for (const cuisine of cuisines) {
-      const dish = cuisine.areas[0]?.dishes[0];
-      if (!dish) continue;
-
-      void searchDishesClient(dish.query, { limit: 5, signal: controller.signal })
-        .then((response) => {
-          setFeatured((current) => ({
-            ...current,
-            [cuisine.name]: {
-              dish,
-              results: primaryRestaurantResults(response.results, 2),
-              loaded: true,
-            },
-          }));
-        })
-        .catch(() => {
-          if (controller.signal.aborted) return;
-          setFeatured((current) => ({
-            ...current,
-            [cuisine.name]: { dish, results: [], loaded: true },
-          }));
-        });
+      void findFeaturedRestaurants(cuisine, controller.signal).then((result) => {
+        if (!result || controller.signal.aborted) return;
+        setFeatured((current) => ({ ...current, [cuisine.name]: result }));
+      });
     }
 
     return () => controller.abort();
@@ -95,11 +100,13 @@ export function CuisineExplorer() {
 
     void Promise.all(
       selectedArea.dishes.map(async (dish): Promise<DishResults> => {
-        const response = await searchDishesClient(dish.query, { limit: 8, signal: controller.signal });
-        return {
-          dish,
-          results: primaryRestaurantResults(response.results, 3),
-        };
+        try {
+          const response = await searchDishesClient(dish.query, { limit: 8, signal: controller.signal });
+          return { dish, results: primaryRestaurantResults(response.results, 3) };
+        } catch {
+          if (controller.signal.aborted) throw new DOMException("Aborted", "AbortError");
+          return { dish, results: [] };
+        }
       }),
     )
       .then((results) => {
@@ -127,9 +134,19 @@ export function CuisineExplorer() {
     setSelectedCuisine(null);
   }
 
+  function openFoodKnowledge(dishId: string): void {
+    triggerRef.current = null;
+    const dialog = dialogRef.current;
+    if (dialog?.open) dialog.close();
+    setSelectedCuisine(null);
+    window.location.hash = `learn-${encodeURIComponent(dishId)}`;
+  }
+
   function restoreTriggerFocus(): void {
     setSelectedCuisine(null);
-    window.requestAnimationFrame(() => triggerRef.current?.focus());
+    const trigger = triggerRef.current;
+    triggerRef.current = null;
+    if (trigger) window.requestAnimationFrame(() => trigger.focus());
   }
 
   return (
@@ -139,7 +156,7 @@ export function CuisineExplorer() {
           <p className="foodSectionEyebrow">Matlyst</p>
           <h2 id="cuisine-explorer-title">Utforsk kjøkken</h2>
         </div>
-        <p>Velg et kjøkken eller en region, finn retter du har lyst på, og se hvem som faktisk har dem på menyen.</p>
+        <p>Velg et kjøkken eller en region, oppdag relevante retter, og se hvem som faktisk har dem på en fersk meny.</p>
       </div>
 
       <div className="cuisineGrid">
@@ -162,7 +179,7 @@ export function CuisineExplorer() {
                 </span>
 
                 <span className="cuisineDishPreview" aria-label={`Eksempler på retter i ${cuisine.name}`}>
-                  {cuisinePreviewDishes(cuisine).map((dish) => <span key={dish.query}>{dish.label}</span>)}
+                  {cuisinePreviewDishes(cuisine).map((dish) => <span key={dish.id}>{dish.label}</span>)}
                 </span>
 
                 <span className="cuisineRestaurantPreview">
@@ -179,7 +196,7 @@ export function CuisineExplorer() {
                     </span>
                   ) : null}
                   {preview?.loaded && preview.results.length === 0 ? (
-                    <span className="cuisineRestaurantLoading">Ingen ferske treff på {preview.dish.label.toLowerCase()} akkurat nå.</span>
+                    <span className="cuisineRestaurantLoading">Ingen ferske treff på de prioriterte rettene akkurat nå.</span>
                   ) : null}
                 </span>
               </button>
@@ -258,10 +275,15 @@ export function CuisineExplorer() {
               {!loadingArea && !areaError ? (
                 <div className="cuisineExploreDishList">
                   {dishResults.map(({ dish, results }) => (
-                    <article className="cuisineExploreDish" key={dish.query}>
+                    <article className="cuisineExploreDish" key={dish.id}>
                       <div className="cuisineExploreDishHeading">
                         <h4>{dish.label}</h4>
-                        <a href={dishSearchHref(dish.query)}>Se alle treff <span aria-hidden="true">→</span></a>
+                        <div className="cuisineExploreDishActions">
+                          {dish.hasKnowledge ? (
+                            <button type="button" onClick={() => openFoodKnowledge(dish.id)}>Lær om retten <span aria-hidden="true">↗</span></button>
+                          ) : null}
+                          <a href={dishSearchHref(dish.query)}>Se alle treff <span aria-hidden="true">→</span></a>
+                        </div>
                       </div>
 
                       {results.length > 0 ? (
@@ -286,7 +308,7 @@ export function CuisineExplorer() {
             </section>
 
             <footer className="cuisineExploreDialogFooter">
-              Restaurantene vises bare når Fysen har et ferskt, ikke-fuzzy menytreff på retten.
+              Restaurantene vises bare når Fysen har et ferskt, ikke-fuzzy menytreff på retten. Matkunnskap er et separat redaksjonelt lag.
             </footer>
           </div>
         ) : null}
