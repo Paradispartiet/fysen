@@ -8,7 +8,8 @@ import {
 } from "./http-client.js";
 
 const MAX_RENDERED_HTML_BYTES = 2 * 1024 * 1024;
-const MAX_BROWSER_REQUESTS = 120;
+const MAX_BROWSER_ROUTE_EVENTS = 1000;
+const MAX_BROWSER_NETWORK_REQUESTS = 120;
 const NAVIGATION_TIMEOUT_MS = 15_000;
 const NETWORK_IDLE_TIMEOUT_MS = 5_000;
 
@@ -37,6 +38,23 @@ export interface BrowserRequestPolicyInput {
 export type BrowserRequestDecision =
   | { readonly action: "allow"; readonly validatePublicNetwork: true }
   | { readonly action: "block"; readonly reason: string; readonly fatal: boolean };
+
+export interface BrowserRequestBudget {
+  readonly routeEvents: number;
+  readonly networkRequests: number;
+}
+
+export type BrowserRequestBudgetViolation =
+  | {
+      readonly code: "BROWSER_ROUTE_EVENT_LIMIT" | "BROWSER_REQUEST_LIMIT";
+      readonly message: string;
+    }
+  | null;
+
+export interface BrowserRequestBudgetResult {
+  readonly budget: BrowserRequestBudget;
+  readonly violation: BrowserRequestBudgetViolation;
+}
 
 export function browserRequestDecision(input: BrowserRequestPolicyInput): BrowserRequestDecision {
   if (blockedResourceTypes.has(input.resourceType)) {
@@ -68,32 +86,69 @@ export function browserRequestDecision(input: BrowserRequestPolicyInput): Browse
   return { action: "allow", validatePublicNetwork: true };
 }
 
+export function accountBrowserRequest(
+  current: BrowserRequestBudget,
+  decision: BrowserRequestDecision,
+): BrowserRequestBudgetResult {
+  const routeEvents = current.routeEvents + 1;
+  if (routeEvents > MAX_BROWSER_ROUTE_EVENTS) {
+    return {
+      budget: { routeEvents, networkRequests: current.networkRequests },
+      violation: {
+        code: "BROWSER_ROUTE_EVENT_LIMIT",
+        message: `Rendered source exceeded ${MAX_BROWSER_ROUTE_EVENTS} browser route events`,
+      },
+    };
+  }
+
+  if (decision.action === "block") {
+    return {
+      budget: { routeEvents, networkRequests: current.networkRequests },
+      violation: null,
+    };
+  }
+
+  const networkRequests = current.networkRequests + 1;
+  if (networkRequests > MAX_BROWSER_NETWORK_REQUESTS) {
+    return {
+      budget: { routeEvents, networkRequests },
+      violation: {
+        code: "BROWSER_REQUEST_LIMIT",
+        message: `Rendered source exceeded ${MAX_BROWSER_NETWORK_REQUESTS} allowed browser network requests`,
+      },
+    };
+  }
+
+  return {
+    budget: { routeEvents, networkRequests },
+    violation: null,
+  };
+}
+
 async function installNetworkPolicy(
   context: BrowserContext,
   sourceOrigin: string,
   violation: { value: MenuFetchError | null },
 ): Promise<void> {
   const validatedUrls = new Map<string, Promise<void>>();
-  let requestCount = 0;
+  let budget: BrowserRequestBudget = { routeEvents: 0, networkRequests: 0 };
 
   await context.route("**/*", async (route: Route) => {
     try {
-      requestCount += 1;
-      if (requestCount > MAX_BROWSER_REQUESTS) {
-        violation.value ??= new MenuFetchError(
-          "BROWSER_REQUEST_LIMIT",
-          `Rendered source exceeded ${MAX_BROWSER_REQUESTS} browser requests`,
-        );
-        await route.abort("blockedbyclient");
-        return;
-      }
-
       const request = route.request();
       const decision = browserRequestDecision({
         sourceOrigin,
         requestUrl: request.url(),
         resourceType: request.resourceType(),
       });
+      const accounted = accountBrowserRequest(budget, decision);
+      budget = accounted.budget;
+      if (accounted.violation) {
+        violation.value ??= new MenuFetchError(accounted.violation.code, accounted.violation.message);
+        await route.abort("blockedbyclient");
+        return;
+      }
+
       if (decision.action === "block") {
         if (decision.fatal) {
           violation.value ??= new MenuFetchError("BROWSER_REQUEST_BLOCKED", decision.reason);
