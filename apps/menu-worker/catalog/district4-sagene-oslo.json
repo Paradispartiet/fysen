@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "district4-sagene-oslo",
+    "name": "District 4",
+    "websiteUrl": "https://district4.no/",
+    "address": "Kristiansands gate 1, 0463 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9380864,
+    "longitude": 10.7530356
+  },
+  "menuSource": {
+    "url": "https://district4.no/wp-content/uploads/2026/06/D4_innemeny_A3_2026_sommermeny.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 25
+  },
+  "hoursSource": {
+    "url": "https://district4.no/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "actions": [
+    {
+      "type": "order",
+      "url": "https://district4.winorder.no/en",
+      "sourceUrl": "https://district4.no/",
+      "provider": "District 4"
+    },
+    {
+      "type": "booking",
+      "url": "https://booking.gastroplanner.no/district4/t",
+      "sourceUrl": "https://district4.no/",
+      "provider": "District 4"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chả giò / Springrolls",
+      "Bánh mì / Vietnamese baguette",
+      "Phở bò tái / Pho beef noodle soup",
+      "Bún Bò Huế / Spicy noodle soup",
+      "Cà ri gà / Chicken curry"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chả giò / Springrolls",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Bánh mì / Vietnamese baguette",
+        "priceMinor": 16800
+      },
+      {
+        "name": "Phở bò tái / Pho beef noodle soup",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Bún Bò Huế / Spicy noodle soup",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Cà ri gà / Chicken curry",
+        "priceMinor": 23900
+      }
+    ],
+    "forbiddenDishNames": [
+      "Rosegarden",
+      "Yuzu Sake Sour",
+      "Mango daquiri",
+      "Saigon bottle 0,33L *Hvetemel, sulfit"
+    ]
+  }
+}
