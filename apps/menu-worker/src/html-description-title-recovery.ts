@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v3";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v4";
 
 const PRICE_LINE = /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
 const DESCRIPTION_LEAD = /^(?:serveres?|servert|served|with|kan\s+fås|can\s+be|blandet|mixed|godt\s+krydret|well\s+seasoned|marinert|marinated|grillet|grilled|bakt|baked|braisert|braised|tilberedt|prepared|toppet|topped|inneholder|contains?|inkludert|including|ekstra|extra|pr\.?\s*person|per\s+person)\b/iu;
@@ -210,7 +210,7 @@ function recoverParentheticalQualifiedTitle(
   const current = normalizeVisibleLine(item.name);
   const foldedCurrent = current.toLocaleLowerCase("nb-NO");
   const scanStart = Math.max(0, position - 1);
-  const scanEnd = Math.min(lines.length - 1, position + 1);
+  const scanEnd = Math.min(lines.length - 1, position + 2);
 
   for (let index = scanStart; index <= scanEnd; index += 1) {
     const candidate = normalizeVisibleLine(lines[index] ?? "");
@@ -225,6 +225,9 @@ function recoverParentheticalQualifiedTitle(
 
     if (foldedCandidate !== foldedCurrent || index >= lines.length - 1) continue;
     const next = normalizeVisibleLine(lines[index + 1] ?? "");
+    const splitTitle = recoverSplitParentheticalTitle(candidate, next);
+    if (splitTitle) return splitTitle;
+
     const nextMatch = next.match(PARENTHETICAL_QUALIFIER);
     if (nextMatch?.[1] && !looksLikeAllergenQualifier(nextMatch[1])) {
       return `${candidate} ${next}`;

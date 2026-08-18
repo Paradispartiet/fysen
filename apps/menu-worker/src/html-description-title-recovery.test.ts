@@ -53,7 +53,7 @@ describe("HTML description-title recovery", () => {
       visibleText,
     );
 
-    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v3");
+    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v4");
     expect(result.map((entry) => entry.name)).toEqual([
       "Hummus (kikert-og sesampuré)",
       "Hvitløkmarinerte kyllingvinger",
@@ -113,6 +113,23 @@ describe("HTML description-title recovery", () => {
     expect(result).toHaveLength(1);
     expect(result[0]?.name).toBe("Kofta (arabisk gryterett med kjøttboller)");
     expect(result[0]?.description).toBeNull();
+  });
+
+  it("joins a forward continuation when the extractor kept the first half as the observed title", () => {
+    const visibleText = [
+      "Kofta (arabisk gryterett",
+      "med kjøttboller)",
+      "Godt krydret kjøtt av okse og lam. Serveres med salat, oliven, pitabrød og bulgur",
+      "310",
+    ].join("\n");
+
+    const result = recoverDescriptionNamedHtmlItems(
+      [item("Kofta (arabisk gryterett", 0, 31000)],
+      visibleText,
+    );
+
+    expect(result).toHaveLength(1);
+    expect(result[0]?.name).toBe("Kofta (arabisk gryterett med kjøttboller)");
   });
 
   it("recovers the canonical heading across several description lines for per-person pricing", () => {
