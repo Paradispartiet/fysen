@@ -19,10 +19,44 @@ describe("extractScopedHtmlMenu", () => {
     `;
 
     const result = extractScopedHtmlMenu(html);
-    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v5");
+    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v6");
     expect(result.items.map((item) => item.name)).toEqual(["Falafel", "Bakalawa"]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([9800, 12900]);
     expect(result.visibleText).not.toContain("Husets Cabernet");
+  });
+
+  it("recovers repeated title-description-price cards without making descriptions searchable dish names", () => {
+    const html = `
+      <html><body>
+        <h2>Meet the dishes</h2>
+        <div><h3>Creamy Chick-N Bowl 蒜香奶油鸡面</h3><p>Ramen with creamy garlic pork broth and BBQ chicken. 195,-</p></div>
+        <div><h3>Tender Short Ribs 招牌牛肋油泼面</h3><p>Homemade wide flat noodle with slow-cooked beef ribs and chilli oil. 249,-</p></div>
+        <div><h3>Beijing ChaCha 牛肉炸酱面</h3><p>Homemade wide flat noodle with spiced minced beef and soybean paste. 149,-</p></div>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual([
+      "Creamy Chick-N Bowl 蒜香奶油鸡面",
+      "Tender Short Ribs 招牌牛肋油泼面",
+      "Beijing ChaCha 牛肉炸酱面",
+    ]);
+    expect(result.items.map((item) => item.priceMinor)).toEqual([19500, 24900, 14900]);
+    expect(result.items[0]?.description).toContain("Ramen with creamy garlic pork broth");
+    expect(result.items.some((item) => item.name.startsWith("Ramen with"))).toBe(false);
+  });
+
+  it("does not promote a one-off section label when a normal inline dish follows it", () => {
+    const html = `
+      <html><body>
+        <h2>PASTA</h2>
+        <p>Slow-cooked beef and tomato pasta 249,-</p>
+        <p>Carbonara 229,-</p>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual(["Slow-cooked beef and tomato pasta", "Carbonara"]);
   });
 
   it("keeps nested drink headings blocked beneath a drinks-menu heading", () => {
