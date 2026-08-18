@@ -6,7 +6,7 @@ import {
 } from "@fysen/menu-core";
 import { extractHtmlMenu, type ExtractedHtmlMenu } from "./html-extractor.js";
 
-export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v11";
+export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v12";
 
 const HEADING_MARKER = "__FYSEN_HEADING_LEVEL_";
 const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
@@ -356,6 +356,117 @@ function hasRepeatedHeadingLevel(headingLevels: ReadonlyMap<number, number>, pos
   return false;
 }
 
+function looksLikeStandaloneBlockTitle(value: string): boolean {
+  const title = canonicalCardTitle(value);
+  if (!plausibleCardTitle(title) || isBeverageItemName(title) || isObviousMetadataItem(title)) return false;
+  const words = title.split(/\s+/).filter(Boolean);
+  if (words.length > 8) return false;
+  if (/[.!?]$/u.test(title) || /[,;:]$/u.test(title)) return false;
+  return !/^(?:with|served|topped|contains?|including|med|servert|toppet|inneholder|inkludert)\b/iu.test(title);
+}
+
+interface StandalonePriceBlockExtraction {
+  readonly items: readonly MenuObservedItem[];
+  readonly priceCount: number;
+}
+
+function extractStandalonePriceBlocks(
+  visibleText: string,
+  headingLevels: ReadonlyMap<number, number>,
+): StandalonePriceBlockExtraction {
+  const lines = visibleText.split("\n").map(normalizeVisibleLine).filter(Boolean);
+  const pricePositions = lines
+    .map((line, index) => (STANDALONE_PRICE.test(line) ? index : -1))
+    .filter((index) => index >= 0);
+  const unique = new Map<string, MenuObservedItem>();
+
+  for (const [priceOffset, pricePosition] of pricePositions.entries()) {
+    const priceMinor = parsePriceMinorAtEnd(lines[pricePosition] ?? "");
+    if (priceMinor === null) continue;
+
+    const previousPrice = pricePositions[priceOffset - 1] ?? -1;
+    const blockStart = previousPrice + 1;
+    if (blockStart >= pricePosition) continue;
+
+    let lastHeading: number | null = null;
+    for (let index = blockStart; index < pricePosition; index += 1) {
+      if (headingLevels.has(index)) lastHeading = index;
+    }
+
+    let titleIndex: number | null = null;
+    let name: string | null = null;
+
+    if (lastHeading !== null && hasRepeatedHeadingLevel(headingLevels, lastHeading)) {
+      const firstContentIndex = (() => {
+        for (let index = lastHeading + 1; index < pricePosition; index += 1) {
+          if (headingLevels.has(index)) continue;
+          const line = lines[index]?.trim() ?? "";
+          if (line) return index;
+        }
+        return null;
+      })();
+      const firstContent = firstContentIndex === null ? "" : lines[firstContentIndex] ?? "";
+      if (firstContent && looksLikeDescriptionLine(firstContent)) {
+        const headingTitle = recoveredTitle(lines, lastHeading, headingLevels);
+        if (headingTitle && looksLikeStandaloneBlockTitle(headingTitle)) {
+          titleIndex = lastHeading;
+          name = headingTitle;
+        }
+      }
+    }
+
+    if (titleIndex === null) {
+      const scanFrom = lastHeading === null ? blockStart : lastHeading + 1;
+      for (let index = scanFrom; index < pricePosition; index += 1) {
+        if (headingLevels.has(index)) continue;
+        const candidate = lines[index]?.trim() ?? "";
+        if (!candidate || !looksLikeStandaloneBlockTitle(candidate)) continue;
+        titleIndex = index;
+        name = canonicalCardTitle(candidate);
+        break;
+      }
+    }
+
+    if (titleIndex === null || !name) continue;
+
+    const descriptionLines = lines
+      .slice(titleIndex + 1, pricePosition)
+      .filter((line, offset) => {
+        const absoluteIndex = titleIndex! + 1 + offset;
+        return (
+          line &&
+          !headingLevels.has(absoluteIndex) &&
+          !STANDALONE_PRICE.test(line) &&
+          !PRICE_AT_END.test(line) &&
+          !CARD_TITLE_BOUNDARY.test(line) &&
+          !MORE_LABEL.test(line) &&
+          !EXTRAS_TRIGGER.test(line)
+        );
+      });
+    const description = descriptionLines.join(" ").trim() || null;
+    const sourceKey = createMenuItemSourceKey(name);
+
+    unique.set(sourceKey, {
+      sourceKey,
+      name,
+      normalizedName: normalizeDishName(name),
+      description,
+      sectionName: null,
+      priceMinor,
+      currency: "NOK",
+      position: titleIndex,
+      extractionMethod: "html_heuristic",
+      confidence: 0.9,
+      sourceExcerpt: lines.slice(titleIndex, pricePosition + 1).join(" — ").slice(0, 1000),
+    });
+  }
+
+  return {
+    items: [...unique.values()].sort((a, b) => a.position - b.position),
+    priceCount: pricePositions.length,
+  };
+}
+
 interface CardRecovery {
   readonly lineIndex: number;
   readonly title: string;
@@ -532,6 +643,19 @@ export function extractScopedHtmlMenu(html: string): ExtractedHtmlMenu {
   ) {
     return {
       items: numbered.items,
+      method: "html_heuristic",
+      visibleText,
+    };
+  }
+
+  const standalone = extractStandalonePriceBlocks(visibleText, scopedText.headingLevels);
+  if (
+    standalone.priceCount >= 3 &&
+    standalone.items.length >= 3 &&
+    standalone.items.length * 4 >= standalone.priceCount * 3
+  ) {
+    return {
+      items: standalone.items,
       method: "html_heuristic",
       visibleText,
     };
