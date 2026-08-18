@@ -7,12 +7,14 @@ import {
   shouldForceReextract,
 } from "./menu-source-runtime.js";
 import { PDF_EXTRACTOR_VERSION } from "./pdf-extractor.js";
+import { PDF_SOURCE_EXTRACTOR_VERSION } from "./pdf-source-extractor.js";
 
 describe("menu source runtime extractor refresh policy", () => {
   it("forces a fresh PDF fetch when the stored snapshot used an older extractor", () => {
-    expect(extractorVersionForSourceType("pdf")).toBe(PDF_EXTRACTOR_VERSION);
+    expect(extractorVersionForSourceType("pdf")).toBe(PDF_SOURCE_EXTRACTOR_VERSION);
     expect(shouldForceReextract("pdf", "pdf-text-v1")).toBe(true);
-    expect(shouldForceReextract("pdf", PDF_EXTRACTOR_VERSION)).toBe(false);
+    expect(shouldForceReextract("pdf", PDF_EXTRACTOR_VERSION)).toBe(true);
+    expect(shouldForceReextract("pdf", PDF_SOURCE_EXTRACTOR_VERSION)).toBe(false);
   });
 
   it("uses the same version policy for supported HTML sources", () => {
