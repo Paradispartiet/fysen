@@ -1,11 +1,10 @@
 import { sha256 } from "@fysen/menu-core";
 import { HttpMenuClient, type MenuHttpFetchResult } from "./http-client.js";
+import { OpeningHoursExtractionError, type ExtractedOpeningHours } from "./opening-hours-extractor.js";
 import {
-  OPENING_HOURS_EXTRACTOR_VERSION,
-  OpeningHoursExtractionError,
-  extractKitchenOpeningHours,
-  type ExtractedOpeningHours,
-} from "./opening-hours-extractor.js";
+  extractCanonicalOpeningHours,
+  OPENING_HOURS_SOURCE_EXTRACTOR_VERSION,
+} from "./opening-hours-source-extractor.js";
 
 export interface OpeningHoursSourceRuntimeInput {
   readonly url: string;
@@ -61,12 +60,12 @@ export async function resolveOpeningHoursSource(
     throw new OpeningHoursExtractionError("UNSUPPORTED_EXTRACTOR", `Unsupported hours extractor: ${extractor}`);
   }
 
-  const extracted = extractKitchenOpeningHours(fetched.body, input.scopeHints);
+  const extracted = extractCanonicalOpeningHours(fetched.body, input.scopeHints);
   return {
     kind: "content",
     fetched,
     extracted,
     scheduleFingerprint: openingHoursFingerprint(extracted.intervals),
-    extractorVersion: OPENING_HOURS_EXTRACTOR_VERSION,
+    extractorVersion: OPENING_HOURS_SOURCE_EXTRACTOR_VERSION,
   };
 }
