@@ -8,6 +8,7 @@ import "../styles/design-v2-1.css";
 import "../styles/results-v2-1.css";
 import "../styles/design-v2-2.css";
 import "../styles/design-v2-2-1.css";
+import "../styles/dish-learning-dialog.css";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
