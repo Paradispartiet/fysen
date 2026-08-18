@@ -1,5 +1,6 @@
 import type { MenuObservedItem } from "@fysen/menu-core";
 import { BrowserMenuClient } from "./browser-client.js";
+import { HTML_EXTRACTOR_VERSION } from "./html-extractor.js";
 import {
   extractScopedHtmlMenu,
   HTML_SOURCE_EXTRACTOR_VERSION,
@@ -9,6 +10,7 @@ import { extractScopedPdfMenu, PDF_SOURCE_EXTRACTOR_VERSION } from "./pdf-source
 
 const DEFAULT_MAX_PDF_RESPONSE_BYTES = 8 * 1024 * 1024;
 const MAX_PDF_RESPONSE_BYTES = 25 * 1024 * 1024;
+const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
 export type MenuSourceFetchMode = "http" | "browser";
@@ -37,7 +39,7 @@ export function pdfResponseByteLimit(): number {
 }
 
 export function extractorVersionForSourceType(sourceType: string): string | null {
-  if (sourceType === "html" || sourceType === "json_ld") return HTML_SOURCE_EXTRACTOR_VERSION;
+  if (sourceType === "html" || sourceType === "json_ld") return HTML_RUNTIME_EXTRACTOR_VERSION;
   if (sourceType === "pdf") return PDF_SOURCE_EXTRACTOR_VERSION;
   return null;
 }
@@ -101,7 +103,7 @@ export async function extractMenuSource(
     return {
       items: extracted.items,
       method: extracted.method,
-      extractorVersion: HTML_SOURCE_EXTRACTOR_VERSION,
+      extractorVersion: HTML_RUNTIME_EXTRACTOR_VERSION,
     };
   }
   if (sourceType === "pdf") {
