@@ -41,14 +41,14 @@ function normalizeWeekdayAliases(value: string): string {
     .replace(/\blordager\b/giu, "lordag")
     .replace(/\bsøndager\b/giu, "søndag")
     .replace(/\bsondager\b/giu, "sondag")
-    .replace(/\bmon\.?\b/giu, "Monday")
-    .replace(/\btues?\.?\b/giu, "Tuesday")
-    .replace(/\bweds?\.?\b/giu, "Wednesday")
-    .replace(/\bthurs?\.?\b/giu, "Thursday")
-    .replace(/\bthu\.?\b/giu, "Thursday")
-    .replace(/\bfri\.?\b/giu, "Friday")
-    .replace(/\bsat\.?\b/giu, "Saturday")
-    .replace(/\bsun\.?\b/giu, "Sunday");
+    .replace(/\bmon\b\.?/giu, "Monday")
+    .replace(/\btues?\b\.?/giu, "Tuesday")
+    .replace(/\bweds?\b\.?/giu, "Wednesday")
+    .replace(/\bthurs?\b\.?/giu, "Thursday")
+    .replace(/\bthu\b\.?/giu, "Thursday")
+    .replace(/\bfri\b\.?/giu, "Friday")
+    .replace(/\bsat\b\.?/giu, "Saturday")
+    .replace(/\bsun\b\.?/giu, "Sunday");
 }
 
 function escapeHtml(value: string): string {
