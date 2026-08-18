@@ -1,0 +1,509 @@
+/* Fysen cuisine exploration — interactive regions, dish discovery and live restaurant hits. */
+
+.cuisineCardInteractive {
+  min-height: 330px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.cuisineCardTrigger {
+  display: flex;
+  width: 100%;
+  min-height: 250px;
+  flex: 1;
+  flex-direction: column;
+  padding: 21px;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.cuisineCardTrigger:focus-visible,
+.cuisineAreaList button:focus-visible,
+.cuisineExploreAreas button:focus-visible,
+.cuisineExploreDialogClose:focus-visible,
+.cuisineExploreDish a:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+.cuisineCardHeading {
+  display: block;
+}
+
+.cuisineCardHeading strong {
+  display: block;
+  margin: 0;
+  color: var(--color-ink);
+  font-size: 23px;
+  font-weight: 590;
+  line-height: 1.08;
+  letter-spacing: -0.014em;
+}
+
+.cuisineCardHeading > span {
+  display: block;
+  margin-top: 7px;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.cuisineDishPreview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 19px;
+}
+
+.cuisineDishPreview > span {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  padding: 0 10px;
+  color: #dbe4da;
+  font-size: 12px;
+  font-weight: 520;
+  border: 1px solid rgba(121, 201, 135, 0.24);
+  border-radius: var(--radius-round);
+}
+
+.cuisineRestaurantPreview {
+  display: block;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(121, 201, 135, 0.13);
+}
+
+.cuisineRestaurantPreviewLabel {
+  display: block;
+  color: var(--color-brand);
+  font-size: 10px;
+  font-weight: 680;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+.cuisineRestaurantLoading {
+  display: block;
+  margin-top: 7px;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.cuisineRestaurantNames {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.cuisineRestaurantNames > span {
+  display: block;
+}
+
+.cuisineRestaurantNames strong {
+  display: block;
+  color: var(--color-ink);
+  font-size: 12px;
+  font-weight: 590;
+  line-height: 1.35;
+}
+
+.cuisineRestaurantNames small {
+  display: block;
+  margin-top: 2px;
+  color: var(--color-muted);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.cuisineCardOpenHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  color: var(--color-brand);
+  font-size: 11px;
+  font-weight: 620;
+}
+
+.cuisineCardTrigger:hover .cuisineCardOpenHint {
+  color: var(--color-brand-hover);
+}
+
+.cuisineAreaList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 13px 16px 16px;
+  border-top: 1px solid rgba(121, 201, 135, 0.13);
+}
+
+.cuisineAreaList button,
+.cuisineExploreAreas button {
+  min-height: 30px;
+  padding: 0 10px;
+  color: var(--color-muted);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 560;
+  background: transparent;
+  border: 1px solid rgba(121, 201, 135, 0.24);
+  border-radius: var(--radius-round);
+  cursor: pointer;
+}
+
+.cuisineAreaList button:hover,
+.cuisineExploreAreas button:hover,
+.cuisineExploreAreas button.isActive {
+  color: var(--color-brand-hover);
+  border-color: rgba(121, 201, 135, 0.62);
+}
+
+.cuisineExploreAreas button.isActive {
+  background: rgba(121, 201, 135, 0.08);
+}
+
+.cuisineExploreDialog {
+  width: min(980px, calc(100vw - 48px));
+  max-width: none;
+  max-height: min(88vh, 980px);
+  padding: 0;
+  color: var(--color-ink);
+  background: #060706;
+  border: 1px solid rgba(121, 201, 135, 0.32);
+  border-radius: 18px;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.62);
+}
+
+.cuisineExploreDialog::backdrop {
+  background: rgba(0, 0, 0, 0.76);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.cuisineExploreDialogShell {
+  position: relative;
+  max-height: min(88vh, 980px);
+  overflow-y: auto;
+  padding: 32px;
+}
+
+.cuisineExploreDialogClose {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  float: right;
+  display: inline-grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  margin: -4px -4px 0 18px;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 24px;
+  line-height: 1;
+  background: #0a0b0a;
+  border: 1px solid rgba(121, 201, 135, 0.28);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.cuisineExploreDialogHeader > p,
+.cuisineExploreResultsHeading > div > p {
+  margin: 0;
+  color: var(--color-brand);
+  font-size: 10px;
+  font-weight: 680;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+.cuisineExploreDialogHeader h2 {
+  margin: 6px 0 0;
+  font-size: clamp(34px, 5vw, 54px);
+  font-weight: 580;
+  line-height: 1.02;
+  letter-spacing: -0.018em;
+}
+
+.cuisineExploreDialogHeader > span {
+  display: block;
+  margin-top: 9px;
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+.cuisineExploreAreas {
+  margin-top: 30px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(121, 201, 135, 0.16);
+  border-bottom: 1px solid rgba(121, 201, 135, 0.16);
+}
+
+.cuisineExploreAreas h3 {
+  margin: 0 0 11px;
+  color: var(--color-soft);
+  font-size: 11px;
+  font-weight: 620;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.cuisineExploreAreas > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cuisineExploreResults {
+  margin-top: 28px;
+}
+
+.cuisineExploreResultsHeading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.cuisineExploreResultsHeading h3 {
+  margin: 6px 0 0;
+  font-size: 25px;
+  font-weight: 580;
+  letter-spacing: -0.012em;
+}
+
+.cuisineExploreResultsHeading > span {
+  color: var(--color-muted);
+  font-size: 11px;
+}
+
+.cuisineExploreStatus {
+  margin: 24px 0 0;
+  padding: 18px;
+  color: var(--color-muted);
+  font-size: 13px;
+  background: #090a09;
+  border: 1px solid rgba(121, 201, 135, 0.18);
+  border-radius: 12px;
+}
+
+.cuisineExploreDishList {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.cuisineExploreDish {
+  padding: 18px;
+  background: #090a09;
+  border: 1px solid rgba(121, 201, 135, 0.18);
+  border-radius: 12px;
+}
+
+.cuisineExploreDishHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cuisineExploreDishHeading h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 590;
+}
+
+.cuisineExploreDishHeading > a {
+  color: var(--color-brand);
+  font-size: 11px;
+  font-weight: 620;
+  text-decoration: none;
+}
+
+.cuisineExploreDish ul {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cuisineExploreDish li a {
+  display: block;
+  min-height: 98px;
+  padding: 12px;
+  color: inherit;
+  text-decoration: none;
+  background: #060706;
+  border: 1px solid rgba(121, 201, 135, 0.14);
+  border-radius: 9px;
+}
+
+.cuisineExploreDish li a:hover {
+  border-color: rgba(121, 201, 135, 0.42);
+}
+
+.cuisineExploreDish li strong,
+.cuisineExploreDish li span,
+.cuisineExploreDish li small {
+  display: block;
+}
+
+.cuisineExploreDish li strong {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cuisineExploreDish li span {
+  margin-top: 5px;
+  color: var(--color-brand);
+  font-size: 11px;
+}
+
+.cuisineExploreDish li small {
+  margin-top: 4px;
+  color: var(--color-muted);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.cuisineExploreDish > p {
+  margin: 13px 0 0;
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.cuisineExploreDialogFooter {
+  margin-top: 26px;
+  padding-top: 17px;
+  color: var(--color-soft);
+  font-size: 10px;
+  line-height: 1.5;
+  border-top: 1px solid rgba(121, 201, 135, 0.14);
+}
+
+.foodKnowledgeFacts {
+  margin: 0 0 34px;
+  padding: 20px 0 22px;
+  border-top: 1px solid rgba(121, 201, 135, 0.18);
+  border-bottom: 1px solid rgba(121, 201, 135, 0.18);
+}
+
+.foodKnowledgeFactsHeading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.foodKnowledgeFactsHeading h3 {
+  margin: 4px 0 0;
+  font-size: 23px;
+  font-weight: 580;
+}
+
+.foodKnowledgeFactsHeading > p {
+  max-width: 380px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: right;
+}
+
+.foodKnowledgeFactsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.foodKnowledgeFactsGrid article {
+  padding: 15px 16px;
+  background: #070807;
+  border: 1px solid rgba(121, 201, 135, 0.16);
+  border-radius: 10px;
+}
+
+.foodKnowledgeFactsGrid article > span {
+  color: var(--color-brand);
+  font-size: 10px;
+  font-weight: 680;
+  letter-spacing: 0.065em;
+  text-transform: uppercase;
+}
+
+.foodKnowledgeFactsGrid article > p {
+  margin: 7px 0 0;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .foodKnowledgeFactsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cuisineExploreDish ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .cuisineCardInteractive {
+    min-width: min(300px, 84vw);
+    min-height: 350px;
+  }
+
+  .cuisineCardTrigger {
+    min-height: 268px;
+  }
+
+  .cuisineExploreDialog {
+    width: calc(100vw - 24px);
+    max-height: 92vh;
+    border-radius: 15px;
+  }
+
+  .cuisineExploreDialogShell {
+    max-height: 92vh;
+    padding: 22px 18px 24px;
+  }
+
+  .cuisineExploreResultsHeading,
+  .foodKnowledgeFactsHeading {
+    display: block;
+  }
+
+  .cuisineExploreResultsHeading > span,
+  .foodKnowledgeFactsHeading > p {
+    display: block;
+    margin-top: 8px;
+    text-align: left;
+  }
+
+  .cuisineExploreDish ul {
+    grid-template-columns: 1fr;
+  }
+
+  .foodKnowledgeFactsGrid {
+    display: flex;
+    gap: 9px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scroll-snap-type: x proximity;
+  }
+
+  .foodKnowledgeFactsGrid article {
+    min-width: min(260px, 78vw);
+    scroll-snap-align: start;
+  }
+}
