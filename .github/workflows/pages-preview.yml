@@ -87,9 +87,9 @@ jobs:
         run: |
           test -f apps/web/out/index.html
           test -f apps/web/out/search/index.html
-          test -f apps/web/out/brand/fysen-mark.webp
+          test -f apps/web/out/brand/fysen-mark-exact.png
           grep -q '/fysen-preview/search' apps/web/out/index.html
-          grep -q '/fysen-preview/brand/fysen-mark.webp' apps/web/out/index.html
+          grep -q '/fysen-preview/brand/fysen-mark-exact.png' apps/web/out/index.html
           grep -q 'Utforsk kjøkken' apps/web/out/index.html
           grep -q 'fysen-api.vercel.app' apps/web/out/search/index.html || grep -R -q 'fysen-api.vercel.app' apps/web/out/_next
 
@@ -135,7 +135,7 @@ jobs:
           test "$actual_source_sha" = "$SOURCE_SHA"
           test -f "$preview_dir/index.html"
           test -f "$preview_dir/search/index.html"
-          test -f "$preview_dir/brand/fysen-mark.webp"
+          test -f "$preview_dir/brand/fysen-mark-exact.png"
 
           git -C "$preview_dir" config user.name "Fysen Preview Publisher"
           git -C "$preview_dir" config user.email "paradispartiet@gmail.com"
