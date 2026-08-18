@@ -1,6 +1,9 @@
 import type { MenuObservedItem } from "@fysen/menu-core";
 import { BrowserMenuClient } from "./browser-client.js";
-import { extractHtmlMenu, HTML_EXTRACTOR_VERSION } from "./html-extractor.js";
+import {
+  extractScopedHtmlMenu,
+  HTML_SOURCE_EXTRACTOR_VERSION,
+} from "./html-source-extractor.js";
 import { HttpMenuClient, type MenuHttpFetchResult } from "./http-client.js";
 import { extractPdfMenu, PDF_EXTRACTOR_VERSION } from "./pdf-extractor.js";
 
@@ -34,7 +37,7 @@ export function pdfResponseByteLimit(): number {
 }
 
 export function extractorVersionForSourceType(sourceType: string): string | null {
-  if (sourceType === "html" || sourceType === "json_ld") return HTML_EXTRACTOR_VERSION;
+  if (sourceType === "html" || sourceType === "json_ld") return HTML_SOURCE_EXTRACTOR_VERSION;
   if (sourceType === "pdf") return PDF_EXTRACTOR_VERSION;
   return null;
 }
@@ -93,12 +96,12 @@ export async function extractMenuSource(
   fetched: MenuContentFetchResult,
 ): Promise<ExtractedMenuSource> {
   if (sourceType === "html" || sourceType === "json_ld") {
-    const extracted = extractHtmlMenu(fetched.body);
+    const extracted = extractScopedHtmlMenu(fetched.body);
     assertExtractionMethodForSourceType(sourceType, extracted.method);
     return {
       items: extracted.items,
       method: extracted.method,
-      extractorVersion: HTML_EXTRACTOR_VERSION,
+      extractorVersion: HTML_SOURCE_EXTRACTOR_VERSION,
     };
   }
   if (sourceType === "pdf") {
