@@ -42,4 +42,26 @@ describe("standalone price block title selection", () => {
     expect(result.items[1]?.description).toContain("Hjemmelaget burger");
     expect(result.items[2]?.description).toContain("Hjemmelaget burger");
   });
+
+  it("skips long med/with descriptions while preserving shorter dish titles that contain med", () => {
+    const html = `
+      <html><body>
+        <h5>Stekt Laks – Glutenfri</h5>
+        <p>Fersk laks med ovnsstekte rotgrønnsaker og marinerte poteter</p>
+        <p>219,-</p>
+        <h5>Fløtegratinert kyllingbryst med eller uten skinke</h5>
+        <p>Fløtesaus med champignon, serveres med ovnstekte amandinepoteter og salat</p>
+        <p>249,-</p>
+      </body></html>
+    `;
+
+    const result = extractHtmlMenu(html);
+
+    expect(result.items.map((item) => item.name)).toEqual([
+      "Stekt Laks – Glutenfri",
+      "Fløtegratinert kyllingbryst med eller uten skinke",
+    ]);
+    expect(result.items.map((item) => item.priceMinor)).toEqual([21900, 24900]);
+    expect(result.items[0]?.description).toContain("Fersk laks med ovnsstekte rotgrønnsaker");
+  });
 });
