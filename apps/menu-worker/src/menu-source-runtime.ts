@@ -5,7 +5,7 @@ import {
   HTML_SOURCE_EXTRACTOR_VERSION,
 } from "./html-source-extractor.js";
 import { HttpMenuClient, type MenuHttpFetchResult } from "./http-client.js";
-import { extractPdfMenu, PDF_EXTRACTOR_VERSION } from "./pdf-extractor.js";
+import { extractScopedPdfMenu, PDF_SOURCE_EXTRACTOR_VERSION } from "./pdf-source-extractor.js";
 
 const DEFAULT_MAX_PDF_RESPONSE_BYTES = 8 * 1024 * 1024;
 const MAX_PDF_RESPONSE_BYTES = 25 * 1024 * 1024;
@@ -38,7 +38,7 @@ export function pdfResponseByteLimit(): number {
 
 export function extractorVersionForSourceType(sourceType: string): string | null {
   if (sourceType === "html" || sourceType === "json_ld") return HTML_SOURCE_EXTRACTOR_VERSION;
-  if (sourceType === "pdf") return PDF_EXTRACTOR_VERSION;
+  if (sourceType === "pdf") return PDF_SOURCE_EXTRACTOR_VERSION;
   return null;
 }
 
@@ -105,11 +105,11 @@ export async function extractMenuSource(
     };
   }
   if (sourceType === "pdf") {
-    const extracted = await extractPdfMenu(fetched.bodyBytes);
+    const extracted = await extractScopedPdfMenu(fetched.bodyBytes);
     return {
       items: extracted.items,
       method: extracted.method,
-      extractorVersion: PDF_EXTRACTOR_VERSION,
+      extractorVersion: PDF_SOURCE_EXTRACTOR_VERSION,
     };
   }
   throw new Error(`Menu runtime does not extract source type ${sourceType}`);
