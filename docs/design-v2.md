@@ -70,16 +70,21 @@ Kjøkkenkortene er sorte med tynn grønn outline. På mobil kan de scrolles hori
 
 ## Lær en ny rett
 
-Forsiden har en egen, mer editorial seksjon for korte matnotater. Første kort er Ramen, Biryani og Falafel.
+Forsiden har en egen editorial læringsseksjon. Første kort er Ramen, Biryani og Falafel.
 
-Disse kortene kan forklare:
+Rettens navn er en interaktiv læringsinngang. Når brukeren trykker på navnet, åpnes en kunnskapspopup som skal gi et reelt mini-oppslagsverk i stedet for bare en kort faktatekst. Popupen kan inneholde:
 
-- opprinnelse eller region;
-- hva retten grunnleggende er;
-- viktige variasjoner;
-- lenke til søk etter retten.
+- hva retten er og hvordan den vanligvis er bygget opp;
+- bakgrunn, opprinnelse og matkulturell kontekst, med tydelig språk når opprinnelsen er omdiskutert;
+- sentrale bestanddeler og teknikker;
+- en tydelig merket hjemmeoppskrift med ingredienser og trinnvis fremgangsmåte;
+- vanlige regionale eller tekniske varianter;
+- praktiske tips som forklarer hva som faktisk gjør forskjell i tilberedningen;
+- direkte lenke tilbake til Fysen-søk etter retten.
 
-Det skal ikke påstås at en bestemt restaurant bruker disse ingrediensene eller denne varianten.
+Oppskriften skal beskrives som en hjemmevariant når retten er en bred matfamilie og ikke har én canonical oppskrift. Det skal aldri påstås at en bestemt restaurant bruker ingrediensene, teknikken eller varianten i kunnskapspopupen.
+
+Kunnskapspopupen bruker native dialog-semantikk, kan lukkes med tastatur, har tydelig fokus, fungerer på mobil og skiller visuelt mellom generell matkunnskap og restaurantens sporbare menybevis.
 
 ## Læring på søkeresultater
 
@@ -117,7 +122,7 @@ Design v2.2 behandles som tre reelle viewport-klasser:
 - iPad ca. 1024×1366;
 - mobil ca. 390×844.
 
-På desktop ligger heroillustrasjonen til høyre for overskriften. På iPad skaleres den ned i samme rad. På mobil forblir den i overskriftsraden i en liten, tydelig størrelse. Kjøkken- og læringskort kan bli horisontale scrolleflater på mobil.
+På desktop ligger heroillustrasjonen til høyre for overskriften. På iPad skaleres den ned i samme rad. På mobil forblir den i overskriftsraden i en liten, tydelig størrelse. Kjøkken- og læringskort kan bli horisontale scrolleflater på mobil. Kunnskapspopupen bruker bred desktopflate, men går over til én kolonne og nesten full skjermbredde på mobil.
 
 ## Skal ikke brukes
 
