@@ -21,7 +21,7 @@ export default function HomePage() {
           </div>
           <div className="homeSearchWrap">
             <DishSearch />
-            <p className="searchProof">Søk i ferske, sporbare restaurantmenyer.</p>
+            <p className="searchProof">Søk etter en rett og se hvilke restauranter som har den på en fersk, sporbar meny.</p>
           </div>
         </section>
         <CuisineExplorer />
