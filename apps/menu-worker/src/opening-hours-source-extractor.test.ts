@@ -17,7 +17,7 @@ describe("canonical opening-hours source extractor", () => {
       </body></html>
     `);
 
-    expect(OPENING_HOURS_SOURCE_EXTRACTOR_VERSION).toBe("hours-visible-v11");
+    expect(OPENING_HOURS_SOURCE_EXTRACTOR_VERSION).toBe("hours-visible-v12");
     expect(extracted.intervals).toEqual([
       { isoWeekday: 1, opensAt: "11:30", closesAt: "20:30", closesNextDay: false },
       { isoWeekday: 2, opensAt: "11:30", closesAt: "20:30", closesNextDay: false },
@@ -28,6 +28,47 @@ describe("canonical opening-hours source extractor", () => {
       { isoWeekday: 7, opensAt: "14:00", closesAt: "20:30", closesNextDay: false },
     ]);
     expect(extracted.sourceExcerpt).toContain("Kjøkkenet stenger 30 min før stengetid");
+  });
+
+  it("applies one explicit global absolute kitchen close to the parsed weekday schedule", () => {
+    const extracted = extractCanonicalOpeningHours(`
+      <html><body>
+        <p>Man - Lør 12:00 - 22:00</p>
+        <p>Søn 14:00 - 22:00</p>
+        <p>kjøkkenet stenger 21:00</p>
+      </body></html>
+    `);
+
+    expect(extracted.intervals).toHaveLength(7);
+    expect(extracted.intervals.slice(0, 6).every((item) => item.opensAt === "12:00")).toBe(true);
+    expect(extracted.intervals[6]).toMatchObject({ opensAt: "14:00", closesAt: "21:00" });
+    expect(extracted.intervals.every((item) => item.closesAt === "21:00")).toBe(true);
+    expect(extracted.sourceExcerpt).toContain("kjøkkenet stenger 21:00");
+  });
+
+  it("does not extend a day that already closes before the global kitchen close", () => {
+    const extracted = extractCanonicalOpeningHours(`
+      <html><body>
+        <p>Mandag-Fredag: 11:00-20:00</p>
+        <p>Lørdag-Søndag: 12:00-22:00</p>
+        <p>Kjøkkenet stenger 21:00</p>
+      </body></html>
+    `);
+
+    expect(extracted.intervals.slice(0, 5).every((item) => item.closesAt === "20:00")).toBe(true);
+    expect(extracted.intervals.slice(5).every((item) => item.closesAt === "21:00")).toBe(true);
+  });
+
+  it("fails closed on conflicting global absolute kitchen-close times", () => {
+    expect(() =>
+      extractCanonicalOpeningHours(`
+        <html><body>
+          <p>Mandag-Søndag: 12:00-22:00</p>
+          <p>Kjøkkenet stenger 21:00</p>
+          <p>Kitchen closes at 20:30</p>
+        </body></html>
+      `),
+    ).toThrow(OpeningHoursExtractionError);
   });
 
   it("normalizes common English weekday abbreviations without changing the canonical schedule grammar", () => {
