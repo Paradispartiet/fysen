@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { dishSearchHref } from "../lib/public-path";
+import { foodKnowledgeFacts } from "./cuisine-explorer-data";
 import { learningDishes, type DishLearningDetail } from "./dish-learning-data";
 
 export function DishLearningSection() {
@@ -39,6 +40,24 @@ export function DishLearningSection() {
         </div>
         <p>Trykk på rettnavnet for å lære hva retten er og hvordan du kan lage den hjemme.</p>
       </div>
+
+      <section className="foodKnowledgeFacts" aria-labelledby="food-knowledge-facts-title">
+        <div className="foodKnowledgeFactsHeading">
+          <div>
+            <p className="foodSectionEyebrow">Matkunnskap</p>
+            <h3 id="food-knowledge-facts-title">Visste du?</h3>
+          </div>
+          <p>Korte fakta om kjøkken, regioner og mattradisjoner.</p>
+        </div>
+        <div className="foodKnowledgeFactsGrid">
+          {foodKnowledgeFacts.map((fact) => (
+            <article key={fact.cuisine}>
+              <span>{fact.cuisine}</span>
+              <p>{fact.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <div className="dishLearningGrid">
         {learningDishes.map((dish) => (
