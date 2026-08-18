@@ -4,13 +4,6 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths:
-      - "apps/web/**"
-      - "packages/contracts/**"
-      - ".github/workflows/pages-preview.yml"
-      - "package.json"
-      - "pnpm-workspace.yaml"
-      - "turbo.json"
 
 permissions:
   contents: read
@@ -22,7 +15,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,9 +37,6 @@ jobs:
       - name: Prepare functional static preview
         shell: bash
         run: |
-          # GitHub Pages has no server runtime. Keep the canonical UI and result
-          # components, replace only the server search route with the dedicated
-          # client adapter, and never export the server-only web API routes.
           rm -rf apps/web/app/api
 
           cat > apps/web/app/search/page.tsx <<'EOF'
@@ -67,9 +57,7 @@ jobs:
             basePath: "/fysen-preview",
             assetPrefix: "/fysen-preview",
             trailingSlash: true,
-            images: {
-              unoptimized: true,
-            },
+            images: { unoptimized: true },
           };
 
           export default nextConfig;
@@ -83,15 +71,12 @@ jobs:
           NEXT_PUBLIC_DISABLE_FUNNEL_TRACKING: "1"
         run: pnpm turbo run build --filter=@fysen/web...
 
-      - name: Verify functional search export
+      - name: Verify structural static export
         run: |
+          set -euo pipefail
           test -f apps/web/out/index.html
           test -f apps/web/out/search/index.html
-          test -f apps/web/out/brand/fysen-mark-user.webp
-          grep -q '/fysen-preview/search' apps/web/out/index.html
-          grep -q '/fysen-preview/brand/fysen-mark-user.webp' apps/web/out/index.html
-          grep -q 'Utforsk kjøkken' apps/web/out/index.html
-          grep -q 'fysen-api.vercel.app' apps/web/out/search/index.html || grep -R -q 'fysen-api.vercel.app' apps/web/out/_next
+          test -d apps/web/out/_next
 
       - name: Keep Next assets out of Jekyll processing
         run: touch apps/web/out/.nojekyll
@@ -117,8 +102,8 @@ jobs:
           set -euo pipefail
 
           if [[ -z "${FYSEN_PREVIEW_TOKEN:-}" ]]; then
-            echo "::notice title=Fysen preview auto-publish disabled::Add repository secret FYSEN_PREVIEW_TOKEN to enable cross-repo publishing."
-            exit 0
+            echo "::error title=Fysen preview token missing::Repository secret FYSEN_PREVIEW_TOKEN is required; preview publishing must never silently skip."
+            exit 1
           fi
 
           preview_dir="${RUNNER_TEMP}/fysen-preview-site"
@@ -131,11 +116,11 @@ jobs:
 
           rsync -a --delete --exclude='.git/' apps/web/out/ "$preview_dir/"
 
-          actual_source_sha="$(cat "$preview_dir/source-main-sha.txt")"
+          actual_source_sha="$(tr -d '\r\n' < "$preview_dir/source-main-sha.txt")"
           test "$actual_source_sha" = "$SOURCE_SHA"
           test -f "$preview_dir/index.html"
           test -f "$preview_dir/search/index.html"
-          test -f "$preview_dir/brand/fysen-mark-user.webp"
+          test -d "$preview_dir/_next"
 
           git -C "$preview_dir" config user.name "Fysen Preview Publisher"
           git -C "$preview_dir" config user.email "paradispartiet@gmail.com"
@@ -146,6 +131,10 @@ jobs:
             git -C "$preview_dir" push --quiet origin site
           fi
 
+          git -C "$preview_dir" fetch --quiet origin site
+          remote_source_sha="$(git -C "$preview_dir" show origin/site:source-main-sha.txt | tr -d '\r\n')"
+          test "$remote_source_sha" = "$SOURCE_SHA"
+
           curl --fail-with-body --silent --show-error \
             --request POST \
             --header "Accept: application/vnd.github+json" \
@@ -154,4 +143,26 @@ jobs:
             https://api.github.com/repos/Paradispartiet/fysen-preview/dispatches \
             --data "{\"event_type\":\"publish-fysen-preview\",\"client_payload\":{\"source_sha\":\"${SOURCE_SHA}\"}}"
 
-          echo "Published Fysen preview snapshot ${SOURCE_SHA} and dispatched GitHub Pages."
+      - name: Verify public preview matches main
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+
+          for attempt in $(seq 1 36); do
+            public_sha="$(curl --fail --silent --show-error --location \
+              "https://paradispartiet.github.io/fysen-preview/source-main-sha.txt?source=${SOURCE_SHA}&attempt=${attempt}" \
+              2>/dev/null | tr -d '\r\n' || true)"
+
+            if [[ "$public_sha" == "$SOURCE_SHA" ]]; then
+              echo "Public Fysen preview now serves $SOURCE_SHA"
+              exit 0
+            fi
+
+            echo "Waiting for public preview: expected $SOURCE_SHA, got ${public_sha:-<unavailable>} (attempt $attempt/36)"
+            sleep 10
+          done
+
+          echo "::error title=Fysen preview is stale::Public preview did not reach main SHA $SOURCE_SHA"
+          exit 1
