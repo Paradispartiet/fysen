@@ -43,6 +43,7 @@
       "Mezah uten kjøtt (vegetar)",
       "Mezah med kjøtt",
       "Baklawa med pistasjhonning",
+      "Ostekake",
       "Creme Brulee"
     ],
     "requiredDishVariants": [
@@ -55,6 +56,7 @@
       { "name": "Mezah uten kjøtt (vegetar)", "priceMinor": 35000 },
       { "name": "Mezah med kjøtt", "priceMinor": 39900 },
       { "name": "Baklawa med pistasjhonning", "priceMinor": 13900 },
+      { "name": "Ostekake", "priceMinor": 13900 },
       { "name": "Creme Brulee", "priceMinor": 14500 }
     ],
     "forbiddenDishNames": [
