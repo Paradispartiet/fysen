@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kain-neo-filipino-bistro-oslo",
+    "name": "Kain Neo-Filipino Bistro",
+    "websiteUrl": "https://www.kain-oslo.com/",
+    "address": "Hammersborggata 9, 0181 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91503,
+    "longitude": 10.75209
+  },
+  "menuSource": {
+    "url": "https://www.kain-oslo.com/about-5",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 10
+  },
+  "hoursSource": {
+    "url": "https://www.kain-oslo.com/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 2
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "Kain publishes complete venue hours on its first-party site (Tue-Fri 16:00-22:00, Sat 16:00-23:00, Sun-Mon closed) and explicitly states that the kitchen closes at 21:00. The source does not separately state the kitchen opening time, so keep open/closed unknown until complete kitchen-scoped intervals are explicitly verified."
+    }
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://www.kain-oslo.com/reservation-page",
+      "sourceUrl": "https://www.kain-oslo.com/book-a-table",
+      "provider": "Kain"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Sinuglaw",
+      "Siomai",
+      "Sisig",
+      "Pork Adobo",
+      "Lamb kulma",
+      "Chicken Inasal",
+      "Pinakbet",
+      "Vegan Kare-kare",
+      "Calamansi",
+      "Buko pandan"
+    ],
+    "requiredDishVariants": [
+      { "name": "Sinuglaw", "priceMinor": 19900 },
+      { "name": "Siomai", "priceMinor": 18900 },
+      { "name": "Sisig", "priceMinor": 19900 },
+      { "name": "Pork Adobo", "priceMinor": 29900 },
+      { "name": "Lamb kulma", "priceMinor": 30900 },
+      { "name": "Chicken Inasal", "priceMinor": 29900 },
+      { "name": "Pinakbet", "priceMinor": 29900 },
+      { "name": "Vegan Kare-kare", "priceMinor": 27900 },
+      { "name": "Calamansi", "priceMinor": 16900 },
+      { "name": "Buko pandan", "priceMinor": 16900 }
+    ],
+    "forbiddenDishNames": [
+      "5 COURSE MENU",
+      "A LA CARTE",
+      "STARTER",
+      "MAIN COURSE",
+      "DESSERT",
+      "Wine package",
+      "Last order"
+    ]
+  }
+}
