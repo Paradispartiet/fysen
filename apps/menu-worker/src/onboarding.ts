@@ -15,6 +15,8 @@ import {
 import { verifyActionSource } from "./action-source-runtime.js";
 import { HttpMenuClient } from "./http-client.js";
 import {
+  getHoursVerificationStatus,
+  isHoursVerificationBlocking,
   listRestaurantOnboardingManifests,
   readRestaurantOnboardingManifest,
   type RestaurantOnboardingManifest,
@@ -59,6 +61,7 @@ export interface RestaurantOnboardingResult {
   readonly itemCount: number | null;
   readonly missingRequiredDishes: readonly string[];
   readonly forbiddenDishesPresent: readonly string[];
+  readonly warnings: readonly string[];
   readonly error: string | null;
 }
 
@@ -80,6 +83,11 @@ function acceptedHours(summary: OpeningHoursWatchResult): boolean {
 
 function qualityFailure(prefix: string, quality: ManifestMenuQualityResult): string {
   return `${prefix}: items=${quality.itemCount}/${quality.minimumExpectedItems}, missing=${quality.missingRequiredDishes.join(",") || "none"}, forbidden=${quality.forbiddenDishesPresent.join(",") || "none"}`;
+}
+
+function declaredVerificationWarnings(manifest: RestaurantOnboardingManifest): string[] {
+  const hours = manifest.verification.hours;
+  return hours ? [`hours ${hours.status}: ${hours.note} (checked ${hours.checkedAt})`] : [];
 }
 
 async function assertLatestSnapshot(
@@ -145,6 +153,7 @@ async function ensureMetadata(
   manifest: RestaurantOnboardingManifest,
   restaurantId: string,
 ): Promise<{ readonly hoursSourceId: string | null; readonly actions: readonly OnboardingActionResult[] }> {
+  const hoursAudit = manifest.verification.hours;
   const hoursSourceId = manifest.hoursSource
     ? await upsertRestaurantHoursSource(pool, {
         restaurantId,
@@ -153,6 +162,9 @@ async function ensureMetadata(
         checkIntervalMinutes: manifest.hoursSource.checkIntervalMinutes,
         minimumExpectedIntervals: manifest.hoursSource.minimumExpectedIntervals,
         scopeHints: manifest.hoursSource.scopeHints,
+        verificationStatus: getHoursVerificationStatus(manifest),
+        verificationNote: hoursAudit?.note ?? null,
+        verificationCheckedAt: hoursAudit?.checkedAt ?? null,
       })
     : null;
 
@@ -177,6 +189,7 @@ async function onboardOne(
   let firstWatch: MenuWatchSummary | null = null;
   let secondWatch: MenuWatchSummary | null = null;
   let latestQuality: ManifestMenuQualityResult | null = null;
+  const warnings = declaredVerificationWarnings(manifest);
 
   try {
     const candidate = await upsertRestaurantCandidate(pool, manifest.restaurant);
@@ -248,6 +261,7 @@ async function onboardOne(
         itemCount: latestQuality.itemCount,
         missingRequiredDishes: latestQuality.missingRequiredDishes,
         forbiddenDishesPresent: latestQuality.forbiddenDishesPresent,
+        warnings,
         error: null,
       };
     }
@@ -278,7 +292,12 @@ async function onboardOne(
     if (hoursSourceId) {
       hoursWatch = await watchRestaurantHoursSourceOnce(pool, hoursSourceId);
       if (!acceptedHours(hoursWatch)) {
-        throw new Error(`Initial onboarding hours watch was ${hoursWatch.outcome}${hoursWatch.errorCode ? ` (${hoursWatch.errorCode})` : ""}`);
+        if (isHoursVerificationBlocking(manifest)) {
+          throw new Error(`Initial onboarding hours watch was ${hoursWatch.outcome}${hoursWatch.errorCode ? ` (${hoursWatch.errorCode})` : ""}`);
+        }
+        warnings.push(
+          `hours source validation remains nonblocking: ${hoursWatch.outcome}${hoursWatch.errorCode ? ` (${hoursWatch.errorCode})` : ""}`,
+        );
       }
     }
     await setRestaurantCoverageActive(pool, candidate.id, true);
@@ -295,6 +314,7 @@ async function onboardOne(
       itemCount: latestQuality.itemCount,
       missingRequiredDishes: latestQuality.missingRequiredDishes,
       forbiddenDishesPresent: latestQuality.forbiddenDishesPresent,
+      warnings,
       error: null,
     };
   } catch (error) {
@@ -321,6 +341,7 @@ async function onboardOne(
       itemCount: latestQuality?.itemCount ?? null,
       missingRequiredDishes: latestQuality?.missingRequiredDishes ?? [],
       forbiddenDishesPresent: latestQuality?.forbiddenDishesPresent ?? [],
+      warnings,
       error: errorMessage,
     };
   } finally {
