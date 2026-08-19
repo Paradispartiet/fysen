@@ -1,9 +1,11 @@
 import {
   createDatabasePool,
+  getMenuSourceSupport,
   listDueMenuSourceIds,
   MenuIndexRepository,
   type WatchOutcome,
 } from "@fysen/database";
+import { HttpMenuClient } from "./http-client.js";
 import { watchMenuSourceOnce, type MenuWatchSummary } from "./watcher.js";
 
 const failingOutcomes = new Set<WatchOutcome>([
@@ -29,13 +31,15 @@ export async function runDueMenuSources(limit = 25): Promise<DueMenuRunSummary> 
   const pool = createDatabasePool();
   try {
     const repository = new MenuIndexRepository(pool);
+    const httpClient = new HttpMenuClient();
     const sourceIds = await listDueMenuSourceIds(pool, limit);
     const results: DueMenuSourceResult[] = [];
     let failedCount = 0;
 
     for (const menuSourceId of sourceIds) {
       try {
-        const summary = await watchMenuSourceOnce(repository, menuSourceId);
+        const sourceSupport = await getMenuSourceSupport(pool, menuSourceId);
+        const summary = await watchMenuSourceOnce(repository, menuSourceId, httpClient, sourceSupport);
         if (failingOutcomes.has(summary.outcome)) failedCount += 1;
         results.push({ menuSourceId, summary, error: null });
       } catch (error) {
