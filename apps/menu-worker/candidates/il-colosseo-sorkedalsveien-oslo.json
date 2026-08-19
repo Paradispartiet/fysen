@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "il-colosseo-sorkedalsveien-oslo",
+    "name": "Il Colosseo",
+    "websiteUrl": "https://ilcolosseo.no/",
+    "address": "Sørkedalsveien 3A, 0369 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9302311,
+    "longitude": 10.713033
+  },
+  "menuSource": {
+    "url": "https://ilcolosseo.no/meny/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 16
+  },
+  "hoursSource": {
+    "url": "https://ilcolosseo.no/home/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://ilcolosseo.no/booking/",
+      "sourceUrl": "https://ilcolosseo.no/home/",
+      "provider": "Il Colosseo"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bruschetta",
+      "Okse carpaccio",
+      "Caprese salat",
+      "Gratinert løksuppe",
+      "Margherita",
+      "Cappricciosa",
+      "Pepperoni",
+      "Quattro Stagioni",
+      "Penne della casa",
+      "Spaghetti Bolognese",
+      "Spaghetti Carbonara",
+      "Lasagna Al Forno",
+      "Sjokoladefondant",
+      "Affogato"
+    ],
+    "requiredDishVariants": [
+      { "name": "Bruschetta", "priceMinor": 16900 },
+      { "name": "Okse carpaccio", "priceMinor": 23900 },
+      { "name": "Caprese salat", "priceMinor": 19900 },
+      { "name": "Gratinert løksuppe", "priceMinor": 23900 },
+      { "name": "Margherita", "priceMinor": 18900 },
+      { "name": "Cappricciosa", "priceMinor": 28400 },
+      { "name": "Pepperoni", "priceMinor": 27900 },
+      { "name": "Quattro Stagioni", "priceMinor": 28400 },
+      { "name": "Penne della casa", "priceMinor": 27900 },
+      { "name": "Spaghetti Bolognese", "priceMinor": 25900 },
+      { "name": "Spaghetti Carbonara", "priceMinor": 28900 },
+      { "name": "Lasagna Al Forno", "priceMinor": 28900 },
+      { "name": "Sjokoladefondant", "priceMinor": 16900 },
+      { "name": "Affogato", "priceMinor": 12000 }
+    ],
+    "forbiddenDishNames": [
+      "Meny",
+      "Forretter",
+      "Pizza meny",
+      "Fersk pasta",
+      "Dessert",
+      "Take Away",
+      "Lunsj meny",
+      "Se hele menyen"
+    ]
+  }
+}
