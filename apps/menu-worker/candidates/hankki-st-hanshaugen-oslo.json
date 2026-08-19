@@ -24,13 +24,6 @@
     "checkIntervalMinutes": 360,
     "minimumExpectedIntervals": 7
   },
-  "verification": {
-    "hours": {
-      "status": "verified",
-      "checkedAt": "2026-08-19",
-      "note": "Hankki is a takeaway-only restaurant and its first-party homepage explicitly publishes MON-SUN 12:00-20:30, with last order at 20:30. These are canonical service/kitchen hours for the takeaway operation."
-    }
-  },
   "actions": [
     {
       "type": "order",
