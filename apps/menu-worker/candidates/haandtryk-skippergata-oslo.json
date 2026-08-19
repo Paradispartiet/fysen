@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "haandtryk-skippergata-oslo",
+    "name": "Haandtryk",
+    "websiteUrl": "https://www.haandtryk.com/",
+    "address": "Skippergata 3, 0152 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90794,
+    "longitude": 10.74495
+  },
+  "menuSource": {
+    "url": "https://www.haandtryk.com/hjem-1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 14
+  },
+  "hoursSource": {
+    "url": "https://www.haandtryk.com/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 5
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "Haandtryk currently publishes mutually inconsistent restaurant-day schedules across its Norwegian homepage, English page and alternate first-party home page. Menu and booking remain hard-gated; open/closed must stay unknown until one canonical kitchen schedule is confirmed."
+    }
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://booking.gastroplanner.no/haandtryk/t",
+      "sourceUrl": "https://www.haandtryk.com/",
+      "provider": "Gastroplanner"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "FRIES",
+      "Haandtryk BURGER",
+      "Umami BURGER",
+      "Oste BURGER",
+      "Vegetar BURGER",
+      "CAESAR SALAD",
+      "CHORIZO PØLSE",
+      "PAA HAVET I STORM",
+      "DEN FØRSTE OMFAVNELSE",
+      "LAMMEPØLSE",
+      "VEGETAR BRATWURST"
+    ],
+    "requiredDishVariants": [
+      { "name": "FRIES", "priceMinor": 6900 },
+      { "name": "Haandtryk BURGER", "priceMinor": 24900 },
+      { "name": "Umami BURGER", "priceMinor": 23500 },
+      { "name": "Oste BURGER", "priceMinor": 16500 },
+      { "name": "Vegetar BURGER", "priceMinor": 23500 },
+      { "name": "CAESAR SALAD", "priceMinor": 23500 },
+      { "name": "CHORIZO PØLSE", "priceMinor": 22500 },
+      { "name": "PAA HAVET I STORM", "priceMinor": 19000 },
+      { "name": "DEN FØRSTE OMFAVNELSE", "priceMinor": 22900 },
+      { "name": "LAMMEPØLSE", "priceMinor": 18000 },
+      { "name": "VEGETAR BRATWURST", "priceMinor": 20900 }
+    ],
+    "forbiddenDishNames": [
+      "SIDES",
+      "DIPS",
+      "MAINS",
+      "ALLERGENER",
+      "Restaurant",
+      "Kaffebaren"
+    ]
+  }
+}
