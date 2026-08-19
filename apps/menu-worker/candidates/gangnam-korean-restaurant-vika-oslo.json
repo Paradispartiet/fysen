@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "gangnam-korean-restaurant-vika-oslo",
+    "name": "Gangnam Korean Restaurant",
+    "websiteUrl": "https://gangnam.no/",
+    "address": "Munkedamsveien 59, 0270 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9111706,
+    "longitude": 10.720909
+  },
+  "menuSource": {
+    "url": "https://gangnam.no/onewebmedia/A%20La%20Carte%20Meny%200825.pdf",
+    "sourceType": "pdf",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 18
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-19",
+      "note": "Gangnam has a live first-party menu, but a canonical first-party weekly kitchen-hours source could not be verified during onboarding. External listings are not promoted to canonical hours; keep open/closed unknown until first-party hours can be read directly."
+    }
+  },
+  "actions": [
+    {
+      "type": "order",
+      "url": "https://www.foodora.no/restaurant/n4tg/gangnam-korean-restaurant",
+      "sourceUrl": "https://www.foodora.no/restaurant/n4tg/gangnam-korean-restaurant",
+      "provider": "Foodora"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kimchi Mandu 김치만두 2stk",
+      "Yukjeon 육전 2stk",
+      "Scampi Korokke 새우고로케 2stk",
+      "Modum 모둠",
+      "Topokki Chili 떡볶이",
+      "Topokki Soya 간장떡볶이",
+      "Kimchijeon 김치전 3stk",
+      "Haemulpajeon 해물파전 3stk",
+      "Tteokgalbi Bokkeum 떡갈비 볶음",
+      "Daegu Bokkeum 대구볶음",
+      "Sundubu Jjigae 순두부찌개",
+      "Bibimbap 비빔밥",
+      "Bulgogi 불고기",
+      "Jeyuk Bokkeum 제육볶음",
+      "Kimchi Jjigae 김치찌개",
+      "Galbijjim 갈비찜",
+      "Nokcha Ice Cream 녹차 아이스크림",
+      "Hotteok 호떡",
+      "Bungeoppang 붕어빵"
+    ],
+    "requiredDishVariants": [
+      { "name": "Kimchi Mandu 김치만두 2stk", "priceMinor": 7800 },
+      { "name": "Yukjeon 육전 2stk", "priceMinor": 10600 },
+      { "name": "Scampi Korokke 새우고로케 2stk", "priceMinor": 11600 },
+      { "name": "Modum 모둠", "priceMinor": 14500 },
+      { "name": "Topokki Chili 떡볶이", "priceMinor": 15500 },
+      { "name": "Topokki Soya 간장떡볶이", "priceMinor": 15500 },
+      { "name": "Kimchijeon 김치전 3stk", "priceMinor": 15200 },
+      { "name": "Haemulpajeon 해물파전 3stk", "priceMinor": 15200 },
+      { "name": "Tteokgalbi Bokkeum 떡갈비 볶음", "priceMinor": 17500 },
+      { "name": "Daegu Bokkeum 대구볶음", "priceMinor": 33800 },
+      { "name": "Sundubu Jjigae 순두부찌개", "priceMinor": 32800 },
+      { "name": "Bibimbap 비빔밥", "priceMinor": 32400 },
+      { "name": "Bulgogi 불고기", "priceMinor": 34200 },
+      { "name": "Jeyuk Bokkeum 제육볶음", "priceMinor": 32600 },
+      { "name": "Kimchi Jjigae 김치찌개", "priceMinor": 32800 },
+      { "name": "Galbijjim 갈비찜", "priceMinor": 40500 },
+      { "name": "Nokcha Ice Cream 녹차 아이스크림", "priceMinor": 8600 },
+      { "name": "Hotteok 호떡", "priceMinor": 11500 },
+      { "name": "Bungeoppang 붕어빵", "priceMinor": 11500 }
+    ],
+    "forbiddenDishNames": [
+      "Peach Soju",
+      "Blueberry Soju",
+      "Ssanghwacha",
+      "Insamcha",
+      "Americano",
+      "Cafe Latte",
+      "Sijhye",
+      "Te / Kaffe"
+    ]
+  }
+}
