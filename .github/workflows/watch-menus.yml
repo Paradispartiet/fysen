@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: fysen-production-menu-watcher
+  group: fysen-production-menu-mutation
   cancel-in-progress: false
 
 jobs:
