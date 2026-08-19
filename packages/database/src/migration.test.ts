@@ -21,6 +21,7 @@ describe("database migrations", () => {
       "0014_search_demand_source.sql",
       "0015_restaurant_claims.sql",
       "0016_fysen_pro_sessions.sql",
+      "0017_aha_min_mat.sql",
     ]);
 
     const schemaSql = await readFile(new URL("../migrations/0001_menu_index.sql", import.meta.url), "utf8");
@@ -134,5 +135,16 @@ describe("database migrations", () => {
     expect(fysenProSql).toContain("setup_token_redeemed");
     expect(fysenProSql).toContain("session_created");
     expect(fysenProSql).toContain("session_revoked");
+
+    const ahaMinMatSql = await readFile(new URL("../migrations/0017_aha_min_mat.sql", import.meta.url), "utf8");
+    expect(ahaMinMatSql).toContain("CREATE TABLE IF NOT EXISTS fysen.aha_consumer_sessions");
+    expect(ahaMinMatSql).toContain("CREATE TABLE IF NOT EXISTS fysen.min_mat_items");
+    expect(ahaMinMatSql).toContain("CREATE TABLE IF NOT EXISTS fysen.aha_analysis_handoffs");
+    expect(ahaMinMatSql).toContain("CREATE TABLE IF NOT EXISTS fysen.aha_consumer_audit_log");
+    expect(ahaMinMatSql).toContain("aha_authorization_id uuid NOT NULL UNIQUE");
+    expect(ahaMinMatSql).toContain("token_hash char(64) NOT NULL UNIQUE");
+    expect(ahaMinMatSql).toContain("scopes = ARRAY['fysen:min_mat', 'fysen:analysis_handoff']::text[]");
+    expect(ahaMinMatSql).not.toContain("session_token");
+    expect(ahaMinMatSql).not.toContain("handoff_token");
   });
 });
