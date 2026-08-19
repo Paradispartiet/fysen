@@ -56,16 +56,24 @@ jobs:
       - name: Generate quality dashboard
         run: pnpm --filter @fysen/database quality:dashboard -- reports
 
-      - name: Publish dashboard to job summary
-        shell: bash
-        run: cat packages/database/reports/quality-dashboard.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Generate demand loop
+        run: pnpm --filter @fysen/database demand:loop -- reports
 
-      - name: Upload machine-readable dashboard
+      - name: Publish reports to job summary
+        shell: bash
+        run: |
+          cat packages/database/reports/quality-dashboard.md >> "$GITHUB_STEP_SUMMARY"
+          printf '\n\n' >> "$GITHUB_STEP_SUMMARY"
+          cat packages/database/reports/demand-loop.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload machine-readable reports
         uses: actions/upload-artifact@v4
         with:
           name: fysen-quality-dashboard
           path: |
             packages/database/reports/quality-dashboard.json
             packages/database/reports/quality-dashboard.md
+            packages/database/reports/demand-loop.json
+            packages/database/reports/demand-loop.md
           retention-days: 14
           if-no-files-found: error

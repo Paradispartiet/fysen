@@ -107,12 +107,14 @@ integrationDescribe("revenue funnel integration", () => {
       normalized_query: string;
       city: string;
       result_count: number;
-    }>("SELECT normalized_query, city, result_count FROM fysen.search_events WHERE id = $1", [recorded.searchId]);
+      demand_source: string;
+    }>("SELECT normalized_query, city, result_count, demand_source FROM fysen.search_events WHERE id = $1", [recorded.searchId]);
 
     expect(search.rows[0]).toEqual({
       normalized_query: "beef tartare",
       city: "Oslo",
       result_count: 1,
+      demand_source: "explicit_search",
     });
 
     const impression = await pool.query<{ match_type: string; match_score: number }>(
@@ -168,10 +170,10 @@ integrationDescribe("revenue funnel integration", () => {
       impressions: [],
     });
 
-    const zero = await pool.query<{ result_count: number }>(
-      "SELECT result_count FROM fysen.search_events WHERE id = $1",
+    const zero = await pool.query<{ result_count: number; demand_source: string }>(
+      "SELECT result_count, demand_source FROM fysen.search_events WHERE id = $1",
       [recorded.searchId],
     );
-    expect(zero.rows[0]?.result_count).toBe(0);
+    expect(zero.rows[0]).toEqual({ result_count: 0, demand_source: "explicit_search" });
   });
 });
