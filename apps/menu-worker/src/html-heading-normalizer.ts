@@ -3,11 +3,11 @@ import { load } from "cheerio";
 export const HTML_HEADING_NORMALIZER_VERSION = "heading-v2";
 
 const STANDALONE_CURRENCY_LABEL = /^(?:NOK|kr\.?)$/iu;
+const NOK_PREFIXED_PRICE = /^NOK\s*([1-9]\d{1,3}(?:[.,]\d{1,2})?)$/iu;
 const CONTACT_PHONE_METADATA = /^(?:phone|telefon|tel(?:efon)?|mobile|mobil)\s*:\s*[+()\d][+()\d\s.-]{4,}$/iu;
 
-function parserOnlyMetadata(value: string): boolean {
-  const normalized = value.normalize("NFKC").replace(/\s+/g, " ").trim();
-  return STANDALONE_CURRENCY_LABEL.test(normalized) || CONTACT_PHONE_METADATA.test(normalized);
+function normalizedText(value: string): string {
+  return value.normalize("NFKC").replace(/\s+/g, " ").trim();
 }
 
 export function normalizeHtmlHeadingLineBreaks(html: string): string {
@@ -16,10 +16,17 @@ export function normalizeHtmlHeadingLineBreaks(html: string): string {
     $(heading).find("br").replaceWith(" ");
   });
 
-  $("*").each((_, element) => {
+  $("body *").each((_, element) => {
     const node = $(element);
-    if (node.children().length > 0) return;
-    if (parserOnlyMetadata(node.text())) node.remove();
+    const text = normalizedText(node.text());
+    const nokPrefixedPrice = text.match(NOK_PREFIXED_PRICE);
+    if (nokPrefixedPrice?.[1]) {
+      node.text(`${nokPrefixedPrice[1]} NOK`);
+      return;
+    }
+    if (STANDALONE_CURRENCY_LABEL.test(text) || CONTACT_PHONE_METADATA.test(text)) {
+      node.remove();
+    }
   });
 
   return $.html();
