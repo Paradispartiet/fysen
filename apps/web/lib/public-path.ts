@@ -18,3 +18,7 @@ export function dishSearchHref(query: string, city = "Oslo"): string {
   const params = new URLSearchParams({ q: query, city });
   return `${withPublicBasePath("/search")}?${params.toString()}`;
 }
+
+export function foodKnowledgeHref(dishId: string): string {
+  return `${withPublicBasePath("/")}#learn-${encodeURIComponent(dishId)}`;
+}
