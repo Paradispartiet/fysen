@@ -101,3 +101,58 @@ jobs:
 
       - name: Database integration tests
         run: pnpm --filter @fysen/database test:integration
+
+  cue-production-smoke:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'verify/cue-production-smoke-v1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
+      DATABASE_SSL: "verify-full"
+      NODE_ENV: production
+      SMOKE_QUERY: "Diavola"
+      SMOKE_CITY: "Oslo"
+      SMOKE_EXPECTED_RESTAURANT_SLUG: "cue-thorvald-meyers-gate-oslo"
+      SMOKE_EXPECTED_DISH_NAME: "Diavola"
+      SMOKE_EXPECTED_PRICE_MINOR: "25900"
+      SMOKE_EXPECTED_PRICE_KIND: "exact"
+      SMOKE_EXPECTED_MATCH_TYPE: "exact"
+      SMOKE_EXPECTED_OPENING: "any"
+      SMOKE_EXPECTED_ACTION: "booking"
+      SMOKE_MIN_COUNT: "1"
+    steps:
+      - name: Require production database secret
+        shell: bash
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "FYSEN_PRODUCTION_DATABASE_URL is not configured for this trusted same-repository verification." >&2
+            exit 1
+          fi
+
+      - name: Checkout verified production main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build production search dependencies
+        run: |
+          pnpm --filter @fysen/menu-core build
+          pnpm --filter @fysen/database build
+
+      - name: Read-only Cue production search smoke
+        run: node scripts/production-search-smoke.mjs
