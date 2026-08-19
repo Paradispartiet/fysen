@@ -53,7 +53,7 @@ describe("HTML description-title recovery", () => {
       visibleText,
     );
 
-    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v6");
+    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v7");
     expect(result.map((entry) => entry.name)).toEqual([
       "Hummus (kikert-og sesampuré)",
       "Hvitløkmarinerte kyllingvinger",
@@ -62,6 +62,47 @@ describe("HTML description-title recovery", () => {
       "Kylling Tawok",
     ]);
     expect(result[0]?.description).toBe("Serveres med pitabrød");
+  });
+
+  it("recovers a dish title that follows a plain food-section label in the same price block", () => {
+    const pizza = {
+      ...item("Pizza", 0, 25900),
+      description: "Diavola Tomatsaus, ost, nduja, salami og chili",
+      sourceExcerpt: "Pizza — Diavola — Tomatsaus, ost, nduja, salami og chili — 259",
+    };
+
+    const result = recoverDescriptionNamedHtmlItems(
+      [pizza],
+      ["Pizza", "Diavola", "Tomatsaus, ost, nduja, salami og chili", "259"].join("\n"),
+    );
+
+    expect(result).toHaveLength(1);
+    expect(result[0]?.name).toBe("Diavola");
+    expect(result[0]?.description).toBe("Tomatsaus, ost, nduja, salami og chili");
+  });
+
+  it("treats a comma-rich ingredient line as description and preserves a short question-mark dish title", () => {
+    const ingredientLine = "Tomatsaus, ost, biff, rødløk, sjampinjong, aioli";
+    const result = recoverDescriptionNamedHtmlItems(
+      [item(ingredientLine, 1, 26900)],
+      ["Wanna Beef?", ingredientLine, "269"].join("\n"),
+    );
+
+    expect(result).toHaveLength(1);
+    expect(result[0]?.name).toBe("Wanna Beef?");
+    expect(result[0]?.description).toBe(ingredientLine);
+  });
+
+  it("still treats a long question sentence as description rather than a dish title", () => {
+    const question = "Er du klar for en skikkelig spicy pizza?";
+    const result = recoverDescriptionNamedHtmlItems(
+      [item(question, 1, 25900)],
+      ["Diavola", question, "259"].join("\n"),
+    );
+
+    expect(result).toHaveLength(1);
+    expect(result[0]?.name).toBe("Diavola");
+    expect(result[0]?.description).toBe(question);
   });
 
   it("recovers allergen-only metadata and a non-allergen parenthetical title qualifier", () => {
