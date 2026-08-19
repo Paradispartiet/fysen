@@ -11,12 +11,12 @@
     "longitude": 10.7606623
   },
   "menuSource": {
-    "url": "https://nepalhouse.no/",
+    "url": "https://www.foodora.no/restaurant/t8dc/nepal-house",
     "sourceType": "html",
-    "fetchMode": "browser",
+    "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 8
+    "minimumExpectedItems": 30
   },
   "hoursSource": {
     "url": "https://nepalhouse.no/",
@@ -46,36 +46,46 @@
   ],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Chicken Samosa 2pcs.",
-      "Dahi Puri",
-      "Vegetable Samosa Chaat",
-      "Green MO:MO (Dumplings 4pcs.)",
-      "Bhatmas Shadeko",
-      "Badam Sadeko",
-      "Chatpate",
-      "Vegetable Samosa",
-      "Pani puri"
+      "Kukhura Ko Masu",
+      "Khasi Ko Masu",
+      "Mix Green Vegetable",
+      "Jhaneko Dal",
+      "Choila Chicken",
+      "Chicken MO:MO Dumplings 10",
+      "Chicken Jhol MO:MO",
+      "Chili Chicken MO:MO",
+      "Chicken Chowmein",
+      "Pork Sekuwa 250 g",
+      "Green MO:MO",
+      "Green Jhol MO:MO",
+      "Veg Chowmein"
     ],
     "requiredDishVariants": [
-      { "name": "Chicken Samosa 2pcs.", "priceMinor": 9900 },
-      { "name": "Dahi Puri", "priceMinor": 10900 },
-      { "name": "Vegetable Samosa Chaat", "priceMinor": 12900 },
-      { "name": "Green MO:MO (Dumplings 4pcs.)", "priceMinor": 9900 },
-      { "name": "Bhatmas Shadeko", "priceMinor": 8900 },
-      { "name": "Badam Sadeko", "priceMinor": 9900 },
-      { "name": "Chatpate", "priceMinor": 8900 },
-      { "name": "Vegetable Samosa", "priceMinor": 9900 },
-      { "name": "Pani puri", "priceMinor": 9900 }
+      { "name": "Kukhura Ko Masu", "priceMinor": 24900, "priceKind": "from" },
+      { "name": "Khasi Ko Masu", "priceMinor": 25900, "priceKind": "from" },
+      { "name": "Mix Green Vegetable", "priceMinor": 21900, "priceKind": "from" },
+      { "name": "Jhaneko Dal", "priceMinor": 19900, "priceKind": "from" },
+      { "name": "Choila Chicken", "priceMinor": 24900, "priceKind": "from" },
+      { "name": "Chicken MO:MO Dumplings 10", "priceMinor": 21900, "priceKind": "from" },
+      { "name": "Chicken Jhol MO:MO", "priceMinor": 23900, "priceKind": "from" },
+      { "name": "Chili Chicken MO:MO", "priceMinor": 23900, "priceKind": "from" },
+      { "name": "Chicken Chowmein", "priceMinor": 23900, "priceKind": "from" },
+      { "name": "Pork Sekuwa 250 g", "priceMinor": 24900, "priceKind": "from" },
+      { "name": "Green MO:MO", "priceMinor": 21900, "priceKind": "from" },
+      { "name": "Green Jhol MO:MO", "priceMinor": 23900, "priceKind": "from" },
+      { "name": "Veg Chowmein", "priceMinor": 22900, "priceKind": "from" }
     ],
     "forbiddenDishNames": [
-      "Appetizer",
-      "Nepali Street Food",
+      "Populært",
       "Nepali Curry",
-      "Grill Meat and Biryani",
-      "Indian Curry",
-      "Takeaway Menu",
-      "Opening Hours",
-      "Order Online"
+      "Nepali Street Food",
+      "Nepali Street Food -Veg",
+      "Mango Lassi",
+      "Plain Lassi",
+      "Coca Cola",
+      "Cola Zero",
+      "produktinformasjon",
+      "Opening Hours"
     ]
   }
 }
