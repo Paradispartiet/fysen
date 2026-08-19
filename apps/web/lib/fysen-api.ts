@@ -1,4 +1,10 @@
 import {
+  dishBrowseQuerySchema,
+  dishBrowseResponseSchema,
+  type DishBrowseQuery,
+  type DishBrowseResponse,
+} from "@fysen/contracts/dish-browse";
+import {
   conversionEventInputSchema,
   conversionEventReceiptSchema,
   dishSearchQuerySchema,
@@ -14,6 +20,22 @@ function apiBaseUrl(): string {
   if (configured) return configured.replace(/\/$/, "");
   if (process.env.NODE_ENV === "development") return "http://localhost:3001";
   throw new Error("FYSEN_API_BASE_URL is required in production");
+}
+
+export async function browseDishes(input: DishBrowseQuery): Promise<DishBrowseResponse> {
+  const query = dishBrowseQuerySchema.parse(input);
+  const params = new URLSearchParams({ city: query.city });
+  const response = await fetch(`${apiBaseUrl()}/v1/dishes/browse?${params.toString()}`, {
+    cache: "no-store",
+    headers: { accept: "application/json" },
+    signal: AbortSignal.timeout(5_000),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Fysen API dish browse failed with HTTP ${response.status}`);
+  }
+
+  return dishBrowseResponseSchema.parse(await response.json());
 }
 
 export async function searchDishes(input: DishSearchQuery): Promise<DishSearchResponse> {

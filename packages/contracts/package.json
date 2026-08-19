@@ -9,6 +9,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./dish-browse": {
+      "types": "./dist/dish-browse.d.ts",
+      "default": "./dist/dish-browse.js"
     }
   },
   "scripts": {

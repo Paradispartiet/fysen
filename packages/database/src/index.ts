@@ -1,3 +1,4 @@
+export * from "./browse.js";
 export * from "./client.js";
 export * from "./coverage.js";
 export * from "./due-sources.js";

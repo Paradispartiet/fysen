@@ -1,16 +1,30 @@
 import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import {
+  dishBrowseResponseSchema,
+  type DishBrowseQuery,
+  type DishBrowseResponse,
+} from "@fysen/contracts/dish-browse";
+import {
   dishSearchResponseSchema,
   type DishSearchQuery,
   type DishSearchResponse,
 } from "@fysen/contracts";
-import { recordSearchFunnel, searchDishes } from "@fysen/database";
+import { browseDishes, recordSearchFunnel, searchDishes } from "@fysen/database";
 import { normalizeDishName } from "@fysen/menu-core";
 import { DatabaseService } from "./database.service.js";
 
 @Injectable()
 export class DishSearchService {
   constructor(@Inject(DatabaseService) private readonly databaseService: DatabaseService) {}
+
+  async browse(input: DishBrowseQuery): Promise<DishBrowseResponse> {
+    const dishes = await browseDishes(this.databaseService.pool(), { city: input.city });
+    return dishBrowseResponseSchema.parse({
+      city: input.city,
+      count: dishes.length,
+      dishes,
+    });
+  }
 
   async search(input: DishSearchQuery): Promise<DishSearchResponse> {
     const normalizedQuery = normalizeDishName(input.q);

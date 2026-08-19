@@ -1,10 +1,15 @@
 "use client";
 
 import {
+  dishBrowseResponseSchema,
+  type DishBrowseResponse,
+} from "@fysen/contracts/dish-browse";
+import {
   dishSearchResponseSchema,
   type DishSearchResponse,
 } from "@fysen/contracts";
 import { useEffect, useMemo, useState } from "react";
+import { DishBrowse } from "./dish-browse";
 import { DishKnowledgeNote } from "./dish-knowledge-note";
 import { DishResult } from "./dish-result";
 import { DishSearch } from "./dish-search";
@@ -26,6 +31,11 @@ function queryFromLocation(): QueryState {
   };
 }
 
+function previewBrowseUrl(city: string): string {
+  const params = new URLSearchParams({ city });
+  return `${previewApiBaseUrl}/v1/dishes/browse?${params.toString()}`;
+}
+
 function previewSearchUrl(query: QueryState): string {
   const params = new URLSearchParams({
     q: query.q,
@@ -37,12 +47,14 @@ function previewSearchUrl(query: QueryState): string {
 }
 
 function productionSearchUrl(query: QueryState): string {
-  const params = new URLSearchParams({ q: query.q, city: query.city });
+  const params = new URLSearchParams({ city: query.city });
+  if (query.q) params.set("q", query.q);
   return `https://fysen.vercel.app/search?${params.toString()}`;
 }
 
 export function StaticPreviewSearchPage() {
   const [query, setQuery] = useState<QueryState | null>(null);
+  const [browseData, setBrowseData] = useState<DishBrowseResponse | null>(null);
   const [data, setData] = useState<DishSearchResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -54,12 +66,13 @@ export function StaticPreviewSearchPage() {
   useEffect(() => {
     if (!query) return;
 
+    setBrowseData(null);
     setData(null);
     setError(null);
 
-    if (query.q.length < 2) {
+    if (query.q.length === 1) {
       setLoading(false);
-      setError(query.q.length === 0 ? null : "Skriv minst to tegn for å søke.");
+      setError("Skriv minst to tegn for å søke.");
       return;
     }
 
@@ -71,21 +84,26 @@ export function StaticPreviewSearchPage() {
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 7_000);
     let disposed = false;
+    const browseMode = query.q.length === 0;
     setLoading(true);
 
-    void fetch(previewSearchUrl(query), {
+    void fetch(browseMode ? previewBrowseUrl(query.city) : previewSearchUrl(query), {
       headers: { accept: "application/json" },
       signal: controller.signal,
     })
       .then(async (response) => {
         if (!response.ok) {
-          throw new Error(`Fysen API dish search failed with HTTP ${response.status}`);
+          throw new Error(`Fysen API request failed with HTTP ${response.status}`);
         }
-        return dishSearchResponseSchema.parse(await response.json());
+        const payload: unknown = await response.json();
+        return browseMode
+          ? { browse: dishBrowseResponseSchema.parse(payload), search: null }
+          : { browse: null, search: dishSearchResponseSchema.parse(payload) };
       })
       .then((response) => {
         if (disposed) return;
-        setData(response);
+        setBrowseData(response.browse);
+        setData(response.search);
       })
       .catch(() => {
         if (disposed) return;
@@ -136,55 +154,66 @@ export function StaticPreviewSearchPage() {
 
       <main className="resultsMain">
         <section className="resultsContent" aria-live="polite">
-          <div className="resultsIntro">
-            <p className="eyebrow">{city}</p>
-            <h1>{q || "Finn en rett"}</h1>
-            <p className="resultsCount">{loading ? "Søker i ferske menyer …" : countLabel}</p>
-          </div>
-
-          <DishKnowledgeNote query={q} />
-
-          {loading ? (
-            <div className="loadingResults" aria-label="Søker etter menytreff">
-              {[0, 1].map((index) => (
-                <div className="loadingResult" key={index}>
-                  <div className="skeletonLine skeletonTitle" />
-                  <div className="skeletonLine skeletonRestaurant" />
-                  <div className="skeletonLine skeletonBody" />
-                  <div className="skeletonLine skeletonMeta" />
-                </div>
-              ))}
-            </div>
-          ) : null}
-
-          {!loading && error ? (
-            <SearchState title={error} body={q.length > 1 ? "Prøv igjen om litt." : undefined} />
-          ) : null}
-
-          {!loading && !error && data && data.results.length === 0 ? (
-            <SearchState
-              title={`Ingen ferske treff på «${q}»`}
-              body={`Vi finner ikke retten på en fersk meny i ${city} akkurat nå.`}
+          {q.length === 0 ? (
+            <DishBrowse
+              city={city}
+              data={browseData}
+              loading={query === null || loading}
+              error={error}
             />
-          ) : null}
-
-          {!loading && primaryResults.length > 0 ? (
-            <div className="resultList">
-              {primaryResults.map((result) => <DishResult result={result} key={result.menuItemId} />)}
-            </div>
-          ) : null}
-
-          {!loading && nearResults.length > 0 ? (
-            <section className="nearResults" aria-labelledby="near-results-title">
-              {primaryResults.length === 0 ? (
-                <p className="nearResultsLead">Vi fant ikke et sikkert rettetreff, men disse menyoppføringene ligner.</p>
-              ) : null}
-              <h2 id="near-results-title">Nære treff</h2>
-              <div className="resultList">
-                {nearResults.map((result) => <DishResult result={result} key={result.menuItemId} />)}
+          ) : (
+            <>
+              <div className="resultsIntro">
+                <p className="eyebrow">{city}</p>
+                <h1>{q}</h1>
+                <p className="resultsCount">{loading ? "Søker i ferske menyer …" : countLabel}</p>
               </div>
-            </section>
-          ) : null}
+
+              <DishKnowledgeNote query={q} />
+
+              {loading ? (
+                <div className="loadingResults" aria-label="Søker etter menytreff">
+                  {[0, 1].map((index) => (
+                    <div className="loadingResult" key={index}>
+                      <div className="skeletonLine skeletonTitle" />
+                      <div className="skeletonLine skeletonRestaurant" />
+                      <div className="skeletonLine skeletonBody" />
+                      <div className="skeletonLine skeletonMeta" />
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+
+              {!loading && error ? (
+                <SearchState title={error} body={q.length > 1 ? "Prøv igjen om litt." : undefined} />
+              ) : null}
+
+              {!loading && !error && data && data.results.length === 0 ? (
+                <SearchState
+                  title={`Ingen ferske treff på «${q}»`}
+                  body={`Vi finner ikke retten på en fersk meny i ${city} akkurat nå.`}
+                />
+              ) : null}
+
+              {!loading && primaryResults.length > 0 ? (
+                <div className="resultList">
+                  {primaryResults.map((result) => <DishResult result={result} key={result.menuItemId} />)}
+                </div>
+              ) : null}
+
+              {!loading && nearResults.length > 0 ? (
+                <section className="nearResults" aria-labelledby="near-results-title">
+                  {primaryResults.length === 0 ? (
+                    <p className="nearResultsLead">Vi fant ikke et sikkert rettetreff, men disse menyoppføringene ligner.</p>
+                  ) : null}
+                  <h2 id="near-results-title">Nære treff</h2>
+                  <div className="resultList">
+                    {nearResults.map((result) => <DishResult result={result} key={result.menuItemId} />)}
+                  </div>
+                </section>
+              ) : null}
+            </>
+          )}
         </section>
       </main>
     </div>

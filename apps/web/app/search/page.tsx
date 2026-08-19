@@ -1,11 +1,13 @@
+import type { DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import type { DishSearchResponse, DishSearchSort } from "@fysen/contracts";
+import { DishBrowse } from "../../components/dish-browse";
 import { DishKnowledgeNote } from "../../components/dish-knowledge-note";
 import { DishResult } from "../../components/dish-result";
 import { DishSearch } from "../../components/dish-search";
 import { GlobalHeader } from "../../components/global-header";
 import { LocationControls } from "../../components/location-controls";
 import { SearchState } from "../../components/search-state";
-import { searchDishes } from "../../lib/fysen-api";
+import { browseDishes, searchDishes } from "../../lib/fysen-api";
 import { withPublicBasePath } from "../../lib/public-path";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
@@ -34,6 +36,17 @@ function searchHref(
     params.set("lon", String(longitude));
   }
   return `${withPublicBasePath("/search")}?${params.toString()}`;
+}
+
+async function loadBrowse(city: string): Promise<{
+  data: DishBrowseResponse | null;
+  error: string | null;
+}> {
+  try {
+    return { data: await browseDishes({ city }), error: null };
+  } catch {
+    return { data: null, error: "Prøv igjen om litt." };
+  }
 }
 
 async function loadResults(
@@ -71,7 +84,12 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   const hasLocation = latitude !== null && longitude !== null;
   const requestedSort = first(params.sort);
   const sort: DishSearchSort = requestedSort === "distance" && hasLocation ? "distance" : "relevance";
-  const { data, error } = await loadResults(q, city, latitude, longitude, sort);
+  const browseState = q.length === 0 ? await loadBrowse(city) : { data: null, error: null };
+  const searchState = q.length === 0
+    ? { data: null, error: null }
+    : await loadResults(q, city, latitude, longitude, sort);
+  const data = searchState.data;
+  const error = searchState.error;
   const primaryResults = data?.results.filter((result) => result.match.type !== "fuzzy") ?? [];
   const nearResults = data?.results.filter((result) => result.match.type === "fuzzy") ?? [];
 
@@ -96,52 +114,58 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
 
       <main className="resultsMain">
         <section className="resultsContent" aria-live="polite">
-          <div className="resultsIntro">
-            <p className="eyebrow">{city}</p>
-            <h1>{q || "Finn en rett"}</h1>
-            <p className="resultsCount">{countLabel}</p>
-            {q.length >= 2 ? <LocationControls hasLocation={hasLocation} sort={sort} /> : null}
-          </div>
-
-          <DishKnowledgeNote query={q} />
-
-          {error ? (
-            <SearchState
-              title={error}
-              body={q.length === 1 ? undefined : "Prøv igjen om litt."}
-              actionHref={
-                q.length > 1
-                  ? searchHref(q, city, latitude, longitude, sort)
-                  : undefined
-              }
-              actionLabel={q.length > 1 ? "Prøv igjen" : undefined}
-            />
-          ) : null}
-
-          {!error && data && data.results.length === 0 ? (
-            <SearchState
-              title={`Ingen ferske treff på «${q}»`}
-              body={`Vi finner ikke retten på en fersk meny i ${city} akkurat nå.`}
-            />
-          ) : null}
-
-          {primaryResults.length > 0 ? (
-            <div className="resultList">
-              {primaryResults.map((result) => <DishResult result={result} key={result.menuItemId} />)}
-            </div>
-          ) : null}
-
-          {nearResults.length > 0 ? (
-            <section className="nearResults" aria-labelledby="near-results-title">
-              {primaryResults.length === 0 ? (
-                <p className="nearResultsLead">Vi fant ikke et sikkert rettetreff, men disse menyoppføringene ligner.</p>
-              ) : null}
-              <h2 id="near-results-title">Nære treff</h2>
-              <div className="resultList">
-                {nearResults.map((result) => <DishResult result={result} key={result.menuItemId} />)}
+          {q.length === 0 ? (
+            <DishBrowse city={city} data={browseState.data} error={browseState.error} />
+          ) : (
+            <>
+              <div className="resultsIntro">
+                <p className="eyebrow">{city}</p>
+                <h1>{q}</h1>
+                <p className="resultsCount">{countLabel}</p>
+                {q.length >= 2 ? <LocationControls hasLocation={hasLocation} sort={sort} /> : null}
               </div>
-            </section>
-          ) : null}
+
+              <DishKnowledgeNote query={q} />
+
+              {error ? (
+                <SearchState
+                  title={error}
+                  body={q.length === 1 ? undefined : "Prøv igjen om litt."}
+                  actionHref={
+                    q.length > 1
+                      ? searchHref(q, city, latitude, longitude, sort)
+                      : undefined
+                  }
+                  actionLabel={q.length > 1 ? "Prøv igjen" : undefined}
+                />
+              ) : null}
+
+              {!error && data && data.results.length === 0 ? (
+                <SearchState
+                  title={`Ingen ferske treff på «${q}»`}
+                  body={`Vi finner ikke retten på en fersk meny i ${city} akkurat nå.`}
+                />
+              ) : null}
+
+              {primaryResults.length > 0 ? (
+                <div className="resultList">
+                  {primaryResults.map((result) => <DishResult result={result} key={result.menuItemId} />)}
+                </div>
+              ) : null}
+
+              {nearResults.length > 0 ? (
+                <section className="nearResults" aria-labelledby="near-results-title">
+                  {primaryResults.length === 0 ? (
+                    <p className="nearResultsLead">Vi fant ikke et sikkert rettetreff, men disse menyoppføringene ligner.</p>
+                  ) : null}
+                  <h2 id="near-results-title">Nære treff</h2>
+                  <div className="resultList">
+                    {nearResults.map((result) => <DishResult result={result} key={result.menuItemId} />)}
+                  </div>
+                </section>
+              ) : null}
+            </>
+          )}
         </section>
       </main>
     </div>
