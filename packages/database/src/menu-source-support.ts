@@ -1,4 +1,4 @@
-import type { Pool } from "pg";
+import type { Pool, QueryResultRow } from "pg";
 
 export interface MenuSourceSupport {
   readonly redirectOrigins: readonly string[];
@@ -10,7 +10,7 @@ export const EMPTY_MENU_SOURCE_SUPPORT: MenuSourceSupport = {
   browserDataOrigins: [],
 };
 
-interface SupportRow {
+interface SupportRow extends QueryResultRow {
   origin: string;
   allow_redirect: boolean;
   allow_browser_data: boolean;
