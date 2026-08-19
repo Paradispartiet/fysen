@@ -7,13 +7,48 @@ import {
 import { extractKitchenOpeningHoursWithIdenticalSectionRecovery } from "./opening-hours-duplicate-section-recovery.js";
 import { normalizeOpeningHoursMarkerLines } from "./opening-hours-marker-normalizer.js";
 
-export const OPENING_HOURS_SOURCE_EXTRACTOR_VERSION = "hours-visible-v14";
+export const OPENING_HOURS_SOURCE_EXTRACTOR_VERSION = "hours-visible-v15";
 
 const relativeKitchenClosePattern = /(?:kjøkken(?:et)?\s+stenger|kitchen\s+closes)\s+(\d{1,3})\s*(?:min\.?|minutter?|minutes?)\s+(?:før\s+stengetid|before\s+(?:closing|close)(?:\s+time)?)/giu;
 const relativeKitchenCloseLinePattern = /(?:kjøkken(?:et)?\s+stenger|kitchen\s+closes)\s+\d{1,3}\s*(?:min\.?|minutter?|minutes?)\s+(?:før\s+stengetid|before\s+(?:closing|close)(?:\s+time)?)/iu;
 const absoluteKitchenClosePattern = /(?:kjøkken(?:et)?\s+(?:til|stenger)|kitchen\s+closes(?:\s+at)?)\s*(?:(?:kl\.?|klokka)\s*)?(?:2[0-3]|[01]?\d)(?:[.:][0-5]\d)?/iu;
 const absoluteKitchenCloseCapturePattern = /(?:kjøkken(?:et)?\s+(?:til|stenger)|kitchen\s+closes(?:\s+at)?)\s*(?:(?:kl\.?|klokka)\s*)?((?:2[0-3]|[01]?\d)(?:[.:][0-5]\d)?)/giu;
 const weekdayMentionPattern = /\b(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Mandag|Tirsdag|Onsdag|Torsdag|Fredag|Lørdag|Lordag|Søndag|Sondag|Man|Tir|Ons|Tor|Fre|Lør|Lor|Søn|Son|Mon|Tue|Tues|Wed|Weds|Thu|Thur|Thurs|Fri|Sat|Sun)\b/iu;
+const canonicalWeekdayPattern = /\b(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|mandag|tirsdag|onsdag|torsdag|fredag|lørdag|lordag|søndag|sondag|man|tir|ons|tor|fre|lør|lor|søn|son)\b/giu;
+const canonicalWeekdayNumber: Readonly<Record<string, number>> = {
+  monday: 1,
+  mandag: 1,
+  man: 1,
+  tuesday: 2,
+  tirsdag: 2,
+  tir: 2,
+  wednesday: 3,
+  onsdag: 3,
+  ons: 3,
+  thursday: 4,
+  torsdag: 4,
+  tor: 4,
+  friday: 5,
+  fredag: 5,
+  fre: 5,
+  saturday: 6,
+  lørdag: 6,
+  lordag: 6,
+  lør: 6,
+  lor: 6,
+  sunday: 7,
+  søndag: 7,
+  sondag: 7,
+  søn: 7,
+  son: 7,
+};
+const sourceClockPattern = "(?:(?:1[0-2]|0?[1-9])(?:[.:][0-5]\\d)?\\s*(?:am|pm)|(?:2[0-3]|[01]?\\d)(?:[.:][0-5]\\d)?)";
+const clockWordRangePattern = new RegExp(`(${sourceClockPattern})\\s+(?:to|til)\\s+(${sourceClockPattern})`, "giu");
+const canonicalWeekdayToken = "(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|mandag|tirsdag|onsdag|torsdag|fredag|lørdag|lordag|søndag|sondag|man|tir|ons|tor|fre|lør|lor|søn|son)";
+const weekdayListPattern = new RegExp(
+  `\\b(${canonicalWeekdayToken}(?:(?:\\s*,\\s*|\\s+(?:and|og|&)\\s+)${canonicalWeekdayToken}){1,6})\\b`,
+  "giu",
+);
 
 function extractVisibleLines(html: string): readonly string[] {
   const $ = load(html);
@@ -32,8 +67,20 @@ function extractVisibleLines(html: string): readonly string[] {
     .filter(Boolean);
 }
 
+function normalizeContiguousWeekdayLists(value: string): string {
+  return value.replace(weekdayListPattern, (matched) => {
+    const days = matched.match(canonicalWeekdayPattern) ?? [];
+    if (days.length < 2) return matched;
+    const numbers = days.map((day) => canonicalWeekdayNumber[day.toLocaleLowerCase("nb-NO")] ?? 0);
+    if (numbers.some((day) => day === 0)) return matched;
+    const contiguous = numbers.every((day, index) => index === 0 || day === (numbers[index - 1] as number) + 1);
+    if (!contiguous) return matched;
+    return `${days[0]}-${days[days.length - 1]}`;
+  });
+}
+
 function normalizeWeekdayAliases(value: string): string {
-  return value
+  const aliases = value
     .replace(/\bmandager\b/giu, "mandag")
     .replace(/\btirsdager\b/giu, "tirsdag")
     .replace(/\bonsdager\b/giu, "onsdag")
@@ -52,6 +99,7 @@ function normalizeWeekdayAliases(value: string): string {
     .replace(/\bfri\b\.?/giu, "Friday")
     .replace(/\bsat\b\.?/giu, "Saturday")
     .replace(/\bsun\b\.?/giu, "Sunday");
+  return normalizeContiguousWeekdayLists(aliases).replace(clockWordRangePattern, "$1 - $2");
 }
 
 function normalizeClock(value: string): string {
