@@ -224,6 +224,7 @@ export async function searchDishes(
           ON hours_snapshot.source_id = hours_source.id
         WHERE hours_source.enabled = true
           AND hours_source.service_type = 'kitchen'
+          AND hours_source.verification_status = 'verified'
           AND hours_source.last_checked_at IS NOT NULL
           AND now() <= hours_source.last_checked_at
             + make_interval(mins => GREATEST(hours_source.check_interval_minutes * 3, 1440))

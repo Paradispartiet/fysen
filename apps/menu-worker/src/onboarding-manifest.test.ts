@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { restaurantOnboardingManifestSchema } from "./onboarding-manifest.js";
+import {
+  getHoursVerificationStatus,
+  isHoursVerificationBlocking,
+  restaurantOnboardingManifestSchema,
+} from "./onboarding-manifest.js";
 
 const validManifest = {
   version: 1,
@@ -30,6 +34,9 @@ describe("restaurant onboarding manifest", () => {
     expect(parsed.menuSource.userAgent).toBe("FysenMenuBot/0.1");
     expect(parsed.menuSource.fetchMode).toBe("http");
     expect(parsed.actions).toEqual([]);
+    expect(parsed.verification).toEqual({});
+    expect(getHoursVerificationStatus(parsed)).toBe("verified");
+    expect(isHoursVerificationBlocking(parsed)).toBe(true);
     expect(parsed.qualityAssertions.requiredDishVariants).toEqual([]);
     expect(parsed.qualityAssertions.forbiddenDishNames).toEqual([]);
   });
@@ -180,6 +187,56 @@ describe("restaurant onboarding manifest", () => {
       },
     });
     expect(defaulted.hoursSource?.scopeHints).toEqual([]);
+  });
+
+  it("allows explicitly provisional hours without weakening menu assertions", () => {
+    const parsed = restaurantOnboardingManifestSchema.parse({
+      ...validManifest,
+      hoursSource: {
+        url: "https://example.com/hours",
+        timeZone: "Europe/Oslo",
+        checkIntervalMinutes: 360,
+        minimumExpectedIntervals: 7,
+      },
+      verification: {
+        hours: {
+          status: "provisional",
+          checkedAt: "2026-08-19",
+          note: "First-party page exposes conflicting opening-hours sections.",
+        },
+      },
+    });
+    expect(getHoursVerificationStatus(parsed)).toBe("provisional");
+    expect(isHoursVerificationBlocking(parsed)).toBe(false);
+    expect(parsed.qualityAssertions.requiredDishNames).toEqual(["Biff tartar"]);
+  });
+
+  it("requires an audit note and source for provisional hours, while unverified hours may omit a source", () => {
+    expect(() =>
+      restaurantOnboardingManifestSchema.parse({
+        ...validManifest,
+        verification: {
+          hours: {
+            status: "provisional",
+            checkedAt: "2026-08-19",
+            note: "Conflicting source.",
+          },
+        },
+      }),
+    ).toThrow("Provisional opening hours require an hoursSource");
+
+    const unverified = restaurantOnboardingManifestSchema.parse({
+      ...validManifest,
+      verification: {
+        hours: {
+          status: "unverified",
+          checkedAt: "2026-08-19",
+          note: "No canonical kitchen-hours source is currently available.",
+        },
+      },
+    });
+    expect(getHoursVerificationStatus(unverified)).toBe("unverified");
+    expect(isHoursVerificationBlocking(unverified)).toBe(false);
   });
 
   it("requires HTTPS sources and explicit dish smoke assertions", () => {

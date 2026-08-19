@@ -40,6 +40,12 @@ const requiredDishVariantSchema = z
     }
   });
 
+const hoursVerificationSchema = z.object({
+  status: z.enum(["provisional", "unverified"]),
+  checkedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "checkedAt must use YYYY-MM-DD"),
+  note: z.string().trim().min(1).max(1000),
+});
+
 export const restaurantOnboardingManifestSchema = z
   .object({
     version: z.literal(1),
@@ -70,6 +76,11 @@ export const restaurantOnboardingManifestSchema = z
         scopeHints: z.array(z.string().trim().min(1).max(80)).max(8).default([]),
       })
       .optional(),
+    verification: z
+      .object({
+        hours: hoursVerificationSchema.optional(),
+      })
+      .default({}),
     actions: z
       .array(
         z.object({
@@ -95,9 +106,25 @@ export const restaurantOnboardingManifestSchema = z
         message: "Browser fetch mode only supports HTML/JSON-LD sources",
       });
     }
+    if (manifest.verification.hours?.status === "provisional" && !manifest.hoursSource) {
+      context.addIssue({
+        code: "custom",
+        path: ["verification", "hours", "status"],
+        message: "Provisional opening hours require an hoursSource to keep monitoring",
+      });
+    }
   });
 
 export type RestaurantOnboardingManifest = z.infer<typeof restaurantOnboardingManifestSchema>;
+export type HoursVerificationStatus = "verified" | "provisional" | "unverified";
+
+export function getHoursVerificationStatus(manifest: RestaurantOnboardingManifest): HoursVerificationStatus {
+  return manifest.verification.hours?.status ?? "verified";
+}
+
+export function isHoursVerificationBlocking(manifest: RestaurantOnboardingManifest): boolean {
+  return getHoursVerificationStatus(manifest) === "verified";
+}
 
 export async function readRestaurantOnboardingManifest(path: string): Promise<RestaurantOnboardingManifest> {
   const raw = await readFile(path, "utf8");
