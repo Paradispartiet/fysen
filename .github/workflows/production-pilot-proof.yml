@@ -1,0 +1,80 @@
+name: Fysen production pilot proof
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/production-pilot-proof.yml"
+      - "scripts/production-pilot-proof.mjs"
+      - "apps/menu-worker/catalog/**"
+      - "apps/web/app/search/**"
+      - "apps/web/components/dish-browse.tsx"
+      - "apps/api/src/dish-search.controller.ts"
+      - "apps/api/src/dish-search.service.ts"
+      - "packages/database/src/browse.ts"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-production-pilot-proof
+  cancel-in-progress: false
+
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
+      DATABASE_SSL: "verify-full"
+      NODE_ENV: production
+      FYSEN_PUBLIC_API_URL: https://fysen-api.vercel.app
+      FYSEN_PUBLIC_WEB_URL: https://fysen-matsgran-8572s-projects.vercel.app
+    steps:
+      - name: Require production database secret
+        shell: bash
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "FYSEN_PRODUCTION_DATABASE_URL is not configured." >&2
+            exit 1
+          fi
+
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build proof dependencies
+        run: |
+          pnpm --filter @fysen/menu-core build
+          pnpm --filter @fysen/database build
+
+      - name: Verify catalog, watcher, direct production search, API and web
+        shell: bash
+        run: |
+          node scripts/production-pilot-proof.mjs | tee /tmp/fysen-production-pilot-proof.json
+          {
+            echo '## Fysen production pilot proof'
+            echo
+            echo 'This proof reads the canonical production catalog dynamically, verifies every catalog restaurant against production DB + watcher state, runs representative `searchDishes` calls directly without recording funnel events, then checks the public browse API and web surface.'
+            echo
+            echo '```json'
+            cat /tmp/fysen-production-pilot-proof.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
