@@ -11,9 +11,9 @@
     "longitude": 10.7426052
   },
   "menuSource": {
-    "url": "https://hankki.no/shop/",
+    "url": "https://favrit.com/en-gb/menu/location/L4qGXXDv7LB",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
     "minimumExpectedItems": 12
@@ -24,11 +24,18 @@
     "checkIntervalMinutes": 360,
     "minimumExpectedIntervals": 7
   },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "Hankki's first-party homepage explicitly publishes MON-SUN 12:00-20:30 and last order 20:30, but the current canonical hours extractor does not materialize this compact English day-range syntax. Keep open/closed unknown until the schedule is parsed canonically."
+    }
+  },
   "actions": [
     {
       "type": "order",
       "url": "https://favrit.com/en-gb/menu/location/L4qGXXDv7LB",
-      "sourceUrl": "https://hankki.no/shop/",
+      "sourceUrl": "https://hankki.no/",
       "provider": "Favrit"
     }
   ],
