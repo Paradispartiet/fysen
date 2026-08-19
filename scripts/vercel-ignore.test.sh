@@ -8,13 +8,28 @@ trap 'rm -rf "$tmp"' EXIT
 # Vercel branch filtering uses minimatch. The catch-all must therefore be **,
 # not *, otherwise branch names containing / (agent/..., fix/..., candidate/...)
 # fall through as unspecified branches and Vercel enables them by default.
+# Main enablement is intentionally app-specific during the API production retry:
+# API stays enabled on main, while web is disabled so the retry cannot spend a
+# web deployment. Keep this assertion explicit so later policy changes must
+# update both vercel.json and this regression contract together.
 for config in "$source_repo/apps/web/vercel.json" "$source_repo/apps/api/vercel.json"; do
-  node - "$config" <<'NODE'
+  expected_main=true
+  if [[ "$config" == "$source_repo/apps/web/vercel.json" ]]; then
+    expected_main=false
+  fi
+
+  node - "$config" "$expected_main" <<'NODE'
 const fs = require("node:fs");
 const path = process.argv[2];
+const expectedMain = process.argv[3] === "true";
 const config = JSON.parse(fs.readFileSync(path, "utf8"));
 const rules = config.git?.deploymentEnabled;
-if (!rules || rules.main !== true || rules["preview-*"] !== true || rules["**"] !== false) {
+if (
+  !rules ||
+  rules.main !== expectedMain ||
+  rules["preview-*"] !== true ||
+  rules["**"] !== false
+) {
   throw new Error(`${path}: invalid Vercel deploymentEnabled gate`);
 }
 if (Object.prototype.hasOwnProperty.call(rules, "*")) {
