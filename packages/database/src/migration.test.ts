@@ -16,6 +16,7 @@ describe("database migrations", () => {
       "0009_remove_blocked_tunco_candidate.sql",
       "0010_menu_item_price_semantics.sql",
       "0011_restaurant_hours_scope_hints.sql",
+      "0012_restaurant_hours_verification.sql",
     ]);
 
     const schemaSql = await readFile(
@@ -122,5 +123,13 @@ describe("database migrations", () => {
     expect(hoursScopeHintsSql).toContain("scope_hints text[] NOT NULL DEFAULT ARRAY[]::text[]");
     expect(hoursScopeHintsSql).toContain("cardinality(scope_hints) <= 8");
     expect(hoursScopeHintsSql).toContain("VALIDATE CONSTRAINT restaurant_hours_sources_scope_hints_count_check");
+
+    const hoursVerificationSql = await readFile(
+      new URL("../migrations/0012_restaurant_hours_verification.sql", import.meta.url),
+      "utf8",
+    );
+    expect(hoursVerificationSql).toContain("verification_status text NOT NULL DEFAULT 'verified'");
+    expect(hoursVerificationSql).toContain("verification_status IN ('verified', 'provisional', 'unverified')");
+    expect(hoursVerificationSql).toContain("verification_note IS NOT NULL AND verification_checked_at IS NOT NULL");
   });
 });
