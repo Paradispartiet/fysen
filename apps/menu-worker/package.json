@@ -16,6 +16,7 @@
     "validate:manifest": "node dist/index.js validate:manifest",
     "validate:directory": "node dist/index.js validate:directory",
     "validate:candidates": "node dist/index.js validate:directory candidates",
+    "verification:log": "node dist/index.js verification:log catalog",
     "verify:actions": "node dist/index.js verify:actions",
     "browser:smoke": "node dist/browser-smoke.js",
     "lint": "eslint src --ext .ts",
