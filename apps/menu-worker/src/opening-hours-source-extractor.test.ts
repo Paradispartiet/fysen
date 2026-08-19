@@ -17,7 +17,7 @@ describe("canonical opening-hours source extractor", () => {
       </body></html>
     `);
 
-    expect(OPENING_HOURS_SOURCE_EXTRACTOR_VERSION).toBe("hours-visible-v13");
+    expect(OPENING_HOURS_SOURCE_EXTRACTOR_VERSION).toBe("hours-visible-v14");
     expect(extracted.intervals).toEqual([
       { isoWeekday: 1, opensAt: "11:30", closesAt: "20:30", closesNextDay: false },
       { isoWeekday: 2, opensAt: "11:30", closesAt: "20:30", closesNextDay: false },
@@ -28,6 +28,28 @@ describe("canonical opening-hours source extractor", () => {
       { isoWeekday: 7, opensAt: "14:00", closesAt: "20:30", closesNextDay: false },
     ]);
     expect(extracted.sourceExcerpt).toContain("Kjøkkenet stenger 30 min før stengetid");
+  });
+
+  it("normalizes decorative and split opening-hours markers before applying explicit scope hints", () => {
+    const extracted = extractCanonicalOpeningHours(
+      `
+        <html><body>
+          <p>* * * ÅPNINGSTIDER CUE</p>
+          <p>Mandag - Søndag | 15:00 - 01:00</p>
+          <div>
+            <p>ÅPNINGSTIDER</p>
+            <p>PIZZERIA</p>
+            <p>Mandag - Søndag | 18:00 - 23:30</p>
+          </div>
+        </body></html>
+      `,
+      ["Pizzeria"],
+    );
+
+    expect(extracted.intervals).toHaveLength(7);
+    expect(extracted.intervals.every((item) => item.opensAt === "18:00" && item.closesAt === "23:30")).toBe(true);
+    expect(extracted.visibleText).toContain("ÅPNINGSTIDER CUE");
+    expect(extracted.visibleText).toContain("ÅPNINGSTIDER PIZZERIA");
   });
 
   it("applies one explicit global absolute kitchen close to the parsed weekday schedule", () => {
