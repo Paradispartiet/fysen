@@ -8,7 +8,8 @@ Fysen skal ikke være avhengig av at forbrukeren betaler for å søke etter mat.
 
 - **R1 — Funnel foundation:** produksjonsaktiv. Search events, impressions og conversion events måles data-minimalt.
 - **R2 — Conversion destinations:** bygget med canonical booking-/ordrehandlinger, kildebevis, verifiseringstid, utløp og automatisk re-verifisering. Rodeos førsteparts booking-side er første produksjonsdestinasjon.
-- **R3–R5:** planlagt, men skal ikke forseres før de foregående lagene er produksjonsverifisert.
+- **R3 — Claim Restaurant:** bygget i repo med pending claim, manuell verifikasjon, access grants, separate restauranteide profilfelt og audit-logg. Offentlig produksjonsstatus følger den kontrollerte database-/Vercel-releasen.
+- **R4–R5:** planlagt. R4 bygges rundt verifiserte access grants; kommersielle eksperimenter kommer først etterpå.
 
 ## Forretningsmodell
 
@@ -27,10 +28,10 @@ Det gratis søket skal maksimere relevans og tillit, ikke kortsiktig annonseinnt
 
 ### 2. Fysen Pro for restauranter
 
-Restauranter skal senere kunne claime en eksisterende Fysen-profil og få en betalt drifts-/innsiktstjeneste med blant annet:
+Restauranter skal kunne claime en eksisterende Fysen-profil og senere få en betalt drifts-/innsiktstjeneste med blant annet:
 
 - verifisert restaurantprofil;
-- kontroll over canonical kontakt-, booking- og ordrelenker;
+- kontroll over restauranteide kontakt- og profilfelt;
 - meny- og kildehelse;
 - hvilke retter som skaper impressions og klikk;
 - hvilke relevante søk som ikke gir restauranten treff;
@@ -66,8 +67,9 @@ En restaurant kan senere kjøpe tydelig merket plassering på et relevant retts�
 3. **Attribusjon må være målbar før vi priser den.**
 4. **Dataminimering først.** Første funnelversjon trenger ikke IP, user-agent, konto eller permanent brukerprofil.
 5. **Restaurantinnsikt skal bygge på aggregert etterspørsel og dokumenterte resultater.**
-6. **Claiming gir redigeringsrett til virksomhetsdata, ikke rett til å omskrive historiske kildebevis.**
+6. **Claiming gir redigeringsrett til restauranteide virksomhetsdata, ikke rett til å omskrive historiske kildebevis.**
 7. **Ingen kommersiell handling uten ferskt destinasjonsbevis.** Booking og bestilling skal forsvinne fra produktet når verifiseringen er utløpt.
+8. **Verifikasjon er ikke selvbetjent.** En offentlig claim kan bare bli pending; verifikasjon og access grant krever separat review.
 
 ## Revenue funnel v1
 
@@ -150,7 +152,7 @@ Rodeos `https://www.rodeooslo.no/booking` er første førsteparts bookingbevis. 
 
 ## Privacy v1
 
-Første funnelversjon skal ikke lagre:
+Consumer funnel skal ikke lagre:
 
 - IP-adresse;
 - user-agent;
@@ -161,6 +163,8 @@ Første funnelversjon skal ikke lagre:
 - permanent cross-site-identifikator.
 
 Målet er å forstå **etterspørsel og resultatytelse**, ikke å bygge en reklameprofil på enkeltpersoner.
+
+Claim Restaurant er en separat virksomhetsprosess og lagrer nødvendig navn og jobb-e-post for å kunne verifisere tilknytningen. Disse opplysningene returneres aldri i den offentlige claim-state-responsen og blandes ikke inn i consumer funnel.
 
 ## Leveransefaser
 
@@ -180,15 +184,19 @@ Målet er å forstå **etterspørsel og resultatytelse**, ikke å bygge en rekla
 - automatisk re-verifisering og audit-logg;
 - `booking_clicked` og `order_clicked` bruker samme impression-attribusjon som resten av trakten.
 
-### R3 — Claim restaurant
+### R3 — Claim Restaurant
 
-Bygg:
+Levert kontrakt:
 
-- claim request;
-- verifikasjonsstatus;
-- virksomhetseier/tilgang;
-- audit-logg for endringer;
-- skille mellom kildebevis og restauranteide canonical felt.
+- offentlig claim request kan bare opprette `pending`;
+- PII-fri offentlig claim-state;
+- intern review med `verified`/`rejected`;
+- verifisert virksomhetseier/tilgang som revokerbart access grant;
+- audit-logg for claim, access og owner-field-endringer;
+- separate `restaurant_owned_profiles`, uten omskriving av kildebevis;
+- web-inngang fra søkeresultater uten å registrere consumer conversion-event.
+
+Se `docs/claim-restaurant-v1.md` for sikkerhets- og testkontrakten.
 
 ### R4 — Fysen Pro dashboard
 
@@ -201,6 +209,8 @@ Første dashboard viser per restaurant:
 - nulltreff/etterspørselsgap;
 - menyferskhet og watcherhelse;
 - booking-/ordrehandlingers verifikasjonsstatus.
+
+R4 skal bruke verifiserte `restaurant_access_grants` som tilgangsgrunnlag. Innlogging/teamtilgang hører hjemme her, ikke i R3.
 
 ### R5 — Commercial experiments
 
