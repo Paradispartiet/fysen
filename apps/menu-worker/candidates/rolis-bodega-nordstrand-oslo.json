@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "rolis-bodega-nordstrand-oslo",
+    "name": "Rolis Bodega",
+    "websiteUrl": "https://www.rolis-bodega.no/",
+    "address": "Nordstrandveien 32, 1163 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.86114,
+    "longitude": 10.79585
+  },
+  "menuSource": {
+    "url": "https://www.rolis-bodega.no/meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 18
+  },
+  "hoursSource": {
+    "url": "https://www.rolis-bodega.no/book-bord",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 6
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "Rolis Bodega publishes explicit kitchen closing times Wednesday through Sunday, while Tuesday is listed only with venue hours. Keep open/closed unknown until the full weekly kitchen schedule can be canonicalized without inference."
+    }
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://www.rolis-bodega.no/book-bord",
+      "sourceUrl": "https://www.rolis-bodega.no/",
+      "provider": "Rolis Bodega"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Biff tartar med vaktelegg og røkt margbein",
+      "Tapa del Norte",
+      "Gambas al Limóny Mantequilla",
+      "Croquetas de pulled pork",
+      "Mangalica morunos",
+      "Rillette av kanin i pai",
+      "Wagyu Carpaccio",
+      "Ungarsk gulasj",
+      "Ungarsk-inspirert frilandsgris",
+      "Mørnet Sirloin Steak – Slakterens valg",
+      "Margherita",
+      "Ungarsk Fiesta",
+      "Slakterburger"
+    ],
+    "requiredDishVariants": [
+      { "name": "Biff tartar med vaktelegg og røkt margbein", "priceMinor": 24900 },
+      { "name": "Tapa del Norte", "priceMinor": 14900 },
+      { "name": "Gambas al Limóny Mantequilla", "priceMinor": 14900 },
+      { "name": "Croquetas de pulled pork", "priceMinor": 13900 },
+      { "name": "Mangalica morunos", "priceMinor": 14900 },
+      { "name": "Rillette av kanin i pai", "priceMinor": 9900 },
+      { "name": "Wagyu Carpaccio", "priceMinor": 24900 },
+      { "name": "Ungarsk gulasj", "priceMinor": 24000 },
+      { "name": "Ungarsk-inspirert frilandsgris", "priceMinor": 29000 },
+      { "name": "Mørnet Sirloin Steak – Slakterens valg", "priceMinor": 34000 },
+      { "name": "Margherita", "priceMinor": 18500 },
+      { "name": "Ungarsk Fiesta", "priceMinor": 22000 },
+      { "name": "Slakterburger", "priceMinor": 22000 }
+    ],
+    "forbiddenDishNames": [
+      "A LA CARTE",
+      "TAPAS & SMÅRETTER",
+      "HOVEDRETTER",
+      "PIZZA",
+      "BURGER",
+      "VIN & MUSSERENDE",
+      "ANDRE DRIKKER",
+      "Glass",
+      "Flaske",
+      "Copyright"
+    ]
+  }
+}
