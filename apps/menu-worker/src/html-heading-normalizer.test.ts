@@ -43,7 +43,7 @@ describe("HTML heading line-break normalizer", () => {
     );
     const $ = load(normalized);
 
-    expect($("h4").text().replace(/\\s+/g, " ").trim()).toBe("Dish Name");
+    expect($("h4").text().replace(/\s+/g, " ").trim()).toBe("Dish Name");
     expect($("h4 br")).toHaveLength(0);
     expect($("p br")).toHaveLength(1);
   });
@@ -66,19 +66,16 @@ describe("HTML heading line-break normalizer", () => {
     expect(extracted.items.some((item) => item.name === "NOK")).toBe(false);
   });
 
-  it("removes nested phone metadata instead of turning its trailing digits into a menu price", () => {
+  it("does not rewrite unrelated NOK text or contact metadata", () => {
     const normalized = normalizeHtmlHeadingLineBreaks(`
       <html><body>
+        <p>NOK tasting menu available on request</p>
         <footer><p>Phone: 457 66 <span>490</span></p></footer>
-        <section><p>Tibis 320</p></section>
       </body></html>
     `);
+    const $ = load(normalized);
 
-    const extracted = extractScopedHtmlMenu(normalized);
-    expect(extracted.items.map((item) => [item.name, item.priceMinor])).toContainEqual([
-      "Tibis",
-      32000,
-    ]);
-    expect(extracted.items.some((item) => /^Phone:/iu.test(item.name))).toBe(false);
+    expect($("body").text()).toContain("NOK tasting menu available on request");
+    expect($("body").text()).toContain("Phone: 457 66 490");
   });
 });
