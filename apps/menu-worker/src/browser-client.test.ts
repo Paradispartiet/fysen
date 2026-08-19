@@ -26,16 +26,21 @@ describe("browser request policy", () => {
     }
   });
 
-  it("permits public HTTPS script/style candidates to pass the network validator", () => {
+  it("permits public HTTPS script candidates to pass the network validator", () => {
     expect(
       browserRequestDecision({ sourceOrigin, requestUrl: "https://cdn.example.net/app.js", resourceType: "script" }),
     ).toEqual({ action: "allow", validatePublicNetwork: true });
   });
 
-  it("blocks heavy resources without failing the rendered source", () => {
-    expect(
-      browserRequestDecision({ sourceOrigin, requestUrl: "https://cdn.example.net/photo.jpg", resourceType: "image" }),
-    ).toEqual({ action: "block", reason: "blocked resource type: image", fatal: false });
+  it("blocks presentation-heavy resources without failing the rendered source", () => {
+    for (const [resourceType, url] of [
+      ["image", "https://cdn.example.net/photo.jpg"],
+      ["stylesheet", "https://cdn.example.net/site.css"],
+    ] as const) {
+      expect(
+        browserRequestDecision({ sourceOrigin, requestUrl: url, resourceType }),
+      ).toEqual({ action: "block", reason: `blocked resource type: ${resourceType}`, fatal: false });
+    }
   });
 
   it("fails closed on non-HTTPS browser traffic", () => {
