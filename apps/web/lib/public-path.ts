@@ -9,6 +9,11 @@ export function withPublicBasePath(path: string): string {
   return `${publicBasePath}${normalizedPath}`;
 }
 
+export function dishBrowseHref(city = "Oslo"): string {
+  const params = new URLSearchParams({ city });
+  return `${withPublicBasePath("/search")}?${params.toString()}`;
+}
+
 export function dishSearchHref(query: string, city = "Oslo"): string {
   const params = new URLSearchParams({ q: query, city });
   return `${withPublicBasePath("/search")}?${params.toString()}`;
