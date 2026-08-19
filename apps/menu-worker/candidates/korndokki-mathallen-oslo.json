@@ -55,13 +55,13 @@
     ],
     "requiredDishVariants": [
       { "name": "Sausage Corndog", "priceMinor": 9900 },
-      { "name": "Half & Half Corndog", "priceMinor": 10900 },
+      { "name": "Half & Half Corndog", "priceMinor": 10900, "priceKind": "from" },
       { "name": "Mozzarella Corndog", "priceMinor": 11500 },
-      { "name": "Octopus Ink Corndog", "priceMinor": 11900 },
+      { "name": "Octopus Ink Corndog", "priceMinor": 11900, "priceKind": "from" },
       { "name": "Bibimbap", "priceMinor": 22900 },
-      { "name": "Bibimbap (Vegan)", "priceMinor": 22900 },
+      { "name": "Bibimbap (Vegan)", "priceMinor": 22900, "priceKind": "from" },
       { "name": "Spicy Pork Bulgogi Bowl", "priceMinor": 23900 },
-      { "name": "KornDoKKi Combo", "priceMinor": 19900 },
+      { "name": "KornDoKKi Combo", "priceMinor": 19900, "priceKind": "from" },
       { "name": "Deep-fried Mandu", "priceMinor": 7900 }
     ],
     "forbiddenDishNames": [
