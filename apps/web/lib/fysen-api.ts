@@ -5,6 +5,15 @@ import {
   type DishBrowseResponse,
 } from "@fysen/contracts/dish-browse";
 import {
+  fysenProDashboardSchema,
+  fysenProLogoutReceiptSchema,
+  fysenProSessionReceiptSchema,
+  fysenProSetupRedeemSchema,
+  type FysenProDashboard,
+  type FysenProLogoutReceipt,
+  type FysenProSessionReceipt,
+} from "@fysen/contracts/fysen-pro";
+import {
   restaurantClaimContextSchema,
   restaurantClaimReceiptSchema,
   restaurantClaimRequestSchema,
@@ -130,4 +139,59 @@ export async function submitRestaurantClaim(
   }
 
   return restaurantClaimReceiptSchema.parse(await response.json());
+}
+
+export async function redeemFysenProSetupToken(setupToken: string): Promise<FysenProSessionReceipt> {
+  const input = fysenProSetupRedeemSchema.parse({ setupToken });
+  const response = await fetch(`${apiBaseUrl()}/v1/pro/sessions`, {
+    method: "POST",
+    cache: "no-store",
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(input),
+    signal: AbortSignal.timeout(5_000),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Fysen API Pro setup redemption failed with HTTP ${response.status}`);
+  }
+
+  return fysenProSessionReceiptSchema.parse(await response.json());
+}
+
+export async function getFysenProDashboard(sessionToken: string): Promise<FysenProDashboard> {
+  const response = await fetch(`${apiBaseUrl()}/v1/pro/dashboard`, {
+    cache: "no-store",
+    headers: {
+      accept: "application/json",
+      authorization: `Bearer ${sessionToken}`,
+    },
+    signal: AbortSignal.timeout(5_000),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Fysen API Pro dashboard failed with HTTP ${response.status}`);
+  }
+
+  return fysenProDashboardSchema.parse(await response.json());
+}
+
+export async function revokeFysenProSession(sessionToken: string): Promise<FysenProLogoutReceipt> {
+  const response = await fetch(`${apiBaseUrl()}/v1/pro/sessions/current`, {
+    method: "DELETE",
+    cache: "no-store",
+    headers: {
+      accept: "application/json",
+      authorization: `Bearer ${sessionToken}`,
+    },
+    signal: AbortSignal.timeout(5_000),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Fysen API Pro logout failed with HTTP ${response.status}`);
+  }
+
+  return fysenProLogoutReceiptSchema.parse(await response.json());
 }

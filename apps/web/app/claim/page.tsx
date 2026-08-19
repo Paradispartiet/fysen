@@ -2,7 +2,7 @@ import type { RestaurantClaimContext } from "@fysen/contracts/restaurant-claims"
 import { GlobalHeader } from "../../components/global-header";
 import { RestaurantClaimForm } from "../../components/restaurant-claim-form";
 import { getRestaurantClaimContext } from "../../lib/fysen-api";
-import { dishBrowseHref } from "../../lib/public-path";
+import { dishBrowseHref, withPublicBasePath } from "../../lib/public-path";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
@@ -44,8 +44,9 @@ export default async function ClaimPage({ searchParams }: { searchParams: Search
 
             {context.claimState === "claimed" ? (
               <div className="claimStateBox" data-state="claimed">
-                <strong>Restauranten har allerede verifisert tilgang.</strong>
-                <p>Flere brukere og teamtilgang kommer i Fysen Pro-laget. Denne siden oppretter ikke ekstra tilgang automatisk.</p>
+                <strong>Restauranten har verifisert tilgang.</strong>
+                <p>Har du fått en Fysen Pro-engangskode, kan du åpne restaurantens dashboard.</p>
+                <p><a href={withPublicBasePath("/pro/login")}>Åpne Fysen Pro →</a></p>
               </div>
             ) : (
               <>

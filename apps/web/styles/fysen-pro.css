@@ -1,0 +1,372 @@
+.proPage {
+  min-height: 100vh;
+  background: var(--color-surface);
+}
+
+.proShell {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 36px 0 80px;
+}
+
+.proLoginShell {
+  width: min(680px, calc(100% - 32px));
+}
+
+.proBackLink {
+  display: inline-flex;
+  margin-bottom: 20px;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.proBackLink:hover {
+  color: var(--color-text);
+}
+
+.proLoginCard,
+.proPanel,
+.proMetricCard {
+  background: var(--color-surface-raised, #fff);
+  border: 1px solid var(--color-border);
+}
+
+.proLoginCard {
+  padding: clamp(24px, 5vw, 44px);
+  border-radius: 22px;
+}
+
+.proEyebrow {
+  margin: 0 0 7px;
+  color: var(--color-brand);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.proLoginCard h1,
+.proDashboardHeader h1 {
+  margin: 0;
+  font-size: clamp(30px, 5vw, 46px);
+  line-height: 1.05;
+}
+
+.proLead {
+  margin: 10px 0 0;
+  color: var(--color-text-muted);
+}
+
+.proLoginForm {
+  display: grid;
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.proField {
+  display: grid;
+  gap: 7px;
+}
+
+.proField label {
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.proField input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 13px;
+  color: var(--color-text);
+  font: inherit;
+  background: var(--color-surface-raised, #fff);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.proField p,
+.proSecurityNote p,
+.proMetricCard p,
+.proPanelIntro,
+.proFootnote {
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.proField p,
+.proSecurityNote p,
+.proMetricCard p,
+.proPanelIntro,
+.proFootnote {
+  margin: 0;
+}
+
+.proPrimaryButton,
+.proSecondaryButton {
+  min-height: 42px;
+  padding: 0 16px;
+  font: inherit;
+  font-weight: 750;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.proPrimaryButton {
+  justify-self: start;
+  color: var(--color-action-ink);
+  background: var(--color-action);
+  border: 0;
+}
+
+.proSecondaryButton {
+  color: var(--color-text);
+  background: transparent;
+  border: 1px solid var(--color-border);
+}
+
+.proPrimaryButton:disabled,
+.proSecondaryButton:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.proPrimaryButton:focus-visible,
+.proSecondaryButton:focus-visible,
+.proField input:focus-visible,
+.proBackLink:focus-visible,
+.proStatusList a:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+.proError {
+  margin: 0;
+  color: #9b1c1c;
+  font-size: 13px;
+}
+
+.proSecurityNote {
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: var(--color-surface-subtle, rgba(0, 0, 0, 0.035));
+  border-radius: 14px;
+}
+
+.proSecurityNote p {
+  margin-top: 6px;
+}
+
+.proDashboardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.proMetricGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.proMetricCard {
+  padding: 20px;
+  border-radius: 16px;
+}
+
+.proMetricCard > span {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.proMetricCard > strong {
+  display: block;
+  margin: 6px 0 8px;
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1;
+}
+
+.proDashboardGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.proPanel {
+  margin-top: 14px;
+  padding: 22px;
+  border-radius: 16px;
+}
+
+.proDashboardGrid > .proPanel {
+  margin-top: 0;
+}
+
+.proPanelHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.proPanelHeader h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.proPanelIntro {
+  margin: -8px 0 16px;
+  line-height: 1.5;
+}
+
+.proBreakdownList {
+  display: grid;
+  margin: 0;
+}
+
+.proBreakdownList > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.proBreakdownList > div:first-child {
+  border-top: 0;
+}
+
+.proBreakdownList dt {
+  color: var(--color-text-muted);
+}
+
+.proBreakdownList dd {
+  margin: 0;
+  font-weight: 800;
+}
+
+.proStatusList,
+.proDemandList {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.proStatusList li,
+.proDemandList li {
+  display: grid;
+  gap: 5px;
+  padding: 12px 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.proStatusList li:first-child,
+.proDemandList li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.proStatusList li > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.proStatusList a {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.proStatusList li > span,
+.proDemandList span {
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.proTableWrap {
+  overflow-x: auto;
+}
+
+.proTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.proTable th,
+.proTable td {
+  padding: 11px 10px;
+  text-align: left;
+  border-top: 1px solid var(--color-border);
+}
+
+.proTable thead th {
+  padding-top: 0;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  border-top: 0;
+}
+
+.proTable th:not(:first-child),
+.proTable td:not(:first-child) {
+  text-align: right;
+}
+
+.proEmpty {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.proFootnote {
+  margin-top: 20px;
+  line-height: 1.5;
+}
+
+@media (max-width: 760px) {
+  .proShell,
+  .proLoginShell {
+    width: min(100% - 24px, 1120px);
+    padding-top: 24px;
+  }
+
+  .proDashboardHeader {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .proSecondaryButton {
+    align-self: flex-start;
+  }
+
+  .proMetricGrid,
+  .proDashboardGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .proLoginCard,
+  .proPanel,
+  .proMetricCard {
+    border-radius: 14px;
+  }
+
+  .proStatusList li > div {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+}

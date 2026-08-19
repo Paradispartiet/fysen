@@ -20,6 +20,7 @@ describe("database migrations", () => {
       "0013_menu_source_support_origins.sql",
       "0014_search_demand_source.sql",
       "0015_restaurant_claims.sql",
+      "0016_fysen_pro_sessions.sql",
     ]);
 
     const schemaSql = await readFile(new URL("../migrations/0001_menu_index.sql", import.meta.url), "utf8");
@@ -123,5 +124,15 @@ describe("database migrations", () => {
     expect(restaurantClaimsSql).toContain("restaurant_claims_pending_identity_idx");
     expect(restaurantClaimsSql).toContain("restaurant_access_grants_active_identity_idx");
     expect(restaurantClaimsSql).toContain("owner_fields_updated");
+
+    const fysenProSql = await readFile(new URL("../migrations/0016_fysen_pro_sessions.sql", import.meta.url), "utf8");
+    expect(fysenProSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_pro_setup_tokens");
+    expect(fysenProSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_pro_sessions");
+    expect(fysenProSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_pro_access_audit_log");
+    expect(fysenProSql).toContain("token_hash char(64) NOT NULL UNIQUE");
+    expect(fysenProSql).toContain("setup_token_issued");
+    expect(fysenProSql).toContain("setup_token_redeemed");
+    expect(fysenProSql).toContain("session_created");
+    expect(fysenProSql).toContain("session_revoked");
   });
 });
