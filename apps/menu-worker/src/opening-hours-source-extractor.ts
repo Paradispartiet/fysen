@@ -13,6 +13,7 @@ const relativeKitchenClosePattern = /(?:kjøkken(?:et)?\s+stenger|kitchen\s+clos
 const relativeKitchenCloseLinePattern = /(?:kjøkken(?:et)?\s+stenger|kitchen\s+closes)\s+\d{1,3}\s*(?:min\.?|minutter?|minutes?)\s+(?:før\s+stengetid|before\s+(?:closing|close)(?:\s+time)?)/iu;
 const absoluteKitchenClosePattern = /(?:kjøkken(?:et)?\s+(?:til|stenger)|kitchen\s+closes(?:\s+at)?)\s*(?:(?:kl\.?|klokka)\s*)?(?:2[0-3]|[01]?\d)(?:[.:][0-5]\d)?/iu;
 const absoluteKitchenCloseCapturePattern = /(?:kjøkken(?:et)?\s+(?:til|stenger)|kitchen\s+closes(?:\s+at)?)\s*(?:(?:kl\.?|klokka)\s*)?((?:2[0-3]|[01]?\d)(?:[.:][0-5]\d)?)/giu;
+const explicitKitchenScheduleLinePattern = /^(?:kitchen\s+(?:open|hours|opening\s+hours)|kjøkken(?:et)?\s+(?:åpent|apent|åpningstider)|kjøkkentider)\b/iu;
 const weekdayMentionPattern = /\b(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Mandag|Tirsdag|Onsdag|Torsdag|Fredag|Lørdag|Lordag|Søndag|Sondag|Man|Tir|Ons|Tor|Fre|Lør|Lor|Søn|Son|Mon|Tue|Tues|Wed|Weds|Thu|Thur|Thurs|Fri|Sat|Sun)\b/iu;
 const canonicalWeekdayPattern = /\b(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|mandag|tirsdag|onsdag|torsdag|fredag|lørdag|lordag|søndag|sondag|man|tir|ons|tor|fre|lør|lor|søn|son)\b/giu;
 const canonicalWeekdayNumber: Readonly<Record<string, number>> = {
@@ -100,6 +101,27 @@ function normalizeWeekdayAliases(value: string): string {
     .replace(/\bsat\b\.?/giu, "Saturday")
     .replace(/\bsun\b\.?/giu, "Sunday");
   return normalizeContiguousWeekdayLists(aliases).replace(clockWordRangePattern, "$1 - $2");
+}
+
+function extractExplicitKitchenSchedule(
+  lines: readonly string[],
+  scopeHints: readonly string[],
+): ExtractedOpeningHours | null {
+  const kitchenLines = lines.filter((line) => explicitKitchenScheduleLinePattern.test(line));
+  if (kitchenLines.length === 0) return null;
+
+  const normalized = kitchenLines.map(normalizeWeekdayAliases);
+  const extracted = extractKitchenOpeningHoursWithIdenticalSectionRecovery(normalized, scopeHints);
+  if (extracted.intervals.length === 0) {
+    throw new OpeningHoursExtractionError(
+      "EMPTY_EXPLICIT_KITCHEN_SCHEDULE",
+      "An explicit kitchen-scoped schedule was present but no intervals could be parsed",
+    );
+  }
+  return {
+    ...extracted,
+    visibleText: lines.join("\n"),
+  };
 }
 
 function normalizeClock(value: string): string {
@@ -265,6 +287,11 @@ export function extractCanonicalOpeningHours(
   const originalLines = normalizeOpeningHoursMarkerLines(extractVisibleLines(html));
   const relativeMinutes = relativeCutoffMinutes(originalLines);
   const globalAbsolute = absoluteGlobalKitchenClose(originalLines);
+  const explicitKitchenSchedule = extractExplicitKitchenSchedule(originalLines, scopeHints);
+
+  if (explicitKitchenSchedule && relativeMinutes === null && !globalAbsolute) {
+    return explicitKitchenSchedule;
+  }
 
   if (relativeMinutes !== null) {
     const textWithoutRelative = originalLines
@@ -278,7 +305,8 @@ export function extractCanonicalOpeningHours(
       );
     }
 
-    const base = extractKitchenOpeningHoursWithIdenticalSectionRecovery(sanitizedLines(originalLines), scopeHints);
+    const base = explicitKitchenSchedule ??
+      extractKitchenOpeningHoursWithIdenticalSectionRecovery(sanitizedLines(originalLines), scopeHints);
     const intervals = base.intervals.map((item) => subtractKitchenCutoff(item, relativeMinutes));
     const relativeExcerpt = originalLines.find((line) => relativeKitchenCloseLinePattern.test(line)) ?? null;
 
@@ -293,7 +321,8 @@ export function extractCanonicalOpeningHours(
   }
 
   if (globalAbsolute) {
-    const base = extractKitchenOpeningHoursWithIdenticalSectionRecovery(sanitizedAbsoluteLines(originalLines), scopeHints);
+    const base = explicitKitchenSchedule ??
+      extractKitchenOpeningHoursWithIdenticalSectionRecovery(sanitizedAbsoluteLines(originalLines), scopeHints);
     const intervals = base.intervals.map((item) => applyAbsoluteKitchenClose(item, globalAbsolute.closesAt));
     return {
       intervals,
