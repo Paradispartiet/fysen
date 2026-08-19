@@ -56,7 +56,11 @@ export async function exchangeAhaAuthorization(
     throw new UnauthorizedException({ code: "AHA_EXCHANGE_UNAVAILABLE", message: "AHA authorization could not be verified." });
   }
   let body: unknown = null;
-  try { body = await response.json(); } catch {}
+  try {
+    body = await response.json();
+  } catch {
+    // Non-JSON AHA responses remain fail-closed; schema validation below rejects null.
+  }
   if (!response.ok) {
     throw new UnauthorizedException({ code: "INVALID_AHA_AUTHORIZATION", message: "AHA authorization is invalid or expired." });
   }
