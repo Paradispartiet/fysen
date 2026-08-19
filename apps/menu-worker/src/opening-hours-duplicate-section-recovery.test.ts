@@ -73,9 +73,11 @@ describe("duplicate opening-hours section recovery", () => {
       extractKitchenOpeningHoursWithIdenticalSectionRecovery(
         [
           "Åpningstider CUE",
-          "Mandag 15:00 - 01:00",
+          "Mandag - Søndag | 15:00 - 01:00",
           "Åpningstider PIZZERIA",
-          "Mandag 18:00 - 23:30",
+          "Mandag - Søndag | 18:00 - 23:30",
+          "Åpningstider PIZZERIA",
+          "Mandag - Søndag | 18:30 - 23:30",
         ],
         ["Pizzeria"],
       );
@@ -88,6 +90,7 @@ describe("duplicate opening-hours section recovery", () => {
       expect((error as Error).message).toContain('"label":"PIZZERIA"');
       expect((error as Error).message).toContain('"normalizedLabel":"pizzeria"');
       expect((error as Error).message).toContain('"hinted":true');
+      expect((error as Error).message).toContain('"parsedSectionCount":2');
     }
   });
 });
