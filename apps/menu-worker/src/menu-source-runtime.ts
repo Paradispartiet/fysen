@@ -14,6 +14,10 @@ import {
   normalizeHtmlHeadingLineBreaks,
 } from "./html-heading-normalizer.js";
 import {
+  HTML_PRICE_WRAPPED_RECOVERY_VERSION,
+  recoverPriceWrappedHtmlItems,
+} from "./html-price-wrapped-recovery.js";
+import {
   extractScopedHtmlMenu,
   HTML_SOURCE_EXTRACTOR_VERSION,
 } from "./html-source-extractor.js";
@@ -26,7 +30,7 @@ const TRAILING_ALLERGEN_CODES = /\s+\((?:[\p{L}\d]{1,5}\s*(?:[,/+ ]\s*)?){1,20}\
 const TRAILING_INLINE_PRICE = /\s+[-–—]\s*(?:(?:kr\.?\s*)[1-9]\d{1,3}(?:[.,]\d{1,2})?|[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok))$/iu;
 export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v1";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v2";
-const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}`;
+const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
 export type MenuSourceFetchMode = "http" | "browser";
@@ -143,10 +147,18 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverDescriptionNamedHtmlItems(extracted.items, extracted.visibleText)
         : extracted.items;
+    const priceWrappedItems =
+      extracted.method === "html_heuristic"
+        ? recoverPriceWrappedHtmlItems(extracted.visibleText)
+        : [];
+    const preferredItems =
+      priceWrappedItems.length >= 3 && priceWrappedItems.length >= recoveredItems.length * 2
+        ? priceWrappedItems
+        : recoveredItems;
     const items =
       extracted.method === "html_heuristic"
-        ? recoveredItems.map(normalizeHtmlItemName)
-        : recoveredItems;
+        ? preferredItems.map(normalizeHtmlItemName)
+        : preferredItems;
     return {
       items,
       method: extracted.method,
