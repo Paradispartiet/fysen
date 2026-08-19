@@ -5,6 +5,7 @@ export type DishSuggestion = {
   readonly id: string;
   readonly label: string;
   readonly query: string;
+  readonly aliases: readonly string[];
   readonly hasKnowledge: boolean;
   readonly explorerPriority: number;
 };
@@ -76,6 +77,7 @@ function dishesForArea(cuisine: string, region: string): readonly DishSuggestion
       id: dish.id,
       label: dish.name,
       query: dish.query,
+      aliases: dish.aliases,
       hasKnowledge: foodKnowledgeDishIdSet.has(dish.id),
       explorerPriority: dish.explorerPriority,
     }));
