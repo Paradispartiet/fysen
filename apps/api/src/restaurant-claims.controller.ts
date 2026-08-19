@@ -14,7 +14,7 @@ import {
   type RestaurantClaimContext,
   type RestaurantClaimReceipt,
   type RestaurantClaimRequest,
-} from "@fysen/contracts";
+} from "@fysen/contracts/restaurant-claims";
 import { RestaurantClaimsService } from "./restaurant-claims.service.js";
 
 function badRequest(code: string, message: string, issues?: readonly unknown[]): never {
