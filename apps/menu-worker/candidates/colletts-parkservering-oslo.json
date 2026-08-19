@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "colletts-parkservering-oslo",
+    "name": "Collett's Parkservering",
+    "websiteUrl": "https://collettsparkservering.com/",
+    "address": "Colletts gate 33, 0169 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9294761,
+    "longitude": 10.7405376
+  },
+  "menuSource": {
+    "url": "https://collettsparkservering.com/meny",
+    "sourceType": "html",
+    "fetchMode": "browser",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 20
+  },
+  "hoursSource": {
+    "url": "https://collettsparkservering.com/kontakt",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 2
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "The first-party contact page publishes grouped restaurant opening hours for weekdays and weekends, but does not separately identify kitchen-service hours. Keep the verified menu searchable; do not derive canonical open/closed until the service-hours semantics are confirmed."
+    }
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://collettsparkservering.com/bestilling",
+      "sourceUrl": "https://collettsparkservering.com/",
+      "provider": "Collett's Parkservering"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Dagens Suppe",
+      "Friterte Calamares",
+      "Spansk Gambas",
+      "Rekesmørbrød",
+      "Kyllingfilet",
+      "Hamburger",
+      "Husets Kjøttkaker",
+      "Indrefilet av Okse",
+      "Wienerschnitzel (Kalv)",
+      "Havabbor",
+      "Meze",
+      "Husets Pasta",
+      "Fish N Chips",
+      "Tyrkisk Kofte",
+      "Mixgrill",
+      "Tiramisu",
+      "Husets Creme Brulee",
+      "Husets Ostekaker"
+    ],
+    "requiredDishVariants": [
+      { "name": "Dagens Suppe", "priceMinor": 19900 },
+      { "name": "Friterte Calamares", "priceMinor": 12900 },
+      { "name": "Spansk Gambas", "priceMinor": 15900 },
+      { "name": "Rekesmørbrød", "priceMinor": 19900 },
+      { "name": "Kyllingfilet", "priceMinor": 34900 },
+      { "name": "Hamburger", "priceMinor": 29900 },
+      { "name": "Husets Kjøttkaker", "priceMinor": 29900 },
+      { "name": "Indrefilet av Okse", "priceMinor": 39900 },
+      { "name": "Wienerschnitzel (Kalv)", "priceMinor": 39900 },
+      { "name": "Havabbor", "priceMinor": 29900 },
+      { "name": "Meze", "priceMinor": 29900 },
+      { "name": "Husets Pasta", "priceMinor": 29900 },
+      { "name": "Fish N Chips", "priceMinor": 29900 },
+      { "name": "Tyrkisk Kofte", "priceMinor": 29900 },
+      { "name": "Mixgrill", "priceMinor": 39900 },
+      { "name": "Tiramisu", "priceMinor": 12900 },
+      { "name": "Husets Creme Brulee", "priceMinor": 12900 },
+      { "name": "Husets Ostekaker", "priceMinor": 10900 }
+    ],
+    "forbiddenDishNames": [
+      "Meny",
+      "Forretter",
+      "Hovedretter",
+      "Andre Retter",
+      "Dessert",
+      "Allergener",
+      "Kontaktinformasjon",
+      "Åpningstider",
+      "Beliggenhet"
+    ]
+  }
+}
