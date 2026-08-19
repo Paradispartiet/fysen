@@ -38,6 +38,16 @@ const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
 export type MenuSourceFetchMode = "http" | "browser";
 
+export interface MenuSourceSupportInput {
+  readonly redirectOrigins: readonly string[];
+  readonly browserDataOrigins: readonly string[];
+}
+
+const EMPTY_MENU_SOURCE_SUPPORT: MenuSourceSupportInput = {
+  redirectOrigins: [],
+  browserDataOrigins: [],
+};
+
 export interface MenuSourceRuntimeInput {
   readonly url: string;
   readonly sourceType: string;
@@ -45,6 +55,7 @@ export interface MenuSourceRuntimeInput {
   readonly userAgent: string;
   readonly etag: string | null;
   readonly lastModified: string | null;
+  readonly sourceSupport?: MenuSourceSupportInput;
 }
 
 export interface ExtractedMenuSource {
@@ -137,10 +148,12 @@ export async function fetchMenuSource(
   httpClient = new HttpMenuClient(),
 ): Promise<MenuHttpFetchResult> {
   assertSupportedMenuSource(input);
+  const sourceSupport = input.sourceSupport ?? EMPTY_MENU_SOURCE_SUPPORT;
   if (input.fetchMode === "browser") {
     return new BrowserMenuClient(httpClient).fetchSource({
       url: input.url,
       userAgent: input.userAgent,
+      sourceSupport,
     });
   }
 
@@ -151,7 +164,10 @@ export async function fetchMenuSource(
       etag: input.etag,
       lastModified: input.lastModified,
     },
-    input.sourceType === "pdf" ? { maxResponseBytes: pdfResponseByteLimit() } : {},
+    {
+      allowedRedirectOrigins: sourceSupport.redirectOrigins,
+      ...(input.sourceType === "pdf" ? { maxResponseBytes: pdfResponseByteLimit() } : {}),
+    },
   );
 }
 
