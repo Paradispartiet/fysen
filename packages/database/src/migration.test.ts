@@ -19,6 +19,7 @@ describe("database migrations", () => {
       "0012_restaurant_hours_verification.sql",
       "0013_menu_source_support_origins.sql",
       "0014_search_demand_source.sql",
+      "0015_restaurant_claims.sql",
     ]);
 
     const schemaSql = await readFile(new URL("../migrations/0001_menu_index.sql", import.meta.url), "utf8");
@@ -111,5 +112,16 @@ describe("database migrations", () => {
     expect(demandSourceSql).toContain("SET DEFAULT 'legacy_unclassified'");
     expect(demandSourceSql).toContain("search_events_demand_source_check");
     expect(demandSourceSql).toContain("search_events_demand_source_occurred_idx");
+
+    const restaurantClaimsSql = await readFile(new URL("../migrations/0015_restaurant_claims.sql", import.meta.url), "utf8");
+    expect(restaurantClaimsSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_claims");
+    expect(restaurantClaimsSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_access_grants");
+    expect(restaurantClaimsSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_owned_profiles");
+    expect(restaurantClaimsSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_claim_audit_log");
+    expect(restaurantClaimsSql).toContain("claimant_role IN ('owner', 'manager', 'authorized_agent')");
+    expect(restaurantClaimsSql).toContain("status IN ('pending', 'verified', 'rejected', 'withdrawn')");
+    expect(restaurantClaimsSql).toContain("restaurant_claims_pending_identity_idx");
+    expect(restaurantClaimsSql).toContain("restaurant_access_grants_active_identity_idx");
+    expect(restaurantClaimsSql).toContain("owner_fields_updated");
   });
 });
