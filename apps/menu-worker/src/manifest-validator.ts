@@ -101,13 +101,15 @@ function emptyHtmlMenuDiagnostics(
   requiredDishNames: readonly string[],
 ): EmptyHtmlMenuDiagnostics {
   const foldedBody = body.toLocaleLowerCase("nb-NO");
+  const scriptBlock = new RegExp("<script\\b[^>]*>[\\s\\S]*?</script>", "giu");
+  const styleBlock = new RegExp("<style\\b[^>]*>[\\s\\S]*?</style>", "giu");
   const textExcerpt = body
-    .replace(/<script\\b[^>]*>[\\s\\S]*?<\\/script>/giu, " ")
-    .replace(/<style\\b[^>]*>[\\s\\S]*?<\\/style>/giu, " ")
+    .replace(scriptBlock, " ")
+    .replace(styleBlock, " ")
     .replace(/<[^>]+>/gu, " ")
     .replace(/&nbsp;/giu, " ")
     .replace(/&amp;/giu, "&")
-    .replace(/\\s+/gu, " ")
+    .replace(/\s+/gu, " ")
     .trim()
     .slice(0, 4000);
 
