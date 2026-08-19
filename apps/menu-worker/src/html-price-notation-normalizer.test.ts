@@ -48,7 +48,7 @@ describe("HTML menu runtime normalization", () => {
   });
 
   it("strips short uppercase allergen-code lists while preserving semantic parentheses", () => {
-    expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v5");
+    expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v6");
     const allergenItem = normalizeHtmlItemName({
       sourceKey: "old",
       name: "Rasmalai (G, M, E, N)",
@@ -166,6 +166,8 @@ describe("HTML menu runtime normalization", () => {
       "Cola Zero",
       "Mango Lassi",
       "Coca-Cola",
+      "Punjab Cola",
+      "Old Jamaica Ginger Beer",
       "Mango Juice",
       "Farris Blå",
       "Hard seltz Rabarbra",
