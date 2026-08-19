@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { HttpMenuClient, type MenuFetchError } from "./http-client.js";
+import { HttpMenuClient } from "./http-client.js";
 
 const publicResolver = async (): Promise<readonly { address: string }[]> => [
   { address: "93.184.216.34" },
@@ -42,7 +42,7 @@ describe("HTTP menu source support origins", () => {
         etag: null,
         lastModified: null,
       }),
-    ).rejects.toMatchObject<MenuFetchError>({ code: "CROSS_ORIGIN_REDIRECT" });
+    ).rejects.toMatchObject({ code: "CROSS_ORIGIN_REDIRECT" });
   });
 
   it("allows only an explicitly declared redirect origin and rechecks its robots policy", async () => {
@@ -84,6 +84,29 @@ describe("HTTP menu source support origins", () => {
     expect(calls).toContain("https://order.test/menu");
   });
 
+  it("keeps robots responses bounded but accepts a valid policy above the old 256 KiB cap", async () => {
+    const largeRobots = `User-agent: *\nAllow: /\n#${"x".repeat(300 * 1024)}`;
+    const client = new HttpMenuClient({
+      fetchImpl: asFetch(async (url) =>
+        url.pathname === "/robots.txt"
+          ? new Response(largeRobots, { status: 200 })
+          : new Response("<html><body>Menu</body></html>", { status: 200 }),
+      ),
+      resolver: publicResolver,
+      minHostDelayMs: 1,
+      timeoutMs: 1000,
+    });
+
+    await expect(
+      client.fetchSource({
+        url: "https://restaurant.test/menu",
+        userAgent: "FysenMenuBot/0.1",
+        etag: null,
+        lastModified: null,
+      }),
+    ).resolves.toMatchObject({ kind: "content", status: 200 });
+  });
+
   it("refuses an undeclared second hop even after an allowed first hop", async () => {
     const client = new HttpMenuClient({
       fetchImpl: asFetch(async (url) => {
@@ -110,6 +133,6 @@ describe("HTTP menu source support origins", () => {
         },
         { allowedRedirectOrigins: ["https://order.test"] },
       ),
-    ).rejects.toMatchObject<MenuFetchError>({ code: "CROSS_ORIGIN_REDIRECT" });
+    ).rejects.toMatchObject({ code: "CROSS_ORIGIN_REDIRECT" });
   });
 });
