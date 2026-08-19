@@ -5,11 +5,15 @@ import {
 } from "./opening-hours-duplicate-section-recovery.js";
 import { OpeningHoursExtractionError, type ExtractedOpeningHours } from "./opening-hours-extractor.js";
 import {
+  OPENING_HOURS_SCOPE_HINT_RESOLVER_VERSION,
+  resolveOpeningHoursScopeHints,
+} from "./opening-hours-scope-hints.js";
+import {
   extractCanonicalOpeningHours,
   OPENING_HOURS_SOURCE_EXTRACTOR_VERSION,
 } from "./opening-hours-source-extractor.js";
 
-export const OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION = `${OPENING_HOURS_SOURCE_EXTRACTOR_VERSION}+${OPENING_HOURS_DUPLICATE_SECTION_RECOVERY_VERSION}`;
+export const OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION = `${OPENING_HOURS_SOURCE_EXTRACTOR_VERSION}+${OPENING_HOURS_DUPLICATE_SECTION_RECOVERY_VERSION}+${OPENING_HOURS_SCOPE_HINT_RESOLVER_VERSION}`;
 
 export interface OpeningHoursSourceRuntimeInput {
   readonly url: string;
@@ -18,6 +22,7 @@ export interface OpeningHoursSourceRuntimeInput {
   readonly lastModified: string | null;
   readonly extractor?: string;
   readonly scopeHints: readonly string[];
+  readonly fallbackScopeHints?: readonly string[];
 }
 
 type OpeningHoursContentFetch = Extract<MenuHttpFetchResult, { readonly kind: "content" }>;
@@ -65,7 +70,8 @@ export async function resolveOpeningHoursSource(
     throw new OpeningHoursExtractionError("UNSUPPORTED_EXTRACTOR", `Unsupported hours extractor: ${extractor}`);
   }
 
-  const extracted = extractCanonicalOpeningHours(fetched.body, input.scopeHints);
+  const scopeHints = resolveOpeningHoursScopeHints(input.scopeHints, input.fallbackScopeHints ?? []);
+  const extracted = extractCanonicalOpeningHours(fetched.body, scopeHints);
   return {
     kind: "content",
     fetched,
