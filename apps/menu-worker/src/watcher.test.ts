@@ -4,6 +4,8 @@ import { HTML_EXTRACTOR_VERSION } from "./html-extractor.js";
 import { HTML_HEADING_NORMALIZER_VERSION } from "./html-heading-normalizer.js";
 import { HTML_SOURCE_EXTRACTOR_VERSION } from "./html-source-extractor.js";
 import {
+  HTML_ITEM_NAME_NORMALIZER_VERSION,
+  HTML_PRICE_NOTATION_NORMALIZER_VERSION,
   assertExtractionMethodForSourceType,
   extractorVersionForSourceType,
   shouldForceReextract,
@@ -20,7 +22,14 @@ describe("menu source runtime extractor refresh policy", () => {
   });
 
   it("uses the composed runtime version policy for supported HTML sources", () => {
-    const runtimeVersion = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}`;
+    const runtimeVersion = [
+      HTML_SOURCE_EXTRACTOR_VERSION,
+      HTML_EXTRACTOR_VERSION,
+      HTML_DESCRIPTION_TITLE_RECOVERY_VERSION,
+      HTML_HEADING_NORMALIZER_VERSION,
+      HTML_PRICE_NOTATION_NORMALIZER_VERSION,
+      HTML_ITEM_NAME_NORMALIZER_VERSION,
+    ].join("+");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
     expect(shouldForceReextract("html", HTML_EXTRACTOR_VERSION)).toBe(true);
