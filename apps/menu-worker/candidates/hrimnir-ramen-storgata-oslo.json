@@ -71,7 +71,11 @@
       { "name": "SHIITAKE & BLOMKÅL", "priceMinor": 9500 },
       { "name": "AGURK", "priceMinor": 9500 },
       { "name": "LAKSETARTAR", "priceMinor": 17900 },
-      { "name": "KATSU SANDO", "priceMinor": 7500 }
+      { "name": "KATSU SANDO", "priceMinor": 7500 },
+      { "name": "SHOYU RAMEN", "priceMinor": 26000 },
+      { "name": "SPICY MISO RAMEN", "priceMinor": 26000 },
+      { "name": "KYLLING SHOYU PAITAN RAMEN", "priceMinor": 26000 },
+      { "name": "SPICY HASSELNØTT TAN TAN MEN", "priceMinor": 26000 }
     ],
     "forbiddenDishNames": [
       "Ramen",
