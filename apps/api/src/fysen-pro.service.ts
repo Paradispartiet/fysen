@@ -14,6 +14,17 @@ import {
 } from "@fysen/database";
 import { DatabaseService } from "./database.service.js";
 
+export const FYSEN_PRO_DEMAND_GAP_MIN_SEARCHES = 3;
+
+export function protectFysenProDashboard(dashboard: FysenProDashboard): FysenProDashboard {
+  return {
+    ...dashboard,
+    cityDemandGaps: dashboard.cityDemandGaps.filter(
+      (gap) => gap.searches7d >= FYSEN_PRO_DEMAND_GAP_MIN_SEARCHES,
+    ),
+  };
+}
+
 @Injectable()
 export class FysenProService {
   constructor(@Inject(DatabaseService) private readonly database: DatabaseService) {}
@@ -31,7 +42,7 @@ export class FysenProService {
     if (!dashboard) {
       throw new UnauthorizedException({ code: "INVALID_PRO_SESSION", message: "Invalid or expired Pro session." });
     }
-    return fysenProDashboardSchema.parse(dashboard);
+    return protectFysenProDashboard(fysenProDashboardSchema.parse(dashboard));
   }
 
   async logout(sessionToken: string): Promise<FysenProLogoutReceipt> {
