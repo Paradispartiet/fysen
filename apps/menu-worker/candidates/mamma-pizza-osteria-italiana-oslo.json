@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mamma-pizza-osteria-italiana-oslo",
+    "name": "Mamma Pizza Osteria Italiana",
+    "websiteUrl": "https://www.mammapizza.no/en/osteria-italiana",
+    "address": "Dronningens gate 22, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91083,
+    "longitude": 10.74664
+  },
+  "menuSource": {
+    "url": "https://www.foodora.no/restaurant/n9kb/mamma-pizza-dronningensgate",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 12
+  },
+  "hoursSource": {
+    "url": "https://www.mammapizza.no/en/osteria-italiana",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 2
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "Mamma Pizza's first-party Osteria Italiana page publishes venue hours Mon-Sat 11:00-22:00 and Sunday 12:00-22:00, and explicitly says the kitchen is open until 21:30. The current schedule does not separately publish a per-day kitchen opening time, so keep open/closed unknown until the kitchen-scoped intervals can be materialized canonically."
+    }
+  },
+  "actions": [
+    {
+      "type": "order",
+      "url": "https://www.foodora.no/restaurant/n9kb/mamma-pizza-dronningensgate",
+      "sourceUrl": "https://www.mammapizza.no/en/osteria-italiana",
+      "provider": "Foodora"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Regina Margherita",
+      "Capricciosa",
+      "Diavola",
+      "Vegetariana",
+      "Napoli",
+      "Formaggi",
+      "Sana",
+      "Crudo di Parma",
+      "Parmigiana",
+      "Principessa",
+      "Tartufo",
+      "'Nduja"
+    ],
+    "requiredDishVariants": [
+      { "name": "Regina Margherita", "priceMinor": 21900, "priceKind": "from" },
+      { "name": "Capricciosa", "priceMinor": 27500, "priceKind": "from" },
+      { "name": "Diavola", "priceMinor": 27900, "priceKind": "from" },
+      { "name": "Vegetariana", "priceMinor": 27000, "priceKind": "from" },
+      { "name": "Napoli", "priceMinor": 28000, "priceKind": "from" },
+      { "name": "Formaggi", "priceMinor": 27500, "priceKind": "from" },
+      { "name": "Sana", "priceMinor": 27000, "priceKind": "from" },
+      { "name": "Crudo di Parma", "priceMinor": 29000, "priceKind": "from" },
+      { "name": "Parmigiana", "priceMinor": 27000, "priceKind": "from" },
+      { "name": "Principessa", "priceMinor": 28500, "priceKind": "from" },
+      { "name": "Tartufo", "priceMinor": 29000, "priceKind": "from" },
+      { "name": "'Nduja", "priceMinor": 29500, "priceKind": "from" }
+    ],
+    "forbiddenDishNames": [
+      "Aranciata",
+      "Galvanina Bellini Mocktail Økol 200ml",
+      "Galvanina Spritz Mocktail Økol 200ml",
+      "Pepsi",
+      "Pepsi Max",
+      "Chinotto",
+      "Gazzosa",
+      "Limonata",
+      "Ice Tea Lemon",
+      "Ice Tea Peach",
+      "Apple Juice",
+      "Pizzakutter"
+    ]
+  }
+}
