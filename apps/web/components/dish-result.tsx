@@ -3,6 +3,7 @@ import { formatDishPrice } from "../lib/dish-price";
 import { restaurantClaimHref } from "../lib/public-path";
 import { DishComposition } from "./dish-composition";
 import { FreshnessStatus } from "./freshness-status";
+import { SaveMinMatButton } from "./save-min-mat-button";
 import styles from "./dish-result.module.css";
 import { TrackedExternalLink } from "./tracked-external-link";
 
@@ -76,6 +77,7 @@ export function DishResult({ result }: { result: DishSearchResult }) {
           <span className="openingStatus" data-state={result.opening.state}>{openingLabel(result)}</span>
         </div>
         <div className={actionsClassName}>
+          <SaveMinMatButton menuItemId={result.menuItemId} />
           {result.actions.booking ? (
             <TrackedExternalLink
               className={primaryActionClassName}

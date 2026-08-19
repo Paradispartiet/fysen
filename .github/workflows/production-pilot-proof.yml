@@ -12,22 +12,36 @@ on:
       - "apps/web/app/search/**"
       - "apps/web/app/claim/**"
       - "apps/web/app/pro/**"
+      - "apps/web/app/min-mat/**"
       - "apps/web/app/api/pro/**"
+      - "apps/web/app/api/aha/**"
+      - "apps/web/app/api/min-mat/**"
+      - "apps/web/app/layout.tsx"
+      - "apps/web/components/global-header.tsx"
+      - "apps/web/components/dish-result.tsx"
       - "apps/web/components/dish-browse.tsx"
       - "apps/web/components/restaurant-claim-form.tsx"
       - "apps/web/components/fysen-pro-login-form.tsx"
+      - "apps/web/components/save-min-mat-button*"
+      - "apps/web/components/min-mat-*"
+      - "apps/web/lib/aha-*"
+      - "apps/web/styles/min-mat.css"
       - "apps/api/src/dish-search.controller.ts"
       - "apps/api/src/dish-search.service.ts"
       - "apps/api/src/restaurant-claims.controller.ts"
       - "apps/api/src/restaurant-claims.service.ts"
       - "apps/api/src/fysen-pro.controller.ts"
       - "apps/api/src/fysen-pro.service.ts"
+      - "apps/api/src/aha-min-mat.*"
+      - "packages/contracts/src/aha-min-mat.ts"
       - "packages/database/migrations/0014_search_demand_source.sql"
       - "packages/database/migrations/0015_restaurant_claims.sql"
       - "packages/database/migrations/0016_fysen_pro_sessions.sql"
+      - "packages/database/migrations/0017_aha_min_mat.sql"
       - "packages/database/src/browse.ts"
       - "packages/database/src/restaurant-claims.ts"
       - "packages/database/src/fysen-pro.ts"
+      - "packages/database/src/aha-min-mat.ts"
 
 permissions:
   contents: read
@@ -46,6 +60,8 @@ jobs:
       NODE_ENV: production
       FYSEN_PUBLIC_API_URL: https://fysen-api.vercel.app
       FYSEN_PUBLIC_WEB_URL: https://fysen-matsgran-8572s-projects.vercel.app
+      AHA_PUBLIC_API_URL: https://aha-canonical-api-production.redground-9c6e20c2.northeurope.azurecontainerapps.io
+      AHA_PUBLIC_WEB_URL: https://paradispartiet.github.io/AHA-EchoNet
     steps:
       - name: Require production database secret
         shell: bash
@@ -94,15 +110,15 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Verify Demand provenance, Claim Restaurant and Fysen Pro production boundaries
+      - name: Verify Demand, Revenue R3/R4 and AHA Min mat production boundaries
         shell: bash
         run: |
           node scripts/revenue-production-proof.mjs | tee /tmp/fysen-revenue-production-proof.json
           {
             echo
-            echo '## Fysen revenue production proof'
+            echo '## Fysen revenue + AHA Min mat production proof'
             echo
-            echo 'This proof is non-mutating: it verifies production R3/R4 schema, fail-closed demand provenance, hash-only Pro token storage, PII-free Claim context, unauthenticated Pro rejection, and the public Claim/Pro web surfaces.'
+            echo 'This proof is non-mutating: it verifies Demand provenance, R3/R4 and AHA Min mat schema, hash-only secret storage, consumer/Pro isolation, fail-closed unauthenticated API surfaces, the public Min mat/Claim/Pro web surfaces, PKCE redirect wiring, AHA static handoff pages, and that the AHA Fysen exchange is enabled with the exact production callback allowlisted.'
             echo
             echo '```json'
             cat /tmp/fysen-revenue-production-proof.json

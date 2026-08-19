@@ -1,0 +1,25 @@
+.minMatPage { min-height: 100vh; background: var(--page-background, #f7f4ec); color: var(--text-primary, #182019); }
+.minMatShell { width: min(920px, calc(100% - 32px)); margin: 0 auto; padding: 42px 0 72px; }
+.minMatHero { max-width: 680px; margin-bottom: 28px; }
+.minMatHero h1 { margin: 0.15rem 0 0.55rem; font-size: clamp(2.2rem, 7vw, 4rem); line-height: 0.95; }
+.minMatHero p, .minMatPanel p, .minMatAnalysis p { line-height: 1.55; }
+.minMatEyebrow { margin: 0; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.65; }
+.minMatPanel, .minMatAnalysis { border: 1px solid rgba(24,32,25,0.14); border-radius: 22px; background: rgba(255,255,255,0.62); padding: 24px; }
+.minMatPanel h2, .minMatAnalysis h2 { margin: 0 0 0.45rem; }
+.minMatPrimary { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; border: 0; border-radius: 999px; background: #203c2d; color: #fff; cursor: pointer; font: inherit; font-weight: 800; padding: 0.7rem 1rem; text-decoration: none; }
+.minMatPrivacy { margin-top: 16px; font-size: 0.88rem; opacity: 0.72; }
+.minMatToolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 20px 0; }
+.minMatToolbar p { margin: 0; font-weight: 800; }
+.minMatTextButton { border: 0; background: transparent; color: inherit; cursor: pointer; font: inherit; font-weight: 750; text-decoration: underline; text-underline-offset: 3px; }
+.minMatTextButton:disabled { opacity: 0.55; cursor: default; }
+.minMatList { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.minMatList li { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; padding: 18px 20px; border: 1px solid rgba(24,32,25,0.12); border-radius: 18px; background: rgba(255,255,255,0.72); }
+.minMatList h2 { margin: 0 0 0.25rem; font-size: 1.08rem; }
+.minMatList p { margin: 0 0 0.3rem; }
+.minMatList span { font-size: 0.86rem; opacity: 0.68; }
+.minMatAnalysis { margin-top: 22px; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+.minMatAnalysis form { flex: 0 0 auto; }
+.minMatEmpty { text-align: left; }
+.minMatNavLink { margin-left: auto; color: inherit; font-size: 0.88rem; font-weight: 800; text-decoration: none; }
+.minMatNavLink:hover { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 640px) { .minMatAnalysis { align-items: flex-start; flex-direction: column; } .minMatList li { align-items: flex-start; } }

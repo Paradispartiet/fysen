@@ -21,7 +21,7 @@
     "demand:loop": "node dist/demand-loop-cli.js",
     "quality:dashboard": "node dist/quality-dashboard-cli.js",
     "pro:issue-setup": "node dist/fysen-pro-setup-cli.js",
-    "test:integration": "vitest run src/integration.test.ts && vitest run src/repository-price-semantics.integration.test.ts && vitest run src/search.integration.test.ts && vitest run src/browse.integration.test.ts && vitest run src/funnel.integration.test.ts && vitest run src/restaurant-actions.integration.test.ts && vitest run src/restaurant-hours.integration.test.ts && vitest run src/restaurant-hours-sources.integration.test.ts && vitest run src/coverage.integration.test.ts && vitest run src/demand-loop.integration.test.ts && vitest run src/restaurant-claims.integration.test.ts && vitest run src/fysen-pro.integration.test.ts && vitest run src/quality-dashboard.integration.test.ts"
+    "test:integration": "vitest run src/integration.test.ts && vitest run src/repository-price-semantics.integration.test.ts && vitest run src/search.integration.test.ts && vitest run src/browse.integration.test.ts && vitest run src/funnel.integration.test.ts && vitest run src/restaurant-actions.integration.test.ts && vitest run src/restaurant-hours.integration.test.ts && vitest run src/restaurant-hours-sources.integration.test.ts && vitest run src/coverage.integration.test.ts && vitest run src/demand-loop.integration.test.ts && vitest run src/restaurant-claims.integration.test.ts && vitest run src/fysen-pro.integration.test.ts && vitest run src/aha-min-mat.integration.test.ts && vitest run src/quality-dashboard.integration.test.ts"
   },
   "dependencies": {
     "@fysen/menu-core": "workspace:*",
