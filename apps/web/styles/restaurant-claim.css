@@ -1,0 +1,161 @@
+.claimPage {
+  min-height: 100vh;
+  background: var(--color-surface);
+}
+
+.claimMain {
+  width: min(760px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 36px 0 72px;
+}
+
+.claimBackLink {
+  display: inline-flex;
+  margin-bottom: 20px;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.claimBackLink:hover {
+  color: var(--color-text);
+}
+
+.claimCard {
+  padding: clamp(24px, 5vw, 44px);
+  background: var(--color-surface-raised, #fff);
+  border: 1px solid var(--color-border);
+  border-radius: 22px;
+}
+
+.claimEyebrow {
+  margin: 0 0 8px;
+  color: var(--color-brand);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.claimCard h1 {
+  margin: 0;
+  font-size: clamp(28px, 5vw, 42px);
+  line-height: 1.05;
+}
+
+.claimRestaurantAddress {
+  margin: 12px 0 0;
+  color: var(--color-text-muted);
+}
+
+.claimPrinciples,
+.claimStateBox,
+.claimSuccess {
+  margin-top: 24px;
+  padding: 16px 18px;
+  background: var(--color-surface-subtle, rgba(0, 0, 0, 0.035));
+  border-radius: 14px;
+}
+
+.claimPrinciples p,
+.claimStateBox p,
+.claimSuccess p {
+  margin: 0;
+}
+
+.claimPrinciples p + p,
+.claimStateBox p + p,
+.claimSuccess p + p {
+  margin-top: 8px;
+}
+
+.claimForm {
+  display: grid;
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.claimField {
+  display: grid;
+  gap: 7px;
+}
+
+.claimField label {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.claimField label span,
+.claimHint {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.claimField input,
+.claimField select,
+.claimField textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 13px;
+  color: var(--color-text);
+  font: inherit;
+  background: var(--color-surface-raised, #fff);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.claimField textarea {
+  resize: vertical;
+}
+
+.claimField input:focus-visible,
+.claimField select:focus-visible,
+.claimField textarea:focus-visible,
+.claimSubmit:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+.claimHint,
+.claimError {
+  margin: 0;
+  font-size: 13px;
+}
+
+.claimError {
+  color: #9b1c1c;
+}
+
+.claimSubmit {
+  justify-self: start;
+  min-height: 44px;
+  padding: 0 18px;
+  color: var(--color-action-ink);
+  font: inherit;
+  font-weight: 750;
+  background: var(--color-action);
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.claimSubmit:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.claimSuccess code {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .claimMain {
+    width: min(100% - 24px, 760px);
+    padding-top: 24px;
+  }
+
+  .claimCard {
+    border-radius: 16px;
+  }
+}

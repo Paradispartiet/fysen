@@ -13,6 +13,10 @@
     "./dish-browse": {
       "types": "./dist/dish-browse.d.ts",
       "default": "./dist/dish-browse.js"
+    },
+    "./restaurant-claims": {
+      "types": "./dist/restaurant-claims.d.ts",
+      "default": "./dist/restaurant-claims.js"
     }
   },
   "scripts": {

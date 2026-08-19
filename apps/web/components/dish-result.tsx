@@ -1,5 +1,6 @@
 import type { DishSearchResult } from "@fysen/contracts";
 import { formatDishPrice } from "../lib/dish-price";
+import { restaurantClaimHref } from "../lib/public-path";
 import { DishComposition } from "./dish-composition";
 import { FreshnessStatus } from "./freshness-status";
 import styles from "./dish-result.module.css";
@@ -28,6 +29,7 @@ function directionsUrl(latitude: number, longitude: number): string {
 export function DishResult({ result }: { result: DishSearchResult }) {
   const actionsClassName = styles.actions ?? "";
   const primaryActionClassName = styles.primaryAction ?? "";
+  const claimLinkClassName = styles.claimLink ?? "";
 
   return (
     <article className="dishResult">
@@ -50,6 +52,9 @@ export function DishResult({ result }: { result: DishSearchResult }) {
               result.restaurant.name
             )}
           </p>
+          <a className={claimLinkClassName} href={restaurantClaimHref(result.restaurant.slug)}>
+            Driver du {result.restaurant.name}?
+          </a>
         </div>
         <p className={result.dish.priceMinor === null ? "dishPrice isMissing" : "dishPrice"}>
           {formatDishPrice(result.dish)}

@@ -5,9 +5,11 @@ import { DishSearchService } from "./dish-search.service.js";
 import { FunnelController } from "./funnel.controller.js";
 import { FunnelService } from "./funnel.service.js";
 import { HealthController } from "./health.controller.js";
+import { RestaurantClaimsController } from "./restaurant-claims.controller.js";
+import { RestaurantClaimsService } from "./restaurant-claims.service.js";
 
 @Module({
-  controllers: [HealthController, DishSearchController, FunnelController],
-  providers: [DatabaseService, DishSearchService, FunnelService],
+  controllers: [HealthController, DishSearchController, FunnelController, RestaurantClaimsController],
+  providers: [DatabaseService, DishSearchService, FunnelService, RestaurantClaimsService],
 })
 export class AppModule {}

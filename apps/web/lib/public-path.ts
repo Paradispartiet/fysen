@@ -22,3 +22,8 @@ export function dishSearchHref(query: string, city = "Oslo"): string {
 export function foodKnowledgeHref(dishId: string): string {
   return `${withPublicBasePath("/")}#learn-${encodeURIComponent(dishId)}`;
 }
+
+export function restaurantClaimHref(restaurantSlug: string): string {
+  const params = new URLSearchParams({ restaurant: restaurantSlug });
+  return `${withPublicBasePath("/claim")}?${params.toString()}`;
+}
