@@ -1,8 +1,9 @@
-export const OPENING_HOURS_MARKER_NORMALIZER_VERSION = "hours-marker-v1";
+export const OPENING_HOURS_MARKER_NORMALIZER_VERSION = "hours-marker-v2";
 
 const HOURS_MARKER = /^(?:opening\s+hours|hours|åpningstider)(?:\s+([^:]{1,80}))?:?$/iu;
 const DECORATIVE_PREFIX = /^(?:(?:[*•·◦▪▫●○◆◇|])\s*){1,8}/u;
 const WEEKDAY_OR_TIME = /\b(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday|mandag|tirsdag|onsdag|torsdag|fredag|lørdag|lordag|søndag|sondag|man|tir|ons|tor|fre|lør|lor|søn|son)\b|\d{1,2}[.:]\d{2}/iu;
+const GLUED_WEEKDAY_SCHEDULE = /^(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday|mandag|tirsdag|onsdag|torsdag|fredag|lørdag|lordag|søndag|sondag|man|tir|ons|tor|fre|lør|lor|søn|son)(?:closed|open|stengt|åpen|apen|\d)/iu;
 
 function normalizeLine(value: string): string {
   return value.normalize("NFKC").replace(/[\u200B-\u200D\uFEFF]/gu, "").replace(/\s+/g, " ").trim();
@@ -17,7 +18,15 @@ function normalizedMarker(value: string): string | null {
 
 function isScopeLabelCandidate(value: string): boolean {
   const line = normalizeLine(value);
-  if (!line || line.length > 40 || !/\p{L}/u.test(line) || WEEKDAY_OR_TIME.test(line)) return false;
+  if (
+    !line ||
+    line.length > 40 ||
+    !/\p{L}/u.test(line) ||
+    WEEKDAY_OR_TIME.test(line) ||
+    GLUED_WEEKDAY_SCHEDULE.test(line)
+  ) {
+    return false;
+  }
   if (HOURS_MARKER.test(line) || /[:|]/u.test(line)) return false;
   return line.split(/\s+/).length <= 4;
 }
