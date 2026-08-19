@@ -5,6 +5,15 @@ import {
   type DishBrowseResponse,
 } from "@fysen/contracts/dish-browse";
 import {
+  restaurantClaimContextSchema,
+  restaurantClaimReceiptSchema,
+  restaurantClaimRequestSchema,
+  restaurantClaimSlugSchema,
+  type RestaurantClaimContext,
+  type RestaurantClaimReceipt,
+  type RestaurantClaimRequest,
+} from "@fysen/contracts/restaurant-claims";
+import {
   conversionEventInputSchema,
   conversionEventReceiptSchema,
   dishSearchQuerySchema,
@@ -82,4 +91,43 @@ export async function recordConversionEvent(input: ConversionEventInput): Promis
   }
 
   return conversionEventReceiptSchema.parse(await response.json());
+}
+
+export async function getRestaurantClaimContext(restaurantSlug: string): Promise<RestaurantClaimContext> {
+  const slug = restaurantClaimSlugSchema.parse(restaurantSlug);
+  const response = await fetch(`${apiBaseUrl()}/v1/restaurants/${encodeURIComponent(slug)}/claim`, {
+    cache: "no-store",
+    headers: { accept: "application/json" },
+    signal: AbortSignal.timeout(5_000),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Fysen API restaurant claim context failed with HTTP ${response.status}`);
+  }
+
+  return restaurantClaimContextSchema.parse(await response.json());
+}
+
+export async function submitRestaurantClaim(
+  restaurantSlug: string,
+  input: RestaurantClaimRequest,
+): Promise<RestaurantClaimReceipt> {
+  const slug = restaurantClaimSlugSchema.parse(restaurantSlug);
+  const claim = restaurantClaimRequestSchema.parse(input);
+  const response = await fetch(`${apiBaseUrl()}/v1/restaurants/${encodeURIComponent(slug)}/claims`, {
+    method: "POST",
+    cache: "no-store",
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(claim),
+    signal: AbortSignal.timeout(5_000),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Fysen API restaurant claim request failed with HTTP ${response.status}`);
+  }
+
+  return restaurantClaimReceiptSchema.parse(await response.json());
 }
