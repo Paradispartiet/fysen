@@ -3,6 +3,7 @@ import { formatDishPrice } from "../lib/dish-price";
 import { restaurantClaimHref } from "../lib/public-path";
 import { DishComposition } from "./dish-composition";
 import { FreshnessStatus } from "./freshness-status";
+import { SaveMinMatButton } from "./save-min-mat-button";
 import styles from "./dish-result.module.css";
 import { TrackedExternalLink } from "./tracked-external-link";
 
@@ -11,7 +12,6 @@ function formatDistance(distanceMeters: number): string {
     const rounded = Math.max(10, Math.round(distanceMeters / 10) * 10);
     return `${new Intl.NumberFormat("nb-NO").format(rounded)} m unna`;
   }
-
   return `${new Intl.NumberFormat("nb-NO", { maximumFractionDigits: 1 }).format(distanceMeters / 1_000)} km unna`;
 }
 
@@ -38,32 +38,18 @@ export function DishResult({ result }: { result: DishSearchResult }) {
           <h2>{result.dish.name}</h2>
           <p className="restaurantName">
             {result.restaurant.websiteUrl ? (
-              <TrackedExternalLink
-                className="restaurantLink"
-                href={result.restaurant.websiteUrl}
-                impressionId={result.impressionId}
-                eventType="restaurant_clicked"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <TrackedExternalLink className="restaurantLink" href={result.restaurant.websiteUrl} impressionId={result.impressionId} eventType="restaurant_clicked" target="_blank" rel="noreferrer">
                 {result.restaurant.name} <span aria-hidden="true">↗</span>
               </TrackedExternalLink>
-            ) : (
-              result.restaurant.name
-            )}
+            ) : result.restaurant.name}
           </p>
-          <a className={claimLinkClassName} href={restaurantClaimHref(result.restaurant.slug)}>
-            Driver du {result.restaurant.name}?
-          </a>
+          <a className={claimLinkClassName} href={restaurantClaimHref(result.restaurant.slug)}>Driver du {result.restaurant.name}?</a>
         </div>
-        <p className={result.dish.priceMinor === null ? "dishPrice isMissing" : "dishPrice"}>
-          {formatDishPrice(result.dish)}
-        </p>
+        <p className={result.dish.priceMinor === null ? "dishPrice isMissing" : "dishPrice"}>{formatDishPrice(result.dish)}</p>
       </div>
 
       {result.dish.description ? <p className="dishDescription">{result.dish.description}</p> : null}
       <DishComposition description={result.dish.description} />
-
       <div className="dishResultFacts">
         <span>{result.restaurant.address}, {result.restaurant.city}</span>
         {result.distanceMeters !== null ? <span>{formatDistance(result.distanceMeters)}</span> : null}
@@ -76,55 +62,12 @@ export function DishResult({ result }: { result: DishSearchResult }) {
           <span className="openingStatus" data-state={result.opening.state}>{openingLabel(result)}</span>
         </div>
         <div className={actionsClassName}>
-          {result.actions.booking ? (
-            <TrackedExternalLink
-              className={primaryActionClassName}
-              href={result.actions.booking.url}
-              impressionId={result.impressionId}
-              eventType="booking_clicked"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Bestill bord
-            </TrackedExternalLink>
-          ) : null}
-          {result.actions.order ? (
-            <TrackedExternalLink
-              className={primaryActionClassName}
-              href={result.actions.order.url}
-              impressionId={result.impressionId}
-              eventType="order_clicked"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Bestill mat
-            </TrackedExternalLink>
-          ) : null}
-          <TrackedExternalLink
-            className="evidenceLink"
-            href={result.menu.sourceUrl}
-            impressionId={result.impressionId}
-            eventType="menu_clicked"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Meny <span aria-hidden="true">↗</span>
-          </TrackedExternalLink>
-          {result.opening.sourceUrl ? (
-            <a className="evidenceLink" href={result.opening.sourceUrl} target="_blank" rel="noreferrer">
-              Åpningstider <span aria-hidden="true">↗</span>
-            </a>
-          ) : null}
-          <TrackedExternalLink
-            className="evidenceLink"
-            href={directionsUrl(result.restaurant.latitude, result.restaurant.longitude)}
-            impressionId={result.impressionId}
-            eventType="directions_clicked"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Gå dit <span aria-hidden="true">↗</span>
-          </TrackedExternalLink>
+          <SaveMinMatButton menuItemId={result.menuItemId} />
+          {result.actions.booking ? <TrackedExternalLink className={primaryActionClassName} href={result.actions.booking.url} impressionId={result.impressionId} eventType="booking_clicked" target="_blank" rel="noreferrer">Bestill bord</TrackedExternalLink> : null}
+          {result.actions.order ? <TrackedExternalLink className={primaryActionClassName} href={result.actions.order.url} impressionId={result.impressionId} eventType="order_clicked" target="_blank" rel="noreferrer">Bestill mat</TrackedExternalLink> : null}
+          <TrackedExternalLink className="evidenceLink" href={result.menu.sourceUrl} impressionId={result.impressionId} eventType="menu_clicked" target="_blank" rel="noreferrer">Meny <span aria-hidden="true">↗</span></TrackedExternalLink>
+          {result.opening.sourceUrl ? <a className="evidenceLink" href={result.opening.sourceUrl} target="_blank" rel="noreferrer">Åpningstider <span aria-hidden="true">↗</span></a> : null}
+          <TrackedExternalLink className="evidenceLink" href={directionsUrl(result.restaurant.latitude, result.restaurant.longitude)} impressionId={result.impressionId} eventType="directions_clicked" target="_blank" rel="noreferrer">Gå dit <span aria-hidden="true">↗</span></TrackedExternalLink>
         </div>
       </div>
     </article>

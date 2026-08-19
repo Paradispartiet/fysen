@@ -16,6 +16,7 @@ import "../styles/discovery-quality-v1.css";
 import "../styles/dish-browse.css";
 import "../styles/restaurant-claim.css";
 import "../styles/fysen-pro.css";
+import "../styles/min-mat.css";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],

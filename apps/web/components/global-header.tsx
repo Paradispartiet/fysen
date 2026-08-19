@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { withPublicBasePath } from "../lib/public-path";
 import { FysenLogo } from "./fysen-logo";
 
 export function GlobalHeader({
@@ -16,6 +17,7 @@ export function GlobalHeader({
         <div className="globalHeaderTopline">
           <FysenLogo />
           <span className="locationText" aria-label={`Valgt by: ${city}`}>{city}</span>
+          <a className="minMatNavLink" href={withPublicBasePath("/min-mat")}>Min mat</a>
         </div>
         {children ? <div className="globalHeaderSearch">{children}</div> : null}
       </div>
