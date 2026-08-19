@@ -2,13 +2,15 @@ name: Fysen production pilot proof
 
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Materialize Fysen production catalog"]
+    types: [completed]
   push:
     branches: [main]
     paths:
       - ".github/workflows/production-pilot-proof.yml"
       - "scripts/production-pilot-proof.mjs"
       - "scripts/revenue-production-proof.mjs"
-      - "apps/menu-worker/catalog/**"
       - "apps/web/app/search/**"
       - "apps/web/app/claim/**"
       - "apps/web/app/pro/**"
@@ -52,6 +54,10 @@ concurrency:
 
 jobs:
   proof:
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-latest
     timeout-minutes: 12
     env:
@@ -71,10 +77,10 @@ jobs:
             exit 1
           fi
 
-      - name: Checkout main
+      - name: Checkout verified revision
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
           persist-credentials: false
 
       - name: pnpm
