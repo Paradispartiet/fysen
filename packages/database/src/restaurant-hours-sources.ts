@@ -7,6 +7,7 @@ export interface UpsertRestaurantHoursSourceInput {
   readonly timeZone: string;
   readonly checkIntervalMinutes: number;
   readonly minimumExpectedIntervals: number;
+  readonly scopeHints?: readonly string[];
 }
 
 interface RestaurantHoursSourceRow extends QueryResultRow {
@@ -20,6 +21,7 @@ interface RestaurantHoursSourceRow extends QueryResultRow {
   extractor: "visible_text_v1";
   check_interval_minutes: number;
   minimum_expected_intervals: number;
+  scope_hints: string[];
   etag: string | null;
   last_modified: string | null;
   last_schedule_fingerprint: string | null;
@@ -37,6 +39,7 @@ function mapRestaurantHoursSource(row: RestaurantHoursSourceRow): RestaurantHour
     extractor: row.extractor,
     checkIntervalMinutes: Number(row.check_interval_minutes),
     minimumExpectedIntervals: Number(row.minimum_expected_intervals),
+    scopeHints: row.scope_hints,
     etag: row.etag,
     lastModified: row.last_modified,
     lastScheduleFingerprint: row.last_schedule_fingerprint,
@@ -58,6 +61,7 @@ export async function getRestaurantHoursSourceById(
             s.extractor,
             s.check_interval_minutes,
             s.minimum_expected_intervals,
+            s.scope_hints,
             s.etag,
             s.last_modified,
             s.last_schedule_fingerprint
@@ -76,6 +80,11 @@ export async function upsertRestaurantHoursSource(
   pool: Pool,
   input: UpsertRestaurantHoursSourceInput,
 ): Promise<string> {
+  const scopeHints = [...new Set((input.scopeHints ?? []).map((hint) => hint.trim()).filter(Boolean))];
+  if (scopeHints.length > 8 || scopeHints.some((hint) => hint.length > 80)) {
+    throw new Error("Restaurant hours scope hints must contain at most 8 non-empty values of at most 80 characters");
+  }
+
   const result = await pool.query<{ id: string }>(
     `INSERT INTO fysen.restaurant_hours_sources (
        restaurant_id,
@@ -85,20 +94,23 @@ export async function upsertRestaurantHoursSource(
        extractor,
        check_interval_minutes,
        minimum_expected_intervals,
+       scope_hints,
        next_check_at,
        enabled
-     ) VALUES ($1, 'kitchen', $2, $3, 'visible_text_v1', $4, $5, now(), true)
+     ) VALUES ($1, 'kitchen', $2, $3, 'visible_text_v1', $4, $5, $6::text[], now(), true)
      ON CONFLICT (restaurant_id, service_type) DO UPDATE SET
        url = EXCLUDED.url,
        time_zone = EXCLUDED.time_zone,
        extractor = EXCLUDED.extractor,
        check_interval_minutes = EXCLUDED.check_interval_minutes,
        minimum_expected_intervals = EXCLUDED.minimum_expected_intervals,
+       scope_hints = EXCLUDED.scope_hints,
        next_check_at = CASE
          WHEN fysen.restaurant_hours_sources.last_checked_at IS NULL
            OR fysen.restaurant_hours_sources.url IS DISTINCT FROM EXCLUDED.url
            OR fysen.restaurant_hours_sources.time_zone IS DISTINCT FROM EXCLUDED.time_zone
            OR fysen.restaurant_hours_sources.minimum_expected_intervals IS DISTINCT FROM EXCLUDED.minimum_expected_intervals
+           OR fysen.restaurant_hours_sources.scope_hints IS DISTINCT FROM EXCLUDED.scope_hints
          THEN now()
          ELSE fysen.restaurant_hours_sources.next_check_at
        END,
@@ -111,6 +123,7 @@ export async function upsertRestaurantHoursSource(
       input.timeZone,
       input.checkIntervalMinutes,
       input.minimumExpectedIntervals,
+      scopeHints,
     ],
   );
   const id = result.rows[0]?.id;
