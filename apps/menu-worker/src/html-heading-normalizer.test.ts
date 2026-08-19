@@ -30,7 +30,7 @@ describe("HTML heading line-break normalizer", () => {
     const extracted = extractScopedHtmlMenu(normalized);
     const recovered = recoverDescriptionNamedHtmlItems(extracted.items, extracted.visibleText);
 
-    expect(HTML_HEADING_NORMALIZER_VERSION).toBe("heading-v1");
+    expect(HTML_HEADING_NORMALIZER_VERSION).toBe("heading-v2");
     expect(recovered.map((item) => [item.name, item.priceMinor])).toContainEqual([
       "Kofta (arabisk gryterett med kjøttboller)",
       31000,
@@ -43,8 +43,39 @@ describe("HTML heading line-break normalizer", () => {
     );
     const $ = load(normalized);
 
-    expect($("h4").text().replace(/\\s+/g, " ").trim()).toBe("Dish Name");
+    expect($("h4").text().replace(/\s+/g, " ").trim()).toBe("Dish Name");
     expect($("h4 br")).toHaveLength(0);
     expect($("p br")).toHaveLength(1);
+  });
+
+  it("normalizes a NOK-prefixed price so the existing conservative price recovery can link it to the dish", () => {
+    const normalized = normalizeHtmlHeadingLineBreaks(`
+      <html><body>
+        <section>
+          <h3>Doro Wet</h3>
+          <div><span>NOK</span><strong>290</strong></div>
+        </section>
+      </body></html>
+    `);
+
+    const extracted = extractScopedHtmlMenu(normalized);
+    expect(extracted.items.map((item) => [item.name, item.priceMinor])).toContainEqual([
+      "Doro Wet",
+      29000,
+    ]);
+    expect(extracted.items.some((item) => item.name === "NOK")).toBe(false);
+  });
+
+  it("does not rewrite unrelated NOK text or contact metadata", () => {
+    const normalized = normalizeHtmlHeadingLineBreaks(`
+      <html><body>
+        <p>NOK tasting menu available on request</p>
+        <footer><p>Phone: 457 66 <span>490</span></p></footer>
+      </body></html>
+    `);
+    const $ = load(normalized);
+
+    expect($("body").text()).toContain("NOK tasting menu available on request");
+    expect($("body").text()).toContain("Phone: 457 66 490");
   });
 });
