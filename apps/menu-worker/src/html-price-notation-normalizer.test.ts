@@ -48,7 +48,7 @@ describe("HTML menu runtime normalization", () => {
   });
 
   it("strips short uppercase allergen-code lists while preserving semantic parentheses", () => {
-    expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v4");
+    expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v5");
     const allergenItem = normalizeHtmlItemName({
       sourceKey: "old",
       name: "Rasmalai (G, M, E, N)",
@@ -142,7 +142,7 @@ describe("HTML menu runtime normalization", () => {
     expect(item.sourceKey).toBe("stable");
   });
 
-  it("rejects numeric-only and obvious retail/UI HTML items", () => {
+  it("rejects numeric-only, retail/UI and explicit beverage items", () => {
     const item = (name: string): Parameters<typeof isCanonicalHtmlMenuItem>[0] => ({
       sourceKey: name,
       name,
@@ -152,8 +152,8 @@ describe("HTML menu runtime normalization", () => {
       priceMinor: 39900,
       currency: "NOK",
       position: 99,
-      extractionMethod: "html_heuristic",
-      confidence: 0.5,
+      extractionMethod: "json_ld",
+      confidence: 0.99,
       sourceExcerpt: name,
     });
 
@@ -163,9 +163,24 @@ describe("HTML menu runtime normalization", () => {
       "Håndlagde produkter fra vårt kjøkken og familiens utvalg",
       "Legg i handlekurv",
       "I'd Rather Eat Pasta & Drink Wine Tee",
+      "Cola Zero",
+      "Mango Lassi",
+      "Coca-Cola",
+      "Mango Juice",
+      "Farris Blå",
+      "Hard seltz Rabarbra",
+      "Hansa pilsner 0,5 l",
+      "Birra Moretti flaske 0,33",
+      "Kingfisher øl flaske 0,33",
+      "Grevens pærecider flaske 0,33",
+      "Rødvin glass",
+      "Hvitvin flaske",
     ]) {
       expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
     }
-    expect(isCanonicalHtmlMenuItem(item("Spaghetti Carbonara"))).toBe(true);
+
+    for (const name of ["Spaghetti Carbonara", "Fish N Chips", "Beer-battered fish", "Kheer"]) {
+      expect(isCanonicalHtmlMenuItem(item(name))).toBe(true);
+    }
   });
 });
