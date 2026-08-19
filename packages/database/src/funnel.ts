@@ -96,8 +96,8 @@ export async function recordSearchFunnel(
     await client.query("BEGIN");
     const searchResult = await client.query<IdRow>(
       `
-        INSERT INTO fysen.search_events (normalized_query, city, result_count)
-        VALUES ($1, $2, $3)
+        INSERT INTO fysen.search_events (normalized_query, city, result_count, demand_source)
+        VALUES ($1, $2, $3, 'explicit_search')
         RETURNING id
       `,
       [input.normalizedQuery, input.city, input.impressions.length],

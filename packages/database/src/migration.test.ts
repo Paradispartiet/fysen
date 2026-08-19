@@ -18,6 +18,7 @@ describe("database migrations", () => {
       "0011_restaurant_hours_scope_hints.sql",
       "0012_restaurant_hours_verification.sql",
       "0013_menu_source_support_origins.sql",
+      "0014_search_demand_source.sql",
     ]);
 
     const schemaSql = await readFile(new URL("../migrations/0001_menu_index.sql", import.meta.url), "utf8");
@@ -103,5 +104,12 @@ describe("database migrations", () => {
     expect(supportOriginsSql).toContain("allow_browser_data boolean NOT NULL DEFAULT false");
     expect(supportOriginsSql).toContain("menu_source_support_origin_https");
     expect(supportOriginsSql).toContain("ON DELETE CASCADE");
+
+    const demandSourceSql = await readFile(new URL("../migrations/0014_search_demand_source.sql", import.meta.url), "utf8");
+    expect(demandSourceSql).toContain("demand_source text");
+    expect(demandSourceSql).toContain("SET demand_source = 'legacy_unclassified'");
+    expect(demandSourceSql).toContain("SET DEFAULT 'legacy_unclassified'");
+    expect(demandSourceSql).toContain("search_events_demand_source_check");
+    expect(demandSourceSql).toContain("search_events_demand_source_occurred_idx");
   });
 });
