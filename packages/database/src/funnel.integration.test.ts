@@ -126,6 +126,15 @@ integrationDescribe("revenue funnel integration", () => {
     expect(impression.rows[0]).toEqual({ match_type: "canonical", match_score: 0.98 });
   });
 
+  it("fails closed when a caller does not provide demand provenance", async () => {
+    const inserted = await pool.query<{ demand_source: string }>(
+      `INSERT INTO fysen.search_events (normalized_query, city, result_count)
+       VALUES ('unknown caller query', 'Oslo', 0)
+       RETURNING demand_source`,
+    );
+    expect(inserted.rows[0]?.demand_source).toBe("legacy_unclassified");
+  });
+
   it("deduplicates retried conversion events by client event id", async () => {
     const recorded = await recordSearchFunnel(pool, {
       normalizedQuery: "tartar",
