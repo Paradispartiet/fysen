@@ -32,7 +32,7 @@ describe("HTML runtime extractor version", () => {
     ].join("+");
 
     expect(HTML_NON_DISH_FILTER_VERSION).toBe("non-dish-v4");
-    expect(HTML_BEVERAGE_FILTER_VERSION).toBe("beverage-v4");
+    expect(HTML_BEVERAGE_FILTER_VERSION).toBe("beverage-v5");
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe("trailing-price-card-v2");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
