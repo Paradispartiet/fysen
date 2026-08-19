@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "nepal-house-toftes-gate-oslo",
+    "name": "Nepal House",
+    "websiteUrl": "https://nepalhouse.no/",
+    "address": "Toftes gate 19B, 0556 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9294748,
+    "longitude": 10.7606623
+  },
+  "menuSource": {
+    "url": "https://nepalhouse.no/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 8
+  },
+  "hoursSource": {
+    "url": "https://nepalhouse.no/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7,
+    "scopeHints": [
+      "Opening Hours",
+      "Toftes Gate 19B",
+      "Nepal House"
+    ]
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "Nepal House publishes complete venue opening hours on its first-party homepage, but does not separately label a kitchen schedule. Keep open/closed unknown until kitchen-scoped hours are explicitly verified."
+    }
+  },
+  "actions": [
+    {
+      "type": "order",
+      "url": "https://nepalhouse.aorder.no/",
+      "sourceUrl": "https://nepalhouse.no/",
+      "provider": "Aorder"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chicken Samosa 2pcs.",
+      "Dahi Puri",
+      "Vegetable Samosa Chaat",
+      "Green MO:MO (Dumplings 4pcs.)",
+      "Bhatmas Shadeko",
+      "Badam Sadeko",
+      "Chatpate",
+      "Vegetable Samosa",
+      "Pani puri"
+    ],
+    "requiredDishVariants": [
+      { "name": "Chicken Samosa 2pcs.", "priceMinor": 9900 },
+      { "name": "Dahi Puri", "priceMinor": 10900 },
+      { "name": "Vegetable Samosa Chaat", "priceMinor": 12900 },
+      { "name": "Green MO:MO (Dumplings 4pcs.)", "priceMinor": 9900 },
+      { "name": "Bhatmas Shadeko", "priceMinor": 8900 },
+      { "name": "Badam Sadeko", "priceMinor": 9900 },
+      { "name": "Chatpate", "priceMinor": 8900 },
+      { "name": "Vegetable Samosa", "priceMinor": 9900 },
+      { "name": "Pani puri", "priceMinor": 9900 }
+    ],
+    "forbiddenDishNames": [
+      "Appetizer",
+      "Nepali Street Food",
+      "Nepali Curry",
+      "Grill Meat and Biryani",
+      "Indian Curry",
+      "Takeaway Menu",
+      "Opening Hours",
+      "Order Online"
+    ]
+  }
+}
