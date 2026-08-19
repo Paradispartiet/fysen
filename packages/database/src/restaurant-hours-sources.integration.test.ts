@@ -65,4 +65,41 @@ integrationDescribe("restaurant hours source upsert", () => {
       scopeHints: ["Pizzeria"],
     });
   });
+
+  it("persists explicit provisional verification metadata without disabling monitoring", async () => {
+    const sourceId = await upsertRestaurantHoursSource(pool, {
+      restaurantId,
+      url: "https://example.com/hours",
+      timeZone: "Europe/Oslo",
+      checkIntervalMinutes: 360,
+      minimumExpectedIntervals: 7,
+      verificationStatus: "provisional",
+      verificationNote: "First-party page exposes conflicting opening-hours sections.",
+      verificationCheckedAt: "2026-08-19",
+    });
+
+    const result = await pool.query<{
+      verification_status: string;
+      verification_note: string | null;
+      verification_checked_at: string;
+      enabled: boolean;
+    }>(
+      `SELECT verification_status,
+              verification_note,
+              verification_checked_at::text,
+              enabled
+         FROM fysen.restaurant_hours_sources
+        WHERE id = $1`,
+      [sourceId],
+    );
+    expect(result.rows[0]).toEqual({
+      verification_status: "provisional",
+      verification_note: "First-party page exposes conflicting opening-hours sections.",
+      verification_checked_at: "2026-08-19",
+      enabled: true,
+    });
+
+    const due = await listDueRestaurantHoursSources(pool, 25);
+    expect(due.some((target) => target.id === sourceId)).toBe(true);
+  });
 });
