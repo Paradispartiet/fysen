@@ -7,7 +7,11 @@ export async function DELETE(): Promise<NextResponse> {
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get(FYSEN_AHA_SESSION_COOKIE)?.value;
   if (sessionToken) {
-    try { await revokeAhaConsumer(sessionToken); } catch {}
+    try {
+      await revokeAhaConsumer(sessionToken);
+    } catch {
+      // Local HttpOnly session clearing stays fail-closed if remote revocation is unavailable.
+    }
   }
   const response = NextResponse.json({ accepted: true });
   response.cookies.set(FYSEN_AHA_SESSION_COOKIE, "", {
