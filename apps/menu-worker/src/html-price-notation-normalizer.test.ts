@@ -48,7 +48,7 @@ describe("HTML menu runtime normalization", () => {
   });
 
   it("strips short uppercase allergen-code lists while preserving semantic parentheses", () => {
-    expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v6");
+    expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v7");
     const allergenItem = normalizeHtmlItemName({
       sourceKey: "old",
       name: "Rasmalai (G, M, E, N)",
