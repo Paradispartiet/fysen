@@ -8,6 +8,6 @@ describe("opening-hours runtime extractor version", () => {
     expect(OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION).toBe(
       `${OPENING_HOURS_SOURCE_EXTRACTOR_VERSION}+${OPENING_HOURS_DUPLICATE_SECTION_RECOVERY_VERSION}`,
     );
-    expect(OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION).toBe("hours-visible-v13+scope-duplicates-v1");
+    expect(OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION).toBe("hours-visible-v14+scope-duplicates-v1");
   });
 });
