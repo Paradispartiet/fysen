@@ -1,9 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  HttpMenuClient,
-  type MenuHttpFetchResult,
-  type MenuHttpSourceState,
-} from "./http-client.js";
+import { HttpMenuClient, type MenuHttpFetchResult } from "./http-client.js";
 import { resolveOpeningHoursSource } from "./opening-hours-source-runtime.js";
 
 const multiScopeHoursHtml = `
@@ -20,7 +16,7 @@ class StaticHoursClient extends HttpMenuClient {
     super();
   }
 
-  override async fetchSource(_source: MenuHttpSourceState): Promise<MenuHttpFetchResult> {
+  override async fetchSource(): Promise<MenuHttpFetchResult> {
     return {
       kind: "content",
       fetchedAt: "2026-08-19T00:00:00.000Z",
