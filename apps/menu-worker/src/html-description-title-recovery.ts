@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v10";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v9";
 
 const PRICE_LINE = /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
 const DESCRIPTION_LEAD = /^(?:serveres?|servert|served|with|kan\s+fås|can\s+be|blandet|mixed|godt\s+krydret|well\s+seasoned|marinert|marinated|grillet|grilled|bakt|baked|braisert|braised|tilberedt|prepared|toppet|topped|inneholder|contains?|inkludert|including|ekstra|extra|pr\.?\s*person|per\s+person)\b/iu;
@@ -143,13 +143,6 @@ function looksLikeDescription(value: string): boolean {
     /[.!]$/u.test(line) ||
     longQuestion
   );
-}
-
-function looksLikeDescriptionNamedItem(item: MenuObservedItem): boolean {
-  if (looksLikeDescription(item.name)) return true;
-  const description = normalizeVisibleLine(item.description ?? "");
-  if (!description) return false;
-  return looksLikeDescription(`${item.name}, ${description}`);
 }
 
 function looksLikeRecoveredTitle(value: string): boolean {
@@ -337,26 +330,6 @@ function recoverTitle(
   return null;
 }
 
-function recoverTitleAcrossImmediatePrice(
-  lines: readonly string[],
-  item: MenuObservedItem,
-): DescriptionTitleRecovery | null {
-  const position = item.position;
-  if (!Number.isInteger(position) || position < 2 || position >= lines.length) return null;
-  if (!looksLikeDescriptionNamedItem(item)) return null;
-
-  const currentLine = normalizeVisibleLine(lines[position] ?? "");
-  if (!currentLine || currentLine === normalizeVisibleLine(item.name) || !looksLikeDescription(currentLine)) {
-    return null;
-  }
-
-  const price = normalizeVisibleLine(lines[position - 1] ?? "");
-  const candidate = normalizeVisibleLine(lines[position - 2] ?? "");
-  if (!PRICE_LINE.test(price) || !looksLikeRecoveredTitle(candidate)) return null;
-
-  return { title: candidate, observedNameIsTitleContinuation: false };
-}
-
 function recoverParentheticalQualifiedTitle(
   lines: readonly string[],
   item: MenuObservedItem,
@@ -433,19 +406,11 @@ export function recoverDescriptionNamedHtmlItems(
   for (const item of items) {
     const position = item.position;
     const sectionLabelTitle = recoverSectionLabelTitleFromSourceExcerpt(item);
-    const immediatePriceRecovery = !sectionLabelTitle
-      ? recoverTitleAcrossImmediatePrice(lines, item)
-      : null;
     const descriptionRecovery =
-      !sectionLabelTitle &&
-      !immediatePriceRecovery &&
-      looksLikeDescriptionNamedItem(item) &&
-      Number.isInteger(position) &&
-      position >= 1
+      !sectionLabelTitle && looksLikeDescription(item.name) && Number.isInteger(position) && position >= 1
         ? recoverTitle(lines, position, item.name)
         : null;
-    const effectiveDescriptionRecovery = immediatePriceRecovery ?? descriptionRecovery;
-    const descriptionTitle = effectiveDescriptionRecovery?.title ?? null;
+    const descriptionTitle = descriptionRecovery?.title ?? null;
     const qualifiedTitle = sectionLabelTitle || descriptionTitle ? null : recoverParentheticalQualifiedTitle(lines, item);
     const title = sectionLabelTitle ?? descriptionTitle ?? qualifiedTitle;
 
@@ -459,16 +424,16 @@ export function recoverDescriptionNamedHtmlItems(
             normalizedName: normalizeDishName(title),
             description: sectionLabelTitle
               ? recoveredSectionLabelDescription(item, sectionLabelTitle)
-              : effectiveDescriptionRecovery
-                ? recoveredDescription(item, !effectiveDescriptionRecovery.observedNameIsTitleContinuation)
+              : descriptionRecovery
+                ? recoveredDescription(item, !descriptionRecovery.observedNameIsTitleContinuation)
                 : item.description,
             confidence: sectionLabelTitle
               ? Math.min(item.confidence, 0.82)
-              : effectiveDescriptionRecovery
+              : descriptionRecovery
                 ? Math.min(item.confidence, 0.84)
                 : item.confidence,
             sourceExcerpt:
-              sectionLabelTitle || effectiveDescriptionRecovery
+              sectionLabelTitle || descriptionRecovery
                 ? `${title} — ${item.sourceExcerpt ?? item.name}`.slice(0, 1000)
                 : item.sourceExcerpt,
           };
