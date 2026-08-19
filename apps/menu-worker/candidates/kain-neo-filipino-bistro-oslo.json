@@ -45,24 +45,24 @@
       "Siomai",
       "Sisig",
       "Pork Adobo",
-      "Beef kulma",
+      "Lamb kulma",
       "Chicken Inasal",
       "Pinakbet",
       "Vegan Kare-kare",
       "Calamansi",
-      "Yema and Strawberry"
+      "Buko pandan"
     ],
     "requiredDishVariants": [
       { "name": "Sinuglaw", "priceMinor": 19900 },
       { "name": "Siomai", "priceMinor": 18900 },
       { "name": "Sisig", "priceMinor": 19900 },
       { "name": "Pork Adobo", "priceMinor": 29900 },
-      { "name": "Beef kulma", "priceMinor": 30900 },
+      { "name": "Lamb kulma", "priceMinor": 30900 },
       { "name": "Chicken Inasal", "priceMinor": 29900 },
       { "name": "Pinakbet", "priceMinor": 29900 },
       { "name": "Vegan Kare-kare", "priceMinor": 27900 },
       { "name": "Calamansi", "priceMinor": 16900 },
-      { "name": "Yema and Strawberry", "priceMinor": 16900 }
+      { "name": "Buko pandan", "priceMinor": 16900 }
     ],
     "forbiddenDishNames": [
       "5 COURSE MENU",
