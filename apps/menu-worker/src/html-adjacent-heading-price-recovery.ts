@@ -11,6 +11,7 @@ export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v2";
 const HEADING_MARKER = "__FYSEN_ADJACENT_HEADING_LEVEL_";
 const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{1,3})(?:[.,](\d{1,2}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
 const SECTION_OR_UI_LABEL = /^(?:our\s+menu|menu|meny|single\s+meat|single\s+(?:vegetar|vegetarian)(?:\s*&\s*vegan)?|pdf\s+version|drinks?|drikke(?:meny)?|popular\s+dish|opening(?:\s+hours)?|åpningstider|contact|kontakt|address|adresse|booking|reservation(?:s)?|reservasjoner?|allergens?|allergener?)$/iu;
+const BOTTLED_WATER_TITLE = /\b(?:still|sparkling)\s+(?:water|naturell)\b/iu;
 
 interface ParsedPrice {
   readonly priceMinor: number;
@@ -37,7 +38,7 @@ function parsePrice(value: string): ParsedPrice | null {
 function looksLikeDishTitle(value: string): boolean {
   const title = normalizeVisibleLine(value);
   if (!title || title.length < 2 || title.length > 180 || !/\p{L}/u.test(title)) return false;
-  if (SECTION_OR_UI_LABEL.test(title) || PRICE_LINE.test(title)) return false;
+  if (SECTION_OR_UI_LABEL.test(title) || PRICE_LINE.test(title) || BOTTLED_WATER_TITLE.test(title)) return false;
   if (/^(?:©|™|https?:\/\/|www\.|phone\s*:|telefon\s*:)/iu.test(title)) return false;
   if (/[.!?]$/u.test(title)) return false;
   return title.split(/\s+/).filter(Boolean).length <= 12;
