@@ -53,18 +53,6 @@ function normalizeWeekdayAliases(value: string): string {
     .replace(/\bsun\b\.?/giu, "Sunday");
 }
 
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-function syntheticHtml(lines: readonly string[]): string {
-  return `<html><body>${lines.map((line) => `<p>${escapeHtml(line)}</p>`).join("")}</body></html>`;
-}
-
 function normalizeClock(value: string): string {
   const normalized = value.replace(".", ":");
   const [rawHour, rawMinute = "00"] = normalized.split(":");
