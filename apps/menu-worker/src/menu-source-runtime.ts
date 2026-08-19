@@ -31,8 +31,11 @@ const TRAILING_INLINE_PRICE = /\s+[-–—]\s*(?:(?:kr\.?\s*)[1-9]\d{1,3}(?:[.,]
 const TRAILING_PARENTHETICAL = /\s+\([^()]{1,60}\)$/u;
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]?\s+/u;
+const NON_DISH_HTML_ITEM = /^(?:legg i handlekurv|add to cart|håndlagde produkter\b|handmade products\b)/iu;
+const RETAIL_APPAREL_ITEM = /\b(?:tee|t-?shirt|hoodie|sweatshirt|caps?)$/iu;
+const HISTORICAL_SINCE_ITEM = /·\s*siden$/iu;
 export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v1";
-export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v3";
+export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v4";
 const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
@@ -102,7 +105,13 @@ export function normalizeHtmlItemName(item: MenuObservedItem): MenuObservedItem 
 }
 
 export function isCanonicalHtmlMenuItem(item: MenuObservedItem): boolean {
-  return /\p{L}/u.test(item.name);
+  const name = item.name.trim();
+  return (
+    /\p{L}/u.test(name) &&
+    !NON_DISH_HTML_ITEM.test(name) &&
+    !RETAIL_APPAREL_ITEM.test(name) &&
+    !HISTORICAL_SINCE_ITEM.test(name)
+  );
 }
 
 export function pdfResponseByteLimit(): number {
