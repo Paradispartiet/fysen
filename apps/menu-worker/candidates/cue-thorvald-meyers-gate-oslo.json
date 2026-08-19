@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "cue-thorvald-meyers-gate-oslo",
+    "name": "Cue Oslo",
+    "websiteUrl": "https://www.cueoslo.no/",
+    "address": "Thorvald Meyers gate 11, 0555 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92894,
+    "longitude": 10.75717
+  },
+  "menuSource": {
+    "url": "https://www.cueoslo.no/meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 6
+  },
+  "hoursSource": {
+    "url": "https://www.cueoslo.no/meny",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7,
+    "scopeHints": ["Pizzeria"]
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://www.cueoslo.no/hjem",
+      "sourceUrl": "https://www.cueoslo.no/",
+      "provider": "Cue Oslo"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Diavola",
+      "Wanna Beef?",
+      "Don't chicken out",
+      "Uno Prosciutto, Por Favor",
+      "Margherita 0.0%",
+      "1,2,3,4! Formaggio"
+    ],
+    "requiredDishVariants": [
+      { "name": "Diavola", "priceMinor": 25900 },
+      { "name": "Wanna Beef?", "priceMinor": 26900 },
+      { "name": "Don't chicken out", "priceMinor": 24900 },
+      { "name": "Uno Prosciutto, Por Favor", "priceMinor": 24900 },
+      { "name": "Margherita 0.0%", "priceMinor": 18900 },
+      { "name": "1,2,3,4! Formaggio", "priceMinor": 23900 }
+    ],
+    "forbiddenDishNames": [
+      "Cocktails",
+      "Middagsmeny",
+      "Pizza",
+      "SE MENY",
+      "There are no items to show here yet",
+      "KONTAKT",
+      "ÅPNINGSTIDER CUE",
+      "ÅPNINGSTIDER PIZZERIA"
+    ]
+  }
+}
