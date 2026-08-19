@@ -5,6 +5,7 @@ export * from "./demand-loop.js";
 export * from "./demand-loop-markdown.js";
 export * from "./due-sources.js";
 export * from "./funnel.js";
+export * from "./fysen-pro.js";
 export * from "./menu-source-state.js";
 export * from "./menu-source-support.js";
 export * from "./migrate.js";
