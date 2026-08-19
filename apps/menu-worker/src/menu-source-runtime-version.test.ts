@@ -3,6 +3,7 @@ import { HTML_DESCRIPTION_TITLE_RECOVERY_VERSION } from "./html-description-titl
 import { HTML_EXTRACTOR_VERSION } from "./html-extractor.js";
 import { HTML_HEADING_NORMALIZER_VERSION } from "./html-heading-normalizer.js";
 import { HTML_PRICE_WRAPPED_RECOVERY_VERSION } from "./html-price-wrapped-recovery.js";
+import { HTML_TITLE_PRICE_RECOVERY_VERSION } from "./html-title-price-recovery.js";
 import { HTML_SOURCE_EXTRACTOR_VERSION } from "./html-source-extractor.js";
 import {
   HTML_ITEM_NAME_NORMALIZER_VERSION,
@@ -21,6 +22,7 @@ describe("HTML runtime extractor version", () => {
       HTML_PRICE_NOTATION_NORMALIZER_VERSION,
       HTML_ITEM_NAME_NORMALIZER_VERSION,
       HTML_PRICE_WRAPPED_RECOVERY_VERSION,
+      HTML_TITLE_PRICE_RECOVERY_VERSION,
     ].join("+");
 
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
