@@ -20,7 +20,8 @@
     "sourceSupport": {
       "browserDataOrigins": [
         "https://siteassets.parastorage.com",
-        "https://static.parastorage.com"
+        "https://static.parastorage.com",
+        "https://panorama.wixapps.net"
       ]
     }
   },
