@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "korndokki-mathallen-oslo",
+    "name": "KornDoKKi",
+    "websiteUrl": "https://mathallenoslo.no/butikk/korndokki/",
+    "address": "Vulkan 5, 0178 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9222727,
+    "longitude": 10.7519078
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/korndokki-mathallen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 10
+  },
+  "hoursSource": {
+    "url": "https://mathallenoslo.no/butikk/korndokki/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 6
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "Mathallen publishes KornDoKKi's stall opening hours directly (Tue-Sat 10-20, Sun 11-18), but does not label them separately as kitchen hours. Keep open/closed unknown until the schedule is explicitly kitchen-scoped."
+    }
+  },
+  "actions": [
+    {
+      "type": "order",
+      "url": "https://wolt.com/nb/nor/oslo/restaurant/korndokki-mathallen",
+      "sourceUrl": "https://mathallenoslo.no/butikk/korndokki/",
+      "provider": "Wolt"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Sausage Corndog",
+      "Half & Half Corndog",
+      "Mozzarella Corndog",
+      "Octopus Ink Corndog",
+      "Bibimbap",
+      "Vegan Bibimbap",
+      "Beef Bulgogi Bowl",
+      "Spicy Pork Bulgogi Bowl",
+      "Tteokbokki",
+      "KornDoKKi Combo (Half & half corndog + 1/2 Tteokbokki)",
+      "Deep-Fried Mandu"
+    ],
+    "requiredDishVariants": [
+      { "name": "Sausage Corndog", "priceMinor": 9900 },
+      { "name": "Half & Half Corndog", "priceMinor": 10900 },
+      { "name": "Mozzarella Corndog", "priceMinor": 11500 },
+      { "name": "Octopus Ink Corndog", "priceMinor": 11900 },
+      { "name": "Bibimbap", "priceMinor": 22900 },
+      { "name": "Vegan Bibimbap", "priceMinor": 22900 },
+      { "name": "Beef Bulgogi Bowl", "priceMinor": 24900 },
+      { "name": "Spicy Pork Bulgogi Bowl", "priceMinor": 23900 },
+      { "name": "Tteokbokki", "priceMinor": 18900 },
+      { "name": "KornDoKKi Combo (Half & half corndog + 1/2 Tteokbokki)", "priceMinor": 19900 },
+      { "name": "Deep-Fried Mandu", "priceMinor": 7900 }
+    ],
+    "forbiddenDishNames": [
+      "Coca-Cola Original Taste",
+      "Coca-Cola uten sukker",
+      "Fanta Appelsin",
+      "Fanta Exotic",
+      "Sprite",
+      "Telemark Still Naturell",
+      "Telemark Sparkling Naturell",
+      "Monster Ultra White 500ml bx",
+      "LOTTE Milkis Soft Drink 250ml"
+    ]
+  }
+}
