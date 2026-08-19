@@ -30,6 +30,21 @@ describe("generic HTML item-name normalization", () => {
     expect(normalized.sourceKey).toBe(createMenuItemSourceKey(expected));
   });
 
+  it("strips a menu index only when it precedes a numeric dish quantity", () => {
+    const normalized = normalizeHtmlItemName(item("3. 5 Hot Wings"));
+    expect(normalized.name).toBe("5 Hot Wings");
+    expect(normalized.normalizedName).toBe(normalizeDishName("5 Hot Wings"));
+    expect(normalized.sourceKey).toBe(createMenuItemSourceKey("5 Hot Wings"));
+  });
+
+  it.each([
+    "43. Crispy Scampi 12 biter",
+    "15. HOT WINGS MEAL",
+    "12 Inch Pizza",
+  ])("preserves a leading number when it is part of the canonical dish label: %s", (input) => {
+    expect(normalizeHtmlItemName(item(input)).name).toBe(input);
+  });
+
   it("does not strip pipes that are part of the dish text", () => {
     const input = "Surf | Turf";
     expect(normalizeHtmlItemName(item(input)).name).toBe(input);
