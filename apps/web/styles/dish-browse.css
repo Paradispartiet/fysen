@@ -1,0 +1,114 @@
+.homeDishBrowseLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 13px 2px 0;
+  color: var(--color-brand);
+  font-size: 13px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.homeDishBrowseLink:hover {
+  color: var(--color-brand-hover);
+}
+
+.homeDishBrowseLink:focus-visible,
+.dishBrowseItem:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+.dishBrowse {
+  padding-bottom: 32px;
+}
+
+.dishBrowseHeader {
+  margin-bottom: 30px;
+}
+
+.dishBrowseHeader h1 {
+  margin: 0;
+  font-size: clamp(44px, 5vw, 66px);
+  font-weight: 780;
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+}
+
+.dishBrowseHeader > p:last-child {
+  max-width: 680px;
+  margin: 17px 0 0;
+  color: var(--color-muted);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.dishBrowseStatus,
+.dishBrowseCount {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.dishBrowseCount {
+  margin-bottom: 12px;
+  font-weight: 650;
+}
+
+.dishBrowseList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 34px;
+  border-top: 1px solid var(--color-line);
+}
+
+.dishBrowseItem {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 15px 2px 16px;
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.dishBrowseItem:hover strong {
+  color: var(--color-brand-hover);
+}
+
+.dishBrowseItem strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.dishBrowseItem span {
+  flex: 0 0 auto;
+  color: var(--color-muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .dishBrowseHeader h1 {
+    font-size: clamp(38px, 11vw, 50px);
+  }
+
+  .dishBrowseHeader > p:last-child {
+    font-size: 15px;
+  }
+
+  .dishBrowseList {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+
+  .dishBrowseItem {
+    gap: 12px;
+  }
+}
