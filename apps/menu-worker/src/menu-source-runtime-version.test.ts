@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION } from "./html-adjacent-heading-price-recovery.js";
 import { HTML_DESCRIPTION_TITLE_RECOVERY_VERSION } from "./html-description-title-recovery.js";
 import { HTML_EXTRACTOR_VERSION } from "./html-extractor.js";
 import { HTML_HEADING_NORMALIZER_VERSION } from "./html-heading-normalizer.js";
@@ -21,6 +22,7 @@ describe("HTML runtime extractor version", () => {
       HTML_PRICE_NOTATION_NORMALIZER_VERSION,
       HTML_ITEM_NAME_NORMALIZER_VERSION,
       HTML_PRICE_WRAPPED_RECOVERY_VERSION,
+      HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION,
     ].join("+");
 
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
