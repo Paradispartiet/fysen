@@ -1,0 +1,13 @@
+import { describe, expect, it } from "vitest";
+import { OPENING_HOURS_DUPLICATE_SECTION_RECOVERY_VERSION } from "./opening-hours-duplicate-section-recovery.js";
+import { OPENING_HOURS_SOURCE_EXTRACTOR_VERSION } from "./opening-hours-source-extractor.js";
+import { OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION } from "./opening-hours-source-runtime.js";
+
+describe("opening-hours runtime extractor version", () => {
+  it("includes canonical source extraction and scoped duplicate recovery", () => {
+    expect(OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION).toBe(
+      `${OPENING_HOURS_SOURCE_EXTRACTOR_VERSION}+${OPENING_HOURS_DUPLICATE_SECTION_RECOVERY_VERSION}`,
+    );
+    expect(OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION).toBe("hours-visible-v13+scope-duplicates-v1");
+  });
+});

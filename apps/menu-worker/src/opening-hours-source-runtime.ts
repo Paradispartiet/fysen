@@ -1,10 +1,15 @@
 import { sha256 } from "@fysen/menu-core";
 import { HttpMenuClient, type MenuHttpFetchResult } from "./http-client.js";
+import {
+  OPENING_HOURS_DUPLICATE_SECTION_RECOVERY_VERSION,
+} from "./opening-hours-duplicate-section-recovery.js";
 import { OpeningHoursExtractionError, type ExtractedOpeningHours } from "./opening-hours-extractor.js";
 import {
   extractCanonicalOpeningHours,
   OPENING_HOURS_SOURCE_EXTRACTOR_VERSION,
 } from "./opening-hours-source-extractor.js";
+
+export const OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION = `${OPENING_HOURS_SOURCE_EXTRACTOR_VERSION}+${OPENING_HOURS_DUPLICATE_SECTION_RECOVERY_VERSION}`;
 
 export interface OpeningHoursSourceRuntimeInput {
   readonly url: string;
@@ -66,6 +71,6 @@ export async function resolveOpeningHoursSource(
     fetched,
     extracted,
     scheduleFingerprint: openingHoursFingerprint(extracted.intervals),
-    extractorVersion: OPENING_HOURS_SOURCE_EXTRACTOR_VERSION,
+    extractorVersion: OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION,
   };
 }

@@ -5,7 +5,14 @@ import {
   type ExtractedOpeningHours,
 } from "./opening-hours-extractor.js";
 
+export const OPENING_HOURS_DUPLICATE_SECTION_RECOVERY_VERSION = "scope-duplicates-v1";
+
 const hoursMarkerPattern = /^(?:opening\s+hours|hours|åpningstider)(?:\s+([^:]{1,80}))?:?$/iu;
+
+interface HoursMarker {
+  readonly index: number;
+  readonly label: string | null;
+}
 
 function escapeHtml(value: string): string {
   return value
@@ -17,6 +24,24 @@ function escapeHtml(value: string): string {
 
 function syntheticHtml(lines: readonly string[]): string {
   return `<html><body>${lines.map((line) => `<p>${escapeHtml(line)}</p>`).join("")}</body></html>`;
+}
+
+function normalizedScope(value: string): string {
+  return value
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
+    .toLocaleLowerCase("nb-NO")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function markerMatchesHints(marker: HoursMarker, scopeHints: readonly string[]): boolean {
+  if (!marker.label) return false;
+  const label = normalizedScope(marker.label);
+  return scopeHints.some((hint) => {
+    const normalizedHint = normalizedScope(hint);
+    return Boolean(normalizedHint) && (normalizedHint.includes(label) || label.includes(normalizedHint));
+  });
 }
 
 function intervalSignature(intervals: readonly RestaurantHoursIntervalInput[]): string {
@@ -49,21 +74,27 @@ export function extractKitchenOpeningHoursWithIdenticalSectionRecovery(
       throw error;
     }
 
-    const markerIndexes = lines
-      .map((line, index) => (hoursMarkerPattern.test(line.trim()) ? index : -1))
-      .filter((index) => index >= 0);
-    if (markerIndexes.length < 2) throw error;
+    const markers: HoursMarker[] = [];
+    for (const [index, line] of lines.entries()) {
+      const match = line.trim().match(hoursMarkerPattern);
+      if (match) markers.push({ index, label: match[1]?.trim() || null });
+    }
+    if (markers.length < 2) throw error;
 
+    const scopedMarkers = markers.filter((marker) => markerMatchesHints(marker, scopeHints));
+    const recoveryMarkers = scopedMarkers.length >= 2 ? scopedMarkers : markers;
     const parsedSections: ExtractedOpeningHours[] = [];
-    for (const [markerOffset, markerIndex] of markerIndexes.entries()) {
-      const end = markerIndexes[markerOffset + 1] ?? lines.length;
-      const section = lines.slice(markerIndex, end);
+
+    for (const marker of recoveryMarkers) {
+      const nextGlobalMarker = markers.find((candidate) => candidate.index > marker.index);
+      const end = nextGlobalMarker?.index ?? lines.length;
+      const section = lines.slice(marker.index, end);
       try {
         const parsed = extractKitchenOpeningHours(syntheticHtml(section), scopeHints);
         if (parsed.intervals.length > 0) parsedSections.push(parsed);
       } catch {
-        // The original extractor already proved that more than one section was parseable.
-        // Ignore non-schedule or malformed sibling sections here; conflicts remain fail-closed below.
+        // Ignore malformed sibling sections; acceptance below still requires at least two
+        // parseable copies with exactly the same canonical schedule.
       }
     }
 
