@@ -63,9 +63,9 @@
       { "name": "Formaggi", "priceMinor": 27500, "priceKind": "from" },
       { "name": "Sana", "priceMinor": 27000, "priceKind": "from" },
       { "name": "Crudo di Parma", "priceMinor": 29000, "priceKind": "from" },
-      { "name": "Parmigiana", "priceMinor": 27000, "priceKind": "from" },
-      { "name": "Principessa", "priceMinor": 28500, "priceKind": "from" },
-      { "name": "Tartufo", "priceMinor": 29000, "priceKind": "from" },
+      { "name": "Parmigiana", "priceMinor": 28000, "priceKind": "from" },
+      { "name": "Principessa", "priceMinor": 29500, "priceKind": "from" },
+      { "name": "Tartufo", "priceMinor": 29500, "priceKind": "from" },
       { "name": "'Nduja", "priceMinor": 29500, "priceKind": "from" }
     ],
     "forbiddenDishNames": [
