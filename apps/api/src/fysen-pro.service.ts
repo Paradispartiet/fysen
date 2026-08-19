@@ -42,7 +42,12 @@ export class FysenProService {
     if (!dashboard) {
       throw new UnauthorizedException({ code: "INVALID_PRO_SESSION", message: "Invalid or expired Pro session." });
     }
-    return protectFysenProDashboard(fysenProDashboardSchema.parse(dashboard));
+    return fysenProDashboardSchema.parse({
+      ...dashboard,
+      cityDemandGaps: dashboard.cityDemandGaps.filter(
+        (gap) => gap.searches7d >= FYSEN_PRO_DEMAND_GAP_MIN_SEARCHES,
+      ),
+    });
   }
 
   async logout(sessionToken: string): Promise<FysenProLogoutReceipt> {
