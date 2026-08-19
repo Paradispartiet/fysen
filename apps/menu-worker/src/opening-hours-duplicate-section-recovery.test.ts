@@ -67,4 +67,30 @@ describe("duplicate opening-hours section recovery", () => {
       ),
     ).toThrow(OpeningHoursExtractionError);
   });
+
+  it("adds normalized marker diagnostics without changing the ambiguity error code", () => {
+    try {
+      extractKitchenOpeningHoursWithIdenticalSectionRecovery(
+        [
+          "Åpningstider CUE",
+          "Mandag - Søndag | 15:00 - 01:00",
+          "Åpningstider PIZZERIA",
+          "Mandag - Søndag | 18:00 - 23:30",
+          "Åpningstider PIZZERIA",
+          "Mandag - Søndag | 18:30 - 23:30",
+        ],
+        ["Pizzeria"],
+      );
+      throw new Error("Expected opening-hours ambiguity");
+    } catch (error) {
+      expect(error).toBeInstanceOf(OpeningHoursExtractionError);
+      expect(error).toMatchObject({ code: "AMBIGUOUS_HOURS_SECTION" });
+      expect((error as Error).message).toContain("hoursDiagnostics=");
+      expect((error as Error).message).toContain('"label":"CUE"');
+      expect((error as Error).message).toContain('"label":"PIZZERIA"');
+      expect((error as Error).message).toContain('"normalizedLabel":"pizzeria"');
+      expect((error as Error).message).toContain('"hinted":true');
+      expect((error as Error).message).toContain('"parsedSectionCount":2');
+    }
+  });
 });
