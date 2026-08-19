@@ -3,6 +3,31 @@ import { resolve } from "node:path";
 import { z } from "zod";
 
 const httpsUrl = z.string().url().refine((value) => value.startsWith("https://"), "URL must use HTTPS");
+const httpsOrigin = z.string().url().transform((value, context) => {
+  const parsed = new URL(value);
+  if (
+    parsed.protocol !== "https:" ||
+    parsed.username ||
+    parsed.password ||
+    parsed.pathname !== "/" ||
+    parsed.search ||
+    parsed.hash
+  ) {
+    context.addIssue({
+      code: "custom",
+      message: "Support origin must be an exact HTTPS origin without credentials, path, query or fragment",
+    });
+    return z.NEVER;
+  }
+  return parsed.origin;
+});
+
+const sourceSupportSchema = z
+  .object({
+    redirectOrigins: z.array(httpsOrigin).max(2).default([]),
+    browserDataOrigins: z.array(httpsOrigin).max(3).default([]),
+  })
+  .default({ redirectOrigins: [], browserDataOrigins: [] });
 
 const requiredDishVariantSchema = z
   .object({
@@ -66,6 +91,7 @@ export const restaurantOnboardingManifestSchema = z
       userAgent: z.string().trim().min(1).max(300).default("FysenMenuBot/0.1"),
       checkIntervalMinutes: z.number().int().min(60).max(10080),
       minimumExpectedItems: z.number().int().min(1).max(500),
+      sourceSupport: sourceSupportSchema,
     }),
     hoursSource: z
       .object({
@@ -106,6 +132,43 @@ export const restaurantOnboardingManifestSchema = z
         message: "Browser fetch mode only supports HTML/JSON-LD sources",
       });
     }
+
+    const sourceOrigin = new URL(manifest.menuSource.url).origin;
+    const support = manifest.menuSource.sourceSupport;
+    for (const [field, origins] of [
+      ["redirectOrigins", support.redirectOrigins],
+      ["browserDataOrigins", support.browserDataOrigins],
+    ] as const) {
+      if (new Set(origins).size !== origins.length) {
+        context.addIssue({
+          code: "custom",
+          path: ["menuSource", "sourceSupport", field],
+          message: "Support origins must be unique",
+        });
+      }
+      if (origins.includes(sourceOrigin)) {
+        context.addIssue({
+          code: "custom",
+          path: ["menuSource", "sourceSupport", field],
+          message: "The declared menu source origin is already allowed and must not be repeated",
+        });
+      }
+    }
+    if (manifest.menuSource.fetchMode !== "browser" && support.browserDataOrigins.length > 0) {
+      context.addIssue({
+        code: "custom",
+        path: ["menuSource", "sourceSupport", "browserDataOrigins"],
+        message: "browserDataOrigins require browser fetch mode",
+      });
+    }
+    if (support.redirectOrigins.some((origin) => support.browserDataOrigins.includes(origin))) {
+      context.addIssue({
+        code: "custom",
+        path: ["menuSource", "sourceSupport"],
+        message: "A redirect origin already permits browser data and must not also be listed as browserDataOrigins",
+      });
+    }
+
     if (manifest.verification.hours?.status === "provisional" && !manifest.hoursSource) {
       context.addIssue({
         code: "custom",
@@ -116,6 +179,7 @@ export const restaurantOnboardingManifestSchema = z
   });
 
 export type RestaurantOnboardingManifest = z.infer<typeof restaurantOnboardingManifestSchema>;
+export type MenuSourceSupport = RestaurantOnboardingManifest["menuSource"]["sourceSupport"];
 export type HoursVerificationStatus = "verified" | "provisional" | "unverified";
 
 export function getHoursVerificationStatus(manifest: RestaurantOnboardingManifest): HoursVerificationStatus {

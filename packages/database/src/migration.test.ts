@@ -17,12 +17,10 @@ describe("database migrations", () => {
       "0010_menu_item_price_semantics.sql",
       "0011_restaurant_hours_scope_hints.sql",
       "0012_restaurant_hours_verification.sql",
+      "0013_menu_source_support_origins.sql",
     ]);
 
-    const schemaSql = await readFile(
-      new URL("../migrations/0001_menu_index.sql", import.meta.url),
-      "utf8",
-    );
+    const schemaSql = await readFile(new URL("../migrations/0001_menu_index.sql", import.meta.url), "utf8");
     expect(schemaSql).toContain("CREATE EXTENSION IF NOT EXISTS postgis");
     expect(schemaSql).toContain("CREATE EXTENSION IF NOT EXISTS pg_trgm");
     expect(schemaSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurants");
@@ -30,28 +28,19 @@ describe("database migrations", () => {
     expect(schemaSql).toContain("CREATE TABLE IF NOT EXISTS fysen.menu_snapshots");
     expect(schemaSql).toContain("CREATE TABLE IF NOT EXISTS fysen.menu_items");
 
-    const seedSql = await readFile(
-      new URL("../migrations/0002_seed_rodeo_pilot.sql", import.meta.url),
-      "utf8",
-    );
+    const seedSql = await readFile(new URL("../migrations/0002_seed_rodeo_pilot.sql", import.meta.url), "utf8");
     expect(seedSql).toContain("'rodeo-oslo'");
     expect(seedSql).toContain("'https://www.rodeooslo.no/'");
     expect(seedSql).toContain("next_check_at");
 
-    const revenueSql = await readFile(
-      new URL("../migrations/0003_revenue_funnel.sql", import.meta.url),
-      "utf8",
-    );
+    const revenueSql = await readFile(new URL("../migrations/0003_revenue_funnel.sql", import.meta.url), "utf8");
     expect(revenueSql).toContain("CREATE TABLE IF NOT EXISTS fysen.search_events");
     expect(revenueSql).toContain("CREATE TABLE IF NOT EXISTS fysen.search_result_impressions");
     expect(revenueSql).toContain("CREATE TABLE IF NOT EXISTS fysen.conversion_events");
     expect(revenueSql).toContain("WHERE result_count = 0");
     expect(revenueSql).toContain("client_event_id uuid NOT NULL UNIQUE");
 
-    const actionsSql = await readFile(
-      new URL("../migrations/0004_restaurant_actions.sql", import.meta.url),
-      "utf8",
-    );
+    const actionsSql = await readFile(new URL("../migrations/0004_restaurant_actions.sql", import.meta.url), "utf8");
     expect(actionsSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_actions");
     expect(actionsSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_action_verification_runs");
     expect(actionsSql).toContain("action_type IN ('booking', 'order')");
@@ -59,10 +48,7 @@ describe("database migrations", () => {
     expect(actionsSql).toContain("'https://www.rodeooslo.no/booking'");
     expect(actionsSql).toContain("'first_party_page'");
 
-    const hoursSql = await readFile(
-      new URL("../migrations/0005_restaurant_hours.sql", import.meta.url),
-      "utf8",
-    );
+    const hoursSql = await readFile(new URL("../migrations/0005_restaurant_hours.sql", import.meta.url), "utf8");
     expect(hoursSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_hours_sources");
     expect(hoursSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_hours_snapshots");
     expect(hoursSql).toContain("CREATE TABLE IF NOT EXISTS fysen.restaurant_hours_intervals");
@@ -72,10 +58,7 @@ describe("database migrations", () => {
     expect(hoursSql).toContain("'https://www.rodeooslo.no/'");
     expect(hoursSql).toContain("minimum_expected_intervals");
 
-    const dishConceptsSql = await readFile(
-      new URL("../migrations/0006_dish_concepts.sql", import.meta.url),
-      "utf8",
-    );
+    const dishConceptsSql = await readFile(new URL("../migrations/0006_dish_concepts.sql", import.meta.url), "utf8");
     expect(dishConceptsSql).toContain("CREATE TABLE IF NOT EXISTS fysen.dish_concepts");
     expect(dishConceptsSql).toContain("CREATE TABLE IF NOT EXISTS fysen.dish_aliases");
     expect(dishConceptsSql).toContain("normalized_alias text NOT NULL UNIQUE");
@@ -85,51 +68,40 @@ describe("database migrations", () => {
     expect(dishConceptsSql).toContain("'chicken-caesar-burger'");
     expect(dishConceptsSql).not.toContain("('beef-tartare', 'Tartar', 'tartar'");
 
-    const pdfTextSql = await readFile(
-      new URL("../migrations/0007_pdf_text_extraction.sql", import.meta.url),
-      "utf8",
-    );
+    const pdfTextSql = await readFile(new URL("../migrations/0007_pdf_text_extraction.sql", import.meta.url), "utf8");
     expect(pdfTextSql).toContain("menu_items_extraction_method_check");
     expect(pdfTextSql).toContain("'pdf_text'");
     expect(pdfTextSql).toContain("VALIDATE CONSTRAINT menu_items_extraction_method_check");
 
-    const fetchModeSql = await readFile(
-      new URL("../migrations/0008_menu_source_fetch_mode.sql", import.meta.url),
-      "utf8",
-    );
+    const fetchModeSql = await readFile(new URL("../migrations/0008_menu_source_fetch_mode.sql", import.meta.url), "utf8");
     expect(fetchModeSql).toContain("fetch_mode text NOT NULL DEFAULT 'http'");
     expect(fetchModeSql).toContain("fetch_mode IN ('http', 'browser')");
 
-    const tuncoCleanupSql = await readFile(
-      new URL("../migrations/0009_remove_blocked_tunco_candidate.sql", import.meta.url),
-      "utf8",
-    );
+    const tuncoCleanupSql = await readFile(new URL("../migrations/0009_remove_blocked_tunco_candidate.sql", import.meta.url), "utf8");
     expect(tuncoCleanupSql).toContain("slug = 'tunco-st-hanshaugen-oslo'");
     expect(tuncoCleanupSql).toContain("active = false");
 
-    const priceSemanticsSql = await readFile(
-      new URL("../migrations/0010_menu_item_price_semantics.sql", import.meta.url),
-      "utf8",
-    );
+    const priceSemanticsSql = await readFile(new URL("../migrations/0010_menu_item_price_semantics.sql", import.meta.url), "utf8");
     expect(priceSemanticsSql).toContain("price_kind text NOT NULL DEFAULT 'exact'");
     expect(priceSemanticsSql).toContain("price_kind IN ('exact', 'from', 'multiple')");
     expect(priceSemanticsSql).toContain("price_max_minor >= price_minor");
     expect(priceSemanticsSql).toContain("VALIDATE CONSTRAINT menu_items_price_shape_check");
 
-    const hoursScopeHintsSql = await readFile(
-      new URL("../migrations/0011_restaurant_hours_scope_hints.sql", import.meta.url),
-      "utf8",
-    );
+    const hoursScopeHintsSql = await readFile(new URL("../migrations/0011_restaurant_hours_scope_hints.sql", import.meta.url), "utf8");
     expect(hoursScopeHintsSql).toContain("scope_hints text[] NOT NULL DEFAULT ARRAY[]::text[]");
     expect(hoursScopeHintsSql).toContain("cardinality(scope_hints) <= 8");
     expect(hoursScopeHintsSql).toContain("VALIDATE CONSTRAINT restaurant_hours_sources_scope_hints_count_check");
 
-    const hoursVerificationSql = await readFile(
-      new URL("../migrations/0012_restaurant_hours_verification.sql", import.meta.url),
-      "utf8",
-    );
+    const hoursVerificationSql = await readFile(new URL("../migrations/0012_restaurant_hours_verification.sql", import.meta.url), "utf8");
     expect(hoursVerificationSql).toContain("verification_status text NOT NULL DEFAULT 'verified'");
     expect(hoursVerificationSql).toContain("verification_status IN ('verified', 'provisional', 'unverified')");
     expect(hoursVerificationSql).toContain("verification_note IS NOT NULL AND verification_checked_at IS NOT NULL");
+
+    const supportOriginsSql = await readFile(new URL("../migrations/0013_menu_source_support_origins.sql", import.meta.url), "utf8");
+    expect(supportOriginsSql).toContain("CREATE TABLE IF NOT EXISTS fysen.menu_source_support_origins");
+    expect(supportOriginsSql).toContain("allow_redirect boolean NOT NULL DEFAULT false");
+    expect(supportOriginsSql).toContain("allow_browser_data boolean NOT NULL DEFAULT false");
+    expect(supportOriginsSql).toContain("menu_source_support_origin_https");
+    expect(supportOriginsSql).toContain("ON DELETE CASCADE");
   });
 });

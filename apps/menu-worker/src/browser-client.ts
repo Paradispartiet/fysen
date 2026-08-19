@@ -24,15 +24,23 @@ const blockedResourceTypes = new Set([
 
 type RenderedMenuFetch = Extract<MenuHttpFetchResult, { readonly kind: "content" }>;
 
+export interface BrowserMenuSourceSupport {
+  readonly redirectOrigins: readonly string[];
+  readonly browserDataOrigins: readonly string[];
+}
+
 export interface BrowserMenuSource {
   readonly url: string;
   readonly userAgent: string;
+  readonly sourceSupport?: BrowserMenuSourceSupport;
 }
 
 export interface BrowserRequestPolicyInput {
   readonly sourceOrigin: string;
   readonly requestUrl: string;
   readonly resourceType: string;
+  readonly redirectOrigins?: readonly string[];
+  readonly browserDataOrigins?: readonly string[];
 }
 
 export type BrowserRequestDecision =
@@ -72,9 +80,13 @@ export function browserRequestDecision(input: BrowserRequestPolicyInput): Browse
     return { action: "block", reason: `browser request must use HTTPS: ${requestUrl.protocol}`, fatal: true };
   }
 
+  const documentOrigins = new Set([input.sourceOrigin, ...(input.redirectOrigins ?? [])]);
+  const dataOrigins = new Set([...documentOrigins, ...(input.browserDataOrigins ?? [])]);
+  const allowedOrigins = input.resourceType === "document" ? documentOrigins : dataOrigins;
+
   if (
     (input.resourceType === "document" || input.resourceType === "xhr" || input.resourceType === "fetch") &&
-    requestUrl.origin !== input.sourceOrigin
+    !allowedOrigins.has(requestUrl.origin)
   ) {
     return {
       action: "block",
@@ -128,6 +140,7 @@ export function accountBrowserRequest(
 async function installNetworkPolicy(
   context: BrowserContext,
   sourceOrigin: string,
+  support: BrowserMenuSourceSupport,
   violation: { value: MenuFetchError | null },
 ): Promise<void> {
   const validatedUrls = new Map<string, Promise<void>>();
@@ -140,6 +153,8 @@ async function installNetworkPolicy(
         sourceOrigin,
         requestUrl: request.url(),
         resourceType: request.resourceType(),
+        redirectOrigins: support.redirectOrigins,
+        browserDataOrigins: support.browserDataOrigins,
       });
       const accounted = accountBrowserRequest(budget, decision);
       budget = accounted.budget;
@@ -182,13 +197,20 @@ export class BrowserMenuClient {
   async fetchSource(source: BrowserMenuSource): Promise<RenderedMenuFetch> {
     const started = Date.now();
     const target = await assertPublicHttpUrl(source.url);
+    const support: BrowserMenuSourceSupport = source.sourceSupport ?? {
+      redirectOrigins: [],
+      browserDataOrigins: [],
+    };
 
-    const preflight = await this.httpClient.fetchSource({
-      url: target.toString(),
-      userAgent: source.userAgent,
-      etag: null,
-      lastModified: null,
-    });
+    const preflight = await this.httpClient.fetchSource(
+      {
+        url: target.toString(),
+        userAgent: source.userAgent,
+        etag: null,
+        lastModified: null,
+      },
+      { allowedRedirectOrigins: support.redirectOrigins },
+    );
     if (preflight.kind !== "content") {
       throw new MenuFetchError(
         "BROWSER_PREFLIGHT_NOT_MODIFIED",
@@ -208,7 +230,7 @@ export class BrowserMenuClient {
     const violation: { value: MenuFetchError | null } = { value: null };
 
     try {
-      await installNetworkPolicy(context, target.origin, violation);
+      await installNetworkPolicy(context, target.origin, support, violation);
       const page = await context.newPage();
       context.on("page", (openedPage) => {
         if (openedPage !== page) void openedPage.close();
@@ -223,10 +245,11 @@ export class BrowserMenuClient {
 
       if (violation.value) throw violation.value;
       const finalUrl = new URL(page.url());
-      if (finalUrl.origin !== target.origin) {
+      const allowedDocumentOrigins = new Set([target.origin, ...support.redirectOrigins]);
+      if (!allowedDocumentOrigins.has(finalUrl.origin)) {
         throw new MenuFetchError(
           "BROWSER_CROSS_ORIGIN_REDIRECT",
-          `Rendered source redirected outside its declared origin: ${finalUrl.origin}`,
+          `Rendered source redirected outside its declared origins: ${finalUrl.origin}`,
           response?.status() ?? null,
         );
       }

@@ -4,6 +4,7 @@ import {
   MenuIndexRepository,
   quiesceRestaurantCandidate,
   recordRestaurantActionVerificationSuccess,
+  replaceMenuSourceSupport,
   setMenuSourceEnabled,
   setRestaurantCoverageActive,
   upsertRestaurantAction,
@@ -207,6 +208,15 @@ async function onboardOne(
       minimumExpectedItems: manifest.menuSource.minimumExpectedItems,
     });
     menuSourceId = source.id;
+    await replaceMenuSourceSupport(pool, source.id, manifest.menuSource.sourceSupport);
+    const menuHttpClient = new HttpMenuClient();
+    const watchMenu = () =>
+      watchMenuSourceOnce(
+        repository,
+        source.id,
+        menuHttpClient,
+        manifest.menuSource.sourceSupport,
+      );
 
     if (!candidate.active && !source.enabled) {
       await setMenuSourceEnabled(pool, source.id, true);
@@ -221,7 +231,7 @@ async function onboardOne(
       if (requiresExtractorRefresh) {
         await setRestaurantCoverageActive(pool, candidate.id, false);
 
-        firstWatch = await watchMenuSourceOnce(repository, source.id);
+        firstWatch = await watchMenu();
         if (!accepted(firstWatch)) {
           throw new Error(`First extractor refresh watch was ${firstWatch.outcome}`);
         }
@@ -231,7 +241,7 @@ async function onboardOne(
           throw new Error(qualityFailure("First extractor refresh failed onboarding assertions", latestQuality));
         }
 
-        secondWatch = await watchMenuSourceOnce(repository, source.id);
+        secondWatch = await watchMenu();
         if (!accepted(secondWatch)) {
           throw new Error(`Second extractor refresh watch was ${secondWatch.outcome}`);
         }
@@ -266,7 +276,7 @@ async function onboardOne(
       };
     }
 
-    firstWatch = await watchMenuSourceOnce(repository, source.id);
+    firstWatch = await watchMenu();
     if (!accepted(firstWatch)) {
       throw new Error(`First onboarding watch was ${firstWatch.outcome}`);
     }
@@ -276,7 +286,7 @@ async function onboardOne(
       throw new Error(qualityFailure("First onboarding snapshot failed assertions", latestQuality));
     }
 
-    secondWatch = await watchMenuSourceOnce(repository, source.id);
+    secondWatch = await watchMenu();
     if (!accepted(secondWatch)) {
       throw new Error(`Second onboarding watch was ${secondWatch.outcome}`);
     }

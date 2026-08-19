@@ -48,7 +48,7 @@ describe("HTML menu runtime normalization", () => {
   });
 
   it("strips short uppercase allergen-code lists while preserving semantic parentheses", () => {
-    expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v3");
+    expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v6");
     const allergenItem = normalizeHtmlItemName({
       sourceKey: "old",
       name: "Rasmalai (G, M, E, N)",
@@ -142,21 +142,47 @@ describe("HTML menu runtime normalization", () => {
     expect(item.sourceKey).toBe("stable");
   });
 
-  it("rejects numeric-only HTML item names as non-canonical menu entries", () => {
-    expect(
-      isCanonicalHtmlMenuItem({
-        sourceKey: "phone-fragment",
-        name: "994 44",
-        normalizedName: "994 44",
-        description: null,
-        sectionName: null,
-        priceMinor: 99400,
-        currency: "NOK",
-        position: 99,
-        extractionMethod: "html_heuristic",
-        confidence: 0.5,
-        sourceExcerpt: "994 44",
-      }),
-    ).toBe(false);
+  it("rejects numeric-only, retail/UI and explicit beverage items", () => {
+    const item = (name: string): Parameters<typeof isCanonicalHtmlMenuItem>[0] => ({
+      sourceKey: name,
+      name,
+      normalizedName: name.toLowerCase(),
+      description: null,
+      sectionName: null,
+      priceMinor: 39900,
+      currency: "NOK",
+      position: 99,
+      extractionMethod: "json_ld",
+      confidence: 0.99,
+      sourceExcerpt: name,
+    });
+
+    for (const name of [
+      "994 44",
+      "Oslo · Siden",
+      "Håndlagde produkter fra vårt kjøkken og familiens utvalg",
+      "Legg i handlekurv",
+      "I'd Rather Eat Pasta & Drink Wine Tee",
+      "Cola Zero",
+      "Mango Lassi",
+      "Coca-Cola",
+      "Punjab Cola",
+      "Old Jamaica Ginger Beer",
+      "Mango Juice",
+      "Farris Blå",
+      "Hard seltz Rabarbra",
+      "Hansa pilsner 0,5 l",
+      "Birra Moretti flaske 0,33",
+      "Kingfisher øl flaske 0,33",
+      "Grevens pærecider flaske 0,33",
+      "Rødvin glass",
+      "Hvitvin flaske",
+    ]) {
+      expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
+    }
+
+    for (const name of ["Spaghetti Carbonara", "Fish N Chips", "Beer-battered fish", "Kheer"]) {
+      expect(isCanonicalHtmlMenuItem(item(name))).toBe(true);
+    }
   });
 });

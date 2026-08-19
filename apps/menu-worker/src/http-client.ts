@@ -12,6 +12,7 @@ type RobotsParserFactory = (url: string, robotsText: string) => RobotsRules;
 const nodeRequire = createRequire(import.meta.url);
 const robotsParser = nodeRequire("robots-parser") as RobotsParserFactory;
 const MAX_EXPLICIT_RESPONSE_BYTES = 25 * 1024 * 1024;
+const MAX_ROBOTS_RESPONSE_BYTES = 1024 * 1024;
 
 export interface MenuHttpSourceState {
   readonly url: string;
@@ -22,6 +23,7 @@ export interface MenuHttpSourceState {
 
 export interface MenuHttpFetchOptions {
   readonly maxResponseBytes?: number;
+  readonly allowedRedirectOrigins?: readonly string[];
 }
 
 export type MenuHttpFetchResult =
@@ -66,6 +68,11 @@ export interface HttpMenuClientOptions {
   readonly minHostDelayMs?: number;
 }
 
+interface SafeFetchResult {
+  readonly response: Response;
+  readonly finalUrl: URL;
+}
+
 function positiveIntegerFromEnv(name: string, fallback: number): number {
   const value = Number(process.env[name]);
   return Number.isInteger(value) && value > 0 ? value : fallback;
@@ -105,9 +112,10 @@ export class HttpMenuClient {
     options: MenuHttpFetchOptions = {},
   ): Promise<MenuHttpFetchResult> {
     const maxResponseBytes = responseByteLimit(options.maxResponseBytes, this.maxResponseBytes);
+    const allowedRedirectOrigins = options.allowedRedirectOrigins ?? [];
     const started = performance.now();
     const target = await this.validate(source.url);
-    const robotsAllowed = await this.checkRobots(target, source.userAgent);
+    const robotsAllowed = await this.checkRobots(target, source.userAgent, allowedRedirectOrigins);
     if (!robotsAllowed) {
       throw new MenuFetchError("ROBOTS_DISALLOWED", `robots.txt disallows ${target.href}`);
     }
@@ -119,7 +127,20 @@ export class HttpMenuClient {
     if (source.etag) headers.set("If-None-Match", source.etag);
     if (source.lastModified) headers.set("If-Modified-Since", source.lastModified);
 
-    const response = await this.safeFetch(target, { method: "GET", headers });
+    const fetched = await this.safeFetch(target, { method: "GET", headers }, allowedRedirectOrigins);
+    const response = fetched.response;
+    if (fetched.finalUrl.origin !== target.origin) {
+      const finalRobotsAllowed = await this.checkRobots(
+        fetched.finalUrl,
+        source.userAgent,
+        allowedRedirectOrigins,
+      );
+      if (!finalRobotsAllowed) {
+        await response.body?.cancel().catch(() => undefined);
+        throw new MenuFetchError("ROBOTS_DISALLOWED", `robots.txt disallows ${fetched.finalUrl.href}`);
+      }
+    }
+
     const fetchedAt = new Date().toISOString();
     const durationMs = Math.max(0, Math.round(performance.now() - started));
     const etag = response.headers.get("etag");
@@ -148,16 +169,25 @@ export class HttpMenuClient {
     };
   }
 
-  private async checkRobots(target: URL, userAgent: string): Promise<boolean> {
+  private async checkRobots(
+    target: URL,
+    userAgent: string,
+    allowedRedirectOrigins: readonly string[],
+  ): Promise<boolean> {
     const robotsUrl = new URL("/robots.txt", target);
-    const response = await this.safeFetch(robotsUrl, {
-      method: "GET",
-      headers: new Headers({ Accept: "text/plain,*/*;q=0.1", "User-Agent": userAgent }),
-    });
+    const fetched = await this.safeFetch(
+      robotsUrl,
+      {
+        method: "GET",
+        headers: new Headers({ Accept: "text/plain,*/*;q=0.1", "User-Agent": userAgent }),
+      },
+      allowedRedirectOrigins,
+    );
+    const response = fetched.response;
 
     if (response.status >= 200 && response.status < 300) {
-      const bodyBytes = await this.readLimitedBytes(response, 256 * 1024);
-      const parser = robotsParser(robotsUrl.href, Buffer.from(bodyBytes).toString("utf8"));
+      const bodyBytes = await this.readLimitedBytes(response, MAX_ROBOTS_RESPONSE_BYTES);
+      const parser = robotsParser(fetched.finalUrl.href, Buffer.from(bodyBytes).toString("utf8"));
       return parser.isAllowed(target.href, userAgent) !== false;
     }
 
@@ -176,9 +206,14 @@ export class HttpMenuClient {
     return this.resolver ? assertPublicHttpUrl(value, this.resolver) : assertPublicHttpUrl(value);
   }
 
-  private async safeFetch(initialUrl: URL, init: RequestInit): Promise<Response> {
+  private async safeFetch(
+    initialUrl: URL,
+    init: RequestInit,
+    allowedRedirectOrigins: readonly string[] = [],
+  ): Promise<SafeFetchResult> {
     let current = await this.validate(initialUrl);
     const initialOrigin = current.origin;
+    const allowedOrigins = new Set(allowedRedirectOrigins);
 
     for (let redirects = 0; redirects <= 3; redirects += 1) {
       await this.throttle(current.origin);
@@ -194,13 +229,15 @@ export class HttpMenuClient {
         throw new MenuFetchError("NETWORK_ERROR", `Network request failed: ${message}`);
       }
 
-      if (![301, 302, 303, 307, 308].includes(response.status)) return response;
+      if (![301, 302, 303, 307, 308].includes(response.status)) {
+        return { response, finalUrl: current };
+      }
       const location = response.headers.get("location");
       if (!location) throw new MenuFetchError("INVALID_REDIRECT", "Redirect response did not contain Location");
       await response.body?.cancel();
 
       const next = await this.validate(new URL(location, current));
-      if (next.origin !== initialOrigin) {
+      if (next.origin !== initialOrigin && !allowedOrigins.has(next.origin)) {
         throw new MenuFetchError("CROSS_ORIGIN_REDIRECT", `Cross-origin crawler redirect blocked: ${next.origin}`);
       }
       current = next;
