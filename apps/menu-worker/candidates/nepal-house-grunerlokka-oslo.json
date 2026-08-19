@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "nepal-house-grunerlokka-oslo",
+    "name": "Nepal House",
+    "websiteUrl": "https://nepalhouse.no/",
+    "address": "Toftes gate 19B, 0556 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9294748,
+    "longitude": 10.7606623
+  },
+  "menuSource": {
+    "url": "https://www.foodora.no/restaurant/t8dc/nepal-house",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 40
+  },
+  "hoursSource": {
+    "url": "https://nepalhouse.no/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "Nepal House publishes restaurant opening hours directly on its first-party site (Mon-Thu 15:00-22:00, Fri-Sat 15:00-22:30, Sun 15:00-21:30), but does not separately label a kitchen schedule. Keep open/closed unknown until kitchen-scoped hours are explicitly verified."
+    }
+  },
+  "actions": [
+    {
+      "type": "order",
+      "url": "https://nepalhouse.aorder.no/",
+      "sourceUrl": "https://nepalhouse.no/",
+      "provider": "Aorder"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chicken MO:MO (Dumplings) 4stk",
+      "Green MO:MO (Dumplings 4stk)",
+      "Pani puri",
+      "Bhatmas Shadeko",
+      "Kukhura Ko Masu",
+      "Khasi Ko Masu",
+      "Jhaneko Dal",
+      "Choila Chicken",
+      "Chicken MO:MO Dumplings 10",
+      "Chicken Jhol MO:MO",
+      "Chili Chicken MO:MO",
+      "Chicken Chowmein",
+      "Pork Sekuwa 250 g",
+      "Green Jhol MO:MO",
+      "Veg Chowmein"
+    ],
+    "requiredDishVariants": [
+      { "name": "Chicken MO:MO (Dumplings) 4stk", "priceMinor": 10900, "priceKind": "from" },
+      { "name": "Green MO:MO (Dumplings 4stk)", "priceMinor": 10900, "priceKind": "from" },
+      { "name": "Pani puri", "priceMinor": 9900, "priceKind": "from" },
+      { "name": "Bhatmas Shadeko", "priceMinor": 8900, "priceKind": "from" },
+      { "name": "Kukhura Ko Masu", "priceMinor": 24900, "priceKind": "from" },
+      { "name": "Khasi Ko Masu", "priceMinor": 25900, "priceKind": "from" },
+      { "name": "Jhaneko Dal", "priceMinor": 19900, "priceKind": "from" },
+      { "name": "Choila Chicken", "priceMinor": 24900, "priceKind": "from" },
+      { "name": "Chicken MO:MO Dumplings 10", "priceMinor": 21900, "priceKind": "from" },
+      { "name": "Chicken Jhol MO:MO", "priceMinor": 23900, "priceKind": "from" },
+      { "name": "Chili Chicken MO:MO", "priceMinor": 23900, "priceKind": "from" },
+      { "name": "Chicken Chowmein", "priceMinor": 23900, "priceKind": "from" },
+      { "name": "Pork Sekuwa 250 g", "priceMinor": 24900, "priceKind": "from" },
+      { "name": "Green Jhol MO:MO", "priceMinor": 23900, "priceKind": "from" },
+      { "name": "Veg Chowmein", "priceMinor": 22900, "priceKind": "from" }
+    ],
+    "forbiddenDishNames": [
+      "Mango Lassi",
+      "Plain Lassi",
+      "Coca Cola",
+      "Cola Zero",
+      "Levering",
+      "fra 27 NOK54 NOK"
+    ]
+  }
+}
