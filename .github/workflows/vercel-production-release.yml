@@ -214,7 +214,7 @@ jobs:
           {
             echo '## Fysen batched production plan'
             echo
-            echo "- Release mode: `${{ needs.window.outputs.release_mode }}`"
+            echo "- Release mode: \`${{ needs.window.outputs.release_mode }}\`"
             echo "- Canonical source: \`$source_sha\`"
             echo "- Web currently released from: \`${web_production_sha:-unknown}\`"
             echo "- API currently released from: \`${api_production_sha:-unknown}\`"
@@ -233,7 +233,7 @@ jobs:
     timeout-minutes: 30
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_PROJECT_ID: ${{ env.FYSEN_WEB_PROJECT_ID }}
+      VERCEL_PROJECT_ID: prj_G0Vm4jhCg3hWRvVBSEIt5klHO6sS
       SOURCE_SHA: ${{ needs.prepare.outputs.source_sha }}
       RELEASE_MODE: ${{ needs.prepare.outputs.release_mode }}
     steps:
@@ -303,7 +303,7 @@ jobs:
     timeout-minutes: 30
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_PROJECT_ID: ${{ env.FYSEN_API_PROJECT_ID }}
+      VERCEL_PROJECT_ID: prj_sSNtWlPc13Lgr2ws6DdhCfPFtr4E
       SOURCE_SHA: ${{ needs.prepare.outputs.source_sha }}
       RELEASE_MODE: ${{ needs.prepare.outputs.release_mode }}
     steps:
