@@ -48,7 +48,7 @@ describe("HTML menu runtime normalization", () => {
   });
 
   it("strips short uppercase allergen-code lists while preserving semantic parentheses", () => {
-    expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v3");
+    expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v4");
     const allergenItem = normalizeHtmlItemName({
       sourceKey: "old",
       name: "Rasmalai (G, M, E, N)",
@@ -142,21 +142,30 @@ describe("HTML menu runtime normalization", () => {
     expect(item.sourceKey).toBe("stable");
   });
 
-  it("rejects numeric-only HTML item names as non-canonical menu entries", () => {
-    expect(
-      isCanonicalHtmlMenuItem({
-        sourceKey: "phone-fragment",
-        name: "994 44",
-        normalizedName: "994 44",
-        description: null,
-        sectionName: null,
-        priceMinor: 99400,
-        currency: "NOK",
-        position: 99,
-        extractionMethod: "html_heuristic",
-        confidence: 0.5,
-        sourceExcerpt: "994 44",
-      }),
-    ).toBe(false);
+  it("rejects numeric-only and obvious retail/UI HTML items", () => {
+    const item = (name: string): Parameters<typeof isCanonicalHtmlMenuItem>[0] => ({
+      sourceKey: name,
+      name,
+      normalizedName: name.toLowerCase(),
+      description: null,
+      sectionName: null,
+      priceMinor: 39900,
+      currency: "NOK",
+      position: 99,
+      extractionMethod: "html_heuristic",
+      confidence: 0.5,
+      sourceExcerpt: name,
+    });
+
+    for (const name of [
+      "994 44",
+      "Oslo · Siden",
+      "Håndlagde produkter fra vårt kjøkken og familiens utvalg",
+      "Legg i handlekurv",
+      "I'd Rather Eat Pasta & Drink Wine Tee",
+    ]) {
+      expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
+    }
+    expect(isCanonicalHtmlMenuItem(item("Spaghetti Carbonara"))).toBe(true);
   });
 });
