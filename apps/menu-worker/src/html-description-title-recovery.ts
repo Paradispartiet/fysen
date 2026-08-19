@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v7";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v8";
 
 const PRICE_LINE = /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
 const DESCRIPTION_LEAD = /^(?:serveres?|servert|served|with|kan\s+fås|can\s+be|blandet|mixed|godt\s+krydret|well\s+seasoned|marinert|marinated|grillet|grilled|bakt|baked|braisert|braised|tilberedt|prepared|toppet|topped|inneholder|contains?|inkludert|including|ekstra|extra|pr\.?\s*person|per\s+person)\b/iu;
@@ -193,23 +193,30 @@ function recoverSectionLabelTitleFromSourceExcerpt(item: MenuObservedItem): stri
     .map(normalizeVisibleLine)
     .filter(Boolean);
   const foldedCurrent = current.toLocaleLowerCase("nb-NO");
-  const candidates = new Set<string>();
+  const fallbackCandidates = new Set<string>();
+  const structuredCandidates = new Set<string>();
 
   for (let index = 0; index < segments.length; index += 1) {
     const segment = segments[index] ?? "";
     if (segment.toLocaleLowerCase("nb-NO") !== foldedCurrent) continue;
-    for (let offset = 1; offset <= 3; offset += 1) {
-      const next = segments[index + offset] ?? "";
-      if (!next) continue;
-      if (PRICE_LINE.test(next)) break;
-      if (looksLikeRecoveredTitle(next)) {
-        candidates.add(next);
-        break;
+
+    for (let offset = 1; index + offset < segments.length; offset += 1) {
+      const candidate = segments[index + offset] ?? "";
+      if (!candidate) continue;
+      if (PRICE_LINE.test(candidate)) break;
+      if (!looksLikeRecoveredTitle(candidate)) continue;
+
+      fallbackCandidates.add(candidate);
+      const following = segments[index + offset + 1] ?? "";
+      if (following && !PRICE_LINE.test(following) && looksLikeDescription(following)) {
+        structuredCandidates.add(candidate);
       }
     }
   }
 
-  return candidates.size === 1 ? [...candidates][0] ?? null : null;
+  if (structuredCandidates.size === 1) return [...structuredCandidates][0] ?? null;
+  if (structuredCandidates.size > 1) return null;
+  return fallbackCandidates.size === 1 ? [...fallbackCandidates][0] ?? null : null;
 }
 
 function recoverForwardSplitParentheticalTitleFromSourceExcerpt(item: MenuObservedItem): string | null {

@@ -53,7 +53,7 @@ describe("HTML description-title recovery", () => {
       visibleText,
     );
 
-    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v7");
+    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v8");
     expect(result.map((entry) => entry.name)).toEqual([
       "Hummus (kikert-og sesampuré)",
       "Hvitløkmarinerte kyllingvinger",
@@ -64,21 +64,41 @@ describe("HTML description-title recovery", () => {
     expect(result[0]?.description).toBe("Serveres med pitabrød");
   });
 
-  it("recovers a dish title that follows a plain food-section label in the same price block", () => {
+  it("prefers a structurally anchored dish after a section intro in the same price block", () => {
     const pizza = {
       ...item("Pizza", 0, 25900),
-      description: "Diavola Tomatsaus, ost, nduja, salami og chili",
-      sourceExcerpt: "Pizza — Diavola — Tomatsaus, ost, nduja, salami og chili — 259",
+      description:
+        "Rykende fersk italiensk pizza fra steinovnen Diavola Tomatsaus, ost, ventricina, oliven, rødløk, ruccola, chili",
+      sourceExcerpt:
+        "Pizza — Rykende fersk italiensk pizza fra steinovnen — Diavola — Tomatsaus, ost, ventricina, oliven, rødløk, ruccola, chili — 259",
     };
 
     const result = recoverDescriptionNamedHtmlItems(
       [pizza],
-      ["Pizza", "Diavola", "Tomatsaus, ost, nduja, salami og chili", "259"].join("\n"),
+      [
+        "Pizza",
+        "Rykende fersk italiensk pizza fra steinovnen",
+        "Diavola",
+        "Tomatsaus, ost, ventricina, oliven, rødløk, ruccola, chili",
+        "259",
+      ].join("\n"),
     );
 
     expect(result).toHaveLength(1);
     expect(result[0]?.name).toBe("Diavola");
-    expect(result[0]?.description).toBe("Tomatsaus, ost, nduja, salami og chili");
+  });
+
+  it("does not guess when two section-block candidates are each structurally title-like", () => {
+    const pizza = {
+      ...item("Pizza", 0, 25900),
+      sourceExcerpt:
+        "Pizza — Special One — Tomatsaus, ost, chili, løk, oliven — Special Two — Creme fraiche, ost, sopp, løk, urter — 259",
+    };
+
+    const result = recoverDescriptionNamedHtmlItems([pizza], "Pizza\n259");
+
+    expect(result).toHaveLength(1);
+    expect(result[0]?.name).toBe("Pizza");
   });
 
   it("treats a comma-rich ingredient line as description and preserves a short question-mark dish title", () => {
