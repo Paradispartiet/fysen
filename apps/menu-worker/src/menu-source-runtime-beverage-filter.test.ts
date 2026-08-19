@@ -59,6 +59,8 @@ describe("generic HTML canonical item filtering", () => {
     "Telefon +47 22 33 44 55",
     "Tlf 22 33 44 55",
     "Phone: +47 22 33 44 55",
+    "All rights reserved | YNG Bar & Social",
+    "ALL RIGHTS RESERVED - Restaurant Example",
   ])("rejects non-food or beverage-only menu item %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
   });
@@ -105,6 +107,8 @@ describe("generic HTML canonical item filtering", () => {
     "Coffee Rubbed Steak",
     "Telephone Noodles",
     "Phone Booth Burger",
+    "Reserved Ribeye",
+    "Rights Burger",
   ])("keeps food item %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(true);
   });
