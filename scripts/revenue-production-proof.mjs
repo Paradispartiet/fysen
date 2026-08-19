@@ -58,7 +58,7 @@ async function verifyRevenueSchema(pool) {
   ];
   const tokenColumnResult = await pool.query(
     `SELECT relation.relname AS table_name,
-            array_agg(attribute.attname ORDER BY attribute.attnum) AS columns
+            array_agg(attribute.attname::text ORDER BY attribute.attnum) AS columns
        FROM pg_attribute AS attribute
        JOIN pg_class AS relation ON relation.oid = attribute.attrelid
        JOIN pg_namespace AS namespace ON namespace.oid = relation.relnamespace
