@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "tyrkisk-kjokken-lindeberg-oslo",
+    "name": "Tyrkisk Kjøkken",
+    "websiteUrl": "https://www.xn--tyrkiskkjkken-jnb.no/",
+    "address": "Jerikoveien 1, 1067 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9327672,
+    "longitude": 10.881372
+  },
+  "menuSource": {
+    "url": "https://www.xn--tyrkiskkjkken-jnb.no/tyrkisk-meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 20
+  },
+  "hoursSource": {
+    "url": "https://www.xn--tyrkiskkjkken-jnb.no/tyrkisk-meny",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "Tyrkisk Kjøkken publishes venue opening hours directly on the current first-party menu page, but the current canonical page does not separately label a kitchen schedule. Keep open/closed unknown until kitchen-scoped hours are explicitly verified."
+    }
+  },
+  "actions": [
+    {
+      "type": "order",
+      "url": "https://wolt.com/en/nor/oslo/restaurant/tyrkisk-kjkken",
+      "sourceUrl": "https://wolt.com/en/nor/oslo/restaurant/tyrkisk-kjkken",
+      "provider": "Wolt"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Ali Nazik med adana kebab",
+      "Ali nazik med biff",
+      "Adana kebab",
+      "Sis kebab",
+      "Mix grill",
+      "Døner kebab",
+      "Lezzet Kebabi",
+      "Izgara Tavuk",
+      "Mangal Kanat",
+      "Iskender kebab",
+      "Døner beyti",
+      "Beyti kebab",
+      "Køfte"
+    ],
+    "requiredDishVariants": [
+      { "name": "Ali Nazik med adana kebab", "priceMinor": 30900 },
+      { "name": "Ali nazik med biff", "priceMinor": 33900 },
+      { "name": "Adana kebab", "priceMinor": 30900 },
+      { "name": "Sis kebab", "priceMinor": 32900 },
+      { "name": "Mix grill", "priceMinor": 34900 },
+      { "name": "Døner kebab", "priceMinor": 29500 },
+      { "name": "Lezzet Kebabi", "priceMinor": 29400 },
+      { "name": "Izgara Tavuk", "priceMinor": 32900 },
+      { "name": "Mangal Kanat", "priceMinor": 28900 },
+      { "name": "Iskender kebab", "priceMinor": 30900 },
+      { "name": "Døner beyti", "priceMinor": 31900 },
+      { "name": "Beyti kebab", "priceMinor": 31900 },
+      { "name": "Køfte", "priceMinor": 29400 }
+    ],
+    "forbiddenDishNames": [
+      "Tyrkisk Retter",
+      "Åpnings Tider",
+      "Kontakt Oss",
+      "Image"
+    ]
+  }
+}
