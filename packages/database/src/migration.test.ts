@@ -108,7 +108,7 @@ describe("database migrations", () => {
     const demandSourceSql = await readFile(new URL("../migrations/0014_search_demand_source.sql", import.meta.url), "utf8");
     expect(demandSourceSql).toContain("demand_source text");
     expect(demandSourceSql).toContain("SET demand_source = 'legacy_unclassified'");
-    expect(demandSourceSql).toContain("SET DEFAULT 'explicit_search'");
+    expect(demandSourceSql).toContain("SET DEFAULT 'legacy_unclassified'");
     expect(demandSourceSql).toContain("search_events_demand_source_check");
     expect(demandSourceSql).toContain("search_events_demand_source_occurred_idx");
   });

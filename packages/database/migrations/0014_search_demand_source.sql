@@ -6,7 +6,7 @@ SET demand_source = 'legacy_unclassified'
 WHERE demand_source IS NULL;
 
 ALTER TABLE fysen.search_events
-  ALTER COLUMN demand_source SET DEFAULT 'explicit_search';
+  ALTER COLUMN demand_source SET DEFAULT 'legacy_unclassified';
 
 ALTER TABLE fysen.search_events
   ALTER COLUMN demand_source SET NOT NULL;
