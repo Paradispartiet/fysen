@@ -46,6 +46,7 @@ describe("generic HTML canonical item filtering", () => {
     "Telemark Still Naturell",
     "Telemark Sparkling Naturell 0,5l",
     "Arabisk kaffe med kardemomme",
+    "Turkish Coffee with cardamom",
     "Pizzakutter",
     "Pizza Cutter",
     "Levering",
@@ -97,6 +98,7 @@ describe("generic HTML canonical item filtering", () => {
     "Fromage Pizza 109",
     "Dessert Pizza",
     "Dry Martini Sauce Steak",
+    "Coffee Rubbed Steak",
   ])("keeps food item %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(true);
   });
