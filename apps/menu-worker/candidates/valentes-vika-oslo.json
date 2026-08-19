@@ -13,7 +13,7 @@
   "menuSource": {
     "url": "https://valentes.no/",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
     "minimumExpectedItems": 8
@@ -23,6 +23,13 @@
     "timeZone": "Europe/Oslo",
     "checkIntervalMinutes": 360,
     "minimumExpectedIntervals": 5
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "The first-party page publishes Tuesday-Saturday restaurant hours and an explicit kitchen closing time, but the current static hours worker cannot re-extract the schedule automatically. Keep menu evidence searchable while open/closed remains unknown until canonical hours extraction is available."
+    }
   },
   "actions": [
     {
