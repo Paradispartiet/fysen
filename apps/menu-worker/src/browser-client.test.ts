@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   accountBrowserRequest,
+  browserBudgetViolationIsFatal,
   browserRequestDecision,
   type BrowserRequestBudget,
   type BrowserRequestDecision,
@@ -26,21 +27,16 @@ describe("browser request policy", () => {
     }
   });
 
-  it("permits public HTTPS script candidates to pass the network validator", () => {
+  it("permits public HTTPS script/style candidates to pass the network validator", () => {
     expect(
       browserRequestDecision({ sourceOrigin, requestUrl: "https://cdn.example.net/app.js", resourceType: "script" }),
     ).toEqual({ action: "allow", validatePublicNetwork: true });
   });
 
-  it("blocks presentation-heavy resources without failing the rendered source", () => {
-    for (const [resourceType, url] of [
-      ["image", "https://cdn.example.net/photo.jpg"],
-      ["stylesheet", "https://cdn.example.net/site.css"],
-    ] as const) {
-      expect(
-        browserRequestDecision({ sourceOrigin, requestUrl: url, resourceType }),
-      ).toEqual({ action: "block", reason: `blocked resource type: ${resourceType}`, fatal: false });
-    }
+  it("blocks heavy resources without failing the rendered source", () => {
+    expect(
+      browserRequestDecision({ sourceOrigin, requestUrl: "https://cdn.example.net/photo.jpg", resourceType: "image" }),
+    ).toEqual({ action: "block", reason: "blocked resource type: image", fatal: false });
   });
 
   it("fails closed on non-HTTPS browser traffic", () => {
@@ -69,7 +65,7 @@ describe("browser request budget", () => {
     expect(budget).toEqual({ routeEvents: 500, networkRequests: 0 });
   });
 
-  it("still fails closed after 120 allowed browser network requests", () => {
+  it("never permits more than 120 allowed browser network requests", () => {
     let budget: BrowserRequestBudget = { routeEvents: 0, networkRequests: 0 };
     for (let index = 0; index < 120; index += 1) {
       const result = accountBrowserRequest(budget, allowed);
@@ -86,6 +82,22 @@ describe("browser request budget", () => {
       code: "BROWSER_REQUEST_LIMIT",
       message: "Rendered source exceeded 120 allowed browser network requests",
     });
+    expect(overflow.budget.networkRequests).toBe(121);
+  });
+
+  it("truncates allowed-network overflow but keeps the route-event cap fatal", () => {
+    expect(
+      browserBudgetViolationIsFatal({
+        code: "BROWSER_REQUEST_LIMIT",
+        message: "request budget exhausted",
+      }),
+    ).toBe(false);
+    expect(
+      browserBudgetViolationIsFatal({
+        code: "BROWSER_ROUTE_EVENT_LIMIT",
+        message: "route budget exhausted",
+      }),
+    ).toBe(true);
   });
 
   it("keeps a separate hard cap on all browser route events", () => {
