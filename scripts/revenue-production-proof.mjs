@@ -12,6 +12,18 @@ function fail(message, details = null) {
   throw new Error(`${message}${suffix}`);
 }
 
+async function captureProof(name, verify) {
+  try {
+    return { name, status: "verified", value: await verify() };
+  } catch (error) {
+    return {
+      name,
+      status: "failed",
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
 async function fetchWithProofTimeout(url, init = {}) {
   return fetch(url, {
     cache: "no-store",
@@ -377,19 +389,26 @@ async function verifyPublicRevenueWeb() {
 
 const pool = createDatabasePool({ maxConnections: 2 });
 try {
-  const schema = await verifyRevenueSchema(pool);
-  const api = await verifyPublicRevenueApi();
-  const aha = await verifyAhaFysenBoundary();
-  const web = await verifyPublicRevenueWeb();
+  const checks = [
+    await captureProof("schema", () => verifyRevenueSchema(pool)),
+    await captureProof("api", verifyPublicRevenueApi),
+    await captureProof("aha", verifyAhaFysenBoundary),
+    await captureProof("web", verifyPublicRevenueWeb),
+  ];
+  const failures = checks.filter((check) => check.status === "failed");
+  const valueFor = (name) => checks.find((check) => check.name === name)?.value ?? null;
 
   process.stdout.write(`${JSON.stringify({
-    status: "verified",
+    status: failures.length === 0 ? "verified" : "failed",
     mutatingProductionRequests: false,
-    schema,
-    api,
-    aha,
-    web,
+    schema: valueFor("schema"),
+    api: valueFor("api"),
+    aha: valueFor("aha"),
+    web: valueFor("web"),
+    failures: failures.map(({ name, error }) => ({ name, error })),
   }, null, 2)}\n`);
+
+  if (failures.length > 0) process.exitCode = 1;
 } finally {
   await pool.end();
 }
