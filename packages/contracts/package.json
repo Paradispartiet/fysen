@@ -21,6 +21,10 @@
     "./fysen-pro": {
       "types": "./dist/fysen-pro.d.ts",
       "default": "./dist/fysen-pro.js"
+    },
+    "./aha-min-mat": {
+      "types": "./dist/aha-min-mat.d.ts",
+      "default": "./dist/aha-min-mat.js"
     }
   },
   "scripts": {

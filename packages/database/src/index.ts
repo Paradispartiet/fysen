@@ -1,3 +1,4 @@
+export * from "./aha-min-mat.js";
 export * from "./browse.js";
 export * from "./client.js";
 export * from "./coverage.js";
