@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v9";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v10";
 
 const PRICE_LINE = /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
 const DESCRIPTION_LEAD = /^(?:serveres?|servert|served|with|kan\s+fås|can\s+be|blandet|mixed|godt\s+krydret|well\s+seasoned|marinert|marinated|grillet|grilled|bakt|baked|braisert|braised|tilberedt|prepared|toppet|topped|inneholder|contains?|inkludert|including|ekstra|extra|pr\.?\s*person|per\s+person)\b/iu;
@@ -12,6 +12,7 @@ const PRICE_METADATA_LEAD = /^(?:pr\.?\s*person|per\s+person)\b/iu;
 const SPLIT_PARENTHETICAL_CONTINUATION = /^(?:med|with)\b.*\)$/iu;
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const SECTION_LABEL = /^(?:meny|menu|à\s+la\s+carte|a\s+la\s+carte|forretter?|starters?|appetizers?|småretter|hovedretter?|mains?|main\s+courses?|dessert(?:er|s)?|tilbehør|sides?|pizza(?:er|s)?|pizzeria|kylling\s+og\s+lam|mezah[- ]retter)$/iu;
+const SEMANTIC_SECTION_LABEL = /^(?:salater?\s*(?:&|og)\s*suppe(?:r)?|kylling|kjøttretter?|fiskeretter?|salater?|supper?)$/iu;
 const ALLERGEN_PREFIX = /^(?:allergener?|allergens?)\s*:\s*/iu;
 const ALLERGEN_SEPARATOR = /\s*(?:,|\/|\+|;|\bog\b|\band\b)\s*/iu;
 const SHORT_ALLERGEN_CODE_LIST = /^(?:[A-Z0-9]{1,3})(?:\s*[,/+;]\s*[A-Z0-9]{1,3})*$/u;
@@ -21,6 +22,7 @@ const PARENTHETICAL_QUALIFIER = /^\(([^()]{1,60})\)$/u;
 const ALLERGEN_TERMS = new Set([
   "gluten",
   "hvete",
+  "hvetegluten",
   "rug",
   "bygg",
   "havre",
@@ -58,6 +60,7 @@ const ALLERGEN_TERMS = new Set([
   "lupin",
   "bløtdyr",
   "wheat",
+  "wheatgluten",
   "rye",
   "barley",
   "oats",
@@ -89,6 +92,11 @@ const ALLERGEN_TERMS = new Set([
 interface DescriptionTitleRecovery {
   readonly title: string;
   readonly observedNameIsTitleContinuation: boolean;
+}
+
+interface SourceExcerptTitleRecovery {
+  readonly title: string;
+  readonly sectionHint: string | null;
 }
 
 function normalizeVisibleLine(value: string): string {
@@ -145,6 +153,11 @@ function looksLikeDescription(value: string): boolean {
   );
 }
 
+function isSectionLabel(value: string): boolean {
+  const line = normalizeVisibleLine(value);
+  return SECTION_LABEL.test(line) || SEMANTIC_SECTION_LABEL.test(line);
+}
+
 function looksLikeRecoveredTitle(value: string): boolean {
   const line = normalizeVisibleLine(value);
   if (!line || line.length > 160 || !/\p{L}/u.test(line)) return false;
@@ -152,6 +165,7 @@ function looksLikeRecoveredTitle(value: string): boolean {
     PRICE_LINE.test(line) ||
     SECTION_LABEL.test(line) ||
     looksLikeDescription(line) ||
+    ALLERGEN_PREFIX.test(line) ||
     looksLikeAllergenMetadata(line)
   ) {
     return false;
@@ -185,18 +199,19 @@ function recoverSplitParentheticalTitle(candidate: string, continuation: string)
   return parenthesisBalance(combined) === 0 && looksLikeRecoveredTitle(combined) ? combined : null;
 }
 
-function recoverSectionLabelTitleFromSourceExcerpt(item: MenuObservedItem): string | null {
+function recoverForwardTitleFromSourceExcerpt(item: MenuObservedItem): SourceExcerptTitleRecovery | null {
   const current = normalizeVisibleLine(item.name);
   const sourceExcerpt = item.sourceExcerpt?.trim() ?? "";
-  if (!sourceExcerpt || !SECTION_LABEL.test(current)) return null;
+  const currentIsSection = isSectionLabel(current);
+  const currentIsNonTitle = currentIsSection || looksLikeDescription(current) || ALLERGEN_PREFIX.test(current);
+  if (!sourceExcerpt || !currentIsNonTitle) return null;
 
   const segments = sourceExcerpt
     .split(SOURCE_EXCERPT_SEPARATOR)
     .map(normalizeVisibleLine)
     .filter(Boolean);
   const foldedCurrent = current.toLocaleLowerCase("nb-NO");
-  const fallbackCandidates = new Set<string>();
-  const structuredCandidates = new Set<string>();
+  const candidates = new Set<string>();
 
   for (let index = 0; index < segments.length; index += 1) {
     const segment = segments[index] ?? "";
@@ -206,19 +221,15 @@ function recoverSectionLabelTitleFromSourceExcerpt(item: MenuObservedItem): stri
       const candidate = segments[index + offset] ?? "";
       if (!candidate) continue;
       if (PRICE_LINE.test(candidate)) break;
-      if (!looksLikeRecoveredTitle(candidate)) continue;
-
-      fallbackCandidates.add(candidate);
-      const following = segments[index + offset + 1] ?? "";
-      if (following && !PRICE_LINE.test(following) && looksLikeDescription(following)) {
-        structuredCandidates.add(candidate);
-      }
+      if (looksLikeRecoveredTitle(candidate)) candidates.add(candidate);
     }
   }
 
-  if (structuredCandidates.size === 1) return [...structuredCandidates][0] ?? null;
-  if (structuredCandidates.size > 1) return null;
-  return fallbackCandidates.size === 1 ? [...fallbackCandidates][0] ?? null : null;
+  if (candidates.size !== 1) return null;
+  return {
+    title: [...candidates][0] ?? "",
+    sectionHint: currentIsSection ? current : null,
+  };
 }
 
 function recoverForwardSplitParentheticalTitleFromSourceExcerpt(item: MenuObservedItem): string | null {
@@ -401,18 +412,16 @@ export function recoverDescriptionNamedHtmlItems(
   visibleText: string,
 ): readonly MenuObservedItem[] {
   const lines = visibleText.split("\n").map(normalizeVisibleLine);
-  const unique = new Map<string, MenuObservedItem>();
-
-  for (const item of items) {
+  const recovered = items.map((item) => {
     const position = item.position;
-    const sectionLabelTitle = recoverSectionLabelTitleFromSourceExcerpt(item);
+    const forwardRecovery = recoverForwardTitleFromSourceExcerpt(item);
     const descriptionRecovery =
-      !sectionLabelTitle && looksLikeDescription(item.name) && Number.isInteger(position) && position >= 1
+      !forwardRecovery && looksLikeDescription(item.name) && Number.isInteger(position) && position >= 1
         ? recoverTitle(lines, position, item.name)
         : null;
     const descriptionTitle = descriptionRecovery?.title ?? null;
-    const qualifiedTitle = sectionLabelTitle || descriptionTitle ? null : recoverParentheticalQualifiedTitle(lines, item);
-    const title = sectionLabelTitle ?? descriptionTitle ?? qualifiedTitle;
+    const qualifiedTitle = forwardRecovery || descriptionTitle ? null : recoverParentheticalQualifiedTitle(lines, item);
+    const title = forwardRecovery?.title ?? descriptionTitle ?? qualifiedTitle;
 
     const next = title
       ? (() => {
@@ -422,24 +431,47 @@ export function recoverDescriptionNamedHtmlItems(
             sourceKey,
             name: title,
             normalizedName: normalizeDishName(title),
-            description: sectionLabelTitle
-              ? recoveredSectionLabelDescription(item, sectionLabelTitle)
+            description: forwardRecovery
+              ? recoveredSectionLabelDescription(item, forwardRecovery.title)
               : descriptionRecovery
                 ? recoveredDescription(item, !descriptionRecovery.observedNameIsTitleContinuation)
                 : item.description,
-            confidence: sectionLabelTitle
+            confidence: forwardRecovery
               ? Math.min(item.confidence, 0.82)
               : descriptionRecovery
                 ? Math.min(item.confidence, 0.84)
                 : item.confidence,
             sourceExcerpt:
-              sectionLabelTitle || descriptionRecovery
+              forwardRecovery || descriptionRecovery
                 ? `${title} — ${item.sourceExcerpt ?? item.name}`.slice(0, 1000)
                 : item.sourceExcerpt,
           };
         })()
       : item;
 
+    return {
+      item: next,
+      sectionHint: forwardRecovery?.sectionHint ?? null,
+    };
+  });
+
+  const titleCounts = new Map<string, number>();
+  for (const entry of recovered) {
+    titleCounts.set(entry.item.normalizedName, (titleCounts.get(entry.item.normalizedName) ?? 0) + 1);
+  }
+
+  const unique = new Map<string, MenuObservedItem>();
+  for (const entry of recovered) {
+    const count = titleCounts.get(entry.item.normalizedName) ?? 0;
+    const sectionName = count > 1 && entry.sectionHint ? entry.sectionHint : entry.item.sectionName;
+    const next =
+      sectionName !== entry.item.sectionName
+        ? {
+            ...entry.item,
+            sectionName,
+            sourceKey: createMenuItemSourceKey(entry.item.name, sectionName),
+          }
+        : entry.item;
     unique.set(next.sourceKey, next);
   }
 
