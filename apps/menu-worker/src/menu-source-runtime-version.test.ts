@@ -27,7 +27,7 @@ describe("HTML runtime extractor version", () => {
       HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION,
     ].join("+");
 
-    expect(HTML_BEVERAGE_FILTER_VERSION).toBe("beverage-v1");
+    expect(HTML_BEVERAGE_FILTER_VERSION).toBe("beverage-v2");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
     expect(shouldForceReextract("html", "html-v14+html-v7+titles-v8+heading-v1")).toBe(true);
