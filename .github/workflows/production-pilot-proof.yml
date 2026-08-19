@@ -7,12 +7,27 @@ on:
     paths:
       - ".github/workflows/production-pilot-proof.yml"
       - "scripts/production-pilot-proof.mjs"
+      - "scripts/revenue-production-proof.mjs"
       - "apps/menu-worker/catalog/**"
       - "apps/web/app/search/**"
+      - "apps/web/app/claim/**"
+      - "apps/web/app/pro/**"
+      - "apps/web/app/api/pro/**"
       - "apps/web/components/dish-browse.tsx"
+      - "apps/web/components/restaurant-claim-form.tsx"
+      - "apps/web/components/fysen-pro-login-form.tsx"
       - "apps/api/src/dish-search.controller.ts"
       - "apps/api/src/dish-search.service.ts"
+      - "apps/api/src/restaurant-claims.controller.ts"
+      - "apps/api/src/restaurant-claims.service.ts"
+      - "apps/api/src/fysen-pro.controller.ts"
+      - "apps/api/src/fysen-pro.service.ts"
+      - "packages/database/migrations/0014_search_demand_source.sql"
+      - "packages/database/migrations/0015_restaurant_claims.sql"
+      - "packages/database/migrations/0016_fysen_pro_sessions.sql"
       - "packages/database/src/browse.ts"
+      - "packages/database/src/restaurant-claims.ts"
+      - "packages/database/src/fysen-pro.ts"
 
 permissions:
   contents: read
@@ -76,5 +91,20 @@ jobs:
             echo
             echo '```json'
             cat /tmp/fysen-production-pilot-proof.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Verify Demand provenance, Claim Restaurant and Fysen Pro production boundaries
+        shell: bash
+        run: |
+          node scripts/revenue-production-proof.mjs | tee /tmp/fysen-revenue-production-proof.json
+          {
+            echo
+            echo '## Fysen revenue production proof'
+            echo
+            echo 'This proof is non-mutating: it verifies production R3/R4 schema, fail-closed demand provenance, hash-only Pro token storage, PII-free Claim context, unauthenticated Pro rejection, and the public Claim/Pro web surfaces.'
+            echo
+            echo '```json'
+            cat /tmp/fysen-revenue-production-proof.json
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
