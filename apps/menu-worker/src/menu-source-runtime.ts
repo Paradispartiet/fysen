@@ -40,6 +40,7 @@ const TRAILING_MENU_DELIMITER = /\s*[|¦]\s*$/u;
 const TRAILING_PARENTHETICAL = /\s+\([^()]{1,60}\)$/u;
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]?\s+/u;
+const LEADING_MENU_INDEX_BEFORE_QUANTITY = /^\d{1,3}[.)]\s+(?=\d+\s+\p{L})/u;
 const NON_DISH_HTML_ITEM = /^(?:legg i handlekurv|add to cart|håndlagde produkter\b|handmade products\b|levering$|delivery$|a\s+teapot$|all\s+rights\s+reserved\b)/iu;
 const PHONE_METADATA_ITEM = /^(?:tel(?:efon)?|tlf|phone)\s*:?\s*\+?\d[\d ()+.-]{4,}$/iu;
 const NON_DISH_MENU_SECTION = /^(?:meny|à la carte|forretter|småretter|grillretter|hovedretter|dessert(?:er)?|drikkemeny|drikke(?:r)?|drikkevarer|cocktails?|vin|øl|bestill|bord|åpningstider|kontakt)$/iu;
@@ -51,7 +52,7 @@ const BEVERAGE_MENU_ITEM = /^(?:(?:coca[- ]?cola|cola(?:\s+zero)?|fanta|sprite|f
 const BEVERAGE_STYLE_ITEM = /(?:\b(?:milk\s+tea|boba\s+milk|smoothie|lemonade|red\s+bull|energy\s+drink|mocktail)\b|^pepsi(?:\s+max)?$|^(?:aranciata|chinotto|gazzosa|limonata)$|^(?:ice|iced)\s+tea(?:\s+(?:lemon|peach|green|mango|lychee|raspberry|passion\s*fruit))?$|^(?:taro|chocolate)\s+milk$|^iced\s+cocoa(?:\s+\p{L}+){0,3}\s+milk$|^(?:matcha|chai|vanilla|caramel)(?:\s+\p{L}+){0,3}\s+latte(?:\s+cheese)?$|^(?:saigon\s+special|salt|egg)\s+cafe(?:\s*-\s*cafe\s+sua\s+da)?$|^solo(?:\s+\d+(?:[.,]\d+)?\s*(?:ml|cl|l))?$)/iu;
 const BOTTLED_BEVERAGE_VOLUME = /\bflaske\s+0[,.]\d{1,2}(?:\s*l)?$/iu;
 export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v1";
-export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v7";
+export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v6";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v5";
 const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}`;
@@ -110,6 +111,7 @@ function restoreSemanticParentheticalName(item: MenuObservedItem): string {
 export function normalizeHtmlItemName(item: MenuObservedItem): MenuObservedItem {
   const restored = restoreSemanticParentheticalName(item);
   const name = restored
+    .replace(LEADING_MENU_INDEX_BEFORE_QUANTITY, "")
     .replace(TRAILING_ALLERGEN_CODES, "")
     .replace(TRAILING_INLINE_PRICE, "")
     .replace(TRAILING_MENU_DELIMITER, "")
