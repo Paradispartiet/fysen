@@ -18,7 +18,8 @@ import { extractScopedPdfMenu, PDF_SOURCE_EXTRACTOR_VERSION } from "./pdf-source
 
 const DEFAULT_MAX_PDF_RESPONSE_BYTES = 8 * 1024 * 1024;
 const MAX_PDF_RESPONSE_BYTES = 25 * 1024 * 1024;
-const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}`;
+export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v1";
+const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
 export type MenuSourceFetchMode = "http" | "browser";
@@ -39,6 +40,13 @@ export interface ExtractedMenuSource {
 }
 
 type MenuContentFetchResult = Extract<MenuHttpFetchResult, { readonly kind: "content" }>;
+
+export function normalizeHtmlPriceNotation(html: string): string {
+  return html.replace(
+    /(\b(?:kr\.?\s*)?[1-9]\d{1,3})(?:\s*,)?\s*\/-/giu,
+    "$1,-",
+  );
+}
 
 export function pdfResponseByteLimit(): number {
   const configured = Number(process.env.FYSEN_MAX_PDF_RESPONSE_BYTES);
@@ -106,7 +114,9 @@ export async function extractMenuSource(
   fetched: MenuContentFetchResult,
 ): Promise<ExtractedMenuSource> {
   if (sourceType === "html" || sourceType === "json_ld") {
-    const extracted = extractScopedHtmlMenu(normalizeHtmlHeadingLineBreaks(fetched.body));
+    const extracted = extractScopedHtmlMenu(
+      normalizeHtmlPriceNotation(normalizeHtmlHeadingLineBreaks(fetched.body)),
+    );
     assertExtractionMethodForSourceType(sourceType, extracted.method);
     const items =
       extracted.method === "html_heuristic"
