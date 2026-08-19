@@ -19,6 +19,7 @@ export interface RestaurantHoursSourceTarget {
   readonly extractor: "visible_text_v1";
   readonly checkIntervalMinutes: number;
   readonly minimumExpectedIntervals: number;
+  readonly scopeHints: readonly string[];
   readonly etag: string | null;
   readonly lastModified: string | null;
   readonly lastScheduleFingerprint: string | null;
@@ -57,6 +58,7 @@ interface SourceRow extends QueryResultRow {
   extractor: "visible_text_v1";
   check_interval_minutes: number;
   minimum_expected_intervals: number;
+  scope_hints: string[];
   etag: string | null;
   last_modified: string | null;
   last_schedule_fingerprint: string | null;
@@ -86,6 +88,7 @@ function mapSource(row: SourceRow): RestaurantHoursSourceTarget {
     extractor: row.extractor,
     checkIntervalMinutes: Number(row.check_interval_minutes),
     minimumExpectedIntervals: Number(row.minimum_expected_intervals),
+    scopeHints: row.scope_hints,
     etag: row.etag,
     lastModified: row.last_modified,
     lastScheduleFingerprint: row.last_schedule_fingerprint,
@@ -157,6 +160,7 @@ export async function listDueRestaurantHoursSources(
             s.extractor,
             s.check_interval_minutes,
             s.minimum_expected_intervals,
+            s.scope_hints,
             s.etag,
             s.last_modified,
             s.last_schedule_fingerprint
