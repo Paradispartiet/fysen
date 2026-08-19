@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
   HttpMenuClient,
-  type MenuHttpFetchOptions,
   type MenuHttpFetchResult,
   type MenuHttpSourceState,
 } from "./http-client.js";
@@ -21,10 +20,7 @@ class StaticHoursClient extends HttpMenuClient {
     super();
   }
 
-  override async fetchSource(
-    _source: MenuHttpSourceState,
-    _options: MenuHttpFetchOptions = {},
-  ): Promise<MenuHttpFetchResult> {
+  override async fetchSource(_source: MenuHttpSourceState): Promise<MenuHttpFetchResult> {
     return {
       kind: "content",
       fetchedAt: "2026-08-19T00:00:00.000Z",
