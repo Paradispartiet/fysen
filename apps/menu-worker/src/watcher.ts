@@ -12,6 +12,7 @@ import {
   fetchMenuSource,
   pdfResponseByteLimit,
   shouldForceReextract,
+  type MenuSourceSupportInput,
 } from "./menu-source-runtime.js";
 
 export interface MenuWatchSummary {
@@ -32,6 +33,7 @@ export async function watchMenuSourceOnce(
   repository: MenuIndexRepository,
   menuSourceId: string,
   httpClient = new HttpMenuClient(),
+  sourceSupport: MenuSourceSupportInput = { redirectOrigins: [], browserDataOrigins: [] },
 ): Promise<MenuWatchSummary> {
   const startedAt = new Date().toISOString();
   const source = await repository.getMenuSourceById(menuSourceId);
@@ -47,6 +49,7 @@ export async function watchMenuSourceOnce(
     userAgent: source.userAgent,
     etag: forceReextract ? null : source.etag,
     lastModified: forceReextract ? null : source.lastModified,
+    sourceSupport,
   } as const;
 
   let fetched;
@@ -73,6 +76,8 @@ export async function watchMenuSourceOnce(
         fetchMode: source.fetchMode,
         maxResponseBytes: source.sourceType === "pdf" ? pdfResponseByteLimit() : null,
         forceReextract,
+        redirectOrigins: sourceSupport.redirectOrigins,
+        browserDataOrigins: sourceSupport.browserDataOrigins,
       },
     });
     throw error;
