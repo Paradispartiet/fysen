@@ -3,7 +3,7 @@ import type {
   RestaurantClaimContext,
   RestaurantClaimReceipt,
   RestaurantClaimRequest,
-} from "@fysen/contracts";
+} from "@fysen/contracts/restaurant-claims";
 import { getRestaurantClaimContext, requestRestaurantClaim } from "@fysen/database";
 import { DatabaseService } from "./database.service.js";
 
