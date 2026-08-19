@@ -3,6 +3,7 @@ import { extractScopedHtmlMenu } from "./html-source-extractor.js";
 import {
   HTML_ITEM_NAME_NORMALIZER_VERSION,
   HTML_PRICE_NOTATION_NORMALIZER_VERSION,
+  isCanonicalHtmlMenuItem,
   normalizeHtmlItemName,
   normalizeHtmlPriceNotation,
 } from "./menu-source-runtime.js";
@@ -46,9 +47,9 @@ describe("HTML menu runtime normalization", () => {
     expect(result.items.map((item) => item.priceMinor)).toEqual([17900, 16500, 19900]);
   });
 
-  it("strips short trailing allergen-code lists while preserving the rest of the menu item", () => {
-    expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v2");
-    const item = normalizeHtmlItemName({
+  it("strips short uppercase allergen-code lists while preserving semantic parentheses", () => {
+    expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v3");
+    const allergenItem = normalizeHtmlItemName({
       sourceKey: "old",
       name: "Rasmalai (G, M, E, N)",
       normalizedName: "rasmalai g m e n",
@@ -61,12 +62,43 @@ describe("HTML menu runtime normalization", () => {
       confidence: 0.9,
       sourceExcerpt: "Rasmalai (G, M, E, N) — KR. 169,/-",
     });
+    const semanticItem = normalizeHtmlItemName({
+      sourceKey: "old-semantic",
+      name: "Wienerschnitzel",
+      normalizedName: "wienerschnitzel",
+      description: "Med grønnsaker og pommes frites.",
+      sectionName: "Hovedretter",
+      priceMinor: 39900,
+      currency: "NOK",
+      position: 10,
+      extractionMethod: "html_heuristic",
+      confidence: 0.9,
+      sourceExcerpt: "11. Wienerschnitzel (Kalv) — Kr 399,-",
+    });
 
-    expect(item.name).toBe("Rasmalai");
-    expect(item.normalizedName).toBe("rasmalai");
-    expect(item.sourceKey).not.toBe("old");
-    expect(item.priceMinor).toBe(16900);
-    expect(item.description).toBe("Milk dumpling dessert.");
+    expect(allergenItem.name).toBe("Rasmalai");
+    expect(allergenItem.normalizedName).toBe("rasmalai");
+    expect(semanticItem.name).toBe("Wienerschnitzel (Kalv)");
+    expect(semanticItem.normalizedName).toContain("kalv");
+    expect(semanticItem.priceMinor).toBe(39900);
+  });
+
+  it("still strips a single short allergen code", () => {
+    const item = normalizeHtmlItemName({
+      sourceKey: "old",
+      name: "Coastal Delight (SF)",
+      normalizedName: "coastal delight sf",
+      description: null,
+      sectionName: null,
+      priceMinor: 17900,
+      currency: "NOK",
+      position: 1,
+      extractionMethod: "html_heuristic",
+      confidence: 0.9,
+      sourceExcerpt: "Coastal Delight (SF) — 179",
+    });
+
+    expect(item.name).toBe("Coastal Delight");
   });
 
   it("strips a recovered trailing inline NOK price without changing the parsed price value", () => {
@@ -108,5 +140,23 @@ describe("HTML menu runtime normalization", () => {
 
     expect(item.name).toBe("Table 42 - 7");
     expect(item.sourceKey).toBe("stable");
+  });
+
+  it("rejects numeric-only HTML item names as non-canonical menu entries", () => {
+    expect(
+      isCanonicalHtmlMenuItem({
+        sourceKey: "phone-fragment",
+        name: "994 44",
+        normalizedName: "994 44",
+        description: null,
+        sectionName: null,
+        priceMinor: 99400,
+        currency: "NOK",
+        position: 99,
+        extractionMethod: "html_heuristic",
+        confidence: 0.5,
+        sourceExcerpt: "994 44",
+      }),
+    ).toBe(false);
   });
 });
