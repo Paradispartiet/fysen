@@ -12,6 +12,7 @@ type RobotsParserFactory = (url: string, robotsText: string) => RobotsRules;
 const nodeRequire = createRequire(import.meta.url);
 const robotsParser = nodeRequire("robots-parser") as RobotsParserFactory;
 const MAX_EXPLICIT_RESPONSE_BYTES = 25 * 1024 * 1024;
+const MAX_ROBOTS_RESPONSE_BYTES = 1024 * 1024;
 
 export interface MenuHttpSourceState {
   readonly url: string;
@@ -185,7 +186,7 @@ export class HttpMenuClient {
     const response = fetched.response;
 
     if (response.status >= 200 && response.status < 300) {
-      const bodyBytes = await this.readLimitedBytes(response, 256 * 1024);
+      const bodyBytes = await this.readLimitedBytes(response, MAX_ROBOTS_RESPONSE_BYTES);
       const parser = robotsParser(fetched.finalUrl.href, Buffer.from(bodyBytes).toString("utf8"));
       return parser.isAllowed(target.href, userAgent) !== false;
     }
