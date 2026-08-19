@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v5";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v6";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -45,6 +45,34 @@ interface ItemCandidate extends ParsedPrice {
   readonly sectionName: string | null;
   readonly rawName: string;
 }
+
+const PDF_DOT_LEADER_SUFFIX = /\s*(?:\.\s*){2,}$/u;
+const PDF_QUANTITY = /\b\d+(?:[.,]\d+)?\s*(?:kg|gr|g|ml|cl|l)\b/giu;
+const PDF_NON_DISH_METADATA = /^(?:set\s+menu|tasting\s+menu|course\s+menu)\b/iu;
+const allergenCodeTokens = new Set([
+  "al",
+  "b",
+  "bl",
+  "ca",
+  "e",
+  "f",
+  "g",
+  "h",
+  "ha",
+  "m",
+  "ma",
+  "pe",
+  "pi",
+  "r",
+  "se",
+  "sk",
+  "sl",
+  "sn",
+  "so",
+  "su",
+  "va",
+  "wa",
+]);
 
 function normalizeLine(value: string): string {
   return value.normalize("NFKC").replace(/\s+/g, " ").trim();
@@ -139,10 +167,35 @@ function stripAllergenSuffix(value: string): string {
     .trim();
 }
 
+function stripDotLeaderSuffix(value: string): string {
+  return normalizeLine(value).replace(PDF_DOT_LEADER_SUFFIX, "").trim();
+}
+
+function canonicalPdfDishName(value: string): string {
+  return stripDotLeaderSuffix(stripAllergenSuffix(value));
+}
+
+function looksLikeAllergenCodeOnly(value: string): boolean {
+  const tokens = normalizeLine(value)
+    .replace(/[.,;:]+$/u, "")
+    .split(/[\s,/+]+/u)
+    .map((token) => token.toLocaleLowerCase("nb-NO"))
+    .filter(Boolean);
+  return tokens.length > 0 && tokens.length <= 12 && tokens.every((token) => allergenCodeTokens.has(token));
+}
+
+function looksLikeQuantityPricingMetadata(value: string): boolean {
+  const quantities = normalizeLine(value).match(PDF_QUANTITY) ?? [];
+  return quantities.length >= 2;
+}
+
 function looksLikeDishName(value: string): boolean {
   const text = normalizeLine(value);
   if (text.length < 2 || text.length > 220 || !/\p{L}/u.test(text)) return false;
   if (/https?:\/\/|www\.|@/iu.test(text)) return false;
+  if (/©|™|\bcopyright\b|\ball rights reserved\b/iu.test(text)) return false;
+  if (PDF_NON_DISH_METADATA.test(text)) return false;
+  if (looksLikeAllergenCodeOnly(text) || looksLikeQuantityPricingMetadata(text)) return false;
   if (/^(allerg|contains|inneholder|priser|prices|kjøkken|opening|åpning|mandag|tirsdag|onsdag|torsdag|fredag|lørdag|søndag)\b/iu.test(text)) return false;
   return true;
 }
@@ -161,7 +214,7 @@ const wrappedDishQualifiers = new Set([
 ]);
 
 function isWrappedDishQualifier(value: string): boolean {
-  return wrappedDishQualifiers.has(normalizeDishName(stripAllergenSuffix(value)));
+  return wrappedDishQualifiers.has(normalizeDishName(canonicalPdfDishName(value)));
 }
 
 const priceSuffix = "(?:\\s*(?:,-|kr\\.?|nok))?";
@@ -179,7 +232,7 @@ function parseInlineDish(line: string): ParsedInlineDish | null {
   if (!match?.[1] || match.index <= 0) return null;
   const price = parsedPrice(match[1], match[2]);
   if (!price) return null;
-  const rawName = stripAllergenSuffix(line.slice(0, match.index));
+  const rawName = canonicalPdfDishName(line.slice(0, match.index));
   if (!looksLikeDishName(rawName)) return null;
   return { rawName, ...price };
 }
@@ -196,7 +249,7 @@ function wrappedName(
   if (!looksLikeDishName(continuation)) return null;
   if (lines[continuationIndex]?.page !== lines[prefixLineIndex]?.page) return null;
   return {
-    name: normalizeLine(`${stripAllergenSuffix(prefix)} ${continuation}`),
+    name: normalizeLine(`${canonicalPdfDishName(prefix)} ${canonicalPdfDishName(continuation)}`),
     continuationLineIndex: continuationIndex,
   };
 }
@@ -212,7 +265,8 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
     const line = lines[index]?.text ?? "";
     const nextLine = lines[index + 1]?.text ?? "";
     const inline = parseInlineDish(line);
-    const isStandalonePricedDishName = looksLikeDishName(line) && standalonePrice.test(nextLine);
+    const standaloneName = canonicalPdfDishName(line);
+    const isStandalonePricedDishName = looksLikeDishName(standaloneName) && standalonePrice.test(nextLine);
     const section = isStandalonePricedDishName || inline ? null : sectionHeading(line);
     if (section) {
       currentSection = section;
@@ -225,22 +279,20 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
       if (price && index > 0) {
         const previousIndex = index - 1;
         const previous = lines[previousIndex]?.text ?? "";
-        if (looksLikeDishName(previous)) {
-          const rawName = stripAllergenSuffix(previous);
-          if (looksLikeDishName(rawName)) {
-            const continuation = wrappedName(rawName, lines, index);
-            if (isWrappedDishQualifier(rawName) && !continuation) continue;
-            if (continuation) consumedWrappedNameLines.add(continuation.continuationLineIndex);
-            candidates.push({
-              nameLineIndex: previousIndex,
-              nameContinuationLineIndex: continuation?.continuationLineIndex ?? null,
-              priceLineIndex: index,
-              page: lines[previousIndex]?.page ?? lines[index]?.page ?? 1,
-              sectionName: currentSection,
-              rawName: continuation?.name ?? rawName,
-              ...price,
-            });
-          }
+        const rawName = canonicalPdfDishName(previous);
+        if (looksLikeDishName(rawName)) {
+          const continuation = wrappedName(rawName, lines, index);
+          if (isWrappedDishQualifier(rawName) && !continuation) continue;
+          if (continuation) consumedWrappedNameLines.add(continuation.continuationLineIndex);
+          candidates.push({
+            nameLineIndex: previousIndex,
+            nameContinuationLineIndex: continuation?.continuationLineIndex ?? null,
+            priceLineIndex: index,
+            page: lines[previousIndex]?.page ?? lines[index]?.page ?? 1,
+            sectionName: currentSection,
+            rawName: continuation?.name ?? rawName,
+            ...price,
+          });
         }
       }
       continue;
@@ -302,7 +354,8 @@ function buildItems(lines: readonly PdfLine[]): readonly MenuObservedItem[] {
 
   for (const [position, candidate] of candidates.entries()) {
     const nextCandidateLine = candidates[position + 1]?.nameLineIndex ?? lines.length;
-    const name = normalizeLine(candidate.rawName);
+    const name = canonicalPdfDishName(candidate.rawName);
+    if (!looksLikeDishName(name)) continue;
     const sourceKey = createMenuItemSourceKey(name, candidate.sectionName);
     if (seen.has(sourceKey)) continue;
     seen.add(sourceKey);
