@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "la-mayor-bernt-ankers-gate-oslo",
+    "name": "La Mayor",
+    "websiteUrl": "https://www.lamayor.no/",
+    "address": "Bernt Ankers gate 25, 0183 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9165077,
+    "longitude": 10.7511673
+  },
+  "menuSource": {
+    "url": "https://www.lamayor.no/copy-of-restaurant",
+    "sourceType": "html",
+    "fetchMode": "browser",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 14,
+    "sourceSupport": {
+      "browserDataOrigins": ["https://siteassets.parastorage.com"]
+    }
+  },
+  "hoursSource": {
+    "url": "https://www.lamayor.no/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 6
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "La Mayor publishes clear first-party venue opening hours, but the page does not explicitly identify them as kitchen hours and the canonical kitchen-hours extractor cannot verify them. Keep open/closed unknown until an explicit kitchen schedule is available."
+    }
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://lamayor.superbexperience.com/reserve/experience",
+      "sourceUrl": "https://www.lamayor.no/",
+      "provider": "Superb"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tostada de Callos (from the coast)",
+      "Aguachile de Salmon",
+      "Berenjena con Mole Rosa (chef’s inspiration)",
+      "Molotes de Platano (Oaxaca)",
+      "Mussels Tamal",
+      "Cochinita Pibil (Yucatan region)",
+      "Manchamanteles (Oaxaca)",
+      "Birria Huarache",
+      "Tamal de Chocolate (Mexico City)"
+    ],
+    "requiredDishVariants": [
+      { "name": "Tostada de Callos (from the coast)", "priceMinor": 23000 },
+      { "name": "Aguachile de Salmon", "priceMinor": 22000 },
+      { "name": "Berenjena con Mole Rosa (chef’s inspiration)", "priceMinor": 21000 },
+      { "name": "Molotes de Platano (Oaxaca)", "priceMinor": 21000 },
+      { "name": "Mussels Tamal", "priceMinor": 22000 },
+      { "name": "Cochinita Pibil (Yucatan region)", "priceMinor": 31000 },
+      { "name": "Manchamanteles (Oaxaca)", "priceMinor": 28500 },
+      { "name": "Birria Huarache", "priceMinor": 31000 },
+      { "name": "Tamal de Chocolate (Mexico City)", "priceMinor": 14500 }
+    ],
+    "forbiddenDishNames": [
+      "MENU",
+      "TASTING MENU",
+      "A LA CARTA",
+      "ENTRADAS / APPETIZERS",
+      "FUERTES /MAINS",
+      "DULCE/ SWEET",
+      "BRUNCH",
+      "Wine pairing",
+      "Coffee or Juice"
+    ]
+  }
+}
