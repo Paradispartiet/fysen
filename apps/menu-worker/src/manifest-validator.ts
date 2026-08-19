@@ -21,6 +21,16 @@ export interface ManifestObservedDishVariant {
   readonly priceMinor: number | null;
 }
 
+export interface EmptyHtmlMenuDiagnostics {
+  readonly bodyBytes: number;
+  readonly scriptSources: readonly string[];
+  readonly iframeSources: readonly string[];
+  readonly embeddedRequiredDishHits: readonly string[];
+  readonly hasNextData: boolean;
+  readonly hasJsonLd: boolean;
+  readonly textExcerpt: string;
+}
+
 export interface ManifestMenuValidationResult {
   readonly accepted: boolean;
   readonly url: string;
@@ -31,6 +41,7 @@ export interface ManifestMenuValidationResult {
   readonly quality: ManifestMenuQualityResult | null;
   readonly observedDishNames: readonly string[];
   readonly observedDishVariants: readonly ManifestObservedDishVariant[];
+  readonly diagnostics?: EmptyHtmlMenuDiagnostics | null;
   readonly error: string | null;
 }
 
@@ -75,6 +86,44 @@ function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
+function uniqueAttributeValues(body: string, tagName: string, attributeName: string): readonly string[] {
+  const values = new Set<string>();
+  const tagPattern = new RegExp(`<${tagName}\\b[^>]*\\b${attributeName}\\s*=\\s*["']([^"']+)["'][^>]*>`, "giu");
+  for (const match of body.matchAll(tagPattern)) {
+    if (match[1]) values.add(match[1]);
+    if (values.size >= 20) break;
+  }
+  return [...values];
+}
+
+function emptyHtmlMenuDiagnostics(
+  body: string,
+  requiredDishNames: readonly string[],
+): EmptyHtmlMenuDiagnostics {
+  const foldedBody = body.toLocaleLowerCase("nb-NO");
+  const textExcerpt = body
+    .replace(/<script\\b[^>]*>[\\s\\S]*?<\\/script>/giu, " ")
+    .replace(/<style\\b[^>]*>[\\s\\S]*?<\\/style>/giu, " ")
+    .replace(/<[^>]+>/gu, " ")
+    .replace(/&nbsp;/giu, " ")
+    .replace(/&amp;/giu, "&")
+    .replace(/\\s+/gu, " ")
+    .trim()
+    .slice(0, 4000);
+
+  return {
+    bodyBytes: new TextEncoder().encode(body).length,
+    scriptSources: uniqueAttributeValues(body, "script", "src"),
+    iframeSources: uniqueAttributeValues(body, "iframe", "src"),
+    embeddedRequiredDishHits: requiredDishNames.filter((name) =>
+      foldedBody.includes(name.toLocaleLowerCase("nb-NO")),
+    ),
+    hasNextData: /__NEXT_DATA__/u.test(body),
+    hasJsonLd: /application\/ld\+json/iu.test(body),
+    textExcerpt,
+  };
+}
+
 async function validateMenu(
   manifest: RestaurantOnboardingManifest,
   client: HttpMenuClient,
@@ -99,6 +148,11 @@ async function validateMenu(
     const extracted = await extractMenuSource(manifest.menuSource.sourceType, fetched);
     const fingerprint = createMenuFingerprint(extracted.items);
     const quality = evaluateManifestMenuQuality(manifest, extracted.items);
+    const diagnostics =
+      extracted.items.length === 0 &&
+      (manifest.menuSource.sourceType === "html" || manifest.menuSource.sourceType === "json_ld")
+        ? emptyHtmlMenuDiagnostics(fetched.body, manifest.qualityAssertions.requiredDishNames)
+        : null;
     return {
       accepted: quality.accepted,
       url: manifest.menuSource.url,
@@ -112,6 +166,7 @@ async function validateMenu(
         name: item.name,
         priceMinor: item.priceMinor,
       })),
+      diagnostics,
       error: quality.accepted
         ? null
         : `Menu assertions failed: items=${quality.itemCount}/${quality.minimumExpectedItems}, missing=${quality.missingRequiredDishes.join(",") || "none"}, forbidden=${quality.forbiddenDishesPresent.join(",") || "none"}`,
@@ -127,6 +182,7 @@ async function validateMenu(
       quality: null,
       observedDishNames: [],
       observedDishVariants: [],
+      diagnostics: null,
       error: errorMessage(error),
     };
   }
