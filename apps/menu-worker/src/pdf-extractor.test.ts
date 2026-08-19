@@ -149,6 +149,38 @@ describe("PDF menu extractor", () => {
     });
   });
 
+  it("strips repeated dotted PDF leaders while preserving the dish and exact price", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "SNACKS",
+      "GUACAMOLE CLÁSICO . . . . . . . . . . . . 189,-",
+      "Most avokado med lime og koriander",
+      "TACO DE PESCADO ................. 189,-",
+    ]);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["GUACAMOLE CLÁSICO", 18900],
+      ["TACO DE PESCADO", 18900],
+    ]);
+  });
+
+  it("rejects allergen-only, size-grid, set-menu and copyright metadata without hiding real dishes", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "HOVEDRETTER",
+      "BRISKET NORTEÑO",
+      "E,",
+      "449,-",
+      "COYO BLÅSKJELL",
+      "500gr 349,- 800gr 469,-",
+      "Set menu 850,-",
+      "Med forebehold om prisendringer og skrivefeil © Coyo 2026",
+      "DESSERT",
+      "CHURROS . . . . . . . 189,-",
+    ]);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([["CHURROS", 18900]]);
+    expect(items.some((item) => /^(?:E,|Set menu|500gr|Med forebehold)/iu.test(item.name))).toBe(false);
+  });
+
   it("uses PDF.js text extraction without OCR", async () => {
     const bytes = new Uint8Array(Buffer.from(syntheticPdfBase64, "base64"));
     const extracted = await extractPdfMenu(bytes);
