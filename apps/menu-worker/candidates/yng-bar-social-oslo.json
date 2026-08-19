@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "yng-bar-social-oslo",
+    "name": "YNG Bar & Social",
+    "websiteUrl": "https://www.yngoslo.no/",
+    "address": "Youngstorget 3, 0181 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9141,
+    "longitude": 10.74934
+  },
+  "menuSource": {
+    "url": "https://yngoslo.no/menu",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 11
+  },
+  "hoursSource": {
+    "url": "https://yngoslo.no/menu",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 4
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "YNG publishes explicitly kitchen-scoped hours Wednesday-Friday 16:00-21:45 and Saturday 19:30-21:45 on its first-party menu page. The page does not explicitly publish kitchen closures or intervals for Sunday-Tuesday, so the weekly kitchen schedule is incomplete and must remain provisional."
+    }
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://book.easytable.com/book/?id=4608b&lang=auto",
+      "sourceUrl": "https://www.yngoslo.no/",
+      "provider": "easyTable"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Jamaican Oxtail Sandos",
+      "Mini Patty Flat bread",
+      "Jamaican Fried Chicken Bao Bun",
+      "jerk chicken Burger",
+      "jerk chicken",
+      "Curry goat",
+      "Fried Chicken",
+      "Mac & Cheese",
+      "Sweet Potato Fries",
+      "Fried Sweet Plantain",
+      "FrieD DUMPLING"
+    ],
+    "requiredDishVariants": [
+      { "name": "Jamaican Oxtail Sandos", "priceMinor": 16500 },
+      { "name": "Mini Patty Flat bread", "priceMinor": 13900 },
+      { "name": "Jamaican Fried Chicken Bao Bun", "priceMinor": 9800 },
+      { "name": "jerk chicken Burger", "priceMinor": 19500 },
+      { "name": "jerk chicken", "priceMinor": 23900 },
+      { "name": "Curry goat", "priceMinor": 24900 },
+      { "name": "Fried Chicken", "priceMinor": 22900 },
+      { "name": "Mac & Cheese", "priceMinor": 6900 },
+      { "name": "Sweet Potato Fries", "priceMinor": 5900 },
+      { "name": "Fried Sweet Plantain", "priceMinor": 5900 },
+      { "name": "FrieD DUMPLING", "priceMinor": 4500 }
+    ],
+    "forbiddenDishNames": [
+      "Kitchen hours",
+      "Opening Hours",
+      "Small bites & Big energy",
+      "Yard burger",
+      "The big three",
+      "On the side",
+      "Drink menu",
+      "Address",
+      "Lost & Found"
+    ]
+  }
+}
