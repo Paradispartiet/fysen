@@ -28,9 +28,25 @@
   transform: translateY(-1px);
 }
 
-.primaryAction:focus-visible {
+.primaryAction:focus-visible,
+.claimLink:focus-visible {
   outline: 2px solid var(--color-brand);
   outline-offset: 3px;
+}
+
+.claimLink {
+  display: inline-flex;
+  margin-top: 4px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.claimLink:hover {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 @media (max-width: 767px) {
