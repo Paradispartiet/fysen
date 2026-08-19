@@ -45,6 +45,7 @@ describe("generic HTML canonical item filtering", () => {
     "Pizza Cutter",
     "Levering",
     "Delivery",
+    "A teapot",
     "fra 27 NOK54 NOK",
     "from 99 kr109 kr",
     "129 NOK",
@@ -65,6 +66,7 @@ describe("generic HTML canonical item filtering", () => {
     "Iced Tea Smoked Duck",
     "Pizza Cutter Steak",
     "Leverpostei med bacon",
+    "Teapot Dumplings",
     "27 Spice Chicken",
     "Fromage Pizza 109",
   ])("keeps food item %s", (name) => {

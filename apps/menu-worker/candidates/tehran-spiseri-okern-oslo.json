@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "tehran-spiseri-okern-oslo",
+    "name": "Tehran Spiseri",
+    "websiteUrl": "https://www.tehran.no/",
+    "address": "Selma Ellefsens vei 2, 0581 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.925407,
+    "longitude": 10.807496
+  },
+  "menuSource": {
+    "url": "https://www.tehran.no/menu",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 15
+  },
+  "hoursSource": {
+    "url": "https://www.tehran.no/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "Tehran Spiseri publishes restaurant opening hours directly on its first-party homepage (Mon-Sun 10:00-21:00), but does not separately label a kitchen schedule. Keep open/closed unknown until kitchen-scoped hours are explicitly verified."
+    }
+  },
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kashke Bademjan",
+      "Soup Jo",
+      "Mirza Ghasemi",
+      "Soltani",
+      "Chenjeh",
+      "Koobideh",
+      "Barg",
+      "Joojeh",
+      "Gheymeh Bademjan",
+      "Bakhtiari",
+      "Zereshk polo ba morgh",
+      "Ghormeh Sabzi",
+      "Baghali polo ba Mahiche/Gardan"
+    ],
+    "requiredDishVariants": [
+      { "name": "Kashke Bademjan", "priceMinor": 9900 },
+      { "name": "Soup Jo", "priceMinor": 9900 },
+      { "name": "Mirza Ghasemi", "priceMinor": 9900 },
+      { "name": "Soltani", "priceMinor": 29900 },
+      { "name": "Chenjeh", "priceMinor": 29900 },
+      { "name": "Koobideh", "priceMinor": 19900 },
+      { "name": "Barg", "priceMinor": 29900 },
+      { "name": "Joojeh", "priceMinor": 19900 },
+      { "name": "Gheymeh Bademjan", "priceMinor": 12900 },
+      { "name": "Bakhtiari", "priceMinor": 29900 },
+      { "name": "Zereshk polo ba morgh", "priceMinor": 19900 },
+      { "name": "Ghormeh Sabzi", "priceMinor": 13900 },
+      { "name": "Baghali polo ba Mahiche/Gardan", "priceMinor": 27900 }
+    ],
+    "forbiddenDishNames": [
+      "Chai Tea",
+      "Doogh/Ayran",
+      "A teapot",
+      "Starters",
+      "Main Courses",
+      "Accessories",
+      "Beverages",
+      "Tehran Spiseri"
+    ]
+  }
+}
