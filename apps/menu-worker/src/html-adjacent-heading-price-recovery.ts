@@ -3,25 +3,35 @@ import {
   createMenuItemSourceKey,
   normalizeDishName,
   type MenuObservedItem,
+  type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v1";
+export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v2";
 
 const HEADING_MARKER = "__FYSEN_ADJACENT_HEADING_LEVEL_";
-const PRICE_LINE = /^(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{1,3})(?:[.,](\d{1,2}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
+const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{1,3})(?:[.,](\d{1,2}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
 const SECTION_OR_UI_LABEL = /^(?:our\s+menu|menu|meny|single\s+meat|single\s+(?:vegetar|vegetarian)(?:\s*&\s*vegan)?|pdf\s+version|drinks?|drikke(?:meny)?|popular\s+dish|opening(?:\s+hours)?|åpningstider|contact|kontakt|address|adresse|booking|reservation(?:s)?|reservasjoner?|allergens?|allergener?)$/iu;
+
+interface ParsedPrice {
+  readonly priceMinor: number;
+  readonly priceKind: MenuPriceKind;
+}
 
 function normalizeVisibleLine(value: string): string {
   return value.normalize("NFKC").replace(/\s+/g, " ").trim();
 }
 
-function parsePriceMinor(value: string): number | null {
+function parsePrice(value: string): ParsedPrice | null {
   const match = normalizeVisibleLine(value).match(PRICE_LINE);
-  if (!match?.[1]) return null;
-  const whole = Number(match[1]);
-  const decimals = (match[2] ?? "").padEnd(2, "0").slice(0, 2);
+  if (!match?.[2]) return null;
+  const whole = Number(match[2]);
+  const decimals = (match[3] ?? "").padEnd(2, "0").slice(0, 2);
   const amount = whole * 100 + Number(decimals || "0");
-  return amount >= 4_000 && amount <= 1_000_000 ? amount : null;
+  if (amount < 4_000 || amount > 1_000_000) return null;
+  return {
+    priceMinor: amount,
+    priceKind: match[1] ? "from" : "exact",
+  };
 }
 
 function looksLikeDishTitle(value: string): boolean {
@@ -69,19 +79,19 @@ export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly Men
     const title = normalizeVisibleLine(heading[2] ?? "");
     if (!looksLikeDishTitle(title)) continue;
 
-    let priceMinor: number | null = null;
+    let price: ParsedPrice | null = null;
     let pricePosition: number | null = null;
     const scanEnd = Math.min(lines.length, position + 5);
     for (let index = position + 1; index < scanEnd; index += 1) {
       const candidate = lines[index] ?? "";
       if (candidate.startsWith(HEADING_MARKER)) break;
-      const parsed = parsePriceMinor(candidate);
-      if (parsed === null) continue;
-      priceMinor = parsed;
+      const parsed = parsePrice(candidate);
+      if (!parsed) continue;
+      price = parsed;
       pricePosition = index;
       break;
     }
-    if (priceMinor === null || pricePosition === null) continue;
+    if (!price || pricePosition === null) continue;
 
     const sourceKey = createMenuItemSourceKey(title);
     const items = byHeadingLevel.get(headingLevel) ?? [];
@@ -91,7 +101,8 @@ export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly Men
       normalizedName: normalizeDishName(title),
       description: null,
       sectionName: null,
-      priceMinor,
+      priceMinor: price.priceMinor,
+      priceKind: price.priceKind,
       currency: "NOK",
       position,
       extractionMethod: "html_heuristic",
