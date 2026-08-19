@@ -345,6 +345,11 @@ function recoverTitleAcrossImmediatePrice(
   if (!Number.isInteger(position) || position < 2 || position >= lines.length) return null;
   if (!looksLikeDescriptionNamedItem(item)) return null;
 
+  const currentLine = normalizeVisibleLine(lines[position] ?? "");
+  if (!currentLine || currentLine === normalizeVisibleLine(item.name) || !looksLikeDescription(currentLine)) {
+    return null;
+  }
+
   const price = normalizeVisibleLine(lines[position - 1] ?? "");
   const candidate = normalizeVisibleLine(lines[position - 2] ?? "");
   if (!PRICE_LINE.test(price) || !looksLikeRecoveredTitle(candidate)) return null;
