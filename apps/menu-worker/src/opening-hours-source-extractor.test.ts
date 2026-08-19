@@ -17,7 +17,7 @@ describe("canonical opening-hours source extractor", () => {
       </body></html>
     `);
 
-    expect(OPENING_HOURS_SOURCE_EXTRACTOR_VERSION).toBe("hours-visible-v12");
+    expect(OPENING_HOURS_SOURCE_EXTRACTOR_VERSION).toBe("hours-visible-v13");
     expect(extracted.intervals).toEqual([
       { isoWeekday: 1, opensAt: "11:30", closesAt: "20:30", closesNextDay: false },
       { isoWeekday: 2, opensAt: "11:30", closesAt: "20:30", closesNextDay: false },

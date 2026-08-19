@@ -2,11 +2,11 @@ import { load } from "cheerio";
 import type { RestaurantHoursIntervalInput } from "@fysen/database";
 import {
   OpeningHoursExtractionError,
-  extractKitchenOpeningHours,
   type ExtractedOpeningHours,
 } from "./opening-hours-extractor.js";
+import { extractKitchenOpeningHoursWithIdenticalSectionRecovery } from "./opening-hours-duplicate-section-recovery.js";
 
-export const OPENING_HOURS_SOURCE_EXTRACTOR_VERSION = "hours-visible-v12";
+export const OPENING_HOURS_SOURCE_EXTRACTOR_VERSION = "hours-visible-v13";
 
 const relativeKitchenClosePattern = /(?:kjøkken(?:et)?\s+stenger|kitchen\s+closes)\s+(\d{1,3})\s*(?:min\.?|minutter?|minutes?)\s+(?:før\s+stengetid|before\s+(?:closing|close)(?:\s+time)?)/giu;
 const relativeKitchenCloseLinePattern = /(?:kjøkken(?:et)?\s+stenger|kitchen\s+closes)\s+\d{1,3}\s*(?:min\.?|minutter?|minutes?)\s+(?:før\s+stengetid|before\s+(?:closing|close)(?:\s+time)?)/iu;
@@ -51,18 +51,6 @@ function normalizeWeekdayAliases(value: string): string {
     .replace(/\bfri\b\.?/giu, "Friday")
     .replace(/\bsat\b\.?/giu, "Saturday")
     .replace(/\bsun\b\.?/giu, "Sunday");
-}
-
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-function syntheticHtml(lines: readonly string[]): string {
-  return `<html><body>${lines.map((line) => `<p>${escapeHtml(line)}</p>`).join("")}</body></html>`;
 }
 
 function normalizeClock(value: string): string {
@@ -241,7 +229,7 @@ export function extractCanonicalOpeningHours(
       );
     }
 
-    const base = extractKitchenOpeningHours(syntheticHtml(sanitizedLines(originalLines)), scopeHints);
+    const base = extractKitchenOpeningHoursWithIdenticalSectionRecovery(sanitizedLines(originalLines), scopeHints);
     const intervals = base.intervals.map((item) => subtractKitchenCutoff(item, relativeMinutes));
     const relativeExcerpt = originalLines.find((line) => relativeKitchenCloseLinePattern.test(line)) ?? null;
 
@@ -256,7 +244,7 @@ export function extractCanonicalOpeningHours(
   }
 
   if (globalAbsolute) {
-    const base = extractKitchenOpeningHours(syntheticHtml(sanitizedAbsoluteLines(originalLines)), scopeHints);
+    const base = extractKitchenOpeningHoursWithIdenticalSectionRecovery(sanitizedAbsoluteLines(originalLines), scopeHints);
     const intervals = base.intervals.map((item) => applyAbsoluteKitchenClose(item, globalAbsolute.closesAt));
     return {
       intervals,
@@ -265,5 +253,8 @@ export function extractCanonicalOpeningHours(
     };
   }
 
-  return extractKitchenOpeningHours(syntheticHtml(originalLines.map(normalizeWeekdayAliases)), scopeHints);
+  return extractKitchenOpeningHoursWithIdenticalSectionRecovery(
+    originalLines.map(normalizeWeekdayAliases),
+    scopeHints,
+  );
 }
