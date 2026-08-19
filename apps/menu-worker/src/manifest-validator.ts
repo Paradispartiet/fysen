@@ -18,7 +18,7 @@ import { extractMenuSource, fetchMenuSource } from "./menu-source-runtime.js";
 
 export interface ManifestObservedDishVariant {
   readonly name: string;
-  readonly priceMinor: number;
+  readonly priceMinor: number | null;
 }
 
 export interface ManifestMenuValidationResult {
