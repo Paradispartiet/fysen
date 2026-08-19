@@ -18,7 +18,7 @@ function item(name: string): MenuObservedItem {
   };
 }
 
-describe("generic HTML beverage filtering", () => {
+describe("generic HTML canonical item filtering", () => {
   it.each([
     "Brown Sugar Boba Milk",
     "Taro Milk",
@@ -32,7 +32,18 @@ describe("generic HTML beverage filtering", () => {
     "Salt Cafe",
     "Egg Cafe",
     "Homemade Lemonade with Mint",
-  ])("rejects beverage-only menu item %s", (name) => {
+    "Pepsi",
+    "Pepsi Max",
+    "Aranciata",
+    "Chinotto",
+    "Gazzosa",
+    "Limonata",
+    "Ice Tea Lemon",
+    "Ice Tea Peach",
+    "Galvanina Bellini Mocktail Økol 200ml",
+    "Pizzakutter",
+    "Pizza Cutter",
+  ])("rejects non-food or beverage-only menu item %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
   });
 
@@ -44,6 +55,10 @@ describe("generic HTML beverage filtering", () => {
     "Egg Fried Rice",
     "Salt and Pepper Squid",
     "Solo Garlic Noodles",
+    "Pepsi-glazed Chicken Wings",
+    "Chinotto Braised Pork",
+    "Iced Tea Smoked Duck",
+    "Pizza Cutter Steak",
   ])("keeps food item %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(true);
   });
