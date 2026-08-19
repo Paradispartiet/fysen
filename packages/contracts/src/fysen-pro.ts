@@ -28,7 +28,7 @@ export const fysenProDashboardSchema = z.object({
   metrics: z.object({
     impressions: z.number().int().nonnegative(),
     clicks: z.number().int().nonnegative(),
-    ctr: z.number().min(0),
+    ctr: z.number().min(0).max(1),
     clickBreakdown: fysenProClickBreakdownSchema,
   }),
   topDishes: z.array(z.object({
@@ -53,7 +53,7 @@ export const fysenProDashboardSchema = z.object({
   })),
   cityDemandGaps: z.array(z.object({
     query: z.string().min(1),
-    searches7d: z.number().int().positive(),
+    searches7d: z.number().int().min(3),
     signal: z.enum(["zero_result", "fuzzy_only", "zero_and_fuzzy"]),
   })).max(5),
 });
