@@ -55,6 +55,10 @@ describe("generic HTML canonical item filtering", () => {
     "fra 27 NOK54 NOK",
     "from 99 kr109 kr",
     "129 NOK",
+    "Tel: 40 00 16 86",
+    "Telefon +47 22 33 44 55",
+    "Tlf 22 33 44 55",
+    "Phone: +47 22 33 44 55",
   ])("rejects non-food or beverage-only menu item %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
   });
@@ -99,6 +103,8 @@ describe("generic HTML canonical item filtering", () => {
     "Dessert Pizza",
     "Dry Martini Sauce Steak",
     "Coffee Rubbed Steak",
+    "Telephone Noodles",
+    "Phone Booth Burger",
   ])("keeps food item %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(true);
   });
