@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "valentes-vika-oslo",
+    "name": "Valentes",
+    "websiteUrl": "https://valentes.no/",
+    "address": "Ruseløkkveien 3-5, 0251 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91424,
+    "longitude": 10.728985
+  },
+  "menuSource": {
+    "url": "https://valentes.no/",
+    "sourceType": "html",
+    "fetchMode": "browser",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "browserDataOrigins": ["https://valentes-elegant-revamp-g4yb9.myshopify.com"]
+    }
+  },
+  "hoursSource": {
+    "url": "https://valentes.no/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 5
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "The first-party page publishes Tuesday-Saturday restaurant hours and an explicit kitchen closing time, but the current static hours worker cannot re-extract the schedule automatically. Keep menu evidence searchable while open/closed remains unknown until canonical hours extraction is available."
+    }
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://valentes.no/",
+      "sourceUrl": "https://valentes.no/",
+      "provider": "EasyTable"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tagliere Italiano",
+      "Insalata Nicoise",
+      "Pizza Rucola",
+      "Spaghetti Carbonara",
+      "Tagliatelle al Tartufo",
+      "Spaghetti Vongole Veraci",
+      "Agnello",
+      "Valentes Spesial"
+    ],
+    "requiredDishVariants": [
+      { "name": "Tagliere Italiano", "priceMinor": 24500 },
+      { "name": "Insalata Nicoise", "priceMinor": 21500 },
+      { "name": "Pizza Rucola", "priceMinor": 24500 },
+      { "name": "Spaghetti Carbonara", "priceMinor": 26500 },
+      { "name": "Tagliatelle al Tartufo", "priceMinor": 31500 },
+      { "name": "Spaghetti Vongole Veraci", "priceMinor": 29500 },
+      { "name": "Agnello", "priceMinor": 38500 },
+      { "name": "Valentes Spesial", "priceMinor": 36500 }
+    ],
+    "forbiddenDishNames": [
+      "Antipasti",
+      "Pizza",
+      "Pasta",
+      "Secondi",
+      "Ingen produkter ennå"
+    ]
+  }
+}
