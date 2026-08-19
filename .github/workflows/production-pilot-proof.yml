@@ -117,6 +117,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Verify Demand, Revenue R3/R4 and AHA Min mat production boundaries
+        if: always()
         shell: bash
         run: |
           node scripts/revenue-production-proof.mjs | tee /tmp/fysen-revenue-production-proof.json
