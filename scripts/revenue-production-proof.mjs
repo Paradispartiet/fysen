@@ -57,13 +57,17 @@ async function verifyRevenueSchema(pool) {
     "aha_analysis_handoffs",
   ];
   const tokenColumnResult = await pool.query(
-    `SELECT table_name,
-            array_agg(column_name ORDER BY ordinal_position) AS columns
-       FROM information_schema.columns
-      WHERE table_schema = 'fysen'
-        AND table_name = ANY($1::text[])
-      GROUP BY table_name
-      ORDER BY table_name`,
+    `SELECT relation.relname AS table_name,
+            array_agg(attribute.attname ORDER BY attribute.attnum) AS columns
+       FROM pg_attribute AS attribute
+       JOIN pg_class AS relation ON relation.oid = attribute.attrelid
+       JOIN pg_namespace AS namespace ON namespace.oid = relation.relnamespace
+      WHERE namespace.nspname = 'fysen'
+        AND relation.relname = ANY($1::text[])
+        AND attribute.attnum > 0
+        AND attribute.attisdropped = false
+      GROUP BY relation.relname
+      ORDER BY relation.relname`,
     [tokenTables],
   );
 
