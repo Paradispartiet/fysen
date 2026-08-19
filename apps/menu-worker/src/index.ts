@@ -10,6 +10,7 @@ import { onboardRestaurantCatalog, onboardRestaurantManifest } from "./onboardin
 import { runRodeoPilot } from "./pilot.js";
 import { runDueMenuSources } from "./run-due.js";
 import { runDueRestaurantHours } from "./run-opening-hours.js";
+import { readRestaurantVerificationLog } from "./verification-log.js";
 
 function print(value: unknown): void {
   process.stdout.write(`${JSON.stringify(value, null, 2)}\n`);
@@ -71,6 +72,10 @@ async function main(): Promise<void> {
     const summary = await validateRestaurantManifestDirectory(directory);
     print(summary);
     if (summary.failedCount > 0) process.exitCode = 1;
+    return;
+  }
+  if (command === "verification:log") {
+    print(await readRestaurantVerificationLog(process.argv[3]));
     return;
   }
   if (command === "onboard:manifest") {
