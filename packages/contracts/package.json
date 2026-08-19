@@ -17,6 +17,10 @@
     "./restaurant-claims": {
       "types": "./dist/restaurant-claims.d.ts",
       "default": "./dist/restaurant-claims.js"
+    },
+    "./fysen-pro": {
+      "types": "./dist/fysen-pro.d.ts",
+      "default": "./dist/fysen-pro.js"
     }
   },
   "scripts": {
