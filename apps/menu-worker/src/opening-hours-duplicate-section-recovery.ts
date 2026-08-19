@@ -8,6 +8,7 @@ import {
 export const OPENING_HOURS_DUPLICATE_SECTION_RECOVERY_VERSION = "scope-duplicates-v1";
 
 const hoursMarkerPattern = /^(?:opening\s+hours|hours|åpningstider)(?:\s+([^:]{1,80}))?:?$/iu;
+const hoursLikePattern = /(?:opening\s+hours|åpningstider|\bhours\b)/iu;
 
 interface HoursMarker {
   readonly index: number;
@@ -63,6 +64,39 @@ function intervalSignature(intervals: readonly RestaurantHoursIntervalInput[]): 
   );
 }
 
+function diagnostics(
+  lines: readonly string[],
+  markers: readonly HoursMarker[],
+  scopeHints: readonly string[],
+  parsedSectionCount: number,
+): string {
+  const hints = scopeHints.map(normalizedScope).filter(Boolean);
+  const parsedMarkers = markers.map((marker) => ({
+    index: marker.index,
+    label: marker.label,
+    normalizedLabel: marker.label ? normalizedScope(marker.label) : null,
+    hinted: markerMatchesHints(marker, scopeHints),
+  }));
+  const hoursLikeLines = lines
+    .map((line, index) => ({ index, line: line.trim().slice(0, 160) }))
+    .filter((entry) => hoursLikePattern.test(entry.line))
+    .slice(0, 12);
+  return `hoursDiagnostics=${JSON.stringify({ hints, parsedMarkers, parsedSectionCount, hoursLikeLines })}`;
+}
+
+function rethrowWithDiagnostics(
+  error: OpeningHoursExtractionError,
+  lines: readonly string[],
+  markers: readonly HoursMarker[],
+  scopeHints: readonly string[],
+  parsedSectionCount: number,
+): never {
+  throw new OpeningHoursExtractionError(
+    error.code,
+    `${error.message}; ${diagnostics(lines, markers, scopeHints, parsedSectionCount)}`,
+  );
+}
+
 export function extractKitchenOpeningHoursWithIdenticalSectionRecovery(
   lines: readonly string[],
   scopeHints: readonly string[] = [],
@@ -79,7 +113,7 @@ export function extractKitchenOpeningHoursWithIdenticalSectionRecovery(
       const match = line.trim().match(hoursMarkerPattern);
       if (match) markers.push({ index, label: match[1]?.trim() || null });
     }
-    if (markers.length < 2) throw error;
+    if (markers.length < 2) rethrowWithDiagnostics(error, lines, markers, scopeHints, 0);
 
     const scopedMarkers = markers.filter((marker) => markerMatchesHints(marker, scopeHints));
     const recoveryMarkers = scopedMarkers.length >= 2 ? scopedMarkers : markers;
@@ -98,12 +132,16 @@ export function extractKitchenOpeningHoursWithIdenticalSectionRecovery(
       }
     }
 
-    if (parsedSections.length < 2) throw error;
+    if (parsedSections.length < 2) {
+      rethrowWithDiagnostics(error, lines, markers, scopeHints, parsedSections.length);
+    }
     const signatures = new Set(parsedSections.map((section) => intervalSignature(section.intervals)));
-    if (signatures.size !== 1) throw error;
+    if (signatures.size !== 1) {
+      rethrowWithDiagnostics(error, lines, markers, scopeHints, parsedSections.length);
+    }
 
     const selected = parsedSections[0];
-    if (!selected) throw error;
+    if (!selected) rethrowWithDiagnostics(error, lines, markers, scopeHints, parsedSections.length);
     return {
       ...selected,
       visibleText: lines.join("\n"),
