@@ -6,6 +6,7 @@ import { HTML_HEADING_NORMALIZER_VERSION } from "./html-heading-normalizer.js";
 import { HTML_PRICE_WRAPPED_RECOVERY_VERSION } from "./html-price-wrapped-recovery.js";
 import { HTML_SOURCE_EXTRACTOR_VERSION } from "./html-source-extractor.js";
 import {
+  HTML_BEVERAGE_FILTER_VERSION,
   HTML_ITEM_NAME_NORMALIZER_VERSION,
   HTML_PRICE_NOTATION_NORMALIZER_VERSION,
   extractorVersionForSourceType,
@@ -21,10 +22,12 @@ describe("HTML runtime extractor version", () => {
       HTML_HEADING_NORMALIZER_VERSION,
       HTML_PRICE_NOTATION_NORMALIZER_VERSION,
       HTML_ITEM_NAME_NORMALIZER_VERSION,
+      HTML_BEVERAGE_FILTER_VERSION,
       HTML_PRICE_WRAPPED_RECOVERY_VERSION,
       HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION,
     ].join("+");
 
+    expect(HTML_BEVERAGE_FILTER_VERSION).toBe("beverage-v2");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
     expect(shouldForceReextract("html", "html-v14+html-v7+titles-v8+heading-v1")).toBe(true);
