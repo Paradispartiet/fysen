@@ -41,6 +41,12 @@ describe("generic HTML canonical item filtering", () => {
     "Ice Tea Lemon",
     "Ice Tea Peach",
     "Galvanina Bellini Mocktail Økol 200ml",
+    "Gin Tonic",
+    "DRY MARTINI",
+    "Telemark Still Naturell",
+    "Telemark Sparkling Naturell 0,5l",
+    "Arabisk kaffe med kardemomme",
+    "Turkish Coffee with cardamom",
     "Pizzakutter",
     "Pizza Cutter",
     "Levering",
@@ -50,6 +56,27 @@ describe("generic HTML canonical item filtering", () => {
     "from 99 kr109 kr",
     "129 NOK",
   ])("rejects non-food or beverage-only menu item %s", (name) => {
+    expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
+  });
+
+  it.each([
+    "MENY",
+    "À la carte",
+    "FORRETTER",
+    "SMÅRETTER",
+    "GRILLRETTER",
+    "HOVEDRETTER",
+    "DESSERTER",
+    "Drikkemeny",
+    "DRIKKEVARER",
+    "COCKTAILS",
+    "VIN",
+    "ØL",
+    "BESTILL",
+    "BORD",
+    "ÅPNINGSTIDER",
+    "KONTAKT",
+  ])("rejects menu/navigation heading %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
   });
 
@@ -69,6 +96,9 @@ describe("generic HTML canonical item filtering", () => {
     "Teapot Dumplings",
     "27 Spice Chicken",
     "Fromage Pizza 109",
+    "Dessert Pizza",
+    "Dry Martini Sauce Steak",
+    "Coffee Rubbed Steak",
   ])("keeps food item %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(true);
   });
