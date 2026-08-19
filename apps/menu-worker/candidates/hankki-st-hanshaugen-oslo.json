@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "hankki-st-hanshaugen-oslo",
+    "name": "Hankki K-Mat",
+    "websiteUrl": "https://hankki.no/",
+    "address": "Waldemar Thranes gate 32A, 0171 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9249755,
+    "longitude": 10.7426052
+  },
+  "menuSource": {
+    "url": "https://hankki.no/shop/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 12
+  },
+  "hoursSource": {
+    "url": "https://hankki.no/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "verification": {
+    "hours": {
+      "status": "verified",
+      "checkedAt": "2026-08-19",
+      "note": "Hankki is a takeaway-only restaurant and its first-party homepage explicitly publishes MON-SUN 12:00-20:30, with last order at 20:30. These are canonical service/kitchen hours for the takeaway operation."
+    }
+  },
+  "actions": [
+    {
+      "type": "order",
+      "url": "https://favrit.com/en-gb/menu/location/L4qGXXDv7LB",
+      "sourceUrl": "https://hankki.no/shop/",
+      "provider": "Favrit"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Beef bulgogi",
+      "Jeyuk-bokkeum",
+      "Bibimbap Original",
+      "Bibimbap Vegan",
+      "Bulgogi-Deopbap",
+      "Chicken Mandu (4 pcs)",
+      "Fried TTEOK",
+      "Haemul-pajeon (3 pcs)",
+      "Hansik Set (5 dishes for 2 pers)",
+      "Japchae Vegan",
+      "Jeyuk-Deopbap",
+      "Tteokbokki",
+      "Tteokbokki Vegan"
+    ],
+    "requiredDishVariants": [
+      { "name": "Beef bulgogi", "priceMinor": 24000 },
+      { "name": "Jeyuk-bokkeum", "priceMinor": 22000 },
+      { "name": "Bibimbap Original", "priceMinor": 20500 },
+      { "name": "Bibimbap Vegan", "priceMinor": 18000 },
+      { "name": "Bulgogi-Deopbap", "priceMinor": 24000 },
+      { "name": "Chicken Mandu (4 pcs)", "priceMinor": 7500 },
+      { "name": "Fried TTEOK", "priceMinor": 7500 },
+      { "name": "Haemul-pajeon (3 pcs)", "priceMinor": 13000 },
+      { "name": "Hansik Set (5 dishes for 2 pers)", "priceMinor": 71000 },
+      { "name": "Japchae Vegan", "priceMinor": 13500 },
+      { "name": "Jeyuk-Deopbap", "priceMinor": 22000 },
+      { "name": "Tteokbokki", "priceMinor": 17000 },
+      { "name": "Tteokbokki Vegan", "priceMinor": 17000 }
+    ],
+    "forbiddenDishNames": [
+      "Legg i handlekurv",
+      "Vis handlekurv",
+      "Velg alternativ",
+      "Les mer",
+      "Filter",
+      "Close",
+      "Copyright"
+    ]
+  }
+}
