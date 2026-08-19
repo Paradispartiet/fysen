@@ -47,7 +47,7 @@ integrationDescribe("demand loop integration", () => {
       responseContentType: "text/html",
       rawSha256: "d".repeat(64),
       normalizedSha256: "e".repeat(64),
-      normalizedText: "Quality burger 199",
+      normalizedText: "Demand burger 199",
       etag: null,
       lastModified: null,
       robotsAllowed: true,
@@ -56,8 +56,8 @@ integrationDescribe("demand loop integration", () => {
       items: [
         {
           sourceKey: "f".repeat(64),
-          name: "Quality burger",
-          normalizedName: "quality burger",
+          name: "Demand burger",
+          normalizedName: "demand burger",
           description: null,
           sectionName: null,
           priceMinor: 19900,
@@ -65,7 +65,7 @@ integrationDescribe("demand loop integration", () => {
           position: 0,
           extractionMethod: "html_heuristic",
           confidence: 0.9,
-          sourceExcerpt: "Quality burger 199",
+          sourceExcerpt: "Demand burger 199",
         },
       ],
       changes: [],
@@ -90,8 +90,8 @@ integrationDescribe("demand loop integration", () => {
       `INSERT INTO fysen.dish_aliases (
          dish_concept_id, alias, normalized_alias, alias_scope, locale, curation_note
        ) VALUES
-         ($1, 'Quality burger', 'quality burger', 'menu', 'en', 'Demand loop integration menu alias'),
-         ($1, 'Quality sandwich', 'quality sandwich', 'query', 'en', 'Demand loop integration query alias')
+         ($1, 'Demand burger', 'demand burger', 'menu', 'en', 'Demand loop integration menu alias'),
+         ($1, 'Demand sandwich', 'demand sandwich', 'query', 'en', 'Demand loop integration query alias')
        ON CONFLICT (normalized_alias) DO UPDATE SET
          dish_concept_id = EXCLUDED.dish_concept_id,
          alias = EXCLUDED.alias,
@@ -107,13 +107,13 @@ integrationDescribe("demand loop integration", () => {
          ('ramen', 'Oslo', 0, 'explicit_search'),
          ('ramen', 'Oslo', 0, 'explicit_search'),
          ('fusion gap', 'Oslo', 0, 'explicit_search'),
-         ('quality burger', 'Oslo', 0, 'explicit_search'),
+         ('demand burger', 'Oslo', 0, 'explicit_search'),
          ('legacy ramen', 'Oslo', 0, 'legacy_unclassified')`,
     );
 
     const fuzzySearch = await pool.query<{ id: string }>(
       `INSERT INTO fysen.search_events (normalized_query, city, result_count, demand_source)
-       VALUES ('qualty burger', 'Oslo', 1, 'explicit_search')
+       VALUES ('demnd burger', 'Oslo', 1, 'explicit_search')
        RETURNING id`,
     );
     const fuzzySearchId = fuzzySearch.rows[0]?.id;
@@ -141,7 +141,7 @@ integrationDescribe("demand loop integration", () => {
 
     const resolvedCanonicalFuzzy = await pool.query<{ id: string }>(
       `INSERT INTO fysen.search_events (normalized_query, city, result_count, demand_source)
-       VALUES ('quality sandwich', 'Oslo', 1, 'explicit_search')
+       VALUES ('demand sandwich', 'Oslo', 1, 'explicit_search')
        RETURNING id`,
     );
     const resolvedCanonicalFuzzyId = resolvedCanonicalFuzzy.rows[0]?.id;
@@ -155,7 +155,7 @@ integrationDescribe("demand loop integration", () => {
 
     const legacyFuzzy = await pool.query<{ id: string }>(
       `INSERT INTO fysen.search_events (normalized_query, city, result_count, demand_source)
-       VALUES ('legacy qualty burger', 'Oslo', 1, 'legacy_unclassified')
+       VALUES ('legacy demnd burger', 'Oslo', 1, 'legacy_unclassified')
        RETURNING id`,
     );
     const legacyFuzzyId = legacyFuzzy.rows[0]?.id;
@@ -183,7 +183,7 @@ integrationDescribe("demand loop integration", () => {
       legacyUnclassifiedSignalSearches7d: 2,
     });
 
-    expect(report.queue.map((item) => item.normalizedQuery)).toEqual(["ramen", "fusion gap", "qualty burger"]);
+    expect(report.queue.map((item) => item.normalizedQuery)).toEqual(["ramen", "fusion gap", "demnd burger"]);
     expect(report.queue[0]).toMatchObject({
       searches7d: 2,
       zeroResultSearches7d: 2,
@@ -214,8 +214,8 @@ integrationDescribe("demand loop integration", () => {
     expect(report.queue.some((item) => item.normalizedQuery.startsWith("legacy"))).toBe(false);
     expect(report.resolvedByCurrentIndex).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ normalizedQuery: "quality burger", currentResolution: "exact" }),
-        expect.objectContaining({ normalizedQuery: "quality sandwich", currentResolution: "canonical" }),
+        expect.objectContaining({ normalizedQuery: "demand burger", currentResolution: "exact" }),
+        expect.objectContaining({ normalizedQuery: "demand sandwich", currentResolution: "canonical" }),
       ]),
     );
   });
