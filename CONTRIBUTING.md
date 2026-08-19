@@ -16,26 +16,23 @@ A change is not complete while lint, typecheck, tests or build are red.
 
 ## Deployment discipline
 
-Fysen limits automatic Vercel deployments and batches production builds because the Hobby plan has strict deployment and build-rate limits.
+Fysen uses fully explicit Vercel production releases. Git pushes and merges must not create Vercel deployments automatically.
 
-- Ordinary feature branches use GitHub CI only. They must not create Vercel deployments unless the branch is explicitly named `preview-*`.
-- The Vercel branch catch-all is `"**": false`, not `"*": false`. Vercel uses minimatch; a single `*` does not cover slash branch names such as `agent/...`, `fix/...`, `candidate/...`, `feat/...` or `diag/...`.
-- `main` and explicit `preview-*` branches stay enabled. If a branch matches both an allow-rule and `**: false`, Vercel deploys because the explicit allow-rule is true.
-- Merging to `main` accumulates the next release. A normal `main` merge does **not** build either Vercel project by itself.
-- Production builds are released by changing the app-specific release marker: `apps/web/.vercel-release` for web and `apps/api/.vercel-release` for API.
-- Every production marker update must set `queued-through=<PRE_MARKER_MAIN_SHA>`, where `PRE_MARKER_MAIN_SHA` is the exact `main` commit that will be the release commit's parent. This is the production trigger contract.
-- The Vercel main-branch gate reads that marker/parent relationship directly. It must not depend on `VERCEL_GIT_PREVIOUS_SHA`, because Vercel may use a shallow clone without the previous production commit object.
-- The marker therefore identifies the latest canonical `main` state included in that release. One marker update may publish many merged changes at once.
-- `apps/web/vercel.json` builds production only when the web release marker is advanced for the current release commit. `apps/api/vercel.json` does the same for the API marker.
-- A web-only release updates only the web marker; an API-only release updates only the API marker. Shared changes may update both in the same release commit.
-- `preview-*` branches retain dependency-aware Turborepo affected detection for deliberate visual/runtime previews.
-- Important quota distinction: `git.deploymentEnabled` prevents unwanted Git deployments from being created. `ignoreCommand` only cancels after a deployment has entered the build path; such canceled deployments can still count toward Vercel's daily deployment quota. Do not use `ignoreCommand` as a substitute for the branch gate.
-- `main` remains connected to Vercel, so rapid main-merge volume can still consume daily deployment records even when the release marker skips the build. If that becomes the remaining quota bottleneck, the next infra step is to disable Git auto-deploys entirely and release through an explicit authenticated CLI/deploy-hook workflow.
-- Vercel auto-cancels superseded Git jobs so the newest eligible release wins when release pushes happen close together.
-- Do not create empty commits merely to redeploy. Advance the relevant release marker instead.
-- Manual promotion or dashboard redeploy is a recovery mechanism, not part of everyday development.
+- `apps/web/vercel.json` and `apps/api/vercel.json` set `git.deploymentEnabled` to `false`. This applies to `main`, feature branches and preview branches alike.
+- GitHub Pages is the normal Fysen working preview. Do not use Vercel Git previews for ordinary visual QA.
+- Merging to `main` only changes canonical source. It does not deploy web or API to Vercel.
+- Production is released only through the GitHub Actions workflow **Fysen explicit Vercel production release** (`.github/workflows/vercel-production-release.yml`).
+- The release workflow locks the exact current `main` SHA before deploying. Web and API jobs both check out that locked SHA, so a later concurrent merge cannot silently change the release contents.
+- The workflow can release `web`, `api`, or `both`. Select only the target that actually needs a production deployment.
+- The workflow targets the existing Vercel projects through their stable team/project IDs and authenticates with the repository secret `VERCEL_TOKEN`.
+- `VERCEL_TOKEN` must be a Vercel access token with permission to deploy both Fysen projects. Never commit the token or copy it into workflow source.
+- Web releases are deployed explicitly with Vercel CLI to the `fysen` production project and then checked through the public production site.
+- API releases are deployed explicitly with Vercel CLI to `fysen-api` and then checked through `/v1/health` and `/v1/dishes/browse?city=Oslo`.
+- A failed verification is a failed production release even if Vercel completed a build. Investigate before retrying.
+- Do not restore `.vercel-release`, `scripts/vercel-ignore.sh`, `ignoreCommand`, or branch allowlists as a deployment mechanism. They are obsolete in the explicit-release model.
+- Do not create empty commits to trigger Vercel. Run the explicit production-release workflow against canonical `main` instead.
 
-This makes the branch gate responsible for preventing unwanted deployment creation, while `main` and the release markers control which production builds actually run. Preserve that separation unless Vercel is moved to a plan or CI/CD path where deployment-rate pressure is no longer relevant.
+This architecture makes Vercel deployment creation an intentional release action rather than a side effect of repository activity. It protects the deployment quota while allowing development and GitHub Pages previews to continue independently.
 
 ## Domain rule
 

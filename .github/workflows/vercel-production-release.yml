@@ -1,0 +1,192 @@
+name: Fysen explicit Vercel production release
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Production target
+        required: true
+        default: both
+        type: choice
+        options:
+          - web
+          - api
+          - both
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-vercel-production-release
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      source_sha: ${{ steps.source.outputs.source_sha }}
+    steps:
+      - name: Checkout canonical main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Lock canonical source SHA
+        id: source
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_sha="$(git rev-parse HEAD)"
+          echo "source_sha=$source_sha" >> "$GITHUB_OUTPUT"
+          echo "Releasing canonical main $source_sha"
+
+  web:
+    if: ${{ inputs.target == 'web' || inputs.target == 'both' }}
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: team_mV3NpMYd5l7yGmuZkbTf46y8
+      VERCEL_PROJECT_ID: prj_G0Vm4jhCg3hWRvVBSEIt5klHO6sS
+    steps:
+      - name: Require Vercel token
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${VERCEL_TOKEN:-}" ]]; then
+            echo "::error title=Missing VERCEL_TOKEN::Add a Vercel access token as the repository secret VERCEL_TOKEN before running production releases."
+            exit 1
+          fi
+
+      - name: Checkout locked source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.source_sha }}
+          fetch-depth: 1
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Deploy web explicitly to production
+        id: deploy
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf .vercel
+          pnpm dlx vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
+          pnpm dlx vercel@latest build --prod --token="$VERCEL_TOKEN"
+          deployment_url="$(pnpm dlx vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN")"
+          echo "deployment_url=$deployment_url" >> "$GITHUB_OUTPUT"
+          echo "Web production deployment: $deployment_url"
+
+      - name: Verify public web
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 18); do
+            if curl --fail --silent --show-error --location --max-time 20 \
+              'https://fysen-matsgran-8572s-projects.vercel.app/' >/dev/null; then
+              echo "Fysen web is reachable after release of ${{ needs.prepare.outputs.source_sha }}"
+              exit 0
+            fi
+            echo "Waiting for Fysen web production alias ($attempt/18)"
+            sleep 5
+          done
+          exit 1
+
+      - name: Summarize web release
+        shell: bash
+        run: |
+          {
+            echo '## Fysen web production release'
+            echo
+            echo '- Source: `${{ needs.prepare.outputs.source_sha }}`'
+            echo '- Deployment: `${{ steps.deploy.outputs.deployment_url }}`'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  api:
+    if: ${{ inputs.target == 'api' || inputs.target == 'both' }}
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: team_mV3NpMYd5l7yGmuZkbTf46y8
+      VERCEL_PROJECT_ID: prj_sSNtWlPc13Lgr2ws6DdhCfPFtr4E
+    steps:
+      - name: Require Vercel token
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${VERCEL_TOKEN:-}" ]]; then
+            echo "::error title=Missing VERCEL_TOKEN::Add a Vercel access token as the repository secret VERCEL_TOKEN before running production releases."
+            exit 1
+          fi
+
+      - name: Checkout locked source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.source_sha }}
+          fetch-depth: 1
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Deploy API explicitly to production
+        id: deploy
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf .vercel
+          pnpm dlx vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
+          pnpm dlx vercel@latest build --prod --token="$VERCEL_TOKEN"
+          deployment_url="$(pnpm dlx vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN")"
+          echo "deployment_url=$deployment_url" >> "$GITHUB_OUTPUT"
+          echo "API production deployment: $deployment_url"
+
+      - name: Verify public API
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 18); do
+            health="$(curl --fail --silent --show-error --location --max-time 20 \
+              'https://fysen-api.vercel.app/v1/health' 2>/dev/null || true)"
+            browse="$(curl --fail --silent --show-error --location --max-time 20 \
+              'https://fysen-api.vercel.app/v1/dishes/browse?city=Oslo' 2>/dev/null || true)"
+            if printf '%s' "$health" | jq -e '.service == "fysen-api" and .status == "ok"' >/dev/null 2>&1 \
+              && printf '%s' "$browse" | jq -e '.city == "Oslo" and (.dishes | type == "array")' >/dev/null 2>&1; then
+              echo "Fysen API is live with browse support after release of ${{ needs.prepare.outputs.source_sha }}"
+              exit 0
+            fi
+            echo "Waiting for Fysen API production alias ($attempt/18)"
+            sleep 5
+          done
+          exit 1
+
+      - name: Summarize API release
+        shell: bash
+        run: |
+          {
+            echo '## Fysen API production release'
+            echo
+            echo '- Source: `${{ needs.prepare.outputs.source_sha }}`'
+            echo '- Deployment: `${{ steps.deploy.outputs.deployment_url }}`'
+          } >> "$GITHUB_STEP_SUMMARY"
