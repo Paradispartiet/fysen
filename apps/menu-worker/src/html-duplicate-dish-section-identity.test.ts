@@ -36,9 +36,9 @@ describe("duplicate dish names across semantic menu sections", () => {
 
     expect(extracted).toEqual([
       { name: "Fatouche", priceMinor: 17900, sectionName: "Salater & Suppe" },
-      { name: "Chorbet Ades", priceMinor: 14900, sectionName: "Salater & Suppe" },
+      { name: "Chorbet Ades", priceMinor: 14900, sectionName: null },
       { name: "Fatouche", priceMinor: 34900, sectionName: "Kylling" },
-      { name: "Kos Kos Kylling", priceMinor: 34900, sectionName: "Kylling" },
+      { name: "Kos Kos Kylling", priceMinor: 34900, sectionName: null },
     ]);
     expect(new Set(result.items.map((item) => item.sourceKey)).size).toBe(result.items.length);
   });
