@@ -61,6 +61,26 @@ describe("adjacent heading-price HTML recovery", () => {
     expect(items.some((item) => item.name === "Discounted Bowl")).toBe(false);
   });
 
+  it("rejects bottled-water headings while preserving neighboring food cards", () => {
+    const items = recoverAdjacentHeadingPriceHtmlItems(`
+      <html><body>
+        <h3>Deep-fried Mandu</h3><p>79 NOK</p>
+        <h3>Spicy Pork Bulgogi Bowl</h3><p>239 NOK</p>
+        <h3>Telemark Still Naturell</h3><p>49 NOK</p>
+        <h3>Telemark Sparkling Naturell</h3><p>49 NOK</p>
+        <h3>Bibimbap</h3><p>229 NOK</p>
+        <h3>Tteokbokki</h3><p>189 NOK</p>
+      </body></html>
+    `);
+
+    expect(items.map((item) => item.name)).toEqual([
+      "Deep-fried Mandu",
+      "Spicy Pork Bulgogi Bowl",
+      "Bibimbap",
+      "Tteokbokki",
+    ]);
+  });
+
   it("fails closed when there are too few repeated heading-price cards to establish a menu pattern", () => {
     const items = recoverAdjacentHeadingPriceHtmlItems(`
       <html><body>
