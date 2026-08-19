@@ -5,8 +5,9 @@ import {
   type ExtractedOpeningHours,
 } from "./opening-hours-extractor.js";
 import { extractKitchenOpeningHoursWithIdenticalSectionRecovery } from "./opening-hours-duplicate-section-recovery.js";
+import { normalizeOpeningHoursMarkerLines } from "./opening-hours-marker-normalizer.js";
 
-export const OPENING_HOURS_SOURCE_EXTRACTOR_VERSION = "hours-visible-v13";
+export const OPENING_HOURS_SOURCE_EXTRACTOR_VERSION = "hours-visible-v14";
 
 const relativeKitchenClosePattern = /(?:kjøkken(?:et)?\s+stenger|kitchen\s+closes)\s+(\d{1,3})\s*(?:min\.?|minutter?|minutes?)\s+(?:før\s+stengetid|before\s+(?:closing|close)(?:\s+time)?)/giu;
 const relativeKitchenCloseLinePattern = /(?:kjøkken(?:et)?\s+stenger|kitchen\s+closes)\s+\d{1,3}\s*(?:min\.?|minutter?|minutes?)\s+(?:før\s+stengetid|before\s+(?:closing|close)(?:\s+time)?)/iu;
@@ -213,7 +214,7 @@ export function extractCanonicalOpeningHours(
   html: string,
   scopeHints: readonly string[] = [],
 ): ExtractedOpeningHours {
-  const originalLines = extractVisibleLines(html);
+  const originalLines = normalizeOpeningHoursMarkerLines(extractVisibleLines(html));
   const relativeMinutes = relativeCutoffMinutes(originalLines);
   const globalAbsolute = absoluteGlobalKitchenClose(originalLines);
 
