@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "buteco-ipanema-storgata-oslo",
+    "name": "Buteco Ipanema",
+    "websiteUrl": "https://buteco.no/",
+    "address": "Storgata 13, 0155 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91353,
+    "longitude": 10.74934
+  },
+  "menuSource": {
+    "url": "https://buteco.no/menu",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 7
+  },
+  "hoursSource": {
+    "url": "https://buteco.no/contact",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 6
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "Buteco publishes explicitly kitchen-scoped hours Tuesday-Thursday 19:00-22:00 and Friday-Sunday 15:00-22:00 on its first-party contact page. Monday is published as venue-closed rather than separately kitchen-closed, so keep the weekly kitchen schedule provisional instead of inferring the missing kitchen closure."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pão de Queijo",
+      "Coxinha",
+      "Bolinhos de Bacalhau",
+      "Mandioca Frita",
+      "Camarão ao alho e óleo",
+      "Batata Frita",
+      "Frango a Passarinho"
+    ],
+    "requiredDishVariants": [
+      { "name": "Pão de Queijo", "priceMinor": 17900 },
+      { "name": "Coxinha", "priceMinor": 19500 },
+      { "name": "Bolinhos de Bacalhau", "priceMinor": 19500 },
+      { "name": "Mandioca Frita", "priceMinor": 9900 },
+      { "name": "Camarão ao alho e óleo", "priceMinor": 29000 },
+      { "name": "Batata Frita", "priceMinor": 9900 },
+      { "name": "Frango a Passarinho", "priceMinor": 17900 }
+    ],
+    "forbiddenDishNames": [
+      "Caipirinha Brasileira",
+      "Starters",
+      "Main Courses",
+      "Skewer",
+      "Desserts",
+      "Weekly Specials",
+      "Buteco Ipanema. All rights reserved"
+    ]
+  }
+}
