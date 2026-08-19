@@ -16,6 +16,11 @@ import {
 import { resolveOpeningHoursSource } from "./opening-hours-source-runtime.js";
 import { extractMenuSource, fetchMenuSource } from "./menu-source-runtime.js";
 
+export interface ManifestObservedDishVariant {
+  readonly name: string;
+  readonly priceMinor: number;
+}
+
 export interface ManifestMenuValidationResult {
   readonly accepted: boolean;
   readonly url: string;
@@ -25,6 +30,7 @@ export interface ManifestMenuValidationResult {
   readonly fingerprint: string | null;
   readonly quality: ManifestMenuQualityResult | null;
   readonly observedDishNames: readonly string[];
+  readonly observedDishVariants: readonly ManifestObservedDishVariant[];
   readonly error: string | null;
 }
 
@@ -101,6 +107,10 @@ async function validateMenu(
       fingerprint,
       quality,
       observedDishNames: extracted.items.map((item) => item.name),
+      observedDishVariants: extracted.items.map((item) => ({
+        name: item.name,
+        priceMinor: item.priceMinor,
+      })),
       error: quality.accepted
         ? null
         : `Menu assertions failed: items=${quality.itemCount}/${quality.minimumExpectedItems}, missing=${quality.missingRequiredDishes.join(",") || "none"}, forbidden=${quality.forbiddenDishesPresent.join(",") || "none"}`,
@@ -115,6 +125,7 @@ async function validateMenu(
       fingerprint: null,
       quality: null,
       observedDishNames: [],
+      observedDishVariants: [],
       error: errorMessage(error),
     };
   }
