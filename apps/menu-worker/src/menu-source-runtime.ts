@@ -23,8 +23,9 @@ import { extractScopedPdfMenu, PDF_SOURCE_EXTRACTOR_VERSION } from "./pdf-source
 const DEFAULT_MAX_PDF_RESPONSE_BYTES = 8 * 1024 * 1024;
 const MAX_PDF_RESPONSE_BYTES = 25 * 1024 * 1024;
 const TRAILING_ALLERGEN_CODES = /\s+\((?:[\p{L}\d]{1,5}\s*(?:[,/+ ]\s*)?){1,20}\)$/u;
+const TRAILING_INLINE_PRICE = /\s+[-–—]\s*(?:(?:kr\.?\s*)[1-9]\d{1,3}(?:[.,]\d{1,2})?|[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok))$/iu;
 export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v1";
-export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v1";
+export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v2";
 const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
@@ -55,7 +56,10 @@ export function normalizeHtmlPriceNotation(html: string): string {
 }
 
 export function normalizeHtmlItemName(item: MenuObservedItem): MenuObservedItem {
-  const name = item.name.replace(TRAILING_ALLERGEN_CODES, "").trim();
+  const name = item.name
+    .replace(TRAILING_ALLERGEN_CODES, "")
+    .replace(TRAILING_INLINE_PRICE, "")
+    .trim();
   if (!name || name === item.name) return item;
   return {
     ...item,

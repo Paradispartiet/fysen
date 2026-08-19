@@ -47,7 +47,7 @@ describe("HTML menu runtime normalization", () => {
   });
 
   it("strips short trailing allergen-code lists while preserving the rest of the menu item", () => {
-    expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v1");
+    expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v2");
     const item = normalizeHtmlItemName({
       sourceKey: "old",
       name: "Rasmalai (G, M, E, N)",
@@ -67,5 +67,46 @@ describe("HTML menu runtime normalization", () => {
     expect(item.sourceKey).not.toBe("old");
     expect(item.priceMinor).toBe(16900);
     expect(item.description).toBe("Milk dumpling dessert.");
+  });
+
+  it("strips a recovered trailing inline NOK price without changing the parsed price value", () => {
+    const item = normalizeHtmlItemName({
+      sourceKey: "old",
+      name: "Vegetar BURGER - 235 KR",
+      normalizedName: "vegetar burger 235 kr",
+      description: "H, SO, L",
+      sectionName: "Burgers",
+      priceMinor: 23500,
+      currency: "NOK",
+      position: 8,
+      extractionMethod: "html_heuristic",
+      confidence: 0.84,
+      sourceExcerpt: "Vegetar BURGER - 235 KR — H, SO, L — 235",
+    });
+
+    expect(item.name).toBe("Vegetar BURGER");
+    expect(item.normalizedName).toBe("vegetar burger");
+    expect(item.sourceKey).not.toBe("old");
+    expect(item.priceMinor).toBe(23500);
+    expect(item.description).toBe("H, SO, L");
+  });
+
+  it("does not strip a dash-number suffix when it lacks a currency marker", () => {
+    const item = normalizeHtmlItemName({
+      sourceKey: "stable",
+      name: "Table 42 - 7",
+      normalizedName: "table 42 7",
+      description: null,
+      sectionName: null,
+      priceMinor: 700,
+      currency: "NOK",
+      position: 1,
+      extractionMethod: "html_heuristic",
+      confidence: 0.9,
+      sourceExcerpt: "Table 42 - 7",
+    });
+
+    expect(item.name).toBe("Table 42 - 7");
+    expect(item.sourceKey).toBe("stable");
   });
 });

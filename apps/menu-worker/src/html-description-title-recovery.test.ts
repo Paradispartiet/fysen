@@ -53,7 +53,7 @@ describe("HTML description-title recovery", () => {
       visibleText,
     );
 
-    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v8");
+    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v9");
     expect(result.map((entry) => entry.name)).toEqual([
       "Hummus (kikert-og sesampuré)",
       "Hvitløkmarinerte kyllingvinger",
@@ -156,6 +156,18 @@ describe("HTML description-title recovery", () => {
       "Pizza",
     ]);
     expect(result[0]?.description).toBe("Hvete, laktose");
+  });
+
+  it("treats a short standalone allergen-code list as metadata and recovers the preceding dish title", () => {
+    const result = recoverDescriptionNamedHtmlItems(
+      [item("H, SO, L", 1, 23500)],
+      ["Vegetar BURGER -", "H, SO, L", "235"].join("\n"),
+    );
+
+    expect(result).toHaveLength(1);
+    expect(result[0]?.name).toBe("Vegetar BURGER -");
+    expect(result[0]?.description).toBe("H, SO, L");
+    expect(result[0]?.priceMinor).toBe(23500);
   });
 
   it("joins a split parenthetical dish heading instead of keeping the continuation as a dish", () => {

@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v8";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v9";
 
 const PRICE_LINE = /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
 const DESCRIPTION_LEAD = /^(?:serveres?|servert|served|with|kan\s+fås|can\s+be|blandet|mixed|godt\s+krydret|well\s+seasoned|marinert|marinated|grillet|grilled|bakt|baked|braisert|braised|tilberedt|prepared|toppet|topped|inneholder|contains?|inkludert|including|ekstra|extra|pr\.?\s*person|per\s+person)\b/iu;
@@ -15,6 +15,7 @@ const SECTION_LABEL = /^(?:meny|menu|à\s+la\s+carte|a\s+la\s+carte|forretter?|s
 const ALLERGEN_PREFIX = /^(?:allergener?|allergens?)\s*:\s*/iu;
 const ALLERGEN_SEPARATOR = /\s*(?:,|\/|\+|;|\bog\b|\band\b)\s*/iu;
 const SHORT_ALLERGEN_CODE_LIST = /^(?:[A-Z0-9]{1,3})(?:\s*[,/+;]\s*[A-Z0-9]{1,3})*$/u;
+const SHORT_ALLERGEN_CODE_SEPARATOR = /[,/+;]/u;
 const PARENTHETICAL_QUALIFIER = /^\(([^()]{1,60})\)$/u;
 
 const ALLERGEN_TERMS = new Set([
@@ -112,6 +113,7 @@ function allergenParts(value: string): readonly string[] {
 function looksLikeAllergenMetadata(value: string): boolean {
   const line = normalizeVisibleLine(value);
   if (!line) return false;
+  if (SHORT_ALLERGEN_CODE_LIST.test(line) && SHORT_ALLERGEN_CODE_SEPARATOR.test(line)) return true;
   const hasPrefix = ALLERGEN_PREFIX.test(line);
   const parts = allergenParts(line);
   if (parts.length === 0 || (!hasPrefix && parts.length < 2)) return false;
