@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "coyo-sorenga-oslo",
+    "name": "Coyo",
+    "websiteUrl": "https://coyorestaurant.no/",
+    "address": "Sørengkaia 165, 0194 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90203,
+    "longitude": 10.75149
+  },
+  "menuSource": {
+    "url": "https://coyorestaurant.no/wp-content/uploads/2026/06/COYO-SUMMER-2026-NOR-8pages.pdf",
+    "sourceType": "pdf",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 25
+  },
+  "hoursSource": {
+    "url": "https://coyorestaurant.no/booking/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-19",
+      "note": "Coyo publishes first-party venue hours and states that the kitchen closes one hour before, but the canonical hours extractor does not yet materialize that relative kitchen offset. Keep open/closed unknown until the kitchen intervals are extracted directly."
+    }
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://coyorestaurant.no/booking/",
+      "sourceUrl": "https://coyorestaurant.no/booking/",
+      "provider": "Coyo"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "GUACAMOLE CLÁSICO",
+      "SALSA TASTING",
+      "RANCHERO BEAN DIP",
+      "CHEDDAR NACHOS",
+      "GAMBAS DE LIMA",
+      "NIKKEI CEVICHE",
+      "MANGO JALISCO SALAD",
+      "SCAMPI MANGO JALISCO SALAD",
+      "MILPA BURRITO",
+      "CERDO BURRITO",
+      "COSTRA DE MILPA",
+      "FLAUTAS DE RES",
+      "FLAUTAS DE CAMOTE",
+      "FLAUTAS DE PATO",
+      "TACO DE GAMBAS",
+      "TACO DE PESCADO",
+      "CHURROS"
+    ],
+    "requiredDishVariants": [
+      { "name": "GUACAMOLE CLÁSICO", "priceMinor": 18900 },
+      { "name": "SALSA TASTING", "priceMinor": 15900 },
+      { "name": "RANCHERO BEAN DIP", "priceMinor": 13900 },
+      { "name": "CHEDDAR NACHOS", "priceMinor": 22900 },
+      { "name": "GAMBAS DE LIMA", "priceMinor": 23900 },
+      { "name": "NIKKEI CEVICHE", "priceMinor": 26900 },
+      { "name": "MANGO JALISCO SALAD", "priceMinor": 20700 },
+      { "name": "SCAMPI MANGO JALISCO SALAD", "priceMinor": 28900 },
+      { "name": "MILPA BURRITO", "priceMinor": 25900 },
+      { "name": "CERDO BURRITO", "priceMinor": 27900 },
+      { "name": "COSTRA DE MILPA", "priceMinor": 25700 },
+      { "name": "FLAUTAS DE RES", "priceMinor": 26700 },
+      { "name": "FLAUTAS DE CAMOTE", "priceMinor": 25900 },
+      { "name": "FLAUTAS DE PATO", "priceMinor": 26900 },
+      { "name": "TACO DE GAMBAS", "priceMinor": 18900 },
+      { "name": "TACO DE PESCADO", "priceMinor": 18900 },
+      { "name": "CHURROS", "priceMinor": 18900 }
+    ],
+    "forbiddenDishNames": [
+      "WWW.COYORESTAURANT.NO",
+      "Wifi-passord",
+      "PERFEKTE TIL Å DELE!",
+      "Med forebehold om prisendringer",
+      "Minimum 2 personer",
+      "Set menu"
+    ]
+  }
+}
