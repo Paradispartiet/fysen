@@ -5,6 +5,10 @@ import {
 } from "@fysen/menu-core";
 import { BrowserMenuClient } from "./browser-client.js";
 import {
+  HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION,
+  recoverAdjacentHeadingPriceHtmlItems,
+} from "./html-adjacent-heading-price-recovery.js";
+import {
   HTML_DESCRIPTION_TITLE_RECOVERY_VERSION,
   recoverDescriptionNamedHtmlItems,
 } from "./html-description-title-recovery.js";
@@ -38,7 +42,7 @@ const BEVERAGE_MENU_ITEM = /^(?:(?:coca[- ]?cola|cola(?:\s+zero)?|fanta|sprite|f
 const BOTTLED_BEVERAGE_VOLUME = /\bflaske\s+0[,.]\d{1,2}(?:\s*l)?$/iu;
 export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v1";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v6";
-const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}`;
+const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
 export type MenuSourceFetchMode = "http" | "browser";
@@ -189,9 +193,8 @@ export async function extractMenuSource(
   fetched: MenuContentFetchResult,
 ): Promise<ExtractedMenuSource> {
   if (sourceType === "html" || sourceType === "json_ld") {
-    const extracted = extractScopedHtmlMenu(
-      normalizeHtmlPriceNotation(normalizeHtmlHeadingLineBreaks(fetched.body)),
-    );
+    const normalizedHtml = normalizeHtmlPriceNotation(normalizeHtmlHeadingLineBreaks(fetched.body));
+    const extracted = extractScopedHtmlMenu(normalizedHtml);
     assertExtractionMethodForSourceType(sourceType, extracted.method);
     const recoveredItems =
       extracted.method === "html_heuristic"
@@ -201,10 +204,18 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverPriceWrappedHtmlItems(extracted.visibleText)
         : [];
+    const headingPriceItems =
+      extracted.method === "html_heuristic"
+        ? recoverAdjacentHeadingPriceHtmlItems(normalizedHtml)
+        : [];
+    const headingPriceCoverageThreshold = Math.ceil(recoveredItems.length * 0.75);
     const preferredItems =
-      priceWrappedItems.length >= 3 && priceWrappedItems.length >= recoveredItems.length * 2
-        ? priceWrappedItems
-        : recoveredItems;
+      headingPriceItems.length >= 4 &&
+      (recoveredItems.length === 0 || headingPriceItems.length >= headingPriceCoverageThreshold)
+        ? headingPriceItems
+        : priceWrappedItems.length >= 3 && priceWrappedItems.length >= recoveredItems.length * 2
+          ? priceWrappedItems
+          : recoveredItems;
     const normalizedItems =
       extracted.method === "html_heuristic"
         ? preferredItems.map(normalizeHtmlItemName)
