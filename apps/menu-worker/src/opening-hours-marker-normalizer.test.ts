@@ -6,7 +6,7 @@ import {
 
 describe("opening-hours marker normalizer", () => {
   it("removes decorative prefixes only when they expose a real hours marker", () => {
-    expect(OPENING_HOURS_MARKER_NORMALIZER_VERSION).toBe("hours-marker-v1");
+    expect(OPENING_HOURS_MARKER_NORMALIZER_VERSION).toBe("hours-marker-v2");
     expect(
       normalizeOpeningHoursMarkerLines([
         "* * * ÅPNINGSTIDER CUE",
@@ -44,4 +44,14 @@ describe("opening-hours marker normalizer", () => {
       "Mandag - Søndag | 11:00 - 22:00",
     ]);
   });
+
+  it.each(["MondayClosed", "TuesdayOpen", "MandagStengt", "OnsdagÅpen"])(
+    "does not consume glued weekday schedule text %s as a scope label",
+    (schedule) => {
+      expect(normalizeOpeningHoursMarkerLines(["Opening Hours", schedule])).toEqual([
+        "Opening Hours",
+        schedule,
+      ]);
+    },
+  );
 });
