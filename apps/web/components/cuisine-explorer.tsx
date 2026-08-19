@@ -1,35 +1,15 @@
 "use client";
 
-import type { DishSearchResult } from "@fysen/contracts";
+import type { DishBrowseItem, DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { searchDishesClient } from "../lib/client-dish-search";
+import { discoveryCoverage } from "../lib/dish-discovery";
 import { dishSearchHref } from "../lib/public-path";
 import { cuisines, type Cuisine, type CuisineArea, type DishSuggestion } from "./cuisine-explorer-data";
 
-type FeaturedRestaurants = {
+type DishCoverage = {
   readonly dish: DishSuggestion;
-  readonly results: readonly DishSearchResult[];
-  readonly loaded: boolean;
+  readonly restaurantCount: number;
 };
-
-type DishResults = {
-  readonly dish: DishSuggestion;
-  readonly results: readonly DishSearchResult[];
-};
-
-function primaryRestaurantResults(results: readonly DishSearchResult[], limit: number): DishSearchResult[] {
-  const seen = new Set<string>();
-  const selected: DishSearchResult[] = [];
-
-  for (const result of results) {
-    if (result.match.type === "fuzzy" || seen.has(result.restaurant.id)) continue;
-    seen.add(result.restaurant.id);
-    selected.push(result);
-    if (selected.length >= limit) break;
-  }
-
-  return selected;
-}
 
 function cuisineCandidates(cuisine: Cuisine): readonly DishSuggestion[] {
   const seen = new Set<string>();
@@ -47,12 +27,19 @@ function cuisinePreviewDishes(cuisine: Cuisine): readonly DishSuggestion[] {
   return cuisineCandidates(cuisine).slice(0, 4);
 }
 
-function rankDishResults(results: readonly DishResults[]): DishResults[] {
-  return [...results].sort((left, right) => {
-    const leftHasCoverage = left.results.length > 0 ? 1 : 0;
-    const rightHasCoverage = right.results.length > 0 ? 1 : 0;
+function coverageForDish(dishes: readonly DishBrowseItem[], dish: DishSuggestion): DishCoverage {
+  return {
+    dish,
+    restaurantCount: discoveryCoverage(dishes, dish).restaurantCount,
+  };
+}
+
+function rankDishCoverage(coverage: readonly DishCoverage[]): DishCoverage[] {
+  return [...coverage].sort((left, right) => {
+    const leftHasCoverage = left.restaurantCount > 0 ? 1 : 0;
+    const rightHasCoverage = right.restaurantCount > 0 ? 1 : 0;
     if (leftHasCoverage !== rightHasCoverage) return rightHasCoverage - leftHasCoverage;
-    if (left.results.length !== right.results.length) return right.results.length - left.results.length;
+    if (left.restaurantCount !== right.restaurantCount) return right.restaurantCount - left.restaurantCount;
     if (left.dish.explorerPriority !== right.dish.explorerPriority) {
       return right.dish.explorerPriority - left.dish.explorerPriority;
     }
@@ -60,89 +47,35 @@ function rankDishResults(results: readonly DishResults[]): DishResults[] {
   });
 }
 
-async function findFeaturedRestaurants(cuisine: Cuisine, signal: AbortSignal): Promise<FeaturedRestaurants | null> {
-  const candidates = cuisineCandidates(cuisine).slice(0, 6);
-  const fallback = candidates[0];
-  if (!fallback) return null;
-
-  for (const dish of candidates) {
-    if (signal.aborted) return null;
-    try {
-      const response = await searchDishesClient(dish.query, { limit: 5, signal });
-      const results = primaryRestaurantResults(response.results, 2);
-      if (results.length > 0) return { dish, results, loaded: true };
-    } catch {
-      if (signal.aborted) return null;
-    }
-  }
-
-  return { dish: fallback, results: [], loaded: true };
+function featuredCoverage(cuisine: Cuisine, dishes: readonly DishBrowseItem[]): DishCoverage | null {
+  return rankDishCoverage(cuisineCandidates(cuisine).map((dish) => coverageForDish(dishes, dish)))[0] ?? null;
 }
 
-export function CuisineExplorer() {
-  const [featured, setFeatured] = useState<Record<string, FeaturedRestaurants>>({});
+export function CuisineExplorer({ browseData }: { readonly browseData: DishBrowseResponse | null }) {
   const [selectedCuisine, setSelectedCuisine] = useState<Cuisine | null>(null);
   const [selectedAreaName, setSelectedAreaName] = useState<string>("");
-  const [dishResults, setDishResults] = useState<readonly DishResults[]>([]);
-  const [loadingArea, setLoadingArea] = useState(false);
-  const [areaError, setAreaError] = useState<string | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const liveDishes = browseData?.dishes ?? [];
 
   const selectedArea = useMemo<CuisineArea | null>(() => {
     if (!selectedCuisine) return null;
     return selectedCuisine.areas.find((area) => area.name === selectedAreaName) ?? selectedCuisine.areas[0] ?? null;
   }, [selectedAreaName, selectedCuisine]);
 
-  useEffect(() => {
-    const controller = new AbortController();
+  const selectedDishCoverage = useMemo(() => {
+    if (!selectedArea) return [];
+    return rankDishCoverage(selectedArea.dishes.map((dish) => coverageForDish(liveDishes, dish)));
+  }, [liveDishes, selectedArea]);
 
-    for (const cuisine of cuisines) {
-      void findFeaturedRestaurants(cuisine, controller.signal).then((result) => {
-        if (!result || controller.signal.aborted) return;
-        setFeatured((current) => ({ ...current, [cuisine.name]: result }));
-      });
-    }
-
-    return () => controller.abort();
-  }, []);
+  const featured = useMemo(() => {
+    return new Map(cuisines.map((cuisine) => [cuisine.name, featuredCoverage(cuisine, liveDishes)]));
+  }, [liveDishes]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (selectedCuisine && dialog && !dialog.open) dialog.showModal();
   }, [selectedCuisine]);
-
-  useEffect(() => {
-    if (!selectedCuisine || !selectedArea) return;
-
-    const controller = new AbortController();
-    setDishResults([]);
-    setAreaError(null);
-    setLoadingArea(true);
-
-    void Promise.all(
-      selectedArea.dishes.map(async (dish): Promise<DishResults> => {
-        try {
-          const response = await searchDishesClient(dish.query, { limit: 8, signal: controller.signal });
-          return { dish, results: primaryRestaurantResults(response.results, 3) };
-        } catch {
-          if (controller.signal.aborted) throw new DOMException("Aborted", "AbortError");
-          return { dish, results: [] };
-        }
-      }),
-    )
-      .then((results) => {
-        if (!controller.signal.aborted) setDishResults(rankDishResults(results));
-      })
-      .catch(() => {
-        if (!controller.signal.aborted) setAreaError("Kunne ikke hente ferske restauranttreff akkurat nå.");
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) setLoadingArea(false);
-      });
-
-    return () => controller.abort();
-  }, [selectedArea, selectedCuisine]);
 
   function openCuisine(cuisine: Cuisine, area: CuisineArea, trigger: HTMLButtonElement): void {
     triggerRef.current = trigger;
@@ -177,13 +110,13 @@ export function CuisineExplorer() {
         <div>
           <p className="foodSectionEyebrow">Matlyst</p>
         </div>
-        <p>Velg et kjøkken eller en region, oppdag relevante retter, og se hvem som faktisk har dem på en fersk meny.</p>
+        <p>Velg et kjøkken eller en region, oppdag relevante retter, og se hvilke som faktisk har fersk Oslo-dekning nå.</p>
       </div>
 
       <div className="cuisineGrid">
         {cuisines.map((cuisine) => {
           const firstArea = cuisine.areas[0];
-          const preview = featured[cuisine.name];
+          const preview = featured.get(cuisine.name) ?? null;
           if (!firstArea) return null;
 
           return (
@@ -205,18 +138,16 @@ export function CuisineExplorer() {
 
                 <span className="cuisineRestaurantPreview">
                   <span className="cuisineRestaurantPreviewLabel">På menyen nå</span>
-                  {!preview?.loaded ? <span className="cuisineRestaurantLoading">Henter ferske restauranttreff …</span> : null}
-                  {preview?.loaded && preview.results.length > 0 ? (
+                  {!browseData ? <span className="cuisineRestaurantLoading">Live-dekning kunne ikke hentes akkurat nå.</span> : null}
+                  {browseData && preview && preview.restaurantCount > 0 ? (
                     <span className="cuisineRestaurantNames">
-                      {preview.results.map((result) => (
-                        <span key={result.restaurant.id}>
-                          <strong>{result.restaurant.name}</strong>
-                          <small>{preview.dish.label} · {result.restaurant.address}</small>
-                        </span>
-                      ))}
+                      <span>
+                        <strong>{preview.dish.label}</strong>
+                        <small>Minst {preview.restaurantCount} {preview.restaurantCount === 1 ? "restaurant" : "restauranter"} med ferske menytreff</small>
+                      </span>
                     </span>
                   ) : null}
-                  {preview?.loaded && preview.results.length === 0 ? (
+                  {browseData && (!preview || preview.restaurantCount === 0) ? (
                     <span className="cuisineRestaurantLoading">Ingen ferske treff på de prioriterte rettene akkurat nå.</span>
                   ) : null}
                 </span>
@@ -285,51 +216,36 @@ export function CuisineExplorer() {
               <div className="cuisineExploreResultsHeading">
                 <div>
                   <p>{selectedArea.name}</p>
-                  <h3>Retter og hvor du kan få dem</h3>
+                  <h3>Retter i området</h3>
                 </div>
-                <span>Ferske menytreff først · Oslo</span>
+                <span>Fersk Oslo-dekning først</span>
               </div>
 
-              {loadingArea ? <p className="cuisineExploreStatus">Henter retter og restauranter …</p> : null}
-              {!loadingArea && areaError ? <p className="cuisineExploreStatus">{areaError}</p> : null}
-
-              {!loadingArea && !areaError ? (
-                <div className="cuisineExploreDishList">
-                  {dishResults.map(({ dish, results }) => (
-                    <article className="cuisineExploreDish" key={dish.id} data-has-coverage={results.length > 0 ? "true" : "false"}>
-                      <div className="cuisineExploreDishHeading">
-                        <h4>{dish.label}</h4>
-                        <div className="cuisineExploreDishActions">
-                          {dish.hasKnowledge ? (
-                            <button type="button" onClick={() => openFoodKnowledge(dish.id)}>Lær om retten <span aria-hidden="true">↗</span></button>
-                          ) : null}
-                          <a href={dishSearchHref(dish.query)}>Se alle treff <span aria-hidden="true">→</span></a>
-                        </div>
+              <div className="cuisineExploreDishList">
+                {selectedDishCoverage.map(({ dish, restaurantCount }) => (
+                  <article className="cuisineExploreDish" key={dish.id} data-has-coverage={restaurantCount > 0 ? "true" : "false"}>
+                    <div className="cuisineExploreDishHeading">
+                      <h4>{dish.label}</h4>
+                      <div className="cuisineExploreDishActions">
+                        {dish.hasKnowledge ? (
+                          <button type="button" onClick={() => openFoodKnowledge(dish.id)}>Lær om retten <span aria-hidden="true">↗</span></button>
+                        ) : null}
+                        <a href={dishSearchHref(dish.query)}>Se treff <span aria-hidden="true">→</span></a>
                       </div>
+                    </div>
 
-                      {results.length > 0 ? (
-                        <ul>
-                          {results.map((result) => (
-                            <li key={result.restaurant.id}>
-                              <a href={dishSearchHref(dish.query)}>
-                                <strong>{result.restaurant.name}</strong>
-                                <span>{result.dish.name}</span>
-                                <small>{result.restaurant.address}</small>
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p>Ingen ferske menytreff på denne retten i Oslo akkurat nå.</p>
-                      )}
-                    </article>
-                  ))}
-                </div>
-              ) : null}
+                    {restaurantCount > 0 ? (
+                      <p>På fersk meny hos minst {restaurantCount} {restaurantCount === 1 ? "restaurant" : "restauranter"} i Oslo.</p>
+                    ) : (
+                      <p>Ingen ferske menytreff på denne retten i Oslo akkurat nå.</p>
+                    )}
+                  </article>
+                ))}
+              </div>
             </section>
 
             <footer className="cuisineExploreDialogFooter">
-              Retter med sikre, ferske Oslo-treff vises først. Innen samme dekningsnivå brukes redaksjonell relevans. Restaurantene vises bare fra ikke-fuzzy menytreff.
+              Dekningen kommer fra den samme ferske browse-indeksen som «Alle retter». Discovery-kall registreres ikke som brukersøk. Når flere menyvarianter kan overlappe, viser Fysen et konservativt minimumstall i stedet for å summere dem.
             </footer>
           </div>
         ) : null}
