@@ -26,10 +26,13 @@ import { extractScopedPdfMenu, PDF_SOURCE_EXTRACTOR_VERSION } from "./pdf-source
 
 const DEFAULT_MAX_PDF_RESPONSE_BYTES = 8 * 1024 * 1024;
 const MAX_PDF_RESPONSE_BYTES = 25 * 1024 * 1024;
-const TRAILING_ALLERGEN_CODES = /\s+\((?:[\p{L}\d]{1,5}\s*(?:[,/+ ]\s*)?){1,20}\)$/u;
+const TRAILING_ALLERGEN_CODES = /\s+\((?:[A-Z0-9]{1,3})(?:\s*[,/+ ]\s*[A-Z0-9]{1,3})*\)$/u;
 const TRAILING_INLINE_PRICE = /\s+[-–—]\s*(?:(?:kr\.?\s*)[1-9]\d{1,3}(?:[.,]\d{1,2})?|[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok))$/iu;
+const TRAILING_PARENTHETICAL = /\s+\([^()]{1,60}\)$/u;
+const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
+const LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]?\s+/u;
 export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v1";
-export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v2";
+export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v3";
 const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
@@ -59,8 +62,22 @@ export function normalizeHtmlPriceNotation(html: string): string {
   );
 }
 
+function restoreSemanticParentheticalName(item: MenuObservedItem): string {
+  const excerptHead = item.sourceExcerpt
+    ?.split(SOURCE_EXCERPT_SEPARATOR)[0]
+    ?.replace(LEADING_MENU_NUMBER, "")
+    .trim();
+  if (!excerptHead || !TRAILING_PARENTHETICAL.test(excerptHead)) return item.name;
+  if (TRAILING_ALLERGEN_CODES.test(excerptHead)) return item.name;
+
+  const withoutParenthetical = excerptHead.replace(TRAILING_PARENTHETICAL, "").trim();
+  if (normalizeDishName(withoutParenthetical) !== normalizeDishName(item.name)) return item.name;
+  return excerptHead;
+}
+
 export function normalizeHtmlItemName(item: MenuObservedItem): MenuObservedItem {
-  const name = item.name
+  const restored = restoreSemanticParentheticalName(item);
+  const name = restored
     .replace(TRAILING_ALLERGEN_CODES, "")
     .replace(TRAILING_INLINE_PRICE, "")
     .trim();
@@ -71,6 +88,10 @@ export function normalizeHtmlItemName(item: MenuObservedItem): MenuObservedItem 
     normalizedName: normalizeDishName(name),
     sourceKey: createMenuItemSourceKey(name, item.sectionName),
   };
+}
+
+export function isCanonicalHtmlMenuItem(item: MenuObservedItem): boolean {
+  return /\p{L}/u.test(item.name);
 }
 
 export function pdfResponseByteLimit(): number {
@@ -157,7 +178,7 @@ export async function extractMenuSource(
         : recoveredItems;
     const items =
       extracted.method === "html_heuristic"
-        ? preferredItems.map(normalizeHtmlItemName)
+        ? preferredItems.map(normalizeHtmlItemName).filter(isCanonicalHtmlMenuItem)
         : preferredItems;
     return {
       items,
