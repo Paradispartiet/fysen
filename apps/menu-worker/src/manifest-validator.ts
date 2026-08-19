@@ -128,8 +128,8 @@ async function validateHours(
         userAgent: manifest.menuSource.userAgent,
         etag: null,
         lastModified: null,
-        scopeHints: [
-          ...hours.scopeHints,
+        scopeHints: hours.scopeHints,
+        fallbackScopeHints: [
           hours.url,
           manifest.restaurant.slug,
           manifest.restaurant.name,
