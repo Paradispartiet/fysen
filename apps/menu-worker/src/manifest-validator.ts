@@ -6,8 +6,11 @@ import {
   type ManifestMenuQualityResult,
 } from "./manifest-quality.js";
 import {
+  getHoursVerificationStatus,
+  isHoursVerificationBlocking,
   listRestaurantOnboardingManifests,
   readRestaurantOnboardingManifest,
+  type HoursVerificationStatus,
   type RestaurantOnboardingManifest,
 } from "./onboarding-manifest.js";
 import { resolveOpeningHoursSource } from "./opening-hours-source-runtime.js";
@@ -27,6 +30,8 @@ export interface ManifestMenuValidationResult {
 
 export interface ManifestHoursValidationResult {
   readonly accepted: boolean;
+  readonly blocking: boolean;
+  readonly verificationStatus: HoursVerificationStatus;
   readonly url: string;
   readonly httpStatus: number | null;
   readonly intervalCount: number | null;
@@ -50,6 +55,7 @@ export interface RestaurantManifestValidationResult {
   readonly hours: ManifestHoursValidationResult | null;
   readonly actions: readonly ManifestActionValidationResult[];
   readonly errors: readonly string[];
+  readonly warnings: readonly string[];
 }
 
 export interface RestaurantManifestCatalogValidationSummary {
@@ -120,6 +126,8 @@ async function validateHours(
 ): Promise<ManifestHoursValidationResult | null> {
   const hours = manifest.hoursSource;
   if (!hours) return null;
+  const blocking = isHoursVerificationBlocking(manifest);
+  const verificationStatus = getHoursVerificationStatus(manifest);
 
   try {
     const resolved = await resolveOpeningHoursSource(
@@ -144,6 +152,8 @@ async function validateHours(
     const accepted = intervalCount >= hours.minimumExpectedIntervals;
     return {
       accepted,
+      blocking,
+      verificationStatus,
       url: hours.url,
       httpStatus: resolved.fetched.status,
       intervalCount,
@@ -156,6 +166,8 @@ async function validateHours(
   } catch (error) {
     return {
       accepted: false,
+      blocking,
+      verificationStatus,
       url: hours.url,
       httpStatus: null,
       intervalCount: null,
@@ -204,23 +216,31 @@ export async function validateRestaurantManifest(
   const menu = await validateMenu(manifest, client);
   const hours = await validateHours(manifest, client);
   const actions = await validateActions(manifest, client);
+  const hoursBlocking = isHoursVerificationBlocking(manifest);
+  const hoursAudit = manifest.verification.hours;
 
   const errors = [
     menu.error ? `menu: ${menu.error}` : null,
-    hours?.error ? `hours: ${hours.error}` : null,
+    hoursBlocking && hours?.error ? `hours: ${hours.error}` : null,
     ...actions.filter((action) => action.error).map((action) => `${action.type}: ${action.error}`),
+  ].filter((value): value is string => value !== null);
+
+  const warnings = [
+    hoursAudit ? `hours ${hoursAudit.status}: ${hoursAudit.note} (checked ${hoursAudit.checkedAt})` : null,
+    !hoursBlocking && hours?.error ? `hours source validation: ${hours.error}` : null,
   ].filter((value): value is string => value !== null);
 
   return {
     slug: manifest.restaurant.slug,
     accepted:
       menu.accepted &&
-      (hours?.accepted ?? true) &&
+      (!hoursBlocking || (hours?.accepted ?? true)) &&
       actions.every((action) => action.accepted),
     menu,
     hours,
     actions,
     errors,
+    warnings,
   };
 }
 
