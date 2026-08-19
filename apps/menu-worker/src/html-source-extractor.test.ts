@@ -19,10 +19,44 @@ describe("extractScopedHtmlMenu", () => {
     `;
 
     const result = extractScopedHtmlMenu(html);
-    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v14");
+    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v15");
     expect(result.items.map((item) => item.name)).toEqual(["Falafel", "Bakalawa"]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([9800, 12900]);
     expect(result.visibleText).not.toContain("Husets Cabernet");
+  });
+
+  it("blocks compound wine and other-drinks sections while allowing a later food section", () => {
+    const html = `
+      <html><body>
+        <h2>Hovedretter</h2>
+        <p>Slakterburger 220 kr</p>
+        <h2>VIN & MUSSERENDE</h2>
+        <p>Chinon les terrasses Pascal Lambert 2023</p>
+        <p>Flaske 880 kr</p>
+        <h2>ANDRE DRIKKER</h2>
+        <p>Guinness Draught 90 kr</p>
+        <h2>Dessert</h2>
+        <p>Churros 129 kr</p>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual(["Slakterburger", "Churros"]);
+    expect(result.visibleText).not.toContain("Chinon les terrasses");
+    expect(result.visibleText).not.toContain("Guinness Draught");
+  });
+
+  it("does not confuse a similarly worded food heading with a beverage section", () => {
+    const html = `
+      <html><body>
+        <h2>Andre retter</h2>
+        <p>Ungarsk gulasj 240 kr</p>
+        <p>Slakterburger 220 kr</p>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual(["Ungarsk gulasj", "Slakterburger"]);
   });
 
   it("skips plain food-section labels before the first standalone-price dish in a section", () => {
