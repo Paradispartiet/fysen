@@ -152,6 +152,7 @@ async function ensureMetadata(
         timeZone: manifest.hoursSource.timeZone,
         checkIntervalMinutes: manifest.hoursSource.checkIntervalMinutes,
         minimumExpectedIntervals: manifest.hoursSource.minimumExpectedIntervals,
+        scopeHints: manifest.hoursSource.scopeHints,
       })
     : null;
 

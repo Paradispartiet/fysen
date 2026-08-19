@@ -148,7 +148,7 @@ describe("restaurant onboarding manifest", () => {
     ).toThrow("Browser fetch mode only supports HTML/JSON-LD sources");
   });
 
-  it("accepts source-backed hours and commercial actions", () => {
+  it("accepts source-backed hours, explicit scope hints and commercial actions", () => {
     const parsed = restaurantOnboardingManifestSchema.parse({
       ...validManifest,
       hoursSource: {
@@ -156,6 +156,7 @@ describe("restaurant onboarding manifest", () => {
         timeZone: "Europe/Oslo",
         checkIntervalMinutes: 720,
         minimumExpectedIntervals: 5,
+        scopeHints: ["Pizzeria"],
       },
       actions: [
         {
@@ -166,7 +167,19 @@ describe("restaurant onboarding manifest", () => {
       ],
     });
     expect(parsed.hoursSource?.timeZone).toBe("Europe/Oslo");
+    expect(parsed.hoursSource?.scopeHints).toEqual(["Pizzeria"]);
     expect(parsed.actions[0]).toMatchObject({ type: "booking", provider: null });
+
+    const defaulted = restaurantOnboardingManifestSchema.parse({
+      ...validManifest,
+      hoursSource: {
+        url: "https://example.com/",
+        timeZone: "Europe/Oslo",
+        checkIntervalMinutes: 720,
+        minimumExpectedIntervals: 5,
+      },
+    });
+    expect(defaulted.hoursSource?.scopeHints).toEqual([]);
   });
 
   it("requires HTTPS sources and explicit dish smoke assertions", () => {

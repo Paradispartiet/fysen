@@ -36,13 +36,14 @@ integrationDescribe("restaurant hours source upsert", () => {
     await pool.end();
   });
 
-  it("is idempotent and makes a newly configured source due", async () => {
+  it("is idempotent, persists scope hints and makes a newly configured source due", async () => {
     const firstId = await upsertRestaurantHoursSource(pool, {
       restaurantId,
       url: "https://example.com/",
       timeZone: "Europe/Oslo",
       checkIntervalMinutes: 720,
       minimumExpectedIntervals: 5,
+      scopeHints: ["Pizzeria", "Pizzeria"],
     });
     const secondId = await upsertRestaurantHoursSource(pool, {
       restaurantId,
@@ -50,6 +51,7 @@ integrationDescribe("restaurant hours source upsert", () => {
       timeZone: "Europe/Oslo",
       checkIntervalMinutes: 720,
       minimumExpectedIntervals: 5,
+      scopeHints: ["Pizzeria"],
     });
     expect(secondId).toBe(firstId);
 
@@ -60,6 +62,7 @@ integrationDescribe("restaurant hours source upsert", () => {
       url: "https://example.com/",
       timeZone: "Europe/Oslo",
       minimumExpectedIntervals: 5,
+      scopeHints: ["Pizzeria"],
     });
   });
 });

@@ -15,6 +15,7 @@ describe("database migrations", () => {
       "0008_menu_source_fetch_mode.sql",
       "0009_remove_blocked_tunco_candidate.sql",
       "0010_menu_item_price_semantics.sql",
+      "0011_restaurant_hours_scope_hints.sql",
     ]);
 
     const schemaSql = await readFile(
@@ -113,5 +114,13 @@ describe("database migrations", () => {
     expect(priceSemanticsSql).toContain("price_kind IN ('exact', 'from', 'multiple')");
     expect(priceSemanticsSql).toContain("price_max_minor >= price_minor");
     expect(priceSemanticsSql).toContain("VALIDATE CONSTRAINT menu_items_price_shape_check");
+
+    const hoursScopeHintsSql = await readFile(
+      new URL("../migrations/0011_restaurant_hours_scope_hints.sql", import.meta.url),
+      "utf8",
+    );
+    expect(hoursScopeHintsSql).toContain("scope_hints text[] NOT NULL DEFAULT ARRAY[]::text[]");
+    expect(hoursScopeHintsSql).toContain("cardinality(scope_hints) <= 8");
+    expect(hoursScopeHintsSql).toContain("VALIDATE CONSTRAINT restaurant_hours_sources_scope_hints_count_check");
   });
 });

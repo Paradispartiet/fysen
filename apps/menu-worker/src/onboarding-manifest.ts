@@ -67,6 +67,7 @@ export const restaurantOnboardingManifestSchema = z
         timeZone: z.string().trim().min(1).max(100),
         checkIntervalMinutes: z.number().int().min(60).max(10080),
         minimumExpectedIntervals: z.number().int().min(1).max(14),
+        scopeHints: z.array(z.string().trim().min(1).max(80)).max(8).default([]),
       })
       .optional(),
     actions: z

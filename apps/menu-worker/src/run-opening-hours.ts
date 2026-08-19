@@ -45,7 +45,12 @@ async function watchRestaurantHoursTargetOnce(
         etag: source.etag,
         lastModified: source.lastModified,
         extractor: source.extractor,
-        scopeHints: [source.url, source.restaurantSlug, source.restaurantName],
+        scopeHints: [
+          ...source.scopeHints,
+          source.url,
+          source.restaurantSlug,
+          source.restaurantName,
+        ],
       },
       client,
     );
