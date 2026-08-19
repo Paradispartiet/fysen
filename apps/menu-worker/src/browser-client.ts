@@ -17,7 +17,6 @@ const blockedResourceTypes = new Set([
   "image",
   "media",
   "font",
-  "stylesheet",
   "texttrack",
   "eventsource",
   "websocket",
@@ -138,6 +137,12 @@ export function accountBrowserRequest(
   };
 }
 
+export function browserBudgetViolationIsFatal(
+  violation: Exclude<BrowserRequestBudgetViolation, null>,
+): boolean {
+  return violation.code === "BROWSER_ROUTE_EVENT_LIMIT";
+}
+
 async function installNetworkPolicy(
   context: BrowserContext,
   sourceOrigin: string,
@@ -160,7 +165,9 @@ async function installNetworkPolicy(
       const accounted = accountBrowserRequest(budget, decision);
       budget = accounted.budget;
       if (accounted.violation) {
-        violation.value ??= new MenuFetchError(accounted.violation.code, accounted.violation.message);
+        if (browserBudgetViolationIsFatal(accounted.violation)) {
+          violation.value ??= new MenuFetchError(accounted.violation.code, accounted.violation.message);
+        }
         await route.abort("blockedbyclient");
         return;
       }
