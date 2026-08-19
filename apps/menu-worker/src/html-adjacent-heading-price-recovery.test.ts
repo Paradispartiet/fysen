@@ -18,15 +18,47 @@ describe("adjacent heading-price HTML recovery", () => {
       </body></html>
     `);
 
-    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v1");
-    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
-      ["Doro Wet", 29000],
-      ["Key Wet", 28000],
-      ["Shiro w/salad", 26500],
-      ["Shiro, Meser", 29000],
-      ["Salad w/tuna", 16500],
+    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v2");
+    expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
+      ["Doro Wet", 29000, "exact"],
+      ["Key Wet", 28000, "exact"],
+      ["Shiro w/salad", 26500, "exact"],
+      ["Shiro, Meser", 29000, "exact"],
+      ["Salad w/tuna", 16500, "exact"],
     ]);
     expect(items.some((item) => item.name.startsWith("Phone:"))).toBe(false);
+  });
+
+  it("preserves from-price semantics instead of inventing an exact price", () => {
+    const items = recoverAdjacentHeadingPriceHtmlItems(`
+      <html><body>
+        <h2>Corndogs</h2>
+        <h3>Sausage Corndog</h3><p>fra 99 NOK</p>
+        <h3>Half & Half Corndog</h3><p>fra 109 NOK</p>
+        <h3>Mozzarella Corndog</h3><p>from 115 NOK</p>
+        <h3>Octopus Ink Corndog</h3><p>119 NOK</p>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
+      ["Sausage Corndog", 9900, "from"],
+      ["Half & Half Corndog", 10900, "from"],
+      ["Mozzarella Corndog", 11500, "from"],
+      ["Octopus Ink Corndog", 11900, "exact"],
+    ]);
+  });
+
+  it("does not reinterpret a line containing multiple displayed prices as one from-price", () => {
+    const items = recoverAdjacentHeadingPriceHtmlItems(`
+      <html><body>
+        <h3>Discounted Bowl</h3><p>fra 199,20 NOK 249 NOK</p>
+        <h3>Dish Two</h3><p>109 NOK</p>
+        <h3>Dish Three</h3><p>115 NOK</p>
+        <h3>Dish Four</h3><p>119 NOK</p>
+      </body></html>
+    `);
+
+    expect(items.some((item) => item.name === "Discounted Bowl")).toBe(false);
   });
 
   it("fails closed when there are too few repeated heading-price cards to establish a menu pattern", () => {
