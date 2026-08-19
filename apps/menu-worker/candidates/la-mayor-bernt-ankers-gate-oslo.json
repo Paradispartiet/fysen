@@ -18,7 +18,10 @@
     "checkIntervalMinutes": 360,
     "minimumExpectedItems": 14,
     "sourceSupport": {
-      "browserDataOrigins": ["https://siteassets.parastorage.com"]
+      "browserDataOrigins": [
+        "https://siteassets.parastorage.com",
+        "https://static.parastorage.com"
+      ]
     }
   },
   "hoursSource": {
