@@ -22,7 +22,7 @@
     "url": "https://www.rolis-bodega.no/book-bord",
     "timeZone": "Europe/Oslo",
     "checkIntervalMinutes": 360,
-    "minimumExpectedIntervals": 6
+    "minimumExpectedIntervals": 7
   },
   "verification": {
     "hours": {
