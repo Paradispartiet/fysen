@@ -43,6 +43,11 @@ describe("generic HTML canonical item filtering", () => {
     "Galvanina Bellini Mocktail Økol 200ml",
     "Pizzakutter",
     "Pizza Cutter",
+    "Levering",
+    "Delivery",
+    "fra 27 NOK54 NOK",
+    "from 99 kr109 kr",
+    "129 NOK",
   ])("rejects non-food or beverage-only menu item %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
   });
@@ -59,6 +64,9 @@ describe("generic HTML canonical item filtering", () => {
     "Chinotto Braised Pork",
     "Iced Tea Smoked Duck",
     "Pizza Cutter Steak",
+    "Leverpostei med bacon",
+    "27 Spice Chicken",
+    "Fromage Pizza 109",
   ])("keeps food item %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(true);
   });
