@@ -1,6 +1,8 @@
 import type { Pool, QueryResultRow } from "pg";
 import type { RestaurantHoursSourceTarget } from "./restaurant-hours.js";
 
+export type RestaurantHoursVerificationStatus = "verified" | "provisional" | "unverified";
+
 export interface UpsertRestaurantHoursSourceInput {
   readonly restaurantId: string;
   readonly url: string;
@@ -8,6 +10,9 @@ export interface UpsertRestaurantHoursSourceInput {
   readonly checkIntervalMinutes: number;
   readonly minimumExpectedIntervals: number;
   readonly scopeHints?: readonly string[];
+  readonly verificationStatus?: RestaurantHoursVerificationStatus;
+  readonly verificationNote?: string | null;
+  readonly verificationCheckedAt?: string | null;
 }
 
 interface RestaurantHoursSourceRow extends QueryResultRow {
@@ -85,6 +90,16 @@ export async function upsertRestaurantHoursSource(
     throw new Error("Restaurant hours scope hints must contain at most 8 non-empty values of at most 80 characters");
   }
 
+  const verificationStatus = input.verificationStatus ?? "verified";
+  const verificationNote = input.verificationNote?.trim() || null;
+  const verificationCheckedAt = input.verificationCheckedAt ?? null;
+  if (verificationStatus !== "verified" && (!verificationNote || !verificationCheckedAt)) {
+    throw new Error("Provisional or unverified restaurant hours require verification note and checked-at date");
+  }
+  if (verificationCheckedAt && !/^\d{4}-\d{2}-\d{2}$/.test(verificationCheckedAt)) {
+    throw new Error("Restaurant hours verification checked-at date must use YYYY-MM-DD");
+  }
+
   const result = await pool.query<{ id: string }>(
     `INSERT INTO fysen.restaurant_hours_sources (
        restaurant_id,
@@ -95,9 +110,12 @@ export async function upsertRestaurantHoursSource(
        check_interval_minutes,
        minimum_expected_intervals,
        scope_hints,
+       verification_status,
+       verification_note,
+       verification_checked_at,
        next_check_at,
        enabled
-     ) VALUES ($1, 'kitchen', $2, $3, 'visible_text_v1', $4, $5, $6::text[], now(), true)
+     ) VALUES ($1, 'kitchen', $2, $3, 'visible_text_v1', $4, $5, $6::text[], $7, $8, $9::date, now(), true)
      ON CONFLICT (restaurant_id, service_type) DO UPDATE SET
        url = EXCLUDED.url,
        time_zone = EXCLUDED.time_zone,
@@ -105,12 +123,16 @@ export async function upsertRestaurantHoursSource(
        check_interval_minutes = EXCLUDED.check_interval_minutes,
        minimum_expected_intervals = EXCLUDED.minimum_expected_intervals,
        scope_hints = EXCLUDED.scope_hints,
+       verification_status = EXCLUDED.verification_status,
+       verification_note = EXCLUDED.verification_note,
+       verification_checked_at = EXCLUDED.verification_checked_at,
        next_check_at = CASE
          WHEN fysen.restaurant_hours_sources.last_checked_at IS NULL
            OR fysen.restaurant_hours_sources.url IS DISTINCT FROM EXCLUDED.url
            OR fysen.restaurant_hours_sources.time_zone IS DISTINCT FROM EXCLUDED.time_zone
            OR fysen.restaurant_hours_sources.minimum_expected_intervals IS DISTINCT FROM EXCLUDED.minimum_expected_intervals
            OR fysen.restaurant_hours_sources.scope_hints IS DISTINCT FROM EXCLUDED.scope_hints
+           OR fysen.restaurant_hours_sources.verification_status IS DISTINCT FROM EXCLUDED.verification_status
          THEN now()
          ELSE fysen.restaurant_hours_sources.next_check_at
        END,
@@ -124,6 +146,9 @@ export async function upsertRestaurantHoursSource(
       input.checkIntervalMinutes,
       input.minimumExpectedIntervals,
       scopeHints,
+      verificationStatus,
+      verificationNote,
+      verificationCheckedAt,
     ],
   );
   const id = result.rows[0]?.id;
