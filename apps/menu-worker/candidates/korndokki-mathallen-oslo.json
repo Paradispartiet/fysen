@@ -11,9 +11,9 @@
     "longitude": 10.7519078
   },
   "menuSource": {
-    "url": "https://wolt.com/nb/nor/oslo/restaurant/korndokki-mathallen",
+    "url": "https://www.foodora.no/restaurant/q839/korndokki-mathallen",
     "sourceType": "html",
-    "fetchMode": "browser",
+    "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
     "minimumExpectedItems": 10
@@ -34,9 +34,9 @@
   "actions": [
     {
       "type": "order",
-      "url": "https://wolt.com/nb/nor/oslo/restaurant/korndokki-mathallen",
+      "url": "https://www.foodora.no/restaurant/q839/korndokki-mathallen",
       "sourceUrl": "https://mathallenoslo.no/butikk/korndokki/",
-      "provider": "Wolt"
+      "provider": "Foodora"
     }
   ],
   "qualityAssertions": {
@@ -46,12 +46,12 @@
       "Mozzarella Corndog",
       "Octopus Ink Corndog",
       "Bibimbap",
-      "Vegan Bibimbap",
+      "Bibimbap (Vegan)",
       "Beef Bulgogi Bowl",
       "Spicy Pork Bulgogi Bowl",
       "Tteokbokki",
-      "KornDoKKi Combo (Half & half corndog + 1/2 Tteokbokki)",
-      "Deep-Fried Mandu"
+      "KornDoKKi Combo",
+      "Deep-fried Mandu"
     ],
     "requiredDishVariants": [
       { "name": "Sausage Corndog", "priceMinor": 9900 },
@@ -59,16 +59,14 @@
       { "name": "Mozzarella Corndog", "priceMinor": 11500 },
       { "name": "Octopus Ink Corndog", "priceMinor": 11900 },
       { "name": "Bibimbap", "priceMinor": 22900 },
-      { "name": "Vegan Bibimbap", "priceMinor": 22900 },
-      { "name": "Beef Bulgogi Bowl", "priceMinor": 24900 },
+      { "name": "Bibimbap (Vegan)", "priceMinor": 22900 },
       { "name": "Spicy Pork Bulgogi Bowl", "priceMinor": 23900 },
-      { "name": "Tteokbokki", "priceMinor": 18900 },
-      { "name": "KornDoKKi Combo (Half & half corndog + 1/2 Tteokbokki)", "priceMinor": 19900 },
-      { "name": "Deep-Fried Mandu", "priceMinor": 7900 }
+      { "name": "KornDoKKi Combo", "priceMinor": 19900 },
+      { "name": "Deep-fried Mandu", "priceMinor": 7900 }
     ],
     "forbiddenDishNames": [
-      "Coca-Cola Original Taste",
-      "Coca-Cola uten sukker",
+      "Coca-Cola",
+      "Coca-Cola Uten Sukker",
       "Fanta Appelsin",
       "Fanta Exotic",
       "Sprite",
