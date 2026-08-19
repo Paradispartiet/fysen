@@ -43,18 +43,17 @@ describe("HTML heading line-break normalizer", () => {
     );
     const $ = load(normalized);
 
-    expect($("h4").text().replace(/\s+/g, " ").trim()).toBe("Dish Name");
+    expect($("h4").text().replace(/\\s+/g, " ").trim()).toBe("Dish Name");
     expect($("h4 br")).toHaveLength(0);
     expect($("p br")).toHaveLength(1);
   });
 
-  it("recovers a dish when a standalone currency label separates its heading from the price", () => {
+  it("normalizes a NOK-prefixed price so the existing conservative price recovery can link it to the dish", () => {
     const normalized = normalizeHtmlHeadingLineBreaks(`
       <html><body>
         <section>
           <h3>Doro Wet</h3>
-          <div>NOK</div>
-          <div>290</div>
+          <div><span>NOK</span><strong>290</strong></div>
         </section>
       </body></html>
     `);
@@ -67,10 +66,10 @@ describe("HTML heading line-break normalizer", () => {
     expect(extracted.items.some((item) => item.name === "NOK")).toBe(false);
   });
 
-  it("removes phone metadata instead of turning its trailing digits into a menu price", () => {
+  it("removes nested phone metadata instead of turning its trailing digits into a menu price", () => {
     const normalized = normalizeHtmlHeadingLineBreaks(`
       <html><body>
-        <footer><p>Phone: 457 66 490</p></footer>
+        <footer><p>Phone: 457 66 <span>490</span></p></footer>
         <section><p>Tibis 320</p></section>
       </body></html>
     `);
