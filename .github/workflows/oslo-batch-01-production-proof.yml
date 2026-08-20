@@ -8,19 +8,14 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: fysen-production-menu-mutation
-  cancel-in-progress: false
-
 jobs:
   proof:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
     env:
       DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
       DATABASE_SSL: "verify-full"
       NODE_ENV: production
-      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
     steps:
       - name: Require production database secret
         shell: bash
@@ -50,8 +45,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Build menu worker and dependencies
-        run: pnpm --filter @fysen/menu-worker... build
+      - name: Build database dependency graph
+        run: pnpm --filter @fysen/database... build
 
       - name: Count canonical catalog manifests
         shell: bash
@@ -60,86 +55,13 @@ jobs:
           echo "catalog_manifest_count=$count"
           test "$count" -eq 45
 
-      - name: Materialize exact production catalog
-        run: pnpm --filter @fysen/menu-worker onboard:catalog
-
-      - name: Watch promoted menu sources explicitly
-        shell: bash
-        run: |
-          node --input-type=module <<'NODE'
-          import {
-            createDatabasePool,
-            getMenuSourceSupport,
-            MenuIndexRepository,
-          } from './packages/database/dist/index.js';
-          import { HttpMenuClient } from './apps/menu-worker/dist/http-client.js';
-          import { watchMenuSourceOnce } from './apps/menu-worker/dist/watcher.js';
-
-          const slugs = [
-            'dalat-cafe-torggata-oslo',
-            'kebabish-original-breigata-oslo',
-            'kinabolle-ensjo-oslo',
-            'kinabolle-gronland-oslo',
-            'oche-aker-brygge-oslo',
-            'oche-torggata-oslo',
-            'villa-paradiso-tivoli-oslo',
-          ];
-          const failing = new Set([
-            'blocked_by_robots',
-            'fetch_error',
-            'extraction_error',
-            'quarantined',
-          ]);
-          const pool = createDatabasePool();
-          try {
-            const { rows } = await pool.query(
-              `SELECT DISTINCT ON (r.slug)
-                 r.slug,
-                 ms.id::text AS source_id,
-                 ms.url
-               FROM fysen.restaurants r
-               JOIN fysen.menu_sources ms ON ms.restaurant_id = r.id
-               WHERE r.slug = ANY($1::text[])
-                 AND r.active = true
-                 AND ms.enabled = true
-               ORDER BY r.slug, ms.created_at DESC`,
-              [slugs],
-            );
-            const expected = [...slugs].sort();
-            const actual = rows.map((row) => row.slug).sort();
-            if (rows.length !== slugs.length || JSON.stringify(actual) !== JSON.stringify(expected)) {
-              throw new Error(`Expected seven promoted enabled sources, got ${JSON.stringify(rows)}`);
-            }
-
-            const repository = new MenuIndexRepository(pool);
-            const httpClient = new HttpMenuClient();
-            const results = [];
-            for (const row of rows) {
-              const support = await getMenuSourceSupport(pool, row.source_id);
-              const summary = await watchMenuSourceOnce(
-                repository,
-                row.source_id,
-                httpClient,
-                support,
-              );
-              results.push({ slug: row.slug, url: row.url, ...summary });
-            }
-            console.log(JSON.stringify({ promotedWatchCount: results.length, results }, null, 2));
-            const failures = results.filter((result) => failing.has(result.outcome));
-            if (failures.length > 0) {
-              throw new Error(`Promoted watcher failures: ${JSON.stringify(failures)}`);
-            }
-          } finally {
-            await pool.end();
-          }
-          NODE
-
-      - name: Read exact production proof
+      - name: Read exact post-merge production proof
         shell: bash
         run: |
           node --input-type=module <<'NODE'
           import { createDatabasePool } from './packages/database/dist/index.js';
 
+          const mergeTime = new Date('2026-08-20T17:08:16Z');
           const slugs = [
             'dalat-cafe-torggata-oslo',
             'kebabish-original-breigata-oslo',
@@ -161,8 +83,10 @@ jobs:
               `SELECT DISTINCT ON (r.slug)
                  r.slug,
                  r.active,
+                 r.created_at AS restaurant_created_at,
                  ms.enabled,
                  ms.url,
+                 ms.created_at AS menu_source_created_at,
                  ms.last_http_status,
                  ms.consecutive_failures,
                  ms.last_checked_at,
@@ -172,11 +96,12 @@ jobs:
                  w.extracted_item_count,
                  w.error_code,
                  w.error_message,
-                 w.started_at AS latest_watch_started_at
+                 w.started_at AS latest_watch_started_at,
+                 w.completed_at AS latest_watch_completed_at
                FROM fysen.restaurants r
                JOIN fysen.menu_sources ms ON ms.restaurant_id = r.id
                LEFT JOIN LATERAL (
-                 SELECT outcome, http_status, extracted_item_count, error_code, error_message, started_at
+                 SELECT outcome, http_status, extracted_item_count, error_code, error_message, started_at, completed_at
                  FROM fysen.menu_watch_runs
                  WHERE menu_source_id = ms.id
                  ORDER BY started_at DESC
@@ -191,7 +116,12 @@ jobs:
                  (SELECT count(*)::int FROM fysen.restaurants WHERE active = true) AS active_restaurants,
                  (SELECT count(*)::int FROM fysen.menu_sources WHERE enabled = true) AS enabled_menu_sources`,
             );
-            console.log(JSON.stringify({ promotedRows: rows, databaseCounts: counts.rows[0] }, null, 2));
+            console.log(JSON.stringify({
+              expectedCatalogManifestCount: 45,
+              promotedCount: rows.length,
+              promotedRows: rows,
+              databaseCounts: counts.rows[0],
+            }, null, 2));
 
             const expected = [...slugs].sort();
             const actual = rows.map((row) => row.slug).sort();
@@ -208,6 +138,12 @@ jobs:
               }
               if (!row.last_menu_fingerprint) {
                 throw new Error(`${row.slug} is missing a production menu fingerprint`);
+              }
+              if (!row.last_checked_at || new Date(row.last_checked_at) < mergeTime) {
+                throw new Error(`${row.slug} was not checked after the batch merge`);
+              }
+              if (!row.latest_watch_started_at || new Date(row.latest_watch_started_at) < mergeTime) {
+                throw new Error(`${row.slug} has no post-merge watcher row`);
               }
             }
           } finally {
