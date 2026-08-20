@@ -7,12 +7,13 @@ import {
 } from "@fysen/menu-core";
 import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recovery.js";
 
-export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION = "trailing-price-card-v3";
+export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION = "trailing-price-card-v4";
 
+const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{1,3})(?:[.,](\d{1,2}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
 const TRAILING_MARKED_PRICE = /(?:(fra|from)\s+)?([1-9]\d{1,3})(?:[.,](\d{1,2}))?\s*(?:,-|kr\.?|NOK)\s*$/iu;
 const ADDITIONAL_MARKED_PRICE = /[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|NOK)/iu;
-const SECTION_OR_UI_LABEL = /^(?:top\s+of\s+page|bottom\s+of\s+page|home|hjem|menu|meny|more|om\s+oss|about(?:\s+us)?|contact(?:\s+us)?|kontakt(?:\s+oss)?|opening(?:\s+hours)?|åpning(?:s)?\s*tider|address|adresse|booking|reservation(?:s)?|reservasjoner?|gift\s*card|gavekort|delivery\s*fee|leveringsgebyr|allergens?|allergener?)$/iu;
+const SECTION_OR_UI_LABEL = /^(?:top\s+of\s+page|bottom\s+of\s+page|home|hjem|menu|meny|more|om\s+oss|about(?:\s+us)?|contact(?:\s+us)?|kontakt(?:\s+oss)?|opening(?:\s+hours)?|åpning(?:s)?\s*tider|address|adresse|booking|reservation(?:s)?|reservasjoner?|gift\s*card|gavekort|delivery\s*fee|leveringsgebyr|allergens?|allergener?|drinks?|drikke(?:meny)?|beverages?)$/iu;
 const UI_ACTION_LEAD = /^(?:choose|select|velg|bestill|order|book|reserve|click|trykk|tap)\b/iu;
 const DESCRIPTION_LEAD = /^(?:serveres?|servert|served|with|med|marinert|marinated|grillet|grilled|bakt|baked|braisert|braised|toppet|topped|inneholder|contains?|inkludert|including|alle\s+retter)\b/iu;
 const ALLERGEN_METADATA = /^\(?\s*(?:allergener?|allergens?)\s*:/iu;
@@ -21,6 +22,11 @@ interface ParsedTrailingPrice {
   readonly priceMinor: number;
   readonly priceKind: MenuPriceKind;
   readonly residual: string;
+}
+
+interface TrailingPriceCandidate {
+  readonly item: MenuObservedItem;
+  readonly sectionHint: string | null;
 }
 
 function normalizeVisibleLine(value: string): string {
@@ -73,16 +79,33 @@ function looksLikeDescription(value: string): boolean {
 function looksLikeDishTitle(value: string): boolean {
   const title = normalizeVisibleLine(value);
   if (!title || title.length < 2 || title.length > 160 || !/\p{L}/u.test(title)) return false;
+  if (title.startsWith(HEADING_MARKER)) return false;
   if (parseTrailingPrice(title) || SECTION_OR_UI_LABEL.test(title) || UI_ACTION_LEAD.test(title)) return false;
   if (looksLikeDescription(title) || /^(?:©|™|https?:\/\/|www\.)/iu.test(title)) return false;
   return title.split(/\s+/).filter(Boolean).length <= 12;
 }
 
-function visibleLines(html: string): readonly string[] {
+function annotatedLines(html: string): readonly string[] {
   const $ = load(html);
   $("script, style, noscript, svg, template").remove();
   $("br").replaceWith("\n");
-  $("p, li, tr, div, section, article, h1, h2, h3, h4, h5, h6").each((_, element) => {
+
+  for (let level = 1; level <= 6; level += 1) {
+    $(`h${level}`).each((_, element) => {
+      $(element).prepend(`\n${HEADING_MARKER}${level}__\n`);
+      $(element).append("\n");
+    });
+  }
+
+  $("[role='heading'][aria-level]").each((_, element) => {
+    if ($(element).is("h1, h2, h3, h4, h5, h6")) return;
+    const level = Number($(element).attr("aria-level"));
+    if (!Number.isInteger(level) || level < 1 || level > 6) return;
+    $(element).prepend(`\n${HEADING_MARKER}${level}__\n`);
+    $(element).append("\n");
+  });
+
+  $("p, li, tr, div, section, article").each((_, element) => {
     $(element).append("\n");
   });
   return $("body")
@@ -92,12 +115,67 @@ function visibleLines(html: string): readonly string[] {
     .filter(Boolean);
 }
 
+function sectionHintBeforeTitle(lines: readonly string[], titlePosition: number): string | null {
+  for (let index = titlePosition - 1; index >= 0; index -= 1) {
+    const marker = lines[index]?.match(/^__FYSEN_TRAILING_PRICE_HEADING_LEVEL_([1-6])__$/u);
+    if (!marker) continue;
+
+    // A marker immediately before the selected title belongs to the title itself,
+    // not to its menu section. Continue to the preceding heading in that case.
+    if (index + 1 === titlePosition) continue;
+
+    const headingTitle = normalizeVisibleLine(lines[index + 1] ?? "");
+    if (!looksLikeDishTitle(headingTitle)) continue;
+    return headingTitle;
+  }
+  return null;
+}
+
+function preserveDocumentedDuplicateSections(
+  candidates: readonly TrailingPriceCandidate[],
+): readonly MenuObservedItem[] {
+  const titleCounts = new Map<string, number>();
+  const hintCounts = new Map<string, number>();
+  const distinctHints = new Map<string, Set<string>>();
+
+  for (const candidate of candidates) {
+    const name = candidate.item.normalizedName;
+    titleCounts.set(name, (titleCounts.get(name) ?? 0) + 1);
+    if (!candidate.sectionHint) continue;
+    hintCounts.set(name, (hintCounts.get(name) ?? 0) + 1);
+    const hints = distinctHints.get(name) ?? new Set<string>();
+    hints.add(normalizeDishName(candidate.sectionHint));
+    distinctHints.set(name, hints);
+  }
+
+  const unique = new Map<string, MenuObservedItem>();
+  for (const candidate of candidates) {
+    const name = candidate.item.normalizedName;
+    const count = titleCounts.get(name) ?? 0;
+    const hasCompleteSectionEvidence =
+      count > 1 &&
+      (hintCounts.get(name) ?? 0) === count &&
+      (distinctHints.get(name)?.size ?? 0) >= 2 &&
+      candidate.sectionHint !== null;
+    const next = hasCompleteSectionEvidence
+      ? {
+          ...candidate.item,
+          sectionName: candidate.sectionHint,
+          sourceKey: createMenuItemSourceKey(candidate.item.name, candidate.sectionHint),
+        }
+      : candidate.item;
+    unique.set(next.sourceKey, next);
+  }
+
+  return [...unique.values()].sort((a, b) => a.position - b.position);
+}
+
 export function recoverTrailingPriceCardHtmlItems(html: string): readonly MenuObservedItem[] {
   const semanticCategoryItems = recoverSemanticCategoryCardHtmlItems(html);
   if (semanticCategoryItems.length >= 4) return semanticCategoryItems;
 
-  const lines = visibleLines(html);
-  const unique = new Map<string, MenuObservedItem>();
+  const lines = annotatedLines(html);
+  const candidates: TrailingPriceCandidate[] = [];
 
   for (let pricePosition = 0; pricePosition < lines.length; pricePosition += 1) {
     const endpoint = parseTrailingPrice(lines[pricePosition] ?? "");
@@ -106,6 +184,7 @@ export function recoverTrailingPriceCardHtmlItems(html: string): readonly MenuOb
     let titlePosition: number | null = null;
     for (let index = pricePosition - 1; index >= Math.max(0, pricePosition - 6); index -= 1) {
       const candidate = lines[index] ?? "";
+      if (candidate.startsWith(HEADING_MARKER)) continue;
       if (parseTrailingPrice(candidate)) break;
       if (!looksLikeDishTitle(candidate)) continue;
       titlePosition = index;
@@ -117,27 +196,35 @@ export function recoverTrailingPriceCardHtmlItems(html: string): readonly MenuOb
     const descriptionParts = lines
       .slice(titlePosition + 1, pricePosition)
       .map(normalizeVisibleLine)
-      .filter(Boolean);
+      .filter((line) => Boolean(line) && !line.startsWith(HEADING_MARKER));
     if (endpoint.residual) descriptionParts.push(endpoint.residual);
     const description = descriptionParts.length > 0 ? [...new Set(descriptionParts)].join(" ") : null;
     const sourceKey = createMenuItemSourceKey(title);
 
-    unique.set(sourceKey, {
-      sourceKey,
-      name: title,
-      normalizedName: normalizeDishName(title),
-      description,
-      sectionName: null,
-      priceMinor: endpoint.priceMinor,
-      priceKind: endpoint.priceKind,
-      currency: "NOK",
-      position: titlePosition,
-      extractionMethod: "html_heuristic",
-      confidence: 0.95,
-      sourceExcerpt: lines.slice(titlePosition, pricePosition + 1).join(" — ").slice(0, 1000),
+    candidates.push({
+      item: {
+        sourceKey,
+        name: title,
+        normalizedName: normalizeDishName(title),
+        description,
+        sectionName: null,
+        priceMinor: endpoint.priceMinor,
+        priceKind: endpoint.priceKind,
+        currency: "NOK",
+        position: titlePosition,
+        extractionMethod: "html_heuristic",
+        confidence: 0.95,
+        sourceExcerpt: lines
+          .slice(titlePosition, pricePosition + 1)
+          .filter((line) => !line.startsWith(HEADING_MARKER))
+          .join(" — ")
+          .slice(0, 1000),
+      },
+      sectionHint: sectionHintBeforeTitle(lines, titlePosition),
     });
   }
 
-  if (unique.size < 4) return [];
-  return [...unique.values()].sort((a, b) => a.position - b.position);
+  const items = preserveDocumentedDuplicateSections(candidates);
+  if (items.length < 4) return [];
+  return items;
 }
