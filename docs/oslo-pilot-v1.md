@@ -4,52 +4,61 @@
 
 Fysen Oslo Pilot v1 skal bevise at Fysen kan brukes av folk i Oslo til å finne en konkret rett de har lyst på, basert på ferske og sporbare restaurantmenyer.
 
-Pilotens north star er fortsatt dish-first:
+Pilotens north star er dish-first:
 
 > Brukeren skriver retten. Fysen viser restauranter som kan dokumenteres å ha retten på en fersk meny nå.
 
-Piloten skal **ikke** optimaliseres for flest mulig restauranter. Den skal optimaliseres for:
+Fysen skal først og fremst hjelpe brukeren å finne **hvor en rett faktisk kan spises**, samtidig som verifiserte booking- og bestillingsmuligheter kan gjøre resultatet handlingsklart.
+
+Piloten skal ikke optimaliseres for flest mulig restauranter eller flest mulig menyitems. Den skal optimaliseres for:
 
 - pålitelige treff;
 - nyttig Oslo-dekning;
 - ferske og kildebelagte menydata;
 - målbar, ekte brukerintensjon;
+- tydelig skille mellom hva restauranten selv publiserer og hva en leverings-/bestillingstjeneste dokumenterer;
 - en tydelig vei fra oppdagelse til restaurant, booking eller bestilling der dette er verifisert.
 
-Restaurant-onboarding er derfor en løpende coverage-maskin, ikke lenger pilotens hovedarbeid. Nye restauranter skal primært prioriteres når faktisk etterspørsel, geografi, kjøkken eller en nødvendig kildetype viser et reelt gap.
+Restaurant-onboarding er en løpende coverage-maskin. Nye restauranter prioriteres når etterspørsel, geografi, kjøkken eller en nødvendig kildetype viser et reelt gap.
 
-## Status 19. august 2026
+## Status 20. august 2026
 
 ### Canonical produksjonskatalog
 
-Den canonicale katalogen i `apps/menu-worker/catalog/` inneholder **22 restauranter**:
+`apps/menu-worker/catalog/` er den eneste canonicale produksjonslisten. Dokumentasjonen skal ikke vedlikeholde et parallelt, håndskrevet restauranttall eller en katalogkopi som raskt blir utdatert.
 
-1. `aura-oscars-gate-oslo`
-2. `bambus-lambertseter-oslo`
-3. `borggarden-biffrestaurant-oslo`
-4. `cafe-sara-hausmann-oslo`
-5. `colletts-parkservering-oslo`
-6. `confusion-oslo`
-7. `cue-thorvald-meyers-gate-oslo`
-8. `district4-sagene-oslo`
-9. `haandtryk-skippergata-oslo`
-10. `habibi-mollergata-oslo`
-11. `hrimnir-ramen-storgata`
-12. `il-colosseo-sorkedalsveien-oslo`
-13. `koskos-grensen-oslo`
-14. `lahori-dera-gronland-oslo`
-15. `mathus-chicken-vestli-oslo`
-16. `noods-klingenberggata-oslo`
-17. `olivia-aker-brygge-oslo`
-18. `parthenon-osterhaus-oslo`
-19. `punjab-tandoori-gronland-oslo`
-20. `roll-sushi-majorstua-oslo`
-21. `valentes-vika-oslo`
-22. `way-down-south-oslo`
+Antall restauranter er heller ikke et produktmål. En restaurant teller offentlig først når canonical manifest, production DB, watcher-state, søkeindeks, API og webflate er konsistente.
 
-Katalogtallet er ikke i seg selv et produksjonsbevis. En restaurant teller offentlig først når den canonicale manifestdefinisjonen, production DB, watcher-state, søkeindeks, API og webflate er konsistente.
+## Kildehierarki for restaurantmenyer
 
-### Kildetyper som nå er bevist
+Fysen skal velge kilden som best dokumenterer hva restauranten faktisk serverer nå. Kildehierarkiet er:
+
+1. **Restaurantens egen aktuelle meny er førstevalg.** Dette kan være first-party HTML, JSON-LD, PDF eller annen offisiell menypublikasjon.
+2. Andre aktuelle first-party-flater kan brukes for identitet, rettsinformasjon, åpningstider og handlinger når de faktisk publiserer den relevante informasjonen.
+3. **Foodora, Wolt eller tilsvarende kan brukes som sekundær priset service-meny** når restaurantens egen meny ikke er maskinlesbar, ikke publiserer priser pålitelig, eller restauranten eksplisitt bruker tjenesten som bestillingsflate.
+4. En service-/delivery-meny beviser bare de rettene og prisene som faktisk finnes på den tjenesten. Den skal ikke omtales som restaurantens komplette dine-in-meny uten selvstendig bevis for dette.
+5. Søkemotor-snutter, cachede/indexerte kopier og ikke-tilknyttede aggregatorsider er research-signaler, ikke canonical erstatning for en nåværende live-kilde.
+
+At en restaurant mangler egen nettside er **ikke** i seg selv en avvisningsgrunn. Identiteten må fortsatt være sikkert etablert, og den valgte menyflaten må passere de samme live source-, safety- og quality-portene.
+
+Denne modellen er viktig fordi Fysen ikke er en Foodora-/Wolt-katalog. Produktet skal kunne fortelle brukeren hvor en rett kan spises, også når den best maskinlesbare prisflaten tilfeldigvis er en leveringstjeneste.
+
+## `minimumExpectedItems`: integritetsport, ikke kvote
+
+`minimumExpectedItems` er fortsatt en hard fail-closed port. Men tallet skal representere **kildebevist minimumsdekning**, ikke hvor mange retter vi mener en restaurant burde ha.
+
+Reglene er:
+
+- minimumet skal begrunnes i den aktuelle canonical live-kilden og være høyt nok til å oppdage reelt parser-/kildetap;
+- vi setter ikke vilkårlige terskler som 20 eller 30 bare fordi en restaurant eller et kjøkken forventes å være stort;
+- en legitim kort meny kan være fullverdig Fysen-dekning dersom rettene er aktuelle, prisede og pålitelig ekstrahert;
+- dersom direkte live-kildebevis viser at en tidligere rett faktisk er fjernet, skal en stale required-assertion og det source-backed minimumet oppdateres;
+- minimumet skal **aldri** senkes for å skjule at parseren bare materialiserer en del av en kilde som fortsatt inneholder flere retter;
+- representative dish-/price-assertions og forbidden assertions beholdes som separate kvalitetsporter.
+
+Forskjellen er avgjørende: **en mindre faktisk meny er gyldig; parser-loss er ikke gyldig.**
+
+## Kildetyper og transport
 
 Piloten dekker flere reelle kildeklasser og parser-/transportvarianter:
 
@@ -57,232 +66,98 @@ Piloten dekker flere reelle kildeklasser og parser-/transportvarianter:
 - strukturert JSON-LD;
 - PDF-meny;
 - browser-renderte JavaScript-kilder;
-- førsteparthandlinger for `booking` og `order`;
+- sekundære service-menyer når first-party meny ikke kan materialiseres forsvarlig;
+- first-party booking-/order-handlinger der de kan verifiseres;
 - separate og branch-scopede åpningstidskilder;
-- mer krevende redirect- og browser-data-origins gjennom eksplisitt `sourceSupport`.
-
-Rodeo er fortsatt golden live-kilde for den opprinnelige ende-til-ende-kontrakten. Senere restauranter har utvidet beviset til andre transport-, parser-, pris-, hours- og action-varianter.
-
-### Første reelle browser-case
+- eksplisitte redirect- og browser-data-origins gjennom `sourceSupport`.
 
 Browser-fetch er ikke automatisk fallback. Det brukes bare når manifestet eksplisitt sier `fetchMode: "browser"`, vanlig HTTP ikke er tilstrekkelig, robots/sikkerhetsportene tillater det og origin-policyen er eksplisitt.
 
-**Collett's Parkservering er det første reelle produksjonscaset som beviser browser-kilden i katalogen.** Kilden trenger rendering, har eksplisitte minimums- og dish/pris-assertions og er beholdt som browser-source i canonical manifest.
+`sourceSupport` er en eksplisitt transportutvidelse, ikke en generell allowlist. Bare nødvendige, konkrete HTTPS-origins kan deklareres, og offentlig-nettverk/IP-validering gjelder fortsatt.
 
-Valentes bruker også browser-mode og beviser i tillegg `sourceSupport.browserDataOrigins` for en eksplisitt Shopify-dataorigin.
+## Meny, åpningstider og handlinger er separate bevis
 
-### `sourceSupport`-kontrakten
+Menybevis skal ikke blokkeres av at kjøkkentidene er usikre, og åpningstidene skal ikke diktes opp fra vanlige venue-hours.
 
-`sourceSupport` er manifestets eksplisitte transportutvidelse for en ellers fail-closed source policy. Den er **ikke** en generell allowlist og skal aldri brukes som automatisk fallback.
+Når en first-party side publiserer åpningstider, men canonical hours-worker ikke sikkert kan tolke dem som kjøkkentider, kan manifestet bruke eksplisitt `provisional` eller `unverified` hours-status. Da kan den verifiserte menyen fortsatt være søkbar, men Fysen skal vise `opening: unknown` til kjøkkentidene faktisk er verifisert.
 
-Kontrakten brukes for to avgrensede behov:
-
-- `redirectOrigins`: eksplisitt tillatte HTTPS-origins når en canonical kilde faktisk redirecter til en annen first-party/forventet origin;
-- `browserDataOrigins`: eksplisitt tillatte HTTPS-origins som en browser-rendering trenger for XHR/fetch-data.
-
-Sikkerhetsreglene gjelder fortsatt:
-
-- origin må være eksplisitt deklarert;
-- bare HTTPS-origins godtas;
-- offentlig-nettverk/IP-validering gjelder;
-- udeklaredte origins feiler lukket;
-- browser-data-origin gir ikke generell navigasjonsrett;
-- støtten persisteres per `menu_source` og inngår i den canonicale kildedefinisjonen.
-
-Punjab Tandoori er et konkret produksjonsbevis for `redirectOrigins`. Valentes er et konkret produksjonsbevis for `browserDataOrigins`.
-
-### Provisional opening hours
-
-Menybevis og åpningstidsbevis er separate.
-
-Når en first-party side publiserer åpningstider, men dagens canonical hours-worker ikke kan re-ekstrahere eller tolke service-/kjøkkentidssemantikken sikkert, kan manifestet eksplisitt bruke:
-
-```json
-{
-  "verification": {
-    "hours": {
-      "status": "provisional",
-      "checkedAt": "YYYY-MM-DD",
-      "note": "..."
-    }
-  }
-}
-```
-
-`provisional` er en dokumentert, ikke-blokkerende usikkerhet — ikke et grønt hours-bevis. Konsekvensen er:
-
-- den verifiserte menyen kan fortsatt være søkbar;
-- Fysen skal ikke utlede `open` eller `closed` fra den provisional kilden;
-- search-resultatet skal vise åpningstilstand `unknown` til canonical hours-ekstraksjon er sikker;
-- menu-, identity-, quality- og action-gatene svekkes ikke.
-
-Valentes og Collett's Parkservering er konkrete katalogcase for denne modellen.
-
-## Production proof
-
-Et produktsteg i Oslo-piloten er ikke offentlig ferdig bare fordi repo og CI er grønne.
-
-Den permanente workflowen `production-pilot-proof.yml` etablerer én samlet production proof-port. Den leser katalogen dynamisk og skal for hver canonical restaurant verifisere:
-
-1. aktiv restaurant i production DB;
-2. riktig canonical menu-source URL og enabled source;
-3. fersk source-state;
-4. publisert latest snapshot med minst manifestets minimum antall items;
-5. akseptert siste menu-watch (`changed`, `unchanged` eller `not_modified`);
-6. representative direkte `searchDishes`-treff mot production DB;
-7. offentlig browse-API;
-8. offentlig webflate.
-
-Representative production-search-smokes inkluderer blant annet:
-
-- Punjab Tandoori / `Punjabi Mix Grill` + verifisert order;
-- Valentes / `Valentes Spesial` + `opening: unknown` for provisional hours;
-- Collett's / `Wienerschnitzel (Kalv)` + browser/provisional-hours-case;
-- en vanlig rett som `Margherita` for bredere dekning.
-
-Disse QA-søkene kaller `searchDishes` direkte og registrerer **ikke** `recordSearchFunnel`. De skal aldri skape falske demand-signaler.
-
-### Gjeldende deployment-status
-
-Production proof skal rapporteres rødt dersom lagene ikke er synkrone. Per 19. august 2026 var production API/DB foran den offentlige web-deployen: browse-API-et eksponerte nyere katalogdata, mens den offentlige `/search?city=Oslo` fortsatt renderte en eldre «Finn en rett»-flate.
-
-Dette skal **ikke** dokumenteres som et grønt offentlig produksjonsbevis før web-deployen faktisk er synkron og den samlede porten passerer. Vercel-release beholdes eksplisitt/batchet for å unngå unødvendig deployforbruk; production proof skal avdekke versjonsdrift, ikke omgå release-kontrakten.
-
-## Utforsk Oslo / Alle retter v1
-
-Restaurantkatalogen er nå stor og variert nok til at neste hovedetappe er produktoppdagelse, ikke tilfeldig onboarding.
-
-`/search?city=Oslo` uten `q` er den navigerbare **Alle retter i Oslo**-flaten. Den bygger på den samme ferske browse-indeksen som søkeproduktet — ingen ny database og ingen parallell rettidentitet.
-
-Utforsk Oslo v1 gir:
-
-- tekstfilter på ferske rettidentiteter;
-- kjøkken → region/land via eksisterende Food Knowledge-/CuisineExplorer-katalog;
-- fersk Oslo-dekning som sekundært discovery-signal;
-- restaurantantall når dette kan oppgis konservativt fra live-indeksen;
-- klikk på rett → samme ordinære søkeresultatside som et vanlig eksplisitt søk;
-- `Lær om retten` der Food Knowledge finnes;
-- canonical/redaksjonelle matprofiler med fersk dekning først;
-- live «På menyen nå»-liste over de faktisk søkbare menyidentitetene.
-
-### Én kilde til live discovery
-
-`CuisineExplorer` skal ikke kjøre automatiske `/search`-forespørsler i bakgrunnen for å finne «På menyen nå».
-
-Forsiden og Alle retter bruker i stedet den ikke-attribuerende `GET /v1/dishes/browse`-indeksen. Dermed:
-
-- discovery kan vise faktisk fersk dekning;
-- bakgrunnsvisninger skaper ikke `search_events` eller impressions;
-- bare eksplisitte brukersøk går gjennom vanlig search-funnel;
-- demand-dataene kan senere brukes som en reell prioriteringskø.
-
-Matching mellom redaksjonelle matprofiler og live menyidentiteter er deterministisk normalisert exact/frase-matching, ikke fuzzy semantikk. Dersom flere live stavemåter kan overlappe den samme restauranten, summeres de ikke ukritisk; UI viser et konservativt minimum fremfor å overdrive dekningen.
-
-## Søkemodell og rettidentitet
-
-Søk bygger videre på:
-
-- exact;
-- canonical;
-- prefix;
-- contains;
-- trigram/fuzzy som sekundært forslagsspor.
-
-Semantisk eller fuzzy likhet skal aldri alene gjøre en annen rett til et sikkert treff.
-
-Canonical dish concepts og kuraterte aliaser brukes der identiteten faktisk er bevist. Raw menyidentiteter kan fortsatt vises i live browse dersom de er ferske og søkbare; det er bedre å vise en sporbar menyidentitet enn å tvinge den inn i feil canonical rett.
-
-Food Knowledge er et redaksjonelt kunnskapslag over de samme rettene. Det skal ikke opprette konkurrerende restaurantdekning eller en egen søkeindeks.
-
-## Demand-loop
-
-Revenue Layer måler ekte brukersøk, impressions og attribuerte handlinger uten permanent brukerprofil.
-
-Arbeidsregelen for videre coverage er:
-
-1. samle faktiske søk;
-2. replay historiske fuzzy- og nulltreff mot **dagens** ferske indeks;
-3. fjern signaler som nå løses sikkert som `exact`, `canonical`, `prefix` eller `contains`;
-4. prioriter bare gap som fortsatt faktisk finnes;
-5. vurder deretter om gapet best løses med alias/canonicalisering, parserforbedring, ny restaurant eller bredere geografisk/kjøkkenmessig dekning.
-
-Historiske null-/fuzzy-rader er etterspørselsdata, ikke automatisk backlog. De skal aldri fortsette å styre arbeid etter at dagens indeks allerede løser dem.
-
-Det samme gjelder restaurant-onboarding: neste restaurant skal komme fordi den dekker et reelt behov eller viktig representativt hull — ikke fordi katalogen skal nå et vilkårlig tall som 30 eller 50.
+Booking/order deklareres bare når destinasjonen kan verifiseres. En delivery-plattform som brukes som menybevis blir ikke automatisk en canonical handling uten egen action-verifikasjon.
 
 ## Restaurant-onboarding
 
-Onboardingflyten er eksplisitt og manifestbasert:
+Onboardingflyten er manifestbasert:
 
-`candidate manifest -> active=false -> source/safety -> first watch -> minimum + dish/price assertions -> second watch -> action verification -> hours gate/audit -> active=true`
+`candidate manifest -> source/safety -> live extraction -> source-backed minimum + dish/price assertions -> action verification -> hours gate/audit -> merge -> separat byte-identisk promotion -> production materialization/proof`
 
 Viktige regler:
 
-- en kandidat kan ha lagrede snapshots uten å være søkbar;
-- første og andre menu-watch må være aksepterte;
-- latest snapshot må passere manifestets minimum og konkrete quality assertions;
-- booking/order må verifiseres mot canonical first-party source når handlingen deklareres;
-- verified hours må passere hours-gaten før de kan brukes som open/closed-bevis;
-- eksplisitt provisional-hours følger modellen over og gir `unknown`, ikke oppdiktet åpningstilstand;
-- mislykkede inaktive kandidater quiesces slik at menu/hours/actions ikke fortsetter som unødvendig due-trafikk;
-- allerede publiserte restauranter beholder refresh/recovery-reglene;
-- browser brukes bare når manifestet eksplisitt trenger det og alle safety/sourceSupport-gater passerer.
+- `candidates/` er read-only staging og aktiverer aldri en restaurant i produksjon;
+- live candidate-gaten bruker samme runtime-primitiver som production watcher;
+- den aktuelle live-kilden, ikke et gammelt søkeindeksutdrag, bestemmer hvilke assertions som er sanne;
+- parser-/transportfeil løses generisk med regresjonstester, aldri med restaurantspesifikke runtime-unntak;
+- parser-/sikkerhetsgrenser svekkes ikke for å få en kandidat grønn;
+- en god kandidat skal heller ikke forkastes fordi et historisk eller vilkårlig item-tall er høyere enn den faktiske menyen;
+- promotion skjer i en separat PR som flytter eksakt samme validerte manifest byte-for-byte fra `candidates/` til `catalog/`;
+- etter promotion må production DB, watcher, production-search, API og web inngå i produksjonsbeviset før restauranten kalles offentlig ferdig.
+
+## Production proof
+
+Repo-merge og grønn CI er ikke alene offentlig produksjonsbevis.
+
+Den permanente production proof-porten skal blant annet kontrollere:
+
+1. aktiv restaurant i production DB;
+2. riktig canonical menu-source og enabled source;
+3. fersk source-state;
+4. publisert latest snapshot over manifestets source-backed minimum;
+5. akseptert siste menu-watch;
+6. representative direkte `searchDishes`-smokes uten Revenue/search-funnel-events;
+7. offentlig browse-API;
+8. offentlig webflate.
+
+Production proof skal være rødt dersom lagene ikke er synkrone. Vercel-release beholdes batchet for å unngå unødvendig deployforbruk; proof-porten skal avdekke drift, ikke omgå release-kontrakten.
+
+## Utforsk Oslo / Alle retter
+
+`/search?city=Oslo` uten `q` er discovery-flaten over den samme ferske rettindeksen som søkeproduktet. Det skal ikke finnes en parallell restaurant- eller rettdatabase for discovery.
+
+Forsiden og Alle retter bruker den ikke-attribuerende browse-indeksen. Bakgrunnsvisninger skal derfor ikke skape `search_events` eller impressions; bare eksplisitte brukersøk inngår i demand-funnelen.
+
+Canonical dish concepts og kuraterte aliaser brukes når identiteten faktisk er bevist. Fuzzy/semantisk likhet alene skal aldri gjøre en annen rett til et sikkert treff.
+
+## Demand-loop
+
+Videre coverage styres av ekte, fortsatt uløste behov:
+
+1. samle eksplisitte brukersøk;
+2. replay historiske null-/fuzzy-signaler mot dagens ferske indeks;
+3. fjern signaler som nå løses sikkert;
+4. prioriter gjenværende reelle gap;
+5. avgjør om gapet best løses med alias/canonicalisering, parserforbedring, ny restaurant eller bredere geografisk/kjøkkenmessig dekning.
+
+Historiske nulltreff er etterspørselsdata, ikke automatisk backlog. På samme måte er restaurantantall og menyantall kvalitetsdata, ikke kvoter.
 
 ## Produktmål
 
 Ved avslutning av Oslo Pilot v1 skal Fysen kunne:
 
-1. indeksere et representativt sett Oslo-restauranter med flere reelle menykildetyper;
-2. vise en navigerbar oversikt over ferske retter i Oslo, ikke bare kreve at brukeren kjenner eksakt søkeord på forhånd;
+1. indeksere et representativt sett Oslo-restauranter fra flere reelle menykildetyper;
+2. vise en navigerbar oversikt over ferske retter i Oslo;
 3. forstå trygge aliaser og moderate stavevariasjoner uten å dikte opp rettelikhet;
-4. vise avstand og støtte nærhetsrangering når brukeren eksplisitt deler posisjon;
+4. vise avstand og støtte nærhetsrangering når brukeren deler posisjon;
 5. vise åpningstilstand bare når den er kildebelagt og fersk, ellers `unknown`;
-6. vise rett, pris, restaurant, avstand, menyferskhet og kilde i en tydelig resultatflate;
-7. gjøre det lett å gå videre til meny, restaurant, veibeskrivelse, booking eller bestilling når slike handlinger er verifisert;
-8. gi intern oversikt over crawlerhelse, kildeferskhet, quarantine og dekning;
-9. måle hvilke retter folk faktisk søker etter og hvilke treff som fører til handling, uten at QA eller discovery-bakgrunnskall forurenser dataene;
-10. bruke ekte demand-gap som grunnlag for videre aliasarbeid, coverage og restaurant-onboarding.
+6. vise rett, pris, restaurant, menyferskhet og kilde tydelig;
+7. skille restaurantens egen meny fra sekundær delivery/service-meny når dette er relevant for provenance;
+8. gjøre det lett å gå videre til restaurant, veibeskrivelse, booking eller bestilling når handlingen er verifisert;
+9. måle ekte etterspørsel uten at QA eller discovery forurenser dataene;
+10. bruke reelle demand-gap til å styre videre coverage.
 
 ## Kommersiell rekkefølge
 
-Revenue Layer R1 og R2 etablerer funnel-måling og verifiserte booking/order-destinasjoner.
-
-Neste kommersielle hovedfaser etter demand-loop er:
-
-### R3 — Claim Restaurant
-
-En restaurant skal kunne claime sin **eksisterende** canonical Fysen-profil. Claim skal ha:
-
-- verifikasjon;
-- eksplisitt tilgangskontroll;
-- audit-logg;
-- ingen ny parallell restaurantidentitet.
-
-### R4 — Fysen Pro
-
-Et claima restaurant-dashboard kan deretter vise blant annet:
-
-- impressions;
-- klikk/attribuerte handlinger;
-- populære retter;
-- etterspørselsgap;
-- menyhelse og ferskhet.
-
-Pris, betalte leads eller sponsede retter skal først testes etter at claim/eierskap og målingen er troverdig. Sponsing må aldri få lov til å dikte opp tilgjengelighet eller overstyre ferskhets-/kildebeviset.
-
-## Prioritert videre arbeid
-
-Rekkefølgen for Oslo-piloten er nå:
-
-1. **Production proof** — hold DB, watcher, production-search, API og web konsistente og eksplisitt verifiserte.
-2. **Utforsk Oslo / Alle retter** — videreutvikle discovery på den samme canonical/live-indeksen.
-3. **Ekte demand-loop** — la uløste, replay-verifiserte søkegap styre coverage-arbeidet.
-4. **Claim Restaurant (R3)** — claim eksisterende profiler med verifikasjon og audit.
-5. **Fysen Pro (R4)** — gi claima restauranter innsikt i faktisk etterspørsel, treff og menyhelse.
-6. **Kontinuerlig restaurantdekning** — sekundært og gapstyrt, aldri en ren tallkonkurranse.
+Revenue Layer R1/R2 etablerer funnel-måling og verifiserte handlinger. Deretter følger Claim Restaurant og Fysen Pro på den samme canonical restaurantidentiteten. Betalt plassering eller sponsing skal aldri kunne dikte opp rettetilgjengelighet eller overstyre kilde-/ferskhetsbevis.
 
 ## Suksesskriterium
 
-Piloten er vellykket når en ny bruker i Oslo kan åpne Fysen, enten søke direkte eller utforske ferske retter, og få et **troverdig, ferskt og handlingsklart resultat** — samtidig som Fysen kan skille ekte brukeretterspørsel fra intern QA/discovery og bruke de gjenværende reelle gapene til å styre videre arbeid.
+Piloten er vellykket når en bruker i Oslo kan søke eller utforske en konkret rett og få et **troverdig, ferskt og handlingsklart resultat** som viser hvor retten faktisk kan spises, med tydelig provenance og uten at tekniske kvoter forveksles med produktkvalitet.
 
 Revenue- og konverteringsdelen er spesifisert i [`revenue-layer-v1.md`](./revenue-layer-v1.md).
