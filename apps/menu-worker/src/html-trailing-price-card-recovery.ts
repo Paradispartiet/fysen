@@ -21,6 +21,8 @@ const PARENTHETICAL_METADATA_ONLY = /^\([^()]{1,120}\)$/u;
 const LEADING_MENU_INDEX = /^(\d{1,3})\s*[.)]?\s+(.+)$/u;
 const EXPLICIT_A_LA_CARTE_SCOPE = /^(?:a\s+la\s+carta|a\s+la\s+carte|à\s+la\s+carte)$/iu;
 const NEXT_MENU_SCOPE = /^(?:breakfast|frokost|brunch|lunch|lunsj|tasting\s+menu|set\s+menu|drinks?|drikke(?:meny)?|bar\s+menu)$/iu;
+const EXPLICIT_A_LA_CARTE_SECTION = "A LA CARTA";
+const MAX_PRECEDING_TITLE_DISTANCE = 12;
 
 interface ParsedTrailingPrice {
   readonly priceMinor: number;
@@ -194,7 +196,16 @@ function candidatesInExplicitAlaCarteScope(
   const scoped = candidates.filter(
     ({ item }) => item.position > scopeStart && item.position < scopeEnd,
   );
-  return scoped.length >= 4 ? scoped : candidates;
+  if (scoped.length < 4) return candidates;
+  return scoped.map((candidate) => ({
+    ...candidate,
+    item: {
+      ...candidate.item,
+      sectionName: EXPLICIT_A_LA_CARTE_SECTION,
+      sourceKey: createMenuItemSourceKey(candidate.item.name, EXPLICIT_A_LA_CARTE_SECTION),
+      confidence: 0.99,
+    },
+  }));
 }
 
 function parseNumberedCandidate(
@@ -271,7 +282,11 @@ export function recoverTrailingPriceCardHtmlItems(html: string): readonly MenuOb
       titlePosition = pricePosition;
       title = normalizeVisibleLine(endpoint.residual);
     } else {
-      for (let index = pricePosition - 1; index >= Math.max(0, pricePosition - 6); index -= 1) {
+      for (
+        let index = pricePosition - 1;
+        index >= Math.max(0, pricePosition - MAX_PRECEDING_TITLE_DISTANCE);
+        index -= 1
+      ) {
         const candidate = lines[index] ?? "";
         if (candidate.startsWith(HEADING_MARKER)) continue;
         if (parseTrailingPrice(candidate)) break;
@@ -315,8 +330,14 @@ export function recoverTrailingPriceCardHtmlItems(html: string): readonly MenuOb
   }
 
   const scopedCandidates = candidatesInExplicitAlaCarteScope(lines, candidates);
-  const numberedCandidates = canonicalizeStrongNumberedMenu(scopedCandidates);
-  const items = preserveDocumentedDuplicateSections(numberedCandidates ?? scopedCandidates);
+  const deduplicatedCandidates = preserveDocumentedDuplicateSections(scopedCandidates).map((item) => ({
+    item,
+    sectionHint: item.sectionName,
+  }));
+  const numberedCandidates = canonicalizeStrongNumberedMenu(deduplicatedCandidates);
+  const items = numberedCandidates
+    ? preserveDocumentedDuplicateSections(numberedCandidates)
+    : deduplicatedCandidates.map(({ item }) => item);
   if (items.length < 4) return [];
   return items;
 }

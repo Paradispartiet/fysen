@@ -3,7 +3,7 @@ name: Fysen production pilot proof
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["Materialize Fysen production catalog"]
+    workflows: ["Materialize Fysen production catalog", "Fysen batched Vercel production release"]
     types: [completed]
   push:
     branches: [main]
@@ -65,7 +65,7 @@ jobs:
       DATABASE_SSL: "verify-full"
       NODE_ENV: production
       FYSEN_PUBLIC_API_URL: https://fysen-api.vercel.app
-      FYSEN_PUBLIC_WEB_URL: https://fysen-matsgran-8572s-projects.vercel.app
+      FYSEN_PUBLIC_WEB_URL: https://fysen.vercel.app
       AHA_PUBLIC_API_URL: https://aha-canonical-api-production.redground-9c6e20c2.northeurope.azurecontainerapps.io
       AHA_PUBLIC_WEB_URL: https://paradispartiet.github.io/AHA-EchoNet
     steps:
