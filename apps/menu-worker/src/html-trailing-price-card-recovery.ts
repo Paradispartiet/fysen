@@ -7,7 +7,7 @@ import {
 } from "@fysen/menu-core";
 import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recovery.js";
 
-export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION = "trailing-price-card-v6";
+export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION = "trailing-price-card-v7";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{1,3})(?:[.,](\d{1,2}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
@@ -17,6 +17,10 @@ const SECTION_OR_UI_LABEL = /^(?:top\s+of\s+page|bottom\s+of\s+page|home|hjem|me
 const UI_ACTION_LEAD = /^(?:choose|select|velg|bestill|order|book|reserve|click|trykk|tap)\b/iu;
 const DESCRIPTION_LEAD = /^(?:serveres?|servert|served|with|med|marinert|marinated|grillet|grilled|bakt|baked|braisert|braised|toppet|topped|inneholder|contains?|inkludert|including|alle\s+retter)\b/iu;
 const ALLERGEN_METADATA = /^\(?\s*(?:allergener?|allergens?)\s*:/iu;
+const PARENTHETICAL_METADATA_ONLY = /^\([^()]{1,120}\)$/u;
+const LEADING_MENU_INDEX = /^(\d{1,3})\s*[.)]?\s+(.+)$/u;
+const EXPLICIT_A_LA_CARTE_SCOPE = /^(?:a\s+la\s+carta|a\s+la\s+carte|à\s+la\s+carte)$/iu;
+const NEXT_MENU_SCOPE = /^(?:breakfast|frokost|brunch|lunch|lunsj|tasting\s+menu|set\s+menu|drinks?|drikke(?:meny)?|bar\s+menu)$/iu;
 
 interface ParsedTrailingPrice {
   readonly priceMinor: number;
@@ -27,6 +31,12 @@ interface ParsedTrailingPrice {
 interface TrailingPriceCandidate {
   readonly item: MenuObservedItem;
   readonly sectionHint: string | null;
+}
+
+interface NumberedTrailingPriceCandidate {
+  readonly candidate: TrailingPriceCandidate;
+  readonly menuIndex: number;
+  readonly name: string;
 }
 
 function normalizeVisibleLine(value: string): string {
@@ -69,7 +79,9 @@ function looksLikeDescription(value: string): boolean {
   const commaCount = line.match(/,/gu)?.length ?? 0;
   return (
     ALLERGEN_METADATA.test(line) ||
+    PARENTHETICAL_METADATA_ONLY.test(line) ||
     DESCRIPTION_LEAD.test(line) ||
+    (commaCount >= 1 && words.length >= 7) ||
     (commaCount >= 3 && words.length >= 5) ||
     words.length >= 13 ||
     /[.!?]$/u.test(line)
@@ -170,6 +182,78 @@ function preserveDocumentedDuplicateSections(
   return [...unique.values()].sort((a, b) => a.position - b.position);
 }
 
+function candidatesInExplicitAlaCarteScope(
+  lines: readonly string[],
+  candidates: readonly TrailingPriceCandidate[],
+): readonly TrailingPriceCandidate[] {
+  const scopeStart = lines.findIndex((line) => EXPLICIT_A_LA_CARTE_SCOPE.test(line));
+  if (scopeStart < 0) return candidates;
+
+  const relativeScopeEnd = lines.slice(scopeStart + 1).findIndex((line) => NEXT_MENU_SCOPE.test(line));
+  const scopeEnd = relativeScopeEnd < 0 ? lines.length : scopeStart + 1 + relativeScopeEnd;
+  const scoped = candidates.filter(
+    ({ item }) => item.position > scopeStart && item.position < scopeEnd,
+  );
+  return scoped.length >= 4 ? scoped : candidates;
+}
+
+function parseNumberedCandidate(
+  candidate: TrailingPriceCandidate,
+): NumberedTrailingPriceCandidate | null {
+  const match = candidate.item.name.match(LEADING_MENU_INDEX);
+  if (!match?.[1] || !match[2]) return null;
+  const menuIndex = Number(match[1]);
+  const name = normalizeVisibleLine(match[2]);
+  if (!Number.isInteger(menuIndex) || menuIndex < 1 || menuIndex > 300) return null;
+  if (!name || !/\p{L}/u.test(name)) return null;
+  return { candidate, menuIndex, name };
+}
+
+function canonicalizeStrongNumberedMenu(
+  candidates: readonly TrailingPriceCandidate[],
+): readonly TrailingPriceCandidate[] | null {
+  const ordered = [...candidates].sort((a, b) => a.item.position - b.item.position);
+  const byIndex = new Map<number, NumberedTrailingPriceCandidate>();
+
+  for (const candidate of ordered) {
+    const numbered = parseNumberedCandidate(candidate);
+    if (!numbered) continue;
+    const existing = byIndex.get(numbered.menuIndex);
+    if (existing) {
+      const sameName = normalizeDishName(existing.name) === normalizeDishName(numbered.name);
+      const samePrice = existing.candidate.item.priceMinor === numbered.candidate.item.priceMinor;
+      const samePriceKind = existing.candidate.item.priceKind === numbered.candidate.item.priceKind;
+      if (!sameName || !samePrice || !samePriceKind) return null;
+      continue;
+    }
+    byIndex.set(numbered.menuIndex, numbered);
+  }
+
+  const numbered = [...byIndex.values()].sort(
+    (a, b) => a.candidate.item.position - b.candidate.item.position,
+  );
+  if (numbered.length < 8) return null;
+
+  for (let index = 1; index < numbered.length; index += 1) {
+    if ((numbered[index]?.menuIndex ?? 0) <= (numbered[index - 1]?.menuIndex ?? 0)) return null;
+  }
+
+  const firstIndex = numbered[0]?.menuIndex ?? 0;
+  const lastIndex = numbered[numbered.length - 1]?.menuIndex ?? 0;
+  const indexSpan = lastIndex - firstIndex + 1;
+  if (firstIndex > 5 || indexSpan < 8 || numbered.length / indexSpan < 0.7) return null;
+
+  return numbered.map(({ candidate, name }) => ({
+    ...candidate,
+    item: {
+      ...candidate.item,
+      name,
+      normalizedName: normalizeDishName(name),
+      sourceKey: createMenuItemSourceKey(name),
+    },
+  }));
+}
+
 export function recoverTrailingPriceCardHtmlItems(html: string): readonly MenuObservedItem[] {
   const semanticCategoryItems = recoverSemanticCategoryCardHtmlItems(html);
   if (semanticCategoryItems.length >= 4) return semanticCategoryItems;
@@ -182,22 +266,28 @@ export function recoverTrailingPriceCardHtmlItems(html: string): readonly MenuOb
     if (!endpoint) continue;
 
     let titlePosition: number | null = null;
-    for (let index = pricePosition - 1; index >= Math.max(0, pricePosition - 6); index -= 1) {
-      const candidate = lines[index] ?? "";
-      if (candidate.startsWith(HEADING_MARKER)) continue;
-      if (parseTrailingPrice(candidate)) break;
-      if (!looksLikeDishTitle(candidate)) continue;
-      titlePosition = index;
-      break;
+    let title: string | null = null;
+    if (endpoint.residual && looksLikeDishTitle(endpoint.residual)) {
+      titlePosition = pricePosition;
+      title = normalizeVisibleLine(endpoint.residual);
+    } else {
+      for (let index = pricePosition - 1; index >= Math.max(0, pricePosition - 6); index -= 1) {
+        const candidate = lines[index] ?? "";
+        if (candidate.startsWith(HEADING_MARKER)) continue;
+        if (parseTrailingPrice(candidate)) break;
+        if (!looksLikeDishTitle(candidate)) continue;
+        titlePosition = index;
+        title = normalizeVisibleLine(candidate);
+        break;
+      }
     }
-    if (titlePosition === null) continue;
+    if (titlePosition === null || !title) continue;
 
-    const title = normalizeVisibleLine(lines[titlePosition] ?? "");
     const descriptionParts = lines
       .slice(titlePosition + 1, pricePosition)
       .map(normalizeVisibleLine)
       .filter((line) => Boolean(line) && !line.startsWith(HEADING_MARKER));
-    if (endpoint.residual) descriptionParts.push(endpoint.residual);
+    if (endpoint.residual && titlePosition !== pricePosition) descriptionParts.push(endpoint.residual);
     const description = descriptionParts.length > 0 ? [...new Set(descriptionParts)].join(" ") : null;
     const sourceKey = createMenuItemSourceKey(title);
 
@@ -224,7 +314,9 @@ export function recoverTrailingPriceCardHtmlItems(html: string): readonly MenuOb
     });
   }
 
-  const items = preserveDocumentedDuplicateSections(candidates);
+  const scopedCandidates = candidatesInExplicitAlaCarteScope(lines, candidates);
+  const numberedCandidates = canonicalizeStrongNumberedMenu(scopedCandidates);
+  const items = preserveDocumentedDuplicateSections(numberedCandidates ?? scopedCandidates);
   if (items.length < 4) return [];
   return items;
 }

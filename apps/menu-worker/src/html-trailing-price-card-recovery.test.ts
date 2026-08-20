@@ -17,7 +17,7 @@ describe("trailing-price HTML card recovery", () => {
       </body></html>
     `);
 
-    expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe("trailing-price-card-v6");
+    expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe("trailing-price-card-v7");
     expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
       ["Dish One", 19900, "exact"],
       ["Dish Two", 20900, "exact"],
@@ -91,6 +91,74 @@ describe("trailing-price HTML card recovery", () => {
     `);
 
     expect(items.map((item) => item.name)).toEqual(["Dish One", "Dish Two", "Dish Three", "Dish Four"]);
+  });
+
+  it("canonicalizes a dense numbered menu and drops unnumbered add-ons and drinks", () => {
+    const items = recoverTrailingPriceCardHtmlItems(`
+      <html><body>
+        <p>1 Satay</p><p>125 kr</p>
+        <p>2 Ka Nhom Jeep</p><p>115 kr</p>
+        <p>3 Gyoza</p><p>109 kr</p>
+        <p>4 Tod Man Plah</p><p>109 kr</p>
+        <p>5 Popie Tod</p><p>105 kr</p>
+        <p>8 Phad Khi Mao</p><p>259 kr</p>
+        <p>9 Kwuitiew Gai</p><p>255 kr</p>
+        <p>10 Kwuitiew Tom Yum</p><p>249 kr</p>
+        <p>11 Kwuitiew Nua</p><p>249 kr</p>
+        <p>12 Phad Mhi</p><p>Stekte nudler med grønnsaker, egg og soyasaus</p><p>259 kr</p>
+        <p>Kylling</p><p>60 kr</p>
+        <p>Iskaffe</p><p>99 kr</p>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Satay", 12500],
+      ["Ka Nhom Jeep", 11500],
+      ["Gyoza", 10900],
+      ["Tod Man Plah", 10900],
+      ["Popie Tod", 10500],
+      ["Phad Khi Mao", 25900],
+      ["Kwuitiew Gai", 25500],
+      ["Kwuitiew Tom Yum", 24900],
+      ["Kwuitiew Nua", 24900],
+      ["Phad Mhi", 25900],
+    ]);
+  });
+
+  it("uses an inline dish title and honors an explicit a-la-carte scope", () => {
+    const items = recoverTrailingPriceCardHtmlItems(`
+      <html><body>
+        <p>TASTING MENU</p>
+        <p>Chef Selection 870,-</p>
+        <p>A LA CARTA</p>
+        <p>ENTRADAS / APPETIZERS</p>
+        <p>Tostada de Callos (from the coast) 230,-</p>
+        <p>Fresh scallops / avocado / salsa</p>
+        <p>(Skalldyr, Soya, Peanøtter)</p>
+        <p>Aguachile de Salmon 220,-</p>
+        <p>Fresh salmon / pomegranate / grapefruit</p>
+        <p>(Fisk)</p>
+        <p>Berenjena con Mole Rosa (chef's inspiration) 210,-</p>
+        <p>Pink mole / tempura eggplant / tamarind</p>
+        <p>(Hvete, Nøtter)</p>
+        <p>Molotes de Platano (Oaxaca) 210,-</p>
+        <p>Mashed plantain / beans / fresh cheese</p>
+        <p>(Laktose, Hvete)</p>
+        <p>Tetela (Oaxaca) 210,-</p>
+        <p>Masa / gouda / octopus / shrimp</p>
+        <p>(Laktose, Skalldyr)</p>
+        <p>BRUNCH</p>
+        <p>Huevos Rancheros 240,-</p>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Tostada de Callos (from the coast)", 23000],
+      ["Aguachile de Salmon", 22000],
+      ["Berenjena con Mole Rosa (chef's inspiration)", 21000],
+      ["Molotes de Platano (Oaxaca)", 21000],
+      ["Tetela (Oaxaca)", 21000],
+    ]);
   });
 
   it("requires a repeated card pattern instead of trusting isolated price-adjacent text", () => {
