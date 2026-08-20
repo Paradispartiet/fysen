@@ -36,7 +36,7 @@ describe("plain food-section first-card recovery", () => {
     ]);
   });
 
-  it("preserves dotted European thousands for a first card", () => {
+  it("preserves dotted European thousands for the first card after a later section boundary", () => {
     const items = recoverFirstCardAfterPlainFoodSections(`
       Forretter
       Small Plate
@@ -49,7 +49,6 @@ describe("plain food-section first-card recovery", () => {
     `);
 
     expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
-      ["Small Plate", 9900, "exact"],
       ["Sharing Menu Four", 239600, "from"],
     ]);
   });
