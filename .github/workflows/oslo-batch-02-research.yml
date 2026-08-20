@@ -44,7 +44,7 @@ jobs:
         shell: bash
         run: |
           python3 - <<'PY'
-          import json, time
+          import json, re, time, unicodedata
           from pathlib import Path
           from urllib.parse import urlencode
           from urllib.request import Request, urlopen
@@ -54,15 +54,55 @@ jobs:
           out_dir = Path('apps/menu-worker/research/oslo-batch-02-generated')
           out_dir.mkdir(parents=True, exist_ok=True)
 
+          def unique(values):
+            seen = set()
+            output = []
+            for value in values:
+              normalized = ' '.join(value.split()).strip(' ,')
+              if normalized and normalized.casefold() not in seen:
+                seen.add(normalized.casefold())
+                output.append(normalized)
+            return output
+
+          def ascii_fold(value):
+            return ''.join(
+              character for character in unicodedata.normalize('NFKD', value)
+              if not unicodedata.combining(character)
+            )
+
+          def query_variants(restaurant):
+            address = restaurant['address']
+            name = restaurant['name']
+            address_without_postcode = re.sub(
+              r',?\s*\b\d{4}\s+Oslo\b',
+              ', Oslo',
+              address,
+              flags=re.IGNORECASE,
+            )
+            address_without_postcode = re.sub(r'\s+,', ',', address_without_postcode)
+            address_folded = ascii_fold(address_without_postcode)
+            name_folded = ascii_fold(name)
+            spelling_variants = []
+            for value in [address_without_postcode, address_folded]:
+              if re.search(r'\bFritjof\b', value, re.IGNORECASE):
+                spelling_variants.append(re.sub(r'\bFritjof\b', 'Fridtjof', value, flags=re.IGNORECASE))
+            return unique([
+              f"{address}, Norway",
+              f"{address_without_postcode}, Norway",
+              f"{name}, Oslo, Norway",
+              f"{name}, {address_without_postcode}, Norway",
+              f"{address_folded}, Norway",
+              f"{name_folded}, Oslo, Norway",
+              *[f"{value}, Norway" for value in spelling_variants],
+            ])
+
           geocoded = []
           failures = []
           for index, entry in enumerate(seed['restaurants'], start=1):
             restaurant = dict(entry['restaurant'])
-            queries = [
-              f"{restaurant['address']}, Norway",
-              f"{restaurant['name']}, {restaurant['address']}, Norway",
-            ]
+            queries = query_variants(restaurant)
             hit = None
+            used_query = None
             for query in queries:
               params = urlencode({
                 'q': query,
@@ -81,10 +121,15 @@ jobs:
                 rows = json.load(response)
               if rows:
                 hit = rows[0]
+                used_query = query
                 break
               time.sleep(1.1)
             if not hit:
-              failures.append({'slug': restaurant['slug'], 'address': restaurant['address']})
+              failures.append({
+                'slug': restaurant['slug'],
+                'address': restaurant['address'],
+                'queries': queries,
+              })
               continue
             restaurant['latitude'] = float(hit['lat'])
             restaurant['longitude'] = float(hit['lon'])
@@ -97,6 +142,7 @@ jobs:
               'slug': restaurant['slug'],
               'lat': restaurant['latitude'],
               'lon': restaurant['longitude'],
+              'query': used_query,
               'display_name': hit.get('display_name'),
             }, ensure_ascii=False))
             time.sleep(1.1)
