@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v4";
+export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v5";
 
 const HEADING_MARKER = "__FYSEN_ADJACENT_HEADING_LEVEL_";
 const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
@@ -17,6 +17,11 @@ const BOTTLED_WATER_TITLE = /\b(?:still|sparkling)\s+(?:water|naturell)\b/iu;
 interface ParsedPrice {
   readonly priceMinor: number;
   readonly priceKind: MenuPriceKind;
+}
+
+interface HeadingPriceCandidate {
+  readonly item: MenuObservedItem;
+  readonly sectionHint: string | null;
 }
 
 function normalizeVisibleLine(value: string): string {
@@ -87,9 +92,68 @@ function annotatedLines(html: string): readonly string[] {
     .filter(Boolean);
 }
 
+function nearestSemanticSectionHeading(
+  lines: readonly string[],
+  position: number,
+  dishHeadingLevel: number,
+): string | null {
+  for (let index = position - 1; index >= 0; index -= 1) {
+    const heading = (lines[index] ?? "").match(
+      /^__FYSEN_ADJACENT_HEADING_LEVEL_([1-6])__\s*(.*)$/u,
+    );
+    if (!heading?.[1]) continue;
+    const level = Number(heading[1]);
+    if (level >= dishHeadingLevel) continue;
+
+    const title = normalizeVisibleLine(heading[2] ?? "");
+    if (!title || SECTION_OR_UI_LABEL.test(title) || BEVERAGE_SECTION_HEADING.test(title)) continue;
+    return title;
+  }
+  return null;
+}
+
+function applyDuplicateSectionIdentity(
+  candidates: readonly HeadingPriceCandidate[],
+): readonly MenuObservedItem[] {
+  const byName = new Map<string, HeadingPriceCandidate[]>();
+  for (const candidate of candidates) {
+    const group = byName.get(candidate.item.normalizedName) ?? [];
+    group.push(candidate);
+    byName.set(candidate.item.normalizedName, group);
+  }
+
+  const sectionScopedNames = new Set<string>();
+  for (const [normalizedName, group] of byName) {
+    if (group.length < 2) continue;
+    const sectionHints = group
+      .map((candidate) => candidate.sectionHint)
+      .filter((value): value is string => Boolean(value));
+    if (sectionHints.length !== group.length) continue;
+    const distinctSections = new Set(sectionHints.map(normalizeDishName));
+    if (distinctSections.size >= 2) sectionScopedNames.add(normalizedName);
+  }
+
+  const unique = new Map<string, MenuObservedItem>();
+  for (const candidate of candidates) {
+    const sectionName = sectionScopedNames.has(candidate.item.normalizedName)
+      ? candidate.sectionHint
+      : null;
+    const item = sectionName
+      ? {
+          ...candidate.item,
+          sectionName,
+          sourceKey: createMenuItemSourceKey(candidate.item.name, sectionName),
+        }
+      : candidate.item;
+    unique.set(item.sourceKey, item);
+  }
+
+  return [...unique.values()].sort((a, b) => a.position - b.position);
+}
+
 export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly MenuObservedItem[] {
   const lines = annotatedLines(html);
-  const byHeadingLevel = new Map<number, MenuObservedItem[]>();
+  const byHeadingLevel = new Map<number, HeadingPriceCandidate[]>();
   let blockedSectionLevel: number | null = null;
 
   for (let position = 0; position < lines.length; position += 1) {
@@ -131,8 +195,7 @@ export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly Men
     if (!price || pricePosition === null) continue;
 
     const sourceKey = createMenuItemSourceKey(title);
-    const items = byHeadingLevel.get(headingLevel) ?? [];
-    items.push({
+    const item: MenuObservedItem = {
       sourceKey,
       name: title,
       normalizedName: normalizeDishName(title),
@@ -145,6 +208,11 @@ export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly Men
       extractionMethod: "html_heuristic",
       confidence: 0.96,
       sourceExcerpt: `${title} — ${lines[pricePosition] ?? ""}`.slice(0, 1000),
+    };
+    const items = byHeadingLevel.get(headingLevel) ?? [];
+    items.push({
+      item,
+      sectionHint: nearestSemanticSectionHeading(lines, position, headingLevel),
     });
     byHeadingLevel.set(headingLevel, items);
   }
@@ -152,7 +220,5 @@ export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly Men
   const strongest = [...byHeadingLevel.values()].sort((a, b) => b.length - a.length)[0] ?? [];
   if (strongest.length < 4) return [];
 
-  const unique = new Map<string, MenuObservedItem>();
-  for (const item of strongest) unique.set(item.sourceKey, item);
-  return [...unique.values()].sort((a, b) => a.position - b.position);
+  return applyDuplicateSectionIdentity(strongest);
 }
