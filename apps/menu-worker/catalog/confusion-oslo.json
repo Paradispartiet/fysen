@@ -44,44 +44,26 @@
       "Rainbow"
     ],
     "requiredDishVariants": [
-      {
-        "name": "Golden rolls",
-        "priceMinor": 8400
-      },
-      {
-        "name": "Chicken Satay",
-        "priceMinor": 12900
-      },
-      {
-        "name": "Confusion Duck",
-        "priceMinor": 21400
-      },
-      {
-        "name": "Pho Bo",
-        "priceMinor": 18900
-      },
-      {
-        "name": "Shaking Beef",
-        "priceMinor": 23400
-      },
-      {
-        "name": "Vietnamese Egg Noodles",
-        "priceMinor": 18400
-      },
-      {
-        "name": "Mrs. Fish",
-        "priceMinor": 16400
-      },
-      {
-        "name": "Rainbow",
-        "priceMinor": 16900
-      }
+      { "name": "Golden rolls", "priceMinor": 8400 },
+      { "name": "Chicken Satay", "priceMinor": 12900 },
+      { "name": "Confusion Duck", "priceMinor": 21400 },
+      { "name": "Pho Bo", "priceMinor": 18900 },
+      { "name": "Shaking Beef", "priceMinor": 23400 },
+      { "name": "Vietnamese Egg Noodles", "priceMinor": 18400 },
+      { "name": "Mrs. Fish", "priceMinor": 16400 },
+      { "name": "Rainbow", "priceMinor": 16900 }
     ],
     "forbiddenDishNames": [
       "Coca-Cola",
       "Cuba Libre",
       "Kaffe(sort, Cafe au lait, Cappuchino, Espresso)",
-      "Gin Tonic"
+      "Gin Tonic",
+      "Rom, cola og lime",
+      "Mimosa",
+      "Classic Mojito",
+      "Spør oss 🙂",
+      "Spør om dagens Yin og Yang",
+      "Ca Phe Sua Da"
     ]
   }
 }

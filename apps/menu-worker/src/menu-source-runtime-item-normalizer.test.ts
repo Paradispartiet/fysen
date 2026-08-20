@@ -62,6 +62,7 @@ describe("generic HTML item-name normalization", () => {
     "Soy",
     "Fish",
     "Hjemmeside",
+    "top of page",
     "Mine Favoritter",
     "pers",
     "Medium",
@@ -76,7 +77,27 @@ describe("generic HTML item-name normalization", () => {
     "stk. Svinekjøtt med scampi, salat og agurk.",
     "stk vårruller med kylling.",
     "biter. 4 avokado nigiri og 8 kappa maki.",
+    "Spør oss 🙂",
+    "Spør om dagens Yin og Yang",
   ])("rejects generic batch non-dish leakage: %s", (name) => {
+    expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
+  });
+
+  it.each([
+    "Rom, cola og lime",
+    "Vodka, cranberry og lime",
+    "Mimosa",
+    "Black Russian Kahlua",
+    "White Russian",
+    "Vodka Cranberry",
+    "Aperol, Prosecco, appelsin",
+    "Hendricks gin, agurk, tonic",
+    "Makers mark, eggehvite, sitron",
+    "Vodka, Ingefærøl og sitron",
+    "Jack Daniels, Cointreau, Yuzu, sukkerlake, sitronbrus",
+    "Classic Mojito",
+    "Ca Phe Sua Da",
+  ])("rejects beverage names and cocktail-description leakage: %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
   });
 
@@ -88,7 +109,15 @@ describe("generic HTML item-name normalization", () => {
     "Grilled Salmon",
     "Vegan Burger",
     "Gluten Free Pizza",
-  ])("preserves real dish names while filtering metadata: %s", (name) => {
+    "Rum Raisin Ice Cream",
+    "Gin-cured salmon",
+    "Orange Chicken",
+    "Whiskey-glazed ribs",
+    "Bourbon orange chicken",
+    "Dagens fisk",
+    "Dagens Dessert",
+    "Yin & Yang Bao",
+  ])("preserves real dish names while filtering metadata and drinks: %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(true);
   });
 });

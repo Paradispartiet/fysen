@@ -73,7 +73,7 @@ const NON_DISH_MENU_SECTION =
 const ALLERGEN_ONLY_ITEM =
   /^(?:\(\s*)?(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|selleri|celery|citrus|sitrus|sulfitt|sulphites?)(?:\s*[,/+&]\s*(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|selleri|celery|citrus|sitrus|sulfitt|sulphites?))*\s*\)?$/iu;
 const NON_DISH_METADATA_ITEM =
-  /^(?:hjemmeside|homepage|mine\s+favoritter|my\s+favou?rites|favoritter|favou?rites|pers\.?|medium|gluten[- ]?free|glutenfri)$/iu;
+  /^(?:hjemmeside|homepage|top\s+of\s+page|mine\s+favoritter|my\s+favou?rites|favoritter|favou?rites|pers\.?|medium|gluten[- ]?free|glutenfri|spør\s+oss(?:\s+.*)?|spør\s+om\s+dagens\b.*)$/iu;
 const NON_DISH_FRAGMENT_ITEM = /^(?:stk\.?|biter\.)\s+/iu;
 const NON_DISH_ADDON_ITEM =
   /^\*?\s*(?:påfyll\s+av\s+tilbehør|refill\s+of\s+sides?|add[- ]?ons?)\b/iu;
@@ -85,13 +85,15 @@ const HISTORICAL_SINCE_ITEM = /·\s*siden$/iu;
 const BEVERAGE_MENU_ITEM =
   /^(?:(?:coca[- ]?cola|cola(?:\s+zero)?|fanta|sprite|farris(?:\s+\p{L}+)?|eplemost|mineralvann|(?:\p{L}+\s+)?juice|(?:\p{L}+\s+)?lassi)(?:\s+.*)?|(?:guinness|corona|munkholm|aperol)(?:\s+.*)?|(?:gin\s+(?:&\s*)?tonic|dry\s+martini)|(?:arabisk|arabic|tyrkisk|turkish)\s+(?:coffee|kaffe)(?:\s+.*)?|telemark\s+(?:still|sparkling)\s+naturell(?:\s+.*)?|hard\s+seltz(?:\s+.*)?|.*\b(?:pilsner|pærecider|cider|ingefærøl)\b.*|.*\bøl\b.*(?:\bflaske\b|\bglass\b|\d+[,.]\d+)|(?:rosévin|hvitvin|rødvin)(?:\s+(?:glass|flaske))?|.*\b(?:coffee|kaffe|espresso|americano|cappuccino|latte|tea|te)\b|.*\b(?:cola|ginger\s+beer)\b)$/iu;
 const BEVERAGE_STYLE_ITEM =
-  /(?:\b(?:milk\s+tea|boba\s+milk|smoothie|lemonade|red\s+bull|energy\s+drink|mocktail)\b|^pepsi(?:\s+max)?$|^(?:aranciata|chinotto|gazzosa|limonata)$|^(?:ice|iced)\s+tea(?:\s+(?:lemon|peach|green|mango|lychee|raspberry|passion\s*fruit))?$|^(?:taro|chocolate)\s+milk$|^iced\s+cocoa(?:\s+\p{L}+){0,3}\s+milk$|^(?:matcha|chai|vanilla|caramel)(?:\s+\p{L}+){0,3}\s+latte(?:\s+cheese)?$|^(?:saigon\s+special|salt|egg)\s+cafe(?:\s*-\s*cafe\s+sua\s+da)?$|^solo(?:\s+\d+(?:[.,]\d+)?\s*(?:ml|cl|l))?$)/iu;
+  /(?:\b(?:milk\s+tea|boba\s+milk|smoothie|lemonade|red\s+bull|energy\s+drink|mocktail)\b|^pepsi(?:\s+max)?$|^(?:aranciata|chinotto|gazzosa|limonata)$|^(?:ice|iced)\s+tea(?:\s+(?:lemon|peach|green|mango|lychee|raspberry|passion\s*fruit))?$|^(?:taro|chocolate)\s+milk$|^iced\s+cocoa(?:\s+\p{L}+){0,3}\s+milk$|^(?:matcha|chai|vanilla|caramel)(?:\s+\p{L}+){0,3}\s+latte(?:\s+cheese)?$|^(?:saigon\s+special|salt|egg)\s+cafe(?:\s*-\s*cafe\s+sua\s+da)?$|^ca\s+phe(?:\s+sua)?\s+da$|^solo(?:\s+\d+(?:[.,]\d+)?\s*(?:ml|cl|l))?$)/iu;
 const BOTTLED_BEVERAGE_VOLUME =
   /(?:^flaske$|\b(?:flaske\s+0[,.]\d{1,2}(?:\s*l)?|0[,.]\d{1,2}\s*l?\s+flaske)\)?\s*[-–—]?$)/iu;
+const COCKTAIL_DESCRIPTION_ITEM =
+  /^(?:(?:mimosa|(?:black|white)\s+russian(?:\s+kahlua)?|classic\s+mojito|vodka\s+cranberry)$|(?=.*,)(?=.*\b(?:gin|vodka|rom|rum|tequila|whisk(?:e)?y|bourbon|aperol|prosecco|kahlua|makers\s+mark|jack\s+daniels|cointreau)\b)(?=.*\b(?:tonic|cola|cranberry|prosecco|lime|sitron|lemon|appelsin|orange|eggehvite|egg\s*whites?|ginger\s+ale|ingefærøl|lemon\s+soda|sitronbrus)\b).+)$/iu;
 export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v2";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
-export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v7";
-export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v6";
+export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v8";
+export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v7";
 const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
@@ -188,7 +190,8 @@ export function isCanonicalHtmlMenuItem(item: MenuObservedItem): boolean {
     !HISTORICAL_SINCE_ITEM.test(filterName) &&
     !BEVERAGE_MENU_ITEM.test(filterName) &&
     !BEVERAGE_STYLE_ITEM.test(filterName) &&
-    !BOTTLED_BEVERAGE_VOLUME.test(filterName)
+    !BOTTLED_BEVERAGE_VOLUME.test(filterName) &&
+    !COCKTAIL_DESCRIPTION_ITEM.test(filterName)
   );
 }
 
