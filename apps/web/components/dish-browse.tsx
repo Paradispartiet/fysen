@@ -3,6 +3,7 @@
 import type { DishBrowseItem, DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import { useMemo, useState } from "react";
 import { foodDishCatalog } from "../content/food-knowledge/catalog";
+import { foodKnowledgeDishIdSet } from "../content/food-knowledge/manifest";
 import {
   discoveryCoverage,
   liveDishMatchesDescriptor,
@@ -53,7 +54,7 @@ function suggestionDescriptor(dish: DishSuggestion): DiscoveryDishDescriptor {
 
 function knowledgeDishForLiveItem(item: DishBrowseItem): KnowledgeDish | null {
   return [...foodDishCatalog]
-    .filter((dish) => liveDishMatchesDescriptor(item, knowledgeDescriptor(dish)))
+    .filter((dish) => foodKnowledgeDishIdSet.has(dish.id) && liveDishMatchesDescriptor(item, knowledgeDescriptor(dish)))
     .sort((left, right) => right.explorerPriority - left.explorerPriority || left.name.localeCompare(right.name, "nb"))[0] ?? null;
 }
 
