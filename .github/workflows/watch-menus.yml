@@ -67,6 +67,11 @@ jobs:
         continue-on-error: true
         run: pnpm --filter @fysen/menu-worker run:due
 
+      - name: Onboard catalog candidates
+        id: onboard_catalog
+        continue-on-error: true
+        run: pnpm --filter @fysen/menu-worker onboard:catalog
+
       - name: Watch due restaurant hours
         id: watch_restaurant_hours
         continue-on-error: true
@@ -76,11 +81,6 @@ jobs:
         id: verify_restaurant_actions
         continue-on-error: true
         run: pnpm --filter @fysen/menu-worker verify:actions
-
-      - name: Onboard catalog candidates
-        id: onboard_catalog
-        continue-on-error: true
-        run: pnpm --filter @fysen/menu-worker onboard:catalog
 
       - name: Preserve operational failure signal
         if: always()
