@@ -121,4 +121,49 @@ describe("HTML runtime recovery selection", () => {
       ]),
     );
   });
+
+  it("supplements preferred semantic cards with a strong adjacent heading card", async () => {
+    const result = await extract(`
+      <html><body>
+        <section data-testid="menu-category-section">
+          <h2 data-testid="menu-category-section-title">Desserts</h2>
+          <div data-testid="menu-product"><h3 data-testid="menu-product-name">112. Turmeric Ice Cream</h3><p data-testid="menu-product-price">169 NOK</p></div>
+          <div data-testid="menu-product"><h3 data-testid="menu-product-name">114. Coconut Ice Cream Aura Delight</h3><p data-testid="menu-product-price">155 NOK</p></div>
+          <div data-testid="menu-product"><h3 data-testid="menu-product-name">115. Paan Shot</h3><p data-testid="menu-product-price">145 NOK</p></div>
+          <div data-testid="menu-product"><h3 data-testid="menu-product-name">116. Mango Kulfi</h3><p data-testid="menu-product-price">149 NOK</p></div>
+          <article><h3>113. Rasmalai (G, M, E, N)</h3><p>169 NOK</p></article>
+        </section>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => [item.name, item.priceMinor])).toContainEqual([
+      "113. Rasmalai",
+      16900,
+    ]);
+  });
+
+  it("normalizes bare trailing dash prices before full-runtime recovery", async () => {
+    const result = await extract(`
+      <html><body>
+        <h2>A LA CARTE</h2>
+        <h4>Biff tartar 249,-</h4><p>Knivhakket storfekjøtt.</p>
+        <h4>Boeuf Bourguignon 260-</h4><p>Langtidsbraisert oksekjøtt.</p>
+        <h4>Vegetar 189-</h4><p>Hvit saus og grillede grønnsaker.</p>
+        <h4>Capricciosa 220-</h4><p>Tomatsaus og sopp.</p>
+        <h4>Pepperoni 220-</h4><p>Husets pepperoni.</p>
+        <h4>Chilli cowboy 240-</h4><p>Burger med chipotle.</p>
+        <h2>ANDRE DRIKKER</h2>
+        <p>Grimbergen Blonde (0,33 l flaske) – 105 kr</p>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Biff tartar", 24900],
+      ["Boeuf Bourguignon", 26000],
+      ["Vegetar", 18900],
+      ["Capricciosa", 22000],
+      ["Pepperoni", 22000],
+      ["Chilli cowboy", 24000],
+    ]);
+  });
 });

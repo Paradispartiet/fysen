@@ -6,9 +6,10 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recovery.js";
+import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v8";
+  "trailing-price-card-v9";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -101,6 +102,7 @@ function looksLikeDescription(value: string): boolean {
     ALLERGEN_METADATA.test(line) ||
     PARENTHETICAL_METADATA_ONLY.test(line) ||
     DESCRIPTION_LEAD.test(line) ||
+    looksLikeHtmlDescription(line) ||
     (commaCount >= 3 && words.length >= 5) ||
     words.length >= 13 ||
     /[.!?]$/u.test(line)

@@ -61,7 +61,7 @@ describe("HTML description-title recovery", () => {
       visibleText,
     );
 
-    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v11");
+    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v12");
     expect(result.map((entry) => entry.name)).toEqual([
       "Hummus (kikert-og sesampuré)",
       "Hvitløkmarinerte kyllingvinger",
@@ -99,6 +99,15 @@ describe("HTML description-title recovery", () => {
       ["Rainbow", 16900],
       ["Mezah med en grill rett", 45900],
     ]);
+  });
+
+  it("treats a multiword colon introduction as description", () => {
+    const result = recoverDescriptionNamedHtmlItems(
+      [item("Den palestinske mezahen har sine særtrekk:", 1, 35000)],
+      ["Gaza kebab", "Den palestinske mezahen har sine særtrekk:", "350"].join("\n"),
+    );
+
+    expect(result[0]?.name).toBe("Gaza kebab");
   });
 
   it("prefers a structurally anchored dish after a section intro in the same price block", () => {

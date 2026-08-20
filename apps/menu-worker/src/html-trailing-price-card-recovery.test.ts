@@ -19,7 +19,7 @@ describe("trailing-price HTML card recovery", () => {
     `);
 
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
-      "trailing-price-card-v8",
+      "trailing-price-card-v9",
     );
     expect(
       items.map((item) => [item.name, item.priceMinor, item.priceKind]),

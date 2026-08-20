@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v11";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v12";
 
 const PRICE_LINE =
   /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
@@ -145,7 +145,7 @@ function looksLikeAllergenQualifier(value: string): boolean {
   return parts.length > 0 && parts.every((part) => ALLERGEN_TERMS.has(part));
 }
 
-function looksLikeDescription(value: string): boolean {
+export function looksLikeHtmlDescription(value: string): boolean {
   const line = normalizeVisibleLine(value);
   if (!line) return false;
   const words = line.split(/\s+/).filter(Boolean);
@@ -158,6 +158,7 @@ function looksLikeDescription(value: string): boolean {
     (commaCount >= 3 && words.length >= 5) ||
     words.length >= 9 ||
     /[.!]$/u.test(line) ||
+    (/:$/u.test(line) && words.length >= 4) ||
     longQuestion
   );
 }
@@ -173,7 +174,7 @@ function looksLikeRecoveredTitle(value: string): boolean {
   if (
     PRICE_LINE.test(line) ||
     isSectionLabel(line) ||
-    looksLikeDescription(line) ||
+    looksLikeHtmlDescription(line) ||
     ALLERGEN_PREFIX.test(line) ||
     looksLikeAllergenMetadata(line)
   ) {
@@ -221,7 +222,7 @@ function recoverForwardTitleFromSourceExcerpt(
   const currentIsSection = isSectionLabel(current);
   const currentIsNonTitle =
     currentIsSection ||
-    looksLikeDescription(current) ||
+    looksLikeHtmlDescription(current) ||
     ALLERGEN_PREFIX.test(current);
   if (!sourceExcerpt || !currentIsNonTitle) return null;
 
@@ -248,7 +249,7 @@ function recoverForwardTitleFromSourceExcerpt(
       if (
         following &&
         !PRICE_LINE.test(following) &&
-        looksLikeDescription(following)
+        looksLikeHtmlDescription(following)
       ) {
         structuredCandidates.add(candidate);
       }
@@ -480,7 +481,7 @@ export function recoverDescriptionNamedHtmlItems(
     const forwardRecovery = recoverForwardTitleFromSourceExcerpt(item);
     const descriptionRecovery =
       !forwardRecovery &&
-      looksLikeDescription(item.name) &&
+      looksLikeHtmlDescription(item.name) &&
       Number.isInteger(position) &&
       position >= 1
         ? recoverTitle(lines, position, item.name)

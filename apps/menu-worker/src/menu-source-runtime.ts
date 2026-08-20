@@ -79,8 +79,8 @@ const BEVERAGE_MENU_ITEM =
 const BEVERAGE_STYLE_ITEM =
   /(?:\b(?:milk\s+tea|boba\s+milk|smoothie|lemonade|red\s+bull|energy\s+drink|mocktail)\b|^pepsi(?:\s+max)?$|^(?:aranciata|chinotto|gazzosa|limonata)$|^(?:ice|iced)\s+tea(?:\s+(?:lemon|peach|green|mango|lychee|raspberry|passion\s*fruit))?$|^(?:taro|chocolate)\s+milk$|^iced\s+cocoa(?:\s+\p{L}+){0,3}\s+milk$|^(?:matcha|chai|vanilla|caramel)(?:\s+\p{L}+){0,3}\s+latte(?:\s+cheese)?$|^(?:saigon\s+special|salt|egg)\s+cafe(?:\s*-\s*cafe\s+sua\s+da)?$|^solo(?:\s+\d+(?:[.,]\d+)?\s*(?:ml|cl|l))?$)/iu;
 const BOTTLED_BEVERAGE_VOLUME =
-  /(?:^flaske$|\b(?:flaske\s+0[,.]\d{1,2}(?:\s*l)?|0[,.]\d{1,2}\s*l?\s+flaske)\)?\s*-?$)/iu;
-export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v1";
+  /(?:^flaske$|\b(?:flaske\s+0[,.]\d{1,2}(?:\s*l)?|0[,.]\d{1,2}\s*l?\s+flaske)\)?\s*[-–—]?$)/iu;
+export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v2";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v6";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v6";
@@ -121,10 +121,9 @@ type MenuContentFetchResult = Extract<
 >;
 
 export function normalizeHtmlPriceNotation(html: string): string {
-  return html.replace(
-    /(\b(?:kr\.?\s*)?[1-9]\d{1,3})(?:\s*,)?\s*\/-/giu,
-    "$1,-",
-  );
+  return html
+    .replace(/(\b(?:kr\.?\s*)?[1-9]\d{1,3})(?:\s*,)?\s*\/-/giu, "$1,-")
+    .replace(/(\b[1-9]\d{1,3})\s*-(?=\s*(?:<|$))/gmu, "$1,-");
 }
 
 function restoreSemanticParentheticalName(item: MenuObservedItem): string {
@@ -394,11 +393,18 @@ export async function extractMenuSource(
             priceWrappedItems.length >= recoveredItems.length * 2
           ? priceWrappedItems
           : recoveredItems;
-    const headingSupplementedItems =
+    const recoveredSupplementedItems =
       extracted.method === "html_heuristic" &&
       !isolatedTrailingRecoveryPreferred
-        ? supplementStrongHeadingRecovery(preferredItems, headingPriceItems)
+        ? mergeMissingRecoveredItems(preferredItems, recoveredItems)
         : preferredItems;
+    const headingSupplementedItems =
+      extracted.method === "html_heuristic"
+        ? supplementStrongHeadingRecovery(
+            recoveredSupplementedItems,
+            headingPriceItems,
+          )
+        : recoveredSupplementedItems;
     const sectionSupplementedItems =
       extracted.method === "html_heuristic" &&
       !isolatedTrailingRecoveryPreferred
