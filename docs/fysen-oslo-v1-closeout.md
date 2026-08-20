@@ -9,6 +9,21 @@ Dette er den permanente ferdigdefinisjonen for Oslo v1. Et grønt mergebevis er 
 - Ingen closeout-gate utløser en ekstra eller manuell Vercel-deploy.
 - Production proof skal lese både API og web etter et ordinært vindu og bevise at de kjører forventet `main`-SHA.
 
+## Restaurantproduksjonsbaseline 2026-08-20
+
+Restaurantproduksjon er en separat innholds-/integritetslinje og skal ikke forveksles med hele Oslo-v1-closeouten. Den siste eksakte production-reconciliatoren viser likevel at selve canonical restaurantbasen nå er konsistent:
+
+- 45 canonical katalogmanifester;
+- 45/45 aktive canonical restauranter;
+- 45 aktive restaurant-rader totalt;
+- 45 enabled menu sources;
+- 0 inactive canonical;
+- 0 active-not-catalog drift.
+
+Første høy-throughput Oslo-batch tok 20 restauranter gjennom felles research/intake med parallellitet fire og promoterte syv production-klare restauranter samlet. Tretten ble eksplisitt beholdt i source/parser/quality-køen i stedet for å senke kvalitetskravene. Permanent metode og datert produksjonsbevis ligger i [`restaurant-production.md`](./restaurant-production.md).
+
+Denne baselinen betyr **ikke** at hele Fysen Oslo v1 er ferdig. Release-, Min mat/AHA-, Claim/Pro-, mobil- og representative E2E-portene nedenfor må fortsatt være grønne på riktig produksjons-SHA før v1-erklæringen kan gis.
+
 ## De åtte låste portene
 
 | Port | Permanent bevis | Ferdig når |
