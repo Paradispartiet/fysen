@@ -174,6 +174,29 @@ Eksempler: `Asia`, `Iberia`, `japansk`, `ramen`, `momo`, `pierogi`.
 
 Bare aktive kjøkken vises i denne katalogen. Planlagte taksonominoder vises gjennom verdensdel → region-flyten og er tydelig merket som ikke aktivert.
 
+## «Alle retter» følger samme taksonomi
+
+`/search` uten søketekst er Fysens **Alle retter**-flate. Denne flaten skal ikke ha en egen eller eldre kjøkkeninndeling. Fra v3 bruker den samme hierarki som Matlyst:
+
+1. verdensdel,
+2. kulinarisk region,
+3. kjøkken,
+4. eventuell intern kjøkkenproveniens.
+
+Filteret bruker `culinary-taxonomy.ts` som presentasjonstaksonomi og production-backed discovery-retter fra Matlyst som canonical scope. Det betyr at retter som ble lagt til for koreansk, filippinsk, nepalsk, etiopisk, persisk, usbekisk, brasiliansk eller polsk discovery ikke faller ut bare fordi de ikke har en full Food Knowledge-artikkel.
+
+Den gamle løsningen som genererte kjøkkenknapper direkte fra `foodDishCatalog.cuisine` skal ikke brukes som browse-taksonomi. `foodDishCatalog` forblir autoritativ for Food Knowledge der artikler finnes, men er ikke lenger navigasjonskilden for **Alle retter**.
+
+Taxonomy-scope kan deep-linkes med URL-parametrene:
+
+- `world`
+- `region`
+- `cuisine`
+
+Eksempel: `world=asia&region=east-asia&cuisine=Japansk` åpner **Alle retter** direkte på Asia → Øst-Asia → Japansk. Når brukeren navigerer i filteret oppdateres URL-en uten å opprette søkehistorikk eller en ny API-forespørsel.
+
+Selve live-listen kommer fortsatt fra samme `DishBrowseResponse`. Et taxonomy-filter begrenser denne listen ved å matche live-identiteter mot de samme conservative canonical descriptorene som Matlyst bruker. Det summeres ikke overlappende aliases til kunstige restauranttall.
+
 ## Source-gate
 
 Et kjøkken blir ikke aktivt fordi navnet finnes i taksonomien. Aktivering krever fortsatt:
