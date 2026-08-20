@@ -70,6 +70,34 @@ describe("semantic menu category card recovery", () => {
     expect(items.some((item) => item.name === "Cutlery available" || item.name === "House Soda")).toBe(false);
   });
 
+  it("uses the current semantic price while ignoring an explicitly marked before-discount price", () => {
+    const items = recoverSemanticCategoryCardHtmlItems(`
+      <html><body>
+        <div data-testid="menu-category-section">
+          <div data-testid="menu-category-section-title"><h2>Bulgogi bowl</h2></div>
+          <div data-testid="menu-product">
+            <span data-testid="menu-product-name">Beef Bulgogi Bowl</span>
+            <p data-testid="menu-product-price">fra 199,20 NOK<span data-testid="menu-product-price-before-discount">249 NOK</span></p>
+          </div>
+          <div data-testid="menu-product"><span data-testid="menu-product-name">Spicy Pork Bulgogi Bowl</span><span data-testid="menu-product-price">239 NOK</span></div>
+          <div data-testid="menu-product"><span data-testid="menu-product-name">Chicken Bowl</span><span data-testid="menu-product-price">229 NOK</span></div>
+          <div data-testid="menu-product"><span data-testid="menu-product-name">Vegan Bowl</span><span data-testid="menu-product-price">219 NOK</span></div>
+        </div>
+        <div data-testid="menu-category-section">
+          <div data-testid="menu-category-section-title"><h2>Mineralvann</h2></div>
+          <div data-testid="menu-product"><span data-testid="menu-product-name">House Soda</span><span data-testid="menu-product-price">49 NOK</span></div>
+        </div>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
+      ["Beef Bulgogi Bowl", 19920, "from"],
+      ["Spicy Pork Bulgogi Bowl", 23900, "exact"],
+      ["Chicken Bowl", 22900, "exact"],
+      ["Vegan Bowl", 21900, "exact"],
+    ]);
+  });
+
   it("preserves duplicate dish names in different semantic menu sections", () => {
     const items = recoverSemanticCategoryCardHtmlItems(`
       <html><body>
