@@ -1,0 +1,84 @@
+name: Registan production proof
+
+on:
+  push:
+    branches: [ops/registan-production-proof]
+    paths:
+      - ".github/workflows/registan-production-proof.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-production-menu-mutation
+  cancel-in-progress: false
+
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
+      DATABASE_SSL: "verify-full"
+      NODE_ENV: production
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_MENU_WATCH_BATCH_SIZE: "100"
+      FYSEN_HOURS_WATCH_BATCH_SIZE: "100"
+      SMOKE_QUERY: "Lagman"
+      SMOKE_CITY: "Oslo"
+      SMOKE_EXPECTED_RESTAURANT_SLUG: "registan-gronland-oslo"
+      SMOKE_EXPECTED_DISH_NAME: "Lagman"
+      SMOKE_EXPECTED_PRICE_MINOR: "39900"
+      SMOKE_EXPECTED_PRICE_KIND: "from"
+      SMOKE_EXPECTED_MATCH_TYPE: "exact"
+      SMOKE_EXPECTED_OPENING: "any"
+      SMOKE_EXPECTED_ACTION: "none"
+      SMOKE_MIN_COUNT: "1"
+    steps:
+      - name: Require production database secret
+        shell: bash
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "FYSEN_PRODUCTION_DATABASE_URL is not configured." >&2
+            exit 1
+          fi
+
+      - name: Checkout canonical main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build menu worker and dependencies
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Materialize canonical production catalog
+        run: pnpm --filter @fysen/menu-worker onboard:catalog
+
+      - name: Watch due menu sources
+        id: watch_menu_sources
+        continue-on-error: true
+        run: pnpm --filter @fysen/menu-worker run:due
+
+      - name: Watch restaurant hours
+        id: watch_restaurant_hours
+        continue-on-error: true
+        run: pnpm --filter @fysen/menu-worker watch:hours
+
+      - name: Verify Registan in production search
+        shell: bash
+        run: node scripts/production-search-smoke.mjs
