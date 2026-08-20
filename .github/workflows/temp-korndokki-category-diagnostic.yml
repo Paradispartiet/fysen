@@ -1,0 +1,121 @@
+name: TEMP Korndokki category diagnostic
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/temp-korndokki-category-diagnostic.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build menu-worker dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Inspect live Korndokki recovery paths
+        shell: bash
+        run: |
+          cd apps/menu-worker
+          node --input-type=module <<'NODE'
+          import { load } from 'cheerio';
+          import {
+            extractMenuSource,
+            fetchMenuSource,
+            normalizeHtmlItemName,
+            normalizeHtmlPriceNotation,
+          } from './dist/menu-source-runtime.js';
+          import { normalizeHtmlHeadingLineBreaks } from './dist/html-heading-normalizer.js';
+          import { extractScopedHtmlMenu } from './dist/html-source-extractor.js';
+          import { recoverDescriptionNamedHtmlItems } from './dist/html-description-title-recovery.js';
+          import { recoverSemanticCategoryCardHtmlItems } from './dist/html-category-card-recovery.js';
+          import { recoverTrailingPriceCardHtmlItems } from './dist/html-trailing-price-card-recovery.js';
+          import { recoverAdjacentHeadingPriceHtmlItems } from './dist/html-adjacent-heading-price-recovery.js';
+          import { recoverPriceWrappedHtmlItems } from './dist/html-price-wrapped-recovery.js';
+          import { recoverFirstCardAfterPlainFoodSections } from './dist/html-section-first-card-recovery.js';
+          import { recoverExplicitFromPriceHtmlItems } from './dist/html-explicit-from-price-recovery.js';
+
+          const fetched = await fetchMenuSource({
+            url: 'https://www.foodora.no/restaurant/q839/korndokki-mathallen',
+            sourceType: 'html',
+            fetchMode: 'http',
+            userAgent: 'FysenMenuBot/0.1',
+            etag: null,
+            lastModified: null,
+          });
+          if (fetched.kind !== 'content') throw new Error(`Expected content, got ${fetched.kind}`);
+
+          const normalizedHtml = normalizeHtmlPriceNotation(normalizeHtmlHeadingLineBreaks(fetched.body));
+          const scoped = extractScopedHtmlMenu(normalizedHtml);
+          const recovered = recoverDescriptionNamedHtmlItems(scoped.items, scoped.visibleText);
+          const semantic = recoverSemanticCategoryCardHtmlItems(normalizedHtml);
+          const trailing = recoverTrailingPriceCardHtmlItems(normalizedHtml);
+          const heading = recoverAdjacentHeadingPriceHtmlItems(normalizedHtml);
+          const wrapped = recoverPriceWrappedHtmlItems(scoped.visibleText);
+          const sectionFirst = recoverFirstCardAfterPlainFoodSections(scoped.visibleText);
+          const explicitFrom = recoverExplicitFromPriceHtmlItems(scoped.visibleText);
+          const full = await extractMenuSource('html', fetched);
+
+          const clean = (value) => value.normalize('NFKC').replace(/\s+/g, ' ').trim();
+          const compact = (item) => ({
+            name: item.name,
+            sectionName: item.sectionName,
+            priceMinor: item.priceMinor,
+            priceKind: item.priceKind ?? 'exact',
+            confidence: item.confidence,
+          });
+          const summarize = (items) => ({
+            count: items.length,
+            targetItems: items
+              .map(normalizeHtmlItemName)
+              .filter((item) => /beef bulgogi|tteokbokki|spicy pork|bibimbap|corndog/i.test(item.name))
+              .map(compact),
+            names: items.map((item) => item.name),
+          });
+
+          const $ = load(normalizedHtml);
+          const sections = $("[data-testid='menu-category-section']").toArray().map((section, sectionIndex) => ({
+            sectionIndex,
+            title: clean($(section).find("[data-testid='menu-category-section-title']").first().text()),
+            cards: $(section).find("[data-testid='menu-product']").toArray().map((card) => ({
+              name: clean($(card).find("[data-testid='menu-product-name']").first().text()),
+              price: clean($(card).find("[data-testid='menu-product-price']").first().text()),
+            })),
+          }));
+
+          console.log(JSON.stringify({
+            httpStatus: fetched.status,
+            extractionMethod: scoped.method,
+            rawCategorySections: sections,
+            recovered: summarize(recovered),
+            semantic: summarize(semantic),
+            trailing: summarize(trailing),
+            heading: summarize(heading),
+            wrapped: summarize(wrapped),
+            sectionFirst: summarize(sectionFirst),
+            explicitFrom: summarize(explicitFrom),
+            full: summarize(full.items),
+          }, null, 2));
+          NODE
