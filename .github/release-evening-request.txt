@@ -1,0 +1,4 @@
+Fysen evening production release request
+Date: 2026-08-20
+Window: 22:00 Europe/Oslo
+Locked product source: c06d6503fc65518af96121566da1c487149d4b37
