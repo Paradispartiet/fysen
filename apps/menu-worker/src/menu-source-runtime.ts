@@ -22,6 +22,10 @@ import {
   normalizeHtmlHeadingLineBreaks,
 } from "./html-heading-normalizer.js";
 import {
+  HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION,
+  supplementStrongHeadingRecovery,
+} from "./html-heading-recovery-supplement.js";
+import {
   HTML_PRICE_WRAPPED_RECOVERY_VERSION,
   recoverPriceWrappedHtmlItems,
 } from "./html-price-wrapped-recovery.js";
@@ -63,7 +67,7 @@ export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v1";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v6";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v5";
-const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}`;
+const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
 export type MenuSourceFetchMode = "http" | "browser";
@@ -290,10 +294,14 @@ export async function extractMenuSource(
         : priceWrappedItems.length >= 3 && priceWrappedItems.length >= recoveredItems.length * 2
           ? priceWrappedItems
           : recoveredItems;
+    const headingSupplementedItems =
+      extracted.method === "html_heuristic"
+        ? supplementStrongHeadingRecovery(preferredItems, headingPriceItems)
+        : preferredItems;
     const priceEnrichedItems =
       extracted.method === "html_heuristic"
-        ? mergeExplicitFromPriceRecovery(preferredItems, explicitFromPriceItems)
-        : preferredItems;
+        ? mergeExplicitFromPriceRecovery(headingSupplementedItems, explicitFromPriceItems)
+        : headingSupplementedItems;
     const normalizedItems =
       extracted.method === "html_heuristic"
         ? priceEnrichedItems.map(normalizeHtmlItemName)
