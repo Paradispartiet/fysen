@@ -57,11 +57,47 @@ Production persists the hours verification status and audit metadata. Search onl
 
 ## Batch intake and validation
 
-For larger research groups, use the production-line commands documented in [`docs/restaurant-production.md`](../../../docs/restaurant-production.md). `intake:batch` fetches each declared canonical menu source, pins the complete observed item count as the initial source-integrity floor and generates representative priced assertions. It never overwrites an existing candidate.
+For larger research groups, use the production-line commands documented in [`docs/restaurant-production.md`](../../../docs/restaurant-production.md). The normal research unit is 20–30 restaurants, with bounded live-source concurrency rather than one restaurant per long work round.
 
-`validate:candidates:batch` validates candidates with bounded concurrency. Each candidate returns its own result, and failures are grouped into manifest, transport, extraction, menu assertion, hours, action or unknown families. A malformed or unavailable candidate therefore remains red without preventing independent candidates from completing their live gates.
+`intake:batch` fetches each declared canonical menu source, pins the complete observed item count as the initial source-integrity floor and generates representative priced assertions. It never overwrites an existing candidate.
+
+`validate:candidates:batch` validates candidates with bounded concurrency. Default concurrency is four. Each candidate returns its own result, and failures are grouped into manifest, transport, extraction, menu assertion, hours, action or unknown families. A malformed or unavailable candidate therefore remains red without preventing independent candidates from completing their live gates.
 
 Batching changes throughput only. It does not relax source hierarchy, minimum item floors, required/forbidden assertions, action verification or the explicit promotion boundary.
+
+## Technical green is not the final promotion gate
+
+A candidate may return `accepted: true` while still containing semantically bad canonical output. Batch 01 proved that UI labels, allergen-only text, section names, drink descriptions or parser fragments can survive a purely structural gate.
+
+After every batch validation, review the observed canonical dish names across the **whole green subset** before promotion:
+
+1. look for repeated UI/metadata labels, section headings, allergen-only labels, drink/cocktail text, quantity fragments and description fragments;
+2. if the same failure shape can occur across restaurants, fix it once in the shared runtime rather than adding restaurant-specific parser code;
+3. bump the relevant extractor/filter version so existing production snapshots are eligible for controlled re-extraction;
+4. add negative regressions for the leakage and positive regressions proving that real dishes with similar words are preserved;
+5. rerun the affected candidates through the full live gate;
+6. add source-specific `forbiddenDishNames` when a concrete leakage has been observed and should remain fail-closed;
+7. hold a candidate in the parser/source queue if the output is still suspicious even when its blocking validator result is green.
+
+The candidate generator's minimum of three unique priced dishes is evaluated after canonical filtering. If a candidate falls below that threshold once false menu items are removed, it should fail instead of retaining the false positives to satisfy intake.
+
+Promotion is therefore based on **blocking green + output clean**, not `accepted=true` alone.
+
+## Promotion and post-merge reconciliation
+
+Validation performs no database writes and cannot activate a restaurant.
+
+Promotion is explicit: after a candidate passes all blocking source validation and output-quality review, the same manifest is moved byte-for-byte from `candidates/` to `catalog/` in a separate production-onboarding change. `catalog/` remains the only directory consumed by automatic onboarding.
+
+After merge, repository state and production state must be reconciled. A completed restaurant-production change should prove:
+
+- every canonical catalog slug maps to an active production restaurant;
+- the expected menu source is enabled and has a current fingerprint;
+- latest watcher status is accepted and `consecutive_failures = 0`;
+- no active restaurant exists outside `catalog/` without an explicit, documented reason;
+- obsolete non-canonical rows are quiesced rather than left active as silent production drift.
+
+The verified baseline on 2026-08-20 is 45 canonical manifests, 45 active restaurants and 45 enabled menu sources with zero active-not-catalog drift. This number is a dated production measurement, not a quota for future coverage.
 
 All explicitly uncertain production restaurants are available from the derived audit log:
 
@@ -70,7 +106,3 @@ pnpm --filter @fysen/menu-worker verification:log
 ```
 
 The log is generated from the canonical manifests rather than maintained as a second hand-written restaurant list.
-
-Validation performs no database writes and cannot activate a restaurant.
-
-Promotion is explicit: after a candidate passes all blocking source validation, the same manifest is moved from `candidates/` to `catalog/` in a separate production-onboarding change. `catalog/` remains the only directory consumed by automatic onboarding.
