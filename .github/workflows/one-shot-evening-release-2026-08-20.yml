@@ -1,11 +1,11 @@
 name: Fysen one-shot evening production release 2026-08-20
-# Retrigger after workflow registration on main.
 
 on:
-  push:
+  pull_request:
+    types: [opened, synchronize, reopened]
     branches: [main]
     paths:
-      - .github/workflows/one-shot-evening-release-2026-08-20.yml
+      - .github/release-evening-request.txt
 
 permissions:
   contents: read
@@ -20,6 +20,7 @@ env:
 
 jobs:
   web:
+    if: ${{ github.event.pull_request.head.ref == 'agent/evening-release-request' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
@@ -74,6 +75,7 @@ jobs:
           exit 1
 
   api:
+    if: ${{ github.event.pull_request.head.ref == 'agent/evening-release-request' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
