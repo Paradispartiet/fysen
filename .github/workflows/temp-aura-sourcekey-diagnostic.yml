@@ -1,0 +1,98 @@
+name: TEMP Aura sourceKey diagnostic
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/temp-aura-sourcekey-diagnostic.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build menu-worker dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Inspect Aura canonical sourceKey groups
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { fetchMenuSource, extractMenuSource } from './apps/menu-worker/dist/menu-source-runtime.js';
+
+          const fetched = await fetchMenuSource({
+            url: 'https://aurarestaurant.no/meny/',
+            sourceType: 'html',
+            fetchMode: 'http',
+            userAgent: 'FysenMenuBot/0.1',
+            etag: null,
+            lastModified: null,
+          });
+          if (fetched.kind !== 'content') {
+            throw new Error(`Aura diagnostic expected content, got ${fetched.kind}`);
+          }
+
+          const extracted = await extractMenuSource('html', fetched);
+          const bySourceKey = new Map();
+          const byNormalizedName = new Map();
+          for (const item of extracted.items) {
+            const sourceGroup = bySourceKey.get(item.sourceKey) ?? [];
+            sourceGroup.push(item);
+            bySourceKey.set(item.sourceKey, sourceGroup);
+
+            const nameGroup = byNormalizedName.get(item.normalizedName) ?? [];
+            nameGroup.push(item);
+            byNormalizedName.set(item.normalizedName, nameGroup);
+          }
+
+          const compact = (item) => ({
+            sourceKey: item.sourceKey,
+            name: item.name,
+            normalizedName: item.normalizedName,
+            sectionName: item.sectionName,
+            priceMinor: item.priceMinor,
+            priceKind: item.priceKind ?? 'exact',
+            priceMaxMinor: item.priceMaxMinor ?? null,
+            position: item.position,
+            confidence: item.confidence,
+            sourceExcerpt: item.sourceExcerpt,
+          });
+
+          const duplicateSourceKeys = [...bySourceKey.entries()]
+            .filter(([, items]) => items.length > 1)
+            .map(([sourceKey, items]) => ({ sourceKey, items: items.map(compact) }));
+          const duplicateNames = [...byNormalizedName.entries()]
+            .filter(([, items]) => items.length > 1)
+            .map(([normalizedName, items]) => ({ normalizedName, items: items.map(compact) }));
+
+          console.log(JSON.stringify({
+            method: extracted.method,
+            extractorVersion: extracted.extractorVersion,
+            itemCount: extracted.items.length,
+            duplicateSourceKeyGroupCount: duplicateSourceKeys.length,
+            duplicateSourceKeys,
+            duplicateNormalizedNameGroupCount: duplicateNames.length,
+            duplicateNormalizedNames: duplicateNames,
+          }, null, 2));
+          NODE
