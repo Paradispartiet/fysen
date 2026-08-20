@@ -307,11 +307,8 @@ export function recoverTrailingPriceCardHtmlItems(html: string): readonly MenuOb
 
     let titlePosition: number | null = null;
     let title: string | null = null;
-    const numberedTitle = endpoint.residual
-      ? precedingNumberedTitle(lines, pricePosition)
-      : null;
-    const residualWordCount = endpoint.residual.split(/\s+/).filter(Boolean).length;
-    if (numberedTitle && residualWordCount >= 4) {
+    const numberedTitle = precedingNumberedTitle(lines, pricePosition);
+    if (numberedTitle) {
       titlePosition = numberedTitle.position;
       title = numberedTitle.title;
     } else if (endpoint.residual && looksLikeDishTitle(endpoint.residual)) {
