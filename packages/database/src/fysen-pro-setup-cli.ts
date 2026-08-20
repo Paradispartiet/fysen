@@ -1,5 +1,6 @@
 import { createDatabasePool } from "./client.js";
 import { issueRestaurantProSetupToken } from "./fysen-pro.js";
+import { assertLocalOperatorEnvironment } from "./operator-environment.js";
 
 function requiredArgument(value: string | undefined, name: string): string {
   const normalized = value?.trim();
@@ -8,6 +9,7 @@ function requiredArgument(value: string | undefined, name: string): string {
 }
 
 async function main(): Promise<void> {
+  assertLocalOperatorEnvironment();
   const args = process.argv.slice(2).filter((value) => value !== "--");
   const accessGrantId = requiredArgument(args[0], "accessGrantId");
   const createdBy = requiredArgument(args[1], "createdBy");

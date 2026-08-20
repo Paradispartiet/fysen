@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION,
+  isStrongNumberedTrailingPriceCardRecovery,
   recoverTrailingPriceCardHtmlItems,
 } from "./html-trailing-price-card-recovery.js";
 
@@ -123,6 +124,7 @@ describe("trailing-price HTML card recovery", () => {
       ["Kwuitiew Nua", 24900],
       ["Phad Mhi", 25900],
     ]);
+    expect(isStrongNumberedTrailingPriceCardRecovery(items)).toBe(true);
   });
 
   it("uses an inline dish title and honors an explicit a-la-carte scope", () => {

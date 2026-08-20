@@ -282,6 +282,18 @@ function canonicalizeStrongNumberedMenu(
   }));
 }
 
+export function isStrongNumberedTrailingPriceCardRecovery(
+  items: readonly MenuObservedItem[],
+): boolean {
+  return (
+    items.length >= 8 &&
+    items.every((item) => {
+      const excerpt = item.sourceExcerpt?.trim() ?? "";
+      return LEADING_MENU_INDEX.test(excerpt);
+    })
+  );
+}
+
 export function recoverTrailingPriceCardHtmlItems(html: string): readonly MenuObservedItem[] {
   const semanticCategoryItems = recoverSemanticCategoryCardHtmlItems(html);
   if (semanticCategoryItems.length >= 4) return semanticCategoryItems;

@@ -26,10 +26,12 @@ describe("HTML runtime recovery selection", () => {
         <p>3 Gyoza</p><p>Friterte dumplings med grønnsaker 109 kr</p>
         <p>4 Tod Man Plah</p><p>Fiskekaker med søt chilisaus 109 kr</p>
         <p>5 Popie Tod</p><p>Vårruller med grønnsaker og chilisaus 105 kr</p>
+        <p>Hovedretter</p>
         <p>8 Phad Khi Mao</p><p>259 kr</p>
         <p>9 Kwuitiew Gai</p><p>255 kr</p>
         <p>10 Kwuitiew Tom Yum</p><p>249 kr</p>
         <p>11 Kwuitiew Nua</p><p>249 kr</p>
+        <p>Drikke</p>
         <p>12 Phad Mhi</p><p>Stekte nudler med grønnsaker, egg og soyasaus 259 kr</p>
         <p>Kylling</p><p>60 kr</p>
         <p>Iskaffe</p><p>99 kr</p>
