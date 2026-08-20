@@ -1,4 +1,5 @@
 name: Fysen one-shot evening production release 2026-08-20
+# Retrigger after workflow registration on main.
 
 on:
   push:
