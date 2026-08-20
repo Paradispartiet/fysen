@@ -12,6 +12,10 @@ import {
   HTML_DESCRIPTION_TITLE_RECOVERY_VERSION,
   recoverDescriptionNamedHtmlItems,
 } from "./html-description-title-recovery.js";
+import {
+  HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION,
+  recoverExplicitFromPriceHtmlItems,
+} from "./html-explicit-from-price-recovery.js";
 import { HTML_EXTRACTOR_VERSION } from "./html-extractor.js";
 import {
   HTML_HEADING_NORMALIZER_VERSION,
@@ -29,6 +33,10 @@ import {
   extractScopedHtmlMenu,
   HTML_SOURCE_EXTRACTOR_VERSION,
 } from "./html-source-extractor.js";
+import {
+  filterPlainTextBeverageSectionItems,
+  HTML_TEXT_SECTION_SCOPE_VERSION,
+} from "./html-text-section-scope.js";
 import { HttpMenuClient, type MenuHttpFetchResult } from "./http-client.js";
 import { extractScopedPdfMenu, PDF_SOURCE_EXTRACTOR_VERSION } from "./pdf-source-extractor.js";
 
@@ -55,7 +63,7 @@ export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v1";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v6";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v5";
-const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}`;
+const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
 export type MenuSourceFetchMode = "http" | "browser";
@@ -140,6 +148,39 @@ export function isCanonicalHtmlMenuItem(item: MenuObservedItem): boolean {
     !BEVERAGE_STYLE_ITEM.test(name) &&
     !BOTTLED_BEVERAGE_VOLUME.test(name)
   );
+}
+
+function mergeExplicitFromPriceRecovery(
+  items: readonly MenuObservedItem[],
+  recovered: readonly MenuObservedItem[],
+): readonly MenuObservedItem[] {
+  if (recovered.length === 0) return items;
+  const output = [...items];
+
+  for (const candidate of recovered) {
+    const matches = output
+      .map((item, index) => ({ item, index }))
+      .filter(({ item }) => item.normalizedName === candidate.normalizedName);
+
+    if (matches.length === 0) {
+      output.push(candidate);
+      continue;
+    }
+    if (matches.length !== 1) continue;
+
+    const match = matches[0];
+    if (!match) continue;
+    output[match.index] = {
+      ...match.item,
+      priceMinor: candidate.priceMinor,
+      priceKind: "from",
+      priceMaxMinor: null,
+      confidence: Math.max(match.item.confidence, candidate.confidence),
+      sourceExcerpt: candidate.sourceExcerpt ?? match.item.sourceExcerpt,
+    };
+  }
+
+  return output.sort((a, b) => a.position - b.position);
 }
 
 export function pdfResponseByteLimit(): number {
@@ -232,6 +273,10 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverAdjacentHeadingPriceHtmlItems(normalizedHtml)
         : [];
+    const explicitFromPriceItems =
+      extracted.method === "html_heuristic"
+        ? recoverExplicitFromPriceHtmlItems(extracted.visibleText)
+        : [];
     const trailingPriceCardQualifies =
       trailingPriceCardItems.length >= 4 &&
       (recoveredItems.length === 0 ||
@@ -245,11 +290,19 @@ export async function extractMenuSource(
         : priceWrappedItems.length >= 3 && priceWrappedItems.length >= recoveredItems.length * 2
           ? priceWrappedItems
           : recoveredItems;
+    const priceEnrichedItems =
+      extracted.method === "html_heuristic"
+        ? mergeExplicitFromPriceRecovery(preferredItems, explicitFromPriceItems)
+        : preferredItems;
     const normalizedItems =
       extracted.method === "html_heuristic"
-        ? preferredItems.map(normalizeHtmlItemName)
-        : preferredItems;
-    const items = normalizedItems.filter(isCanonicalHtmlMenuItem);
+        ? priceEnrichedItems.map(normalizeHtmlItemName)
+        : priceEnrichedItems;
+    const canonicalItems = normalizedItems.filter(isCanonicalHtmlMenuItem);
+    const items =
+      extracted.method === "html_heuristic"
+        ? filterPlainTextBeverageSectionItems(canonicalItems, extracted.visibleText)
+        : canonicalItems;
     return {
       items,
       method: extracted.method,
