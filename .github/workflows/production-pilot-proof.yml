@@ -5,46 +5,6 @@ on:
   workflow_run:
     workflows: ["Materialize Fysen production catalog", "Fysen batched Vercel production release"]
     types: [completed]
-  push:
-    branches: [main]
-    paths:
-      - ".github/workflows/production-pilot-proof.yml"
-      - "scripts/production-pilot-proof.mjs"
-      - "scripts/revenue-production-proof.mjs"
-      - "apps/web/app/search/**"
-      - "apps/web/app/claim/**"
-      - "apps/web/app/pro/**"
-      - "apps/web/app/min-mat/**"
-      - "apps/web/app/api/pro/**"
-      - "apps/web/app/api/aha/**"
-      - "apps/web/app/api/min-mat/**"
-      - "apps/web/app/layout.tsx"
-      - "apps/web/components/global-header.tsx"
-      - "apps/web/components/dish-result.tsx"
-      - "apps/web/components/dish-browse.tsx"
-      - "apps/web/components/restaurant-claim-form.tsx"
-      - "apps/web/components/fysen-pro-login-form.tsx"
-      - "apps/web/components/save-min-mat-button*"
-      - "apps/web/components/min-mat-*"
-      - "apps/web/lib/aha-*"
-      - "apps/web/styles/min-mat.css"
-      - "apps/api/src/dish-search.controller.ts"
-      - "apps/api/src/dish-search.service.ts"
-      - "apps/api/src/restaurant-claims.controller.ts"
-      - "apps/api/src/restaurant-claims.service.ts"
-      - "apps/api/src/fysen-pro.controller.ts"
-      - "apps/api/src/fysen-pro.service.ts"
-      - "apps/api/src/aha-min-mat.*"
-      - "packages/contracts/src/aha-min-mat.ts"
-      - "packages/database/migrations/0014_search_demand_source.sql"
-      - "packages/database/migrations/0015_restaurant_claims.sql"
-      - "packages/database/migrations/0016_fysen_pro_sessions.sql"
-      - "packages/database/migrations/0017_aha_min_mat.sql"
-      - "packages/database/src/browse.ts"
-      - "packages/database/src/discovery-catalog.ts"
-      - "packages/database/src/restaurant-claims.ts"
-      - "packages/database/src/fysen-pro.ts"
-      - "packages/database/src/aha-min-mat.ts"
 
 permissions:
   contents: read
