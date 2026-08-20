@@ -51,7 +51,7 @@ jobs:
             catalog/tyrkisk-kjokken-lindeberg-oslo.json
           do
             echo "===== $manifest ====="
-            if ! pnpm --filter @fysen/menu-worker validate:manifest -- "$manifest"; then
+            if ! pnpm --filter @fysen/menu-worker validate:manifest "$manifest"; then
               failed=1
             fi
           done
