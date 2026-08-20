@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 53,
+    "minimumExpectedItems": 48,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -38,8 +38,7 @@
       "Indiavolata",
       "Crudo",
       "Panna cotta",
-      "Salamino",
-      "Villa Paradiso"
+      "Salamino"
     ],
     "requiredDishVariants": [
       {"name": "Husets focaccia med aioli", "priceMinor": 8500},
@@ -48,9 +47,14 @@
       {"name": "Indiavolata", "priceMinor": 26000},
       {"name": "Crudo", "priceMinor": 29000},
       {"name": "Panna cotta", "priceMinor": 16000},
-      {"name": "Salamino", "priceMinor": 11500},
-      {"name": "Villa Paradiso", "priceMinor": 6800}
+      {"name": "Salamino", "priceMinor": 11500}
     ],
-    "forbiddenDishNames": []
+    "forbiddenDishNames": [
+      "Smurf",
+      "Rødhette",
+      "Pippi Langstrømpe",
+      "Peter Pan",
+      "Villa Paradiso"
+    ]
   }
 }
