@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kebabish-original-breigata-oslo",
+    "name": "Kebabish Original",
+    "websiteUrl": null,
+    "address": "Breigata 12, 0187 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.914067,
+    "longitude": 10.761225
+  },
+  "menuSource": {
+    "url": "https://www.foodora.no/restaurant/n0ut/kebabish-original",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 43,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "No complete machine-readable first-party source was established in the Batch 01 research pass. The matched priced Foodora service menu is tested as secondary evidence only; open/closed remains unknown."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Butter Chicken",
+      "Vegetable Pakora",
+      "Lamb Chops",
+      "Chicken Tikka Masala",
+      "Lamb Tikka Masala",
+      "Chicken Biryani",
+      "Plain/Pilau Rice",
+      "Mixed Tikka"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Butter Chicken",
+        "priceMinor": 23030
+      },
+      {
+        "name": "Vegetable Pakora",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Lamb Chops",
+        "priceMinor": 31900,
+        "priceKind": "from"
+      },
+      {
+        "name": "Chicken Tikka Masala",
+        "priceMinor": 31900,
+        "priceKind": "from"
+      },
+      {
+        "name": "Lamb Tikka Masala",
+        "priceMinor": 33900,
+        "priceKind": "from"
+      },
+      {
+        "name": "Chicken Biryani",
+        "priceMinor": 21900,
+        "priceKind": "from"
+      },
+      {
+        "name": "Plain/Pilau Rice",
+        "priceMinor": 5000,
+        "priceKind": "from"
+      },
+      {
+        "name": "Mixed Tikka",
+        "priceMinor": 32900,
+        "priceKind": "from"
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -69,7 +69,14 @@ const NON_DISH_HTML_ITEM =
 const PHONE_METADATA_ITEM =
   /^(?:tel(?:efon)?|tlf|phone)\s*:?\s*\+?\d[\d ()+.-]{4,}$/iu;
 const NON_DISH_MENU_SECTION =
-  /^(?:meny|à la carte|forretter|småretter|grillretter|hovedretter|dessert(?:er)?|drikkemeny|drikke(?:r)?|drikkevarer|cocktails?|vin|øl|bestill|bord|åpningstider|kontakt)$/iu;
+  /^(?:meny|à la carte|forretter|småretter|grillretter|hovedretter|dessert(?:er)?|drikkemeny|drikke(?:r)?|drikkevarer|cocktails?|vin|øl|bestill|bord|åpningstider|kontakt|snacks?|maki|grill|antipasti|vegan|klassiske\s+forretter\s+og\s+supper)$/iu;
+const ALLERGEN_ONLY_ITEM =
+  /^(?:\(\s*)?(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|selleri|celery|citrus|sitrus|sulfitt|sulphites?)(?:\s*[,/+&]\s*(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|selleri|celery|citrus|sitrus|sulfitt|sulphites?))*\s*\)?$/iu;
+const NON_DISH_METADATA_ITEM =
+  /^(?:hjemmeside|homepage|mine\s+favoritter|my\s+favou?rites|favoritter|favou?rites|pers\.?|medium|gluten[- ]?free|glutenfri)$/iu;
+const NON_DISH_FRAGMENT_ITEM = /^(?:stk\.?|biter\.)\s+/iu;
+const NON_DISH_ADDON_ITEM =
+  /^\*?\s*(?:påfyll\s+av\s+tilbehør|refill\s+of\s+sides?|add[- ]?ons?)\b/iu;
 const PRICE_DISPLAY_ONLY_ITEM =
   /^(?:(?:fra|from)\s+)?(?:(?:(?:nok|kr\.?)\s*)?[1-9]\d{0,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)\s*){1,4}$/iu;
 const KITCHEN_RETAIL_ITEM = /^(?:pizzakutter|pizza\s+cutter)$/iu;
@@ -83,7 +90,7 @@ const BOTTLED_BEVERAGE_VOLUME =
   /(?:^flaske$|\b(?:flaske\s+0[,.]\d{1,2}(?:\s*l)?|0[,.]\d{1,2}\s*l?\s+flaske)\)?\s*[-–—]?$)/iu;
 export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v2";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
-export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v6";
+export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v7";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v6";
 const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}`;
 
@@ -165,18 +172,23 @@ export function normalizeHtmlItemName(
 
 export function isCanonicalHtmlMenuItem(item: MenuObservedItem): boolean {
   const name = item.name.trim();
+  const filterName = name.replace(/\p{Cf}/gu, "").trim();
   return (
-    /\p{L}/u.test(name) &&
-    !NON_DISH_HTML_ITEM.test(name) &&
-    !PHONE_METADATA_ITEM.test(name) &&
-    !NON_DISH_MENU_SECTION.test(name) &&
-    !PRICE_DISPLAY_ONLY_ITEM.test(name) &&
-    !KITCHEN_RETAIL_ITEM.test(name) &&
-    !RETAIL_APPAREL_ITEM.test(name) &&
-    !HISTORICAL_SINCE_ITEM.test(name) &&
-    !BEVERAGE_MENU_ITEM.test(name) &&
-    !BEVERAGE_STYLE_ITEM.test(name) &&
-    !BOTTLED_BEVERAGE_VOLUME.test(name)
+    /\p{L}/u.test(filterName) &&
+    !NON_DISH_HTML_ITEM.test(filterName) &&
+    !PHONE_METADATA_ITEM.test(filterName) &&
+    !NON_DISH_MENU_SECTION.test(filterName) &&
+    !ALLERGEN_ONLY_ITEM.test(filterName) &&
+    !NON_DISH_METADATA_ITEM.test(filterName) &&
+    !NON_DISH_FRAGMENT_ITEM.test(filterName) &&
+    !NON_DISH_ADDON_ITEM.test(filterName) &&
+    !PRICE_DISPLAY_ONLY_ITEM.test(filterName) &&
+    !KITCHEN_RETAIL_ITEM.test(filterName) &&
+    !RETAIL_APPAREL_ITEM.test(filterName) &&
+    !HISTORICAL_SINCE_ITEM.test(filterName) &&
+    !BEVERAGE_MENU_ITEM.test(filterName) &&
+    !BEVERAGE_STYLE_ITEM.test(filterName) &&
+    !BOTTLED_BEVERAGE_VOLUME.test(filterName)
   );
 }
 

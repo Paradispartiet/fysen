@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "villa-paradiso-tivoli-oslo",
+    "name": "Villa Paradiso Tivoli",
+    "websiteUrl": "https://www.villaparadiso.no/restauranter/tivoli",
+    "address": "Ivan Bjørndals gate 25, Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.938239,
+    "longitude": 10.763706
+  },
+  "menuSource": {
+    "url": "https://cdn.prod.website-files.com/5c77c5f7f7364239e114229f/6a0f1ec3b4d7e73c4f6e984c_Villa%20Paradiso%20Tivoli%20meny.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 52,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Husets focaccia med aioli",
+      "Insalata siciliana",
+      "Linguine alle vongole e ‘nduja",
+      "‘Nduja",
+      "Tartufo e parma",
+      "Cannoli siciliani",
+      "Salamino",
+      "Villa Paradiso"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Husets focaccia med aioli",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Insalata siciliana",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Linguine alle vongole e ‘nduja",
+        "priceMinor": 26500
+      },
+      {
+        "name": "‘Nduja",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Tartufo e parma",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Cannoli siciliani",
+        "priceMinor": 16000
+      },
+      {
+        "name": "Salamino",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Villa Paradiso",
+        "priceMinor": 6800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

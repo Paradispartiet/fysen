@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "batch": "oslo-batch-01",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "restaurant": {"slug":"kinabolle-gronland-oslo","name":"Kinabolle Grønland","websiteUrl":"https://www.kinabolle.no/","address":"Tøyengata 2, 0190 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.kinabolle.no/menus-1","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified for this location, so open/closed must remain unknown."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"kinabolle-ensjo-oslo","name":"Kinabolle Ensjø","websiteUrl":"https://www.kinabolle.no/","address":"Gladengveien 7F, 0661 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.kinabolle.no/menus-1","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified for this location, so open/closed must remain unknown."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"the-golden-chimp-torggata-oslo","name":"The Golden Chimp","websiteUrl":"https://www.thegoldenchimp.no/","address":"Torggata 13, 0181 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.thegoldenchimp.no/menu","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"gangnam-munkedamsveien-oslo","name":"Gangnam Korean Restaurant","websiteUrl":"https://www.gangnam.no/","address":"Munkedamsveien 59, 0270 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://gangnam.no/onewebmedia/A%20La%20Carte%20Meny%200825.pdf","sourceType":"pdf","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"asia-aker-brygge-oslo","name":"ASIA Aker Brygge","websiteUrl":"https://asiaakerbrygge.no/","address":"Stranden 1, 0250 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://asiaakerbrygge.no/wp-content/uploads/2025/02/ASIA-meny-v3-260125.pdf","sourceType":"pdf","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"oche-torggata-oslo","name":"Oche Torggata","websiteUrl":"https://oche.com/no/oslo","address":"Torggata 26, 0183 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://oche.com/no/oslo/menu","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"oche-aker-brygge-oslo","name":"Oche Aker Brygge","websiteUrl":"https://oche.com/no/oslo/akerbrygge","address":"Holmens gate 5, 0250 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://oche.com/no/oslo/akerbrygge/menu","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"pincho-nation-fred-olsens-oslo","name":"Pincho Nation Oslo Jernbanetorget","websiteUrl":"https://pinchonation.no/restaurant/no-oslo-fred-olsens/","address":"Fred Olsens gate 11, Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://pinchonation.no/restaurant/no-oslo-fred-olsens/","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Pincho Nation is app-centric; Batch 01 tests whether its canonical location page exposes sufficient machine-readable menu evidence. Kitchen hours remain unverified until separately proven."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"castello-sorenga-oslo","name":"Castello Restaurant Oslo","websiteUrl":"https://www.castellorestaurant.no/","address":"Sørengkaia 99, 0194 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.castellorestaurant.no/oslo/hovedmeny","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"tatakii-middelthuns-gate-oslo","name":"Tatakii Asian","websiteUrl":"https://www.tatakiiasian.no/","address":"Middelthuns gate 25, 0368 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.tatakiiasian.no/meny","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"feniqia-sorenga-oslo","name":"Feniqia Oslo","websiteUrl":"https://www.feniqia.no/oslo","address":"Rostockgata 66, 0194 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.feniqia.no/meny","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"red-sun-storo-oslo","name":"Red Sun Storo","websiteUrl":"https://www.redsun.no/","address":"Vitaminveien 28, 0483 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.redsun.no/menu","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"villa-paradiso-tivoli-oslo","name":"Villa Paradiso Tivoli","websiteUrl":"https://www.villaparadiso.no/restauranter/tivoli","address":"Ivan Bjørndals gate 25, Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://cdn.prod.website-files.com/5c77c5f7f7364239e114229f/6a0f1ec3b4d7e73c4f6e984c_Villa%20Paradiso%20Tivoli%20meny.pdf","sourceType":"pdf","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"dinner-nationaltheatret-oslo","name":"Dinner Nationaltheatret","websiteUrl":"https://www.dinner.no/nationaltheatret","address":"Stortingsgata 22, 0161 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.dinner.no/nationaltheatret/meny","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"dinner-barcode-oslo","name":"Dinner Barcode","websiteUrl":"https://www.dinner.no/barcode","address":"Dronning Eufemias gate 28, 0191 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.dinner.no/barcode/meny","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"dim-sum-tordenskiolds-gate-oslo","name":"Dim Sum Oslo","websiteUrl":"https://www.dimsumoslo.no/","address":"Tordenskiolds gate 8, 0160 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.dimsumoslo.no/onewebmedia/dimsum_matmeny.pdf","sourceType":"pdf","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"mamma-pizza-osteria-di-mare-oslo","name":"Mamma Pizza Osteria di Mare","websiteUrl":"https://www.mammapizza.no/osteria-di-mare","address":"Ruseløkkveien 26, 0251 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.mammapizza.no/osteria-di-mare","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"The first-party location page is used as the Batch 01 source probe. If it does not expose the priced food menu directly, this restaurant must move to source discovery rather than weakening the gate."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"dalat-cafe-torggata-oslo","name":"Dalat Café","websiteUrl":"https://www.dalatcafe.no/","address":"Torggata 27, 0183 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.foodora.no/restaurant/n9oz/dalat-cafe","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Identity is independently matched to the Torggata restaurant; Batch 01 uses the current priced Foodora service menu because a complete machine-readable first-party menu has not yet been proven. It must not be described as complete dine-in coverage."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"green-taste-oslo-gate-oslo","name":"Green Taste","websiteUrl":"https://www.greentaste.no/","address":"Oslo gate 39A, 0192 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.foodora.no/restaurant/y48m/green-taste","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Identity is independently established by Green Taste's first-party site; Batch 01 uses the current priced Foodora service menu as secondary menu evidence and does not claim complete dine-in coverage."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    },
+    {
+      "restaurant": {"slug":"kebabish-original-breigata-oslo","name":"Kebabish Original","websiteUrl":null,"address":"Breigata 12, 0187 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.foodora.no/restaurant/n0ut/kebabish-original","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"No complete machine-readable first-party source was established in the Batch 01 research pass. The matched priced Foodora service menu is tested as secondary evidence only; open/closed remains unknown."}},
+      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
+    }
+  ]
+}
