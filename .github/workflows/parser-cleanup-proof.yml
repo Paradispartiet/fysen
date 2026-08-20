@@ -1,3 +1,4 @@
+# temporary proof rerun after workflow cleanup
 name: Parser cleanup proof
 
 on:
