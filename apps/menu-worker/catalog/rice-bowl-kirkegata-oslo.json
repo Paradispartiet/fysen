@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "rice-bowl-kirkegata-oslo",
+    "name": "Rice Bowl Thai Café",
+    "websiteUrl": "https://www.ricebowl.no/",
+    "address": "Kirkegata 20, 0153 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9109243,
+    "longitude": 10.7447792
+  },
+  "menuSource": {
+    "url": "https://www.ricebowl.no/meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 36
+  },
+  "hoursSource": {
+    "url": "https://www.ricebowl.no/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "actions": [
+    {
+      "type": "order",
+      "url": "https://www.ricebowl.no/bestill-takeaway",
+      "sourceUrl": "https://www.ricebowl.no/",
+      "provider": "Rice Bowl"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Satay",
+      "Phad Khi Mao",
+      "Phad Thai Kung",
+      "Phad Kraprao Gai",
+      "Phad Tom Yum Kung",
+      "Tom Kha Gai",
+      "Kaeng Kiew Whan Gai",
+      "Panang Nua",
+      "Yam Nua"
+    ],
+    "requiredDishVariants": [
+      { "name": "Satay", "priceMinor": 12500 },
+      { "name": "Phad Khi Mao", "priceMinor": 25900 },
+      { "name": "Phad Thai Kung", "priceMinor": 25900 },
+      { "name": "Phad Kraprao Gai", "priceMinor": 25500 },
+      { "name": "Phad Tom Yum Kung", "priceMinor": 24500 },
+      { "name": "Tom Kha Gai", "priceMinor": 25900 },
+      { "name": "Kaeng Kiew Whan Gai", "priceMinor": 25900 },
+      { "name": "Panang Nua", "priceMinor": 29900 },
+      { "name": "Yam Nua", "priceMinor": 29900 }
+    ],
+    "forbiddenDishNames": [
+      "Kylling",
+      "Biff",
+      "Reker",
+      "Ris",
+      "Grønnsaker",
+      "Cashewnøtter",
+      "Nudler",
+      "Laks",
+      "Iskaffe",
+      "Thai Te",
+      "Grønn Thai Te",
+      "Ekstra sulten ?",
+      "Ekstra sulten",
+      "Vis mer"
+    ]
+  }
+}

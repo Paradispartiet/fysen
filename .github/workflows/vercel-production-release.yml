@@ -62,6 +62,11 @@ jobs:
             exit 0
           fi
 
+          if [[ "$GITHUB_REF" != "refs/heads/main" ]]; then
+            echo "::error title=Invalid production release ref::Manual Fysen production releases must be dispatched from main."
+            exit 1
+          fi
+
           echo "active=true" >> "$GITHUB_OUTPUT"
           echo "target=${REQUESTED_TARGET:-auto}" >> "$GITHUB_OUTPUT"
           echo "release_mode=manual-${REQUESTED_TARGET:-auto}" >> "$GITHUB_OUTPUT"
@@ -90,10 +95,10 @@ jobs:
             exit 1
           fi
 
-      - name: Checkout canonical main history
+      - name: Checkout locked trigger history
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.sha }}
           fetch-depth: 0
 
       - name: Build batched release plan
@@ -103,6 +108,10 @@ jobs:
           set -euo pipefail
 
           source_sha="$(git rev-parse HEAD)"
+          if [[ "$source_sha" != "$GITHUB_SHA" ]]; then
+            echo "Locked release source $source_sha does not match workflow trigger $GITHUB_SHA" >&2
+            exit 1
+          fi
 
           latest_production_sha() {
             local project_id="$1"
@@ -276,7 +285,7 @@ jobs:
           set -euo pipefail
           for attempt in $(seq 1 18); do
             if curl --fail --silent --show-error --location --max-time 20 \
-              'https://fysen-matsgran-8572s-projects.vercel.app/' >/dev/null; then
+              'https://fysen.vercel.app/' >/dev/null; then
               echo "Fysen web is reachable after release of $SOURCE_SHA"
               exit 0
             fi

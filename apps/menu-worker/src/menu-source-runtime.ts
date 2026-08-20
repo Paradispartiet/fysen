@@ -35,6 +35,7 @@ import {
 } from "./html-section-first-card-recovery.js";
 import {
   HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION,
+  isStrongNumberedTrailingPriceCardRecovery,
   recoverTrailingPriceCardHtmlItems,
 } from "./html-trailing-price-card-recovery.js";
 import {
@@ -306,30 +307,15 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverFirstCardAfterPlainFoodSections(extracted.visibleText)
         : [];
-    if (extracted.visibleText.includes("CHEF MONTSERRAT GARZA")) {
-      const summarize = (items: readonly MenuObservedItem[]) =>
-        items.map(({ name, priceMinor, confidence }) => ({ name, priceMinor, confidence }));
-      process.stderr.write(
-        `${JSON.stringify({
-          recoverySelectionDebug: {
-            recovered: summarize(recoveredItems),
-            trailing: summarize(trailingPriceCardItems),
-            priceWrapped: summarize(priceWrappedItems),
-            heading: summarize(headingPriceItems),
-            sectionFirst: summarize(sectionFirstCardItems),
-            htmlSlice: (() => {
-              const index = normalizedHtml.indexOf("Tostada de Callos");
-              return index >= 0 ? normalizedHtml.slice(Math.max(0, index - 3000), index + 12000) : "";
-            })(),
-          },
-        })}\n`,
-      );
-    }
     const semanticCategoryCardsPreferred =
       trailingPriceCardItems.length >= 4 &&
       trailingPriceCardItems.every((item) => item.sectionName !== null && item.confidence >= 0.99);
+    const strongNumberedCardsPreferred =
+      isStrongNumberedTrailingPriceCardRecovery(trailingPriceCardItems);
+    const isolatedTrailingRecoveryPreferred =
+      semanticCategoryCardsPreferred || strongNumberedCardsPreferred;
     const trailingPriceCardQualifies =
-      semanticCategoryCardsPreferred ||
+      isolatedTrailingRecoveryPreferred ||
       (trailingPriceCardItems.length >= 4 &&
         (recoveredItems.length === 0 ||
           trailingPriceCardItems.length >= Math.max(6, Math.ceil(recoveredItems.length * 1.5))));
@@ -343,15 +329,15 @@ export async function extractMenuSource(
           ? priceWrappedItems
           : recoveredItems;
     const headingSupplementedItems =
-      extracted.method === "html_heuristic" && !semanticCategoryCardsPreferred
+      extracted.method === "html_heuristic" && !isolatedTrailingRecoveryPreferred
         ? supplementStrongHeadingRecovery(preferredItems, headingPriceItems)
         : preferredItems;
     const sectionSupplementedItems =
-      extracted.method === "html_heuristic" && !semanticCategoryCardsPreferred
+      extracted.method === "html_heuristic" && !isolatedTrailingRecoveryPreferred
         ? mergeMissingRecoveredItems(headingSupplementedItems, sectionFirstCardItems)
         : headingSupplementedItems;
     const priceEnrichedItems =
-      extracted.method === "html_heuristic" && !semanticCategoryCardsPreferred
+      extracted.method === "html_heuristic" && !isolatedTrailingRecoveryPreferred
         ? mergeExplicitFromPriceRecovery(sectionSupplementedItems, explicitFromPriceItems)
         : sectionSupplementedItems;
     const normalizedItems =
@@ -360,7 +346,7 @@ export async function extractMenuSource(
         : priceEnrichedItems;
     const canonicalItems = normalizedItems.filter(isCanonicalHtmlMenuItem);
     const items =
-      extracted.method === "html_heuristic" && !semanticCategoryCardsPreferred
+      extracted.method === "html_heuristic" && !isolatedTrailingRecoveryPreferred
         ? filterPlainTextBeverageSectionItems(canonicalItems, extracted.visibleText)
         : canonicalItems;
     return {
