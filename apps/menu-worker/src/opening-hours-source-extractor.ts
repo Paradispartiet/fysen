@@ -50,6 +50,52 @@ const weekdayListPattern = new RegExp(
   `\\b(${canonicalWeekdayToken}(?:(?:\\s*,\\s*|\\s+(?:and|og|&)\\s+)${canonicalWeekdayToken}){1,6})\\b`,
   "giu",
 );
+const sourceHoursMarkerPattern = /^(?:opening\s+hours|hours|åpningstider)(?:\s+([^:]{1,80}))?:?$/iu;
+
+interface SourceHoursMarker {
+  readonly index: number;
+  readonly label: string | null;
+}
+
+function normalizedScope(value: string): string {
+  return value
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
+    .toLocaleLowerCase("nb-NO")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function markerMatchesScopeHints(marker: SourceHoursMarker, scopeHints: readonly string[]): boolean {
+  if (!marker.label) return false;
+  const label = normalizedScope(marker.label);
+  return scopeHints.some((hint) => {
+    const normalizedHint = normalizedScope(hint);
+    return Boolean(normalizedHint) && (normalizedHint.includes(label) || label.includes(normalizedHint));
+  });
+}
+
+function scopeLinesForCutoffAnalysis(
+  lines: readonly string[],
+  scopeHints: readonly string[],
+): readonly string[] {
+  if (scopeHints.length === 0) return lines;
+
+  const markers: SourceHoursMarker[] = [];
+  for (const [index, line] of lines.entries()) {
+    const match = line.trim().match(sourceHoursMarkerPattern);
+    if (match) markers.push({ index, label: match[1]?.trim() || null });
+  }
+  if (markers.length < 2) return lines;
+
+  const hinted = markers.filter((marker) => markerMatchesScopeHints(marker, scopeHints));
+  if (hinted.length !== 1) return lines;
+
+  const selected = hinted[0];
+  if (!selected) return lines;
+  const nextMarker = markers.find((candidate) => candidate.index > selected.index);
+  return lines.slice(selected.index, nextMarker?.index ?? lines.length);
+}
 
 function extractVisibleLines(html: string): readonly string[] {
   const $ = load(html);
@@ -285,16 +331,20 @@ export function extractCanonicalOpeningHours(
   scopeHints: readonly string[] = [],
 ): ExtractedOpeningHours {
   const originalLines = normalizeOpeningHoursMarkerLines(extractVisibleLines(html));
-  const relativeMinutes = relativeCutoffMinutes(originalLines);
-  const globalAbsolute = absoluteGlobalKitchenClose(originalLines);
-  const explicitKitchenSchedule = extractExplicitKitchenSchedule(originalLines, scopeHints);
+  const cutoffLines = scopeLinesForCutoffAnalysis(originalLines, scopeHints);
+  const relativeMinutes = relativeCutoffMinutes(cutoffLines);
+  const globalAbsolute = absoluteGlobalKitchenClose(cutoffLines);
+  const explicitKitchenSchedule = extractExplicitKitchenSchedule(cutoffLines, scopeHints);
 
   if (explicitKitchenSchedule && relativeMinutes === null && !globalAbsolute) {
-    return explicitKitchenSchedule;
+    return {
+      ...explicitKitchenSchedule,
+      visibleText: originalLines.join("\n"),
+    };
   }
 
   if (relativeMinutes !== null) {
-    const textWithoutRelative = originalLines
+    const textWithoutRelative = cutoffLines
       .map((line) => line.replace(relativeKitchenClosePattern, "").trim())
       .filter(Boolean)
       .join(" ");
@@ -306,9 +356,9 @@ export function extractCanonicalOpeningHours(
     }
 
     const base = explicitKitchenSchedule ??
-      extractKitchenOpeningHoursWithIdenticalSectionRecovery(sanitizedLines(originalLines), scopeHints);
+      extractKitchenOpeningHoursWithIdenticalSectionRecovery(sanitizedLines(cutoffLines), scopeHints);
     const intervals = base.intervals.map((item) => subtractKitchenCutoff(item, relativeMinutes));
-    const relativeExcerpt = originalLines.find((line) => relativeKitchenCloseLinePattern.test(line)) ?? null;
+    const relativeExcerpt = cutoffLines.find((line) => relativeKitchenCloseLinePattern.test(line)) ?? null;
 
     return {
       intervals,
@@ -322,7 +372,7 @@ export function extractCanonicalOpeningHours(
 
   if (globalAbsolute) {
     const base = explicitKitchenSchedule ??
-      extractKitchenOpeningHoursWithIdenticalSectionRecovery(sanitizedAbsoluteLines(originalLines), scopeHints);
+      extractKitchenOpeningHoursWithIdenticalSectionRecovery(sanitizedAbsoluteLines(cutoffLines), scopeHints);
     const intervals = base.intervals.map((item) => applyAbsoluteKitchenClose(item, globalAbsolute.closesAt));
     return {
       intervals,
