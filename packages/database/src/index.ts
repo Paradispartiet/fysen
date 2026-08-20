@@ -15,6 +15,7 @@ export * from "./quality-dashboard-markdown.js";
 export * from "./repository.js";
 export * from "./restaurant-action-state.js";
 export * from "./restaurant-actions.js";
+export * from "./restaurant-claim-operator.js";
 export * from "./restaurant-claims.js";
 export * from "./restaurant-hours-sources.js";
 export * from "./restaurant-hours.js";
