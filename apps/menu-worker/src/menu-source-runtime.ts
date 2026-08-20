@@ -308,10 +308,7 @@ export async function extractMenuSource(
         : [];
     if (
       process.env.GITHUB_ACTIONS === "true" &&
-      recoveredItems.length >= 10 &&
-      (trailingPriceCardItems.length >= 10 ||
-        priceWrappedItems.length >= 10 ||
-        headingPriceItems.length >= 10)
+      recoveredItems.length >= 10
     ) {
       const summarize = (items: readonly MenuObservedItem[]) =>
         items.map(({ name, priceMinor, confidence }) => ({ name, priceMinor, confidence }));
