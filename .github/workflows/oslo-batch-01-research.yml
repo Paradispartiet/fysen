@@ -10,7 +10,7 @@ on:
       - "apps/menu-worker/src/menu-source-runtime-item-normalizer.test.ts"
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   research:
@@ -23,8 +23,7 @@ jobs:
       - name: Checkout batch branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          persist-credentials: true
+          persist-credentials: false
 
       - name: Patch generic non-dish leakage
         shell: bash
@@ -253,16 +252,3 @@ jobs:
           path: apps/menu-worker/oslo-batch-01-evidence.tgz
           if-no-files-found: error
           retention-days: 7
-
-      - name: Commit parser hardening
-        shell: bash
-        run: |
-          if git diff --quiet -- apps/menu-worker/src/menu-source-runtime.ts apps/menu-worker/src/menu-source-runtime-item-normalizer.test.ts; then
-            echo "Parser hardening already committed."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- apps/menu-worker/src/menu-source-runtime.ts apps/menu-worker/src/menu-source-runtime-item-normalizer.test.ts
-          git commit -m "Filter generic non-dish HTML leakage"
-          git push origin HEAD:${{ github.event.pull_request.head.ref }}
