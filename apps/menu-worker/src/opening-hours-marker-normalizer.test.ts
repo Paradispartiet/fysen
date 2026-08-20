@@ -6,7 +6,7 @@ import {
 
 describe("opening-hours marker normalizer", () => {
   it("removes decorative prefixes only when they expose a real hours marker", () => {
-    expect(OPENING_HOURS_MARKER_NORMALIZER_VERSION).toBe("hours-marker-v2");
+    expect(OPENING_HOURS_MARKER_NORMALIZER_VERSION).toBe("hours-marker-v3");
     expect(
       normalizeOpeningHoursMarkerLines([
         "* * * ÅPNINGSTIDER CUE",
@@ -54,4 +54,20 @@ describe("opening-hours marker normalizer", () => {
       ]);
     },
   );
+
+  it("normalizes Norwegian and English half-hour kitchen cutoffs to numeric relative offsets", () => {
+    expect(
+      normalizeOpeningHoursMarkerLines([
+        "Kjøkkenet stenger halvtime før stengetid",
+        "Kjøkkenet stenger en halv time før stengetid",
+        "Kitchen closes half an hour before closing",
+        "Kitchen closes a half hour before close time",
+      ]),
+    ).toEqual([
+      "Kjøkkenet stenger 30 min før stengetid",
+      "Kjøkkenet stenger 30 min før stengetid",
+      "Kitchen closes 30 minutes before closing",
+      "Kitchen closes 30 minutes before close time",
+    ]);
+  });
 });
