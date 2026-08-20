@@ -13,6 +13,17 @@ Siste eksakte materializer på `ef1693ff5315fda7327553791655a88d8142a212` leste 
 
 Den operative rødlisten fra samme kjøring var Aura, Café Sara, Confusion, Eat Thai Steen & Strøm, Haandtryk, Habibi, Il Colosseo, Lahori Dera, Rolis Bodega og Roll Sushi Majorstua. En materializer kan avslutte med status 1 selv om bare enkelte manifester feiler; resultatlisten, ikke bare jobbstatusen, avgjør hvilke restauranter som er grønne.
 
+### Pre-merge batchbevis for parser-/kildelukkingen
+
+GitHub-run `Validate Fysen restaurant candidates` #360 på commit `936a1ce7d6f1629993023da0642ff074bf349a42` kjørte de samme 10 manifestene gjennom full live runtime med parallellitet fire:
+
+- 9 av 10 besto hele source-gaten;
+- Aura, Confusion, Eat Thai, Haandtryk, Habibi, Il Colosseo, Lahori Dera, Rolis Bodega og Roll Sushi var grønne;
+- ingen av de 10 hadde gjenstående parser-, extraction- eller menu-assertion-feil;
+- Café Sara var eneste røde manifest fordi restaurantens publiserte meny- og reservasjonslenker svarte HTTP 404.
+
+En separat kontroll av Café Saras førstpartslenkede Yoordi-side ga HTTP 200, men ingen maskinlesbare menyretter, og ble derfor ikke godkjent som erstatningskilde. Tallene i dette avsnittet er pre-merge source-gate-bevis. De blir ikke produksjonstall før merge og den eksakte post-merge materializeren har bekreftet dem.
+
 Som ekstern størrelsesreferanse viste Mattilsynets Smilefjes-oversikt 1 345 spisesteder i Oslo ved kontroll 2026-08-20: <https://smilefjes.mattilsynet.no/kommune/oslo/>. Dette omfatter flere typer spisesteder og er ikke Fysens canonical backlog. Målingen betyr at 40-manifestgruppen bare er den nåværende produksjonsgruppen, ikke «alle restauranter i Oslo».
 
 ## Produksjonslinjen
