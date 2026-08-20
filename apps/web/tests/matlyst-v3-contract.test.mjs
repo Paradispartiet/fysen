@@ -72,55 +72,30 @@ async function importSource(relativeSourcePath) {
   return import(pathToFileURL(destination).href);
 }
 
-const taxonomy = await importSource("components/culinary-taxonomy.ts");
 const explorerData = await importSource("components/cuisine-explorer-data.ts");
 const publicPath = await importSource("lib/public-path.ts");
+const explorerSource = await readFile(path.join(webRoot, "components/cuisine-explorer.tsx"), "utf8");
 
-function world(id) {
-  return taxonomy.culinaryWorlds.find((candidate) => candidate.id === id);
-}
-
-function region(worldId, regionId) {
-  return world(worldId)?.regions.find((candidate) => candidate.id === regionId);
-}
-
-function cuisineLink(worldId, regionId, cuisineName) {
-  return region(worldId, regionId)?.cuisines.find((candidate) => candidate.name === cuisineName);
-}
-
-test("Matlyst v3 låser sentrale verdensdel → region → kjøkken-stier", () => {
-  assert.equal(cuisineLink("asia", "east-asia", "Japansk")?.cuisine?.name, "Japansk");
-  assert.equal(cuisineLink("europe", "southern-europe", "Italiensk")?.cuisine?.name, "Italiensk");
-  assert.equal(cuisineLink("africa", "north-africa", "Egyptisk")?.cuisine?.name, "Egyptisk");
-  assert.equal(cuisineLink("asia", "west-asia", "Levantinsk")?.cuisine?.name, "Levantinsk");
-});
-
-test("Iberia beholder Spansk og Portugisisk som definerte, men ikke falskt aktive kjøkken", () => {
-  const iberia = region("europe", "iberia");
-  assert.ok(iberia);
-  assert.deepEqual(iberia.cuisines.map((entry) => entry.name), ["Spansk", "Portugisisk"]);
-  assert.ok(iberia.cuisines.every((entry) => entry.cuisine === null));
-});
-
-test("hvert aktivt kjøkken finnes nøyaktig én gang i taksonomien", () => {
-  const activeLinks = taxonomy.culinaryWorlds.flatMap((entry) =>
-    entry.regions.flatMap((culinaryRegion) => culinaryRegion.cuisines.filter((link) => link.cuisine)),
-  );
-  const activeNames = activeLinks.map((entry) => entry.name);
+test("Matlyst viser en flat, entydig katalog over aktive kjøkken", () => {
+  const activeNames = explorerData.cuisines.map((cuisine) => cuisine.name);
+  assert.equal(activeNames.length, 19);
   assert.equal(new Set(activeNames).size, activeNames.length);
-  assert.deepEqual(
-    [...activeNames].sort((left, right) => left.localeCompare(right, "nb")),
-    explorerData.cuisines.map((cuisine) => cuisine.name).sort((left, right) => left.localeCompare(right, "nb")),
-  );
+  assert.ok(activeNames.includes("Japansk"));
+  assert.ok(activeNames.includes("Italiensk"));
+  assert.ok(activeNames.includes("Egyptisk"));
+  assert.ok(activeNames.includes("Levantinsk"));
 });
 
-test("Midtøsten kan ikke komme tilbake som både region og kjøkken", () => {
+test("Midtøsten kan ikke komme tilbake som et aggregert kjøkken", () => {
   assert.ok(!explorerData.cuisines.some((cuisine) => cuisine.name === "Midtøsten"));
-  assert.ok(!taxonomy.culinaryWorlds.some((entry) =>
-    entry.regions.some((culinaryRegion) =>
-      culinaryRegion.name === "Midtøsten" || culinaryRegion.cuisines.some((link) => link.name === "Midtøsten"),
-    ),
-  ));
+});
+
+test("Utforsk verden er flat og kommer før Hva frister", () => {
+  const worldDirectory = explorerSource.indexOf('id="all-cuisines-title">Utforsk verden</h3>');
+  const moodDirectory = explorerSource.indexOf('id="matlyst-mood-title">Velg etter lyst</h3>');
+  assert.ok(worldDirectory >= 0, "mangler den flate Utforsk verden-katalogen");
+  assert.ok(moodDirectory > worldDirectory, "Hva frister skal ligge under Utforsk verden");
+  assert.doesNotMatch(explorerSource, /culinaryWorlds|selectedWorld|selectedCulinaryRegion/u);
 });
 
 test("production-backed discovery-retter er tilgjengelige i Alle retter-scope", () => {
@@ -136,38 +111,12 @@ test("production-backed discovery-retter er tilgjengelige i Alle retter-scope", 
   }
 });
 
-test("deep-link-helperen roundtripper world, region og cuisine", () => {
-  const href = publicPath.dishBrowseTaxonomyHref("Oslo", {
-    worldId: "asia",
-    regionId: "east-asia",
-    cuisineName: "Japansk",
-  });
+test("deep-link-helperen roundtripper et direkte kjøkkenvalg", () => {
+  const href = publicPath.dishBrowseCuisineHref("Oslo", "Japansk");
   const url = new URL(href, "https://fysen.test");
   assert.equal(url.pathname, "/search");
   assert.equal(url.searchParams.get("city"), "Oslo");
-  assert.equal(url.searchParams.get("world"), "asia");
-  assert.equal(url.searchParams.get("region"), "east-asia");
   assert.equal(url.searchParams.get("cuisine"), "Japansk");
-});
-
-test("ugyldige deep-link-kombinasjoner nedgraderes trygt", () => {
-  const valid = taxonomy.resolveActiveCuisineTaxonomySelection("asia", "east-asia", "Japansk");
-  assert.equal(valid.world?.name, "Asia");
-  assert.equal(valid.region?.name, "Øst-Asia");
-  assert.equal(valid.cuisine?.name, "Japansk");
-
-  const wrongRegion = taxonomy.resolveActiveCuisineTaxonomySelection("asia", "iberia", "Spansk");
-  assert.equal(wrongRegion.world?.name, "Asia");
-  assert.equal(wrongRegion.region, null);
-  assert.equal(wrongRegion.cuisine, null);
-
-  const inactiveCuisine = taxonomy.resolveActiveCuisineTaxonomySelection("europe", "iberia", "Spansk");
-  assert.equal(inactiveCuisine.world?.name, "Europa");
-  assert.equal(inactiveCuisine.region, null);
-  assert.equal(inactiveCuisine.cuisine, null);
-
-  const unknownWorld = taxonomy.resolveActiveCuisineTaxonomySelection("atlantis", "east-asia", "Japansk");
-  assert.equal(unknownWorld.world, null);
-  assert.equal(unknownWorld.region, null);
-  assert.equal(unknownWorld.cuisine, null);
+  assert.equal(url.searchParams.has("world"), false);
+  assert.equal(url.searchParams.has("region"), false);
 });
