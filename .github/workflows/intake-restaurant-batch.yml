@@ -1,0 +1,143 @@
+name: Intake Fysen restaurant batch
+
+on:
+  pull_request:
+    paths:
+      - "apps/menu-worker/intake/*.json"
+      - ".github/workflows/intake-restaurant-batch.yml"
+  workflow_dispatch:
+    inputs:
+      plan_path:
+        description: "Path relative to apps/menu-worker, e.g. intake/oslo-batch-01.json"
+        required: true
+        default: "intake/oslo-batch-01.json"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-restaurant-intake-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  intake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Resolve intake plan
+        id: plan
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_PLAN_PATH: ${{ inputs.plan_path }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            plan="$INPUT_PLAN_PATH"
+          else
+            mapfile -t changed < <(
+              git diff --name-only "$BASE_SHA" "$HEAD_SHA" -- 'apps/menu-worker/intake/*.json' |
+                sed 's#^apps/menu-worker/##'
+            )
+            if [ "${#changed[@]}" -ne 1 ]; then
+              echo "Expected exactly one changed intake plan, found ${#changed[@]}." >&2
+              printf '%s\n' "${changed[@]}" >&2
+              exit 1
+            fi
+            plan="${changed[0]}"
+          fi
+
+          case "$plan" in
+            /*|*..*)
+              echo "plan_path must stay inside apps/menu-worker" >&2
+              exit 1
+              ;;
+          esac
+          if [ ! -f "apps/menu-worker/$plan" ]; then
+            echo "Intake plan not found: apps/menu-worker/$plan" >&2
+            exit 1
+          fi
+          echo "plan=$plan" >> "$GITHUB_OUTPUT"
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build menu-worker dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Generate candidate batch
+        id: generate
+        continue-on-error: true
+        shell: bash
+        env:
+          PLAN_PATH: ${{ steps.plan.outputs.plan }}
+        run: |
+          set -uo pipefail
+          mkdir -p artifacts
+          pnpm --filter @fysen/menu-worker intake:batch -- "$PLAN_PATH" \
+            2>&1 | tee artifacts/intake-summary.log
+          exit "${PIPESTATUS[0]}"
+
+      - name: Validate generated candidates
+        id: validate
+        if: always()
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p artifacts
+          pnpm --filter @fysen/menu-worker validate:candidates:batch \
+            2>&1 | tee artifacts/validation-summary.log
+          exit "${PIPESTATUS[0]}"
+
+      - name: Upload batch evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: restaurant-intake-${{ github.run_id }}
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            apps/menu-worker/candidates/*.json
+            artifacts/*.log
+
+      - name: Preserve batch failure signal
+        if: always()
+        shell: bash
+        env:
+          GENERATE_OUTCOME: ${{ steps.generate.outcome }}
+          VALIDATE_OUTCOME: ${{ steps.validate.outcome }}
+        run: |
+          failed=0
+          if [ "$GENERATE_OUTCOME" = "failure" ]; then
+            echo "One or more restaurant intake entries failed." >&2
+            failed=1
+          fi
+          if [ "$VALIDATE_OUTCOME" = "failure" ]; then
+            echo "One or more generated candidates failed live validation." >&2
+            failed=1
+          fi
+          exit "$failed"
