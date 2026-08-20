@@ -56,29 +56,24 @@ function looksLikeDishTitle(value: string): boolean {
   return title.split(/\s+/).filter(Boolean).length <= 12;
 }
 
-function annotateHeading(
-  $: ReturnType<typeof load>,
-  element: Parameters<Parameters<ReturnType<typeof load>["each"]>[0]>[1],
-  level: number,
-): void {
-  if (!Number.isInteger(level) || level < 1 || level > 6) return;
-  $(element).prepend(`\n${HEADING_MARKER}${level}__ `);
-  $(element).append("\n");
-}
-
 function annotatedLines(html: string): readonly string[] {
   const $ = load(html);
   $("script, style, noscript, svg, template").remove();
   $("br").replaceWith("\n");
 
   for (let level = 1; level <= 6; level += 1) {
-    $(`h${level}`).each((_, element) => annotateHeading($, element, level));
+    $(`h${level}`).each((_, element) => {
+      $(element).prepend(`\n${HEADING_MARKER}${level}__ `);
+      $(element).append("\n");
+    });
   }
 
   $("[role='heading'][aria-level]").each((_, element) => {
     if ($(element).is("h1, h2, h3, h4, h5, h6")) return;
     const level = Number($(element).attr("aria-level"));
-    annotateHeading($, element, level);
+    if (!Number.isInteger(level) || level < 1 || level > 6) return;
+    $(element).prepend(`\n${HEADING_MARKER}${level}__ `);
+    $(element).append("\n");
   });
 
   $("p, li, tr, div, section, article").each((_, element) => {
