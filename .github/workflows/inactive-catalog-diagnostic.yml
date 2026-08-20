@@ -24,6 +24,36 @@ jobs:
           ref: 700d24cb3c1e96a8fb5db5f2aa5f2457132d24c5
           persist-credentials: false
 
+      - name: Apply generic navigation and cocktail filters in proof worktree
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('apps/menu-worker/src/menu-source-runtime.ts')
+          text = path.read_text()
+          text = text.replace(
+            r'/^(?:hjemmeside|homepage|mine\s+favoritter|my\s+favou?rites|favoritter|favou?rites|pers\.?|medium|gluten[- ]?free|glutenfri)$/iu;',
+            r'/^(?:hjemmeside|homepage|top\s+of\s+page|mine\s+favoritter|my\s+favou?rites|favoritter|favou?rites|pers\.?|medium|gluten[- ]?free|glutenfri)$/iu;'
+          )
+          anchor = '''const BOTTLED_BEVERAGE_VOLUME =
+  /(?:^flaske$|\\b(?:flaske\\s+0[,.]\\d{1,2}(?:\\s*l)?|0[,.]\\d{1,2}\\s*l?\\s+flaske)\\)?\\s*[-–—]?$)/iu;
+'''
+          replacement = anchor + '''const COCKTAIL_DESCRIPTION_ITEM =
+  /^(?:(?:mimosa|(?:black|white)\\s+russian|classic\\s+mojito)$|(?=.*\\b(?:gin|vodka|rom|rum|tequila|whisk(?:e)?y|bourbon|aperol|prosecco|kahlua|makers\\s+mark)\\b)(?=.*\\b(?:tonic|cola|cranberry|prosecco|lime|sitron|lemon|appelsin|orange|eggehvite|egg\\s*white)\\b).+)$/iu;
+'''
+          if anchor not in text:
+            raise SystemExit('beverage anchor not found')
+          text = text.replace(anchor, replacement)
+          text = text.replace(
+            '    !BOTTLED_BEVERAGE_VOLUME.test(filterName)\n',
+            '    !BOTTLED_BEVERAGE_VOLUME.test(filterName) &&\n    !COCKTAIL_DESCRIPTION_ITEM.test(filterName)\n'
+          )
+          if 'top\\s+of\\s+page' not in text or 'COCKTAIL_DESCRIPTION_ITEM' not in text:
+            raise SystemExit('proof patch failed')
+          path.write_text(text)
+          PY
+          git diff --check
+
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -41,13 +71,39 @@ jobs:
       - name: Build menu worker and dependencies
         run: pnpm --filter @fysen/menu-worker... build
 
-      - name: Validate inactive canonical manifests live
+      - name: Prove generic output-quality filter
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { createMenuItemSourceKey, normalizeDishName } from './packages/menu-core/dist/index.js';
+          import { isCanonicalHtmlMenuItem } from './apps/menu-worker/dist/menu-source-runtime.js';
+          const item = (name) => ({
+            sourceKey: createMenuItemSourceKey(name), name, normalizedName: normalizeDishName(name),
+            description: null, sectionName: null, priceMinor: 20500, currency: 'NOK', position: 0,
+            extractionMethod: 'html_heuristic', confidence: 0.9, sourceExcerpt: name,
+          });
+          const reject = [
+            'top of page', 'Rom, cola og lime', 'Vodka, cranberry og lime', 'Mimosa',
+            'Black Russian Kahlua', 'White Russian', 'Vodka Cranberry',
+            'Aperol, Prosecco, appelsin', 'Hendricks gin, agurk, tonic',
+            'Makers mark, eggehvite, sitron', 'Classic Mojito',
+          ];
+          const preserve = [
+            'Fish & Chips', 'Sesame Chicken', 'Vegan Burger', 'Rum Raisin Ice Cream',
+            'Gin-cured salmon', 'Orange Chicken',
+          ];
+          const badReject = reject.filter((name) => isCanonicalHtmlMenuItem(item(name)));
+          const badPreserve = preserve.filter((name) => !isCanonicalHtmlMenuItem(item(name)));
+          console.log(JSON.stringify({ reject, preserve, badReject, badPreserve }, null, 2));
+          if (badReject.length || badPreserve.length) process.exit(1);
+          NODE
+
+      - name: Validate affected inactive canonical manifests live
         shell: bash
         run: |
           failed=0
           for manifest in \
             catalog/confusion-oslo.json \
-            catalog/kain-neo-filipino-bistro-oslo.json \
             catalog/tyrkisk-kjokken-lindeberg-oslo.json
           do
             echo "===== $manifest ====="
