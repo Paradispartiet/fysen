@@ -3,3 +3,4 @@ Date: 2026-08-20
 Window: 22:00 Europe/Oslo
 Locked product source: c06d6503fc65518af96121566da1c487149d4b37
 Retry: pull_request_target secret-enabled
+Retry-2: target workflow confirmed on main
