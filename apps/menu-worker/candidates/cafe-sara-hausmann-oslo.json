@@ -11,9 +11,9 @@
     "longitude": 10.754149
   },
   "menuSource": {
-    "url": "https://cafesara.no/meny/",
+    "url": "https://de.yoordi.app/checkin/1789089047065029",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
     "minimumExpectedItems": 55
@@ -27,7 +27,7 @@
   "actions": [
     {
       "type": "booking",
-      "url": "https://cafesara.no/reservasjon/",
+      "url": "https://cafesara.no/cafe/reservasjon/",
       "sourceUrl": "https://cafesara.no/",
       "provider": "Café Sara"
     }
