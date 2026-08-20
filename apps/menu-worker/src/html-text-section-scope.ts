@@ -6,38 +6,42 @@ const BEVERAGE_SECTION_LABEL = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverage
 const FOOD_SECTION_LABEL = /^(?:forretter?|starters?|appetizers?|small\s+plates?|småretter|hovedretter?|mains?|main\s+courses?|supper?|soups?|barnemeny|kids?\s+menu|sauser?|sauces?|desserter?|desserts?|sides?|tilbehør|salater?|salads?|pizza(?:er|s)?|noodles?|nudler|curr(?:y|ies)|wok|grillretter?)$/iu;
 const MENU_END_SECTION_LABEL = /^(?:product\s+information|restaurant\s+information|allergen(?:oversikt|er|s)?|reservasjoner?|reservations?|kontakt(?:\s+oss)?|contact(?:\s+us)?|booking|bordbestilling)$/iu;
 
+type MenuSectionState = "unknown" | "food" | "beverage";
+
 function normalizeLine(value: string): string {
   return value.normalize("NFKC").replace(/\s+/g, " ").trim();
 }
 
-interface BlockedRange {
-  readonly start: number;
-  readonly end: number;
-}
-
-function blockedBeverageRanges(lines: readonly string[]): readonly BlockedRange[] {
-  const ranges: BlockedRange[] = [];
-  let start: number | null = null;
+function sectionStateByPosition(lines: readonly string[]): readonly MenuSectionState[] {
+  const states: MenuSectionState[] = [];
+  let state: MenuSectionState = "unknown";
 
   for (let index = 0; index < lines.length; index += 1) {
     const line = lines[index] ?? "";
     if (BEVERAGE_SECTION_LABEL.test(line)) {
-      if (start === null) start = index + 1;
+      state = "beverage";
+      states[index] = "unknown";
       continue;
     }
-    if (start === null) continue;
-    if (FOOD_SECTION_LABEL.test(line) || MENU_END_SECTION_LABEL.test(line)) {
-      ranges.push({ start, end: index });
-      start = null;
+    if (FOOD_SECTION_LABEL.test(line)) {
+      state = "food";
+      states[index] = "unknown";
+      continue;
     }
+    if (MENU_END_SECTION_LABEL.test(line)) {
+      state = "unknown";
+      states[index] = "unknown";
+      continue;
+    }
+    states[index] = state;
   }
 
-  if (start !== null) ranges.push({ start, end: lines.length });
-  return ranges;
+  return states;
 }
 
-function insideBlockedRange(position: number, ranges: readonly BlockedRange[]): boolean {
-  return ranges.some((range) => position >= range.start && position < range.end);
+interface ItemSectionEvidence {
+  hasFoodOccurrence: boolean;
+  hasBeverageOccurrence: boolean;
 }
 
 export function filterPlainTextBeverageSectionItems(
@@ -46,24 +50,30 @@ export function filterPlainTextBeverageSectionItems(
 ): readonly MenuObservedItem[] {
   if (items.length === 0) return items;
   const lines = visibleText.split("\n").map(normalizeLine).filter(Boolean);
-  const ranges = blockedBeverageRanges(lines);
-  if (ranges.length === 0) return items;
+  if (!lines.some((line) => BEVERAGE_SECTION_LABEL.test(line))) return items;
 
-  const positionsByName = new Map<string, number[]>();
+  const states = sectionStateByPosition(lines);
+  const evidenceByName = new Map<string, ItemSectionEvidence>();
+
   for (let index = 0; index < lines.length; index += 1) {
     const line = lines[index] ?? "";
     if (!line || !/\p{L}/u.test(line)) continue;
+    const state = states[index] ?? "unknown";
+    if (state === "unknown") continue;
+
     const normalized = normalizeDishName(line);
-    const positions = positionsByName.get(normalized) ?? [];
-    positions.push(index);
-    positionsByName.set(normalized, positions);
+    const evidence = evidenceByName.get(normalized) ?? {
+      hasFoodOccurrence: false,
+      hasBeverageOccurrence: false,
+    };
+    if (state === "food") evidence.hasFoodOccurrence = true;
+    if (state === "beverage") evidence.hasBeverageOccurrence = true;
+    evidenceByName.set(normalized, evidence);
   }
 
   return items.filter((item) => {
-    const positions = positionsByName.get(item.normalizedName) ?? [];
-    if (positions.length === 0) return true;
-    const inside = positions.some((position) => insideBlockedRange(position, ranges));
-    const outside = positions.some((position) => !insideBlockedRange(position, ranges));
-    return !inside || outside;
+    const evidence = evidenceByName.get(item.normalizedName);
+    if (!evidence?.hasBeverageOccurrence) return true;
+    return evidence.hasFoodOccurrence;
   });
 }
