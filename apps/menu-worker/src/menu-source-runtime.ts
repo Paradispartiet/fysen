@@ -73,7 +73,7 @@ const NON_DISH_MENU_SECTION =
 const ALLERGEN_ONLY_ITEM =
   /^(?:\(\s*)?(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|selleri|celery|citrus|sitrus|sulfitt|sulphites?)(?:\s*[,/+&]\s*(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|selleri|celery|citrus|sitrus|sulfitt|sulphites?))*\s*\)?$/iu;
 const NON_DISH_METADATA_ITEM =
-  /^(?:hjemmeside|homepage|top\s+of\s+page|mine\s+favoritter|my\s+favou?rites|favoritter|favou?rites|pers\.?|medium|gluten[- ]?free|glutenfri)$/iu;
+  /^(?:hjemmeside|homepage|top\s+of\s+page|mine\s+favoritter|my\s+favou?rites|favoritter|favou?rites|pers\.?|medium|gluten[- ]?free|glutenfri|spør\s+oss(?:\s+.*)?|spør\s+om\s+dagens\b.*)$/iu;
 const NON_DISH_FRAGMENT_ITEM = /^(?:stk\.?|biter\.)\s+/iu;
 const NON_DISH_ADDON_ITEM =
   /^\*?\s*(?:påfyll\s+av\s+tilbehør|refill\s+of\s+sides?|add[- ]?ons?)\b/iu;
@@ -85,7 +85,7 @@ const HISTORICAL_SINCE_ITEM = /·\s*siden$/iu;
 const BEVERAGE_MENU_ITEM =
   /^(?:(?:coca[- ]?cola|cola(?:\s+zero)?|fanta|sprite|farris(?:\s+\p{L}+)?|eplemost|mineralvann|(?:\p{L}+\s+)?juice|(?:\p{L}+\s+)?lassi)(?:\s+.*)?|(?:guinness|corona|munkholm|aperol)(?:\s+.*)?|(?:gin\s+(?:&\s*)?tonic|dry\s+martini)|(?:arabisk|arabic|tyrkisk|turkish)\s+(?:coffee|kaffe)(?:\s+.*)?|telemark\s+(?:still|sparkling)\s+naturell(?:\s+.*)?|hard\s+seltz(?:\s+.*)?|.*\b(?:pilsner|pærecider|cider|ingefærøl)\b.*|.*\bøl\b.*(?:\bflaske\b|\bglass\b|\d+[,.]\d+)|(?:rosévin|hvitvin|rødvin)(?:\s+(?:glass|flaske))?|.*\b(?:coffee|kaffe|espresso|americano|cappuccino|latte|tea|te)\b|.*\b(?:cola|ginger\s+beer)\b)$/iu;
 const BEVERAGE_STYLE_ITEM =
-  /(?:\b(?:milk\s+tea|boba\s+milk|smoothie|lemonade|red\s+bull|energy\s+drink|mocktail)\b|^pepsi(?:\s+max)?$|^(?:aranciata|chinotto|gazzosa|limonata)$|^(?:ice|iced)\s+tea(?:\s+(?:lemon|peach|green|mango|lychee|raspberry|passion\s*fruit))?$|^(?:taro|chocolate)\s+milk$|^iced\s+cocoa(?:\s+\p{L}+){0,3}\s+milk$|^(?:matcha|chai|vanilla|caramel)(?:\s+\p{L}+){0,3}\s+latte(?:\s+cheese)?$|^(?:saigon\s+special|salt|egg)\s+cafe(?:\s*-\s*cafe\s+sua\s+da)?$|^solo(?:\s+\d+(?:[.,]\d+)?\s*(?:ml|cl|l))?$)/iu;
+  /(?:\b(?:milk\s+tea|boba\s+milk|smoothie|lemonade|red\s+bull|energy\s+drink|mocktail)\b|^pepsi(?:\s+max)?$|^(?:aranciata|chinotto|gazzosa|limonata)$|^(?:ice|iced)\s+tea(?:\s+(?:lemon|peach|green|mango|lychee|raspberry|passion\s*fruit))?$|^(?:taro|chocolate)\s+milk$|^iced\s+cocoa(?:\s+\p{L}+){0,3}\s+milk$|^(?:matcha|chai|vanilla|caramel)(?:\s+\p{L}+){0,3}\s+latte(?:\s+cheese)?$|^(?:saigon\s+special|salt|egg)\s+cafe(?:\s*-\s*cafe\s+sua\s+da)?$|^ca\s+phe(?:\s+sua)?\s+da$|^solo(?:\s+\d+(?:[.,]\d+)?\s*(?:ml|cl|l))?$)/iu;
 const BOTTLED_BEVERAGE_VOLUME =
   /(?:^flaske$|\b(?:flaske\s+0[,.]\d{1,2}(?:\s*l)?|0[,.]\d{1,2}\s*l?\s+flaske)\)?\s*[-–—]?$)/iu;
 const COCKTAIL_DESCRIPTION_ITEM =
