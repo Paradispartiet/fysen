@@ -23,8 +23,9 @@ async function collection(): Promise<{ signedIn: boolean; data: MinMatList }> {
   catch { return { signedIn: false, data: { items: [] } }; }
 }
 
-export default async function MinMatPage() {
+export default async function MinMatPage({ searchParams }: { searchParams: Promise<{ handoff?: string }> }) {
   const { signedIn, data } = await collection();
+  const { handoff } = await searchParams;
   const connectHref = `${withPublicBasePath("/api/aha/connect")}?returnTo=${encodeURIComponent(withPublicBasePath("/min-mat"))}`;
   return (
     <div className="minMatPage">
@@ -35,6 +36,13 @@ export default async function MinMatPage() {
           <h1>Min mat</h1>
           <p>Samle retter du vil huske. Søkehistorikken din blir ikke lagt her og blir ikke koblet til AHA-identiteten.</p>
         </header>
+
+        {handoff === "failed" ? (
+          <section className="minMatPanel" role="alert">
+            <h2>Handoff-lenken kunne ikke brukes</h2>
+            <p>Den kan være utløpt eller allerede brukt. Samlingen din er fortsatt trygg i Min mat; prøv igjen for å lage en ny engangslenke.</p>
+          </section>
+        ) : null}
 
         {!signedIn ? (
           <section className="minMatPanel">

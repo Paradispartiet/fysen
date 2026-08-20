@@ -1,5 +1,6 @@
 export * from "./aha-min-mat.js";
 export * from "./browse.js";
+export * from "./discovery-catalog.js";
 export * from "./client.js";
 export * from "./coverage.js";
 export * from "./demand-loop.js";

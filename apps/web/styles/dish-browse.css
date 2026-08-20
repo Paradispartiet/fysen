@@ -152,6 +152,23 @@
   text-align: right;
 }
 
+.dishBrowseMeta {
+  max-width: 520px;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: right;
+}
+
+.dishBrowseMeta p {
+  margin: 0;
+}
+
+.dishBrowseMeta p + p {
+  margin-top: 2px;
+  font-size: 11px;
+}
+
 .dishBrowseEditorialGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -305,6 +322,11 @@
   }
 
   .dishBrowseSectionHeading > p {
+    margin-top: 8px;
+    text-align: left;
+  }
+
+  .dishBrowseMeta {
     margin-top: 8px;
     text-align: left;
   }

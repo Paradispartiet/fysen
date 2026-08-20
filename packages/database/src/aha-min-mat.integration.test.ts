@@ -188,6 +188,37 @@ integrationDescribe("AHA Min mat integration", () => {
     ]);
     await expect(redeemAhaAnalysisHandoff(pool, handoff.handoffToken)).resolves.toBeNull();
 
+    const recovered = await saveMinMatItem(pool, session.sessionToken, menuItemId);
+    expect(recovered?.savedItemId).not.toBe(saved.savedItemId);
+    const secondSession = await createAhaConsumerSession(pool, {
+      ...authorization,
+      authorizationId: "55555555-5555-4555-8555-555555555555",
+    });
+    if (!secondSession) throw new Error("Expected second-device AHA session");
+    await expect(listMinMatItems(pool, secondSession.sessionToken)).resolves.toEqual([
+      expect.objectContaining({ savedItemId: recovered?.savedItemId, dishName: "Daal makhani" }),
+    ]);
+
+    await pool.query(
+      `INSERT INTO fysen.min_mat_items
+         (aha_subject, menu_item_id, snapshot_id, restaurant_id, dish_name, restaurant_name,
+          restaurant_slug, city, price_minor, currency, saved_at)
+       SELECT $1, gen_random_uuid(), $2, $3, 'Proof dish ' || value, 'AHA Min Mat Test',
+              'aha-min-mat-test-oslo', 'Oslo', 10000 + value, 'NOK', now() - make_interval(secs => value)
+         FROM generate_series(1, 55) AS value`,
+      [authorization.subject, snapshotId, restaurantId],
+    );
+    const cappedHandoff = await issueAhaAnalysisHandoff(pool, secondSession.sessionToken);
+    expect(cappedHandoff?.itemCount).toBe(50);
+    if (!cappedHandoff) throw new Error("Expected capped AHA handoff");
+    await pool.query(
+      `UPDATE fysen.aha_analysis_handoffs
+          SET created_at = now() - interval '2 minutes', expires_at = now() - interval '1 minute'
+        WHERE token_hash = encode(digest($1, 'sha256'), 'hex')`,
+      [cappedHandoff.handoffToken],
+    );
+    await expect(redeemAhaAnalysisHandoff(pool, cappedHandoff.handoffToken)).resolves.toBeNull();
+
     await expect(revokeAhaConsumerSession(pool, session.sessionToken)).resolves.toBe(true);
     await expect(listMinMatItems(pool, session.sessionToken)).resolves.toBeNull();
   });
