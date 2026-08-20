@@ -32,7 +32,17 @@ async function main(): Promise<void> {
         accessGrantId: receipt.accessGrantId,
         nextStep:
           receipt.status === "verified" && receipt.accessGrantId
-            ? `pnpm --filter @fysen/database pro:issue-setup -- ${receipt.accessGrantId} ${command.reviewedBy}`
+            ? {
+                command: "pnpm",
+                args: [
+                  "--filter",
+                  "@fysen/database",
+                  "pro:issue-setup",
+                  "--",
+                  receipt.accessGrantId,
+                  command.reviewedBy,
+                ],
+              }
             : null,
       }, null, 2)}\n`,
     );
