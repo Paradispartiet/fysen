@@ -317,6 +317,10 @@ export async function extractMenuSource(
             priceWrapped: summarize(priceWrappedItems),
             heading: summarize(headingPriceItems),
             sectionFirst: summarize(sectionFirstCardItems),
+            htmlSlice: (() => {
+              const index = normalizedHtml.indexOf("Tostada de Callos");
+              return index >= 0 ? normalizedHtml.slice(Math.max(0, index - 3000), index + 12000) : "";
+            })(),
           },
         })}\n`,
       );
