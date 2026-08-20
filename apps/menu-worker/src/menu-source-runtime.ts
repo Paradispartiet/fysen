@@ -306,6 +306,26 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverFirstCardAfterPlainFoodSections(extracted.visibleText)
         : [];
+    if (normalizedHtml.includes("1 Satay")) {
+      const summarize = (items: readonly MenuObservedItem[]) =>
+        items.map(({ name, priceMinor, confidence, sectionName }) => ({
+          name,
+          priceMinor,
+          confidence,
+          sectionName,
+        }));
+      process.stderr.write(
+        `${JSON.stringify({
+          recoverySelectionDebug: {
+            recovered: summarize(recoveredItems),
+            trailing: summarize(trailingPriceCardItems),
+            priceWrapped: summarize(priceWrappedItems),
+            heading: summarize(headingPriceItems),
+            sectionFirst: summarize(sectionFirstCardItems),
+          },
+        })}\n`,
+      );
+    }
     const semanticCategoryCardsPreferred =
       trailingPriceCardItems.length >= 4 &&
       trailingPriceCardItems.every((item) => item.sectionName !== null && item.confidence >= 0.99);
