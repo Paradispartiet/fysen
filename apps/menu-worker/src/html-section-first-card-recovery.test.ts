@@ -29,7 +29,7 @@ describe("plain food-section first-card recovery", () => {
       55 NOK
     `);
 
-    expect(HTML_SECTION_FIRST_CARD_RECOVERY_VERSION).toBe("section-first-card-v1");
+    expect(HTML_SECTION_FIRST_CARD_RECOVERY_VERSION).toBe("section-first-card-v2");
     expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
       ["House Bread", 9900, "from"],
       ["House Plov", 34900, "from"],
