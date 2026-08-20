@@ -33,6 +33,15 @@ grep -F 'No production-relevant changes have accumulated' "$workflow" >/dev/null
 grep -F -- '--meta "fysenSourceSha=$SOURCE_SHA"' "$workflow" >/dev/null
 grep -F 'deploy --prebuilt --prod' "$workflow" >/dev/null
 
+proof_workflow=.github/workflows/production-pilot-proof.yml
+test -f "$proof_workflow"
+grep -F 'Fysen batched Vercel production release' "$proof_workflow" >/dev/null
+grep -F 'FYSEN_PUBLIC_WEB_URL: https://fysen.vercel.app' "$proof_workflow" >/dev/null
+if grep -F 'FYSEN_PUBLIC_WEB_URL: https://fysen-matsgran-8572s-projects.vercel.app' "$proof_workflow" >/dev/null; then
+  echo "Production proof must use the public Fysen web alias, not the Vercel team alias" >&2
+  exit 1
+fi
+
 for obsolete in \
   apps/web/.vercel-release \
   apps/api/.vercel-release \
