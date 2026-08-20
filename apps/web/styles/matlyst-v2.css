@@ -65,14 +65,19 @@
 
 .matlystMoodCard {
   display: flex;
+  width: 100%;
   min-height: 132px;
   flex-direction: column;
   padding: 16px;
   color: inherit;
+  font: inherit;
+  text-align: left;
   text-decoration: none;
+  appearance: none;
   background: #060706;
   border: 1px solid rgba(121, 201, 135, 0.2);
   border-radius: 12px;
+  cursor: pointer;
   transition: border-color 140ms ease, transform 140ms ease;
 }
 
@@ -122,6 +127,10 @@
   font-size: 10px;
   font-weight: 560;
   line-height: 1.35;
+}
+
+.matlystMoodDialog .cuisineExploreResults {
+  margin-top: 30px;
 }
 
 .matlystCuisineHeading {
