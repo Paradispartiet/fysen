@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "polka-shots-bites-oslo",
+    "name": "Polka Shots & Bites",
+    "websiteUrl": "https://www.polkapierogi.no/",
+    "address": "Hausmanns gate 31 C, 0182 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91784,
+    "longitude": 10.75379
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/polka-pierogi",
+    "sourceType": "html",
+    "fetchMode": "browser",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 20
+  },
+  "hoursSource": {
+    "url": "https://www.polkapierogi.no/restaurant.html",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 6
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-20",
+      "note": "Polka publishes venue opening hours on its first-party restaurant page (Tue-Thu 12:00-21:00, Fri-Sat 12:00-22:00, Sun 13:00-20:00). The source does not separately label kitchen hours and does not explicitly state Monday's kitchen status, so keep open/closed unknown until a complete kitchen-scoped weekly schedule is verified."
+    }
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://book.dinnerbooking.com/no/en-US/book/index/4069/2",
+      "sourceUrl": "https://www.polkapierogi.no/restaurant.html",
+      "provider": "DinnerBooking"
+    },
+    {
+      "type": "order",
+      "url": "https://wolt.com/nb/nor/oslo/restaurant/polka-pierogi",
+      "sourceUrl": "https://www.polkapierogi.no/takeaway.html",
+      "provider": "Wolt"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Schabowy",
+      "Polish Sausage Fest",
+      "Golabek - Cabbage roll",
+      "Ruskie",
+      "Pork & Beef",
+      "Lamb, Beef & Butter pierogi",
+      "Fried Ruskie",
+      "Krokiety w/ Pork & Beef",
+      "Krokiety w/ Mushrooms & Cheese",
+      "Zurek",
+      "Rosol",
+      "Chlodnik - Polsk Gazpacho",
+      "Polsk Ramen",
+      "Sernik - Polish Cheesecake"
+    ],
+    "requiredDishVariants": [
+      { "name": "Schabowy", "priceMinor": 26400 },
+      { "name": "Polish Sausage Fest", "priceMinor": 27500 },
+      { "name": "Golabek - Cabbage roll", "priceMinor": 27000 },
+      { "name": "Ruskie", "priceMinor": 18900, "priceKind": "from" },
+      { "name": "Pork & Beef", "priceMinor": 18900, "priceKind": "from" },
+      { "name": "Lamb, Beef & Butter pierogi", "priceMinor": 18900 },
+      { "name": "Fried Ruskie", "priceMinor": 18900, "priceKind": "from" },
+      { "name": "Krokiety w/ Pork & Beef", "priceMinor": 24800 },
+      { "name": "Krokiety w/ Mushrooms & Cheese", "priceMinor": 24800 },
+      { "name": "Zurek", "priceMinor": 23200 },
+      { "name": "Rosol", "priceMinor": 21400 },
+      { "name": "Chlodnik - Polsk Gazpacho", "priceMinor": 18400 },
+      { "name": "Polsk Ramen", "priceMinor": 22500 },
+      { "name": "Sernik - Polish Cheesecake", "priceMinor": 13400 }
+    ],
+    "forbiddenDishNames": [
+      "On Lemon Plum",
+      "On Lemon Pear",
+      "On Lemon Lime",
+      "Coca-Cola",
+      "Coca-Cola Uten Sukker",
+      "Drikke",
+      "Mest bestilt",
+      "Hovedretter",
+      "Pierogi",
+      "Friterte Pierogi",
+      "Bites",
+      "Krokiety",
+      "Supper",
+      "Sides",
+      "Dessert",
+      "Leveringstid"
+    ]
+  }
+}
