@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "villa-paradiso-majorstua-oslo",
+    "name": "Villa Paradiso Majorstua",
+    "websiteUrl": "https://www.villaparadiso.no/restauranter/majorstua",
+    "address": "Jacob Aalls gate 28, 0364 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.928915,
+    "longitude": 10.717852
+  },
+  "menuSource": {
+    "url": "https://cdn.prod.website-files.com/5c77c5f7f7364239e114229f/6a0f20a36dcbe0a042728044_Villa%20Paradiso%20Majorstua%20meny.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 55,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "Batch 02 uses the current first-party linked food-menu PDF. Kitchen hours will be verified separately from the location page."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Husets focaccia med aioli",
+      "Panino pizza al Parma",
+      "Fusilli alla Montecarlo",
+      "Parma",
+      "Ai quattro formaggi",
+      "Panna cotta",
+      "Prosciutto Cotto",
+      "Villa Paradiso"
+    ],
+    "requiredDishVariants": [
+      {"name": "Husets focaccia med aioli", "priceMinor": 8500},
+      {"name": "Panino pizza al Parma", "priceMinor": 19000},
+      {"name": "Fusilli alla Montecarlo", "priceMinor": 27500},
+      {"name": "Parma", "priceMinor": 27500},
+      {"name": "Ai quattro formaggi", "priceMinor": 25000},
+      {"name": "Panna cotta", "priceMinor": 16000},
+      {"name": "Prosciutto Cotto", "priceMinor": 11500},
+      {"name": "Villa Paradiso", "priceMinor": 6800}
+    ],
+    "forbiddenDishNames": []
+  }
+}
