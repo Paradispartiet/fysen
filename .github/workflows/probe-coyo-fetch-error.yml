@@ -1,0 +1,85 @@
+name: Probe Coyo production fetch error
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/probe-coyo-fetch-error.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
+      DATABASE_SSL: "verify-full"
+      NODE_ENV: production
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - name: Require production database secret
+        shell: bash
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "FYSEN_PRODUCTION_DATABASE_URL is not configured." >&2
+            exit 1
+          fi
+      - name: Checkout probe revision
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+      - name: Build menu worker and database
+        run: pnpm --filter @fysen/menu-worker... build
+      - name: Read Coyo production watcher history
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { createDatabasePool } from './packages/database/dist/client.js';
+          const pool = createDatabasePool();
+          try {
+            const result = await pool.query(`
+              SELECT
+                r.slug,
+                ms.id AS menu_source_id,
+                ms.url,
+                ms.enabled,
+                ms.last_http_status,
+                ms.last_checked_at,
+                ms.next_check_at,
+                ms.consecutive_failures,
+                wr.outcome,
+                wr.started_at,
+                wr.completed_at,
+                wr.http_status AS watch_http_status,
+                wr.extracted_item_count,
+                wr.error_code,
+                wr.error_message,
+                wr.details
+              FROM fysen.restaurants r
+              JOIN fysen.menu_sources ms ON ms.restaurant_id = r.id
+              JOIN fysen.menu_watch_runs wr ON wr.menu_source_id = ms.id
+              WHERE r.slug = 'coyo-sorenga-oslo'
+              ORDER BY wr.started_at DESC
+              LIMIT 10
+            `);
+            process.stdout.write(`${JSON.stringify(result.rows, null, 2)}\n`);
+          } finally {
+            await pool.end();
+          }
+          NODE
+      - name: Run current live source gate for Coyo
+        working-directory: apps/menu-worker
+        run: pnpm validate:manifest -- catalog/coyo-sorenga-oslo.json
