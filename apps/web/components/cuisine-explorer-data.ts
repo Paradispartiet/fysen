@@ -1,4 +1,4 @@
-import { foodDiscoveryCatalog } from "../content/food-knowledge/discovery-catalog";
+import { matlystDiscoveryCatalog } from "../content/food-knowledge/matlyst-discovery-catalog";
 import { foodKnowledgeDishIdSet } from "../content/food-knowledge/manifest";
 
 export type DishSuggestion = {
@@ -109,6 +109,13 @@ const cuisineSpecs: readonly CuisineSpec[] = [
     regions: ["Nepal"],
   },
   {
+    name: "Etiopisk",
+    context: "Doro wat · tibs · firfir · shiro",
+    areasLabel: "Tradisjon",
+    sourceCuisine: "Etiopisk",
+    regions: ["Etiopia"],
+  },
+  {
     name: "Italiensk",
     context: "Roma · Napoli · Sicilia",
     areasLabel: "Regioner og bytradisjoner",
@@ -213,13 +220,13 @@ const foodMoodSpecs: readonly FoodMoodSpec[] = [
     name: "Vegetar",
     context: "Falafel · dosa · chana masala · vegetarburger",
     query: "vegetar",
-    dishIds: ["falafel", "dosa", "chana-masala", "veggie-burger", "hummus", "kare-kare", "jhaneko-dal"],
+    dishIds: ["falafel", "dosa", "chana-masala", "veggie-burger", "hummus", "kare-kare", "jhaneko-dal", "mesir-wat", "shiro"],
   },
   {
     name: "Grill",
     context: "Koobideh · chapli kebab · sekuwa · inasal",
     query: "grill",
-    dishIds: ["koobideh", "chapli-kebab", "sekuwa", "chicken-inasal", "qazon-kebab"],
+    dishIds: ["koobideh", "chapli-kebab", "sekuwa", "chicken-inasal", "qazon-kebab", "tibs", "awaze-tibs"],
   },
   {
     name: "Street food",
@@ -235,7 +242,7 @@ const foodMoodSpecs: readonly FoodMoodSpec[] = [
   },
 ];
 
-function toDishSuggestion(dish: (typeof foodDiscoveryCatalog)[number]): DishSuggestion {
+function toDishSuggestion(dish: (typeof matlystDiscoveryCatalog)[number]): DishSuggestion {
   return {
     id: dish.id,
     label: dish.name,
@@ -247,7 +254,7 @@ function toDishSuggestion(dish: (typeof foodDiscoveryCatalog)[number]): DishSugg
 }
 
 function dishesForArea(sourceCuisine: string, region: string): readonly DishSuggestion[] {
-  return foodDiscoveryCatalog
+  return matlystDiscoveryCatalog
     .filter((dish) => dish.cuisine === sourceCuisine && dish.region === region)
     .sort((left, right) => right.explorerPriority - left.explorerPriority || left.name.localeCompare(right.name, "nb"))
     .slice(0, 8)
@@ -256,7 +263,7 @@ function dishesForArea(sourceCuisine: string, region: string): readonly DishSugg
 
 function dishesForIds(ids: readonly string[]): readonly DishSuggestion[] {
   return ids.map((id) => {
-    const dish = foodDiscoveryCatalog.find((candidate) => candidate.id === id);
+    const dish = matlystDiscoveryCatalog.find((candidate) => candidate.id === id);
     if (!dish) throw new Error(`Matlyst mood references unknown canonical dish: ${id}`);
     return toDishSuggestion(dish);
   });
