@@ -62,6 +62,7 @@ describe("generic HTML item-name normalization", () => {
     "Soy",
     "Fish",
     "Hjemmeside",
+    "top of page",
     "Mine Favoritter",
     "pers",
     "Medium",
@@ -81,6 +82,23 @@ describe("generic HTML item-name normalization", () => {
   });
 
   it.each([
+    "Rom, cola og lime",
+    "Vodka, cranberry og lime",
+    "Mimosa",
+    "Black Russian Kahlua",
+    "White Russian",
+    "Vodka Cranberry",
+    "Aperol, Prosecco, appelsin",
+    "Hendricks gin, agurk, tonic",
+    "Makers mark, eggehvite, sitron",
+    "Vodka, Ingefærøl og sitron",
+    "Jack Daniels, Cointreau, Yuzu, sukkerlake, sitronbrus",
+    "Classic Mojito",
+  ])("rejects cocktail names and ingredient-description leakage: %s", (name) => {
+    expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
+  });
+
+  it.each([
     "Fish & Chips",
     "Sesame Chicken",
     "Milk Bun Burger",
@@ -88,7 +106,12 @@ describe("generic HTML item-name normalization", () => {
     "Grilled Salmon",
     "Vegan Burger",
     "Gluten Free Pizza",
-  ])("preserves real dish names while filtering metadata: %s", (name) => {
+    "Rum Raisin Ice Cream",
+    "Gin-cured salmon",
+    "Orange Chicken",
+    "Whiskey-glazed ribs",
+    "Bourbon orange chicken",
+  ])("preserves real dish names while filtering metadata and drinks: %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(true);
   });
 });
