@@ -57,4 +57,4 @@ jobs:
       - name: Onboard Confusion against production
         run: >-
           pnpm --filter @fysen/menu-worker onboard:manifest
-          apps/menu-worker/catalog/confusion-oslo.json
+          catalog/confusion-oslo.json
