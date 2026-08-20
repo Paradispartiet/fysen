@@ -10,20 +10,17 @@ permissions:
   contents: read
 
 concurrency:
-  group: fysen-production-menu-mutation
+  group: fysen-production-search-smoke
   cancel-in-progress: false
 
 jobs:
   proof:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
     env:
       DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
       DATABASE_SSL: "verify-full"
       NODE_ENV: production
-      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
-      FYSEN_MENU_WATCH_BATCH_SIZE: "100"
-      FYSEN_HOURS_WATCH_BATCH_SIZE: "100"
       SMOKE_QUERY: "Lagman"
       SMOKE_CITY: "Oslo"
       SMOKE_EXPECTED_RESTAURANT_SLUG: "registan-gronland-oslo"
@@ -63,21 +60,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Build menu worker and dependencies
-        run: pnpm --filter @fysen/menu-worker... build
-
-      - name: Materialize canonical production catalog
-        run: pnpm --filter @fysen/menu-worker onboard:catalog
-
-      - name: Watch due menu sources
-        id: watch_menu_sources
-        continue-on-error: true
-        run: pnpm --filter @fysen/menu-worker run:due
-
-      - name: Watch restaurant hours
-        id: watch_restaurant_hours
-        continue-on-error: true
-        run: pnpm --filter @fysen/menu-worker watch:hours
+      - name: Build production search dependencies
+        run: |
+          pnpm --filter @fysen/menu-core build
+          pnpm --filter @fysen/database build
 
       - name: Verify Registan in production search
         shell: bash
