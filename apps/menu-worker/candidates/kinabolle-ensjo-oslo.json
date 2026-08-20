@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kinabolle-ensjo-oslo",
+    "name": "Kinabolle Ensjø",
+    "websiteUrl": "https://www.kinabolle.no/",
+    "address": "Gladengveien 7F, 0661 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.915473,
+    "longitude": 10.789609
+  },
+  "menuSource": {
+    "url": "https://www.kinabolle.no/menus-1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 11,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified for this location, so open/closed must remain unknown."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pork dumplings",
+      "Spinach dumplings (Vegan)",
+      "NO 1 Sweet spicy chicken",
+      "NO 2 Pork chilli",
+      "NO 4 Spicy numbing Tofu (Vegan)",
+      "NO 5 Sweet potato noodles (Vegan/gluten free)",
+      "NO 7 Spicy Cumin Lamb",
+      "NO 8 Spicy cumin tofu (Vegan)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pork dumplings",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Spinach dumplings (Vegan)",
+        "priceMinor": 13500
+      },
+      {
+        "name": "NO 1 Sweet spicy chicken",
+        "priceMinor": 19900
+      },
+      {
+        "name": "NO 2 Pork chilli",
+        "priceMinor": 19900
+      },
+      {
+        "name": "NO 4 Spicy numbing Tofu (Vegan)",
+        "priceMinor": 18900
+      },
+      {
+        "name": "NO 5 Sweet potato noodles (Vegan/gluten free)",
+        "priceMinor": 18900
+      },
+      {
+        "name": "NO 7 Spicy Cumin Lamb",
+        "priceMinor": 20900
+      },
+      {
+        "name": "NO 8 Spicy cumin tofu (Vegan)",
+        "priceMinor": 20500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

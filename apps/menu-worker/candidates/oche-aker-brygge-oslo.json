@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "oche-aker-brygge-oslo",
+    "name": "Oche Aker Brygge",
+    "websiteUrl": "https://oche.com/no/oslo/akerbrygge",
+    "address": "Holmens gate 5, 0250 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.910323,
+    "longitude": 10.725752
+  },
+  "menuSource": {
+    "url": "https://oche.com/no/oslo/akerbrygge/menu",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 26,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pollo",
+      "Funghi",
+      "Margherita",
+      "Nduja",
+      "Mexican Snack",
+      "Nachos with Salsa & Guacamole V",
+      "Oche Burger & Fries",
+      "BROWNIE & ICE CREAM"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pollo",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Funghi",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Margherita",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Nduja",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Mexican Snack",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Nachos with Salsa & Guacamole V",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Oche Burger & Fries",
+        "priceMinor": 27900
+      },
+      {
+        "name": "BROWNIE & ICE CREAM",
+        "priceMinor": 9900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

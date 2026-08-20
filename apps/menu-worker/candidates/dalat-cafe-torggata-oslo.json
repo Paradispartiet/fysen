@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dalat-cafe-torggata-oslo",
+    "name": "Dalat Café",
+    "websiteUrl": "https://www.dalatcafe.no/",
+    "address": "Torggata 27, 0183 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.916912,
+    "longitude": 10.753309
+  },
+  "menuSource": {
+    "url": "https://www.foodora.no/restaurant/n9oz/dalat-cafe",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 25,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "Identity is independently matched to the Torggata restaurant; Batch 01 uses the current priced Foodora service menu because a complete machine-readable first-party menu has not yet been proven. It must not be described as complete dine-in coverage."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Wonton Suppe (Súp hoành thánh)",
+      "Vietnamesisk Baguette (Bánh mì)",
+      "Wonton Suppe (Mì hoành thánh)",
+      "Stekt Ris (Cơm chiên dương châu)",
+      "Biff & Brokkoli (Bò xào bông cải)",
+      "Innbakt Svinekjøtt (Heo lăn sốt chua ngọt)",
+      "Biff Chili Satesaus (Bò xào ớt sa tế)",
+      "Scampi i Chili Satesaus (Tôm xào ớt sa tế)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Wonton Suppe (Súp hoành thánh)",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Vietnamesisk Baguette (Bánh mì)",
+        "priceMinor": 16900,
+        "priceKind": "from"
+      },
+      {
+        "name": "Wonton Suppe (Mì hoành thánh)",
+        "priceMinor": 25900,
+        "priceKind": "from"
+      },
+      {
+        "name": "Stekt Ris (Cơm chiên dương châu)",
+        "priceMinor": 27900,
+        "priceKind": "from"
+      },
+      {
+        "name": "Biff & Brokkoli (Bò xào bông cải)",
+        "priceMinor": 27900,
+        "priceKind": "from"
+      },
+      {
+        "name": "Innbakt Svinekjøtt (Heo lăn sốt chua ngọt)",
+        "priceMinor": 27900,
+        "priceKind": "from"
+      },
+      {
+        "name": "Biff Chili Satesaus (Bò xào ớt sa tế)",
+        "priceMinor": 27900,
+        "priceKind": "from"
+      },
+      {
+        "name": "Scampi i Chili Satesaus (Tôm xào ớt sa tế)",
+        "priceMinor": 27900,
+        "priceKind": "from"
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

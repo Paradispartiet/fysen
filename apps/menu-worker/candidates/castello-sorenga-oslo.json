@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "castello-sorenga-oslo",
+    "name": "Castello Restaurant Oslo",
+    "websiteUrl": "https://www.castellorestaurant.no/",
+    "address": "Sørengkaia 99, 0194 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.902835,
+    "longitude": 10.753342
+  },
+  "menuSource": {
+    "url": "https://www.castellorestaurant.no/oslo/hovedmeny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 72,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fiskesuppe brunsj",
+      "Manchego 6 mnd",
+      "Pinchos de Pollo",
+      "Blåskjell al vino blanco",
+      "Grillet Salat",
+      "TARTUFO E FUNGHI",
+      "LASAGNE AL FORNO",
+      "BARNEPIZZA"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fiskesuppe brunsj",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Manchego 6 mnd",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Pinchos de Pollo",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Blåskjell al vino blanco",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Grillet Salat",
+        "priceMinor": 14900
+      },
+      {
+        "name": "TARTUFO E FUNGHI",
+        "priceMinor": 29900
+      },
+      {
+        "name": "LASAGNE AL FORNO",
+        "priceMinor": 32900
+      },
+      {
+        "name": "BARNEPIZZA",
+        "priceMinor": 17900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
