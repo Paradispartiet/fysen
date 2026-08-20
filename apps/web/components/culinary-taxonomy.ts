@@ -24,6 +24,12 @@ export type CuisineTaxonomyPath = {
   readonly regionName: string;
 };
 
+export type ActiveCuisineTaxonomySelection = {
+  readonly world: CulinaryWorld | null;
+  readonly region: CulinaryRegion | null;
+  readonly cuisine: Cuisine | null;
+};
+
 type CulinaryRegionSpec = {
   readonly id: string;
   readonly name: string;
@@ -248,4 +254,23 @@ export function activeWorldCuisines(world: CulinaryWorld): readonly Cuisine[] {
 
 export function cuisineTaxonomyPath(cuisineName: string): CuisineTaxonomyPath | null {
   return activeCuisinePaths.get(cuisineName) ?? null;
+}
+
+export function resolveActiveCuisineTaxonomySelection(
+  worldId: string,
+  regionId: string,
+  cuisineName: string,
+): ActiveCuisineTaxonomySelection {
+  const world = culinaryWorlds.find(
+    (candidate) => candidate.id === worldId && activeWorldCuisines(candidate).length > 0,
+  ) ?? null;
+  const region = world
+    ? world.regions.find(
+        (candidate) => candidate.id === regionId && activeRegionCuisines(candidate).length > 0,
+      ) ?? null
+    : null;
+  const cuisine = region
+    ? activeRegionCuisines(region).find((candidate) => candidate.name === cuisineName) ?? null
+    : null;
+  return { world, region, cuisine };
 }
