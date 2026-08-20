@@ -9,6 +9,11 @@ import {
   type RestaurantHoursWatchOutcome,
 } from "@fysen/database";
 import { HttpMenuClient, MenuFetchError } from "./http-client.js";
+import {
+  getHoursVerificationStatus,
+  listRestaurantOnboardingManifests,
+  type HoursVerificationStatus,
+} from "./onboarding-manifest.js";
 import { OpeningHoursExtractionError } from "./opening-hours-extractor.js";
 import { resolveOpeningHoursSource } from "./opening-hours-source-runtime.js";
 
@@ -23,11 +28,60 @@ export interface OpeningHoursWatchResult {
 export interface OpeningHoursWatchSummary {
   readonly dueCount: number;
   readonly failedCount: number;
+  readonly blockingFailedCount: number;
+  readonly nonBlockingFailedCount: number;
   readonly results: readonly OpeningHoursWatchResult[];
 }
 
 function menuBotUserAgent(): string {
   return process.env.FYSEN_MENU_BOT_USER_AGENT?.trim() || "FysenMenuBot/0.1";
+}
+
+function isFailedOutcome(outcome: OpeningHoursWatchResult["outcome"]): boolean {
+  return (
+    outcome === "quarantined" ||
+    outcome === "extraction_error" ||
+    outcome === "fetch_error" ||
+    outcome === "unexpected_error"
+  );
+}
+
+export function summarizeOpeningHoursWatchResults(
+  due: readonly Pick<RestaurantHoursSourceTarget, "id" | "restaurantSlug">[],
+  results: readonly OpeningHoursWatchResult[],
+  verificationStatusBySlug: ReadonlyMap<string, HoursVerificationStatus>,
+): OpeningHoursWatchSummary {
+  const sourceById = new Map(due.map((source) => [source.id, source] as const));
+  let failedCount = 0;
+  let blockingFailedCount = 0;
+  let nonBlockingFailedCount = 0;
+
+  for (const result of results) {
+    if (!isFailedOutcome(result.outcome)) continue;
+    failedCount += 1;
+
+    const source = sourceById.get(result.sourceId);
+    const verificationStatus = source
+      ? verificationStatusBySlug.get(source.restaurantSlug)
+      : undefined;
+    const explicitlyNonBlocking =
+      result.outcome !== "unexpected_error" &&
+      (verificationStatus === "provisional" || verificationStatus === "unverified");
+
+    if (explicitlyNonBlocking) {
+      nonBlockingFailedCount += 1;
+    } else {
+      blockingFailedCount += 1;
+    }
+  }
+
+  return {
+    dueCount: due.length,
+    failedCount,
+    blockingFailedCount,
+    nonBlockingFailedCount,
+    results,
+  };
 }
 
 async function watchRestaurantHoursTargetOnce(
@@ -148,23 +202,20 @@ export async function runDueRestaurantHours(limit = 25): Promise<OpeningHoursWat
 
   try {
     const due = await listDueRestaurantHoursSources(pool, limit);
+    const catalog = await listRestaurantOnboardingManifests();
+    const verificationStatusBySlug = new Map(
+      catalog.map(({ manifest }) => [
+        manifest.restaurant.slug,
+        getHoursVerificationStatus(manifest),
+      ] as const),
+    );
     const results: OpeningHoursWatchResult[] = [];
-    let failedCount = 0;
 
     for (const source of due) {
-      const result = await watchRestaurantHoursTargetOnce(pool, source, client, userAgent);
-      if (
-        result.outcome === "quarantined" ||
-        result.outcome === "extraction_error" ||
-        result.outcome === "fetch_error" ||
-        result.outcome === "unexpected_error"
-      ) {
-        failedCount += 1;
-      }
-      results.push(result);
+      results.push(await watchRestaurantHoursTargetOnce(pool, source, client, userAgent));
     }
 
-    return { dueCount: due.length, failedCount, results };
+    return summarizeOpeningHoursWatchResults(due, results, verificationStatusBySlug);
   } finally {
     await pool.end();
   }
