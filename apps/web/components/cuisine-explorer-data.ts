@@ -1,4 +1,4 @@
-import { foodDishCatalog } from "../content/food-knowledge/catalog";
+import { foodDiscoveryCatalog } from "../content/food-knowledge/discovery-catalog";
 import { foodKnowledgeDishIdSet } from "../content/food-knowledge/manifest";
 
 export type DishSuggestion = {
@@ -74,11 +74,39 @@ const cuisineSpecs: readonly CuisineSpec[] = [
     regions: ["Vietnam"],
   },
   {
+    name: "Koreansk",
+    context: "Bibimbap · bulgogi · tteokbokki · mandu",
+    areasLabel: "Tradisjon",
+    sourceCuisine: "Koreansk",
+    regions: ["Korea"],
+  },
+  {
+    name: "Filippinsk",
+    context: "Sisig · adobo · inasal · kare-kare",
+    areasLabel: "Tradisjon",
+    sourceCuisine: "Filippinsk",
+    regions: ["Filippinene"],
+  },
+  {
     name: "Indisk",
     context: "Nord-India · Sør-India · Hyderabad",
     areasLabel: "Regioner og tradisjoner",
     sourceCuisine: "Indisk",
     regions: ["Nord-India", "Sør-India", "Hyderabad"],
+  },
+  {
+    name: "Pakistansk",
+    context: "Karahi · chapli kebab · tikka masala",
+    areasLabel: "Tradisjon",
+    sourceCuisine: "Pakistansk",
+    regions: ["Lahore"],
+  },
+  {
+    name: "Nepalsk",
+    context: "Momo · jhol momo · chowmein · sekuwa",
+    areasLabel: "Tradisjon",
+    sourceCuisine: "Nepalsk",
+    regions: ["Nepal"],
   },
   {
     name: "Italiensk",
@@ -102,11 +130,39 @@ const cuisineSpecs: readonly CuisineSpec[] = [
     regions: ["Tyrkia"],
   },
   {
+    name: "Persisk",
+    context: "Koobideh · ghormeh sabzi · zereshk polo",
+    areasLabel: "Tradisjon",
+    sourceCuisine: "Persisk",
+    regions: ["Iran"],
+  },
+  {
+    name: "Usbekisk",
+    context: "Plov · lagman · qazon kebab · manty",
+    areasLabel: "Tradisjon",
+    sourceCuisine: "Usbekisk",
+    regions: ["Usbekistan"],
+  },
+  {
     name: "Mexicansk",
     context: "Sentral-Mexico · Jalisco · Yucatán · Baja",
     areasLabel: "Regioner og tradisjoner",
     sourceCuisine: "Mexicansk",
     regions: ["Sentral-Mexico", "Jalisco", "Yucatán", "Baja"],
+  },
+  {
+    name: "Brasiliansk",
+    context: "Pão de queijo · coxinha · mandioca · bacalhau",
+    areasLabel: "Tradisjon",
+    sourceCuisine: "Brasiliansk",
+    regions: ["Brasil"],
+  },
+  {
+    name: "Polsk",
+    context: "Pierogi · bigos · schabowy · żur",
+    areasLabel: "Tradisjon",
+    sourceCuisine: "Polsk",
+    regions: ["Polen"],
   },
 ];
 
@@ -127,19 +183,19 @@ const foodMoodSpecs: readonly FoodMoodSpec[] = [
     name: "Nudler",
     context: "Ramen · udon · pad thai · phở",
     query: "nudler",
-    dishIds: ["ramen", "udon", "dan-dan-noodles", "pad-thai", "pho"],
+    dishIds: ["ramen", "udon", "dan-dan-noodles", "pad-thai", "pho", "nepali-chowmein", "lagman"],
   },
   {
     name: "Curry",
     context: "Butter chicken · grønn curry · masala",
     query: "curry",
-    dishIds: ["butter-chicken", "green-curry", "chana-masala", "mirchi-ka-salan"],
+    dishIds: ["butter-chicken", "green-curry", "chana-masala", "mirchi-ka-salan", "chicken-tikka-masala-pakistan"],
   },
   {
     name: "Dumplings",
-    context: "Gyoza · jiaozi · mantı",
+    context: "Gyoza · jiaozi · momo · mantı",
     query: "dumplings",
-    dishIds: ["gyoza", "dumplings", "manti"],
+    dishIds: ["gyoza", "dumplings", "manti", "momo", "jhol-momo", "mandu", "manty"],
   },
   {
     name: "Tacos",
@@ -151,17 +207,35 @@ const foodMoodSpecs: readonly FoodMoodSpec[] = [
     name: "Fried chicken",
     context: "Fritert kylling · wings · tenders",
     query: "fried chicken",
-    dishIds: ["fried-chicken", "chicken-wings", "chicken-tenders", "hot-chicken"],
+    dishIds: ["fried-chicken", "chicken-wings", "chicken-tenders", "hot-chicken", "frango-a-passarinho"],
   },
   {
     name: "Vegetar",
     context: "Falafel · dosa · chana masala · vegetarburger",
     query: "vegetar",
-    dishIds: ["falafel", "dosa", "chana-masala", "veggie-burger", "hummus"],
+    dishIds: ["falafel", "dosa", "chana-masala", "veggie-burger", "hummus", "kare-kare", "jhaneko-dal"],
+  },
+  {
+    name: "Grill",
+    context: "Koobideh · chapli kebab · sekuwa · inasal",
+    query: "grill",
+    dishIds: ["koobideh", "chapli-kebab", "sekuwa", "chicken-inasal", "qazon-kebab"],
+  },
+  {
+    name: "Street food",
+    context: "Coxinha · momo · tteokbokki · siomai",
+    query: "street food",
+    dishIds: ["coxinha", "momo", "tteokbokki", "siomai", "pao-de-queijo"],
+  },
+  {
+    name: "Risretter",
+    context: "Bibimbap · biryani · plov · zereshk polo",
+    query: "ris",
+    dishIds: ["bibimbap", "biryani", "uzbek-plov", "zereshk-polo"],
   },
 ];
 
-function toDishSuggestion(dish: (typeof foodDishCatalog)[number]): DishSuggestion {
+function toDishSuggestion(dish: (typeof foodDiscoveryCatalog)[number]): DishSuggestion {
   return {
     id: dish.id,
     label: dish.name,
@@ -173,7 +247,7 @@ function toDishSuggestion(dish: (typeof foodDishCatalog)[number]): DishSuggestio
 }
 
 function dishesForArea(sourceCuisine: string, region: string): readonly DishSuggestion[] {
-  return foodDishCatalog
+  return foodDiscoveryCatalog
     .filter((dish) => dish.cuisine === sourceCuisine && dish.region === region)
     .sort((left, right) => right.explorerPriority - left.explorerPriority || left.name.localeCompare(right.name, "nb"))
     .slice(0, 8)
@@ -182,7 +256,7 @@ function dishesForArea(sourceCuisine: string, region: string): readonly DishSugg
 
 function dishesForIds(ids: readonly string[]): readonly DishSuggestion[] {
   return ids.map((id) => {
-    const dish = foodDishCatalog.find((candidate) => candidate.id === id);
+    const dish = foodDiscoveryCatalog.find((candidate) => candidate.id === id);
     if (!dish) throw new Error(`Matlyst mood references unknown canonical dish: ${id}`);
     return toDishSuggestion(dish);
   });
