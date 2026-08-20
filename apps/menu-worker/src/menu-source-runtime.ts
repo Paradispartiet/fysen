@@ -306,10 +306,7 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverFirstCardAfterPlainFoodSections(extracted.visibleText)
         : [];
-    if (
-      process.env.GITHUB_ACTIONS === "true" &&
-      recoveredItems.length >= 10
-    ) {
+    if (extracted.visibleText.includes("CHEF MONTSERRAT GARZA")) {
       const summarize = (items: readonly MenuObservedItem[]) =>
         items.map(({ name, priceMinor, confidence }) => ({ name, priceMinor, confidence }));
       process.stderr.write(
