@@ -23,12 +23,33 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v7");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v8");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
     ]);
     expect(scoped.map((item) => item.position)).toEqual([0, 1]);
+  });
+
+  it("excludes a child-drink section and resumes at Italian desserts", () => {
+    const lines = [
+      "Menu per bambini",
+      "Bambino Margerita 95",
+      "Barnedrinker",
+      "Smurf 68",
+      "Villa Paradiso 68",
+      "Dolci",
+      "Tiramisù 145",
+      "Panna cotta 145",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual([
+      "Bambino Margerita",
+      "Tiramisù",
+      "Panna cotta",
+    ]);
   });
 
   it("drops generic per-person pricing metadata without restaurant-specific rules", () => {
