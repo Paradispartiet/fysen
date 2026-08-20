@@ -41,16 +41,26 @@ describe("HTML runtime extractor version", () => {
 
     expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v8");
     expect(HTML_NON_DISH_FILTER_VERSION).toBe("non-dish-v6");
-    expect(HTML_BEVERAGE_FILTER_VERSION).toBe("beverage-v5");
-    expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe("trailing-price-card-v7");
-    expect(HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION).toBe("heading-supplement-v1");
+    expect(HTML_BEVERAGE_FILTER_VERSION).toBe("beverage-v6");
+    expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
+      "trailing-price-card-v10",
+    );
+    expect(HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION).toBe(
+      "heading-supplement-v1",
+    );
     expect(HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION).toBe("from-price-v1");
-    expect(HTML_SECTION_FIRST_CARD_RECOVERY_VERSION).toBe("section-first-card-v2");
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v1");
+    expect(HTML_SECTION_FIRST_CARD_RECOVERY_VERSION).toBe(
+      "section-first-card-v2",
+    );
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v2");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
-    expect(shouldForceReextract("html", "html-v14+html-v7+titles-v8+heading-v1")).toBe(true);
-    expect(shouldForceReextract("json_ld", "html-v14+html-v7+titles-v8+heading-v1")).toBe(true);
+    expect(
+      shouldForceReextract("html", "html-v14+html-v7+titles-v8+heading-v1"),
+    ).toBe(true);
+    expect(
+      shouldForceReextract("json_ld", "html-v14+html-v7+titles-v8+heading-v1"),
+    ).toBe(true);
     expect(shouldForceReextract("html", runtimeVersion)).toBe(false);
   });
 });

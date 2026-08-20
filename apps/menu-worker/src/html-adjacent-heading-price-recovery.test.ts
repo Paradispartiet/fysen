@@ -18,7 +18,7 @@ describe("adjacent heading-price HTML recovery", () => {
       </body></html>
     `);
 
-    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v5");
+    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v6");
     expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
       ["Doro Wet", 29000, "exact"],
       ["Key Wet", 28000, "exact"],
@@ -45,6 +45,25 @@ describe("adjacent heading-price HTML recovery", () => {
       ["Half & Half Corndog", 10900, "from"],
       ["Mozzarella Corndog", 11500, "from"],
       ["Octopus Ink Corndog", 11900, "exact"],
+    ]);
+  });
+
+  it("accepts a same-level price heading after an otherwise empty dish card", () => {
+    const items = recoverAdjacentHeadingPriceHtmlItems(`
+      <html><body>
+        <h2>Desserts</h2>
+        <h3>112. Turmeric Ice Cream</h3><h3>KR. 169,-</h3>
+        <h3>113. Rasmalai (G, M, E, N)</h3><h3>KR. 169,-</h3>
+        <h3>114. Coconut Ice Cream Aura Delight</h3><h3>KR. 155,-</h3>
+        <h3>115. Paan Shot</h3><h3>KR. 145,-</h3>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["112. Turmeric Ice Cream", 16900],
+      ["113. Rasmalai (G, M, E, N)", 16900],
+      ["114. Coconut Ice Cream Aura Delight", 15500],
+      ["115. Paan Shot", 14500],
     ]);
   });
 

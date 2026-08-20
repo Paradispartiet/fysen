@@ -1,12 +1,17 @@
 import { normalizeDishName } from "@fysen/menu-core";
 import { runRestaurantActionVerification } from "./action-verifier.js";
+import { generateRestaurantCandidateBatch } from "./batch-intake.js";
+import { validateRestaurantManifestBatch } from "./batch-validator.js";
 import { extractHtmlMenu } from "./html-extractor.js";
 import { HttpMenuClient } from "./http-client.js";
 import {
   validateRestaurantManifestDirectory,
   validateRestaurantManifestPath,
 } from "./manifest-validator.js";
-import { onboardRestaurantCatalog, onboardRestaurantManifest } from "./onboarding.js";
+import {
+  onboardRestaurantCatalog,
+  onboardRestaurantManifest,
+} from "./onboarding.js";
 import { runRodeoPilot } from "./pilot.js";
 import { runDueMenuSources } from "./run-due.js";
 import { runDueRestaurantHours } from "./run-opening-hours.js";
@@ -17,9 +22,15 @@ function print(value: unknown): void {
 }
 
 async function probe(url: string): Promise<void> {
-  const userAgent = process.env.FYSEN_MENU_BOT_USER_AGENT?.trim() || "FysenMenuBot/0.1";
+  const userAgent =
+    process.env.FYSEN_MENU_BOT_USER_AGENT?.trim() || "FysenMenuBot/0.1";
   const client = new HttpMenuClient();
-  const result = await client.fetchSource({ url, userAgent, etag: null, lastModified: null });
+  const result = await client.fetchSource({
+    url,
+    userAgent,
+    etag: null,
+    lastModified: null,
+  });
   if (result.kind === "not_modified") {
     print(result);
     return;
@@ -50,7 +61,8 @@ async function main(): Promise<void> {
   }
   if (command === "probe") {
     const url = process.argv[3];
-    if (!url) throw new Error("Usage: pnpm --filter @fysen/menu-worker probe -- <url>");
+    if (!url)
+      throw new Error("Usage: pnpm --filter @fysen/menu-worker probe -- <url>");
     await probe(url);
     return;
   }
@@ -60,7 +72,10 @@ async function main(): Promise<void> {
   }
   if (command === "validate:manifest") {
     const path = process.argv[3];
-    if (!path) throw new Error("Usage: pnpm --filter @fysen/menu-worker validate:manifest -- <manifest.json>");
+    if (!path)
+      throw new Error(
+        "Usage: pnpm --filter @fysen/menu-worker validate:manifest -- <manifest.json>",
+      );
     const result = await validateRestaurantManifestPath(path);
     print(result);
     if (!result.accepted) process.exitCode = 1;
@@ -68,8 +83,39 @@ async function main(): Promise<void> {
   }
   if (command === "validate:directory") {
     const directory = process.argv[3];
-    if (!directory) throw new Error("Usage: pnpm --filter @fysen/menu-worker validate:directory -- <directory>");
+    if (!directory)
+      throw new Error(
+        "Usage: pnpm --filter @fysen/menu-worker validate:directory -- <directory>",
+      );
     const summary = await validateRestaurantManifestDirectory(directory);
+    print(summary);
+    if (summary.failedCount > 0) process.exitCode = 1;
+    return;
+  }
+  if (command === "validate:batch") {
+    const directory = process.argv[3];
+    if (!directory)
+      throw new Error(
+        "Usage: pnpm --filter @fysen/menu-worker validate:batch -- <directory>",
+      );
+    const configuredConcurrency = Number.parseInt(
+      process.env.FYSEN_CANDIDATE_VALIDATION_CONCURRENCY ?? "4",
+      10,
+    );
+    const summary = await validateRestaurantManifestBatch(directory, {
+      concurrency: configuredConcurrency,
+    });
+    print(summary);
+    if (summary.failedCount > 0) process.exitCode = 1;
+    return;
+  }
+  if (command === "intake:batch") {
+    const path = process.argv[3];
+    if (!path)
+      throw new Error(
+        "Usage: pnpm --filter @fysen/menu-worker intake:batch -- <batch-plan.json>",
+      );
+    const summary = await generateRestaurantCandidateBatch(path);
     print(summary);
     if (summary.failedCount > 0) process.exitCode = 1;
     return;
@@ -80,7 +126,10 @@ async function main(): Promise<void> {
   }
   if (command === "onboard:manifest") {
     const path = process.argv[3];
-    if (!path) throw new Error("Usage: pnpm --filter @fysen/menu-worker onboard:manifest -- <manifest.json>");
+    if (!path)
+      throw new Error(
+        "Usage: pnpm --filter @fysen/menu-worker onboard:manifest -- <manifest.json>",
+      );
     const result = await onboardRestaurantManifest(path);
     print(result);
     if (result.outcome === "failed") process.exitCode = 1;
@@ -93,21 +142,30 @@ async function main(): Promise<void> {
     return;
   }
   if (command === "run:due") {
-    const configuredLimit = Number.parseInt(process.env.FYSEN_MENU_WATCH_BATCH_SIZE ?? "25", 10);
+    const configuredLimit = Number.parseInt(
+      process.env.FYSEN_MENU_WATCH_BATCH_SIZE ?? "25",
+      10,
+    );
     const summary = await runDueMenuSources(configuredLimit);
     print(summary);
     if (summary.failedCount > 0) process.exitCode = 1;
     return;
   }
   if (command === "watch:hours") {
-    const configuredLimit = Number.parseInt(process.env.FYSEN_HOURS_WATCH_BATCH_SIZE ?? "25", 10);
+    const configuredLimit = Number.parseInt(
+      process.env.FYSEN_HOURS_WATCH_BATCH_SIZE ?? "25",
+      10,
+    );
     const summary = await runDueRestaurantHours(configuredLimit);
     print(summary);
     if (summary.failedCount > 0) process.exitCode = 1;
     return;
   }
   if (command === "verify:actions") {
-    const configuredLimit = Number.parseInt(process.env.FYSEN_ACTION_VERIFY_BATCH_SIZE ?? "25", 10);
+    const configuredLimit = Number.parseInt(
+      process.env.FYSEN_ACTION_VERIFY_BATCH_SIZE ?? "25",
+      10,
+    );
     const summary = await runRestaurantActionVerification(configuredLimit);
     print(summary);
     if (summary.failedCount > 0) process.exitCode = 1;
@@ -117,7 +175,8 @@ async function main(): Promise<void> {
 }
 
 void main().catch((error: unknown) => {
-  const message = error instanceof Error ? error.stack ?? error.message : String(error);
+  const message =
+    error instanceof Error ? (error.stack ?? error.message) : String(error);
   process.stderr.write(`${message}\n`);
   process.exitCode = 1;
 });

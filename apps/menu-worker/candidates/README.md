@@ -55,6 +55,14 @@ For that case the manifest may explicitly declare hours uncertainty:
 
 Production persists the hours verification status and audit metadata. Search only uses `verified` hours to derive `open` / `closed`; a provisional or unverified restaurant remains searchable by its verified menu, but its opening state is `unknown` until the hours status is promoted to verified.
 
+## Batch intake and validation
+
+For larger research groups, use the production-line commands documented in [`docs/restaurant-production.md`](../../../docs/restaurant-production.md). `intake:batch` fetches each declared canonical menu source, pins the complete observed item count as the initial source-integrity floor and generates representative priced assertions. It never overwrites an existing candidate.
+
+`validate:candidates:batch` validates candidates with bounded concurrency. Each candidate returns its own result, and failures are grouped into manifest, transport, extraction, menu assertion, hours, action or unknown families. A malformed or unavailable candidate therefore remains red without preventing independent candidates from completing their live gates.
+
+Batching changes throughput only. It does not relax source hierarchy, minimum item floors, required/forbidden assertions, action verification or the explicit promotion boundary.
+
 All explicitly uncertain production restaurants are available from the derived audit log:
 
 ```bash

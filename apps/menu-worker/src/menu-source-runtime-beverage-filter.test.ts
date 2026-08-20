@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
+import {
+  createMenuItemSourceKey,
+  normalizeDishName,
+  type MenuObservedItem,
+} from "@fysen/menu-core";
 import { isCanonicalHtmlMenuItem } from "./menu-source-runtime.js";
 
 function item(name: string): MenuObservedItem {
@@ -61,6 +65,14 @@ describe("generic HTML canonical item filtering", () => {
     "Phone: +47 22 33 44 55",
     "All rights reserved | YNG Bar & Social",
     "ALL RIGHTS RESERVED - Restaurant Example",
+    "Flaske",
+    "Grimbergen Blonde (0.33 l flaske)",
+    "Frydenlund Bokkøl 0,33 l flaske -",
+    "Guinness",
+    "Corona",
+    "Munkholm",
+    "Aperol",
+    "Mineralvann",
   ])("rejects non-food or beverage-only menu item %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
   });

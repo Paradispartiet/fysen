@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { sha256 } from "@fysen/menu-core";
-import { HttpMenuClient, type MenuFetchError } from "./http-client.js";
+import {
+  boundedHttpTimeoutMs,
+  HttpMenuClient,
+  type MenuFetchError,
+} from "./http-client.js";
 
 const publicResolver = async (): Promise<readonly { address: string }[]> => [
   { address: "93.184.216.34" },
@@ -13,6 +17,13 @@ function asFetch(
 }
 
 describe("HttpMenuClient", () => {
+  it("uses a larger but bounded production timeout", () => {
+    expect(boundedHttpTimeoutMs(undefined)).toBe(20_000);
+    expect(boundedHttpTimeoutMs("25000")).toBe(25_000);
+    expect(boundedHttpTimeoutMs("999999")).toBe(30_000);
+    expect(boundedHttpTimeoutMs("invalid")).toBe(20_000);
+  });
+
   it("honors robots.txt and sends conditional validators to the menu request", async () => {
     const calls: { readonly url: string; readonly headers: Headers }[] = [];
     const fetchImpl = asFetch(async (input, init) => {
@@ -40,7 +51,9 @@ describe("HttpMenuClient", () => {
     expect(result.kind).toBe("not_modified");
     expect(calls).toHaveLength(2);
     expect(calls[1]?.headers.get("if-none-match")).toBe('"v1"');
-    expect(calls[1]?.headers.get("if-modified-since")).toBe("Sat, 15 Aug 2026 12:00:00 GMT");
+    expect(calls[1]?.headers.get("if-modified-since")).toBe(
+      "Sat, 15 Aug 2026 12:00:00 GMT",
+    );
   });
 
   it("preserves binary response bytes and hashes the exact bytes", async () => {
@@ -98,7 +111,9 @@ describe("HttpMenuClient", () => {
       lastModified: null,
     };
 
-    await expect(client.fetchSource(source)).rejects.toMatchObject<MenuFetchError>({ code: "BODY_TOO_LARGE" });
+    await expect(
+      client.fetchSource(source),
+    ).rejects.toMatchObject<MenuFetchError>({ code: "BODY_TOO_LARGE" });
     const result = await client.fetchSource(source, { maxResponseBytes: 16 });
     expect(result.kind).toBe("content");
     if (result.kind !== "content") throw new Error("Expected content response");
@@ -107,7 +122,9 @@ describe("HttpMenuClient", () => {
 
   it("rejects unsafe explicit body-limit overrides above the hard cap", async () => {
     const client = new HttpMenuClient({
-      fetchImpl: asFetch(async () => new Response("never fetched", { status: 200 })),
+      fetchImpl: asFetch(
+        async () => new Response("never fetched", { status: 200 }),
+      ),
       resolver: publicResolver,
       minHostDelayMs: 1,
       timeoutMs: 1000,
@@ -130,7 +147,9 @@ describe("HttpMenuClient", () => {
     const fetchImpl = asFetch(async (input) => {
       calls += 1;
       expect(input.pathname).toBe("/robots.txt");
-      return new Response("User-agent: FysenMenuBot\nDisallow: /menu\n", { status: 200 });
+      return new Response("User-agent: FysenMenuBot\nDisallow: /menu\n", {
+        status: 200,
+      });
     });
 
     const client = new HttpMenuClient({
@@ -157,7 +176,8 @@ describe("HttpMenuClient", () => {
     const fetchImpl = asFetch(async (input) => {
       if (input.pathname === "/robots.txt") {
         robotsCalls += 1;
-        if (robotsCalls === 1) return new Response("temporary upstream failure", { status: 502 });
+        if (robotsCalls === 1)
+          return new Response("temporary upstream failure", { status: 502 });
         return new Response("User-agent: *\nAllow: /\n", { status: 200 });
       }
       menuCalls += 1;
@@ -207,7 +227,10 @@ describe("HttpMenuClient", () => {
         etag: null,
         lastModified: null,
       }),
-    ).rejects.toMatchObject<MenuFetchError>({ code: "ROBOTS_UNAVAILABLE", httpStatus: 502 });
+    ).rejects.toMatchObject<MenuFetchError>({
+      code: "ROBOTS_UNAVAILABLE",
+      httpStatus: 502,
+    });
     expect(robotsCalls).toBe(2);
   });
 

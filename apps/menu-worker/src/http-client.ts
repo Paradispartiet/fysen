@@ -15,6 +15,8 @@ const MAX_EXPLICIT_RESPONSE_BYTES = 25 * 1024 * 1024;
 const MAX_ROBOTS_RESPONSE_BYTES = 1024 * 1024;
 const MAX_TRANSIENT_FETCH_ATTEMPTS = 2;
 const TRANSIENT_HTTP_STATUSES = new Set([408, 500, 502, 503, 504]);
+const DEFAULT_HTTP_TIMEOUT_MS = 20_000;
+const MAX_HTTP_TIMEOUT_MS = 30_000;
 
 export interface MenuHttpSourceState {
   readonly url: string;
@@ -80,9 +82,25 @@ function positiveIntegerFromEnv(name: string, fallback: number): number {
   return Number.isInteger(value) && value > 0 ? value : fallback;
 }
 
-function responseByteLimit(override: number | undefined, fallback: number): number {
+export function boundedHttpTimeoutMs(
+  value = process.env.FYSEN_HTTP_TIMEOUT_MS,
+): number {
+  const configured = Number(value);
+  if (!Number.isInteger(configured) || configured <= 0)
+    return DEFAULT_HTTP_TIMEOUT_MS;
+  return Math.min(configured, MAX_HTTP_TIMEOUT_MS);
+}
+
+function responseByteLimit(
+  override: number | undefined,
+  fallback: number,
+): number {
   if (override === undefined) return fallback;
-  if (!Number.isInteger(override) || override <= 0 || override > MAX_EXPLICIT_RESPONSE_BYTES) {
+  if (
+    !Number.isInteger(override) ||
+    override <= 0 ||
+    override > MAX_EXPLICIT_RESPONSE_BYTES
+  ) {
     throw new MenuFetchError(
       "INVALID_BODY_LIMIT",
       `Explicit response byte limit must be between 1 and ${MAX_EXPLICIT_RESPONSE_BYTES}`,
@@ -106,24 +124,36 @@ export class HttpMenuClient {
   constructor(options: HttpMenuClientOptions = {}) {
     this.fetchImpl = options.fetchImpl ?? fetch;
     this.resolver = options.resolver;
-    this.timeoutMs = options.timeoutMs ?? positiveIntegerFromEnv("FYSEN_HTTP_TIMEOUT_MS", 12_000);
+    this.timeoutMs = options.timeoutMs ?? boundedHttpTimeoutMs();
     this.maxResponseBytes =
-      options.maxResponseBytes ?? positiveIntegerFromEnv("FYSEN_MAX_RESPONSE_BYTES", 2 * 1024 * 1024);
+      options.maxResponseBytes ??
+      positiveIntegerFromEnv("FYSEN_MAX_RESPONSE_BYTES", 2 * 1024 * 1024);
     this.minHostDelayMs =
-      options.minHostDelayMs ?? positiveIntegerFromEnv("FYSEN_MIN_HOST_DELAY_MS", 1_000);
+      options.minHostDelayMs ??
+      positiveIntegerFromEnv("FYSEN_MIN_HOST_DELAY_MS", 1_000);
   }
 
   async fetchSource(
     source: MenuHttpSourceState,
     options: MenuHttpFetchOptions = {},
   ): Promise<MenuHttpFetchResult> {
-    const maxResponseBytes = responseByteLimit(options.maxResponseBytes, this.maxResponseBytes);
+    const maxResponseBytes = responseByteLimit(
+      options.maxResponseBytes,
+      this.maxResponseBytes,
+    );
     const allowedRedirectOrigins = options.allowedRedirectOrigins ?? [];
     const started = performance.now();
     const target = await this.validate(source.url);
-    const robotsAllowed = await this.checkRobots(target, source.userAgent, allowedRedirectOrigins);
+    const robotsAllowed = await this.checkRobots(
+      target,
+      source.userAgent,
+      allowedRedirectOrigins,
+    );
     if (!robotsAllowed) {
-      throw new MenuFetchError("ROBOTS_DISALLOWED", `robots.txt disallows ${target.href}`);
+      throw new MenuFetchError(
+        "ROBOTS_DISALLOWED",
+        `robots.txt disallows ${target.href}`,
+      );
     }
 
     const headers = new Headers({
@@ -131,9 +161,14 @@ export class HttpMenuClient {
       "User-Agent": source.userAgent,
     });
     if (source.etag) headers.set("If-None-Match", source.etag);
-    if (source.lastModified) headers.set("If-Modified-Since", source.lastModified);
+    if (source.lastModified)
+      headers.set("If-Modified-Since", source.lastModified);
 
-    const fetched = await this.safeFetch(target, { method: "GET", headers }, allowedRedirectOrigins);
+    const fetched = await this.safeFetch(
+      target,
+      { method: "GET", headers },
+      allowedRedirectOrigins,
+    );
     const response = fetched.response;
     if (fetched.finalUrl.origin !== target.origin) {
       const finalRobotsAllowed = await this.checkRobots(
@@ -143,7 +178,10 @@ export class HttpMenuClient {
       );
       if (!finalRobotsAllowed) {
         await response.body?.cancel().catch(() => undefined);
-        throw new MenuFetchError("ROBOTS_DISALLOWED", `robots.txt disallows ${fetched.finalUrl.href}`);
+        throw new MenuFetchError(
+          "ROBOTS_DISALLOWED",
+          `robots.txt disallows ${fetched.finalUrl.href}`,
+        );
       }
     }
 
@@ -153,10 +191,21 @@ export class HttpMenuClient {
     const lastModified = response.headers.get("last-modified");
 
     if (response.status === 304) {
-      return { kind: "not_modified", fetchedAt, status: 304, etag, lastModified, durationMs };
+      return {
+        kind: "not_modified",
+        fetchedAt,
+        status: 304,
+        etag,
+        lastModified,
+        durationMs,
+      };
     }
     if (!response.ok) {
-      throw new MenuFetchError("HTTP_STATUS", `Menu fetch returned HTTP ${response.status}`, response.status);
+      throw new MenuFetchError(
+        "HTTP_STATUS",
+        `Menu fetch returned HTTP ${response.status}`,
+        response.status,
+      );
     }
 
     const bodyBytes = await this.readLimitedBytes(response, maxResponseBytes);
@@ -185,19 +234,32 @@ export class HttpMenuClient {
       robotsUrl,
       {
         method: "GET",
-        headers: new Headers({ Accept: "text/plain,*/*;q=0.1", "User-Agent": userAgent }),
+        headers: new Headers({
+          Accept: "text/plain,*/*;q=0.1",
+          "User-Agent": userAgent,
+        }),
       },
       allowedRedirectOrigins,
     );
     const response = fetched.response;
 
     if (response.status >= 200 && response.status < 300) {
-      const bodyBytes = await this.readLimitedBytes(response, MAX_ROBOTS_RESPONSE_BYTES);
-      const parser = robotsParser(fetched.finalUrl.href, Buffer.from(bodyBytes).toString("utf8"));
+      const bodyBytes = await this.readLimitedBytes(
+        response,
+        MAX_ROBOTS_RESPONSE_BYTES,
+      );
+      const parser = robotsParser(
+        fetched.finalUrl.href,
+        Buffer.from(bodyBytes).toString("utf8"),
+      );
       return parser.isAllowed(target.href, userAgent) !== false;
     }
 
-    if (response.status >= 400 && response.status < 500 && response.status !== 429) {
+    if (
+      response.status >= 400 &&
+      response.status < 500 &&
+      response.status !== 429
+    ) {
       return true;
     }
 
@@ -209,7 +271,9 @@ export class HttpMenuClient {
   }
 
   private async validate(value: string | URL): Promise<URL> {
-    return this.resolver ? assertPublicHttpUrl(value, this.resolver) : assertPublicHttpUrl(value);
+    return this.resolver
+      ? assertPublicHttpUrl(value, this.resolver)
+      : assertPublicHttpUrl(value);
   }
 
   private async safeFetch(
@@ -224,7 +288,11 @@ export class HttpMenuClient {
     for (let redirects = 0; redirects <= 3; redirects += 1) {
       let response: Response | null = null;
 
-      for (let attempt = 1; attempt <= MAX_TRANSIENT_FETCH_ATTEMPTS; attempt += 1) {
+      for (
+        let attempt = 1;
+        attempt <= MAX_TRANSIENT_FETCH_ATTEMPTS;
+        attempt += 1
+      ) {
         await this.throttle(current.origin);
         try {
           response = await this.fetchImpl(current, {
@@ -234,11 +302,18 @@ export class HttpMenuClient {
           });
         } catch (error) {
           if (attempt < MAX_TRANSIENT_FETCH_ATTEMPTS) continue;
-          const message = error instanceof Error ? error.message : String(error);
-          throw new MenuFetchError("NETWORK_ERROR", `Network request failed: ${message}`);
+          const message =
+            error instanceof Error ? error.message : String(error);
+          throw new MenuFetchError(
+            "NETWORK_ERROR",
+            `Network request failed: ${message}`,
+          );
         }
 
-        if (isTransientHttpStatus(response.status) && attempt < MAX_TRANSIENT_FETCH_ATTEMPTS) {
+        if (
+          isTransientHttpStatus(response.status) &&
+          attempt < MAX_TRANSIENT_FETCH_ATTEMPTS
+        ) {
           await response.body?.cancel().catch(() => undefined);
           response = null;
           continue;
@@ -247,39 +322,61 @@ export class HttpMenuClient {
       }
 
       if (!response) {
-        throw new MenuFetchError("NETWORK_ERROR", "Network request failed after transient retries");
+        throw new MenuFetchError(
+          "NETWORK_ERROR",
+          "Network request failed after transient retries",
+        );
       }
 
       if (![301, 302, 303, 307, 308].includes(response.status)) {
         return { response, finalUrl: current };
       }
       const location = response.headers.get("location");
-      if (!location) throw new MenuFetchError("INVALID_REDIRECT", "Redirect response did not contain Location");
+      if (!location)
+        throw new MenuFetchError(
+          "INVALID_REDIRECT",
+          "Redirect response did not contain Location",
+        );
       await response.body?.cancel();
 
       const next = await this.validate(new URL(location, current));
       if (next.origin !== initialOrigin && !allowedOrigins.has(next.origin)) {
-        throw new MenuFetchError("CROSS_ORIGIN_REDIRECT", `Cross-origin crawler redirect blocked: ${next.origin}`);
+        throw new MenuFetchError(
+          "CROSS_ORIGIN_REDIRECT",
+          `Cross-origin crawler redirect blocked: ${next.origin}`,
+        );
       }
       current = next;
     }
 
-    throw new MenuFetchError("TOO_MANY_REDIRECTS", "Crawler redirect limit exceeded");
+    throw new MenuFetchError(
+      "TOO_MANY_REDIRECTS",
+      "Crawler redirect limit exceeded",
+    );
   }
 
   private async throttle(origin: string): Promise<void> {
     const now = Date.now();
     const allowedAt = this.nextAllowedAt.get(origin) ?? now;
     if (allowedAt > now) {
-      await new Promise<void>((resolve) => setTimeout(resolve, allowedAt - now));
+      await new Promise<void>((resolve) =>
+        setTimeout(resolve, allowedAt - now),
+      );
     }
     this.nextAllowedAt.set(origin, Date.now() + this.minHostDelayMs);
   }
 
-  private async readLimitedBytes(response: Response, maxBytes: number): Promise<Uint8Array> {
+  private async readLimitedBytes(
+    response: Response,
+    maxBytes: number,
+  ): Promise<Uint8Array> {
     const contentLength = Number(response.headers.get("content-length"));
     if (Number.isFinite(contentLength) && contentLength > maxBytes) {
-      throw new MenuFetchError("BODY_TOO_LARGE", `Response exceeds ${maxBytes} bytes`, response.status);
+      throw new MenuFetchError(
+        "BODY_TOO_LARGE",
+        `Response exceeds ${maxBytes} bytes`,
+        response.status,
+      );
     }
     if (!response.body) return new Uint8Array();
 
@@ -293,7 +390,11 @@ export class HttpMenuClient {
         if (!value) continue;
         total += value.byteLength;
         if (total > maxBytes) {
-          throw new MenuFetchError("BODY_TOO_LARGE", `Response exceeds ${maxBytes} bytes`, response.status);
+          throw new MenuFetchError(
+            "BODY_TOO_LARGE",
+            `Response exceeds ${maxBytes} bytes`,
+            response.status,
+          );
         }
         chunks.push(value);
       }
@@ -301,6 +402,8 @@ export class HttpMenuClient {
       reader.releaseLock();
     }
 
-    return new Uint8Array(Buffer.concat(chunks.map((chunk) => Buffer.from(chunk))));
+    return new Uint8Array(
+      Buffer.concat(chunks.map((chunk) => Buffer.from(chunk))),
+    );
   }
 }

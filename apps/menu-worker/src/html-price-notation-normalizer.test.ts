@@ -10,9 +10,9 @@ import {
 
 describe("HTML menu runtime normalization", () => {
   it("normalizes common slash-style NOK prices without changing ordinary prices", () => {
-    expect(HTML_PRICE_NOTATION_NORMALIZER_VERSION).toBe("price-notation-v1");
-    expect(normalizeHtmlPriceNotation("KR. 179,/- · 165/- · 199,- · NOK 249")).toBe(
-      "KR. 179,- · 165,- · 199,- · NOK 249",
+    expect(HTML_PRICE_NOTATION_NORMALIZER_VERSION).toBe("price-notation-v2");
+    expect(normalizeHtmlPriceNotation("<p>KR. 179,/-</p><p>165/-</p><p>260-</p>")).toBe(
+      "<p>KR. 179,-</p><p>165,-</p><p>260,-</p>",
     );
   });
 

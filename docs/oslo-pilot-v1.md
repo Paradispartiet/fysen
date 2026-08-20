@@ -27,6 +27,8 @@ Restaurant-onboarding er en løpende coverage-maskin. Nye restauranter prioriter
 
 `apps/menu-worker/catalog/` er den eneste canonicale produksjonslisten. Dokumentasjonen skal ikke vedlikeholde et parallelt, håndskrevet restauranttall eller en katalogkopi som raskt blir utdatert.
 
+Den operative batchmetoden og daterte, kildebundne kontrollmålinger dokumenteres i [`restaurant-production.md`](restaurant-production.md). Disse målingene er produksjonsbevis, ikke en alternativ katalog.
+
 Antall restauranter er heller ikke et produktmål. En restaurant teller offentlig først når canonical manifest, production DB, watcher-state, søkeindeks, API og webflate er konsistente.
 
 ## Kildehierarki for restaurantmenyer
