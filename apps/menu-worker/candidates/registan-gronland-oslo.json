@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "registan-gronland-oslo",
+    "name": "Registan",
+    "websiteUrl": "https://registanrestaurant.no/",
+    "address": "Grønlandsleiret 79, 0190 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9127,
+    "longitude": 10.7735
+  },
+  "menuSource": {
+    "url": "https://www.foodora.no/en/restaurant/xlhh/registan",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 24
+  },
+  "hoursSource": {
+    "url": "https://registanrestaurant.no/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Usbekisk Brød",
+      "Aubergine Salat",
+      "Biff Samosa",
+      "Olivie Salat",
+      "Registan Spesial 4 Personer",
+      "Vegetar Usbekisk Plov",
+      "Lagman",
+      "Usbekisk Qazon Kebab",
+      "Oksehale Qazon Kebab",
+      "Kylling Qazon Kebab",
+      "Manty",
+      "Stekt Manty",
+      "Stekt Lagman",
+      "Mohara",
+      "Honningkake"
+    ],
+    "requiredDishVariants": [
+      { "name": "Usbekisk Brød", "priceMinor": 9900, "priceKind": "from" },
+      { "name": "Aubergine Salat", "priceMinor": 27900, "priceKind": "from" },
+      { "name": "Biff Samosa", "priceMinor": 9900, "priceKind": "from" },
+      { "name": "Olivie Salat", "priceMinor": 17900, "priceKind": "from" },
+      { "name": "Registan Spesial 4 Personer", "priceMinor": 239600, "priceKind": "from" },
+      { "name": "Vegetar Usbekisk Plov", "priceMinor": 34900, "priceKind": "from" },
+      { "name": "Lagman", "priceMinor": 39900, "priceKind": "from" },
+      { "name": "Usbekisk Qazon Kebab", "priceMinor": 44900, "priceKind": "from" },
+      { "name": "Oksehale Qazon Kebab", "priceMinor": 44900, "priceKind": "from" },
+      { "name": "Kylling Qazon Kebab", "priceMinor": 30900, "priceKind": "from" },
+      { "name": "Manty", "priceMinor": 39900, "priceKind": "from" },
+      { "name": "Stekt Manty", "priceMinor": 44900, "priceKind": "from" },
+      { "name": "Stekt Lagman", "priceMinor": 39900, "priceKind": "from" },
+      { "name": "Mohara", "priceMinor": 25900, "priceKind": "from" },
+      { "name": "Honningkake", "priceMinor": 11900 }
+    ],
+    "forbiddenDishNames": [
+      "Kuli Appelsin",
+      "Kuli Jordbær & Eple",
+      "Bonaqua Naturell",
+      "Bonaqua Sitron",
+      "Eplemost",
+      "Fuzetea Peach",
+      "Ayran",
+      "Natakhtari Pære",
+      "Natakhtari Barbaris",
+      "Natakhtari Estragon",
+      "Mørk Kvass",
+      "Lys Kvass",
+      "Forretter",
+      "Hovedretter",
+      "Supper",
+      "Barnemeny",
+      "Sauser",
+      "Dessert",
+      "Drikke"
+    ]
+  }
+}

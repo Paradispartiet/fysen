@@ -5,8 +5,9 @@ import {
   type MenuObservedItem,
   type MenuPriceKind,
 } from "@fysen/menu-core";
+import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recovery.js";
 
-export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION = "trailing-price-card-v2";
+export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION = "trailing-price-card-v3";
 
 const PURE_PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{1,3})(?:[.,](\d{1,2}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
 const TRAILING_MARKED_PRICE = /(?:(fra|from)\s+)?([1-9]\d{1,3})(?:[.,](\d{1,2}))?\s*(?:,-|kr\.?|NOK)\s*$/iu;
@@ -92,6 +93,9 @@ function visibleLines(html: string): readonly string[] {
 }
 
 export function recoverTrailingPriceCardHtmlItems(html: string): readonly MenuObservedItem[] {
+  const semanticCategoryItems = recoverSemanticCategoryCardHtmlItems(html);
+  if (semanticCategoryItems.length >= 4) return semanticCategoryItems;
+
   const lines = visibleLines(html);
   const unique = new Map<string, MenuObservedItem>();
 

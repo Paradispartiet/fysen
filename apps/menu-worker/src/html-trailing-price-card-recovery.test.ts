@@ -17,7 +17,7 @@ describe("trailing-price HTML card recovery", () => {
       </body></html>
     `);
 
-    expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe("trailing-price-card-v2");
+    expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe("trailing-price-card-v3");
     expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
       ["Dish One", 19900, "exact"],
       ["Dish Two", 20900, "exact"],
@@ -26,6 +26,35 @@ describe("trailing-price HTML card recovery", () => {
       ["Dish Five", 23900, "from"],
     ]);
     expect(items[0]?.description).toContain("Allergener: melk, hvete");
+  });
+
+  it("prefers semantic category cards so a beverage section cannot leak back into the menu", () => {
+    const items = recoverTrailingPriceCardHtmlItems(`
+      <html><body>
+        <div data-testid="menu-category-section">
+          <div data-testid="menu-category-section-title"><h2>Forretter</h2></div>
+          <div data-testid="menu-product"><span data-testid="menu-product-name">Falafel</span><span data-testid="menu-product-price">99 NOK</span></div>
+          <div data-testid="menu-product"><span data-testid="menu-product-name">Hummus</span><span data-testid="menu-product-price">109 NOK</span></div>
+        </div>
+        <div data-testid="menu-category-section">
+          <div data-testid="menu-category-section-title"><h2>Hovedretter</h2></div>
+          <div data-testid="menu-product"><span data-testid="menu-product-name">Lamb Rice</span><span data-testid="menu-product-price">from 299 NOK</span></div>
+          <div data-testid="menu-product"><span data-testid="menu-product-name">Chicken Rice</span><span data-testid="menu-product-price">279 NOK</span></div>
+        </div>
+        <div data-testid="menu-category-section">
+          <div data-testid="menu-category-section-title"><h2>Drikke</h2></div>
+          <div data-testid="menu-product"><span data-testid="menu-product-name">House Soda</span><span data-testid="menu-product-price">55 NOK</span></div>
+          <div data-testid="menu-product"><span data-testid="menu-product-name">Ayran</span><span data-testid="menu-product-price">55 NOK</span></div>
+        </div>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.sectionName, item.name, item.priceKind])).toEqual([
+      ["Forretter", "Falafel", "exact"],
+      ["Forretter", "Hummus", "exact"],
+      ["Hovedretter", "Lamb Rice", "from"],
+      ["Hovedretter", "Chicken Rice", "exact"],
+    ]);
   });
 
   it("fails closed on ambiguous multi-price metadata while preserving neighboring cards", () => {

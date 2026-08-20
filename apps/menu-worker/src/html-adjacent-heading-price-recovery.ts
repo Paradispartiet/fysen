@@ -6,11 +6,12 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v2";
+export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v4";
 
 const HEADING_MARKER = "__FYSEN_ADJACENT_HEADING_LEVEL_";
-const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{1,3})(?:[.,](\d{1,2}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
+const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
 const SECTION_OR_UI_LABEL = /^(?:our\s+menu|menu|meny|single\s+meat|single\s+(?:vegetar|vegetarian)(?:\s*&\s*vegan)?|pdf\s+version|drinks?|drikke(?:meny)?|popular\s+dish|opening(?:\s+hours)?|åpningstider|contact|kontakt|address|adresse|booking|reservation(?:s)?|reservasjoner?|allergens?|allergener?)$/iu;
+const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|champagne(?:\s+cocktails?)?|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
 const BOTTLED_WATER_TITLE = /\b(?:still|sparkling)\s+(?:water|naturell)\b/iu;
 
 interface ParsedPrice {
@@ -25,8 +26,19 @@ function normalizeVisibleLine(value: string): string {
 function parsePrice(value: string): ParsedPrice | null {
   const match = normalizeVisibleLine(value).match(PRICE_LINE);
   if (!match?.[2]) return null;
-  const whole = Number(match[2]);
-  const decimals = (match[3] ?? "").padEnd(2, "0").slice(0, 2);
+
+  const separator = match[3] ?? null;
+  const trailingDigits = match[4] ?? "";
+  let whole = Number(match[2]);
+  let decimals = "";
+
+  if (separator === "." && trailingDigits.length === 3) {
+    whole = Number(`${match[2]}${trailingDigits}`);
+  } else {
+    if (trailingDigits.length > 2) return null;
+    decimals = trailingDigits.padEnd(2, "0").slice(0, 2);
+  }
+
   const amount = whole * 100 + Number(decimals || "0");
   if (amount < 4_000 || amount > 1_000_000) return null;
   return {
@@ -56,6 +68,14 @@ function annotatedLines(html: string): readonly string[] {
     });
   }
 
+  $("[role='heading'][aria-level]").each((_, element) => {
+    if ($(element).is("h1, h2, h3, h4, h5, h6")) return;
+    const level = Number($(element).attr("aria-level"));
+    if (!Number.isInteger(level) || level < 1 || level > 6) return;
+    $(element).prepend(`\n${HEADING_MARKER}${level}__ `);
+    $(element).append("\n");
+  });
+
   $("p, li, tr, div, section, article").each((_, element) => {
     $(element).append("\n");
   });
@@ -70,6 +90,7 @@ function annotatedLines(html: string): readonly string[] {
 export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly MenuObservedItem[] {
   const lines = annotatedLines(html);
   const byHeadingLevel = new Map<number, MenuObservedItem[]>();
+  let blockedSectionLevel: number | null = null;
 
   for (let position = 0; position < lines.length; position += 1) {
     const line = lines[position] ?? "";
@@ -78,6 +99,15 @@ export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly Men
 
     const headingLevel = Number(heading[1]);
     const title = normalizeVisibleLine(heading[2] ?? "");
+
+    if (blockedSectionLevel !== null && headingLevel <= blockedSectionLevel) {
+      blockedSectionLevel = null;
+    }
+    if (BEVERAGE_SECTION_HEADING.test(title)) {
+      blockedSectionLevel = headingLevel;
+      continue;
+    }
+    if (blockedSectionLevel !== null && headingLevel > blockedSectionLevel) continue;
     if (!looksLikeDishTitle(title)) continue;
 
     let price: ParsedPrice | null = null;
@@ -85,7 +115,13 @@ export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly Men
     const scanEnd = Math.min(lines.length, position + 5);
     for (let index = position + 1; index < scanEnd; index += 1) {
       const candidate = lines[index] ?? "";
-      if (candidate.startsWith(HEADING_MARKER)) break;
+      const nestedHeading = candidate.match(/^__FYSEN_ADJACENT_HEADING_LEVEL_([1-6])__\s*(.*)$/u);
+      if (nestedHeading?.[1]) {
+        const nestedLevel = Number(nestedHeading[1]);
+        const nestedTitle = normalizeVisibleLine(nestedHeading[2] ?? "");
+        if (nestedLevel > headingLevel && SECTION_OR_UI_LABEL.test(nestedTitle)) continue;
+        break;
+      }
       const parsed = parsePrice(candidate);
       if (!parsed) continue;
       price = parsed;

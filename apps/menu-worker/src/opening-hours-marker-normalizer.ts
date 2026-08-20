@@ -1,12 +1,20 @@
-export const OPENING_HOURS_MARKER_NORMALIZER_VERSION = "hours-marker-v2";
+export const OPENING_HOURS_MARKER_NORMALIZER_VERSION = "hours-marker-v3";
 
 const HOURS_MARKER = /^(?:opening\s+hours|hours|åpningstider)(?:\s+([^:]{1,80}))?:?$/iu;
 const DECORATIVE_PREFIX = /^(?:(?:[*•·◦▪▫●○◆◇|])\s*){1,8}/u;
 const WEEKDAY_OR_TIME = /\b(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday|mandag|tirsdag|onsdag|torsdag|fredag|lørdag|lordag|søndag|sondag|man|tir|ons|tor|fre|lør|lor|søn|son)\b|\d{1,2}[.:]\d{2}/iu;
 const GLUED_WEEKDAY_SCHEDULE = /^(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday|mandag|tirsdag|onsdag|torsdag|fredag|lørdag|lordag|søndag|sondag|man|tir|ons|tor|fre|lør|lor|søn|son)(?:closed|open|stengt|åpen|apen|\d)/iu;
+const NORWEGIAN_HALF_HOUR = /\b(?:en\s+)?halv\s*time\b/giu;
+const ENGLISH_HALF_HOUR = /\b(?:a\s+)?half(?:\s+an)?\s+hour\b/giu;
 
 function normalizeLine(value: string): string {
-  return value.normalize("NFKC").replace(/[\u200B-\u200D\uFEFF]/gu, "").replace(/\s+/g, " ").trim();
+  return value
+    .normalize("NFKC")
+    .replace(/[\u200B-\u200D\uFEFF]/gu, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(NORWEGIAN_HALF_HOUR, "30 min")
+    .replace(ENGLISH_HALF_HOUR, "30 minutes");
 }
 
 function normalizedMarker(value: string): string | null {
