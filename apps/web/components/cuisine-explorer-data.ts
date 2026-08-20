@@ -123,11 +123,18 @@ const cuisineSpecs: readonly CuisineSpec[] = [
     regions: ["Roma", "Napoli", "Sicilia"],
   },
   {
-    name: "Midtøsten",
-    context: "Levanten · Egypt",
-    areasLabel: "Regioner og tradisjoner",
+    name: "Levantinsk",
+    context: "Falafel · shawarma · hummus · manakish",
+    areasLabel: "Tradisjon",
     sourceCuisine: "Midtøsten",
-    regions: ["Levanten", "Egypt"],
+    regions: ["Levanten"],
+  },
+  {
+    name: "Egyptisk",
+    context: "Koshari · ta'ameya · ful medames · fattah",
+    areasLabel: "Tradisjon",
+    sourceCuisine: "Midtøsten",
+    regions: ["Egypt"],
   },
   {
     name: "Tyrkisk",
