@@ -3,7 +3,7 @@ name: Fysen production pilot proof
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["Materialize Fysen production catalog"]
+    workflows: ["Materialize Fysen production catalog", "Fysen batched Vercel production release"]
     types: [completed]
   push:
     branches: [main]
