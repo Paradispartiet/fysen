@@ -158,7 +158,7 @@ async function main(): Promise<void> {
     );
     const summary = await runDueRestaurantHours(configuredLimit);
     print(summary);
-    if (summary.failedCount > 0) process.exitCode = 1;
+    if (summary.blockingFailedCount > 0) process.exitCode = 1;
     return;
   }
   if (command === "verify:actions") {
