@@ -97,6 +97,7 @@ jobs:
             }
 
             restaurants.push({
+              version: 1,
               ...entry,
               restaurant: {
                 ...entry.restaurant,
