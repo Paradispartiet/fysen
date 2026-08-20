@@ -65,4 +65,28 @@ describe("plain food-section first-card recovery", () => {
       `).map((item) => item.name),
     ).toEqual(["Falafel"]);
   });
+
+  it("does not carry an unfinished first-card candidate across a new menu scope", () => {
+    const items = recoverFirstCardAfterPlainFoodSections(`
+      Desserts
+      Turmeric Ice Cream (G,M,E,N)
+      With Crumble Motichoor
+      Paan Shot (G,M,E, N)
+      Made of beetle leaves
+      The best way to end your meal
+      kr.949,- PR PERS
+      ALLERGIES: G = Gluten | E = Egg | M = Milk | N = Nuts
+      A La Carte
+      07. Papaddam Basket (M, MU)
+      With aura special dips
+      KR. 75,-
+      Starters
+      Coastal Delight
+      KR. 179,-
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Coastal Delight", 17900],
+    ]);
+  });
 });
