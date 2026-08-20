@@ -35,7 +35,7 @@ function priceMinor(wholeText: string, separator: string | undefined, trailing: 
 function looksLikeTitle(value: string): boolean {
   const title = normalizeLine(value);
   if (!title || title.length < 2 || title.length > 160 || !/\p{L}/u.test(title)) return false;
-  if (ANY_PRICE.test(title) || SECTION_OR_UI_LABEL.test(title)) return false;
+  if (ANY_PRICE.test(title) || INLINE_FROM_PRICE.test(title) || SECTION_OR_UI_LABEL.test(title)) return false;
   if (/^(?:©|™|https?:\/\/|www\.|\d+(?:[.,]\d+)?\s*(?:l|cl|ml|kg)\b)/iu.test(title)) return false;
   const words = title.split(/\s+/).filter(Boolean);
   if (words.length > 12 || /[.!?]$/u.test(title)) return false;
@@ -49,7 +49,7 @@ function nearestTitle(lines: readonly string[], pricePosition: number): { title:
     if (position < 0) break;
     const candidate = normalizeLine(lines[position] ?? "");
     if (!candidate) continue;
-    if (ANY_PRICE.test(candidate)) break;
+    if (ANY_PRICE.test(candidate) || INLINE_FROM_PRICE.test(candidate)) break;
     if (SECTION_OR_UI_LABEL.test(candidate)) continue;
     if (!looksLikeTitle(candidate)) continue;
     return { title: candidate, position };
