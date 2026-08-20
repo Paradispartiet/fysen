@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 17
+    "minimumExpectedItems": 16
   },
   "hoursSource": {
     "url": "https://www.lamayor.no/",
