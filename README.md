@@ -10,6 +10,8 @@ Fysen er en rett-først søketjeneste for restauranter. Brukeren skriver retten 
 
 Fysen skal svare med høy presisjon, ferskhet og kildebelegg. En rett skal aldri vises som tilgjengelig bare fordi en modell antar at restauranten sannsynligvis serverer den.
 
+Restaurantdekning, batch-intake og daterte produksjonsmålinger er dokumentert i [`docs/restaurant-production.md`](docs/restaurant-production.md).
+
 ## Arkitektur
 
 - **Web:** React + Next.js + TypeScript
