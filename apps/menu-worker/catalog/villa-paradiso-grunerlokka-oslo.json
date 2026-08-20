@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "villa-paradiso-grunerlokka-oslo",
+    "name": "Villa Paradiso Grünerløkka",
+    "websiteUrl": "https://www.villaparadiso.no/restauranter/grunerlokka",
+    "address": "Olaf Ryes plass 8, 0552 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.923502,
+    "longitude": 10.757423
+  },
+  "menuSource": {
+    "url": "https://cdn.prod.website-files.com/5c77c5f7f7364239e114229f/6a0f1ff9d9a0768c893a1a35_Villa%20Paradiso%20Gru%CC%88nerl%C3%B8kka%20meny.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 53,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "Batch 02 uses the current first-party linked food-menu PDF. Kitchen hours will be verified separately from the location page."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Husets focaccia med aioli",
+      "Pasta fredda",
+      "Linguine alle vongole e ‘nduja",
+      "Indiavolata",
+      "Crudo",
+      "Panna cotta",
+      "Salamino",
+      "Villa Paradiso"
+    ],
+    "requiredDishVariants": [
+      {"name": "Husets focaccia med aioli", "priceMinor": 8500},
+      {"name": "Pasta fredda", "priceMinor": 22500},
+      {"name": "Linguine alle vongole e ‘nduja", "priceMinor": 26500},
+      {"name": "Indiavolata", "priceMinor": 26000},
+      {"name": "Crudo", "priceMinor": 29000},
+      {"name": "Panna cotta", "priceMinor": 16000},
+      {"name": "Salamino", "priceMinor": 11500},
+      {"name": "Villa Paradiso", "priceMinor": 6800}
+    ],
+    "forbiddenDishNames": []
+  }
+}
