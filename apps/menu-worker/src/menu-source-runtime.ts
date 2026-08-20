@@ -205,7 +205,7 @@ function mergeExplicitFromPriceRecovery(
     };
   }
 
-  return output.sort((a, b) => a.position - b.position);
+  return output.sort((a,b) => a.position - b.position);
 }
 
 export function pdfResponseByteLimit(): number {
@@ -306,10 +306,14 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverFirstCardAfterPlainFoodSections(extracted.visibleText)
         : [];
-    const trailingPriceCardQualifies =
+    const semanticCategoryCardsPreferred =
       trailingPriceCardItems.length >= 4 &&
-      (recoveredItems.length === 0 ||
-        trailingPriceCardItems.length >= Math.max(6, Math.ceil(recoveredItems.length * 1.5)));
+      trailingPriceCardItems.every((item) => item.sectionName !== null && item.confidence >= 0.99);
+    const trailingPriceCardQualifies =
+      semanticCategoryCardsPreferred ||
+      (trailingPriceCardItems.length >= 4 &&
+        (recoveredItems.length === 0 ||
+          trailingPriceCardItems.length >= Math.max(6, Math.ceil(recoveredItems.length * 1.5))));
     const headingPriceCoverageThreshold = Math.ceil(recoveredItems.length * 0.75);
     const preferredItems = trailingPriceCardQualifies
       ? trailingPriceCardItems
@@ -320,15 +324,15 @@ export async function extractMenuSource(
           ? priceWrappedItems
           : recoveredItems;
     const headingSupplementedItems =
-      extracted.method === "html_heuristic"
+      extracted.method === "html_heuristic" && !semanticCategoryCardsPreferred
         ? supplementStrongHeadingRecovery(preferredItems, headingPriceItems)
         : preferredItems;
     const sectionSupplementedItems =
-      extracted.method === "html_heuristic"
+      extracted.method === "html_heuristic" && !semanticCategoryCardsPreferred
         ? mergeMissingRecoveredItems(headingSupplementedItems, sectionFirstCardItems)
         : headingSupplementedItems;
     const priceEnrichedItems =
-      extracted.method === "html_heuristic"
+      extracted.method === "html_heuristic" && !semanticCategoryCardsPreferred
         ? mergeExplicitFromPriceRecovery(sectionSupplementedItems, explicitFromPriceItems)
         : sectionSupplementedItems;
     const normalizedItems =
@@ -337,7 +341,7 @@ export async function extractMenuSource(
         : priceEnrichedItems;
     const canonicalItems = normalizedItems.filter(isCanonicalHtmlMenuItem);
     const items =
-      extracted.method === "html_heuristic"
+      extracted.method === "html_heuristic" && !semanticCategoryCardsPreferred
         ? filterPlainTextBeverageSectionItems(canonicalItems, extracted.visibleText)
         : canonicalItems;
     return {
