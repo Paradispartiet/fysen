@@ -75,6 +75,61 @@ function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
+function htmlDiagnosticContexts(
+  body: string,
+  assertions: readonly string[],
+): readonly { assertion: string; context: string }[] {
+  const foldedBody = body.toLocaleLowerCase("nb-NO");
+  const output: { assertion: string; context: string }[] = [];
+  const seen = new Set<string>();
+
+  for (const assertion of assertions) {
+    const needle = assertion.trim();
+    const foldedNeedle = needle.toLocaleLowerCase("nb-NO");
+    if (!needle || seen.has(foldedNeedle)) continue;
+    seen.add(foldedNeedle);
+    const index = foldedBody.indexOf(foldedNeedle);
+    if (index < 0) continue;
+    output.push({
+      assertion: needle,
+      context: body
+        .slice(Math.max(0, index - 240), Math.min(body.length, index + needle.length + 420))
+        .replace(/\s+/gu, " ")
+        .slice(0, 800),
+    });
+    if (output.length >= 24) break;
+  }
+
+  return output;
+}
+
+function logTemporaryHtmlDiagnostics(
+  manifest: RestaurantOnboardingManifest,
+  body: string,
+): void {
+  if (process.env.GITHUB_WORKFLOW !== "Validate Fysen restaurant candidates") return;
+  const assertions = [
+    ...manifest.qualityAssertions.requiredDishNames,
+    ...(manifest.qualityAssertions.forbiddenDishNames ?? []),
+  ];
+  console.error(
+    JSON.stringify(
+      {
+        temporaryHtmlDiagnostics: {
+          sourceUrl: manifest.menuSource.url,
+          bodyLength: body.length,
+          nativeHeadingTagCount: body.match(/<h[1-6]\b/giu)?.length ?? 0,
+          ariaHeadingRoleCount: body.match(/\brole\s*=\s*["']heading["']/giu)?.length ?? 0,
+          ariaLevelCount: body.match(/\baria-level\s*=/giu)?.length ?? 0,
+          contexts: htmlDiagnosticContexts(body, assertions),
+        },
+      },
+      null,
+      2,
+    ),
+  );
+}
+
 async function validateMenu(
   manifest: RestaurantOnboardingManifest,
   client: HttpMenuClient,
@@ -96,6 +151,7 @@ async function validateMenu(
       throw new Error(`Manifest validation unexpectedly returned HTTP 304 for ${manifest.menuSource.url}`);
     }
 
+    logTemporaryHtmlDiagnostics(manifest, fetched.body);
     const extracted = await extractMenuSource(manifest.menuSource.sourceType, fetched);
     const fingerprint = createMenuFingerprint(extracted.items);
     const quality = evaluateManifestMenuQuality(manifest, extracted.items);
