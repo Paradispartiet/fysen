@@ -2,13 +2,16 @@ import { describe, expect, it } from "vitest";
 import { parseRestaurantClaimOperatorCommand } from "./restaurant-claim-operator.js";
 
 const CLAIM_ID = "123e4567-e89b-42d3-a456-426614174000";
+const ACCESS_GRANT_ID = "223e4567-e89b-42d3-a456-426614174000";
 
 describe("restaurant claim operator CLI", () => {
-  it("parses bounded pending-claim listing", () => {
+  it("parses bounded pending-claim and active-grant listings", () => {
     expect(parseRestaurantClaimOperatorCommand(["--", "list"])).toEqual({ kind: "list", limit: 25 });
     expect(parseRestaurantClaimOperatorCommand(["list", "50"])).toEqual({ kind: "list", limit: 50 });
+    expect(parseRestaurantClaimOperatorCommand(["grants"])).toEqual({ kind: "grants", limit: 25 });
+    expect(parseRestaurantClaimOperatorCommand(["grants", "10"])).toEqual({ kind: "grants", limit: 10 });
     expect(() => parseRestaurantClaimOperatorCommand(["list", "0"])).toThrow(/between 1 and 100/);
-    expect(() => parseRestaurantClaimOperatorCommand(["list", "101"])).toThrow(/between 1 and 100/);
+    expect(() => parseRestaurantClaimOperatorCommand(["grants", "101"])).toThrow(/between 1 and 100/);
   });
 
   it("parses verify and reject without generating a Pro secret", () => {
@@ -40,13 +43,25 @@ describe("restaurant claim operator CLI", () => {
     });
   });
 
+  it("parses explicit access-grant revocation", () => {
+    expect(parseRestaurantClaimOperatorCommand(["revoke", ACCESS_GRANT_ID, "pilot-reviewer"])).toEqual({
+      kind: "revoke",
+      accessGrantId: ACCESS_GRANT_ID,
+      revokedBy: "pilot-reviewer",
+    });
+    expect(() => parseRestaurantClaimOperatorCommand(["revoke", "not-a-uuid", "pilot-reviewer"])).toThrow(
+      /accessGrantId must be a UUID/,
+    );
+    expect(() => parseRestaurantClaimOperatorCommand(["revoke", ACCESS_GRANT_ID])).toThrow(/Usage/);
+  });
+
   it("fails closed on malformed review commands", () => {
     expect(() => parseRestaurantClaimOperatorCommand(["verify", "not-a-uuid", "reviewer", "Verified evidence."])).toThrow(
       /UUID/,
     );
     expect(() => parseRestaurantClaimOperatorCommand(["verify", CLAIM_ID, "reviewer"])).toThrow(/reviewNote/);
     expect(() => parseRestaurantClaimOperatorCommand(["approve", CLAIM_ID, "reviewer", "Verified evidence."])).toThrow(
-      /list, verify, reject/,
+      /list, grants, verify, reject, revoke/,
     );
   });
 });
