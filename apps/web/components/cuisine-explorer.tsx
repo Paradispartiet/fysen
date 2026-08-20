@@ -2,7 +2,7 @@
 
 import type { DishBrowseItem, DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { discoveryCoverage } from "../lib/dish-discovery";
+import { discoveryCoverage, normalizeDiscoveryText } from "../lib/dish-discovery";
 import { dishSearchHref } from "../lib/public-path";
 import {
   cuisines,
@@ -39,6 +39,15 @@ function cuisineCandidates(cuisine: Cuisine): readonly DishSuggestion[] {
 
 function cuisinePreviewDishes(cuisine: Cuisine): readonly DishSuggestion[] {
   return cuisineCandidates(cuisine).slice(0, 4);
+}
+
+function cuisineFilterText(cuisine: Cuisine): string {
+  return normalizeDiscoveryText([
+    cuisine.name,
+    cuisine.context,
+    ...cuisine.areas.map((area) => area.name),
+    ...cuisineCandidates(cuisine).flatMap((dish) => [dish.label, dish.query, ...dish.aliases]),
+  ].join(" "));
 }
 
 function coverageForDish(dishes: readonly DishBrowseItem[], dish: DishSuggestion): DishCoverage {
@@ -105,11 +114,13 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
   const [selectedCuisine, setSelectedCuisine] = useState<Cuisine | null>(null);
   const [selectedAreaName, setSelectedAreaName] = useState<string>("");
   const [selectedMood, setSelectedMood] = useState<FoodMood | null>(null);
-  const [showAllCuisines, setShowAllCuisines] = useState(false);
+  const [cuisineDirectoryQuery, setCuisineDirectoryQuery] = useState("");
   const dialogRef = useRef<HTMLDialogElement>(null);
   const moodDialogRef = useRef<HTMLDialogElement>(null);
+  const cuisineDirectoryDialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const moodTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const cuisineDirectoryTriggerRef = useRef<HTMLButtonElement | null>(null);
   const liveDishes = browseData?.dishes ?? [];
 
   const selectedArea = useMemo<CuisineArea | null>(() => {
@@ -145,7 +156,13 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
     });
   }, [browseData, featured]);
 
-  const visibleCuisines = showAllCuisines ? rankedCuisines : rankedCuisines.slice(0, DEFAULT_CUISINE_COUNT);
+  const visibleCuisines = rankedCuisines.slice(0, DEFAULT_CUISINE_COUNT);
+
+  const filteredCuisines = useMemo(() => {
+    const normalizedQuery = normalizeDiscoveryText(cuisineDirectoryQuery);
+    if (!normalizedQuery) return rankedCuisines;
+    return rankedCuisines.filter((cuisine) => cuisineFilterText(cuisine).includes(normalizedQuery));
+  }, [cuisineDirectoryQuery, rankedCuisines]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -159,6 +176,16 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
 
   function openCuisine(cuisine: Cuisine, area: CuisineArea, trigger: HTMLButtonElement): void {
     triggerRef.current = trigger;
+    setSelectedAreaName(area.name);
+    setSelectedCuisine(cuisine);
+  }
+
+  function openCuisineFromDirectory(cuisine: Cuisine, area: CuisineArea): void {
+    const returnTrigger = cuisineDirectoryTriggerRef.current;
+    cuisineDirectoryTriggerRef.current = null;
+    const directoryDialog = cuisineDirectoryDialogRef.current;
+    if (directoryDialog?.open) directoryDialog.close();
+    triggerRef.current = returnTrigger;
     setSelectedAreaName(area.name);
     setSelectedCuisine(cuisine);
   }
@@ -178,6 +205,17 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
     const dialog = moodDialogRef.current;
     if (dialog?.open) dialog.close();
     setSelectedMood(null);
+  }
+
+  function openCuisineDirectory(trigger: HTMLButtonElement): void {
+    cuisineDirectoryTriggerRef.current = trigger;
+    const dialog = cuisineDirectoryDialogRef.current;
+    if (dialog && !dialog.open) dialog.showModal();
+  }
+
+  function closeCuisineDirectory(): void {
+    const dialog = cuisineDirectoryDialogRef.current;
+    if (dialog?.open) dialog.close();
   }
 
   function openFoodKnowledge(dishId: string): void {
@@ -201,6 +239,13 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
     setSelectedMood(null);
     const trigger = moodTriggerRef.current;
     moodTriggerRef.current = null;
+    if (trigger) window.requestAnimationFrame(() => trigger.focus());
+  }
+
+  function restoreCuisineDirectoryFocus(): void {
+    setCuisineDirectoryQuery("");
+    const trigger = cuisineDirectoryTriggerRef.current;
+    cuisineDirectoryTriggerRef.current = null;
     if (trigger) window.requestAnimationFrame(() => trigger.focus());
   }
 
@@ -320,12 +365,89 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
 
       {rankedCuisines.length > DEFAULT_CUISINE_COUNT ? (
         <div className="matlystCuisineMore">
-          <button type="button" aria-expanded={showAllCuisines} onClick={() => setShowAllCuisines((value) => !value)}>
-            {showAllCuisines ? "Vis færre kjøkken" : `Flere kjøkken (${rankedCuisines.length - DEFAULT_CUISINE_COUNT})`}
-            <span aria-hidden="true">{showAllCuisines ? "↑" : "↓"}</span>
+          <button type="button" aria-haspopup="dialog" onClick={(event) => openCuisineDirectory(event.currentTarget)}>
+            Alle kjøkken ({rankedCuisines.length})
+            <span aria-hidden="true">→</span>
           </button>
         </div>
       ) : null}
+
+      <dialog
+        ref={cuisineDirectoryDialogRef}
+        className="cuisineExploreDialog matlystCuisineDirectoryDialog"
+        aria-labelledby="all-cuisines-dialog-title"
+        onClose={restoreCuisineDirectoryFocus}
+        onClick={(event) => {
+          if (event.target === event.currentTarget) closeCuisineDirectory();
+        }}
+      >
+        <div className="cuisineExploreDialogShell">
+          <button type="button" className="cuisineExploreDialogClose" aria-label="Lukk alle kjøkken" onClick={closeCuisineDirectory}>
+            <span aria-hidden="true">×</span>
+          </button>
+
+          <header className="cuisineExploreDialogHeader">
+            <p>Kjøkken</p>
+            <h2 id="all-cuisines-dialog-title">Alle kjøkken i Matlyst</h2>
+            <span>{rankedCuisines.length} dokumenterte mattradisjoner, sortert med fersk Oslo-dekning først.</span>
+          </header>
+
+          <div className="matlystCuisineDirectorySearch">
+            <label htmlFor="matlyst-cuisine-filter">Filtrer kjøkken</label>
+            <input
+              id="matlyst-cuisine-filter"
+              type="search"
+              autoComplete="off"
+              value={cuisineDirectoryQuery}
+              placeholder="Søk etter kjøkken eller rett …"
+              onChange={(event) => setCuisineDirectoryQuery(event.currentTarget.value)}
+            />
+          </div>
+
+          <div className="matlystCuisineDirectoryMeta" aria-live="polite">
+            <span>{filteredCuisines.length} {filteredCuisines.length === 1 ? "kjøkken" : "kjøkken"}</span>
+            <small>Du kan også søke på retter som ramen, momo eller pierogi.</small>
+          </div>
+
+          {filteredCuisines.length > 0 ? (
+            <div className="matlystCuisineDirectoryGrid">
+              {filteredCuisines.map((cuisine) => {
+                const firstArea = cuisine.areas[0];
+                const preview = featured.get(cuisine.name) ?? null;
+                if (!firstArea) return null;
+
+                return (
+                  <button
+                    type="button"
+                    className="matlystCuisineDirectoryCard"
+                    key={cuisine.name}
+                    onClick={() => openCuisineFromDirectory(cuisine, firstArea)}
+                  >
+                    <span className="matlystCuisineDirectoryCardTopline">
+                      <strong>{cuisine.name}</strong>
+                      <span aria-hidden="true">→</span>
+                    </span>
+                    <small>{cuisine.context}</small>
+                    <span className="matlystCuisineDirectoryCoverage">
+                      {!browseData ? "Utforsk retter" : null}
+                      {browseData && preview && preview.restaurantCount > 0
+                        ? `${preview.dish.label} · minst ${preview.restaurantCount} ${preview.restaurantCount === 1 ? "sted" : "steder"} nå`
+                        : null}
+                      {browseData && (!preview || preview.restaurantCount === 0) ? "Ingen prioriterte ferske treff akkurat nå" : null}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="matlystCuisineDirectoryEmpty">Ingen kjøkken eller representative retter matcher «{cuisineDirectoryQuery.trim()}».</p>
+          )}
+
+          <footer className="cuisineExploreDialogFooter">
+            Katalogen filtrerer bare Matlysts dokumenterte kjøkken og canonical retter. Restaurant- og menydekning kommer fortsatt fra den samme ferske browse-indeksen som resten av Fysen.
+          </footer>
+        </div>
+      </dialog>
 
       <dialog
         ref={moodDialogRef}
