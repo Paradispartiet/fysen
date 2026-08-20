@@ -167,3 +167,9 @@ Revenue Layer R1/R2 etablerer funnel-måling og verifiserte handlinger. Deretter
 Piloten er vellykket når en bruker i Oslo kan søke eller utforske en konkret rett og få et **troverdig, ferskt og handlingsklart resultat** som viser hvor retten faktisk kan spises, med tydelig provenance og uten at tekniske kvoter forveksles med produktkvalitet.
 
 Revenue- og konverteringsdelen er spesifisert i [`revenue-layer-v1.md`](./revenue-layer-v1.md).
+
+## Hva som skjer etter Oslo v1
+
+Oslo-piloten skal production-lukkes før neste store consumerfase starter. Videre restaurant-onboarding er da løpende innholdsproduksjon, ikke en produktblocker.
+
+Fysen v2 er definert i [`fysen-v2.md`](./fysen-v2.md) som personlig og forklarbar matoppdagelse basert på eksplisitte brukersignaler. Planen åpner ikke ratings/reviews, sosial feed, map-first restaurantguide eller generell AI-chat. Flere byer og Pro v2 følger som separate spor etter at Oslo v1 er bevist stabil.

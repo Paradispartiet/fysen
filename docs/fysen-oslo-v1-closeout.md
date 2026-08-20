@@ -74,3 +74,9 @@ Fysen Oslo v1 skal ikke erklæres ferdig på grunnlag av restauranttall, rått m
 > search + discovery + restaurant action + knowledge + personal collection + production integrity
 
 Etter erklæringen er restaurant-onboarding løpende innholdsproduksjon. Nye større forbruker- eller revenue-features tilhører neste eksplisitte produktfase.
+
+## Overgang til v2
+
+Oslo v1-scope forblir frosset til alle åtte porter er grønne. Det er ikke tillatt å bruke en ny v2-feature som erstatning for manglende release-, mobil-, AHA- eller restaurantpilotbevis.
+
+Når v1 er erklært ferdig, følger videre produktarbeid den portstyrte planen i [`fysen-v2.md`](./fysen-v2.md). Hovedretningen er eksplisitt, privat og forklarbar matpersonalisering. Flerbyutrulling og Pro v2 er senere, separate spor.

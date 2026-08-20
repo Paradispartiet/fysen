@@ -25,7 +25,7 @@ Restaurantdekning, batch-intake og daterte produksjonsmålinger er dokumentert i
 - **Production database deploy:** GitHub Actions etter grønn `main`-CI, med serialiserte migrasjoner og post-deploy-verifisering
 - **Revenue foundation:** anonymisert etterspørsel, result impressions og attribuerte konverteringshandlinger uten permanent brukerprofil
 
-Se [`docs/architecture.md`](docs/architecture.md), [`docs/oslo-pilot-v1.md`](docs/oslo-pilot-v1.md), [`docs/revenue-layer-v1.md`](docs/revenue-layer-v1.md), [`docs/design-v1.md`](docs/design-v1.md), [`docs/menu-watcher-v1.md`](docs/menu-watcher-v1.md), [`docs/deployment.md`](docs/deployment.md) og arkitekturbeslutningene under [`docs/adr`](docs/adr).
+Se [`docs/architecture.md`](docs/architecture.md), [`docs/oslo-pilot-v1.md`](docs/oslo-pilot-v1.md), [`docs/fysen-oslo-v1-closeout.md`](docs/fysen-oslo-v1-closeout.md), [`docs/fysen-v2.md`](docs/fysen-v2.md), [`docs/revenue-layer-v1.md`](docs/revenue-layer-v1.md), [`docs/design-v1.md`](docs/design-v1.md), [`docs/menu-watcher-v1.md`](docs/menu-watcher-v1.md), [`docs/deployment.md`](docs/deployment.md) og arkitekturbeslutningene under [`docs/adr`](docs/adr).
 
 ## Kom i gang
 
