@@ -115,7 +115,14 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
       <main className="resultsMain">
         <section className="resultsContent" aria-live="polite">
           {q.length === 0 ? (
-            <DishBrowse city={city} data={browseState.data} error={browseState.error} />
+            <DishBrowse
+              city={city}
+              data={browseState.data}
+              error={browseState.error}
+              initialWorldId={first(params.world)}
+              initialRegionId={first(params.region)}
+              initialCuisineName={first(params.cuisine)}
+            />
           ) : (
             <>
               <div className="resultsIntro">
