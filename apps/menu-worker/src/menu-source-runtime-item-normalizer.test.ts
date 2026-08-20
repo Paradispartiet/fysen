@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
-import { normalizeHtmlItemName } from "./menu-source-runtime.js";
+import { isCanonicalHtmlMenuItem, normalizeHtmlItemName } from "./menu-source-runtime.js";
 
 function item(name: string): MenuObservedItem {
   return {
@@ -48,5 +48,47 @@ describe("generic HTML item-name normalization", () => {
   it("does not strip pipes that are part of the dish text", () => {
     const input = "Surf | Turf";
     expect(normalizeHtmlItemName(item(input)).name).toBe(input);
+  });
+
+  it.each([
+    "(Soya, Sesam, Egg, Hvetemel)",
+    "( Hvetemel, Skalldyr, Soya, Sesam)",
+    "(Hvetemel, Melk, Egg, Sulfitt)",
+    "(Soya)\u200d",
+    "(Hvetemel, Skalldyr, Sesam, Selleri)\u200d",
+    "Shellfish",
+    "milk",
+    "Eggs",
+    "Soy",
+    "Fish",
+    "Hjemmeside",
+    "Mine Favoritter",
+    "pers",
+    "Medium",
+    "Gluten free",
+    "Maki",
+    "Grill",
+    "Snacks",
+    "ANTIPASTI",
+    "VEGAN",
+    "Klassiske Forretter og Supper",
+    "*Påfyll av tilbehør (29,- per type)",
+    "stk. Svinekjøtt med scampi, salat og agurk.",
+    "stk vårruller med kylling.",
+    "biter. 4 avokado nigiri og 8 kappa maki.",
+  ])("rejects generic batch non-dish leakage: %s", (name) => {
+    expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
+  });
+
+  it.each([
+    "Fish & Chips",
+    "Sesame Chicken",
+    "Milk Bun Burger",
+    "Maki Tempura Scampi",
+    "Grilled Salmon",
+    "Vegan Burger",
+    "Gluten Free Pizza",
+  ])("preserves real dish names while filtering metadata: %s", (name) => {
+    expect(isCanonicalHtmlMenuItem(item(name))).toBe(true);
   });
 });
