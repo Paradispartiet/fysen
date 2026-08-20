@@ -163,7 +163,7 @@ function looksLikeRecoveredTitle(value: string): boolean {
   if (!line || line.length > 160 || !/\p{L}/u.test(line)) return false;
   if (
     PRICE_LINE.test(line) ||
-    SECTION_LABEL.test(line) ||
+    isSectionLabel(line) ||
     looksLikeDescription(line) ||
     ALLERGEN_PREFIX.test(line) ||
     looksLikeAllergenMetadata(line)
@@ -211,7 +211,8 @@ function recoverForwardTitleFromSourceExcerpt(item: MenuObservedItem): SourceExc
     .map(normalizeVisibleLine)
     .filter(Boolean);
   const foldedCurrent = current.toLocaleLowerCase("nb-NO");
-  const candidates = new Set<string>();
+  const fallbackCandidates = new Set<string>();
+  const structuredCandidates = new Set<string>();
 
   for (let index = 0; index < segments.length; index += 1) {
     const segment = segments[index] ?? "";
@@ -221,13 +222,28 @@ function recoverForwardTitleFromSourceExcerpt(item: MenuObservedItem): SourceExc
       const candidate = segments[index + offset] ?? "";
       if (!candidate) continue;
       if (PRICE_LINE.test(candidate)) break;
-      if (looksLikeRecoveredTitle(candidate)) candidates.add(candidate);
+      if (!looksLikeRecoveredTitle(candidate)) continue;
+
+      fallbackCandidates.add(candidate);
+      const following = segments[index + offset + 1] ?? "";
+      if (following && !PRICE_LINE.test(following) && looksLikeDescription(following)) {
+        structuredCandidates.add(candidate);
+      }
     }
   }
 
-  if (candidates.size !== 1) return null;
+  const title =
+    structuredCandidates.size === 1
+      ? [...structuredCandidates][0] ?? null
+      : structuredCandidates.size > 1
+        ? null
+        : fallbackCandidates.size === 1
+          ? [...fallbackCandidates][0] ?? null
+          : null;
+  if (!title) return null;
+
   return {
-    title: [...candidates][0] ?? "",
+    title,
     sectionHint: currentIsSection ? current : null,
   };
 }
