@@ -18,7 +18,7 @@ describe("adjacent heading-price HTML recovery", () => {
       </body></html>
     `);
 
-    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v4");
+    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v5");
     expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
       ["Doro Wet", 29000, "exact"],
       ["Key Wet", 28000, "exact"],
@@ -92,6 +92,29 @@ describe("adjacent heading-price HTML recovery", () => {
       ["Clay Pot Lamb", 44900, "exact"],
       ["Handmade Dumplings", 39900, "exact"],
     ]);
+  });
+
+  it("preserves duplicate dish names only when distinct semantic ancestor sections are present", () => {
+    const items = recoverAdjacentHeadingPriceHtmlItems(`
+      <html><body>
+        <h2>Salater & Suppe</h2>
+        <h3>Fatouche</h3><p>kr 179</p>
+        <h3>Chorbet Ades</h3><p>kr 149</p>
+        <h2>Kylling</h2>
+        <h3>Fatouche</h3><p>kr 349</p>
+        <h3>Kos Kos Kylling</h3><p>kr 349</p>
+        <h3>Shawarma</h3><p>kr 339</p>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor, item.sectionName])).toEqual([
+      ["Fatouche", 17900, "Salater & Suppe"],
+      ["Chorbet Ades", 14900, null],
+      ["Fatouche", 34900, "Kylling"],
+      ["Kos Kos Kylling", 34900, null],
+      ["Shawarma", 33900, null],
+    ]);
+    expect(new Set(items.map((item) => item.sourceKey)).size).toBe(items.length);
   });
 
   it("excludes descendant beverage cards when a repeated heading-price menu enters a drink section", () => {
