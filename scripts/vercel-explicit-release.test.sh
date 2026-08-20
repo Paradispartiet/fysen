@@ -47,9 +47,15 @@ fi
 
 proof_workflow=.github/workflows/production-pilot-proof.yml
 test -f "$proof_workflow"
+grep -F 'workflow_dispatch:' "$proof_workflow" >/dev/null
+grep -F 'Materialize Fysen production catalog' "$proof_workflow" >/dev/null
 grep -F 'Fysen batched Vercel production release' "$proof_workflow" >/dev/null
 grep -F 'github.event.workflow_run.head_sha' "$proof_workflow" >/dev/null
 grep -F 'FYSEN_PUBLIC_WEB_URL: https://fysen.vercel.app' "$proof_workflow" >/dev/null
+if grep -Eq '^  push:' "$proof_workflow"; then
+  echo "Production proof must not run directly on main pushes before the batched Vercel production release" >&2
+  exit 1
+fi
 if grep -F 'FYSEN_PUBLIC_WEB_URL: https://fysen-matsgran-8572s-projects.vercel.app' "$proof_workflow" >/dev/null; then
   echo "Production proof must use the public Fysen web alias, not the Vercel team alias" >&2
   exit 1
