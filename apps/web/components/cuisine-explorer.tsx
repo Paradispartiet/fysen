@@ -4,23 +4,30 @@ import type { DishBrowseItem, DishBrowseResponse } from "@fysen/contracts/dish-b
 import { useEffect, useMemo, useRef, useState } from "react";
 import { discoveryCoverage } from "../lib/dish-discovery";
 import { dishSearchHref } from "../lib/public-path";
-import { cuisines, type Cuisine, type CuisineArea, type DishSuggestion } from "./cuisine-explorer-data";
+import { cuisines, foodMoods, type Cuisine, type CuisineArea, type DishSuggestion } from "./cuisine-explorer-data";
 
 type DishCoverage = {
   readonly dish: DishSuggestion;
   readonly restaurantCount: number;
 };
 
-function cuisineCandidates(cuisine: Cuisine): readonly DishSuggestion[] {
+const DEFAULT_CUISINE_COUNT = 8;
+
+function uniqueCandidates(dishes: readonly DishSuggestion[]): readonly DishSuggestion[] {
   const seen = new Set<string>();
-  return cuisine.areas
-    .flatMap((area) => area.dishes)
-    .sort((left, right) => right.explorerPriority - left.explorerPriority || left.label.localeCompare(right.label, "nb"))
-    .filter((dish) => {
-      if (seen.has(dish.id)) return false;
-      seen.add(dish.id);
-      return true;
-    });
+  return dishes.filter((dish) => {
+    if (seen.has(dish.id)) return false;
+    seen.add(dish.id);
+    return true;
+  });
+}
+
+function cuisineCandidates(cuisine: Cuisine): readonly DishSuggestion[] {
+  return uniqueCandidates(
+    cuisine.areas
+      .flatMap((area) => area.dishes)
+      .sort((left, right) => right.explorerPriority - left.explorerPriority || left.label.localeCompare(right.label, "nb")),
+  );
 }
 
 function cuisinePreviewDishes(cuisine: Cuisine): readonly DishSuggestion[] {
@@ -47,13 +54,14 @@ function rankDishCoverage(coverage: readonly DishCoverage[]): DishCoverage[] {
   });
 }
 
-function featuredCoverage(cuisine: Cuisine, dishes: readonly DishBrowseItem[]): DishCoverage | null {
-  return rankDishCoverage(cuisineCandidates(cuisine).map((dish) => coverageForDish(dishes, dish)))[0] ?? null;
+function featuredCoverage(dishesToCheck: readonly DishSuggestion[], dishes: readonly DishBrowseItem[]): DishCoverage | null {
+  return rankDishCoverage(uniqueCandidates(dishesToCheck).map((dish) => coverageForDish(dishes, dish)))[0] ?? null;
 }
 
 export function CuisineExplorer({ browseData }: { readonly browseData: DishBrowseResponse | null }) {
   const [selectedCuisine, setSelectedCuisine] = useState<Cuisine | null>(null);
   const [selectedAreaName, setSelectedAreaName] = useState<string>("");
+  const [showAllCuisines, setShowAllCuisines] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const liveDishes = browseData?.dishes ?? [];
@@ -69,8 +77,24 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
   }, [liveDishes, selectedArea]);
 
   const featured = useMemo(() => {
-    return new Map(cuisines.map((cuisine) => [cuisine.name, featuredCoverage(cuisine, liveDishes)]));
+    return new Map(cuisines.map((cuisine) => [cuisine.name, featuredCoverage(cuisineCandidates(cuisine), liveDishes)]));
   }, [liveDishes]);
+
+  const moodFeatured = useMemo(() => {
+    return new Map(foodMoods.map((mood) => [mood.name, featuredCoverage(mood.dishes, liveDishes)]));
+  }, [liveDishes]);
+
+  const rankedCuisines = useMemo(() => {
+    if (!browseData) return cuisines;
+    return [...cuisines].sort((left, right) => {
+      const leftCount = featured.get(left.name)?.restaurantCount ?? 0;
+      const rightCount = featured.get(right.name)?.restaurantCount ?? 0;
+      if (leftCount !== rightCount) return rightCount - leftCount;
+      return cuisines.indexOf(left) - cuisines.indexOf(right);
+    });
+  }, [browseData, featured]);
+
+  const visibleCuisines = showAllCuisines ? rankedCuisines : rankedCuisines.slice(0, DEFAULT_CUISINE_COUNT);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -105,16 +129,57 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
   }
 
   return (
-    <section className="cuisineExplorer" aria-label="Matlyst">
-      <div className="foodSectionHeading">
+    <section className="cuisineExplorer" aria-labelledby="matlyst-title">
+      <div className="foodSectionHeading matlystHeading">
         <div>
           <p className="foodSectionEyebrow">Matlyst</p>
+          <h2 id="matlyst-title">Finn maten du faktisk har lyst på</h2>
         </div>
-        <p>Velg et kjøkken eller en region, oppdag relevante retter, og se hvilke som faktisk har fersk Oslo-dekning nå.</p>
+        <p>Start med en smak eller en rettstype, eller gå videre til et kjøkken. Alt leder til den samme ferske Oslo-indeksen.</p>
+      </div>
+
+      <div className="matlystMoodBlock" aria-labelledby="matlyst-mood-title">
+        <div className="matlystSubheading">
+          <div>
+            <span>Hva frister?</span>
+            <h3 id="matlyst-mood-title">Velg etter lyst</h3>
+          </div>
+          <p>Du trenger ikke vite hvilket kjøkken retten kommer fra.</p>
+        </div>
+
+        <div className="matlystMoodGrid">
+          {foodMoods.map((mood) => {
+            const preview = moodFeatured.get(mood.name) ?? null;
+            return (
+              <a className="matlystMoodCard" href={dishSearchHref(mood.query)} key={mood.name}>
+                <span className="matlystMoodCardTopline">
+                  <strong>{mood.name}</strong>
+                  <span aria-hidden="true">→</span>
+                </span>
+                <small>{mood.context}</small>
+                <span className="matlystMoodCoverage">
+                  {!browseData ? "Se ferske treff" : null}
+                  {browseData && preview && preview.restaurantCount > 0
+                    ? `${preview.dish.label}: minst ${preview.restaurantCount} ${preview.restaurantCount === 1 ? "sted" : "steder"} nå`
+                    : null}
+                  {browseData && (!preview || preview.restaurantCount === 0) ? "Se hva som finnes i Oslo nå" : null}
+                </span>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="matlystCuisineHeading">
+        <div>
+          <span>Kjøkken</span>
+          <h3>Utforsk etter mattradisjon</h3>
+        </div>
+        <p>De best dekkede kjøkkenene vises først når live-data er tilgjengelig.</p>
       </div>
 
       <div className="cuisineGrid">
-        {cuisines.map((cuisine) => {
+        {visibleCuisines.map((cuisine) => {
           const firstArea = cuisine.areas[0];
           const preview = featured.get(cuisine.name) ?? null;
           if (!firstArea) return null;
@@ -153,21 +218,32 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
                 </span>
               </button>
 
-              <div className="cuisineAreaList" aria-label={`${cuisine.areasLabel} i ${cuisine.name}`}>
-                {cuisine.areas.map((area) => (
-                  <button
-                    type="button"
-                    key={area.name}
-                    onClick={(event) => openCuisine(cuisine, area, event.currentTarget)}
-                  >
-                    {area.name}
-                  </button>
-                ))}
-              </div>
+              {cuisine.areas.length > 1 ? (
+                <div className="cuisineAreaList" aria-label={`${cuisine.areasLabel} i ${cuisine.name}`}>
+                  {cuisine.areas.map((area) => (
+                    <button
+                      type="button"
+                      key={area.name}
+                      onClick={(event) => openCuisine(cuisine, area, event.currentTarget)}
+                    >
+                      {area.name}
+                    </button>
+                  ))}
+                </div>
+              ) : null}
             </article>
           );
         })}
       </div>
+
+      {rankedCuisines.length > DEFAULT_CUISINE_COUNT ? (
+        <div className="matlystCuisineMore">
+          <button type="button" aria-expanded={showAllCuisines} onClick={() => setShowAllCuisines((value) => !value)}>
+            {showAllCuisines ? "Vis færre kjøkken" : `Flere kjøkken (${rankedCuisines.length - DEFAULT_CUISINE_COUNT})`}
+            <span aria-hidden="true">{showAllCuisines ? "↑" : "↓"}</span>
+          </button>
+        </div>
+      ) : null}
 
       <dialog
         ref={dialogRef}
@@ -195,28 +271,30 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
               <span>{selectedCuisine.context}</span>
             </header>
 
-            <section className="cuisineExploreAreas" aria-labelledby="cuisine-area-title">
-              <h3 id="cuisine-area-title">{selectedCuisine.areasLabel}</h3>
-              <div>
-                {selectedCuisine.areas.map((area) => (
-                  <button
-                    type="button"
-                    className={area.name === selectedArea.name ? "isActive" : undefined}
-                    aria-pressed={area.name === selectedArea.name}
-                    key={area.name}
-                    onClick={() => setSelectedAreaName(area.name)}
-                  >
-                    {area.name}
-                  </button>
-                ))}
-              </div>
-            </section>
+            {selectedCuisine.areas.length > 1 ? (
+              <section className="cuisineExploreAreas" aria-labelledby="cuisine-area-title">
+                <h3 id="cuisine-area-title">{selectedCuisine.areasLabel}</h3>
+                <div>
+                  {selectedCuisine.areas.map((area) => (
+                    <button
+                      type="button"
+                      className={area.name === selectedArea.name ? "isActive" : undefined}
+                      aria-pressed={area.name === selectedArea.name}
+                      key={area.name}
+                      onClick={() => setSelectedAreaName(area.name)}
+                    >
+                      {area.name}
+                    </button>
+                  ))}
+                </div>
+              </section>
+            ) : null}
 
             <section className="cuisineExploreResults" aria-live="polite">
               <div className="cuisineExploreResultsHeading">
                 <div>
-                  <p>{selectedArea.name}</p>
-                  <h3>Retter i området</h3>
+                  <p>{selectedCuisine.areas.length > 1 ? selectedArea.name : selectedCuisine.name}</p>
+                  <h3>Retter å utforske</h3>
                 </div>
                 <span>Fersk Oslo-dekning først</span>
               </div>
