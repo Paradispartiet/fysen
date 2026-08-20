@@ -5,9 +5,9 @@ const publicBasePath = configuredBasePath && configuredBasePath !== "/"
   : "";
 
 export type DishBrowseTaxonomyScope = {
-  readonly worldId?: string;
-  readonly regionId?: string;
-  readonly cuisineName?: string;
+  readonly worldId?: string | undefined;
+  readonly regionId?: string | undefined;
+  readonly cuisineName?: string | undefined;
 };
 
 export function withPublicBasePath(path: string): string {
