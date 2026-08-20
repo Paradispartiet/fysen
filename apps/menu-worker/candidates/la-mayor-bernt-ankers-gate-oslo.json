@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "la-mayor-bernt-ankers-gate-oslo",
+    "name": "La Mayor",
+    "websiteUrl": "https://www.lamayor.no/",
+    "address": "Bernt Ankers gate 25-27, 0183 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9165077,
+    "longitude": 10.7511673
+  },
+  "menuSource": {
+    "url": "https://www.lamayor.no/copy-of-restaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 17
+  },
+  "hoursSource": {
+    "url": "https://www.lamayor.no/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 6
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-20",
+      "note": "La Mayor publishes complete first-party venue opening hours (Mon-Thu 17:00-22:00, Fri 17:00-23:00, Sat 12:00-23:00, Sun closed), but the source labels them only as OPEN and does not separately identify kitchen-service hours. Keep open/closed unknown until kitchen-scoped intervals are explicitly verified."
+    }
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://lamayor.superbexperience.com/reserve/experience",
+      "sourceUrl": "https://www.lamayor.no/",
+      "provider": "Superb"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tostada de Callos (from the coast)",
+      "Aguachile de Salmon",
+      "Berenjena con Mole Rosa (chef’s inspiration)",
+      "Molotes de Platano (Oaxaca)",
+      "Tetela (Oaxaca)",
+      "Mussels Tamal",
+      "Pistacho Mole",
+      "Cochinita Pibil (Yucatan region)",
+      "Empanada de Pescado (Baja California Style)",
+      "Manchamanteles (Oaxaca)",
+      "Pescado Zarandeado (Nayarit)",
+      "Birria Huarache",
+      "Buñuelos con Cajeta (Celaya)",
+      "Pie de Queso Bola (Yucatan region)",
+      "Tamal de Chocolate (Mexico City)"
+    ],
+    "requiredDishVariants": [
+      { "name": "Tostada de Callos (from the coast)", "priceMinor": 23000 },
+      { "name": "Aguachile de Salmon", "priceMinor": 22000 },
+      { "name": "Berenjena con Mole Rosa (chef’s inspiration)", "priceMinor": 21000 },
+      { "name": "Molotes de Platano (Oaxaca)", "priceMinor": 21000 },
+      { "name": "Tetela (Oaxaca)", "priceMinor": 21000 },
+      { "name": "Mussels Tamal", "priceMinor": 22000 },
+      { "name": "Pistacho Mole", "priceMinor": 23000 },
+      { "name": "Cochinita Pibil (Yucatan region)", "priceMinor": 31000 },
+      { "name": "Empanada de Pescado (Baja California Style)", "priceMinor": 31000 },
+      { "name": "Manchamanteles (Oaxaca)", "priceMinor": 28500 },
+      { "name": "Pescado Zarandeado (Nayarit)", "priceMinor": 39500 },
+      { "name": "Birria Huarache", "priceMinor": 31000 },
+      { "name": "Buñuelos con Cajeta (Celaya)", "priceMinor": 14500 },
+      { "name": "Pie de Queso Bola (Yucatan region)", "priceMinor": 14500 },
+      { "name": "Tamal de Chocolate (Mexico City)", "priceMinor": 14500 }
+    ],
+    "forbiddenDishNames": [
+      "MENU",
+      "TASTING MENU",
+      "A LA CARTA",
+      "ENTRADAS / APPETIZERS",
+      "FUERTES /MAINS",
+      "DULCE/ SWEET",
+      "BRUNCH",
+      "5 Course Menu",
+      "3 Course Menu",
+      "6 Course Menu",
+      "Tributo al Mole",
+      "Wine pairing",
+      "Coffee or Juice",
+      "La Mayor Set"
+    ]
+  }
+}
