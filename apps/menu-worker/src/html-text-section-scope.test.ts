@@ -52,6 +52,28 @@ describe("plain-text HTML section scoping", () => {
     ]);
   });
 
+  it("ignores unknown duplicate DOM text when the canonical occurrence is inside a beverage section", () => {
+    const items = [item("Falafel", 1), item("House Soda", 2), item("Ayran", 3)];
+    const visibleText = `
+      House Soda
+      Ayran
+      Forretter
+      Falafel
+      99 NOK
+      Drikke
+      House Soda
+      55 NOK
+      Ayran
+      55 NOK
+      Restaurant information
+      House Soda
+    `;
+
+    expect(filterPlainTextBeverageSectionItems(items, visibleText).map((entry) => entry.name)).toEqual([
+      "Falafel",
+    ]);
+  });
+
   it("preserves an item when the same title also occurs in a food section", () => {
     const items = [item("House Special", 1)];
     const visibleText = `
