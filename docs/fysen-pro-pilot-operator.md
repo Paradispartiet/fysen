@@ -14,7 +14,7 @@ Operatørflyten er lokal og privilegert. Den skal ikke kjøres i GitHub Actions,
 - Rå setup-/session-token skal aldri legges i database, GitHub-logg, workflow artifact, commit, issue eller PR-kommentar.
 - Det finnes fortsatt ingen offentlig HTTP-route for claim review, access grant eller setup-token-utstedelse.
 
-Begge privilegerte CLI-ene nekter å kjøre når `GITHUB_ACTIONS=true`.
+De privilegerte operator-CLI-ene nekter å kjøre når `GITHUB_ACTIONS=true`.
 
 ## Forutsetninger
 
@@ -75,6 +75,32 @@ Denne kommandoen viser den rå setup-tokenen én gang. Bare SHA-256-hashen lagre
 Representanten bruker setup-tokenen på Fysen Pro-login. Web-laget redeemer tokenen server-to-server og setter Pro-sessionen i en `HttpOnly`, `SameSite=Lax` cookie. Klient-JavaScript skal aldri motta session-tokenen.
 
 Etter login skal dashboardet være skopet til restauranten i det aktive access grantet. Logout revokerer server-sessionen. Senere revokering av access grant skal også invalidere en ellers aktiv Pro-session umiddelbart.
+
+## 6. Kjør kontrollert autentisert pilotbevis
+
+Når ordinær batch-release og den ikke-muterende production proofen viser at R3/R4-flatene er live, kan én ny setup-token brukes til et kontrollert ende-til-ende-bevis:
+
+```bash
+pnpm --filter @fysen/database pro:pilot-proof -- <restaurantSlug>
+```
+
+Kommandoen krever en interaktiv TTY. Setup-tokenen kan ikke gis i argv eller pipe; den limes inn i et skjult inputfelt og skrives aldri tilbake til terminalen. Kommandoen nekter også å kjøre i GitHub Actions.
+
+Proofen er bevisst muterende og gjør bare den avgrensede pilotsekvensen:
+
+1. redeemer setup-tokenen gjennom den offentlige Fysen web-ruten;
+2. kontrollerer at web-responsen ikke eksponerer setup- eller session-token i JSON;
+3. kontrollerer `HttpOnly`, `Secure`, `SameSite=Lax` og `Path=/` på Pro-cookie;
+4. forsøker samme setup-token en gang til og krever `401`, slik at one-time-kontrakten bevises;
+5. leser det autentiserte Pro-dashboardet og krever at det er skopet til oppgitt restaurant;
+6. kontrollerer at Demand Loop-responsen fortsatt filtrerer alle signaler under tre søk siste sju dager;
+7. åpner den autentiserte `/pro`-flaten med session-cookie;
+8. logger ut gjennom web-laget;
+9. krever at den gamle sessionen deretter gir `401` i API-et og redirect til login i web.
+
+Proofen skriver bare en sanitert JSON-oppsummering med boolske kontraktbevis og aggregerte dashboardtall. Den skriver aldri raw setup-token, raw session-token eller rå Demand Loop-spørringer.
+
+En proof-run bruker opp setup-tokenen og avslutter den opprettede sessionen. Den skal derfor bare kjøres som en planlagt pilotkontroll, ikke som generell smoke-test.
 
 ## Pilotbevis før R5
 
