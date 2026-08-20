@@ -4,6 +4,7 @@ import {
   OPENING_HOURS_DUPLICATE_SECTION_RECOVERY_VERSION,
 } from "./opening-hours-duplicate-section-recovery.js";
 import { OpeningHoursExtractionError, type ExtractedOpeningHours } from "./opening-hours-extractor.js";
+import { OPENING_HOURS_MARKER_NORMALIZER_VERSION } from "./opening-hours-marker-normalizer.js";
 import {
   OPENING_HOURS_SCOPE_HINT_RESOLVER_VERSION,
   resolveOpeningHoursScopeHints,
@@ -13,7 +14,7 @@ import {
   OPENING_HOURS_SOURCE_EXTRACTOR_VERSION,
 } from "./opening-hours-source-extractor.js";
 
-export const OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION = `${OPENING_HOURS_SOURCE_EXTRACTOR_VERSION}+${OPENING_HOURS_DUPLICATE_SECTION_RECOVERY_VERSION}+${OPENING_HOURS_SCOPE_HINT_RESOLVER_VERSION}`;
+export const OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION = `${OPENING_HOURS_SOURCE_EXTRACTOR_VERSION}+${OPENING_HOURS_DUPLICATE_SECTION_RECOVERY_VERSION}+${OPENING_HOURS_SCOPE_HINT_RESOLVER_VERSION}+${OPENING_HOURS_MARKER_NORMALIZER_VERSION}`;
 
 export interface OpeningHoursSourceRuntimeInput {
   readonly url: string;
