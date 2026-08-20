@@ -108,7 +108,7 @@ describe("trailing-price HTML card recovery", () => {
         <p>11 Kwuitiew Nua</p><p>Stekt oksekjøtt i panang karri med kokosmelk, lange bønner og paprika</p><p>249 kr</p>
         <p>12 Phad Mhi</p><p>Stekte nudler med grønnsaker, egg og soyasaus 259 kr</p>
         <p>Kylling</p><p>60 kr</p>
-        <p>Iskaffe</p><p>99 kr</p>
+        <p>35 kr</p><p>Vis mer</p><p>Thai Iced Delight</p><p>Iskaffe</p><p>99 kr</p>
       </body></html>
     `);
 

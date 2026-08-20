@@ -19,6 +19,7 @@ const DESCRIPTION_LEAD = /^(?:serveres?|servert|served|with|med|marinert|marinat
 const ALLERGEN_METADATA = /^\(?\s*(?:allergener?|allergens?)\s*:/iu;
 const PARENTHETICAL_METADATA_ONLY = /^\([^()]{1,120}\)$/u;
 const LEADING_MENU_INDEX = /^(\d{1,3})\s*[.)]?\s+(.+)$/u;
+const CURRENCY_ONLY_NUMBERED_TITLE = /^(?:kr\.?|nok)$/iu;
 const EXPLICIT_A_LA_CARTE_SCOPE = /^(?:a\s+la\s+carta|a\s+la\s+carte|à\s+la\s+carte)$/iu;
 const NEXT_MENU_SCOPE = /^(?:breakfast|frokost|brunch|lunch|lunsj|tasting\s+menu|set\s+menu|drinks?|drikke(?:meny)?|bar\s+menu)$/iu;
 const EXPLICIT_A_LA_CARTE_SECTION = "A LA CARTA";
@@ -37,6 +38,11 @@ interface TrailingPriceCandidate {
 
 interface NumberedTrailingPriceCandidate {
   readonly candidate: TrailingPriceCandidate;
+  readonly menuIndex: number;
+  readonly name: string;
+}
+
+interface ParsedNumberedMenuTitle {
   readonly menuIndex: number;
   readonly name: string;
 }
@@ -210,13 +216,19 @@ function candidatesInExplicitAlaCarteScope(
 function parseNumberedCandidate(
   candidate: TrailingPriceCandidate,
 ): NumberedTrailingPriceCandidate | null {
-  const match = candidate.item.name.match(LEADING_MENU_INDEX);
+  const parsed = parseNumberedMenuTitle(candidate.item.name);
+  if (!parsed) return null;
+  return { candidate, ...parsed };
+}
+
+function parseNumberedMenuTitle(value: string): ParsedNumberedMenuTitle | null {
+  const match = normalizeVisibleLine(value).match(LEADING_MENU_INDEX);
   if (!match?.[1] || !match[2]) return null;
   const menuIndex = Number(match[1]);
   const name = normalizeVisibleLine(match[2]);
   if (!Number.isInteger(menuIndex) || menuIndex < 1 || menuIndex > 300) return null;
-  if (!name || !/\p{L}/u.test(name)) return null;
-  return { candidate, menuIndex, name };
+  if (!name || !/\p{L}/u.test(name) || CURRENCY_ONLY_NUMBERED_TITLE.test(name)) return null;
+  return { menuIndex, name };
 }
 
 function precedingNumberedTitle(
@@ -231,7 +243,7 @@ function precedingNumberedTitle(
     const candidate = lines[index] ?? "";
     if (candidate.startsWith(HEADING_MARKER)) continue;
     if (parseTrailingPrice(candidate)) break;
-    if (!LEADING_MENU_INDEX.test(candidate) || !looksLikeDishTitle(candidate)) continue;
+    if (!parseNumberedMenuTitle(candidate) || !looksLikeDishTitle(candidate)) continue;
     return { position: index, title: normalizeVisibleLine(candidate) };
   }
   return null;

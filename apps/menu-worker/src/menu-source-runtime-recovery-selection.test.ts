@@ -34,7 +34,7 @@ describe("HTML runtime recovery selection", () => {
         <p>Drikke</p>
         <p>12 Phad Mhi</p><p>Stekte nudler med grønnsaker, egg og soyasaus 259 kr</p>
         <p>Kylling</p><p>60 kr</p>
-        <p>Iskaffe</p><p>99 kr</p>
+        <p>35 kr</p><p>Vis mer</p><p>Thai Iced Delight</p><p>Iskaffe</p><p>99 kr</p>
       </body></html>
     `);
 
