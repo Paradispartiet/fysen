@@ -36,6 +36,7 @@ import {
 import {
   HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION,
   isStrongNumberedTrailingPriceCardRecovery,
+  recoverInlineMarkedPriceTextItems,
   recoverTrailingPriceCardHtmlItems,
 } from "./html-trailing-price-card-recovery.js";
 import {
@@ -353,6 +354,10 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverPriceWrappedHtmlItems(extracted.visibleText)
         : [];
+    const inlineMarkedPriceItems =
+      extracted.method === "html_heuristic"
+        ? recoverInlineMarkedPriceTextItems(extracted.visibleText)
+        : [];
     const headingPriceItems =
       extracted.method === "html_heuristic"
         ? recoverAdjacentHeadingPriceHtmlItems(normalizedHtml)
@@ -405,14 +410,19 @@ export async function extractMenuSource(
             headingPriceItems,
           )
         : recoveredSupplementedItems;
+    const inlineSupplementedItems =
+      extracted.method === "html_heuristic" &&
+      !isolatedTrailingRecoveryPreferred
+        ? mergeMissingRecoveredItems(headingSupplementedItems, inlineMarkedPriceItems)
+        : headingSupplementedItems;
     const sectionSupplementedItems =
       extracted.method === "html_heuristic" &&
       !isolatedTrailingRecoveryPreferred
         ? mergeMissingRecoveredItems(
-            headingSupplementedItems,
+            inlineSupplementedItems,
             sectionFirstCardItems,
           )
-        : headingSupplementedItems;
+        : inlineSupplementedItems;
     const wrappedSupplementedItems =
       extracted.method === "html_heuristic" &&
       !isolatedTrailingRecoveryPreferred

@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v9";
+  "trailing-price-card-v10";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -449,4 +449,38 @@ export function recoverTrailingPriceCardHtmlItems(
     : deduplicatedCandidates.map(({ item }) => item);
   if (items.length < 4) return [];
   return items;
+}
+
+export function recoverInlineMarkedPriceTextItems(
+  visibleText: string,
+): readonly MenuObservedItem[] {
+  const lines = visibleText
+    .split("\n")
+    .map(normalizeVisibleLine)
+    .filter(Boolean);
+  const unique = new Map<string, MenuObservedItem>();
+
+  for (let position = 0; position < lines.length; position += 1) {
+    const endpoint = parseTrailingPrice(lines[position] ?? "");
+    if (!endpoint?.residual || !looksLikeDishTitle(endpoint.residual)) continue;
+    const name = normalizeVisibleLine(endpoint.residual);
+    const sourceKey = createMenuItemSourceKey(name);
+    unique.set(sourceKey, {
+      sourceKey,
+      name,
+      normalizedName: normalizeDishName(name),
+      description: null,
+      sectionName: null,
+      priceMinor: endpoint.priceMinor,
+      priceKind: endpoint.priceKind,
+      currency: "NOK",
+      position,
+      extractionMethod: "html_heuristic",
+      confidence: 0.97,
+      sourceExcerpt: lines[position]?.slice(0, 1000) ?? name,
+    });
+  }
+
+  if (unique.size < 3) return [];
+  return [...unique.values()].sort((a, b) => a.position - b.position);
 }
