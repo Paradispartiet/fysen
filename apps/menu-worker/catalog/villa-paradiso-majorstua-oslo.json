@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 55,
+    "minimumExpectedItems": 50,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -38,8 +38,7 @@
       "Parma",
       "Ai quattro formaggi",
       "Panna cotta",
-      "Prosciutto Cotto",
-      "Villa Paradiso"
+      "Prosciutto Cotto"
     ],
     "requiredDishVariants": [
       {"name": "Husets focaccia med aioli", "priceMinor": 8500},
@@ -48,9 +47,14 @@
       {"name": "Parma", "priceMinor": 27500},
       {"name": "Ai quattro formaggi", "priceMinor": 25000},
       {"name": "Panna cotta", "priceMinor": 16000},
-      {"name": "Prosciutto Cotto", "priceMinor": 11500},
-      {"name": "Villa Paradiso", "priceMinor": 6800}
+      {"name": "Prosciutto Cotto", "priceMinor": 11500}
     ],
-    "forbiddenDishNames": []
+    "forbiddenDishNames": [
+      "Smurf",
+      "Rødhette",
+      "Pippi Langstrømpe",
+      "Peter Pan",
+      "Villa Paradiso"
+    ]
   }
 }
