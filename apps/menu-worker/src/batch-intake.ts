@@ -3,6 +3,7 @@ import { isAbsolute, resolve, sep } from "node:path";
 import { type MenuObservedItem } from "@fysen/menu-core";
 import { z } from "zod";
 import { HttpMenuClient } from "./http-client.js";
+import { canonicalizeUniqueMenuSourceKeys } from "./menu-source-key-canonicalizer.js";
 import {
   restaurantOnboardingManifestSchema,
   type RestaurantOnboardingManifest,
@@ -110,15 +111,16 @@ export function buildGeneratedRestaurantManifest(
   entry: RestaurantBatchIntakeEntry,
   items: readonly MenuObservedItem[],
 ): RestaurantOnboardingManifest {
-  if (items.length === 0)
+  const canonicalItems = canonicalizeUniqueMenuSourceKeys(items);
+  if (canonicalItems.length === 0)
     throw new Error("Live source exposed no canonical menu items");
-  const assertions = evenlySpacedItems(items, entry.assertionCount);
+  const assertions = evenlySpacedItems(canonicalItems, entry.assertionCount);
   const manifest = restaurantOnboardingManifestSchema.parse({
     version: 1,
     restaurant: entry.restaurant,
     menuSource: {
       ...entry.menuSource,
-      minimumExpectedItems: items.length,
+      minimumExpectedItems: canonicalItems.length,
     },
     hoursSource: entry.hoursSource,
     verification: entry.verification,
@@ -209,13 +211,10 @@ export async function generateRestaurantCandidateBatch(
           entry.menuSource.sourceType,
           fetched,
         );
-        observedItemCount = extracted.items.length;
         extractionMethod = extracted.method;
         extractorVersion = extracted.extractorVersion;
-        const manifest = buildGeneratedRestaurantManifest(
-          entry,
-          extracted.items,
-        );
+        const manifest = buildGeneratedRestaurantManifest(entry, extracted.items);
+        observedItemCount = manifest.menuSource.minimumExpectedItems;
         const outputPath = resolve(
           outputDirectory,
           `${entry.restaurant.slug}.json`,
