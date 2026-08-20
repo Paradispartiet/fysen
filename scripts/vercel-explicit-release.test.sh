@@ -16,7 +16,7 @@ done
 workflow=.github/workflows/vercel-production-release.yml
 test -f "$workflow"
 grep -F 'schedule:' "$workflow" >/dev/null
-grep -F 'cron: "0 8,9,20,21 * * *"' "$workflow" >/dev/null
+grep -F 'cron: "23 8,9,20,21 * * *"' "$workflow" >/dev/null
 grep -F 'TZ=Europe/Oslo date +%H' "$workflow" >/dev/null
 grep -F 'workflow_dispatch:' "$workflow" >/dev/null
 grep -F 'default: auto' "$workflow" >/dev/null
