@@ -15,7 +15,7 @@
     "build": "tsc -p tsconfig.json",
     "lint": "eslint src --ext .ts",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run src/migration.test.ts src/client.test.ts src/due-sources.test.ts src/demand-loop-markdown.test.ts src/quality-dashboard-markdown.test.ts src/quality-dashboard-cli.test.ts src/operator-environment.test.ts src/restaurant-claim-operator-cli.test.ts src/fysen-pro-pilot-proof.test.ts",
+    "test": "vitest run src/migration.test.ts src/client.test.ts src/due-sources.test.ts src/demand-loop-markdown.test.ts src/quality-dashboard-markdown.test.ts src/quality-dashboard-cli.test.ts src/operator-environment.test.ts src/restaurant-claim-operator-cli.test.ts src/fysen-pro-pilot-proof.test.ts src/discovery-catalog.test.ts",
     "migrate": "node dist/migrate.js",
     "verify:production": "node dist/verify-production.js",
     "demand:loop": "node dist/demand-loop-cli.js",

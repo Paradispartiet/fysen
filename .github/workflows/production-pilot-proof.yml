@@ -41,6 +41,7 @@ on:
       - "packages/database/migrations/0016_fysen_pro_sessions.sql"
       - "packages/database/migrations/0017_aha_min_mat.sql"
       - "packages/database/src/browse.ts"
+      - "packages/database/src/discovery-catalog.ts"
       - "packages/database/src/restaurant-claims.ts"
       - "packages/database/src/fysen-pro.ts"
       - "packages/database/src/aha-min-mat.ts"
@@ -109,7 +110,7 @@ jobs:
           {
             echo '## Fysen production pilot proof'
             echo
-            echo 'This proof reads the canonical production catalog dynamically, verifies every catalog restaurant against production DB + watcher state, runs representative `searchDishes` calls directly without recording funnel events, then checks the public browse API and web surface.'
+            echo 'This proof reads the canonical production catalog dynamically, verifies every catalog restaurant against production DB + watcher state, runs the locked Oslo v1 search scenarios directly without recording funnel events, then verifies the canonical consumer browse API and web surface.'
             echo
             echo '```json'
             cat /tmp/fysen-production-pilot-proof.json

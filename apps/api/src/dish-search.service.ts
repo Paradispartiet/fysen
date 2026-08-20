@@ -18,11 +18,12 @@ export class DishSearchService {
   constructor(@Inject(DatabaseService) private readonly databaseService: DatabaseService) {}
 
   async browse(input: DishBrowseQuery): Promise<DishBrowseResponse> {
-    const dishes = await browseDishes(this.databaseService.pool(), { city: input.city });
+    const result = await browseDishes(this.databaseService.pool(), { city: input.city });
     return dishBrowseResponseSchema.parse({
       city: input.city,
-      count: dishes.length,
-      dishes,
+      count: result.dishes.length,
+      dishes: result.dishes,
+      quality: result.quality,
     });
   }
 

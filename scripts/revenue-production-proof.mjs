@@ -283,6 +283,19 @@ async function verifyAhaFysenBoundary() {
     fail("Public AHA Fysen handoff page is stale", { handoffPageUrl });
   }
 
+  const fysenHandoffUrl = `${webBaseUrl}/api/aha/handoff`;
+  const invalidHandoffResponse = await fetchWithProofTimeout(fysenHandoffUrl, {
+    method: "POST",
+    headers: { origin: new URL(ahaWebBaseUrl).origin, authorization: `Handoff ${"x".repeat(43)}` },
+  });
+  const invalidHandoffPayload = await invalidHandoffResponse.json().catch(() => null);
+  if (invalidHandoffResponse.status !== 401 || invalidHandoffPayload?.error?.code !== "INVALID_AHA_HANDOFF") {
+    fail("Fysen handoff endpoint does not fail safely for an invalid/expired/replayed token", {
+      status: invalidHandoffResponse.status,
+      payload: invalidHandoffPayload,
+    });
+  }
+
   return {
     exchange: {
       url: exchangeUrl,
@@ -292,6 +305,7 @@ async function verifyAhaFysenBoundary() {
     },
     authorizationPage: { url: authorizePageUrl, rendered: true },
     handoffPage: { url: handoffPageUrl, rendered: true },
+    invalidHandoff: { url: fysenHandoffUrl, status: 401, controlledError: true },
   };
 }
 
@@ -329,6 +343,12 @@ async function verifyPublicRevenueWeb() {
   const minMatHtml = await minMatResponse.text();
   if (!minMatHtml.includes("Min mat") || !minMatHtml.includes("Logg inn med AHA")) {
     fail("Public Min mat web is not rendering the AHA consumer login surface", { minMatUrl });
+  }
+  const handoffFailureUrl = `${webBaseUrl}/min-mat?handoff=failed`;
+  const handoffFailureResponse = await fetchWithProofTimeout(handoffFailureUrl);
+  const handoffFailureHtml = await handoffFailureResponse.text();
+  if (!handoffFailureResponse.ok || !handoffFailureHtml.includes("Handoff-lenken kunne ikke brukes")) {
+    fail("Public Min mat web lacks controlled expired/replayed handoff UX", { status: handoffFailureResponse.status, handoffFailureUrl });
   }
 
   const connectUrl = `${webBaseUrl}/api/aha/connect?returnTo=${encodeURIComponent("/min-mat")}`;
@@ -376,7 +396,7 @@ async function verifyPublicRevenueWeb() {
       unauthenticatedRedirect: proLocation,
       failClosed: true,
     },
-    minMat: { url: minMatUrl, rendered: true, unauthenticated: true },
+    minMat: { url: minMatUrl, rendered: true, unauthenticated: true, controlledHandoffFailureUx: true },
     ahaConnect: {
       url: connectUrl,
       authorizationUrl: `${authorizationRedirect.origin}${authorizationRedirect.pathname}`,
