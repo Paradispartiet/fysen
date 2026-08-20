@@ -35,11 +35,21 @@ jobs:
       - name: Build menu-worker dependency graph
         run: pnpm --filter @fysen/menu-worker... build
 
-      - name: Inspect Aura canonical sourceKey groups
+      - name: Inspect Aura recovery boundaries
         shell: bash
         run: |
           node --input-type=module <<'NODE'
-          import { fetchMenuSource, extractMenuSource } from './apps/menu-worker/dist/menu-source-runtime.js';
+          import {
+            fetchMenuSource,
+            extractMenuSource,
+            normalizeHtmlItemName,
+            normalizeHtmlPriceNotation,
+          } from './apps/menu-worker/dist/menu-source-runtime.js';
+          import { normalizeHtmlHeadingLineBreaks } from './apps/menu-worker/dist/html-heading-normalizer.js';
+          import { extractScopedHtmlMenu } from './apps/menu-worker/dist/html-source-extractor.js';
+          import { recoverDescriptionNamedHtmlItems } from './apps/menu-worker/dist/html-description-title-recovery.js';
+          import { recoverTrailingPriceCardHtmlItems } from './apps/menu-worker/dist/html-trailing-price-card-recovery.js';
+          import { recoverAdjacentHeadingPriceHtmlItems } from './apps/menu-worker/dist/html-adjacent-heading-price-recovery.js';
 
           const fetched = await fetchMenuSource({
             url: 'https://aurarestaurant.no/meny/',
@@ -53,18 +63,18 @@ jobs:
             throw new Error(`Aura diagnostic expected content, got ${fetched.kind}`);
           }
 
-          const extracted = await extractMenuSource('html', fetched);
-          const bySourceKey = new Map();
-          const byNormalizedName = new Map();
-          for (const item of extracted.items) {
-            const sourceGroup = bySourceKey.get(item.sourceKey) ?? [];
-            sourceGroup.push(item);
-            bySourceKey.set(item.sourceKey, sourceGroup);
-
-            const nameGroup = byNormalizedName.get(item.normalizedName) ?? [];
-            nameGroup.push(item);
-            byNormalizedName.set(item.normalizedName, nameGroup);
-          }
+          const normalizedHtml = normalizeHtmlPriceNotation(normalizeHtmlHeadingLineBreaks(fetched.body));
+          const scoped = extractScopedHtmlMenu(normalizedHtml);
+          const recovered = scoped.method === 'html_heuristic'
+            ? recoverDescriptionNamedHtmlItems(scoped.items, scoped.visibleText)
+            : scoped.items;
+          const trailing = scoped.method === 'html_heuristic'
+            ? recoverTrailingPriceCardHtmlItems(normalizedHtml)
+            : [];
+          const heading = scoped.method === 'html_heuristic'
+            ? recoverAdjacentHeadingPriceHtmlItems(normalizedHtml)
+            : [];
+          const finalRuntime = await extractMenuSource('html', fetched);
 
           const compact = (item) => ({
             sourceKey: item.sourceKey,
@@ -73,26 +83,35 @@ jobs:
             sectionName: item.sectionName,
             priceMinor: item.priceMinor,
             priceKind: item.priceKind ?? 'exact',
-            priceMaxMinor: item.priceMaxMinor ?? null,
             position: item.position,
             confidence: item.confidence,
             sourceExcerpt: item.sourceExcerpt,
           });
 
-          const duplicateSourceKeys = [...bySourceKey.entries()]
-            .filter(([, items]) => items.length > 1)
-            .map(([sourceKey, items]) => ({ sourceKey, items: items.map(compact) }));
-          const duplicateNames = [...byNormalizedName.entries()]
-            .filter(([, items]) => items.length > 1)
-            .map(([normalizedName, items]) => ({ normalizedName, items: items.map(compact) }));
+          const summarize = (label, items) => {
+            const normalized = items.map(normalizeHtmlItemName);
+            const keyGroups = new Map();
+            for (const item of normalized) {
+              const group = keyGroups.get(item.sourceKey) ?? [];
+              group.push(item);
+              keyGroups.set(item.sourceKey, group);
+            }
+            return {
+              label,
+              itemCount: items.length,
+              turmericBeforeNormalization: items.filter((item) => /turmeric ice cream/i.test(item.name)).map(compact),
+              turmericAfterNormalization: normalized.filter((item) => item.normalizedName === 'turmeric ice cream').map(compact),
+              duplicateCanonicalKeys: [...keyGroups.entries()]
+                .filter(([, group]) => group.length > 1)
+                .map(([sourceKey, group]) => ({ sourceKey, items: group.map(compact) })),
+            };
+          };
 
           console.log(JSON.stringify({
-            method: extracted.method,
-            extractorVersion: extracted.extractorVersion,
-            itemCount: extracted.items.length,
-            duplicateSourceKeyGroupCount: duplicateSourceKeys.length,
-            duplicateSourceKeys,
-            duplicateNormalizedNameGroupCount: duplicateNames.length,
-            duplicateNormalizedNames: duplicateNames,
+            scoped: summarize('scoped', scoped.items),
+            recovered: summarize('recovered', recovered),
+            trailing: summarize('trailing', trailing),
+            heading: summarize('heading', heading),
+            finalRuntime: summarize('finalRuntime', finalRuntime.items),
           }, null, 2));
           NODE
