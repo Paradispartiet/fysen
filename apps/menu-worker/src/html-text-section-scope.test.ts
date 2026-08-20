@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
+import {
+  createMenuItemSourceKey,
+  normalizeDishName,
+  type MenuObservedItem,
+} from "@fysen/menu-core";
 import {
   filterPlainTextBeverageSectionItems,
   HTML_TEXT_SECTION_SCOPE_VERSION,
@@ -45,11 +49,12 @@ describe("plain-text HTML section scoping", () => {
       119 NOK
     `;
 
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v1");
-    expect(filterPlainTextBeverageSectionItems(items, visibleText).map((entry) => entry.name)).toEqual([
-      "Falafel",
-      "Baklava",
-    ]);
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v2");
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual(["Falafel", "Baklava"]);
   });
 
   it("ignores unknown duplicate DOM text when the canonical occurrence is inside a beverage section", () => {
@@ -69,9 +74,11 @@ describe("plain-text HTML section scoping", () => {
       House Soda
     `;
 
-    expect(filterPlainTextBeverageSectionItems(items, visibleText).map((entry) => entry.name)).toEqual([
-      "Falafel",
-    ]);
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual(["Falafel"]);
   });
 
   it("preserves an item when the same title also occurs in a food section", () => {
@@ -85,13 +92,20 @@ describe("plain-text HTML section scoping", () => {
       79 NOK
     `;
 
-    expect(filterPlainTextBeverageSectionItems(items, visibleText).map((entry) => entry.name)).toEqual([
-      "House Special",
-    ]);
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual(["House Special"]);
   });
 
   it("does nothing when no plain beverage boundary is present", () => {
     const items = [item("Falafel", 1), item("Baklava", 2)];
-    expect(filterPlainTextBeverageSectionItems(items, "Forretter\nFalafel\nDessert\nBaklava")).toEqual(items);
+    expect(
+      filterPlainTextBeverageSectionItems(
+        items,
+        "Forretter\nFalafel\nDessert\nBaklava",
+      ),
+    ).toEqual(items);
   });
 });

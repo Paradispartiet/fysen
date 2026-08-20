@@ -169,17 +169,18 @@ async function verifyCatalogMaterialization(pool, manifests) {
 
 function assertSearchTarget(rows, testCase) {
   const primaryRows = rows.filter((row) => row.matchType !== "fuzzy");
-  if (primaryRows.length < testCase.minCount) {
+  const eligibleRows = testCase.expectedMatch === "fuzzy" ? rows.filter((row) => row.matchType === "fuzzy") : primaryRows;
+  if (eligibleRows.length < testCase.minCount) {
     fail(`${testCase.label} search returned too few primary results`, {
       query: testCase.query,
       expected: testCase.minCount,
-      actual: primaryRows.length,
+      actual: eligibleRows.length,
     });
   }
 
   const target = testCase.expectedSlug
-    ? primaryRows.find((row) => row.restaurantSlug === testCase.expectedSlug)
-    : primaryRows[0] ?? null;
+    ? eligibleRows.find((row) => row.restaurantSlug === testCase.expectedSlug)
+    : eligibleRows[0] ?? null;
   if (!target) fail(`${testCase.label} expected restaurant is missing`, { expectedSlug: testCase.expectedSlug });
 
   if (testCase.expectedDishName && target.dishName !== testCase.expectedDishName) {
@@ -197,6 +198,9 @@ function assertSearchTarget(rows, testCase) {
   if (testCase.expectedAction === "order" && !target.orderAction) {
     fail(`${testCase.label} expected a verified order action`);
   }
+  if (testCase.expectDistance && !(typeof target.distanceMeters === "number" && target.distanceMeters >= 0)) {
+    fail(`${testCase.label} expected a computed distance`, { distanceMeters: target.distanceMeters });
+  }
 
   return {
     label: testCase.label,
@@ -213,6 +217,7 @@ function assertSearchTarget(rows, testCase) {
       hasOrder: Boolean(target.orderAction),
       observedAt: target.observedAt,
       lastCheckedAt: target.lastCheckedAt,
+      distanceMeters: target.distanceMeters,
     },
   };
 }
@@ -253,6 +258,11 @@ async function verifySearchSmokes(pool) {
       query: "Margherita",
       minCount: 3,
     },
+    { label: "Ramen", query: "ramen", minCount: 1 },
+    { label: "Pizza", query: "pizza", minCount: 1 },
+    { label: "Indian dish", query: "Butter Chicken", minCount: 2 },
+    { label: "Fuzzy spelling", query: "margerita", expectedMatch: "fuzzy", minCount: 1 },
+    { label: "Geolocation and distance", query: "pizza", latitude: 59.9139, longitude: 10.7522, expectDistance: true, minCount: 1 },
   ];
 
   const outputs = [];
@@ -262,8 +272,8 @@ async function verifySearchSmokes(pool) {
       normalizedQuery,
       city: "Oslo",
       limit: 20,
-      latitude: null,
-      longitude: null,
+      latitude: testCase.latitude ?? null,
+      longitude: testCase.longitude ?? null,
       sort: "relevance",
     });
     outputs.push(assertSearchTarget(rows, testCase));
@@ -290,11 +300,34 @@ async function verifyPublicSurfaces() {
   if (browse.count !== browse.dishes.length) {
     fail("Public API browse count does not match its dish list", { count: browse.count, dishes: browse.dishes.length });
   }
+  if (
+    browse?.quality?.filterVersion !== "consumer-v1"
+    || browse.quality.rawItemCount < browse.count
+    || browse.quality.validItemCount !== browse.quality.rawItemCount - browse.quality.excludedItemCount
+    || browse.quality.deduplicatedItemCount !== browse.quality.validItemCount - browse.count
+  ) {
+    fail("Public API browse is missing canonical consumer-catalog proof", browse?.quality ?? null);
+  }
+  const forbiddenBrowsePatterns = [
+    /^allergen/i,
+    /^\d+\s*(?:stk|cl|ml|l|g|kg|biter|bottles?)?$/i,
+    /\b(?:aperol spritz|cola|fanta|sprite|vann|water)\b/i,
+  ];
+  const leakedBrowseItems = browse.dishes
+    .filter((dish) => forbiddenBrowsePatterns.some((pattern) => pattern.test(dish?.name ?? "")))
+    .map((dish) => dish?.name);
+  if (leakedBrowseItems.length > 0) fail("Consumer browse leaks non-dish menu entries", leakedBrowseItems);
   const publicDishNames = new Set(browse.dishes.map((dish) => dish?.name));
   const requiredPublicDishes = ["Punjabi Mix Grill", "Valentes Spesial", "Wienerschnitzel (Kalv)"];
   const missingPublicDishes = requiredPublicDishes.filter((name) => !publicDishNames.has(name));
   if (missingPublicDishes.length > 0) {
     fail("Public API browse is missing representative current-catalog dishes", missingPublicDishes);
+  }
+  if (!browse.dishes.some((dish) => dish?.id?.startsWith("concept:"))) {
+    fail("Public consumer catalog is missing a canonical lexicon identity");
+  }
+  if (!browse.dishes.some((dish) => dish?.id?.startsWith("menu:"))) {
+    fail("Public consumer catalog is missing a valid non-lexicon identity");
   }
 
   const webBrowseUrl = `${webBaseUrl}/search?city=Oslo`;
@@ -306,7 +339,7 @@ async function verifyPublicSurfaces() {
   }
 
   return {
-    api: { url: browseUrl, city: browse.city, dishCount: browse.count, representativeDishes: requiredPublicDishes },
+    api: { url: browseUrl, city: browse.city, dishCount: browse.count, quality: browse.quality, representativeDishes: requiredPublicDishes },
     web: { url: webBrowseUrl, liveDishBrowseRendered: true },
   };
 }

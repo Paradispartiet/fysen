@@ -18,8 +18,12 @@ describe("trailing-price HTML card recovery", () => {
       </body></html>
     `);
 
-    expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe("trailing-price-card-v7");
-    expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
+    expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
+      "trailing-price-card-v8",
+    );
+    expect(
+      items.map((item) => [item.name, item.priceMinor, item.priceKind]),
+    ).toEqual([
       ["Dish One", 19900, "exact"],
       ["Dish Two", 20900, "exact"],
       ["Dish Three", 21900, "exact"],
@@ -50,7 +54,9 @@ describe("trailing-price HTML card recovery", () => {
       </body></html>
     `);
 
-    expect(items.map((item) => [item.sectionName, item.name, item.priceKind])).toEqual([
+    expect(
+      items.map((item) => [item.sectionName, item.name, item.priceKind]),
+    ).toEqual([
       ["Forretter", "Falafel", "exact"],
       ["Forretter", "Hummus", "exact"],
       ["Hovedretter", "Lamb Rice", "from"],
@@ -91,7 +97,12 @@ describe("trailing-price HTML card recovery", () => {
       </body></html>
     `);
 
-    expect(items.map((item) => item.name)).toEqual(["Dish One", "Dish Two", "Dish Three", "Dish Four"]);
+    expect(items.map((item) => item.name)).toEqual([
+      "Dish One",
+      "Dish Two",
+      "Dish Three",
+      "Dish Four",
+    ]);
   });
 
   it("canonicalizes a dense numbered menu and drops unnumbered add-ons and drinks", () => {

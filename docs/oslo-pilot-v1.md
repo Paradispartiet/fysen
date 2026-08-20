@@ -119,6 +119,8 @@ Den permanente production proof-porten skal blant annet kontrollere:
 
 Production proof skal være rødt dersom lagene ikke er synkrone. Vercel-release beholdes batchet for å unngå unødvendig deployforbruk; proof-porten skal avdekke drift, ikke omgå release-kontrakten.
 
+Den samlede closeout-kontrakten, mobilreisene og de representative produksjonsgatene er låst i [`fysen-oslo-v1-closeout.md`](./fysen-oslo-v1-closeout.md).
+
 ## Utforsk Oslo / Alle retter
 
 `/search?city=Oslo` uten `q` er discovery-flaten over den samme ferske rettindeksen som søkeproduktet. Det skal ikke finnes en parallell restaurant- eller rettdatabase for discovery.
@@ -126,6 +128,8 @@ Production proof skal være rødt dersom lagene ikke er synkrone. Vercel-release
 Forsiden og Alle retter bruker den ikke-attribuerende browse-indeksen. Bakgrunnsvisninger skal derfor ikke skape `search_events` eller impressions; bare eksplisitte brukersøk inngår i demand-funnelen.
 
 Canonical dish concepts og kuraterte aliaser brukes når identiteten faktisk er bevist. Fuzzy/semantisk likhet alene skal aldri gjøre en annen rett til et sikkert treff.
+
+Browse-flaten er en forbrukerkatalog, ikke en dump av parseroutput. API-et skal derfor klassifisere og telle drikke, saus/tilbehør, modifier, allergen-/informasjon, menyoverskrifter og ugyldige fragmenter før publisering. Bare faktiske retter canonicaliseres og vises.
 
 ## Demand-loop
 

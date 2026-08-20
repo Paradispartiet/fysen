@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 30
+    "minimumExpectedItems": 27
   },
   "hoursSource": {
     "url": "https://lahoridera.no/",

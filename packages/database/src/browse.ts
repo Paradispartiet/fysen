@@ -1,4 +1,11 @@
 import type { Pool, QueryResultRow } from "pg";
+import {
+  canonicalMenuDishIdentity,
+  canonicalMenuDishName,
+  classifyDiscoveryCandidate,
+  discoveryExclusionCategories,
+  type DiscoveryExclusionCategory,
+} from "./discovery-catalog.js";
 
 export interface DishBrowseDatabaseInput {
   readonly city: string;
@@ -11,17 +18,39 @@ export interface DishBrowseDatabaseResult {
   readonly restaurantCount: number;
 }
 
+export interface DishBrowseDatabaseQuality {
+  readonly filterVersion: "consumer-v1";
+  readonly rawItemCount: number;
+  readonly validItemCount: number;
+  readonly excludedItemCount: number;
+  readonly deduplicatedItemCount: number;
+  readonly exclusions: Readonly<Record<DiscoveryExclusionCategory, number>>;
+}
+
+export interface DishBrowseDatabaseResponse {
+  readonly dishes: readonly DishBrowseDatabaseResult[];
+  readonly quality: DishBrowseDatabaseQuality;
+}
+
 interface DishBrowseRow extends QueryResultRow {
-  dish_id: string;
-  dish_name: string;
-  search_query: string;
-  restaurant_count: number;
+  concept_slug: string | null;
+  concept_name: string | null;
+  preferred_query: string | null;
+  original_name: string;
+  normalized_name: string;
+  description: string | null;
+  section_name: string | null;
+  price_minor: number | null;
+  restaurant_id: string;
+  confidence: number;
+  position: number;
+  fetched_at: Date;
 }
 
 export async function browseDishes(
   pool: Pool,
   input: DishBrowseDatabaseInput,
-): Promise<readonly DishBrowseDatabaseResult[]> {
+): Promise<DishBrowseDatabaseResponse> {
   const result = await pool.query<DishBrowseRow>(
     `
       WITH latest_snapshots AS (
@@ -38,15 +67,16 @@ export async function browseDishes(
           AND now() <= source.last_checked_at
             + make_interval(mins => GREATEST(source.check_interval_minutes * 3, 1440))
         ORDER BY snapshot.menu_source_id, snapshot.fetched_at DESC, snapshot.created_at DESC
-      ),
-      dish_rows AS (
-        SELECT
-          CASE
-            WHEN concept.id IS NOT NULL THEN 'concept:' || concept.slug
-            ELSE 'menu:' || item.normalized_name
-          END AS dish_id,
-          COALESCE(concept.canonical_name, item.original_name) AS dish_name,
-          COALESCE(preferred_query.normalized_alias, concept.normalized_name, item.normalized_name) AS search_query,
+      )
+      SELECT
+          concept.slug AS concept_slug,
+          concept.canonical_name AS concept_name,
+          COALESCE(preferred_query.normalized_alias, concept.normalized_name) AS preferred_query,
+          item.original_name,
+          item.normalized_name,
+          item.description,
+          item.section_name,
+          item.price_minor,
           restaurant.id AS restaurant_id,
           item.confidence,
           item.position,
@@ -72,40 +102,62 @@ export async function browseDishes(
           LIMIT 1
         ) AS preferred_query ON concept.id IS NOT NULL
         WHERE lower(restaurant.city) = lower($1)
-      ),
-      ranked AS (
-        SELECT
-          dish_rows.*,
-          row_number() OVER (
-            PARTITION BY dish_id
-            ORDER BY confidence DESC, fetched_at DESC, position ASC, dish_name ASC
-          ) AS representative_rank
-        FROM dish_rows
-      ),
-      restaurant_counts AS (
-        SELECT
-          dish_id,
-          count(DISTINCT restaurant_id)::integer AS restaurant_count
-        FROM dish_rows
-        GROUP BY dish_id
-      )
-      SELECT
-        ranked.dish_id,
-        ranked.dish_name,
-        ranked.search_query,
-        restaurant_counts.restaurant_count
-      FROM ranked
-      JOIN restaurant_counts USING (dish_id)
-      WHERE ranked.representative_rank = 1
-      ORDER BY lower(ranked.dish_name), ranked.dish_name, ranked.dish_id
     `,
     [input.city],
   );
 
-  return result.rows.map((row) => ({
-    id: row.dish_id,
-    name: row.dish_name,
-    query: row.search_query,
-    restaurantCount: Number(row.restaurant_count),
-  }));
+  const exclusions = Object.fromEntries(discoveryExclusionCategories.map((category) => [category, 0])) as Record<DiscoveryExclusionCategory, number>;
+  const groups = new Map<string, { rows: DishBrowseRow[]; restaurants: Set<string> }>();
+
+  for (const row of result.rows) {
+    const category = classifyDiscoveryCandidate({
+      name: row.original_name,
+      normalizedName: row.normalized_name,
+      description: row.description,
+      sectionName: row.section_name,
+      priceMinor: row.price_minor,
+    });
+    if (category !== "dish") {
+      exclusions[category] += 1;
+      continue;
+    }
+    const identity = row.concept_slug ? `concept:${row.concept_slug}` : `menu:${canonicalMenuDishIdentity(row.original_name)}`;
+    if (identity === "menu:") {
+      exclusions.invalid_fragment += 1;
+      continue;
+    }
+    const group = groups.get(identity) ?? { rows: [], restaurants: new Set<string>() };
+    group.rows.push(row);
+    group.restaurants.add(row.restaurant_id);
+    groups.set(identity, group);
+  }
+
+  const dishes = [...groups.entries()].map(([id, group]) => {
+    const representative = [...group.rows].sort((left, right) =>
+      right.confidence - left.confidence
+      || right.fetched_at.getTime() - left.fetched_at.getTime()
+      || left.position - right.position
+      || left.original_name.localeCompare(right.original_name, "nb"))[0]!;
+    const name = representative.concept_name ?? canonicalMenuDishName(representative.original_name);
+    return {
+      id,
+      name,
+      query: representative.preferred_query ?? canonicalMenuDishIdentity(name),
+      restaurantCount: group.restaurants.size,
+    };
+  }).sort((left, right) => left.name.localeCompare(right.name, "nb") || left.id.localeCompare(right.id));
+
+  const excludedItemCount = Object.values(exclusions).reduce((sum, count) => sum + count, 0);
+  const validItemCount = result.rows.length - excludedItemCount;
+  return {
+    dishes,
+    quality: {
+      filterVersion: "consumer-v1",
+      rawItemCount: result.rows.length,
+      validItemCount,
+      excludedItemCount,
+      deduplicatedItemCount: validItemCount - dishes.length,
+      exclusions,
+    },
+  };
 }

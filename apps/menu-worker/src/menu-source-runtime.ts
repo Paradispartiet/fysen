@@ -47,31 +47,43 @@ import {
   HTML_TEXT_SECTION_SCOPE_VERSION,
 } from "./html-text-section-scope.js";
 import { HttpMenuClient, type MenuHttpFetchResult } from "./http-client.js";
-import { extractScopedPdfMenu, PDF_SOURCE_EXTRACTOR_VERSION } from "./pdf-source-extractor.js";
+import {
+  extractScopedPdfMenu,
+  PDF_SOURCE_EXTRACTOR_VERSION,
+} from "./pdf-source-extractor.js";
 
 const DEFAULT_MAX_PDF_RESPONSE_BYTES = 8 * 1024 * 1024;
 const MAX_PDF_RESPONSE_BYTES = 25 * 1024 * 1024;
-const TRAILING_ALLERGEN_CODES = /\s+\((?:[A-Z0-9]{1,3})(?:\s*[,/+ ]\s*[A-Z0-9]{1,3})*\)$/u;
-const TRAILING_INLINE_PRICE = /\s+[-–—]\s*(?:(?:kr\.?\s*)[1-9]\d{1,3}(?:[.,]\d{1,2})?|[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok))$/iu;
+const TRAILING_ALLERGEN_CODES =
+  /\s+\((?:[A-Z0-9]{1,3})(?:\s*[,/+ ]\s*[A-Z0-9]{1,3})*\)$/u;
+const TRAILING_INLINE_PRICE =
+  /\s+[-–—]\s*(?:(?:kr\.?\s*)[1-9]\d{1,3}(?:[.,]\d{1,2})?|[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok))$/iu;
 const TRAILING_MENU_DELIMITER = /\s*[|¦]\s*$/u;
 const TRAILING_PARENTHETICAL = /\s+\([^()]{1,60}\)$/u;
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]?\s+/u;
 const LEADING_MENU_INDEX_BEFORE_QUANTITY = /^\d{1,3}[.)]\s+(?=\d+\s+\p{L})/u;
-const NON_DISH_HTML_ITEM = /^(?:legg i handlekurv|add to cart|håndlagde produkter\b|handmade products\b|levering$|delivery$|a\s+teapot$|all\s+rights\s+reserved\b)/iu;
-const PHONE_METADATA_ITEM = /^(?:tel(?:efon)?|tlf|phone)\s*:?\s*\+?\d[\d ()+.-]{4,}$/iu;
-const NON_DISH_MENU_SECTION = /^(?:meny|à la carte|forretter|småretter|grillretter|hovedretter|dessert(?:er)?|drikkemeny|drikke(?:r)?|drikkevarer|cocktails?|vin|øl|bestill|bord|åpningstider|kontakt)$/iu;
-const PRICE_DISPLAY_ONLY_ITEM = /^(?:(?:fra|from)\s+)?(?:(?:(?:nok|kr\.?)\s*)?[1-9]\d{0,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)\s*){1,4}$/iu;
+const NON_DISH_HTML_ITEM =
+  /^(?:legg i handlekurv|add to cart|håndlagde produkter\b|handmade products\b|levering$|delivery$|a\s+teapot$|all\s+rights\s+reserved\b)/iu;
+const PHONE_METADATA_ITEM =
+  /^(?:tel(?:efon)?|tlf|phone)\s*:?\s*\+?\d[\d ()+.-]{4,}$/iu;
+const NON_DISH_MENU_SECTION =
+  /^(?:meny|à la carte|forretter|småretter|grillretter|hovedretter|dessert(?:er)?|drikkemeny|drikke(?:r)?|drikkevarer|cocktails?|vin|øl|bestill|bord|åpningstider|kontakt)$/iu;
+const PRICE_DISPLAY_ONLY_ITEM =
+  /^(?:(?:fra|from)\s+)?(?:(?:(?:nok|kr\.?)\s*)?[1-9]\d{0,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)\s*){1,4}$/iu;
 const KITCHEN_RETAIL_ITEM = /^(?:pizzakutter|pizza\s+cutter)$/iu;
 const RETAIL_APPAREL_ITEM = /\b(?:tee|t-?shirt|hoodie|sweatshirt|caps?)$/iu;
 const HISTORICAL_SINCE_ITEM = /·\s*siden$/iu;
-const BEVERAGE_MENU_ITEM = /^(?:(?:coca[- ]?cola|cola(?:\s+zero)?|fanta|sprite|farris(?:\s+\p{L}+)?|eplemost|(?:\p{L}+\s+)?juice|(?:\p{L}+\s+)?lassi)(?:\s+.*)?|(?:gin\s+(?:&\s*)?tonic|dry\s+martini)|(?:arabisk|arabic|tyrkisk|turkish)\s+(?:coffee|kaffe)(?:\s+.*)?|telemark\s+(?:still|sparkling)\s+naturell(?:\s+.*)?|hard\s+seltz(?:\s+.*)?|.*\b(?:pilsner|pærecider|cider|ingefærøl)\b.*|.*\bøl\b.*(?:\bflaske\b|\bglass\b|\d+[,.]\d+)|(?:rosévin|hvitvin|rødvin)(?:\s+(?:glass|flaske))?|.*\b(?:coffee|kaffe|espresso|americano|cappuccino|latte|tea|te)\b|.*\b(?:cola|ginger\s+beer)\b)$/iu;
-const BEVERAGE_STYLE_ITEM = /(?:\b(?:milk\s+tea|boba\s+milk|smoothie|lemonade|red\s+bull|energy\s+drink|mocktail)\b|^pepsi(?:\s+max)?$|^(?:aranciata|chinotto|gazzosa|limonata)$|^(?:ice|iced)\s+tea(?:\s+(?:lemon|peach|green|mango|lychee|raspberry|passion\s*fruit))?$|^(?:taro|chocolate)\s+milk$|^iced\s+cocoa(?:\s+\p{L}+){0,3}\s+milk$|^(?:matcha|chai|vanilla|caramel)(?:\s+\p{L}+){0,3}\s+latte(?:\s+cheese)?$|^(?:saigon\s+special|salt|egg)\s+cafe(?:\s*-\s*cafe\s+sua\s+da)?$|^solo(?:\s+\d+(?:[.,]\d+)?\s*(?:ml|cl|l))?$)/iu;
-const BOTTLED_BEVERAGE_VOLUME = /\bflaske\s+0[,.]\d{1,2}(?:\s*l)?$/iu;
+const BEVERAGE_MENU_ITEM =
+  /^(?:(?:coca[- ]?cola|cola(?:\s+zero)?|fanta|sprite|farris(?:\s+\p{L}+)?|eplemost|mineralvann|(?:\p{L}+\s+)?juice|(?:\p{L}+\s+)?lassi)(?:\s+.*)?|(?:guinness|corona|munkholm|aperol)(?:\s+.*)?|(?:gin\s+(?:&\s*)?tonic|dry\s+martini)|(?:arabisk|arabic|tyrkisk|turkish)\s+(?:coffee|kaffe)(?:\s+.*)?|telemark\s+(?:still|sparkling)\s+naturell(?:\s+.*)?|hard\s+seltz(?:\s+.*)?|.*\b(?:pilsner|pærecider|cider|ingefærøl)\b.*|.*\bøl\b.*(?:\bflaske\b|\bglass\b|\d+[,.]\d+)|(?:rosévin|hvitvin|rødvin)(?:\s+(?:glass|flaske))?|.*\b(?:coffee|kaffe|espresso|americano|cappuccino|latte|tea|te)\b|.*\b(?:cola|ginger\s+beer)\b)$/iu;
+const BEVERAGE_STYLE_ITEM =
+  /(?:\b(?:milk\s+tea|boba\s+milk|smoothie|lemonade|red\s+bull|energy\s+drink|mocktail)\b|^pepsi(?:\s+max)?$|^(?:aranciata|chinotto|gazzosa|limonata)$|^(?:ice|iced)\s+tea(?:\s+(?:lemon|peach|green|mango|lychee|raspberry|passion\s*fruit))?$|^(?:taro|chocolate)\s+milk$|^iced\s+cocoa(?:\s+\p{L}+){0,3}\s+milk$|^(?:matcha|chai|vanilla|caramel)(?:\s+\p{L}+){0,3}\s+latte(?:\s+cheese)?$|^(?:saigon\s+special|salt|egg)\s+cafe(?:\s*-\s*cafe\s+sua\s+da)?$|^solo(?:\s+\d+(?:[.,]\d+)?\s*(?:ml|cl|l))?$)/iu;
+const BOTTLED_BEVERAGE_VOLUME =
+  /(?:^flaske$|\b(?:flaske\s+0[,.]\d{1,2}(?:\s*l)?|0[,.]\d{1,2}\s*l?\s+flaske)\)?\s*-?$)/iu;
 export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v1";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v6";
-export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v5";
+export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v6";
 const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
@@ -103,7 +115,10 @@ export interface ExtractedMenuSource {
   readonly extractorVersion: string;
 }
 
-type MenuContentFetchResult = Extract<MenuHttpFetchResult, { readonly kind: "content" }>;
+type MenuContentFetchResult = Extract<
+  MenuHttpFetchResult,
+  { readonly kind: "content" }
+>;
 
 export function normalizeHtmlPriceNotation(html: string): string {
   return html.replace(
@@ -117,15 +132,21 @@ function restoreSemanticParentheticalName(item: MenuObservedItem): string {
     ?.split(SOURCE_EXCERPT_SEPARATOR)[0]
     ?.replace(LEADING_MENU_NUMBER, "")
     .trim();
-  if (!excerptHead || !TRAILING_PARENTHETICAL.test(excerptHead)) return item.name;
+  if (!excerptHead || !TRAILING_PARENTHETICAL.test(excerptHead))
+    return item.name;
   if (TRAILING_ALLERGEN_CODES.test(excerptHead)) return item.name;
 
-  const withoutParenthetical = excerptHead.replace(TRAILING_PARENTHETICAL, "").trim();
-  if (normalizeDishName(withoutParenthetical) !== normalizeDishName(item.name)) return item.name;
+  const withoutParenthetical = excerptHead
+    .replace(TRAILING_PARENTHETICAL, "")
+    .trim();
+  if (normalizeDishName(withoutParenthetical) !== normalizeDishName(item.name))
+    return item.name;
   return excerptHead;
 }
 
-export function normalizeHtmlItemName(item: MenuObservedItem): MenuObservedItem {
+export function normalizeHtmlItemName(
+  item: MenuObservedItem,
+): MenuObservedItem {
   const restored = restoreSemanticParentheticalName(item);
   const name = restored
     .replace(LEADING_MENU_INDEX_BEFORE_QUANTITY, "")
@@ -206,22 +227,29 @@ function mergeExplicitFromPriceRecovery(
     };
   }
 
-  return output.sort((a,b) => a.position - b.position);
+  return output.sort((a, b) => a.position - b.position);
 }
 
 export function pdfResponseByteLimit(): number {
   const configured = Number(process.env.FYSEN_MAX_PDF_RESPONSE_BYTES);
-  if (!Number.isInteger(configured) || configured <= 0) return DEFAULT_MAX_PDF_RESPONSE_BYTES;
+  if (!Number.isInteger(configured) || configured <= 0)
+    return DEFAULT_MAX_PDF_RESPONSE_BYTES;
   return Math.min(configured, MAX_PDF_RESPONSE_BYTES);
 }
 
-export function extractorVersionForSourceType(sourceType: string): string | null {
-  if (sourceType === "html" || sourceType === "json_ld") return HTML_RUNTIME_EXTRACTOR_VERSION;
+export function extractorVersionForSourceType(
+  sourceType: string,
+): string | null {
+  if (sourceType === "html" || sourceType === "json_ld")
+    return HTML_RUNTIME_EXTRACTOR_VERSION;
   if (sourceType === "pdf") return PDF_SOURCE_EXTRACTOR_VERSION;
   return null;
 }
 
-export function shouldForceReextract(sourceType: string, previousExtractorVersion: string | null): boolean {
+export function shouldForceReextract(
+  sourceType: string,
+  previousExtractorVersion: string | null,
+): boolean {
   const currentExtractorVersion = extractorVersionForSourceType(sourceType);
   return (
     currentExtractorVersion !== null &&
@@ -230,7 +258,10 @@ export function shouldForceReextract(sourceType: string, previousExtractorVersio
   );
 }
 
-export function assertExtractionMethodForSourceType(sourceType: string, extractionMethod: string): void {
+export function assertExtractionMethodForSourceType(
+  sourceType: string,
+  extractionMethod: string,
+): void {
   if (sourceType === "json_ld" && extractionMethod !== "json_ld") {
     throw new Error(
       `Source declared json_ld but extractor resolved ${extractionMethod}; refusing implicit HTML fallback`,
@@ -238,12 +269,26 @@ export function assertExtractionMethodForSourceType(sourceType: string, extracti
   }
 }
 
-export function assertSupportedMenuSource(input: Pick<MenuSourceRuntimeInput, "sourceType" | "fetchMode">): void {
-  if (input.sourceType !== "html" && input.sourceType !== "json_ld" && input.sourceType !== "pdf") {
-    throw new Error(`Menu runtime does not support source type ${input.sourceType}`);
+export function assertSupportedMenuSource(
+  input: Pick<MenuSourceRuntimeInput, "sourceType" | "fetchMode">,
+): void {
+  if (
+    input.sourceType !== "html" &&
+    input.sourceType !== "json_ld" &&
+    input.sourceType !== "pdf"
+  ) {
+    throw new Error(
+      `Menu runtime does not support source type ${input.sourceType}`,
+    );
   }
-  if (input.fetchMode === "browser" && input.sourceType !== "html" && input.sourceType !== "json_ld") {
-    throw new Error(`Browser fetch mode only supports HTML/JSON-LD sources, got ${input.sourceType}`);
+  if (
+    input.fetchMode === "browser" &&
+    input.sourceType !== "html" &&
+    input.sourceType !== "json_ld"
+  ) {
+    throw new Error(
+      `Browser fetch mode only supports HTML/JSON-LD sources, got ${input.sourceType}`,
+    );
   }
 }
 
@@ -270,7 +315,9 @@ export async function fetchMenuSource(
     },
     {
       allowedRedirectOrigins: sourceSupport.redirectOrigins,
-      ...(input.sourceType === "pdf" ? { maxResponseBytes: pdfResponseByteLimit() } : {}),
+      ...(input.sourceType === "pdf"
+        ? { maxResponseBytes: pdfResponseByteLimit() }
+        : {}),
     },
   );
 }
@@ -280,17 +327,29 @@ export async function extractMenuSource(
   fetched: MenuContentFetchResult,
 ): Promise<ExtractedMenuSource> {
   if (sourceType === "html" || sourceType === "json_ld") {
-    const normalizedHtml = normalizeHtmlPriceNotation(normalizeHtmlHeadingLineBreaks(fetched.body));
+    const normalizedHtml = normalizeHtmlPriceNotation(
+      normalizeHtmlHeadingLineBreaks(fetched.body),
+    );
     const extracted = extractScopedHtmlMenu(normalizedHtml);
     assertExtractionMethodForSourceType(sourceType, extracted.method);
     const recoveredItems =
       extracted.method === "html_heuristic"
-        ? recoverDescriptionNamedHtmlItems(extracted.items, extracted.visibleText)
+        ? recoverDescriptionNamedHtmlItems(
+            extracted.items,
+            extracted.visibleText,
+          )
         : extracted.items;
-    const trailingPriceCardItems =
+    const rawTrailingPriceCardItems =
       extracted.method === "html_heuristic"
         ? recoverTrailingPriceCardHtmlItems(normalizedHtml)
         : [];
+    const trailingPriceCardItems =
+      extracted.method === "html_heuristic"
+        ? recoverDescriptionNamedHtmlItems(
+            rawTrailingPriceCardItems,
+            extracted.visibleText,
+          )
+        : rawTrailingPriceCardItems;
     const priceWrappedItems =
       extracted.method === "html_heuristic"
         ? recoverPriceWrappedHtmlItems(extracted.visibleText)
@@ -309,7 +368,9 @@ export async function extractMenuSource(
         : [];
     const semanticCategoryCardsPreferred =
       trailingPriceCardItems.length >= 4 &&
-      trailingPriceCardItems.every((item) => item.sectionName !== null && item.confidence >= 0.99);
+      trailingPriceCardItems.every(
+        (item) => item.sectionName !== null && item.confidence >= 0.99,
+      );
     const strongNumberedCardsPreferred =
       isStrongNumberedTrailingPriceCardRecovery(trailingPriceCardItems);
     const isolatedTrailingRecoveryPreferred =
@@ -318,36 +379,61 @@ export async function extractMenuSource(
       isolatedTrailingRecoveryPreferred ||
       (trailingPriceCardItems.length >= 4 &&
         (recoveredItems.length === 0 ||
-          trailingPriceCardItems.length >= Math.max(6, Math.ceil(recoveredItems.length * 1.5))));
-    const headingPriceCoverageThreshold = Math.ceil(recoveredItems.length * 0.75);
+          trailingPriceCardItems.length >=
+            Math.max(6, Math.ceil(recoveredItems.length * 1.5))));
+    const headingPriceCoverageThreshold = Math.ceil(
+      recoveredItems.length * 0.75,
+    );
     const preferredItems = trailingPriceCardQualifies
       ? trailingPriceCardItems
       : headingPriceItems.length >= 4 &&
-          (recoveredItems.length === 0 || headingPriceItems.length >= headingPriceCoverageThreshold)
+          (recoveredItems.length === 0 ||
+            headingPriceItems.length >= headingPriceCoverageThreshold)
         ? headingPriceItems
-        : priceWrappedItems.length >= 3 && priceWrappedItems.length >= recoveredItems.length * 2
+        : priceWrappedItems.length >= 3 &&
+            priceWrappedItems.length >= recoveredItems.length * 2
           ? priceWrappedItems
           : recoveredItems;
     const headingSupplementedItems =
-      extracted.method === "html_heuristic" && !isolatedTrailingRecoveryPreferred
+      extracted.method === "html_heuristic" &&
+      !isolatedTrailingRecoveryPreferred
         ? supplementStrongHeadingRecovery(preferredItems, headingPriceItems)
         : preferredItems;
     const sectionSupplementedItems =
-      extracted.method === "html_heuristic" && !isolatedTrailingRecoveryPreferred
-        ? mergeMissingRecoveredItems(headingSupplementedItems, sectionFirstCardItems)
+      extracted.method === "html_heuristic" &&
+      !isolatedTrailingRecoveryPreferred
+        ? mergeMissingRecoveredItems(
+            headingSupplementedItems,
+            sectionFirstCardItems,
+          )
         : headingSupplementedItems;
-    const priceEnrichedItems =
-      extracted.method === "html_heuristic" && !isolatedTrailingRecoveryPreferred
-        ? mergeExplicitFromPriceRecovery(sectionSupplementedItems, explicitFromPriceItems)
+    const wrappedSupplementedItems =
+      extracted.method === "html_heuristic" &&
+      !isolatedTrailingRecoveryPreferred
+        ? mergeMissingRecoveredItems(
+            sectionSupplementedItems,
+            priceWrappedItems,
+          )
         : sectionSupplementedItems;
+    const priceEnrichedItems =
+      extracted.method === "html_heuristic" &&
+      !isolatedTrailingRecoveryPreferred
+        ? mergeExplicitFromPriceRecovery(
+            wrappedSupplementedItems,
+            explicitFromPriceItems,
+          )
+        : wrappedSupplementedItems;
     const normalizedItems =
       extracted.method === "html_heuristic"
         ? priceEnrichedItems.map(normalizeHtmlItemName)
         : priceEnrichedItems;
     const canonicalItems = normalizedItems.filter(isCanonicalHtmlMenuItem);
     const items =
-      extracted.method === "html_heuristic" && !isolatedTrailingRecoveryPreferred
-        ? filterPlainTextBeverageSectionItems(canonicalItems, extracted.visibleText)
+      extracted.method === "html_heuristic"
+        ? filterPlainTextBeverageSectionItems(
+            canonicalItems,
+            extracted.visibleText,
+          )
         : canonicalItems;
     return {
       items,

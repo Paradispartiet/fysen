@@ -1,12 +1,16 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v1";
+export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v2";
 
 const SECTION_COUNT_SUFFIX = /\s*\(\s*\d{1,3}\s*\)\s*$/u;
-const BEVERAGE_SECTION_LABEL = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?)$/iu;
-const FOOD_SECTION_LABEL = /^(?:forretter?|starters?|appetizers?|small\s+plates?|småretter|hovedretter?|mains?|main\s+courses?|supper?|soups?|barnemeny|kids?\s+menu|sauser?|sauces?|desserter?|desserts?|sides?|tilbehør|salater?|salads?|pizza(?:er|s)?|noodles?|nudler|curr(?:y|ies)|wok|grillretter?)$/iu;
-const MENU_END_SECTION_LABEL = /^(?:product\s+information|restaurant\s+information|restaurantinformasjon|allergen(?:oversikt|er|s)?|reservasjoner?|reservations?|kontakt(?:\s+oss)?|contact(?:\s+us)?|booking|bordbestilling)$/iu;
-const MENU_PRICE_SIGNAL = /(?:^|\s)(?:(?:fra|from)\s*)?(?:(?:NOK|kr\.?)\s*)?[1-9]\d{0,3}(?:[.,]\d{1,3})?\s*(?:,-|kr\.?|NOK)?$/iu;
+const BEVERAGE_SECTION_LABEL =
+  /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?)$/iu;
+const FOOD_SECTION_LABEL =
+  /^(?:forretter?|starters?|appetizers?|small\s+plates?|småretter|hovedretter?|mains?|main\s+courses?|supper?|soups?|barnemeny|kids?\s+menu|sauser?|sauces?|desserter?|desserts?|sides?|tilbehør|salater?|salads?|pizza(?:er|s)?|noodles?|nudler|curr(?:y|ies)|wok|grillretter?)$/iu;
+const MENU_END_SECTION_LABEL =
+  /^(?:product\s+information|restaurant\s+information|restaurantinformasjon|allergen(?:oversikt|er|s)?|reservasjoner?|reservations?|kontakt(?:\s+oss)?|contact(?:\s+us)?|booking|bordbestilling)$/iu;
+const MENU_PRICE_SIGNAL =
+  /(?:^|\s)(?:(?:fra|from)\s*)?(?:(?:NOK|kr\.?)\s*)?[1-9]\d{0,3}(?:[.,]\d{1,3})?\s*(?:,-|kr\.?|NOK)?$/iu;
 
 type MenuSectionState = "unknown" | "food" | "beverage";
 
@@ -18,7 +22,9 @@ function normalizedSectionLabel(value: string): string {
   return normalizeLine(value).replace(SECTION_COUNT_SUFFIX, "").trim();
 }
 
-function sectionStateByPosition(lines: readonly string[]): readonly MenuSectionState[] {
+function sectionStateByPosition(
+  lines: readonly string[],
+): readonly MenuSectionState[] {
   const states: MenuSectionState[] = [];
   let state: MenuSectionState = "unknown";
   let sawPrice = false;
@@ -67,7 +73,12 @@ export function filterPlainTextBeverageSectionItems(
 ): readonly MenuObservedItem[] {
   if (items.length === 0) return items;
   const lines = visibleText.split("\n").map(normalizeLine).filter(Boolean);
-  if (!lines.some((line) => BEVERAGE_SECTION_LABEL.test(normalizedSectionLabel(line)))) return items;
+  if (
+    !lines.some((line) =>
+      BEVERAGE_SECTION_LABEL.test(normalizedSectionLabel(line)),
+    )
+  )
+    return items;
 
   const states = sectionStateByPosition(lines);
   const evidenceByName = new Map<string, ItemSectionEvidence>();

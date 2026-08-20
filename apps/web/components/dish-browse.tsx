@@ -114,7 +114,7 @@ export function DishBrowse({
         <p className="eyebrow">{city}</p>
         <h1 id="dish-browse-title">Alle retter i {city}</h1>
         <p>
-          Utforsk den samme ferske rettindeksen som Fysen søker i. Filtrer direkte på rett, eller gå via kjøkken og region. Klikk på en rett for å åpne den vanlige søkeresultatsiden.
+          Utforsk den samme ferske rettindeksen som Fysen søker i. Drikke, tilbehør, valg, informasjonslinjer og parserstøy er fjernet før rettene vises.
         </p>
       </header>
 
@@ -226,7 +226,10 @@ export function DishBrowse({
                 <p className="eyebrow">Ferske menyer</p>
                 <h2 id="dish-browse-live-title">På menyen nå</h2>
               </div>
-              <p>{visibleLiveDishes.length} av {data.count} rettidentiteter</p>
+              <div className="dishBrowseMeta">
+                <p>{visibleLiveDishes.length} av {data.count} canonicale retter</p>
+                <p>{data.quality.rawItemCount} rå oppføringer · {data.quality.excludedItemCount} skjult · {data.quality.deduplicatedItemCount} slått sammen</p>
+              </div>
             </div>
 
             {visibleLiveDishes.length > 0 ? (
@@ -240,8 +243,8 @@ export function DishBrowse({
                         <span>{dish.restaurantCount} {dish.restaurantCount === 1 ? "restaurant" : "restauranter"}</span>
                       </a>
                       {knowledgeDish ? (
-                        <a className="dishBrowseKnowledgeLink" href={foodKnowledgeHref(knowledgeDish.id)} aria-label={`Lær om ${knowledgeDish.name}`}>
-                          Lær <span aria-hidden="true">↗</span>
+                        <a className="dishBrowseKnowledgeLink" href={foodKnowledgeHref(knowledgeDish.id)} aria-label={`Om ${knowledgeDish.name}`}>
+                          Om retten <span aria-hidden="true">↗</span>
                         </a>
                       ) : null}
                     </div>
@@ -249,7 +252,7 @@ export function DishBrowse({
                 })}
               </div>
             ) : (
-              <p className="dishBrowseEmptyFilter">Ingen ferske rettidentiteter matcher filteret.</p>
+              <p className="dishBrowseEmptyFilter">Ingen canonicale retter matcher filteret.</p>
             )}
           </section>
         </>

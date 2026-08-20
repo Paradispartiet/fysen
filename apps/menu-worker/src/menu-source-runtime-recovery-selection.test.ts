@@ -74,4 +74,51 @@ describe("HTML runtime recovery selection", () => {
       ["Tetela (Oaxaca)", 21000],
     ]);
   });
+
+  it("recovers titles after trailing-card selection and scopes drinks from the preferred path", async () => {
+    const result = await extract(`
+      <html><body>
+        <h2>Hovedretter</h2>
+        <div>Mrs. Fish</div><div>Helfritert makirull med laks</div><div>164 kr</div>
+        <div>Rainbow</div><div>Fritert scampi med avokado</div><div>169 kr</div>
+        <div>Gaza kebab</div><div>Kan fås gluten- og laktosefri</div><div>350 kr</div>
+        <div>Dønner kebab</div><div>Blandet kjøtt av lam og okse</div><div>350 kr</div>
+        <div>Mezah med en grill rett</div><div>Mini-mezah med valgfri grillrett</div><div>459 kr</div>
+        <h2>Drikkemeny</h2>
+        <div>Flaske</div><div>880 kr</div>
+        <div>Grimbergen Blonde (0.33 l flaske)</div><div>109 kr</div>
+        <div>Mineralvann</div><div>59 kr</div>
+        <div>Munkholm</div><div>69 kr</div>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Mrs. Fish", 16400],
+      ["Rainbow", 16900],
+      ["Gaza kebab", 35000],
+      ["Dønner kebab", 35000],
+      ["Mezah med en grill rett", 45900],
+    ]);
+  });
+
+  it("supplements a selected recovery with a price-wrapped dish card", async () => {
+    const result = await extract(`
+      <html><body>
+        <h2>Burgere</h2>
+        <div>225</div><div>Haandtryk BURGER -</div><div>H, SO, L</div><div>225</div>
+        <div>235</div><div>Vegetar BURGER -</div><div>H, SO, L</div><div>235</div>
+        <div>245</div><div>Kylling BURGER -</div><div>H, SO, L</div><div>245</div>
+        <div>255</div><div>Cheese BURGER -</div><div>H, SO, L</div><div>255</div>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual(
+      expect.arrayContaining([
+        ["Haandtryk BURGER -", 22500],
+        ["Vegetar BURGER -", 23500],
+        ["Kylling BURGER -", 24500],
+        ["Cheese BURGER -", 25500],
+      ]),
+    );
+  });
 });

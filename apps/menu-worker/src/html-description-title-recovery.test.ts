@@ -5,7 +5,11 @@ import {
   recoverDescriptionNamedHtmlItems,
 } from "./html-description-title-recovery.js";
 
-function item(name: string, position: number, priceMinor: number): MenuObservedItem {
+function item(
+  name: string,
+  position: number,
+  priceMinor: number,
+): MenuObservedItem {
   return {
     sourceKey: `test:${position}`,
     name,
@@ -47,13 +51,17 @@ describe("HTML description-title recovery", () => {
         item("Serveres med pitabrød", 2, 11900),
         item("Serveres med salat", 5, 29000),
         item("Kan fås gluten- og laktosefri", 8, 35000),
-        item("Godt krydret kjøtt av okse og lam. Serveres med salat", 11, 35000),
+        item(
+          "Godt krydret kjøtt av okse og lam. Serveres med salat",
+          11,
+          35000,
+        ),
         item("Marinert kyllingbryst som serveres med salat", 14, 31000),
       ],
       visibleText,
     );
 
-    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v10");
+    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v11");
     expect(result.map((entry) => entry.name)).toEqual([
       "Hummus (kikert-og sesampuré)",
       "Hvitløkmarinerte kyllingvinger",
@@ -62,6 +70,35 @@ describe("HTML description-title recovery", () => {
       "Kylling Tawok",
     ]);
     expect(result[0]?.description).toBe("Serveres med pitabrød");
+  });
+
+  it("recovers titles before short fried, steamed and mini-mezah descriptions", () => {
+    const visibleText = [
+      "Mrs. Fish",
+      "Helfritert makirull med laks",
+      "164",
+      "Rainbow",
+      "Fritert scampi med avokado",
+      "169",
+      "Mezah med en grill rett",
+      "Mini-mezah med valgfri grillrett",
+      "459",
+    ].join("\n");
+
+    const result = recoverDescriptionNamedHtmlItems(
+      [
+        item("Helfritert makirull med laks", 1, 16400),
+        item("Fritert scampi med avokado", 4, 16900),
+        item("Mini-mezah med valgfri grillrett", 7, 45900),
+      ],
+      visibleText,
+    );
+
+    expect(result.map((entry) => [entry.name, entry.priceMinor])).toEqual([
+      ["Mrs. Fish", 16400],
+      ["Rainbow", 16900],
+      ["Mezah med en grill rett", 45900],
+    ]);
   });
 
   it("prefers a structurally anchored dish after a section intro in the same price block", () => {
@@ -267,6 +304,9 @@ describe("HTML description-title recovery", () => {
       ["Forretter", "Gresk salat", "220", "Mezah med kjøtt", "399"].join("\n"),
     );
 
-    expect(result.map((entry) => entry.name)).toEqual(["Gresk salat", "Mezah med kjøtt"]);
+    expect(result.map((entry) => entry.name)).toEqual([
+      "Gresk salat",
+      "Mezah med kjøtt",
+    ]);
   });
 });

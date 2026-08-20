@@ -34,23 +34,23 @@
   ],
   "qualityAssertions": {
     "requiredDishNames": [
-      "43. Crispy Scampi 12 biter",
-      "50. Edamame Soy Beans",
-      "01. Sushi Kombo Medium 17 biter",
+      "Crispy Scampi 12 biter",
+      "Edamame Soy Beans",
+      "Sushi Kombo Medium 17 biter",
       "Roll's Nigiri 2 stk",
       "Party Deluxe 50 biter (4-5 pers)"
     ],
     "requiredDishVariants": [
       {
-        "name": "43. Crispy Scampi 12 biter",
+        "name": "Crispy Scampi 12 biter",
         "priceMinor": 16900
       },
       {
-        "name": "50. Edamame Soy Beans",
+        "name": "Edamame Soy Beans",
         "priceMinor": 8900
       },
       {
-        "name": "01. Sushi Kombo Medium 17 biter",
+        "name": "Sushi Kombo Medium 17 biter",
         "priceMinor": 26900
       },
       {

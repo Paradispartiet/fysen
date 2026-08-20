@@ -164,9 +164,9 @@ integrationDescribe("dish browse integration", () => {
   });
 
   it("groups canonical aliases across restaurants and ignores older snapshots", async () => {
-    const dishes = await browseDishes(pool, { city: "Oslo" });
+    const result = await browseDishes(pool, { city: "Oslo" });
 
-    expect(dishes).toEqual([
+    expect(result.dishes).toEqual([
       {
         id: "concept:beef-tartare",
         name: "Biff tartar",
@@ -174,9 +174,41 @@ integrationDescribe("dish browse integration", () => {
         restaurantCount: 2,
       },
     ]);
+    expect(result.quality).toEqual({
+      filterVersion: "consumer-v1",
+      rawItemCount: 2,
+      validItemCount: 2,
+      excludedItemCount: 0,
+      deduplicatedItemCount: 1,
+      exclusions: {
+        beverage: 0,
+        sauce_or_side: 0,
+        modifier: 0,
+        allergen_or_information: 0,
+        menu_heading: 0,
+        invalid_fragment: 0,
+      },
+    });
   });
 
   it("keeps browse results city-scoped", async () => {
-    await expect(browseDishes(pool, { city: "Bergen" })).resolves.toEqual([]);
+    await expect(browseDishes(pool, { city: "Bergen" })).resolves.toEqual({
+      dishes: [],
+      quality: {
+        filterVersion: "consumer-v1",
+        rawItemCount: 0,
+        validItemCount: 0,
+        excludedItemCount: 0,
+        deduplicatedItemCount: 0,
+        exclusions: {
+          beverage: 0,
+          sauce_or_side: 0,
+          modifier: 0,
+          allergen_or_information: 0,
+          menu_heading: 0,
+          invalid_fragment: 0,
+        },
+      },
+    });
   });
 });
