@@ -22,6 +22,7 @@ describe("database migrations", () => {
       "0015_restaurant_claims.sql",
       "0016_fysen_pro_sessions.sql",
       "0017_aha_min_mat.sql",
+      "0018_menu_item_source_key_dedupe.sql",
     ]);
 
     const schemaSql = await readFile(new URL("../migrations/0001_menu_index.sql", import.meta.url), "utf8");
@@ -146,5 +147,12 @@ describe("database migrations", () => {
     expect(ahaMinMatSql).toContain("scopes = ARRAY['fysen:min_mat', 'fysen:analysis_handoff']::text[]");
     expect(ahaMinMatSql).not.toContain("session_token");
     expect(ahaMinMatSql).not.toContain("handoff_token");
+
+    const sourceKeyDedupeSql = await readFile(new URL("../migrations/0018_menu_item_source_key_dedupe.sql", import.meta.url), "utf8");
+    expect(sourceKeyDedupeSql).toContain("CREATE OR REPLACE FUNCTION fysen.dedupe_menu_item_source_key()");
+    expect(sourceKeyDedupeSql).toContain("BEFORE INSERT ON fysen.menu_items");
+    expect(sourceKeyDedupeSql).toContain("snapshot_id = NEW.snapshot_id");
+    expect(sourceKeyDedupeSql).toContain("source_key = NEW.source_key");
+    expect(sourceKeyDedupeSql).toContain("RETURN NULL");
   });
 });
