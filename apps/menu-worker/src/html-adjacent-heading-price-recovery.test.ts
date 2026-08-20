@@ -18,7 +18,7 @@ describe("adjacent heading-price HTML recovery", () => {
       </body></html>
     `);
 
-    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v2");
+    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v3");
     expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
       ["Doro Wet", 29000, "exact"],
       ["Key Wet", 28000, "exact"],
@@ -45,6 +45,67 @@ describe("adjacent heading-price HTML recovery", () => {
       ["Half & Half Corndog", 10900, "from"],
       ["Mozzarella Corndog", 11500, "from"],
       ["Octopus Ink Corndog", 11900, "exact"],
+    ]);
+  });
+
+  it("keeps the first dish after a section heading when a nested UI badge precedes its price", () => {
+    const items = recoverAdjacentHeadingPriceHtmlItems(`
+      <html><body>
+        <h2>Main courses</h2>
+        <h3>House Plov</h3><h4>Popular dish</h4><p>from 349 NOK</p>
+        <h3>Vegetable Plov</h3><p>from 329 NOK</p>
+        <h3>Clay Pot Lamb</h3><p>449 NOK</p>
+        <h3>Handmade Dumplings</h3><p>399 NOK</p>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
+      ["House Plov", 34900, "from"],
+      ["Vegetable Plov", 32900, "from"],
+      ["Clay Pot Lamb", 44900, "exact"],
+      ["Handmade Dumplings", 39900, "exact"],
+    ]);
+  });
+
+  it("excludes descendant beverage cards when a repeated heading-price menu enters a drink section", () => {
+    const items = recoverAdjacentHeadingPriceHtmlItems(`
+      <html><body>
+        <h2>Main courses</h2>
+        <h3>Lamb Rice</h3><p>299 NOK</p>
+        <h3>Chicken Rice</h3><p>279 NOK</p>
+        <h3>Vegetable Rice</h3><p>249 NOK</p>
+        <h3>Beef Noodles</h3><p>319 NOK</p>
+        <h2>Drikke</h2>
+        <h3>House Soda</h3><p>55 NOK</p>
+        <h3>Yoghurt Drink</h3><p>59 NOK</p>
+        <h3>Pear Lemonade</h3><p>69 NOK</p>
+        <h3>Dark Malt Drink</h3><p>79 NOK</p>
+      </body></html>
+    `);
+
+    expect(items.map((item) => item.name)).toEqual([
+      "Lamb Rice",
+      "Chicken Rice",
+      "Vegetable Rice",
+      "Beef Noodles",
+    ]);
+  });
+
+  it("parses dotted European thousands in NOK cards without treating ordinary decimals as thousands", () => {
+    const items = recoverAdjacentHeadingPriceHtmlItems(`
+      <html><body>
+        <h3>Sharing Menu Four</h3><p>from 2.396 NOK</p>
+        <h3>Sharing Menu Six</h3><p>from 3.100 NOK</p>
+        <h3>Small Plate</h3><p>99.50 NOK</p>
+        <h3>Dessert Plate</h3><p>119 NOK</p>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
+      ["Sharing Menu Four", 239600, "from"],
+      ["Sharing Menu Six", 310000, "from"],
+      ["Small Plate", 9950, "exact"],
+      ["Dessert Plate", 11900, "exact"],
     ]);
   });
 
