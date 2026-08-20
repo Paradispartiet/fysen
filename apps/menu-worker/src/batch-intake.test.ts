@@ -58,7 +58,7 @@ const entry: RestaurantBatchIntakeEntry = {
 };
 
 describe("restaurant batch intake", () => {
-  it("pins the complete observed item count and representative live prices", () => {
+  it("pins the complete canonical item count and representative live prices", () => {
     const items = Array.from({ length: 10 }, (_, index) =>
       item(`Dish ${index + 1}`, index),
     );
@@ -73,6 +73,26 @@ describe("restaurant batch intake", () => {
     ]);
     expect(manifest.qualityAssertions.requiredDishVariants).toHaveLength(4);
     expect(manifest.qualityAssertions.forbiddenDishNames).toEqual(["Drinks"]);
+  });
+
+  it("does not inflate the integrity floor for repeated equivalent source keys", () => {
+    const first = item("Dish 1", 0);
+    const repeated = { ...first, position: 1 };
+    const manifest = buildGeneratedRestaurantManifest(entry, [
+      first,
+      repeated,
+      item("Dish 2", 2),
+      item("Dish 3", 3),
+      item("Dish 4", 4),
+    ]);
+
+    expect(manifest.menuSource.minimumExpectedItems).toBe(4);
+    expect(manifest.qualityAssertions.requiredDishNames).toEqual([
+      "Dish 1",
+      "Dish 2",
+      "Dish 3",
+      "Dish 4",
+    ]);
   });
 
   it("preserves fail-closed from and multiple price semantics", () => {

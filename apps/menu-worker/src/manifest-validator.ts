@@ -5,6 +5,7 @@ import {
   evaluateManifestMenuQuality,
   type ManifestMenuQualityResult,
 } from "./manifest-quality.js";
+import { canonicalizeUniqueMenuSourceKeys } from "./menu-source-key-canonicalizer.js";
 import {
   getHoursVerificationStatus,
   isHoursVerificationBlocking,
@@ -97,8 +98,9 @@ async function validateMenu(
     }
 
     const extracted = await extractMenuSource(manifest.menuSource.sourceType, fetched);
-    const fingerprint = createMenuFingerprint(extracted.items);
-    const quality = evaluateManifestMenuQuality(manifest, extracted.items);
+    const canonicalItems = canonicalizeUniqueMenuSourceKeys(extracted.items);
+    const fingerprint = createMenuFingerprint(canonicalItems);
+    const quality = evaluateManifestMenuQuality(manifest, canonicalItems);
     return {
       accepted: quality.accepted,
       url: manifest.menuSource.url,
@@ -107,8 +109,8 @@ async function validateMenu(
       extractorVersion: extracted.extractorVersion,
       fingerprint,
       quality,
-      observedDishNames: extracted.items.map((item) => item.name),
-      observedDishVariants: extracted.items.map((item) => ({
+      observedDishNames: canonicalItems.map((item) => item.name),
+      observedDishVariants: canonicalItems.map((item) => ({
         name: item.name,
         priceMinor: item.priceMinor,
       })),
