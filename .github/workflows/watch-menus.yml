@@ -82,11 +82,6 @@ jobs:
         continue-on-error: true
         run: pnpm --filter @fysen/menu-worker onboard:catalog
 
-      - name: Watch newly onboarded restaurant hours
-        id: watch_new_restaurant_hours
-        continue-on-error: true
-        run: pnpm --filter @fysen/menu-worker watch:hours
-
       - name: Preserve operational failure signal
         if: always()
         shell: bash
@@ -95,7 +90,6 @@ jobs:
           RESTAURANT_HOURS_OUTCOME: ${{ steps.watch_restaurant_hours.outcome }}
           RESTAURANT_ACTIONS_OUTCOME: ${{ steps.verify_restaurant_actions.outcome }}
           ONBOARD_CATALOG_OUTCOME: ${{ steps.onboard_catalog.outcome }}
-          NEW_RESTAURANT_HOURS_OUTCOME: ${{ steps.watch_new_restaurant_hours.outcome }}
         run: |
           failed=0
           check_stage() {
@@ -111,6 +105,5 @@ jobs:
           check_stage "Watch due restaurant hours" "$RESTAURANT_HOURS_OUTCOME"
           check_stage "Reverify expiring restaurant actions" "$RESTAURANT_ACTIONS_OUTCOME"
           check_stage "Onboard catalog candidates" "$ONBOARD_CATALOG_OUTCOME"
-          check_stage "Watch newly onboarded restaurant hours" "$NEW_RESTAURANT_HOURS_OUTCOME"
 
           exit "$failed"
