@@ -1,0 +1,199 @@
+/* Matlyst v2 — intent-first discovery layered on top of the canonical dish browse index. */
+
+.matlystHeading h2 {
+  max-width: 620px;
+  margin: 7px 0 0;
+  color: var(--color-ink);
+  font-size: clamp(30px, 3vw, 42px);
+  font-weight: 580;
+  line-height: 1.05;
+  letter-spacing: -0.018em;
+}
+
+.matlystMoodBlock {
+  margin: 28px 0 38px;
+  padding: 24px;
+  background: #080908;
+  border: 1px solid rgba(121, 201, 135, 0.2);
+  border-radius: 16px;
+}
+
+.matlystSubheading,
+.matlystCuisineHeading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.matlystSubheading span,
+.matlystCuisineHeading span {
+  display: block;
+  color: var(--color-brand);
+  font-size: 10px;
+  font-weight: 680;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+.matlystSubheading h3,
+.matlystCuisineHeading h3 {
+  margin: 5px 0 0;
+  color: var(--color-ink);
+  font-size: 23px;
+  font-weight: 580;
+  line-height: 1.12;
+  letter-spacing: -0.012em;
+}
+
+.matlystSubheading > p,
+.matlystCuisineHeading > p {
+  max-width: 410px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: right;
+}
+
+.matlystMoodGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.matlystMoodCard {
+  display: flex;
+  min-height: 132px;
+  flex-direction: column;
+  padding: 16px;
+  color: inherit;
+  text-decoration: none;
+  background: #060706;
+  border: 1px solid rgba(121, 201, 135, 0.2);
+  border-radius: 12px;
+  transition: border-color 140ms ease, transform 140ms ease;
+}
+
+.matlystMoodCard:hover {
+  border-color: rgba(121, 201, 135, 0.52);
+  transform: translateY(-1px);
+}
+
+.matlystMoodCard:focus-visible,
+.matlystCuisineMore button:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+.matlystMoodCardTopline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.matlystMoodCardTopline strong {
+  color: var(--color-ink);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.matlystMoodCardTopline > span {
+  color: var(--color-brand);
+  font-size: 16px;
+}
+
+.matlystMoodCard > small {
+  display: block;
+  margin-top: 8px;
+  color: var(--color-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.matlystMoodCoverage {
+  display: block;
+  margin-top: auto;
+  padding-top: 13px;
+  color: #bdd8c0;
+  font-size: 10px;
+  font-weight: 560;
+  line-height: 1.35;
+}
+
+.matlystCuisineHeading {
+  margin: 0 0 18px;
+  padding-top: 7px;
+}
+
+.matlystCuisineMore {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.matlystCuisineMore button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 9px;
+  padding: 0 16px;
+  color: var(--color-brand);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 620;
+  background: transparent;
+  border: 1px solid rgba(121, 201, 135, 0.28);
+  border-radius: var(--radius-round);
+  cursor: pointer;
+}
+
+.matlystCuisineMore button:hover {
+  color: var(--color-brand-hover);
+  border-color: rgba(121, 201, 135, 0.58);
+}
+
+@media (max-width: 1000px) {
+  .matlystMoodGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .matlystHeading h2 {
+    font-size: clamp(29px, 9vw, 37px);
+  }
+
+  .matlystMoodBlock {
+    margin-top: 22px;
+    padding: 18px;
+  }
+
+  .matlystSubheading,
+  .matlystCuisineHeading {
+    display: block;
+  }
+
+  .matlystSubheading > p,
+  .matlystCuisineHeading > p {
+    margin-top: 8px;
+    text-align: left;
+  }
+
+  .matlystMoodGrid {
+    display: flex;
+    gap: 9px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    scroll-snap-type: x proximity;
+  }
+
+  .matlystMoodCard {
+    min-width: min(230px, 72vw);
+    min-height: 126px;
+    scroll-snap-align: start;
+  }
+}
