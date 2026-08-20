@@ -18,6 +18,10 @@ jobs:
       DATABASE_SSL: "verify-full"
       NODE_ENV: production
       FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_PUBLIC_API_URL: https://fysen-api.vercel.app
+      FYSEN_PUBLIC_WEB_URL: https://fysen-matsgran-8572s-projects.vercel.app
+      AHA_PUBLIC_API_URL: https://aha-canonical-api-production.redground-9c6e20c2.northeurope.azurecontainerapps.io
+      AHA_PUBLIC_WEB_URL: https://paradispartiet.github.io/AHA-EchoNet
     steps:
       - name: Require production database secret
         shell: bash
@@ -83,3 +87,31 @@ jobs:
       - name: Run current live source gate for Coyo
         working-directory: apps/menu-worker
         run: node dist/index.js validate:manifest catalog/coyo-sorenga-oslo.json
+      - name: Run one controlled Coyo production watch
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { createDatabasePool, MenuIndexRepository } from './packages/database/dist/index.js';
+          import { watchMenuSourceOnce } from './apps/menu-worker/dist/watcher.js';
+          const pool = createDatabasePool();
+          try {
+            const sourceResult = await pool.query(`
+              SELECT ms.id
+              FROM fysen.restaurants r
+              JOIN fysen.menu_sources ms ON ms.restaurant_id = r.id
+              WHERE r.slug = 'coyo-sorenga-oslo'
+                AND ms.enabled = true
+              ORDER BY ms.created_at DESC
+              LIMIT 1
+            `);
+            const sourceId = sourceResult.rows[0]?.id;
+            if (!sourceId) throw new Error('Enabled Coyo production menu source not found');
+            const repository = new MenuIndexRepository(pool);
+            const summary = await watchMenuSourceOnce(repository, sourceId);
+            process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`);
+          } finally {
+            await pool.end();
+          }
+          NODE
+      - name: Verify exact production catalog and surfaces
+        run: node scripts/production-pilot-proof.mjs
