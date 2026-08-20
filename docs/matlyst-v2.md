@@ -26,6 +26,7 @@ Aktiv Matlyst-taksonomi etter dekningsutvidelsen:
 - Indisk
 - Pakistansk
 - Nepalsk
+- Etiopisk
 - Italiensk
 - Midtøsten
 - Tyrkisk
@@ -57,16 +58,17 @@ Disse er tverrgående brukerintensjoner. De kan peke på retter fra flere kjøkk
 
 ## Canonical discovery-data og matkunnskap
 
-Matlyst skiller mellom to evidensnivåer:
+Matlyst skiller mellom evidensnivåene, men ikke mellom sannhetskilder:
 
 - `foodDishCatalog` er den eksisterende matkunnskapskatalogen. Retter med artikkel i manifestet kan vise **Lær om retten**.
 - `foodDiscoveryCatalog` bygger videre på samme katalog med production-backed canonical discovery-retter som foreløpig ikke trenger en full matkunnskapsartikkel.
+- `matlystDiscoveryCatalog` er et tynt aggregat over discovery-katalogen for nye, eksplisitt dokumenterte Matlyst-retter. Det inneholder ingen egen restaurant- eller søkelogikk.
 
 Dette skillet gjør at Fysen kan vise dokumenterte kjøkken og live menydekning uten å late som en rett allerede har ferdig faginnhold. Nye discovery-retter får `hasKnowledge=false` helt til en faktisk artikkel er lagt i food-knowledge-manifestet.
 
-Discovery-katalogen inneholder ingen restaurantkopier. Den inneholder bare canonical rettsidentiteter, søketermer, aliaser, kjøkken/region og explorer-prioritet. Restaurant- og menybevis kommer fortsatt fra produksjonskatalogen og den materialiserte browse-indeksen.
+Discovery-katalogene inneholder ingen restaurantkopier. De inneholder bare canonical rettsidentiteter, søketermer, aliaser, kjøkken/region og explorer-prioritet. Restaurant- og menybevis kommer fortsatt fra produksjonskatalogen og den materialiserte browse-indeksen.
 
-## Produksjonsgrunnlag for den nye kjøkkendekningen
+## Produksjonsgrunnlag for kjøkkendekningen
 
 Dekningsutvidelsen er basert på restauranter som allerede finnes i Fysens produksjonskatalog:
 
@@ -78,8 +80,9 @@ Dekningsutvidelsen er basert på restauranter som allerede finnes i Fysens produ
 - Persisk → Tehran Spiseri: blant annet koobideh, ghormeh sabzi, zereshk polo og kashke bademjan.
 - Usbekisk → Registan: blant annet plov, lagman, qazon kebab og manty.
 - Polsk → Polskie Jadło: blant annet pierogi, bigos, kotlet schabowy og żur.
+- Etiopisk → Hakuna Matata: blant annet doro wet, key wet, tibis, awaze tibis, gored gored, firfir, meser wet og shiro.
 
-Aliasene i discovery-katalogen er valgt for å matche de faktiske menyidentitetene konservativt gjennom `dish-discovery.ts`.
+Aliasene i discovery-katalogene er valgt for å matche de faktiske menyidentitetene konservativt gjennom `dish-discovery.ts`.
 
 ## Live-dekning og rangering
 
@@ -99,8 +102,14 @@ Matlyst skal fortsatt være en oppdagelsesflate over Fysens eksisterende sannhet
 
 Det skal ikke opprettes en separat Matlyst-restaurantdatabase eller hardkodes restauranttall i UI-et.
 
+## Kandidater som ikke er aktivert ennå
+
+Et restaurantnavn eller en enkelt tematisk rett er ikke nok til å opprette et kjøkken. For eksempel er Parthenon i produksjonskatalogen i hovedsak dokumentert med pizza, grill, falafel og kebab; det er derfor ikke tilstrekkelig grunnlag for å aktivere **Gresk** bare ut fra restaurantnavnet.
+
+Tilsvarende har Rolis Bodega enkelte eksplisitt ungarsk-inspirerte retter, men menyen er en blandet bodega-/tapasflate. **Ungarsk** holdes derfor tilbake til Matlyst har et bredere canonical rettsgrunnlag.
+
 ## Neste utvidelser
 
-Neste dekningsrunde bør prioritere kjøkken som allerede kan underbygges av produksjonsmenyer, før vi lager tomme kategorier. Kandidater vurderes fortløpende mot restaurantproduksjonen. Norsk/nordisk, fransk, spansk, gresk, etiopisk/eritreisk og andre kjøkken aktiveres først når canonical retter og faktisk Oslo-dekning kan dokumenteres.
+Neste dekningsrunde bør prioritere kjøkken som allerede kan underbygges av produksjonsmenyer, før vi lager tomme kategorier. Norsk/nordisk, fransk, spansk, gresk, eritreisk og andre kjøkken aktiveres først når canonical retter og faktisk Oslo-dekning kan dokumenteres.
 
 Parallelt kan de nye discovery-rettene gradvis få full matkunnskap. Det er et innholdsløft, ikke en forutsetning for at Matlyst kan vise dem med fersk menydekning.
