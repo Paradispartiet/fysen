@@ -6,12 +6,13 @@ import {
 } from "@fysen/menu-core";
 import { extractHtmlMenu, type ExtractedHtmlMenu } from "./html-extractor.js";
 
-export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v15";
+export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v16";
 
 const HEADING_MARKER = "__FYSEN_HEADING_LEVEL_";
 const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|vin\s*(?:&|og)\s*musserende|wine(?:\s+(?:list|menu))?|wine\s*(?:&|and)\s*sparkling|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
 const MENU_END_SECTION_HEADING = /^(?:allergen(?:oversikt|er|s)?|reservasjoner?|reservations?|kontakt(?:\s+oss)?|contact(?:\s+us)?|booking|bordbestilling)$/iu;
 const FOOD_SECTION_LABEL = /^(?:forretter?|starters?|appetizers?|small\s+plates?|hovedretter?|mains?|main\s+courses?|desserter?|desserts?|sushiruller?|sushi\s+rolls?|sushi|sides?|tilbehør|noodles?|nudler|curr(?:y|ies)|wok|soups?|supper?|salads?|salater?)$/iu;
+const DUPLICATE_DISH_SECTION_LABEL = /^(?:forretter?|starters?|appetizers?|småretter|hovedretter?|mains?|main\s+courses?|dessert(?:er|s)?|tilbehør|sides?|pizza(?:er|s)?|pizzeria|kylling\s+og\s+lam|mezah[- ]retter|salater?\s*(?:&|og)\s*suppe(?:r)?|kylling|kjøttretter?|fiskeretter?|salater?|supper?)$/iu;
 const BEVERAGE_ITEM_NAME = /^(?:kaffe(?:\b|[-/])|coffee(?:\b|[-/])|filterkaffe\b|iskaffe\b|iced\s+coffee\b|espresso\b|americano\b|cappuccino\b|latte\b|arabisk\s+kaffe\b|libanesisk\s+kaffe\b|te(?:\b|[-/])|tea(?:\b|[-/])|(?:grønn\s+|green\s+)?thai\s+(?:te|tea)\b)/iu;
 const PRICE_TOKEN = "(?:(?:kr\\.?\\s*)?[1-9]\\d{1,3}(?:[.,]\\d{1,2})?(?:\\s*(?:,-|kr\\.?|nok))?)";
 const PRICE_AT_END = new RegExp(`\\s+${PRICE_TOKEN}$`, "iu");
@@ -388,6 +389,27 @@ interface StandalonePriceBlockExtraction {
   readonly priceCount: number;
 }
 
+interface StandalonePriceBlockCandidate {
+  readonly item: MenuObservedItem;
+  readonly sectionHint: string | null;
+}
+
+function duplicateDishSectionHint(
+  lines: readonly string[],
+  headingLevels: ReadonlyMap<number, number>,
+  titleIndex: number,
+): string | null {
+  const titleLevel = headingLevels.get(titleIndex);
+  for (let index = titleIndex - 1; index >= 0; index -= 1) {
+    const headingLevel = headingLevels.get(index);
+    if (headingLevel === undefined) continue;
+    if (titleLevel !== undefined && headingLevel >= titleLevel) continue;
+    const heading = normalizeVisibleLine(lines[index] ?? "");
+    if (DUPLICATE_DISH_SECTION_LABEL.test(heading)) return heading;
+  }
+  return null;
+}
+
 function extractStandalonePriceBlocks(
   visibleText: string,
   headingLevels: ReadonlyMap<number, number>,
@@ -396,7 +418,7 @@ function extractStandalonePriceBlocks(
   const pricePositions = lines
     .map((line, index) => (STANDALONE_PRICE.test(line) ? index : -1))
     .filter((index) => index >= 0);
-  const unique = new Map<string, MenuObservedItem>();
+  const candidates: StandalonePriceBlockCandidate[] = [];
 
   for (const [priceOffset, pricePosition] of pricePositions.entries()) {
     const priceMinor = parsePriceMinorAtEnd(lines[pricePosition] ?? "");
@@ -465,8 +487,7 @@ function extractStandalonePriceBlocks(
       });
     const description = descriptionLines.join(" ").trim() || null;
     const sourceKey = createMenuItemSourceKey(name);
-
-    unique.set(sourceKey, {
+    const item: MenuObservedItem = {
       sourceKey,
       name,
       normalizedName: normalizeDishName(name),
@@ -478,7 +499,45 @@ function extractStandalonePriceBlocks(
       extractionMethod: "html_heuristic",
       confidence: 0.9,
       sourceExcerpt: lines.slice(titleIndex, pricePosition + 1).join(" — ").slice(0, 1000),
+    };
+
+    candidates.push({
+      item,
+      sectionHint: duplicateDishSectionHint(lines, headingLevels, titleIndex),
     });
+  }
+
+  const candidatesByName = new Map<string, StandalonePriceBlockCandidate[]>();
+  for (const candidate of candidates) {
+    const group = candidatesByName.get(candidate.item.normalizedName) ?? [];
+    group.push(candidate);
+    candidatesByName.set(candidate.item.normalizedName, group);
+  }
+
+  const sectionScopedNames = new Set<string>();
+  for (const [normalizedName, group] of candidatesByName) {
+    if (group.length < 2) continue;
+    const sectionHints = group
+      .map((candidate) => candidate.sectionHint)
+      .filter((value): value is string => Boolean(value));
+    if (sectionHints.length !== group.length) continue;
+    const distinctSections = new Set(sectionHints.map(normalizeDishName));
+    if (distinctSections.size >= 2) sectionScopedNames.add(normalizedName);
+  }
+
+  const unique = new Map<string, MenuObservedItem>();
+  for (const candidate of candidates) {
+    const sectionName = sectionScopedNames.has(candidate.item.normalizedName)
+      ? candidate.sectionHint
+      : null;
+    const next = sectionName
+      ? {
+          ...candidate.item,
+          sectionName,
+          sourceKey: createMenuItemSourceKey(candidate.item.name, sectionName),
+        }
+      : candidate.item;
+    unique.set(next.sourceKey, next);
   }
 
   return {
