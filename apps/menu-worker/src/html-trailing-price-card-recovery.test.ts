@@ -17,7 +17,7 @@ describe("trailing-price HTML card recovery", () => {
       </body></html>
     `);
 
-    expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe("trailing-price-card-v5");
+    expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe("trailing-price-card-v6");
     expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
       ["Dish One", 19900, "exact"],
       ["Dish Two", 20900, "exact"],

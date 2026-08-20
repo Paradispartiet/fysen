@@ -6,13 +6,14 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_CATEGORY_CARD_RECOVERY_VERSION = "category-cards-v2";
+export const HTML_CATEGORY_CARD_RECOVERY_VERSION = "category-cards-v3";
 
 const CATEGORY_SECTION = "[data-testid='menu-category-section']";
 const CATEGORY_TITLE = "[data-testid='menu-category-section-title']";
 const PRODUCT_CARD = "[data-testid='menu-product']";
 const PRODUCT_NAME = "[data-testid='menu-product-name']";
 const PRODUCT_PRICE = "[data-testid='menu-product-price']";
+const PRODUCT_PRICE_BEFORE_DISCOUNT = "[data-testid='menu-product-price-before-discount']";
 const PRODUCT_DESCRIPTION = "[data-testid='menu-product-description']";
 const BEVERAGE_SECTION = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|champagne(?:\s+cocktails?)?|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
 const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK|kr\.?)\s*)?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
@@ -74,7 +75,9 @@ export function recoverSemanticCategoryCardHtmlItems(html: string): readonly Men
 
     for (const card of cards) {
       const name = normalizeText($(card).find(PRODUCT_NAME).first().text());
-      const priceText = normalizeText($(card).find(PRODUCT_PRICE).first().text());
+      const priceElement = $(card).find(PRODUCT_PRICE).first().clone();
+      priceElement.find(PRODUCT_PRICE_BEFORE_DISCOUNT).remove();
+      const priceText = normalizeText(priceElement.text());
       const price = parsePrice(priceText);
       if (!name || !/\p{L}/u.test(name) || !price) continue;
 
