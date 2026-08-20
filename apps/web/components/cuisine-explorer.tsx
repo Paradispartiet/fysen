@@ -204,12 +204,6 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
     if (selectedWorld && dialog && !dialog.open) dialog.showModal();
   }, [selectedWorld]);
 
-  function openCuisine(cuisine: Cuisine, area: CuisineArea, trigger: HTMLButtonElement): void {
-    triggerRef.current = trigger;
-    setSelectedAreaName(area.name);
-    setSelectedCuisine(cuisine);
-  }
-
   function openCuisineFromDirectory(cuisine: Cuisine, area: CuisineArea): void {
     const returnTrigger = cuisineDirectoryTriggerRef.current;
     cuisineDirectoryTriggerRef.current = null;
@@ -388,7 +382,7 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
               <small>{world.context}</small>
               <span className="matlystWorldCardRegions">{activeRegions.map((region) => region.name).join(" · ")}</span>
               <span className="matlystWorldCoverage">
-                {activeCuisines.length} aktive {activeCuisines.length === 1 ? "kjøkken" : "kjøkken"}
+                {activeCuisines.length} aktive kjøkken
                 {browseData && preview && preview.restaurantCount > 0
                   ? ` · ${preview.dish.label} hos minst ${preview.restaurantCount} ${preview.restaurantCount === 1 ? "sted" : "steder"} nå`
                   : ""}
@@ -504,7 +498,7 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
                         <span className="matlystRegionCuisineNames">{region.cuisines.map((link) => link.name).join(" · ")}</span>
                         <span className="matlystRegionCoverage">
                           {activeCuisines.length > 0
-                            ? `${activeCuisines.length} aktive ${activeCuisines.length === 1 ? "kjøkken" : "kjøkken"}${browseData && preview && preview.restaurantCount > 0 ? ` · ${preview.dish.label} på menyen nå` : ""}`
+                            ? `${activeCuisines.length} aktive kjøkken${browseData && preview && preview.restaurantCount > 0 ? ` · ${preview.dish.label} på menyen nå` : ""}`
                             : "Taksonomi klar · ingen dokumentert Oslo-dekning ennå"}
                         </span>
                       </button>
