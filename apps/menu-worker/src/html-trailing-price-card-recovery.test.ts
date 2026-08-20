@@ -96,16 +96,16 @@ describe("trailing-price HTML card recovery", () => {
   it("canonicalizes a dense numbered menu and drops unnumbered add-ons and drinks", () => {
     const items = recoverTrailingPriceCardHtmlItems(`
       <html><body>
-        <p>1 Satay</p><p>125 kr</p>
-        <p>2 Ka Nhom Jeep</p><p>115 kr</p>
-        <p>3 Gyoza</p><p>109 kr</p>
-        <p>4 Tod Man Plah</p><p>109 kr</p>
-        <p>5 Popie Tod</p><p>105 kr</p>
+        <p>1 Satay</p><p>Kylling satay med peanøttsaus 125 kr</p>
+        <p>2 Ka Nhom Jeep</p><p>Reker dumplings med soyasaus 115 kr</p>
+        <p>3 Gyoza</p><p>Friterte dumplings med grønnsaker 109 kr</p>
+        <p>4 Tod Man Plah</p><p>Fiskekaker med søt chilisaus 109 kr</p>
+        <p>5 Popie Tod</p><p>Vårruller med grønnsaker og chilisaus 105 kr</p>
         <p>8 Phad Khi Mao</p><p>259 kr</p>
         <p>9 Kwuitiew Gai</p><p>255 kr</p>
         <p>10 Kwuitiew Tom Yum</p><p>249 kr</p>
         <p>11 Kwuitiew Nua</p><p>249 kr</p>
-        <p>12 Phad Mhi</p><p>Stekte nudler med grønnsaker, egg og soyasaus</p><p>259 kr</p>
+        <p>12 Phad Mhi</p><p>Stekte nudler med grønnsaker, egg og soyasaus 259 kr</p>
         <p>Kylling</p><p>60 kr</p>
         <p>Iskaffe</p><p>99 kr</p>
       </body></html>

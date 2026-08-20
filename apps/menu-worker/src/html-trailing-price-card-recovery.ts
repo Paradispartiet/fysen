@@ -83,7 +83,6 @@ function looksLikeDescription(value: string): boolean {
     ALLERGEN_METADATA.test(line) ||
     PARENTHETICAL_METADATA_ONLY.test(line) ||
     DESCRIPTION_LEAD.test(line) ||
-    (commaCount >= 1 && words.length >= 7) ||
     (commaCount >= 3 && words.length >= 5) ||
     words.length >= 13 ||
     /[.!?]$/u.test(line)
@@ -220,11 +219,28 @@ function parseNumberedCandidate(
   return { candidate, menuIndex, name };
 }
 
+function precedingNumberedTitle(
+  lines: readonly string[],
+  pricePosition: number,
+): { readonly position: number; readonly title: string } | null {
+  for (
+    let index = pricePosition - 1;
+    index >= Math.max(0, pricePosition - MAX_PRECEDING_TITLE_DISTANCE);
+    index -= 1
+  ) {
+    const candidate = lines[index] ?? "";
+    if (candidate.startsWith(HEADING_MARKER)) continue;
+    if (parseTrailingPrice(candidate)) break;
+    if (!LEADING_MENU_INDEX.test(candidate) || !looksLikeDishTitle(candidate)) continue;
+    return { position: index, title: normalizeVisibleLine(candidate) };
+  }
+  return null;
+}
+
 function canonicalizeStrongNumberedMenu(
   candidates: readonly TrailingPriceCandidate[],
 ): readonly TrailingPriceCandidate[] | null {
   const ordered = [...candidates].sort((a, b) => a.item.position - b.item.position);
-  const debugRice = ordered.some(({ item }) => item.name === "1 Satay");
   const byIndex = new Map<number, NumberedTrailingPriceCandidate>();
 
   for (const candidate of ordered) {
@@ -235,14 +251,7 @@ function canonicalizeStrongNumberedMenu(
       const sameName = normalizeDishName(existing.name) === normalizeDishName(numbered.name);
       const samePrice = existing.candidate.item.priceMinor === numbered.candidate.item.priceMinor;
       const samePriceKind = existing.candidate.item.priceKind === numbered.candidate.item.priceKind;
-      if (!sameName || !samePrice || !samePriceKind) {
-        if (debugRice) {
-          process.stderr.write(
-            `${JSON.stringify({ numberedMenuDebug: { reason: "conflict", existing, numbered } })}\n`,
-          );
-        }
-        return null;
-      }
+      if (!sameName || !samePrice || !samePriceKind) return null;
       continue;
     }
     byIndex.set(numbered.menuIndex, numbered);
@@ -260,20 +269,6 @@ function canonicalizeStrongNumberedMenu(
   const firstIndex = numbered[0]?.menuIndex ?? 0;
   const lastIndex = numbered[numbered.length - 1]?.menuIndex ?? 0;
   const indexSpan = lastIndex - firstIndex + 1;
-  if (debugRice) {
-    process.stderr.write(
-      `${JSON.stringify({
-        numberedMenuDebug: {
-          reason: "summary",
-          ordered: ordered.map(({ item }) => [item.name, item.priceMinor]),
-          numbered: numbered.map(({ menuIndex, name }) => [menuIndex, name]),
-          firstIndex,
-          lastIndex,
-          indexSpan,
-        },
-      })}\n`,
-    );
-  }
   if (firstIndex > 5 || indexSpan < 8 || numbered.length / indexSpan < 0.7) return null;
 
   return numbered.map(({ candidate, name }) => ({
@@ -300,7 +295,14 @@ export function recoverTrailingPriceCardHtmlItems(html: string): readonly MenuOb
 
     let titlePosition: number | null = null;
     let title: string | null = null;
-    if (endpoint.residual && looksLikeDishTitle(endpoint.residual)) {
+    const numberedTitle = endpoint.residual
+      ? precedingNumberedTitle(lines, pricePosition)
+      : null;
+    const residualWordCount = endpoint.residual.split(/\s+/).filter(Boolean).length;
+    if (numberedTitle && residualWordCount >= 4) {
+      titlePosition = numberedTitle.position;
+      title = numberedTitle.title;
+    } else if (endpoint.residual && looksLikeDishTitle(endpoint.residual)) {
       titlePosition = pricePosition;
       title = normalizeVisibleLine(endpoint.residual);
     } else {
