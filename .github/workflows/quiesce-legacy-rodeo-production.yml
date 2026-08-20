@@ -1,0 +1,130 @@
+name: Quiesce legacy Rodeo production drift
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/quiesce-legacy-rodeo-production.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-production-menu-mutation
+  cancel-in-progress: false
+
+jobs:
+  quiesce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
+      DATABASE_SSL: "verify-full"
+      NODE_ENV: production
+    steps:
+      - name: Checkout exact main
+        uses: actions/checkout@v4
+        with:
+          ref: d60bf00a9a8b9f785af8f4698fc8c6e5b9a0030a
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build database dependency graph
+        run: pnpm --filter @fysen/database... build
+
+      - name: Quiesce non-canonical Rodeo row and verify exact production state
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readdir, readFile } from 'node:fs/promises';
+          import {
+            createDatabasePool,
+            getRestaurantCoverageState,
+            quiesceRestaurantCandidate,
+            setRestaurantCoverageActive,
+          } from './packages/database/dist/index.js';
+
+          const directory = 'apps/menu-worker/catalog';
+          const files = (await readdir(directory)).filter((name) => name.endsWith('.json')).sort();
+          const manifests = [];
+          for (const file of files) {
+            const manifest = JSON.parse(await readFile(`${directory}/${file}`, 'utf8'));
+            manifests.push({ file, slug: manifest.restaurant.slug, name: manifest.restaurant.name });
+          }
+          const manifestSlugs = manifests.map((row) => row.slug);
+          if (manifestSlugs.includes('rodeo-oslo')) {
+            throw new Error('Refusing to quiesce Rodeo because it has become canonical');
+          }
+          if (manifests.length !== 45 || new Set(manifestSlugs).size !== 45) {
+            throw new Error(`Expected 45 unique canonical manifests, got ${manifests.length}/${new Set(manifestSlugs).size}`);
+          }
+
+          const pool = createDatabasePool();
+          try {
+            const rodeo = await getRestaurantCoverageState(pool, 'rodeo-oslo');
+            if (!rodeo) throw new Error('Legacy rodeo-oslo row does not exist');
+            if (rodeo.active) {
+              await setRestaurantCoverageActive(pool, rodeo.id, false);
+            }
+            const quiesced = await quiesceRestaurantCandidate(pool, rodeo.id);
+
+            const state = await getRestaurantCoverageState(pool, 'rodeo-oslo');
+            const rodeoSources = await pool.query(
+              `SELECT
+                 count(*) FILTER (WHERE enabled)::int AS enabled_menu_sources,
+                 (SELECT count(*)::int FROM fysen.restaurant_hours_sources WHERE restaurant_id = $1 AND enabled = true) AS enabled_hours_sources,
+                 (SELECT count(*)::int FROM fysen.restaurant_actions WHERE restaurant_id = $1 AND enabled = true) AS enabled_actions
+               FROM fysen.menu_sources
+               WHERE restaurant_id = $1`,
+              [rodeo.id],
+            );
+            const db = await pool.query(
+              `SELECT r.slug, r.name, r.active
+               FROM fysen.restaurants r
+               ORDER BY r.slug`,
+            );
+            const dbBySlug = new Map(db.rows.map((row) => [row.slug, row]));
+            const inactiveCanonical = manifests.filter((row) => !dbBySlug.get(row.slug)?.active);
+            const activeNotCatalog = db.rows.filter((row) => row.active && !manifestSlugs.includes(row.slug));
+            const totals = await pool.query(
+              `SELECT
+                 (SELECT count(*)::int FROM fysen.restaurants WHERE active = true) AS active_restaurants,
+                 (SELECT count(*)::int FROM fysen.menu_sources WHERE enabled = true) AS enabled_menu_sources`,
+            );
+            const result = {
+              rodeoState: state,
+              quiesced,
+              rodeoEnabled: rodeoSources.rows[0],
+              canonicalManifestCount: manifests.length,
+              activeCanonicalRestaurants: manifests.filter((row) => dbBySlug.get(row.slug)?.active).length,
+              inactiveCanonical,
+              activeNotCatalog,
+              databaseCounts: totals.rows[0],
+            };
+            console.log(JSON.stringify(result, null, 2));
+
+            if (state?.active) throw new Error('Rodeo is still active');
+            const enabled = rodeoSources.rows[0];
+            if (!enabled || Number(enabled.enabled_menu_sources) !== 0 || Number(enabled.enabled_hours_sources) !== 0 || Number(enabled.enabled_actions) !== 0) {
+              throw new Error(`Rodeo sources/actions still enabled: ${JSON.stringify(enabled)}`);
+            }
+            if (inactiveCanonical.length !== 0) throw new Error(`Canonical inactive drift: ${JSON.stringify(inactiveCanonical)}`);
+            if (activeNotCatalog.length !== 0) throw new Error(`Active non-canonical drift remains: ${JSON.stringify(activeNotCatalog)}`);
+            if (Number(totals.rows[0]?.active_restaurants) !== 45) throw new Error(`Expected exactly 45 active restaurants, got ${totals.rows[0]?.active_restaurants}`);
+            if (Number(totals.rows[0]?.enabled_menu_sources) !== 45) throw new Error(`Expected exactly 45 enabled menu sources, got ${totals.rows[0]?.enabled_menu_sources}`);
+          } finally {
+            await pool.end();
+          }
+          NODE
