@@ -18,7 +18,7 @@ describe("adjacent heading-price HTML recovery", () => {
       </body></html>
     `);
 
-    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v3");
+    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v4");
     expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
       ["Doro Wet", 29000, "exact"],
       ["Key Wet", 28000, "exact"],
@@ -45,6 +45,33 @@ describe("adjacent heading-price HTML recovery", () => {
       ["Half & Half Corndog", 10900, "from"],
       ["Mozzarella Corndog", 11500, "from"],
       ["Octopus Ink Corndog", 11900, "exact"],
+    ]);
+  });
+
+  it("honors ARIA heading semantics and blocks descendant beverage cards", () => {
+    const items = recoverAdjacentHeadingPriceHtmlItems(`
+      <html><body>
+        <div role="heading" aria-level="2">Main courses</div>
+        <div role="heading" aria-level="3">House Plov</div>
+        <div role="heading" aria-level="4">Popular dish</div>
+        <p>from 349 NOK</p>
+        <p>Traditional rice dish with meat, carrots and spices.</p>
+        <div role="heading" aria-level="3">Vegetable Plov</div><p>from 329 NOK</p>
+        <div role="heading" aria-level="3">Clay Pot Lamb</div><p>449 NOK</p>
+        <div role="heading" aria-level="3">Handmade Dumplings</div><p>399 NOK</p>
+        <div role="heading" aria-level="2">Drikke</div>
+        <div role="heading" aria-level="3">House Soda</div><p>55 NOK</p>
+        <div role="heading" aria-level="3">Yoghurt Drink</div><p>59 NOK</p>
+        <div role="heading" aria-level="3">Pear Lemonade</div><p>69 NOK</p>
+        <div role="heading" aria-level="3">Dark Malt Drink</div><p>79 NOK</p>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
+      ["House Plov", 34900, "from"],
+      ["Vegetable Plov", 32900, "from"],
+      ["Clay Pot Lamb", 44900, "exact"],
+      ["Handmade Dumplings", 39900, "exact"],
     ]);
   });
 
