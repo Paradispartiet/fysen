@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lahori-dera-gronland-oslo",
+    "name": "Lahori Dera Tandoori",
+    "websiteUrl": "https://lahoridera.no/",
+    "address": "Norbygata 56",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.913067,
+    "longitude": 10.76559
+  },
+  "menuSource": {
+    "url": "https://lahoridera.no/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedItems": 30
+  },
+  "hoursSource": {
+    "url": "https://lahoridera.no/",
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 360,
+    "minimumExpectedIntervals": 7
+  },
+  "actions": [
+    {
+      "type": "order",
+      "url": "https://lahoridera.no/shop/",
+      "sourceUrl": "https://lahoridera.no/",
+      "provider": "Lahori Dera"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kylling Tikka Masala",
+      "Lahori Lam Karahi Fresh",
+      "Chapli Kebab",
+      "Saag Paneer",
+      "Mix Grill"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kylling Tikka Masala",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Lahori Lam Karahi Fresh",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Chapli Kebab",
+        "priceMinor": 19400
+      },
+      {
+        "name": "Saag Paneer",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Mix Grill",
+        "priceMinor": 37900
+      }
+    ]
+  }
+}
