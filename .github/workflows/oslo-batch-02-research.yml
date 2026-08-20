@@ -1,0 +1,198 @@
+name: Oslo batch 02 research
+
+on:
+  pull_request:
+    paths:
+      - "apps/menu-worker/research/oslo-batch-02.seed.json"
+      - ".github/workflows/oslo-batch-02-research.yml"
+      - "apps/menu-worker/src/**"
+
+permissions:
+  contents: read
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build menu-worker dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Geocode full batch and build intake plan
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, time
+          from pathlib import Path
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+
+          seed_path = Path('apps/menu-worker/research/oslo-batch-02.seed.json')
+          seed = json.loads(seed_path.read_text())
+          out_dir = Path('apps/menu-worker/research/oslo-batch-02-generated')
+          out_dir.mkdir(parents=True, exist_ok=True)
+
+          geocoded = []
+          failures = []
+          for index, entry in enumerate(seed['restaurants'], start=1):
+            restaurant = dict(entry['restaurant'])
+            queries = [
+              f"{restaurant['address']}, Norway",
+              f"{restaurant['name']}, {restaurant['address']}, Norway",
+            ]
+            hit = None
+            for query in queries:
+              params = urlencode({
+                'q': query,
+                'format': 'jsonv2',
+                'limit': 1,
+                'countrycodes': 'no',
+              })
+              request = Request(
+                f'https://nominatim.openstreetmap.org/search?{params}',
+                headers={
+                  'User-Agent': 'FysenRestaurantResearch/1.0 (GitHub Actions; Paradispartiet/fysen)',
+                  'Accept': 'application/json',
+                },
+              )
+              with urlopen(request, timeout=20) as response:
+                rows = json.load(response)
+              if rows:
+                hit = rows[0]
+                break
+              time.sleep(1.1)
+            if not hit:
+              failures.append({'slug': restaurant['slug'], 'address': restaurant['address']})
+              continue
+            restaurant['latitude'] = float(hit['lat'])
+            restaurant['longitude'] = float(hit['lon'])
+            generated = dict(entry)
+            generated['version'] = 1
+            generated['restaurant'] = restaurant
+            geocoded.append(generated)
+            print(json.dumps({
+              'index': index,
+              'slug': restaurant['slug'],
+              'lat': restaurant['latitude'],
+              'lon': restaurant['longitude'],
+              'display_name': hit.get('display_name'),
+            }, ensure_ascii=False))
+            time.sleep(1.1)
+
+          plan = {
+            'version': 1,
+            'outputDirectory': 'research/oslo-batch-02-generated',
+            'concurrency': seed.get('concurrency', 4),
+            'restaurants': geocoded,
+          }
+          Path('apps/menu-worker/research/oslo-batch-02.plan.json').write_text(
+            json.dumps(plan, ensure_ascii=False, indent=2) + '\n'
+          )
+          Path('apps/menu-worker/research/oslo-batch-02-geocode.json').write_text(
+            json.dumps({
+              'requested': len(seed['restaurants']),
+              'geocoded': len(geocoded),
+              'failed': failures,
+            }, ensure_ascii=False, indent=2) + '\n'
+          )
+          if failures:
+            raise SystemExit(f'Geocoding failed for {len(failures)} entries: {failures}')
+          PY
+
+      - name: Run batch intake without stopping on individual source failures
+        id: intake
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js intake:batch research/oslo-batch-02.plan.json | tee research/oslo-batch-02-intake.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Validate every generated manifest independently
+        id: validation
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/oslo-batch-02-generated | tee research/oslo-batch-02-validation.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Summarize batch result
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile, readdir } from 'node:fs/promises';
+          const readJson = async (path) => JSON.parse(await readFile(path, 'utf8'));
+          const geocode = await readJson('apps/menu-worker/research/oslo-batch-02-geocode.json');
+          const intake = await readJson('apps/menu-worker/research/oslo-batch-02-intake.json');
+          let validation = null;
+          try { validation = await readJson('apps/menu-worker/research/oslo-batch-02-validation.json'); } catch {}
+          const generatedFiles = (await readdir('apps/menu-worker/research/oslo-batch-02-generated')).filter((name) => name.endsWith('.json')).sort();
+          const summary = {
+            geocode,
+            intake: {
+              requestedCount: intake.requestedCount,
+              generatedCount: intake.generatedCount,
+              failedCount: intake.failedCount,
+              concurrency: intake.concurrency,
+              results: intake.results,
+            },
+            validation: validation ? {
+              manifestCount: validation.manifestCount,
+              acceptedCount: validation.acceptedCount,
+              failedCount: validation.failedCount,
+              failureFamilyCounts: validation.failureFamilyCounts,
+              results: validation.results.map((result) => ({
+                slug: result.slug,
+                accepted: result.accepted,
+                failureFamilies: result.failureFamilies,
+                observedDishNames: result.validation?.menu?.observedDishNames ?? [],
+                itemCount: result.validation?.menu?.quality?.itemCount ?? null,
+                error: result.error,
+              })),
+            } : null,
+            generatedFiles,
+          };
+          await writeFile('apps/menu-worker/research/oslo-batch-02-summary.json', JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          NODE
+
+      - name: Upload exact batch artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: oslo-batch-02-research
+          path: |
+            apps/menu-worker/research/oslo-batch-02.seed.json
+            apps/menu-worker/research/oslo-batch-02.plan.json
+            apps/menu-worker/research/oslo-batch-02-geocode.json
+            apps/menu-worker/research/oslo-batch-02-intake.json
+            apps/menu-worker/research/oslo-batch-02-validation.json
+            apps/menu-worker/research/oslo-batch-02-summary.json
+            apps/menu-worker/research/oslo-batch-02-generated/*.json
+          if-no-files-found: error
