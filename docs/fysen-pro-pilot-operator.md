@@ -7,12 +7,13 @@ Dette dokumentet beskriver den privilegerte operatørflyten som kobler Claim Res
 Operatørflyten er lokal og privilegert. Den skal ikke kjøres i GitHub Actions, Vercel-builds eller andre delte CI-/artifact-miljøer.
 
 - Claim-listen inneholder claimant-PII og skal behandles som intern review-informasjon.
+- Listen over aktive access grants inneholder principal-PII og er også local-only.
 - Verifikasjon krever fortsatt en uavhengig, troverdig kanal. Restaurantdomene i e-post er ikke automatisk bevis.
 - `verify` oppretter bare det eksisterende `restaurant_access_grant` gjennom canonical review-logikk.
 - Setup-token utstedes i et separat eksplisitt steg etter verifisering.
 - Rå setup-token vises én gang lokalt og skal leveres out-of-band.
 - Rå setup-/session-token skal aldri legges i database, GitHub-logg, workflow artifact, commit, issue eller PR-kommentar.
-- Det finnes fortsatt ingen offentlig HTTP-route for claim review, access grant eller setup-token-utstedelse.
+- Det finnes fortsatt ingen offentlig HTTP-route for claim review, access grant, revokering eller setup-token-utstedelse.
 
 De privilegerte operator-CLI-ene nekter å kjøre når `GITHUB_ACTIONS=true`.
 
@@ -76,7 +77,29 @@ Representanten bruker setup-tokenen på Fysen Pro-login. Web-laget redeemer toke
 
 Etter login skal dashboardet være skopet til restauranten i det aktive access grantet. Logout revokerer server-sessionen. Senere revokering av access grant skal også invalidere en ellers aktiv Pro-session umiddelbart.
 
-## 6. Kjør kontrollert autentisert pilotbevis
+## 6. Finn og revoker aktiv tilgang
+
+Aktive grants kan listes lokalt:
+
+```bash
+pnpm --filter @fysen/database claim:operator -- grants
+```
+
+Valgfri grense, 1–100:
+
+```bash
+pnpm --filter @fysen/database claim:operator -- grants 50
+```
+
+Output inneholder principal-e-post og skal behandles som intern PII. Når en verifisert representant ikke lenger skal ha tilgang, revokeres det konkrete grantet eksplisitt:
+
+```bash
+pnpm --filter @fysen/database claim:operator -- revoke <accessGrantId> <reviewer>
+```
+
+Revokering bruker canonical `revokeRestaurantAccess()` og audit-logges som `access_revoked`. Et revokert grant kan ikke lenger skrive restauranteide profilfelt. Fordi hver Fysen Pro dashboard-request krever et fortsatt aktivt grant, blir også eksisterende Pro-sessioner for grantet ubrukelige fail-closed uten at rå session-token må finnes eller håndteres av operatøren.
+
+## 7. Kjør kontrollert autentisert pilotbevis
 
 Når ordinær batch-release og den ikke-muterende production proofen viser at R3/R4-flatene er live, kan én ny setup-token brukes til et kontrollert ende-til-ende-bevis:
 
