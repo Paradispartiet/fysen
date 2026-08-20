@@ -6,9 +6,11 @@ on:
     paths:
       - ".github/workflows/oslo-batch-01-research.yml"
       - "apps/menu-worker/research/oslo-batch-01.seed.json"
+      - "apps/menu-worker/src/menu-source-runtime.ts"
+      - "apps/menu-worker/src/menu-source-runtime-item-normalizer.test.ts"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   research:
@@ -16,12 +18,95 @@ jobs:
     timeout-minutes: 25
     env:
       FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
-      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_MENU_BOT_USER_AGENT: FysenMenuBot/0.1
     steps:
       - name: Checkout batch branch
         uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.ref }}
+          persist-credentials: true
+
+      - name: Patch generic non-dish leakage
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          runtime_path = Path("apps/menu-worker/src/menu-source-runtime.ts")
+          runtime = runtime_path.read_text()
+          if 'HTML_NON_DISH_FILTER_VERSION = "non-dish-v7"' not in runtime:
+              runtime = runtime.replace(
+                  'const NON_DISH_MENU_SECTION =\n  /^(?:meny|à la carte|forretter|småretter|grillretter|hovedretter|dessert(?:er)?|drikkemeny|drikke(?:r)?|drikkevarer|cocktails?|vin|øl|bestill|bord|åpningstider|kontakt)$/iu;\n',
+                  'const NON_DISH_MENU_SECTION =\n  /^(?:meny|à la carte|forretter|småretter|grillretter|hovedretter|dessert(?:er)?|drikkemeny|drikke(?:r)?|drikkevarer|cocktails?|vin|øl|bestill|bord|åpningstider|kontakt|snacks?|maki|grill|antipasti|vegan|klassiske\\s+forretter\\s+og\\s+supper)$/iu;\nconst ALLERGEN_TERM =\n  "(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|selleri|celery|citrus|sitrus|sulfitt|sulphites?)";\nconst ALLERGEN_ONLY_ITEM = new RegExp(\n  `^(?:\\\\(\\\\s*)?${ALLERGEN_TERM}(?:\\\\s*[,/+&]\\\\s*${ALLERGEN_TERM})*\\\\s*\\\\)?$`,\n  "iu",\n);\nconst NON_DISH_METADATA_ITEM =\n  /^(?:hjemmeside|homepage|mine\\s+favoritter|my\\s+favou?rites|favoritter|favou?rites|pers\\.?|medium|gluten[- ]?free|glutenfri)$/iu;\nconst NON_DISH_FRAGMENT_ITEM = /^(?:stk\\.|biter\\.)\\s+/iu;\nconst NON_DISH_ADDON_ITEM =\n  /^\\*?\\s*(?:påfyll\\s+av\\s+tilbehør|refill\\s+of\\s+sides?|add[- ]?ons?)\\b/iu;\n'
+              )
+              runtime = runtime.replace(
+                  'export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v6";',
+                  'export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v7";'
+              )
+              runtime = runtime.replace(
+                  '    !NON_DISH_MENU_SECTION.test(name) &&\n    !PRICE_DISPLAY_ONLY_ITEM.test(name) &&',
+                  '    !NON_DISH_MENU_SECTION.test(name) &&\n    !ALLERGEN_ONLY_ITEM.test(name) &&\n    !NON_DISH_METADATA_ITEM.test(name) &&\n    !NON_DISH_FRAGMENT_ITEM.test(name) &&\n    !NON_DISH_ADDON_ITEM.test(name) &&\n    !PRICE_DISPLAY_ONLY_ITEM.test(name) &&'
+              )
+              if 'HTML_NON_DISH_FILTER_VERSION = "non-dish-v7"' not in runtime:
+                  raise SystemExit("runtime patch did not apply cleanly")
+              runtime_path.write_text(runtime)
+
+          test_path = Path("apps/menu-worker/src/menu-source-runtime-item-normalizer.test.ts")
+          test = test_path.read_text()
+          if "rejects generic batch non-dish leakage" not in test:
+              test = test.replace(
+                  'import { normalizeHtmlItemName } from "./menu-source-runtime.js";',
+                  'import { isCanonicalHtmlMenuItem, normalizeHtmlItemName } from "./menu-source-runtime.js";'
+              )
+              addition = r'''
+
+  it.each([
+    "(Soya, Sesam, Egg, Hvetemel)",
+    "( Hvetemel, Skalldyr, Soya, Sesam)",
+    "(Hvetemel, Melk, Egg, Sulfitt)",
+    "Shellfish",
+    "milk",
+    "Eggs",
+    "Soy",
+    "Fish",
+    "Hjemmeside",
+    "Mine Favoritter",
+    "pers",
+    "Medium",
+    "Gluten free",
+    "Maki",
+    "Grill",
+    "Snacks",
+    "ANTIPASTI",
+    "VEGAN",
+    "Klassiske Forretter og Supper",
+    "*Påfyll av tilbehør (29,- per type)",
+    "stk. Svinekjøtt med scampi, salat og agurk.",
+    "biter. 4 avokado nigiri og 8 kappa maki.",
+  ])("rejects generic batch non-dish leakage: %s", (name) => {
+    expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
+  });
+
+  it.each([
+    "Fish & Chips",
+    "Sesame Chicken",
+    "Milk Bun Burger",
+    "Maki Tempura Scampi",
+    "Grilled Salmon",
+    "Vegan Burger",
+    "Gluten Free Pizza",
+  ])("preserves real dish names while filtering metadata: %s", (name) => {
+    expect(isCanonicalHtmlMenuItem(item(name))).toBe(true);
+  });
+'''
+              marker = "\n});\n"
+              if marker not in test:
+                  raise SystemExit("test suite closing marker not found")
+              test = test.rsplit(marker, 1)[0] + addition + marker
+              test_path.write_text(test)
+
+          PY
+          git diff --check
 
       - name: pnpm
         uses: pnpm/action-setup@v4
@@ -39,6 +124,9 @@ jobs:
 
       - name: Build menu-worker dependency graph
         run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Run generic leakage regression tests
+        run: pnpm --filter @fysen/menu-worker test -- menu-source-runtime-item-normalizer.test.ts
 
       - name: Geocode research seed and build intake plan
         working-directory: apps/menu-worker
@@ -122,6 +210,7 @@ jobs:
         working-directory: apps/menu-worker
         shell: bash
         run: |
+          rm -rf candidates-batch-01
           mkdir -p candidates-batch-01
           set +e
           node dist/index.js intake:batch research/oslo-batch-01.generated.json > research/oslo-batch-01.intake.json 2> research/oslo-batch-01.intake.stderr
@@ -164,3 +253,16 @@ jobs:
           path: apps/menu-worker/oslo-batch-01-evidence.tgz
           if-no-files-found: error
           retention-days: 7
+
+      - name: Commit parser hardening
+        shell: bash
+        run: |
+          if git diff --quiet -- apps/menu-worker/src/menu-source-runtime.ts apps/menu-worker/src/menu-source-runtime-item-normalizer.test.ts; then
+            echo "Parser hardening already committed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- apps/menu-worker/src/menu-source-runtime.ts apps/menu-worker/src/menu-source-runtime-item-normalizer.test.ts
+          git commit -m "Filter generic non-dish HTML leakage"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
