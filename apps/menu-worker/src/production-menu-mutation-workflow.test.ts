@@ -33,4 +33,13 @@ describe("production menu mutation workflows", () => {
     expect(watcher).toContain("name: Onboard catalog candidates");
     expect(watcher).toContain("run: pnpm --filter @fysen/menu-worker onboard:catalog");
   });
+
+  it("reconciles canonical catalog metadata before watching due restaurant hours", () => {
+    const onboardingStep = watcher.indexOf("name: Onboard catalog candidates");
+    const hoursStep = watcher.indexOf("name: Watch due restaurant hours");
+
+    expect(onboardingStep).toBeGreaterThan(-1);
+    expect(hoursStep).toBeGreaterThan(-1);
+    expect(onboardingStep).toBeLessThan(hoursStep);
+  });
 });
