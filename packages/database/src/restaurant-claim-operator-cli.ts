@@ -1,7 +1,11 @@
 import { createDatabasePool } from "./client.js";
 import { assertLocalOperatorEnvironment } from "./operator-environment.js";
-import { listPendingRestaurantClaims, parseRestaurantClaimOperatorCommand } from "./restaurant-claim-operator.js";
-import { reviewRestaurantClaim } from "./restaurant-claims.js";
+import {
+  listActiveRestaurantAccessGrants,
+  listPendingRestaurantClaims,
+  parseRestaurantClaimOperatorCommand,
+} from "./restaurant-claim-operator.js";
+import { reviewRestaurantClaim, revokeRestaurantAccess } from "./restaurant-claims.js";
 
 async function main(): Promise<void> {
   assertLocalOperatorEnvironment();
@@ -15,6 +19,27 @@ async function main(): Promise<void> {
       );
       const pendingClaims = await listPendingRestaurantClaims(pool, command.limit);
       process.stdout.write(`${JSON.stringify({ pendingClaims }, null, 2)}\n`);
+      return;
+    }
+
+    if (command.kind === "grants") {
+      process.stderr.write(
+        "Access grant output contains principal PII. Use locally only; do not redirect it to GitHub logs, workflow artifacts or commits.\n",
+      );
+      const activeGrants = await listActiveRestaurantAccessGrants(pool, command.limit);
+      process.stdout.write(`${JSON.stringify({ activeGrants }, null, 2)}\n`);
+      return;
+    }
+
+    if (command.kind === "revoke") {
+      await revokeRestaurantAccess(pool, command.accessGrantId, command.revokedBy);
+      process.stdout.write(
+        `${JSON.stringify({
+          accessGrantId: command.accessGrantId,
+          status: "revoked",
+          proAccess: "invalidated",
+        }, null, 2)}\n`,
+      );
       return;
     }
 
