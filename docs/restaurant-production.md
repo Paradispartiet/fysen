@@ -24,6 +24,25 @@ GitHub-run `Validate Fysen restaurant candidates` #360 på commit `936a1ce7d6f16
 
 En separat kontroll av Café Saras førstpartslenkede Yoordi-side ga HTTP 200, men ingen maskinlesbare menyretter, og ble derfor ikke godkjent som erstatningskilde. Tallene i dette avsnittet er pre-merge source-gate-bevis. De blir ikke produksjonstall før merge og den eksakte post-merge materializeren har bekreftet dem.
 
+### Post-merge produksjonsbevis
+
+PR #275 ble merget som `12eed524d7233f93f8d0164fadb93b11a3cf7be6`. Den eksakte `Materialize Fysen production catalog`-runnen #32368602476 og den påfølgende watcher-runnen #32369125339 ga samme katalogresultat:
+
+- 40 manifester ble behandlet;
+- 8 restauranter ble publisert i post-merge materializeren;
+- 28 var allerede publisert;
+- 36 manifester var production-green;
+- 4 manifester var røde.
+
+Den eneste operative rødlisten etter denne kjøringen er:
+
+1. Café Sara — den publiserte førstpartsmenyen svarer HTTP 404;
+2. Confusion — snapshot-persistens traff en duplisert `sourceKey`;
+3. Hrimnir Ramen (`hrimnir-ramen-storgata-oslo`) — det dupliserte Oslo-manifestet traff forbidden assertion `Ramen`, mens det eksisterende canonicale Hrimnir-manifestet fortsatt er publisert;
+4. La Mayor — første onboarding-watch endte i `extraction_error`.
+
+Watcherens åpningstidssteg rapporterte i tillegg feil for flere due/nye kilder. Dette endrer ikke den fail-closed katalogtellingen: restauranter med provisional/unverified timer forblir søkbare, men får `open/closed = unknown` til timer-kilden er verifisert. Korndokki var `already_published` i både materializer og watcher.
+
 Som ekstern størrelsesreferanse viste Mattilsynets Smilefjes-oversikt 1 345 spisesteder i Oslo ved kontroll 2026-08-20: <https://smilefjes.mattilsynet.no/kommune/oslo/>. Dette omfatter flere typer spisesteder og er ikke Fysens canonical backlog. Målingen betyr at 40-manifestgruppen bare er den nåværende produksjonsgruppen, ikke «alle restauranter i Oslo».
 
 ## Produksjonslinjen
