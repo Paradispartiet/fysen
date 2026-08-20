@@ -1,0 +1,165 @@
+name: Oslo batch 01 research
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/oslo-batch-01-research.yml"
+      - "apps/menu-worker/research/oslo-batch-01.seed.json"
+
+permissions:
+  contents: read
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - name: Checkout batch branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build menu-worker dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Geocode research seed and build intake plan
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+
+          const seedPath = 'research/oslo-batch-01.seed.json';
+          const outputPath = 'research/oslo-batch-01.generated.json';
+          const failurePath = 'research/oslo-batch-01.geocode-failures.json';
+          const seed = JSON.parse(await readFile(seedPath, 'utf8'));
+          const restaurants = [];
+          const failures = [];
+          const cache = new Map();
+          const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+          for (const entry of seed.restaurants) {
+            const address = entry.restaurant.address;
+            let point = cache.get(address);
+            if (!point) {
+              const params = new URLSearchParams({
+                format: 'jsonv2',
+                limit: '1',
+                countrycodes: 'no',
+                q: address,
+              });
+              const response = await fetch(`https://nominatim.openstreetmap.org/search?${params}`, {
+                headers: {
+                  'User-Agent': 'FysenBatchResearch/0.1 (https://github.com/Paradispartiet/fysen)',
+                  'Accept': 'application/json',
+                  'Referer': 'https://github.com/Paradispartiet/fysen',
+                },
+                signal: AbortSignal.timeout(15000),
+              });
+              if (!response.ok) {
+                failures.push({ slug: entry.restaurant.slug, address, error: `Nominatim HTTP ${response.status}` });
+                await sleep(1200);
+                continue;
+              }
+              const rows = await response.json();
+              const first = rows[0];
+              if (!first) {
+                failures.push({ slug: entry.restaurant.slug, address, error: 'No geocode result' });
+                await sleep(1200);
+                continue;
+              }
+              point = { latitude: Number(first.lat), longitude: Number(first.lon), displayName: first.display_name };
+              if (!Number.isFinite(point.latitude) || !Number.isFinite(point.longitude)) {
+                failures.push({ slug: entry.restaurant.slug, address, error: 'Invalid geocode coordinates' });
+                await sleep(1200);
+                continue;
+              }
+              cache.set(address, point);
+              await sleep(1200);
+            }
+
+            restaurants.push({
+              ...entry,
+              restaurant: {
+                ...entry.restaurant,
+                latitude: point.latitude,
+                longitude: point.longitude,
+              },
+            });
+          }
+
+          const plan = {
+            version: 1,
+            outputDirectory: 'candidates-batch-01',
+            concurrency: seed.concurrency ?? 4,
+            restaurants,
+          };
+          await writeFile(outputPath, `${JSON.stringify(plan, null, 2)}\n`);
+          await writeFile(failurePath, `${JSON.stringify(failures, null, 2)}\n`);
+          process.stdout.write(`${JSON.stringify({ requested: seed.restaurants.length, geocoded: restaurants.length, failed: failures.length, failures }, null, 2)}\n`);
+          NODE
+
+      - name: Run bounded-concurrency intake
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p candidates-batch-01
+          set +e
+          node dist/index.js intake:batch research/oslo-batch-01.generated.json > research/oslo-batch-01.intake.json 2> research/oslo-batch-01.intake.stderr
+          status=$?
+          set -e
+          echo "intake_exit_status=$status"
+          cat research/oslo-batch-01.intake.json || true
+          cat research/oslo-batch-01.intake.stderr || true
+
+      - name: Validate generated candidates independently
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch candidates-batch-01 > research/oslo-batch-01.validation.json 2> research/oslo-batch-01.validation.stderr
+          status=$?
+          set -e
+          echo "validation_exit_status=$status"
+          cat research/oslo-batch-01.validation.json || true
+          cat research/oslo-batch-01.validation.stderr || true
+
+      - name: Package batch evidence
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          tar -czf oslo-batch-01-evidence.tgz \
+            research/oslo-batch-01.seed.json \
+            research/oslo-batch-01.generated.json \
+            research/oslo-batch-01.geocode-failures.json \
+            research/oslo-batch-01.intake.json \
+            research/oslo-batch-01.intake.stderr \
+            research/oslo-batch-01.validation.json \
+            research/oslo-batch-01.validation.stderr \
+            candidates-batch-01
+
+      - name: Upload batch evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: oslo-batch-01-evidence
+          path: apps/menu-worker/oslo-batch-01-evidence.tgz
+          if-no-files-found: error
+          retention-days: 7
