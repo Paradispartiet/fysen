@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v6";
+export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v7";
 
 const HEADING_MARKER = "__FYSEN_ADJACENT_HEADING_LEVEL_";
 const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
@@ -23,6 +23,12 @@ interface ParsedPrice {
 interface HeadingPriceCandidate {
   readonly item: MenuObservedItem;
   readonly sectionHint: string | null;
+}
+
+interface NumberedHeadingCandidate {
+  readonly candidate: HeadingPriceCandidate;
+  readonly menuIndex: number;
+  readonly name: string;
 }
 
 function normalizeVisibleLine(value: string): string {
@@ -113,31 +119,49 @@ function nearestSemanticSectionHeading(
   return null;
 }
 
-function canonicalizeStrongNumberedHeadingPattern(
-  candidates: readonly HeadingPriceCandidate[],
-): readonly HeadingPriceCandidate[] {
-  const numbered = candidates
-    .map((candidate) => {
-      const match = candidate.item.name.match(LEADING_MENU_INDEX);
-      if (!match?.[1] || !match[2]) return null;
-      const menuIndex = Number(match[1]);
-      const name = normalizeVisibleLine(match[2]);
-      if (!Number.isInteger(menuIndex) || !name || !/\p{L}/u.test(name)) return null;
-      return { candidate, menuIndex, name };
-    })
-    .filter(
-      (value): value is {
-        readonly candidate: HeadingPriceCandidate;
-        readonly menuIndex: number;
-        readonly name: string;
-      } => value !== null,
-    );
+function parseNumberedCandidate(candidate: HeadingPriceCandidate): NumberedHeadingCandidate | null {
+  const match = candidate.item.name.match(LEADING_MENU_INDEX);
+  if (!match?.[1] || !match[2]) return null;
+  const menuIndex = Number(match[1]);
+  const name = normalizeVisibleLine(match[2]);
+  if (!Number.isInteger(menuIndex) || menuIndex < 1 || menuIndex > 300) return null;
+  if (!name || !/\p{L}/u.test(name)) return null;
+  return { candidate, menuIndex, name };
+}
 
-  if (numbered.length < 4 || numbered.length * 5 < candidates.length * 4) return candidates;
-  if (new Set(numbered.map((entry) => entry.menuIndex)).size !== numbered.length) return candidates;
-  for (let index = 1; index < numbered.length; index += 1) {
-    if ((numbered[index]?.menuIndex ?? 0) <= (numbered[index - 1]?.menuIndex ?? 0)) return candidates;
+function canonicalizeStrongNumberedHeadingMenu(
+  candidates: readonly HeadingPriceCandidate[],
+): readonly HeadingPriceCandidate[] | null {
+  const ordered = [...candidates].sort((a, b) => a.item.position - b.item.position);
+  const byIndex = new Map<number, NumberedHeadingCandidate>();
+
+  for (const candidate of ordered) {
+    const numbered = parseNumberedCandidate(candidate);
+    if (!numbered) continue;
+    const existing = byIndex.get(numbered.menuIndex);
+    if (existing) {
+      const sameName = normalizeDishName(existing.name) === normalizeDishName(numbered.name);
+      const samePrice = existing.candidate.item.priceMinor === numbered.candidate.item.priceMinor;
+      const samePriceKind = existing.candidate.item.priceKind === numbered.candidate.item.priceKind;
+      if (!sameName || !samePrice || !samePriceKind) return null;
+      continue;
+    }
+    byIndex.set(numbered.menuIndex, numbered);
   }
+
+  const numbered = [...byIndex.values()].sort(
+    (a, b) => a.candidate.item.position - b.candidate.item.position,
+  );
+  if (numbered.length < 8) return null;
+
+  for (let index = 1; index < numbered.length; index += 1) {
+    if ((numbered[index]?.menuIndex ?? 0) <= (numbered[index - 1]?.menuIndex ?? 0)) return null;
+  }
+
+  const firstIndex = numbered[0]?.menuIndex ?? 0;
+  const lastIndex = numbered[numbered.length - 1]?.menuIndex ?? 0;
+  const indexSpan = lastIndex - firstIndex + 1;
+  if (indexSpan < 8 || numbered.length / indexSpan < 0.7) return null;
 
   return numbered.map(({ candidate, name }) => ({
     ...candidate,
@@ -255,8 +279,13 @@ export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly Men
     byHeadingLevel.set(headingLevel, items);
   }
 
+  const allCandidates = [...byHeadingLevel.values()]
+    .flat()
+    .sort((a, b) => a.item.position - b.item.position);
+  const strongNumberedMenu = canonicalizeStrongNumberedHeadingMenu(allCandidates);
+  if (strongNumberedMenu) return applyDuplicateSectionIdentity(strongNumberedMenu);
+
   const strongest = [...byHeadingLevel.values()].sort((a, b) => b.length - a.length)[0] ?? [];
   if (strongest.length < 4) return [];
-
-  return applyDuplicateSectionIdentity(canonicalizeStrongNumberedHeadingPattern(strongest));
+  return applyDuplicateSectionIdentity(strongest);
 }
