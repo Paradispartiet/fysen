@@ -1,8 +1,8 @@
 name: Registan production proof
 
 on:
-  push:
-    branches: [ops/registan-production-proof]
+  pull_request:
+    branches: [main]
     paths:
       - ".github/workflows/registan-production-proof.yml"
 
