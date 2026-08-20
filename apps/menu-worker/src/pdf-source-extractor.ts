@@ -1,7 +1,7 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v7";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v8";
 
 function normalizeScopeLine(value: string): string {
   return value
@@ -16,14 +16,14 @@ function normalizeScopeLine(value: string): string {
 
 function isBeverageSectionHeading(value: string): boolean {
   const line = normalizeScopeLine(value);
-  return /^(?:bia va ruou(?: beer spirits)?|beer(?: and)? spirits|giai khat(?: non alcohol(?:ic)?)?|non alcoholic(?: drinks?)?|ruou pha(?: cocktails?)?|cocktails?|khong con(?: mocktails?)?|mocktails?|do uong(?: drinks?)?|drikke(?:meny)?|drinks?|beverages?|vinkart|vin(?:kart|liste|meny)?|wine(?: list| menu)?|beer|ol|spirits?|brennevin|liquor)$/u.test(
+  return /^(?:bia va ruou(?: beer spirits)?|beer(?: and)? spirits|giai khat(?: non alcohol(?:ic)?)?|non alcoholic(?: drinks?)?|ruou pha(?: cocktails?)?|cocktails?|khong con(?: mocktails?)?|mocktails?|do uong(?: drinks?)?|drikke(?:meny)?|drinks?|beverages?|barnedrinker|barne drikker|kids drinks?|children s drinks?|vinkart|vin(?:kart|liste|meny)?|wine(?: list| menu)?|beer|ol|spirits?|brennevin|liquor)$/u.test(
     line,
   );
 }
 
 function isFoodSectionHeading(value: string): boolean {
   const line = normalizeScopeLine(value);
-  return /^(?:do ngot(?: dessert)?|desserts?|mat|food|forretter|starters?|smaretter|small plates?|snacks?|hovedretter|main courses?|mains?)$/u.test(
+  return /^(?:do ngot(?: dessert)?|desserts?|dolci|mat|food|forretter|starters?|smaretter|small plates?|snacks?|hovedretter|main courses?|mains?)$/u.test(
     line,
   );
 }
