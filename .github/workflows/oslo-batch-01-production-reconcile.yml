@@ -1,0 +1,90 @@
+name: Oslo batch 01 production reconcile
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/oslo-batch-01-production-reconcile.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
+      DATABASE_SSL: "verify-full"
+      NODE_ENV: production
+    steps:
+      - name: Checkout exact batch merge
+        uses: actions/checkout@v4
+        with:
+          ref: 700d24cb3c1e96a8fb5db5f2aa5f2457132d24c5
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build database dependency graph
+        run: pnpm --filter @fysen/database... build
+
+      - name: Reconcile canonical manifest slugs with production
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readdir, readFile } from 'node:fs/promises';
+          import { createDatabasePool } from './packages/database/dist/index.js';
+
+          const directory = 'apps/menu-worker/catalog';
+          const files = (await readdir(directory)).filter((name) => name.endsWith('.json')).sort();
+          const manifestRows = [];
+          for (const file of files) {
+            const manifest = JSON.parse(await readFile(`${directory}/${file}`, 'utf8'));
+            manifestRows.push({ file, slug: manifest.restaurant.slug, name: manifest.restaurant.name });
+          }
+          const manifestSlugs = manifestRows.map((row) => row.slug);
+          const pool = createDatabasePool();
+          try {
+            const db = await pool.query(
+              `SELECT r.slug, r.name, r.active,
+                      count(ms.id)::int AS menu_source_count,
+                      count(ms.id) FILTER (WHERE ms.enabled)::int AS enabled_menu_source_count
+               FROM fysen.restaurants r
+               LEFT JOIN fysen.menu_sources ms ON ms.restaurant_id = r.id
+               GROUP BY r.id, r.slug, r.name, r.active
+               ORDER BY r.slug`,
+            );
+            const dbBySlug = new Map(db.rows.map((row) => [row.slug, row]));
+            const catalogNotActive = manifestRows
+              .filter((row) => !dbBySlug.get(row.slug)?.active)
+              .map((row) => ({ ...row, db: dbBySlug.get(row.slug) ?? null }));
+            const activeNotCatalog = db.rows
+              .filter((row) => row.active && !manifestSlugs.includes(row.slug));
+            const duplicateManifestSlugs = manifestSlugs.filter((slug, index) => manifestSlugs.indexOf(slug) !== index);
+            const activeCatalogRows = manifestRows.filter((row) => dbBySlug.get(row.slug)?.active);
+            console.log(JSON.stringify({
+              manifestCount: manifestRows.length,
+              uniqueManifestSlugs: new Set(manifestSlugs).size,
+              activeCatalogRestaurantCount: activeCatalogRows.length,
+              catalogNotActive,
+              activeNotCatalog,
+              duplicateManifestSlugs: [...new Set(duplicateManifestSlugs)],
+            }, null, 2));
+            if (manifestRows.length !== 45) throw new Error(`Expected 45 manifests, got ${manifestRows.length}`);
+            if (new Set(manifestSlugs).size !== manifestRows.length) throw new Error('Duplicate canonical manifest slug detected');
+          } finally {
+            await pool.end();
+          }
+          NODE
