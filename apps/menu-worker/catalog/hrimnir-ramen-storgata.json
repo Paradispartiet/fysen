@@ -21,7 +21,10 @@
     "url": "https://www.hrimnir-ramen.no/meny-storgata",
     "timeZone": "Europe/Oslo",
     "checkIntervalMinutes": 720,
-    "minimumExpectedIntervals": 7
+    "minimumExpectedIntervals": 7,
+    "scopeHints": [
+      "Storgata"
+    ]
   },
   "actions": [
     {
