@@ -1,0 +1,101 @@
+name: Matlyst v3 production proof
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Fysen batched Vercel production release"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-matlyst-v3-production-proof
+  cancel-in-progress: false
+
+jobs:
+  proof:
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      FYSEN_PUBLIC_WEB_URL: https://fysen.vercel.app
+    steps:
+      - name: Verify Matlyst v3 public consumer journeys
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const base = (process.env.FYSEN_PUBLIC_WEB_URL || "https://fysen.vercel.app").replace(/\/$/, "");
+
+          async function fetchHtml(path) {
+            const url = `${base}${path}`;
+            let lastStatus = null;
+            let lastError = null;
+            for (let attempt = 1; attempt <= 10; attempt += 1) {
+              try {
+                const response = await fetch(url, {
+                  cache: "no-store",
+                  headers: { "user-agent": "FysenMatlystProductionProof/1.0" },
+                  signal: AbortSignal.timeout(15_000),
+                });
+                lastStatus = response.status;
+                if (response.ok) return { url, html: await response.text() };
+              } catch (error) {
+                lastError = error instanceof Error ? error.message : String(error);
+              }
+              await new Promise((resolve) => setTimeout(resolve, 5_000));
+            }
+            throw new Error(`Could not fetch ${url}; status=${lastStatus ?? "none"}; error=${lastError ?? "none"}`);
+          }
+
+          function requireText(surface, ...texts) {
+            const missing = texts.filter((text) => !surface.html.includes(text));
+            if (missing.length > 0) {
+              throw new Error(`${surface.url} is missing Matlyst production markers: ${missing.join(" | ")}`);
+            }
+          }
+
+          const home = await fetchHtml("/");
+          requireText(
+            home,
+            "Hva har du lyst på?",
+            "Finn maten du faktisk har lyst på",
+            "Velg etter lyst",
+            "Utforsk verden",
+            "Asia",
+            "Europa",
+            "Afrika",
+            "Amerika",
+            "Alle kjøkken (19)",
+          );
+
+          const journeys = [
+            ["Asia → Øst-Asia → Japansk", "/search?city=Oslo&world=asia&region=east-asia&cuisine=Japansk", "Ramen"],
+            ["Europa → Sør-Europa → Italiensk", "/search?city=Oslo&world=europe&region=southern-europe&cuisine=Italiensk", "Carbonara"],
+            ["Asia → Sør-Asia → Nepalsk", "/search?city=Oslo&world=asia&region=south-asia&cuisine=Nepalsk", "Momo"],
+            ["Europa → Øst-Europa → Polsk", "/search?city=Oslo&world=europe&region=eastern-europe&cuisine=Polsk", "Pierogi"],
+            ["Afrika → Øst-Afrika → Etiopisk", "/search?city=Oslo&world=africa&region=east-africa&cuisine=Etiopisk", "Doro wat"],
+            ["Asia → Sørøst-Asia → Filippinsk", "/search?city=Oslo&world=asia&region=southeast-asia&cuisine=Filippinsk", "Sisig"],
+            ["Afrika → Nord-Afrika → Egyptisk", "/search?city=Oslo&world=africa&region=north-africa&cuisine=Egyptisk", "Koshari"],
+            ["Asia → Vest-Asia → Levantinsk", "/search?city=Oslo&world=asia&region=west-asia&cuisine=Levantinsk", "Falafel"],
+          ];
+
+          const verified = [];
+          for (const [pathLabel, path, representativeDish] of journeys) {
+            const surface = await fetchHtml(path);
+            requireText(surface, "Alle retter i Oslo", pathLabel, representativeDish);
+            verified.push({ path: pathLabel, representativeDish, url: surface.url });
+          }
+
+          process.stdout.write(`${JSON.stringify({
+            status: "verified",
+            home: home.url,
+            worlds: ["Asia", "Europa", "Afrika", "Amerika"],
+            activeCuisineCount: 19,
+            journeys: verified,
+          }, null, 2)}\n`);
+          NODE
