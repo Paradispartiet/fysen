@@ -5,11 +5,12 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_SECTION_FIRST_CARD_RECOVERY_VERSION = "section-first-card-v1";
+export const HTML_SECTION_FIRST_CARD_RECOVERY_VERSION = "section-first-card-v2";
 
 const SECTION_COUNT_SUFFIX = /\s*\(\s*\d{1,3}\s*\)\s*$/u;
 const FOOD_SECTION_LABEL = /^(?:forretter?|starters?|appetizers?|small\s+plates?|småretter|hovedretter?|mains?|main\s+courses?|supper?|soups?|barnemeny|kids?\s+menu|sauser?|sauces?|desserter?|desserts?|sides?|tilbehør|salater?|salads?|pizza(?:er|s)?|noodles?|nudler|curr(?:y|ies)|wok|grillretter?)$/iu;
 const BEVERAGE_SECTION_LABEL = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?)$/iu;
+const MENU_SCOPE_LABEL = /^(?:meny|menu|à\s+la\s+carte|a\s+la\s+carte)$/iu;
 const MENU_END_SECTION_LABEL = /^(?:product\s+information|restaurant\s+information|restaurantinformasjon|allergen(?:oversikt|er|s)?|reservasjoner?|reservations?|kontakt(?:\s+oss)?|contact(?:\s+us)?|booking|bordbestilling)$/iu;
 const PRICE_LINE = /^(?:(fra|from)\s*)?(?:(?:NOK|kr\.?)\s*)?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
 const UI_LABEL = /^(?:popular\s+dish|most\s+ordered|bestseller|#?\d+\s+(?:most\s+liked|mest\s+likte)|image|add\s+to\s+cart|legg\s+i\s+handlekurv|show\s+more|vis\s+mer)$/iu;
@@ -28,6 +29,7 @@ function isSectionBoundary(value: string): boolean {
   return (
     FOOD_SECTION_LABEL.test(label) ||
     BEVERAGE_SECTION_LABEL.test(label) ||
+    MENU_SCOPE_LABEL.test(label) ||
     MENU_END_SECTION_LABEL.test(label)
   );
 }
