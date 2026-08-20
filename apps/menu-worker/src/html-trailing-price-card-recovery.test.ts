@@ -57,6 +57,33 @@ describe("trailing-price HTML card recovery", () => {
     ]);
   });
 
+  it("prefers one strong semantic food category over loose price-adjacent UI text", () => {
+    const items = recoverTrailingPriceCardHtmlItems(`
+      <html><body>
+        <div data-testid="menu-category-section">
+          <div data-testid="menu-category-section-title"><h2>Mains</h2></div>
+          <p>Cutlery available</p>
+          <div data-testid="menu-product"><span data-testid="menu-product-name">House Sausage</span><span data-testid="menu-product-price">160 NOK</span></div>
+          <div data-testid="menu-product"><span data-testid="menu-product-name">Cabbage Stew</span><span data-testid="menu-product-price">160 NOK</span></div>
+          <div data-testid="menu-product"><span data-testid="menu-product-name">Cheese Dumplings</span><span data-testid="menu-product-price">249 NOK</span></div>
+          <div data-testid="menu-product"><span data-testid="menu-product-name">Meat Dumplings</span><span data-testid="menu-product-price">249 NOK</span></div>
+        </div>
+        <div data-testid="menu-category-section">
+          <div data-testid="menu-category-section-title"><h2>Drikke</h2></div>
+          <div data-testid="menu-product"><span data-testid="menu-product-name">House Soda</span><span data-testid="menu-product-price">55 NOK</span></div>
+        </div>
+      </body></html>
+    `);
+
+    expect(items.map((item) => item.name)).toEqual([
+      "House Sausage",
+      "Cabbage Stew",
+      "Cheese Dumplings",
+      "Meat Dumplings",
+    ]);
+    expect(items.every((item) => item.sectionName === "Mains" && item.confidence === 0.99)).toBe(true);
+  });
+
   it("fails closed on ambiguous multi-price metadata while preserving neighboring cards", () => {
     const items = recoverTrailingPriceCardHtmlItems(`
       <html><body>
