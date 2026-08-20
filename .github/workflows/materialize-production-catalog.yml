@@ -11,6 +11,8 @@ on:
       - "!apps/menu-worker/src/**/*.test.ts"
       - "packages/menu-core/src/**"
       - "!packages/menu-core/src/**/*.test.ts"
+      - "packages/database/migrations/**"
+      - "packages/database/src/migrate.ts"
 
 permissions:
   contents: read
@@ -59,6 +61,9 @@ jobs:
 
       - name: Build menu worker and dependencies
         run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Apply production database migrations
+        run: pnpm --filter @fysen/database migrate
 
       - name: Materialize canonical production catalog
         run: pnpm --filter @fysen/menu-worker onboard:catalog
