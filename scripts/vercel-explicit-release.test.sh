@@ -32,6 +32,11 @@ grep -F 'packages/menu-core/*' "$workflow" >/dev/null
 grep -F 'No production-relevant changes have accumulated' "$workflow" >/dev/null
 grep -F -- '--meta "fysenSourceSha=$SOURCE_SHA"' "$workflow" >/dev/null
 grep -F 'deploy --prebuilt --prod' "$workflow" >/dev/null
+grep -F 'https://fysen.vercel.app/' "$workflow" >/dev/null
+if grep -F 'https://fysen-matsgran-8572s-projects.vercel.app/' "$workflow" >/dev/null; then
+  echo "Release verification must use the public Fysen web alias, not the Vercel team alias" >&2
+  exit 1
+fi
 
 proof_workflow=.github/workflows/production-pilot-proof.yml
 test -f "$proof_workflow"
