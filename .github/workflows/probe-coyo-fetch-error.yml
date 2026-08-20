@@ -82,4 +82,4 @@ jobs:
           NODE
       - name: Run current live source gate for Coyo
         working-directory: apps/menu-worker
-        run: pnpm validate:manifest -- catalog/coyo-sorenga-oslo.json
+        run: node dist/index.js validate:manifest catalog/coyo-sorenga-oslo.json
