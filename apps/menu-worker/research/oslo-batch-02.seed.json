@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "batch": "oslo-batch-02",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "restaurant": {"slug":"1947-gandhi-majorstuen-oslo","name":"1947 Gandhi Majorstuen","websiteUrl":"https://www.1947gandhi.no/","address":"Majorstuveien 41A, 0367 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.1947gandhi.no/","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 locks current menu identity first. Kitchen-scoped hours are not part of this intake gate and remain unknown until separately verified."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"benares-tordenskiolds-gate-oslo","name":"Benares","websiteUrl":"https://benares.no/","address":"Tordenskiolds gate 8, 0160 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://benares.no/meny?menu=menu","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 locks current menu identity first. Kitchen-scoped hours remain unknown until separately verified."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"mesob-motzfeldts-gate-oslo","name":"Mesob Restaurant","websiteUrl":"https://mesobrestaurant.no/","address":"Motzfeldts gate 5, 0187 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://mesobrestaurant.no/menu/","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 locks current menu identity first. Kitchen-scoped hours remain unknown until separately verified."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"jaipur-karl-johans-gate-oslo","name":"Jaipur Indian Restaurant","websiteUrl":"https://jaipur.no/","address":"Karl Johans gate 18C, 0159 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://jaipur.no/our-menu","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 locks current menu identity first. Kitchen-scoped hours remain unknown until separately verified."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"new-delhi-tjuvholmen-oslo","name":"New Delhi Oslo","websiteUrl":"https://newdelhi.no/","address":"Tjuvholmen allé 2, 0252 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://newdelhi.no/en/new-delhi-restaurant-english-menu/","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 locks current menu identity first. Kitchen-scoped hours remain unknown until separately verified."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"sawan-president-harbitz-gate-oslo","name":"Sawan","websiteUrl":"https://www.sawan.no/","address":"President Harbitz' gate 4, 0259 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://sawan.no/SawanAlacarteActive.pdf","sourceType":"pdf","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 locks the current first-party PDF menu first. Kitchen-scoped hours remain unknown until separately verified."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"the-golden-chimp-torggata-oslo","name":"The Golden Chimp","websiteUrl":"https://www.thegoldenchimp.no/","address":"Torggata 13, 0181 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.thegoldenchimp.no/menu","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Retry after generic parser hardening. Kitchen-scoped hours remain outside the intake gate."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"beijing-palace-pilestredet-oslo","name":"Beijing Palace","websiteUrl":"https://beijingpalace.no/","address":"Pilestredet 27, 0164 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://beijingpalace.no/wp-content/uploads/2024/05/Microsoft-Word-middags-meny-2024.pdf","sourceType":"pdf","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 locks the current first-party dinner-menu PDF first. Kitchen-scoped hours remain unknown until separately verified."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"kverneriet-majorstua-oslo","name":"Kverneriet Majorstua","websiteUrl":"https://kverneriet.com/majorstua/","address":"Kirkeveien 64B, 0366 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://kverneriet.com/majorstua/menu/","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 locks current menu identity first. Kitchen hours are verified separately after candidate generation."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"kverneriet-solli-oslo","name":"Kverneriet Solli","websiteUrl":"https://kverneriet.com/solli/","address":"Henrik Ibsens gate 100, 0255 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://kverneriet.com/solli/menu/","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 locks current menu identity first. Kitchen hours are verified separately after candidate generation."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"dognvill-tjuvholmen-oslo","name":"Døgnvill Tjuvholmen","websiteUrl":"https://www.dognvillburger.no/restaurant/tjuvholmen","address":"Lille Stranden 10, 0252 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.dognvillburger.no/en/meny/tjuvholmen","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 locks current menu identity first. The first-party restaurant page publishes kitchen-close semantics, which will be verified separately."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"dognvill-vulkan-oslo","name":"Døgnvill Vulkan","websiteUrl":"https://www.dognvillburger.no/restaurant/vulkan","address":"Vulkan 12, 0178 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.dognvillburger.no/en/meny/vulkan","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 locks current menu identity first. Kitchen hours will be verified separately."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"dognvill-bjorvika-oslo","name":"Døgnvill Bjørvika","websiteUrl":"https://www.dognvillburger.no/restaurant/bjorvika","address":"Operagata 6, 0150 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://www.dognvillburger.no/en/meny/bjorvika","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 locks current menu identity first. Kitchen hours will be verified separately."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"villa-paradiso-grunerlokka-oslo","name":"Villa Paradiso Grünerløkka","websiteUrl":"https://www.villaparadiso.no/restauranter/grunerlokka","address":"Olaf Ryes plass 8, 0552 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://cdn.prod.website-files.com/5c77c5f7f7364239e114229f/6a0f1ff9d9a0768c893a1a35_Villa%20Paradiso%20Gru%CC%88nerl%C3%B8kka%20meny.pdf","sourceType":"pdf","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 uses the current first-party linked food-menu PDF. Kitchen hours will be verified separately from the location page."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"villa-paradiso-munch-brygge-oslo","name":"Villa Paradiso Munch Brygge","websiteUrl":"https://www.villaparadiso.no/restauranter/munch-brygge","address":"Operagata 1, 0194 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://cdn.prod.website-files.com/5c77c5f7f7364239e114229f/6a0f1cfa0280cbf79106bf45_Villa%20Paradiso%20Munch%20Brygge%20meny.pdf","sourceType":"pdf","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 uses the current first-party linked food-menu PDF. Kitchen hours will be verified separately from the location page."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"villa-paradiso-majorstua-oslo","name":"Villa Paradiso Majorstua","websiteUrl":"https://www.villaparadiso.no/restauranter/majorstua","address":"Jacob Aalls gate 28, 0364 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://cdn.prod.website-files.com/5c77c5f7f7364239e114229f/6a0f20a36dcbe0a042728044_Villa%20Paradiso%20Majorstua%20meny.pdf","sourceType":"pdf","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 uses the current first-party linked food-menu PDF. Kitchen hours will be verified separately from the location page."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"delicatessen-grunerlokka-oslo","name":"Delicatessen Grünerløkka","websiteUrl":"https://delicatessen.no/grunerlokka/","address":"Søndre gate 8, 0550 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://favrit.com/nb-no/menu/location/LK4AD79J8nO","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"The first-party location page links this Favrit service menu directly. Batch 02 tests it as a restaurant-linked secondary priced service-menu source; dine-in completeness is not assumed."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"delicatessen-majorstuen-oslo","name":"Delicatessen Majorstuen","websiteUrl":"https://delicatessen.no/majorstuen/","address":"Vibes gate 8, 0356 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://favrit.com/nb-no/menu/location/LgEAQE59pAo","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"The first-party location page links this Favrit service menu directly. Batch 02 tests it as a restaurant-linked secondary priced service-menu source; dine-in completeness is not assumed."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"indi-spice-welhavens-gate-oslo","name":"IndiSpice Oslo","websiteUrl":"https://indispiceoslo.no/","address":"Welhavens gate 2, 0166 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://indispiceoslo.no/meny/","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 locks the current first-party priced food menu first. Kitchen hours remain unknown until separately verified."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    },
+    {
+      "restaurant": {"slug":"der-peppern-gror-radhusplassen-oslo","name":"Der Peppern Gror Rådhusplassen","websiteUrl":"https://radhusplassen.derpepperngror.no/","address":"Fritjof Nansens plass 7, 0160 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://radhusplassen.derpepperngror.no/meny-norsk/","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-20","note":"Batch 02 probes the current first-party menu page. If its menu is image-only or otherwise not canonical-readable, this restaurant stays in source discovery without weakening the gate."}},
+      "actions":[],"assertionCount":8,"forbiddenDishNames":[]
+    }
+  ]
+}
