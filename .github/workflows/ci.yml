@@ -101,3 +101,216 @@ jobs:
 
       - name: Database integration tests
         run: pnpm --filter @fysen/database test:integration
+
+  oslo-batch-01-proof:
+    if: github.event_name == 'pull_request' && github.head_ref == 'agent/oslo-batch-01'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
+      FYSEN_MENU_BOT_USER_AGENT: FysenMenuBot/0.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Apply proposed generic non-dish filter in proof worktree
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          runtime_path = Path("apps/menu-worker/src/menu-source-runtime.ts")
+          runtime = runtime_path.read_text()
+          old_section = '''const NON_DISH_MENU_SECTION =
+            /^(?:meny|à la carte|forretter|småretter|grillretter|hovedretter|dessert(?:er)?|drikkemeny|drikke(?:r)?|drikkevarer|cocktails?|vin|øl|bestill|bord|åpningstider|kontakt)$/iu;
+          '''.replace("          ", "")
+          new_section = r'''const NON_DISH_MENU_SECTION =
+            /^(?:meny|à la carte|forretter|småretter|grillretter|hovedretter|dessert(?:er)?|drikkemeny|drikke(?:r)?|drikkevarer|cocktails?|vin|øl|bestill|bord|åpningstider|kontakt|snacks?|maki|grill|antipasti|vegan|klassiske\s+forretter\s+og\s+supper)$/iu;
+          const ALLERGEN_ONLY_ITEM =
+            /^(?:\(\s*)?(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|selleri|celery|citrus|sitrus|sulfitt|sulphites?)(?:\s*[,/+&]\s*(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|selleri|celery|citrus|sitrus|sulfitt|sulphites?))*\s*\)?$/iu;
+          const NON_DISH_METADATA_ITEM =
+            /^(?:hjemmeside|homepage|mine\s+favoritter|my\s+favou?rites|favoritter|favou?rites|pers\.?|medium|gluten[- ]?free|glutenfri)$/iu;
+          const NON_DISH_FRAGMENT_ITEM = /^(?:stk\.|biter\.)\s+/iu;
+          const NON_DISH_ADDON_ITEM =
+            /^\*?\s*(?:påfyll\s+av\s+tilbehør|refill\s+of\s+sides?|add[- ]?ons?)\b/iu;
+          '''.replace("          ", "")
+          if old_section not in runtime:
+              raise SystemExit("expected non-dish section block not found")
+          runtime = runtime.replace(old_section, new_section)
+          runtime = runtime.replace(
+              'export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v6";',
+              'export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v7";'
+          )
+          runtime = runtime.replace(
+              '    !NON_DISH_MENU_SECTION.test(name) &&\n    !PRICE_DISPLAY_ONLY_ITEM.test(name) &&',
+              '    !NON_DISH_MENU_SECTION.test(name) &&\n    !ALLERGEN_ONLY_ITEM.test(name) &&\n    !NON_DISH_METADATA_ITEM.test(name) &&\n    !NON_DISH_FRAGMENT_ITEM.test(name) &&\n    !NON_DISH_ADDON_ITEM.test(name) &&\n    !PRICE_DISPLAY_ONLY_ITEM.test(name) &&'
+          )
+          if 'HTML_NON_DISH_FILTER_VERSION = "non-dish-v7"' not in runtime:
+              raise SystemExit("runtime patch did not apply")
+          runtime_path.write_text(runtime)
+
+          test_path = Path("apps/menu-worker/src/menu-source-runtime-item-normalizer.test.ts")
+          test = test_path.read_text()
+          test = test.replace(
+              'import { normalizeHtmlItemName } from "./menu-source-runtime.js";',
+              'import { isCanonicalHtmlMenuItem, normalizeHtmlItemName } from "./menu-source-runtime.js";'
+          )
+          addition = r'''
+
+            it.each([
+              "(Soya, Sesam, Egg, Hvetemel)",
+              "( Hvetemel, Skalldyr, Soya, Sesam)",
+              "(Hvetemel, Melk, Egg, Sulfitt)",
+              "Shellfish",
+              "milk",
+              "Eggs",
+              "Soy",
+              "Fish",
+              "Hjemmeside",
+              "Mine Favoritter",
+              "pers",
+              "Medium",
+              "Gluten free",
+              "Maki",
+              "Grill",
+              "Snacks",
+              "ANTIPASTI",
+              "VEGAN",
+              "Klassiske Forretter og Supper",
+              "*Påfyll av tilbehør (29,- per type)",
+              "stk. Svinekjøtt med scampi, salat og agurk.",
+              "biter. 4 avokado nigiri og 8 kappa maki.",
+            ])("rejects generic batch non-dish leakage: %s", (name) => {
+              expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
+            });
+
+            it.each([
+              "Fish & Chips",
+              "Sesame Chicken",
+              "Milk Bun Burger",
+              "Maki Tempura Scampi",
+              "Grilled Salmon",
+              "Vegan Burger",
+              "Gluten Free Pizza",
+            ])("preserves real dish names while filtering metadata: %s", (name) => {
+              expect(isCanonicalHtmlMenuItem(item(name))).toBe(true);
+            });
+          '''.replace("          ", "")
+          marker = "\n});\n"
+          if marker not in test:
+              raise SystemExit("test suite closing marker not found")
+          test = test.rsplit(marker, 1)[0] + addition + marker
+          test_path.write_text(test)
+          PY
+          git diff --check
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build menu-worker dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Focused non-dish regression
+        run: pnpm --filter @fysen/menu-worker test -- menu-source-runtime-item-normalizer.test.ts
+
+      - name: Geocode seed and build intake plan
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const seed = JSON.parse(await readFile('research/oslo-batch-01.seed.json', 'utf8'));
+          const restaurants = [];
+          const failures = [];
+          const cache = new Map();
+          const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+          for (const entry of seed.restaurants) {
+            const address = entry.restaurant.address;
+            let point = cache.get(address);
+            if (!point) {
+              const params = new URLSearchParams({ format: 'jsonv2', limit: '1', countrycodes: 'no', q: address });
+              const response = await fetch(`https://nominatim.openstreetmap.org/search?${params}`, {
+                headers: {
+                  'User-Agent': 'FysenBatchResearch/0.1 (https://github.com/Paradispartiet/fysen)',
+                  'Accept': 'application/json',
+                  'Referer': 'https://github.com/Paradispartiet/fysen',
+                },
+                signal: AbortSignal.timeout(15000),
+              });
+              if (!response.ok) {
+                failures.push({ slug: entry.restaurant.slug, address, error: `Nominatim HTTP ${response.status}` });
+                await sleep(1200);
+                continue;
+              }
+              const first = (await response.json())[0];
+              if (!first) {
+                failures.push({ slug: entry.restaurant.slug, address, error: 'No geocode result' });
+                await sleep(1200);
+                continue;
+              }
+              point = { latitude: Number(first.lat), longitude: Number(first.lon) };
+              cache.set(address, point);
+              await sleep(1200);
+            }
+            restaurants.push({
+              version: 1,
+              ...entry,
+              restaurant: { ...entry.restaurant, latitude: point.latitude, longitude: point.longitude },
+            });
+          }
+          await writeFile('research/oslo-batch-01.generated.json', `${JSON.stringify({ version: 1, outputDirectory: 'candidates-batch-01', concurrency: seed.concurrency ?? 4, restaurants }, null, 2)}\n`);
+          await writeFile('research/oslo-batch-01.geocode-failures.json', `${JSON.stringify(failures, null, 2)}\n`);
+          process.stdout.write(`${JSON.stringify({ requested: seed.restaurants.length, geocoded: restaurants.length, failed: failures.length, failures }, null, 2)}\n`);
+          NODE
+
+      - name: Run bounded-concurrency intake
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          rm -rf candidates-batch-01
+          mkdir -p candidates-batch-01
+          set +e
+          node dist/index.js intake:batch research/oslo-batch-01.generated.json > research/oslo-batch-01.intake.json 2> research/oslo-batch-01.intake.stderr
+          status=$?
+          set -e
+          echo "intake_exit_status=$status"
+          cat research/oslo-batch-01.intake.json || true
+          cat research/oslo-batch-01.intake.stderr || true
+
+      - name: Validate generated candidates
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node dist/index.js validate:batch candidates-batch-01 > research/oslo-batch-01.validation.json
+          cat research/oslo-batch-01.validation.json
+
+      - name: Package batch evidence
+        working-directory: apps/menu-worker
+        run: |
+          tar -czf oslo-batch-01-evidence-v2.tgz \
+            research/oslo-batch-01.generated.json \
+            research/oslo-batch-01.geocode-failures.json \
+            research/oslo-batch-01.intake.json \
+            research/oslo-batch-01.intake.stderr \
+            research/oslo-batch-01.validation.json \
+            candidates-batch-01
+
+      - name: Upload batch evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: oslo-batch-01-evidence-v2
+          path: apps/menu-worker/oslo-batch-01-evidence-v2.tgz
+          retention-days: 7
