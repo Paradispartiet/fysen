@@ -17,6 +17,8 @@
 .dishBrowseItemMain:focus-visible,
 .dishBrowseKnowledgeLink:focus-visible,
 .dishBrowseEditorialActions a:focus-visible,
+.dishBrowseWorldFilters button:focus-visible,
+.dishBrowseCulinaryRegionFilters button:focus-visible,
 .dishBrowseCuisineFilters button:focus-visible,
 .dishBrowseRegionFilters button:focus-visible,
 .dishBrowseFilter input:focus-visible {
@@ -71,7 +73,8 @@
   max-width: 680px;
 }
 
-.dishBrowseFilter > span {
+.dishBrowseFilter > span,
+.dishBrowseTaxonomyLevel > span {
   color: var(--color-muted);
   font-size: 12px;
   font-weight: 650;
@@ -89,6 +92,13 @@
   border-radius: 12px;
 }
 
+.dishBrowseTaxonomyLevel {
+  display: grid;
+  gap: 8px;
+}
+
+.dishBrowseWorldFilters,
+.dishBrowseCulinaryRegionFilters,
 .dishBrowseCuisineFilters,
 .dishBrowseRegionFilters {
   display: flex;
@@ -96,6 +106,8 @@
   gap: 8px;
 }
 
+.dishBrowseWorldFilters button,
+.dishBrowseCulinaryRegionFilters button,
 .dishBrowseCuisineFilters button,
 .dishBrowseRegionFilters button {
   min-height: 36px;
@@ -110,17 +122,31 @@
   cursor: pointer;
 }
 
+.dishBrowseWorldFilters button:hover,
+.dishBrowseCulinaryRegionFilters button:hover,
 .dishBrowseCuisineFilters button:hover,
 .dishBrowseRegionFilters button:hover,
+.dishBrowseWorldFilters button.isActive,
+.dishBrowseCulinaryRegionFilters button.isActive,
 .dishBrowseCuisineFilters button.isActive,
 .dishBrowseRegionFilters button.isActive {
   color: var(--color-brand-hover);
   border-color: var(--color-brand);
 }
 
+.dishBrowseWorldFilters button.isActive,
+.dishBrowseCulinaryRegionFilters button.isActive,
 .dishBrowseCuisineFilters button.isActive,
 .dishBrowseRegionFilters button.isActive {
   color: var(--color-brand);
+}
+
+.dishBrowseTaxonomyPath {
+  margin: 0;
+  color: var(--color-brand);
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.4;
 }
 
 .dishBrowseEditorial {

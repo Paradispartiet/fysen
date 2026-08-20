@@ -22,6 +22,11 @@ export type Cuisine = {
   readonly areas: readonly CuisineArea[];
 };
 
+export type CuisineDiscoveryDish = {
+  readonly areaName: string;
+  readonly dish: DishSuggestion;
+};
+
 export type FoodMood = {
   readonly name: string;
   readonly context: string;
@@ -274,6 +279,15 @@ function dishesForIds(ids: readonly string[]): readonly DishSuggestion[] {
     if (!dish) throw new Error(`Matlyst mood references unknown canonical dish: ${id}`);
     return toDishSuggestion(dish);
   });
+}
+
+export function discoveryDishesForCuisine(cuisineName: string): readonly CuisineDiscoveryDish[] {
+  const spec = cuisineSpecs.find((candidate) => candidate.name === cuisineName);
+  if (!spec) return [];
+  return matlystDiscoveryCatalog
+    .filter((dish) => dish.cuisine === spec.sourceCuisine && spec.regions.includes(dish.region))
+    .sort((left, right) => right.explorerPriority - left.explorerPriority || left.name.localeCompare(right.name, "nb"))
+    .map((dish) => ({ areaName: dish.region, dish: toDishSuggestion(dish) }));
 }
 
 export const cuisines: readonly Cuisine[] = cuisineSpecs.map((spec) => ({
