@@ -13,6 +13,8 @@ const nodeRequire = createRequire(import.meta.url);
 const robotsParser = nodeRequire("robots-parser") as RobotsParserFactory;
 const MAX_EXPLICIT_RESPONSE_BYTES = 25 * 1024 * 1024;
 const MAX_ROBOTS_RESPONSE_BYTES = 1024 * 1024;
+const MAX_TRANSIENT_FETCH_ATTEMPTS = 2;
+const TRANSIENT_HTTP_STATUSES = new Set([408, 500, 502, 503, 504]);
 
 export interface MenuHttpSourceState {
   readonly url: string;
@@ -87,6 +89,10 @@ function responseByteLimit(override: number | undefined, fallback: number): numb
     );
   }
   return override;
+}
+
+function isTransientHttpStatus(status: number): boolean {
+  return TRANSIENT_HTTP_STATUSES.has(status);
 }
 
 export class HttpMenuClient {
@@ -216,17 +222,32 @@ export class HttpMenuClient {
     const allowedOrigins = new Set(allowedRedirectOrigins);
 
     for (let redirects = 0; redirects <= 3; redirects += 1) {
-      await this.throttle(current.origin);
-      let response: Response;
-      try {
-        response = await this.fetchImpl(current, {
-          ...init,
-          redirect: "manual",
-          signal: AbortSignal.timeout(this.timeoutMs),
-        });
-      } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
-        throw new MenuFetchError("NETWORK_ERROR", `Network request failed: ${message}`);
+      let response: Response | null = null;
+
+      for (let attempt = 1; attempt <= MAX_TRANSIENT_FETCH_ATTEMPTS; attempt += 1) {
+        await this.throttle(current.origin);
+        try {
+          response = await this.fetchImpl(current, {
+            ...init,
+            redirect: "manual",
+            signal: AbortSignal.timeout(this.timeoutMs),
+          });
+        } catch (error) {
+          if (attempt < MAX_TRANSIENT_FETCH_ATTEMPTS) continue;
+          const message = error instanceof Error ? error.message : String(error);
+          throw new MenuFetchError("NETWORK_ERROR", `Network request failed: ${message}`);
+        }
+
+        if (isTransientHttpStatus(response.status) && attempt < MAX_TRANSIENT_FETCH_ATTEMPTS) {
+          await response.body?.cancel().catch(() => undefined);
+          response = null;
+          continue;
+        }
+        break;
+      }
+
+      if (!response) {
+        throw new MenuFetchError("NETWORK_ERROR", "Network request failed after transient retries");
       }
 
       if (![301, 302, 303, 307, 308].includes(response.status)) {

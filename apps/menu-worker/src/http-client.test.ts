@@ -151,6 +151,97 @@ describe("HttpMenuClient", () => {
     expect(calls).toBe(1);
   });
 
+  it("retries one transient robots.txt 502 before evaluating the rules", async () => {
+    let robotsCalls = 0;
+    let menuCalls = 0;
+    const fetchImpl = asFetch(async (input) => {
+      if (input.pathname === "/robots.txt") {
+        robotsCalls += 1;
+        if (robotsCalls === 1) return new Response("temporary upstream failure", { status: 502 });
+        return new Response("User-agent: *\nAllow: /\n", { status: 200 });
+      }
+      menuCalls += 1;
+      return new Response("<html><body>menu</body></html>", {
+        status: 200,
+        headers: { "Content-Type": "text/html" },
+      });
+    });
+
+    const client = new HttpMenuClient({
+      fetchImpl,
+      resolver: publicResolver,
+      minHostDelayMs: 1,
+      timeoutMs: 1000,
+    });
+    const result = await client.fetchSource({
+      url: "https://restaurant.test/menu",
+      userAgent: "FysenMenuBot/0.1",
+      etag: null,
+      lastModified: null,
+    });
+
+    expect(result.kind).toBe("content");
+    expect(robotsCalls).toBe(2);
+    expect(menuCalls).toBe(1);
+  });
+
+  it("keeps robots.txt fail-closed after bounded transient retries", async () => {
+    let robotsCalls = 0;
+    const fetchImpl = asFetch(async (input) => {
+      expect(input.pathname).toBe("/robots.txt");
+      robotsCalls += 1;
+      return new Response("upstream failure", { status: 502 });
+    });
+
+    const client = new HttpMenuClient({
+      fetchImpl,
+      resolver: publicResolver,
+      minHostDelayMs: 1,
+      timeoutMs: 1000,
+    });
+
+    await expect(
+      client.fetchSource({
+        url: "https://restaurant.test/menu",
+        userAgent: "FysenMenuBot/0.1",
+        etag: null,
+        lastModified: null,
+      }),
+    ).rejects.toMatchObject<MenuFetchError>({ code: "ROBOTS_UNAVAILABLE", httpStatus: 502 });
+    expect(robotsCalls).toBe(2);
+  });
+
+  it("retries one transient network failure for a menu GET", async () => {
+    let menuCalls = 0;
+    const fetchImpl = asFetch(async (input) => {
+      if (input.pathname === "/robots.txt") {
+        return new Response("User-agent: *\nAllow: /\n", { status: 200 });
+      }
+      menuCalls += 1;
+      if (menuCalls === 1) throw new Error("fetch failed");
+      return new Response("<html><body>menu</body></html>", {
+        status: 200,
+        headers: { "Content-Type": "text/html" },
+      });
+    });
+
+    const client = new HttpMenuClient({
+      fetchImpl,
+      resolver: publicResolver,
+      minHostDelayMs: 1,
+      timeoutMs: 1000,
+    });
+    const result = await client.fetchSource({
+      url: "https://restaurant.test/menu",
+      userAgent: "FysenMenuBot/0.1",
+      etag: null,
+      lastModified: null,
+    });
+
+    expect(result.kind).toBe("content");
+    expect(menuCalls).toBe(2);
+  });
+
   it("blocks cross-origin redirects after revalidating the destination", async () => {
     const fetchImpl = asFetch(async (input) => {
       if (input.pathname === "/robots.txt") {
