@@ -56,7 +56,21 @@ Følgende innganger er nå aktive:
 
 Disse er tverrgående brukerintensjoner. De kan peke på retter fra flere kjøkken.
 
-Et lystkort er ikke lenger en direkte lenke til et bredt tekstsøk som `street food` eller `grill`. Kortet åpner en egen Matlyst-utforsker med de canonical rettene som faktisk representerer lysten, rangert med fersk Oslo-dekning først. Derfra velger brukeren en konkret rett og går videre til vanlig Fysen-søk via **Se treff**. Dette hindrer at et kort viser dokumentert dekning fra én rett og deretter sender brukeren til et bredt søk som ikke nødvendigvis treffer den samme maten.
+Et lystkort er ikke en direkte lenke til et bredt tekstsøk som `street food` eller `grill`. Kortet åpner en egen Matlyst-utforsker med de canonical rettene som faktisk representerer lysten, rangert med fersk Oslo-dekning først. Derfra velger brukeren en konkret rett og går videre til vanlig Fysen-søk via **Se treff**. Dette hindrer at et kort viser dokumentert dekning fra én rett og deretter sender brukeren til et bredt søk som ikke nødvendigvis treffer den samme maten.
+
+## Kjøkken på forsiden og Alle kjøkken
+
+Forsiden skal ikke vokse til en vegg av store kort når taksonomien utvides. Den viser derfor bare de åtte best rangerte kjøkkenene i stor kortform.
+
+**Alle kjøkken** åpner en separat, kompakt katalog med hele den dokumenterte taksonomien. Katalogen:
+
+- beholder samme live-dekningsrangering som forsiden,
+- kan filtreres på kjøkkennavn, regioner og representative canonical retter,
+- viser ett konservativt live-signal per kjøkken når dekning finnes,
+- åpner den samme kjøkken-/rettsutforskeren som de store kortene,
+- oppretter ingen egen søke- eller restaurantindeks.
+
+Dermed kan Matlyst vokse videre uten at hovedsiden blir visuelt overlesset.
 
 ## Canonical discovery-data og matkunnskap
 
@@ -88,7 +102,7 @@ Aliasene i discovery-katalogene er valgt for å matche de faktiske menyidentitet
 
 ## Live-dekning og rangering
 
-Når browse-data er tilgjengelig, rangeres kjøkken etter beste dokumenterte ferske dekning blant kjøkkenets canonical retter. De åtte best rangerte vises først, mens resten ligger bak **Flere kjøkken**. Når live-data mangler, brukes den eksplisitte produktrekkefølgen som stabil fallback.
+Når browse-data er tilgjengelig, rangeres kjøkken etter beste dokumenterte ferske dekning blant kjøkkenets canonical retter. De åtte best rangerte vises på forsiden; hele listen finnes i **Alle kjøkken**. Når live-data mangler, brukes den eksplisitte produktrekkefølgen som stabil fallback.
 
 Kortene under **Hva frister?** bruker canonical retter som representative signaler. Kortet viser ett ferskt eksempel med et konservativt restaurantminimum. Når kortet åpnes, rangeres alle rettene i lysten etter samme coverage-logikk. Matlyst registrerer ikke selve discovery-visningen som et brukersøk; først når brukeren velger **Se treff** på en konkret rett går flyten inn i vanlig søk.
 
