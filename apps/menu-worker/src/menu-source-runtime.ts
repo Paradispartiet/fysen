@@ -306,6 +306,27 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverFirstCardAfterPlainFoodSections(extracted.visibleText)
         : [];
+    if (
+      process.env.GITHUB_ACTIONS === "true" &&
+      recoveredItems.length >= 10 &&
+      (trailingPriceCardItems.length >= 10 ||
+        priceWrappedItems.length >= 10 ||
+        headingPriceItems.length >= 10)
+    ) {
+      const summarize = (items: readonly MenuObservedItem[]) =>
+        items.map(({ name, priceMinor, confidence }) => ({ name, priceMinor, confidence }));
+      process.stderr.write(
+        `${JSON.stringify({
+          recoverySelectionDebug: {
+            recovered: summarize(recoveredItems),
+            trailing: summarize(trailingPriceCardItems),
+            priceWrapped: summarize(priceWrappedItems),
+            heading: summarize(headingPriceItems),
+            sectionFirst: summarize(sectionFirstCardItems),
+          },
+        })}\n`,
+      );
+    }
     const semanticCategoryCardsPreferred =
       trailingPriceCardItems.length >= 4 &&
       trailingPriceCardItems.every((item) => item.sectionName !== null && item.confidence >= 0.99);
