@@ -224,6 +224,7 @@ function canonicalizeStrongNumberedMenu(
   candidates: readonly TrailingPriceCandidate[],
 ): readonly TrailingPriceCandidate[] | null {
   const ordered = [...candidates].sort((a, b) => a.item.position - b.item.position);
+  const debugRice = ordered.some(({ item }) => item.name === "1 Satay");
   const byIndex = new Map<number, NumberedTrailingPriceCandidate>();
 
   for (const candidate of ordered) {
@@ -234,7 +235,14 @@ function canonicalizeStrongNumberedMenu(
       const sameName = normalizeDishName(existing.name) === normalizeDishName(numbered.name);
       const samePrice = existing.candidate.item.priceMinor === numbered.candidate.item.priceMinor;
       const samePriceKind = existing.candidate.item.priceKind === numbered.candidate.item.priceKind;
-      if (!sameName || !samePrice || !samePriceKind) return null;
+      if (!sameName || !samePrice || !samePriceKind) {
+        if (debugRice) {
+          process.stderr.write(
+            `${JSON.stringify({ numberedMenuDebug: { reason: "conflict", existing, numbered } })}\n`,
+          );
+        }
+        return null;
+      }
       continue;
     }
     byIndex.set(numbered.menuIndex, numbered);
@@ -252,6 +260,20 @@ function canonicalizeStrongNumberedMenu(
   const firstIndex = numbered[0]?.menuIndex ?? 0;
   const lastIndex = numbered[numbered.length - 1]?.menuIndex ?? 0;
   const indexSpan = lastIndex - firstIndex + 1;
+  if (debugRice) {
+    process.stderr.write(
+      `${JSON.stringify({
+        numberedMenuDebug: {
+          reason: "summary",
+          ordered: ordered.map(({ item }) => [item.name, item.priceMinor]),
+          numbered: numbered.map(({ menuIndex, name }) => [menuIndex, name]),
+          firstIndex,
+          lastIndex,
+          indexSpan,
+        },
+      })}\n`,
+    );
+  }
   if (firstIndex > 5 || indexSpan < 8 || numbered.length / indexSpan < 0.7) return null;
 
   return numbered.map(({ candidate, name }) => ({
