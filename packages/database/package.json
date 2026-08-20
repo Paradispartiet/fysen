@@ -15,11 +15,12 @@
     "build": "tsc -p tsconfig.json",
     "lint": "eslint src --ext .ts",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run src/migration.test.ts src/client.test.ts src/due-sources.test.ts src/demand-loop-markdown.test.ts src/quality-dashboard-markdown.test.ts src/quality-dashboard-cli.test.ts",
+    "test": "vitest run src/migration.test.ts src/client.test.ts src/due-sources.test.ts src/demand-loop-markdown.test.ts src/quality-dashboard-markdown.test.ts src/quality-dashboard-cli.test.ts src/operator-environment.test.ts src/restaurant-claim-operator-cli.test.ts",
     "migrate": "node dist/migrate.js",
     "verify:production": "node dist/verify-production.js",
     "demand:loop": "node dist/demand-loop-cli.js",
     "quality:dashboard": "node dist/quality-dashboard-cli.js",
+    "claim:operator": "node dist/restaurant-claim-operator-cli.js",
     "pro:issue-setup": "node dist/fysen-pro-setup-cli.js",
     "test:integration": "vitest run src/integration.test.ts && vitest run src/repository-price-semantics.integration.test.ts && vitest run src/search.integration.test.ts && vitest run src/browse.integration.test.ts && vitest run src/funnel.integration.test.ts && vitest run src/restaurant-actions.integration.test.ts && vitest run src/restaurant-hours.integration.test.ts && vitest run src/restaurant-hours-sources.integration.test.ts && vitest run src/coverage.integration.test.ts && vitest run src/demand-loop.integration.test.ts && vitest run src/restaurant-claims.integration.test.ts && vitest run src/fysen-pro.integration.test.ts && vitest run src/aha-min-mat.integration.test.ts && vitest run src/quality-dashboard.integration.test.ts"
   },
