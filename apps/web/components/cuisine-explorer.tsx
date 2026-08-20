@@ -5,6 +5,14 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { discoveryCoverage, normalizeDiscoveryText } from "../lib/dish-discovery";
 import { dishSearchHref } from "../lib/public-path";
 import {
+  activeRegionCuisines,
+  activeWorldCuisines,
+  cuisineTaxonomyPath,
+  culinaryWorlds,
+  type CulinaryRegion,
+  type CulinaryWorld,
+} from "./culinary-taxonomy";
+import {
   cuisines,
   foodMoods,
   type Cuisine,
@@ -17,6 +25,8 @@ type DishCoverage = {
   readonly dish: DishSuggestion;
   readonly restaurantCount: number;
 };
+
+const frontPageWorlds = culinaryWorlds.filter((world) => activeWorldCuisines(world).length > 0);
 
 function uniqueCandidates(dishes: readonly DishSuggestion[]): readonly DishSuggestion[] {
   const seen = new Set<string>();
@@ -35,8 +45,15 @@ function cuisineCandidates(cuisine: Cuisine): readonly DishSuggestion[] {
   );
 }
 
+function cuisinesCandidates(cuisinesToCheck: readonly Cuisine[]): readonly DishSuggestion[] {
+  return uniqueCandidates(cuisinesToCheck.flatMap(cuisineCandidates));
+}
+
 function cuisineFilterText(cuisine: Cuisine): string {
+  const taxonomyPath = cuisineTaxonomyPath(cuisine.name);
   return normalizeDiscoveryText([
+    taxonomyPath?.worldName ?? "",
+    taxonomyPath?.regionName ?? "",
     cuisine.name,
     cuisine.context,
     ...cuisine.areas.map((area) => area.name),
@@ -108,17 +125,28 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
   const [selectedCuisine, setSelectedCuisine] = useState<Cuisine | null>(null);
   const [selectedAreaName, setSelectedAreaName] = useState<string>("");
   const [selectedMood, setSelectedMood] = useState<FoodMood | null>(null);
+  const [selectedWorld, setSelectedWorld] = useState<CulinaryWorld | null>(null);
+  const [selectedCulinaryRegionId, setSelectedCulinaryRegionId] = useState("");
   const [cuisineDirectoryQuery, setCuisineDirectoryQuery] = useState("");
   const dialogRef = useRef<HTMLDialogElement>(null);
   const moodDialogRef = useRef<HTMLDialogElement>(null);
+  const worldDialogRef = useRef<HTMLDialogElement>(null);
+  const cuisineDirectoryDialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const moodTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const worldTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const cuisineDirectoryTriggerRef = useRef<HTMLButtonElement | null>(null);
   const liveDishes = browseData?.dishes ?? [];
 
   const selectedArea = useMemo<CuisineArea | null>(() => {
     if (!selectedCuisine) return null;
     return selectedCuisine.areas.find((area) => area.name === selectedAreaName) ?? selectedCuisine.areas[0] ?? null;
   }, [selectedAreaName, selectedCuisine]);
+
+  const selectedCulinaryRegion = useMemo<CulinaryRegion | null>(() => {
+    if (!selectedWorld || !selectedCulinaryRegionId) return null;
+    return selectedWorld.regions.find((region) => region.id === selectedCulinaryRegionId) ?? null;
+  }, [selectedCulinaryRegionId, selectedWorld]);
 
   const selectedDishCoverage = useMemo(() => {
     if (!selectedArea) return [];
@@ -132,6 +160,13 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
 
   const featured = useMemo(() => {
     return new Map(cuisines.map((cuisine) => [cuisine.name, featuredCoverage(cuisineCandidates(cuisine), liveDishes)]));
+  }, [liveDishes]);
+
+  const worldFeatured = useMemo(() => {
+    return new Map(frontPageWorlds.map((world) => [
+      world.id,
+      featuredCoverage(cuisinesCandidates(activeWorldCuisines(world)), liveDishes),
+    ]));
   }, [liveDishes]);
 
   const moodFeatured = useMemo(() => {
@@ -164,8 +199,29 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
     if (selectedMood && dialog && !dialog.open) dialog.showModal();
   }, [selectedMood]);
 
-  function openCuisine(cuisine: Cuisine, area: CuisineArea, trigger: HTMLButtonElement): void {
-    triggerRef.current = trigger;
+  useEffect(() => {
+    const dialog = worldDialogRef.current;
+    if (selectedWorld && dialog && !dialog.open) dialog.showModal();
+  }, [selectedWorld]);
+
+  function openCuisineFromDirectory(cuisine: Cuisine, area: CuisineArea): void {
+    const returnTrigger = cuisineDirectoryTriggerRef.current;
+    cuisineDirectoryTriggerRef.current = null;
+    const directoryDialog = cuisineDirectoryDialogRef.current;
+    if (directoryDialog?.open) directoryDialog.close();
+    triggerRef.current = returnTrigger;
+    setSelectedAreaName(area.name);
+    setSelectedCuisine(cuisine);
+  }
+
+  function openCuisineFromWorld(cuisine: Cuisine, area: CuisineArea): void {
+    const returnTrigger = worldTriggerRef.current;
+    worldTriggerRef.current = null;
+    const dialog = worldDialogRef.current;
+    if (dialog?.open) dialog.close();
+    setSelectedWorld(null);
+    setSelectedCulinaryRegionId("");
+    triggerRef.current = returnTrigger;
     setSelectedAreaName(area.name);
     setSelectedCuisine(cuisine);
   }
@@ -185,6 +241,30 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
     const dialog = moodDialogRef.current;
     if (dialog?.open) dialog.close();
     setSelectedMood(null);
+  }
+
+  function openWorld(world: CulinaryWorld, trigger: HTMLButtonElement): void {
+    worldTriggerRef.current = trigger;
+    setSelectedCulinaryRegionId("");
+    setSelectedWorld(world);
+  }
+
+  function closeWorld(): void {
+    const dialog = worldDialogRef.current;
+    if (dialog?.open) dialog.close();
+    setSelectedWorld(null);
+    setSelectedCulinaryRegionId("");
+  }
+
+  function openCuisineDirectory(trigger: HTMLButtonElement): void {
+    cuisineDirectoryTriggerRef.current = trigger;
+    const dialog = cuisineDirectoryDialogRef.current;
+    if (dialog && !dialog.open) dialog.showModal();
+  }
+
+  function closeCuisineDirectory(): void {
+    const dialog = cuisineDirectoryDialogRef.current;
+    if (dialog?.open) dialog.close();
   }
 
   function openFoodKnowledge(dishId: string): void {
@@ -211,6 +291,21 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
     if (trigger) window.requestAnimationFrame(() => trigger.focus());
   }
 
+  function restoreWorldTriggerFocus(): void {
+    setSelectedWorld(null);
+    setSelectedCulinaryRegionId("");
+    const trigger = worldTriggerRef.current;
+    worldTriggerRef.current = null;
+    if (trigger) window.requestAnimationFrame(() => trigger.focus());
+  }
+
+  function restoreCuisineDirectoryFocus(): void {
+    setCuisineDirectoryQuery("");
+    const trigger = cuisineDirectoryTriggerRef.current;
+    cuisineDirectoryTriggerRef.current = null;
+    if (trigger) window.requestAnimationFrame(() => trigger.focus());
+  }
+
   return (
     <section className="cuisineExplorer" aria-labelledby="matlyst-title">
       <div className="foodSectionHeading matlystHeading">
@@ -218,7 +313,7 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
           <p className="foodSectionEyebrow">Matlyst</p>
           <h2 id="matlyst-title">Finn maten du faktisk har lyst på</h2>
         </div>
-        <p>Start med en smak eller rettstype, eller gå rett til et kjøkken. Alt ender i den samme ferske Oslo-indeksen.</p>
+        <p>Start med en smak eller rettstype, eller utforsk matkulturer fra verdensdel til konkret kjøkken. Alt ender i den samme ferske Oslo-indeksen.</p>
       </div>
 
       <div className="matlystMoodBlock" aria-labelledby="matlyst-mood-title">
@@ -259,12 +354,186 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
         </div>
       </div>
 
-      <section className="matlystCuisineDirectory" aria-labelledby="all-cuisines-title">
-        <header className="matlystCuisineDirectoryHeader">
-          <p>Kjøkken</p>
-          <h3 id="all-cuisines-title">Alle aktive kjøkken i Matlyst</h3>
-          <span>{rankedCuisines.length} dokumenterte mattradisjoner, sortert med fersk Oslo-dekning først.</span>
-        </header>
+      <div className="matlystCuisineHeading">
+        <div>
+          <span>Matkulturer</span>
+          <h3>Utforsk verden</h3>
+        </div>
+        <p>Verdensdel → kulinarisk region → kjøkken. Bare dokumenterte kjøkken blir aktive.</p>
+      </div>
+
+      <div className="matlystWorldGrid">
+        {frontPageWorlds.map((world) => {
+          const activeCuisines = activeWorldCuisines(world);
+          const activeRegions = world.regions.filter((region) => activeRegionCuisines(region).length > 0);
+          const preview = worldFeatured.get(world.id) ?? null;
+          return (
+            <button
+              type="button"
+              className="matlystWorldCard"
+              aria-haspopup="dialog"
+              key={world.id}
+              onClick={(event) => openWorld(world, event.currentTarget)}
+            >
+              <span className="matlystWorldCardTopline">
+                <strong>{world.name}</strong>
+                <span aria-hidden="true">→</span>
+              </span>
+              <small>{world.context}</small>
+              <span className="matlystWorldCardRegions">{activeRegions.map((region) => region.name).join(" · ")}</span>
+              <span className="matlystWorldCoverage">
+                {activeCuisines.length} aktive kjøkken
+                {browseData && preview && preview.restaurantCount > 0
+                  ? ` · ${preview.dish.label} hos minst ${preview.restaurantCount} ${preview.restaurantCount === 1 ? "sted" : "steder"} nå`
+                  : ""}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="matlystCuisineMore">
+        <button type="button" aria-haspopup="dialog" onClick={(event) => openCuisineDirectory(event.currentTarget)}>
+          Alle kjøkken ({rankedCuisines.length})
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+
+      <dialog
+        ref={worldDialogRef}
+        className="cuisineExploreDialog matlystWorldDialog"
+        aria-labelledby={selectedWorld ? "world-dialog-title" : undefined}
+        onClose={restoreWorldTriggerFocus}
+        onClick={(event) => {
+          if (event.target === event.currentTarget) closeWorld();
+        }}
+      >
+        {selectedWorld ? (
+          <div className="cuisineExploreDialogShell">
+            <button type="button" className="cuisineExploreDialogClose" aria-label={`Lukk ${selectedWorld.name}`} onClick={closeWorld}>
+              <span aria-hidden="true">×</span>
+            </button>
+
+            <header className="cuisineExploreDialogHeader">
+              <p>{selectedCulinaryRegion ? selectedWorld.name : "Matkulturer"}</p>
+              <h2 id="world-dialog-title">{selectedCulinaryRegion ? selectedCulinaryRegion.name : selectedWorld.name}</h2>
+              <span>{selectedCulinaryRegion ? selectedCulinaryRegion.context : selectedWorld.context}</span>
+            </header>
+
+            {selectedCulinaryRegion ? (
+              <>
+                <button type="button" className="matlystWorldBack" onClick={() => setSelectedCulinaryRegionId("")}>
+                  <span aria-hidden="true">←</span> Tilbake til {selectedWorld.name}
+                </button>
+
+                <section className="matlystTaxonomyLevel" aria-labelledby="taxonomy-cuisine-title">
+                  <div className="cuisineExploreResultsHeading">
+                    <div>
+                      <p>Nivå 3 · kjøkken</p>
+                      <h3 id="taxonomy-cuisine-title">Velg mattradisjon</h3>
+                    </div>
+                    <span>{activeRegionCuisines(selectedCulinaryRegion).length} aktive nå</span>
+                  </div>
+
+                  <div className="matlystTaxonomyCuisineGrid">
+                    {selectedCulinaryRegion.cuisines.map((link) => {
+                      const firstArea = link.cuisine?.areas[0] ?? null;
+                      const preview = link.cuisine ? featured.get(link.cuisine.name) ?? null : null;
+                      return link.cuisine && firstArea ? (
+                        <button
+                          type="button"
+                          className="matlystTaxonomyCuisineCard"
+                          data-active="true"
+                          key={link.name}
+                          onClick={() => openCuisineFromWorld(link.cuisine as Cuisine, firstArea)}
+                        >
+                          <span className="matlystTaxonomyCuisineTopline">
+                            <strong>{link.name}</strong>
+                            <span aria-hidden="true">→</span>
+                          </span>
+                          <small>{link.cuisine.context}</small>
+                          <span className="matlystTaxonomyCuisineStatus">
+                            {browseData && preview && preview.restaurantCount > 0
+                              ? `${preview.dish.label} · minst ${preview.restaurantCount} ${preview.restaurantCount === 1 ? "sted" : "steder"} nå`
+                              : "Dokumentert kjøkken · utforsk retter"}
+                          </span>
+                        </button>
+                      ) : (
+                        <div className="matlystTaxonomyCuisineCard" data-active="false" key={link.name}>
+                          <span className="matlystTaxonomyCuisineTopline"><strong>{link.name}</strong></span>
+                          <small>Taksonomisk plass er definert.</small>
+                          <span className="matlystTaxonomyCuisineStatus">Aktiveres når canonical retter og Oslo-dekning er dokumentert.</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+              </>
+            ) : (
+              <section className="matlystTaxonomyLevel" aria-labelledby="taxonomy-region-title">
+                <div className="cuisineExploreResultsHeading">
+                  <div>
+                    <p>Nivå 2 · kulinarisk region</p>
+                    <h3 id="taxonomy-region-title">Velg region</h3>
+                  </div>
+                  <span>Nivå 1: {selectedWorld.name}</span>
+                </div>
+
+                <div className="matlystRegionGrid">
+                  {selectedWorld.regions.map((region) => {
+                    const activeCuisines = activeRegionCuisines(region);
+                    const preview = featuredCoverage(cuisinesCandidates(activeCuisines), liveDishes);
+                    return (
+                      <button
+                        type="button"
+                        className="matlystRegionCard"
+                        key={region.id}
+                        onClick={() => setSelectedCulinaryRegionId(region.id)}
+                      >
+                        <span className="matlystRegionCardTopline">
+                          <strong>{region.name}</strong>
+                          <span aria-hidden="true">→</span>
+                        </span>
+                        <small>{region.context}</small>
+                        <span className="matlystRegionCuisineNames">{region.cuisines.map((link) => link.name).join(" · ")}</span>
+                        <span className="matlystRegionCoverage">
+                          {activeCuisines.length > 0
+                            ? `${activeCuisines.length} aktive kjøkken${browseData && preview && preview.restaurantCount > 0 ? ` · ${preview.dish.label} på menyen nå` : ""}`
+                            : "Taksonomi klar · ingen dokumentert Oslo-dekning ennå"}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
+
+            <footer className="cuisineExploreDialogFooter">
+              Verdensdel og kulinarisk region er navigasjonsnivåer. Bare kjøkken med canonical retter og dokumentert produksjonsgrunnlag blir aktive i Fysen.
+            </footer>
+          </div>
+        ) : null}
+      </dialog>
+
+      <dialog
+        ref={cuisineDirectoryDialogRef}
+        className="cuisineExploreDialog matlystCuisineDirectoryDialog"
+        aria-labelledby="all-cuisines-dialog-title"
+        onClose={restoreCuisineDirectoryFocus}
+        onClick={(event) => {
+          if (event.target === event.currentTarget) closeCuisineDirectory();
+        }}
+      >
+        <div className="cuisineExploreDialogShell">
+          <button type="button" className="cuisineExploreDialogClose" aria-label="Lukk alle kjøkken" onClick={closeCuisineDirectory}>
+            <span aria-hidden="true">×</span>
+          </button>
+
+          <header className="cuisineExploreDialogHeader">
+            <p>Kjøkken</p>
+            <h2 id="all-cuisines-dialog-title">Alle aktive kjøkken i Matlyst</h2>
+            <span>{rankedCuisines.length} dokumenterte mattradisjoner, sortert med fersk Oslo-dekning først.</span>
+          </header>
 
           <div className="matlystCuisineDirectorySearch">
             <label htmlFor="matlyst-cuisine-filter">Filtrer kjøkken</label>
@@ -273,14 +542,14 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
               type="search"
               autoComplete="off"
               value={cuisineDirectoryQuery}
-              placeholder="Søk etter kjøkken eller rett …"
+              placeholder="Søk etter verdensdel, region, kjøkken eller rett …"
               onChange={(event) => setCuisineDirectoryQuery(event.currentTarget.value)}
             />
           </div>
 
           <div className="matlystCuisineDirectoryMeta" aria-live="polite">
             <span>{filteredCuisines.length} kjøkken</span>
-            <small>Du kan søke på japansk, ramen, momo eller pierogi.</small>
+            <small>Du kan søke på Asia, Iberia, japansk, ramen, momo eller pierogi.</small>
           </div>
 
           {filteredCuisines.length > 0 ? (
@@ -288,6 +557,7 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
               {filteredCuisines.map((cuisine) => {
                 const firstArea = cuisine.areas[0];
                 const preview = featured.get(cuisine.name) ?? null;
+                const taxonomyPath = cuisineTaxonomyPath(cuisine.name);
                 if (!firstArea) return null;
 
                 return (
@@ -295,9 +565,11 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
                     type="button"
                     className="matlystCuisineDirectoryCard"
                     key={cuisine.name}
-                    aria-haspopup="dialog"
-                    onClick={(event) => openCuisine(cuisine, firstArea, event.currentTarget)}
+                    onClick={() => openCuisineFromDirectory(cuisine, firstArea)}
                   >
+                    <span className="matlystCuisineDirectoryPath">
+                      {taxonomyPath ? `${taxonomyPath.worldName} → ${taxonomyPath.regionName}` : "Matlyst"}
+                    </span>
                     <span className="matlystCuisineDirectoryCardTopline">
                       <strong>{cuisine.name}</strong>
                       <span aria-hidden="true">→</span>
@@ -318,8 +590,11 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
             <p className="matlystCuisineDirectoryEmpty">Ingen aktive kjøkken eller representative retter matcher «{cuisineDirectoryQuery.trim()}».</p>
           )}
 
-        <p className="matlystCuisineDirectoryNote">Velg et kjøkken for å utforske konkrete retter og ferske serveringssteder i Oslo.</p>
-      </section>
+          <footer className="cuisineExploreDialogFooter">
+            Katalogen viser bare aktive kjøkken. Hele verdensdel → region → kjøkken-taksonomien finnes i Matkulturer-utforskeren på forsiden.
+          </footer>
+        </div>
+      </dialog>
 
       <dialog
         ref={moodDialogRef}

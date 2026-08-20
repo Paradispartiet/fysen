@@ -1,4 +1,4 @@
-/* Matlyst — intent-first discovery with direct cuisine navigation. */
+/* Matlyst v3 — intent-first discovery with world → culinary region → cuisine navigation. */
 
 .matlystHeading h2 {
   max-width: 620px;
@@ -18,14 +18,16 @@
   border-radius: 16px;
 }
 
-.matlystSubheading {
+.matlystSubheading,
+.matlystCuisineHeading {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 28px;
 }
 
-.matlystSubheading span {
+.matlystSubheading span,
+.matlystCuisineHeading span {
   display: block;
   color: var(--color-brand);
   font-size: 10px;
@@ -34,7 +36,8 @@
   text-transform: uppercase;
 }
 
-.matlystSubheading h3 {
+.matlystSubheading h3,
+.matlystCuisineHeading h3 {
   margin: 5px 0 0;
   color: var(--color-ink);
   font-size: 23px;
@@ -43,7 +46,8 @@
   letter-spacing: -0.012em;
 }
 
-.matlystSubheading > p {
+.matlystSubheading > p,
+.matlystCuisineHeading > p {
   max-width: 410px;
   margin: 0;
   color: var(--color-muted);
@@ -78,19 +82,29 @@
 }
 
 .matlystMoodCard:hover,
-.matlystCuisineDirectoryCard:hover {
+.matlystWorldCard:hover,
+.matlystRegionCard:hover,
+.matlystTaxonomyCuisineCard[data-active="true"]:hover {
   border-color: rgba(121, 201, 135, 0.52);
   transform: translateY(-1px);
 }
 
 .matlystMoodCard:focus-visible,
+.matlystWorldCard:focus-visible,
+.matlystRegionCard:focus-visible,
+.matlystTaxonomyCuisineCard[data-active="true"]:focus-visible,
+.matlystWorldBack:focus-visible,
+.matlystCuisineMore button:focus-visible,
 .matlystCuisineDirectorySearch input:focus-visible,
 .matlystCuisineDirectoryCard:focus-visible {
   outline: 2px solid var(--color-brand);
   outline-offset: 3px;
 }
 
-.matlystMoodCardTopline {
+.matlystMoodCardTopline,
+.matlystWorldCardTopline,
+.matlystRegionCardTopline,
+.matlystTaxonomyCuisineTopline {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -104,7 +118,10 @@
   letter-spacing: -0.01em;
 }
 
-.matlystMoodCardTopline > span {
+.matlystMoodCardTopline > span,
+.matlystWorldCardTopline > span,
+.matlystRegionCardTopline > span,
+.matlystTaxonomyCuisineTopline > span {
   color: var(--color-brand);
   font-size: 16px;
 }
@@ -131,37 +148,186 @@
   margin-top: 30px;
 }
 
-.matlystCuisineDirectory {
-  padding: 24px;
+.matlystCuisineHeading {
+  margin: 0 0 18px;
+  padding-top: 7px;
+}
+
+.matlystWorldGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.matlystWorldCard {
+  display: flex;
+  min-height: 194px;
+  flex-direction: column;
+  padding: 20px;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  appearance: none;
   background: #080908;
   border: 1px solid rgba(121, 201, 135, 0.2);
-  border-radius: 16px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: border-color 140ms ease, transform 140ms ease;
 }
 
-.matlystCuisineDirectoryHeader > p {
-  margin: 0 0 7px;
-  color: var(--color-brand);
-  font-size: 10px;
-  font-weight: 680;
-  letter-spacing: 0.075em;
-  text-transform: uppercase;
-}
-
-.matlystCuisineDirectoryHeader > h3 {
-  margin: 0;
+.matlystWorldCardTopline strong {
   color: var(--color-ink);
-  font-size: clamp(24px, 3vw, 34px);
+  font-size: 25px;
   font-weight: 580;
-  line-height: 1.08;
-  letter-spacing: -0.016em;
+  letter-spacing: -0.018em;
 }
 
-.matlystCuisineDirectoryHeader > span {
+.matlystWorldCard > small {
   display: block;
   margin-top: 8px;
   color: var(--color-muted);
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.45;
+}
+
+.matlystWorldCardRegions {
+  display: block;
+  margin-top: 16px;
+  color: var(--color-soft);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.matlystWorldCoverage {
+  display: block;
+  margin-top: auto;
+  padding-top: 18px;
+  color: #bdd8c0;
+  font-size: 10px;
+  font-weight: 560;
+  line-height: 1.4;
+}
+
+.matlystCuisineMore {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.matlystCuisineMore button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 9px;
+  padding: 0 16px;
+  color: var(--color-brand);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 620;
+  background: transparent;
+  border: 1px solid rgba(121, 201, 135, 0.28);
+  border-radius: var(--radius-round);
+  cursor: pointer;
+}
+
+.matlystCuisineMore button:hover,
+.matlystWorldBack:hover {
+  color: var(--color-brand-hover);
+  border-color: rgba(121, 201, 135, 0.58);
+}
+
+.matlystWorldBack {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+  padding: 0 13px;
+  color: var(--color-brand);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 620;
+  background: transparent;
+  border: 1px solid rgba(121, 201, 135, 0.25);
+  border-radius: var(--radius-round);
+  cursor: pointer;
+}
+
+.matlystTaxonomyLevel {
+  margin-top: 30px;
+}
+
+.matlystRegionGrid,
+.matlystTaxonomyCuisineGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.matlystRegionCard,
+.matlystTaxonomyCuisineCard {
+  display: flex;
+  min-height: 150px;
+  flex-direction: column;
+  padding: 16px;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  background: #090a09;
+  border: 1px solid rgba(121, 201, 135, 0.18);
+  border-radius: 12px;
+}
+
+button.matlystRegionCard,
+button.matlystTaxonomyCuisineCard {
+  cursor: pointer;
+  transition: border-color 140ms ease, transform 140ms ease;
+}
+
+.matlystRegionCardTopline strong,
+.matlystTaxonomyCuisineTopline strong {
+  color: var(--color-ink);
+  font-size: 18px;
+  font-weight: 590;
+  letter-spacing: -0.01em;
+}
+
+.matlystRegionCard > small,
+.matlystTaxonomyCuisineCard > small {
+  display: block;
+  margin-top: 7px;
+  color: var(--color-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.matlystRegionCuisineNames {
+  display: block;
+  margin-top: 13px;
+  color: var(--color-soft);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.matlystRegionCoverage,
+.matlystTaxonomyCuisineStatus {
+  display: block;
+  margin-top: auto;
+  padding-top: 14px;
+  color: #bdd8c0;
+  font-size: 10px;
+  font-weight: 560;
+  line-height: 1.4;
+}
+
+.matlystTaxonomyCuisineCard[data-active="false"] {
+  opacity: 0.62;
+  border-style: dashed;
+}
+
+.matlystTaxonomyCuisineCard[data-active="false"] .matlystTaxonomyCuisineStatus {
+  color: var(--color-muted);
 }
 
 .matlystCuisineDirectorySearch {
@@ -240,6 +406,16 @@
   transform: translateY(-1px);
 }
 
+.matlystCuisineDirectoryPath {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--color-brand);
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
 .matlystCuisineDirectoryCardTopline {
   display: flex;
   align-items: center;
@@ -286,13 +462,6 @@
   border-radius: 12px;
 }
 
-.matlystCuisineDirectoryNote {
-  margin: 18px 0 0;
-  color: var(--color-muted);
-  font-size: 11px;
-  line-height: 1.45;
-}
-
 @media (max-width: 1000px) {
   .matlystMoodGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -309,11 +478,13 @@
     padding: 18px;
   }
 
-  .matlystSubheading {
+  .matlystSubheading,
+  .matlystCuisineHeading {
     display: block;
   }
 
-  .matlystSubheading > p {
+  .matlystSubheading > p,
+  .matlystCuisineHeading > p {
     margin-top: 8px;
     text-align: left;
   }
@@ -332,12 +503,15 @@
     scroll-snap-align: start;
   }
 
+  .matlystWorldGrid,
+  .matlystRegionGrid,
+  .matlystTaxonomyCuisineGrid,
   .matlystCuisineDirectoryGrid {
     grid-template-columns: 1fr;
   }
 
-  .matlystCuisineDirectory {
-    padding: 18px;
+  .matlystWorldCard {
+    min-height: 176px;
   }
 
   .matlystCuisineDirectoryMeta {

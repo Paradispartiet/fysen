@@ -4,6 +4,12 @@ const publicBasePath = configuredBasePath && configuredBasePath !== "/"
   ? `${configuredBasePath.startsWith("/") ? "" : "/"}${configuredBasePath}`.replace(/\/+$/, "")
   : "";
 
+export type DishBrowseTaxonomyScope = {
+  readonly worldId?: string | undefined;
+  readonly regionId?: string | undefined;
+  readonly cuisineName?: string | undefined;
+};
+
 export function withPublicBasePath(path: string): string {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   return `${publicBasePath}${normalizedPath}`;
@@ -14,9 +20,11 @@ export function dishBrowseHref(city = "Oslo"): string {
   return `${withPublicBasePath("/search")}?${params.toString()}`;
 }
 
-export function dishBrowseCuisineHref(city = "Oslo", cuisineName?: string): string {
+export function dishBrowseTaxonomyHref(city = "Oslo", scope: DishBrowseTaxonomyScope = {}): string {
   const params = new URLSearchParams({ city });
-  if (cuisineName) params.set("cuisine", cuisineName);
+  if (scope.worldId) params.set("world", scope.worldId);
+  if (scope.regionId) params.set("region", scope.regionId);
+  if (scope.cuisineName) params.set("cuisine", scope.cuisineName);
   return `${withPublicBasePath("/search")}?${params.toString()}`;
 }
 

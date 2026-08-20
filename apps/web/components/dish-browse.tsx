@@ -10,7 +10,7 @@ import {
   normalizeDiscoveryText,
   type DiscoveryDishDescriptor,
 } from "../lib/dish-discovery";
-import { dishBrowseCuisineHref, dishSearchHref, foodKnowledgeHref } from "../lib/public-path";
+import { dishBrowseTaxonomyHref, dishSearchHref, foodKnowledgeHref } from "../lib/public-path";
 import {
   cuisines,
   discoveryDishesForCuisine,
@@ -18,6 +18,13 @@ import {
   type CuisineDiscoveryDish,
   type DishSuggestion,
 } from "./cuisine-explorer-data";
+import {
+  activeRegionCuisines,
+  activeWorldCuisines,
+  culinaryWorlds,
+  type CulinaryRegion,
+  type CulinaryWorld,
+} from "./culinary-taxonomy";
 import { SearchState } from "./search-state";
 
 type KnowledgeDish = (typeof foodDishCatalog)[number];
@@ -27,6 +34,7 @@ type EditorialCoverage = CuisineDiscoveryDish & {
 };
 
 const cuisineByName = new Map(cuisines.map((cuisine) => [cuisine.name, cuisine] as const));
+const activeWorlds = culinaryWorlds.filter((world) => activeWorldCuisines(world).length > 0);
 
 function knowledgeDescriptor(dish: KnowledgeDish): DiscoveryDishDescriptor {
   return {
@@ -55,6 +63,10 @@ function matchesText(values: readonly string[], query: string): boolean {
   return values.some((value) => normalizeDiscoveryText(value).includes(query));
 }
 
+function activeRegions(world: CulinaryWorld): readonly CulinaryRegion[] {
+  return world.regions.filter((region) => activeRegionCuisines(region).length > 0);
+}
+
 function discoveryScopeForCuisines(cuisineScope: readonly Cuisine[]): CuisineDiscoveryDish[] {
   const seen = new Set<string>();
   return cuisineScope
@@ -71,25 +83,61 @@ function liveItemsForDiscoveryScope(items: readonly DishBrowseItem[], scope: rea
   return items.filter((item) => scope.some(({ dish }) => liveDishMatchesDescriptor(item, suggestionDescriptor(dish))));
 }
 
+function selectedWorldFromId(worldId: string): CulinaryWorld | null {
+  return activeWorlds.find((world) => world.id === worldId) ?? null;
+}
+
 export function DishBrowse({
   city,
   data,
   loading = false,
   error = null,
+  initialWorldId = "",
+  initialRegionId = "",
   initialCuisineName = "",
 }: {
   city: string;
   data: DishBrowseResponse | null;
   loading?: boolean;
   error?: string | null;
+  initialWorldId?: string;
+  initialRegionId?: string;
   initialCuisineName?: string;
 }) {
-  const initialCuisine = cuisineByName.get(initialCuisineName) ?? null;
+  const initialWorld = selectedWorldFromId(initialWorldId);
+  const initialRegion = initialWorld
+    ? activeRegions(initialWorld).find((region) => region.id === initialRegionId) ?? null
+    : null;
+  const initialCuisine = initialRegion
+    ? activeRegionCuisines(initialRegion).find((cuisine) => cuisine.name === initialCuisineName) ?? null
+    : null;
 
   const [filter, setFilter] = useState("");
+  const [selectedWorldId, setSelectedWorldId] = useState<string | null>(initialWorld?.id ?? null);
+  const [selectedCulinaryRegionId, setSelectedCulinaryRegionId] = useState<string | null>(initialRegion?.id ?? null);
   const [selectedCuisineName, setSelectedCuisineName] = useState<string | null>(initialCuisine?.name ?? null);
   const [selectedCuisineArea, setSelectedCuisineArea] = useState<string | null>(null);
   const normalizedFilter = normalizeDiscoveryText(filter);
+
+  const selectedWorld = useMemo(
+    () => activeWorlds.find((world) => world.id === selectedWorldId) ?? null,
+    [selectedWorldId],
+  );
+
+  const availableRegions = useMemo(
+    () => selectedWorld ? activeRegions(selectedWorld) : [],
+    [selectedWorld],
+  );
+
+  const selectedCulinaryRegion = useMemo(
+    () => availableRegions.find((region) => region.id === selectedCulinaryRegionId) ?? null,
+    [availableRegions, selectedCulinaryRegionId],
+  );
+
+  const availableCuisines = useMemo(
+    () => selectedCulinaryRegion ? activeRegionCuisines(selectedCulinaryRegion) : [],
+    [selectedCulinaryRegion],
+  );
 
   const selectedCuisine = useMemo(
     () => selectedCuisineName ? cuisineByName.get(selectedCuisineName) ?? null : null,
@@ -102,10 +150,17 @@ export function DishBrowse({
       .sort((left, right) => left.localeCompare(right, "nb"));
   }, [selectedCuisine]);
 
-  const cuisineDiscoveryScope = useMemo(() => {
-    const scope = selectedCuisine ? discoveryScopeForCuisines([selectedCuisine]) : [];
+  const taxonomyCuisineScope = useMemo<readonly Cuisine[]>(() => {
+    if (selectedCuisine) return [selectedCuisine];
+    if (selectedCulinaryRegion) return activeRegionCuisines(selectedCulinaryRegion);
+    if (selectedWorld) return activeWorldCuisines(selectedWorld);
+    return [];
+  }, [selectedCuisine, selectedCulinaryRegion, selectedWorld]);
+
+  const taxonomyDiscoveryScope = useMemo(() => {
+    const scope = discoveryScopeForCuisines(taxonomyCuisineScope);
     return selectedCuisineArea ? scope.filter((entry) => entry.areaName === selectedCuisineArea) : scope;
-  }, [selectedCuisine, selectedCuisineArea]);
+  }, [selectedCuisineArea, taxonomyCuisineScope]);
 
   const editorialDishes = useMemo<EditorialCoverage[]>(() => {
     if (!data || !selectedCuisine) return [];
@@ -132,29 +187,44 @@ export function DishBrowse({
     if (!data) return [];
     let dishes = data.dishes.filter((dish) => matchesText([dish.name, dish.query], normalizedFilter));
 
-    if (selectedCuisine) {
-      const scopedIds = new Set(liveItemsForDiscoveryScope(data.dishes, cuisineDiscoveryScope).map((dish) => dish.id));
+    if (selectedWorld) {
+      const scopedIds = new Set(liveItemsForDiscoveryScope(data.dishes, taxonomyDiscoveryScope).map((dish) => dish.id));
       dishes = dishes.filter((dish) => scopedIds.has(dish.id));
     }
 
     return dishes;
-  }, [cuisineDiscoveryScope, data, normalizedFilter, selectedCuisine]);
+  }, [data, normalizedFilter, selectedWorld, taxonomyDiscoveryScope]);
 
-  const cuisinePath = [selectedCuisine?.name, selectedCuisineArea]
+  const taxonomyPath = [selectedWorld?.name, selectedCulinaryRegion?.name, selectedCuisine?.name, selectedCuisineArea]
     .filter((value): value is string => Boolean(value));
 
-  function replaceBrowseUrl(cuisineName?: string): void {
+  function replaceBrowseUrl(worldId?: string, regionId?: string, cuisineName?: string): void {
     window.history.replaceState(
       null,
       "",
-      dishBrowseCuisineHref(city, cuisineName),
+      dishBrowseTaxonomyHref(city, { worldId, regionId, cuisineName }),
     );
+  }
+
+  function chooseWorld(world: CulinaryWorld | null): void {
+    setSelectedWorldId(world?.id ?? null);
+    setSelectedCulinaryRegionId(null);
+    setSelectedCuisineName(null);
+    setSelectedCuisineArea(null);
+    replaceBrowseUrl(world?.id);
+  }
+
+  function chooseCulinaryRegion(region: CulinaryRegion | null): void {
+    setSelectedCulinaryRegionId(region?.id ?? null);
+    setSelectedCuisineName(null);
+    setSelectedCuisineArea(null);
+    replaceBrowseUrl(selectedWorld?.id, region?.id);
   }
 
   function chooseCuisine(cuisine: Cuisine | null): void {
     setSelectedCuisineName(cuisine?.name ?? null);
     setSelectedCuisineArea(null);
-    replaceBrowseUrl(cuisine?.name);
+    replaceBrowseUrl(selectedWorld?.id, selectedCulinaryRegion?.id, cuisine?.name);
   }
 
   return (
@@ -163,7 +233,7 @@ export function DishBrowse({
         <p className="eyebrow">{city}</p>
         <h1 id="dish-browse-title">Alle retter i {city}</h1>
         <p>
-          Utforsk den samme ferske rettindeksen som Fysen søker i. Filtrer direkte på kjøkken eller søk etter en konkret rett.
+          Utforsk den samme ferske rettindeksen som Fysen søker i. Matlyst v3 organiserer oppdagelsen som verdensdel → kulinarisk region → kjøkken, uten å lage en separat menyindeks.
         </p>
       </header>
 
@@ -195,24 +265,78 @@ export function DishBrowse({
             </label>
 
             <div className="dishBrowseTaxonomyLevel">
-              <span>Kjøkken</span>
-              <div className="dishBrowseCuisineFilters" aria-label="Filtrer på kjøkken">
-                <button type="button" className={!selectedCuisine ? "isActive" : undefined} aria-pressed={!selectedCuisine} onClick={() => chooseCuisine(null)}>
-                  Alle kjøkken
+              <span>1 · Verdensdel</span>
+              <div className="dishBrowseWorldFilters" aria-label="Filtrer på verdensdel">
+                <button type="button" className={!selectedWorld ? "isActive" : undefined} aria-pressed={!selectedWorld} onClick={() => chooseWorld(null)}>
+                  Hele verden
                 </button>
-                {cuisines.map((cuisine) => (
+                {activeWorlds.map((world) => (
                   <button
                     type="button"
-                    key={cuisine.name}
-                    className={selectedCuisine?.name === cuisine.name ? "isActive" : undefined}
-                    aria-pressed={selectedCuisine?.name === cuisine.name}
-                    onClick={() => chooseCuisine(cuisine)}
+                    key={world.id}
+                    className={selectedWorld?.id === world.id ? "isActive" : undefined}
+                    aria-pressed={selectedWorld?.id === world.id}
+                    onClick={() => chooseWorld(world)}
                   >
-                    {cuisine.name}
+                    {world.name}
                   </button>
                 ))}
               </div>
             </div>
+
+            {selectedWorld ? (
+              <div className="dishBrowseTaxonomyLevel">
+                <span>2 · Kulinarisk region</span>
+                <div className="dishBrowseCulinaryRegionFilters" aria-label={`Filtrer ${selectedWorld.name} på kulinarisk region`}>
+                  <button
+                    type="button"
+                    className={!selectedCulinaryRegion ? "isActive" : undefined}
+                    aria-pressed={!selectedCulinaryRegion}
+                    onClick={() => chooseCulinaryRegion(null)}
+                  >
+                    Hele {selectedWorld.name}
+                  </button>
+                  {availableRegions.map((region) => (
+                    <button
+                      type="button"
+                      key={region.id}
+                      className={selectedCulinaryRegion?.id === region.id ? "isActive" : undefined}
+                      aria-pressed={selectedCulinaryRegion?.id === region.id}
+                      onClick={() => chooseCulinaryRegion(region)}
+                    >
+                      {region.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
+            {selectedCulinaryRegion ? (
+              <div className="dishBrowseTaxonomyLevel">
+                <span>3 · Kjøkken</span>
+                <div className="dishBrowseCuisineFilters" aria-label={`Filtrer ${selectedCulinaryRegion.name} på kjøkken`}>
+                  <button
+                    type="button"
+                    className={!selectedCuisine ? "isActive" : undefined}
+                    aria-pressed={!selectedCuisine}
+                    onClick={() => chooseCuisine(null)}
+                  >
+                    Hele {selectedCulinaryRegion.name}
+                  </button>
+                  {availableCuisines.map((cuisine) => (
+                    <button
+                      type="button"
+                      key={cuisine.name}
+                      className={selectedCuisine?.name === cuisine.name ? "isActive" : undefined}
+                      aria-pressed={selectedCuisine?.name === cuisine.name}
+                      onClick={() => chooseCuisine(cuisine)}
+                    >
+                      {cuisine.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : null}
 
             {selectedCuisine && cuisineAreas.length > 1 ? (
               <div className="dishBrowseTaxonomyLevel">
@@ -241,8 +365,8 @@ export function DishBrowse({
               </div>
             ) : null}
 
-            {cuisinePath.length > 0 ? (
-              <p className="dishBrowseTaxonomyPath" aria-live="polite">{cuisinePath.join(" → ")}</p>
+            {taxonomyPath.length > 0 ? (
+              <p className="dishBrowseTaxonomyPath" aria-live="polite">{taxonomyPath.join(" → ")}</p>
             ) : null}
           </div>
 
@@ -250,7 +374,7 @@ export function DishBrowse({
             <section className="dishBrowseEditorial" aria-labelledby="dish-browse-editorial-title">
               <div className="dishBrowseSectionHeading">
                 <div>
-                  <p className="eyebrow">Kjøkken</p>
+                  <p className="eyebrow">{[selectedWorld?.name, selectedCulinaryRegion?.name].filter(Boolean).join(" · ")}</p>
                   <h2 id="dish-browse-editorial-title">{selectedCuisineArea ?? selectedCuisine.name}</h2>
                 </div>
                 <p>Production-backed canonical Matlyst-retter med fersk Oslo-dekning først. «Lær om retten» vises bare der Food Knowledge finnes.</p>
