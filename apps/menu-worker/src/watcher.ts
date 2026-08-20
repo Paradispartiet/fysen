@@ -7,6 +7,10 @@ import {
 } from "@fysen/menu-core";
 import { HttpMenuClient, MenuFetchError } from "./http-client.js";
 import {
+  ConflictingMenuSourceKeyError,
+  canonicalizeUniqueMenuSourceKeys,
+} from "./menu-source-key-canonicalizer.js";
+import {
   extractMenuSource,
   extractorVersionForSourceType,
   fetchMenuSource,
@@ -124,15 +128,21 @@ export async function watchMenuSourceOnce(
 
   let extracted;
   try {
-    extracted = await extractMenuSource(source.sourceType, fetched);
+    const rawExtracted = await extractMenuSource(source.sourceType, fetched);
+    extracted = {
+      ...rawExtracted,
+      items: canonicalizeUniqueMenuSourceKeys(rawExtracted.items),
+    };
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     const errorCode =
-      source.sourceType === "pdf"
-        ? "PDF_EXTRACTION_ERROR"
-        : source.sourceType === "json_ld"
-          ? "JSON_LD_EXTRACTION_REQUIRED"
-          : "HTML_EXTRACTION_ERROR";
+      error instanceof ConflictingMenuSourceKeyError
+        ? "DUPLICATE_SOURCE_KEY_CONFLICT"
+        : source.sourceType === "pdf"
+          ? "PDF_EXTRACTION_ERROR"
+          : source.sourceType === "json_ld"
+            ? "JSON_LD_EXTRACTION_REQUIRED"
+            : "HTML_EXTRACTION_ERROR";
     await repository.recordFailure({
       menuSourceId,
       outcome: "extraction_error",
