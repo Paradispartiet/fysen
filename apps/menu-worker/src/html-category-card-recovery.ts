@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_CATEGORY_CARD_RECOVERY_VERSION = "category-cards-v1";
+export const HTML_CATEGORY_CARD_RECOVERY_VERSION = "category-cards-v2";
 
 const CATEGORY_SECTION = "[data-testid='menu-category-section']";
 const CATEGORY_TITLE = "[data-testid='menu-category-section-title']";
@@ -57,11 +57,16 @@ export function recoverSemanticCategoryCardHtmlItems(html: string): readonly Men
 
   const items: MenuObservedItem[] = [];
   const categoryNames = new Set<string>();
+  let hasBeverageSection = false;
   let position = 0;
 
   for (const section of sections) {
     const sectionName = normalizeText($(section).find(CATEGORY_TITLE).first().text());
-    if (!sectionName || BEVERAGE_SECTION.test(sectionName)) continue;
+    if (!sectionName) continue;
+    if (BEVERAGE_SECTION.test(sectionName)) {
+      hasBeverageSection = true;
+      continue;
+    }
 
     const cards = $(section).find(PRODUCT_CARD).toArray();
     if (cards.length === 0) continue;
@@ -94,6 +99,8 @@ export function recoverSemanticCategoryCardHtmlItems(html: string): readonly Men
     }
   }
 
-  if (categoryNames.size < 2 || items.length < 4) return [];
+  const hasStrongCategoryEvidence =
+    categoryNames.size >= 2 || (categoryNames.size === 1 && hasBeverageSection);
+  if (!hasStrongCategoryEvidence || items.length < 4) return [];
   return items;
 }
