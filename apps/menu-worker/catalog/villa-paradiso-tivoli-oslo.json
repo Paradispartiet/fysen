@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 52,
+    "minimumExpectedItems": 47,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -38,43 +38,23 @@
       "‘Nduja",
       "Tartufo e parma",
       "Cannoli siciliani",
-      "Salamino",
-      "Villa Paradiso"
+      "Salamino"
     ],
     "requiredDishVariants": [
-      {
-        "name": "Husets focaccia med aioli",
-        "priceMinor": 8500
-      },
-      {
-        "name": "Insalata siciliana",
-        "priceMinor": 24500
-      },
-      {
-        "name": "Linguine alle vongole e ‘nduja",
-        "priceMinor": 26500
-      },
-      {
-        "name": "‘Nduja",
-        "priceMinor": 25000
-      },
-      {
-        "name": "Tartufo e parma",
-        "priceMinor": 27500
-      },
-      {
-        "name": "Cannoli siciliani",
-        "priceMinor": 16000
-      },
-      {
-        "name": "Salamino",
-        "priceMinor": 11500
-      },
-      {
-        "name": "Villa Paradiso",
-        "priceMinor": 6800
-      }
+      {"name": "Husets focaccia med aioli", "priceMinor": 8500},
+      {"name": "Insalata siciliana", "priceMinor": 24500},
+      {"name": "Linguine alle vongole e ‘nduja", "priceMinor": 26500},
+      {"name": "‘Nduja", "priceMinor": 25000},
+      {"name": "Tartufo e parma", "priceMinor": 27500},
+      {"name": "Cannoli siciliani", "priceMinor": 16000},
+      {"name": "Salamino", "priceMinor": 11500}
     ],
-    "forbiddenDishNames": []
+    "forbiddenDishNames": [
+      "Smurf",
+      "Rødhette",
+      "Pippi Langstrømpe",
+      "Peter Pan",
+      "Villa Paradiso"
+    ]
   }
 }
