@@ -44,9 +44,7 @@ jobs:
                 const card = $(product);
                 return {
                   name: card.find("[data-testid='menu-product-name']").first().text().replace(/\s+/g, ' ').trim(),
-                  nameCount: card.find("[data-testid='menu-product-name']").length,
                   price: card.find("[data-testid='menu-product-price']").first().text().replace(/\s+/g, ' ').trim(),
-                  priceCount: card.find("[data-testid='menu-product-price']").length,
                   text: card.text().replace(/\s+/g, ' ').trim().slice(0, 500),
                 };
               }),
@@ -58,5 +56,24 @@ jobs:
             if (!id || !/(menu|product|category)/i.test(id)) return;
             testIds.set(id, (testIds.get(id) ?? 0) + 1);
           });
-          console.log(JSON.stringify({ status: response.status, htmlLength: html.length, sections, testIds: Object.fromEntries([...testIds].sort()) }, null, 2));
+          const needles = ['Pierogi Polskie', 'Okraszone Cebulką', 'Sztućce'];
+          const rawOccurrences = {};
+          for (const needle of needles) {
+            const snippets = [];
+            let from = 0;
+            while (snippets.length < 8) {
+              const index = html.indexOf(needle, from);
+              if (index < 0) break;
+              snippets.push(html.slice(Math.max(0, index - 350), Math.min(html.length, index + needle.length + 650)).replace(/\s+/g, ' '));
+              from = index + needle.length;
+            }
+            rawOccurrences[needle] = snippets;
+          }
+          console.log(JSON.stringify({
+            status: response.status,
+            htmlLength: html.length,
+            sections,
+            testIds: Object.fromEntries([...testIds].sort()),
+            rawOccurrences,
+          }, null, 2));
           NODE
