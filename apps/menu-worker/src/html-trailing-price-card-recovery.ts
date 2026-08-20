@@ -7,7 +7,7 @@ import {
 } from "@fysen/menu-core";
 import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recovery.js";
 
-export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION = "trailing-price-card-v5";
+export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION = "trailing-price-card-v6";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{1,3})(?:[.,](\d{1,2}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
