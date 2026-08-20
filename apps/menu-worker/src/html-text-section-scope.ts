@@ -26,7 +26,13 @@ function sectionStateByPosition(lines: readonly string[]): readonly MenuSectionS
   for (let index = 0; index < lines.length; index += 1) {
     const line = lines[index] ?? "";
     const sectionLabel = normalizedSectionLabel(line);
+    const countedSection = SECTION_COUNT_SUFFIX.test(line);
 
+    if (!sawPrice && !countedSection && FOOD_SECTION_LABEL.test(sectionLabel)) {
+      state = "food";
+      states[index] = "unknown";
+      continue;
+    }
     if (sawPrice && BEVERAGE_SECTION_LABEL.test(sectionLabel)) {
       state = "beverage";
       states[index] = "unknown";
