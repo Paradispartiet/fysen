@@ -9,6 +9,11 @@ Product execution is currently governed by two complementary plans:
 - [`oslo-pilot-v1.md`](./oslo-pilot-v1.md) — make Fysen genuinely useful in Oslo;
 - [`revenue-layer-v1.md`](./revenue-layer-v1.md) — make demand and restaurant value measurable without corrupting organic search.
 
+The transition beyond v1 is governed by two additional contracts:
+
+- [`fysen-oslo-v1-closeout.md`](./fysen-oslo-v1-closeout.md) — production-close the existing product before adding a new major feature;
+- [`fysen-v2.md`](./fysen-v2.md) — add explicit, private and explainable food personalization without changing the dish-first evidence model.
+
 ## Hard boundaries
 
 1. **Source ingestion is evidence.** HTTP/PDF/image/API observations are source material, not the product model.
