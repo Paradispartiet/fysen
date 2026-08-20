@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { recoverDescriptionNamedHtmlItems } from "./html-description-title-recovery.js";
 import { extractScopedHtmlMenu } from "./html-source-extractor.js";
 
 describe("duplicate dish names across semantic menu sections", () => {
@@ -27,8 +28,9 @@ describe("duplicate dish names across semantic menu sections", () => {
       </body></html>
     `;
 
-    const result = extractScopedHtmlMenu(html);
-    const extracted = result.items.map((item) => ({
+    const scoped = extractScopedHtmlMenu(html);
+    const items = recoverDescriptionNamedHtmlItems(scoped.items, scoped.visibleText);
+    const extracted = items.map((item) => ({
       name: item.name,
       priceMinor: item.priceMinor,
       sectionName: item.sectionName,
@@ -40,6 +42,6 @@ describe("duplicate dish names across semantic menu sections", () => {
       { name: "Fatouche", priceMinor: 34900, sectionName: "Kylling" },
       { name: "Kos Kos Kylling", priceMinor: 34900, sectionName: null },
     ]);
-    expect(new Set(result.items.map((item) => item.sourceKey)).size).toBe(result.items.length);
+    expect(new Set(items.map((item) => item.sourceKey)).size).toBe(items.length);
   });
 });
