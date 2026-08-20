@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v3";
+export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v4";
 
 const HEADING_MARKER = "__FYSEN_ADJACENT_HEADING_LEVEL_";
 const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
@@ -56,17 +56,30 @@ function looksLikeDishTitle(value: string): boolean {
   return title.split(/\s+/).filter(Boolean).length <= 12;
 }
 
+function annotateHeading(
+  $: ReturnType<typeof load>,
+  element: Parameters<Parameters<ReturnType<typeof load>["each"]>[0]>[1],
+  level: number,
+): void {
+  if (!Number.isInteger(level) || level < 1 || level > 6) return;
+  $(element).prepend(`\n${HEADING_MARKER}${level}__ `);
+  $(element).append("\n");
+}
+
 function annotatedLines(html: string): readonly string[] {
   const $ = load(html);
   $("script, style, noscript, svg, template").remove();
   $("br").replaceWith("\n");
 
   for (let level = 1; level <= 6; level += 1) {
-    $(`h${level}`).each((_, element) => {
-      $(element).prepend(`\n${HEADING_MARKER}${level}__ `);
-      $(element).append("\n");
-    });
+    $(`h${level}`).each((_, element) => annotateHeading($, element, level));
   }
+
+  $("[role='heading'][aria-level]").each((_, element) => {
+    if ($(element).is("h1, h2, h3, h4, h5, h6")) return;
+    const level = Number($(element).attr("aria-level"));
+    annotateHeading($, element, level);
+  });
 
   $("p, li, tr, div, section, article").each((_, element) => {
     $(element).append("\n");
