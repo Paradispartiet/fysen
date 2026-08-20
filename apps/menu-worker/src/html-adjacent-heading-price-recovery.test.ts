@@ -18,7 +18,7 @@ describe("adjacent heading-price HTML recovery", () => {
       </body></html>
     `);
 
-    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v6");
+    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v7");
     expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
       ["Doro Wet", 29000, "exact"],
       ["Key Wet", 28000, "exact"],
@@ -29,7 +29,7 @@ describe("adjacent heading-price HTML recovery", () => {
     expect(items.some((item) => item.name.startsWith("Phone:"))).toBe(false);
   });
 
-  it("canonicalizes a strong increasing numbered menu and drops same-level unnumbered add-ons", () => {
+  it("canonicalizes a dense numbered menu across heading levels and drops unnumbered add-ons", () => {
     const items = recoverAdjacentHeadingPriceHtmlItems(`
       <html><body>
         <h2>Nudler</h2>
@@ -37,7 +37,7 @@ describe("adjacent heading-price HTML recovery", () => {
         <h3>2 Ka Nhom Jeep</h3><p>115 NOK</p>
         <h3>3 Gyoza</h3><p>109 NOK</p>
         <h3>4 Tod Man Plah</h3><p>109 NOK</p>
-        <h3>5 Popie Tod</h3><p>105 NOK</p>
+        <h4>5 Popie Tod</h4><p>105 NOK</p>
         <h3>8 Phad Khi Mao</h3><p>259 NOK</p>
         <h3>9 Kwuitiew Gai</h3><p>255 NOK</p>
         <h3>10 Kwuitiew Tom Yum</h3><p>249 NOK</p>
