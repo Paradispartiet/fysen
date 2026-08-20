@@ -3,6 +3,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createDatabasePool } from "./client.js";
 import { runMigrations } from "./migrate.js";
 import { MenuIndexRepository } from "./repository.js";
+import { listActiveRestaurantAccessGrants } from "./restaurant-claim-operator.js";
 import {
   getRestaurantClaimContext,
   requestRestaurantClaim,
@@ -162,6 +163,19 @@ integrationDescribe("restaurant claims integration", () => {
     if (!reviewed.accessGrantId) throw new Error("Expected restaurant access grant");
     expect((await getRestaurantClaimContext(pool, "claim-test-oslo"))?.claimState).toBe("claimed");
 
+    const activeGrants = await listActiveRestaurantAccessGrants(pool);
+    expect(activeGrants).toContainEqual({
+      accessGrantId: reviewed.accessGrantId,
+      claimId: first.claimId,
+      restaurant: {
+        slug: "claim-test-oslo",
+        name: "Canonical Claim Test",
+        address: "Kildegata 1",
+      },
+      principal: { email: "owner@example.com", role: "owner" },
+      grantedAt: expect.any(String),
+    });
+
     const profile = await upsertRestaurantOwnedProfile(pool, {
       accessGrantId: reviewed.accessGrantId,
       displayName: "Claimed display name",
@@ -210,6 +224,7 @@ integrationDescribe("restaurant claims integration", () => {
     );
 
     await revokeRestaurantAccess(pool, reviewed.accessGrantId, "fysen-review");
+    expect((await listActiveRestaurantAccessGrants(pool)).some((grant) => grant.accessGrantId === reviewed.accessGrantId)).toBe(false);
     await expect(
       upsertRestaurantOwnedProfile(pool, {
         accessGrantId: reviewed.accessGrantId,
