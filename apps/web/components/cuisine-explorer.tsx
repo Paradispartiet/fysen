@@ -4,7 +4,14 @@ import type { DishBrowseItem, DishBrowseResponse } from "@fysen/contracts/dish-b
 import { useEffect, useMemo, useRef, useState } from "react";
 import { discoveryCoverage } from "../lib/dish-discovery";
 import { dishSearchHref } from "../lib/public-path";
-import { cuisines, foodMoods, type Cuisine, type CuisineArea, type DishSuggestion } from "./cuisine-explorer-data";
+import {
+  cuisines,
+  foodMoods,
+  type Cuisine,
+  type CuisineArea,
+  type DishSuggestion,
+  type FoodMood,
+} from "./cuisine-explorer-data";
 
 type DishCoverage = {
   readonly dish: DishSuggestion;
@@ -58,12 +65,51 @@ function featuredCoverage(dishesToCheck: readonly DishSuggestion[], dishes: read
   return rankDishCoverage(uniqueCandidates(dishesToCheck).map((dish) => coverageForDish(dishes, dish)))[0] ?? null;
 }
 
+function DiscoveryDishList({
+  coverage,
+  onOpenKnowledge,
+}: {
+  readonly coverage: readonly DishCoverage[];
+  readonly onOpenKnowledge: (dishId: string) => void;
+}) {
+  return (
+    <div className="cuisineExploreDishList">
+      {coverage.map(({ dish, restaurantCount }) => (
+        <article className="cuisineExploreDish" key={dish.id} data-has-coverage={restaurantCount > 0 ? "true" : "false"}>
+          <div className="cuisineExploreDishHeading">
+            <h4>{dish.label}</h4>
+            <div className="cuisineExploreDishActions">
+              {dish.hasKnowledge ? (
+                <button type="button" onClick={() => onOpenKnowledge(dish.id)}>
+                  Lær om retten <span aria-hidden="true">↗</span>
+                </button>
+              ) : null}
+              <a href={dishSearchHref(dish.query)}>
+                Se treff <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+
+          {restaurantCount > 0 ? (
+            <p>På fersk meny hos minst {restaurantCount} {restaurantCount === 1 ? "restaurant" : "restauranter"} i Oslo.</p>
+          ) : (
+            <p>Ingen ferske menytreff på denne retten i Oslo akkurat nå.</p>
+          )}
+        </article>
+      ))}
+    </div>
+  );
+}
+
 export function CuisineExplorer({ browseData }: { readonly browseData: DishBrowseResponse | null }) {
   const [selectedCuisine, setSelectedCuisine] = useState<Cuisine | null>(null);
   const [selectedAreaName, setSelectedAreaName] = useState<string>("");
+  const [selectedMood, setSelectedMood] = useState<FoodMood | null>(null);
   const [showAllCuisines, setShowAllCuisines] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const moodDialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const moodTriggerRef = useRef<HTMLButtonElement | null>(null);
   const liveDishes = browseData?.dishes ?? [];
 
   const selectedArea = useMemo<CuisineArea | null>(() => {
@@ -75,6 +121,11 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
     if (!selectedArea) return [];
     return rankDishCoverage(selectedArea.dishes.map((dish) => coverageForDish(liveDishes, dish)));
   }, [liveDishes, selectedArea]);
+
+  const selectedMoodDishCoverage = useMemo(() => {
+    if (!selectedMood) return [];
+    return rankDishCoverage(selectedMood.dishes.map((dish) => coverageForDish(liveDishes, dish)));
+  }, [liveDishes, selectedMood]);
 
   const featured = useMemo(() => {
     return new Map(cuisines.map((cuisine) => [cuisine.name, featuredCoverage(cuisineCandidates(cuisine), liveDishes)]));
@@ -101,6 +152,11 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
     if (selectedCuisine && dialog && !dialog.open) dialog.showModal();
   }, [selectedCuisine]);
 
+  useEffect(() => {
+    const dialog = moodDialogRef.current;
+    if (selectedMood && dialog && !dialog.open) dialog.showModal();
+  }, [selectedMood]);
+
   function openCuisine(cuisine: Cuisine, area: CuisineArea, trigger: HTMLButtonElement): void {
     triggerRef.current = trigger;
     setSelectedAreaName(area.name);
@@ -113,11 +169,24 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
     setSelectedCuisine(null);
   }
 
+  function openMood(mood: FoodMood, trigger: HTMLButtonElement): void {
+    moodTriggerRef.current = trigger;
+    setSelectedMood(mood);
+  }
+
+  function closeMood(): void {
+    const dialog = moodDialogRef.current;
+    if (dialog?.open) dialog.close();
+    setSelectedMood(null);
+  }
+
   function openFoodKnowledge(dishId: string): void {
     triggerRef.current = null;
-    const dialog = dialogRef.current;
-    if (dialog?.open) dialog.close();
+    moodTriggerRef.current = null;
+    if (dialogRef.current?.open) dialogRef.current.close();
+    if (moodDialogRef.current?.open) moodDialogRef.current.close();
     setSelectedCuisine(null);
+    setSelectedMood(null);
     window.location.hash = `learn-${encodeURIComponent(dishId)}`;
   }
 
@@ -125,6 +194,13 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
     setSelectedCuisine(null);
     const trigger = triggerRef.current;
     triggerRef.current = null;
+    if (trigger) window.requestAnimationFrame(() => trigger.focus());
+  }
+
+  function restoreMoodTriggerFocus(): void {
+    setSelectedMood(null);
+    const trigger = moodTriggerRef.current;
+    moodTriggerRef.current = null;
     if (trigger) window.requestAnimationFrame(() => trigger.focus());
   }
 
@@ -151,20 +227,26 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
           {foodMoods.map((mood) => {
             const preview = moodFeatured.get(mood.name) ?? null;
             return (
-              <a className="matlystMoodCard" href={dishSearchHref(mood.query)} key={mood.name}>
+              <button
+                type="button"
+                className="matlystMoodCard"
+                aria-haspopup="dialog"
+                key={mood.name}
+                onClick={(event) => openMood(mood, event.currentTarget)}
+              >
                 <span className="matlystMoodCardTopline">
                   <strong>{mood.name}</strong>
                   <span aria-hidden="true">→</span>
                 </span>
                 <small>{mood.context}</small>
                 <span className="matlystMoodCoverage">
-                  {!browseData ? "Se ferske treff" : null}
+                  {!browseData ? "Utforsk retter" : null}
                   {browseData && preview && preview.restaurantCount > 0
                     ? `${preview.dish.label}: minst ${preview.restaurantCount} ${preview.restaurantCount === 1 ? "sted" : "steder"} nå`
                     : null}
-                  {browseData && (!preview || preview.restaurantCount === 0) ? "Se hva som finnes i Oslo nå" : null}
+                  {browseData && (!preview || preview.restaurantCount === 0) ? "Utforsk retter i denne lysten" : null}
                 </span>
-              </a>
+              </button>
             );
           })}
         </div>
@@ -246,6 +328,51 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
       ) : null}
 
       <dialog
+        ref={moodDialogRef}
+        className="cuisineExploreDialog matlystMoodDialog"
+        aria-labelledby={selectedMood ? "mood-dialog-title" : undefined}
+        onClose={restoreMoodTriggerFocus}
+        onClick={(event) => {
+          if (event.target === event.currentTarget) closeMood();
+        }}
+      >
+        {selectedMood ? (
+          <div className="cuisineExploreDialogShell">
+            <button
+              type="button"
+              className="cuisineExploreDialogClose"
+              aria-label={`Lukk ${selectedMood.name}`}
+              onClick={closeMood}
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+
+            <header className="cuisineExploreDialogHeader">
+              <p>Hva frister?</p>
+              <h2 id="mood-dialog-title">{selectedMood.name}</h2>
+              <span>{selectedMood.context}</span>
+            </header>
+
+            <section className="cuisineExploreResults" aria-live="polite">
+              <div className="cuisineExploreResultsHeading">
+                <div>
+                  <p>Retter i denne lysten</p>
+                  <h3>Velg en konkret rett</h3>
+                </div>
+                <span>Fersk Oslo-dekning først</span>
+              </div>
+
+              <DiscoveryDishList coverage={selectedMoodDishCoverage} onOpenKnowledge={openFoodKnowledge} />
+            </section>
+
+            <footer className="cuisineExploreDialogFooter">
+              Lysten er en oppdagelsesinngang, ikke et eget søkeindeks. Velg en konkret rett for å se vanlige Fysen-treff fra den samme ferske Oslo-indeksen.
+            </footer>
+          </div>
+        ) : null}
+      </dialog>
+
+      <dialog
         ref={dialogRef}
         className="cuisineExploreDialog"
         aria-labelledby={selectedCuisine ? "cuisine-dialog-title" : undefined}
@@ -299,27 +426,7 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
                 <span>Fersk Oslo-dekning først</span>
               </div>
 
-              <div className="cuisineExploreDishList">
-                {selectedDishCoverage.map(({ dish, restaurantCount }) => (
-                  <article className="cuisineExploreDish" key={dish.id} data-has-coverage={restaurantCount > 0 ? "true" : "false"}>
-                    <div className="cuisineExploreDishHeading">
-                      <h4>{dish.label}</h4>
-                      <div className="cuisineExploreDishActions">
-                        {dish.hasKnowledge ? (
-                          <button type="button" onClick={() => openFoodKnowledge(dish.id)}>Lær om retten <span aria-hidden="true">↗</span></button>
-                        ) : null}
-                        <a href={dishSearchHref(dish.query)}>Se treff <span aria-hidden="true">→</span></a>
-                      </div>
-                    </div>
-
-                    {restaurantCount > 0 ? (
-                      <p>På fersk meny hos minst {restaurantCount} {restaurantCount === 1 ? "restaurant" : "restauranter"} i Oslo.</p>
-                    ) : (
-                      <p>Ingen ferske menytreff på denne retten i Oslo akkurat nå.</p>
-                    )}
-                  </article>
-                ))}
-              </div>
+              <DiscoveryDishList coverage={selectedDishCoverage} onOpenKnowledge={openFoodKnowledge} />
             </section>
 
             <footer className="cuisineExploreDialogFooter">
