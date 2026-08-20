@@ -6,13 +6,14 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v5";
+export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v6";
 
 const HEADING_MARKER = "__FYSEN_ADJACENT_HEADING_LEVEL_";
 const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
 const SECTION_OR_UI_LABEL = /^(?:our\s+menu|menu|meny|single\s+meat|single\s+(?:vegetar|vegetarian)(?:\s*&\s*vegan)?|pdf\s+version|drinks?|drikke(?:meny)?|popular\s+dish|opening(?:\s+hours)?|åpningstider|contact|kontakt|address|adresse|booking|reservation(?:s)?|reservasjoner?|allergens?|allergener?)$/iu;
 const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|champagne(?:\s+cocktails?)?|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
 const BOTTLED_WATER_TITLE = /\b(?:still|sparkling)\s+(?:water|naturell)\b/iu;
+const LEADING_MENU_INDEX = /^(\d{1,3})\s*[.)]?\s+(.+)$/u;
 
 interface ParsedPrice {
   readonly priceMinor: number;
@@ -110,6 +111,43 @@ function nearestSemanticSectionHeading(
     return title;
   }
   return null;
+}
+
+function canonicalizeStrongNumberedHeadingPattern(
+  candidates: readonly HeadingPriceCandidate[],
+): readonly HeadingPriceCandidate[] {
+  const numbered = candidates
+    .map((candidate) => {
+      const match = candidate.item.name.match(LEADING_MENU_INDEX);
+      if (!match?.[1] || !match[2]) return null;
+      const menuIndex = Number(match[1]);
+      const name = normalizeVisibleLine(match[2]);
+      if (!Number.isInteger(menuIndex) || !name || !/\p{L}/u.test(name)) return null;
+      return { candidate, menuIndex, name };
+    })
+    .filter(
+      (value): value is {
+        readonly candidate: HeadingPriceCandidate;
+        readonly menuIndex: number;
+        readonly name: string;
+      } => value !== null,
+    );
+
+  if (numbered.length < 4 || numbered.length * 5 < candidates.length * 4) return candidates;
+  if (new Set(numbered.map((entry) => entry.menuIndex)).size !== numbered.length) return candidates;
+  for (let index = 1; index < numbered.length; index += 1) {
+    if ((numbered[index]?.menuIndex ?? 0) <= (numbered[index - 1]?.menuIndex ?? 0)) return candidates;
+  }
+
+  return numbered.map(({ candidate, name }) => ({
+    ...candidate,
+    item: {
+      ...candidate.item,
+      name,
+      normalizedName: normalizeDishName(name),
+      sourceKey: createMenuItemSourceKey(name),
+    },
+  }));
 }
 
 function applyDuplicateSectionIdentity(
@@ -220,5 +258,5 @@ export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly Men
   const strongest = [...byHeadingLevel.values()].sort((a, b) => b.length - a.length)[0] ?? [];
   if (strongest.length < 4) return [];
 
-  return applyDuplicateSectionIdentity(strongest);
+  return applyDuplicateSectionIdentity(canonicalizeStrongNumberedHeadingPattern(strongest));
 }
