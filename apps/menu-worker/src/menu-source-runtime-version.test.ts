@@ -45,7 +45,7 @@ describe("HTML runtime extractor version", () => {
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe("trailing-price-card-v5");
     expect(HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION).toBe("heading-supplement-v1");
     expect(HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION).toBe("from-price-v1");
-    expect(HTML_SECTION_FIRST_CARD_RECOVERY_VERSION).toBe("section-first-card-v1");
+    expect(HTML_SECTION_FIRST_CARD_RECOVERY_VERSION).toBe("section-first-card-v2");
     expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v1");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
