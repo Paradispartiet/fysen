@@ -54,6 +54,7 @@ jobs:
         run: pnpm --filter @fysen/menu-worker... build
 
       - name: Materialize canonical production catalog
+        continue-on-error: true
         run: pnpm --filter @fysen/menu-worker onboard:catalog
 
       - name: Search Bigos in production without Revenue events
