@@ -77,6 +77,8 @@ describe("generic HTML item-name normalization", () => {
     "stk. Svinekjøtt med scampi, salat og agurk.",
     "stk vårruller med kylling.",
     "biter. 4 avokado nigiri og 8 kappa maki.",
+    "Spør oss 🙂",
+    "Spør om dagens Yin og Yang",
   ])("rejects generic batch non-dish leakage: %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
   });
@@ -94,7 +96,8 @@ describe("generic HTML item-name normalization", () => {
     "Vodka, Ingefærøl og sitron",
     "Jack Daniels, Cointreau, Yuzu, sukkerlake, sitronbrus",
     "Classic Mojito",
-  ])("rejects cocktail names and ingredient-description leakage: %s", (name) => {
+    "Ca Phe Sua Da",
+  ])("rejects beverage names and cocktail-description leakage: %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
   });
 
@@ -111,6 +114,9 @@ describe("generic HTML item-name normalization", () => {
     "Orange Chicken",
     "Whiskey-glazed ribs",
     "Bourbon orange chicken",
+    "Dagens fisk",
+    "Dagens Dessert",
+    "Yin & Yang Bao",
   ])("preserves real dish names while filtering metadata and drinks: %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(true);
   });
