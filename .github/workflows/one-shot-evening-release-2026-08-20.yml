@@ -1,0 +1,130 @@
+name: Fysen one-shot evening production release 2026-08-20
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/one-shot-evening-release-2026-08-20.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-vercel-production-release
+  cancel-in-progress: false
+
+env:
+  VERCEL_ORG_ID: team_mV3NpMYd5l7yGmuZkbTf46y8
+  SOURCE_SHA: c06d6503fc65518af96121566da1c487149d4b37
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_PROJECT_ID: prj_G0Vm4jhCg3hWRvVBSEIt5klHO6sS
+    steps:
+      - name: Verify approved Oslo evening window
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(TZ=Europe/Oslo date +%H)" = "22"
+
+      - name: Checkout locked product source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          fetch-depth: 1
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Deploy web explicitly to production
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${VERCEL_TOKEN:-}"
+          rm -rf .vercel
+          pnpm dlx vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
+          pnpm dlx vercel@latest build --prod --token="$VERCEL_TOKEN"
+          pnpm dlx vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN" \
+            --meta "fysenSourceSha=$SOURCE_SHA" \
+            --meta "fysenReleaseMode=one-shot-2223-oslo"
+
+      - name: Verify public web alias
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 18); do
+            if curl --fail --silent --show-error --location --max-time 20 https://fysen.vercel.app/ >/dev/null; then
+              exit 0
+            fi
+            sleep 5
+          done
+          exit 1
+
+  api:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_PROJECT_ID: prj_sSNtWlPc13Lgr2ws6DdhCfPFtr4E
+    steps:
+      - name: Verify approved Oslo evening window
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(TZ=Europe/Oslo date +%H)" = "22"
+
+      - name: Checkout locked product source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          fetch-depth: 1
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Deploy API explicitly to production
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${VERCEL_TOKEN:-}"
+          rm -rf .vercel
+          pnpm dlx vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
+          pnpm dlx vercel@latest build --prod --token="$VERCEL_TOKEN"
+          pnpm dlx vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN" \
+            --meta "fysenSourceSha=$SOURCE_SHA" \
+            --meta "fysenReleaseMode=one-shot-2223-oslo"
+
+      - name: Verify public API alias
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 18); do
+            health="$(curl --fail --silent --show-error --location --max-time 20 https://fysen-api.vercel.app/v1/health 2>/dev/null || true)"
+            browse="$(curl --fail --silent --show-error --location --max-time 20 'https://fysen-api.vercel.app/v1/dishes/browse?city=Oslo' 2>/dev/null || true)"
+            if printf '%s' "$health" | jq -e '.service == "fysen-api" and .status == "ok"' >/dev/null 2>&1 \
+              && printf '%s' "$browse" | jq -e '.city == "Oslo" and (.dishes | type == "array")' >/dev/null 2>&1; then
+              exit 0
+            fi
+            sleep 5
+          done
+          exit 1
