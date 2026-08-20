@@ -23,6 +23,8 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -48,7 +50,7 @@ jobs:
 
       - name: Validate changed candidate staging area
         if: github.event_name == 'pull_request'
-        run: pnpm --filter @fysen/menu-worker validate:candidates
+        run: pnpm --filter @fysen/menu-worker validate:candidates:batch
 
       - name: Validate requested manifest or directory
         if: github.event_name == 'workflow_dispatch'
@@ -65,6 +67,6 @@ jobs:
               pnpm --filter @fysen/menu-worker validate:manifest -- "$MANIFEST_PATH"
               ;;
             *)
-              pnpm --filter @fysen/menu-worker validate:directory -- "$MANIFEST_PATH"
+              pnpm --filter @fysen/menu-worker validate:batch -- "$MANIFEST_PATH"
               ;;
           esac
