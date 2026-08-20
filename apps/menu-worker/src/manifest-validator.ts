@@ -1,3 +1,4 @@
+import { load } from "cheerio";
 import { createMenuFingerprint } from "@fysen/menu-core";
 import { verifyActionSource } from "./action-source-runtime.js";
 import { HttpMenuClient } from "./http-client.js";
@@ -75,32 +76,53 @@ function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
-function htmlDiagnosticContexts(
+function normalizeDiagnosticText(value: string): string {
+  return value.normalize("NFKC").replace(/\s+/gu, " ").trim();
+}
+
+function exactProductTileContexts(
   body: string,
   assertions: readonly string[],
-): readonly { assertion: string; context: string }[] {
-  const foldedBody = body.toLocaleLowerCase("nb-NO");
-  const output: { assertion: string; context: string }[] = [];
+): readonly { assertion: string; found: boolean; tile: string | null }[] {
+  const $ = load(body);
+  const output: { assertion: string; found: boolean; tile: string | null }[] = [];
   const seen = new Set<string>();
 
   for (const assertion of assertions) {
-    const needle = assertion.trim();
-    const foldedNeedle = needle.toLocaleLowerCase("nb-NO");
-    if (!needle || seen.has(foldedNeedle)) continue;
-    seen.add(foldedNeedle);
-    const index = foldedBody.indexOf(foldedNeedle);
-    if (index < 0) continue;
+    const expected = normalizeDiagnosticText(assertion).toLocaleLowerCase("nb-NO");
+    if (!expected || seen.has(expected)) continue;
+    seen.add(expected);
+
+    const exactHeading = $("[data-testid='menu-product'] h1, [data-testid='menu-product'] h2, [data-testid='menu-product'] h3, [data-testid='menu-product'] h4, [data-testid='menu-product'] h5, [data-testid='menu-product'] h6")
+      .filter((_, element) => normalizeDiagnosticText($(element).text()).toLocaleLowerCase("nb-NO") === expected)
+      .first();
+    const tile = exactHeading.closest("[data-testid='menu-product']");
     output.push({
-      assertion: needle,
-      context: body
-        .slice(Math.max(0, index - 240), Math.min(body.length, index + needle.length + 420))
-        .replace(/\s+/gu, " ")
-        .slice(0, 800),
+      assertion,
+      found: tile.length > 0,
+      tile: tile.length > 0 ? normalizeDiagnosticText($.html(tile)).slice(0, 1400) : null,
     });
-    if (output.length >= 24) break;
+    if (output.length >= 20) break;
   }
 
   return output;
+}
+
+function categoryStateContexts(body: string): readonly string[] {
+  const marker = "RestaurantMenuCategory:";
+  const contexts: string[] = [];
+  let offset = 0;
+  while (contexts.length < 12) {
+    const index = body.indexOf(marker, offset);
+    if (index < 0) break;
+    contexts.push(
+      normalizeDiagnosticText(
+        body.slice(Math.max(0, index - 80), Math.min(body.length, index + 700)),
+      ).slice(0, 780),
+    );
+    offset = index + marker.length;
+  }
+  return contexts;
 }
 
 function logTemporaryHtmlDiagnostics(
@@ -108,10 +130,45 @@ function logTemporaryHtmlDiagnostics(
   body: string,
 ): void {
   if (process.env.GITHUB_WORKFLOW !== "Validate Fysen restaurant candidates") return;
-  const assertions = [
-    ...manifest.qualityAssertions.requiredDishNames,
-    ...(manifest.qualityAssertions.forbiddenDishNames ?? []),
+  const $ = load(body);
+  const required = manifest.qualityAssertions.requiredDishNames;
+  const forbidden = manifest.qualityAssertions.forbiddenDishNames ?? [];
+  const sectionAssertions = forbidden.filter((value) =>
+    /^(?:forretter|hovedretter|supper|barnemeny|sauser|dessert|drikke)$/iu.test(value.trim()),
+  );
+  const diagnosticAssertions = [
+    ...required.slice(0, 8),
+    ...sectionAssertions,
+    ...forbidden.filter((value) => !sectionAssertions.includes(value)).slice(0, 5),
   ];
+
+  const headingTexts = $("h1, h2, h3")
+    .toArray()
+    .map((element) => normalizeDiagnosticText($(element).text()))
+    .filter(Boolean);
+  const h2Texts = $("h2")
+    .toArray()
+    .map((element) => normalizeDiagnosticText($(element).text()))
+    .filter(Boolean);
+  const productLists = $("ul.dish-list-grid")
+    .toArray()
+    .slice(0, 20)
+    .map((element, index) => {
+      const list = $(element);
+      const titles = list
+        .find("[data-testid='menu-product'] h1, [data-testid='menu-product'] h2, [data-testid='menu-product'] h3, [data-testid='menu-product'] h4, [data-testid='menu-product'] h5, [data-testid='menu-product'] h6")
+        .toArray()
+        .map((title) => normalizeDiagnosticText($(title).text()))
+        .filter(Boolean);
+      const parent = list.parent();
+      return {
+        index,
+        itemCount: list.find("[data-testid='menu-product']").length,
+        firstTitles: titles.slice(0, 4),
+        parentPrefix: normalizeDiagnosticText($.html(parent)).slice(0, 1000),
+      };
+    });
+
   console.error(
     JSON.stringify(
       {
@@ -119,9 +176,12 @@ function logTemporaryHtmlDiagnostics(
           sourceUrl: manifest.menuSource.url,
           bodyLength: body.length,
           nativeHeadingTagCount: body.match(/<h[1-6]\b/giu)?.length ?? 0,
-          ariaHeadingRoleCount: body.match(/\brole\s*=\s*["']heading["']/giu)?.length ?? 0,
-          ariaLevelCount: body.match(/\baria-level\s*=/giu)?.length ?? 0,
-          contexts: htmlDiagnosticContexts(body, assertions),
+          h2Texts,
+          headingTexts: headingTexts.slice(0, 80),
+          productListCount: $("ul.dish-list-grid").length,
+          productLists,
+          exactProductTiles: exactProductTileContexts(body, diagnosticAssertions),
+          categoryStateContexts: categoryStateContexts(body),
         },
       },
       null,
