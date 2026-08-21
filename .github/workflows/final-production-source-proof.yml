@@ -1,0 +1,358 @@
+name: Final production source proof
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/final-production-source-proof.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-production-menu-mutation
+  cancel-in-progress: false
+
+jobs:
+  materialize-and-prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
+      DATABASE_SSL: "verify-full"
+      NODE_ENV: production
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - name: Require production database secret
+        shell: bash
+        run: |
+          test -n "$DATABASE_URL" || { echo "FYSEN_PRODUCTION_DATABASE_URL is not configured" >&2; exit 1; }
+
+      - name: Checkout exact production revision
+        uses: actions/checkout@v4
+        with:
+          ref: 9d6b2344f1e2fde47c8aa1fd966128fefef4302c
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build production dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Materialize canonical catalog
+        id: materialize
+        shell: bash
+        run: |
+          mkdir -p apps/menu-worker/research
+          set +e
+          pnpm --filter @fysen/menu-worker onboard:catalog | tee apps/menu-worker/research/final-production-materialize.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Refresh Hrimnir hours through canonical watcher
+        id: hrimnir
+        shell: bash
+        run: |
+          set +e
+          node --input-type=module <<'NODE' | tee apps/menu-worker/research/final-production-hrimnir-hours.json
+          import { createDatabasePool } from './packages/database/dist/index.js';
+          import { watchRestaurantHoursSourceOnce } from './apps/menu-worker/dist/run-opening-hours.js';
+          const pool = createDatabasePool();
+          try {
+            const source = await pool.query(
+              `SELECT hs.id
+                 FROM fysen.restaurant_hours_sources hs
+                 JOIN fysen.restaurants r ON r.id = hs.restaurant_id
+                WHERE r.slug = 'hrimnir-ramen-storgata'
+                  AND hs.enabled = true
+                LIMIT 1`,
+            );
+            const sourceId = source.rows[0]?.id;
+            if (!sourceId) throw new Error('Enabled Hrimnir hours source not found');
+            const result = await watchRestaurantHoursSourceOnce(pool, sourceId);
+            console.log(JSON.stringify(result, null, 2));
+            if (!['changed','unchanged','not_modified'].includes(result.outcome)) {
+              throw new Error(`Hrimnir hours refresh failed: ${result.outcome} ${result.errorCode ?? ''}`);
+            }
+          } finally {
+            await pool.end();
+          }
+          NODE
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Prove production catalog, source authority, hours and search
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE' | tee apps/menu-worker/research/final-production-proof.json
+          import { readdir, readFile, writeFile } from 'node:fs/promises';
+          import { createDatabasePool } from './packages/database/dist/index.js';
+          import { searchDishes } from './packages/database/dist/search.js';
+          import { normalizeDishName } from './packages/menu-core/dist/index.js';
+          import { OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION } from './apps/menu-worker/dist/opening-hours-source-runtime.js';
+
+          const files = (await readdir('apps/menu-worker/catalog'))
+            .filter((name) => name.endsWith('.json'))
+            .sort();
+          const manifests = [];
+          for (const file of files) {
+            manifests.push(JSON.parse(await readFile(`apps/menu-worker/catalog/${file}`, 'utf8')));
+          }
+          const manifestBySlug = new Map(manifests.map((manifest) => [manifest.restaurant.slug, manifest]));
+          const catalogSlugs = [...manifestBySlug.keys()];
+          const targetSlugs = [
+            'coyo-sorenga-oslo',
+            'hrimnir-ramen-storgata',
+            'lahori-dera-gronland-oslo',
+            'oche-aker-brygge-oslo',
+            'oche-torggata-oslo',
+            'registan-gronland-oslo',
+            'viet-kitchen-bjolsen-oslo',
+          ];
+
+          const pool = createDatabasePool();
+          try {
+            const totals = await pool.query(
+              `SELECT
+                 (SELECT count(*)::int FROM fysen.restaurants WHERE active = true) AS active_restaurants,
+                 (SELECT count(*)::int FROM fysen.menu_sources WHERE enabled = true) AS enabled_menu_sources`,
+            );
+            const restaurantRows = await pool.query(
+              `SELECT r.slug, r.active,
+                      count(ms.id) FILTER (WHERE ms.enabled)::int AS enabled_source_count
+                 FROM fysen.restaurants r
+                 LEFT JOIN fysen.menu_sources ms ON ms.restaurant_id = r.id
+                WHERE r.slug = ANY($1::text[])
+                GROUP BY r.id, r.slug, r.active
+                ORDER BY r.slug`,
+              [catalogSlugs],
+            );
+            const sourceRows = await pool.query(
+              `SELECT r.slug, ms.id, ms.url, ms.source_type, ms.fetch_mode, ms.enabled,
+                      ms.minimum_expected_items, ms.last_http_status, ms.consecutive_failures,
+                      ms.last_checked_at,
+                      snap.extractor_version, snap.fetched_at AS snapshot_fetched_at,
+                      snap.item_count AS snapshot_item_count,
+                      wr.outcome AS latest_watch_outcome,
+                      wr.http_status AS latest_watch_http_status,
+                      wr.extracted_item_count,
+                      wr.error_code, wr.error_message,
+                      wr.started_at AS latest_watch_started_at
+                 FROM fysen.restaurants r
+                 JOIN fysen.menu_sources ms ON ms.restaurant_id = r.id
+                 LEFT JOIN LATERAL (
+                   SELECT s.extractor_version, s.fetched_at, count(mi.id)::int AS item_count
+                     FROM fysen.menu_snapshots s
+                     LEFT JOIN fysen.menu_items mi ON mi.snapshot_id = s.id
+                    WHERE s.menu_source_id = ms.id
+                    GROUP BY s.id, s.extractor_version, s.fetched_at
+                    ORDER BY s.fetched_at DESC, s.created_at DESC
+                    LIMIT 1
+                 ) snap ON true
+                 LEFT JOIN LATERAL (
+                   SELECT w.outcome, w.http_status, w.extracted_item_count,
+                          w.error_code, w.error_message, w.started_at
+                     FROM fysen.menu_watch_runs w
+                    WHERE w.menu_source_id = ms.id
+                    ORDER BY w.started_at DESC
+                    LIMIT 1
+                 ) wr ON true
+                WHERE r.slug = ANY($1::text[])
+                ORDER BY r.slug, ms.created_at ASC`,
+              [catalogSlugs],
+            );
+
+            const enabledSourcesBySlug = new Map();
+            for (const row of sourceRows.rows) {
+              if (!row.enabled) continue;
+              const existing = enabledSourcesBySlug.get(row.slug) ?? [];
+              existing.push(row);
+              enabledSourcesBySlug.set(row.slug, existing);
+            }
+
+            const catalogDrift = [];
+            for (const slug of catalogSlugs) {
+              const manifest = manifestBySlug.get(slug);
+              const restaurant = restaurantRows.rows.find((row) => row.slug === slug);
+              const enabled = enabledSourcesBySlug.get(slug) ?? [];
+              if (!restaurant?.active) {
+                catalogDrift.push({ slug, problem: 'inactive_restaurant' });
+              }
+              if (enabled.length !== 1) {
+                catalogDrift.push({ slug, problem: 'enabled_source_count', count: enabled.length });
+                continue;
+              }
+              if (enabled[0].url !== manifest.menuSource.url) {
+                catalogDrift.push({
+                  slug,
+                  problem: 'wrong_enabled_source_url',
+                  expected: manifest.menuSource.url,
+                  actual: enabled[0].url,
+                });
+              }
+            }
+
+            const activeNotCatalog = await pool.query(
+              `SELECT slug
+                 FROM fysen.restaurants
+                WHERE active = true
+                  AND NOT (slug = ANY($1::text[]))
+                ORDER BY slug`,
+              [catalogSlugs],
+            );
+
+            const targetSources = targetSlugs.map((slug) => {
+              const rows = enabledSourcesBySlug.get(slug) ?? [];
+              return rows[0] ?? { slug, missing: true };
+            });
+
+            for (const source of targetSources) {
+              const manifest = manifestBySlug.get(source.slug);
+              if (!manifest) throw new Error(`Missing manifest for ${source.slug}`);
+              if (source.missing) throw new Error(`No enabled source for ${source.slug}`);
+              if (source.url !== manifest.menuSource.url) {
+                throw new Error(`${source.slug} enabled URL ${source.url} != ${manifest.menuSource.url}`);
+              }
+              if (Number(source.snapshot_item_count) < manifest.menuSource.minimumExpectedItems) {
+                throw new Error(`${source.slug} snapshot items=${source.snapshot_item_count}/${manifest.menuSource.minimumExpectedItems}`);
+              }
+              if (Number(source.consecutive_failures) !== 0) {
+                throw new Error(`${source.slug} consecutive_failures=${source.consecutive_failures}`);
+              }
+              if (!source.extractor_version) {
+                throw new Error(`${source.slug} has no snapshot extractor version`);
+              }
+            }
+
+            const hrimnirHours = await pool.query(
+              `SELECT hs.id, hs.enabled, hs.consecutive_failures, hs.last_checked_at,
+                      snap.extractor_version, snap.fetched_at AS snapshot_fetched_at,
+                      snap.interval_count,
+                      wr.outcome AS latest_watch_outcome,
+                      wr.error_code, wr.error_message,
+                      wr.started_at AS latest_watch_started_at
+                 FROM fysen.restaurant_hours_sources hs
+                 JOIN fysen.restaurants r ON r.id = hs.restaurant_id
+                 LEFT JOIN LATERAL (
+                   SELECT s.extractor_version, s.fetched_at, s.interval_count
+                     FROM fysen.restaurant_hours_snapshots s
+                    WHERE s.source_id = hs.id
+                    ORDER BY s.fetched_at DESC, s.created_at DESC
+                    LIMIT 1
+                 ) snap ON true
+                 LEFT JOIN LATERAL (
+                   SELECT w.outcome, w.error_code, w.error_message, w.started_at
+                     FROM fysen.restaurant_hours_watch_runs w
+                    WHERE w.source_id = hs.id
+                    ORDER BY w.started_at DESC
+                    LIMIT 1
+                 ) wr ON true
+                WHERE r.slug = 'hrimnir-ramen-storgata'
+                  AND hs.enabled = true
+                LIMIT 1`,
+            );
+            const hours = hrimnirHours.rows[0];
+            if (!hours) throw new Error('Hrimnir hours source missing');
+            if (hours.extractor_version !== OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION) {
+              throw new Error(`Hrimnir hours extractor=${hours.extractor_version}; expected ${OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION}`);
+            }
+            if (Number(hours.interval_count) !== 7) {
+              throw new Error(`Hrimnir hours interval_count=${hours.interval_count}/7`);
+            }
+            if (Number(hours.consecutive_failures) !== 0 || hours.error_code || hours.error_message) {
+              throw new Error(`Hrimnir hours unhealthy: failures=${hours.consecutive_failures} error=${hours.error_code}: ${hours.error_message}`);
+            }
+
+            const searchProof = [];
+            for (const slug of targetSlugs) {
+              const manifest = manifestBySlug.get(slug);
+              const dishName = manifest.qualityAssertions.requiredDishNames[0];
+              if (!dishName) throw new Error(`${slug} has no required dish for search proof`);
+              const results = await searchDishes(pool, {
+                normalizedQuery: normalizeDishName(dishName),
+                city: 'Oslo',
+                limit: 100,
+                latitude: null,
+                longitude: null,
+                sort: 'relevance',
+              });
+              const hit = results.find((result) => result.restaurantSlug === slug);
+              if (!hit) throw new Error(`Production search did not return ${slug} for ${dishName}`);
+              if (hit.sourceUrl !== manifest.menuSource.url) {
+                throw new Error(`Production search for ${slug} uses ${hit.sourceUrl}; expected ${manifest.menuSource.url}`);
+              }
+              searchProof.push({
+                slug,
+                query: dishName,
+                dishName: hit.dishName,
+                priceMinor: hit.priceMinor,
+                sourceUrl: hit.sourceUrl,
+                observedAt: hit.observedAt,
+                lastCheckedAt: hit.lastCheckedAt,
+              });
+            }
+
+            const proof = {
+              productionRevision: '9d6b2344f1e2fde47c8aa1fd966128fefef4302c',
+              materializeExitCode: '${{ steps.materialize.outputs.exit_code }}',
+              hrimnirRefreshExitCode: '${{ steps.hrimnir.outputs.exit_code }}',
+              catalogCount: manifests.length,
+              totals: totals.rows[0],
+              catalogDrift,
+              activeNotCatalog: activeNotCatalog.rows,
+              targetSources,
+              hrimnirHours: hours,
+              expectedHoursExtractor: OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION,
+              searchProof,
+            };
+            await writeFile(
+              'apps/menu-worker/research/final-production-proof-structured.json',
+              JSON.stringify(proof, null, 2) + '\n',
+            );
+            console.log(JSON.stringify(proof, null, 2));
+
+            if (manifests.length !== 50) throw new Error(`Catalog count=${manifests.length}/50`);
+            if (Number(totals.rows[0]?.active_restaurants) !== 50) {
+              throw new Error(`Active restaurants=${totals.rows[0]?.active_restaurants}/50`);
+            }
+            if (Number(totals.rows[0]?.enabled_menu_sources) !== 50) {
+              throw new Error(`Enabled menu sources=${totals.rows[0]?.enabled_menu_sources}/50`);
+            }
+            if (catalogDrift.length > 0 || activeNotCatalog.rows.length > 0) {
+              throw new Error(`Catalog/DB drift: ${JSON.stringify({ catalogDrift, activeNotCatalog: activeNotCatalog.rows })}`);
+            }
+            if ('${{ steps.materialize.outputs.exit_code }}' !== '0') {
+              throw new Error(`Canonical materializer exited ${{ steps.materialize.outputs.exit_code }}`);
+            }
+            if ('${{ steps.hrimnir.outputs.exit_code }}' !== '0') {
+              throw new Error(`Hrimnir hours refresh exited ${{ steps.hrimnir.outputs.exit_code }}`);
+            }
+          } finally {
+            await pool.end();
+          }
+          NODE
+
+      - name: Upload final production artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-production-source-proof
+          path: |
+            apps/menu-worker/research/final-production-materialize.json
+            apps/menu-worker/research/final-production-hrimnir-hours.json
+            apps/menu-worker/research/final-production-proof.json
+            apps/menu-worker/research/final-production-proof-structured.json
+          if-no-files-found: warn
