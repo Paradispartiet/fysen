@@ -1,0 +1,169 @@
+name: Restore four all-50 live proof
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/restore-four-all50-proof.yml"
+      - "apps/menu-worker/src/**"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-all:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
+    steps:
+      - name: Checkout repair parser head
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build menu-worker dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Assert 50 canonical manifests
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readdir, readFile } from 'node:fs/promises';
+          const files = (await readdir('catalog')).filter((name) => name.endsWith('.json')).sort();
+          const slugs = [];
+          for (const file of files) {
+            const manifest = JSON.parse(await readFile(`catalog/${file}`, 'utf8'));
+            slugs.push(manifest.restaurant.slug);
+          }
+          if (files.length !== 50 || new Set(slugs).size !== 50) {
+            throw new Error(`Expected 50 unique catalog manifests, got ${files.length}/${new Set(slugs).size}`);
+          }
+          console.log(JSON.stringify({ manifestCount: files.length, uniqueSlugs: new Set(slugs).size }, null, 2));
+          NODE
+
+      - name: Live validate all 50 canonical manifests
+        id: all50
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch catalog | tee research/restore-four-all50.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Prepare four-source repeat set
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+          const targetSlugs = new Set([
+            'coyo-sorenga-oslo',
+            'lahori-dera-gronland-oslo',
+            'oche-aker-brygge-oslo',
+            'oche-torggata-oslo',
+          ]);
+          const out = 'research/restore-four-repeat';
+          await mkdir(out, { recursive: true });
+          const found = [];
+          for (const file of (await readdir('catalog')).filter((name) => name.endsWith('.json')).sort()) {
+            const raw = await readFile(`catalog/${file}`, 'utf8');
+            const manifest = JSON.parse(raw);
+            if (!targetSlugs.has(manifest.restaurant.slug)) continue;
+            await writeFile(`${out}/${file}`, raw);
+            found.push(manifest.restaurant.slug);
+          }
+          if (found.length !== 4) throw new Error(`Expected 4 repeat manifests, got ${found.length}`);
+          console.log(JSON.stringify(found, null, 2));
+          NODE
+
+      - name: Repeat live validation for repaired four
+        id: repeat4
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/restore-four-repeat | tee research/restore-four-repeat.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Summarize live proof
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const all = JSON.parse(await readFile('research/restore-four-all50.json', 'utf8'));
+          const repeat = JSON.parse(await readFile('research/restore-four-repeat.json', 'utf8'));
+          const targets = new Set([
+            'coyo-sorenga-oslo',
+            'lahori-dera-gronland-oslo',
+            'oche-aker-brygge-oslo',
+            'oche-torggata-oslo',
+          ]);
+          const compact = (result) => ({
+            slug: result.slug,
+            accepted: result.accepted,
+            failureFamilies: result.failureFamilies ?? [],
+            error: result.error ?? null,
+            menuError: result.validation?.menu?.error ?? null,
+            itemCount: result.validation?.menu?.quality?.itemCount ?? null,
+            extractionMethod: result.validation?.menu?.extractionMethod ?? null,
+            extractorVersion: result.validation?.menu?.extractorVersion ?? null,
+            observedDishNames: result.validation?.menu?.observedDishNames ?? [],
+            hoursOutcome: result.validation?.hours?.outcome ?? null,
+          });
+          const allTargets = (all.results ?? []).filter((result) => targets.has(result.slug)).map(compact);
+          const repeatTargets = (repeat.results ?? []).map(compact);
+          const failed = (all.results ?? []).filter((result) => !result.accepted).map(compact);
+          const summary = {
+            all50ExitCode: '${{ steps.all50.outputs.exit_code }}',
+            repeat4ExitCode: '${{ steps.repeat4.outputs.exit_code }}',
+            all50: {
+              manifestCount: all.manifestCount,
+              acceptedCount: all.acceptedCount,
+              failedCount: all.failedCount,
+              failureFamilyCounts: all.failureFamilyCounts,
+            },
+            failed,
+            repairedFourFirstPass: allTargets,
+            repairedFourSecondPass: repeatTargets,
+          };
+          await writeFile('research/restore-four-all50-summary.json', JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          if (all.manifestCount !== 50 || all.acceptedCount !== 50 || all.failedCount !== 0) {
+            throw new Error(`All-50 gate failed: ${all.acceptedCount}/${all.manifestCount}, failed=${all.failedCount}`);
+          }
+          if (repeat.manifestCount !== 4 || repeat.acceptedCount !== 4 || repeat.failedCount !== 0) {
+            throw new Error(`Four-source repeat gate failed: ${repeat.acceptedCount}/${repeat.manifestCount}, failed=${repeat.failedCount}`);
+          }
+          NODE
+
+      - name: Upload proof artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: restore-four-all50-proof
+          path: |
+            apps/menu-worker/research/restore-four-all50.json
+            apps/menu-worker/research/restore-four-repeat.json
+            apps/menu-worker/research/restore-four-all50-summary.json
+          if-no-files-found: error
