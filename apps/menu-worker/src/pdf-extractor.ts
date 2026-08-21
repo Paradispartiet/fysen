@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v7";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v8";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -48,6 +48,7 @@ interface ItemCandidate extends ParsedPrice {
 
 const PDF_DOT_LEADER_SUFFIX = /\s*(?:\.\s*){2,}$/u;
 const PDF_LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]\s*/u;
+const PDF_NUMBERED_ROW_MARKER = /(?:^|\s)(\d{1,3}\s*[.)]\s+)(?=\p{L})/gu;
 const PDF_QUANTITY = /\b\d+(?:[.,]\d+)?\s*(?:kg|gr|g|ml|cl|l)\b/giu;
 const PDF_NON_DISH_METADATA = /^(?:set\s+menu|tasting\s+menu|course\s+menu)\b/iu;
 const allergenCodeTokens = new Set([
@@ -137,6 +138,24 @@ function reconstructLines(items: readonly unknown[], page: number): readonly Pdf
 
 function sectionHeading(line: string): string | null {
   const normalized = normalizeLine(line);
+  if (!normalized || /\d{1,4}\s*(?:,-|kr\.?|nok)?\s*$/iu.test(normalized)) return null;
+
+  const bilingual = normalized.split(/\s*\/\/\s*/u);
+  if (bilingual.length === 2) {
+    const left = bilingual[0]?.trim() ?? "";
+    const right = bilingual[1]?.trim() ?? "";
+    if (
+      left.length >= 2 &&
+      left.length <= 80 &&
+      right.length >= 2 &&
+      right.length <= 80 &&
+      /\p{L}/u.test(left) &&
+      /\p{L}/u.test(right)
+    ) {
+      return left.replace(/[ .-]+$/u, "");
+    }
+  }
+
   const match = normalized.match(/^([A-ZÆØÅÀÈÉÌÒÙÜ][A-ZÆØÅÀÈÉÌÒÙÜ &'’.-]{2,80})(?:\s+[A-ZÆØÅ]?[a-zæøåàèéìòùü].*)?$/u);
   if (!match?.[1]) return null;
   const section = match[1].trim().replace(/[ .-]+$/u, "");
@@ -146,25 +165,25 @@ function sectionHeading(line: string): string | null {
   return section;
 }
 
-function validPriceKroner(value: string): number | null {
+function validPriceKroner(value: string, minimum = 40): number | null {
   const parsed = Number(value);
-  return Number.isInteger(parsed) && parsed >= 40 && parsed <= 10_000 ? parsed : null;
+  return Number.isInteger(parsed) && parsed >= minimum && parsed <= 10_000 ? parsed : null;
 }
 
-function parsedPrice(first: string, second?: string): ParsedPrice | null {
-  const firstPrice = validPriceKroner(first);
+function parsedPrice(first: string, second?: string, minimum = 40): ParsedPrice | null {
+  const firstPrice = validPriceKroner(first, minimum);
   if (firstPrice === null) return null;
   if (!second) {
     return { priceKind: "exact", priceKroner: firstPrice, priceMaxKroner: null };
   }
-  const secondPrice = validPriceKroner(second);
+  const secondPrice = validPriceKroner(second, minimum);
   if (secondPrice === null) return null;
-  const minimum = Math.min(firstPrice, secondPrice);
-  const maximum = Math.max(firstPrice, secondPrice);
-  if (minimum === maximum) {
-    return { priceKind: "exact", priceKroner: minimum, priceMaxKroner: null };
+  const low = Math.min(firstPrice, secondPrice);
+  const high = Math.max(firstPrice, secondPrice);
+  if (low === high) {
+    return { priceKind: "exact", priceKroner: low, priceMaxKroner: null };
   }
-  return { priceKind: "multiple", priceKroner: minimum, priceMaxKroner: maximum };
+  return { priceKind: "multiple", priceKroner: low, priceMaxKroner: high };
 }
 
 function stripAllergenSuffix(value: string): string {
@@ -251,11 +270,28 @@ const trailingPrice = new RegExp(
 function parseInlineDish(line: string): ParsedInlineDish | null {
   const match = trailingPrice.exec(line);
   if (!match?.[1] || match.index <= 0) return null;
-  const price = parsedPrice(match[1], match[2]);
+  const explicitCurrency = /(?:kr\.?|nok)/iu.test(match[0]);
+  const price = parsedPrice(match[1], match[2], explicitCurrency ? 30 : 40);
   if (!price) return null;
   const rawName = canonicalPdfDishName(line.slice(0, match.index));
   if (!looksLikeDishName(rawName)) return null;
   return { rawName, ...price };
+}
+
+function splitNumberedInlineDishes(line: string): readonly ParsedInlineDish[] | null {
+  const positions: number[] = [];
+  for (const match of line.matchAll(PDF_NUMBERED_ROW_MARKER)) {
+    const offset = match[0].startsWith(" ") ? 1 : 0;
+    positions.push(match.index + offset);
+  }
+  if (positions.length < 2 || positions[0] !== 0) return null;
+
+  const segments = positions.map((start, index) =>
+    line.slice(start, positions[index + 1] ?? line.length).trim(),
+  );
+  const parsed = segments.map(parseInlineDish);
+  if (parsed.some((entry) => entry === null)) return null;
+  return parsed as readonly ParsedInlineDish[];
 }
 
 function wrappedName(
@@ -285,12 +321,30 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
 
     const line = lines[index]?.text ?? "";
     const nextLine = lines[index + 1]?.text ?? "";
-    const inline = parseInlineDish(line);
+    const splitInline = splitNumberedInlineDishes(line);
+    const inline = splitInline ? null : parseInlineDish(line);
     const standaloneName = canonicalPdfDishName(line);
     const isStandalonePricedDishName = looksLikeDishName(standaloneName) && standalonePrice.test(nextLine);
-    const section = isStandalonePricedDishName || inline ? null : sectionHeading(line);
+    const section = isStandalonePricedDishName || inline || splitInline ? null : sectionHeading(line);
     if (section) {
       currentSection = section;
+      continue;
+    }
+
+    if (splitInline) {
+      for (const split of splitInline) {
+        candidates.push({
+          nameLineIndex: index,
+          nameContinuationLineIndex: null,
+          priceLineIndex: index,
+          page: lines[index]?.page ?? 1,
+          sectionName: currentSection,
+          rawName: split.rawName,
+          priceKind: split.priceKind,
+          priceKroner: split.priceKroner,
+          priceMaxKroner: split.priceMaxKroner,
+        });
+      }
       continue;
     }
 
@@ -371,15 +425,12 @@ export function extractMenuItemsFromPdfLines(lines: readonly string[]): readonly
 function buildItems(lines: readonly PdfLine[]): readonly MenuObservedItem[] {
   const candidates = collectCandidates(lines);
   const items: MenuObservedItem[] = [];
-  const seen = new Set<string>();
 
   for (const [position, candidate] of candidates.entries()) {
     const nextCandidateLine = candidates[position + 1]?.nameLineIndex ?? lines.length;
     const name = canonicalPdfDishName(candidate.rawName);
     if (!looksLikeDishName(name)) continue;
     const sourceKey = createMenuItemSourceKey(name, candidate.sectionName);
-    if (seen.has(sourceKey)) continue;
-    seen.add(sourceKey);
     const description = descriptionForCandidate(lines, candidate, nextCandidateLine);
     const observedPrice = candidate.priceMaxKroner === null
       ? `${candidate.priceKroner} NOK`
