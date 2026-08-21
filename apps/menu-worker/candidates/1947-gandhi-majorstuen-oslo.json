@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "1947-gandhi-majorstuen-oslo",
+    "name": "1947 Gandhi Majorstuen",
+    "websiteUrl": "https://www.1947gandhi.no/",
+    "address": "Majorstuveien 41A, 0367 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.928314,
+    "longitude": 10.715439
+  },
+  "menuSource": {
+    "url": "https://www.1947gandhi.no/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 41,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "hoursSource": {
+    "url": "https://www.1947gandhi.no/",
+    "scopeHints": [
+      "Åpningstider",
+      "Mandag",
+      "søndag",
+      "16:00",
+      "22:00"
+    ],
+    "minimumExpectedIntervals": 1,
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 720,
+    "extractor": "visible_text_v1"
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-21",
+      "note": "First-party site publishes venue opening hours Monday-Sunday 16:00-22:00, but does not separately publish a kitchen-scoped closing schedule. Keep open/closed unknown until kitchen hours are canonical."
+    }
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://www.1947gandhi.no/reservation/",
+      "sourceUrl": "https://www.1947gandhi.no/",
+      "provider": "easyTable"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "TUNFISK KEBAB",
+      "Plain Butter Naan",
+      "MIX GRILL",
+      "LAMB ROGAN JOSH",
+      "HVITLØK CHICKEN TIKKA",
+      "CHICKEN TIKKA MASALA",
+      "CHICKEN MOMO",
+      "ALOO CHANA CHAAT"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "TUNFISK KEBAB",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Plain Butter Naan",
+        "priceMinor": 4900
+      },
+      {
+        "name": "MIX GRILL",
+        "priceMinor": 32900
+      },
+      {
+        "name": "LAMB ROGAN JOSH",
+        "priceMinor": 31900
+      },
+      {
+        "name": "HVITLØK CHICKEN TIKKA",
+        "priceMinor": 28900
+      },
+      {
+        "name": "CHICKEN TIKKA MASALA",
+        "priceMinor": 27900
+      },
+      {
+        "name": "CHICKEN MOMO",
+        "priceMinor": 12900
+      },
+      {
+        "name": "ALOO CHANA CHAAT",
+        "priceMinor": 13900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
