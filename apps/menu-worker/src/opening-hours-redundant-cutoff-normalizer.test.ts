@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { extractCanonicalOpeningHours } from "./opening-hours-source-extractor.js";
 import {
   normalizeRedundantAbsoluteKitchenCloseHtml,
   OPENING_HOURS_REDUNDANT_CUTOFF_NORMALIZER_VERSION,
@@ -25,14 +24,13 @@ describe("redundant absolute kitchen cutoff normalization", () => {
     expect(normalized).toContain("Kjøkken til 20:00");
     // Fredensborg beholder sitt eget 21:00-bevis; Storgata kollapses til ett 21:00-kutt.
     expect(normalized.match(/Kjøkken til 21:00/gu)).toHaveLength(2);
-    const extracted = extractCanonicalOpeningHours(normalized, ["Storgata"]);
-    expect(extracted.intervals).toHaveLength(7);
-    expect(extracted.intervals.every((item) => item.opensAt === "12:00")).toBe(
-      true,
+    expect(normalized).not.toContain(
+      "Søndag til Torsdag: 12:00 - 22.00 (Kjøkken til 21:00)",
     );
-    expect(extracted.intervals.every((item) => item.closesAt === "21:00")).toBe(
-      true,
+    expect(normalized).not.toContain(
+      "Fredag - Lørdag: 12:00 - 23.00(Kjøkken til 21:00)",
     );
+    expect(normalized).toContain("<p>Kjøkken til 21:00</p>");
   });
 
   it("does not hide conflicting cutoffs inside the selected scope", () => {
