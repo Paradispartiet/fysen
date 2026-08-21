@@ -27,6 +27,10 @@ export interface MenuWatchSummary {
   readonly snapshotId: string | null;
 }
 
+export interface MenuWatchOptions {
+  readonly allowDisabled?: boolean;
+}
+
 function evidenceText(items: readonly MenuObservedItem[]): string {
   return items.map((item) => item.sourceExcerpt ?? item.name).join("\n");
 }
@@ -38,11 +42,12 @@ export async function watchMenuSourceOnce(
   menuSourceId: string,
   httpClient = new HttpMenuClient(),
   sourceSupport: MenuSourceSupportInput = { redirectOrigins: [], browserDataOrigins: [] },
+  options: MenuWatchOptions = {},
 ): Promise<MenuWatchSummary> {
   const startedAt = new Date().toISOString();
   const source = await repository.getMenuSourceById(menuSourceId);
   if (!source) throw new Error(`Unknown menu source: ${menuSourceId}`);
-  if (!source.enabled) throw new Error(`Menu source is disabled: ${menuSourceId}`);
+  if (!source.enabled && !options.allowDisabled) throw new Error(`Menu source is disabled: ${menuSourceId}`);
 
   const previous = await repository.getLatestSnapshotWithItems(menuSourceId);
   const forceReextract = shouldForceReextract(source.sourceType, previous?.extractorVersion ?? null);
