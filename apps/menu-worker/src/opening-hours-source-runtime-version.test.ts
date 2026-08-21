@@ -12,7 +12,7 @@ describe("opening-hours runtime extractor version", () => {
       `${OPENING_HOURS_SOURCE_EXTRACTOR_VERSION}+${OPENING_HOURS_DUPLICATE_SECTION_RECOVERY_VERSION}+${OPENING_HOURS_SCOPE_HINT_RESOLVER_VERSION}+${OPENING_HOURS_MARKER_NORMALIZER_VERSION}+${OPENING_HOURS_REDUNDANT_CUTOFF_NORMALIZER_VERSION}`,
     );
     expect(OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION).toBe(
-      "hours-visible-v15+scope-duplicates-v1+scope-priority-v1+hours-marker-v3+redundant-absolute-v2",
+      "hours-visible-v15+scope-duplicates-v1+scope-priority-v1+hours-marker-v3+redundant-absolute-v4",
     );
   });
 });
