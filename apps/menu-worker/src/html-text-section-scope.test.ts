@@ -53,7 +53,7 @@ describe("plain-text HTML section scoping", () => {
       119 NOK
     `;
 
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v4");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v5");
     expect(
       filterPlainTextBeverageSectionItems(items, visibleText).map(
         (entry) => entry.name,
@@ -88,6 +88,87 @@ describe("plain-text HTML section scoping", () => {
         (entry) => entry.name,
       ),
     ).toEqual(["The Classic", "Brownie"]);
+  });
+
+  it("resets an early drinks navigation state when an actual Food section starts", () => {
+    const items = [
+      item("Pollo", 1, 24900),
+      item("Margherita", 2, 21900),
+      item("Oche Burger & Fries", 3, 27900),
+      item("House Lager", 4, 11900),
+    ];
+    const visibleText = `
+      Food
+      ØL & CIDER
+      VIN & MUSSERENDE
+      Cocktails
+      ALKOHOLFRITT
+      Food
+      Stonebaked White Pizza
+      Pollo 249
+      Stonebaked Red Pizza
+      Margherita 219
+      Big Tactics Main Courses
+      Oche Burger & Fries 279
+      Cocktails
+      House Lager 119
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual(["Pollo", "Margherita", "Oche Burger & Fries"]);
+  });
+
+  it("resets navigation Drikke when a specific food category starts", () => {
+    const items = [
+      item("Kylling Tikka Masala", 1, 20900),
+      item("Lahori Lam Karahi Fresh", 2, 20900),
+      item("Chapli Kebab", 3, 19400),
+      item("Saag Paneer", 4, 16900),
+      item("Mix Grill", 5, 37900),
+      item("Coca-Cola", 6, 4000),
+    ];
+    const visibleText = `
+      Kylling
+      Lam
+      Kebab
+      Vegetar
+      Spesial
+      Nan
+      Drikke
+      Kylling
+      Kylling Tikka Masala
+      209 NOK
+      Lam
+      Lahori Lam Karahi Fresh
+      209 NOK
+      Kebab
+      Chapli Kebab
+      194 NOK
+      Vegetar
+      Saag Paneer
+      169 NOK
+      Spesial
+      Mix Grill
+      379 NOK
+      Drikke
+      Coca-Cola
+      40 NOK
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual([
+      "Kylling Tikka Masala",
+      "Lahori Lam Karahi Fresh",
+      "Chapli Kebab",
+      "Saag Paneer",
+      "Mix Grill",
+    ]);
   });
 
   it("recognizes bilingual tap and bottled beer headings", () => {

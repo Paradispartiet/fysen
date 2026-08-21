@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   classifyRestaurantValidationFailure,
+  isRetryableRestaurantValidationFailure,
   validateRestaurantManifestBatch,
 } from "./batch-validator.js";
 import type { RestaurantManifestValidationResult } from "./manifest-validator.js";
@@ -16,6 +17,7 @@ function validation(
     readonly hasQuality?: boolean;
     readonly hoursAccepted?: boolean;
     readonly actionAccepted?: boolean;
+    readonly actionError?: string | null;
   } = {},
 ): RestaurantManifestValidationResult {
   const menuAccepted = options.menuAccepted ?? true;
@@ -61,7 +63,9 @@ function validation(
         url: "https://example.com/booking",
         accepted: actionAccepted,
         httpStatus: actionAccepted ? 200 : null,
-        error: actionAccepted ? null : "Booking endpoint failed",
+        error: actionAccepted
+          ? null
+          : (options.actionError ?? "Booking endpoint failed"),
       },
     ],
     errors: [],
@@ -96,6 +100,89 @@ describe("restaurant batch validation", () => {
     ).toEqual(["action"]);
   });
 
+  it("retries bounded transient transport, action and invalid-payload failures", () => {
+    expect(
+      isRetryableRestaurantValidationFailure(
+        validation("transport", {
+          menuAccepted: false,
+          menuError: "Menu fetch returned HTTP 403",
+        }),
+      ),
+    ).toBe(true);
+    expect(
+      isRetryableRestaurantValidationFailure(
+        validation("pdf", {
+          menuAccepted: false,
+          menuError: "PDF source did not start with a PDF signature",
+        }),
+      ),
+    ).toBe(true);
+    expect(
+      isRetryableRestaurantValidationFailure(
+        validation("action", {
+          actionAccepted: false,
+          actionError: "The operation was aborted due to timeout",
+        }),
+      ),
+    ).toBe(true);
+  });
+
+  it("never retries deterministic menu assertions or hours semantics", () => {
+    expect(
+      isRetryableRestaurantValidationFailure(
+        validation("assertions", { menuAccepted: false, hasQuality: true }),
+      ),
+    ).toBe(false);
+    expect(
+      isRetryableRestaurantValidationFailure(
+        validation("hours", { hoursAccepted: false }),
+      ),
+    ).toBe(false);
+  });
+
+  it("recovers a transient source on a later bounded attempt", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "fysen-batch-validator-"));
+    await writeFile(join(directory, "a.json"), "{}");
+    let calls = 0;
+
+    const summary = await validateRestaurantManifestBatch(directory, {
+      retryDelayMs: 0,
+      validatePath: async () => {
+        calls += 1;
+        if (calls < 3) {
+          return validation("a", {
+            menuAccepted: false,
+            menuError: "Menu fetch returned HTTP 403",
+          });
+        }
+        return validation("a");
+      },
+    });
+
+    expect(calls).toBe(3);
+    expect(summary.acceptedCount).toBe(1);
+    expect(summary.failedCount).toBe(0);
+    expect(summary.results[0]?.failureFamilies).toEqual([]);
+  });
+
+  it("does not retry a deterministic quality failure", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "fysen-batch-validator-"));
+    await writeFile(join(directory, "a.json"), "{}");
+    let calls = 0;
+
+    const summary = await validateRestaurantManifestBatch(directory, {
+      retryDelayMs: 0,
+      validatePath: async () => {
+        calls += 1;
+        return validation("a", { menuAccepted: false, hasQuality: true });
+      },
+    });
+
+    expect(calls).toBe(1);
+    expect(summary.acceptedCount).toBe(0);
+    expect(summary.failureFamilyCounts.menu_assertions).toBe(1);
+  });
+
   it("keeps stable order and isolates malformed manifests from the rest of the batch", async () => {
     const directory = await mkdtemp(join(tmpdir(), "fysen-batch-validator-"));
     await Promise.all([
@@ -107,6 +194,7 @@ describe("restaurant batch validation", () => {
     const active = { count: 0, maximum: 0 };
     const summary = await validateRestaurantManifestBatch(directory, {
       concurrency: 2,
+      retryDelayMs: 0,
       validatePath: async (path) => {
         active.count += 1;
         active.maximum = Math.max(active.maximum, active.count);
@@ -131,10 +219,13 @@ describe("restaurant batch validation", () => {
     ]);
   });
 
-  it("rejects unsafe concurrency values", async () => {
+  it("rejects unsafe concurrency and retry-delay values", async () => {
     const directory = await mkdtemp(join(tmpdir(), "fysen-batch-validator-"));
     await expect(
       validateRestaurantManifestBatch(directory, { concurrency: 0 }),
     ).rejects.toThrow("between 1 and 12");
+    await expect(
+      validateRestaurantManifestBatch(directory, { retryDelayMs: -1 }),
+    ).rejects.toThrow("between 0 and 10000");
   });
 });

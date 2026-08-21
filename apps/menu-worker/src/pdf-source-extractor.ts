@@ -5,11 +5,14 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v12";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v13";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
 const LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]\s*/u;
+const SECTION_PRICE_SIGNAL = /(?:^|\s)(?:kr\.?|nok)?\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)?$/iu;
+const VARIANT_SECTION_KEYWORD =
+  /\b(?:sashimi|nigiri|maki|uramaki|futomaki|temaki|sushi|tacos?|pizza(?:er|s)?|pasta|dessert(?:er|s)?|starters?|forretter?|mains?|hovedretter?|grill|bowls?)\b/iu;
 const RECOVERY_ALLERGEN_CODES = new Set([
   "al",
   "b",
@@ -110,6 +113,89 @@ function findNextDishLine(lines: readonly string[], dishName: string, startIndex
   return null;
 }
 
+function looksLikeVariantSectionHeading(value: string): boolean {
+  const line = normalizeVisibleLine(value);
+  if (
+    line.length < 3 ||
+    line.length > 80 ||
+    SECTION_PRICE_SIGNAL.test(line) ||
+    !VARIANT_SECTION_KEYWORD.test(line)
+  ) {
+    return false;
+  }
+  return line.split(/\s+/u).filter(Boolean).length <= 6;
+}
+
+function nearestVariantSectionHeading(
+  lines: readonly string[],
+  dishLineIndex: number,
+): string | null {
+  for (let index = dishLineIndex - 1; index >= Math.max(0, dishLineIndex - 16); index -= 1) {
+    const line = normalizeVisibleLine(lines[index] ?? "");
+    if (!line) continue;
+    if (looksLikeVariantSectionHeading(line)) return line;
+  }
+  return null;
+}
+
+export function disambiguateConflictingPdfSourceKeys(
+  visibleText: string,
+  items: readonly MenuObservedItem[],
+): readonly MenuObservedItem[] {
+  const groups = new Map<string, MenuObservedItem[]>();
+  for (const item of items) {
+    const group = groups.get(item.sourceKey) ?? [];
+    group.push(item);
+    groups.set(item.sourceKey, group);
+  }
+
+  const conflictingKeys = new Set<string>();
+  for (const [sourceKey, group] of groups) {
+    if (group.length < 2) continue;
+    const prices = new Set(
+      group.map(
+        (item) =>
+          `${item.priceKind ?? "exact"}:${item.priceMinor ?? "null"}:${item.priceMaxMinor ?? "null"}`,
+      ),
+    );
+    if (prices.size >= 2) conflictingKeys.add(sourceKey);
+  }
+  if (conflictingKeys.size === 0) return items;
+
+  const lines = visibleText.split("\n").map(normalizeVisibleLine);
+  const sectionByItem = new Map<MenuObservedItem, string>();
+  let searchFrom = 0;
+  for (const item of items) {
+    const lineIndex = findNextDishLine(lines, item.name, searchFrom);
+    if (lineIndex !== null) searchFrom = lineIndex + 1;
+    if (lineIndex === null || !conflictingKeys.has(item.sourceKey)) continue;
+    const section = nearestVariantSectionHeading(lines, lineIndex);
+    if (section) sectionByItem.set(item, section);
+  }
+
+  const resolvedKeys = new Set<string>();
+  for (const sourceKey of conflictingKeys) {
+    const group = groups.get(sourceKey) ?? [];
+    const sections = group
+      .map((item) => sectionByItem.get(item) ?? null)
+      .filter((value): value is string => Boolean(value));
+    if (sections.length !== group.length) continue;
+    const distinctSections = new Set(sections.map(normalizeDishName));
+    if (distinctSections.size >= 2) resolvedKeys.add(sourceKey);
+  }
+
+  return items.map((item) => {
+    if (!resolvedKeys.has(item.sourceKey)) return item;
+    const sectionName = sectionByItem.get(item);
+    if (!sectionName) return item;
+    return {
+      ...item,
+      sectionName,
+      sourceKey: createMenuItemSourceKey(item.name, sectionName),
+    };
+  });
+}
+
 function looksLikePricingMetadata(name: string): boolean {
   const normalized = normalizeScopeLine(name);
   return /^(?:minimum|min)\s+\d+\s+(?:personer|persons?|people)\b.*\b(?:pris|price)\s+(?:per|pr)\s+(?:person|personer)\b/u.test(
@@ -202,8 +288,12 @@ export async function extractScopedPdfMenu(bytes: Uint8Array): Promise<Extracted
     extracted.visibleText,
     extracted.items,
   );
+  const disambiguatedItems = disambiguateConflictingPdfSourceKeys(
+    extracted.visibleText,
+    recoveredItems,
+  );
   return {
     ...extracted,
-    items: scopePdfMenuItems(extracted.visibleText, recoveredItems),
+    items: scopePdfMenuItems(extracted.visibleText, disambiguatedItems),
   };
 }

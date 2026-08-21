@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { extractMenuItemsFromPdfLines } from "./pdf-extractor.js";
 import {
   PDF_SOURCE_EXTRACTOR_VERSION,
+  disambiguateConflictingPdfSourceKeys,
   recoverExplicitLowPerItemPdfRows,
   scopePdfMenuItems,
 } from "./pdf-source-extractor.js";
@@ -27,12 +28,47 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v12");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v13");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
     ]);
     expect(scoped.map((item) => item.position)).toEqual([0, 1]);
+  });
+
+  it("disambiguates a same-name PDF dish with conflicting prices only when distinct nearby menu sections exist", () => {
+    const lines = [
+      "KLASSISK Sashimi",
+      "LAKS 139",
+      "Klassisk Nigiri",
+      "LAKS 159",
+      "Maki",
+      "TEMPURA MAKI 189",
+    ];
+    const visibleText = lines.join("\n");
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const salmon = parsed.filter((item) => item.normalizedName === "laks");
+
+    expect(salmon).toHaveLength(2);
+    expect(new Set(salmon.map((item) => item.sourceKey)).size).toBe(1);
+
+    const disambiguated = disambiguateConflictingPdfSourceKeys(visibleText, parsed);
+    const scopedSalmon = disambiguated.filter((item) => item.normalizedName === "laks");
+    expect(scopedSalmon.map((item) => [item.sectionName, item.priceMinor])).toEqual([
+      ["KLASSISK Sashimi", 13900],
+      ["Klassisk Nigiri", 15900],
+    ]);
+    expect(new Set(scopedSalmon.map((item) => item.sourceKey)).size).toBe(2);
+  });
+
+  it("fails closed when conflicting same-name prices cannot be bound to distinct menu sections", () => {
+    const lines = ["LAKS 139", "LAKS 159"];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const disambiguated = disambiguateConflictingPdfSourceKeys(lines.join("\n"), parsed);
+
+    expect(disambiguated.map((item) => item.sourceKey)).toEqual(
+      parsed.map((item) => item.sourceKey),
+    );
   });
 
   it("recovers an explicit low per-item price from the next PDF text line", () => {
