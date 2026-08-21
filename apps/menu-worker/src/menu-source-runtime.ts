@@ -20,7 +20,10 @@ import {
   HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION,
   recoverExplicitFromPriceHtmlItems,
 } from "./html-explicit-from-price-recovery.js";
-import { HTML_EXTRACTOR_VERSION } from "./html-extractor.js";
+import {
+  extractHtmlVisibleText,
+  HTML_EXTRACTOR_VERSION,
+} from "./html-extractor.js";
 import {
   HTML_HEADING_NORMALIZER_VERSION,
   normalizeHtmlHeadingLineBreaks,
@@ -47,6 +50,10 @@ import {
   extractScopedHtmlMenu,
   HTML_SOURCE_EXTRACTOR_VERSION,
 } from "./html-source-extractor.js";
+import {
+  canonicalizeHtmlOutputItems,
+  HTML_OUTPUT_CANONICALIZER_VERSION,
+} from "./html-output-canonicalizer.js";
 import {
   filterPlainTextBeverageSectionItems,
   HTML_TEXT_SECTION_SCOPE_VERSION,
@@ -98,7 +105,7 @@ export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v2";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v8";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v7";
-const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}`;
+const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
 export type MenuSourceFetchMode = "http" | "browser";
@@ -349,6 +356,7 @@ export async function extractMenuSource(
     const normalizedHtml = normalizeHtmlPriceNotation(
       normalizeHtmlHeadingLineBreaks(fetched.body),
     );
+    const fullVisibleText = extractHtmlVisibleText(normalizedHtml);
     const extracted = extractScopedHtmlMenu(normalizedHtml);
     assertExtractionMethodForSourceType(sourceType, extracted.method);
     const embeddedItems =
@@ -476,13 +484,14 @@ export async function extractMenuSource(
         ? priceEnrichedItems.map(normalizeHtmlItemName)
         : priceEnrichedItems;
     const canonicalItems = normalizedItems.filter(isCanonicalHtmlMenuItem);
+    const beverageScopedItems =
+      extracted.method === "html_heuristic"
+        ? filterPlainTextBeverageSectionItems(canonicalItems, fullVisibleText)
+        : canonicalItems;
     const items =
       extracted.method === "html_heuristic"
-        ? filterPlainTextBeverageSectionItems(
-            canonicalItems,
-            extracted.visibleText,
-          )
-        : canonicalItems;
+        ? canonicalizeHtmlOutputItems(beverageScopedItems)
+        : beverageScopedItems;
     return {
       items,
       method: extracted.method,

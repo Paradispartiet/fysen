@@ -53,7 +53,7 @@ describe("plain-text HTML section scoping", () => {
       119 NOK
     `;
 
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v5");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v6");
     expect(
       filterPlainTextBeverageSectionItems(items, visibleText).map(
         (entry) => entry.name,
