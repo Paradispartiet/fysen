@@ -1,0 +1,75 @@
+name: Catalog live diagnosis
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/catalog-live-diagnose.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+      - name: Build menu worker
+        run: pnpm --filter @fysen/menu-worker... build
+      - name: Validate all 49 catalog manifests concurrently and print failures
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch catalog > /tmp/catalog-validation.json
+          status=$?
+          node --input-type=module <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const summary = JSON.parse(await readFile('/tmp/catalog-validation.json', 'utf8'));
+          const compact = {
+            manifestCount: summary.manifestCount,
+            acceptedCount: summary.acceptedCount,
+            failedCount: summary.failedCount,
+            concurrency: summary.concurrency,
+            failureFamilyCounts: summary.failureFamilyCounts,
+            failures: summary.results
+              .filter((result) => !result.accepted)
+              .map((result) => ({
+                slug: result.slug,
+                failureFamilies: result.failureFamilies,
+                menu: result.validation?.menu ? {
+                  accepted: result.validation.menu.accepted,
+                  httpStatus: result.validation.menu.httpStatus,
+                  method: result.validation.menu.method,
+                  extractorVersion: result.validation.menu.extractorVersion,
+                  fingerprint: result.validation.menu.fingerprint,
+                  quality: result.validation.menu.quality,
+                  observedDishNames: result.validation.menu.observedDishNames,
+                  error: result.validation.menu.error,
+                } : null,
+                hours: result.validation?.hours,
+                actions: result.validation?.actions,
+                error: result.error,
+              })),
+          };
+          console.log('CATALOG_LIVE_DIAGNOSIS=' + JSON.stringify(compact));
+          NODE
+          exit $status
