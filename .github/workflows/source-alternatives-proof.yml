@@ -1,0 +1,163 @@
+name: Source alternatives proof
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/source-alternatives-proof.yml"
+      - "apps/menu-worker/src/**"
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "2"
+    steps:
+      - name: Checkout proof head
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Build isolated source alternatives
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { mkdir, readFile, writeFile } from 'node:fs/promises';
+          const read = async (path) => JSON.parse(await readFile(path, 'utf8'));
+          const writeVariant = async (name, manifest) => {
+            const dir = `research/source-alternatives/${name}`;
+            await mkdir(dir, { recursive: true });
+            await writeFile(`${dir}/manifest.json`, JSON.stringify(manifest, null, 2) + '\n');
+          };
+
+          const hrimnir = await read('catalog/hrimnir-ramen-storgata.json');
+          await writeVariant('hrimnir-current', hrimnir);
+
+          const registan = await read('catalog/registan-gronland-oslo.json');
+          const registanOfficial = structuredClone(registan);
+          registanOfficial.menuSource.url = 'https://registanrestaurant.no/meny/';
+          registanOfficial.menuSource.fetchMode = 'http';
+          registanOfficial.menuSource.sourceSupport = { redirectOrigins: [], browserDataOrigins: [] };
+          await writeVariant('registan-official-http', registanOfficial);
+
+          const registanOfficialBrowser = structuredClone(registanOfficial);
+          registanOfficialBrowser.menuSource.fetchMode = 'browser';
+          await writeVariant('registan-official-browser', registanOfficialBrowser);
+
+          const registanWolt = structuredClone(registan);
+          registanWolt.menuSource.url = 'https://wolt.com/nb/nor/oslo/restaurant/registan-reg';
+          registanWolt.menuSource.fetchMode = 'http';
+          registanWolt.menuSource.sourceSupport = { redirectOrigins: [], browserDataOrigins: [] };
+          await writeVariant('registan-wolt-http', registanWolt);
+
+          const viet = await read('catalog/viet-kitchen-bjolsen-oslo.json');
+          const vietOrderaHttp = structuredClone(viet);
+          vietOrderaHttp.menuSource.url = 'https://vietkitchen.ordera.no/';
+          vietOrderaHttp.menuSource.fetchMode = 'http';
+          vietOrderaHttp.menuSource.sourceSupport = { redirectOrigins: [], browserDataOrigins: [] };
+          await writeVariant('viet-ordera-http', vietOrderaHttp);
+
+          const vietOrderaBrowser = structuredClone(vietOrderaHttp);
+          vietOrderaBrowser.menuSource.fetchMode = 'browser';
+          await writeVariant('viet-ordera-browser', vietOrderaBrowser);
+
+          const vietWolt = structuredClone(viet);
+          vietWolt.menuSource.url = 'https://wolt.com/nb/nor/oslo/restaurant/viet-kitchen-oslo';
+          vietWolt.menuSource.fetchMode = 'http';
+          vietWolt.menuSource.sourceSupport = { redirectOrigins: [], browserDataOrigins: [] };
+          await writeVariant('viet-wolt-http', vietWolt);
+          NODE
+
+      - name: Validate alternatives independently
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          mkdir -p research/source-alternatives-results
+          for name in \
+            hrimnir-current \
+            registan-official-http \
+            registan-official-browser \
+            registan-wolt-http \
+            viet-ordera-http \
+            viet-ordera-browser \
+            viet-wolt-http
+          do
+            echo "=== $name ==="
+            node dist/index.js validate:batch "research/source-alternatives/$name" > "research/source-alternatives-results/$name.json" 2>&1
+            echo $? > "research/source-alternatives-results/$name.exit"
+            cat "research/source-alternatives-results/$name.json"
+          done
+          exit 0
+
+      - name: Summarize source alternatives
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const names = [
+            'hrimnir-current',
+            'registan-official-http',
+            'registan-official-browser',
+            'registan-wolt-http',
+            'viet-ordera-http',
+            'viet-ordera-browser',
+            'viet-wolt-http',
+          ];
+          const summary = [];
+          for (const name of names) {
+            const exitCode = Number((await readFile(`research/source-alternatives-results/${name}.exit`, 'utf8')).trim());
+            let payload = null;
+            let parseError = null;
+            try {
+              payload = JSON.parse(await readFile(`research/source-alternatives-results/${name}.json`, 'utf8'));
+            } catch (error) {
+              parseError = String(error);
+            }
+            const result = payload?.results?.[0] ?? null;
+            summary.push({
+              name,
+              exitCode,
+              parseError,
+              accepted: result?.accepted ?? null,
+              failureFamilies: result?.failureFamilies ?? [],
+              error: result?.error ?? null,
+              menuError: result?.validation?.menu?.error ?? null,
+              itemCount: result?.validation?.menu?.quality?.itemCount ?? null,
+              extractionMethod: result?.validation?.menu?.extractionMethod ?? null,
+              extractorVersion: result?.validation?.menu?.extractorVersion ?? null,
+              observedDishNames: result?.validation?.menu?.observedDishNames ?? [],
+              missingRequiredDishes: result?.validation?.menu?.quality?.missingRequiredDishes ?? [],
+              forbiddenDishesPresent: result?.validation?.menu?.quality?.forbiddenDishesPresent ?? [],
+              hoursOutcome: result?.validation?.hours?.outcome ?? null,
+              actions: result?.validation?.actions ?? null,
+            });
+          }
+          await writeFile('research/source-alternatives-summary.json', JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          NODE
+
+      - name: Upload proof artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-alternatives-proof
+          path: |
+            apps/menu-worker/research/source-alternatives-results/*
+            apps/menu-worker/research/source-alternatives-summary.json
+          if-no-files-found: error
