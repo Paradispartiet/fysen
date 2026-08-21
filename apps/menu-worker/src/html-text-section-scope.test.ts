@@ -53,7 +53,7 @@ describe("plain-text HTML section scoping", () => {
       119 NOK
     `;
 
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v3");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v4");
     expect(
       filterPlainTextBeverageSectionItems(items, visibleText).map(
         (entry) => entry.name,
@@ -115,6 +115,61 @@ describe("plain-text HTML section scoping", () => {
     ).toEqual(["Butter Chicken"]);
   });
 
+  it("filters beverage sections when item and price share one text line", () => {
+    const items = [
+      item("Brownie", 1, 16900),
+      item("SOFT DRINKS", 2, 5900),
+      item("Thomas Henry Ginger Ale", 3, 4900),
+      item("VEGANSK MILKSHAKE", 4, 11900),
+      item("Freshly ground coffee", 5, 4500),
+    ];
+    const visibleText = `
+      DESSERTS
+      Brownie 169
+      SOFT DRINKS
+      Thomas Henry Ginger Ale 49
+      MILKSHAKES
+      VEGANSK MILKSHAKE 119
+      COFFEE AND TEA
+      Freshly ground coffee 45
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual(["Brownie"]);
+  });
+
+  it("recognizes coffee, beer and wine families as beverage sections", () => {
+    const items = [
+      item("Kulfi", 1, 12900),
+      item("Cuppucino", 2, 5500),
+      item("King Chakra", 3, 16500),
+      item("Paxis Arinto", 4, 9900),
+    ];
+    const visibleText = `
+      DESSERT
+      Kulfi
+      129
+      KAFFE / COFFEE
+      Cuppucino
+      55
+      ØL / BEER
+      King Chakra
+      165
+      Hvitvin / White wine
+      Paxis Arinto
+      99
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual(["Kulfi"]);
+  });
+
   it("removes conservative output metadata and description fragments even without a beverage section", () => {
     const items = [
       item("(p,s)", 1),
@@ -126,8 +181,9 @@ describe("plain-text HTML section scoping", () => {
       item("Pieces of chicken, lamb and scampi", 7, 28900),
       item("(CAN BE MADE VEGAN)", 8, 26900),
       item("/Gluten fri", 9, 260000),
-      item("Butter Chicken", 10, 28900),
-      item("Fish N Chips", 11, 24900),
+      item("American chocolate cake with walnuts, served with vanilla ice cream", 10, 16900),
+      item("Butter Chicken", 11, 28900),
+      item("Fish N Chips", 12, 24900),
     ];
 
     expect(
@@ -137,12 +193,13 @@ describe("plain-text HTML section scoping", () => {
     ).toEqual(["Butter Chicken", "Fish N Chips"]);
   });
 
-  it("cleans layout leaders and mirrored trailing prices without changing legitimate dash numbers", () => {
+  it("cleans layout leaders, dangling dashes and mirrored trailing prices without changing legitimate dash numbers", () => {
     const items = [
       item("Linser (rød eller gul)___________", 1, 26900),
       item("Crispy Chicken Tenders - 179", 2, 17900),
       item("Mango Sorbet 119,-", 3, 12900),
-      item("Table 42 - 7", 4, 700),
+      item("CLASSIC CAESAR-", 4, 21900),
+      item("Table 42 - 7", 5, 700),
     ];
 
     expect(
@@ -153,6 +210,7 @@ describe("plain-text HTML section scoping", () => {
       "Linser (rød eller gul)",
       "Crispy Chicken Tenders",
       "Mango Sorbet",
+      "CLASSIC CAESAR",
       "Table 42 - 7",
     ]);
   });
