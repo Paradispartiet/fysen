@@ -1,0 +1,109 @@
+name: Wolt embedded menu discovery
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/wolt-embedded-menu-discovery.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Inspect Wolt embedded state for deep menu items
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research
+          node --input-type=module <<'NODE'
+          import { writeFile } from 'node:fs/promises';
+          import { load } from 'cheerio';
+          import { HttpMenuClient } from './dist/http-client.js';
+          const client = new HttpMenuClient();
+          const sources = [
+            {
+              name: 'registan',
+              url: 'https://wolt.com/nb/nor/oslo/restaurant/registan-reg',
+              needles: ['Usbekisk Plov', 'Manty', 'Registan Spesial 4 Personer', 'Honning Kake'],
+            },
+            {
+              name: 'viet',
+              url: 'https://wolt.com/nb/nor/oslo/restaurant/viet-kitchen-oslo',
+              needles: ['PHỞ BIFF BÒ TÁI', 'BÁNH MÌ ĐẶC BIỆT - Special', 'BÚN BÒ NỨC NỞ', 'Summer Rolls'],
+            },
+          ];
+          const reports = [];
+          for (const source of sources) {
+            const fetched = await client.fetchSource({ url: source.url, userAgent: 'FysenMenuBot/0.1', etag: null, lastModified: null });
+            if (fetched.kind !== 'content') throw new Error(`${source.name}: ${fetched.kind}`);
+            const body = fetched.body;
+            const $ = load(body);
+            const scripts = $('script').toArray().map((element, index) => ({
+              index,
+              id: $(element).attr('id') ?? null,
+              type: $(element).attr('type') ?? null,
+              text: $(element).html() ?? '',
+            }));
+            const needleReports = source.needles.map((needle) => {
+              const bodyIndex = body.toLocaleLowerCase('nb-NO').indexOf(needle.toLocaleLowerCase('nb-NO'));
+              const scriptMatches = scripts
+                .filter((script) => script.text.toLocaleLowerCase('nb-NO').includes(needle.toLocaleLowerCase('nb-NO')))
+                .map((script) => {
+                  const offset = script.text.toLocaleLowerCase('nb-NO').indexOf(needle.toLocaleLowerCase('nb-NO'));
+                  return {
+                    index: script.index,
+                    id: script.id,
+                    type: script.type,
+                    length: script.text.length,
+                    sample: script.text.slice(Math.max(0, offset - 1200), offset + 3500),
+                  };
+                });
+              return {
+                needle,
+                rawBodyContains: bodyIndex >= 0,
+                rawBodySample: bodyIndex >= 0 ? body.slice(Math.max(0, bodyIndex - 1200), bodyIndex + 3500) : null,
+                scriptMatches,
+              };
+            });
+            reports.push({
+              name: source.name,
+              url: source.url,
+              status: fetched.status,
+              bodyBytes: fetched.bodyBytes.length,
+              scriptCount: scripts.length,
+              scripts: scripts.map((script) => ({ index: script.index, id: script.id, type: script.type, length: script.text.length })).filter((script) => script.length > 1000),
+              needles: needleReports,
+            });
+          }
+          await writeFile('research/wolt-embedded-menu-discovery.json', JSON.stringify(reports, null, 2) + '\n');
+          console.log(JSON.stringify(reports.map((report) => ({
+            name: report.name,
+            status: report.status,
+            bodyBytes: report.bodyBytes,
+            scriptCount: report.scriptCount,
+            needles: report.needles.map((needle) => ({ needle: needle.needle, rawBodyContains: needle.rawBodyContains, scriptMatchCount: needle.scriptMatches.length, scriptIds: needle.scriptMatches.map((match) => match.id) })),
+          })), null, 2));
+          NODE
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wolt-embedded-menu-discovery
+          path: apps/menu-worker/research/wolt-embedded-menu-discovery.json
+          if-no-files-found: error
