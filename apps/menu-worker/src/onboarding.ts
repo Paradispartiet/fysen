@@ -74,6 +74,17 @@ export interface RestaurantCatalogOnboardingSummary {
   readonly results: readonly RestaurantOnboardingResult[];
 }
 
+export interface PublishedRefreshFailureState {
+  readonly temporarilyDeactivated: boolean;
+  readonly latestSnapshotIsSafe: boolean;
+}
+
+export function shouldRestorePublishedCoverageAfterRefreshFailure(
+  state: PublishedRefreshFailureState,
+): boolean {
+  return state.temporarilyDeactivated && state.latestSnapshotIsSafe;
+}
+
 function accepted(summary: MenuWatchSummary): boolean {
   return acceptedOutcomes.has(summary.outcome);
 }
@@ -190,6 +201,8 @@ async function onboardOne(
   let firstWatch: MenuWatchSummary | null = null;
   let secondWatch: MenuWatchSummary | null = null;
   let latestQuality: ManifestMenuQualityResult | null = null;
+  let refreshCoverageTemporarilyDeactivated = false;
+  let latestRefreshSnapshotIsSafe = false;
   const warnings = declaredVerificationWarnings(manifest);
 
   try {
@@ -230,33 +243,43 @@ async function onboardOne(
 
       if (requiresExtractorRefresh) {
         await setRestaurantCoverageActive(pool, candidate.id, false);
+        refreshCoverageTemporarilyDeactivated = true;
+        latestRefreshSnapshotIsSafe = true;
 
         firstWatch = await watchMenu();
         if (!accepted(firstWatch)) {
           throw new Error(`First extractor refresh watch was ${firstWatch.outcome}`);
         }
 
+        latestRefreshSnapshotIsSafe = false;
         latestQuality = await assertLatestSnapshot(repository, source.id, manifest);
         if (!latestQuality.accepted) {
           throw new Error(qualityFailure("First extractor refresh failed onboarding assertions", latestQuality));
         }
+        latestRefreshSnapshotIsSafe = true;
 
         secondWatch = await watchMenu();
         if (!accepted(secondWatch)) {
           throw new Error(`Second extractor refresh watch was ${secondWatch.outcome}`);
         }
+        latestRefreshSnapshotIsSafe = false;
       }
 
       latestQuality = await assertLatestSnapshot(repository, source.id, manifest);
       if (!latestQuality.accepted) {
+        latestRefreshSnapshotIsSafe = false;
         await setRestaurantCoverageActive(pool, candidate.id, false);
         throw new Error(qualityFailure("Published restaurant no longer satisfies onboarding assertions", latestQuality));
       }
+      if (requiresExtractorRefresh) latestRefreshSnapshotIsSafe = true;
+
       const metadata = await ensureMetadata(pool, manifest, candidate.id);
       hoursSourceId = metadata.hoursSourceId;
       actions = metadata.actions;
       if (requiresExtractorRefresh) {
         await setRestaurantCoverageActive(pool, candidate.id, true);
+        refreshCoverageTemporarilyDeactivated = false;
+        latestRefreshSnapshotIsSafe = false;
       }
       return {
         slug: manifest.restaurant.slug,
@@ -329,6 +352,24 @@ async function onboardOne(
     };
   } catch (error) {
     let errorMessage = error instanceof Error ? error.message : String(error);
+
+    if (
+      candidateWasActive === true &&
+      restaurantId &&
+      shouldRestorePublishedCoverageAfterRefreshFailure({
+        temporarilyDeactivated: refreshCoverageTemporarilyDeactivated,
+        latestSnapshotIsSafe: latestRefreshSnapshotIsSafe,
+      })
+    ) {
+      try {
+        await setRestaurantCoverageActive(pool, restaurantId, true);
+        refreshCoverageTemporarilyDeactivated = false;
+        warnings.push("published coverage restored after extractor refresh failure; latest known snapshot remains manifest-valid");
+      } catch (restoreError) {
+        errorMessage += `; published coverage restore failed: ${restoreError instanceof Error ? restoreError.message : String(restoreError)}`;
+      }
+    }
+
     if (candidateWasActive === false && restaurantId) {
       try {
         const quiesced = await quiesceRestaurantCandidate(pool, restaurantId);
