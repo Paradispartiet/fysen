@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { extractMenuItemsFromPdfLines } from "./pdf-extractor.js";
-import { PDF_SOURCE_EXTRACTOR_VERSION, scopePdfMenuItems } from "./pdf-source-extractor.js";
+import {
+  PDF_SOURCE_EXTRACTOR_VERSION,
+  recoverExplicitLowPerItemPdfRows,
+  scopePdfMenuItems,
+} from "./pdf-source-extractor.js";
 
 describe("PDF source scope", () => {
   it("excludes generic beverage sections and resumes at a later dessert section", () => {
@@ -23,12 +27,37 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v8");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v12");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
     ]);
     expect(scoped.map((item) => item.position)).toEqual([0, 1]);
+  });
+
+  it("recovers an explicit low per-item price from the next PDF text line", () => {
+    const visibleText = [
+      "DESSERT // Dessert",
+      "178. Noe søtt til kaffe? Macaron HNE",
+      "kr.35 (pr.stk)",
+      "(spør gjerne servitøren din om dagens utvalg)",
+    ].join("\n");
+
+    const recovered = recoverExplicitLowPerItemPdfRows(visibleText, []);
+    expect(recovered.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Noe søtt til kaffe? Macaron", 3500],
+    ]);
+  });
+
+  it("does not recover low bare-number or non-per-item price lines", () => {
+    const visibleText = [
+      "DESSERT",
+      "Cheap metadata",
+      "35",
+      "Ordinary low line",
+      "kr.35",
+    ].join("\n");
+    expect(recoverExplicitLowPerItemPdfRows(visibleText, [])).toEqual([]);
   });
 
   it("excludes a child-drink section and resumes at Italian desserts", () => {
