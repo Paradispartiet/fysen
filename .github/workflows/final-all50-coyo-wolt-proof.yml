@@ -4,8 +4,6 @@ on:
   pull_request:
     paths:
       - ".github/workflows/final-all50-coyo-wolt-proof.yml"
-      - "apps/menu-worker/src/**"
-      - "apps/menu-worker/catalog/**"
 
 permissions:
   contents: read
@@ -16,10 +14,9 @@ jobs:
     timeout-minutes: 45
     env:
       FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
-      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
     steps:
-      - name: Checkout combined proof ref
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           persist-credentials: false
       - uses: pnpm/action-setup@v4
@@ -33,120 +30,65 @@ jobs:
       - run: pnpm --filter @fysen/menu-worker... build
       - name: Assert 50 canonical manifests
         working-directory: apps/menu-worker
-        shell: bash
         run: |
           node --input-type=module <<'NODE'
           import { readdir, readFile } from 'node:fs/promises';
-          const files = (await readdir('catalog')).filter((name) => name.endsWith('.json')).sort();
+          const files = (await readdir('catalog')).filter((x) => x.endsWith('.json')).sort();
           const slugs = [];
-          for (const file of files) {
-            const manifest = JSON.parse(await readFile(`catalog/${file}`, 'utf8'));
-            slugs.push(manifest.restaurant.slug);
-          }
-          if (files.length !== 50 || new Set(slugs).size !== 50) {
-            throw new Error(`Expected 50 unique catalog manifests, got ${files.length}/${new Set(slugs).size}`);
-          }
-          console.log(JSON.stringify({ manifestCount: files.length, uniqueSlugs: new Set(slugs).size }, null, 2));
+          for (const file of files) slugs.push(JSON.parse(await readFile(`catalog/${file}`, 'utf8')).restaurant.slug);
+          if (files.length !== 50 || new Set(slugs).size !== 50) throw new Error(`Expected 50 unique manifests, got ${files.length}/${new Set(slugs).size}`);
           NODE
       - name: Live validate all 50 canonical manifests
-        id: all50
         working-directory: apps/menu-worker
-        shell: bash
         run: |
           mkdir -p research
           set +e
           node dist/index.js validate:batch catalog | tee research/final-all50.json
-          status=${PIPESTATUS[0]}
-          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
           exit 0
-      - name: Prepare seven-source repeat set
+      - name: Prepare repaired seven
         working-directory: apps/menu-worker
-        shell: bash
         run: |
           node --input-type=module <<'NODE'
           import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
-          const targetSlugs = new Set([
-            'coyo-sorenga-oslo',
-            'lahori-dera-gronland-oslo',
-            'oche-aker-brygge-oslo',
-            'oche-torggata-oslo',
-            'hrimnir-ramen-storgata',
-            'registan-gronland-oslo',
-            'viet-kitchen-bjolsen-oslo',
-          ]);
-          const out = 'research/final-seven-repeat';
-          await mkdir(out, { recursive: true });
-          const found = [];
-          for (const file of (await readdir('catalog')).filter((name) => name.endsWith('.json')).sort()) {
+          const wanted = new Set(['coyo-sorenga-oslo','lahori-dera-gronland-oslo','oche-aker-brygge-oslo','oche-torggata-oslo','hrimnir-ramen-storgata','registan-gronland-oslo','viet-kitchen-bjolsen-oslo']);
+          await mkdir('research/final-seven-repeat', { recursive: true });
+          let count = 0;
+          for (const file of (await readdir('catalog')).filter((x) => x.endsWith('.json')).sort()) {
             const raw = await readFile(`catalog/${file}`, 'utf8');
-            const manifest = JSON.parse(raw);
-            if (!targetSlugs.has(manifest.restaurant.slug)) continue;
-            await writeFile(`${out}/${file}`, raw);
-            found.push(manifest.restaurant.slug);
+            if (!wanted.has(JSON.parse(raw).restaurant.slug)) continue;
+            await writeFile(`research/final-seven-repeat/${file}`, raw);
+            count += 1;
           }
-          if (found.length !== 7) throw new Error(`Expected 7 repeat manifests, got ${found.length}`);
-          console.log(JSON.stringify(found, null, 2));
+          if (count !== 7) throw new Error(`Expected 7 repeat manifests, got ${count}`);
           NODE
-      - name: Repeat live validation for repaired seven
-        id: repeat7
+      - name: Repeat repaired seven
         working-directory: apps/menu-worker
-        shell: bash
         run: |
           set +e
           node dist/index.js validate:batch research/final-seven-repeat | tee research/final-seven-repeat.json
-          status=${PIPESTATUS[0]}
-          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
           exit 0
-      - name: Summarize live proof
+      - name: Gate and summarize
         working-directory: apps/menu-worker
-        shell: bash
         run: |
           node --input-type=module <<'NODE'
           import { readFile, writeFile } from 'node:fs/promises';
-          const all = JSON.parse(await readFile('research/final-all50.json', 'utf8'));
-          const repeat = JSON.parse(await readFile('research/final-seven-repeat.json', 'utf8'));
-          const targets = new Set([
-            'coyo-sorenga-oslo','lahori-dera-gronland-oslo','oche-aker-brygge-oslo','oche-torggata-oslo','hrimnir-ramen-storgata','registan-gronland-oslo','viet-kitchen-bjolsen-oslo'
-          ]);
-          const compact = (result) => ({
-            slug: result.slug,
-            accepted: result.accepted,
-            failureFamilies: result.failureFamilies ?? [],
-            error: result.error ?? null,
-            menuError: result.validation?.menu?.error ?? null,
-            itemCount: result.validation?.menu?.quality?.itemCount ?? null,
-            method: result.validation?.menu?.method ?? null,
-            extractorVersion: result.validation?.menu?.extractorVersion ?? null,
-            observedDishNames: result.validation?.menu?.observedDishNames ?? [],
-            hoursAccepted: result.validation?.hours?.accepted ?? null,
-            hoursIntervals: result.validation?.hours?.intervalCount ?? null,
-          });
+          const all = JSON.parse(await readFile('research/final-all50.json','utf8'));
+          const repeat = JSON.parse(await readFile('research/final-seven-repeat.json','utf8'));
+          const compact = (r) => ({ slug:r.slug, accepted:r.accepted, failureFamilies:r.failureFamilies, menuError:r.validation?.menu?.error ?? null, itemCount:r.validation?.menu?.quality?.itemCount ?? null, hoursAccepted:r.validation?.hours?.accepted ?? null });
           const summary = {
-            all50ExitCode: '${{ steps.all50.outputs.exit_code }}',
-            repeat7ExitCode: '${{ steps.repeat7.outputs.exit_code }}',
-            all50: {
-              manifestCount: all.manifestCount,
-              acceptedCount: all.acceptedCount,
-              failedCount: all.failedCount,
-              failureFamilyCounts: all.failureFamilyCounts,
-            },
-            failed: (all.results ?? []).filter((r) => !r.accepted).map(compact),
-            repairedSevenFirstPass: (all.results ?? []).filter((r) => targets.has(r.slug)).map(compact),
-            repairedSevenSecondPass: (repeat.results ?? []).map(compact),
+            all50: { manifestCount:all.manifestCount, acceptedCount:all.acceptedCount, failedCount:all.failedCount, failureFamilyCounts:all.failureFamilyCounts },
+            failed: all.results.filter((r) => !r.accepted).map(compact),
+            repairedSeven: repeat.results.map(compact),
           };
-          await writeFile('research/final-all50-summary.json', JSON.stringify(summary, null, 2) + '\n');
-          console.log(JSON.stringify(summary, null, 2));
-          if (all.manifestCount !== 50 || all.acceptedCount !== 50 || all.failedCount !== 0) {
-            throw new Error(`All-50 gate failed: ${all.acceptedCount}/${all.manifestCount}, failed=${all.failedCount}`);
-          }
-          if (repeat.manifestCount !== 7 || repeat.acceptedCount !== 7 || repeat.failedCount !== 0) {
-            throw new Error(`Seven-source repeat gate failed: ${repeat.acceptedCount}/${repeat.manifestCount}, failed=${repeat.failedCount}`);
-          }
+          await writeFile('research/final-all50-summary.json', JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if (all.manifestCount !== 50 || all.acceptedCount !== 50 || all.failedCount !== 0) throw new Error(`All-50 gate failed ${all.acceptedCount}/${all.manifestCount}`);
+          if (repeat.manifestCount !== 7 || repeat.acceptedCount !== 7 || repeat.failedCount !== 0) throw new Error(`Repeat gate failed ${repeat.acceptedCount}/${repeat.manifestCount}`);
           NODE
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: final-all50-coyo-wolt-proof
+          name: final-all50-coyo-wolt-serial-proof
           path: |
             apps/menu-worker/research/final-all50.json
             apps/menu-worker/research/final-seven-repeat.json
