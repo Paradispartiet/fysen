@@ -114,10 +114,10 @@ describe("HTML runtime recovery selection", () => {
 
     expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual(
       expect.arrayContaining([
-        ["Haandtryk BURGER -", 22500],
-        ["Vegetar BURGER -", 23500],
-        ["Kylling BURGER -", 24500],
-        ["Cheese BURGER -", 25500],
+        ["Haandtryk BURGER", 22500],
+        ["Vegetar BURGER", 23500],
+        ["Kylling BURGER", 24500],
+        ["Cheese BURGER", 25500],
       ]),
     );
   });
