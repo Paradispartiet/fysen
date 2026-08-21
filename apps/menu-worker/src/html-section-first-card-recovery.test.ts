@@ -113,6 +113,23 @@ describe("plain food-section first-card recovery", () => {
     ]);
   });
 
+  it("does not treat burger upsell copy as the first burger card", () => {
+    const items = recoverFirstCardAfterPlainFoodSections(`
+      BURGERS
+      MAKE IT GREEN. BEYOND BURGER..15
+      15
+      THE CLASSIC
+      199
+      CHEDDAR & BACON
+      249
+      DESSERTS
+      BROWNIE
+      169
+    `);
+
+    expect(items.map((item) => item.name)).toEqual(["BROWNIE"]);
+  });
+
   it("preserves dotted European thousands for the first card after a later section boundary", () => {
     const items = recoverFirstCardAfterPlainFoodSections(`
       Forretter
