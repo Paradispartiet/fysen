@@ -4,11 +4,11 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v3";
+export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v4";
 
 const SECTION_COUNT_SUFFIX = /\s*\(\s*\d{1,3}\s*\)\s*$/u;
 const BEVERAGE_SECTION_LABEL =
-  /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|mocktails?|aperitifs?|draught\s+beer|draft\s+beer|beer\s+on\s+tap|fat\s+øl\s*[/|]\s*tap\s+beer|flaske\s+øl\s*[/|]\s*bottle\s+beer|musserende\s*[/|]\s*sparkling\s+wine|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?)$/iu;
+  /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|mineralvann|mineral\s+water|soft\s+drinks?|sodas?|brus|milkshakes?|coffee(?:\s+and\s+tea|\s+drinks?)?|tea|kaffe\s*[/|]\s*coffee|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|vin\s+glass\s*[/|]\s*wine\s+glass(?:\s*\(\s*\d+\s*cl\s*\))?|hvitvin\s*[/|]\s*white\s+wine|rødvin\s*[/|]\s*red\s+wine|cocktails?|mocktails?|aperitifs?|draught\s+beer|draft\s+beer|beer\s+on\s+tap|fat\s+øl\s*[/|]\s*tap\s+beer|flaske\s+øl\s*[/|]\s*bottle\s+beer|musserende\s*[/|]\s*sparkling\s+wine|øl\s*[/|]\s*beer|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|cider|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?)$/iu;
 const FOOD_SECTION_LABEL =
   /^(?:forretter?|starters?|appetizers?|small\s+plates?|småretter|burgers?|hovedretter?|mains?|main\s+courses?|supper?|soups?|barnemeny|children'?s\s+menu|kids?\s+menu|sauser?|sauces?|desserter?|desserts?|sides?|tilbehør|salater?|salads?|pizza(?:er|s)?|noodles?|nudler|curr(?:y|ies)|wok|grillretter?|snacks?(?:\s+menu)?|fries)$/iu;
 const MENU_END_SECTION_LABEL =
@@ -27,6 +27,8 @@ const OUTPUT_METADATA =
   /^(?:our\s+menu|all\s+dishes\s+are\s+served\s+with\s+rice|contents?\s*:.*|druer\s*:.*|grapes?\s*:.*)$/iu;
 const DESCRIPTION_FRAGMENT =
   /^(?:pieces?\s+of\b|served\s+with\b|topped\s+with\b|glazed\s+with\b|all\s+dishes\s+are\s+served\b|can\s+be\s+made\b|homemade\s+.+\s+cooked\s+in\b|chicken\s+cooked\s+in\b|grilled\s+chicken\s+in\b|traditional\s+.+\s+dessert\s+with\b)/iu;
+const DESCRIPTION_PHRASE =
+  /\b(?:served\s+with|topped\s+with|glazed\s+with|comes\s+with|cooked\s+in|prepared\s+(?:in|with))\b/iu;
 const BILINGUAL_SECTION_PART =
   /^(?:forretter?|ap+etizers?|starters?|kjøtt\s+curries|non[- ]veg\s+curries|vegetar\s+curries|vegetarian\s+curries|nanbrød|nanbread|fat\s+øl|tap\s+beer|flaske\s+øl|bottle\s+beer|musserende|sparkling\s+wine|soft\s+drinks?)$/iu;
 const EXPLICIT_TRAILING_PRICE =
@@ -109,6 +111,13 @@ function isBilingualMenuSection(value: string): boolean {
   return parts.length >= 2 && parts.every((part) => BILINGUAL_SECTION_PART.test(part));
 }
 
+function looksLikeDescriptionFragment(value: string): boolean {
+  const normalized = normalizeLine(value);
+  if (DESCRIPTION_FRAGMENT.test(normalized)) return true;
+  const wordCount = normalized.split(/\s+/u).filter(Boolean).length;
+  return wordCount >= 8 && DESCRIPTION_PHRASE.test(normalized);
+}
+
 function isObviousOutputNoise(value: string): boolean {
   const normalized = normalizeLine(value);
   const unwrapped = stripOuterParentheses(normalized);
@@ -119,8 +128,9 @@ function isObviousOutputNoise(value: string): boolean {
     CONTACT_METADATA.test(normalized) ||
     PER_PERSON_PRICE_METADATA.test(normalized) ||
     OUTPUT_METADATA.test(withoutLeadingDelimiter) ||
-    DESCRIPTION_FRAGMENT.test(withoutLeadingDelimiter) ||
+    looksLikeDescriptionFragment(withoutLeadingDelimiter) ||
     isBilingualMenuSection(withoutLeadingDelimiter) ||
+    BEVERAGE_SECTION_LABEL.test(normalizedSectionLabel(withoutLeadingDelimiter)) ||
     /^(?:gluten[- ]?fri|gluten[- ]?free)$/iu.test(withoutLeadingDelimiter)
   );
 }
@@ -132,7 +142,7 @@ function cleanOutputArtifactName(item: MenuObservedItem): MenuObservedItem {
   if (barePrice?.[1] && Number(barePrice[1]) >= 40 && item.priceMinor === Number(barePrice[1]) * 100) {
     name = name.replace(BARE_DASH_TRAILING_PRICE, "").trim();
   }
-  name = name.replace(/\s+[-–—]\s*$/u, "").trim();
+  name = name.replace(/[-–—]\s*$/u, "").trim();
   if (!name || name === item.name) return item;
   return {
     ...item,
@@ -140,6 +150,36 @@ function cleanOutputArtifactName(item: MenuObservedItem): MenuObservedItem {
     normalizedName: normalizeDishName(name),
     sourceKey: createMenuItemSourceKey(name, item.sectionName),
   };
+}
+
+function lineReferencesItem(line: string, itemName: string): boolean {
+  const normalizedLine = normalizeDishName(line);
+  const normalizedName = normalizeDishName(itemName);
+  if (!normalizedName || !normalizedLine.startsWith(normalizedName)) return false;
+  if (normalizedLine.length === normalizedName.length) return true;
+  const remainder = normalizedLine.slice(normalizedName.length).trim();
+  return /^(?:\d|nok\b|kr\b)/iu.test(remainder);
+}
+
+function sectionEvidenceForItem(
+  item: MenuObservedItem,
+  lines: readonly string[],
+  states: readonly MenuSectionState[],
+): ItemSectionEvidence {
+  const evidence: ItemSectionEvidence = {
+    hasFoodOccurrence: false,
+    hasBeverageOccurrence: false,
+  };
+  for (let index = 0; index < lines.length; index += 1) {
+    const state = states[index] ?? "unknown";
+    if (state === "unknown") continue;
+    const line = lines[index] ?? "";
+    if (!lineReferencesItem(line, item.name)) continue;
+    if (state === "food") evidence.hasFoodOccurrence = true;
+    if (state === "beverage") evidence.hasBeverageOccurrence = true;
+    if (evidence.hasFoodOccurrence && evidence.hasBeverageOccurrence) break;
+  }
+  return evidence;
 }
 
 export function filterPlainTextBeverageSectionItems(
@@ -160,27 +200,9 @@ export function filterPlainTextBeverageSectionItems(
   }
 
   const states = sectionStateByPosition(lines);
-  const evidenceByName = new Map<string, ItemSectionEvidence>();
-
-  for (let index = 0; index < lines.length; index += 1) {
-    const line = lines[index] ?? "";
-    if (!line || !/\p{L}/u.test(line)) continue;
-    const state = states[index] ?? "unknown";
-    if (state === "unknown") continue;
-
-    const normalized = normalizeDishName(line);
-    const evidence = evidenceByName.get(normalized) ?? {
-      hasFoodOccurrence: false,
-      hasBeverageOccurrence: false,
-    };
-    if (state === "food") evidence.hasFoodOccurrence = true;
-    if (state === "beverage") evidence.hasBeverageOccurrence = true;
-    evidenceByName.set(normalized, evidence);
-  }
-
   return cleanedItems.filter((item) => {
-    const evidence = evidenceByName.get(item.normalizedName);
-    if (!evidence?.hasBeverageOccurrence) return true;
+    const evidence = sectionEvidenceForItem(item, lines, states);
+    if (!evidence.hasBeverageOccurrence) return true;
     return evidence.hasFoodOccurrence;
   });
 }
