@@ -1,7 +1,7 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v8";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v9";
 
 function normalizeScopeLine(value: string): string {
   return value
