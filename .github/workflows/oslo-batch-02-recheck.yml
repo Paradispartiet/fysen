@@ -1,0 +1,117 @@
+name: Oslo batch 02 canonical recheck
+
+on:
+  pull_request:
+    paths:
+      - "apps/menu-worker/research/oslo-batch-02-recheck.seed.json"
+      - ".github/workflows/oslo-batch-02-recheck.yml"
+      - "apps/menu-worker/src/html-text-section-scope.ts"
+      - "apps/menu-worker/src/html-text-section-scope.test.ts"
+
+permissions:
+  contents: read
+
+jobs:
+  recheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build menu-worker dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Prepare generated directory
+        run: mkdir -p apps/menu-worker/research/oslo-batch-02-recheck-generated
+
+      - name: Regenerate all held batch-02 manifests
+        id: intake
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js intake:batch research/oslo-batch-02-recheck.seed.json | tee research/oslo-batch-02-recheck-intake.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Validate regenerated manifests independently
+        id: validation
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/oslo-batch-02-recheck-generated | tee research/oslo-batch-02-recheck-validation.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Summarize exact observed output
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile, readdir } from 'node:fs/promises';
+          const readJson = async (path) => JSON.parse(await readFile(path, 'utf8'));
+          const intake = await readJson('apps/menu-worker/research/oslo-batch-02-recheck-intake.json');
+          let validation = null;
+          try { validation = await readJson('apps/menu-worker/research/oslo-batch-02-recheck-validation.json'); } catch {}
+          const generatedFiles = (await readdir('apps/menu-worker/research/oslo-batch-02-recheck-generated')).filter((name) => name.endsWith('.json')).sort();
+          const summary = {
+            intake: {
+              requestedCount: intake.requestedCount,
+              generatedCount: intake.generatedCount,
+              failedCount: intake.failedCount,
+              concurrency: intake.concurrency,
+              results: intake.results,
+            },
+            validation: validation ? {
+              manifestCount: validation.manifestCount,
+              acceptedCount: validation.acceptedCount,
+              failedCount: validation.failedCount,
+              failureFamilyCounts: validation.failureFamilyCounts,
+              results: validation.results.map((result) => ({
+                slug: result.slug,
+                accepted: result.accepted,
+                failureFamilies: result.failureFamilies,
+                itemCount: result.validation?.menu?.quality?.itemCount ?? null,
+                observedDishNames: result.validation?.menu?.observedDishNames ?? [],
+                error: result.error,
+              })),
+            } : null,
+            generatedFiles,
+          };
+          await writeFile('apps/menu-worker/research/oslo-batch-02-recheck-summary.json', JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          NODE
+
+      - name: Upload exact recheck artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: oslo-batch-02-recheck
+          path: |
+            apps/menu-worker/research/oslo-batch-02-recheck.seed.json
+            apps/menu-worker/research/oslo-batch-02-recheck-intake.json
+            apps/menu-worker/research/oslo-batch-02-recheck-validation.json
+            apps/menu-worker/research/oslo-batch-02-recheck-summary.json
+            apps/menu-worker/research/oslo-batch-02-recheck-generated/*.json
+          if-no-files-found: error
