@@ -76,7 +76,10 @@ export async function resolveOpeningHoursSource(
   }
 
   const scopeHints = resolveOpeningHoursScopeHints(input.scopeHints, input.fallbackScopeHints ?? []);
-  const normalizedHtml = normalizeRedundantAbsoluteKitchenCloseHtml(fetched.body);
+  const normalizedHtml = normalizeRedundantAbsoluteKitchenCloseHtml(
+    fetched.body,
+    scopeHints,
+  );
   const extracted = extractCanonicalOpeningHours(normalizedHtml, scopeHints);
   return {
     kind: "content",
