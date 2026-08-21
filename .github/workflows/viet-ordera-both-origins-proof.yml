@@ -1,0 +1,62 @@
+name: Viet Ordera two-origin proof
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/viet-ordera-both-origins-proof.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Prepare Viet Ordera browser manifest
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { mkdir, readFile, writeFile } from 'node:fs/promises';
+          const manifest = JSON.parse(await readFile('catalog/viet-kitchen-bjolsen-oslo.json', 'utf8'));
+          manifest.menuSource.url = 'https://vietkitchen.ordera.no/';
+          manifest.menuSource.fetchMode = 'browser';
+          manifest.menuSource.sourceSupport = {
+            redirectOrigins: [],
+            browserDataOrigins: [
+              'https://order-api.ordera.no',
+              'https://socket.ordera.no'
+            ]
+          };
+          await mkdir('research/viet-ordera-two-origin', { recursive: true });
+          await writeFile('research/viet-ordera-two-origin/manifest.json', JSON.stringify(manifest, null, 2) + '\n');
+          NODE
+      - name: Validate Viet Ordera browser source
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/viet-ordera-two-origin | tee research/viet-ordera-two-origin-result.json
+          exit 0
+      - name: Upload proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: viet-ordera-two-origin-proof
+          path: apps/menu-worker/research/viet-ordera-two-origin-result.json
+          if-no-files-found: error
