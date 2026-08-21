@@ -1,10 +1,12 @@
 import {
   createDatabasePool,
   getRestaurantActionState,
+  listEnabledMenuSourcesForRestaurant,
   MenuIndexRepository,
   quiesceRestaurantCandidate,
   recordRestaurantActionVerificationSuccess,
   replaceMenuSourceSupport,
+  replacePublishedMenuSourceAuthority,
   setMenuSourceEnabled,
   setRestaurantCoverageActive,
   upsertRestaurantAction,
@@ -87,6 +89,17 @@ export function shouldRestorePublishedCoverageAfterRefreshFailure(
 
 function accepted(summary: MenuWatchSummary): boolean {
   return acceptedOutcomes.has(summary.outcome);
+}
+
+export function shouldStagePublishedSourceMigration(
+  candidateActive: boolean,
+  authoritativeMenuSourceId: string,
+  enabledSources: readonly { readonly id: string }[],
+): boolean {
+  return (
+    candidateActive &&
+    enabledSources.some((source) => source.id !== authoritativeMenuSourceId)
+  );
 }
 
 function acceptedHours(summary: OpeningHoursWatchResult): boolean {
@@ -222,6 +235,17 @@ async function onboardOne(
     });
     menuSourceId = source.id;
     await replaceMenuSourceSupport(pool, source.id, manifest.menuSource.sourceSupport);
+    const enabledSources = candidate.active
+      ? await listEnabledMenuSourcesForRestaurant(pool, candidate.id)
+      : [];
+    const publishedSourceMigration = shouldStagePublishedSourceMigration(
+      candidate.active,
+      source.id,
+      enabledSources,
+    );
+    if (publishedSourceMigration) {
+      await setMenuSourceEnabled(pool, source.id, false);
+    }
     const menuHttpClient = new HttpMenuClient();
     const watchMenu = () =>
       watchMenuSourceOnce(
@@ -229,6 +253,7 @@ async function onboardOne(
         source.id,
         menuHttpClient,
         manifest.menuSource.sourceSupport,
+        { allowDisabled: publishedSourceMigration },
       );
 
     if (!candidate.active && !source.enabled) {
@@ -236,6 +261,57 @@ async function onboardOne(
     }
 
     if (candidate.active) {
+      if (publishedSourceMigration) {
+        firstWatch = await watchMenu();
+        if (!accepted(firstWatch)) {
+          throw new Error(`First staged source migration watch was ${firstWatch.outcome}`);
+        }
+        latestQuality = await assertLatestSnapshot(repository, source.id, manifest);
+        if (!latestQuality.accepted) {
+          throw new Error(
+            qualityFailure(
+              "First staged source migration snapshot failed assertions",
+              latestQuality,
+            ),
+          );
+        }
+
+        secondWatch = await watchMenu();
+        if (!accepted(secondWatch)) {
+          throw new Error(`Second staged source migration watch was ${secondWatch.outcome}`);
+        }
+        latestQuality = await assertLatestSnapshot(repository, source.id, manifest);
+        if (!latestQuality.accepted) {
+          throw new Error(
+            qualityFailure(
+              "Second staged source migration snapshot failed assertions",
+              latestQuality,
+            ),
+          );
+        }
+
+        const metadata = await ensureMetadata(pool, manifest, candidate.id);
+        hoursSourceId = metadata.hoursSourceId;
+        actions = metadata.actions;
+        await replacePublishedMenuSourceAuthority(pool, candidate.id, source.id);
+        return {
+          slug: manifest.restaurant.slug,
+          outcome: "already_published",
+          restaurantId,
+          menuSourceId,
+          hoursSourceId,
+          hoursWatch,
+          actions,
+          firstWatch,
+          secondWatch,
+          itemCount: latestQuality.itemCount,
+          missingRequiredDishes: latestQuality.missingRequiredDishes,
+          forbiddenDishesPresent: latestQuality.forbiddenDishesPresent,
+          warnings,
+          error: null,
+        };
+      }
+
       const previousSnapshot = await repository.getLatestSnapshotWithItems(source.id);
       const requiresExtractorRefresh = previousSnapshot
         ? shouldForceReextract(source.sourceType, previousSnapshot.extractorVersion)
@@ -333,6 +409,7 @@ async function onboardOne(
         );
       }
     }
+    await replacePublishedMenuSourceAuthority(pool, candidate.id, source.id);
     await setRestaurantCoverageActive(pool, candidate.id, true);
     return {
       slug: manifest.restaurant.slug,
