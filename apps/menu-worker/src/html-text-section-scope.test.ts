@@ -53,7 +53,7 @@ describe("plain-text HTML section scoping", () => {
       119 NOK
     `;
 
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v4");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v5");
     expect(
       filterPlainTextBeverageSectionItems(items, visibleText).map(
         (entry) => entry.name,
@@ -88,6 +88,33 @@ describe("plain-text HTML section scoping", () => {
         (entry) => entry.name,
       ),
     ).toEqual(["The Classic", "Brownie"]);
+  });
+
+  it("resets navigation drinks state when the actual menu scope starts", () => {
+    const items = [
+      item("Doro Wet", 1, 29000),
+      item("Key Wet", 2, 28000),
+      item("House Soda", 3, 5500),
+    ];
+    const visibleText = `
+      Home
+      Drinks
+      Contact
+      OUR MENU
+      Doro Wet
+      290 NOK
+      Key Wet
+      280 NOK
+      Drikke
+      House Soda
+      55 NOK
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual(["Doro Wet", "Key Wet"]);
   });
 
   it("recognizes bilingual tap and bottled beer headings", () => {
@@ -170,6 +197,24 @@ describe("plain-text HTML section scoping", () => {
     ).toEqual(["Kulfi"]);
   });
 
+  it("matches beverage evidence after stripping a trailing allergen code", () => {
+    const items = [item("Kulfi", 1, 12900), item("CUPPUCINO", 2, 5500)];
+    const visibleText = `
+      DESSERTS
+      Kulfi
+      129
+      KAFFE / COFFEE
+      CUPPUCINO (M)
+      55
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual(["Kulfi"]);
+  });
+
   it("removes conservative output metadata and description fragments even without a beverage section", () => {
     const items = [
       item("(p,s)", 1),
@@ -181,25 +226,31 @@ describe("plain-text HTML section scoping", () => {
       item("Pieces of chicken, lamb and scampi", 7, 28900),
       item("(CAN BE MADE VEGAN)", 8, 26900),
       item("/Gluten fri", 9, 260000),
-      item("American chocolate cake with walnuts, served with vanilla ice cream", 10, 16900),
+      item(
+        "American chocolate cake with walnuts, served with vanilla ice cream",
+        10,
+        16900,
+      ),
       item("Butter Chicken", 11, 28900),
       item("Fish N Chips", 12, 24900),
     ];
 
     expect(
-      filterPlainTextBeverageSectionItems(items, "HOVEDRETTER\nButter Chicken\nFish N Chips").map(
-        (entry) => entry.name,
-      ),
+      filterPlainTextBeverageSectionItems(
+        items,
+        "HOVEDRETTER\nButter Chicken\nFish N Chips",
+      ).map((entry) => entry.name),
     ).toEqual(["Butter Chicken", "Fish N Chips"]);
   });
 
-  it("cleans layout leaders, dangling dashes and mirrored trailing prices without changing legitimate dash numbers", () => {
+  it("cleans layout artifacts only when embedded prices agree with the observed card price", () => {
     const items = [
       item("Linser (rød eller gul)___________", 1, 26900),
       item("Crispy Chicken Tenders - 179", 2, 17900),
       item("Mango Sorbet 119,-", 3, 12900),
-      item("CLASSIC CAESAR-", 4, 21900),
-      item("Table 42 - 7", 5, 700),
+      item("Mango Kulfi 119,-", 4, 11900),
+      item("CLASSIC CAESAR-", 5, 21900),
+      item("Table 42 - 7", 6, 700),
     ];
 
     expect(
@@ -209,7 +260,7 @@ describe("plain-text HTML section scoping", () => {
     ).toEqual([
       "Linser (rød eller gul)",
       "Crispy Chicken Tenders",
-      "Mango Sorbet",
+      "Mango Kulfi",
       "CLASSIC CAESAR",
       "Table 42 - 7",
     ]);
