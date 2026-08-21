@@ -31,6 +31,8 @@
       "Kjøkkenet stenger"
     ],
     "minimumExpectedIntervals": 5,
+    "timeZone": "Europe/Oslo",
+    "checkIntervalMinutes": 720,
     "extractor": "visible_text_v1"
   },
   "verification": {
