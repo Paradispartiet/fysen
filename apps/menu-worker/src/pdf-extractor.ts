@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v8";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v9";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -258,12 +258,14 @@ function isWrappedDishQualifier(value: string): boolean {
 
 const pricePrefix = "(?:(?:kr\\.?|nok)\\s*)?";
 const priceSuffix = "(?:\\s*(?:,-|kr\\.?|nok))?";
+const perItemPriceSuffix =
+  "(?:\\s*\\((?:pr\\.?\\s*stk\\.?|per\\s+(?:piece|item|stk\\.?)|each)\\))?";
 const standalonePrice = new RegExp(
   `^${pricePrefix}([1-9]\\d{1,3})(?:\\s*\\/\\s*([1-9]\\d{1,3}))?${priceSuffix}$`,
   "iu",
 );
 const trailingPrice = new RegExp(
-  `\\s+${pricePrefix}([1-9]\\d{1,3})(?:\\s*\\/\\s*([1-9]\\d{1,3}))?${priceSuffix}$`,
+  `\\s+${pricePrefix}([1-9]\\d{1,3})(?:\\s*\\/\\s*([1-9]\\d{1,3}))?${priceSuffix}${perItemPriceSuffix}$`,
   "iu",
 );
 
