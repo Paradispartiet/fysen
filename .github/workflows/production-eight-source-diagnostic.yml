@@ -1,0 +1,146 @@
+name: Production eight-source diagnostic
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/production-eight-source-diagnostic.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
+    steps:
+      - name: Checkout exact rollback main
+        uses: actions/checkout@v4
+        with:
+          ref: 640021bae29238f0649c2ef679483b7c967e9895
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build menu-worker dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Isolate exact eight canonical manifests
+        shell: bash
+        run: |
+          mkdir -p apps/menu-worker/research/production-eight-source-diagnostic
+          for slug in \
+            coyo-sorengkaia-oslo \
+            cue-bar-grill-nedre-slottsgate-oslo \
+            lahori-dera-gronland-oslo \
+            oche-brugata-oslo \
+            oche-torggata-oslo \
+            1947-gandhi-majorstuen-oslo \
+            new-anarkali-oslo \
+            radhuni-radhusgata-oslo
+          do
+            test -f "apps/menu-worker/catalog/${slug}.json"
+            cp "apps/menu-worker/catalog/${slug}.json" "apps/menu-worker/research/production-eight-source-diagnostic/${slug}.json"
+          done
+          node --input-type=module <<'NODE'
+          import { readdir, readFile, writeFile } from 'node:fs/promises';
+          const dir = 'apps/menu-worker/research/production-eight-source-diagnostic';
+          const files = (await readdir(dir)).filter((name) => name.endsWith('.json')).sort();
+          const manifests = [];
+          for (const file of files) {
+            const manifest = JSON.parse(await readFile(`${dir}/${file}`, 'utf8'));
+            manifests.push({
+              slug: manifest.restaurant.slug,
+              sourceType: manifest.menuSource.sourceType,
+              sourceUrl: manifest.menuSource.url,
+              minimumExpectedItems: manifest.menuSource.minimumExpectedItems,
+            });
+          }
+          await writeFile('apps/menu-worker/research/production-eight-source-manifests.json', JSON.stringify(manifests, null, 2) + '\n');
+          console.log(JSON.stringify(manifests, null, 2));
+          NODE
+
+      - name: Live validation pass 1
+        id: pass1
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/production-eight-source-diagnostic | tee research/production-eight-source-pass1.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Live validation pass 2
+        id: pass2
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/production-eight-source-diagnostic | tee research/production-eight-source-pass2.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Compare both live passes
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const p1 = JSON.parse(await readFile('research/production-eight-source-pass1.json', 'utf8'));
+          const p2 = JSON.parse(await readFile('research/production-eight-source-pass2.json', 'utf8'));
+          const manifests = JSON.parse(await readFile('research/production-eight-source-manifests.json', 'utf8'));
+          const compact = (result) => ({
+            slug: result.slug,
+            accepted: result.accepted,
+            failureFamilies: result.failureFamilies ?? [],
+            error: result.error ?? null,
+            itemCount: result.validation?.menu?.quality?.itemCount ?? null,
+            extractionMethod: result.validation?.menu?.extractionMethod ?? null,
+            extractorVersion: result.validation?.menu?.extractorVersion ?? null,
+            observedDishNames: result.validation?.menu?.observedDishNames ?? [],
+          });
+          const bySlug = (payload) => new Map((payload.results ?? []).map((result) => [result.slug, compact(result)]));
+          const a = bySlug(p1);
+          const b = bySlug(p2);
+          const comparison = manifests.map((manifest) => ({
+            ...manifest,
+            pass1: a.get(manifest.slug) ?? null,
+            pass2: b.get(manifest.slug) ?? null,
+          }));
+          const summary = {
+            pass1ExitCode: '${{ steps.pass1.outputs.exit_code }}',
+            pass2ExitCode: '${{ steps.pass2.outputs.exit_code }}',
+            pass1: { manifestCount: p1.manifestCount, acceptedCount: p1.acceptedCount, failedCount: p1.failedCount, failureFamilyCounts: p1.failureFamilyCounts },
+            pass2: { manifestCount: p2.manifestCount, acceptedCount: p2.acceptedCount, failedCount: p2.failedCount, failureFamilyCounts: p2.failureFamilyCounts },
+            comparison,
+          };
+          await writeFile('research/production-eight-source-summary.json', JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          NODE
+
+      - name: Upload diagnostic artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-eight-source-diagnostic
+          path: |
+            apps/menu-worker/research/production-eight-source-manifests.json
+            apps/menu-worker/research/production-eight-source-pass1.json
+            apps/menu-worker/research/production-eight-source-pass2.json
+            apps/menu-worker/research/production-eight-source-summary.json
+          if-no-files-found: error
