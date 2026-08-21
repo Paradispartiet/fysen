@@ -88,6 +88,87 @@ jobs:
           console.log(JSON.stringify(found, null, 2));
           NODE
 
+      - name: Inspect raw HTTP structure for HTML sources
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, readdir, writeFile } from 'node:fs/promises';
+          import { load } from 'cheerio';
+          import { HttpMenuClient } from './dist/http-client.js';
+          import { extractScopedHtmlMenu } from './dist/html-source-extractor.js';
+
+          const dir = 'research/production-four-source-diagnostic';
+          const needlesBySlug = new Map([
+            ['lahori-dera-gronland-oslo', ['Kylling Tikka Masala', 'Lahori Lam Karahi Fresh', 'Chapli Kebab', 'Saag Paneer', 'Mix Grill']],
+            ['oche-aker-brygge-oslo', ['Pollo', 'Funghi', 'Margherita', 'Nduja', 'Oche Burger & Fries']],
+            ['oche-torggata-oslo', ['Pollo', 'Funghi', 'Margherita', 'Nduja', 'Oche Burger & Fries']],
+          ]);
+          const client = new HttpMenuClient();
+          const reports = [];
+          const normalize = (value) => String(value ?? '').normalize('NFKC').replace(/\s+/g, ' ').trim();
+
+          for (const file of (await readdir(dir)).filter((name) => name.endsWith('.json')).sort()) {
+            const manifest = JSON.parse(await readFile(`${dir}/${file}`, 'utf8'));
+            if (!needlesBySlug.has(manifest.restaurant.slug)) continue;
+            const fetched = await client.fetchSource({
+              url: manifest.menuSource.url,
+              userAgent: manifest.menuSource.userAgent,
+              etag: null,
+              lastModified: null,
+            }, { allowedRedirectOrigins: manifest.menuSource.sourceSupport?.redirectOrigins ?? [] });
+            if (fetched.kind !== 'content') throw new Error(`${manifest.restaurant.slug}: unexpected ${fetched.kind}`);
+            const $ = load(fetched.body);
+            const bodyText = normalize($('body').text());
+            const scoped = extractScopedHtmlMenu(fetched.body);
+            const needles = [];
+            for (const needle of needlesBySlug.get(manifest.restaurant.slug) ?? []) {
+              const lowerNeedle = normalize(needle).toLocaleLowerCase('nb-NO');
+              const candidates = $('body *').toArray()
+                .map((element) => ({ element, text: normalize($(element).text()) }))
+                .filter((entry) => entry.text.toLocaleLowerCase('nb-NO').includes(lowerNeedle))
+                .sort((a, b) => a.text.length - b.text.length);
+              const best = candidates[0] ?? null;
+              needles.push({
+                needle,
+                rawBodyContains: bodyText.toLocaleLowerCase('nb-NO').includes(lowerNeedle),
+                bestElement: best ? {
+                  tag: best.element.tagName,
+                  id: $(best.element).attr('id') ?? null,
+                  className: $(best.element).attr('class') ?? null,
+                  text: best.text.slice(0, 600),
+                  html: ($.html(best.element) ?? '').slice(0, 1800),
+                  parentTag: best.element.parent?.tagName ?? null,
+                  parentClass: best.element.parent ? ($(best.element.parent).attr('class') ?? null) : null,
+                } : null,
+              });
+            }
+            reports.push({
+              slug: manifest.restaurant.slug,
+              url: manifest.menuSource.url,
+              status: fetched.status,
+              contentType: fetched.contentType,
+              bodyBytes: fetched.bodyBytes.length,
+              bodyTextLength: bodyText.length,
+              scopedItemCount: scoped.items.length,
+              scopedVisibleTextSample: scoped.visibleText.slice(0, 6000),
+              domCounts: {
+                h1: $('h1').length,
+                h2: $('h2').length,
+                h3: $('h3').length,
+                h4: $('h4').length,
+                li: $('li').length,
+                article: $('article').length,
+                section: $('section').length,
+                script: $('script').length,
+              },
+              needles,
+            });
+          }
+          await writeFile('research/production-html-http-structure.json', JSON.stringify(reports, null, 2) + '\n');
+          console.log(JSON.stringify(reports.map((r) => ({ slug: r.slug, status: r.status, bodyBytes: r.bodyBytes, bodyTextLength: r.bodyTextLength, scopedItemCount: r.scopedItemCount, domCounts: r.domCounts, needles: r.needles.map((n) => ({ needle: n.needle, rawBodyContains: n.rawBodyContains, tag: n.bestElement?.tag ?? null, className: n.bestElement?.className ?? null })) })), null, 2));
+          NODE
+
       - name: Live validation pass 1
         id: pass1
         working-directory: apps/menu-worker
@@ -136,6 +217,7 @@ jobs:
             accepted: result.accepted,
             failureFamilies: result.failureFamilies ?? [],
             error: result.error ?? null,
+            menuError: result.validation?.menu?.error ?? null,
             itemCount: result.validation?.menu?.quality?.itemCount ?? null,
             extractionMethod: result.validation?.menu?.extractionMethod ?? null,
             extractorVersion: result.validation?.menu?.extractorVersion ?? null,
@@ -172,6 +254,7 @@ jobs:
           name: production-four-source-diagnostic
           path: |
             apps/menu-worker/research/production-four-source-manifests.json
+            apps/menu-worker/research/production-html-http-structure.json
             apps/menu-worker/research/production-four-source-pass1.json
             apps/menu-worker/research/production-four-source-pass2.json
             apps/menu-worker/research/production-html-browser-result.json
