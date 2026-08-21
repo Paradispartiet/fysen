@@ -1,5 +1,6 @@
 import {
   createDatabasePool,
+  getLatestRestaurantHoursSnapshotExtractorVersion,
   getRestaurantHoursSourceById,
   listDueRestaurantHoursSources,
   recordRestaurantHoursFailure,
@@ -15,7 +16,10 @@ import {
   type HoursVerificationStatus,
 } from "./onboarding-manifest.js";
 import { OpeningHoursExtractionError } from "./opening-hours-extractor.js";
-import { resolveOpeningHoursSource } from "./opening-hours-source-runtime.js";
+import {
+  resolveOpeningHoursSource,
+  shouldForceOpeningHoursReextract,
+} from "./opening-hours-source-runtime.js";
 
 export interface OpeningHoursWatchResult {
   readonly sourceId: string;
@@ -92,12 +96,17 @@ async function watchRestaurantHoursTargetOnce(
 ): Promise<OpeningHoursWatchResult> {
   const startedAt = new Date().toISOString();
   try {
+    const previousExtractorVersion =
+      await getLatestRestaurantHoursSnapshotExtractorVersion(pool, source.id);
+    const forceReextract = shouldForceOpeningHoursReextract(
+      previousExtractorVersion,
+    );
     const resolved = await resolveOpeningHoursSource(
       {
         url: source.url,
         userAgent,
-        etag: source.etag,
-        lastModified: source.lastModified,
+        etag: forceReextract ? null : source.etag,
+        lastModified: forceReextract ? null : source.lastModified,
         extractor: source.extractor,
         scopeHints: source.scopeHints,
         fallbackScopeHints: [
@@ -111,6 +120,27 @@ async function watchRestaurantHoursTargetOnce(
     const completedAt = new Date().toISOString();
 
     if (resolved.kind === "not_modified") {
+      if (forceReextract) {
+        const errorCode = "FORCED_HOURS_REEXTRACT_NOT_MODIFIED";
+        const errorMessage =
+          "Hours source returned HTTP 304 while a newer runtime extractor required a full re-extraction";
+        await recordRestaurantHoursFailure(pool, {
+          sourceId: source.id,
+          outcome: "fetch_error",
+          startedAt,
+          completedAt,
+          httpStatus: resolved.fetched.status,
+          errorCode,
+          errorMessage,
+        });
+        return {
+          sourceId: source.id,
+          outcome: "fetch_error",
+          intervalCount: null,
+          snapshotId: null,
+          errorCode,
+        };
+      }
       await recordRestaurantHoursNotModified(pool, {
         sourceId: source.id,
         startedAt,
