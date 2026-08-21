@@ -1,0 +1,202 @@
+name: Oslo batch 02 residual 15
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/oslo-batch-02-residual-15.yml"
+      - "apps/menu-worker/src/**"
+      - "apps/menu-worker/catalog/**"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  residual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout current runtime
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build menu-worker dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Restore immutable Batch 02 plan and isolate 15 unpromoted entries
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02
+          mkdir -p /tmp/batch02
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+
+          const source = JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json', 'utf8'));
+          const catalogFiles = (await readdir('apps/menu-worker/catalog'))
+            .filter((name) => name.endsWith('.json'))
+            .sort();
+          const catalogSlugs = new Set();
+          for (const file of catalogFiles) {
+            const manifest = JSON.parse(await readFile(`apps/menu-worker/catalog/${file}`, 'utf8'));
+            catalogSlugs.add(manifest.restaurant.slug);
+          }
+
+          const restaurants = source.restaurants.filter(
+            (entry) => !catalogSlugs.has(entry.restaurant.slug),
+          );
+          if (source.restaurants.length !== 20) {
+            throw new Error(`Expected immutable Batch 02 plan to contain 20 entries; found ${source.restaurants.length}`);
+          }
+          if (catalogSlugs.size !== 50) {
+            throw new Error(`Expected current catalog to contain 50 entries; found ${catalogSlugs.size}`);
+          }
+          if (restaurants.length !== 15) {
+            throw new Error(
+              `Expected exactly 15 unpromoted Batch 02 entries; found ${restaurants.length}: ${restaurants
+                .map((entry) => entry.restaurant.slug)
+                .join(',')}`,
+            );
+          }
+
+          const plan = {
+            ...source,
+            outputDirectory: 'research/oslo-batch-02-residual-15-generated',
+            concurrency: 2,
+            restaurants,
+          };
+          await mkdir('apps/menu-worker/research/oslo-batch-02-residual-15-generated', {
+            recursive: true,
+          });
+          await writeFile(
+            'apps/menu-worker/research/oslo-batch-02-residual-15.plan.json',
+            JSON.stringify(plan, null, 2) + '\n',
+          );
+          console.log(
+            JSON.stringify(
+              {
+                originalBatchCount: source.restaurants.length,
+                currentCatalogCount: catalogSlugs.size,
+                residualCount: restaurants.length,
+                slugs: restaurants.map((entry) => entry.restaurant.slug),
+              },
+              null,
+              2,
+            ),
+          );
+          NODE
+
+      - name: Fresh intake of all 15 residuals
+        id: intake
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js intake:batch research/oslo-batch-02-residual-15.plan.json | tee research/oslo-batch-02-residual-15-intake.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Independently live validate every generated manifest
+        id: validation
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/oslo-batch-02-residual-15-generated | tee research/oslo-batch-02-residual-15-validation.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Summarize exact residual output
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, readdir, writeFile } from 'node:fs/promises';
+
+          const intake = JSON.parse(
+            await readFile('research/oslo-batch-02-residual-15-intake.json', 'utf8'),
+          );
+          let validation = null;
+          try {
+            validation = JSON.parse(
+              await readFile('research/oslo-batch-02-residual-15-validation.json', 'utf8'),
+            );
+          } catch {}
+          const generatedFiles = (
+            await readdir('research/oslo-batch-02-residual-15-generated')
+          )
+            .filter((name) => name.endsWith('.json'))
+            .sort();
+
+          const summary = {
+            sourceMain: '9d6b2344f1e2fde47c8aa1fd966128fefef4302c',
+            intakeExitCode: '${{ steps.intake.outputs.exit_code }}',
+            validationExitCode: '${{ steps.validation.outputs.exit_code }}',
+            intake: {
+              requestedCount: intake.requestedCount,
+              generatedCount: intake.generatedCount,
+              failedCount: intake.failedCount,
+              concurrency: intake.concurrency,
+              results: intake.results,
+            },
+            validation: validation
+              ? {
+                  manifestCount: validation.manifestCount,
+                  acceptedCount: validation.acceptedCount,
+                  failedCount: validation.failedCount,
+                  failureFamilyCounts: validation.failureFamilyCounts,
+                  results: validation.results.map((result) => ({
+                    slug: result.slug,
+                    accepted: result.accepted,
+                    failureFamilies: result.failureFamilies ?? [],
+                    error: result.error ?? null,
+                    menuError: result.validation?.menu?.error ?? null,
+                    itemCount: result.validation?.menu?.quality?.itemCount ?? null,
+                    method: result.validation?.menu?.method ?? null,
+                    extractorVersion: result.validation?.menu?.extractorVersion ?? null,
+                    observedDishNames:
+                      result.validation?.menu?.observedDishNames ?? [],
+                  })),
+                }
+              : null,
+            generatedFiles,
+          };
+          await writeFile(
+            'research/oslo-batch-02-residual-15-summary.json',
+            JSON.stringify(summary, null, 2) + '\n',
+          );
+          console.log(JSON.stringify(summary, null, 2));
+          NODE
+
+      - name: Upload exact residual artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: oslo-batch-02-residual-15
+          path: |
+            apps/menu-worker/research/oslo-batch-02-residual-15.plan.json
+            apps/menu-worker/research/oslo-batch-02-residual-15-intake.json
+            apps/menu-worker/research/oslo-batch-02-residual-15-validation.json
+            apps/menu-worker/research/oslo-batch-02-residual-15-summary.json
+            apps/menu-worker/research/oslo-batch-02-residual-15-generated/*.json
+          if-no-files-found: error
