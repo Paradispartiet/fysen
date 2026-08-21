@@ -101,6 +101,14 @@ test("Utforsk verden er flat og kommer før Hva frister", () => {
   assert.doesNotMatch(explorerSource, /culinaryWorlds|selectedWorld|selectedCulinaryRegion/u);
 });
 
+test("Utforsk verden viser seks relevante kjøkken før brukeren åpner resten", () => {
+  assert.match(explorerSource, /const COLLAPSED_CUISINE_COUNT = 6/u);
+  assert.match(explorerSource, /filteredCuisines\.slice\(0, COLLAPSED_CUISINE_COUNT\)/u);
+  assert.match(explorerSource, /aria-expanded=\{isCuisineDirectoryExpanded\}/u);
+  assert.match(explorerSource, /Vis alle kjøkken/u);
+  assert.match(explorerSource, /Vis færre kjøkken/u);
+});
+
 test("Utforsk verden viser ferskt restaurantbevis også i Pages-preview", () => {
   assert.match(explorerSource, /På menyen nå/u);
   assert.match(explorerSource, /restaurantExamples/u);
