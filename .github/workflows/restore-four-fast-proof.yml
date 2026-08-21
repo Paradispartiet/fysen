@@ -1,0 +1,94 @@
+name: Restore four fast live proof
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/restore-four-fast-proof.yml"
+      - "apps/menu-worker/src/**"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-four:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
+    steps:
+      - name: Checkout repair parser head
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Prepare exact four canonical manifests
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+          const targets = new Set(['coyo-sorenga-oslo','lahori-dera-gronland-oslo','oche-aker-brygge-oslo','oche-torggata-oslo']);
+          const out = 'research/restore-four-fast';
+          await mkdir(out, { recursive: true });
+          const found = [];
+          for (const file of (await readdir('catalog')).filter((name) => name.endsWith('.json')).sort()) {
+            const raw = await readFile(`catalog/${file}`, 'utf8');
+            const manifest = JSON.parse(raw);
+            if (!targets.has(manifest.restaurant.slug)) continue;
+            await writeFile(`${out}/${file}`, raw);
+            found.push(manifest.restaurant.slug);
+          }
+          if (found.length !== 4) throw new Error(`Expected 4 manifests, got ${found.length}`);
+          console.log(JSON.stringify(found, null, 2));
+          NODE
+      - name: Validate repaired four live
+        id: validate
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/restore-four-fast | tee research/restore-four-fast.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Gate and summarize
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const payload = JSON.parse(await readFile('research/restore-four-fast.json', 'utf8'));
+          const results = (payload.results ?? []).map((result) => ({
+            slug: result.slug,
+            accepted: result.accepted,
+            failureFamilies: result.failureFamilies ?? [],
+            error: result.error ?? null,
+            menuError: result.validation?.menu?.error ?? null,
+            itemCount: result.validation?.menu?.quality?.itemCount ?? null,
+            extractionMethod: result.validation?.menu?.extractionMethod ?? null,
+            extractorVersion: result.validation?.menu?.extractorVersion ?? null,
+            observedDishNames: result.validation?.menu?.observedDishNames ?? [],
+          }));
+          const summary = { exitCode: '${{ steps.validate.outputs.exit_code }}', manifestCount: payload.manifestCount, acceptedCount: payload.acceptedCount, failedCount: payload.failedCount, failureFamilyCounts: payload.failureFamilyCounts, results };
+          await writeFile('research/restore-four-fast-summary.json', JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          if (payload.manifestCount !== 4 || payload.acceptedCount !== 4 || payload.failedCount !== 0) throw new Error(`Four-source gate failed: ${payload.acceptedCount}/${payload.manifestCount}`);
+          NODE
+      - name: Upload proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: restore-four-fast-proof
+          path: |
+            apps/menu-worker/research/restore-four-fast.json
+            apps/menu-worker/research/restore-four-fast-summary.json
+          if-no-files-found: error
