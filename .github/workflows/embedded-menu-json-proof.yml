@@ -1,0 +1,89 @@
+name: Embedded menu JSON live proof
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/embedded-menu-json-proof.yml"
+      - "apps/menu-worker/src/html-embedded-menu-json-recovery.ts"
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Recover Registan and Viet from embedded structured state
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research
+          node --input-type=module <<'NODE'
+          import { writeFile } from 'node:fs/promises';
+          import { HttpMenuClient } from './dist/http-client.js';
+          import { recoverEmbeddedStructuredMenuJson } from './dist/html-embedded-menu-json-recovery.js';
+
+          const client = new HttpMenuClient();
+          const sources = [
+            ['registan', 'https://wolt.com/nb/nor/oslo/restaurant/registan-reg'],
+            ['viet', 'https://wolt.com/nb/nor/oslo/restaurant/viet-kitchen-oslo'],
+          ];
+          const reports = [];
+          for (const [name, url] of sources) {
+            const fetched = await client.fetchSource({
+              url,
+              userAgent: 'FysenMenuBot/0.1',
+              etag: null,
+              lastModified: null,
+            });
+            if (fetched.kind !== 'content') throw new Error(`${name}: unexpected ${fetched.kind}`);
+            const items = recoverEmbeddedStructuredMenuJson(fetched.body);
+            reports.push({
+              name,
+              url,
+              status: fetched.status,
+              itemCount: items.length,
+              sections: [...new Set(items.map((item) => item.sectionName))],
+              items: items.map((item) => ({
+                name: item.name,
+                description: item.description,
+                sectionName: item.sectionName,
+                priceMinor: item.priceMinor,
+                sourceKey: item.sourceKey,
+                extractionMethod: item.extractionMethod,
+              })),
+            });
+          }
+          await writeFile('research/embedded-menu-json-proof.json', JSON.stringify(reports, null, 2) + '\n');
+          console.log(JSON.stringify(reports.map((report) => ({
+            name: report.name,
+            status: report.status,
+            itemCount: report.itemCount,
+            sections: report.sections,
+            sample: report.items.slice(0, 40).map((item) => [item.sectionName, item.name, item.priceMinor]),
+          })), null, 2));
+          if (reports.some((report) => report.itemCount < 10)) {
+            throw new Error(`Embedded recovery under-covered: ${reports.map((report) => `${report.name}=${report.itemCount}`).join(', ')}`);
+          }
+          NODE
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: embedded-menu-json-proof
+          path: apps/menu-worker/research/embedded-menu-json-proof.json
+          if-no-files-found: error
