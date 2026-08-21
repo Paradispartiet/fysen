@@ -17,13 +17,52 @@ describe("PDF prefixed NOK prices", () => {
       "60. Biff stekt m/ grønnsaker i soyasaus (sterk) SY SEM NOK 249",
     ]);
 
-    expect(PDF_EXTRACTOR_VERSION).toBe("pdf-text-v7");
+    expect(PDF_EXTRACTOR_VERSION).toBe("pdf-text-v8");
     expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
       ["Rekechips og peanøtter", 7900],
       ["Dampet Edamame bønner", 7900],
       ["Sprøstekt vårruller", 9900],
       ["Wonton suppe", 10900],
       ["Biff stekt m/ grønnsaker i soyasaus (sterk)", 24900],
+    ]);
+  });
+
+  it("splits two complete numbered menu rows reconstructed onto one PDF text line", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "VENTERETTER // Snacks",
+      "31. Rekechips og peanøtter H P kr. 79 87. Dampet Edamame bønner kr.79",
+    ]);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Rekechips og peanøtter", 7900],
+      ["Dampet Edamame bønner", 7900],
+    ]);
+  });
+
+  it("keeps duplicate dish names when bilingual section context proves separate offerings", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "FORRETTER // Starters",
+      "35. Innbakt kongereker H G SY kr. 109",
+      "HOVEDRETTER // Main Dishes",
+      "46. Innbakt kongereker H SK kr. 269",
+    ]);
+
+    expect(items.map((item) => [item.name, item.priceMinor, item.sectionName])).toEqual([
+      ["Innbakt kongereker", 10900, "FORRETTER"],
+      ["Innbakt kongereker", 26900, "HOVEDRETTER"],
+    ]);
+  });
+
+  it("accepts an explicitly currency-marked 35-kroner dish without lowering bare-number noise protection", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "DESSERT // Dessert",
+      "178. Noe søtt til kaffe? Macaron HNE kr.35",
+      "Cheap metadata",
+      "35",
+    ]);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Noe søtt til kaffe? Macaron", 3500],
     ]);
   });
 
