@@ -31,7 +31,7 @@
       "16:00",
       "22:00"
     ],
-    "minimumExpectedIntervals": 1,
+    "minimumExpectedIntervals": 7,
     "timeZone": "Europe/Oslo",
     "checkIntervalMinutes": 720,
     "extractor": "visible_text_v1"
