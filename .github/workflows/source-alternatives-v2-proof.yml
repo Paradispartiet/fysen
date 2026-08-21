@@ -1,0 +1,160 @@
+name: Source alternatives v2 proof
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/source-alternatives-v2-proof.yml"
+      - "apps/menu-worker/src/**"
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "2"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Build source variants
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { mkdir, readFile, writeFile } from 'node:fs/promises';
+          const read = async (path) => JSON.parse(await readFile(path, 'utf8'));
+          const write = async (name, manifest) => {
+            const dir = `research/source-alt-v2/${name}`;
+            await mkdir(dir, { recursive: true });
+            await writeFile(`${dir}/manifest.json`, JSON.stringify(manifest, null, 2) + '\n');
+          };
+
+          await write('hrimnir-current', await read('catalog/hrimnir-ramen-storgata.json'));
+
+          const registan = await read('catalog/registan-gronland-oslo.json');
+          const registanWolt = structuredClone(registan);
+          registanWolt.menuSource.url = 'https://wolt.com/nb/nor/oslo/restaurant/registan-reg';
+          registanWolt.menuSource.fetchMode = 'http';
+          registanWolt.menuSource.sourceSupport = { redirectOrigins: [], browserDataOrigins: [] };
+          await write('registan-wolt-http', registanWolt);
+
+          const viet = await read('catalog/viet-kitchen-bjolsen-oslo.json');
+          const vietOrdera = structuredClone(viet);
+          vietOrdera.menuSource.url = 'https://vietkitchen.ordera.no/';
+          vietOrdera.menuSource.fetchMode = 'browser';
+          vietOrdera.menuSource.sourceSupport = {
+            redirectOrigins: [],
+            browserDataOrigins: ['https://order-api.ordera.no'],
+          };
+          await write('viet-ordera-browser', vietOrdera);
+
+          const vietWolt = structuredClone(viet);
+          vietWolt.menuSource.url = 'https://wolt.com/nb/nor/oslo/restaurant/viet-kitchen-oslo';
+          vietWolt.menuSource.fetchMode = 'http';
+          vietWolt.menuSource.sourceSupport = { redirectOrigins: [], browserDataOrigins: [] };
+          await write('viet-wolt-http', vietWolt);
+          NODE
+
+      - name: Validate alternatives independently
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          mkdir -p research/source-alt-v2-results
+          for name in hrimnir-current registan-wolt-http viet-ordera-browser viet-wolt-http; do
+            node dist/index.js validate:batch "research/source-alt-v2/$name" > "research/source-alt-v2-results/$name.json" 2>&1
+            echo $? > "research/source-alt-v2-results/$name.exit"
+          done
+          exit 0
+
+      - name: Inspect Wolt HTTP extraction stages
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          import { HttpMenuClient } from './dist/http-client.js';
+          import { extractScopedHtmlMenu } from './dist/html-source-extractor.js';
+          import { extractMenuSource } from './dist/menu-source-runtime.js';
+          const client = new HttpMenuClient();
+          const inputs = [
+            ['registan-wolt', 'https://wolt.com/nb/nor/oslo/restaurant/registan-reg'],
+            ['viet-wolt', 'https://wolt.com/nb/nor/oslo/restaurant/viet-kitchen-oslo'],
+          ];
+          const reports = [];
+          for (const [name, url] of inputs) {
+            const fetched = await client.fetchSource({ url, userAgent: 'FysenMenuBot/0.1', etag: null, lastModified: null });
+            if (fetched.kind !== 'content') throw new Error(`${name}: ${fetched.kind}`);
+            const scoped = extractScopedHtmlMenu(fetched.body);
+            const runtime = await extractMenuSource('html', fetched);
+            reports.push({
+              name,
+              status: fetched.status,
+              bodyBytes: fetched.bodyBytes.length,
+              preFilterCount: scoped.items.length,
+              preFilterNames: scoped.items.slice(0, 100).map((item) => item.name),
+              visibleTextSample: scoped.visibleText.slice(0, 10000),
+              runtimeCount: runtime.items.length,
+              runtimeNames: runtime.items.slice(0, 100).map((item) => item.name),
+            });
+          }
+          await writeFile('research/source-alt-v2-wolt-stages.json', JSON.stringify(reports, null, 2) + '\n');
+          console.log(JSON.stringify(reports.map((report) => ({ name: report.name, status: report.status, bodyBytes: report.bodyBytes, preFilterCount: report.preFilterCount, runtimeCount: report.runtimeCount, preFilterNames: report.preFilterNames, runtimeNames: report.runtimeNames })), null, 2));
+          NODE
+
+      - name: Summarize alternatives
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const names = ['hrimnir-current','registan-wolt-http','viet-ordera-browser','viet-wolt-http'];
+          const summary = [];
+          for (const name of names) {
+            const exitCode = Number((await readFile(`research/source-alt-v2-results/${name}.exit`, 'utf8')).trim());
+            const payload = JSON.parse(await readFile(`research/source-alt-v2-results/${name}.json`, 'utf8'));
+            const result = payload.results?.[0] ?? {};
+            summary.push({
+              name,
+              exitCode,
+              accepted: result.accepted ?? false,
+              failureFamilies: result.failureFamilies ?? [],
+              error: result.error ?? null,
+              menuError: result.validation?.menu?.error ?? null,
+              itemCount: result.validation?.menu?.quality?.itemCount ?? null,
+              extractorVersion: result.validation?.menu?.extractorVersion ?? null,
+              observedDishNames: result.validation?.menu?.observedDishNames ?? [],
+              observedDishVariants: result.validation?.menu?.observedDishVariants ?? [],
+              missingRequiredDishes: result.validation?.menu?.quality?.missingRequiredDishes ?? [],
+              forbiddenDishesPresent: result.validation?.menu?.quality?.forbiddenDishesPresent ?? [],
+              hours: result.validation?.hours ?? null,
+              actions: result.validation?.actions ?? [],
+            });
+          }
+          await writeFile('research/source-alt-v2-summary.json', JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          NODE
+
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-alternatives-v2-proof
+          path: |
+            apps/menu-worker/research/source-alt-v2-results/*
+            apps/menu-worker/research/source-alt-v2-summary.json
+            apps/menu-worker/research/source-alt-v2-wolt-stages.json
+          if-no-files-found: error
