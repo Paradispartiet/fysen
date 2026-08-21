@@ -7,18 +7,13 @@ import {
 } from "./opening-hours-redundant-cutoff-normalizer.js";
 
 describe("redundant absolute kitchen cutoff normalization", () => {
-  it("normalizes identical redundant cutoffs only inside the explicitly selected hours section", () => {
+  it("canonicalizes repeated identical cutoffs only inside the selected location scope", () => {
     const html = `
       <html><body>
-        <h2>Åpningstider Fredensborg</h2>
-        <p>Mandag - Lørdag: 13:00 - 22:30</p>
-        <p>(Kjøkken til 21:00)</p>
-        <p>Søndag: 13:00 - 21:30</p>
-        <p>(Kjøkken til 20:00)</p>
-        <h2>Åpningstider Storgata</h2>
+        <p>Åpningstider Fredensborg:Mandag - Lørdag: 13:00 - 22:30 (Kjøkken til 21:00) Søndag: 13:00 - 21:30 (Kjøkken til 20:00)</p>
+        <p>Åpningstider Storgata:</p>
         <p>Søndag til Torsdag: 12:00 - 22.00 (Kjøkken til 21:00)</p>
-        <p>Fredag - Lørdag: 12:00 - 23.00</p>
-        <p>(Kjøkken til 21:00)</p>
+        <p>Fredag - Lørdag: 12:00 - 23.00(Kjøkken til 21:00)</p>
       </body></html>
     `;
     const normalized = normalizeRedundantAbsoluteKitchenCloseHtml(html, [
@@ -26,9 +21,10 @@ describe("redundant absolute kitchen cutoff normalization", () => {
     ]);
 
     expect(OPENING_HOURS_REDUNDANT_CUTOFF_NORMALIZER_VERSION).toBe(
-      "redundant-absolute-v2",
+      "redundant-absolute-v4",
     );
     expect(normalized).toContain("Kjøkken til 20:00");
+    expect(normalized.match(/Kjøkken til 21:00/gu)).toHaveLength(1);
     const extracted = extractCanonicalOpeningHours(normalized, ["Storgata"]);
     expect(extracted.intervals).toHaveLength(7);
     expect(extracted.intervals.every((item) => item.opensAt === "12:00")).toBe(
@@ -39,16 +35,13 @@ describe("redundant absolute kitchen cutoff normalization", () => {
     );
   });
 
-  it("does not hide a conflicting weekday-specific cutoff inside the selected scope", () => {
+  it("does not hide conflicting cutoffs inside the selected scope", () => {
     const html = `
       <html><body>
-        <h2>Åpningstider Fredensborg</h2>
-        <p>Mandag-Søndag: 12:00-22:00</p>
-        <p>Kjøkken til 19:00</p>
-        <h2>Åpningstider Storgata</h2>
+        <p>Åpningstider Fredensborg:Mandag-Søndag: 12:00-22:00 (Kjøkken til 19:00)</p>
+        <p>Åpningstider Storgata:</p>
         <p>Søndag til Torsdag: 12:00 - 22.00 (Kjøkken til 20:30)</p>
-        <p>Fredag - Lørdag: 12:00 - 23.00</p>
-        <p>(Kjøkken til 21:00)</p>
+        <p>Fredag - Lørdag: 12:00 - 23.00(Kjøkken til 21:00)</p>
       </body></html>
     `;
     const normalized = normalizeRedundantAbsoluteKitchenCloseHtml(html, [
@@ -60,13 +53,16 @@ describe("redundant absolute kitchen cutoff normalization", () => {
     );
   });
 
-  it("does nothing when only a global cutoff is present", () => {
+  it("does nothing when a scope contains only one absolute cutoff occurrence", () => {
     const html = `
       <html><body>
+        <p>Åpningstider Storgata:</p>
         <p>Mandag-Søndag: 12:00-22:00</p>
         <p>Kjøkkenet stenger 21:00</p>
       </body></html>
     `;
-    expect(normalizeRedundantAbsoluteKitchenCloseHtml(html)).toBe(html);
+    expect(
+      normalizeRedundantAbsoluteKitchenCloseHtml(html, ["Storgata"]),
+    ).toBe(html);
   });
 });
