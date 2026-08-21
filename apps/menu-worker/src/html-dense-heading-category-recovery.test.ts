@@ -65,6 +65,41 @@ describe("dense semantic heading category recovery", () => {
     expect(names).not.toContain("Vanilla Shake");
   });
 
+  it("tolerates a small minority of unsectioned priced headings while keeping only section-bound dishes", () => {
+    const html = `
+      <html><body>
+        <h3>Seasonal offer</h3><p>399 NOK</p>
+        <h3>Gift card</h3><p>500 NOK</p>
+        <h2>CURRIES</h2>
+        ${pricedFoodCards(1, 12)}
+        <h2>GRILL</h2>
+        ${pricedFoodCards(13, 12)}
+      </body></html>
+    `;
+    const items = recoverSemanticCategoryCardHtmlItems(html);
+
+    expect(items).toHaveLength(24);
+    expect(items.map((item) => item.name)).not.toContain("Seasonal offer");
+    expect(items.map((item) => item.name)).not.toContain("Gift card");
+    expect(items.every((item) => item.sectionName !== null)).toBe(true);
+  });
+
+  it("does not claim semantic authority when section coverage drops below the quality gate", () => {
+    const unsectioned = pricedFoodCards(1, 6);
+    const sectioned = pricedFoodCards(7, 20);
+    const html = `
+      <html><body>
+        ${unsectioned}
+        <h2>CURRIES</h2>
+        ${sectioned}
+        <h2>GRILL</h2>
+        <h3>Final Dish</h3><p>299 NOK</p>
+      </body></html>
+    `;
+
+    expect(recoverSemanticCategoryCardHtmlItems(html)).toEqual([]);
+  });
+
   it("does not claim semantic authority for a small generic heading list", () => {
     const html = `
       <html><body>
