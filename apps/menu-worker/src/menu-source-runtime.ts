@@ -5,6 +5,10 @@ import {
 } from "@fysen/menu-core";
 import { BrowserMenuClient } from "./browser-client.js";
 import {
+  HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION,
+  recoverEmbeddedStructuredMenuJson,
+} from "./html-embedded-menu-json-recovery.js";
+import {
   HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION,
   recoverAdjacentHeadingPriceHtmlItems,
 } from "./html-adjacent-heading-price-recovery.js";
@@ -94,7 +98,7 @@ export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v2";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v8";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v7";
-const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}`;
+const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
 export type MenuSourceFetchMode = "http" | "browser";
@@ -347,6 +351,19 @@ export async function extractMenuSource(
     );
     const extracted = extractScopedHtmlMenu(normalizedHtml);
     assertExtractionMethodForSourceType(sourceType, extracted.method);
+    const embeddedItems =
+      extracted.method === "html_heuristic"
+        ? recoverEmbeddedStructuredMenuJson(normalizedHtml).filter(
+            isCanonicalHtmlMenuItem,
+          )
+        : [];
+    if (embeddedItems.length >= 4) {
+      return {
+        items: embeddedItems,
+        method: extracted.method,
+        extractorVersion: HTML_RUNTIME_EXTRACTOR_VERSION,
+      };
+    }
     const recoveredItems =
       extracted.method === "html_heuristic"
         ? recoverDescriptionNamedHtmlItems(

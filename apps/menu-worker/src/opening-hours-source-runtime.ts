@@ -6,6 +6,10 @@ import {
 import { OpeningHoursExtractionError, type ExtractedOpeningHours } from "./opening-hours-extractor.js";
 import { OPENING_HOURS_MARKER_NORMALIZER_VERSION } from "./opening-hours-marker-normalizer.js";
 import {
+  normalizeRedundantAbsoluteKitchenCloseHtml,
+  OPENING_HOURS_REDUNDANT_CUTOFF_NORMALIZER_VERSION,
+} from "./opening-hours-redundant-cutoff-normalizer.js";
+import {
   OPENING_HOURS_SCOPE_HINT_RESOLVER_VERSION,
   resolveOpeningHoursScopeHints,
 } from "./opening-hours-scope-hints.js";
@@ -14,7 +18,7 @@ import {
   OPENING_HOURS_SOURCE_EXTRACTOR_VERSION,
 } from "./opening-hours-source-extractor.js";
 
-export const OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION = `${OPENING_HOURS_SOURCE_EXTRACTOR_VERSION}+${OPENING_HOURS_DUPLICATE_SECTION_RECOVERY_VERSION}+${OPENING_HOURS_SCOPE_HINT_RESOLVER_VERSION}+${OPENING_HOURS_MARKER_NORMALIZER_VERSION}`;
+export const OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION = `${OPENING_HOURS_SOURCE_EXTRACTOR_VERSION}+${OPENING_HOURS_DUPLICATE_SECTION_RECOVERY_VERSION}+${OPENING_HOURS_SCOPE_HINT_RESOLVER_VERSION}+${OPENING_HOURS_MARKER_NORMALIZER_VERSION}+${OPENING_HOURS_REDUNDANT_CUTOFF_NORMALIZER_VERSION}`;
 
 export interface OpeningHoursSourceRuntimeInput {
   readonly url: string;
@@ -72,7 +76,11 @@ export async function resolveOpeningHoursSource(
   }
 
   const scopeHints = resolveOpeningHoursScopeHints(input.scopeHints, input.fallbackScopeHints ?? []);
-  const extracted = extractCanonicalOpeningHours(fetched.body, scopeHints);
+  const normalizedHtml = normalizeRedundantAbsoluteKitchenCloseHtml(
+    fetched.body,
+    scopeHints,
+  );
+  const extracted = extractCanonicalOpeningHours(normalizedHtml, scopeHints);
   return {
     kind: "content",
     fetched,
