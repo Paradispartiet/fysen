@@ -9,14 +9,14 @@ import {
   HTML_TEXT_SECTION_SCOPE_VERSION,
 } from "./html-text-section-scope.js";
 
-function item(name: string, position: number): MenuObservedItem {
+function item(name: string, position: number, priceMinor = 10000): MenuObservedItem {
   return {
     sourceKey: createMenuItemSourceKey(name),
     name,
     normalizedName: normalizeDishName(name),
     description: null,
     sectionName: null,
-    priceMinor: 10000,
+    priceMinor,
     currency: "NOK",
     position,
     extractionMethod: "html_heuristic",
@@ -49,7 +49,7 @@ describe("plain-text HTML section scoping", () => {
       119 NOK
     `;
 
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v2");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v3");
     expect(
       filterPlainTextBeverageSectionItems(items, visibleText).map(
         (entry) => entry.name,
@@ -99,7 +99,74 @@ describe("plain-text HTML section scoping", () => {
     ).toEqual(["House Special"]);
   });
 
-  it("does nothing when no plain beverage boundary is present", () => {
+  it("filters bilingual beverage tails and their section headings", () => {
+    const items = [
+      item("BUTTER CHICKEN", 1),
+      item("NANBRØD/ NANBREAD", 2),
+      item("GARLIC NAN", 3),
+      item("KAFFE / COFFEE", 4),
+      item("CUPPUCINO", 5),
+      item("FAT ØL / TAP BEER", 6),
+      item("HOUSE LAGER", 7),
+      item("Hvitvin / White wine", 8),
+      item("Paxis Arinto", 9),
+    ];
+    const visibleText = `
+      KJØTT CURRIES/ NON-VEG CURRIES
+      BUTTER CHICKEN
+      285 NOK
+      NANBRØD/ NANBREAD
+      GARLIC NAN
+      69 NOK
+      KAFFE / COFFEE
+      CUPPUCINO
+      55 NOK
+      FAT ØL / TAP BEER
+      HOUSE LAGER
+      118 NOK
+      Hvitvin / White wine
+      Paxis Arinto
+      99 NOK
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual(["BUTTER CHICKEN", "GARLIC NAN"]);
+  });
+
+  it("removes safe parser and menu metadata artifacts without broad description heuristics", () => {
+    const items = [
+      item("__FYSEN_ADJACENT_HEADING_LEVEL_5__ 59", 1, 5900),
+      item("(E, N, M)", 2),
+      item("(p,s)", 3),
+      item("Ring oss på 476 52", 4),
+      item("1199,- per person", 5),
+      item("2 Per ________", 6),
+      item("/Gluten fri", 7),
+      item("kuler", 8),
+      item("Mango Sorbet 119,-", 9, 11900),
+      item("CRISPY CHICKEN TENDERS - 179", 10, 17900),
+      item("Linser (rod eller gul)___________", 11, 26900),
+      item("Fromage Pizza 109", 12, 20500),
+      item("American chocolate cake with walnuts, served with vanilla ice cream", 13, 16900),
+    ];
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, "No beverage boundary").map(
+        (entry) => entry.name,
+      ),
+    ).toEqual([
+      "Mango Sorbet",
+      "CRISPY CHICKEN TENDERS",
+      "Linser (rod eller gul)",
+      "Fromage Pizza 109",
+      "American chocolate cake with walnuts, served with vanilla ice cream",
+    ]);
+  });
+
+  it("does nothing to ordinary food items when no plain beverage boundary is present", () => {
     const items = [item("Falafel", 1), item("Baklava", 2)];
     expect(
       filterPlainTextBeverageSectionItems(
