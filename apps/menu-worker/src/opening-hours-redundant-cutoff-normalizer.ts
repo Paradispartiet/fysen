@@ -1,13 +1,15 @@
 import { load } from "cheerio";
 
 export const OPENING_HOURS_REDUNDANT_CUTOFF_NORMALIZER_VERSION =
-  "redundant-absolute-v2";
+  "redundant-absolute-v3";
 
 const absoluteKitchenClosePattern =
   /(?:kjøkken(?:et)?\s+(?:til|stenger)|kitchen\s+closes(?:\s+at)?)\s*(?:(?:kl\.?|klokka)\s*)?((?:2[0-3]|[01]?\d)(?:[.:][0-5]\d)?)/giu;
 const weekdayMentionPattern =
   /\b(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Mandag|Tirsdag|Onsdag|Torsdag|Fredag|Lørdag|Lordag|Søndag|Sondag|Man|Tir|Ons|Tor|Fre|Lør|Lor|Søn|Son|Mon|Tue|Tues|Wed|Weds|Thu|Thur|Thurs|Fri|Sat|Sun)\b/iu;
 const hoursMarkerPattern =
+  /^(?:opening\s+hours|hours|åpningstider)(?:\s+([^:]{1,80}))?:/iu;
+const exactHoursMarkerPattern =
   /^(?:opening\s+hours|hours|åpningstider)(?:\s+([^:]{1,80}))?:?$/iu;
 const candidateSelector = "p, li, h1, h2, h3, h4, h5, h6, td, th";
 
@@ -58,6 +60,13 @@ function markerMatchesScopeHints(
   });
 }
 
+function markerForText(text: string, index: number): ScopeMarker | null {
+  const prefix = text.match(hoursMarkerPattern);
+  if (prefix) return { index, label: prefix[1]?.trim() || null };
+  const exact = text.match(exactHoursMarkerPattern);
+  return exact ? { index, label: exact[1]?.trim() || null } : null;
+}
+
 function scopedElements(
   elements: readonly TextElement[],
   scopeHints: readonly string[],
@@ -66,9 +75,9 @@ function scopedElements(
 
   const markers: ScopeMarker[] = [];
   for (const [index, entry] of elements.entries()) {
-    const match = entry.text.match(hoursMarkerPattern);
-    if (!match) continue;
-    let label = match[1]?.trim() || null;
+    const marker = markerForText(entry.text, index);
+    if (!marker) continue;
+    let label = marker.label;
     if (!label) {
       const next = elements[index + 1]?.text.trim() ?? "";
       if (
