@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v6";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v7";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -47,6 +47,7 @@ interface ItemCandidate extends ParsedPrice {
 }
 
 const PDF_DOT_LEADER_SUFFIX = /\s*(?:\.\s*){2,}$/u;
+const PDF_LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]\s*/u;
 const PDF_QUANTITY = /\b\d+(?:[.,]\d+)?\s*(?:kg|gr|g|ml|cl|l)\b/giu;
 const PDF_NON_DISH_METADATA = /^(?:set\s+menu|tasting\s+menu|course\s+menu)\b/iu;
 const allergenCodeTokens = new Set([
@@ -59,17 +60,23 @@ const allergenCodeTokens = new Set([
   "g",
   "h",
   "ha",
+  "hne",
   "m",
   "ma",
+  "mk",
+  "n",
+  "p",
   "pe",
   "pi",
   "r",
   "se",
+  "sem",
   "sk",
   "sl",
   "sn",
   "so",
   "su",
+  "sy",
   "va",
   "wa",
 ]);
@@ -161,10 +168,21 @@ function parsedPrice(first: string, second?: string): ParsedPrice | null {
 }
 
 function stripAllergenSuffix(value: string): string {
-  return value
+  const normalized = normalizeLine(value)
     .replace(/\s+(?:[a-zæøå]{1,3}\s*,\s*){1,12}[a-zæøå]{1,3}$/iu, "")
     .replace(/\s+(?:vegetariano|vegano)$/iu, "")
     .trim();
+  const tokens = normalized.split(/\s+/u);
+  let end = tokens.length;
+  while (end > 0) {
+    const rawToken = tokens[end - 1] ?? "";
+    const token = rawToken.replace(/[(),.;:]+$/gu, "");
+    if (!/^[A-ZÆØÅ]{1,3}$/u.test(token)) break;
+    if (!allergenCodeTokens.has(token.toLocaleLowerCase("nb-NO"))) break;
+    end -= 1;
+  }
+  if (end === 0 || end === tokens.length) return normalized;
+  return tokens.slice(0, end).join(" ").trim();
 }
 
 function stripDotLeaderSuffix(value: string): string {
@@ -172,7 +190,9 @@ function stripDotLeaderSuffix(value: string): string {
 }
 
 function canonicalPdfDishName(value: string): string {
-  return stripDotLeaderSuffix(stripAllergenSuffix(value));
+  return stripDotLeaderSuffix(stripAllergenSuffix(value))
+    .replace(PDF_LEADING_MENU_NUMBER, "")
+    .trim();
 }
 
 function looksLikeAllergenCodeOnly(value: string): boolean {
@@ -217,13 +237,14 @@ function isWrappedDishQualifier(value: string): boolean {
   return wrappedDishQualifiers.has(normalizeDishName(canonicalPdfDishName(value)));
 }
 
+const pricePrefix = "(?:(?:kr\\.?|nok)\\s*)?";
 const priceSuffix = "(?:\\s*(?:,-|kr\\.?|nok))?";
 const standalonePrice = new RegExp(
-  `^([1-9]\\d{1,3})(?:\\s*\\/\\s*([1-9]\\d{1,3}))?${priceSuffix}$`,
+  `^${pricePrefix}([1-9]\\d{1,3})(?:\\s*\\/\\s*([1-9]\\d{1,3}))?${priceSuffix}$`,
   "iu",
 );
 const trailingPrice = new RegExp(
-  `\\s+([1-9]\\d{1,3})(?:\\s*\\/\\s*([1-9]\\d{1,3}))?${priceSuffix}$`,
+  `\\s+${pricePrefix}([1-9]\\d{1,3})(?:\\s*\\/\\s*([1-9]\\d{1,3}))?${priceSuffix}$`,
   "iu",
 );
 
