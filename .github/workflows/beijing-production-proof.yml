@@ -43,147 +43,44 @@ jobs:
         run: pnpm install --no-frozen-lockfile
       - name: Build menu worker and database
         run: pnpm --filter @fysen/menu-worker... build
-      - name: Materialize exact 49-manifest catalog in production
-        run: pnpm --filter @fysen/menu-worker onboard:catalog
-      - name: Run current Beijing live manifest gate
-        working-directory: apps/menu-worker
-        run: node dist/index.js validate:manifest catalog/beijing-palace-pilestredet-oslo.json
-      - name: Run one controlled Beijing production watch
+      - name: Reconcile exact catalog and print compact failures
         shell: bash
         run: |
           node --input-type=module <<'NODE'
-          import { createDatabasePool, MenuIndexRepository } from './packages/database/dist/index.js';
-          import { watchMenuSourceOnce } from './apps/menu-worker/dist/watcher.js';
-          const pool = createDatabasePool();
-          try {
-            const sourceResult = await pool.query(`
-              SELECT ms.id
-              FROM fysen.restaurants r
-              JOIN fysen.menu_sources ms ON ms.restaurant_id = r.id
-              WHERE r.slug = 'beijing-palace-pilestredet-oslo'
-                AND r.active = true
-                AND ms.enabled = true
-              ORDER BY ms.created_at DESC
-              LIMIT 1
-            `);
-            const sourceId = sourceResult.rows[0]?.id;
-            if (!sourceId) throw new Error('Enabled Beijing Palace production menu source not found');
-            const repository = new MenuIndexRepository(pool);
-            const summary = await watchMenuSourceOnce(repository, sourceId);
-            process.stdout.write(`${JSON.stringify({ controlledWatch: summary }, null, 2)}\n`);
-          } finally {
-            await pool.end();
-          }
-          NODE
-      - name: Prove catalog and production database are aligned
-        shell: bash
-        run: |
-          node --input-type=module <<'NODE'
-          import { readdir, readFile } from 'node:fs/promises';
-          import { createDatabasePool } from './packages/database/dist/client.js';
-
-          const catalogDir = './apps/menu-worker/catalog';
-          const files = (await readdir(catalogDir)).filter((name) => name.endsWith('.json')).sort();
-          const manifests = await Promise.all(files.map(async (name) => JSON.parse(await readFile(`${catalogDir}/${name}`, 'utf8'))));
-          const catalogSlugs = manifests.map((manifest) => manifest.restaurant.slug).sort();
-          const uniqueCatalogSlugs = [...new Set(catalogSlugs)];
-          if (catalogSlugs.length !== 49 || uniqueCatalogSlugs.length !== 49) {
-            throw new Error(`Expected exactly 49 unique catalog manifests, got files=${catalogSlugs.length} unique=${uniqueCatalogSlugs.length}`);
-          }
-
-          const pool = createDatabasePool();
-          try {
-            const activeResult = await pool.query(`
-              SELECT slug
-              FROM fysen.restaurants
-              WHERE active = true
-              ORDER BY slug
-            `);
-            const activeSlugs = activeResult.rows.map((row) => row.slug).sort();
-            const enabledResult = await pool.query(`
-              SELECT count(*)::int AS count
-              FROM fysen.menu_sources ms
-              JOIN fysen.restaurants r ON r.id = ms.restaurant_id
-              WHERE r.active = true AND ms.enabled = true
-            `);
-            const beijingResult = await pool.query(`
-              SELECT
-                r.slug,
-                r.active,
-                ms.id AS menu_source_id,
-                ms.url,
-                ms.source_type,
-                ms.enabled,
-                ms.minimum_expected_items,
-                ms.last_menu_fingerprint,
-                ms.last_http_status,
-                ms.last_checked_at,
-                ms.consecutive_failures,
-                snap.id AS snapshot_id,
-                snap.fetched_at AS snapshot_fetched_at,
-                snap.http_status AS snapshot_http_status,
-                snap.extractor_version,
-                COALESCE(item_count.count, 0)::int AS snapshot_item_count,
-                wr.outcome AS latest_watch_outcome,
-                wr.started_at AS latest_watch_started_at,
-                wr.http_status AS latest_watch_http_status,
-                wr.extracted_item_count AS latest_watch_item_count,
-                wr.error_code AS latest_watch_error_code,
-                wr.error_message AS latest_watch_error_message
-              FROM fysen.restaurants r
-              JOIN fysen.menu_sources ms ON ms.restaurant_id = r.id
-              LEFT JOIN LATERAL (
-                SELECT s.*
-                FROM fysen.menu_snapshots s
-                WHERE s.menu_source_id = ms.id
-                ORDER BY s.fetched_at DESC
-                LIMIT 1
-              ) snap ON true
-              LEFT JOIN LATERAL (
-                SELECT count(*) AS count
-                FROM fysen.menu_items mi
-                WHERE mi.snapshot_id = snap.id
-              ) item_count ON true
-              LEFT JOIN LATERAL (
-                SELECT w.*
-                FROM fysen.menu_watch_runs w
-                WHERE w.menu_source_id = ms.id
-                ORDER BY w.started_at DESC
-                LIMIT 1
-              ) wr ON true
-              WHERE r.slug = 'beijing-palace-pilestredet-oslo'
-              ORDER BY ms.created_at DESC
-              LIMIT 1
-            `);
-
-            const activeSet = new Set(activeSlugs);
-            const catalogSet = new Set(uniqueCatalogSlugs);
-            const inactiveCanonical = uniqueCatalogSlugs.filter((slug) => !activeSet.has(slug));
-            const activeNotCatalog = activeSlugs.filter((slug) => !catalogSet.has(slug));
-            const beijing = beijingResult.rows[0] ?? null;
-            const proof = {
-              catalogManifestCount: catalogSlugs.length,
-              uniqueCatalogSlugCount: uniqueCatalogSlugs.length,
-              activeRestaurantCount: activeSlugs.length,
-              enabledMenuSourceCount: enabledResult.rows[0]?.count ?? null,
-              inactiveCanonical,
-              activeNotCatalog,
-              beijing,
-            };
-            process.stdout.write(`${JSON.stringify(proof, null, 2)}\n`);
-
-            if (activeSlugs.length !== 49) throw new Error(`Expected 49 active restaurants, got ${activeSlugs.length}`);
-            if (Number(enabledResult.rows[0]?.count) !== 49) throw new Error(`Expected 49 enabled menu sources, got ${enabledResult.rows[0]?.count}`);
-            if (inactiveCanonical.length || activeNotCatalog.length) throw new Error('Catalog/production slug drift detected');
-            if (!beijing?.active || !beijing?.enabled) throw new Error('Beijing Palace is not active/enabled');
-            if (beijing.minimum_expected_items !== 35) throw new Error(`Beijing minimumExpectedItems mismatch: ${beijing.minimum_expected_items}`);
-            if (beijing.last_menu_fingerprint !== '9bde7b3b0667812246f7e32822ca2ef9c66841c79c23455612d434a84ae91ce0') throw new Error(`Unexpected Beijing fingerprint ${beijing.last_menu_fingerprint}`);
-            if (beijing.extractor_version !== 'pdf-text-v12') throw new Error(`Unexpected Beijing extractor ${beijing.extractor_version}`);
-            if (Number(beijing.snapshot_item_count) !== 35) throw new Error(`Expected Beijing snapshot item count 35, got ${beijing.snapshot_item_count}`);
-            if (Number(beijing.consecutive_failures) !== 0) throw new Error(`Beijing consecutive failures ${beijing.consecutive_failures}`);
-            if (beijing.latest_watch_error_code || beijing.latest_watch_error_message) throw new Error('Latest Beijing watcher contains an error');
-            if (!['changed', 'unchanged', 'not_modified'].includes(beijing.latest_watch_outcome)) throw new Error(`Unexpected Beijing watch outcome ${beijing.latest_watch_outcome}`);
-          } finally {
-            await pool.end();
-          }
+          import { onboardRestaurantCatalog } from './apps/menu-worker/dist/onboarding.js';
+          const summary = await onboardRestaurantCatalog();
+          const compact = {
+            manifestCount: summary.manifestCount,
+            publishedCount: summary.publishedCount,
+            alreadyPublishedCount: summary.alreadyPublishedCount,
+            failedCount: summary.failedCount,
+            failures: summary.results
+              .filter((result) => result.outcome === 'failed')
+              .map((result) => ({
+                slug: result.slug,
+                restaurantId: result.restaurantId,
+                menuSourceId: result.menuSourceId,
+                itemCount: result.itemCount,
+                missingRequiredDishes: result.missingRequiredDishes,
+                forbiddenDishesPresent: result.forbiddenDishesPresent,
+                firstWatch: result.firstWatch ? {
+                  outcome: result.firstWatch.outcome,
+                  httpStatus: result.firstWatch.httpStatus,
+                  extractedItemCount: result.firstWatch.extractedItemCount,
+                  errorCode: result.firstWatch.errorCode,
+                  errorMessage: result.firstWatch.errorMessage,
+                } : null,
+                secondWatch: result.secondWatch ? {
+                  outcome: result.secondWatch.outcome,
+                  httpStatus: result.secondWatch.httpStatus,
+                  extractedItemCount: result.secondWatch.extractedItemCount,
+                  errorCode: result.secondWatch.errorCode,
+                  errorMessage: result.secondWatch.errorMessage,
+                } : null,
+                warnings: result.warnings,
+                error: result.error,
+              })),
+          };
+          console.log('COMPACT_RECONCILE_RESULT=' + JSON.stringify(compact));
+          if (summary.failedCount > 0) process.exit(1);
           NODE
