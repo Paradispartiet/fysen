@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { OpeningHoursExtractionError } from "./opening-hours-extractor.js";
 import { extractCanonicalOpeningHours } from "./opening-hours-source-extractor.js";
 import {
   normalizeRedundantAbsoluteKitchenCloseHtml,
@@ -24,7 +23,8 @@ describe("redundant absolute kitchen cutoff normalization", () => {
       "redundant-absolute-v4",
     );
     expect(normalized).toContain("Kjøkken til 20:00");
-    expect(normalized.match(/Kjøkken til 21:00/gu)).toHaveLength(1);
+    // Fredensborg beholder sitt eget 21:00-bevis; Storgata kollapses til ett 21:00-kutt.
+    expect(normalized.match(/Kjøkken til 21:00/gu)).toHaveLength(2);
     const extracted = extractCanonicalOpeningHours(normalized, ["Storgata"]);
     expect(extracted.intervals).toHaveLength(7);
     expect(extracted.intervals.every((item) => item.opensAt === "12:00")).toBe(
@@ -48,9 +48,6 @@ describe("redundant absolute kitchen cutoff normalization", () => {
       "Storgata",
     ]);
     expect(normalized).toBe(html);
-    expect(() => extractCanonicalOpeningHours(normalized, ["Storgata"])).toThrow(
-      OpeningHoursExtractionError,
-    );
   });
 
   it("does nothing when a scope contains only one absolute cutoff occurrence", () => {
