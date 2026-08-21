@@ -1,0 +1,122 @@
+name: Viet Ordera API discovery
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/viet-ordera-api-discovery.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Capture only declared Ordera data responses
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research
+          node --input-type=module <<'NODE'
+          import { chromium } from 'playwright-core';
+          import { writeFile } from 'node:fs/promises';
+          const source = new URL('https://vietkitchen.ordera.no/');
+          const allowedOrigins = new Set([
+            source.origin,
+            'https://order-api.ordera.no',
+            'https://socket.ordera.no',
+          ]);
+          const dataOrigins = new Set([
+            'https://order-api.ordera.no',
+            'https://socket.ordera.no',
+          ]);
+          const browser = await chromium.launch({ channel: 'chrome', headless: true, chromiumSandbox: true });
+          const context = await browser.newContext({
+            acceptDownloads: false,
+            ignoreHTTPSErrors: false,
+            javaScriptEnabled: true,
+            serviceWorkers: 'block',
+            userAgent: 'FysenMenuBot/0.1',
+          });
+          const reports = [];
+          try {
+            await context.route('**/*', async (route) => {
+              const request = route.request();
+              const type = request.resourceType();
+              if (['image','media','font','texttrack','eventsource','websocket'].includes(type)) {
+                await route.abort('blockedbyclient');
+                return;
+              }
+              let url;
+              try { url = new URL(request.url()); } catch { await route.abort('blockedbyclient'); return; }
+              if (url.protocol !== 'https:') { await route.abort('blockedbyclient'); return; }
+              if (['document','xhr','fetch'].includes(type) && !allowedOrigins.has(url.origin)) {
+                await route.abort('blockedbyclient');
+                return;
+              }
+              await route.continue();
+            });
+            const page = await context.newPage();
+            page.on('response', async (response) => {
+              try {
+                const request = response.request();
+                const type = request.resourceType();
+                const url = new URL(response.url());
+                if (!['xhr','fetch'].includes(type) || !dataOrigins.has(url.origin)) return;
+                const headers = await response.allHeaders();
+                const contentType = headers['content-type'] ?? '';
+                let sample = null;
+                if (/json|text|javascript/i.test(contentType)) {
+                  const text = await response.text().catch(() => '');
+                  sample = text.slice(0, 20000);
+                }
+                reports.push({
+                  url: response.url(),
+                  status: response.status(),
+                  resourceType: type,
+                  contentType,
+                  sample,
+                });
+              } catch {}
+            });
+            const response = await page.goto(source.toString(), { timeout: 15000, waitUntil: 'domcontentloaded' });
+            await page.waitForLoadState('networkidle', { timeout: 7000 }).catch(() => undefined);
+            await page.waitForTimeout(1500);
+            const bodyText = (await page.locator('body').innerText().catch(() => '')).slice(0, 20000);
+            const result = {
+              documentStatus: response?.status() ?? null,
+              finalUrl: page.url(),
+              bodyText,
+              dataResponses: reports,
+            };
+            await writeFile('research/viet-ordera-api-discovery.json', JSON.stringify(result, null, 2) + '\n');
+            console.log(JSON.stringify({
+              documentStatus: result.documentStatus,
+              finalUrl: result.finalUrl,
+              bodyTextLength: bodyText.length,
+              dataResponses: reports.map((entry) => ({ url: entry.url, status: entry.status, resourceType: entry.resourceType, contentType: entry.contentType, sampleLength: entry.sample?.length ?? 0 })),
+            }, null, 2));
+          } finally {
+            await context.close().catch(() => undefined);
+            await browser.close().catch(() => undefined);
+          }
+          NODE
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: viet-ordera-api-discovery
+          path: apps/menu-worker/research/viet-ordera-api-discovery.json
+          if-no-files-found: error
