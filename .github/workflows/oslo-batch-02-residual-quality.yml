@@ -1,0 +1,160 @@
+name: Oslo batch 02 residual quality
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/oslo-batch-02-residual-quality.yml"
+      - "apps/menu-worker/src/**"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  residual-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build menu-worker dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Restore original Batch 02 plan and isolate held generated subset
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02
+          mkdir -p /tmp/batch02
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import { mkdir, readFile, writeFile } from 'node:fs/promises';
+
+          const source = JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json', 'utf8'));
+          const held = new Set([
+            '1947-gandhi-majorstuen-oslo',
+            'mesob-motzfeldts-gate-oslo',
+            'jaipur-karl-johans-gate-oslo',
+            'new-delhi-tjuvholmen-oslo',
+            'beijing-palace-pilestredet-oslo',
+            'dognvill-tjuvholmen-oslo',
+            'dognvill-vulkan-oslo',
+            'dognvill-bjorvika-oslo',
+            'indi-spice-welhavens-gate-oslo',
+          ]);
+          const restaurants = source.restaurants.filter((entry) => held.has(entry.restaurant.slug));
+          if (restaurants.length !== held.size) {
+            throw new Error(`Expected ${held.size} held entries, found ${restaurants.length}`);
+          }
+          const plan = {
+            ...source,
+            outputDirectory: 'research/oslo-batch-02-residual-generated',
+            concurrency: 4,
+            restaurants,
+          };
+          await mkdir('apps/menu-worker/research/oslo-batch-02-residual-generated', { recursive: true });
+          await writeFile(
+            'apps/menu-worker/research/oslo-batch-02-residual.plan.json',
+            JSON.stringify(plan, null, 2) + '\n',
+          );
+          console.log(JSON.stringify({ count: restaurants.length, slugs: restaurants.map((entry) => entry.restaurant.slug) }, null, 2));
+          NODE
+
+      - name: Run fresh intake with current parser
+        id: intake
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js intake:batch research/oslo-batch-02-residual.plan.json | tee research/oslo-batch-02-residual-intake.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Validate every freshly generated manifest
+        id: validation
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/oslo-batch-02-residual-generated | tee research/oslo-batch-02-residual-validation.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Summarize residual output
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile, readdir } from 'node:fs/promises';
+          const readJson = async (path) => JSON.parse(await readFile(path, 'utf8'));
+          const intake = await readJson('apps/menu-worker/research/oslo-batch-02-residual-intake.json');
+          let validation = null;
+          try { validation = await readJson('apps/menu-worker/research/oslo-batch-02-residual-validation.json'); } catch {}
+          const directory = 'apps/menu-worker/research/oslo-batch-02-residual-generated';
+          const generatedFiles = (await readdir(directory)).filter((name) => name.endsWith('.json')).sort();
+          const summary = {
+            intakeExitCode: '${{ steps.intake.outputs.exit_code }}',
+            validationExitCode: '${{ steps.validation.outputs.exit_code }}',
+            intake: {
+              requestedCount: intake.requestedCount,
+              generatedCount: intake.generatedCount,
+              failedCount: intake.failedCount,
+              results: intake.results,
+            },
+            validation: validation ? {
+              manifestCount: validation.manifestCount,
+              acceptedCount: validation.acceptedCount,
+              failedCount: validation.failedCount,
+              failureFamilyCounts: validation.failureFamilyCounts,
+              results: validation.results.map((result) => ({
+                slug: result.slug,
+                accepted: result.accepted,
+                failureFamilies: result.failureFamilies,
+                observedDishNames: result.validation?.menu?.observedDishNames ?? [],
+                itemCount: result.validation?.menu?.quality?.itemCount ?? null,
+                extractionMethod: result.validation?.menu?.extractionMethod ?? null,
+                extractorVersion: result.validation?.menu?.extractorVersion ?? null,
+                error: result.error,
+              })),
+            } : null,
+            generatedFiles,
+          };
+          await writeFile(
+            'apps/menu-worker/research/oslo-batch-02-residual-summary.json',
+            JSON.stringify(summary, null, 2) + '\n',
+          );
+          console.log(JSON.stringify(summary, null, 2));
+          NODE
+
+      - name: Upload residual proof artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: oslo-batch-02-residual-quality
+          path: |
+            apps/menu-worker/research/oslo-batch-02-residual.plan.json
+            apps/menu-worker/research/oslo-batch-02-residual-intake.json
+            apps/menu-worker/research/oslo-batch-02-residual-validation.json
+            apps/menu-worker/research/oslo-batch-02-residual-summary.json
+            apps/menu-worker/research/oslo-batch-02-residual-generated/*.json
+          if-no-files-found: error
