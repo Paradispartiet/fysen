@@ -1,0 +1,96 @@
+name: TEMP patch published source migration
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.event.pull_request.head.ref == 'agent/published-source-migration-safety'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          persist-credentials: true
+      - name: Patch staged source migration
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          watcher = Path('apps/menu-worker/src/watcher.ts')
+          text = watcher.read_text()
+          anchor = '''export interface MenuWatchSummary {\n  readonly menuSourceId: string;\n  readonly outcome: WatchOutcome;\n  readonly itemCount: number | null;\n  readonly changeCount: number;\n  readonly snapshotId: string | null;\n}\n'''
+          replacement = anchor + '''\nexport interface MenuWatchOptions {\n  readonly allowDisabled?: boolean;\n}\n'''
+          if 'export interface MenuWatchOptions' not in text:
+              if anchor not in text:
+                  raise SystemExit('watch options anchor missing')
+              text = text.replace(anchor, replacement, 1)
+          sig_old = '''  sourceSupport: MenuSourceSupportInput = { redirectOrigins: [], browserDataOrigins: [] },\n): Promise<MenuWatchSummary> {'''
+          sig_new = '''  sourceSupport: MenuSourceSupportInput = { redirectOrigins: [], browserDataOrigins: [] },\n  options: MenuWatchOptions = {},\n): Promise<MenuWatchSummary> {'''
+          if sig_new not in text:
+              if sig_old not in text:
+                  raise SystemExit('watch signature anchor missing')
+              text = text.replace(sig_old, sig_new, 1)
+          guard_old = '  if (!source.enabled) throw new Error(`Menu source is disabled: ${menuSourceId}`);'
+          guard_new = '  if (!source.enabled && !options.allowDisabled) throw new Error(`Menu source is disabled: ${menuSourceId}`);'
+          if guard_new not in text:
+              if guard_old not in text:
+                  raise SystemExit('watch disabled guard anchor missing')
+              text = text.replace(guard_old, guard_new, 1)
+          watcher.write_text(text)
+
+          onboarding = Path('apps/menu-worker/src/onboarding.ts')
+          text = onboarding.read_text()
+          import_old = '''  getRestaurantActionState,\n  MenuIndexRepository,\n  quiesceRestaurantCandidate,\n  recordRestaurantActionVerificationSuccess,\n  replaceMenuSourceSupport,\n  setMenuSourceEnabled,'''
+          import_new = '''  getRestaurantActionState,\n  listEnabledMenuSourcesForRestaurant,\n  MenuIndexRepository,\n  quiesceRestaurantCandidate,\n  recordRestaurantActionVerificationSuccess,\n  replaceMenuSourceSupport,\n  replacePublishedMenuSourceAuthority,\n  setMenuSourceEnabled,'''
+          if 'listEnabledMenuSourcesForRestaurant' not in text:
+              if import_old not in text:
+                  raise SystemExit('onboarding import anchor missing')
+              text = text.replace(import_old, import_new, 1)
+
+          accepted_anchor = '''function accepted(summary: MenuWatchSummary): boolean {\n  return acceptedOutcomes.has(summary.outcome);\n}\n'''
+          helper = accepted_anchor + '''\nexport function shouldStagePublishedSourceMigration(\n  candidateActive: boolean,\n  authoritativeMenuSourceId: string,\n  enabledSources: readonly { readonly id: string }[],\n): boolean {\n  return (\n    candidateActive &&\n    enabledSources.some((source) => source.id !== authoritativeMenuSourceId)\n  );\n}\n'''
+          if 'shouldStagePublishedSourceMigration' not in text:
+              if accepted_anchor not in text:
+                  raise SystemExit('migration helper anchor missing')
+              text = text.replace(accepted_anchor, helper, 1)
+
+          support_anchor = '''    menuSourceId = source.id;\n    await replaceMenuSourceSupport(pool, source.id, manifest.menuSource.sourceSupport);\n    const menuHttpClient = new HttpMenuClient();\n    const watchMenu = () =>\n      watchMenuSourceOnce(\n        repository,\n        source.id,\n        menuHttpClient,\n        manifest.menuSource.sourceSupport,\n      );\n'''
+          support_replacement = '''    menuSourceId = source.id;\n    await replaceMenuSourceSupport(pool, source.id, manifest.menuSource.sourceSupport);\n    const enabledSources = candidate.active\n      ? await listEnabledMenuSourcesForRestaurant(pool, candidate.id)\n      : [];\n    const publishedSourceMigration = shouldStagePublishedSourceMigration(\n      candidate.active,\n      source.id,\n      enabledSources,\n    );\n    if (publishedSourceMigration) {\n      await setMenuSourceEnabled(pool, source.id, false);\n    }\n    const menuHttpClient = new HttpMenuClient();\n    const watchMenu = () =>\n      watchMenuSourceOnce(\n        repository,\n        source.id,\n        menuHttpClient,\n        manifest.menuSource.sourceSupport,\n        { allowDisabled: publishedSourceMigration },\n      );\n'''
+          if 'const publishedSourceMigration = shouldStagePublishedSourceMigration' not in text:
+              if support_anchor not in text:
+                  raise SystemExit('source migration staging anchor missing')
+              text = text.replace(support_anchor, support_replacement, 1)
+
+          active_anchor = '''    if (candidate.active) {\n      const previousSnapshot = await repository.getLatestSnapshotWithItems(source.id);\n'''
+          active_replacement = '''    if (candidate.active) {\n      if (publishedSourceMigration) {\n        firstWatch = await watchMenu();\n        if (!accepted(firstWatch)) {\n          throw new Error(`First staged source migration watch was ${firstWatch.outcome}`);\n        }\n        latestQuality = await assertLatestSnapshot(repository, source.id, manifest);\n        if (!latestQuality.accepted) {\n          throw new Error(\n            qualityFailure(\n              "First staged source migration snapshot failed assertions",\n              latestQuality,\n            ),\n          );\n        }\n\n        secondWatch = await watchMenu();\n        if (!accepted(secondWatch)) {\n          throw new Error(`Second staged source migration watch was ${secondWatch.outcome}`);\n        }\n        latestQuality = await assertLatestSnapshot(repository, source.id, manifest);\n        if (!latestQuality.accepted) {\n          throw new Error(\n            qualityFailure(\n              "Second staged source migration snapshot failed assertions",\n              latestQuality,\n            ),\n          );\n        }\n\n        const metadata = await ensureMetadata(pool, manifest, candidate.id);\n        hoursSourceId = metadata.hoursSourceId;\n        actions = metadata.actions;\n        await replacePublishedMenuSourceAuthority(pool, candidate.id, source.id);\n        return {\n          slug: manifest.restaurant.slug,\n          outcome: "already_published",\n          restaurantId,\n          menuSourceId,\n          hoursSourceId,\n          hoursWatch,\n          actions,\n          firstWatch,\n          secondWatch,\n          itemCount: latestQuality.itemCount,\n          missingRequiredDishes: latestQuality.missingRequiredDishes,\n          forbiddenDishesPresent: latestQuality.forbiddenDishesPresent,\n          warnings,\n          error: null,\n        };\n      }\n\n      const previousSnapshot = await repository.getLatestSnapshotWithItems(source.id);\n'''
+          if 'First staged source migration watch' not in text:
+              if active_anchor not in text:
+                  raise SystemExit('active migration anchor missing')
+              text = text.replace(active_anchor, active_replacement, 1)
+
+          publish_old = '''    await setRestaurantCoverageActive(pool, candidate.id, true);\n    return {\n      slug: manifest.restaurant.slug,\n      outcome: "published",'''
+          publish_new = '''    await replacePublishedMenuSourceAuthority(pool, candidate.id, source.id);\n    await setRestaurantCoverageActive(pool, candidate.id, true);\n    return {\n      slug: manifest.restaurant.slug,\n      outcome: "published",'''
+          if 'await replacePublishedMenuSourceAuthority(pool, candidate.id, source.id);\n    await setRestaurantCoverageActive(pool, candidate.id, true);' not in text:
+              if publish_old not in text:
+                  raise SystemExit('candidate publish authority anchor missing')
+              text = text.replace(publish_old, publish_new, 1)
+
+          onboarding.write_text(text)
+          PY
+          git diff --check
+          git diff -- apps/menu-worker/src/watcher.ts apps/menu-worker/src/onboarding.ts
+      - name: Commit permanent patch
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- apps/menu-worker/src/watcher.ts apps/menu-worker/src/onboarding.ts
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Stage published source migrations safely"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
