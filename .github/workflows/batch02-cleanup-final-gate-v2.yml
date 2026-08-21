@@ -1,0 +1,178 @@
+name: Batch 02 cleanup final gate v2
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/batch02-cleanup-final-gate-v2.yml"
+      - "apps/menu-worker/src/**"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Assert and live-validate all 50 current catalog manifests serially
+        id: all50
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research
+          node --input-type=module <<'NODE'
+          import { readdir, readFile } from 'node:fs/promises';
+          const files = (await readdir('catalog')).filter((name) => name.endsWith('.json')).sort();
+          const slugs = [];
+          for (const file of files) {
+            const manifest = JSON.parse(await readFile(`catalog/${file}`, 'utf8'));
+            slugs.push(manifest.restaurant.slug);
+          }
+          if (files.length !== 50 || new Set(slugs).size !== 50) {
+            throw new Error(`Expected 50 unique catalog manifests, got ${files.length}/${new Set(slugs).size}`);
+          }
+          NODE
+          set +e
+          node dist/index.js validate:batch catalog | tee research/batch02-cleanup-all50.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Restore immutable Batch 02 plan and isolate final five holds
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02
+          mkdir -p /tmp/batch02
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import { mkdir, readFile, writeFile } from 'node:fs/promises';
+          const source = JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json','utf8'));
+          const targets = new Set([
+            'jaipur-karl-johans-gate-oslo',
+            'indi-spice-welhavens-gate-oslo',
+            'dognvill-bjorvika-oslo',
+            'dognvill-tjuvholmen-oslo',
+            'dognvill-vulkan-oslo',
+          ]);
+          const restaurants = source.restaurants.filter((entry) => targets.has(entry.restaurant.slug));
+          if (restaurants.length !== 5) throw new Error(`Expected 5 targets, found ${restaurants.length}`);
+          const plan = {
+            ...source,
+            outputDirectory: 'research/batch02-cleanup-final-five-generated',
+            concurrency: 1,
+            restaurants,
+          };
+          await mkdir('apps/menu-worker/research/batch02-cleanup-final-five-generated', { recursive: true });
+          await writeFile('apps/menu-worker/research/batch02-cleanup-final-five.plan.json', JSON.stringify(plan, null, 2) + '\n');
+          NODE
+
+      - name: Fresh intake final five
+        id: intake5
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js intake:batch research/batch02-cleanup-final-five.plan.json | tee research/batch02-cleanup-final-five-intake.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Independent serial validation final five
+        id: validate5
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/batch02-cleanup-final-five-generated | tee research/batch02-cleanup-final-five-validation.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Gate and summarize exact output
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const all50 = JSON.parse(await readFile('research/batch02-cleanup-all50.json','utf8'));
+          const intake = JSON.parse(await readFile('research/batch02-cleanup-final-five-intake.json','utf8'));
+          const validation = JSON.parse(await readFile('research/batch02-cleanup-final-five-validation.json','utf8'));
+          const compact = (result) => ({
+            slug: result.slug,
+            accepted: result.accepted,
+            failureFamilies: result.failureFamilies ?? [],
+            error: result.error ?? null,
+            menuError: result.validation?.menu?.error ?? null,
+            itemCount: result.validation?.menu?.quality?.itemCount ?? null,
+            extractorVersion: result.validation?.menu?.extractorVersion ?? null,
+            observedDishNames: result.validation?.menu?.observedDishNames ?? [],
+          });
+          const summary = {
+            cleanupHead: '2cc92a0b465b756bb23795cde310afd80282fbf9',
+            all50ExitCode: '${{ steps.all50.outputs.exit_code }}',
+            intake5ExitCode: '${{ steps.intake5.outputs.exit_code }}',
+            validate5ExitCode: '${{ steps.validate5.outputs.exit_code }}',
+            all50: {
+              manifestCount: all50.manifestCount,
+              acceptedCount: all50.acceptedCount,
+              failedCount: all50.failedCount,
+              failureFamilyCounts: all50.failureFamilyCounts,
+              failed: (all50.results ?? []).filter((result) => !result.accepted).map(compact),
+            },
+            finalFiveIntake: {
+              requestedCount: intake.requestedCount,
+              generatedCount: intake.generatedCount,
+              failedCount: intake.failedCount,
+              results: intake.results,
+            },
+            finalFiveValidation: {
+              manifestCount: validation.manifestCount,
+              acceptedCount: validation.acceptedCount,
+              failedCount: validation.failedCount,
+              failureFamilyCounts: validation.failureFamilyCounts,
+              results: validation.results.map(compact),
+            },
+          };
+          await writeFile('research/batch02-cleanup-final-gate-v2-summary.json', JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          if (all50.manifestCount !== 50 || all50.acceptedCount !== 50 || all50.failedCount !== 0) {
+            throw new Error(`All-50 gate failed: ${all50.acceptedCount}/${all50.manifestCount}, failed=${all50.failedCount}`);
+          }
+          if (intake.requestedCount !== 5 || intake.generatedCount !== 5 || intake.failedCount !== 0) {
+            throw new Error(`Five intake gate failed: ${intake.generatedCount}/${intake.requestedCount}, failed=${intake.failedCount}`);
+          }
+          if (validation.manifestCount !== 5 || validation.acceptedCount !== 5 || validation.failedCount !== 0) {
+            throw new Error(`Five validation gate failed: ${validation.acceptedCount}/${validation.manifestCount}, failed=${validation.failedCount}`);
+          }
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-cleanup-final-gate-v2
+          path: |
+            apps/menu-worker/research/batch02-cleanup-all50.json
+            apps/menu-worker/research/batch02-cleanup-final-five.plan.json
+            apps/menu-worker/research/batch02-cleanup-final-five-intake.json
+            apps/menu-worker/research/batch02-cleanup-final-five-validation.json
+            apps/menu-worker/research/batch02-cleanup-final-gate-v2-summary.json
+            apps/menu-worker/research/batch02-cleanup-final-five-generated/*.json
+          if-no-files-found: warn
