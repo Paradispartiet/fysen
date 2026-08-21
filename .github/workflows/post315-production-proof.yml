@@ -89,7 +89,8 @@ jobs:
               `SELECT DISTINCT ON (r.slug)
                       r.slug, r.active, ms.enabled, ms.last_http_status,
                       ms.consecutive_failures, ms.last_menu_fingerprint,
-                      ms.extractor_version,
+                      s.extractor_version,
+                      s.fetched_at AS latest_snapshot_fetched_at,
                       w.outcome AS latest_outcome,
                       w.http_status AS latest_watch_http_status,
                       w.extracted_item_count,
@@ -97,6 +98,13 @@ jobs:
                       w.started_at AS latest_watch_started_at
                  FROM fysen.restaurants r
                  JOIN fysen.menu_sources ms ON ms.restaurant_id = r.id
+                 LEFT JOIN LATERAL (
+                   SELECT extractor_version, fetched_at
+                     FROM fysen.menu_snapshots
+                    WHERE menu_source_id = ms.id
+                    ORDER BY fetched_at DESC
+                    LIMIT 1
+                 ) s ON true
                  LEFT JOIN LATERAL (
                    SELECT outcome, http_status, extracted_item_count, error_code, error_message, started_at
                      FROM fysen.menu_watch_runs
