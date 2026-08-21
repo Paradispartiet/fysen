@@ -73,8 +73,11 @@ async function importSource(relativeSourcePath) {
 }
 
 const explorerData = await importSource("components/cuisine-explorer-data.ts");
+const dishDiscovery = await importSource("lib/dish-discovery.ts");
 const publicPath = await importSource("lib/public-path.ts");
 const explorerSource = await readFile(path.join(webRoot, "components/cuisine-explorer.tsx"), "utf8");
+const clientBrowseSource = await readFile(path.join(webRoot, "lib/client-dish-search.ts"), "utf8");
+const previewSearchSource = await readFile(path.join(webRoot, "components/static-preview-search-page.tsx"), "utf8");
 
 test("Matlyst viser en flat, entydig katalog over aktive kjøkken", () => {
   const activeNames = explorerData.cuisines.map((cuisine) => cuisine.name);
@@ -96,6 +99,33 @@ test("Utforsk verden er flat og kommer før Hva frister", () => {
   assert.ok(worldDirectory >= 0, "mangler den flate Utforsk verden-katalogen");
   assert.ok(moodDirectory > worldDirectory, "Hva frister skal ligge under Utforsk verden");
   assert.doesNotMatch(explorerSource, /culinaryWorlds|selectedWorld|selectedCulinaryRegion/u);
+});
+
+test("Utforsk verden viser ferskt restaurantbevis også i Pages-preview", () => {
+  assert.match(explorerSource, /På menyen nå/u);
+  assert.match(explorerSource, /restaurantExamples/u);
+  assert.match(explorerSource, /browseDishesClient/u);
+  assert.match(clientBrowseSource, /NEXT_PUBLIC_FYSEN_API_BASE_URL/u);
+  assert.match(previewSearchSource, /browseDishesClient/u);
+  assert.doesNotMatch(previewSearchSource, /function previewBrowseUrl/u);
+
+  const coverage = dishDiscovery.discoveryCoverage(
+    [
+      {
+        id: "concept:ramen",
+        name: "Ramen",
+        query: "ramen",
+        restaurantCount: 3,
+        restaurantExamples: [
+          { id: "00000000-0000-4000-8000-000000000001", name: "Ramen 1", address: "Testgata 1" },
+          { id: "00000000-0000-4000-8000-000000000002", name: "Ramen 2", address: "Testgata 2" },
+        ],
+      },
+    ],
+    { label: "Ramen", query: "ramen", aliases: [] },
+  );
+  assert.equal(coverage.restaurantCount, 3);
+  assert.deepEqual(coverage.restaurantExamples.map((restaurant) => restaurant.name), ["Ramen 1", "Ramen 2"]);
 });
 
 test("production-backed discovery-retter er tilgjengelige i Alle retter-scope", () => {

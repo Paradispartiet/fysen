@@ -16,6 +16,11 @@ export interface DishBrowseDatabaseResult {
   readonly name: string;
   readonly query: string;
   readonly restaurantCount: number;
+  readonly restaurantExamples: readonly {
+    readonly id: string;
+    readonly name: string;
+    readonly address: string;
+  }[];
 }
 
 export interface DishBrowseDatabaseQuality {
@@ -42,6 +47,8 @@ interface DishBrowseRow extends QueryResultRow {
   section_name: string | null;
   price_minor: number | null;
   restaurant_id: string;
+  restaurant_name: string;
+  restaurant_address: string;
   confidence: number;
   position: number;
   fetched_at: Date;
@@ -78,6 +85,8 @@ export async function browseDishes(
           item.section_name,
           item.price_minor,
           restaurant.id AS restaurant_id,
+          restaurant.name AS restaurant_name,
+          restaurant.address AS restaurant_address,
           item.confidence,
           item.position,
           latest.fetched_at
@@ -133,17 +142,30 @@ export async function browseDishes(
   }
 
   const dishes = [...groups.entries()].map(([id, group]) => {
-    const representative = [...group.rows].sort((left, right) =>
+    const rankedRows = [...group.rows].sort((left, right) =>
       right.confidence - left.confidence
       || right.fetched_at.getTime() - left.fetched_at.getTime()
       || left.position - right.position
-      || left.original_name.localeCompare(right.original_name, "nb"))[0]!;
+      || left.restaurant_name.localeCompare(right.restaurant_name, "nb")
+      || left.original_name.localeCompare(right.original_name, "nb"));
+    const representative = rankedRows[0]!;
+    const seenRestaurants = new Set<string>();
+    const restaurantExamples = rankedRows.flatMap((row) => {
+      if (seenRestaurants.has(row.restaurant_id) || seenRestaurants.size >= 2) return [];
+      seenRestaurants.add(row.restaurant_id);
+      return [{
+        id: row.restaurant_id,
+        name: row.restaurant_name,
+        address: row.restaurant_address,
+      }];
+    });
     const name = representative.concept_name ?? canonicalMenuDishName(representative.original_name);
     return {
       id,
       name,
       query: representative.preferred_query ?? canonicalMenuDishIdentity(name),
       restaurantCount: group.restaurants.size,
+      restaurantExamples,
     };
   }).sort((left, right) => left.name.localeCompare(right.name, "nb") || left.id.localeCompare(right.id));
 

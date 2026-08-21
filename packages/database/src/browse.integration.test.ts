@@ -172,6 +172,18 @@ integrationDescribe("dish browse integration", () => {
         name: "Biff tartar",
         query: "biff tartar",
         restaurantCount: 2,
+        restaurantExamples: [
+          {
+            id: expect.any(String),
+            name: "Browse Bistro",
+            address: "Rettgata 1",
+          },
+          {
+            id: expect.any(String),
+            name: "Browse Brasserie",
+            address: "Rettgata 2",
+          },
+        ],
       },
     ]);
     expect(result.quality).toEqual({

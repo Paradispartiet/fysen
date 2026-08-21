@@ -1,7 +1,12 @@
 "use client";
 
-import type { DishBrowseItem, DishBrowseResponse } from "@fysen/contracts/dish-browse";
+import type {
+  DishBrowseItem,
+  DishBrowseResponse,
+  DishBrowseRestaurantExample,
+} from "@fysen/contracts/dish-browse";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { browseDishesClient } from "../lib/client-dish-search";
 import { discoveryCoverage, normalizeDiscoveryText } from "../lib/dish-discovery";
 import { dishSearchHref } from "../lib/public-path";
 import {
@@ -16,6 +21,7 @@ import {
 type DishCoverage = {
   readonly dish: DishSuggestion;
   readonly restaurantCount: number;
+  readonly restaurantExamples: readonly DishBrowseRestaurantExample[];
 };
 
 function uniqueCandidates(dishes: readonly DishSuggestion[]): readonly DishSuggestion[] {
@@ -45,9 +51,11 @@ function cuisineFilterText(cuisine: Cuisine): string {
 }
 
 function coverageForDish(dishes: readonly DishBrowseItem[], dish: DishSuggestion): DishCoverage {
+  const coverage = discoveryCoverage(dishes, dish);
   return {
     dish,
-    restaurantCount: discoveryCoverage(dishes, dish).restaurantCount,
+    restaurantCount: coverage.restaurantCount,
+    restaurantExamples: coverage.restaurantExamples,
   };
 }
 
@@ -105,6 +113,7 @@ function DiscoveryDishList({
 }
 
 export function CuisineExplorer({ browseData }: { readonly browseData: DishBrowseResponse | null }) {
+  const [previewBrowseData, setPreviewBrowseData] = useState<DishBrowseResponse | null>(null);
   const [selectedCuisine, setSelectedCuisine] = useState<Cuisine | null>(null);
   const [selectedAreaName, setSelectedAreaName] = useState<string>("");
   const [selectedMood, setSelectedMood] = useState<FoodMood | null>(null);
@@ -113,7 +122,21 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
   const moodDialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const moodTriggerRef = useRef<HTMLButtonElement | null>(null);
-  const liveDishes = browseData?.dishes ?? [];
+  const effectiveBrowseData = browseData ?? previewBrowseData;
+  const liveDishes = effectiveBrowseData?.dishes ?? [];
+
+  useEffect(() => {
+    if (browseData) return;
+
+    const controller = new AbortController();
+    void browseDishesClient("Oslo", { signal: controller.signal })
+      .then(setPreviewBrowseData)
+      .catch(() => {
+        if (!controller.signal.aborted) setPreviewBrowseData(null);
+      });
+
+    return () => controller.abort();
+  }, [browseData]);
 
   const selectedArea = useMemo<CuisineArea | null>(() => {
     if (!selectedCuisine) return null;
@@ -139,14 +162,14 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
   }, [liveDishes]);
 
   const rankedCuisines = useMemo(() => {
-    if (!browseData) return cuisines;
+    if (!effectiveBrowseData) return cuisines;
     return [...cuisines].sort((left, right) => {
       const leftCount = featured.get(left.name)?.restaurantCount ?? 0;
       const rightCount = featured.get(right.name)?.restaurantCount ?? 0;
       if (leftCount !== rightCount) return rightCount - leftCount;
       return cuisines.indexOf(left) - cuisines.indexOf(right);
     });
-  }, [browseData, featured]);
+  }, [effectiveBrowseData, featured]);
 
   const filteredCuisines = useMemo(() => {
     const normalizedQuery = normalizeDiscoveryText(cuisineDirectoryQuery);
@@ -265,12 +288,29 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
                       <span aria-hidden="true">→</span>
                     </span>
                     <small>{cuisine.context}</small>
-                    <span className="matlystCuisineDirectoryCoverage">
-                      {!browseData ? "Utforsk retter" : null}
-                      {browseData && preview && preview.restaurantCount > 0
-                        ? `${preview.dish.label} · minst ${preview.restaurantCount} ${preview.restaurantCount === 1 ? "sted" : "steder"} nå`
-                        : null}
-                      {browseData && (!preview || preview.restaurantCount === 0) ? "Ingen prioriterte ferske treff akkurat nå" : null}
+                    <span className="cuisineRestaurantPreview">
+                      <span className="cuisineRestaurantPreviewLabel">På menyen nå</span>
+                      {!effectiveBrowseData ? (
+                        <span className="cuisineRestaurantLoading">Henter ferske restauranttreff …</span>
+                      ) : null}
+                      {effectiveBrowseData && preview && preview.restaurantExamples.length > 0 ? (
+                        <span className="cuisineRestaurantNames">
+                          {preview.restaurantExamples.map((restaurant) => (
+                            <span key={restaurant.id}>
+                              <strong>{restaurant.name}</strong>
+                              <small>{preview.dish.label} · {restaurant.address}</small>
+                            </span>
+                          ))}
+                        </span>
+                      ) : null}
+                      {effectiveBrowseData && preview && preview.restaurantCount > 0 && preview.restaurantExamples.length === 0 ? (
+                        <span className="cuisineRestaurantLoading">
+                          {preview.dish.label} · minst {preview.restaurantCount} {preview.restaurantCount === 1 ? "sted" : "steder"} nå
+                        </span>
+                      ) : null}
+                      {effectiveBrowseData && (!preview || preview.restaurantCount === 0) ? (
+                        <span className="cuisineRestaurantLoading">Ingen prioriterte ferske treff akkurat nå.</span>
+                      ) : null}
                     </span>
                   </button>
                 );
@@ -309,11 +349,11 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
                 </span>
                 <small>{mood.context}</small>
                 <span className="matlystMoodCoverage">
-                  {!browseData ? "Utforsk retter" : null}
-                  {browseData && preview && preview.restaurantCount > 0
+                  {!effectiveBrowseData ? "Henter ferske rettetreff …" : null}
+                  {effectiveBrowseData && preview && preview.restaurantCount > 0
                     ? `${preview.dish.label}: minst ${preview.restaurantCount} ${preview.restaurantCount === 1 ? "sted" : "steder"} nå`
                     : null}
-                  {browseData && (!preview || preview.restaurantCount === 0) ? "Utforsk retter i denne lysten" : null}
+                  {effectiveBrowseData && (!preview || preview.restaurantCount === 0) ? "Utforsk retter i denne lysten" : null}
                 </span>
               </button>
             );
