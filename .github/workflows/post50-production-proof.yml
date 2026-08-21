@@ -25,10 +25,10 @@ jobs:
             exit 1
           fi
 
-      - name: Checkout exact post-parser main
+      - name: Checkout exact rollback main
         uses: actions/checkout@v4
         with:
-          ref: e4938d4f99b9edfb9b2f3d1d41450aa012588179
+          ref: 640021bae29238f0649c2ef679483b7c967e9895
           persist-credentials: false
 
       - name: pnpm
@@ -48,7 +48,7 @@ jobs:
       - name: Build database dependency graph
         run: pnpm --filter @fysen/database... build
 
-      - name: Prove catalog, DB and post-promotion watchers read-only
+      - name: Prove restored catalog, DB and watchers read-only
         shell: bash
         run: |
           node --input-type=module <<'NODE'
@@ -70,12 +70,12 @@ jobs:
             ['beijing-palace-pilestredet-oslo', {
               expectedItems: 35,
               requiredExtractorParts: ['pdf-text-v12'],
-              promotedAt: new Date('2026-08-21T02:25:29Z'),
+              watchAfter: new Date('2026-08-21T02:25:29Z'),
             }],
             ['1947-gandhi-majorstuen-oslo', {
               expectedItems: 41,
-              requiredExtractorParts: ['section-first-card-v3', 'text-section-scope-v5'],
-              promotedAt: new Date('2026-08-21T02:38:18Z'),
+              requiredExtractorParts: ['section-first-card-v2', 'text-section-scope-v4'],
+              watchAfter: new Date('2026-08-21T02:53:14Z'),
             }],
           ]);
           const acceptedOutcomes = new Set(['changed', 'unchanged', 'not_modified']);
@@ -109,8 +109,6 @@ jobs:
                       ms.last_http_status,
                       ms.consecutive_failures,
                       ms.last_menu_fingerprint,
-                      ms.last_checked_at,
-                      ms.updated_at AS menu_source_updated_at,
                       s.extractor_version,
                       s.fetched_at AS latest_snapshot_fetched_at,
                       s.item_count AS latest_snapshot_item_count,
@@ -119,8 +117,7 @@ jobs:
                       w.extracted_item_count,
                       w.error_code,
                       w.error_message,
-                      w.started_at AS latest_watch_started_at,
-                      w.completed_at AS latest_watch_completed_at
+                      w.started_at AS latest_watch_started_at
                  FROM fysen.restaurants r
                  JOIN fysen.menu_sources ms ON ms.restaurant_id = r.id
                  LEFT JOIN LATERAL (
@@ -136,7 +133,7 @@ jobs:
                  ) s ON true
                  LEFT JOIN LATERAL (
                    SELECT outcome, http_status, extracted_item_count,
-                          error_code, error_message, started_at, completed_at
+                          error_code, error_message, started_at
                      FROM fysen.menu_watch_runs
                     WHERE menu_source_id = ms.id
                     ORDER BY started_at DESC
@@ -189,8 +186,8 @@ jobs:
               if (row.error_code || row.error_message) {
                 throw new Error(`${row.slug} watcher error=${row.error_code}: ${row.error_message}`);
               }
-              if (!row.latest_watch_started_at || new Date(row.latest_watch_started_at) < expected.promotedAt) {
-                throw new Error(`${row.slug} has no watcher after promotion ${expected.promotedAt.toISOString()}`);
+              if (!row.latest_watch_started_at || new Date(row.latest_watch_started_at) < expected.watchAfter) {
+                throw new Error(`${row.slug} has no watcher after ${expected.watchAfter.toISOString()}`);
               }
               if (row.latest_outcome !== 'not_modified' && Number(row.extracted_item_count) !== expected.expectedItems) {
                 throw new Error(`${row.slug} watcher items=${row.extracted_item_count}/${expected.expectedItems}`);
