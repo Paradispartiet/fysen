@@ -4,13 +4,13 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v3";
+export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v4";
 
 const SECTION_COUNT_SUFFIX = /\s*\(\s*\d{1,3}\s*\)\s*$/u;
 const BEVERAGE_SECTION_LABEL =
-  /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|white\s+wine|red\s+wine|sparkling\s+wine|cocktails?|aperitif|mocktails?|milkshakes?|draught\s+beer|draft\s+beer|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|cider|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffe\s*\/\s*coffee|coffee\s+drinks?|coffee\s+(?:and|&)\s+tea|drikke\s*\/\s*beverages?|øl\s*\/\s*beer|fat\s+øl\s*\/\s*tap\s+beer|flaske\s+øl\s*\/\s*bottle\s+beer|vin\s+glass\s*\/\s*wine\s+glass(?:\s*\([^)]*\))?|hvitvin\s*\/\s*white\s+wine|rødvin\s*\/\s*red\s+wine|musserende\s*\/\s*sparkling\s+wine)$/iu;
+  /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|mineralvann|mineral\s+water|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|white\s+wine|red\s+wine|sparkling\s+wine|cocktails?|aperitif|mocktails?|milkshakes?|draught\s+beer|draft\s+beer|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|cider|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffe\s*\/\s*coffee|coffee\s+drinks?|coffee\s+(?:and|&)\s+tea|drikke\s*\/\s*beverages?|øl\s*\/\s*beer|fat\s+øl\s*\/\s*tap\s+beer|flaske\s+øl\s*\/\s*bottle\s+beer|vin\s+glass\s*\/\s*wine\s+glass(?:\s*\([^)]*\))?|hvitvin\s*\/\s*white\s+wine|rødvin\s*\/\s*red\s+wine|musserende\s*\/\s*sparkling\s+wine)$/iu;
 const FOOD_SECTION_LABEL =
-  /^(?:forretter?|starters?|appetizers?|forretter?\s*\/\s*apetizers?|small\s+plates?|småretter|hovedretter?|mains?|main\s+courses?|supper?|soups?|barnemeny|kids?\s+menu|children(?:'s)?\s+menu|children\s+menu|sauser?|sauces?|desserter?|desserts?|sides?|tilbehør|tilbehør\s*\/\s*accessories|salater?|salads?|pizza(?:er|s)?|noodles?|nudler|curr(?:y|ies)|wok|grillretter?|tandoori(?:\s+dishes)?|chicken\s+curr(?:y|ies)|lamb\s+curr(?:y|ies)|prawns?\s*&\s*biryani|vegetable\s+menu|kjøtt\s+curries?\s*\/\s*non-veg\s+curries?|vegetar\s+curries?\s*\/\s*vegetarian\s+curries?|nanbrød\s*\/\s*nanbread|nibbles?)$/iu;
+  /^(?:forretter?|starters?|appetizers?|forretter?\s*\/\s*apetizers?|small\s+plates?|småretter|hovedretter?|mains?|main\s+courses?|supper?|soups?|barnemeny|barnemeny\s*\/\s*child\s+menu|kids?\s+menu|child\s+menu|children(?:'s)?\s+menu|children\s+menu|sauser?|sauces?|desserter?|desserts?|sweet\s+dishes?|sides?|tilbehør|tilbehør\s*\/\s*accessories|salater?|salads?|raita\s*&\s*salad|pizza(?:er|s)?|burgers?|snack\s+menu|fries|noodles?|nudler|curr(?:y|ies)|wok|grillretter?|tandoori(?:\s+dishes)?|chicken\s+curr(?:y|ies)|lamb\s+curr(?:y|ies)|prawns?\s*&\s*biryani|vegetable\s+menu|kjøtt\s+curries?\s*\/\s*non-veg\s+curries?|vegetar\s+curries?\s*\/\s*vegetarian\s+curries?|nans?|nanbrød\s*\/\s*nanbread|nibbles?)$/iu;
 const MENU_END_SECTION_LABEL =
   /^(?:product\s+information|restaurant\s+information|restaurantinformasjon|allergen(?:oversikt|er|s)?|reservasjoner?|reservations?|kontakt(?:\s+oss)?|contact(?:\s+us)?|booking|bordbestilling)$/iu;
 const MENU_UI_LABEL = /^(?:our\s+menu|menu|meny)$/iu;
@@ -19,6 +19,8 @@ const MENU_PRICE_SIGNAL =
 const INTERNAL_HEADING_MARKER = /^__FYSEN_ADJACENT_HEADING_LEVEL_[1-6]__/u;
 const SHORT_ALLERGEN_CODE_ITEM =
   /^\(\s*[A-Z0-9+]{1,3}(?:\s*[,/+ ]\s*[A-Z0-9+]{1,3})*\s*\)$/iu;
+const TRAILING_ALLERGEN_CODE_SUFFIX =
+  /\s+\(\s*[A-Z0-9+]{1,3}(?:\s*[,/+ ]\s*[A-Z0-9+]{1,3})*\s*\)$/iu;
 const PHONE_PROMPT_ITEM =
   /^(?:ring\s+oss\s+på|call\s+us\s+(?:at|on))\s*:?\s*\+?\d[\d ()+.-]{3,}$/iu;
 const PRICE_PER_PERSON_ITEM =
@@ -26,6 +28,10 @@ const PRICE_PER_PERSON_ITEM =
 const SERVING_PLACEHOLDER_ITEM = /^\d{1,2}\s+(?:per|pers?\.?)\s+_+$/iu;
 const SLASH_GLUTEN_FREE_ITEM = /^\/\s*gluten\s*(?:fri|free)$/iu;
 const ICE_CREAM_SCOOP_METADATA_ITEM = /^(?:kule|kuler)$/iu;
+const ALL_DISHES_SERVING_METADATA =
+  /^(?:all|alle)\s+(?:dishes|retter)\s+(?:are\s+)?served\b/iu;
+const PARENTHETICAL_DIETARY_METADATA =
+  /^\(\s*can\s+be\s+made\s+(?:vegan|vegetarian|gluten[- ]?free)\s*\)$/iu;
 const TRAILING_DECORATION = /\s*_{3,}\s*$/u;
 const TRAILING_MARKED_PRICE =
   /\s+(?:[-–—]\s*)?([1-9]\d{1,3})(?:[.,]00)?\s*(,-|kr\.?|NOK)?$/iu;
@@ -38,6 +44,12 @@ function normalizeLine(value: string): string {
 
 function normalizedSectionLabel(value: string): string {
   return normalizeLine(value).replace(SECTION_COUNT_SUFFIX, "").trim();
+}
+
+function normalizedEvidenceName(value: string): string {
+  return normalizeDishName(
+    normalizeLine(value).replace(TRAILING_ALLERGEN_CODE_SUFFIX, "").trim(),
+  );
 }
 
 function isKnownSectionLabel(value: string): boolean {
@@ -60,6 +72,8 @@ function isPlainTextNoiseItem(value: string): boolean {
     SERVING_PLACEHOLDER_ITEM.test(line) ||
     SLASH_GLUTEN_FREE_ITEM.test(line) ||
     ICE_CREAM_SCOOP_METADATA_ITEM.test(line) ||
+    ALL_DISHES_SERVING_METADATA.test(line) ||
+    PARENTHETICAL_DIETARY_METADATA.test(line) ||
     isKnownSectionLabel(line)
   );
 }
@@ -156,7 +170,7 @@ export function filterPlainTextBeverageSectionItems(
     const state = states[index] ?? "unknown";
     if (state === "unknown") continue;
 
-    const normalized = normalizeDishName(line);
+    const normalized = normalizedEvidenceName(line);
     const evidence = evidenceByName.get(normalized) ?? {
       hasFoodOccurrence: false,
       hasBeverageOccurrence: false,
