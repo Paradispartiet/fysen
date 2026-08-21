@@ -5,13 +5,14 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION = "embedded-menu-json-v1";
+export const HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION = "embedded-menu-json-v2";
 
 const MIN_CATEGORIES = 2;
 const MIN_ITEMS = 4;
 const MIN_BOUND_RATIO = 0.7;
 const GENERIC_CATEGORY = /^(?:popular|populært|populaert|most\s+ordered|mest\s+bestilt|recommended|anbefalt)$/iu;
-const BEVERAGE_CATEGORY = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|soft\s+drinks?|mineralvann|sodas?|brus|juice|juices|beer|beers|øl|ol|cider|wine|vin|vinkart|cocktails?|mocktails?|coffee|kaffe|tea|te|spirits?|brennevin)$/iu;
+const AUXILIARY_CATEGORY = /^(?:extra|extras|add[- ]?ons?|addons?|tillegg)$/iu;
+const BEVERAGE_CATEGORY = /(?:^|\b)(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|soft\s+drinks?|mineralvann|sodas?|brus|juice|juices|beer|beers|øl|ol|cider|wine|vin|vinkart|cocktails?|mocktails?|coffee|kaffe|cafe|café|iced\s+tea|milk\s+tea|slushy\s+tea|tea|te|smoothies?|spirits?|brennevin)(?:\b|$)/iu;
 
 interface EmbeddedCategory {
   readonly name: string;
@@ -133,7 +134,11 @@ function categoryIdentity(value: string): string {
 }
 
 function usableCategory(name: string): boolean {
-  return !GENERIC_CATEGORY.test(name) && !BEVERAGE_CATEGORY.test(name);
+  return (
+    !GENERIC_CATEGORY.test(name) &&
+    !AUXILIARY_CATEGORY.test(name) &&
+    !BEVERAGE_CATEGORY.test(name)
+  );
 }
 
 function recoverFromCandidate(candidate: Candidate): readonly MenuObservedItem[] {
