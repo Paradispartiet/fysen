@@ -35,6 +35,26 @@ jobs:
         run: pnpm install --no-frozen-lockfile
       - name: Build menu-worker dependency graph
         run: pnpm --filter @fysen/menu-worker... build
+      - name: Print final PDF text reconstruction
+        working-directory: apps/menu-worker
+        run: |
+          node --input-type=module <<'NODE'
+          import { extractPdfMenu } from './dist/pdf-extractor.js';
+          const url = 'https://beijingpalace.no/wp-content/uploads/2024/05/Microsoft-Word-middags-meny-2024.pdf';
+          const response = await fetch(url, { headers: { 'user-agent': process.env.FYSEN_MENU_BOT_USER_AGENT } });
+          if (!response.ok) throw new Error(`PDF fetch ${response.status}`);
+          const extracted = await extractPdfMenu(new Uint8Array(await response.arrayBuffer()));
+          console.log(JSON.stringify({
+            pageCount: extracted.pageCount,
+            tail: extracted.visibleText.split('\n').slice(-30),
+            tailItems: extracted.items.slice(-12).map((item) => ({
+              name: item.name,
+              priceMinor: item.priceMinor,
+              sectionName: item.sectionName,
+              sourceExcerpt: item.sourceExcerpt,
+            })),
+          }, null, 2));
+          NODE
       - name: Prepare generated directory
         run: mkdir -p apps/menu-worker/research/beijing-palace-pdf-v9-generated
       - name: Generate live manifest
