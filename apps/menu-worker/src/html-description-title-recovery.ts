@@ -214,6 +214,27 @@ function recoverSplitParentheticalTitle(
     : null;
 }
 
+function looksLikeDirectlyPricedObservedTitle(value: string): boolean {
+  const line = normalizeVisibleLine(value);
+  if (
+    !line ||
+    PRICE_METADATA_LEAD.test(line) ||
+    ALLERGEN_PREFIX.test(line) ||
+    looksLikeAllergenMetadata(line)
+  ) {
+    return false;
+  }
+
+  const letters = line.replace(/[^\p{L}]+/gu, "");
+  if (letters.length < 3 || line !== line.toLocaleUpperCase("nb-NO")) {
+    return false;
+  }
+
+  return !/^(?:serveres?|served|with|med|contains?|inneholder|allergener?|allergens?)\b/iu.test(
+    line,
+  );
+}
+
 function sourceExcerptDirectlyPricesObservedName(
   item: MenuObservedItem,
 ): boolean {
@@ -512,6 +533,7 @@ export function recoverDescriptionNamedHtmlItems(
     const position = item.position;
     const forwardRecovery = recoverForwardTitleFromSourceExcerpt(item);
     const directlyPricedObservedName =
+      looksLikeDirectlyPricedObservedTitle(item.name) &&
       sourceExcerptDirectlyPricesObservedName(item);
     const descriptionRecovery =
       !forwardRecovery &&
