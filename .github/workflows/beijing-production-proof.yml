@@ -44,10 +44,11 @@ jobs:
       - name: Build menu worker and database
         run: pnpm --filter @fysen/menu-worker... build
       - name: Reconcile exact catalog and print compact failures
+        working-directory: apps/menu-worker
         shell: bash
         run: |
           node --input-type=module <<'NODE'
-          import { onboardRestaurantCatalog } from './apps/menu-worker/dist/onboarding.js';
+          import { onboardRestaurantCatalog } from './dist/onboarding.js';
           const summary = await onboardRestaurantCatalog();
           const compact = {
             manifestCount: summary.manifestCount,
