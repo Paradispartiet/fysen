@@ -1,7 +1,7 @@
 import { load } from "cheerio";
 
 export const OPENING_HOURS_REDUNDANT_CUTOFF_NORMALIZER_VERSION =
-  "redundant-absolute-v3";
+  "redundant-absolute-v4";
 
 const absoluteKitchenClosePattern =
   /(?:kjøkken(?:et)?\s+(?:til|stenger)|kitchen\s+closes(?:\s+at)?)\s*(?:(?:kl\.?|klokka)\s*)?((?:2[0-3]|[01]?\d)(?:[.:][0-5]\d)?)/giu;
@@ -40,9 +40,13 @@ interface ScopeMarker {
   readonly label: string | null;
 }
 
+interface ScopedTextElements {
+  readonly elements: readonly TextElement[];
+  readonly markerElement: unknown | null;
+}
+
 interface CutoffElement extends TextElement {
   readonly values: readonly string[];
-  readonly weekdaySpecific: boolean;
 }
 
 function markerMatchesScopeHints(
@@ -70,8 +74,10 @@ function markerForText(text: string, index: number): ScopeMarker | null {
 function scopedElements(
   elements: readonly TextElement[],
   scopeHints: readonly string[],
-): readonly TextElement[] {
-  if (scopeHints.length === 0) return elements;
+): ScopedTextElements {
+  if (scopeHints.length === 0) {
+    return { elements, markerElement: null };
+  }
 
   const markers: ScopeMarker[] = [];
   for (const [index, entry] of elements.entries()) {
@@ -91,17 +97,24 @@ function scopedElements(
     }
     markers.push({ index, label });
   }
-  if (markers.length < 2) return elements;
+  if (markers.length < 2) {
+    return { elements, markerElement: null };
+  }
 
   const hinted = markers.filter((marker) =>
     markerMatchesScopeHints(marker, scopeHints),
   );
-  if (hinted.length !== 1) return elements;
+  if (hinted.length !== 1) {
+    return { elements, markerElement: null };
+  }
 
   const selected = hinted[0];
-  if (!selected) return elements;
+  if (!selected) return { elements, markerElement: null };
   const nextMarker = markers.find((marker) => marker.index > selected.index);
-  return elements.slice(selected.index, nextMarker?.index ?? elements.length);
+  return {
+    elements: elements.slice(selected.index, nextMarker?.index ?? elements.length),
+    markerElement: elements[selected.index]?.element ?? null,
+  };
 }
 
 export function normalizeRedundantAbsoluteKitchenCloseHtml(
@@ -122,27 +135,27 @@ export function normalizeRedundantAbsoluteKitchenCloseHtml(
 
   const scoped = scopedElements(textElements, scopeHints);
   const cutoffs: CutoffElement[] = [];
-  for (const entry of scoped) {
+  for (const entry of scoped.elements) {
     const values = [...entry.text.matchAll(absoluteKitchenClosePattern)]
       .map((match) => match[1])
       .filter((value): value is string => Boolean(value))
       .map(normalizeClock);
     if (values.length === 0) continue;
-    cutoffs.push({
-      ...entry,
-      values,
-      weekdaySpecific: weekdayMentionPattern.test(entry.text),
-    });
+    cutoffs.push({ ...entry, values });
   }
 
-  const weekdaySpecific = cutoffs.filter((entry) => entry.weekdaySpecific);
-  const global = cutoffs.filter((entry) => !entry.weekdaySpecific);
-  if (weekdaySpecific.length === 0 || global.length === 0) return html;
+  const occurrenceCount = cutoffs.reduce(
+    (sum, entry) => sum + entry.values.length,
+    0,
+  );
+  if (occurrenceCount < 2 || !scoped.markerElement) return html;
 
   const allValues = new Set(cutoffs.flatMap((entry) => [...entry.values]));
   if (allValues.size !== 1) return html;
+  const cutoff = allValues.values().next().value;
+  if (!cutoff) return html;
 
-  for (const entry of weekdaySpecific) {
+  for (const entry of cutoffs) {
     const cleaned = entry.text
       .replace(absoluteKitchenClosePattern, "")
       .replace(/\(\s*\)/gu, "")
@@ -151,5 +164,8 @@ export function normalizeRedundantAbsoluteKitchenCloseHtml(
     $(entry.element as Parameters<typeof $>[0]).text(cleaned);
   }
 
+  $(scoped.markerElement as Parameters<typeof $>[0]).after(
+    `<p>Kjøkken til ${cutoff}</p>`,
+  );
   return $.html();
 }
