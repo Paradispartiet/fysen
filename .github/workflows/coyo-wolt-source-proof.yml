@@ -1,0 +1,86 @@
+name: Coyo Wolt source proof
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/coyo-wolt-source-proof.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Fetch and extract Coyo Wolt twice
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research
+          node --input-type=module <<'NODE'
+          import { writeFile } from 'node:fs/promises';
+          import { fetchMenuSource, extractMenuSource } from './dist/menu-source-runtime.js';
+
+          const url = 'https://wolt.com/nb/nor/oslo/restaurant/coyo';
+          const attempts = [];
+          for (let attempt = 1; attempt <= 2; attempt += 1) {
+            const fetched = await fetchMenuSource({
+              url,
+              sourceType: 'html',
+              fetchMode: 'http',
+              userAgent: 'FysenMenuBot/0.1',
+              etag: null,
+              lastModified: null,
+            });
+            if (fetched.kind !== 'content') throw new Error(`attempt ${attempt}: unexpected ${fetched.kind}`);
+            const extracted = await extractMenuSource('html', fetched);
+            const items = extracted.items.map((item) => ({
+              name: item.name,
+              sectionName: item.sectionName,
+              priceMinor: item.priceMinor,
+              description: item.description,
+              sourceKey: item.sourceKey,
+            }));
+            attempts.push({
+              attempt,
+              httpStatus: fetched.status,
+              method: extracted.method,
+              extractorVersion: extracted.extractorVersion,
+              itemCount: items.length,
+              items,
+            });
+          }
+          await writeFile('research/coyo-wolt-source-proof.json', JSON.stringify({ url, attempts }, null, 2) + '\n');
+          console.log(JSON.stringify({
+            url,
+            attempts: attempts.map((a) => ({
+              attempt: a.attempt,
+              httpStatus: a.httpStatus,
+              method: a.method,
+              itemCount: a.itemCount,
+              items: a.items,
+            })),
+          }, null, 2));
+          if (attempts.some((a) => a.httpStatus !== 200 || a.itemCount < 25)) {
+            throw new Error(`Coyo Wolt gate failed: ${attempts.map((a) => `${a.httpStatus}/${a.itemCount}`).join(', ')}`);
+          }
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coyo-wolt-source-proof
+          path: apps/menu-worker/research/coyo-wolt-source-proof.json
+          if-no-files-found: error
