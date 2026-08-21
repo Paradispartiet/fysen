@@ -1,0 +1,165 @@
+name: Batch 02 output debug v1
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/batch02-output-debug-v1.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - name: Checkout production runtime
+        uses: actions/checkout@v4
+        with:
+          ref: 9d6b2344f1e2fde47c8aa1fd966128fefef4302c
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build menu-worker dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Inspect suspicious output evidence
+        shell: bash
+        run: |
+          mkdir -p apps/menu-worker/research
+          node --input-type=module <<'NODE' | tee apps/menu-worker/research/batch02-output-debug-v1.json
+          import { writeFile } from 'node:fs/promises';
+          import { normalizeDishName } from './packages/menu-core/dist/index.js';
+          import { extractMenuSource, fetchMenuSource } from './apps/menu-worker/dist/menu-source-runtime.js';
+
+          const sources = [
+            { slug: 'jaipur-karl-johans-gate-oslo', url: 'https://jaipur.no/our-menu' },
+            { slug: 'indi-spice-welhavens-gate-oslo', url: 'https://indispiceoslo.no/meny/' },
+            { slug: 'dognvill-bjorvika-oslo', url: 'https://www.dognvillburger.no/en/meny/bjorvika' },
+            { slug: 'dognvill-tjuvholmen-oslo', url: 'https://www.dognvillburger.no/en/meny/tjuvholmen' },
+            { slug: 'dognvill-vulkan-oslo', url: 'https://www.dognvillburger.no/en/meny/vulkan' },
+          ];
+          const suspect = /(?:^|\b)(?:jaipur|tandoori|tasting menu|cuppucino|smak på alt|gram hamburger|classic caesar|herb your enthusiasm|ginger ale|ginger beer|apple puree)(?:\b|$)/iu;
+          const rawTokens = [
+            'Jaipur', 'TANDOORI', 'TASTING MENU', 'CUPPUCINO',
+            'SMAK PÅ ALT', 'GRAM HAMBURGER', 'CLASSIC CAESAR',
+            'HERB YOUR ENTHUSIASM', 'Ginger Ale', 'ginger beer', 'Apple puree',
+          ];
+
+          function compact(item) {
+            return {
+              name: item.name,
+              normalizedName: item.normalizedName,
+              priceMinor: item.priceMinor,
+              priceKind: item.priceKind,
+              sectionName: item.sectionName,
+              extractionMethod: item.extractionMethod,
+              confidence: item.confidence,
+              position: item.position,
+              sourceExcerpt: item.sourceExcerpt,
+            };
+          }
+
+          function rawSnippets(body) {
+            const text = String(body ?? '').replace(/\s+/g, ' ');
+            const snippets = [];
+            for (const token of rawTokens) {
+              let from = 0;
+              for (let count = 0; count < 4; count += 1) {
+                const index = text.toLocaleLowerCase('nb-NO').indexOf(token.toLocaleLowerCase('nb-NO'), from);
+                if (index < 0) break;
+                snippets.push({
+                  token,
+                  excerpt: text.slice(Math.max(0, index - 220), Math.min(text.length, index + token.length + 320)),
+                });
+                from = index + token.length;
+              }
+            }
+            return snippets;
+          }
+
+          const report = [];
+          for (const source of sources) {
+            const fetched = await fetchMenuSource({
+              url: source.url,
+              sourceType: 'html',
+              fetchMode: 'http',
+              userAgent: process.env.FYSEN_MENU_BOT_USER_AGENT ?? 'FysenMenuBot/0.1',
+              etag: null,
+              lastModified: null,
+              sourceSupport: { redirectOrigins: [], browserDataOrigins: [] },
+            });
+            if (fetched.kind !== 'content') throw new Error(`${source.slug} unexpectedly returned not_modified`);
+            const extracted = await extractMenuSource('html', fetched);
+            const suspiciousItems = extracted.items.filter((item) => suspect.test(item.name)).map(compact);
+
+            const byName = new Map();
+            for (const item of extracted.items) {
+              const group = byName.get(item.normalizedName) ?? [];
+              group.push(item);
+              byName.set(item.normalizedName, group);
+            }
+            const duplicateGroups = [...byName.entries()]
+              .filter(([, items]) => items.length > 1)
+              .map(([normalizedName, items]) => ({
+                normalizedName,
+                items: items.map(compact),
+              }));
+
+            const suffixFragments = [];
+            for (const item of extracted.items) {
+              const normalized = normalizeDishName(item.name);
+              for (const other of extracted.items) {
+                if (other === item || item.priceMinor !== other.priceMinor) continue;
+                const otherNormalized = normalizeDishName(other.name);
+                if (
+                  otherNormalized.length > normalized.length + 2 &&
+                  otherNormalized.endsWith(normalized) &&
+                  /^\d+\b/u.test(otherNormalized)
+                ) {
+                  suffixFragments.push({ fragment: compact(item), full: compact(other) });
+                }
+              }
+            }
+
+            report.push({
+              slug: source.slug,
+              url: source.url,
+              httpStatus: fetched.status,
+              method: extracted.method,
+              extractorVersion: extracted.extractorVersion,
+              itemCount: extracted.items.length,
+              suspiciousItems,
+              duplicateGroups,
+              suffixFragments,
+              rawSnippets: rawSnippets(fetched.body),
+            });
+          }
+          const output = { productionRuntime: '9d6b2344f1e2fde47c8aa1fd966128fefef4302c', report };
+          await writeFile('apps/menu-worker/research/batch02-output-debug-v1-structured.json', JSON.stringify(output, null, 2) + '\n');
+          console.log(JSON.stringify(output, null, 2));
+          NODE
+
+      - name: Upload debug evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: batch02-output-debug-v1
+          path: |
+            apps/menu-worker/research/batch02-output-debug-v1.json
+            apps/menu-worker/research/batch02-output-debug-v1-structured.json
+          if-no-files-found: error
