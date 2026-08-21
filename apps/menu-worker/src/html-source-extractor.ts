@@ -399,6 +399,13 @@ function looksLikeStandaloneHeadingTitle(value: string): boolean {
   return !/^(?:with|served|topped|contains?|including|med|servert|toppet|inneholder|inkludert)\b/iu.test(title);
 }
 
+function looksLikeImmediateUppercaseTitle(value: string): boolean {
+  const title = canonicalCardTitle(value);
+  if (!looksLikeStandaloneHeadingTitle(title)) return false;
+  const letters = title.replace(/[^\p{L}]+/gu, "");
+  return letters.length >= 3 && title === title.toLocaleUpperCase("nb-NO");
+}
+
 interface StandalonePriceBlockExtraction {
   readonly items: readonly MenuObservedItem[];
   readonly priceCount: number;
@@ -451,7 +458,17 @@ function extractStandalonePriceBlocks(
     let titleIndex: number | null = null;
     let name: string | null = null;
 
-    if (lastHeading !== null) {
+    const immediateTitleIndex = pricePosition - 1;
+    const immediateTitle = lines[immediateTitleIndex]?.trim() ?? "";
+    if (
+      immediateTitleIndex >= blockStart &&
+      looksLikeImmediateUppercaseTitle(immediateTitle)
+    ) {
+      titleIndex = immediateTitleIndex;
+      name = canonicalCardTitle(immediateTitle);
+    }
+
+    if (titleIndex === null && lastHeading !== null) {
       const firstContentIndex = (() => {
         for (let index = lastHeading + 1; index < pricePosition; index += 1) {
           if (headingLevels.has(index)) continue;

@@ -66,6 +66,25 @@ describe("Batch 02 structural output cleanup", () => {
     ]);
   });
 
+  it("prefers an uppercase dish-like line immediately before price over an earlier section or brand line", () => {
+    const html = `
+      <html><body>
+        <h2>TANDOORI</h2>
+        <p>CHICKEN PERI PERI TIKKA (M, N, G)</p>
+        <p>299.0</p>
+        <p>Restaurant Brand</p>
+        <p>SWEET DISHES</p>
+        <p>MALAI AAM</p>
+        <p>119,-</p>
+      </body></html>
+    `;
+
+    expect(extractScopedHtmlMenu(html).items.map((entry) => entry.name)).toEqual([
+      "CHICKEN PERI PERI TIKKA",
+      "MALAI AAM",
+    ]);
+  });
+
   it("matches beverage evidence after trailing allergen codes are removed from the item name", () => {
     const items = [item("Kulfi", 12900), item("CUPPUCINO", 5500)];
     const visibleText = `
