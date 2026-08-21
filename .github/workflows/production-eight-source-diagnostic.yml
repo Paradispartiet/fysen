@@ -1,4 +1,4 @@
-name: Production eight-source diagnostic
+name: Production four-source diagnostic
 
 on:
   pull_request:
@@ -39,23 +39,19 @@ jobs:
       - name: Build menu-worker dependency graph
         run: pnpm --filter @fysen/menu-worker... build
 
-      - name: Isolate exact eight canonical manifests by embedded slug
+      - name: Isolate exact four inactive canonical manifests
         shell: bash
         run: |
           node --input-type=module <<'NODE'
           import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
           const targetSlugs = new Set([
-            'coyo-sorengkaia-oslo',
-            'cue-bar-grill-nedre-slottsgate-oslo',
+            'coyo-sorenga-oslo',
             'lahori-dera-gronland-oslo',
-            'oche-brugata-oslo',
+            'oche-aker-brygge-oslo',
             'oche-torggata-oslo',
-            '1947-gandhi-majorstuen-oslo',
-            'new-anarkali-oslo',
-            'radhuni-radhusgata-oslo',
           ]);
           const catalogDir = 'apps/menu-worker/catalog';
-          const outDir = 'apps/menu-worker/research/production-eight-source-diagnostic';
+          const outDir = 'apps/menu-worker/research/production-four-source-diagnostic';
           await mkdir(outDir, { recursive: true });
           const found = [];
           for (const file of (await readdir(catalogDir)).filter((name) => name.endsWith('.json')).sort()) {
@@ -76,7 +72,7 @@ jobs:
             const missing = [...targetSlugs].filter((slug) => !foundSlugs.has(slug));
             throw new Error(`Expected ${targetSlugs.size} manifests, found ${found.length}; missing=${missing.join(',')}`);
           }
-          await writeFile('apps/menu-worker/research/production-eight-source-manifests.json', JSON.stringify(found, null, 2) + '\n');
+          await writeFile('apps/menu-worker/research/production-four-source-manifests.json', JSON.stringify(found, null, 2) + '\n');
           console.log(JSON.stringify(found, null, 2));
           NODE
 
@@ -86,7 +82,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          node dist/index.js validate:batch research/production-eight-source-diagnostic | tee research/production-eight-source-pass1.json
+          node dist/index.js validate:batch research/production-four-source-diagnostic | tee research/production-four-source-pass1.json
           status=${PIPESTATUS[0]}
           echo "exit_code=$status" >> "$GITHUB_OUTPUT"
           exit 0
@@ -97,7 +93,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          node dist/index.js validate:batch research/production-eight-source-diagnostic | tee research/production-eight-source-pass2.json
+          node dist/index.js validate:batch research/production-four-source-diagnostic | tee research/production-four-source-pass2.json
           status=${PIPESTATUS[0]}
           echo "exit_code=$status" >> "$GITHUB_OUTPUT"
           exit 0
@@ -108,9 +104,9 @@ jobs:
         run: |
           node --input-type=module <<'NODE'
           import { readFile, writeFile } from 'node:fs/promises';
-          const p1 = JSON.parse(await readFile('research/production-eight-source-pass1.json', 'utf8'));
-          const p2 = JSON.parse(await readFile('research/production-eight-source-pass2.json', 'utf8'));
-          const manifests = JSON.parse(await readFile('research/production-eight-source-manifests.json', 'utf8'));
+          const p1 = JSON.parse(await readFile('research/production-four-source-pass1.json', 'utf8'));
+          const p2 = JSON.parse(await readFile('research/production-four-source-pass2.json', 'utf8'));
+          const manifests = JSON.parse(await readFile('research/production-four-source-manifests.json', 'utf8'));
           const compact = (result) => ({
             slug: result.slug,
             accepted: result.accepted,
@@ -120,6 +116,8 @@ jobs:
             extractionMethod: result.validation?.menu?.extractionMethod ?? null,
             extractorVersion: result.validation?.menu?.extractorVersion ?? null,
             observedDishNames: result.validation?.menu?.observedDishNames ?? [],
+            hours: result.validation?.hours ?? null,
+            actions: result.validation?.actions ?? null,
           });
           const bySlug = (payload) => new Map((payload.results ?? []).map((result) => [result.slug, compact(result)]));
           const a = bySlug(p1);
@@ -136,17 +134,17 @@ jobs:
             pass2: { manifestCount: p2.manifestCount, acceptedCount: p2.acceptedCount, failedCount: p2.failedCount, failureFamilyCounts: p2.failureFamilyCounts },
             comparison,
           };
-          await writeFile('research/production-eight-source-summary.json', JSON.stringify(summary, null, 2) + '\n');
+          await writeFile('research/production-four-source-summary.json', JSON.stringify(summary, null, 2) + '\n');
           console.log(JSON.stringify(summary, null, 2));
           NODE
 
       - name: Upload diagnostic artifact
         uses: actions/upload-artifact@v4
         with:
-          name: production-eight-source-diagnostic
+          name: production-four-source-diagnostic
           path: |
-            apps/menu-worker/research/production-eight-source-manifests.json
-            apps/menu-worker/research/production-eight-source-pass1.json
-            apps/menu-worker/research/production-eight-source-pass2.json
-            apps/menu-worker/research/production-eight-source-summary.json
+            apps/menu-worker/research/production-four-source-manifests.json
+            apps/menu-worker/research/production-four-source-pass1.json
+            apps/menu-worker/research/production-four-source-pass2.json
+            apps/menu-worker/research/production-four-source-summary.json
           if-no-files-found: error
