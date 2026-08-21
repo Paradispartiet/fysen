@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v7";
+export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v8";
 
 const HEADING_MARKER = "__FYSEN_ADJACENT_HEADING_LEVEL_";
 const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
@@ -14,6 +14,7 @@ const SECTION_OR_UI_LABEL = /^(?:our\s+menu|menu|meny|single\s+meat|single\s+(?:
 const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|white\s+wine|red\s+wine|sparkling\s+wine|cocktails?|champagne(?:\s+cocktails?)?|aperitif|mocktails?|milkshakes?|draught\s+beer|draft\s+beer|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|cider|øl\s*\/\s*beer|fat\s+øl\s*\/\s*tap\s+beer|flaske\s+øl\s*\/\s*bottle\s+beer|vin\s+glass\s*\/\s*wine\s+glass|hvitvin\s*\/\s*white\s+wine|rødvin\s*\/\s*red\s+wine|musserende\s*\/\s*sparkling\s+wine|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\s*\/\s*coffee|kaffe\/te.*|coffee\/tea.*|coffee\s+(?:and|&)\s+tea)$/iu;
 const BOTTLED_WATER_TITLE = /\b(?:still|sparkling)\s+(?:water|naturell)\b/iu;
 const DENSE_SEMANTIC_HEADING_MIN_ITEMS = 20;
+const DENSE_SEMANTIC_HEADING_MIN_SECTION_COVERAGE = 0.85;
 
 interface ParsedPrice {
   readonly priceMinor: number;
@@ -23,6 +24,10 @@ interface ParsedPrice {
 interface HeadingPriceCandidate {
   readonly item: MenuObservedItem;
   readonly sectionHint: string | null;
+}
+
+interface SectionedHeadingPriceCandidate extends HeadingPriceCandidate {
+  readonly sectionHint: string;
 }
 
 function normalizeVisibleLine(value: string): string {
@@ -235,17 +240,27 @@ export function recoverDenseSemanticHeadingPriceHtmlItems(
 ): readonly MenuObservedItem[] {
   const candidates = strongestHeadingPriceCandidates(html);
   if (candidates.length < DENSE_SEMANTIC_HEADING_MIN_ITEMS) return [];
-  if (candidates.some((candidate) => !candidate.sectionHint)) return [];
+
+  const sectionedCandidates = candidates.filter(
+    (candidate): candidate is SectionedHeadingPriceCandidate =>
+      Boolean(candidate.sectionHint),
+  );
+  if (
+    sectionedCandidates.length < DENSE_SEMANTIC_HEADING_MIN_ITEMS ||
+    sectionedCandidates.length <
+      Math.ceil(candidates.length * DENSE_SEMANTIC_HEADING_MIN_SECTION_COVERAGE)
+  ) {
+    return [];
+  }
 
   const distinctSections = new Set(
-    candidates.map((candidate) => normalizeDishName(candidate.sectionHint ?? "")),
+    sectionedCandidates.map((candidate) => normalizeDishName(candidate.sectionHint)),
   );
   if (distinctSections.size < 2) return [];
 
   const unique = new Map<string, MenuObservedItem>();
-  for (const candidate of candidates) {
+  for (const candidate of sectionedCandidates) {
     const sectionName = candidate.sectionHint;
-    if (!sectionName) return [];
     const sourceKey = createMenuItemSourceKey(candidate.item.name, sectionName);
     const next: MenuObservedItem = {
       ...candidate.item,
