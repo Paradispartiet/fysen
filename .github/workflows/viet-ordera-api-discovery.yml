@@ -25,98 +25,82 @@ jobs:
           node-version: 24.18.0
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm --filter @fysen/menu-worker... build
-      - name: Capture only declared Ordera data responses
+      - name: Fetch public Ordera API and summarize product-shaped arrays
         working-directory: apps/menu-worker
         shell: bash
         run: |
           mkdir -p research
           node --input-type=module <<'NODE'
-          import { chromium } from 'playwright-core';
           import { writeFile } from 'node:fs/promises';
-          const source = new URL('https://vietkitchen.ordera.no/');
-          const allowedOrigins = new Set([
-            source.origin,
-            'https://order-api.ordera.no',
-            'https://socket.ordera.no',
-          ]);
-          const dataOrigins = new Set([
-            'https://order-api.ordera.no',
-            'https://socket.ordera.no',
-          ]);
-          const browser = await chromium.launch({ channel: 'chrome', headless: true, chromiumSandbox: true });
-          const context = await browser.newContext({
-            acceptDownloads: false,
-            ignoreHTTPSErrors: false,
-            javaScriptEnabled: true,
-            serviceWorkers: 'block',
+          import { HttpMenuClient } from './dist/http-client.js';
+          const url = 'https://order-api.ordera.no/api/v1/shop/all?agency=vietkitchen';
+          const fetched = await new HttpMenuClient().fetchSource({
+            url,
             userAgent: 'FysenMenuBot/0.1',
+            etag: null,
+            lastModified: null,
           });
-          const reports = [];
-          try {
-            await context.route('**/*', async (route) => {
-              const request = route.request();
-              const type = request.resourceType();
-              if (['image','media','font','texttrack','eventsource','websocket'].includes(type)) {
-                await route.abort('blockedbyclient');
-                return;
-              }
-              let url;
-              try { url = new URL(request.url()); } catch { await route.abort('blockedbyclient'); return; }
-              if (url.protocol !== 'https:') { await route.abort('blockedbyclient'); return; }
-              if (['document','xhr','fetch'].includes(type) && !allowedOrigins.has(url.origin)) {
-                await route.abort('blockedbyclient');
-                return;
-              }
-              await route.continue();
-            });
-            const page = await context.newPage();
-            page.on('response', async (response) => {
-              try {
-                const request = response.request();
-                const type = request.resourceType();
-                const url = new URL(response.url());
-                if (!['xhr','fetch'].includes(type) || !dataOrigins.has(url.origin)) return;
-                const headers = await response.allHeaders();
-                const contentType = headers['content-type'] ?? '';
-                let sample = null;
-                if (/json|text|javascript/i.test(contentType)) {
-                  const text = await response.text().catch(() => '');
-                  sample = text.slice(0, 20000);
-                }
-                reports.push({
-                  url: response.url(),
-                  status: response.status(),
-                  resourceType: type,
-                  contentType,
-                  sample,
+          if (fetched.kind !== 'content') throw new Error(`Unexpected ${fetched.kind}`);
+          const json = JSON.parse(fetched.body);
+          const arrays = [];
+          const seen = new Set();
+          const visit = (value, path, depth = 0) => {
+            if (depth > 8 || value === null || typeof value !== 'object') return;
+            if (seen.has(value)) return;
+            seen.add(value);
+            if (Array.isArray(value)) {
+              const objectItems = value.filter((item) => item && typeof item === 'object' && !Array.isArray(item));
+              const keySets = objectItems.slice(0, 10).map((item) => Object.keys(item).sort());
+              const productLike = objectItems.filter((item) => typeof item.name === 'string' && (typeof item.price === 'number' || typeof item.origin_price === 'number'));
+              if (value.length >= 2 || productLike.length > 0) {
+                arrays.push({
+                  path,
+                  length: value.length,
+                  productLikeCount: productLike.length,
+                  sampleKeys: keySets,
+                  productSamples: productLike.slice(0, 8).map((item) => ({
+                    id: item.id ?? null,
+                    name: item.name,
+                    price: item.price ?? null,
+                    dinein_price: item.dinein_price ?? null,
+                    origin_price: item.origin_price ?? null,
+                    soldout: item.soldout ?? null,
+                    visibility: item.visibility ?? null,
+                    description: typeof item.description === 'string' ? item.description.slice(0, 300) : null,
+                  })),
                 });
-              } catch {}
-            });
-            const response = await page.goto(source.toString(), { timeout: 15000, waitUntil: 'domcontentloaded' });
-            await page.waitForLoadState('networkidle', { timeout: 7000 }).catch(() => undefined);
-            await page.waitForTimeout(1500);
-            const bodyText = (await page.locator('body').innerText().catch(() => '')).slice(0, 20000);
-            const result = {
-              documentStatus: response?.status() ?? null,
-              finalUrl: page.url(),
-              bodyText,
-              dataResponses: reports,
-            };
-            await writeFile('research/viet-ordera-api-discovery.json', JSON.stringify(result, null, 2) + '\n');
-            console.log(JSON.stringify({
-              documentStatus: result.documentStatus,
-              finalUrl: result.finalUrl,
-              bodyTextLength: bodyText.length,
-              dataResponses: reports.map((entry) => ({ url: entry.url, status: entry.status, resourceType: entry.resourceType, contentType: entry.contentType, sampleLength: entry.sample?.length ?? 0 })),
-            }, null, 2));
-          } finally {
-            await context.close().catch(() => undefined);
-            await browser.close().catch(() => undefined);
-          }
+              }
+              value.slice(0, 20).forEach((item, index) => visit(item, `${path}[${index}]`, depth + 1));
+              return;
+            }
+            for (const [key, child] of Object.entries(value)) {
+              visit(child, path ? `${path}.${key}` : key, depth + 1);
+            }
+          };
+          visit(json, '$');
+          arrays.sort((a, b) => b.productLikeCount - a.productLikeCount || b.length - a.length);
+          const report = {
+            url,
+            status: fetched.status,
+            contentType: fetched.contentType,
+            bodyBytes: fetched.bodyBytes.length,
+            rootType: Array.isArray(json) ? 'array' : typeof json,
+            rootLength: Array.isArray(json) ? json.length : null,
+            rootKeys: !Array.isArray(json) && json && typeof json === 'object' ? Object.keys(json) : null,
+            arrays: arrays.slice(0, 80),
+          };
+          await writeFile('research/viet-ordera-api-shape.json', JSON.stringify(report, null, 2) + '\n');
+          console.log(JSON.stringify({
+            status: report.status,
+            bodyBytes: report.bodyBytes,
+            rootType: report.rootType,
+            rootLength: report.rootLength,
+            topArrays: report.arrays.slice(0, 20).map((entry) => ({ path: entry.path, length: entry.length, productLikeCount: entry.productLikeCount, productSamples: entry.productSamples.map((item) => [item.name, item.price]) })),
+          }, null, 2));
           NODE
       - if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: viet-ordera-api-discovery
-          path: apps/menu-worker/research/viet-ordera-api-discovery.json
+          name: viet-ordera-api-shape
+          path: apps/menu-worker/research/viet-ordera-api-shape.json
           if-no-files-found: error
