@@ -6,13 +6,14 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v6";
+export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v7";
 
 const HEADING_MARKER = "__FYSEN_ADJACENT_HEADING_LEVEL_";
 const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
 const SECTION_OR_UI_LABEL = /^(?:our\s+menu|menu|meny|single\s+meat|single\s+(?:vegetar|vegetarian)(?:\s*&\s*vegan)?|pdf\s+version|drinks?|drikke(?:meny)?|popular\s+dish|opening(?:\s+hours)?|åpningstider|contact|kontakt|address|adresse|booking|reservation(?:s)?|reservasjoner?|allergens?|allergener?)$/iu;
-const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|champagne(?:\s+cocktails?)?|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
+const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|white\s+wine|red\s+wine|sparkling\s+wine|cocktails?|champagne(?:\s+cocktails?)?|aperitif|mocktails?|milkshakes?|draught\s+beer|draft\s+beer|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|cider|øl\s*\/\s*beer|fat\s+øl\s*\/\s*tap\s+beer|flaske\s+øl\s*\/\s*bottle\s+beer|vin\s+glass\s*\/\s*wine\s+glass|hvitvin\s*\/\s*white\s+wine|rødvin\s*\/\s*red\s+wine|musserende\s*\/\s*sparkling\s+wine|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\s*\/\s*coffee|kaffe\/te.*|coffee\/tea.*|coffee\s+(?:and|&)\s+tea)$/iu;
 const BOTTLED_WATER_TITLE = /\b(?:still|sparkling)\s+(?:water|naturell)\b/iu;
+const DENSE_SEMANTIC_HEADING_MIN_ITEMS = 20;
 
 interface ParsedPrice {
   readonly priceMinor: number;
@@ -151,7 +152,9 @@ function applyDuplicateSectionIdentity(
   return [...unique.values()].sort((a, b) => a.position - b.position);
 }
 
-export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly MenuObservedItem[] {
+function strongestHeadingPriceCandidates(
+  html: string,
+): readonly HeadingPriceCandidate[] {
   const lines = annotatedLines(html);
   const byHeadingLevel = new Map<number, HeadingPriceCandidate[]>();
   let blockedSectionLevel: number | null = null;
@@ -224,7 +227,47 @@ export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly Men
   }
 
   const strongest = [...byHeadingLevel.values()].sort((a, b) => b.length - a.length)[0] ?? [];
-  if (strongest.length < 4) return [];
+  return strongest.length >= 4 ? strongest : [];
+}
 
-  return applyDuplicateSectionIdentity(strongest);
+export function recoverDenseSemanticHeadingPriceHtmlItems(
+  html: string,
+): readonly MenuObservedItem[] {
+  const candidates = strongestHeadingPriceCandidates(html);
+  if (candidates.length < DENSE_SEMANTIC_HEADING_MIN_ITEMS) return [];
+  if (candidates.some((candidate) => !candidate.sectionHint)) return [];
+
+  const distinctSections = new Set(
+    candidates.map((candidate) => normalizeDishName(candidate.sectionHint ?? "")),
+  );
+  if (distinctSections.size < 2) return [];
+
+  const unique = new Map<string, MenuObservedItem>();
+  for (const candidate of candidates) {
+    const sectionName = candidate.sectionHint;
+    if (!sectionName) return [];
+    const sourceKey = createMenuItemSourceKey(candidate.item.name, sectionName);
+    const next: MenuObservedItem = {
+      ...candidate.item,
+      sectionName,
+      sourceKey,
+      confidence: 0.99,
+    };
+    const existing = unique.get(sourceKey);
+    if (
+      existing &&
+      (existing.priceMinor !== next.priceMinor ||
+        existing.priceKind !== next.priceKind ||
+        existing.priceMaxMinor !== next.priceMaxMinor)
+    ) {
+      return [];
+    }
+    unique.set(sourceKey, next);
+  }
+
+  return [...unique.values()].sort((a, b) => a.position - b.position);
+}
+
+export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly MenuObservedItem[] {
+  return applyDuplicateSectionIdentity(strongestHeadingPriceCandidates(html));
 }
