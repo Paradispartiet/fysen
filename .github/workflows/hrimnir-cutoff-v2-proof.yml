@@ -1,0 +1,44 @@
+name: Hrimnir cutoff v2 proof
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/hrimnir-cutoff-v2-proof.yml"
+      - "apps/menu-worker/src/**"
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Validate exact Hrimnir canonical manifest
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          rm -rf research/hrimnir-v2-proof
+          mkdir -p research/hrimnir-v2-proof
+          cp catalog/hrimnir-ramen-storgata.json research/hrimnir-v2-proof/hrimnir-ramen-storgata.json
+          node dist/index.js validate:batch research/hrimnir-v2-proof | tee research/hrimnir-v2-result.json
+      - name: Upload proof
+        uses: actions/upload-artifact@v4
+        with:
+          name: hrimnir-cutoff-v2-proof
+          path: apps/menu-worker/research/hrimnir-v2-result.json
+          if-no-files-found: error
