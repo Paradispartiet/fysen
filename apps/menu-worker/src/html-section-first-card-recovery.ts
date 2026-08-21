@@ -5,12 +5,14 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_SECTION_FIRST_CARD_RECOVERY_VERSION = "section-first-card-v2";
+export const HTML_SECTION_FIRST_CARD_RECOVERY_VERSION = "section-first-card-v3";
 
 const SECTION_COUNT_SUFFIX = /\s*\(\s*\d{1,3}\s*\)\s*$/u;
-const FOOD_SECTION_LABEL = /^(?:forretter?|starters?|appetizers?|small\s+plates?|småretter|hovedretter?|mains?|main\s+courses?|supper?|soups?|barnemeny|kids?\s+menu|sauser?|sauces?|desserter?|desserts?|sides?|tilbehør|salater?|salads?|pizza(?:er|s)?|noodles?|nudler|curr(?:y|ies)|wok|grillretter?)$/iu;
-const BEVERAGE_SECTION_LABEL = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?)$/iu;
-const MENU_SCOPE_LABEL = /^(?:meny|menu|à\s+la\s+carte|a\s+la\s+carte)$/iu;
+const FOOD_SECTION_LABEL =
+  /^(?:forretter?|starters?|appetizers?|forretter?\s*\/\s*ap+etizers?|small\s+plates?|småretter|hovedretter?|mains?|main\s+courses?|supper?|soups?|barnemeny|barne\s+meny|barnemeny\s*\/\s*child\s+menu|kids?\s+menu|child\s+menu|children(?:'s)?\s+menu|children\s+menu|sauser?|sauces?|desserter?|desserts?|sweet\s+dishes?|sides?|tilbehør|tilbehør\s*\/\s*accessories|salater?|salads?|raita\s*&\s*salad|pizza(?:er|s)?|burgers?|snack\s+menu|fries|noodles?|nudler|curr(?:y|ies)|wok|grillretter?|tandoori(?:\s+dishes)?|chicken\s+curr(?:y|ies)|lamb\s+curr(?:y|ies)|prawns?\s*&\s*biryani|vegetable\s+menu|kjøtt\s+curries?\s*\/\s*non-veg\s+curries?|vegetar\s+curries?\s*\/\s*vegetarian\s+curries?|nans?|nanbrød\s*\/\s*nanbread|nibbles?)$/iu;
+const BEVERAGE_SECTION_LABEL =
+  /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|mineralvann|mineral\s+water|soft\s+drinks?|sodas?|brus|milkshakes?|coffee(?:\s+and\s+tea|\s+drinks?)?|tea|kaffe\s*[/|]\s*coffee|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|white\s+wine|red\s+wine|sparkling\s+wine|cocktails?|mocktails?|aperitifs?|draught\s+beer|draft\s+beer|beer\s+on\s+tap|fat\s+øl\s*[/|]\s*tap\s+beer|flaske\s+øl\s*[/|]\s*bottle\s+beer|musserende\s*[/|]\s*sparkling\s+wine|øl\s*[/|]\s*beer|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|cider|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?)$/iu;
+const MENU_SCOPE_LABEL = /^(?:meny|menu|our\s+menu|à\s+la\s+carte|a\s+la\s+carte)$/iu;
 const MENU_END_SECTION_LABEL = /^(?:product\s+information|restaurant\s+information|restaurantinformasjon|allergen(?:oversikt|er|s)?|reservasjoner?|reservations?|kontakt(?:\s+oss)?|contact(?:\s+us)?|booking|bordbestilling)$/iu;
 const PRICE_LINE = /^(?:(fra|from)\s*)?(?:(?:NOK|kr\.?)\s*)?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
 const UI_LABEL = /^(?:popular\s+dish|most\s+ordered|bestseller|#?\d+\s+(?:most\s+liked|mest\s+likte)|image|add\s+to\s+cart|legg\s+i\s+handlekurv|show\s+more|vis\s+mer)$/iu;
