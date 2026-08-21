@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "beijing-palace-pilestredet-oslo",
+    "name": "Beijing Palace",
+    "websiteUrl": "https://beijingpalace.no/",
+    "address": "Pilestredet 27, 0164 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.917595,
+    "longitude": 10.738354
+  },
+  "menuSource": {
+    "url": "https://beijingpalace.no/wp-content/uploads/2024/05/Microsoft-Word-middags-meny-2024.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 35,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "hoursSource": {
+    "url": "https://beijingpalace.no/about/",
+    "scopeHints": [
+      "Åpningstider",
+      "Onsdag",
+      "Lørdag",
+      "Kjøkkenet stenger"
+    ],
+    "minimumExpectedIntervals": 5,
+    "extractor": "visible_text_v1"
+  },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-21",
+      "note": "First-party page publishes venue hours Wednesday-Sunday 16:00-22:00 and separately states that the kitchen closes 21:30. Keep open/closed unknown until the kitchen-scoped close time is represented canonically."
+    }
+  },
+  "actions": [
+    {
+      "type": "booking",
+      "url": "https://beijingpalace.superbexperience.com/",
+      "sourceUrl": "https://beijingpalace.no/",
+      "provider": "Superb"
+    }
+  ],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Rekechips og peanøtter",
+      "Kylling suppe",
+      "Wok assoterte grønnsaker",
+      "Wok kongereker",
+      "Sprøstekt Iberico nakken",
+      "Sprøstekt okseindrefilet",
+      "Innbakt banan",
+      "Noe søtt til kaffe? Macaron"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Rekechips og peanøtter",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Kylling suppe",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Wok assoterte grønnsaker",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Wok kongereker",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Sprøstekt Iberico nakken",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Sprøstekt okseindrefilet",
+        "priceMinor": 32900
+      },
+      {
+        "name": "Innbakt banan",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Noe søtt til kaffe? Macaron",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
