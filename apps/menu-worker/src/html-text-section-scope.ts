@@ -28,7 +28,7 @@ const OUTPUT_METADATA =
 const DESCRIPTION_FRAGMENT =
   /^(?:pieces?\s+of\b|served\s+with\b|topped\s+with\b|glazed\s+with\b|all\s+dishes\s+are\s+served\b|can\s+be\s+made\b|homemade\s+.+\s+cooked\s+in\b|chicken\s+cooked\s+in\b|grilled\s+chicken\s+in\b|traditional\s+.+\s+dessert\s+with\b)/iu;
 const BILINGUAL_SECTION_PART =
-  /^(?:forretter?|appetizers?|starters?|kjøtt\s+curries|non[- ]veg\s+curries|vegetar\s+curries|vegetarian\s+curries|nanbrød|nanbread|fat\s+øl|tap\s+beer|flaske\s+øl|bottle\s+beer|musserende|sparkling\s+wine|soft\s+drinks?)$/iu;
+  /^(?:forretter?|ap+etizers?|starters?|kjøtt\s+curries|non[- ]veg\s+curries|vegetar\s+curries|vegetarian\s+curries|nanbrød|nanbread|fat\s+øl|tap\s+beer|flaske\s+øl|bottle\s+beer|musserende|sparkling\s+wine|soft\s+drinks?)$/iu;
 const EXPLICIT_TRAILING_PRICE =
   /\s+(?:(?:nok|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)\s*$/iu;
 const BARE_DASH_TRAILING_PRICE = /\s+[-–—]\s*([1-9]\d{1,3})\s*$/u;
