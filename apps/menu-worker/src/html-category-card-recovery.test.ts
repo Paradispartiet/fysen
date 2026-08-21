@@ -32,7 +32,7 @@ describe("semantic menu category card recovery", () => {
       </body></html>
     `);
 
-    expect(HTML_CATEGORY_CARD_RECOVERY_VERSION).toBe("category-cards-v3");
+    expect(HTML_CATEGORY_CARD_RECOVERY_VERSION).toBe("category-cards-v4");
     expect(items.map((item) => [item.sectionName, item.name, item.priceMinor, item.priceKind])).toEqual([
       ["Forretter", "House Bread", 9900, "from"],
       ["Forretter", "Aubergine Salad", 27900, "from"],
