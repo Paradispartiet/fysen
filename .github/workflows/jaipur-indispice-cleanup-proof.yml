@@ -32,6 +32,87 @@ jobs:
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm --filter @fysen/menu-worker... build
 
+      - name: Dump targeted live source evidence
+        shell: bash
+        run: |
+          mkdir -p apps/menu-worker/research
+          node --input-type=module <<'NODE' | tee apps/menu-worker/research/jaipur-indispice-target-debug.json
+          import { writeFile } from 'node:fs/promises';
+          import { extractHtmlVisibleText } from './apps/menu-worker/dist/html-extractor.js';
+          import { extractMenuSource, fetchMenuSource } from './apps/menu-worker/dist/menu-source-runtime.js';
+
+          const targets = [
+            {
+              slug: 'jaipur-karl-johans-gate-oslo',
+              url: 'https://jaipur.no/our-menu',
+              tokens: ['CHILDREN MENU', 'MALAI AAM'],
+            },
+            {
+              slug: 'indi-spice-welhavens-gate-oslo',
+              url: 'https://indispiceoslo.no/meny/',
+              tokens: ['TASTING MENU', 'LEN DEG TILBAKE', '595'],
+            },
+          ];
+
+          function contexts(lines, token) {
+            const normalizedToken = token.toLocaleLowerCase('nb-NO');
+            const matches = [];
+            for (let index = 0; index < lines.length; index += 1) {
+              if (!lines[index].toLocaleLowerCase('nb-NO').includes(normalizedToken)) continue;
+              matches.push({
+                index,
+                lines: lines.slice(Math.max(0, index - 5), Math.min(lines.length, index + 7)),
+              });
+              if (matches.length >= 6) break;
+            }
+            return matches;
+          }
+
+          const report = [];
+          for (const target of targets) {
+            const fetched = await fetchMenuSource({
+              url: target.url,
+              sourceType: 'html',
+              fetchMode: 'http',
+              userAgent: process.env.FYSEN_MENU_BOT_USER_AGENT ?? 'FysenMenuBot/0.1',
+              etag: null,
+              lastModified: null,
+              sourceSupport: { redirectOrigins: [], browserDataOrigins: [] },
+            });
+            if (fetched.kind !== 'content') throw new Error(`${target.slug} returned not_modified`);
+            const extracted = await extractMenuSource('html', fetched);
+            const visibleLines = extractHtmlVisibleText(fetched.body)
+              .split(/\n+/)
+              .map((line) => line.replace(/\s+/g, ' ').trim())
+              .filter(Boolean);
+            const suspicious = extracted.items
+              .filter((item) =>
+                target.tokens.some((token) =>
+                  item.name.toLocaleLowerCase('nb-NO').includes(token.toLocaleLowerCase('nb-NO')),
+                ),
+              )
+              .map((item) => ({
+                name: item.name,
+                priceMinor: item.priceMinor,
+                sectionName: item.sectionName,
+                confidence: item.confidence,
+                extractionMethod: item.extractionMethod,
+                sourceExcerpt: item.sourceExcerpt,
+              }));
+            report.push({
+              slug: target.slug,
+              httpStatus: fetched.status,
+              itemCount: extracted.items.length,
+              extractorVersion: extracted.extractorVersion,
+              suspicious,
+              contexts: Object.fromEntries(target.tokens.map((token) => [token, contexts(visibleLines, token)])),
+            });
+          }
+          const output = { cleanupHead: '36d81e4e762cd303422eb2326445a28255e8bcb2', report };
+          await writeFile('apps/menu-worker/research/jaipur-indispice-target-debug-structured.json', JSON.stringify(output, null, 2) + '\n');
+          console.log(JSON.stringify(output, null, 2));
+          NODE
+
       - name: Restore immutable Batch 02 targets
         shell: bash
         run: |
@@ -111,6 +192,8 @@ jobs:
         with:
           name: jaipur-indispice-cleanup-proof
           path: |
+            apps/menu-worker/research/jaipur-indispice-target-debug.json
+            apps/menu-worker/research/jaipur-indispice-target-debug-structured.json
             apps/menu-worker/research/jaipur-indispice-cleanup.plan.json
             apps/menu-worker/research/jaipur-indispice-cleanup-intake.json
             apps/menu-worker/research/jaipur-indispice-cleanup-validation.json
