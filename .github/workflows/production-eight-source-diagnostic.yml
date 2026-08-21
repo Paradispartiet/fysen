@@ -11,7 +11,7 @@ permissions:
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 35
     env:
       FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
       FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
@@ -50,9 +50,16 @@ jobs:
             'oche-aker-brygge-oslo',
             'oche-torggata-oslo',
           ]);
+          const browserSlugs = new Set([
+            'lahori-dera-gronland-oslo',
+            'oche-aker-brygge-oslo',
+            'oche-torggata-oslo',
+          ]);
           const catalogDir = 'apps/menu-worker/catalog';
           const outDir = 'apps/menu-worker/research/production-four-source-diagnostic';
+          const browserDir = 'apps/menu-worker/research/production-html-browser-diagnostic';
           await mkdir(outDir, { recursive: true });
+          await mkdir(browserDir, { recursive: true });
           const found = [];
           for (const file of (await readdir(catalogDir)).filter((name) => name.endsWith('.json')).sort()) {
             const raw = await readFile(`${catalogDir}/${file}`, 'utf8');
@@ -66,6 +73,11 @@ jobs:
               sourceUrl: manifest.menuSource.url,
               minimumExpectedItems: manifest.menuSource.minimumExpectedItems,
             });
+            if (browserSlugs.has(manifest.restaurant.slug)) {
+              manifest.menuSource.fetchMode = 'browser';
+              manifest.menuSource.sourceSupport ??= { redirectOrigins: [], browserDataOrigins: [] };
+              await writeFile(`${browserDir}/${file}`, JSON.stringify(manifest, null, 2) + '\n');
+            }
           }
           if (found.length !== targetSlugs.size) {
             const foundSlugs = new Set(found.map((entry) => entry.slug));
@@ -98,7 +110,18 @@ jobs:
           echo "exit_code=$status" >> "$GITHUB_OUTPUT"
           exit 0
 
-      - name: Compare both live passes
+      - name: Browser-mode validation for three HTML sources
+        id: browser
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/production-html-browser-diagnostic | tee research/production-html-browser-result.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Compare live passes and browser alternative
         working-directory: apps/menu-worker
         shell: bash
         run: |
@@ -106,6 +129,7 @@ jobs:
           import { readFile, writeFile } from 'node:fs/promises';
           const p1 = JSON.parse(await readFile('research/production-four-source-pass1.json', 'utf8'));
           const p2 = JSON.parse(await readFile('research/production-four-source-pass2.json', 'utf8'));
+          const browser = JSON.parse(await readFile('research/production-html-browser-result.json', 'utf8'));
           const manifests = JSON.parse(await readFile('research/production-four-source-manifests.json', 'utf8'));
           const compact = (result) => ({
             slug: result.slug,
@@ -122,16 +146,20 @@ jobs:
           const bySlug = (payload) => new Map((payload.results ?? []).map((result) => [result.slug, compact(result)]));
           const a = bySlug(p1);
           const b = bySlug(p2);
+          const c = bySlug(browser);
           const comparison = manifests.map((manifest) => ({
             ...manifest,
             pass1: a.get(manifest.slug) ?? null,
             pass2: b.get(manifest.slug) ?? null,
+            browser: c.get(manifest.slug) ?? null,
           }));
           const summary = {
             pass1ExitCode: '${{ steps.pass1.outputs.exit_code }}',
             pass2ExitCode: '${{ steps.pass2.outputs.exit_code }}',
+            browserExitCode: '${{ steps.browser.outputs.exit_code }}',
             pass1: { manifestCount: p1.manifestCount, acceptedCount: p1.acceptedCount, failedCount: p1.failedCount, failureFamilyCounts: p1.failureFamilyCounts },
             pass2: { manifestCount: p2.manifestCount, acceptedCount: p2.acceptedCount, failedCount: p2.failedCount, failureFamilyCounts: p2.failureFamilyCounts },
+            browserRun: { manifestCount: browser.manifestCount, acceptedCount: browser.acceptedCount, failedCount: browser.failedCount, failureFamilyCounts: browser.failureFamilyCounts },
             comparison,
           };
           await writeFile('research/production-four-source-summary.json', JSON.stringify(summary, null, 2) + '\n');
@@ -146,5 +174,6 @@ jobs:
             apps/menu-worker/research/production-four-source-manifests.json
             apps/menu-worker/research/production-four-source-pass1.json
             apps/menu-worker/research/production-four-source-pass2.json
+            apps/menu-worker/research/production-html-browser-result.json
             apps/menu-worker/research/production-four-source-summary.json
           if-no-files-found: error
