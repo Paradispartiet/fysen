@@ -52,7 +52,7 @@ describe("HTML runtime extractor version", () => {
     expect(HTML_SECTION_FIRST_CARD_RECOVERY_VERSION).toBe(
       "section-first-card-v2",
     );
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v4");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v5");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
     expect(
