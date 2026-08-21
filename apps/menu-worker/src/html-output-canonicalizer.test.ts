@@ -3,6 +3,7 @@ import {
   normalizeDishName,
   type MenuObservedItem,
 } from "@fysen/menu-core";
+import { describe, expect, it } from "vitest";
 import {
   canonicalizeHtmlOutputItems,
   HTML_OUTPUT_CANONICALIZER_VERSION,
