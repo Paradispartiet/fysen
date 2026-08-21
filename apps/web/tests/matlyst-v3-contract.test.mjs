@@ -102,6 +102,14 @@ test("Utforsk verden er flat og kommer før Hva frister", () => {
 });
 
 test("Utforsk verden viser seks relevante kjøkken før brukeren åpner resten", () => {
+  assert.deepEqual(explorerData.featuredCuisineNames, [
+    "Italiensk",
+    "Japansk",
+    "Tyrkisk",
+    "Indisk",
+    "Kinesisk",
+    "Thai",
+  ]);
   assert.match(explorerSource, /const COLLAPSED_CUISINE_COUNT = 6/u);
   assert.match(explorerSource, /filteredCuisines\.slice\(0, COLLAPSED_CUISINE_COUNT\)/u);
   assert.match(explorerSource, /aria-expanded=\{isCuisineDirectoryExpanded\}/u);
@@ -114,8 +122,13 @@ test("Utforsk verden viser ferskt restaurantbevis også i Pages-preview", () => 
   assert.match(explorerSource, /restaurantExamples/u);
   assert.match(explorerSource, /browseDishesClient/u);
   assert.match(clientBrowseSource, /NEXT_PUBLIC_FYSEN_API_BASE_URL/u);
+  assert.match(clientBrowseSource, /https:\/\/fysen-api\.vercel\.app/u);
+  assert.match(clientBrowseSource, /configuredBasePath \? defaultPreviewApiBaseUrl/u);
   assert.match(previewSearchSource, /browseDishesClient/u);
+  assert.match(previewSearchSource, /clientPreviewApiBaseUrl/u);
+  assert.doesNotMatch(previewSearchSource, /const previewApiBaseUrl/u);
   assert.doesNotMatch(previewSearchSource, /function previewBrowseUrl/u);
+  assert.match(explorerSource, /Kunne ikke hente ferske restauranttreff akkurat nå/u);
 
   const coverage = dishDiscovery.discoveryCoverage(
     [

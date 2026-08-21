@@ -16,7 +16,8 @@ Regresjonskontrakten krever at:
 - sentrale kjøkken som Japansk, Italiensk, Egyptisk og Levantinsk er direkte tilgjengelige;
 - `Midtøsten` ikke kan gjeninnføres som et aggregert kjøkken;
 - **Utforsk verden** kommer før **Hva frister?** og viser `På menyen nå` med representative restaurantbevis;
-- **Utforsk verden** viser seks høyest rangerte kjøkken som standard og kan åpne/lukke resten av den samme 19-kjøkkenlisten;
+- **Utforsk verden** viser den låste popularitetstoppen Italiensk, Japansk, Tyrkisk, Indisk, Kinesisk og Thai som standard og kan åpne/lukke resten av den samme 19-kjøkkenlisten;
+- Pages-previewen har én delt API-base med trygg fallback for statisk basepath og kan aldri bli stående permanent på lasteteksten;
 - GitHub Pages-forsiden og «Alle retter» deler den samme validerte browse-klienten i stedet for parallelle hentere eller discovery-søk;
 - production-backed retter som `momo`, `pierogi`, `doro-wat` og `sisig` er tilgjengelige gjennom kjøkkenscope uten krav om full Food Knowledge-artikkel;
 - `dishBrowseCuisineHref` roundtripper `cuisine` uten `world` eller `region`.

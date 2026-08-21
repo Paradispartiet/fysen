@@ -4,6 +4,8 @@ Den offentlige `fysen-preview`-siden er en statisk eksport av den private Fysen-
 
 Forsiden og «Alle retter» deler én `browseDishesClient`-adapter. Previewen skal ikke vedlikeholde parallelle browse-hentere eller bruke ordinære søkekall for å fylle kjøkkenkortene.
 
+Den delte klienten bruker `NEXT_PUBLIC_FYSEN_API_BASE_URL` når den er satt. Når en statisk build har `NEXT_PUBLIC_FYSEN_BASE_PATH`, men mangler eksplisitt API-base, bruker den den offentlige API-adressen `https://fysen-api.vercel.app`. Produksjonsweb uten statisk basepath får ingen slik fallback. Forsiden viser en kontrollert feiltekst hvis browse-kallet likevel feiler; lasteteksten skal aldri bli stående permanent.
+
 ## Sikkerhetsgrenser
 
 - Backend-, database- og serverkode publiseres ikke i preview-repoet.

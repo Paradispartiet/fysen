@@ -49,6 +49,15 @@ type FoodMoodSpec = {
   readonly dishIds: readonly string[];
 };
 
+export const featuredCuisineNames = [
+  "Italiensk",
+  "Japansk",
+  "Tyrkisk",
+  "Indisk",
+  "Kinesisk",
+  "Thai",
+] as const;
+
 const cuisineSpecs: readonly CuisineSpec[] = [
   {
     name: "Japansk",

@@ -6,7 +6,7 @@ import {
   type DishSearchResponse,
 } from "@fysen/contracts";
 import { useEffect, useMemo, useState } from "react";
-import { browseDishesClient } from "../lib/client-dish-search";
+import { browseDishesClient, clientPreviewApiBaseUrl } from "../lib/client-dish-search";
 import { DishBrowse } from "./dish-browse";
 import { DishKnowledgeNote } from "./dish-knowledge-note";
 import { DishResult } from "./dish-result";
@@ -18,8 +18,6 @@ type QueryState = {
   q: string;
   city: string;
 };
-
-const previewApiBaseUrl = process.env.NEXT_PUBLIC_FYSEN_API_BASE_URL?.trim().replace(/\/$/, "") ?? "";
 
 function queryFromLocation(): QueryState {
   const params = new URLSearchParams(window.location.search);
@@ -36,7 +34,7 @@ function previewSearchUrl(query: QueryState): string {
     limit: "20",
     sort: "relevance",
   });
-  return `${previewApiBaseUrl}/v1/dishes/search?${params.toString()}`;
+  return `${clientPreviewApiBaseUrl}/v1/dishes/search?${params.toString()}`;
 }
 
 function productionSearchUrl(query: QueryState): string {
@@ -69,7 +67,7 @@ export function StaticPreviewSearchPage() {
       return;
     }
 
-    if (!previewApiBaseUrl) {
+    if (!clientPreviewApiBaseUrl) {
       window.location.replace(productionSearchUrl(query));
       return;
     }
