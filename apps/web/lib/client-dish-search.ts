@@ -2,7 +2,12 @@ import { dishSearchResponseSchema, type DishSearchResponse } from "@fysen/contra
 import { dishBrowseResponseSchema, type DishBrowseResponse } from "@fysen/contracts/dish-browse";
 
 const configuredBasePath = process.env.NEXT_PUBLIC_FYSEN_BASE_PATH?.trim() ?? "";
-const configuredPreviewApi = process.env.NEXT_PUBLIC_FYSEN_API_BASE_URL?.trim().replace(/\/$/, "") ?? "";
+const defaultPreviewApiBaseUrl = "https://fysen-api.vercel.app";
+
+export const clientPreviewApiBaseUrl = (
+  process.env.NEXT_PUBLIC_FYSEN_API_BASE_URL?.trim()
+  || (configuredBasePath ? defaultPreviewApiBaseUrl : "")
+).replace(/\/$/, "");
 
 function clientSearchUrl(query: string, city: string, limit: number): string {
   const params = new URLSearchParams({
@@ -12,8 +17,8 @@ function clientSearchUrl(query: string, city: string, limit: number): string {
     sort: "relevance",
   });
 
-  if (configuredBasePath && configuredPreviewApi) {
-    return `${configuredPreviewApi}/v1/dishes/search?${params.toString()}`;
+  if (configuredBasePath && clientPreviewApiBaseUrl) {
+    return `${clientPreviewApiBaseUrl}/v1/dishes/search?${params.toString()}`;
   }
 
   return `/api/dishes/search?${params.toString()}`;
@@ -23,7 +28,7 @@ export async function browseDishesClient(
   city = "Oslo",
   options: { readonly signal?: AbortSignal } = {},
 ): Promise<DishBrowseResponse> {
-  if (!configuredPreviewApi) {
+  if (!clientPreviewApiBaseUrl) {
     throw new Error("Fysen preview API is not configured");
   }
 
@@ -33,7 +38,7 @@ export async function browseDishesClient(
   };
   if (options.signal) requestInit.signal = options.signal;
 
-  const response = await fetch(`${configuredPreviewApi}/v1/dishes/browse?${params.toString()}`, requestInit);
+  const response = await fetch(`${clientPreviewApiBaseUrl}/v1/dishes/browse?${params.toString()}`, requestInit);
   if (!response.ok) {
     throw new Error(`Fysen dish browse failed with HTTP ${response.status}`);
   }
