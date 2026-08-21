@@ -4,19 +4,22 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v4";
+export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v5";
 
 const SECTION_COUNT_SUFFIX = /\s*\(\s*\d{1,3}\s*\)\s*$/u;
 const BEVERAGE_SECTION_LABEL =
   /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|mineralvann|mineral\s+water|soft\s+drinks?|sodas?|brus|milkshakes?|coffee(?:\s+and\s+tea|\s+drinks?)?|tea|kaffe\s*[/|]\s*coffee|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|vin\s+glass\s*[/|]\s*wine\s+glass(?:\s*\(\s*\d+\s*cl\s*\))?|hvitvin\s*[/|]\s*white\s+wine|rødvin\s*[/|]\s*red\s+wine|cocktails?|mocktails?|aperitifs?|draught\s+beer|draft\s+beer|beer\s+on\s+tap|fat\s+øl\s*[/|]\s*tap\s+beer|flaske\s+øl\s*[/|]\s*bottle\s+beer|musserende\s*[/|]\s*sparkling\s+wine|øl\s*[/|]\s*beer|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|cider|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?)$/iu;
 const FOOD_SECTION_LABEL =
-  /^(?:forretter?|starters?|appetizers?|small\s+plates?|småretter|burgers?|hovedretter?|mains?|main\s+courses?|supper?|soups?|barnemeny|children'?s\s+menu|kids?\s+menu|sauser?|sauces?|desserter?|desserts?|sides?|tilbehør|salater?|salads?|pizza(?:er|s)?|noodles?|nudler|curr(?:y|ies)|wok|grillretter?|snacks?(?:\s+menu)?|fries)$/iu;
+  /^(?:forretter?|starters?|appetizers?|small\s+plates?|småretter|burgers?|hovedretter?|mains?|main\s+courses?|supper?|soups?|barnemeny|barne\s+meny|children'?s\s+menu|kids?\s+menu|sauser?|sauces?|desserter?|desserts?|sides?|tilbehør|salater?|salads?|pizza(?:er|s)?|noodles?|nudler|curr(?:y|ies)|wok|grillretter?|snacks?(?:\s+menu)?|fries)$/iu;
+const MENU_SCOPE_LABEL = /^(?:our\s+menu|menu|meny)$/iu;
 const MENU_END_SECTION_LABEL =
   /^(?:product\s+information|restaurant\s+information|restaurantinformasjon|allergen(?:oversikt|er|s)?|reservasjoner?|reservations?|kontakt(?:\s+oss)?|contact(?:\s+us)?|booking|bordbestilling)$/iu;
 const MENU_PRICE_SIGNAL =
   /(?:^|\s)(?:(?:fra|from)\s*)?(?:(?:NOK|kr\.?)\s*)?[1-9]\d{0,3}(?:[.,]\d{1,3})?\s*(?:,-|kr\.?|NOK)?$/iu;
 const ALLERGEN_CODE_ONLY =
   /^\(\s*[a-z]{1,4}\+?(?:\s*[,/]\s*[a-z]{1,4}\+?)*\s*\)\.?$/iu;
+const TRAILING_ALLERGEN_CODE =
+  /\s*\(\s*[a-z]{1,4}\+?(?:\s*[,/]\s*[a-z]{1,4}\+?)*\s*\)\.?\s*$/iu;
 const QUANTITY_OPTION_ONLY =
   /^(?:(?:\d+\s+)?(?:kule(?:r)?|scoops?)|\d+\s+(?:per|pers?\.?|personer?|persons?|people))(?:\s*[_-]{2,})?$/iu;
 const CONTACT_METADATA =
@@ -32,7 +35,7 @@ const DESCRIPTION_PHRASE =
 const BILINGUAL_SECTION_PART =
   /^(?:forretter?|ap+etizers?|starters?|kjøtt\s+curries|non[- ]veg\s+curries|vegetar\s+curries|vegetarian\s+curries|nanbrød|nanbread|fat\s+øl|tap\s+beer|flaske\s+øl|bottle\s+beer|musserende|sparkling\s+wine|soft\s+drinks?)$/iu;
 const EXPLICIT_TRAILING_PRICE =
-  /\s+(?:(?:nok|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)\s*$/iu;
+  /\s+(?:(?:nok|kr\.?)\s*)?([1-9]\d{1,3})(?:([.,])(\d{1,3}))?\s*(,-|kr\.?|nok)\s*$/iu;
 const BARE_DASH_TRAILING_PRICE = /\s+[-–—]\s*([1-9]\d{1,3})\s*$/u;
 const TRAILING_LEADER = /\s*_{3,}\s*$/u;
 
@@ -62,6 +65,12 @@ function sectionStateByPosition(
     const sectionLabel = normalizedSectionLabel(line);
     const countedSection = SECTION_COUNT_SUFFIX.test(line);
 
+    if (!countedSection && MENU_SCOPE_LABEL.test(sectionLabel)) {
+      state = "unknown";
+      sawPrice = false;
+      states[index] = "unknown";
+      continue;
+    }
     if (!countedSection && BEVERAGE_SECTION_LABEL.test(sectionLabel)) {
       state = "beverage";
       states[index] = "unknown";
@@ -135,9 +144,45 @@ function isObviousOutputNoise(value: string): boolean {
   );
 }
 
-function cleanOutputArtifactName(item: MenuObservedItem): MenuObservedItem {
+function parsedExplicitTrailingPriceMinor(
+  match: RegExpMatchArray,
+): number | null {
+  if (!match[1]) return null;
+  const separator = match[2] ?? null;
+  const trailingDigits = match[3] ?? "";
+  let whole = Number(match[1]);
+  let decimals = "";
+
+  if (separator === "." && trailingDigits.length === 3) {
+    whole = Number(`${match[1]}${trailingDigits}`);
+  } else {
+    if (trailingDigits.length > 2) return null;
+    decimals = trailingDigits.padEnd(2, "0").slice(0, 2);
+  }
+
+  const priceMinor = whole * 100 + Number(decimals || "0");
+  return priceMinor >= 4_000 && priceMinor <= 1_000_000
+    ? priceMinor
+    : null;
+}
+
+function cleanOutputArtifactName(
+  item: MenuObservedItem,
+): MenuObservedItem | null {
   let name = normalizeLine(item.name).replace(TRAILING_LEADER, "").trim();
-  name = name.replace(EXPLICIT_TRAILING_PRICE, "").trim();
+  const explicitPrice = name.match(EXPLICIT_TRAILING_PRICE);
+  if (explicitPrice?.index !== undefined) {
+    const embeddedPriceMinor = parsedExplicitTrailingPriceMinor(explicitPrice);
+    if (
+      embeddedPriceMinor !== null &&
+      embeddedPriceMinor !== item.priceMinor
+    ) {
+      return null;
+    }
+    if (embeddedPriceMinor === item.priceMinor) {
+      name = name.slice(0, explicitPrice.index).trim();
+    }
+  }
   const barePrice = name.match(BARE_DASH_TRAILING_PRICE);
   if (barePrice?.[1] && Number(barePrice[1]) >= 40 && item.priceMinor === Number(barePrice[1]) * 100) {
     name = name.replace(BARE_DASH_TRAILING_PRICE, "").trim();
@@ -152,9 +197,15 @@ function cleanOutputArtifactName(item: MenuObservedItem): MenuObservedItem {
   };
 }
 
+function normalizedEvidenceName(value: string): string {
+  return normalizeDishName(
+    normalizeLine(value).replace(TRAILING_ALLERGEN_CODE, "").trim(),
+  );
+}
+
 function lineReferencesItem(line: string, itemName: string): boolean {
-  const normalizedLine = normalizeDishName(line);
-  const normalizedName = normalizeDishName(itemName);
+  const normalizedLine = normalizedEvidenceName(line);
+  const normalizedName = normalizedEvidenceName(itemName);
   if (!normalizedName || !normalizedLine.startsWith(normalizedName)) return false;
   if (normalizedLine.length === normalizedName.length) return true;
   const remainder = normalizedLine.slice(normalizedName.length).trim();
@@ -189,6 +240,7 @@ export function filterPlainTextBeverageSectionItems(
   if (items.length === 0) return items;
   const cleanedItems = items
     .map(cleanOutputArtifactName)
+    .filter((item): item is MenuObservedItem => item !== null)
     .filter((item) => !isObviousOutputNoise(item.name));
   const lines = visibleText.split("\n").map(normalizeLine).filter(Boolean);
   if (
