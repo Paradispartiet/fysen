@@ -4,7 +4,7 @@ export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v1";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
-  /^(?:add|with|legg\s+til|med)\b.*(?:\+\s*(?:kr\.?\s*)?\d+|\b\d+\s*(?:,-|kr\.?|nok)\b)/iu;
+  /^(?:add|with|legg\s+til|med)\b.*(?:\+\s*(?:kr\.?\s*)?\d+|\b\d+\s*(?:,-|kr\.?|nok)(?:\s|$))/iu;
 
 function samePrice(
   left: Pick<MenuObservedItem, "priceMinor">,
