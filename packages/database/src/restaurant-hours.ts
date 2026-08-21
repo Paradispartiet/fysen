@@ -72,8 +72,9 @@ interface LockedSourceRow extends QueryResultRow {
   last_checked_at: Date | null;
 }
 
-interface CountRow extends QueryResultRow {
+interface SnapshotStateRow extends QueryResultRow {
   interval_count: number;
+  extractor_version: string;
 }
 
 function mapSource(row: SourceRow): RestaurantHoursSourceTarget {
@@ -188,15 +189,16 @@ export async function recordRestaurantHoursObservation(
       throw new Error(`Stale restaurant hours observation for ${input.sourceId}`);
     }
 
-    const previousResult = await client.query<CountRow>(
-      `SELECT interval_count
+    const previousResult = await client.query<SnapshotStateRow>(
+      `SELECT interval_count, extractor_version
          FROM fysen.restaurant_hours_snapshots
         WHERE source_id = $1
         ORDER BY fetched_at DESC, created_at DESC
         LIMIT 1`,
       [input.sourceId],
     );
-    const previousCount = previousResult.rows[0]?.interval_count ?? null;
+    const previousSnapshot = previousResult.rows[0] ?? null;
+    const previousCount = previousSnapshot?.interval_count ?? null;
     const suspiciousMinimum = previousCount === null ? 0 : Math.ceil(Number(previousCount) * 0.5);
     const requiredMinimum = Math.max(source.minimum_expected_intervals, suspiciousMinimum);
 
@@ -223,7 +225,12 @@ export async function recordRestaurantHoursObservation(
       return { outcome: "quarantined", snapshotId: null };
     }
 
-    if (source.last_schedule_fingerprint === input.scheduleFingerprint) {
+    const scheduleUnchanged =
+      source.last_schedule_fingerprint === input.scheduleFingerprint;
+    const extractorUnchanged =
+      previousSnapshot?.extractor_version === input.extractorVersion;
+
+    if (scheduleUnchanged && extractorUnchanged) {
       await client.query(
         `UPDATE fysen.restaurant_hours_sources
             SET etag = $2,
@@ -289,7 +296,10 @@ export async function recordRestaurantHoursObservation(
               last_modified = $3,
               last_schedule_fingerprint = $4,
               last_checked_at = $5,
-              last_changed_at = $5,
+              last_changed_at = CASE
+                WHEN last_schedule_fingerprint IS DISTINCT FROM $4 THEN $5
+                ELSE last_changed_at
+              END,
               next_check_at = $6,
               consecutive_failures = 0,
               updated_at = now()
@@ -306,7 +316,7 @@ export async function recordRestaurantHoursObservation(
     await insertWatchRun(client, {
       sourceId: input.sourceId,
       snapshotId,
-      outcome: "changed",
+      outcome: scheduleUnchanged ? "unchanged" : "changed",
       startedAt: input.startedAt,
       completedAt: input.completedAt,
       httpStatus: input.httpStatus,
@@ -314,7 +324,10 @@ export async function recordRestaurantHoursObservation(
       errorMessage: null,
     });
     await client.query("COMMIT");
-    return { outcome: "changed", snapshotId };
+    return {
+      outcome: scheduleUnchanged ? "unchanged" : "changed",
+      snapshotId,
+    };
   } catch (error) {
     await client.query("ROLLBACK");
     throw error;

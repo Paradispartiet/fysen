@@ -20,6 +20,15 @@ import {
 
 export const OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION = `${OPENING_HOURS_SOURCE_EXTRACTOR_VERSION}+${OPENING_HOURS_DUPLICATE_SECTION_RECOVERY_VERSION}+${OPENING_HOURS_SCOPE_HINT_RESOLVER_VERSION}+${OPENING_HOURS_MARKER_NORMALIZER_VERSION}+${OPENING_HOURS_REDUNDANT_CUTOFF_NORMALIZER_VERSION}`;
 
+export function shouldForceOpeningHoursReextract(
+  previousExtractorVersion: string | null,
+): boolean {
+  return (
+    previousExtractorVersion !== null &&
+    previousExtractorVersion !== OPENING_HOURS_RUNTIME_EXTRACTOR_VERSION
+  );
+}
+
 export interface OpeningHoursSourceRuntimeInput {
   readonly url: string;
   readonly userAgent: string;

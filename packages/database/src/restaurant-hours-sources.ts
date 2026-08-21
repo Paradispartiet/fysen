@@ -15,6 +15,10 @@ export interface UpsertRestaurantHoursSourceInput {
   readonly verificationCheckedAt?: string | null;
 }
 
+interface RestaurantHoursSnapshotVersionRow extends QueryResultRow {
+  extractor_version: string;
+}
+
 interface RestaurantHoursSourceRow extends QueryResultRow {
   id: string;
   restaurant_id: string;
@@ -79,6 +83,21 @@ export async function getRestaurantHoursSourceById(
   );
   const row = result.rows[0];
   return row ? mapRestaurantHoursSource(row) : null;
+}
+
+export async function getLatestRestaurantHoursSnapshotExtractorVersion(
+  pool: Pool,
+  sourceId: string,
+): Promise<string | null> {
+  const result = await pool.query<RestaurantHoursSnapshotVersionRow>(
+    `SELECT extractor_version
+       FROM fysen.restaurant_hours_snapshots
+      WHERE source_id = $1
+      ORDER BY fetched_at DESC, created_at DESC
+      LIMIT 1`,
+    [sourceId],
+  );
+  return result.rows[0]?.extractor_version ?? null;
 }
 
 export async function upsertRestaurantHoursSource(
