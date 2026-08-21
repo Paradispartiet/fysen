@@ -9,14 +9,18 @@ import {
   HTML_TEXT_SECTION_SCOPE_VERSION,
 } from "./html-text-section-scope.js";
 
-function item(name: string, position: number): MenuObservedItem {
+function item(
+  name: string,
+  position: number,
+  priceMinor = 10000,
+): MenuObservedItem {
   return {
     sourceKey: createMenuItemSourceKey(name),
     name,
     normalizedName: normalizeDishName(name),
     description: null,
     sectionName: null,
-    priceMinor: 10000,
+    priceMinor,
     currency: "NOK",
     position,
     extractionMethod: "html_heuristic",
@@ -49,12 +53,108 @@ describe("plain-text HTML section scoping", () => {
       119 NOK
     `;
 
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v2");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v3");
     expect(
       filterPlainTextBeverageSectionItems(items, visibleText).map(
         (entry) => entry.name,
       ),
     ).toEqual(["Falafel", "Baklava"]);
+  });
+
+  it("scopes a beverage-first menu before the first price and resumes at burgers", () => {
+    const items = [
+      item("Brooklyn Lager", 1, 13900),
+      item("Paloma", 2, 16900),
+      item("The Classic", 3, 19900),
+      item("Brownie", 4, 16900),
+    ];
+    const visibleText = `
+      DRAUGHT BEER
+      BROOKLYN LAGER
+      139
+      APERITIF
+      PALOMA
+      169
+      BURGERS
+      THE CLASSIC
+      199
+      DESSERTS
+      BROWNIE
+      169
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual(["The Classic", "Brownie"]);
+  });
+
+  it("recognizes bilingual tap and bottled beer headings", () => {
+    const items = [
+      item("Butter Chicken", 1, 28500),
+      item("House Lager", 2, 11800),
+      item("Bottle Lager", 3, 10500),
+    ];
+    const visibleText = `
+      HOVEDRETTER
+      Butter Chicken
+      285
+      FAT ØL / TAP BEER
+      House Lager
+      118
+      FLASKE ØL / BOTTLE BEER
+      Bottle Lager
+      105
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual(["Butter Chicken"]);
+  });
+
+  it("removes conservative output metadata and description fragments even without a beverage section", () => {
+    const items = [
+      item("(p,s)", 1),
+      item("(E, N, M)", 2),
+      item("2 Per ________", 3, 63900),
+      item("Ring oss på 476 52 724", 4, 72400),
+      item("1199,- per person", 5, 119900),
+      item("FORRETTER/APETIZERS", 6, 12900),
+      item("Pieces of chicken, lamb and scampi", 7, 28900),
+      item("(CAN BE MADE VEGAN)", 8, 26900),
+      item("/Gluten fri", 9, 260000),
+      item("Butter Chicken", 10, 28900),
+      item("Fish N Chips", 11, 24900),
+    ];
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, "HOVEDRETTER\nButter Chicken\nFish N Chips").map(
+        (entry) => entry.name,
+      ),
+    ).toEqual(["Butter Chicken", "Fish N Chips"]);
+  });
+
+  it("cleans layout leaders and mirrored trailing prices without changing legitimate dash numbers", () => {
+    const items = [
+      item("Linser (rød eller gul)___________", 1, 26900),
+      item("Crispy Chicken Tenders - 179", 2, 17900),
+      item("Mango Sorbet 119,-", 3, 12900),
+      item("Table 42 - 7", 4, 700),
+    ];
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, "HOVEDRETTER").map(
+        (entry) => entry.name,
+      ),
+    ).toEqual([
+      "Linser (rød eller gul)",
+      "Crispy Chicken Tenders",
+      "Mango Sorbet",
+      "Table 42 - 7",
+    ]);
   });
 
   it("ignores unknown duplicate DOM text when the canonical occurrence is inside a beverage section", () => {
@@ -99,13 +199,13 @@ describe("plain-text HTML section scoping", () => {
     ).toEqual(["House Special"]);
   });
 
-  it("does nothing when no plain beverage boundary is present", () => {
-    const items = [item("Falafel", 1), item("Baklava", 2)];
+  it("still applies output cleanup when no plain beverage boundary is present", () => {
+    const items = [item("Falafel", 1), item("(su)", 2), item("Baklava", 3)];
     expect(
       filterPlainTextBeverageSectionItems(
         items,
         "Forretter\nFalafel\nDessert\nBaklava",
-      ),
-    ).toEqual(items);
+      ).map((entry) => entry.name),
+    ).toEqual(["Falafel", "Baklava"]);
   });
 });
