@@ -5,8 +5,9 @@ import {
   type MenuObservedItem,
   type MenuPriceKind,
 } from "@fysen/menu-core";
+import { recoverDenseSemanticHeadingPriceHtmlItems } from "./html-adjacent-heading-price-recovery.js";
 
-export const HTML_CATEGORY_CARD_RECOVERY_VERSION = "category-cards-v3";
+export const HTML_CATEGORY_CARD_RECOVERY_VERSION = "category-cards-v4";
 
 const CATEGORY_SECTION = "[data-testid='menu-category-section']";
 const CATEGORY_TITLE = "[data-testid='menu-category-section-title']";
@@ -15,7 +16,7 @@ const PRODUCT_NAME = "[data-testid='menu-product-name']";
 const PRODUCT_PRICE = "[data-testid='menu-product-price']";
 const PRODUCT_PRICE_BEFORE_DISCOUNT = "[data-testid='menu-product-price-before-discount']";
 const PRODUCT_DESCRIPTION = "[data-testid='menu-product-description']";
-const BEVERAGE_SECTION = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|champagne(?:\s+cocktails?)?|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
+const BEVERAGE_SECTION = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|white\s+wine|red\s+wine|sparkling\s+wine|cocktails?|champagne(?:\s+cocktails?)?|aperitif|mocktails?|milkshakes?|draught\s+beer|draft\s+beer|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|cider|øl\s*\/\s*beer|fat\s+øl\s*\/\s*tap\s+beer|flaske\s+øl\s*\/\s*bottle\s+beer|vin\s+glass\s*\/\s*wine\s+glass|hvitvin\s*\/\s*white\s+wine|rødvin\s*\/\s*red\s+wine|musserende\s*\/\s*sparkling\s+wine|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\s*\/\s*coffee|kaffe\/te.*|coffee\/tea.*|coffee\s+(?:and|&)\s+tea)$/iu;
 const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK|kr\.?)\s*)?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
 
 interface ParsedPrice {
@@ -54,7 +55,7 @@ function parsePrice(value: string): ParsedPrice | null {
 export function recoverSemanticCategoryCardHtmlItems(html: string): readonly MenuObservedItem[] {
   const $ = load(html);
   const sections = $(CATEGORY_SECTION).toArray();
-  if (sections.length < 2) return [];
+  if (sections.length < 2) return recoverDenseSemanticHeadingPriceHtmlItems(html);
 
   const items: MenuObservedItem[] = [];
   const categoryNames = new Set<string>();
@@ -104,6 +105,8 @@ export function recoverSemanticCategoryCardHtmlItems(html: string): readonly Men
 
   const hasStrongCategoryEvidence =
     categoryNames.size >= 2 || (categoryNames.size === 1 && hasBeverageSection);
-  if (!hasStrongCategoryEvidence || items.length < 4) return [];
+  if (!hasStrongCategoryEvidence || items.length < 4) {
+    return recoverDenseSemanticHeadingPriceHtmlItems(html);
+  }
   return items;
 }
