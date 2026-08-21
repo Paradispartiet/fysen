@@ -49,12 +49,43 @@ describe("plain-text HTML section scoping", () => {
       119 NOK
     `;
 
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v3");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v4");
     expect(
       filterPlainTextBeverageSectionItems(items, visibleText).map(
         (entry) => entry.name,
       ),
     ).toEqual(["Falafel", "Baklava"]);
+  });
+
+  it("restores burger food state after an opening drinks block and stops again at mineral water", () => {
+    const items = [
+      item("Frydenlund Pilsner", 1, 11900),
+      item("THE CLASSIC", 2, 19900),
+      item("CHEDDAR & BACON", 3, 24900),
+      item("Thomas Henry Ginger Ale", 4, 4900),
+      item("Farris", 5, 5900),
+    ];
+    const visibleText = `
+      DRAUGHT BEER
+      Frydenlund Pilsner
+      119 NOK
+      BURGERS
+      THE CLASSIC
+      199 NOK
+      CHEDDAR & BACON
+      249 NOK
+      MINERAL WATER
+      Thomas Henry Ginger Ale
+      49 NOK
+      Farris
+      59 NOK
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual(["THE CLASSIC", "CHEDDAR & BACON"]);
   });
 
   it("ignores unknown duplicate DOM text when the canonical occurrence is inside a beverage section", () => {
@@ -99,7 +130,7 @@ describe("plain-text HTML section scoping", () => {
     ).toEqual(["House Special"]);
   });
 
-  it("filters bilingual beverage tails and their section headings", () => {
+  it("filters bilingual beverage tails and allergen-normalized beverage item names", () => {
     const items = [
       item("BUTTER CHICKEN", 1),
       item("NANBRØD/ NANBREAD", 2),
@@ -119,7 +150,7 @@ describe("plain-text HTML section scoping", () => {
       GARLIC NAN
       69 NOK
       KAFFE / COFFEE
-      CUPPUCINO
+      CUPPUCINO (M)
       55 NOK
       FAT ØL / TAP BEER
       HOUSE LAGER
@@ -146,11 +177,13 @@ describe("plain-text HTML section scoping", () => {
       item("2 Per ________", 6),
       item("/Gluten fri", 7),
       item("kuler", 8),
-      item("Mango Sorbet 119,-", 9, 11900),
-      item("CRISPY CHICKEN TENDERS - 179", 10, 17900),
-      item("Linser (rod eller gul)___________", 11, 26900),
-      item("Fromage Pizza 109", 12, 20500),
-      item("American chocolate cake with walnuts, served with vanilla ice cream", 13, 16900),
+      item("ALL DISHES ARE SERVED WITH RICE", 9),
+      item("(CAN BE MADE VEGAN)", 10),
+      item("Mango Sorbet 119,-", 11, 11900),
+      item("CRISPY CHICKEN TENDERS - 179", 12, 17900),
+      item("Linser (rod eller gul)___________", 13, 26900),
+      item("Fromage Pizza 109", 14, 20500),
+      item("American chocolate cake with walnuts, served with vanilla ice cream", 15, 16900),
     ];
 
     expect(
