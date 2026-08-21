@@ -46,7 +46,7 @@ Ramenillustrasjonen skal aldri ligge nede alene i en stor tom flate og skal aldr
 
 ## Utforsk kjøkken
 
-`CuisineExplorer` viser den flate, filtrerbare **Utforsk verden**-katalogen definert i `matlyst-v3.md`. Verdensdel og kulinarisk region er ikke navigasjonsnivåer; brukeren velger et av de 19 aktive kjøkkenene direkte.
+`CuisineExplorer` viser den flate, filtrerbare **Utforsk verden**-katalogen definert i `matlyst-v3.md`. Verdensdel og kulinarisk region er ikke navigasjonsnivåer; brukeren velger et av de 19 aktive kjøkkenene direkte. Seks kjøkken med høyest fersk Oslo-dekning vises først, mens én åpne/lukke-knapp viser resten av den samme katalogen.
 
 Kjøkkenkortene er handlingsflater, ikke faktabokser. Hvert kort inneholder:
 

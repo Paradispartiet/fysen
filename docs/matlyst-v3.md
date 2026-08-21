@@ -49,12 +49,14 @@ Katalogen viser 19 dokumenterte kjøkkenpresentasjoner:
 
 Forsiden viser, i fast rekkefølge:
 
-1. **Utforsk verden** – én direkte, filtrerbar katalog over alle aktive kjøkken, uten verdensdel eller kulinarisk region som mellomnivå.
+1. **Utforsk verden** – én direkte, filtrerbar katalog over alle aktive kjøkken, uten verdensdel eller kulinarisk region som mellomnivå. De seks kjøkkenene med høyest fersk Oslo-dekning vises først; én knapp åpner og lukker resten av katalogen.
 2. **Hva frister?** – lystinnganger som pizza, curry, nudler og grill.
 
 Katalogen kan filtreres på kjøkkennavn, kjøkkenets egne tradisjoner, canonical rett og alias. Eksempler er `japansk`, `ramen`, `momo` og `pierogi`. Kortene viser ikke verdensdel eller kulinarisk region. Hvert kort viser i stedet **På menyen nå** med opptil to konkrete restauranter, representativ rett og adresse når fersk produksjonsdekning finnes.
 
 Kjøkken sorteres med fersk Oslo-dekning først når browse-data er tilgjengelig. `DishBrowseResponse` leverer både konservativt restaurantantall og opptil to dedupliserte restauranteksempler per rett. Live-signalene lager ikke en ny indeks og registreres ikke som brukersøk.
+
+Den lukkede katalogen viser maksimalt seks kort. **Vis alle kjøkken** åpner alle filtrerte kjøkken, og **Vis færre kjøkken** lukker listen igjen. Filtrering bruker den samme rangerte listen og oppretter ingen alternativ katalog.
 
 ## Alle retter
 

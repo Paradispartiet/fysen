@@ -24,6 +24,8 @@ type DishCoverage = {
   readonly restaurantExamples: readonly DishBrowseRestaurantExample[];
 };
 
+const COLLAPSED_CUISINE_COUNT = 6;
+
 function uniqueCandidates(dishes: readonly DishSuggestion[]): readonly DishSuggestion[] {
   const seen = new Set<string>();
   return dishes.filter((dish) => {
@@ -118,6 +120,7 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
   const [selectedAreaName, setSelectedAreaName] = useState<string>("");
   const [selectedMood, setSelectedMood] = useState<FoodMood | null>(null);
   const [cuisineDirectoryQuery, setCuisineDirectoryQuery] = useState("");
+  const [isCuisineDirectoryExpanded, setIsCuisineDirectoryExpanded] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const moodDialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
@@ -176,6 +179,14 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
     if (!normalizedQuery) return rankedCuisines;
     return rankedCuisines.filter((cuisine) => cuisineFilterText(cuisine).includes(normalizedQuery));
   }, [cuisineDirectoryQuery, rankedCuisines]);
+
+  const visibleCuisines = useMemo(
+    () =>
+      isCuisineDirectoryExpanded
+        ? filteredCuisines
+        : filteredCuisines.slice(0, COLLAPSED_CUISINE_COUNT),
+    [filteredCuisines, isCuisineDirectoryExpanded],
+  );
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -259,18 +270,25 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
               autoComplete="off"
               value={cuisineDirectoryQuery}
               placeholder="Søk etter kjøkken eller rett …"
-              onChange={(event) => setCuisineDirectoryQuery(event.currentTarget.value)}
+              onChange={(event) => {
+                setCuisineDirectoryQuery(event.currentTarget.value);
+                setIsCuisineDirectoryExpanded(false);
+              }}
             />
           </div>
 
           <div className="matlystCuisineDirectoryMeta" aria-live="polite">
-            <span>{filteredCuisines.length} kjøkken</span>
+            <span>
+              {visibleCuisines.length === filteredCuisines.length
+                ? `${filteredCuisines.length} kjøkken`
+                : `${visibleCuisines.length} av ${filteredCuisines.length} kjøkken`}
+            </span>
             <small>Du kan søke på japansk, ramen, momo eller pierogi.</small>
           </div>
 
           {filteredCuisines.length > 0 ? (
-            <div className="matlystCuisineDirectoryGrid">
-              {filteredCuisines.map((cuisine) => {
+            <div className="matlystCuisineDirectoryGrid" id="matlyst-cuisine-directory-grid">
+              {visibleCuisines.map((cuisine) => {
                 const firstArea = cuisine.areas[0];
                 const preview = featured.get(cuisine.name) ?? null;
                 if (!firstArea) return null;
@@ -319,6 +337,19 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
           ) : (
             <p className="matlystCuisineDirectoryEmpty">Ingen aktive kjøkken eller representative retter matcher «{cuisineDirectoryQuery.trim()}».</p>
           )}
+
+        {filteredCuisines.length > COLLAPSED_CUISINE_COUNT ? (
+          <button
+            type="button"
+            className="matlystCuisineDirectoryToggle"
+            aria-controls="matlyst-cuisine-directory-grid"
+            aria-expanded={isCuisineDirectoryExpanded}
+            onClick={() => setIsCuisineDirectoryExpanded((current) => !current)}
+          >
+            {isCuisineDirectoryExpanded ? "Vis færre kjøkken" : `Vis alle kjøkken (${filteredCuisines.length})`}
+            <span aria-hidden="true">{isCuisineDirectoryExpanded ? "↑" : "↓"}</span>
+          </button>
+        ) : null}
 
         <p className="matlystCuisineDirectoryNote">Velg et kjøkken for å utforske konkrete retter og ferske serveringssteder i Oslo.</p>
       </section>
