@@ -9,7 +9,7 @@ function htmlWithPayload(payload: unknown): string {
 }
 
 describe("embedded structured menu JSON recovery", () => {
-  it("recovers category-bound food items with minor-unit prices and skips popularity and drink categories", () => {
+  it("recovers category-bound food items with minor-unit prices and skips popularity, beverage and auxiliary categories", () => {
     const payload = {
       page: {
         menu: {
@@ -17,6 +17,11 @@ describe("embedded structured menu JSON recovery", () => {
             { name: "Populært", item_ids: ["plov", "manty"] },
             { name: "Hovedretter", item_ids: ["plov", "manty", "lagman", "kebab"] },
             { name: "Drikke", item_ids: ["cola", "ayran"] },
+            { name: "Cafe", item_ids: ["coffee"] },
+            { name: "Iced Tea", item_ids: ["iced-tea"] },
+            { name: "Easy Milk Tea", item_ids: ["milk-tea"] },
+            { name: "Slushy Tea", item_ids: ["slushy"] },
+            { name: "Extra", item_ids: ["rice"] },
           ],
           items: [
             { id: "plov", name: "Usbekisk Plov", description: "Ris, gulrot og kjøtt", price: 34900 },
@@ -25,6 +30,11 @@ describe("embedded structured menu JSON recovery", () => {
             { id: "kebab", name: "Qazon Kebab", description: "Grillet kjøtt", price: 44900 },
             { id: "cola", name: "Coca-Cola", description: "", price: 5900 },
             { id: "ayran", name: "Ayran", description: "", price: 6900 },
+            { id: "coffee", name: "Vietnamese Coffee", description: "", price: 7500 },
+            { id: "iced-tea", name: "Peach Tea", description: "", price: 7900 },
+            { id: "milk-tea", name: "Taro Milk Tea", description: "", price: 8500 },
+            { id: "slushy", name: "Mango Slushy", description: "", price: 8500 },
+            { id: "rice", name: "Extra Rice", description: "", price: 3900 },
           ],
         },
       },
@@ -32,7 +42,7 @@ describe("embedded structured menu JSON recovery", () => {
 
     const items = recoverEmbeddedStructuredMenuJson(htmlWithPayload(payload));
 
-    expect(HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION).toBe("embedded-menu-json-v1");
+    expect(HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION).toBe("embedded-menu-json-v2");
     expect(items.map((item) => [item.sectionName, item.name, item.priceMinor])).toEqual([
       ["Hovedretter", "Usbekisk Plov", 34900],
       ["Hovedretter", "Manty", 39900],
