@@ -17,7 +17,7 @@ describe("PDF prefixed NOK prices", () => {
       "60. Biff stekt m/ grønnsaker i soyasaus (sterk) SY SEM NOK 249",
     ]);
 
-    expect(PDF_EXTRACTOR_VERSION).toBe("pdf-text-v8");
+    expect(PDF_EXTRACTOR_VERSION).toBe("pdf-text-v9");
     expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
       ["Rekechips og peanøtter", 7900],
       ["Dampet Edamame bønner", 7900],
@@ -53,10 +53,10 @@ describe("PDF prefixed NOK prices", () => {
     ]);
   });
 
-  it("accepts an explicitly currency-marked 35-kroner dish without lowering bare-number noise protection", () => {
+  it("accepts an explicitly currency-marked 35-kroner per-item dish without lowering bare-number noise protection", () => {
     const items = extractMenuItemsFromPdfLines([
       "DESSERT // Dessert",
-      "178. Noe søtt til kaffe? Macaron HNE kr.35",
+      "178. Noe søtt til kaffe? Macaron HNE kr.35 (pr.stk)",
       "Cheap metadata",
       "35",
     ]);
