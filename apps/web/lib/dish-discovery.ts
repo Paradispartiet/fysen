@@ -1,4 +1,4 @@
-import type { DishBrowseItem } from "@fysen/contracts/dish-browse";
+import type { DishBrowseItem, DishBrowseRestaurantExample } from "@fysen/contracts/dish-browse";
 
 export type DiscoveryDishDescriptor = {
   readonly label: string;
@@ -8,6 +8,7 @@ export type DiscoveryDishDescriptor = {
 
 export type DiscoveryCoverage = {
   readonly restaurantCount: number;
+  readonly restaurantExamples: readonly DishBrowseRestaurantExample[];
   readonly matchedDishes: readonly DishBrowseItem[];
 };
 
@@ -63,13 +64,20 @@ export function discoveryCoverage(
     .sort((left, right) => right.score - left.score || right.item.restaurantCount - left.item.restaurantCount || left.item.name.localeCompare(right.item.name, "nb"));
 
   const best = ranked[0];
-  if (!best) return { restaurantCount: 0, matchedDishes: [] };
+  if (!best) return { restaurantCount: 0, restaurantExamples: [], matchedDishes: [] };
 
   const strongest = ranked.filter((entry) => entry.score === best.score).map((entry) => entry.item);
+  const seenRestaurants = new Set<string>();
+  const restaurantExamples = strongest.flatMap((item) => item.restaurantExamples).filter((restaurant) => {
+    if (seenRestaurants.has(restaurant.id) || seenRestaurants.size >= 2) return false;
+    seenRestaurants.add(restaurant.id);
+    return true;
+  });
   return {
-    // Multiple menu spellings can overlap at the same restaurant. Until browse exposes restaurant ids,
-    // use the strongest single live identity rather than summing and overstating coverage.
+    // Multiple menu spellings can overlap at the same restaurant. Use the strongest single live
+    // identity for the count and deduplicate the representative restaurant proof across spellings.
     restaurantCount: Math.max(...strongest.map((item) => item.restaurantCount)),
+    restaurantExamples,
     matchedDishes: strongest,
   };
 }

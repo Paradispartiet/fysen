@@ -17,7 +17,7 @@ Restaurantforslag krever fortsatt ikke-fuzzy menytreff.
 
 Hvert kjøkkenkort prøver flere høyt prioriterte canonicale retter før det konkluderer med at kjøkkenet mangler ferske treff. Dette hindrer at hele kjøkkenet fremstår tomt bare fordi den aller første redaksjonelle kandidaten ikke finnes i dagens indeks.
 
-Rettetikettene på kortet er redaksjonelle eksempler. Restaurantnavnene under `På menyen nå` kommer alltid fra live Fysen-søk.
+Rettetikettene på kortet er redaksjonelle eksempler. Restaurantnavnene under `På menyen nå` kommer fra den samme live, canonicaliserte browse-indeksen som «Alle retter». Browse-responsen gir opptil to dedupliserte restauranteksempler per rett uten å registrere discovery-visningen som et brukersøk.
 
 ## Regionutforsker
 

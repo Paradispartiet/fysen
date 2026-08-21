@@ -4,11 +4,18 @@ export const dishBrowseQuerySchema = z.object({
   city: z.string().trim().min(1).max(120).default("Oslo"),
 });
 
+export const dishBrowseRestaurantExampleSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string().trim().min(1).max(200),
+  address: z.string().trim().min(1).max(500),
+});
+
 export const dishBrowseItemSchema = z.object({
   id: z.string().trim().min(1).max(360),
   name: z.string().trim().min(1).max(300),
   query: z.string().trim().min(1).max(300),
   restaurantCount: z.number().int().positive(),
+  restaurantExamples: z.array(dishBrowseRestaurantExampleSchema).max(2).default([]),
 });
 
 export const dishBrowseQualitySchema = z.object({
@@ -35,5 +42,6 @@ export const dishBrowseResponseSchema = z.object({
 });
 
 export type DishBrowseQuery = z.infer<typeof dishBrowseQuerySchema>;
+export type DishBrowseRestaurantExample = z.infer<typeof dishBrowseRestaurantExampleSchema>;
 export type DishBrowseItem = z.infer<typeof dishBrowseItemSchema>;
 export type DishBrowseResponse = z.infer<typeof dishBrowseResponseSchema>;

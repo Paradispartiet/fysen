@@ -15,6 +15,8 @@ Regresjonskontrakten krever at:
 - katalogen inneholder 19 entydige aktive kjøkken;
 - sentrale kjøkken som Japansk, Italiensk, Egyptisk og Levantinsk er direkte tilgjengelige;
 - `Midtøsten` ikke kan gjeninnføres som et aggregert kjøkken;
+- **Utforsk verden** kommer før **Hva frister?** og viser `På menyen nå` med representative restaurantbevis;
+- GitHub Pages-forsiden og «Alle retter» deler den samme validerte browse-klienten i stedet for parallelle hentere eller discovery-søk;
 - production-backed retter som `momo`, `pierogi`, `doro-wat` og `sisig` er tilgjengelige gjennom kjøkkenscope uten krav om full Food Knowledge-artikkel;
 - `dishBrowseCuisineHref` roundtripper `cuisine` uten `world` eller `region`.
 

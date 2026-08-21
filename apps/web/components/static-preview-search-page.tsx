@@ -1,14 +1,12 @@
 "use client";
 
-import {
-  dishBrowseResponseSchema,
-  type DishBrowseResponse,
-} from "@fysen/contracts/dish-browse";
+import type { DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import {
   dishSearchResponseSchema,
   type DishSearchResponse,
 } from "@fysen/contracts";
 import { useEffect, useMemo, useState } from "react";
+import { browseDishesClient } from "../lib/client-dish-search";
 import { DishBrowse } from "./dish-browse";
 import { DishKnowledgeNote } from "./dish-knowledge-note";
 import { DishResult } from "./dish-result";
@@ -29,11 +27,6 @@ function queryFromLocation(): QueryState {
     q: (params.get("q") ?? "").trim(),
     city: (params.get("city") ?? "Oslo").trim() || "Oslo",
   };
-}
-
-function previewBrowseUrl(city: string): string {
-  const params = new URLSearchParams({ city });
-  return `${previewApiBaseUrl}/v1/dishes/browse?${params.toString()}`;
 }
 
 function previewSearchUrl(query: QueryState): string {
@@ -87,19 +80,21 @@ export function StaticPreviewSearchPage() {
     const browseMode = query.q.length === 0;
     setLoading(true);
 
-    void fetch(browseMode ? previewBrowseUrl(query.city) : previewSearchUrl(query), {
-      headers: { accept: "application/json" },
-      signal: controller.signal,
-    })
-      .then(async (response) => {
-        if (!response.ok) {
-          throw new Error(`Fysen API request failed with HTTP ${response.status}`);
-        }
-        const payload: unknown = await response.json();
-        return browseMode
-          ? { browse: dishBrowseResponseSchema.parse(payload), search: null }
-          : { browse: null, search: dishSearchResponseSchema.parse(payload) };
-      })
+    const request = browseMode
+      ? browseDishesClient(query.city, { signal: controller.signal })
+          .then((browse) => ({ browse, search: null }))
+      : fetch(previewSearchUrl(query), {
+          headers: { accept: "application/json" },
+          signal: controller.signal,
+        }).then(async (response) => {
+          if (!response.ok) {
+            throw new Error(`Fysen API request failed with HTTP ${response.status}`);
+          }
+          const payload: unknown = await response.json();
+          return { browse: null, search: dishSearchResponseSchema.parse(payload) };
+        });
+
+    void request
       .then((response) => {
         if (disposed) return;
         setBrowseData(response.browse);

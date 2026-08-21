@@ -46,31 +46,21 @@ Ramenillustrasjonen skal aldri ligge nede alene i en stor tom flate og skal aldr
 
 ## Utforsk kjøkken
 
-Den gamle flate listen «Forslag akkurat nå» erstattes av `CuisineExplorer`.
-
-Første kjøkkenfamilier er:
-
-- Asiatisk
-- Indisk
-- Fast food
-- Italiensk
-- Midtøsten
-- Mexicansk
+`CuisineExplorer` viser den flate, filtrerbare **Utforsk verden**-katalogen definert i `matlyst-v3.md`. Verdensdel og kulinarisk region er ikke navigasjonsnivåer; brukeren velger et av de 19 aktive kjøkkenene direkte.
 
 Kjøkkenkortene er handlingsflater, ikke faktabokser. Hvert kort inneholder:
 
-- kjøkkentittel og kort geografisk eller typologisk kontekst;
+- kjøkkentittel og kort matkulturell kontekst;
 - noen konkrete retteksempler fra det canonicale rettregisteret;
-- `På menyen nå` med ferske restauranttreff fra Fysens egne menykilder;
-- egne knapper for regioner, land eller relevante kjøkkenvarianter.
+- `På menyen nå` med ferske restauranttreff fra Fysens eksisterende canonical browse-indeks;
 
-Hele hovedflaten i kortet kan åpne kjøkkenet. Region-/variantknappene kan åpne samme utforsker direkte på valgt område. Utforskeren viser canonicale retter sortert etter redaksjonell relevans og, per rett, opptil noen få restauranter som faktisk har et ferskt ikke-fuzzy menytreff. Hvis første prioriterte rett mangler dekning, kan Fysen prøve neste relevante rett i samme kjøkken før kortet konkluderer med at ingen ferske treff finnes.
+Hele kortet åpner det valgte kjøkkenet direkte. Kjøkkenets egne relevante tradisjoner kan velges inne i utforskeren når de faktisk tilfører matkulturell verdi. Utforskeren viser canonicale retter sortert etter redaksjonell relevans og fersk dekning. Hvis første prioriterte rett mangler dekning, prøver Fysen neste relevante rett før kortet konkluderer med at ingen ferske treff finnes.
 
-Brede samlebetegnelser skal ikke late som om de er én homogen matkultur. «Asiatisk» brytes derfor ned i blant annet Japan, Kina, Thailand og Vietnam. `Fast food` brytes ned i typer og serveringsformer i stedet for å behandles som én geografisk kultur.
+Brede samlebetegnelser som «Asiatisk», `Fast food` og `Midtøsten` skal ikke presenteres som ett aktivt kjøkken når brukeren egentlig trenger konkrete mattradisjoner.
 
 Generiske `Visste du?`-bokser skal ikke brukes. Matfakta skal inngå i den relevante `Lær om retten`-artikkelen der de får kontekst, kilder og sammenheng.
 
-Kjøkkenkortene er sorte med tynn grønn outline. På mobil kan de scrolles horisontalt. Den interaktive utforskeren bruker native dialog-semantikk og skal fungere med tastatur, fokusretur og små skjermer.
+Kjøkkenkortene er sorte med tynn grønn outline. Katalogen går fra to kolonner på brede flater til én kolonne på små skjermer. Den interaktive utforskeren bruker native dialog-semantikk og skal fungere med tastatur, fokusretur og små skjermer.
 
 ## Fysen Food Knowledge v1
 
