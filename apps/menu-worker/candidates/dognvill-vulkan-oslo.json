@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dognvill-vulkan-oslo",
+    "name": "Døgnvill Vulkan",
+    "websiteUrl": "https://www.dognvillburger.no/restaurant/vulkan",
+    "address": "Vulkan 12, 0178 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.921653,
+    "longitude": 10.751795
+  },
+  "menuSource": {
+    "url": "https://www.dognvillburger.no/en/meny/vulkan",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 35,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "Batch 02 locks current menu identity first. Kitchen hours will be verified separately."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "THE CLASSIC",
+      "SAUCY JOE",
+      "RETT OST",
+      "HOMEMADE PICKLES",
+      "SWEET POTATO-FRIES",
+      "CHICKEN WINGS FROM HOVELSRUD FARM",
+      "HERB YOUR ENTHUSIASM",
+      "SUPER PREMIUM ICE CREAM"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "THE CLASSIC",
+        "priceMinor": 19900
+      },
+      {
+        "name": "SAUCY JOE",
+        "priceMinor": 25900
+      },
+      {
+        "name": "RETT OST",
+        "priceMinor": 25900
+      },
+      {
+        "name": "HOMEMADE PICKLES",
+        "priceMinor": 6900
+      },
+      {
+        "name": "SWEET POTATO-FRIES",
+        "priceMinor": 9900
+      },
+      {
+        "name": "CHICKEN WINGS FROM HOVELSRUD FARM",
+        "priceMinor": 15900
+      },
+      {
+        "name": "HERB YOUR ENTHUSIASM",
+        "priceMinor": 21900
+      },
+      {
+        "name": "SUPER PREMIUM ICE CREAM",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jaipur-karl-johans-gate-oslo",
+    "name": "Jaipur Indian Restaurant",
+    "websiteUrl": "https://jaipur.no/",
+    "address": "Karl Johans gate 18C, 0159 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.912685,
+    "longitude": 10.741567
+  },
+  "menuSource": {
+    "url": "https://jaipur.no/our-menu",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 44,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "Batch 02 locks current menu identity first. Kitchen-scoped hours remain unknown until separately verified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "VEGETABLE SAMOSA (GLUTEN)",
+      "CHICKEN TIKKA",
+      "SHAHI KORMA",
+      "LAMB KARAHI",
+      "MANGO PRAWNS MASALA",
+      "NAVRATTAN KORMA",
+      "GARLIC NAN",
+      "GULAB JAMUN (GLUTEN)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "VEGETABLE SAMOSA (GLUTEN)",
+        "priceMinor": 11900
+      },
+      {
+        "name": "CHICKEN TIKKA",
+        "priceMinor": 27900
+      },
+      {
+        "name": "SHAHI KORMA",
+        "priceMinor": 27900
+      },
+      {
+        "name": "LAMB KARAHI",
+        "priceMinor": 29900
+      },
+      {
+        "name": "MANGO PRAWNS MASALA",
+        "priceMinor": 29900
+      },
+      {
+        "name": "NAVRATTAN KORMA",
+        "priceMinor": 26500
+      },
+      {
+        "name": "GARLIC NAN",
+        "priceMinor": 6900
+      },
+      {
+        "name": "GULAB JAMUN (GLUTEN)",
+        "priceMinor": 12900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "indi-spice-welhavens-gate-oslo",
+    "name": "IndiSpice Oslo",
+    "websiteUrl": "https://indispiceoslo.no/",
+    "address": "Welhavens gate 2, 0166 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.919639,
+    "longitude": 10.733846
+  },
+  "menuSource": {
+    "url": "https://indispiceoslo.no/meny/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 48,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "Batch 02 locks the current first-party priced food menu first. Kitchen hours remain unknown until separately verified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "PAPPADOMS",
+      "CHICKEN LASUNI TIKKA",
+      "LAM CHOPS",
+      "PRAWN HYDERABADI",
+      "KADAHI PANIR",
+      "TANDOORI NAN",
+      "EKSTRA SAUS",
+      "KULFI (M, N, PI, A )"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "PAPPADOMS",
+        "priceMinor": 4900
+      },
+      {
+        "name": "CHICKEN LASUNI TIKKA",
+        "priceMinor": 29900
+      },
+      {
+        "name": "LAM CHOPS",
+        "priceMinor": 35900
+      },
+      {
+        "name": "PRAWN HYDERABADI",
+        "priceMinor": 29500
+      },
+      {
+        "name": "KADAHI PANIR",
+        "priceMinor": 24900
+      },
+      {
+        "name": "TANDOORI NAN",
+        "priceMinor": 5900
+      },
+      {
+        "name": "EKSTRA SAUS",
+        "priceMinor": 8500
+      },
+      {
+        "name": "KULFI (M, N, PI, A )",
+        "priceMinor": 12900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
