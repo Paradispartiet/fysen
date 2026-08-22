@@ -1,0 +1,91 @@
+name: TEMP update restaurant production 56 docs
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/TEMP-update-restaurant-production-56-docs.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.event.pull_request.head.ref == 'agent/restaurant-production-56-docs'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          persist-credentials: true
+      - name: Update verified restaurant baseline to 56
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          production = Path('docs/restaurant-production.md')
+          text = production.read_text()
+          replacements = [
+            (
+              'Siste read-only production-proof etter parsercleanup #365, candidate-stage #394 og byte-for-byte catalog-promotion #395 bruker production revision `f42f1522e458d9e583f9cba7860679739631221a` som autoritativ katalogrevision. Run `32597768885` / artifact `9482026561` viser:',
+              'Siste read-only production-proof etter parsercleanup #365, fem-restaurant-promotion #395 og New Delhi-promotion #408 bruker production revision `2e57e1d324415f2a296b43b54c13e58cb23d4292` som autoritativ katalogrevision. Run `32600667247` / artifact `9483248543` viser:',
+            ),
+            ('- **55 canonical produksjonsmanifester** i `apps/menu-worker/catalog/`;', '- **56 canonical produksjonsmanifester** i `apps/menu-worker/catalog/`;'),
+            ('- **55/55 aktive canonical restauranter** i production DB;', '- **56/56 aktive canonical restauranter** i production DB;'),
+            ('- **55 aktive restaurant-rader totalt**;', '- **56 aktive restaurant-rader totalt**;'),
+            ('- **55 enabled menu sources**;', '- **56 enabled menu sources**;'),
+            ('- alle fem nye Batch-02-kilder har `consecutive_failures=0` og siste snapshot på eller over manifestets minimum;', '- de fem tidligere Batch-02-kildene og New Delhi har bevist production coverage; New Delhi har `consecutive_failures=0` og 81-item snapshot;'),
+            ('- production search returnerer representative retter fra alle fem nye restauranter med korrekt canonical source URL.', '- production search returnerer representative retter fra de fem tidligere restaurantene samt New Delhi med korrekt canonical source URL.'),
+            ('Batch-01-reconcile viste 45/45 aktive canonical restauranter; siste production-proof 2026-08-22 viser 55/55.', 'Batch-01-reconcile viste 45/45 aktive canonical restauranter; siste production-proof 2026-08-22 viser 56/56.'),
+            ('Baseline på 55 betyr derfor ikke «55 av alle Oslo-restauranter er ferdige»; den beskriver det nåværende verifiserte produksjonssettet.', 'Baseline på 56 betyr derfor ikke «56 av alle Oslo-restauranter er ferdige»; den beskriver det nåværende verifiserte produksjonssettet.'),
+          ]
+          for old, new in replacements:
+            if old not in text:
+              raise SystemExit(f'missing restaurant-production anchor: {old[:90]}')
+            text = text.replace(old, new, 1)
+
+          anchor = '- Jaipur: **44 items**, HTTP 200, siste watcher `unchanged`.\n\n'
+          addition = '''- Jaipur: **44 items**, HTTP 200, siste watcher `unchanged`.\n\nEtter 55-baselinen ble også **New Delhi Tjuvholmen** promotert byte-for-byte via #408. Permanent `titles-v14` + `beverage-v9` ble først bevist mot eksisterende catalog **55/55** og New Delhi **81/81** i #402. Read-only production-proof #409 / run `32600667247` / artifact `9483248543` med digest `sha256:dadd04d28d955526fdcbb028cb548c87e4bd7ecdef8da4710d376e7a2b2a112d` viser New Delhi som enabled canonical source med **81 items**, HTTP 200, `consecutive_failures=0`, siste watcher `unchanged`, og production-search for `Mixed Ice Cream` **129 kr** og `Murgh Malai Chicken Tikka` **149 kr** fra korrekt canonical source. Dette løftet den operative baselinen til **56/56/56**.\n\n'''
+          if anchor not in text:
+            raise SystemExit('missing New Delhi insertion anchor')
+          text = text.replace(anchor, addition, 1)
+
+          batch_anchor = 'De fem manifestene ble deretter staged i PR #394 med byte-identiske Git blobs og live candidate-gate. PR #395 flyttet dem fra `candidates/` til `catalog/` som fem rene Git-renames med **0 additions / 0 deletions / 0 content changes**. Post-merge auto-materializer ga production-baselinen 55/55/55 ovenfor. Mesob forblir fail-closed i source-dekningskøen.'
+          batch_new = '''De fem manifestene ble deretter staged i PR #394 med byte-identiske Git blobs og live candidate-gate. PR #395 flyttet dem fra `candidates/` til `catalog/` som fem rene Git-renames med **0 additions / 0 deletions / 0 content changes**. Post-merge auto-materializer ga den historiske production-baselinen 55/55/55.\n\nNew Delhi var den eneste av de neste ti residualene som genererte et fullverdig manifest på 55-baselinen. Pipeline-debug #399 isolerte tapet av `Mixed Ice Cream`; permanent #400 innførte inline-priset title-provenance (`titles-v14`) og `beverage-v9`. #402 beviste eksisterende catalog **55/55**, New Delhi **81/81** i fresh intake og separat validation, `Mixed Ice Cream` **12900**, `Murgh Malai Chicken Tikka` **14900** og ingen `With wine package`. Candidate og catalog beholdt blob `d4d9e139a8ae6a145bf565f009ae36edda2663e6`; #408 promoterte filen som ren rename. Canonical `onboard:catalog` publiserte deretter New Delhi med første watch `changed` 81 og andre watch `unchanged` 81. En samtidig Habibi-refresh ble quarantined, men refresh-sikkerheten beholdt siste gyldige published coverage. Read-only #409 beviste deretter **56 active / 56 enabled**, null drift og korrekt New Delhi production-search.\n\nMesob og de øvrige åtte residualene forblir fail-closed i source-/transportkøen.'''
+          if batch_anchor not in text:
+            raise SystemExit('missing Batch 02 historical anchor')
+          text = text.replace(batch_anchor, batch_new, 1)
+          production.write_text(text)
+
+          closeout = Path('docs/fysen-oslo-v1-closeout.md')
+          text = closeout.read_text()
+          replacements = [
+            ('Siste read-only production-proof på catalog revision `f42f1522e458d9e583f9cba7860679739631221a` viser:', 'Siste read-only production-proof på catalog revision `2e57e1d324415f2a296b43b54c13e58cb23d4292` viser:'),
+            ('- **55 canonical katalogmanifester**;', '- **56 canonical katalogmanifester**;'),
+            ('- **55/55 aktive canonical restauranter**;', '- **56/56 aktive canonical restauranter**;'),
+            ('- **55 aktive restaurant-rader totalt**;', '- **56 aktive restaurant-rader totalt**;'),
+            ('- **55 enabled menu sources**;', '- **56 enabled menu sources**;'),
+          ]
+          for old, new in replacements:
+            if old not in text:
+              raise SystemExit(f'missing closeout anchor: {old}')
+            text = text.replace(old, new, 1)
+
+          anchor = 'Batch 01 etablerte høy-throughput-metoden. Batch 02 utvidet dekningen med **Jaipur, IndiSpice og tre Døgnvill-lokasjoner** etter en full parser-/output-cleanup. Den siste parserendringen fikk først merge etter **50/50 serial full-catalog live-gate**, fresh **5/5** intake, separat **5/5** revalidation og eksplisitt output-inspeksjon. De fem manifestene ble deretter staged og promotert byte-for-byte; post-merge proof verifiserte snapshots og production-search for alle fem.'
+          new = '''Batch 01 etablerte høy-throughput-metoden. Batch 02 utvidet først dekningen med **Jaipur, IndiSpice og tre Døgnvill-lokasjoner** etter en full parser-/output-cleanup. Parserendringen fikk først merge etter **50/50 serial full-catalog live-gate**, fresh **5/5** intake, separat **5/5** revalidation og eksplisitt output-inspeksjon. De fem manifestene ble staged og promotert byte-for-byte; post-merge proof verifiserte snapshots og production-search.\n\nDeretter ble **New Delhi Tjuvholmen** den 56. canonical restauranten. #402 beviste eksisterende catalog **55/55** og New Delhi **81/81** før byte-for-byte promotion #408. Production-proof #409 / run `32600667247` / artifact `9483248543` beviser **56 active / 56 enabled**, null drift, 81-item New Delhi-snapshot og søketreff for `Mixed Ice Cream` 129 kr og `Murgh Malai Chicken Tikka` 149 kr fra korrekt canonical source.'''
+          if anchor not in text:
+            raise SystemExit('missing closeout batch anchor')
+          text = text.replace(anchor, new, 1)
+          closeout.write_text(text)
+          PY
+          git diff --check
+          git diff -- docs/restaurant-production.md docs/fysen-oslo-v1-closeout.md
+      - name: Commit permanent documentation update
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- docs/restaurant-production.md docs/fysen-oslo-v1-closeout.md
+          git commit -m "Document 56-restaurant production baseline"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
