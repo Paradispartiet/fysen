@@ -95,4 +95,23 @@ describe("duplicate dish names across semantic menu sections", () => {
     ]);
     expect(new Set(fatouche.map((item) => item.sourceKey)).size).toBe(2);
   });
+  it("keeps same-name dishes distinct across small-dishes and classics sections", () => {
+    const html = `
+      <html><body>
+        <h2>Small Dishes & Sharing Plates</h2>
+        <h3>Hot Wings 179,-</h3>
+        <p>Six glazed chicken wings.</p>
+        <h2>Classics</h2>
+        <h3>Hot Wings 289,-</h3>
+        <p>Twelve glazed chicken wings.</p>
+      </body></html>
+    `;
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((entry) => [entry.name, entry.sectionName, entry.priceMinor])).toEqual([
+      ["Hot Wings", "Small Dishes & Sharing Plates", 17900],
+      ["Hot Wings", "Classics", 28900],
+    ]);
+    expect(new Set(result.items.map((entry) => entry.sourceKey)).size).toBe(2);
+  });
+
 });
