@@ -1,0 +1,218 @@
+name: TEMP Batch 02 recovery family introspection
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch02-recovery-family-introspection.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Capture every recovery family on the same live bytes
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research/recovery-family-introspection
+          node --input-type=module <<'NODE'
+          import { writeFile } from 'node:fs/promises';
+          import {
+            extractMenuSource,
+            fetchMenuSource,
+            isCanonicalHtmlMenuItem,
+            normalizeHtmlItemName,
+            normalizeHtmlPriceNotation,
+          } from './dist/menu-source-runtime.js';
+          import {
+            extractHtmlVisibleText,
+            stripExplicitlyHiddenHtmlContent,
+          } from './dist/html-extractor.js';
+          import { normalizeHtmlHeadingLineBreaks } from './dist/html-heading-normalizer.js';
+          import { extractScopedHtmlMenu } from './dist/html-source-extractor.js';
+          import { recoverEmbeddedStructuredMenuJson } from './dist/html-embedded-menu-json-recovery.js';
+          import { recoverDescriptionNamedHtmlItems } from './dist/html-description-title-recovery.js';
+          import {
+            isStrongNumberedTrailingPriceCardRecovery,
+            recoverInlineMarkedPriceTextItems,
+            recoverTrailingPriceCardHtmlItems,
+          } from './dist/html-trailing-price-card-recovery.js';
+          import { recoverPriceWrappedHtmlItems } from './dist/html-price-wrapped-recovery.js';
+          import { recoverAdjacentHeadingPriceHtmlItems } from './dist/html-adjacent-heading-price-recovery.js';
+          import { recoverExplicitFromPriceHtmlItems } from './dist/html-explicit-from-price-recovery.js';
+          import { recoverFirstCardAfterPlainFoodSections } from './dist/html-section-first-card-recovery.js';
+
+          const targets = [
+            { name: 'benares', url: 'https://benares.no/meny?menu=menu', fetchMode: 'browser' },
+            { name: 'mesob', url: 'https://mesobrestaurant.no/menu/', fetchMode: 'http' },
+            { name: 'sawan', url: 'https://www.sawan.no/meny', fetchMode: 'http' },
+            { name: 'golden-chimp', url: 'https://www.thegoldenchimp.no/menu', fetchMode: 'http' },
+            { name: 'kverneriet-majorstua', url: 'https://kverneriet.com/majorstua/menu/', fetchMode: 'http' },
+            { name: 'kverneriet-solli', url: 'https://kverneriet.com/solli/menu/', fetchMode: 'http' },
+          ];
+
+          const compactItem = (item) => ({
+            name: item.name,
+            normalizedName: item.normalizedName,
+            priceMinor: item.priceMinor,
+            priceKind: item.priceKind ?? null,
+            sectionName: item.sectionName,
+            confidence: item.confidence,
+            position: item.position,
+            sourceExcerpt: item.sourceExcerpt,
+          });
+          const compactFamily = (items) => ({
+            count: items.length,
+            items: items.map(compactItem),
+          });
+
+          const rows = [];
+          for (const target of targets) {
+            const input = {
+              url: target.url,
+              sourceType: 'html',
+              fetchMode: target.fetchMode,
+              userAgent: process.env.FYSEN_MENU_BOT_USER_AGENT ?? 'FysenMenuBot/0.1',
+              etag: null,
+              lastModified: null,
+              sourceSupport: { redirectOrigins: [], browserDataOrigins: [] },
+            };
+            try {
+              const fetched = await fetchMenuSource(input);
+              if (fetched.kind !== 'content') {
+                rows.push({ ...target, fetchKind: fetched.kind });
+                continue;
+              }
+              const normalizedHtml = normalizeHtmlPriceNotation(
+                normalizeHtmlHeadingLineBreaks(fetched.body),
+              );
+              const extracted = extractScopedHtmlMenu(normalizedHtml);
+              const recoveryHtml =
+                extracted.method === 'html_heuristic'
+                  ? stripExplicitlyHiddenHtmlContent(normalizedHtml)
+                  : normalizedHtml;
+              const fullVisibleText = extractHtmlVisibleText(recoveryHtml);
+
+              const embedded = recoverEmbeddedStructuredMenuJson(recoveryHtml).filter(isCanonicalHtmlMenuItem);
+              const recovered = recoverDescriptionNamedHtmlItems(extracted.items, extracted.visibleText);
+              const rawTrailing = recoverTrailingPriceCardHtmlItems(recoveryHtml);
+              const trailing = recoverDescriptionNamedHtmlItems(rawTrailing, extracted.visibleText);
+              const wrapped = recoverPriceWrappedHtmlItems(extracted.visibleText);
+              const inline = recoverInlineMarkedPriceTextItems(extracted.visibleText);
+              const heading = recoverAdjacentHeadingPriceHtmlItems(recoveryHtml);
+              const explicitFrom = recoverExplicitFromPriceHtmlItems(extracted.visibleText);
+              const sectionFirst = recoverFirstCardAfterPlainFoodSections(extracted.visibleText);
+
+              const semanticCategoryCardsPreferred =
+                trailing.length >= 4 &&
+                trailing.every((item) => item.sectionName !== null && item.confidence >= 0.99);
+              const strongNumberedCardsPreferred =
+                isStrongNumberedTrailingPriceCardRecovery(trailing);
+              const isolatedTrailingRecoveryPreferred =
+                semanticCategoryCardsPreferred || strongNumberedCardsPreferred;
+              const trailingPriceCardQualifies =
+                isolatedTrailingRecoveryPreferred ||
+                (trailing.length >= 4 &&
+                  (recovered.length === 0 || trailing.length >= Math.max(6, Math.ceil(recovered.length * 1.5))));
+              const headingPriceCoverageThreshold = Math.ceil(recovered.length * 0.75);
+              const selectedFamily = trailingPriceCardQualifies
+                ? 'trailing'
+                : heading.length >= 4 &&
+                    (recovered.length === 0 || heading.length >= headingPriceCoverageThreshold)
+                  ? 'heading'
+                  : wrapped.length >= 3 && wrapped.length >= recovered.length * 2
+                    ? 'wrapped'
+                    : 'recovered';
+
+              const final = await extractMenuSource('html', fetched);
+              const canonicalCandidates = [
+                ...recovered,
+                ...trailing,
+                ...wrapped,
+                ...inline,
+                ...heading,
+                ...explicitFrom,
+                ...sectionFirst,
+              ]
+                .map(normalizeHtmlItemName)
+                .filter(isCanonicalHtmlMenuItem);
+
+              rows.push({
+                ...target,
+                fetch: {
+                  status: fetched.status,
+                  finalUrl: fetched.finalUrl ?? target.url,
+                  rawSha256: fetched.rawSha256,
+                  bodyBytes: fetched.bodyBytes?.byteLength ?? fetched.body.length,
+                },
+                selection: {
+                  extractedMethod: extracted.method,
+                  semanticCategoryCardsPreferred,
+                  strongNumberedCardsPreferred,
+                  isolatedTrailingRecoveryPreferred,
+                  trailingPriceCardQualifies,
+                  headingPriceCoverageThreshold,
+                  selectedFamily,
+                },
+                families: {
+                  scoped: compactFamily(extracted.items),
+                  embedded: compactFamily(embedded),
+                  recovered: compactFamily(recovered),
+                  rawTrailing: compactFamily(rawTrailing),
+                  trailing: compactFamily(trailing),
+                  wrapped: compactFamily(wrapped),
+                  inline: compactFamily(inline),
+                  heading: compactFamily(heading),
+                  explicitFrom: compactFamily(explicitFrom),
+                  sectionFirst: compactFamily(sectionFirst),
+                  canonicalCandidateUnionBeforeDedupe: compactFamily(canonicalCandidates),
+                  final: compactFamily(final.items),
+                },
+                visibleTextBytes: Buffer.byteLength(extracted.visibleText),
+                fullVisibleTextBytes: Buffer.byteLength(fullVisibleText),
+              });
+            } catch (error) {
+              rows.push({
+                ...target,
+                error: error instanceof Error ? (error.stack ?? error.message) : String(error),
+              });
+            }
+          }
+
+          const summary = {
+            mainRevision: '28e70a5b5f2fa99206e93fa477056ef649c51e62',
+            targetCount: targets.length,
+            rows,
+          };
+          await writeFile(
+            'research/recovery-family-introspection/summary.json',
+            JSON.stringify(summary, null, 2) + '\n',
+          );
+          console.log(JSON.stringify(summary, null, 2));
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-recovery-family-introspection
+          path: apps/menu-worker/research/recovery-family-introspection/summary.json
+          if-no-files-found: error
