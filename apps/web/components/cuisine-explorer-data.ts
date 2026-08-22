@@ -58,6 +58,51 @@ export const featuredCuisineNames = [
   "Thai",
 ] as const;
 
+const homeCuisineSpecs: readonly CuisineSpec[] = [
+  {
+    name: "Asiatisk",
+    context: "Japan · Kina · Thailand · Vietnam",
+    areasLabel: "Land og kjøkkentradisjoner",
+    sourceCuisine: "Asiatisk",
+    regions: ["Japan", "Kina", "Thailand", "Vietnam"],
+  },
+  {
+    name: "Indisk",
+    context: "Nord-India · Sør-India · Hyderabad",
+    areasLabel: "Regioner og tradisjoner",
+    sourceCuisine: "Indisk",
+    regions: ["Nord-India", "Sør-India", "Hyderabad"],
+  },
+  {
+    name: "Fast food",
+    context: "Burger · fried chicken · hot dog",
+    areasLabel: "Typer",
+    sourceCuisine: "Fast food",
+    regions: ["Burger", "Fried chicken", "Hot dog"],
+  },
+  {
+    name: "Italiensk",
+    context: "Roma · Napoli · Sicilia",
+    areasLabel: "Regioner og bytradisjoner",
+    sourceCuisine: "Italiensk",
+    regions: ["Roma", "Napoli", "Sicilia"],
+  },
+  {
+    name: "Midtøsten",
+    context: "Levanten · Egypt · Tyrkia",
+    areasLabel: "Regioner og tradisjoner",
+    sourceCuisine: "Midtøsten",
+    regions: ["Levanten", "Egypt", "Tyrkia"],
+  },
+  {
+    name: "Mexicansk",
+    context: "Sentral-Mexico · Jalisco · Yucatán · Baja",
+    areasLabel: "Regioner og tradisjoner",
+    sourceCuisine: "Mexicansk",
+    regions: ["Sentral-Mexico", "Jalisco", "Yucatán", "Baja"],
+  },
+];
+
 const cuisineSpecs: readonly CuisineSpec[] = [
   {
     name: "Japansk",
@@ -290,6 +335,19 @@ function dishesForIds(ids: readonly string[]): readonly DishSuggestion[] {
   });
 }
 
+function buildCuisines(specs: readonly CuisineSpec[]): readonly Cuisine[] {
+  return specs.map((spec) => ({
+    name: spec.name,
+    context: spec.context,
+    areasLabel: spec.areasLabel,
+    areas: spec.regions.map((region) => {
+      const dishes = dishesForArea(spec.sourceCuisine, region);
+      if (dishes.length === 0) throw new Error(`Cuisine explorer area has no canonical dishes: ${spec.name} / ${region}`);
+      return { name: region, dishes };
+    }),
+  }));
+}
+
 export function discoveryDishesForCuisine(cuisineName: string): readonly CuisineDiscoveryDish[] {
   const spec = cuisineSpecs.find((candidate) => candidate.name === cuisineName);
   if (!spec) return [];
@@ -299,16 +357,8 @@ export function discoveryDishesForCuisine(cuisineName: string): readonly Cuisine
     .map((dish) => ({ areaName: dish.region, dish: toDishSuggestion(dish) }));
 }
 
-export const cuisines: readonly Cuisine[] = cuisineSpecs.map((spec) => ({
-  name: spec.name,
-  context: spec.context,
-  areasLabel: spec.areasLabel,
-  areas: spec.regions.map((region) => {
-    const dishes = dishesForArea(spec.sourceCuisine, region);
-    if (dishes.length === 0) throw new Error(`Cuisine explorer area has no canonical dishes: ${spec.name} / ${region}`);
-    return { name: region, dishes };
-  }),
-}));
+export const homeCuisines: readonly Cuisine[] = buildCuisines(homeCuisineSpecs);
+export const cuisines: readonly Cuisine[] = buildCuisines(cuisineSpecs);
 
 export const foodMoods: readonly FoodMood[] = foodMoodSpecs.map((spec) => ({
   name: spec.name,
