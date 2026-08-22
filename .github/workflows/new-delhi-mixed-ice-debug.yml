@@ -1,0 +1,107 @@
+name: New Delhi mixed ice debug
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/new-delhi-mixed-ice-debug.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Trace New Delhi dessert through recovery layers
+        shell: bash
+        run: |
+          mkdir -p apps/menu-worker/research
+          node --input-type=module <<'NODE' | tee apps/menu-worker/research/new-delhi-mixed-ice-debug.json
+          import { fetchMenuSource, extractMenuSource, normalizeHtmlPriceNotation } from './apps/menu-worker/dist/menu-source-runtime.js';
+          import { normalizeHtmlHeadingLineBreaks } from './apps/menu-worker/dist/html-heading-normalizer.js';
+          import { extractScopedHtmlMenu } from './apps/menu-worker/dist/html-source-extractor.js';
+          import { stripExplicitlyHiddenHtmlContent, extractHtmlVisibleText } from './apps/menu-worker/dist/html-extractor.js';
+          import { recoverDescriptionNamedHtmlItems } from './apps/menu-worker/dist/html-description-title-recovery.js';
+          import { recoverTrailingPriceCardHtmlItems, recoverInlineMarkedPriceTextItems } from './apps/menu-worker/dist/html-trailing-price-card-recovery.js';
+          import { recoverPriceWrappedHtmlItems } from './apps/menu-worker/dist/html-price-wrapped-recovery.js';
+          import { recoverAdjacentHeadingPriceHtmlItems } from './apps/menu-worker/dist/html-adjacent-heading-price-recovery.js';
+          import { recoverExplicitFromPriceHtmlItems } from './apps/menu-worker/dist/html-explicit-from-price-recovery.js';
+          import { recoverFirstCardAfterPlainFoodSections } from './apps/menu-worker/dist/html-section-first-card-recovery.js';
+
+          const input={
+            url:'https://newdelhi.no/en/new-delhi-restaurant-english-menu/',
+            sourceType:'html',
+            fetchMode:'http',
+            userAgent:'FysenMenuBot/0.1',
+            etag:null,
+            lastModified:null,
+            sourceSupport:{redirectOrigins:[],browserDataOrigins:[]},
+          };
+          const fetched=await fetchMenuSource(input);
+          if(fetched.kind!=='content') throw new Error(`Unexpected fetch kind ${fetched.kind}`);
+          const normalized=normalizeHtmlPriceNotation(normalizeHtmlHeadingLineBreaks(fetched.body));
+          const extracted=extractScopedHtmlMenu(normalized);
+          const recoveryHtml=stripExplicitlyHiddenHtmlContent(normalized);
+          const fullVisibleText=extractHtmlVisibleText(recoveryHtml);
+          const recovered=recoverDescriptionNamedHtmlItems(extracted.items,extracted.visibleText);
+          const rawTrailing=recoverTrailingPriceCardHtmlItems(recoveryHtml);
+          const trailing=recoverDescriptionNamedHtmlItems(rawTrailing,extracted.visibleText);
+          const wrapped=recoverPriceWrappedHtmlItems(extracted.visibleText);
+          const inline=recoverInlineMarkedPriceTextItems(extracted.visibleText);
+          const heading=recoverAdjacentHeadingPriceHtmlItems(recoveryHtml);
+          const explicitFrom=recoverExplicitFromPriceHtmlItems(extracted.visibleText);
+          const sectionFirst=recoverFirstCardAfterPlainFoodSections(extracted.visibleText);
+          const final=await extractMenuSource('html',fetched);
+          const compact=(items)=>items.filter((item)=>/ice|sorbet|gul|ras|brownie|kheer|coconut/i.test(item.name)).map((item)=>({name:item.name,priceMinor:item.priceMinor,sectionName:item.sectionName,position:item.position,sourceExcerpt:item.sourceExcerpt}));
+          const report={
+            status:fetched.status,
+            visibleHasMixedIceCream:/Mixed Ice Cream/i.test(fullVisibleText),
+            layers:{
+              extracted:compact(extracted.items),
+              recovered:compact(recovered),
+              rawTrailing:compact(rawTrailing),
+              trailing:compact(trailing),
+              wrapped:compact(wrapped),
+              inline:compact(inline),
+              heading:compact(heading),
+              explicitFrom:compact(explicitFrom),
+              sectionFirst:compact(sectionFirst),
+              final:compact(final.items),
+            },
+            counts:{
+              extracted:extracted.items.length,
+              recovered:recovered.length,
+              rawTrailing:rawTrailing.length,
+              trailing:trailing.length,
+              wrapped:wrapped.length,
+              inline:inline.length,
+              heading:heading.length,
+              explicitFrom:explicitFrom.length,
+              sectionFirst:sectionFirst.length,
+              final:final.items.length,
+            },
+          };
+          console.log(JSON.stringify(report,null,2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: new-delhi-mixed-ice-debug
+          path: apps/menu-worker/research/new-delhi-mixed-ice-debug.json
+          if-no-files-found: error
