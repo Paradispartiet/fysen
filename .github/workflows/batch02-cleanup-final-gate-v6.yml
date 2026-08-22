@@ -1,0 +1,209 @@
+name: Batch 02 cleanup final gate v6
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Assert 50 unique catalog manifests
+        working-directory: apps/menu-worker
+        run: |
+          mkdir -p research
+          node --input-type=module <<'NODE'
+          import { readdir, readFile } from 'node:fs/promises';
+          const files = (await readdir('catalog')).filter((name) => name.endsWith('.json')).sort();
+          const slugs = [];
+          for (const file of files) {
+            const manifest = JSON.parse(await readFile(`catalog/${file}`, 'utf8'));
+            slugs.push(manifest.restaurant.slug);
+          }
+          if (files.length !== 50 || new Set(slugs).size !== 50) {
+            throw new Error(`Expected 50 unique catalog manifests, got ${files.length}/${new Set(slugs).size}`);
+          }
+          NODE
+
+      - name: Validate all 50 serially - pass 1
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch catalog | tee research/batch02-cleanup-all50-pass1.json
+          exit 0
+
+      - name: Retry full serial catalog only if pass 1 is not 50/50
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          accepted=$(node --input-type=module -e "import {readFileSync} from 'node:fs'; const r=JSON.parse(readFileSync('research/batch02-cleanup-all50-pass1.json','utf8')); process.stdout.write(String(r.acceptedCount ?? 0));")
+          if [ "$accepted" = "50" ]; then
+            cp research/batch02-cleanup-all50-pass1.json research/batch02-cleanup-all50-final.json
+          else
+            set +e
+            node dist/index.js validate:batch catalog | tee research/batch02-cleanup-all50-pass2.json
+            set -e
+            cp research/batch02-cleanup-all50-pass2.json research/batch02-cleanup-all50-final.json
+          fi
+
+      - name: Restore immutable Batch 02 plan and isolate final five
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02
+          mkdir -p /tmp/batch02
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import { mkdir, readFile, writeFile } from 'node:fs/promises';
+          const source = JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json','utf8'));
+          const targets = new Set([
+            'jaipur-karl-johans-gate-oslo',
+            'indi-spice-welhavens-gate-oslo',
+            'dognvill-bjorvika-oslo',
+            'dognvill-tjuvholmen-oslo',
+            'dognvill-vulkan-oslo',
+          ]);
+          const restaurants = source.restaurants.filter((entry) => targets.has(entry.restaurant.slug));
+          if (restaurants.length !== 5) throw new Error(`Expected 5 targets, found ${restaurants.length}`);
+          const plan = {
+            ...source,
+            outputDirectory: 'research/batch02-cleanup-final-five-generated',
+            concurrency: 1,
+            restaurants,
+          };
+          await mkdir('apps/menu-worker/research/batch02-cleanup-final-five-generated', { recursive: true });
+          await writeFile('apps/menu-worker/research/batch02-cleanup-final-five.plan.json', JSON.stringify(plan, null, 2) + '\n');
+          NODE
+
+      - name: Fresh intake final five
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js intake:batch research/batch02-cleanup-final-five.plan.json | tee research/batch02-cleanup-final-five-intake.json
+          exit 0
+
+      - name: Independent serial validation final five
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/batch02-cleanup-final-five-generated | tee research/batch02-cleanup-final-five-validation.json
+          exit 0
+
+      - name: Gate counts and observed output quality
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const all50 = JSON.parse(await readFile('research/batch02-cleanup-all50-final.json','utf8'));
+          const intake = JSON.parse(await readFile('research/batch02-cleanup-final-five-intake.json','utf8'));
+          const validation = JSON.parse(await readFile('research/batch02-cleanup-final-five-validation.json','utf8'));
+          const compact = (result) => ({
+            slug: result.slug,
+            accepted: result.accepted,
+            failureFamilies: result.failureFamilies ?? [],
+            error: result.error ?? null,
+            menuError: result.validation?.menu?.error ?? null,
+            itemCount: result.validation?.menu?.quality?.itemCount ?? null,
+            extractorVersion: result.validation?.menu?.extractorVersion ?? null,
+            observedDishNames: result.validation?.menu?.observedDishNames ?? [],
+          });
+          const compactResults = validation.results.map(compact);
+          const bySlug = new Map(compactResults.map((result) => [result.slug, result]));
+          const forbidden = new Map([
+            ['jaipur-karl-johans-gate-oslo', [/^Jaipur$/iu]],
+            ['indi-spice-welhavens-gate-oslo', [/^TANDOORI$/iu, /^TASTING MENU$/iu, /^CUPPUCINO$/iu, /^CAPUCCINO$/iu]],
+            ['dognvill-bjorvika-oslo', [/^ALT$/iu, /^GRAM HAMBURGER$/iu]],
+            ['dognvill-tjuvholmen-oslo', [/^ALT$/iu, /^GRAM HAMBURGER$/iu]],
+            ['dognvill-vulkan-oslo', [/^ALT$/iu, /^GRAM HAMBURGER$/iu]],
+          ]);
+          const qualityFailures = [];
+          for (const [slug, patterns] of forbidden) {
+            const result = bySlug.get(slug);
+            if (!result) {
+              qualityFailures.push(`${slug}: missing validation result`);
+              continue;
+            }
+            const names = result.observedDishNames ?? [];
+            for (const pattern of patterns) {
+              const found = names.find((name) => pattern.test(name));
+              if (found) qualityFailures.push(`${slug}: forbidden output ${found}`);
+            }
+          }
+          const summary = {
+            cleanupHead: 'a097275fb77108594671d0004b8b5bc7bab9d9f8',
+            all50: {
+              manifestCount: all50.manifestCount,
+              acceptedCount: all50.acceptedCount,
+              failedCount: all50.failedCount,
+              failureFamilyCounts: all50.failureFamilyCounts,
+              failed: (all50.results ?? []).filter((result) => !result.accepted).map(compact),
+            },
+            finalFiveIntake: {
+              requestedCount: intake.requestedCount,
+              generatedCount: intake.generatedCount,
+              failedCount: intake.failedCount,
+            },
+            finalFiveValidation: {
+              manifestCount: validation.manifestCount,
+              acceptedCount: validation.acceptedCount,
+              failedCount: validation.failedCount,
+              failureFamilyCounts: validation.failureFamilyCounts,
+              results: compactResults,
+            },
+            qualityFailures,
+          };
+          await writeFile('research/batch02-cleanup-final-gate-v6-summary.json', JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          if (all50.manifestCount !== 50 || all50.acceptedCount !== 50 || all50.failedCount !== 0) {
+            throw new Error(`All-50 gate failed: ${all50.acceptedCount}/${all50.manifestCount}, failed=${all50.failedCount}`);
+          }
+          if (intake.requestedCount !== 5 || intake.generatedCount !== 5 || intake.failedCount !== 0) {
+            throw new Error(`Five intake gate failed: ${intake.generatedCount}/${intake.requestedCount}, failed=${intake.failedCount}`);
+          }
+          if (validation.manifestCount !== 5 || validation.acceptedCount !== 5 || validation.failedCount !== 0) {
+            throw new Error(`Five validation gate failed: ${validation.acceptedCount}/${validation.manifestCount}, failed=${validation.failedCount}`);
+          }
+          if (qualityFailures.length > 0) {
+            throw new Error(`Observed output quality gate failed: ${qualityFailures.join('; ')}`);
+          }
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-cleanup-final-gate-v6
+          path: |
+            apps/menu-worker/research/batch02-cleanup-all50-pass1.json
+            apps/menu-worker/research/batch02-cleanup-all50-pass2.json
+            apps/menu-worker/research/batch02-cleanup-all50-final.json
+            apps/menu-worker/research/batch02-cleanup-final-five.plan.json
+            apps/menu-worker/research/batch02-cleanup-final-five-intake.json
+            apps/menu-worker/research/batch02-cleanup-final-five-validation.json
+            apps/menu-worker/research/batch02-cleanup-final-gate-v6-summary.json
+            apps/menu-worker/research/batch02-cleanup-final-five-generated/*.json
+          if-no-files-found: warn
