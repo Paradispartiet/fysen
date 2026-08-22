@@ -23,6 +23,7 @@ import {
 import {
   extractHtmlVisibleText,
   HTML_EXTRACTOR_VERSION,
+  stripExplicitlyHiddenHtmlContent,
 } from "./html-extractor.js";
 import {
   HTML_HEADING_NORMALIZER_VERSION,
@@ -356,12 +357,16 @@ export async function extractMenuSource(
     const normalizedHtml = normalizeHtmlPriceNotation(
       normalizeHtmlHeadingLineBreaks(fetched.body),
     );
-    const fullVisibleText = extractHtmlVisibleText(normalizedHtml);
     const extracted = extractScopedHtmlMenu(normalizedHtml);
+    const recoveryHtml =
+      extracted.method === "html_heuristic"
+        ? stripExplicitlyHiddenHtmlContent(normalizedHtml)
+        : normalizedHtml;
+    const fullVisibleText = extractHtmlVisibleText(recoveryHtml);
     assertExtractionMethodForSourceType(sourceType, extracted.method);
     const embeddedItems =
       extracted.method === "html_heuristic"
-        ? recoverEmbeddedStructuredMenuJson(normalizedHtml).filter(
+        ? recoverEmbeddedStructuredMenuJson(recoveryHtml).filter(
             isCanonicalHtmlMenuItem,
           )
         : [];
@@ -381,7 +386,7 @@ export async function extractMenuSource(
         : extracted.items;
     const rawTrailingPriceCardItems =
       extracted.method === "html_heuristic"
-        ? recoverTrailingPriceCardHtmlItems(normalizedHtml)
+        ? recoverTrailingPriceCardHtmlItems(recoveryHtml)
         : [];
     const trailingPriceCardItems =
       extracted.method === "html_heuristic"
@@ -400,7 +405,7 @@ export async function extractMenuSource(
         : [];
     const headingPriceItems =
       extracted.method === "html_heuristic"
-        ? recoverAdjacentHeadingPriceHtmlItems(normalizedHtml)
+        ? recoverAdjacentHeadingPriceHtmlItems(recoveryHtml)
         : [];
     const explicitFromPriceItems =
       extracted.method === "html_heuristic"

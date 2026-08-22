@@ -4,7 +4,11 @@ import {
   normalizeDishName,
   type MenuObservedItem,
 } from "@fysen/menu-core";
-import { extractHtmlMenu, type ExtractedHtmlMenu } from "./html-extractor.js";
+import {
+  extractHtmlMenu,
+  stripExplicitlyHiddenHtmlContent,
+  type ExtractedHtmlMenu,
+} from "./html-extractor.js";
 
 export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v17";
 
@@ -749,7 +753,8 @@ export function extractScopedHtmlMenu(html: string): ExtractedHtmlMenu {
   const firstPass = extractHtmlMenu(html);
   if (firstPass.method === "json_ld") return firstPass;
 
-  const sourceLines = annotatedVisibleLines(html);
+  const visibleHtml = stripExplicitlyHiddenHtmlContent(html);
+  const sourceLines = annotatedVisibleLines(visibleHtml);
   const addons = addonOptionNames(sourceLines);
   const scopedText = foodScopedText(sourceLines);
   const visibleText = scopedText.visibleText;

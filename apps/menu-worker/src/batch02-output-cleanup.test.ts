@@ -102,6 +102,29 @@ describe("Batch 02 structural output cleanup", () => {
     ).toEqual(["Kulfi"]);
   });
 
+  it("removes explicitly hidden Webflow menu cards before raw HTML recoveries", async () => {
+    const html = `
+      <html><body>
+        <h2>SNACKS</h2>
+        <div><h3>SPICY POPCORN</h3><p>65</p></div>
+        <div><h3>HOMEMADE PICKLES</h3><p>69</p></div>
+        <div>
+          <div class="snackswrap w-condition-invisible">
+            <h5>ALT</h5><p>339</p>
+          </div>
+          <div class="extrainfo">
+            <h3>PERFEKT Å DELE!</h3>
+            <h3>SMAK PÅ ALT</h3><p>339</p>
+          </div>
+        </div>
+      </body></html>
+    `;
+
+    const extracted = await extractMenuSource("html", fetchedHtml(html));
+    expect(extracted.items.some((entry) => entry.name === "ALT")).toBe(false);
+    expect(extracted.items.some((entry) => entry.name === "SMAK PÅ ALT")).toBe(true);
+  });
+
   it("uses full-page beverage evidence after full-HTML recoveries add drink cards", async () => {
     const html = `
       <html><body>

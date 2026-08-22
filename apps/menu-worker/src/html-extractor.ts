@@ -5,12 +5,18 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EXTRACTOR_VERSION = "html-v7";
+export const HTML_EXTRACTOR_VERSION = "html-v8";
 
 export interface ExtractedHtmlMenu {
   readonly items: readonly MenuObservedItem[];
   readonly method: "json_ld" | "html_heuristic";
   readonly visibleText: string;
+}
+
+export function stripExplicitlyHiddenHtmlContent(html: string): string {
+  const $ = load(html);
+  $("[hidden], [aria-hidden='true'], .w-condition-invisible").remove();
+  return $.html();
 }
 
 type JsonRecord = Record<string, unknown>;
