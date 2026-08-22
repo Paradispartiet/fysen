@@ -79,7 +79,7 @@ const explorerSource = await readFile(path.join(webRoot, "components/cuisine-exp
 const clientBrowseSource = await readFile(path.join(webRoot, "lib/client-dish-search.ts"), "utf8");
 const previewSearchSource = await readFile(path.join(webRoot, "components/static-preview-search-page.tsx"), "utf8");
 
-test("Matlyst viser en flat, entydig katalog over aktive kjøkken", () => {
+test("Alle retter beholder den flate 19-kjøkkenkatalogen", () => {
   const activeNames = explorerData.cuisines.map((cuisine) => cuisine.name);
   assert.equal(activeNames.length, 19);
   assert.equal(new Set(activeNames).size, activeNames.length);
@@ -89,35 +89,33 @@ test("Matlyst viser en flat, entydig katalog over aktive kjøkken", () => {
   assert.ok(activeNames.includes("Levantinsk"));
 });
 
-test("Midtøsten kan ikke komme tilbake som et aggregert kjøkken", () => {
+test("Midtøsten er bare en opprinnelig Matlyst-gruppe, ikke et aggregert Alle retter-kjøkken", () => {
   assert.ok(!explorerData.cuisines.some((cuisine) => cuisine.name === "Midtøsten"));
+  assert.ok(explorerData.homeCuisines.some((cuisine) => cuisine.name === "Midtøsten"));
 });
 
-test("Utforsk verden er flat og kommer før Hva frister", () => {
-  const worldDirectory = explorerSource.indexOf('id="all-cuisines-title">Utforsk verden</h3>');
-  const moodDirectory = explorerSource.indexOf('id="matlyst-mood-title">Velg etter lyst</h3>');
-  assert.ok(worldDirectory >= 0, "mangler den flate Utforsk verden-katalogen");
-  assert.ok(moodDirectory > worldDirectory, "Hva frister skal ligge under Utforsk verden");
-  assert.doesNotMatch(explorerSource, /culinaryWorlds|selectedWorld|selectedCulinaryRegion/u);
-});
-
-test("Utforsk verden viser seks relevante kjøkken før brukeren åpner resten", () => {
-  assert.deepEqual(explorerData.featuredCuisineNames, [
-    "Italiensk",
-    "Japansk",
-    "Tyrkisk",
+test("Matlyst-forsiden er gjenopprettet til de seks opprinnelige kortene", () => {
+  assert.deepEqual(explorerData.homeCuisines.map((cuisine) => cuisine.name), [
+    "Asiatisk",
     "Indisk",
-    "Kinesisk",
-    "Thai",
+    "Fast food",
+    "Italiensk",
+    "Midtøsten",
+    "Mexicansk",
   ]);
-  assert.match(explorerSource, /const COLLAPSED_CUISINE_COUNT = 6/u);
-  assert.match(explorerSource, /filteredCuisines\.slice\(0, COLLAPSED_CUISINE_COUNT\)/u);
-  assert.match(explorerSource, /aria-expanded=\{isCuisineDirectoryExpanded\}/u);
-  assert.match(explorerSource, /Vis alle kjøkken/u);
-  assert.match(explorerSource, /Vis færre kjøkken/u);
+  assert.match(explorerSource, /homeCuisines\.map/u);
+  assert.match(explorerSource, /className="cuisineGrid"/u);
+  assert.match(explorerSource, /className="cuisineCard cuisineCardInteractive"/u);
+  assert.match(explorerSource, /className="cuisineDishPreview"/u);
+  assert.match(explorerSource, /className="cuisineAreaList"/u);
+  assert.match(explorerSource, /Retter og hvor du kan få dem/u);
+  assert.doesNotMatch(explorerSource, /matlystCuisineDirectory/u);
+  assert.doesNotMatch(explorerSource, /matlyst-cuisine-filter/u);
+  assert.doesNotMatch(explorerSource, /Vis alle kjøkken/u);
+  assert.doesNotMatch(explorerSource, /matlystMoodBlock/u);
 });
 
-test("Utforsk verden viser ferskt restaurantbevis også i Pages-preview", () => {
+test("Matlyst viser ferskt restaurantbevis også i Pages-preview", () => {
   assert.match(explorerSource, /På menyen nå/u);
   assert.match(explorerSource, /restaurantExamples/u);
   assert.match(explorerSource, /browseDishesClient/u);
