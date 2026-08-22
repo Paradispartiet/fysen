@@ -1,0 +1,96 @@
+name: TEMP scope allergen provenance v2
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.event.pull_request.head.ref == 'agent/batch02-output-cleanup-v1'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          persist-credentials: true
+      - name: Scope allergen matching to recovered items
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          scope_path = Path('apps/menu-worker/src/html-text-section-scope.ts')
+          text = scope_path.read_text()
+
+          replacements = [
+            (
+              '''function lineReferencesItem(line: string, itemName: string): boolean {\n  const evidenceLine = normalizeLine(line)\n    .replace(TRAILING_ITEM_ALLERGEN_CODES, "")\n    .trim();\n  const normalizedLine = normalizeDishName(evidenceLine);''',
+              '''function lineReferencesItem(\n  line: string,\n  itemName: string,\n  matchTrailingAllergenCodes = false,\n): boolean {\n  const normalizedEvidenceLine = normalizeLine(line);\n  const evidenceLine = matchTrailingAllergenCodes\n    ? normalizedEvidenceLine.replace(TRAILING_ITEM_ALLERGEN_CODES, "").trim()\n    : normalizedEvidenceLine;\n  const normalizedLine = normalizeDishName(evidenceLine);''',
+            ),
+            (
+              '''function sectionEvidenceForItem(\n  item: MenuObservedItem,\n  lines: readonly string[],\n  states: readonly MenuSectionState[],\n): ItemSectionEvidence {''',
+              '''function sectionEvidenceForItem(\n  item: MenuObservedItem,\n  lines: readonly string[],\n  states: readonly MenuSectionState[],\n  matchTrailingAllergenCodes = false,\n): ItemSectionEvidence {''',
+            ),
+            (
+              '''    if (!lineReferencesItem(line, item.name)) continue;''',
+              '''    if (\n      !lineReferencesItem(line, item.name, matchTrailingAllergenCodes)\n    )\n      continue;''',
+            ),
+            (
+              '''export function filterPlainTextBeverageSectionItems(\n  items: readonly MenuObservedItem[],\n  visibleText: string,\n): readonly MenuObservedItem[] {''',
+              '''interface BeverageSectionFilterOptions {\n  readonly matchTrailingAllergenCodes?: boolean;\n}\n\nexport function filterPlainTextBeverageSectionItems(\n  items: readonly MenuObservedItem[],\n  visibleText: string,\n  options: BeverageSectionFilterOptions = {},\n): readonly MenuObservedItem[] {''',
+            ),
+            (
+              '''    const evidence = sectionEvidenceForItem(item, lines, states);''',
+              '''    const evidence = sectionEvidenceForItem(\n      item,\n      lines,\n      states,\n      options.matchTrailingAllergenCodes ?? false,\n    );''',
+            ),
+            (
+              '''    if (scopedLines.some((line) => lineReferencesItem(line, item.name))) {''',
+              '''    if (\n      scopedLines.some((line) =>\n        lineReferencesItem(line, item.name, true),\n      )\n    ) {''',
+            ),
+            (
+              '''  const fullPageFiltered = filterPlainTextBeverageSectionItems(\n    fullPageRecoveryItems,\n    fullVisibleText,\n  );''',
+              '''  const fullPageFiltered = filterPlainTextBeverageSectionItems(\n    fullPageRecoveryItems,\n    fullVisibleText,\n    { matchTrailingAllergenCodes: true },\n  );''',
+            ),
+          ]
+          for old, new in replacements:
+              if new in text:
+                  continue
+              if old not in text:
+                  raise SystemExit(f'scope anchor missing: {old[:80]!r}')
+              text = text.replace(old, new, 1)
+          scope_path.write_text(text)
+
+          batch_path = Path('apps/menu-worker/src/batch02-output-cleanup.test.ts')
+          batch = batch_path.read_text()
+          old = '''      filterPlainTextBeverageSectionItems(items, visibleText).map((entry) => entry.name),'''
+          new = '''      filterPlainTextBeverageSectionItems(items, visibleText, {\n        matchTrailingAllergenCodes: true,\n      }).map((entry) => entry.name),'''
+          if new not in batch:
+              if old not in batch:
+                  raise SystemExit('batch allergen test anchor missing')
+              batch = batch.replace(old, new, 1)
+          batch_path.write_text(batch)
+
+          test_path = Path('apps/menu-worker/src/html-text-section-scope.test.ts')
+          tests = test_path.read_text()
+          old = '''    const scopedVisibleText = `\n      Chef Selection\n      House Special\n      249\n    `;\n    const fullVisibleText = `\n      Chef Selection\n      House Special\n      249\n      Drikke\n      House Special\n      79\n      House Soda\n      55\n    `;'''
+          new = '''    const scopedVisibleText = `\n      Vin\n      House Special (M, E, HV, F)\n      249\n    `;\n    const fullVisibleText = `\n      Vin\n      House Special (M, E, HV, F)\n      249\n      Drikke\n      House Special\n      79\n      House Soda (M)\n      55\n    `;'''
+          if new not in tests:
+              if old not in tests:
+                  raise SystemExit('scoped provenance test fixture anchor missing')
+              tests = tests.replace(old, new, 1)
+          test_path.write_text(tests)
+          PY
+          git diff --check
+          git diff -- apps/menu-worker/src/html-text-section-scope.ts apps/menu-worker/src/html-text-section-scope.test.ts apps/menu-worker/src/batch02-output-cleanup.test.ts
+      - name: Commit permanent correction
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- apps/menu-worker/src/html-text-section-scope.ts apps/menu-worker/src/html-text-section-scope.test.ts apps/menu-worker/src/batch02-output-cleanup.test.ts
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Scope allergen evidence to recovered HTML items"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
