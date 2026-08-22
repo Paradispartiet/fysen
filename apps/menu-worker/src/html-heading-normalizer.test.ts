@@ -30,7 +30,7 @@ describe("HTML heading line-break normalizer", () => {
     const extracted = extractScopedHtmlMenu(normalized);
     const recovered = recoverDescriptionNamedHtmlItems(extracted.items, extracted.visibleText);
 
-    expect(HTML_HEADING_NORMALIZER_VERSION).toBe("heading-v2");
+    expect(HTML_HEADING_NORMALIZER_VERSION).toBe("heading-v3");
     expect(recovered.map((item) => [item.name, item.priceMinor])).toContainEqual([
       "Kofta (arabisk gryterett med kjøttboller)",
       31000,
