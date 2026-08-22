@@ -73,6 +73,8 @@ describe("generic HTML canonical item filtering", () => {
     "Munkholm",
     "Aperol",
     "Mineralvann",
+    "Capuccino",
+    "CUPPUCINO",
   ])("rejects non-food or beverage-only menu item %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
   });
