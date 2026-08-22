@@ -36,7 +36,7 @@ const EXPLICIT_TRAILING_PRICE =
 const BARE_DASH_TRAILING_PRICE = /\s+[-–—]\s*([1-9]\d{1,3})\s*$/u;
 const TRAILING_LEADER = /\s*_{3,}\s*$/u;
 const TRAILING_ITEM_ALLERGEN_CODES =
-  /\s+\((?:[\p{L}\d]{1,5}\s*(?:[,/+ ]\s*)?){1,20}\)$/u;
+  /\s+\((?:[\p{L}]{1,2}|\d{1,2})(?:\s*[,/+ ]\s*(?:[\p{L}]{1,2}|\d{1,2}))*\)$/u;
 
 type MenuSectionState = "unknown" | "food" | "beverage";
 
@@ -205,4 +205,41 @@ export function filterPlainTextBeverageSectionItems(
     if (!evidence.hasBeverageOccurrence) return true;
     return evidence.hasFoodOccurrence;
   });
+}
+
+export function filterHtmlBeverageSectionItemsWithScopedProvenance(
+  items: readonly MenuObservedItem[],
+  scopedVisibleText: string,
+  fullVisibleText: string,
+): readonly MenuObservedItem[] {
+  if (items.length === 0) return items;
+
+  const scopedLines = scopedVisibleText
+    .split("\n")
+    .map(normalizeLine)
+    .filter(Boolean);
+  const scopedItems: MenuObservedItem[] = [];
+  const fullPageRecoveryItems: MenuObservedItem[] = [];
+
+  for (const item of items) {
+    if (scopedLines.some((line) => lineReferencesItem(line, item.name))) {
+      scopedItems.push(item);
+    } else {
+      fullPageRecoveryItems.push(item);
+    }
+  }
+
+  const scopedFiltered = filterPlainTextBeverageSectionItems(
+    scopedItems,
+    scopedVisibleText,
+  );
+  const fullPageFiltered = filterPlainTextBeverageSectionItems(
+    fullPageRecoveryItems,
+    fullVisibleText,
+  );
+
+  const unique = new Map<string, MenuObservedItem>();
+  for (const item of fullPageFiltered) unique.set(item.sourceKey, item);
+  for (const item of scopedFiltered) unique.set(item.sourceKey, item);
+  return [...unique.values()].sort((left, right) => left.position - right.position);
 }

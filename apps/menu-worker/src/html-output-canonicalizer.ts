@@ -62,6 +62,7 @@ function isNumericPrefixSuffixFragment(
     ?.split(SOURCE_EXCERPT_SEPARATOR)[0]
     ?.trim();
   if (!excerptHead) return false;
+  if (!/^\d+\s+/u.test(excerptHead)) return false;
   const normalizedExcerptHead = normalizeDishName(excerptHead);
   if (!/^\d+\s+/u.test(normalizedExcerptHead)) return false;
 

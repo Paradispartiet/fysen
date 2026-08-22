@@ -55,7 +55,7 @@ import {
   HTML_OUTPUT_CANONICALIZER_VERSION,
 } from "./html-output-canonicalizer.js";
 import {
-  filterPlainTextBeverageSectionItems,
+  filterHtmlBeverageSectionItemsWithScopedProvenance,
   HTML_TEXT_SECTION_SCOPE_VERSION,
 } from "./html-text-section-scope.js";
 import { HttpMenuClient, type MenuHttpFetchResult } from "./http-client.js";
@@ -486,7 +486,11 @@ export async function extractMenuSource(
     const canonicalItems = normalizedItems.filter(isCanonicalHtmlMenuItem);
     const beverageScopedItems =
       extracted.method === "html_heuristic"
-        ? filterPlainTextBeverageSectionItems(canonicalItems, fullVisibleText)
+        ? filterHtmlBeverageSectionItemsWithScopedProvenance(
+            canonicalItems,
+            extracted.visibleText,
+            fullVisibleText,
+          )
         : canonicalItems;
     const items =
       extracted.method === "html_heuristic"

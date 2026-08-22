@@ -87,4 +87,16 @@ describe("structural HTML output canonicalization", () => {
       ["Herb Salad", "SALADS"],
     ]);
   });
+
+  it("preserves a canonical suffix when the numeric prefix is a menu index", () => {
+    const items = [
+      item("KEBAB PIZZA", 29900, null, "65. KEBAB PIZZA — 299"),
+      item("65. KEBAB PIZZA", 29900),
+    ];
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "KEBAB PIZZA",
+      "65. KEBAB PIZZA",
+    ]);
+  });
+
 });

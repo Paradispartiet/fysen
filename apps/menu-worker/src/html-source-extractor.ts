@@ -785,7 +785,7 @@ export function extractScopedHtmlMenu(html: string): ExtractedHtmlMenu {
     scopedText.headingLevels,
     foodItems,
   ).map(normalizeNumberedItem);
-  if (standaloneQualifies && standalone.items.length > recovered.length) {
+  if (standaloneQualifies && standalone.items.length >= recovered.length) {
     return {
       items: standalone.items,
       method: "html_heuristic",
