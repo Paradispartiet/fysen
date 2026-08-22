@@ -1,10 +1,17 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v1";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v2";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
   /^(?:add|with|legg\s+til|med)\b.*(?:\+\s*(?:kr\.?\s*)?\d+|\b\d+\s*(?:,-|kr\.?|nok)(?:\s|$))/iu;
+const BADGE_ONLY_ITEM = /^(?:veg(?:etarian)?(?:\s+spicy)?|spicy)$/iu;
+const BRANDED_MENU_SECTION_ITEM =
+  /^(?:[A-ZÆØÅ]{2,24}\s+)(?:RAW|MAKI|TACO|SMÅRETTER|SALATER|VEGANSK|SHARING)$/u;
+const PER_PERSON_PRICE_DISPLAY_ONLY_ITEM =
+  /^(?:(?:nok|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*,?[–—-]\s+per\s+(?:person|pers\.?)$/iu;
+const DAILY_MENU_LABEL_ITEM =
+  /^dagens\s+(?:veganske|vegetariske)\s+meny$/iu;
 
 function samePrice(
   left: Pick<MenuObservedItem, "priceMinor">,
@@ -92,15 +99,26 @@ function isAddonScopedDuplicate(
   );
 }
 
+function isOutputNoiseLabel(item: MenuObservedItem): boolean {
+  const name = item.name.trim();
+  return (
+    BADGE_ONLY_ITEM.test(name) ||
+    BRANDED_MENU_SECTION_ITEM.test(name) ||
+    PER_PERSON_PRICE_DISPLAY_ONLY_ITEM.test(name) ||
+    DAILY_MENU_LABEL_ITEM.test(name)
+  );
+}
+
 export function canonicalizeHtmlOutputItems(
   items: readonly MenuObservedItem[],
 ): readonly MenuObservedItem[] {
-  if (items.length < 2) return items;
-  const mirroredNames = mirroredPromotionalNames(items);
-  return items.filter(
+  const labelFilteredItems = items.filter((item) => !isOutputNoiseLabel(item));
+  if (labelFilteredItems.length < 2) return labelFilteredItems;
+  const mirroredNames = mirroredPromotionalNames(labelFilteredItems);
+  return labelFilteredItems.filter(
     (item) =>
       !mirroredNames.has(item.normalizedName) &&
-      !isNumericPrefixSuffixFragment(item, items) &&
-      !isAddonScopedDuplicate(item, items),
+      !isNumericPrefixSuffixFragment(item, labelFilteredItems) &&
+      !isAddonScopedDuplicate(item, labelFilteredItems),
   );
 }
