@@ -1,0 +1,92 @@
+name: TEMP patch Batch 02 residual output v3
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.event.pull_request.head.ref == 'agent/batch02-residual-output-cleanup-v3'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          persist-credentials: true
+      - name: Patch generic residual output canonicalization
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('apps/menu-worker/src/html-output-canonicalizer.ts')
+          text = path.read_text()
+          text = text.replace(
+              'export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v2";',
+              'export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v3";',
+              1,
+          )
+          anchor = '''const DAILY_MENU_LABEL_ITEM =\n  /^dagens\\s+(?:veganske|vegetariske)\\s+meny$/iu;\n'''
+          helper = anchor + '''const COMMON_FOOD_SECTION_ITEM = /^(?:dumplings?|proteins?)$/iu;\nconst UPGRADE_SECTION_ITEM =\n  /^(?:upgrades?\\s*(?:&|and)\\s*extras?|give\\s+me\\s+an\\s+upgrade|select\\s+your\\s+topping!?)$/iu;\nconst SHORT_ALLERGEN_CODE_ITEM = /^[A-ZÆØÅ]{1,2}$/u;\n'''
+          if 'const COMMON_FOOD_SECTION_ITEM' not in text:
+              if anchor not in text:
+                  raise SystemExit('canonicalizer label anchor missing')
+              text = text.replace(anchor, helper, 1)
+
+          noise_old = '''    BRANDED_MENU_SECTION_ITEM.test(name) ||\n    PER_PERSON_PRICE_DISPLAY_ONLY_ITEM.test(name) ||\n    DAILY_MENU_LABEL_ITEM.test(name)\n'''
+          noise_new = '''    BRANDED_MENU_SECTION_ITEM.test(name) ||\n    COMMON_FOOD_SECTION_ITEM.test(name) ||\n    UPGRADE_SECTION_ITEM.test(name) ||\n    SHORT_ALLERGEN_CODE_ITEM.test(name) ||\n    PER_PERSON_PRICE_DISPLAY_ONLY_ITEM.test(name) ||\n    DAILY_MENU_LABEL_ITEM.test(name)\n'''
+          if noise_new not in text:
+              if noise_old not in text:
+                  raise SystemExit('canonicalizer noise anchor missing')
+              text = text.replace(noise_old, noise_new, 1)
+
+          addon_anchor = '''function isAddonScopedDuplicate(\n  item: MenuObservedItem,\n  items: readonly MenuObservedItem[],\n): boolean {\n'''
+          helper_fn = '''function isNumericTitleSuffixMisreadAsPrice(\n  item: MenuObservedItem,\n  items: readonly MenuObservedItem[],\n): boolean {\n  if (item.priceMinor === null || item.priceMinor % 100 !== 0) return false;\n  const numericSuffix = String(item.priceMinor / 100);\n  if (!/^[1-9]\\d?$/u.test(numericSuffix)) return false;\n  const expectedFullName = `${item.normalizedName} ${numericSuffix}`;\n  return items.some(\n    (candidate) =>\n      candidate !== item && candidate.normalizedName === expectedFullName,\n  );\n}\n\n''' + addon_anchor
+          if 'function isNumericTitleSuffixMisreadAsPrice' not in text:
+              if addon_anchor not in text:
+                  raise SystemExit('canonicalizer addon anchor missing')
+              text = text.replace(addon_anchor, helper_fn, 1)
+
+          filter_old = '''      !mirroredNames.has(item.normalizedName) &&\n      !isNumericPrefixSuffixFragment(item, labelFilteredItems) &&\n      !isAddonScopedDuplicate(item, labelFilteredItems),\n'''
+          filter_new = '''      !mirroredNames.has(item.normalizedName) &&\n      !isNumericPrefixSuffixFragment(item, labelFilteredItems) &&\n      !isNumericTitleSuffixMisreadAsPrice(item, labelFilteredItems) &&\n      !isAddonScopedDuplicate(item, labelFilteredItems),\n'''
+          if filter_new not in text:
+              if filter_old not in text:
+                  raise SystemExit('canonicalizer filter anchor missing')
+              text = text.replace(filter_old, filter_new, 1)
+          path.write_text(text)
+
+          test = Path('apps/menu-worker/src/html-output-canonicalizer.test.ts')
+          t = test.read_text().replace(
+              'expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v2");',
+              'expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v3");',
+              1,
+          )
+          closing = '\n});\n'
+          new_tests = '''\n  it("drops generic priced section, upgrade and short allergen labels", () => {\n    const items = [\n      item("DUMPLINGS", 19500),\n      item("PROTEINS", 24500),\n      item("Upgrades & Extras", 7500),\n      item("SN", 8900),\n      item("SY", 4900),\n      item("Chicken Gyoza", 19500),\n      item("The Godfather", 26900),\n    ];\n    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([\n      "Chicken Gyoza",\n      "The Godfather",\n    ]);\n  });\n\n  it("drops a short title whose numeric suffix was misread as its price", () => {\n    const items = [\n      item("Chicken", 6500),\n      item("Chicken 65", 15500),\n      item("Rice", 6500),\n    ];\n    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([\n      "Chicken 65",\n      "Rice",\n    ]);\n  });\n'''
+          if 'drops generic priced section, upgrade and short allergen labels' not in t:
+              if not t.endswith(closing):
+                  raise SystemExit('canonicalizer test closing anchor missing')
+              t = t[:-len(closing)] + new_tests + closing
+          test.write_text(t)
+
+          version_test = Path('apps/menu-worker/src/menu-source-runtime-version.test.ts')
+          vt = version_test.read_text().replace(
+              'expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v2");',
+              'expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v3");',
+              1,
+          )
+          version_test.write_text(vt)
+          PY
+          git diff --check
+          git diff -- apps/menu-worker/src/html-output-canonicalizer.ts apps/menu-worker/src/html-output-canonicalizer.test.ts apps/menu-worker/src/menu-source-runtime-version.test.ts
+      - name: Commit permanent correction
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- apps/menu-worker/src/html-output-canonicalizer.ts apps/menu-worker/src/html-output-canonicalizer.test.ts apps/menu-worker/src/menu-source-runtime-version.test.ts
+          git commit -m "Filter residual Batch 02 output labels"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
