@@ -65,6 +65,13 @@ jobs:
         with:
           node-version: 24.18.0
 
+      - name: Build workspace contract dependency
+        shell: bash
+        run: |
+          set -euo pipefail
+          corepack pnpm install --no-frozen-lockfile
+          corepack pnpm --filter @fysen/contracts build
+
       - name: Deploy web explicitly to production
         id: deploy
         shell: bash
