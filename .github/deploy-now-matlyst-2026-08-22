@@ -1,1 +1,2 @@
 Trigger the verified one-shot Matlyst web production release from the current main base SHA.
+Retry after building @fysen/contracts before Vercel prebuild.
