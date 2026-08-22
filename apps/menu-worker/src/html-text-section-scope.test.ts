@@ -5,6 +5,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 import {
+  filterHtmlBeverageSectionItemsWithScopedProvenance,
   filterPlainTextBeverageSectionItems,
   HTML_TEXT_SECTION_SCOPE_VERSION,
 } from "./html-text-section-scope.js";
@@ -53,7 +54,7 @@ describe("plain-text HTML section scoping", () => {
       119 NOK
     `;
 
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v5");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v6");
     expect(
       filterPlainTextBeverageSectionItems(items, visibleText).map(
         (entry) => entry.name,
@@ -347,4 +348,53 @@ describe("plain-text HTML section scoping", () => {
       ).map((entry) => entry.name),
     ).toEqual(["Falafel", "Baklava"]);
   });
+
+  it("does not strip parenthetical words as allergen codes", () => {
+    const items = [item("House Special", 1, 24900)];
+    const visibleText = `
+      Chef Selection
+      House Special
+      249
+      Drikke
+      House Special (VEGAN)
+      79
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual(["House Special"]);
+  });
+
+  it("uses full-page drink evidence only for items absent from scoped food text", () => {
+    const items = [
+      item("House Special", 1, 24900),
+      item("House Soda", 2, 5500),
+    ];
+    const scopedVisibleText = `
+      Vin
+      House Special (M, E, HV, F)
+      249
+    `;
+    const fullVisibleText = `
+      Vin
+      House Special (M, E, HV, F)
+      249
+      Drikke
+      House Special
+      79
+      House Soda (M)
+      55
+    `;
+
+    expect(
+      filterHtmlBeverageSectionItemsWithScopedProvenance(
+        items,
+        scopedVisibleText,
+        fullVisibleText,
+      ).map((entry) => entry.name),
+    ).toEqual(["House Special"]);
+  });
+
 });

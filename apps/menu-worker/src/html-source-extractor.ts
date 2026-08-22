@@ -4,9 +4,13 @@ import {
   normalizeDishName,
   type MenuObservedItem,
 } from "@fysen/menu-core";
-import { extractHtmlMenu, type ExtractedHtmlMenu } from "./html-extractor.js";
+import {
+  extractHtmlMenu,
+  stripExplicitlyHiddenHtmlContent,
+  type ExtractedHtmlMenu,
+} from "./html-extractor.js";
 
-export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v16";
+export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v18";
 
 const HEADING_MARKER = "__FYSEN_HEADING_LEVEL_";
 const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|vin\s*(?:&|og)\s*musserende|wine(?:\s+(?:list|menu))?|wine\s*(?:&|and)\s*sparkling|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
@@ -24,12 +28,17 @@ const EXTRAS_TRIGGER = /^(?:ekstra\s+sulten\s*\??|extra\s+hungry\s*\??|extras?\s
 const MORE_LABEL = /^(?:vis\s+mer|show\s+more)$/iu;
 const TRAILING_ALLERGEN_CODES = /\s+\((?:[\p{L}\d]{1,5}\s*,?\s*){1,20}\)$/u;
 
+const LEADING_QUANTITY_UNIT =
+  /^\d{1,4}\s+(?:g|gram(?:s)?|kg|ml|cl|l|stk|st|pcs?|pieces?|biter|biter\s+av)\b/iu;
+
 function normalizeVisibleLine(value: string): string {
   return value.normalize("NFKC").replace(/\s+/g, " ").trim();
 }
 
 function stripMenuNumber(value: string): string {
-  return normalizeVisibleLine(value).replace(/^\d{1,3}\s*[.)]?\s+/u, "").trim();
+  const normalized = normalizeVisibleLine(value);
+  if (LEADING_QUANTITY_UNIT.test(normalized)) return normalized;
+  return normalized.replace(/^\d{1,3}\s*[.)]?\s+/u, "").trim();
 }
 
 function stripTrailingAllergenCodes(value: string): string {
@@ -384,6 +393,28 @@ function looksLikeStandaloneBlockTitle(value: string): boolean {
   return !/^(?:with|served|topped|contains?|including|med|servert|toppet|inneholder|inkludert)\b/iu.test(title);
 }
 
+function looksLikeStandaloneHeadingTitle(value: string): boolean {
+  const title = canonicalCardTitle(value);
+  if (
+    !plausibleCardTitle(title) ||
+    isBeverageItemName(title) ||
+    isObviousMetadataItem(title) ||
+    isPlainFoodSectionLabel(title)
+  ) {
+    return false;
+  }
+  const words = title.split(/\s+/).filter(Boolean);
+  if (words.length > 16 || /[,;:]$/u.test(title)) return false;
+  return !/^(?:with|served|topped|contains?|including|med|servert|toppet|inneholder|inkludert)\b/iu.test(title);
+}
+
+function looksLikeImmediateUppercaseTitle(value: string): boolean {
+  const title = canonicalCardTitle(value);
+  if (!looksLikeStandaloneHeadingTitle(title)) return false;
+  const letters = title.replace(/[^\p{L}]+/gu, "");
+  return letters.length >= 3 && title === title.toLocaleUpperCase("nb-NO");
+}
+
 interface StandalonePriceBlockExtraction {
   readonly items: readonly MenuObservedItem[];
   readonly priceCount: number;
@@ -436,7 +467,17 @@ function extractStandalonePriceBlocks(
     let titleIndex: number | null = null;
     let name: string | null = null;
 
-    if (lastHeading !== null) {
+    const immediateTitleIndex = pricePosition - 1;
+    const immediateTitle = lines[immediateTitleIndex]?.trim() ?? "";
+    if (
+      immediateTitleIndex >= blockStart &&
+      looksLikeImmediateUppercaseTitle(immediateTitle)
+    ) {
+      titleIndex = immediateTitleIndex;
+      name = canonicalCardTitle(immediateTitle);
+    }
+
+    if (titleIndex === null && lastHeading !== null) {
       const firstContentIndex = (() => {
         for (let index = lastHeading + 1; index < pricePosition; index += 1) {
           if (headingLevels.has(index)) continue;
@@ -448,12 +489,19 @@ function extractStandalonePriceBlocks(
       const firstContent = firstContentIndex === null ? "" : lines[firstContentIndex] ?? "";
       const repeatedLevel = hasRepeatedHeadingLevel(headingLevels, lastHeading);
       const strongUniqueCard = !repeatedLevel && looksLikeStrongDescriptionLine(firstContent);
-      if (firstContent && looksLikeDescriptionLine(firstContent) && (repeatedLevel || strongUniqueCard)) {
-        const headingTitle = recoveredTitle(lines, lastHeading, headingLevels);
-        if (headingTitle && looksLikeStandaloneBlockTitle(headingTitle)) {
-          titleIndex = lastHeading;
-          name = headingTitle;
-        }
+      const headingTitle = recoveredTitle(lines, lastHeading, headingLevels);
+      const directRepeatedHeadingPrice = firstContentIndex === null && repeatedLevel;
+      const descriptionAnchoredHeading =
+        Boolean(firstContent) &&
+        looksLikeDescriptionLine(firstContent) &&
+        (repeatedLevel || strongUniqueCard);
+      if (
+        headingTitle &&
+        ((directRepeatedHeadingPrice && looksLikeStandaloneHeadingTitle(headingTitle)) ||
+          (descriptionAnchoredHeading && looksLikeStandaloneBlockTitle(headingTitle)))
+      ) {
+        titleIndex = lastHeading;
+        name = headingTitle;
       }
     }
 
@@ -710,7 +758,8 @@ export function extractScopedHtmlMenu(html: string): ExtractedHtmlMenu {
   const firstPass = extractHtmlMenu(html);
   if (firstPass.method === "json_ld") return firstPass;
 
-  const sourceLines = annotatedVisibleLines(html);
+  const visibleHtml = stripExplicitlyHiddenHtmlContent(html);
+  const sourceLines = annotatedVisibleLines(visibleHtml);
   const addons = addonOptionNames(sourceLines);
   const scopedText = foodScopedText(sourceLines);
   const visibleText = scopedText.visibleText;
@@ -728,17 +777,10 @@ export function extractScopedHtmlMenu(html: string): ExtractedHtmlMenu {
   }
 
   const standalone = extractStandalonePriceBlocks(visibleText, scopedText.headingLevels);
-  if (
+  const standaloneQualifies =
     standalone.priceCount >= 3 &&
     standalone.items.length >= 3 &&
-    standalone.items.length * 4 >= standalone.priceCount * 3
-  ) {
-    return {
-      items: standalone.items,
-      method: "html_heuristic",
-      visibleText,
-    };
-  }
+    standalone.items.length * 4 >= standalone.priceCount * 3;
 
   const scoped = extractHtmlMenu(syntheticHtmlFromVisibleText(visibleText));
   const foodItems = scoped.items.filter(
@@ -753,6 +795,13 @@ export function extractScopedHtmlMenu(html: string): ExtractedHtmlMenu {
     scopedText.headingLevels,
     foodItems,
   ).map(normalizeNumberedItem);
+  if (standaloneQualifies && standalone.items.length >= recovered.length) {
+    return {
+      items: standalone.items,
+      method: "html_heuristic",
+      visibleText,
+    };
+  }
   return {
     ...scoped,
     items: recovered,

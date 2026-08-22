@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v5";
+export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v6";
 
 const SECTION_COUNT_SUFFIX = /\s*\(\s*\d{1,3}\s*\)\s*$/u;
 const BEVERAGE_SECTION_LABEL =
@@ -35,6 +35,8 @@ const EXPLICIT_TRAILING_PRICE =
   /\s+(?:(?:nok|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)\s*$/iu;
 const BARE_DASH_TRAILING_PRICE = /\s+[-–—]\s*([1-9]\d{1,3})\s*$/u;
 const TRAILING_LEADER = /\s*_{3,}\s*$/u;
+const TRAILING_ITEM_ALLERGEN_CODES =
+  /\s+\((?:[\p{L}]{1,2}|\d{1,2})(?:\s*[,/+ ]\s*(?:[\p{L}]{1,2}|\d{1,2}))*\)$/u;
 
 type MenuSectionState = "unknown" | "food" | "beverage";
 
@@ -147,8 +149,16 @@ function cleanOutputArtifactName(item: MenuObservedItem): MenuObservedItem {
   };
 }
 
-function lineReferencesItem(line: string, itemName: string): boolean {
-  const normalizedLine = normalizeDishName(line);
+function lineReferencesItem(
+  line: string,
+  itemName: string,
+  matchTrailingAllergenCodes = false,
+): boolean {
+  const normalizedEvidenceLine = normalizeLine(line);
+  const evidenceLine = matchTrailingAllergenCodes
+    ? normalizedEvidenceLine.replace(TRAILING_ITEM_ALLERGEN_CODES, "").trim()
+    : normalizedEvidenceLine;
+  const normalizedLine = normalizeDishName(evidenceLine);
   const normalizedName = normalizeDishName(itemName);
   if (!normalizedName || !normalizedLine.startsWith(normalizedName)) return false;
   if (normalizedLine.length === normalizedName.length) return true;
@@ -160,6 +170,7 @@ function sectionEvidenceForItem(
   item: MenuObservedItem,
   lines: readonly string[],
   states: readonly MenuSectionState[],
+  matchTrailingAllergenCodes = false,
 ): ItemSectionEvidence {
   const evidence: ItemSectionEvidence = {
     hasFoodOccurrence: false,
@@ -169,7 +180,10 @@ function sectionEvidenceForItem(
     const state = states[index] ?? "unknown";
     if (state === "unknown") continue;
     const line = lines[index] ?? "";
-    if (!lineReferencesItem(line, item.name)) continue;
+    if (
+      !lineReferencesItem(line, item.name, matchTrailingAllergenCodes)
+    )
+      continue;
     if (state === "food") evidence.hasFoodOccurrence = true;
     if (state === "beverage") evidence.hasBeverageOccurrence = true;
     if (evidence.hasFoodOccurrence && evidence.hasBeverageOccurrence) break;
@@ -177,9 +191,14 @@ function sectionEvidenceForItem(
   return evidence;
 }
 
+interface BeverageSectionFilterOptions {
+  readonly matchTrailingAllergenCodes?: boolean;
+}
+
 export function filterPlainTextBeverageSectionItems(
   items: readonly MenuObservedItem[],
   visibleText: string,
+  options: BeverageSectionFilterOptions = {},
 ): readonly MenuObservedItem[] {
   if (items.length === 0) return items;
   const cleanedItems = items
@@ -196,8 +215,55 @@ export function filterPlainTextBeverageSectionItems(
 
   const states = sectionStateByPosition(lines);
   return cleanedItems.filter((item) => {
-    const evidence = sectionEvidenceForItem(item, lines, states);
+    const evidence = sectionEvidenceForItem(
+      item,
+      lines,
+      states,
+      options.matchTrailingAllergenCodes ?? false,
+    );
     if (!evidence.hasBeverageOccurrence) return true;
     return evidence.hasFoodOccurrence;
   });
+}
+
+export function filterHtmlBeverageSectionItemsWithScopedProvenance(
+  items: readonly MenuObservedItem[],
+  scopedVisibleText: string,
+  fullVisibleText: string,
+): readonly MenuObservedItem[] {
+  if (items.length === 0) return items;
+
+  const scopedLines = scopedVisibleText
+    .split("\n")
+    .map(normalizeLine)
+    .filter(Boolean);
+  const scopedItems: MenuObservedItem[] = [];
+  const fullPageRecoveryItems: MenuObservedItem[] = [];
+
+  for (const item of items) {
+    if (
+      scopedLines.some((line) =>
+        lineReferencesItem(line, item.name, true),
+      )
+    ) {
+      scopedItems.push(item);
+    } else {
+      fullPageRecoveryItems.push(item);
+    }
+  }
+
+  const scopedFiltered = filterPlainTextBeverageSectionItems(
+    scopedItems,
+    scopedVisibleText,
+  );
+  const fullPageFiltered = filterPlainTextBeverageSectionItems(
+    fullPageRecoveryItems,
+    fullVisibleText,
+    { matchTrailingAllergenCodes: true },
+  );
+
+  const unique = new Map<string, MenuObservedItem>();
+  for (const item of fullPageFiltered) unique.set(item.sourceKey, item);
+  for (const item of scopedFiltered) unique.set(item.sourceKey, item);
+  return [...unique.values()].sort((left, right) => left.position - right.position);
 }

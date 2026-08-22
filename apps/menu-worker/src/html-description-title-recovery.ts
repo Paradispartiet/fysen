@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v12";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v13";
 
 const PRICE_LINE =
   /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
@@ -212,6 +212,59 @@ function recoverSplitParentheticalTitle(
   return parenthesisBalance(combined) === 0 && looksLikeRecoveredTitle(combined)
     ? combined
     : null;
+}
+
+function looksLikeDirectlyPricedObservedTitle(value: string): boolean {
+  const line = normalizeVisibleLine(value);
+  if (
+    !line ||
+    PRICE_METADATA_LEAD.test(line) ||
+    ALLERGEN_PREFIX.test(line) ||
+    looksLikeAllergenMetadata(line)
+  ) {
+    return false;
+  }
+
+  const letters = line.replace(/[^\p{L}]+/gu, "");
+  if (letters.length < 3 || line !== line.toLocaleUpperCase("nb-NO")) {
+    return false;
+  }
+
+  return !/^(?:serveres?|served|with|med|contains?|inneholder|allergener?|allergens?)\b/iu.test(
+    line,
+  );
+}
+
+function sourceExcerptDirectlyPricesObservedName(
+  item: MenuObservedItem,
+): boolean {
+  const sourceExcerpt = item.sourceExcerpt?.trim() ?? "";
+  if (!sourceExcerpt) return false;
+
+  const current = normalizeVisibleLine(item.name);
+  const foldedCurrent = current.toLocaleLowerCase("nb-NO");
+  const segments = sourceExcerpt
+    .split(SOURCE_EXCERPT_SEPARATOR)
+    .map(normalizeVisibleLine)
+    .filter(Boolean);
+
+  for (let index = 0; index < segments.length - 1; index += 1) {
+    const segment = segments[index] ?? "";
+    const foldedSegment = segment.toLocaleLowerCase("nb-NO");
+    let nameMatches = foldedSegment === foldedCurrent;
+
+    if (!nameMatches && foldedSegment.startsWith(`${foldedCurrent} (`)) {
+      const suffix = segment.slice(current.length).trim();
+      const match = suffix.match(PARENTHETICAL_QUALIFIER);
+      nameMatches = Boolean(match?.[1] && looksLikeAllergenQualifier(match[1]));
+    }
+
+    if (!nameMatches) continue;
+    const next = segments[index + 1] ?? "";
+    if (PRICE_LINE.test(next)) return true;
+  }
+
+  return false;
 }
 
 function recoverForwardTitleFromSourceExcerpt(
@@ -479,8 +532,12 @@ export function recoverDescriptionNamedHtmlItems(
   const recovered = items.map((item) => {
     const position = item.position;
     const forwardRecovery = recoverForwardTitleFromSourceExcerpt(item);
+    const directlyPricedObservedName =
+      looksLikeDirectlyPricedObservedTitle(item.name) &&
+      sourceExcerptDirectlyPricesObservedName(item);
     const descriptionRecovery =
       !forwardRecovery &&
+      !directlyPricedObservedName &&
       looksLikeHtmlDescription(item.name) &&
       Number.isInteger(position) &&
       position >= 1

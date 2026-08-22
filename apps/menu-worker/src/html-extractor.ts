@@ -5,12 +5,18 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EXTRACTOR_VERSION = "html-v7";
+export const HTML_EXTRACTOR_VERSION = "html-v8";
 
 export interface ExtractedHtmlMenu {
   readonly items: readonly MenuObservedItem[];
   readonly method: "json_ld" | "html_heuristic";
   readonly visibleText: string;
+}
+
+export function stripExplicitlyHiddenHtmlContent(html: string): string {
+  const $ = load(html);
+  $(".w-condition-invisible").remove();
+  return $.html();
 }
 
 type JsonRecord = Record<string, unknown>;
@@ -107,7 +113,7 @@ function extractJsonLdItems(html: string): readonly MenuObservedItem[] {
   return [...unique.values()];
 }
 
-function extractVisibleText(html: string): string {
+export function extractHtmlVisibleText(html: string): string {
   const $ = load(html);
   $("script, style, noscript, svg, template").remove();
   $("br").replaceWith("\n");
@@ -425,7 +431,7 @@ function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[]
 
 export function extractHtmlMenu(html: string): ExtractedHtmlMenu {
   const structured = extractJsonLdItems(html);
-  const visibleText = extractVisibleText(html);
+  const visibleText = extractHtmlVisibleText(html);
   if (structured.length > 0) {
     return { items: structured, method: "json_ld", visibleText };
   }

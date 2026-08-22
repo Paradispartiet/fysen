@@ -61,7 +61,7 @@ describe("HTML description-title recovery", () => {
       visibleText,
     );
 
-    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v12");
+    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v13");
     expect(result.map((entry) => entry.name)).toEqual([
       "Hummus (kikert-og sesampuré)",
       "Hvitløkmarinerte kyllingvinger",
@@ -305,6 +305,43 @@ describe("HTML description-title recovery", () => {
     expect(result).toHaveLength(1);
     expect(result[0]?.name).toBe("Mezah med en grill rett");
     expect(result[0]?.description).toBeNull();
+  });
+
+  it("preserves a directly priced dish title even when its leading verb resembles description prose", () => {
+    const grilled = {
+      ...item("GRILLED VEGETABLE PLATE", 2, 15900),
+      sourceExcerpt: "GRILLED VEGETABLE PLATE — 159,-",
+    };
+    const result = recoverDescriptionNamedHtmlItems(
+      [grilled],
+      ["CHILDREN MENU", "GRILLED VEGETABLE PLATE", "159,-"].join("\n"),
+    );
+
+    expect(result).toHaveLength(1);
+    expect(result[0]?.name).toBe("GRILLED VEGETABLE PLATE");
+    expect(result[0]?.confidence).toBe(0.9);
+  });
+
+  it("preserves a long directly priced title instead of replacing it with an earlier section label", () => {
+    const offer = {
+      ...item("LET THE KITCHEN BUILD A SHARING MENU FOR THE WHOLE TABLE", 2, 59500),
+      sourceExcerpt:
+        "LET THE KITCHEN BUILD A SHARING MENU FOR THE WHOLE TABLE — 595.0",
+    };
+    const result = recoverDescriptionNamedHtmlItems(
+      [offer],
+      [
+        "TASTING MENU",
+        "LET THE KITCHEN BUILD A SHARING MENU FOR THE WHOLE TABLE",
+        "595.0",
+      ].join("\n"),
+    );
+
+    expect(result).toHaveLength(1);
+    expect(result[0]?.name).toBe(
+      "LET THE KITCHEN BUILD A SHARING MENU FOR THE WHOLE TABLE",
+    );
+    expect(result[0]?.confidence).toBe(0.9);
   });
 
   it("leaves ordinary short dish names unchanged", () => {
