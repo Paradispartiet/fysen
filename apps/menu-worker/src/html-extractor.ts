@@ -15,7 +15,7 @@ export interface ExtractedHtmlMenu {
 
 export function stripExplicitlyHiddenHtmlContent(html: string): string {
   const $ = load(html);
-  $("[hidden], [aria-hidden='true'], .w-condition-invisible").remove();
+  $(".w-condition-invisible").remove();
   return $.html();
 }
 
