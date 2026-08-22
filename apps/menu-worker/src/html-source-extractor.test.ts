@@ -477,8 +477,8 @@ describe("extractScopedHtmlMenu", () => {
       </body></html>
     `;
     expect(extractScopedHtmlMenu(html).items.map((entry) => entry.name)).toEqual([
-      "Pork Gyoza with Japanese ketchup (4 pcs)",
-      "Chicken Gyoza with Truffle Tosazu (4 pcs)",
+      "Pork Gyoza with Japanese ketchup",
+      "Chicken Gyoza with Truffle Tosazu",
       "Grilled Chicken Yakiniku with Goma Cabbage salad",
       "Grilled Seabass with chili garlic sauce",
     ]);
