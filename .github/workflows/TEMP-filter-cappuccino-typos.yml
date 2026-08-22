@@ -1,0 +1,64 @@
+name: TEMP filter cappuccino typos
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.event.pull_request.head.ref == 'agent/batch02-output-cleanup-v1'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          persist-credentials: true
+      - name: Add generic cappuccino typo filtering
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('apps/menu-worker/src/menu-source-runtime.ts')
+          text = path.read_text()
+          old = '(?:coffee|kaffe|espresso|americano|cappuccino|latte|tea|te)'
+          new = '(?:coffee|kaffe|espresso|americano|cappuccino|capuccino|cuppucino|latte|tea|te)'
+          if text.count(old) != 1:
+              raise SystemExit(f'coffee beverage regex count={text.count(old)}')
+          text = text.replace(old, new, 1)
+          old_version = 'export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v7";'
+          if text.count(old_version) != 1:
+              raise SystemExit(f'beverage version count={text.count(old_version)}')
+          text = text.replace(old_version, 'export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v8";', 1)
+          path.write_text(text)
+
+          path = Path('apps/menu-worker/src/menu-source-runtime-beverage-filter.test.ts')
+          text = path.read_text()
+          anchor = '    "Mineralvann",\n'
+          replacement = '    "Mineralvann",\n    "Capuccino",\n    "CUPPUCINO",\n'
+          if text.count(anchor) != 1:
+              raise SystemExit(f'beverage test anchor count={text.count(anchor)}')
+          text = text.replace(anchor, replacement, 1)
+          path.write_text(text)
+
+          path = Path('apps/menu-worker/src/menu-source-runtime-version.test.ts')
+          text = path.read_text()
+          old = 'expect(HTML_BEVERAGE_FILTER_VERSION).toBe("beverage-v7");'
+          if text.count(old) != 1:
+              raise SystemExit(f'version assertion count={text.count(old)}')
+          text = text.replace(old, 'expect(HTML_BEVERAGE_FILTER_VERSION).toBe("beverage-v8");', 1)
+          path.write_text(text)
+          PY
+          git diff --check
+          git diff -- apps/menu-worker/src/menu-source-runtime.ts apps/menu-worker/src/menu-source-runtime-beverage-filter.test.ts apps/menu-worker/src/menu-source-runtime-version.test.ts
+      - name: Commit permanent fix
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- apps/menu-worker/src/menu-source-runtime.ts apps/menu-worker/src/menu-source-runtime-beverage-filter.test.ts apps/menu-worker/src/menu-source-runtime-version.test.ts
+          git commit -m "Filter common cappuccino misspellings"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
