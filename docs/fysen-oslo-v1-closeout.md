@@ -9,18 +9,21 @@ Dette er den permanente ferdigdefinisjonen for Oslo v1. Et grønt mergebevis er 
 - Ingen closeout-gate utløser en ekstra eller manuell Vercel-deploy.
 - Production proof skal lese både API og web etter et ordinært vindu og bevise at de kjører forventet `main`-SHA.
 
-## Restaurantproduksjonsbaseline 2026-08-20
+## Restaurantproduksjonsbaseline 2026-08-22
 
-Restaurantproduksjon er en separat innholds-/integritetslinje og skal ikke forveksles med hele Oslo-v1-closeouten. Den siste eksakte production-reconciliatoren viser likevel at selve canonical restaurantbasen nå er konsistent:
+Restaurantproduksjon er en separat innholds-/integritetslinje og skal ikke forveksles med hele Oslo-v1-closeouten. Siste read-only production-proof på catalog revision `f42f1522e458d9e583f9cba7860679739631221a` viser:
 
-- 45 canonical katalogmanifester;
-- 45/45 aktive canonical restauranter;
-- 45 aktive restaurant-rader totalt;
-- 45 enabled menu sources;
-- 0 inactive canonical;
-- 0 active-not-catalog drift.
+- **55 canonical katalogmanifester**;
+- **55/55 aktive canonical restauranter**;
+- **55 aktive restaurant-rader totalt**;
+- **55 enabled menu sources**;
+- **0 inactive canonical**;
+- **0 active-not-catalog drift**;
+- nøyaktig **én enabled canonical menu source per katalogrestaurant**.
 
-Første høy-throughput Oslo-batch tok 20 restauranter gjennom felles research/intake med parallellitet fire og promoterte syv production-klare restauranter samlet. Tretten ble eksplisitt beholdt i source/parser/quality-køen i stedet for å senke kvalitetskravene. Permanent metode og datert produksjonsbevis ligger i [`restaurant-production.md`](./restaurant-production.md).
+Batch 01 etablerte høy-throughput-metoden. Batch 02 utvidet dekningen med **Jaipur, IndiSpice og tre Døgnvill-lokasjoner** etter en full parser-/output-cleanup. Den siste parserendringen fikk først merge etter **50/50 serial full-catalog live-gate**, fresh **5/5** intake, separat **5/5** revalidation og eksplisitt output-inspeksjon. De fem manifestene ble deretter staged og promotert byte-for-byte; post-merge proof verifiserte snapshots og production-search for alle fem.
+
+Permanent metode, historiske batchresultater og datert produksjonsbevis ligger i [`restaurant-production.md`](./restaurant-production.md).
 
 Denne baselinen betyr **ikke** at hele Fysen Oslo v1 er ferdig. Release-, Min mat/AHA-, Claim/Pro-, mobil- og representative E2E-portene nedenfor må fortsatt være grønne på riktig produksjons-SHA før v1-erklæringen kan gis.
 
