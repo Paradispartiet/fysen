@@ -484,4 +484,24 @@ describe("extractScopedHtmlMenu", () => {
     ]);
   });
 
+  it("does not treat a section intro as the dish when another title remains before price", () => {
+    const html = `
+      <html><body>
+        <h2>Pizza</h2>
+        <p>Rykende fersk italiensk pizza fra steinovnen</p>
+        <p>Diavola</p>
+        <p>Tomatsaus, ost, ventricina, oliven, rødløk, ruccola, chili</p>
+        <p>259,-</p>
+        <p>Wanna Beef?</p>
+        <p>Tomatsaus, ost, biff, rødløk, sjampinjong, aioli</p>
+        <p>269,-</p>
+        <p>Don't chicken out</p>
+        <p>Tomatsaus, ost, kylling, chili, løk og paprika</p>
+        <p>249,-</p>
+      </body></html>
+    `;
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.some((entry) => entry.name === "Rykende fersk italiensk pizza fra steinovnen")).toBe(false);
+  });
+
 });

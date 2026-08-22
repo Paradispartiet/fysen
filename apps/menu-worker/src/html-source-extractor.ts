@@ -492,7 +492,9 @@ function extractStandalonePriceBlocks(
       const headingTitle = recoveredTitle(lines, lastHeading, headingLevels);
       const directRepeatedHeadingPrice = firstContentIndex === null && repeatedLevel;
       const firstContentIsPlausibleTitle =
-        Boolean(firstContent) && looksLikeStandaloneBlockTitle(firstContent);
+        Boolean(firstContent) &&
+        firstContentIndex === pricePosition - 1 &&
+        looksLikeStandaloneBlockTitle(firstContent);
       const descriptionAnchoredHeading =
         Boolean(firstContent) &&
         !firstContentIsPlausibleTitle &&
