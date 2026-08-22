@@ -1,0 +1,107 @@
+name: Batch 02 v16 A B proof
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/batch02-v16-ab-proof.yml"
+      - "apps/menu-worker/src/**"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Validate all 50 catalog manifests serially
+        id: all50
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research
+          set +e
+          node dist/index.js validate:batch catalog | tee research/v16-all50.json
+          status=${PIPESTATUS[0]}
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Restore immutable Batch 02 plan and isolate five targets
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02 && mkdir -p /tmp/batch02
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import { mkdir, readFile, writeFile } from 'node:fs/promises';
+          const source = JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json','utf8'));
+          const targets = new Set(['jaipur-karl-johans-gate-oslo','indi-spice-welhavens-gate-oslo','dognvill-bjorvika-oslo','dognvill-tjuvholmen-oslo','dognvill-vulkan-oslo']);
+          const restaurants = source.restaurants.filter((entry) => targets.has(entry.restaurant.slug));
+          if (restaurants.length !== 5) throw new Error(`Expected 5 targets, got ${restaurants.length}`);
+          const plan = {...source, outputDirectory:'research/v16-five-generated', concurrency:1, restaurants};
+          await mkdir('apps/menu-worker/research/v16-five-generated',{recursive:true});
+          await writeFile('apps/menu-worker/research/v16-five.plan.json',JSON.stringify(plan,null,2)+'\n');
+          NODE
+
+      - name: Fresh intake five
+        id: intake5
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js intake:batch research/v16-five.plan.json | tee research/v16-five-intake.json
+          echo "exit_code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Independent validation five
+        id: validate5
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/v16-five-generated | tee research/v16-five-validation.json
+          echo "exit_code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Summarize A/B proof
+        working-directory: apps/menu-worker
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const all50=JSON.parse(await readFile('research/v16-all50.json','utf8'));
+          const intake=JSON.parse(await readFile('research/v16-five-intake.json','utf8'));
+          const validation=JSON.parse(await readFile('research/v16-five-validation.json','utf8'));
+          const compact=r=>({slug:r.slug,accepted:r.accepted,failureFamilies:r.failureFamilies??[],itemCount:r.validation?.menu?.quality?.itemCount??null,extractorVersion:r.validation?.menu?.extractorVersion??null,observedDishNames:r.validation?.menu?.observedDishNames??[],menuError:r.validation?.menu?.error??null,error:r.error??null});
+          const summary={all50:{manifestCount:all50.manifestCount,acceptedCount:all50.acceptedCount,failedCount:all50.failedCount,failureFamilyCounts:all50.failureFamilyCounts,failed:(all50.results??[]).filter(r=>!r.accepted).map(compact)},fiveIntake:{requestedCount:intake.requestedCount,generatedCount:intake.generatedCount,failedCount:intake.failedCount},fiveValidation:{manifestCount:validation.manifestCount,acceptedCount:validation.acceptedCount,failedCount:validation.failedCount,results:validation.results.map(compact)}};
+          await writeFile('research/v16-ab-summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-v16-ab-proof
+          path: |
+            apps/menu-worker/research/v16-all50.json
+            apps/menu-worker/research/v16-five-intake.json
+            apps/menu-worker/research/v16-five-validation.json
+            apps/menu-worker/research/v16-ab-summary.json
+            apps/menu-worker/research/v16-five-generated/*.json
+          if-no-files-found: warn
