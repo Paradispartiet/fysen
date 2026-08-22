@@ -6,7 +6,7 @@ import {
 } from "@fysen/menu-core";
 import { extractHtmlMenu, type ExtractedHtmlMenu } from "./html-extractor.js";
 
-export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v17";
+export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v16";
 
 const HEADING_MARKER = "__FYSEN_HEADING_LEVEL_";
 const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|vin\s*(?:&|og)\s*musserende|wine(?:\s+(?:list|menu))?|wine\s*(?:&|and)\s*sparkling|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
@@ -384,28 +384,6 @@ function looksLikeStandaloneBlockTitle(value: string): boolean {
   return !/^(?:with|served|topped|contains?|including|med|servert|toppet|inneholder|inkludert)\b/iu.test(title);
 }
 
-function looksLikeStandaloneHeadingTitle(value: string): boolean {
-  const title = canonicalCardTitle(value);
-  if (
-    !plausibleCardTitle(title) ||
-    isBeverageItemName(title) ||
-    isObviousMetadataItem(title) ||
-    isPlainFoodSectionLabel(title)
-  ) {
-    return false;
-  }
-  const words = title.split(/\s+/).filter(Boolean);
-  if (words.length > 16 || /[,;:]$/u.test(title)) return false;
-  return !/^(?:with|served|topped|contains?|including|med|servert|toppet|inneholder|inkludert)\b/iu.test(title);
-}
-
-function looksLikeImmediateUppercaseTitle(value: string): boolean {
-  const title = canonicalCardTitle(value);
-  if (!looksLikeStandaloneHeadingTitle(title)) return false;
-  const letters = title.replace(/[^\p{L}]+/gu, "");
-  return letters.length >= 3 && title === title.toLocaleUpperCase("nb-NO");
-}
-
 interface StandalonePriceBlockExtraction {
   readonly items: readonly MenuObservedItem[];
   readonly priceCount: number;
@@ -458,17 +436,7 @@ function extractStandalonePriceBlocks(
     let titleIndex: number | null = null;
     let name: string | null = null;
 
-    const immediateTitleIndex = pricePosition - 1;
-    const immediateTitle = lines[immediateTitleIndex]?.trim() ?? "";
-    if (
-      immediateTitleIndex >= blockStart &&
-      looksLikeImmediateUppercaseTitle(immediateTitle)
-    ) {
-      titleIndex = immediateTitleIndex;
-      name = canonicalCardTitle(immediateTitle);
-    }
-
-    if (titleIndex === null && lastHeading !== null) {
+    if (lastHeading !== null) {
       const firstContentIndex = (() => {
         for (let index = lastHeading + 1; index < pricePosition; index += 1) {
           if (headingLevels.has(index)) continue;
@@ -480,19 +448,12 @@ function extractStandalonePriceBlocks(
       const firstContent = firstContentIndex === null ? "" : lines[firstContentIndex] ?? "";
       const repeatedLevel = hasRepeatedHeadingLevel(headingLevels, lastHeading);
       const strongUniqueCard = !repeatedLevel && looksLikeStrongDescriptionLine(firstContent);
-      const headingTitle = recoveredTitle(lines, lastHeading, headingLevels);
-      const directRepeatedHeadingPrice = firstContentIndex === null && repeatedLevel;
-      const descriptionAnchoredHeading =
-        Boolean(firstContent) &&
-        looksLikeDescriptionLine(firstContent) &&
-        (repeatedLevel || strongUniqueCard);
-      if (
-        headingTitle &&
-        ((directRepeatedHeadingPrice && looksLikeStandaloneHeadingTitle(headingTitle)) ||
-          (descriptionAnchoredHeading && looksLikeStandaloneBlockTitle(headingTitle)))
-      ) {
-        titleIndex = lastHeading;
-        name = headingTitle;
+      if (firstContent && looksLikeDescriptionLine(firstContent) && (repeatedLevel || strongUniqueCard)) {
+        const headingTitle = recoveredTitle(lines, lastHeading, headingLevels);
+        if (headingTitle && looksLikeStandaloneBlockTitle(headingTitle)) {
+          titleIndex = lastHeading;
+          name = headingTitle;
+        }
       }
     }
 
