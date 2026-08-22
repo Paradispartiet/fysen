@@ -1,4 +1,4 @@
-name: TEMP Sawan current menu proof
+name: TEMP Sawan browser menu proof
 
 on:
   pull_request:
@@ -33,7 +33,7 @@ jobs:
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm --filter @fysen/menu-worker... build
 
-      - name: Restore immutable Batch 02 Sawan identity and use current first-party HTML menu
+      - name: Restore immutable Sawan identity and use current first-party rendered menu
         shell: bash
         run: |
           rm -rf /tmp/batch02
@@ -49,23 +49,23 @@ jobs:
             ...row.menuSource,
             url:'https://www.sawan.no/meny',
             sourceType:'html',
-            fetchMode:'http',
+            fetchMode:'browser',
             sourceSupport:{redirectOrigins:[],browserDataOrigins:[]},
           };
-          const plan={...source,outputDirectory:'research/sawan-current-generated',concurrency:1,restaurants:[row]};
-          await mkdir('apps/menu-worker/research/sawan-current-generated',{recursive:true});
-          await writeFile('apps/menu-worker/research/sawan-current.plan.json',JSON.stringify(plan,null,2)+'\n');
+          const plan={...source,outputDirectory:'research/sawan-browser-generated',concurrency:1,restaurants:[row]};
+          await mkdir('apps/menu-worker/research/sawan-browser-generated',{recursive:true});
+          await writeFile('apps/menu-worker/research/sawan-browser.plan.json',JSON.stringify(plan,null,2)+'\n');
           NODE
 
       - name: Fresh Sawan intake
         working-directory: apps/menu-worker
         shell: bash
-        run: node dist/index.js intake:batch research/sawan-current.plan.json | tee research/sawan-current-intake.json
+        run: node dist/index.js intake:batch research/sawan-browser.plan.json | tee research/sawan-browser-intake.json
 
       - name: Independent Sawan validation
         working-directory: apps/menu-worker
         shell: bash
-        run: node dist/index.js validate:batch research/sawan-current-generated | tee research/sawan-current-validation.json
+        run: node dist/index.js validate:batch research/sawan-browser-generated | tee research/sawan-browser-validation.json
 
       - name: Gate and summarize
         working-directory: apps/menu-worker
@@ -73,32 +73,33 @@ jobs:
         run: |
           node --input-type=module <<'NODE'
           import {readFile,writeFile} from 'node:fs/promises';
-          const intake=JSON.parse(await readFile('research/sawan-current-intake.json','utf8'));
-          const validation=JSON.parse(await readFile('research/sawan-current-validation.json','utf8'));
+          const intake=JSON.parse(await readFile('research/sawan-browser-intake.json','utf8'));
+          const validation=JSON.parse(await readFile('research/sawan-browser-validation.json','utf8'));
           const result=validation.results?.[0];
-          const generated=JSON.parse(await readFile('research/sawan-current-generated/sawan-president-harbitz-gate-oslo.json','utf8'));
+          const generated=JSON.parse(await readFile('research/sawan-browser-generated/sawan-president-harbitz-gate-oslo.json','utf8'));
           const summary={
             sourceUrl:generated.menuSource.url,
-            intake:{requested:intake.requestedCount,generated:intake.generatedCount,failed:intake.failedCount,observedItems:intake.results?.[0]?.observedItemCount,extractorVersion:intake.results?.[0]?.extractorVersion},
+            fetchMode:generated.menuSource.fetchMode,
+            intake:{requested:intake.requestedCount,generated:intake.generatedCount,failed:intake.failedCount,observedItems:intake.results?.[0]?.observedItemCount,extractorVersion:intake.results?.[0]?.extractorVersion,error:intake.results?.[0]?.error??null},
             validation:{accepted:validation.acceptedCount,failed:validation.failedCount,itemCount:result?.validation?.menu?.quality?.itemCount,extractorVersion:result?.validation?.menu?.extractorVersion,names:result?.validation?.menu?.observedDishNames??[],variants:result?.validation?.menu?.observedDishVariants??[],error:result?.validation?.menu?.error??result?.error??null},
             minimumExpectedItems:generated.menuSource.minimumExpectedItems,
           };
-          await writeFile('research/sawan-current-summary.json',JSON.stringify(summary,null,2)+'\n');
+          await writeFile('research/sawan-browser-summary.json',JSON.stringify(summary,null,2)+'\n');
           console.log(JSON.stringify(summary,null,2));
-          if(intake.requestedCount!==1||intake.generatedCount!==1||intake.failedCount!==0) throw new Error('Sawan intake failed');
-          if(validation.manifestCount!==1||validation.acceptedCount!==1||validation.failedCount!==0) throw new Error('Sawan validation failed');
-          if(summary.sourceUrl!=='https://www.sawan.no/meny') throw new Error('Sawan source URL mismatch');
+          if(intake.requestedCount!==1||intake.generatedCount!==1||intake.failedCount!==0) throw new Error('Sawan browser intake failed');
+          if(validation.manifestCount!==1||validation.acceptedCount!==1||validation.failedCount!==0) throw new Error('Sawan browser validation failed');
+          if(summary.fetchMode!=='browser') throw new Error('Sawan browser mode mismatch');
           if((summary.validation.itemCount??0)<20) throw new Error(`Sawan coverage too small: ${summary.validation.itemCount}`);
           NODE
 
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: sawan-current-menu-proof
+          name: sawan-browser-menu-proof
           path: |
-            apps/menu-worker/research/sawan-current.plan.json
-            apps/menu-worker/research/sawan-current-intake.json
-            apps/menu-worker/research/sawan-current-validation.json
-            apps/menu-worker/research/sawan-current-summary.json
-            apps/menu-worker/research/sawan-current-generated/*.json
+            apps/menu-worker/research/sawan-browser.plan.json
+            apps/menu-worker/research/sawan-browser-intake.json
+            apps/menu-worker/research/sawan-browser-validation.json
+            apps/menu-worker/research/sawan-browser-summary.json
+            apps/menu-worker/research/sawan-browser-generated/*.json
           if-no-files-found: warn
