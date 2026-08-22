@@ -2,26 +2,29 @@
 
 Dette dokumentet beskriver den permanente produksjonsmetoden for restaurantdekning. `apps/menu-worker/catalog/`, production DB og materializer-/watcher-resultatene er sannhetskilden. Tallene nedenfor er en datert kontrollmåling, ikke en parallell katalog eller en fast lanseringskvote.
 
-## Verifisert Oslo-status 2026-08-20
+## Verifisert Oslo-status 2026-08-22
 
-Siste eksakte production-reconcile etter parsermerge `d60bf00a9a8b9f785af8f4698fc8c6e5b9a0030a` og etterfølgende legacy-opprydding viser:
+Siste read-only production-proof etter parsercleanup #365, candidate-stage #394 og byte-for-byte catalog-promotion #395 bruker production revision `f42f1522e458d9e583f9cba7860679739631221a` som autoritativ katalogrevision. Run `32597768885` / artifact `9482026561` viser:
 
-- **45 canonical produksjonsmanifester** i `apps/menu-worker/catalog/`;
-- **45/45 aktive canonical restauranter** i production DB;
-- **45 aktive restaurant-rader totalt**;
-- **45 enabled menu sources**;
+- **55 canonical produksjonsmanifester** i `apps/menu-worker/catalog/`;
+- **55/55 aktive canonical restauranter** i production DB;
+- **55 aktive restaurant-rader totalt**;
+- **55 enabled menu sources**;
 - **0 inactive canonical** restauranter;
-- **0 active-not-catalog** restaurant-rader.
+- **0 active-not-catalog** restaurant-rader;
+- nøyaktig **én enabled canonical menu source per katalogrestaurant**;
+- alle fem nye Batch-02-kilder har `consecutive_failures=0` og siste snapshot på eller over manifestets minimum;
+- production search returnerer representative retter fra alle fem nye restauranter med korrekt canonical source URL.
 
-Dette er den operative restaurantproduksjonsbaselinen. Den tidligere aktive legacy-raden `rodeo-oslo` hadde ikke canonical katalogmanifest og ble derfor satt `active=false`; dens ene menu source, hours source og action ble samtidig quiescet. Raden beholdes for referanseintegritet, men inngår ikke i aktiv produksjonsdekning.
+De fem nye source-bevisene er:
 
-Confusion by Mr. Fish, Kain Neo-Filipino Bistro og Tyrkisk Kjøkken er eksplisitt kontrollert etter den siste parser-/transportoppryddingen:
+- Døgnvill Bjørvika: **35 items**, HTTP 304, siste watcher `not_modified`;
+- Døgnvill Tjuvholmen: **35 items**, HTTP 304, siste watcher `not_modified`;
+- Døgnvill Vulkan: **35 items**, HTTP 304, siste watcher `not_modified`;
+- IndiSpice: **48 items**, HTTP 304, siste watcher `not_modified`;
+- Jaipur: **44 items**, HTTP 200, siste watcher `unchanged`.
 
-- Confusion: `active=true`, source enabled, HTTP 200, `consecutive_failures=0`, siste watcher `unchanged`;
-- Kain: `active=true`, source enabled, HTTP 200, `consecutive_failures=0`, siste watcher `unchanged`;
-- Tyrkisk Kjøkken: `active=true`, source enabled, siste HTTP 304, `consecutive_failures=0`, siste watcher `not_modified`.
-
-Production-status må skilles fra rå DB-historikk: en deaktivert legacy-rad kan fortsatt eksistere, men teller ikke som aktiv restaurant. Den canonicale integritetsmålingen er derfor alltid `catalog slug -> active restaurant -> enabled menu source -> frisk watcher`, pluss eksplisitt kontroll av at ingen aktiv restaurant ligger utenfor katalogen.
+Dette er den operative restaurantproduksjonsbaselinen. Production-status må skilles fra rå DB-historikk: deaktiverte legacy-rader kan fortsatt eksistere for referanseintegritet, men teller ikke som aktive restauranter. Den canonicale integritetsmålingen er alltid `catalog slug -> active restaurant -> nøyaktig én enabled menu source -> frisk snapshot/watcher`, pluss eksplisitt kontroll av at ingen aktiv restaurant ligger utenfor katalogen.
 
 ### Oslo batch 01
 
@@ -52,6 +55,30 @@ De syv som ble promotert samlet var:
 
 Manifestene ble flyttet byte-for-byte fra staging til `catalog/`. Post-merge production proof viste at alle syv var active/enabled med fingerprint, null consecutive failures og ikke-blokkerende watcher-status.
 
+### Oslo batch 02 — cleanup og fem nye production-restauranter
+
+Batch 02 startet med 20 seed-restauranter. Etter tidligere promotion var 15 fortsatt utenfor katalogen. En fersk residualrunde mot den ferdige runtimeen ga **15 requested -> 6 generated -> 6/6 live-valid**, men output-inspeksjonen holdt alle seks igjen: Mesob hadde bare tre desserter og var derfor et source-dekningsproblem, mens Jaipur, IndiSpice og Døgnvill x3 hadde strukturell parserstøy.
+
+Permanent cleanup i PR #365 ble først merget etter A/B-isolering av regressjoner og en autoritativ sluttgate. Den generiske løsningen låser blant annet:
+
+- mat-scopet versus full-page beverage-evidence;
+- kompakte allergenkoder uten å strippe vilkårlige parentetiske ord;
+- canonical output-dedupe for speilede CTA-er, mengdefragmenter og add-on-duplikater;
+- eksakt mengdetittel som `90 GRAM HAMBURGER`;
+- smal Webflow-sanitizering av `.w-condition-invisible`, uten å forkaste legitime generiske `[hidden]`/`aria-hidden`-containere.
+
+Autoritativ pre-merge proof var #393 / run `32596872644` / artifact `9481858862` med digest `sha256:fef15609a9b0f98e381fb1127501d4c497e90b83ce2b39f6315d49cc95eba436`:
+
+- hele eksisterende catalog: **50/50 i primary serial pass**, ingen retry nødvendig;
+- fresh intake av Jaipur + IndiSpice + Døgnvill x3: **5/5**;
+- separat live revalidation av samme fem: **5/5**;
+- observed-output-gaten: **0 quality failures**;
+- Døgnvill: **35 items per lokasjon** og eksakt `90 GRAM HAMBURGER`;
+- IndiSpice: **48 items**;
+- Jaipur: **44 items**.
+
+De fem manifestene ble deretter staged i PR #394 med byte-identiske Git blobs og live candidate-gate. PR #395 flyttet dem fra `candidates/` til `catalog/` som fem rene Git-renames med **0 additions / 0 deletions / 0 content changes**. Post-merge auto-materializer ga production-baselinen 55/55/55 ovenfor. Mesob forblir fail-closed i source-dekningskøen.
+
 ### Rødlistelukkingen før og etter batch 01
 
 Følgende tidligere produksjonsfeil er lukket:
@@ -60,10 +87,10 @@ Følgende tidligere produksjonsfeil er lukket:
 - **Hrimnir:** redundant duplicate Oslo-manifest ble fjernet i PR #283; det eksisterende canonicale Hrimnir-manifestet forble publisert.
 - **La Mayor:** den kildebeviste runtime-flooren ble justert fra 17 til 16 observerte items, mens alle eksplisitte rett-/prisassertions ble beholdt.
 - **Café Sara:** ble ikke tvunget grønn. Den gamle førstpartsmenyen ga HTTP 404, og alternativene beviste ikke en komplett maskinlesbar canonical meny. Restauranten ble derfor fjernet fra aktiv katalog fail-closed i PR #287 og skal først komme tilbake når en fullverdig kilde kan bevises.
-- **Coyo:** to `NETWORK_ERROR`-watcher ble isolert som transportfeil; samme canonical PDF besto live runtime med HTTP 200 og 73 items og fikk deretter frisk production-watch.
-- **Kain / Tyrkisk / Confusion inactive drift:** source-gatene var grønne, men tidligere transportfeil hadde etterlatt dem inactive. Kain ble re-onboardet kontrollert; Confusion/Tyrkisk ble lukket gjennom permanent parserherding og etterfølgende materializer/watcher. Slutt-reconcile viser 45/45 aktive canonical restauranter.
+- **Coyo:** to `NETWORK_ERROR`-watcher ble isolert som transportfeil; samme canonical kilde besto live runtime og fikk deretter frisk production-watch.
+- **Kain / Tyrkisk / Confusion inactive drift:** source-gatene var grønne, men tidligere transportfeil hadde etterlatt dem inactive. Kain ble re-onboardet kontrollert; Confusion/Tyrkisk ble lukket gjennom permanent parserherding og etterfølgende materializer/watcher. Batch-01-reconcile viste 45/45 aktive canonical restauranter; siste production-proof 2026-08-22 viser 55/55.
 
-Som ekstern størrelsesreferanse viste Mattilsynets Smilefjes-oversikt 1 345 spisesteder i Oslo ved kontroll 2026-08-20: <https://smilefjes.mattilsynet.no/kommune/oslo/>. Dette omfatter flere typer spisesteder og er ikke Fysens canonical backlog. Baseline på 45 betyr derfor ikke «45 av alle Oslo-restauranter er ferdige»; den beskriver det nåværende verifiserte produksjonssettet.
+Som ekstern størrelsesreferanse viste Mattilsynets Smilefjes-oversikt 1 345 spisesteder i Oslo ved kontroll 2026-08-20: <https://smilefjes.mattilsynet.no/kommune/oslo/>. Dette omfatter flere typer spisesteder og er ikke Fysens canonical backlog. Baseline på 55 betyr derfor ikke «55 av alle Oslo-restauranter er ferdige»; den beskriver det nåværende verifiserte produksjonssettet.
 
 ## Produksjonslinjen
 
@@ -82,21 +109,24 @@ Restaurantarbeidet kjøres som batcher, mens hver restaurant fortsatt består el
 11. source-spesifikke `forbiddenDishNames` brukes som fail-closed regressionsperre når en konkret lekkasje er observert;
 12. bare output-rene, blocking-grønne kandidater promoteres byte-for-byte til `catalog/`;
 13. full CI, fersk `main`, merge og post-merge materializer/watcher-bevis må følges av en canonical DB-reconcile;
-14. reconcile krever at alle katalog-slugs er aktive, at canonical sources er enabled, og at ingen aktiv restaurant ligger utenfor katalogen uten en eksplisitt begrunnelse.
+14. reconcile krever at alle katalog-slugs er aktive, at canonical sources er enabled, og at ingen aktiv restaurant ligger utenfor katalogen uten en eksplisitt begrunnelse;
+15. når en parser-/extractorendring kan påvirke runtime-identiteten, kjøres en **serial full-catalog live-gate** før merge; en target-subset-gate er ikke tilstrekkelig;
+16. transportflak håndteres per source: allerede grønne primary-resultater beholdes, og bare kilder som feiler utelukkende med `transport`/`action` kan få én identisk retry; `extraction`, `menu_assertions` og `hours` kan aldri retryes bort;
+17. candidate -> catalog promotion skal være byte-for-byte når manifestet allerede er bevist; ren Git rename med uendret blob foretrekkes fremfor ny serialisering.
 
 En batch kan dermed publisere de enkle restaurantene selv om krevende kilder må videre til adapter-/parserkøen. Ingen batchkommando senker assertions, hopper over live source-gaten eller aktiverer filer i `candidates/`.
 
 ## Output-quality-porten
 
-Batch 01 viste at en kilde kan være teknisk `accepted=true` og likevel ha semantisk dårlig output. Produksjonsporten skal derfor skille mellom:
+Batcharbeidet har vist at en kilde kan være teknisk `accepted=true` og likevel ha semantisk dårlig output. Produksjonsporten skal derfor skille mellom:
 
 - **source/runtime green:** nettverk, extraction, minimum, assertions, hours og action består;
 - **output clean:** de observerte canonicale navnene er faktisk retter og ikke UI-/metadata-/drikkestøy;
 - **production active:** samme manifest er materialisert, restaurant/source er aktivert og watcher-status er frisk.
 
-Hvis en output-feil gjelder et mønster som kan forekomme hos flere restauranter, skal den fikses én gang i parser/runtime. Eksempler fra batcharbeidet er `top of page`, allergen-only labels, `Spør oss`, seksjonstitler, `stk`/`biter`-fragmenter og tydelige cocktail-/drikkebeskrivelser.
+Hvis en output-feil gjelder et mønster som kan forekomme hos flere restauranter, skal den fikses én gang i parser/runtime. Eksempler fra batcharbeidet er `top of page`, allergen-only labels, `Spør oss`, seksjonstitler, `stk`/`biter`-fragmenter, speilede CTA-er, mengdefragmenter og tydelige cocktail-/drikkebeskrivelser.
 
-Positive regresjoner er like viktige som negative: filtre for ord som `gin`, `rum`, `bourbon`, `orange` eller `vegan` må samtidig bevise at reelle rettnavn ikke filtreres bort.
+Positive regresjoner er like viktige som negative: filtre for ord som `gin`, `rum`, `bourbon`, `orange` eller `vegan` må samtidig bevise at reelle rettnavn ikke filtreres bort. Skjult DOM må også behandles etter dokumentert kildekontrakt; generiske `hidden`-attributter skal ikke antas å bety «ikke menydata».
 
 ## Kommandoer
 
@@ -116,11 +146,14 @@ Et restaurantarbeid er ikke ferdig ved grønn PR-CI. Etter merge skal produksjon
 
 1. antall unike canonical manifest-slugs;
 2. at hver canonical restaurant er `active=true`;
-3. at forventet menu source er enabled;
-4. at watcher har fingerprint og `consecutive_failures=0`;
-5. at siste watcher-outcome er akseptert (`changed`, `unchanged` eller `not_modified`);
+3. at nøyaktig én forventet canonical menu source er enabled;
+4. at siste snapshot møter manifestets minimum og har extractor-identitet;
+5. at watcher har `consecutive_failures=0` og en ikke-blokkerende status;
 6. at det ikke finnes active-not-catalog drift;
-7. at legacy-rader uten katalogdekning er eksplisitt quiescet dersom de ikke lenger er canonical.
+7. at representative retter kan finnes gjennom production search med korrekt canonical source URL;
+8. at legacy-rader uten katalogdekning er eksplisitt quiescet dersom de ikke lenger er canonical.
+
+Production-proofen skal som hovedregel være read-only. Materialisering skal skje gjennom den permanente, serialiserte `Materialize Fysen production catalog`-workflowen, ikke gjennom direkte SQL-aktivering eller manuell snapshot-skriving.
 
 Web/API-deploy er en separat releaseflate. Restaurantmaterialisering og DB/watcher-proof skal ikke brukes som grunn til å bryte den låste Vercel-regelen på maksimalt to ordinære produksjonsdeployvinduer per døgn.
 
