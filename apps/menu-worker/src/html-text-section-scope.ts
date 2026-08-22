@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v6";
+export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v5";
 
 const SECTION_COUNT_SUFFIX = /\s*\(\s*\d{1,3}\s*\)\s*$/u;
 const BEVERAGE_SECTION_LABEL =
@@ -35,8 +35,6 @@ const EXPLICIT_TRAILING_PRICE =
   /\s+(?:(?:nok|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)\s*$/iu;
 const BARE_DASH_TRAILING_PRICE = /\s+[-–—]\s*([1-9]\d{1,3})\s*$/u;
 const TRAILING_LEADER = /\s*_{3,}\s*$/u;
-const TRAILING_ITEM_ALLERGEN_CODES =
-  /\s+\((?:[\p{L}\d]{1,5}\s*(?:[,/+ ]\s*)?){1,20}\)$/u;
 
 type MenuSectionState = "unknown" | "food" | "beverage";
 
@@ -150,10 +148,7 @@ function cleanOutputArtifactName(item: MenuObservedItem): MenuObservedItem {
 }
 
 function lineReferencesItem(line: string, itemName: string): boolean {
-  const evidenceLine = normalizeLine(line)
-    .replace(TRAILING_ITEM_ALLERGEN_CODES, "")
-    .trim();
-  const normalizedLine = normalizeDishName(evidenceLine);
+  const normalizedLine = normalizeDishName(line);
   const normalizedName = normalizeDishName(itemName);
   if (!normalizedName || !normalizedLine.startsWith(normalizedName)) return false;
   if (normalizedLine.length === normalizedName.length) return true;
