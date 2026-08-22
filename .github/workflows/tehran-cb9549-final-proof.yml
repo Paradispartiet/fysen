@@ -1,0 +1,78 @@
+name: Tehran final cleanup proof
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Isolate Tehran manifest
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          rm -rf research/tehran-final
+          mkdir -p research/tehran-final
+          node --input-type=module <<'NODE'
+          import { readdir, readFile, writeFile } from 'node:fs/promises';
+          let found = 0;
+          for (const file of (await readdir('catalog')).filter((name) => name.endsWith('.json'))) {
+            const raw = await readFile(`catalog/${file}`, 'utf8');
+            const manifest = JSON.parse(raw);
+            if (manifest.restaurant.slug !== 'tehran-spiseri-okern-oslo') continue;
+            await writeFile(`research/tehran-final/${file}`, raw);
+            found += 1;
+          }
+          if (found !== 1) throw new Error(`Expected Tehran manifest, found ${found}`);
+          NODE
+      - name: Tehran live pass 1
+        working-directory: apps/menu-worker
+        shell: bash
+        run: node dist/index.js validate:batch research/tehran-final | tee research/tehran-final-pass1.json
+      - name: Tehran live pass 2
+        working-directory: apps/menu-worker
+        shell: bash
+        run: node dist/index.js validate:batch research/tehran-final | tee research/tehran-final-pass2.json
+      - name: Gate both passes
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const one = JSON.parse(await readFile('research/tehran-final-pass1.json','utf8'));
+          const two = JSON.parse(await readFile('research/tehran-final-pass2.json','utf8'));
+          const compact = (r) => ({acceptedCount:r.acceptedCount,failedCount:r.failedCount,result:(r.results??[])[0]});
+          const summary = {head:'cb9549e45f29042511525b00a45d93066d5649da',pass1:compact(one),pass2:compact(two)};
+          await writeFile('research/tehran-final-summary.json', JSON.stringify(summary,null,2)+'\n');
+          if (one.manifestCount !== 1 || one.acceptedCount !== 1 || one.failedCount !== 0) throw new Error('Tehran pass 1 failed');
+          if (two.manifestCount !== 1 || two.acceptedCount !== 1 || two.failedCount !== 0) throw new Error('Tehran pass 2 failed');
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tehran-cb9549-final-proof
+          path: |
+            apps/menu-worker/research/tehran-final-pass1.json
+            apps/menu-worker/research/tehran-final-pass2.json
+            apps/menu-worker/research/tehran-final-summary.json
+          if-no-files-found: error
