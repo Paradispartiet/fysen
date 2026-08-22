@@ -1,0 +1,162 @@
+name: TEMP Batch 02 DOM and scope probe
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch02-dom-scope-probe.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Capture scoped text and minimal DOM evidence
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research/dom-scope-probe
+          node --input-type=module <<'NODE'
+          import { writeFile } from 'node:fs/promises';
+          import { load } from 'cheerio';
+          import {
+            fetchMenuSource,
+            normalizeHtmlPriceNotation,
+          } from './dist/menu-source-runtime.js';
+          import {
+            extractHtmlVisibleText,
+            stripExplicitlyHiddenHtmlContent,
+          } from './dist/html-extractor.js';
+          import { normalizeHtmlHeadingLineBreaks } from './dist/html-heading-normalizer.js';
+          import { extractScopedHtmlMenu } from './dist/html-source-extractor.js';
+
+          const targets = [
+            {
+              name: 'mesob',
+              url: 'https://mesobrestaurant.no/menu/',
+              patterns: ['KITFO /', 'VEGAN –', 'Strawberry cheesecace', 'Drikke', 'Dessert'],
+            },
+            {
+              name: 'sawan',
+              url: 'https://www.sawan.no/meny',
+              patterns: ['Thai sashimi med laks', 'Money bags (2 stk.)', 'The Chef’s Chicken Salad', 'Sawan’s eksklusive lobster bun', 'SAWAN RAW'],
+            },
+            {
+              name: 'golden-chimp',
+              url: 'https://www.thegoldenchimp.no/menu',
+              patterns: ['Pork Gyoza with Japanese ketchup', 'Grilled Chicken Yakiniku', 'Grilled Seabass', 'Miso cookie', 'PROTEINS'],
+            },
+            {
+              name: 'kverneriet-majorstua',
+              url: 'https://kverneriet.com/majorstua/menu/',
+              patterns: ['Small Dishes & Sharing Plates', 'Triple Chili Cheese', 'Classics', 'The Godfather', 'Milkshakes'],
+            },
+          ];
+
+          const normalize = (value) => value.normalize('NFKC').replace(/\s+/gu, ' ').trim();
+          const results = [];
+
+          for (const target of targets) {
+            try {
+              const fetched = await fetchMenuSource({
+                url: target.url,
+                sourceType: 'html',
+                fetchMode: 'http',
+                userAgent: process.env.FYSEN_MENU_BOT_USER_AGENT ?? 'FysenMenuBot/0.1',
+                etag: null,
+                lastModified: null,
+                sourceSupport: { redirectOrigins: [], browserDataOrigins: [] },
+              });
+              if (fetched.kind !== 'content') {
+                results.push({ name: target.name, fetchKind: fetched.kind });
+                continue;
+              }
+              const normalizedHtml = normalizeHtmlPriceNotation(
+                normalizeHtmlHeadingLineBreaks(fetched.body),
+              );
+              const extracted = extractScopedHtmlMenu(normalizedHtml);
+              const recoveryHtml = stripExplicitlyHiddenHtmlContent(normalizedHtml);
+              const fullVisibleText = extractHtmlVisibleText(recoveryHtml);
+              await writeFile(`research/dom-scope-probe/${target.name}-scoped.txt`, extracted.visibleText);
+              await writeFile(`research/dom-scope-probe/${target.name}-full.txt`, fullVisibleText);
+
+              const $ = load(recoveryHtml);
+              const snippets = [];
+              for (const pattern of target.patterns) {
+                const matches = $('body *').toArray().filter((element) =>
+                  normalize($(element).text()).includes(pattern),
+                );
+                const smallest = matches.filter((element) =>
+                  !$(element).children().toArray().some((child) =>
+                    normalize($(child).text()).includes(pattern),
+                  ),
+                ).slice(0, 5);
+                snippets.push({
+                  pattern,
+                  matches: smallest.map((element) => {
+                    const node = $(element);
+                    const parent = node.parent();
+                    return {
+                      tag: element.tagName,
+                      id: node.attr('id') ?? null,
+                      className: node.attr('class') ?? null,
+                      text: normalize(node.text()).slice(0, 1000),
+                      html: (node.html() ?? '').slice(0, 4000),
+                      parentTag: parent.get(0)?.tagName ?? null,
+                      parentId: parent.attr('id') ?? null,
+                      parentClassName: parent.attr('class') ?? null,
+                      parentText: normalize(parent.text()).slice(0, 2000),
+                      parentHtml: (parent.html() ?? '').slice(0, 8000),
+                    };
+                  }),
+                });
+              }
+              await writeFile(
+                `research/dom-scope-probe/${target.name}-snippets.json`,
+                JSON.stringify({ name: target.name, url: target.url, snippets }, null, 2) + '\n',
+              );
+              results.push({
+                name: target.name,
+                status: fetched.status,
+                rawSha256: fetched.rawSha256,
+                scopedBytes: Buffer.byteLength(extracted.visibleText),
+                fullBytes: Buffer.byteLength(fullVisibleText),
+              });
+            } catch (error) {
+              results.push({
+                name: target.name,
+                error: error instanceof Error ? (error.stack ?? error.message) : String(error),
+              });
+            }
+          }
+          await writeFile(
+            'research/dom-scope-probe/summary.json',
+            JSON.stringify({ mainRevision: '28e70a5b5f2fa99206e93fa477056ef649c51e62', results }, null, 2) + '\n',
+          );
+          console.log(JSON.stringify(results, null, 2));
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-dom-scope-probe
+          path: apps/menu-worker/research/dom-scope-probe
+          if-no-files-found: error
