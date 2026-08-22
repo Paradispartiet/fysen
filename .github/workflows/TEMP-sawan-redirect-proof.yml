@@ -42,7 +42,7 @@ jobs:
           node --input-type=module <<'NODE'
           import {mkdir,readFile,writeFile} from 'node:fs/promises';
           const source=JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json','utf8'));
-          const restaurants=source.restaurants.filter((x)=>x.restaurant.slug==='sawan-frogner-oslo');
+          const restaurants=source.restaurants.filter((x)=>x.restaurant.slug==='sawan-president-harbitz-gate-oslo');
           if(restaurants.length!==1) throw new Error(`Sawan rows=${restaurants.length}`);
           const row=structuredClone(restaurants[0]);
           row.menuSource.sourceSupport={redirectOrigins:['https://www.sawan.no'],browserDataOrigins:[]};
@@ -70,7 +70,7 @@ jobs:
           const intake=JSON.parse(await readFile('research/sawan-redirect-intake.json','utf8'));
           const validation=JSON.parse(await readFile('research/sawan-redirect-validation.json','utf8'));
           const result=validation.results?.[0];
-          const generated=JSON.parse(await readFile('research/sawan-redirect-generated/sawan-frogner-oslo.json','utf8'));
+          const generated=JSON.parse(await readFile('research/sawan-redirect-generated/sawan-president-harbitz-gate-oslo.json','utf8'));
           const summary={
             intake:{requested:intake.requestedCount,generated:intake.generatedCount,failed:intake.failedCount,observedItems:intake.results?.[0]?.observedItemCount,extractorVersion:intake.results?.[0]?.extractorVersion},
             validation:{accepted:validation.acceptedCount,failed:validation.failedCount,itemCount:result?.validation?.menu?.quality?.itemCount,extractorVersion:result?.validation?.menu?.extractorVersion,names:result?.validation?.menu?.observedDishNames??[],error:result?.validation?.menu?.error??result?.error??null},
