@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "new-delhi-tjuvholmen-oslo",
+    "name": "New Delhi Oslo",
+    "websiteUrl": "https://newdelhi.no/",
+    "address": "Tjuvholmen allé 2, 0252 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.906619,
+    "longitude": 10.719954
+  },
+  "menuSource": {
+    "url": "https://newdelhi.no/en/new-delhi-restaurant-english-menu/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 81,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "Batch 02 locks current menu identity first. Kitchen-scoped hours remain unknown until separately verified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Amritsari Tikki",
+      "Tandoori Gobi VEG",
+      "Tandoori Lamb Chops",
+      "★ King Chicken RECOMMENDED",
+      "Prawn Biryani",
+      "Fluffy Naan",
+      "Green Salad Mix",
+      "Murgh Malai Chicken Tikka"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Amritsari Tikki",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Tandoori Gobi VEG",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Tandoori Lamb Chops",
+        "priceMinor": 36900
+      },
+      {
+        "name": "★ King Chicken RECOMMENDED",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Prawn Biryani",
+        "priceMinor": 30900
+      },
+      {
+        "name": "Fluffy Naan",
+        "priceMinor": 5800
+      },
+      {
+        "name": "Green Salad Mix",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Murgh Malai Chicken Tikka",
+        "priceMinor": 14900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
