@@ -1,0 +1,82 @@
+name: TEMP Batch 02 text v5 proof
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/TEMP-batch02-text-v5-proof.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+
+      - name: Restore only text section scope from exact base main
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          git fetch origin "$BASE_SHA" --depth=1
+          git show "$BASE_SHA:apps/menu-worker/src/html-text-section-scope.ts" > apps/menu-worker/src/html-text-section-scope.ts
+          git diff --check
+          git diff -- apps/menu-worker/src/html-text-section-scope.ts
+
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Isolate Gandhi and Habibi manifests
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          rm -rf research/text-v5-catalog
+          mkdir -p research/text-v5-catalog
+          node --input-type=module <<'NODE'
+          import { readdir, readFile, copyFile } from 'node:fs/promises';
+          const targets = new Set([
+            '1947-gandhi-majorstuen-oslo',
+            'habibi-mollergata-oslo',
+          ]);
+          for (const file of (await readdir('catalog')).filter((name) => name.endsWith('.json'))) {
+            const manifest = JSON.parse(await readFile(`catalog/${file}`, 'utf8'));
+            if (targets.has(manifest.restaurant.slug)) {
+              await copyFile(`catalog/${file}`, `research/text-v5-catalog/${file}`);
+              targets.delete(manifest.restaurant.slug);
+            }
+          }
+          if (targets.size) throw new Error(`Missing targets: ${[...targets].join(', ')}`);
+          NODE
+
+      - name: Validate isolated regression pair
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/text-v5-catalog | tee research/text-v5-proof.json
+          status=${PIPESTATUS[0]}
+          echo "text-v5 exit=${status}"
+          exit 0
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-text-v5-proof
+          path: apps/menu-worker/research/text-v5-proof.json
+          if-no-files-found: error
