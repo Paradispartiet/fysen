@@ -19,7 +19,7 @@ describe("extractScopedHtmlMenu", () => {
     `;
 
     const result = extractScopedHtmlMenu(html);
-    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v17");
+    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v18");
     expect(result.items.map((item) => item.name)).toEqual(["Falafel", "Bakalawa"]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([9800, 12900]);
     expect(result.visibleText).not.toContain("Husets Cabernet");
@@ -284,6 +284,27 @@ describe("extractScopedHtmlMenu", () => {
     expect(result.items.map((item) => item.priceMinor)).toEqual([12500, 25900, 25900]);
     expect(result.items.some((item) => /^(?:Kylling|Biff|Reker|Ris)$/u.test(item.name))).toBe(false);
     expect(result.items.some((item) => /Rice Bowl since/iu.test(item.name))).toBe(false);
+  });
+
+  it("preserves an explicit leading quantity unit instead of treating it as a menu index", () => {
+    const html = `
+      <html><body>
+        <h2>BURGERS</h2>
+        <p>90 GRAM HAMBURGER</p>
+        <p>For kids and smaller appetites.</p>
+        <p>139 kr</p>
+        <p>1 Satay</p>
+        <p>Chicken satay with peanut sauce.</p>
+        <p>125 kr</p>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual([
+      "90 GRAM HAMBURGER",
+      "Satay",
+    ]);
+    expect(result.items.map((item) => item.priceMinor)).toEqual([13900, 12500]);
   });
 
   it("does not treat an extras label as a block boundary on an unnumbered menu", () => {
