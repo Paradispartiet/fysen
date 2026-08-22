@@ -4,10 +4,12 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v13";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v14";
 
 const PRICE_LINE =
   /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
+const INLINE_PRICE_AT_END =
+  /\s+(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)?)$/iu;
 const DESCRIPTION_LEAD =
   /^(?:serveres?|servert|served|with|kan\s+fås|can\s+be|blandet|mixed|godt\s+krydret|well\s+seasoned|marinert|marinated|grillet|grilled|bakt|baked|braisert|braised|tilberedt|prepared|toppet|topped|inneholder|contains?|inkludert|including|(?:hel|gylden)?fritert|sprøstekt|woket|dampet|mini[- ]mezah|ekstra|extra|pr\.?\s*person|per\s+person)\b/iu;
 const PRICE_METADATA_LEAD = /^(?:pr\.?\s*person|per\s+person)\b/iu;
@@ -233,6 +235,35 @@ function looksLikeDirectlyPricedObservedTitle(value: string): boolean {
   return !/^(?:serveres?|served|with|med|contains?|inneholder|allergener?|allergens?)\b/iu.test(
     line,
   );
+}
+
+function sourceExcerptInlinePricesObservedName(
+  item: MenuObservedItem,
+): boolean {
+  const sourceExcerpt = item.sourceExcerpt?.trim() ?? "";
+  if (!sourceExcerpt) return false;
+
+  const current = normalizeVisibleLine(item.name);
+  const foldedCurrent = current.toLocaleLowerCase("nb-NO");
+  const segments = sourceExcerpt
+    .split(SOURCE_EXCERPT_SEPARATOR)
+    .map(normalizeVisibleLine)
+    .filter(Boolean);
+
+  for (const segment of segments) {
+    if (!INLINE_PRICE_AT_END.test(segment)) continue;
+    const titlePart = segment.replace(INLINE_PRICE_AT_END, "").trim();
+    const foldedTitlePart = titlePart.toLocaleLowerCase("nb-NO");
+    if (foldedTitlePart === foldedCurrent) return true;
+
+    if (foldedTitlePart.startsWith(`${foldedCurrent} (`)) {
+      const suffix = titlePart.slice(current.length).trim();
+      const match = suffix.match(PARENTHETICAL_QUALIFIER);
+      if (match?.[1] && looksLikeAllergenQualifier(match[1])) return true;
+    }
+  }
+
+  return false;
 }
 
 function sourceExcerptDirectlyPricesObservedName(
@@ -533,8 +564,9 @@ export function recoverDescriptionNamedHtmlItems(
     const position = item.position;
     const forwardRecovery = recoverForwardTitleFromSourceExcerpt(item);
     const directlyPricedObservedName =
-      looksLikeDirectlyPricedObservedTitle(item.name) &&
-      sourceExcerptDirectlyPricesObservedName(item);
+      sourceExcerptInlinePricesObservedName(item) ||
+      (looksLikeDirectlyPricedObservedTitle(item.name) &&
+        sourceExcerptDirectlyPricesObservedName(item));
     const descriptionRecovery =
       !forwardRecovery &&
       !directlyPricedObservedName &&
