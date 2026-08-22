@@ -1,0 +1,44 @@
+name: TEMP Gandhi scope v5 proof
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Isolate Gandhi
+        working-directory: apps/menu-worker
+        run: |
+          rm -rf research/gandhi-scope-v5
+          mkdir -p research/gandhi-scope-v5
+          cp catalog/1947-gandhi-majorstuen-oslo.json research/gandhi-scope-v5/
+      - name: Validate Gandhi on text-section-scope v5
+        working-directory: apps/menu-worker
+        run: node dist/index.js validate:batch research/gandhi-scope-v5 | tee research/gandhi-scope-v5-proof.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gandhi-scope-v5-proof
+          path: apps/menu-worker/research/gandhi-scope-v5-proof.json
+          if-no-files-found: warn
