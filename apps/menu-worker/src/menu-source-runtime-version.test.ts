@@ -43,6 +43,7 @@ describe("HTML runtime extractor version", () => {
       HTML_OUTPUT_CANONICALIZER_VERSION,
     ].join("+");
 
+    expect(HTML_HEADING_NORMALIZER_VERSION).toBe("heading-v3");
     expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v8");
     expect(HTML_NON_DISH_FILTER_VERSION).toBe("non-dish-v8");
     expect(HTML_BEVERAGE_FILTER_VERSION).toBe("beverage-v9");
@@ -60,7 +61,7 @@ describe("HTML runtime extractor version", () => {
       "embedded-menu-json-v2",
     );
     expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v6");
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v1");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v2");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
     expect(
