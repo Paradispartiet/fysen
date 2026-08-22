@@ -1,0 +1,53 @@
+name: TEMP document safe materializer degradation
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/TEMP-add-materializer-policy-doc.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.event.pull_request.head.ref == 'agent/restaurant-production-56-docs'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          persist-credentials: true
+      - name: Document blocking versus nonblocking refresh failures
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('docs/restaurant-production.md')
+          text = p.read_text()
+          old = 'Canonical `onboard:catalog` publiserte deretter New Delhi med første watch `changed` 81 og andre watch `unchanged` 81. En samtidig Habibi-refresh ble quarantined, men refresh-sikkerheten beholdt siste gyldige published coverage. Read-only #409 beviste deretter **56 active / 56 enabled**, null drift og korrekt New Delhi production-search.'
+          new = 'Canonical `onboard:catalog` publiserte deretter New Delhi med første watch `changed` 81 og andre watch `unchanged` 81. En samtidig Habibi-refresh ble quarantined, men refresh-sikkerheten beholdt siste gyldige published coverage. PR #411 skilte deretter permanent mellom `failedCount` og `blockingFailedCount`: en eksplisitt extractor-refresh-feil med bevist safe-fallback-restore for en allerede publisert restaurant forblir synlig source-health-telemetri, men blokkerer ikke hele catalog-materializeringen; nye restauranter, manifest-/quality-feil og refresh uten trygg restore er fortsatt blocking/fail-closed. Read-only #409 beviste deretter **56 active / 56 enabled**, null drift og korrekt New Delhi production-search.'
+          if old not in text:
+            raise SystemExit('missing restaurant materializer policy anchor')
+          text = text.replace(old, new, 1)
+          p.write_text(text)
+
+          p = Path('docs/fysen-oslo-v1-closeout.md')
+          text = p.read_text()
+          old = 'Production-proof #409 / run `32600667247` / artifact `9483248543` beviser **56 active / 56 enabled**, null drift, 81-item New Delhi-snapshot og søketreff for `Mixed Ice Cream` 129 kr og `Murgh Malai Chicken Tikka` 149 kr fra korrekt canonical source.'
+          new = old + ' PR #411 låser samtidig at en trygg refresh-degradering på en allerede publisert restaurant fortsatt rapporteres som source-health-feil, men ikke lenger gjør hele catalog-materializeringen blokkerende når siste manifest-valide coverage er eksplisitt restaurert.'
+          if old not in text:
+            raise SystemExit('missing closeout materializer policy anchor')
+          text = text.replace(old, new, 1)
+          p.write_text(text)
+          PY
+          git diff --check
+      - name: Commit permanent policy documentation
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- docs/restaurant-production.md docs/fysen-oslo-v1-closeout.md
+          git commit -m "Document safe catalog refresh degradation"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
