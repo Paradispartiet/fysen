@@ -1,10 +1,9 @@
 name: One-shot Matlyst production release 2026-08-22
 
 on:
-  push:
-    branches: [main]
+  pull_request:
     paths:
-      - .github/workflows/one-shot-matlyst-production-2026-08-22.yml
+      - .github/deploy-now-matlyst-2026-08-22
 
 permissions:
   contents: read
@@ -19,10 +18,12 @@ env:
 
 jobs:
   deploy-web:
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      SOURCE_SHA: ${{ github.event.pull_request.base.sha }}
     steps:
       - name: Require Vercel token
         shell: bash
@@ -32,12 +33,26 @@ jobs:
             echo "::error title=Missing VERCEL_TOKEN::Repository secret VERCEL_TOKEN is required."
             exit 1
           fi
+          if [[ -z "${SOURCE_SHA:-}" ]]; then
+            echo "::error title=Missing source SHA::The pull request base SHA is required."
+            exit 1
+          fi
 
       - name: Checkout locked main source
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ env.SOURCE_SHA }}
           fetch-depth: 1
+
+      - name: Verify locked source
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual_sha="$(git rev-parse HEAD)"
+          if [[ "$actual_sha" != "$SOURCE_SHA" ]]; then
+            echo "Locked source $actual_sha does not match requested main SHA $SOURCE_SHA" >&2
+            exit 1
+          fi
 
       - name: pnpm
         uses: pnpm/action-setup@v4
@@ -55,17 +70,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          source_sha="$(git rev-parse HEAD)"
-          if [[ "$source_sha" != "$GITHUB_SHA" ]]; then
-            echo "Locked source $source_sha does not match workflow SHA $GITHUB_SHA" >&2
-            exit 1
-          fi
           rm -rf .vercel
           pnpm dlx vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
           pnpm dlx vercel@latest build --prod --token="$VERCEL_TOKEN"
           deployment_url="$(
             pnpm dlx vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN" \
-              --meta "fysenSourceSha=$source_sha" \
+              --meta "fysenSourceSha=$SOURCE_SHA" \
               --meta "fysenReleaseMode=manual-matlyst-restore-2026-08-22"
           )"
           echo "deployment_url=$deployment_url" >> "$GITHUB_OUTPUT"
@@ -78,7 +88,7 @@ jobs:
           for attempt in $(seq 1 24); do
             if curl --fail --silent --show-error --location --max-time 20 \
               'https://fysen.vercel.app/' >/tmp/fysen-home.html; then
-              echo "Fysen production alias is reachable for $GITHUB_SHA"
+              echo "Fysen production alias is reachable after release of $SOURCE_SHA"
               exit 0
             fi
             echo "Waiting for production alias ($attempt/24)"
@@ -92,6 +102,6 @@ jobs:
           {
             echo '## One-shot Matlyst production release'
             echo
-            echo "- Source: \`$GITHUB_SHA\`"
+            echo "- Source: \`$SOURCE_SHA\`"
             echo '- Deployment: `${{ steps.deploy.outputs.deployment_url }}`'
           } >> "$GITHUB_STEP_SUMMARY"
