@@ -373,18 +373,18 @@ describe("plain-text HTML section scoping", () => {
       item("House Soda", 2, 5500),
     ];
     const scopedVisibleText = `
-      Chef Selection
-      House Special
+      Vin
+      House Special (M, E, HV, F)
       249
     `;
     const fullVisibleText = `
-      Chef Selection
-      House Special
+      Vin
+      House Special (M, E, HV, F)
       249
       Drikke
       House Special
       79
-      House Soda
+      House Soda (M)
       55
     `;
 

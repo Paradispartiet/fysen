@@ -96,7 +96,9 @@ describe("Batch 02 structural output cleanup", () => {
       55
     `;
     expect(
-      filterPlainTextBeverageSectionItems(items, visibleText).map((entry) => entry.name),
+      filterPlainTextBeverageSectionItems(items, visibleText, {
+        matchTrailingAllergenCodes: true,
+      }).map((entry) => entry.name),
     ).toEqual(["Kulfi"]);
   });
 

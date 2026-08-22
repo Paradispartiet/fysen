@@ -149,10 +149,15 @@ function cleanOutputArtifactName(item: MenuObservedItem): MenuObservedItem {
   };
 }
 
-function lineReferencesItem(line: string, itemName: string): boolean {
-  const evidenceLine = normalizeLine(line)
-    .replace(TRAILING_ITEM_ALLERGEN_CODES, "")
-    .trim();
+function lineReferencesItem(
+  line: string,
+  itemName: string,
+  matchTrailingAllergenCodes = false,
+): boolean {
+  const normalizedEvidenceLine = normalizeLine(line);
+  const evidenceLine = matchTrailingAllergenCodes
+    ? normalizedEvidenceLine.replace(TRAILING_ITEM_ALLERGEN_CODES, "").trim()
+    : normalizedEvidenceLine;
   const normalizedLine = normalizeDishName(evidenceLine);
   const normalizedName = normalizeDishName(itemName);
   if (!normalizedName || !normalizedLine.startsWith(normalizedName)) return false;
@@ -165,6 +170,7 @@ function sectionEvidenceForItem(
   item: MenuObservedItem,
   lines: readonly string[],
   states: readonly MenuSectionState[],
+  matchTrailingAllergenCodes = false,
 ): ItemSectionEvidence {
   const evidence: ItemSectionEvidence = {
     hasFoodOccurrence: false,
@@ -174,7 +180,10 @@ function sectionEvidenceForItem(
     const state = states[index] ?? "unknown";
     if (state === "unknown") continue;
     const line = lines[index] ?? "";
-    if (!lineReferencesItem(line, item.name)) continue;
+    if (
+      !lineReferencesItem(line, item.name, matchTrailingAllergenCodes)
+    )
+      continue;
     if (state === "food") evidence.hasFoodOccurrence = true;
     if (state === "beverage") evidence.hasBeverageOccurrence = true;
     if (evidence.hasFoodOccurrence && evidence.hasBeverageOccurrence) break;
@@ -182,9 +191,14 @@ function sectionEvidenceForItem(
   return evidence;
 }
 
+interface BeverageSectionFilterOptions {
+  readonly matchTrailingAllergenCodes?: boolean;
+}
+
 export function filterPlainTextBeverageSectionItems(
   items: readonly MenuObservedItem[],
   visibleText: string,
+  options: BeverageSectionFilterOptions = {},
 ): readonly MenuObservedItem[] {
   if (items.length === 0) return items;
   const cleanedItems = items
@@ -201,7 +215,12 @@ export function filterPlainTextBeverageSectionItems(
 
   const states = sectionStateByPosition(lines);
   return cleanedItems.filter((item) => {
-    const evidence = sectionEvidenceForItem(item, lines, states);
+    const evidence = sectionEvidenceForItem(
+      item,
+      lines,
+      states,
+      options.matchTrailingAllergenCodes ?? false,
+    );
     if (!evidence.hasBeverageOccurrence) return true;
     return evidence.hasFoodOccurrence;
   });
@@ -222,7 +241,11 @@ export function filterHtmlBeverageSectionItemsWithScopedProvenance(
   const fullPageRecoveryItems: MenuObservedItem[] = [];
 
   for (const item of items) {
-    if (scopedLines.some((line) => lineReferencesItem(line, item.name))) {
+    if (
+      scopedLines.some((line) =>
+        lineReferencesItem(line, item.name, true),
+      )
+    ) {
       scopedItems.push(item);
     } else {
       fullPageRecoveryItems.push(item);
@@ -236,6 +259,7 @@ export function filterHtmlBeverageSectionItemsWithScopedProvenance(
   const fullPageFiltered = filterPlainTextBeverageSectionItems(
     fullPageRecoveryItems,
     fullVisibleText,
+    { matchTrailingAllergenCodes: true },
   );
 
   const unique = new Map<string, MenuObservedItem>();
