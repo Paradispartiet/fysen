@@ -1,0 +1,85 @@
+name: Catalog three main health proof
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: bd61619e62ae8647e96708e8c18cadec3a809c54
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Isolate exact three catalog manifests
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          rm -rf research/catalog-three-main
+          mkdir -p research/catalog-three-main
+          node --input-type=module <<'NODE'
+          import {readdir,readFile,writeFile} from 'node:fs/promises';
+          const targets=new Set(['1947-gandhi-majorstuen-oslo','coyo-sorenga-oslo','lahori-dera-gronland-oslo']);
+          let found=0;
+          for(const file of (await readdir('catalog')).filter((x)=>x.endsWith('.json'))){
+            const raw=await readFile(`catalog/${file}`,'utf8');
+            const m=JSON.parse(raw);
+            if(!targets.has(m.restaurant.slug)) continue;
+            await writeFile(`research/catalog-three-main/${file}`,raw);
+            found++;
+          }
+          if(found!==3) throw new Error(`Expected 3 manifests, got ${found}`);
+          NODE
+      - name: Validate pass 1
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/catalog-three-main | tee research/catalog-three-main-pass1.json
+          exit 0
+      - name: Validate pass 2
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/catalog-three-main | tee research/catalog-three-main-pass2.json
+          exit 0
+      - name: Summarize
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const p1=JSON.parse(await readFile('research/catalog-three-main-pass1.json','utf8'));
+          const p2=JSON.parse(await readFile('research/catalog-three-main-pass2.json','utf8'));
+          const compact=(r)=>({slug:r.slug,accepted:r.accepted,failureFamilies:r.failureFamilies??[],menuAccepted:r.validation?.menu?.accepted??null,menuStatus:r.validation?.menu?.httpStatus??null,menuItems:r.validation?.menu?.quality?.itemCount??null,menuError:r.validation?.menu?.error??null,hoursAccepted:r.validation?.hours?.accepted??null,hoursStatus:r.validation?.hours?.httpStatus??null,hoursError:r.validation?.hours?.error??null,actions:(r.validation?.actions??[]).map((a)=>({type:a.type,accepted:a.accepted,httpStatus:a.httpStatus,error:a.error??null}))});
+          const summary={main:'bd61619e62ae8647e96708e8c18cadec3a809c54',pass1:{accepted:p1.acceptedCount,failed:p1.failedCount,results:(p1.results??[]).map(compact)},pass2:{accepted:p2.acceptedCount,failed:p2.failedCount,results:(p2.results??[]).map(compact)}};
+          await writeFile('research/catalog-three-main-health-summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: catalog-three-main-health-proof
+          path: |
+            apps/menu-worker/research/catalog-three-main-pass1.json
+            apps/menu-worker/research/catalog-three-main-pass2.json
+            apps/menu-worker/research/catalog-three-main-health-summary.json
+          if-no-files-found: error
