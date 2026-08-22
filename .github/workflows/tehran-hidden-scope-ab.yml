@@ -1,0 +1,98 @@
+name: Tehran hidden scope A B
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - name: Narrow hidden sanitization to proven Webflow class
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/menu-worker/src/html-extractor.ts')
+          s=p.read_text()
+          old='$("[hidden], [aria-hidden=\'true\'], .w-condition-invisible").remove();'
+          new='$(".w-condition-invisible").remove();'
+          if old not in s:
+              raise SystemExit('hidden sanitizer anchor missing')
+          p.write_text(s.replace(old,new,1))
+          PY
+          git diff --check
+          grep -n "w-condition-invisible" apps/menu-worker/src/html-extractor.ts
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Isolate Tehran manifest
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          rm -rf research/tehran-hidden-ab
+          mkdir -p research/tehran-hidden-ab
+          node --input-type=module <<'NODE'
+          import { readdir, readFile, writeFile } from 'node:fs/promises';
+          let found = 0;
+          for (const file of (await readdir('catalog')).filter((name) => name.endsWith('.json'))) {
+            const raw = await readFile(`catalog/${file}`,'utf8');
+            const manifest = JSON.parse(raw);
+            if (manifest.restaurant.slug !== 'tehran-spiseri-okern-oslo') continue;
+            await writeFile(`research/tehran-hidden-ab/${file}`,raw);
+            found += 1;
+          }
+          if (found !== 1) throw new Error(`Expected 1 Tehran manifest, found ${found}`);
+          NODE
+      - name: Tehran validation pass 1
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/tehran-hidden-ab | tee research/tehran-hidden-ab-pass1.json
+          exit 0
+      - name: Tehran validation pass 2
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/tehran-hidden-ab | tee research/tehran-hidden-ab-pass2.json
+          exit 0
+      - name: Gate both passes
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const a=JSON.parse(await readFile('research/tehran-hidden-ab-pass1.json','utf8'));
+          const b=JSON.parse(await readFile('research/tehran-hidden-ab-pass2.json','utf8'));
+          const summary={pass1:{acceptedCount:a.acceptedCount,itemCount:a.results?.[0]?.validation?.menu?.quality?.itemCount,error:a.results?.[0]?.validation?.menu?.error},pass2:{acceptedCount:b.acceptedCount,itemCount:b.results?.[0]?.validation?.menu?.quality?.itemCount,error:b.results?.[0]?.validation?.menu?.error}};
+          await writeFile('research/tehran-hidden-ab-summary.json',JSON.stringify(summary,null,2)+'\n');
+          if(a.acceptedCount!==1||a.failedCount!==0) throw new Error('Tehran pass1 failed');
+          if(b.acceptedCount!==1||b.failedCount!==0) throw new Error('Tehran pass2 failed');
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tehran-hidden-scope-ab
+          path: |
+            apps/menu-worker/research/tehran-hidden-ab-pass1.json
+            apps/menu-worker/research/tehran-hidden-ab-pass2.json
+            apps/menu-worker/research/tehran-hidden-ab-summary.json
+          if-no-files-found: warn
