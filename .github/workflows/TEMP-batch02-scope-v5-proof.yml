@@ -1,0 +1,70 @@
+name: TEMP Batch 02 scope v5 proof
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/TEMP-batch02-scope-v5-proof.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - name: Replace only text-section-scope with exact main baseline v5
+        shell: bash
+        run: |
+          git fetch --no-tags --depth=1 origin 7564082d13d1cbe1cf1310f63e40650ae59cdd66
+          git show FETCH_HEAD:apps/menu-worker/src/html-text-section-scope.ts > apps/menu-worker/src/html-text-section-scope.ts
+          grep -F 'text-section-scope-v5' apps/menu-worker/src/html-text-section-scope.ts
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Isolate Gandhi and Habibi manifests
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          rm -rf research/scope-v5-pair
+          mkdir -p research/scope-v5-pair
+          node --input-type=module <<'NODE'
+          import { readdir, readFile, writeFile } from 'node:fs/promises';
+          const targets = new Set(['1947-gandhi-majorstuen-oslo','habibi-oslo']);
+          const files = (await readdir('catalog')).filter((name) => name.endsWith('.json'));
+          let found = 0;
+          for (const file of files) {
+            const raw = await readFile(`catalog/${file}`, 'utf8');
+            const manifest = JSON.parse(raw);
+            if (!targets.has(manifest.restaurant.slug)) continue;
+            await writeFile(`research/scope-v5-pair/${file}`, raw);
+            found += 1;
+          }
+          if (found !== 2) throw new Error(`Expected 2 manifests, found ${found}`);
+          NODE
+      - name: Validate regression pair with v5 scope
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/scope-v5-pair | tee research/batch02-scope-v5-proof.json
+          exit 0
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-scope-v5-proof
+          path: apps/menu-worker/research/batch02-scope-v5-proof.json
+          if-no-files-found: error
