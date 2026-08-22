@@ -4,17 +4,17 @@ Dette dokumentet beskriver den permanente produksjonsmetoden for restaurantdekni
 
 ## Verifisert Oslo-status 2026-08-22
 
-Siste read-only production-proof etter parsercleanup #365, candidate-stage #394 og byte-for-byte catalog-promotion #395 bruker production revision `f42f1522e458d9e583f9cba7860679739631221a` som autoritativ katalogrevision. Run `32597768885` / artifact `9482026561` viser:
+Siste read-only production-proof etter parsercleanup #365, fem-restaurant-promotion #395 og New Delhi-promotion #408 bruker production revision `2e57e1d324415f2a296b43b54c13e58cb23d4292` som autoritativ katalogrevision. Run `32600667247` / artifact `9483248543` viser:
 
-- **55 canonical produksjonsmanifester** i `apps/menu-worker/catalog/`;
-- **55/55 aktive canonical restauranter** i production DB;
-- **55 aktive restaurant-rader totalt**;
-- **55 enabled menu sources**;
+- **56 canonical produksjonsmanifester** i `apps/menu-worker/catalog/`;
+- **56/56 aktive canonical restauranter** i production DB;
+- **56 aktive restaurant-rader totalt**;
+- **56 enabled menu sources**;
 - **0 inactive canonical** restauranter;
 - **0 active-not-catalog** restaurant-rader;
 - nøyaktig **én enabled canonical menu source per katalogrestaurant**;
-- alle fem nye Batch-02-kilder har `consecutive_failures=0` og siste snapshot på eller over manifestets minimum;
-- production search returnerer representative retter fra alle fem nye restauranter med korrekt canonical source URL.
+- de fem tidligere Batch-02-kildene og New Delhi har bevist production coverage; New Delhi har `consecutive_failures=0` og 81-item snapshot;
+- production search returnerer representative retter fra de fem tidligere restaurantene samt New Delhi med korrekt canonical source URL.
 
 De fem nye source-bevisene er:
 
@@ -23,6 +23,8 @@ De fem nye source-bevisene er:
 - Døgnvill Vulkan: **35 items**, HTTP 304, siste watcher `not_modified`;
 - IndiSpice: **48 items**, HTTP 304, siste watcher `not_modified`;
 - Jaipur: **44 items**, HTTP 200, siste watcher `unchanged`.
+
+Etter 55-baselinen ble også **New Delhi Tjuvholmen** promotert byte-for-byte via #408. Permanent `titles-v14` + `beverage-v9` ble først bevist mot eksisterende catalog **55/55** og New Delhi **81/81** i #402. Read-only production-proof #409 / run `32600667247` / artifact `9483248543` med digest `sha256:dadd04d28d955526fdcbb028cb548c87e4bd7ecdef8da4710d376e7a2b2a112d` viser New Delhi som enabled canonical source med **81 items**, HTTP 200, `consecutive_failures=0`, siste watcher `unchanged`, og production-search for `Mixed Ice Cream` **129 kr** og `Murgh Malai Chicken Tikka` **149 kr** fra korrekt canonical source. Dette løftet den operative baselinen til **56/56/56**.
 
 Dette er den operative restaurantproduksjonsbaselinen. Production-status må skilles fra rå DB-historikk: deaktiverte legacy-rader kan fortsatt eksistere for referanseintegritet, men teller ikke som aktive restauranter. Den canonicale integritetsmålingen er alltid `catalog slug -> active restaurant -> nøyaktig én enabled menu source -> frisk snapshot/watcher`, pluss eksplisitt kontroll av at ingen aktiv restaurant ligger utenfor katalogen.
 
@@ -77,7 +79,11 @@ Autoritativ pre-merge proof var #393 / run `32596872644` / artifact `9481858862`
 - IndiSpice: **48 items**;
 - Jaipur: **44 items**.
 
-De fem manifestene ble deretter staged i PR #394 med byte-identiske Git blobs og live candidate-gate. PR #395 flyttet dem fra `candidates/` til `catalog/` som fem rene Git-renames med **0 additions / 0 deletions / 0 content changes**. Post-merge auto-materializer ga production-baselinen 55/55/55 ovenfor. Mesob forblir fail-closed i source-dekningskøen.
+De fem manifestene ble deretter staged i PR #394 med byte-identiske Git blobs og live candidate-gate. PR #395 flyttet dem fra `candidates/` til `catalog/` som fem rene Git-renames med **0 additions / 0 deletions / 0 content changes**. Post-merge auto-materializer ga den historiske production-baselinen 55/55/55.
+
+New Delhi var den eneste av de neste ti residualene som genererte et fullverdig manifest på 55-baselinen. Pipeline-debug #399 isolerte tapet av `Mixed Ice Cream`; permanent #400 innførte inline-priset title-provenance (`titles-v14`) og `beverage-v9`. #402 beviste eksisterende catalog **55/55**, New Delhi **81/81** i fresh intake og separat validation, `Mixed Ice Cream` **12900**, `Murgh Malai Chicken Tikka` **14900** og ingen `With wine package`. Candidate og catalog beholdt blob `d4d9e139a8ae6a145bf565f009ae36edda2663e6`; #408 promoterte filen som ren rename. Canonical `onboard:catalog` publiserte deretter New Delhi med første watch `changed` 81 og andre watch `unchanged` 81. En samtidig Habibi-refresh ble quarantined, men refresh-sikkerheten beholdt siste gyldige published coverage. Read-only #409 beviste deretter **56 active / 56 enabled**, null drift og korrekt New Delhi production-search.
+
+Mesob og de øvrige åtte residualene forblir fail-closed i source-/transportkøen.
 
 ### Rødlistelukkingen før og etter batch 01
 
@@ -88,9 +94,9 @@ Følgende tidligere produksjonsfeil er lukket:
 - **La Mayor:** den kildebeviste runtime-flooren ble justert fra 17 til 16 observerte items, mens alle eksplisitte rett-/prisassertions ble beholdt.
 - **Café Sara:** ble ikke tvunget grønn. Den gamle førstpartsmenyen ga HTTP 404, og alternativene beviste ikke en komplett maskinlesbar canonical meny. Restauranten ble derfor fjernet fra aktiv katalog fail-closed i PR #287 og skal først komme tilbake når en fullverdig kilde kan bevises.
 - **Coyo:** to `NETWORK_ERROR`-watcher ble isolert som transportfeil; samme canonical kilde besto live runtime og fikk deretter frisk production-watch.
-- **Kain / Tyrkisk / Confusion inactive drift:** source-gatene var grønne, men tidligere transportfeil hadde etterlatt dem inactive. Kain ble re-onboardet kontrollert; Confusion/Tyrkisk ble lukket gjennom permanent parserherding og etterfølgende materializer/watcher. Batch-01-reconcile viste 45/45 aktive canonical restauranter; siste production-proof 2026-08-22 viser 55/55.
+- **Kain / Tyrkisk / Confusion inactive drift:** source-gatene var grønne, men tidligere transportfeil hadde etterlatt dem inactive. Kain ble re-onboardet kontrollert; Confusion/Tyrkisk ble lukket gjennom permanent parserherding og etterfølgende materializer/watcher. Batch-01-reconcile viste 45/45 aktive canonical restauranter; siste production-proof 2026-08-22 viser 56/56.
 
-Som ekstern størrelsesreferanse viste Mattilsynets Smilefjes-oversikt 1 345 spisesteder i Oslo ved kontroll 2026-08-20: <https://smilefjes.mattilsynet.no/kommune/oslo/>. Dette omfatter flere typer spisesteder og er ikke Fysens canonical backlog. Baseline på 55 betyr derfor ikke «55 av alle Oslo-restauranter er ferdige»; den beskriver det nåværende verifiserte produksjonssettet.
+Som ekstern størrelsesreferanse viste Mattilsynets Smilefjes-oversikt 1 345 spisesteder i Oslo ved kontroll 2026-08-20: <https://smilefjes.mattilsynet.no/kommune/oslo/>. Dette omfatter flere typer spisesteder og er ikke Fysens canonical backlog. Baseline på 56 betyr derfor ikke «56 av alle Oslo-restauranter er ferdige»; den beskriver det nåværende verifiserte produksjonssettet.
 
 ## Produksjonslinjen
 

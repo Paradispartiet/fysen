@@ -11,17 +11,19 @@ Dette er den permanente ferdigdefinisjonen for Oslo v1. Et grønt mergebevis er 
 
 ## Restaurantproduksjonsbaseline 2026-08-22
 
-Restaurantproduksjon er en separat innholds-/integritetslinje og skal ikke forveksles med hele Oslo-v1-closeouten. Siste read-only production-proof på catalog revision `f42f1522e458d9e583f9cba7860679739631221a` viser:
+Restaurantproduksjon er en separat innholds-/integritetslinje og skal ikke forveksles med hele Oslo-v1-closeouten. Siste read-only production-proof på catalog revision `2e57e1d324415f2a296b43b54c13e58cb23d4292` viser:
 
-- **55 canonical katalogmanifester**;
-- **55/55 aktive canonical restauranter**;
-- **55 aktive restaurant-rader totalt**;
-- **55 enabled menu sources**;
+- **56 canonical katalogmanifester**;
+- **56/56 aktive canonical restauranter**;
+- **56 aktive restaurant-rader totalt**;
+- **56 enabled menu sources**;
 - **0 inactive canonical**;
 - **0 active-not-catalog drift**;
 - nøyaktig **én enabled canonical menu source per katalogrestaurant**.
 
-Batch 01 etablerte høy-throughput-metoden. Batch 02 utvidet dekningen med **Jaipur, IndiSpice og tre Døgnvill-lokasjoner** etter en full parser-/output-cleanup. Den siste parserendringen fikk først merge etter **50/50 serial full-catalog live-gate**, fresh **5/5** intake, separat **5/5** revalidation og eksplisitt output-inspeksjon. De fem manifestene ble deretter staged og promotert byte-for-byte; post-merge proof verifiserte snapshots og production-search for alle fem.
+Batch 01 etablerte høy-throughput-metoden. Batch 02 utvidet først dekningen med **Jaipur, IndiSpice og tre Døgnvill-lokasjoner** etter en full parser-/output-cleanup. Parserendringen fikk først merge etter **50/50 serial full-catalog live-gate**, fresh **5/5** intake, separat **5/5** revalidation og eksplisitt output-inspeksjon. De fem manifestene ble staged og promotert byte-for-byte; post-merge proof verifiserte snapshots og production-search.
+
+Deretter ble **New Delhi Tjuvholmen** den 56. canonical restauranten. #402 beviste eksisterende catalog **55/55** og New Delhi **81/81** før byte-for-byte promotion #408. Production-proof #409 / run `32600667247` / artifact `9483248543` beviser **56 active / 56 enabled**, null drift, 81-item New Delhi-snapshot og søketreff for `Mixed Ice Cream` 129 kr og `Murgh Malai Chicken Tikka` 149 kr fra korrekt canonical source.
 
 Permanent metode, historiske batchresultater og datert produksjonsbevis ligger i [`restaurant-production.md`](./restaurant-production.md).
 
