@@ -1,0 +1,56 @@
+name: TEMP materialize New Delhi production 56
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/TEMP-new-delhi-production-materialize-56.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-production-menu-mutation
+  cancel-in-progress: false
+
+jobs:
+  materialize:
+    if: github.event.pull_request.head.ref == 'agent/new-delhi-production-materialize-56'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
+      DATABASE_SSL: "verify-full"
+      NODE_ENV: production
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - name: Require production database secret
+        shell: bash
+        run: |
+          test -n "$DATABASE_URL" || { echo "FYSEN_PRODUCTION_DATABASE_URL is not configured" >&2; exit 1; }
+
+      - name: Checkout exact promoted catalog revision
+        uses: actions/checkout@v4
+        with:
+          ref: 2e57e1d324415f2a296b43b54c13e58cb23d4292
+          persist-credentials: false
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build menu worker and dependencies
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Materialize canonical production catalog
+        run: pnpm --filter @fysen/menu-worker onboard:catalog
