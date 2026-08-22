@@ -1,0 +1,103 @@
+name: TEMP Batch 02 residual four fast proof
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch02-residual-four-fast-proof.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Restore Batch 02 plan and build four target plan
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02 && mkdir -p /tmp/batch02
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import {mkdir,readFile,writeFile} from 'node:fs/promises';
+          const source=JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json','utf8'));
+          const bySlug=new Map(source.restaurants.map((x)=>[x.restaurant.slug,x]));
+          const variants=[
+            {slug:'benares-tordenskiolds-gate-oslo',url:'https://benares.no/meny?menu=menu',fetchMode:'browser'},
+            {slug:'the-golden-chimp-torggata-oslo',url:'https://www.thegoldenchimp.no/menu',fetchMode:'http'},
+            {slug:'kverneriet-majorstua-oslo',url:'https://kverneriet.com/majorstua/menu/',fetchMode:'http'},
+            {slug:'kverneriet-solli-oslo',url:'https://kverneriet.com/solli/menu/',fetchMode:'http'},
+          ];
+          const restaurants=variants.map((v)=>{
+            const base=structuredClone(bySlug.get(v.slug));
+            if(!base) throw new Error(`Missing Batch 02 seed ${v.slug}`);
+            base.menuSource={...base.menuSource,url:v.url,sourceType:'html',fetchMode:v.fetchMode,sourceSupport:{redirectOrigins:[],browserDataOrigins:[]}};
+            return base;
+          });
+          const plan={...source,outputDirectory:'research/residual-four-fast-generated',concurrency:1,restaurants};
+          await mkdir('apps/menu-worker/research/residual-four-fast-generated',{recursive:true});
+          await writeFile('apps/menu-worker/research/residual-four-fast.plan.json',JSON.stringify(plan,null,2)+'\n');
+          NODE
+      - name: Fresh intake
+        working-directory: apps/menu-worker
+        run: node dist/index.js intake:batch research/residual-four-fast.plan.json | tee research/residual-four-fast-intake.json
+      - name: Independent validation
+        working-directory: apps/menu-worker
+        run: node dist/index.js validate:batch research/residual-four-fast-generated | tee research/residual-four-fast-validation.json
+      - name: Summarize exact output
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const intake=JSON.parse(await readFile('research/residual-four-fast-intake.json','utf8'));
+          const validation=JSON.parse(await readFile('research/residual-four-fast-validation.json','utf8'));
+          const rows=(validation.results??[]).map((r)=>({slug:r.slug,accepted:r.accepted,itemCount:r.validation?.menu?.quality?.itemCount??null,names:r.validation?.menu?.observedDishNames??[],variants:r.validation?.menu?.observedDishVariants??[],error:r.validation?.menu?.error??r.error??null}));
+          const bySlug=new Map(rows.map((r)=>[r.slug,r]));
+          const forbidden=new Set(['Chicken','DUMPLINGS','PROTEINS','Upgrades & Extras','SN','SY']);
+          const qualityFailures=[];
+          for(const row of rows) for(const name of row.names) if(forbidden.has(name)) qualityFailures.push(`${row.slug}:${name}`);
+          const benares=bySlug.get('benares-tordenskiolds-gate-oslo');
+          const chimp=bySlug.get('the-golden-chimp-torggata-oslo');
+          const major=bySlug.get('kverneriet-majorstua-oslo');
+          const solli=bySlug.get('kverneriet-solli-oslo');
+          if(!benares||!chimp||!major||!solli) qualityFailures.push('missing-target-result');
+          if(benares && (benares.itemCount??0)<69) qualityFailures.push(`benares:coverage:${benares.itemCount}`);
+          if(chimp && (chimp.itemCount??0)<15) qualityFailures.push(`chimp:coverage:${chimp.itemCount}`);
+          if(major && (major.itemCount??0)<20) qualityFailures.push(`major:coverage:${major.itemCount}`);
+          if(solli && (solli.itemCount??0)<20) qualityFailures.push(`solli:coverage:${solli.itemCount}`);
+          const summary={intake:{requested:intake.requestedCount,generated:intake.generatedCount,failed:intake.failedCount},validation:{manifestCount:validation.manifestCount,accepted:validation.acceptedCount,failed:validation.failedCount},qualityFailures,rows};
+          await writeFile('research/residual-four-fast-summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if(intake.requestedCount!==4||intake.generatedCount!==4||intake.failedCount!==0) throw new Error('Fast intake gate failed');
+          if(validation.manifestCount!==4||validation.acceptedCount!==4||validation.failedCount!==0) throw new Error('Fast validation gate failed');
+          if(qualityFailures.length) throw new Error(`Fast quality failures ${JSON.stringify(qualityFailures)}`);
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-residual-four-fast-proof
+          path: |
+            apps/menu-worker/research/residual-four-fast-intake.json
+            apps/menu-worker/research/residual-four-fast-validation.json
+            apps/menu-worker/research/residual-four-fast-summary.json
+            apps/menu-worker/research/residual-four-fast-generated/*.json
+          if-no-files-found: warn
