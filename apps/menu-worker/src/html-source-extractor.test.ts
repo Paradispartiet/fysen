@@ -19,7 +19,7 @@ describe("extractScopedHtmlMenu", () => {
     `;
 
     const result = extractScopedHtmlMenu(html);
-    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v18");
+    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v19");
     expect(result.items.map((item) => item.name)).toEqual(["Falafel", "Bakalawa"]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([9800, 12900]);
     expect(result.visibleText).not.toContain("Husets Cabernet");
@@ -461,4 +461,27 @@ describe("extractScopedHtmlMenu", () => {
     expect(result.method).toBe("json_ld");
     expect(result.items.map((item) => item.name)).toEqual(["Hommus"]);
   });
+  it("prefers a plausible long first dish title over its repeated section heading", () => {
+    const html = `
+      <html><body>
+        <h2>DUMPLINGS</h2>
+        <p>Pork Gyoza with Japanese ketchup (4 pcs)</p>
+        <p>195,-</p>
+        <p>Chicken Gyoza with Truffle Tosazu (4 pcs)</p>
+        <p>195,-</p>
+        <h2>PROTEINS</h2>
+        <p>Grilled Chicken Yakiniku with Goma Cabbage salad</p>
+        <p>245,-</p>
+        <p>Grilled Seabass with chili garlic sauce</p>
+        <p>275,-</p>
+      </body></html>
+    `;
+    expect(extractScopedHtmlMenu(html).items.map((entry) => entry.name)).toEqual([
+      "Pork Gyoza with Japanese ketchup (4 pcs)",
+      "Chicken Gyoza with Truffle Tosazu (4 pcs)",
+      "Grilled Chicken Yakiniku with Goma Cabbage salad",
+      "Grilled Seabass with chili garlic sauce",
+    ]);
+  });
+
 });
