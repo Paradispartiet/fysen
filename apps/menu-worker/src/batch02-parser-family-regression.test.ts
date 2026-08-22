@@ -1,26 +1,25 @@
 import { describe, expect, it } from "vitest";
-import {
-  HTML_NON_DISH_FILTER_VERSION,
-  HTML_PRICE_NOTATION_NORMALIZER_VERSION,
-  isCanonicalHtmlMenuItem,
-  normalizeHtmlPriceNotation,
-} from "./menu-source-runtime.js";
-import {
-  HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION,
-  recoverTrailingPriceCardHtmlItems,
-} from "./html-trailing-price-card-recovery.js";
 import type { MenuObservedItem } from "@fysen/menu-core";
+import {
+  HTML_HEADING_NORMALIZER_VERSION,
+  normalizeHtmlHeadingLineBreaks,
+} from "./html-heading-normalizer.js";
+import {
+  HTML_OUTPUT_CANONICALIZER_VERSION,
+  canonicalizeHtmlOutputItems,
+} from "./html-output-canonicalizer.js";
+import { recoverTrailingPriceCardHtmlItems } from "./html-trailing-price-card-recovery.js";
 
-function item(name: string): MenuObservedItem {
+function item(name: string, position: number): MenuObservedItem {
   return {
-    sourceKey: name,
+    sourceKey: `${position}-${name}`,
     name,
     normalizedName: name.toLocaleLowerCase("nb-NO"),
     description: null,
     sectionName: null,
     priceMinor: 19500,
     currency: "NOK",
-    position: 1,
+    position,
     extractionMethod: "html_heuristic",
     confidence: 0.95,
     sourceExcerpt: name,
@@ -29,11 +28,13 @@ function item(name: string): MenuObservedItem {
 
 describe("Batch 02 generic parser families", () => {
   it("normalizes Scandinavian dot-dash whole-NOK notation before extraction", () => {
-    expect(HTML_PRICE_NOTATION_NORMALIZER_VERSION).toBe("price-notation-v3");
-    const normalized = normalizeHtmlPriceNotation(`
-      <h3>Triple Chili Cheese 135.-</h3>
-      <h3>The Godfather 269.-</h3>
-      <p>American Fries 84.-</p>
+    expect(HTML_HEADING_NORMALIZER_VERSION).toBe("heading-v3");
+    const normalized = normalizeHtmlHeadingLineBreaks(`
+      <html><body>
+        <h3>Triple Chili Cheese 135.-</h3>
+        <h3>The Godfather 269.-</h3>
+        <p>American Fries 84.-</p>
+      </body></html>
     `);
     expect(normalized).toContain("Triple Chili Cheese 135,-");
     expect(normalized).toContain("The Godfather 269,-");
@@ -41,7 +42,7 @@ describe("Batch 02 generic parser families", () => {
   });
 
   it("recovers Kverneriet-style title plus normalized trailing price cards", () => {
-    const html = normalizeHtmlPriceNotation(`
+    const html = normalizeHtmlHeadingLineBreaks(`
       <html><body>
         <h2>Burgers</h2>
         <h3>The Godfather 269.-</h3><p>Mortadella, provolone and dijonaisse.</p>
@@ -65,11 +66,8 @@ describe("Batch 02 generic parser families", () => {
     ]);
   });
 
-  it("recovers a title followed by a marked price and parenthetical allergen metadata", () => {
-    expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
-      "trailing-price-card-v11",
-    );
-    const html = `
+  it("normalizes price lines with parenthetical allergen metadata so trailing-card recovery can use them", () => {
+    const html = normalizeHtmlHeadingLineBreaks(`
       <html><body>
         <h2>DUMPLINGS</h2>
         <p>Pork Gyoza with Japanese ketchup (4 pcs)</p>
@@ -81,7 +79,9 @@ describe("Batch 02 generic parser families", () => {
         <p>Shiitake Wontons with vinegar/soy dip (5 pcs)</p>
         <p>205,-(Lactose, garlic, gluten, egg, soy)</p>
       </body></html>
-    `;
+    `);
+    expect(html).not.toContain("Mollusc, garlic");
+    expect(html).not.toContain("Shellfish, mustard");
     const items = recoverTrailingPriceCardHtmlItems(html);
     expect(items.map(({ name }) => name)).toEqual([
       "Pork Gyoza with Japanese ketchup (4 pcs)",
@@ -89,13 +89,17 @@ describe("Batch 02 generic parser families", () => {
       "King Crab dumplings with kimchi mayonnaise (4 pcs)",
       "Shiitake Wontons with vinegar/soy dip (5 pcs)",
     ]);
-    expect(items.every(({ priceMinor }) => priceMinor === 19500 || priceMinor === 20500)).toBe(true);
-    expect(items[0]?.description).toContain("Mollusc");
+    expect(items.map(({ priceMinor }) => priceMinor)).toEqual([
+      19500,
+      19500,
+      19500,
+      20500,
+    ]);
   });
 
-  it("rejects badge, branded section and per-person display labels without rejecting real dishes", () => {
-    expect(HTML_NON_DISH_FILTER_VERSION).toBe("non-dish-v9");
-    for (const name of [
+  it("filters badge, branded section and per-person display labels while preserving real dishes", () => {
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v2");
+    const names = [
       "VEG",
       "VEG SPICY",
       "SAWAN RAW",
@@ -107,17 +111,19 @@ describe("Batch 02 generic parser families", () => {
       "SAWAN SHARING",
       "975,– per person",
       "Dagens veganske meny",
-    ]) {
-      expect(isCanonicalHtmlMenuItem(item(name)), name).toBe(false);
-    }
-
-    for (const name of [
       "Vegan crispy oyster mushrooms",
       "Laksetartar taco agurk, yuzu, ingefær og soya",
       "Chicken Tikka",
       "Veg Biryani",
-    ]) {
-      expect(isCanonicalHtmlMenuItem(item(name)), name).toBe(true);
-    }
+    ];
+    const output = canonicalizeHtmlOutputItems(
+      names.map((name, position) => item(name, position)),
+    );
+    expect(output.map(({ name }) => name)).toEqual([
+      "Vegan crispy oyster mushrooms",
+      "Laksetartar taco agurk, yuzu, ingefær og soya",
+      "Chicken Tikka",
+      "Veg Biryani",
+    ]);
   });
 });
