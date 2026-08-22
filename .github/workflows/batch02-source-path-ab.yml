@@ -1,0 +1,88 @@
+name: Batch 02 source path A B
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Build six isolated source-path plans
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02 && mkdir -p /tmp/batch02
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import {mkdir,readFile,writeFile} from 'node:fs/promises';
+          const source=JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json','utf8'));
+          const bySlug=new Map(source.restaurants.map((x)=>[x.restaurant.slug,x]));
+          const variants=[
+            ['benares-http','benares-tordenskiolds-gate-oslo','https://benares.no/meny?menu=menu','html','http'],
+            ['benares-browser','benares-tordenskiolds-gate-oslo','https://benares.no/meny?menu=menu','html','browser'],
+            ['mesob-http','mesob-motzfeldts-gate-oslo','https://mesobrestaurant.no/menu/','html','http'],
+            ['mesob-browser','mesob-motzfeldts-gate-oslo','https://mesobrestaurant.no/menu/','html','browser'],
+            ['sawan-http','sawan-president-harbitz-gate-oslo','https://www.sawan.no/meny','html','http'],
+            ['sawan-browser','sawan-president-harbitz-gate-oslo','https://www.sawan.no/meny','html','browser'],
+          ];
+          await mkdir('apps/menu-worker/research/source-path-ab',{recursive:true});
+          for(const [name,slug,url,sourceType,fetchMode] of variants){
+            const base=bySlug.get(slug); if(!base) throw new Error(`Missing ${slug}`);
+            const entry={...base,menuSource:{...base.menuSource,url,sourceType,fetchMode,sourceSupport:{redirectOrigins:[],browserDataOrigins:[]}}};
+            const plan={...source,outputDirectory:`research/source-path-ab/${name}-generated`,concurrency:1,restaurants:[entry]};
+            await mkdir(`apps/menu-worker/research/source-path-ab/${name}-generated`,{recursive:true});
+            await writeFile(`apps/menu-worker/research/source-path-ab/${name}.plan.json`,JSON.stringify(plan,null,2)+'\n');
+          }
+          NODE
+      - name: Run source-path variants
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          for name in benares-http benares-browser mesob-http mesob-browser sawan-http sawan-browser; do
+            echo "=== $name ==="
+            node dist/index.js intake:batch "research/source-path-ab/$name.plan.json" | tee "research/source-path-ab/$name.result.json"
+          done
+          exit 0
+      - name: Summarize source paths
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const names=['benares-http','benares-browser','mesob-http','mesob-browser','sawan-http','sawan-browser'];
+          const rows=[];
+          for(const name of names){
+            const r=JSON.parse(await readFile(`research/source-path-ab/${name}.result.json`,'utf8'));
+            const x=r.results?.[0]??{};
+            rows.push({name,outcome:x.outcome??null,observedItemCount:x.observedItemCount??null,extractionMethod:x.extractionMethod??null,extractorVersion:x.extractorVersion??null,error:x.error??null});
+          }
+          await writeFile('research/source-path-ab/summary.json',JSON.stringify({rows},null,2)+'\n');
+          console.log(JSON.stringify({rows},null,2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-source-path-ab
+          path: apps/menu-worker/research/source-path-ab
+          if-no-files-found: error
