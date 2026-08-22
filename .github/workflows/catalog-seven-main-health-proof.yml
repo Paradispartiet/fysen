@@ -1,0 +1,78 @@
+name: Catalog seven main health proof
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Isolate exact seven catalog manifests
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          rm -rf research/catalog-seven-main
+          mkdir -p research/catalog-seven-main
+          node --input-type=module <<'NODE'
+          import { readdir, readFile, writeFile } from 'node:fs/promises';
+          const targets = new Set([
+            'dalat-cafe-torggata-oslo',
+            'kebabish-original-breigata-oslo',
+            'korndokki-mathallen-oslo',
+            'mamma-pizza-osteria-italiana-oslo',
+            'nepal-house-grunerlokka-oslo',
+            'polskie-jadlo-oslo',
+            'tehran-spiseri-okern-oslo',
+          ]);
+          let found = 0;
+          for (const file of (await readdir('catalog')).filter((name) => name.endsWith('.json'))) {
+            const raw = await readFile(`catalog/${file}`, 'utf8');
+            const manifest = JSON.parse(raw);
+            if (!targets.has(manifest.restaurant.slug)) continue;
+            await writeFile(`research/catalog-seven-main/${file}`, raw);
+            found += 1;
+          }
+          if (found !== targets.size) throw new Error(`Expected ${targets.size}, found ${found}`);
+          NODE
+      - name: Validate seven pass 1
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/catalog-seven-main | tee research/catalog-seven-main-pass1.json
+          exit 0
+      - name: Validate seven pass 2
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/catalog-seven-main | tee research/catalog-seven-main-pass2.json
+          exit 0
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: catalog-seven-main-health-proof
+          path: |
+            apps/menu-worker/research/catalog-seven-main-pass1.json
+            apps/menu-worker/research/catalog-seven-main-pass2.json
+          if-no-files-found: error
