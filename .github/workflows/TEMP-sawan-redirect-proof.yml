@@ -1,0 +1,98 @@
+name: TEMP Sawan redirect proof
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/TEMP-sawan-redirect-proof.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  prove:
+    if: github.event.pull_request.head.ref == 'agent/sawan-redirect-proof'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Restore immutable Batch 02 Sawan row with exact redirect origin
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02
+          mkdir -p /tmp/batch02
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import {mkdir,readFile,writeFile} from 'node:fs/promises';
+          const source=JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json','utf8'));
+          const restaurants=source.restaurants.filter((x)=>x.restaurant.slug==='sawan-frogner-oslo');
+          if(restaurants.length!==1) throw new Error(`Sawan rows=${restaurants.length}`);
+          const row=structuredClone(restaurants[0]);
+          row.menuSource.sourceSupport={redirectOrigins:['https://www.sawan.no'],browserDataOrigins:[]};
+          const plan={...source,outputDirectory:'research/sawan-redirect-generated',concurrency:1,restaurants:[row]};
+          await mkdir('apps/menu-worker/research/sawan-redirect-generated',{recursive:true});
+          await writeFile('apps/menu-worker/research/sawan-redirect.plan.json',JSON.stringify(plan,null,2)+'\n');
+          NODE
+
+      - name: Fresh Sawan intake
+        working-directory: apps/menu-worker
+        shell: bash
+        run: node dist/index.js intake:batch research/sawan-redirect.plan.json | tee research/sawan-redirect-intake.json
+
+      - name: Independent Sawan validation
+        working-directory: apps/menu-worker
+        shell: bash
+        run: node dist/index.js validate:batch research/sawan-redirect-generated | tee research/sawan-redirect-validation.json
+
+      - name: Gate and summarize
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const intake=JSON.parse(await readFile('research/sawan-redirect-intake.json','utf8'));
+          const validation=JSON.parse(await readFile('research/sawan-redirect-validation.json','utf8'));
+          const result=validation.results?.[0];
+          const generated=JSON.parse(await readFile('research/sawan-redirect-generated/sawan-frogner-oslo.json','utf8'));
+          const summary={
+            intake:{requested:intake.requestedCount,generated:intake.generatedCount,failed:intake.failedCount,observedItems:intake.results?.[0]?.observedItemCount,extractorVersion:intake.results?.[0]?.extractorVersion},
+            validation:{accepted:validation.acceptedCount,failed:validation.failedCount,itemCount:result?.validation?.menu?.quality?.itemCount,extractorVersion:result?.validation?.menu?.extractorVersion,names:result?.validation?.menu?.observedDishNames??[],error:result?.validation?.menu?.error??result?.error??null},
+            redirectOrigins:generated.menuSource.sourceSupport?.redirectOrigins??[],
+            minimumExpectedItems:generated.menuSource.minimumExpectedItems,
+          };
+          await writeFile('research/sawan-redirect-summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if(intake.requestedCount!==1||intake.generatedCount!==1||intake.failedCount!==0) throw new Error('Sawan intake failed');
+          if(validation.manifestCount!==1||validation.acceptedCount!==1||validation.failedCount!==0) throw new Error('Sawan validation failed');
+          if(summary.redirectOrigins.length!==1||summary.redirectOrigins[0]!=='https://www.sawan.no') throw new Error('Sawan redirect support mismatch');
+          if((summary.validation.itemCount??0)<20) throw new Error(`Sawan coverage too small: ${summary.validation.itemCount}`);
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sawan-redirect-proof
+          path: |
+            apps/menu-worker/research/sawan-redirect.plan.json
+            apps/menu-worker/research/sawan-redirect-intake.json
+            apps/menu-worker/research/sawan-redirect-validation.json
+            apps/menu-worker/research/sawan-redirect-summary.json
+            apps/menu-worker/research/sawan-redirect-generated/*.json
+          if-no-files-found: warn
