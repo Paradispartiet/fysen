@@ -2,6 +2,7 @@ import { normalizeDishName } from "@fysen/menu-core";
 import { runRestaurantActionVerification } from "./action-verifier.js";
 import { generateRestaurantCandidateBatch } from "./batch-intake.js";
 import { validateRestaurantManifestBatch } from "./batch-validator.js";
+import { countBlockingCatalogOnboardingFailures } from "./catalog-onboarding-failure-policy.js";
 import { extractHtmlMenu } from "./html-extractor.js";
 import { HttpMenuClient } from "./http-client.js";
 import {
@@ -137,8 +138,11 @@ async function main(): Promise<void> {
   }
   if (command === "onboard:catalog") {
     const summary = await onboardRestaurantCatalog();
-    print(summary);
-    if (summary.failedCount > 0) process.exitCode = 1;
+    const blockingFailedCount = countBlockingCatalogOnboardingFailures(
+      summary.results,
+    );
+    print({ ...summary, blockingFailedCount });
+    if (blockingFailedCount > 0) process.exitCode = 1;
     return;
   }
   if (command === "run:due") {
