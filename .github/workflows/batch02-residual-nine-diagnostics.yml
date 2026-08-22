@@ -1,0 +1,252 @@
+name: TEMP Batch 02 residual nine diagnostics
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch02-residual-nine-diagnostics.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Restore immutable Batch 02 plan and build diagnostic variants
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02
+          mkdir -p /tmp/batch02
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import { mkdir, readFile, writeFile } from 'node:fs/promises';
+          const source = JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json', 'utf8'));
+          const bySlug = new Map(source.restaurants.map((entry) => [entry.restaurant.slug, entry]));
+          const targets = [
+            ['benares', 'benares-tordenskiolds-gate-oslo', 'https://benares.no/meny?menu=menu'],
+            ['mesob', 'mesob-motzfeldts-gate-oslo', 'https://mesobrestaurant.no/menu/'],
+            ['sawan', 'sawan-president-harbitz-gate-oslo', 'https://www.sawan.no/meny'],
+            ['golden-chimp', 'the-golden-chimp-torggata-oslo', 'https://www.thegoldenchimp.no/menu'],
+            ['kverneriet-majorstua', 'kverneriet-majorstua-oslo', 'https://kverneriet.com/majorstua/menu/'],
+            ['kverneriet-solli', 'kverneriet-solli-oslo', 'https://kverneriet.com/solli/menu/'],
+            ['delicatessen-grunerlokka', 'delicatessen-grunerlokka-oslo', 'https://favrit.com/nb-no/menu/location/LK4AD79J8nO'],
+            ['delicatessen-majorstuen', 'delicatessen-majorstuen-oslo', 'https://favrit.com/nb-no/menu/location/LgEAQE59pAo'],
+            ['der-peppern-gror', 'der-peppern-gror-radhusplassen-oslo', 'https://radhusplassen.derpepperngror.no/meny-norsk/'],
+          ];
+          const variants = [];
+          for (const [shortName, slug, url] of targets) {
+            const base = bySlug.get(slug);
+            if (!base) throw new Error(`Missing immutable Batch 02 seed: ${slug}`);
+            variants.push({ name: `${shortName}-http`, slug, url, fetchMode: 'http', browserDataOrigins: [] });
+            variants.push({ name: `${shortName}-browser`, slug, url, fetchMode: 'browser', browserDataOrigins: [] });
+            if (shortName === 'sawan') {
+              variants.push({
+                name: 'sawan-browser-cookieyes',
+                slug,
+                url,
+                fetchMode: 'browser',
+                browserDataOrigins: ['https://cdn-cookieyes.com'],
+              });
+            }
+          }
+          await mkdir('apps/menu-worker/research/residual-nine-diagnostics', { recursive: true });
+          for (const variant of variants) {
+            const base = bySlug.get(variant.slug);
+            const entry = {
+              ...base,
+              menuSource: {
+                ...base.menuSource,
+                url: variant.url,
+                sourceType: 'html',
+                fetchMode: variant.fetchMode,
+                sourceSupport: {
+                  redirectOrigins: [],
+                  browserDataOrigins: variant.browserDataOrigins,
+                },
+              },
+            };
+            const outputDirectory = `research/residual-nine-diagnostics/${variant.name}-generated`;
+            await mkdir(`apps/menu-worker/${outputDirectory}`, { recursive: true });
+            await writeFile(
+              `apps/menu-worker/research/residual-nine-diagnostics/${variant.name}.plan.json`,
+              JSON.stringify({ ...source, outputDirectory, concurrency: 1, restaurants: [entry] }, null, 2) + '\n',
+            );
+          }
+          await writeFile(
+            'apps/menu-worker/research/residual-nine-diagnostics/variants.json',
+            JSON.stringify({ targets, variants }, null, 2) + '\n',
+          );
+          NODE
+
+      - name: Capture direct transport and DOM signals
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { load } from 'cheerio';
+          import { readFile, writeFile } from 'node:fs/promises';
+          const { targets } = JSON.parse(await readFile('research/residual-nine-diagnostics/variants.json', 'utf8'));
+          const rows = [];
+          for (const [name, slug, url] of targets) {
+            const row = { name, slug, url };
+            try {
+              const response = await fetch(url, {
+                redirect: 'follow',
+                headers: { 'user-agent': process.env.FYSEN_MENU_BOT_USER_AGENT ?? 'FysenMenuBot/0.1' },
+                signal: AbortSignal.timeout(30000),
+              });
+              const body = await response.text();
+              const $ = load(body);
+              const compact = (value) => value.replace(/\s+/gu, ' ').trim();
+              const samples = (selector, limit = 20) =>
+                $(selector)
+                  .toArray()
+                  .map((node) => compact($(node).text()))
+                  .filter(Boolean)
+                  .slice(0, limit);
+              const visibleText = compact($('body').text());
+              const priceTokens = visibleText.match(/(?:^|\s)(?:kr\.?\s*)?\d{2,4}(?:[.,]\d{1,2})?(?:\s*(?:kr\.?|nok|,-))?(?=\s|$)/giu) ?? [];
+              Object.assign(row, {
+                ok: response.ok,
+                status: response.status,
+                finalUrl: response.url,
+                contentType: response.headers.get('content-type'),
+                contentLengthHeader: response.headers.get('content-length'),
+                bodyBytes: Buffer.byteLength(body),
+                htmlBytes: body.length,
+                priceTokenCount: priceTokens.length,
+                imageCount: $('img').length,
+                scriptCount: $('script').length,
+                iframeCount: $('iframe').length,
+                headingSamples: samples('h1,h2,h3,h4,h5,h6'),
+                priceClassSamples: samples('[class*="price" i], [data-price], [itemprop="price"]'),
+                menuClassSamples: samples('[class*="menu" i]').slice(0, 20),
+                imageAltSamples: $('img')
+                  .toArray()
+                  .map((node) => compact($(node).attr('alt') ?? ''))
+                  .filter(Boolean)
+                  .slice(0, 20),
+              });
+            } catch (error) {
+              Object.assign(row, { ok: false, error: error instanceof Error ? error.message : String(error) });
+            }
+            rows.push(row);
+          }
+          await writeFile('research/residual-nine-diagnostics/transport-dom.json', JSON.stringify({ rows }, null, 2) + '\n');
+          console.log(JSON.stringify({ rows }, null, 2));
+          NODE
+
+      - name: Run all HTTP and browser intake variants
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          for plan in research/residual-nine-diagnostics/*.plan.json; do
+            name="$(basename "$plan" .plan.json)"
+            echo "=== intake $name ==="
+            node dist/index.js intake:batch "$plan" | tee "research/residual-nine-diagnostics/$name.intake.json"
+          done
+          exit 0
+
+      - name: Independently revalidate every generated variant
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          for dir in research/residual-nine-diagnostics/*-generated; do
+            name="$(basename "$dir" -generated)"
+            if compgen -G "$dir/*.json" > /dev/null; then
+              echo "=== validate $name ==="
+              node dist/index.js validate:batch "$dir" | tee "research/residual-nine-diagnostics/$name.validation.json"
+            else
+              printf '%s\n' '{"manifestCount":0,"acceptedCount":0,"failedCount":0,"failureFamilyCounts":{},"results":[]}' > "research/residual-nine-diagnostics/$name.validation.json"
+            fi
+          done
+          exit 0
+
+      - name: Summarize residual families and observed output
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile, readdir } from 'node:fs/promises';
+          const root = 'research/residual-nine-diagnostics';
+          const { variants } = JSON.parse(await readFile(`${root}/variants.json`, 'utf8'));
+          const transport = JSON.parse(await readFile(`${root}/transport-dom.json`, 'utf8'));
+          const rows = [];
+          for (const variant of variants) {
+            const intake = JSON.parse(await readFile(`${root}/${variant.name}.intake.json`, 'utf8'));
+            const validation = JSON.parse(await readFile(`${root}/${variant.name}.validation.json`, 'utf8'));
+            const intakeResult = intake.results?.[0] ?? {};
+            const validationResult = validation.results?.[0] ?? {};
+            let generatedAssertions = [];
+            try {
+              const generatedFiles = (await readdir(`${root}/${variant.name}-generated`)).filter((file) => file.endsWith('.json'));
+              if (generatedFiles[0]) {
+                const manifest = JSON.parse(await readFile(`${root}/${variant.name}-generated/${generatedFiles[0]}`, 'utf8'));
+                generatedAssertions = manifest.assertions?.requiredDishes ?? [];
+              }
+            } catch {}
+            rows.push({
+              name: variant.name,
+              slug: variant.slug,
+              url: variant.url,
+              fetchMode: variant.fetchMode,
+              browserDataOrigins: variant.browserDataOrigins,
+              intake: {
+                outcome: intakeResult.outcome ?? null,
+                observedItemCount: intakeResult.observedItemCount ?? null,
+                extractionMethod: intakeResult.extractionMethod ?? null,
+                extractorVersion: intakeResult.extractorVersion ?? null,
+                error: intakeResult.error ?? null,
+                generatedAssertions,
+              },
+              validation: {
+                accepted: validationResult.accepted ?? null,
+                failureFamilies: validationResult.failureFamilies ?? [],
+                error: validationResult.error ?? null,
+                menuError: validationResult.validation?.menu?.error ?? null,
+                itemCount: validationResult.validation?.menu?.quality?.itemCount ?? null,
+                extractorVersion: validationResult.validation?.menu?.extractorVersion ?? null,
+                observedDishNames: validationResult.validation?.menu?.observedDishNames ?? [],
+              },
+            });
+          }
+          const summary = {
+            mainRevision: '22ca4fd00676630cd184c45641d953cdd2f7d0eb',
+            targetCount: 9,
+            variantCount: variants.length,
+            transport: transport.rows,
+            rows,
+          };
+          await writeFile(`${root}/summary.json`, JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          if (new Set(variants.map((variant) => variant.slug)).size !== 9) throw new Error('Residual target drift');
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-residual-nine-diagnostics
+          path: apps/menu-worker/research/residual-nine-diagnostics
+          if-no-files-found: error
