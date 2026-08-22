@@ -1,0 +1,118 @@
+name: TEMP Batch 02 regression A B
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/TEMP-batch02-regression-ab.yml"
+      - "apps/menu-worker/src/**"
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [no-canonicalizer, scoped-beverage]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+
+      - name: Apply isolated runtime variant
+        shell: bash
+        env:
+          VARIANT: ${{ matrix.variant }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+
+          path = Path('apps/menu-worker/src/menu-source-runtime.ts')
+          text = path.read_text()
+          variant = os.environ['VARIANT']
+
+          if variant == 'no-canonicalizer':
+              old_import = '''import {\n  canonicalizeHtmlOutputItems,\n  HTML_OUTPUT_CANONICALIZER_VERSION,\n} from "./html-output-canonicalizer.js";'''
+              new_import = '''import { HTML_OUTPUT_CANONICALIZER_VERSION } from "./html-output-canonicalizer.js";'''
+              old_call = '''        ? canonicalizeHtmlOutputItems(beverageScopedItems)\n        : beverageScopedItems;'''
+              new_call = '''        ? beverageScopedItems\n        : beverageScopedItems;'''
+              if old_import not in text or old_call not in text:
+                  raise SystemExit('canonicalizer anchors missing')
+              text = text.replace(old_import, new_import, 1).replace(old_call, new_call, 1)
+          elif variant == 'scoped-beverage':
+              old_import = '''import {\n  extractHtmlVisibleText,\n  HTML_EXTRACTOR_VERSION,\n} from "./html-extractor.js";'''
+              new_import = '''import { HTML_EXTRACTOR_VERSION } from "./html-extractor.js";'''
+              old_visible = '''    const fullVisibleText = extractHtmlVisibleText(normalizedHtml);\n'''
+              old_filter = '''        ? filterPlainTextBeverageSectionItems(canonicalItems, fullVisibleText)\n        : canonicalItems;'''
+              new_filter = '''        ? filterPlainTextBeverageSectionItems(canonicalItems, extracted.visibleText)\n        : canonicalItems;'''
+              if old_import not in text or old_visible not in text or old_filter not in text:
+                  raise SystemExit('beverage-scope anchors missing')
+              text = text.replace(old_import, new_import, 1)
+              text = text.replace(old_visible, '', 1)
+              text = text.replace(old_filter, new_filter, 1)
+          else:
+              raise SystemExit(f'unknown variant {variant}')
+
+          path.write_text(text)
+          PY
+          git diff --check
+          git diff -- apps/menu-worker/src/menu-source-runtime.ts
+
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Isolate Gandhi and Habibi manifests
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          rm -rf research/ab-catalog
+          mkdir -p research/ab-catalog
+          node --input-type=module <<'NODE'
+          import { readdir, readFile, copyFile } from 'node:fs/promises';
+          const targets = new Set([
+            '1947-gandhi-majorstuen-oslo',
+            'habibi-mollergata-oslo',
+          ]);
+          for (const file of (await readdir('catalog')).filter((name) => name.endsWith('.json'))) {
+            const manifest = JSON.parse(await readFile(`catalog/${file}`, 'utf8'));
+            if (targets.has(manifest.restaurant.slug)) {
+              await copyFile(`catalog/${file}`, `research/ab-catalog/${file}`);
+              targets.delete(manifest.restaurant.slug);
+            }
+          }
+          if (targets.size) throw new Error(`Missing targets: ${[...targets].join(', ')}`);
+          NODE
+
+      - name: Validate isolated regression pair
+        working-directory: apps/menu-worker
+        shell: bash
+        env:
+          VARIANT: ${{ matrix.variant }}
+        run: |
+          set +e
+          node dist/index.js validate:batch research/ab-catalog | tee "research/ab-${VARIANT}.json"
+          status=${PIPESTATUS[0]}
+          echo "variant=${VARIANT} exit=${status}"
+          exit 0
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-regression-ab-${{ matrix.variant }}
+          path: apps/menu-worker/research/ab-${{ matrix.variant }}.json
+          if-no-files-found: error
