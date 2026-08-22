@@ -1,0 +1,105 @@
+name: TEMP patch Batch 02 section identity
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.event.pull_request.head.ref == 'agent/batch02-residual-output-cleanup-v3'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          persist-credentials: true
+      - name: Patch generic food section identity and first-card precedence
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          source = Path('apps/menu-worker/src/html-source-extractor.ts')
+          s = source.read_text()
+          s = s.replace(
+              'export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v18";',
+              'export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v19";',
+              1,
+          )
+          old_food = 'const FOOD_SECTION_LABEL = /^(?:forretter?|starters?|appetizers?|small\\s+plates?|hovedretter?|mains?|main\\s+courses?|desserter?|desserts?|sushiruller?|sushi\\s+rolls?|sushi|sides?|tilbehør|noodles?|nudler|curr(?:y|ies)|wok|soups?|supper?|salads?|salater?)$/iu;'
+          new_food = 'const FOOD_SECTION_LABEL = /^(?:forretter?|starters?|appetizers?|small\\s+plates?|small\\s+dishes?\\s*(?:&|and)\\s*sharing\\s+plates?|classics?|dumplings?|proteins?|hovedretter?|mains?|main\\s+courses?|desserter?|desserts?|sushiruller?|sushi\\s+rolls?|sushi|sides?|tilbehør|noodles?|nudler|curr(?:y|ies)|wok|soups?|supper?|salads?|salater?)$/iu;'
+          if new_food not in s:
+              if old_food not in s:
+                  raise SystemExit('source food label anchor missing')
+              s = s.replace(old_food, new_food, 1)
+
+          old_desc = '''      const descriptionAnchoredHeading =\n        Boolean(firstContent) &&\n        looksLikeDescriptionLine(firstContent) &&\n        (repeatedLevel || strongUniqueCard);\n      if (\n        headingTitle &&\n        ((directRepeatedHeadingPrice && looksLikeStandaloneHeadingTitle(headingTitle)) ||\n          (descriptionAnchoredHeading && looksLikeStandaloneBlockTitle(headingTitle)))\n      ) {\n'''
+          new_desc = '''      const firstContentIsPlausibleTitle =\n        Boolean(firstContent) && looksLikeStandaloneBlockTitle(firstContent);\n      const descriptionAnchoredHeading =\n        Boolean(firstContent) &&\n        !firstContentIsPlausibleTitle &&\n        looksLikeDescriptionLine(firstContent) &&\n        (repeatedLevel || strongUniqueCard);\n      if (\n        headingTitle &&\n        ((directRepeatedHeadingPrice && looksLikeStandaloneHeadingTitle(headingTitle)) ||\n          (descriptionAnchoredHeading && looksLikeStandaloneBlockTitle(headingTitle)))\n      ) {\n'''
+          if new_desc not in s:
+              if old_desc not in s:
+                  raise SystemExit('source heading precedence anchor missing')
+              s = s.replace(old_desc, new_desc, 1)
+          source.write_text(s)
+
+          scope = Path('apps/menu-worker/src/html-text-section-scope.ts')
+          t = scope.read_text()
+          t = t.replace(
+              'export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v6";',
+              'export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v7";',
+              1,
+          )
+          old_scope = '  /^(?:food|mat|forretter?|starters?|appetizers?|small\\s+plates?|småretter|burgers?|hovedretter?|mains?|main\\s+courses?|supper?|soups?|barnemeny|children\'?s\\s+menu|kids?\\s+menu|sauser?|sauces?|desserter?|desserts?|sides?|tilbehør|salater?|salads?|pizza(?:er|s)?|noodles?|nudler|curr(?:y|ies)|wok|grillretter?|snacks?(?:\\s+menu)?|fries|kylling|chicken|lam|lamb|kebab|vegetar|vegetarian|spesial|special|nan|naan)$/iu;'
+          new_scope = '  /^(?:food|mat|forretter?|starters?|appetizers?|small\\s+plates?|small\\s+dishes?\\s*(?:&|and)\\s*sharing\\s+plates?|classics?|dumplings?|proteins?|småretter|burgers?|hovedretter?|mains?|main\\s+courses?|supper?|soups?|barnemeny|children\'?s\\s+menu|kids?\\s+menu|sauser?|sauces?|desserter?|desserts?|sides?|tilbehør|salater?|salads?|pizza(?:er|s)?|noodles?|nudler|curr(?:y|ies)|wok|grillretter?|snacks?(?:\\s+menu)?|fries|kylling|chicken|lam|lamb|kebab|vegetar|vegetarian|spesial|special|nan|naan)$/iu;'
+          if new_scope not in t:
+              if old_scope not in t:
+                  raise SystemExit('text scope food label anchor missing')
+              t = t.replace(old_scope, new_scope, 1)
+          scope.write_text(t)
+
+          source_test = Path('apps/menu-worker/src/html-source-extractor.test.ts')
+          st = source_test.read_text().replace(
+              'expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v18");',
+              'expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v19");',
+          )
+          closing='\n});\n'
+          test_block='''\n  it("prefers a plausible long first dish title over its repeated section heading", () => {\n    const html = `\n      <html><body>\n        <h2>DUMPLINGS</h2>\n        <p>Pork Gyoza with Japanese ketchup (4 pcs)</p>\n        <p>195,-</p>\n        <p>Chicken Gyoza with Truffle Tosazu (4 pcs)</p>\n        <p>195,-</p>\n        <h2>PROTEINS</h2>\n        <p>Grilled Chicken Yakiniku with Goma Cabbage salad</p>\n        <p>245,-</p>\n        <p>Grilled Seabass with chili garlic sauce</p>\n        <p>275,-</p>\n      </body></html>\n    `;\n    expect(extractScopedHtmlMenu(html).items.map((entry) => entry.name)).toEqual([\n      "Pork Gyoza with Japanese ketchup (4 pcs)",\n      "Chicken Gyoza with Truffle Tosazu (4 pcs)",\n      "Grilled Chicken Yakiniku with Goma Cabbage salad",\n      "Grilled Seabass with chili garlic sauce",\n    ]);\n  });\n'''
+          if 'prefers a plausible long first dish title over its repeated section heading' not in st:
+              if not st.endswith(closing):
+                  raise SystemExit('source test closing anchor missing')
+              st=st[:-len(closing)]+test_block+closing
+          source_test.write_text(st)
+
+          scope_test = Path('apps/menu-worker/src/html-text-section-scope.test.ts')
+          tt = scope_test.read_text().replace(
+              'expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v6");',
+              'expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v7");',
+              1,
+          )
+          scope_block='''\n  it("resets beverage navigation at small-dishes and classics sections", () => {\n    const items = [\n      item("Triple Chili Cheese", 1, 13500),\n      item("Original Ribs", 2, 36900),\n      item("The Godfather", 3, 26900),\n    ];\n    const visibleText = `\n      Milkshakes\n      Beverage Menu\n      Small Dishes & Sharing Plates\n      Triple Chili Cheese\n      135\n      Classics\n      Original Ribs\n      369\n      Burgers\n      The Godfather\n      269\n    `;\n    expect(\n      filterPlainTextBeverageSectionItems(items, visibleText).map((entry) => entry.name),\n    ).toEqual(["Triple Chili Cheese", "Original Ribs", "The Godfather"]);\n  });\n'''
+          if 'resets beverage navigation at small-dishes and classics sections' not in tt:
+              if not tt.endswith(closing):
+                  raise SystemExit('scope test closing anchor missing')
+              tt=tt[:-len(closing)]+scope_block+closing
+          scope_test.write_text(tt)
+
+          version_test=Path('apps/menu-worker/src/menu-source-runtime-version.test.ts')
+          vt=version_test.read_text().replace(
+              'expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v6");',
+              'expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v7");',
+              1,
+          )
+          version_test.write_text(vt)
+          PY
+          git diff --check
+          git diff -- apps/menu-worker/src/html-source-extractor.ts apps/menu-worker/src/html-source-extractor.test.ts apps/menu-worker/src/html-text-section-scope.ts apps/menu-worker/src/html-text-section-scope.test.ts apps/menu-worker/src/menu-source-runtime-version.test.ts
+      - name: Commit permanent section correction
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- apps/menu-worker/src/html-source-extractor.ts apps/menu-worker/src/html-source-extractor.test.ts apps/menu-worker/src/html-text-section-scope.ts apps/menu-worker/src/html-text-section-scope.test.ts apps/menu-worker/src/menu-source-runtime-version.test.ts
+          git commit -m "Preserve residual food section first cards"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
