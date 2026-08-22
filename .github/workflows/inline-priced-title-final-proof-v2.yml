@@ -1,0 +1,173 @@
+name: Inline-priced title final proof v2
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Validate current 55 catalog serially
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research
+          node --input-type=module <<'NODE'
+          import {readdir,readFile} from 'node:fs/promises';
+          const files=(await readdir('catalog')).filter((x)=>x.endsWith('.json'));
+          const slugs=[];
+          for(const file of files) slugs.push(JSON.parse(await readFile(`catalog/${file}`,'utf8')).restaurant.slug);
+          if(files.length!==55||new Set(slugs).size!==55) throw new Error(`Catalog=${files.length}/${new Set(slugs).size}; expected 55/55`);
+          NODE
+          set +e
+          node dist/index.js validate:batch catalog | tee research/inline-priced-all55-primary.json
+          exit 0
+
+      - name: Build retry set for transport/action-only failures
+        id: retryset
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          rm -rf research/inline-priced-retry && mkdir -p research/inline-priced-retry
+          node --input-type=module <<'NODE'
+          import {readdir,readFile,writeFile} from 'node:fs/promises';
+          const primary=JSON.parse(await readFile('research/inline-priced-all55-primary.json','utf8'));
+          const allowed=new Set(['transport','action']);
+          const retryable=[]; const nonRetryable=[];
+          for(const r of (primary.results??[]).filter((x)=>!x.accepted)){
+            const families=r.failureFamilies??[];
+            const row={slug:r.slug,failureFamilies:families,error:r.error??null,menuError:r.validation?.menu?.error??null};
+            (families.length>0&&families.every((f)=>allowed.has(f))?retryable:nonRetryable).push(row);
+          }
+          const retrySlugs=new Set(retryable.map((x)=>x.slug)); let copied=0;
+          for(const file of (await readdir('catalog')).filter((x)=>x.endsWith('.json'))){
+            const raw=await readFile(`catalog/${file}`,'utf8'); const m=JSON.parse(raw);
+            if(!retrySlugs.has(m.restaurant.slug)) continue;
+            await writeFile(`research/inline-priced-retry/${file}`,raw); copied++;
+          }
+          if(copied!==retryable.length) throw new Error(`retry manifest mismatch ${copied}/${retryable.length}`);
+          await writeFile('research/inline-priced-retryset.json',JSON.stringify({retryable,nonRetryable},null,2)+'\n');
+          await writeFile(process.env.GITHUB_OUTPUT,`retry_count=${retryable.length}\n`,{flag:'a'});
+          NODE
+
+      - name: Retry only transport/action failures
+        if: steps.retryset.outputs.retry_count != '0'
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/inline-priced-retry | tee research/inline-priced-retry-results.json
+          exit 0
+
+      - name: Empty retry result
+        if: steps.retryset.outputs.retry_count == '0'
+        working-directory: apps/menu-worker
+        run: printf '%s\n' '{"manifestCount":0,"acceptedCount":0,"failedCount":0,"results":[]}' > research/inline-priced-retry-results.json
+
+      - name: Gate combined 55 catalog evidence
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const p=JSON.parse(await readFile('research/inline-priced-all55-primary.json','utf8'));
+          const s=JSON.parse(await readFile('research/inline-priced-retryset.json','utf8'));
+          const r=JSON.parse(await readFile('research/inline-priced-retry-results.json','utf8'));
+          const accepted=new Set((p.results??[]).filter((x)=>x.accepted).map((x)=>x.slug));
+          for(const x of r.results??[]) if(x.accepted) accepted.add(x.slug);
+          const unresolved=(r.results??[]).filter((x)=>!x.accepted).map((x)=>x.slug);
+          const summary={primaryAccepted:p.acceptedCount,primaryFailed:p.failedCount,retryable:s.retryable,nonRetryable:s.nonRetryable,retryAccepted:r.acceptedCount,retryFailed:r.failedCount,combinedAccepted:accepted.size,unresolved};
+          await writeFile('research/inline-priced-all55-summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if(s.nonRetryable.length) throw new Error(`Non-retryable failures ${JSON.stringify(s.nonRetryable)}`);
+          if(unresolved.length) throw new Error(`Unresolved retry failures ${JSON.stringify(unresolved)}`);
+          if(accepted.size!==55) throw new Error(`Combined catalog=${accepted.size}/55`);
+          NODE
+
+      - name: Restore Batch 02 plan and isolate New Delhi
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02 && mkdir -p /tmp/batch02
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import {mkdir,readFile,writeFile} from 'node:fs/promises';
+          const source=JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json','utf8'));
+          const restaurants=source.restaurants.filter((x)=>x.restaurant.slug==='new-delhi-tjuvholmen-oslo');
+          if(restaurants.length!==1) throw new Error(`New Delhi plan rows=${restaurants.length}`);
+          const plan={...source,outputDirectory:'research/new-delhi-final-generated',concurrency:1,restaurants};
+          await mkdir('apps/menu-worker/research/new-delhi-final-generated',{recursive:true});
+          await writeFile('apps/menu-worker/research/new-delhi-final.plan.json',JSON.stringify(plan,null,2)+'\n');
+          NODE
+
+      - name: Fresh New Delhi intake
+        working-directory: apps/menu-worker
+        shell: bash
+        run: node dist/index.js intake:batch research/new-delhi-final.plan.json | tee research/new-delhi-final-intake.json
+
+      - name: Independent New Delhi validation
+        working-directory: apps/menu-worker
+        shell: bash
+        run: node dist/index.js validate:batch research/new-delhi-final-generated | tee research/new-delhi-final-validation.json
+
+      - name: Gate New Delhi exact canonical output
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const intake=JSON.parse(await readFile('research/new-delhi-final-intake.json','utf8'));
+          const validation=JSON.parse(await readFile('research/new-delhi-final-validation.json','utf8'));
+          const result=validation.results?.[0];
+          const names=result?.validation?.menu?.observedDishNames??[];
+          const variants=result?.validation?.menu?.observedDishVariants??[];
+          const generated=JSON.parse(await readFile('research/new-delhi-final-generated/new-delhi-tjuvholmen-oslo.json','utf8'));
+          const byName=new Map(variants.map((v)=>[v.name,v]));
+          const summary={intake:{requested:intake.requestedCount,generated:intake.generatedCount,failed:intake.failedCount,observedItems:intake.results?.[0]?.observedItemCount},validation:{accepted:validation.acceptedCount,failed:validation.failedCount,itemCount:result?.validation?.menu?.quality?.itemCount,names},minimumExpectedItems:generated.menuSource.minimumExpectedItems,mixedIceCream:byName.get('Mixed Ice Cream')??null,murghMalai:byName.get('Murgh Malai Chicken Tikka')??null,hasWinePackage:names.includes('With wine package')};
+          await writeFile('research/new-delhi-final-summary-v2.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if(intake.requestedCount!==1||intake.generatedCount!==1||intake.failedCount!==0) throw new Error('New Delhi intake failed');
+          if(validation.manifestCount!==1||validation.acceptedCount!==1||validation.failedCount!==0) throw new Error('New Delhi validation failed');
+          if(result?.validation?.menu?.quality?.itemCount!==81) throw new Error(`New Delhi itemCount=${result?.validation?.menu?.quality?.itemCount}; expected 81`);
+          if(generated.menuSource.minimumExpectedItems!==81) throw new Error(`New Delhi minimum=${generated.menuSource.minimumExpectedItems}; expected 81`);
+          if(byName.get('Mixed Ice Cream')?.priceMinor!==12900) throw new Error(`Mixed Ice Cream mismatch ${JSON.stringify(byName.get('Mixed Ice Cream')??null)}`);
+          if(byName.get('Murgh Malai Chicken Tikka')?.priceMinor!==14900) throw new Error(`Murgh Malai mismatch ${JSON.stringify(byName.get('Murgh Malai Chicken Tikka')??null)}`);
+          if(names.includes('With wine package')) throw new Error('With wine package leaked as canonical dish');
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: inline-priced-title-final-proof-v2
+          path: |
+            apps/menu-worker/research/inline-priced-all55-primary.json
+            apps/menu-worker/research/inline-priced-retryset.json
+            apps/menu-worker/research/inline-priced-retry-results.json
+            apps/menu-worker/research/inline-priced-all55-summary.json
+            apps/menu-worker/research/new-delhi-final-intake.json
+            apps/menu-worker/research/new-delhi-final-validation.json
+            apps/menu-worker/research/new-delhi-final-summary-v2.json
+            apps/menu-worker/research/new-delhi-final-generated/*.json
+          if-no-files-found: warn
