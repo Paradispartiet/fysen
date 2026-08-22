@@ -1,0 +1,50 @@
+name: TEMP fix section intro precedence
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.event.pull_request.head.ref == 'agent/batch02-residual-output-cleanup-v3'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          persist-credentials: true
+      - name: Require direct price adjacency for first-content title precedence
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('apps/menu-worker/src/html-source-extractor.ts')
+          t=p.read_text()
+          old='''      const firstContentIsPlausibleTitle =\n        Boolean(firstContent) && looksLikeStandaloneBlockTitle(firstContent);\n'''
+          new='''      const firstContentIsPlausibleTitle =\n        Boolean(firstContent) &&\n        firstContentIndex === pricePosition - 1 &&\n        looksLikeStandaloneBlockTitle(firstContent);\n'''
+          if new not in t:
+              if old not in t: raise SystemExit('first-content precedence anchor missing')
+              t=t.replace(old,new,1)
+          p.write_text(t)
+
+          p=Path('apps/menu-worker/src/html-source-extractor.test.ts')
+          t=p.read_text()
+          closing='\n});\n'
+          block='''\n  it("does not treat a section intro as the dish when another title remains before price", () => {\n    const html = `\n      <html><body>\n        <h2>Pizza</h2>\n        <p>Rykende fersk italiensk pizza fra steinovnen</p>\n        <p>Diavola</p>\n        <p>Tomatsaus, ost, ventricina, oliven, rødløk, ruccola, chili</p>\n        <p>259,-</p>\n        <p>Wanna Beef?</p>\n        <p>Tomatsaus, ost, biff, rødløk, sjampinjong, aioli</p>\n        <p>269,-</p>\n        <p>Don't chicken out</p>\n        <p>Tomatsaus, ost, kylling, chili, løk og paprika</p>\n        <p>249,-</p>\n      </body></html>\n    `;\n    const result = extractScopedHtmlMenu(html);\n    expect(result.items.some((entry) => entry.name === "Rykende fersk italiensk pizza fra steinovnen")).toBe(false);\n  });\n'''
+          if 'does not treat a section intro as the dish when another title remains before price' not in t:
+              if not t.endswith(closing): raise SystemExit('source test closing missing')
+              t=t[:-len(closing)]+block+closing
+          p.write_text(t)
+          PY
+          git diff --check
+      - name: Commit permanent precedence correction
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- apps/menu-worker/src/html-source-extractor.ts apps/menu-worker/src/html-source-extractor.test.ts
+          git commit -m "Keep section intros out of dish identity"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
