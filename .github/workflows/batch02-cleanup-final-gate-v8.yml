@@ -1,0 +1,207 @@
+name: Batch 02 cleanup final gate v8
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Assert 50 unique catalog manifests
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research
+          node --input-type=module <<'NODE'
+          import { readdir, readFile } from 'node:fs/promises';
+          const files=(await readdir('catalog')).filter((name)=>name.endsWith('.json')).sort();
+          const slugs=[];
+          for(const file of files){const manifest=JSON.parse(await readFile(`catalog/${file}`,'utf8'));slugs.push(manifest.restaurant.slug);}
+          if(files.length!==50||new Set(slugs).size!==50) throw new Error(`Expected 50 unique catalog manifests, got ${files.length}/${new Set(slugs).size}`);
+          NODE
+
+      - name: Validate all 50 serially - primary pass
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch catalog | tee research/batch02-cleanup-all50-primary.json
+          exit 0
+
+      - name: Isolate only retryable failed sources
+        id: retryset
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          rm -rf research/batch02-cleanup-retry
+          mkdir -p research/batch02-cleanup-retry
+          node --input-type=module <<'NODE'
+          import { readdir, readFile, writeFile } from 'node:fs/promises';
+          const primary=JSON.parse(await readFile('research/batch02-cleanup-all50-primary.json','utf8'));
+          const retryableFamilies=new Set(['transport','action']);
+          const failed=(primary.results??[]).filter((result)=>!result.accepted);
+          const retryable=[];
+          const nonRetryable=[];
+          for(const result of failed){
+            const families=result.failureFamilies??[];
+            const isRetryable=families.length>0&&families.every((family)=>retryableFamilies.has(family));
+            (isRetryable?retryable:nonRetryable).push({slug:result.slug,failureFamilies:families,error:result.error??null,menuError:result.validation?.menu?.error??null});
+          }
+          const retrySlugs=new Set(retryable.map((entry)=>entry.slug));
+          let copied=0;
+          for(const file of (await readdir('catalog')).filter((name)=>name.endsWith('.json'))){
+            const raw=await readFile(`catalog/${file}`,'utf8');
+            const manifest=JSON.parse(raw);
+            if(!retrySlugs.has(manifest.restaurant.slug)) continue;
+            await writeFile(`research/batch02-cleanup-retry/${file}`,raw);
+            copied+=1;
+          }
+          if(copied!==retryable.length) throw new Error(`Retry manifest mismatch ${copied}/${retryable.length}`);
+          const summary={retryable,nonRetryable,retryCount:retryable.length};
+          await writeFile('research/batch02-cleanup-retryset.json',JSON.stringify(summary,null,2)+'\n');
+          await writeFile(process.env.GITHUB_OUTPUT,`retry_count=${retryable.length}\n`,{flag:'a'});
+          console.log(JSON.stringify(summary,null,2));
+          NODE
+
+      - name: Retry only transport/action failures serially
+        if: steps.retryset.outputs.retry_count != '0'
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/batch02-cleanup-retry | tee research/batch02-cleanup-retry-results.json
+          exit 0
+
+      - name: Create empty retry result when no retry is needed
+        if: steps.retryset.outputs.retry_count == '0'
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          printf '%s\n' '{"manifestCount":0,"acceptedCount":0,"failedCount":0,"failureFamilyCounts":{},"results":[]}' > research/batch02-cleanup-retry-results.json
+
+      - name: Gate catalog by per-source evidence
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const primary=JSON.parse(await readFile('research/batch02-cleanup-all50-primary.json','utf8'));
+          const retryset=JSON.parse(await readFile('research/batch02-cleanup-retryset.json','utf8'));
+          const retry=JSON.parse(await readFile('research/batch02-cleanup-retry-results.json','utf8'));
+          const accepted=new Set((primary.results??[]).filter((r)=>r.accepted).map((r)=>r.slug));
+          for(const result of (retry.results??[])){if(result.accepted) accepted.add(result.slug);}
+          const unresolvedRetry=(retry.results??[]).filter((r)=>!r.accepted).map((r)=>({slug:r.slug,failureFamilies:r.failureFamilies??[],error:r.error??null,menuError:r.validation?.menu?.error??null}));
+          const summary={primary:{manifestCount:primary.manifestCount,acceptedCount:primary.acceptedCount,failedCount:primary.failedCount},retryset,retry:{manifestCount:retry.manifestCount,acceptedCount:retry.acceptedCount,failedCount:retry.failedCount,unresolvedRetry},combinedAcceptedCount:accepted.size};
+          await writeFile('research/batch02-cleanup-catalog-combined-summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if(primary.manifestCount!==50) throw new Error(`Primary catalog count ${primary.manifestCount}`);
+          if(retryset.nonRetryable.length>0) throw new Error(`Non-retryable catalog failures: ${JSON.stringify(retryset.nonRetryable)}`);
+          if(unresolvedRetry.length>0) throw new Error(`Retryable sources still failed: ${JSON.stringify(unresolvedRetry)}`);
+          if(accepted.size!==50) throw new Error(`Combined catalog gate ${accepted.size}/50`);
+          NODE
+
+      - name: Restore immutable Batch 02 plan and isolate final five
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02
+          mkdir -p /tmp/batch02
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import { mkdir, readFile, writeFile } from 'node:fs/promises';
+          const source=JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json','utf8'));
+          const targets=new Set(['jaipur-karl-johans-gate-oslo','indi-spice-welhavens-gate-oslo','dognvill-bjorvika-oslo','dognvill-tjuvholmen-oslo','dognvill-vulkan-oslo']);
+          const restaurants=source.restaurants.filter((entry)=>targets.has(entry.restaurant.slug));
+          if(restaurants.length!==5) throw new Error(`Expected 5 targets, found ${restaurants.length}`);
+          const plan={...source,outputDirectory:'research/batch02-cleanup-final-five-generated',concurrency:1,restaurants};
+          await mkdir('apps/menu-worker/research/batch02-cleanup-final-five-generated',{recursive:true});
+          await writeFile('apps/menu-worker/research/batch02-cleanup-final-five.plan.json',JSON.stringify(plan,null,2)+'\n');
+          NODE
+
+      - name: Fresh intake final five
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js intake:batch research/batch02-cleanup-final-five.plan.json | tee research/batch02-cleanup-final-five-intake.json
+          exit 0
+
+      - name: Independent serial validation final five
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/batch02-cleanup-final-five-generated | tee research/batch02-cleanup-final-five-validation.json
+          exit 0
+
+      - name: Gate final five counts and observed output
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const intake=JSON.parse(await readFile('research/batch02-cleanup-final-five-intake.json','utf8'));
+          const validation=JSON.parse(await readFile('research/batch02-cleanup-final-five-validation.json','utf8'));
+          const compact=(result)=>({slug:result.slug,accepted:result.accepted,failureFamilies:result.failureFamilies??[],error:result.error??null,menuError:result.validation?.menu?.error??null,itemCount:result.validation?.menu?.quality?.itemCount??null,extractorVersion:result.validation?.menu?.extractorVersion??null,observedDishNames:result.validation?.menu?.observedDishNames??[]});
+          const results=(validation.results??[]).map(compact);
+          const bySlug=new Map(results.map((r)=>[r.slug,r]));
+          const forbidden=new Map([
+            ['jaipur-karl-johans-gate-oslo',[/^Jaipur$/iu]],
+            ['indi-spice-welhavens-gate-oslo',[/^TANDOORI$/iu,/^TASTING MENU$/iu,/^CUPPUCINO$/iu,/^CAPUCCINO$/iu]],
+            ['dognvill-bjorvika-oslo',[/^ALT$/iu,/^GRAM HAMBURGER$/iu]],
+            ['dognvill-tjuvholmen-oslo',[/^ALT$/iu,/^GRAM HAMBURGER$/iu]],
+            ['dognvill-vulkan-oslo',[/^ALT$/iu,/^GRAM HAMBURGER$/iu]],
+          ]);
+          const qualityFailures=[];
+          for(const [slug,patterns] of forbidden){
+            const result=bySlug.get(slug);
+            if(!result){qualityFailures.push(`${slug}: missing result`);continue;}
+            const names=result.observedDishNames??[];
+            for(const pattern of patterns){const found=names.find((name)=>pattern.test(name));if(found) qualityFailures.push(`${slug}: forbidden ${found}`);}
+            if(slug.startsWith('dognvill-')&&!names.includes('90 GRAM HAMBURGER')) qualityFailures.push(`${slug}: missing exact 90 GRAM HAMBURGER`);
+          }
+          const summary={cleanupHead:'922d0be33f70af6c34ae86a54185b2ba16049d1b',intake:{requestedCount:intake.requestedCount,generatedCount:intake.generatedCount,failedCount:intake.failedCount},validation:{manifestCount:validation.manifestCount,acceptedCount:validation.acceptedCount,failedCount:validation.failedCount,failureFamilyCounts:validation.failureFamilyCounts,results},qualityFailures};
+          await writeFile('research/batch02-cleanup-final-five-summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if(intake.requestedCount!==5||intake.generatedCount!==5||intake.failedCount!==0) throw new Error(`Five intake gate ${intake.generatedCount}/${intake.requestedCount}`);
+          if(validation.manifestCount!==5||validation.acceptedCount!==5||validation.failedCount!==0) throw new Error(`Five validation gate ${validation.acceptedCount}/${validation.manifestCount}`);
+          if(qualityFailures.length>0) throw new Error(`Output quality failures: ${qualityFailures.join('; ')}`);
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-cleanup-final-gate-v8
+          path: |
+            apps/menu-worker/research/batch02-cleanup-all50-primary.json
+            apps/menu-worker/research/batch02-cleanup-retryset.json
+            apps/menu-worker/research/batch02-cleanup-retry-results.json
+            apps/menu-worker/research/batch02-cleanup-catalog-combined-summary.json
+            apps/menu-worker/research/batch02-cleanup-final-five.plan.json
+            apps/menu-worker/research/batch02-cleanup-final-five-intake.json
+            apps/menu-worker/research/batch02-cleanup-final-five-validation.json
+            apps/menu-worker/research/batch02-cleanup-final-five-summary.json
+            apps/menu-worker/research/batch02-cleanup-final-five-generated/*.json
+          if-no-files-found: warn
