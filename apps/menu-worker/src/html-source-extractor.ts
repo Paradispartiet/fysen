@@ -767,17 +767,10 @@ export function extractScopedHtmlMenu(html: string): ExtractedHtmlMenu {
   }
 
   const standalone = extractStandalonePriceBlocks(visibleText, scopedText.headingLevels);
-  if (
+  const standaloneQualifies =
     standalone.priceCount >= 3 &&
     standalone.items.length >= 3 &&
-    standalone.items.length * 4 >= standalone.priceCount * 3
-  ) {
-    return {
-      items: standalone.items,
-      method: "html_heuristic",
-      visibleText,
-    };
-  }
+    standalone.items.length * 4 >= standalone.priceCount * 3;
 
   const scoped = extractHtmlMenu(syntheticHtmlFromVisibleText(visibleText));
   const foodItems = scoped.items.filter(
@@ -792,6 +785,13 @@ export function extractScopedHtmlMenu(html: string): ExtractedHtmlMenu {
     scopedText.headingLevels,
     foodItems,
   ).map(normalizeNumberedItem);
+  if (standaloneQualifies && standalone.items.length > recovered.length) {
+    return {
+      items: standalone.items,
+      method: "html_heuristic",
+      visibleText,
+    };
+  }
   return {
     ...scoped,
     items: recovered,
