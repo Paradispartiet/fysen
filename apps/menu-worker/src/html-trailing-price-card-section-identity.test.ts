@@ -42,15 +42,20 @@ describe("trailing-price card section identity", () => {
     expect(items.find((item) => item.name === "Gambari")?.sectionName).toBeNull();
     expect(items.find((item) => item.name === "Kos Kos Kylling")?.sectionName).toBeNull();
   });
+
   it("keeps inline-priced duplicate dishes distinct across small-dishes and classics sections", () => {
     const items = recoverTrailingPriceCardHtmlItems(`
       <html><body>
         <h2>Small Dishes & Sharing Plates</h2>
+        <h3>Triple Chili Cheese 135,-</h3>
+        <p>Hand rolled chili and cheese balls.</p>
         <h3>Hot Wings 179,-</h3>
         <p>Six glazed chicken wings.</p>
         <h2>Classics</h2>
         <h3>Hot Wings 289,-</h3>
         <p>Twelve glazed chicken wings.</p>
+        <h3>Golden Cauli & Feta 249,-</h3>
+        <p>Roasted cauliflower with feta.</p>
       </body></html>
     `);
     const hotWings = items
@@ -66,5 +71,4 @@ describe("trailing-price card section identity", () => {
     ]);
     expect(new Set(hotWings.map((item) => item.sourceKey)).size).toBe(2);
   });
-
 });
