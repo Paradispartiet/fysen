@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kverneriet-solli-oslo",
+    "name": "Kverneriet Solli",
+    "websiteUrl": "https://kverneriet.com/solli/",
+    "address": "Henrik Ibsens gate 100, 0255 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.914391,
+    "longitude": 10.718977
+  },
+  "menuSource": {
+    "url": "https://kverneriet.com/solli/menu/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 22,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "Batch 02 locks current menu identity first. Kitchen hours are verified separately after candidate generation."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Triple Chili Cheese",
+      "Original Ribs",
+      "Ceasar Salad",
+      "True Blue",
+      "Umami",
+      "American Fries",
+      "Green Side Salad",
+      "Chocolate Fondant"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Triple Chili Cheese",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Original Ribs",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Ceasar Salad",
+        "priceMinor": 29500
+      },
+      {
+        "name": "True Blue",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Umami",
+        "priceMinor": 24900
+      },
+      {
+        "name": "American Fries",
+        "priceMinor": 8400
+      },
+      {
+        "name": "Green Side Salad",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Chocolate Fondant",
+        "priceMinor": 14900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
