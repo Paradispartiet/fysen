@@ -13,6 +13,7 @@ import { HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION } from "./html-strong-title-pr
 import { HTML_OUTPUT_CANONICALIZER_VERSION } from "./html-output-canonicalizer.js";
 import { HTML_TEXT_SECTION_SCOPE_VERSION } from "./html-text-section-scope.js";
 import { HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION } from "./html-trailing-price-card-recovery.js";
+import { PUBLIC_MENU_API_EXTRACTOR_VERSION } from "./public-menu-api-extractor.js";
 import {
   HTML_BEVERAGE_FILTER_VERSION,
   HTML_ITEM_NAME_NORMALIZER_VERSION,
@@ -69,6 +70,7 @@ describe("HTML runtime extractor version", () => {
     expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v3");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
+    expect(extractorVersionForSourceType("api")).toBe(PUBLIC_MENU_API_EXTRACTOR_VERSION);
     expect(
       shouldForceReextract("html", "html-v14+html-v7+titles-v8+heading-v1"),
     ).toBe(true);

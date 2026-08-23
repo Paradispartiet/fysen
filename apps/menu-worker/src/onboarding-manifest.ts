@@ -86,7 +86,7 @@ export const restaurantOnboardingManifestSchema = z
     }),
     menuSource: z.object({
       url: httpsUrl,
-      sourceType: z.enum(["html", "json_ld", "pdf"]),
+      sourceType: z.enum(["html", "json_ld", "pdf", "api"]),
       fetchMode: z.enum(["http", "browser"]).default("http"),
       userAgent: z.string().trim().min(1).max(300).default("FysenMenuBot/0.1"),
       checkIntervalMinutes: z.number().int().min(60).max(10080),
@@ -125,7 +125,11 @@ export const restaurantOnboardingManifestSchema = z
     }),
   })
   .superRefine((manifest, context) => {
-    if (manifest.menuSource.fetchMode === "browser" && manifest.menuSource.sourceType === "pdf") {
+    if (
+      manifest.menuSource.fetchMode === "browser" &&
+      manifest.menuSource.sourceType !== "html" &&
+      manifest.menuSource.sourceType !== "json_ld"
+    ) {
       context.addIssue({
         code: "custom",
         path: ["menuSource", "fetchMode"],
