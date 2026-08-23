@@ -1,4 +1,4 @@
-name: TEMP gated structured API writer for PR 445
+name: TEMP build tested structured API patch
 
 on:
   pull_request:
@@ -7,16 +7,18 @@ on:
       - ".github/workflows/batch02-source-origin-trace.yml"
 
 permissions:
-  contents: write
+  contents: read
+  actions: read
 
 jobs:
-  writer:
+  build-patch:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
           ref: agent/structured-menu-api-v1
+          persist-credentials: false
       - uses: pnpm/action-setup@v4
         with:
           version: 11.4.0
@@ -40,162 +42,108 @@ jobs:
                   raise SystemExit(f"{path}: expected one anchor, got {count}: {old!r}")
               p.write_text(text.replace(old, new, 1))
 
-          replace_once(
-              'apps/menu-worker/src/onboarding-manifest.ts',
+          replace_once('apps/menu-worker/src/onboarding-manifest.ts',
               'sourceType: z.enum(["html", "json_ld", "pdf"]),',
-              'sourceType: z.enum(["html", "json_ld", "pdf", "api"]),',
-          )
-          replace_once(
-              'apps/menu-worker/src/onboarding-manifest.ts',
+              'sourceType: z.enum(["html", "json_ld", "pdf", "api"]),')
+          replace_once('apps/menu-worker/src/onboarding-manifest.ts',
               'if (manifest.menuSource.fetchMode === "browser" && manifest.menuSource.sourceType === "pdf") {',
-              'if (\n      manifest.menuSource.fetchMode === "browser" &&\n      manifest.menuSource.sourceType !== "html" &&\n      manifest.menuSource.sourceType !== "json_ld"\n    ) {',
-          )
-          replace_once(
-              'apps/menu-worker/src/menu-source-runtime.ts',
+              'if (\n      manifest.menuSource.fetchMode === "browser" &&\n      manifest.menuSource.sourceType !== "html" &&\n      manifest.menuSource.sourceType !== "json_ld"\n    ) {')
+          replace_once('apps/menu-worker/src/menu-source-runtime.ts',
               'import { HttpMenuClient, type MenuHttpFetchResult } from "./http-client.js";\n',
-              'import { HttpMenuClient, type MenuHttpFetchResult } from "./http-client.js";\nimport {\n  API_SOURCE_EXTRACTOR_VERSION,\n  extractStructuredApiMenu,\n} from "./api-source-extractor.js";\n',
-          )
-          replace_once(
-              'apps/menu-worker/src/menu-source-runtime.ts',
+              'import { HttpMenuClient, type MenuHttpFetchResult } from "./http-client.js";\nimport {\n  API_SOURCE_EXTRACTOR_VERSION,\n  extractStructuredApiMenu,\n} from "./api-source-extractor.js";\n')
+          replace_once('apps/menu-worker/src/menu-source-runtime.ts',
               'export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";',
-              'export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf" | "api";',
-          )
-          replace_once(
-              'apps/menu-worker/src/menu-source-runtime.ts',
+              'export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf" | "api";')
+          replace_once('apps/menu-worker/src/menu-source-runtime.ts',
               'if (sourceType === "pdf") return PDF_SOURCE_EXTRACTOR_VERSION;\n  return null;',
-              'if (sourceType === "pdf") return PDF_SOURCE_EXTRACTOR_VERSION;\n  if (sourceType === "api") return API_SOURCE_EXTRACTOR_VERSION;\n  return null;',
-          )
-          replace_once(
-              'apps/menu-worker/src/menu-source-runtime.ts',
+              'if (sourceType === "pdf") return PDF_SOURCE_EXTRACTOR_VERSION;\n  if (sourceType === "api") return API_SOURCE_EXTRACTOR_VERSION;\n  return null;')
+          replace_once('apps/menu-worker/src/menu-source-runtime.ts',
               'input.sourceType !== "json_ld" &&\n    input.sourceType !== "pdf"',
-              'input.sourceType !== "json_ld" &&\n    input.sourceType !== "pdf" &&\n    input.sourceType !== "api"',
-          )
-          replace_once(
-              'apps/menu-worker/src/menu-source-runtime.ts',
+              'input.sourceType !== "json_ld" &&\n    input.sourceType !== "pdf" &&\n    input.sourceType !== "api"')
+          replace_once('apps/menu-worker/src/menu-source-runtime.ts',
               '): Promise<ExtractedMenuSource> {\n  if (sourceType === "html" || sourceType === "json_ld") {',
-              '): Promise<ExtractedMenuSource> {\n  if (sourceType === "api") {\n    return {\n      items: extractStructuredApiMenu(fetched.body),\n      method: "api",\n      extractorVersion: API_SOURCE_EXTRACTOR_VERSION,\n    };\n  }\n  if (sourceType === "html" || sourceType === "json_ld") {',
-          )
-          replace_once(
-              'apps/menu-worker/src/menu-source-runtime-version.test.ts',
+              '): Promise<ExtractedMenuSource> {\n  if (sourceType === "api") {\n    return {\n      items: extractStructuredApiMenu(fetched.body),\n      method: "api",\n      extractorVersion: API_SOURCE_EXTRACTOR_VERSION,\n    };\n  }\n  if (sourceType === "html" || sourceType === "json_ld") {')
+          replace_once('apps/menu-worker/src/menu-source-runtime-version.test.ts',
               'import { describe, expect, it } from "vitest";\n',
-              'import { describe, expect, it } from "vitest";\nimport { API_SOURCE_EXTRACTOR_VERSION } from "./api-source-extractor.js";\n',
-          )
-          replace_once(
-              'apps/menu-worker/src/menu-source-runtime-version.test.ts',
+              'import { describe, expect, it } from "vitest";\nimport { API_SOURCE_EXTRACTOR_VERSION } from "./api-source-extractor.js";\n')
+          replace_once('apps/menu-worker/src/menu-source-runtime-version.test.ts',
               'expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);\n',
-              'expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);\n    expect(API_SOURCE_EXTRACTOR_VERSION).toBe("api-v1");\n    expect(extractorVersionForSourceType("api")).toBe(API_SOURCE_EXTRACTOR_VERSION);\n',
-          )
-          replace_once(
-              'apps/menu-worker/src/onboarding-manifest.test.ts',
+              'expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);\n    expect(API_SOURCE_EXTRACTOR_VERSION).toBe("api-v1");\n    expect(extractorVersionForSourceType("api")).toBe(API_SOURCE_EXTRACTOR_VERSION);\n')
+          replace_once('apps/menu-worker/src/onboarding-manifest.test.ts',
               '  it("accepts PDF sources and explicit section/price assertions", () => {',
               '''  it("accepts explicit HTTP API sources and rejects browser API mode", () => {
     const parsed = restaurantOnboardingManifestSchema.parse({
       ...validManifest,
-      menuSource: {
-        ...validManifest.menuSource,
-        url: "https://example.com/api/menu",
-        sourceType: "api",
-      },
+      menuSource: { ...validManifest.menuSource, url: "https://example.com/api/menu", sourceType: "api" },
     });
     expect(parsed.menuSource.sourceType).toBe("api");
     expect(parsed.menuSource.fetchMode).toBe("http");
-
-    expect(() =>
-      restaurantOnboardingManifestSchema.parse({
-        ...validManifest,
-        menuSource: {
-          ...validManifest.menuSource,
-          url: "https://example.com/api/menu",
-          sourceType: "api",
-          fetchMode: "browser",
-        },
-      }),
-    ).toThrow("Browser fetch mode only supports HTML/JSON-LD sources");
+    expect(() => restaurantOnboardingManifestSchema.parse({
+      ...validManifest,
+      menuSource: { ...validManifest.menuSource, url: "https://example.com/api/menu", sourceType: "api", fetchMode: "browser" },
+    })).toThrow("Browser fetch mode only supports HTML/JSON-LD sources");
   });
 
-  it("accepts PDF sources and explicit section/price assertions", () => {''',
-          )
+  it("accepts PDF sources and explicit section/price assertions", () => {''')
           PY
 
           cat > apps/menu-worker/src/api-source-extractor.test.ts <<'TEST'
           import { describe, expect, it } from "vitest";
           import { API_SOURCE_EXTRACTOR_VERSION, extractStructuredApiMenu } from "./api-source-extractor.js";
-
           const localized = (text: string) => [{ language: "no", text }];
           const item = (name: string, amount: number, extra: Record<string, unknown> = {}) => ({
-            id: name,
-            names: localized(name),
-            descriptions: localized(`${name} description`),
-            price: { amount, currency: "NOK", currencySymbol: "kr" },
-            active: true,
-            variants: [{ price: { amount, currency: "NOK", currencySymbol: "kr" } }],
-            ...extra,
+            id: name, names: localized(name), descriptions: localized(`${name} description`),
+            price: { amount, currency: "NOK", currencySymbol: "kr" }, active: true,
+            variants: [{ price: { amount, currency: "NOK", currencySymbol: "kr" } }], ...extra,
           });
-
           describe("structured menu API extractor", () => {
             it("extracts recursive food rows and rejects beverage, aggregate and inactive rows", () => {
               const body = JSON.stringify({ location: { menus: [{ menuSections: [
                 { titles: localized("🍺 Cerveza | Øl"), menuItems: [item("Tapasøl", 145)] },
                 { titles: localized("Butikk"), menuItems: [item("T-skjorte", 300)] },
-                { titles: localized("🍤 Fritura | Fritert"), menuItems: [
-                  item("Patatas bravas", 105), item("Skjult rett", 99, { active: false }),
-                ], subSections: [
+                { titles: localized("🍤 Fritura | Fritert"), menuItems: [item("Patatas bravas", 105), item("Skjult rett", 99, { active: false })], subSections: [
                   { titles: localized("Alle produkter"), menuItems: [item("Patatas bravas", 105)] },
                   { titles: localized("Ukens tapas"), menuItems: [item("Croquetas", 50)] },
                 ] },
               ] }] } });
               const rows = extractStructuredApiMenu(body);
               expect(rows.map((row) => [row.name, row.sectionName, row.priceMinor])).toEqual([
-                ["Patatas bravas", "🍤 Fritura | Fritert", 10500],
-                ["Croquetas", "Ukens tapas", 5000],
+                ["Patatas bravas", "🍤 Fritura | Fritert", 10500], ["Croquetas", "Ukens tapas", 5000],
               ]);
               expect(rows.every((row) => row.currency === "NOK" && row.extractionMethod === "api")).toBe(true);
             });
-
             it("preserves multiple variant prices in minor units", () => {
-              const body = JSON.stringify({ location: { menus: [{ menuSections: [{
-                titles: localized("Carnes | Kjøtt"),
-                menuItems: [item("Biff", 170, { variants: [
-                  { price: { amount: 170, currency: "NOK" } },
-                  { price: { amount: 225.5, currency: "NOK" } },
-                ] })],
-              }] }] } });
-              expect(extractStructuredApiMenu(body)[0]).toMatchObject({
-                name: "Biff", priceMinor: 17000, priceKind: "multiple", priceMaxMinor: 22550,
-              });
+              const body = JSON.stringify({ location: { menus: [{ menuSections: [{ titles: localized("Carnes | Kjøtt"), menuItems: [item("Biff", 170, { variants: [
+                { price: { amount: 170, currency: "NOK" } }, { price: { amount: 225.5, currency: "NOK" } },
+              ] })] }] }] } });
+              expect(extractStructuredApiMenu(body)[0]).toMatchObject({ name: "Biff", priceMinor: 17000, priceKind: "multiple", priceMaxMinor: 22550 });
             });
-
             it("fails closed on invalid JSON, unsupported shapes and currencies", () => {
               expect(() => extractStructuredApiMenu("not-json")).toThrow("did not return valid JSON");
-              expect(() => extractStructuredApiMenu(JSON.stringify({ location: { menus: [] } }))).toThrow(
-                "did not expose location.menus",
-              );
-              expect(() => extractStructuredApiMenu(JSON.stringify({ location: { menus: [{ menuSections: [{
-                titles: localized("Mat"),
-                menuItems: [{ ...item("Pasta", 20), price: { amount: 20, currency: "EUR" }, variants: [] }],
-              }] }] } }))).toThrow("unsupported currency EUR");
+              expect(() => extractStructuredApiMenu(JSON.stringify({ location: { menus: [] } }))).toThrow("did not expose location.menus");
+              expect(() => extractStructuredApiMenu(JSON.stringify({ location: { menus: [{ menuSections: [{ titles: localized("Mat"), menuItems: [{ ...item("Pasta", 20), price: { amount: 20, currency: "EUR" }, variants: [] }] }] }] } }))).toThrow("unsupported currency EUR");
               expect(API_SOURCE_EXTRACTOR_VERSION).toBe("api-v1");
             });
           });
           TEST
-
       - name: Run complete menu-worker regression gate
         run: |
           pnpm --filter @fysen/menu-worker test
           pnpm --filter @fysen/menu-worker typecheck
-      - name: Push only permanent files to PR 445 branch
+      - name: Stage tested permanent files
         shell: bash
         run: |
-          rm .github/workflows/temp-structured-menu-api-writer.yml
-          git add \
-            .github/workflows/temp-structured-menu-api-writer.yml \
-            apps/menu-worker/src/api-source-extractor.ts \
-            apps/menu-worker/src/api-source-extractor.test.ts \
-            apps/menu-worker/src/onboarding-manifest.ts \
-            apps/menu-worker/src/onboarding-manifest.test.ts \
-            apps/menu-worker/src/menu-source-runtime.ts \
-            apps/menu-worker/src/menu-source-runtime-version.test.ts
-          git config user.name "Paradispartiet"
-          git config user.email "paradispartiet@gmail.com"
-          git commit -m "Support fail-closed structured menu API sources"
-          git push origin HEAD:agent/structured-menu-api-v1
+          rm -rf /tmp/structured-api-patch
+          mkdir -p /tmp/structured-api-patch/apps/menu-worker/src /tmp/structured-api-patch/.github/workflows
+          cp apps/menu-worker/src/api-source-extractor.ts /tmp/structured-api-patch/apps/menu-worker/src/
+          cp apps/menu-worker/src/api-source-extractor.test.ts /tmp/structured-api-patch/apps/menu-worker/src/
+          cp apps/menu-worker/src/onboarding-manifest.ts /tmp/structured-api-patch/apps/menu-worker/src/
+          cp apps/menu-worker/src/onboarding-manifest.test.ts /tmp/structured-api-patch/apps/menu-worker/src/
+          cp apps/menu-worker/src/menu-source-runtime.ts /tmp/structured-api-patch/apps/menu-worker/src/
+          cp apps/menu-worker/src/menu-source-runtime-version.test.ts /tmp/structured-api-patch/apps/menu-worker/src/
+          printf '%s\n' 'delete .github/workflows/temp-structured-menu-api-writer.yml' > /tmp/structured-api-patch/APPLY.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: structured-menu-api-tested-patch
+          path: /tmp/structured-api-patch
+          if-no-files-found: error
