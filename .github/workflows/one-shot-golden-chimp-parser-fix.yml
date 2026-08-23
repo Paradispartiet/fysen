@@ -1,0 +1,121 @@
+name: TEMP apply generic direct-priced food title fix
+
+on:
+  push:
+    branches: [agent/batch02-residual-output-cleanup-v3]
+    paths:
+      - ".github/workflows/one-shot-golden-chimp-parser-fix.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Apply exact generic parser patch
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def replace_exact(path: str, old: str, new: str, count: int = 1) -> None:
+              p = Path(path)
+              text = p.read_text()
+              actual = text.count(old)
+              if actual != count:
+                  raise SystemExit(f"{path}: expected {count} occurrences, found {actual}: {old[:80]!r}")
+              p.write_text(text.replace(old, new))
+
+          # 1) A known food section heading must never become the recovered dish title.
+          replace_exact(
+              'apps/menu-worker/src/html-description-title-recovery.ts',
+              'export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v14";',
+              'export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v15";',
+          )
+          replace_exact(
+              'apps/menu-worker/src/html-description-title-recovery.ts',
+              '  /^(?:meny|menu|à\\s+la\\s+carte|a\\s+la\\s+carte|forretter?|starters?|appetizers?|småretter|hovedretter?|mains?|main\\s+courses?|dessert(?:er|s)?|tilbehør|sides?|pizza(?:er|s)?|pizzeria|kylling\\s+og\\s+lam|mezah[- ]retter)$/iu;',
+              '  /^(?:meny|menu|à\\s+la\\s+carte|a\\s+la\\s+carte|forretter?|starters?|appetizers?|small\\s+plates?|small\\s+dishes?\\s*(?:&|and)\\s*sharing\\s+plates?|classics?|dumplings?|proteins?|småretter|hovedretter?|mains?|main\\s+courses?|dessert(?:er|s)?|tilbehør|sides?|pizza(?:er|s)?|pizzeria|kylling\\s+og\\s+lam|mezah[- ]retter)$/iu;',
+          )
+
+          # 2) Long title lines are allowed only with strong structure: directly before
+          # a standalone price, and with the nearest semantic heading being a known food section.
+          replace_exact(
+              'apps/menu-worker/src/html-source-extractor.ts',
+              'export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v19";',
+              'export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v20";',
+          )
+          marker = '''function looksLikeStandaloneHeadingTitle(value: string): boolean {'''
+          addition = '''function nearestHeadingIsExplicitFoodSection(\n  lines: readonly string[],\n  headingLevels: ReadonlyMap<number, number>,\n  position: number,\n): boolean {\n  for (let index = position - 1; index >= 0; index -= 1) {\n    if (!headingLevels.has(index)) continue;\n    return isPlainFoodSectionLabel(lines[index] ?? "");\n  }\n  return false;\n}\n\nfunction looksLikeDirectPricedFoodTitle(value: string): boolean {\n  const title = canonicalCardTitle(value);\n  if (\n    !plausibleCardTitle(title) ||\n    isBeverageItemName(title) ||\n    isObviousMetadataItem(title) ||\n    isPlainFoodSectionLabel(title)\n  ) {\n    return false;\n  }\n  const words = title.split(/\\s+/).filter(Boolean);\n  if (words.length > 20 || /[.!?;:]$/u.test(title)) return false;\n  return !/^(?:with|served|topped|contains?|including|med|servert|toppet|inneholder|inkludert)\\b/iu.test(\n    title,\n  );\n}\n\nfunction looksLikeStandaloneHeadingTitle(value: string): boolean {'''
+          replace_exact('apps/menu-worker/src/html-source-extractor.ts', marker, addition)
+
+          old_immediate = '''    const immediateTitleIndex = pricePosition - 1;\n    const immediateTitle = lines[immediateTitleIndex]?.trim() ?? "";\n    if (\n      immediateTitleIndex >= blockStart &&\n      looksLikeImmediateUppercaseTitle(immediateTitle)\n    ) {\n      titleIndex = immediateTitleIndex;\n      name = canonicalCardTitle(immediateTitle);\n    }'''
+          new_immediate = '''    const immediateTitleIndex = pricePosition - 1;\n    const immediateTitle = lines[immediateTitleIndex]?.trim() ?? "";\n    const directPricedFoodTitle =\n      immediateTitleIndex >= blockStart &&\n      nearestHeadingIsExplicitFoodSection(\n        lines,\n        headingLevels,\n        immediateTitleIndex,\n      ) &&\n      looksLikeDirectPricedFoodTitle(immediateTitle);\n    if (\n      immediateTitleIndex >= blockStart &&\n      (looksLikeImmediateUppercaseTitle(immediateTitle) || directPricedFoodTitle)\n    ) {\n      titleIndex = immediateTitleIndex;\n      name = canonicalCardTitle(immediateTitle);\n    }'''
+          replace_exact('apps/menu-worker/src/html-source-extractor.ts', old_immediate, new_immediate)
+
+          # 3) Keep conservative description-fragment cleanup, except when the item
+          # is directly price-proven and occurs in food (not beverage) scope.
+          replace_exact(
+              'apps/menu-worker/src/html-text-section-scope.ts',
+              'export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v7";',
+              'export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v8";',
+          )
+          replace_exact(
+              'apps/menu-worker/src/html-text-section-scope.ts',
+              'const TRAILING_ITEM_ALLERGEN_CODES =\n  /\\s+\\((?:[\\p{L}]{1,2}|\\d{1,2})(?:\\s*[,/+ ]\\s*(?:[\\p{L}]{1,2}|\\d{1,2}))*\\)$/u;',
+              'const TRAILING_ITEM_ALLERGEN_CODES =\n  /\\s+\\((?:[\\p{L}]{1,2}|\\d{1,2})(?:\\s*[,/+ ]\\s*(?:[\\p{L}]{1,2}|\\d{1,2}))*\\)$/u;\nconst SOURCE_EXCERPT_SEPARATOR = /\\s+—\\s+/u;\nconst DIRECT_SOURCE_PRICE =\n  /^(?:(?:fra|from)\\s*)?(?:(?:NOK|kr\\.?)\\s*)?[1-9]\\d{0,3}(?:[.,]\\d{1,2})?\\s*(?:,-|kr\\.?|NOK)?$/iu;',
+          )
+          replace_exact(
+              'apps/menu-worker/src/html-text-section-scope.ts',
+              'function isObviousOutputNoise(value: string): boolean {',
+              'function isObviousOutputNoise(\n  value: string,\n  allowDirectPricedFoodDescription = false,\n): boolean {',
+          )
+          replace_exact(
+              'apps/menu-worker/src/html-text-section-scope.ts',
+              '    looksLikeDescriptionFragment(withoutLeadingDelimiter) ||',
+              '    (!allowDirectPricedFoodDescription &&\n      looksLikeDescriptionFragment(withoutLeadingDelimiter)) ||',
+          )
+          clean_marker = '''function lineReferencesItem(\n  line: string,'''
+          clean_addition = '''function hasDirectPriceSourceProvenance(item: MenuObservedItem): boolean {\n  const sourceExcerpt = item.sourceExcerpt?.trim() ?? "";\n  if (!sourceExcerpt) return false;\n  const segments = sourceExcerpt\n    .split(SOURCE_EXCERPT_SEPARATOR)\n    .map(normalizeLine)\n    .filter(Boolean);\n  if (segments.length < 2) return false;\n  if (normalizeDishName(segments[0] ?? "") !== item.normalizedName) return false;\n  return DIRECT_SOURCE_PRICE.test(segments[1] ?? "");\n}\n\nfunction lineReferencesItem(\n  line: string,'''
+          replace_exact('apps/menu-worker/src/html-text-section-scope.ts', clean_marker, clean_addition)
+
+          old_filter = '''  const cleanedItems = items\n    .map(cleanOutputArtifactName)\n    .filter((item) => !isObviousOutputNoise(item.name));\n  const lines = visibleText.split("\\n").map(normalizeLine).filter(Boolean);\n  if (\n    !lines.some((line) =>\n      BEVERAGE_SECTION_LABEL.test(normalizedSectionLabel(line)),\n    )\n  ) {\n    return cleanedItems;\n  }\n\n  const states = sectionStateByPosition(lines);\n  return cleanedItems.filter((item) => {\n    const evidence = sectionEvidenceForItem(\n      item,\n      lines,\n      states,\n      options.matchTrailingAllergenCodes ?? false,\n    );\n    if (!evidence.hasBeverageOccurrence) return true;\n    return evidence.hasFoodOccurrence;\n  });'''
+          new_filter = '''  const cleanedItems = items.map(cleanOutputArtifactName);\n  const lines = visibleText.split("\\n").map(normalizeLine).filter(Boolean);\n  const hasBeverageSection = lines.some((line) =>\n    BEVERAGE_SECTION_LABEL.test(normalizedSectionLabel(line)),\n  );\n  const states = sectionStateByPosition(lines);\n\n  return cleanedItems.filter((item) => {\n    const evidence = sectionEvidenceForItem(\n      item,\n      lines,\n      states,\n      options.matchTrailingAllergenCodes ?? false,\n    );\n    const allowDirectPricedFoodDescription =\n      looksLikeDescriptionFragment(item.name) &&\n      hasDirectPriceSourceProvenance(item) &&\n      evidence.hasFoodOccurrence &&\n      !evidence.hasBeverageOccurrence;\n    if (isObviousOutputNoise(item.name, allowDirectPricedFoodDescription))\n      return false;\n    if (!hasBeverageSection || !evidence.hasBeverageOccurrence) return true;\n    return evidence.hasFoodOccurrence;\n  });'''
+          replace_exact('apps/menu-worker/src/html-text-section-scope.ts', old_filter, new_filter)
+
+          # Version assertions in existing tests.
+          for path, old, new in [
+              ('apps/menu-worker/src/html-description-title-recovery.test.ts', 'titles-v14', 'titles-v15'),
+              ('apps/menu-worker/src/html-source-extractor.test.ts', 'html-v19', 'html-v20'),
+              ('apps/menu-worker/src/html-text-section-scope.test.ts', 'text-section-scope-v7', 'text-section-scope-v8'),
+              ('apps/menu-worker/src/menu-source-runtime-version.test.ts', 'text-section-scope-v7', 'text-section-scope-v8'),
+          ]:
+              replace_exact(path, old, new)
+
+          Path('.github/workflows/one-shot-golden-chimp-parser-fix.yml').unlink()
+          PY
+
+      - name: Focused tests before commit
+        run: |
+          pnpm --filter @fysen/menu-worker test -- --run \
+            src/html-description-title-recovery.test.ts \
+            src/html-source-extractor.test.ts \
+            src/html-text-section-scope.test.ts \
+            src/menu-source-runtime-version.test.ts
+          pnpm --filter @fysen/menu-worker typecheck
+
+      - name: Commit permanent parser changes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git commit -m "Recover directly priced long food titles safely"
+          git push origin HEAD:agent/batch02-residual-output-cleanup-v3
