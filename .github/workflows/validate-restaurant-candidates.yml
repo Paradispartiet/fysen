@@ -73,7 +73,7 @@ jobs:
           for path in "${manifests[@]}"; do
             relative_path="${path#apps/menu-worker/}"
             echo "Validating $relative_path"
-            pnpm --filter @fysen/menu-worker validate:manifest -- "$relative_path"
+            pnpm --filter @fysen/menu-worker validate:manifest "$relative_path"
           done
 
       - name: Validate requested manifest or directory
@@ -88,9 +88,9 @@ jobs:
               exit 1
               ;;
             *.json)
-              pnpm --filter @fysen/menu-worker validate:manifest -- "$MANIFEST_PATH"
+              pnpm --filter @fysen/menu-worker validate:manifest "$MANIFEST_PATH"
               ;;
             *)
-              pnpm --filter @fysen/menu-worker validate:batch -- "$MANIFEST_PATH"
+              pnpm --filter @fysen/menu-worker validate:batch "$MANIFEST_PATH"
               ;;
           esac
