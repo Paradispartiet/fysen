@@ -1,0 +1,91 @@
+name: TEMP catalog transport diagnostics v1
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/catalog-transport-diagnostics-v1.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - name: DNS and Node fetch diagnostics
+        shell: bash
+        run: |
+          cat > /tmp/transport-diagnostics.mjs <<'NODE'
+          import { lookup } from 'node:dns/promises';
+          import { writeFile } from 'node:fs/promises';
+
+          const targets = [
+            'https://www.confusionoslo.no/',
+            'https://district4.no/',
+            'https://district4.no/wp-content/uploads/2026/06/D4_innemeny_A3_2026_sommermeny.pdf',
+            'https://registanrestaurant.no/',
+            'https://district4.winorder.no/en',
+            'https://booking.gastroplanner.no/district4/t',
+          ];
+
+          function errorRecord(error) {
+            const cause = error?.cause;
+            return {
+              name: error?.name ?? null,
+              message: error?.message ?? String(error),
+              code: error?.code ?? null,
+              cause: cause ? {
+                name: cause?.name ?? null,
+                message: cause?.message ?? String(cause),
+                code: cause?.code ?? null,
+                errno: cause?.errno ?? null,
+                syscall: cause?.syscall ?? null,
+                hostname: cause?.hostname ?? null,
+                address: cause?.address ?? null,
+                port: cause?.port ?? null,
+              } : null,
+            };
+          }
+
+          const out = [];
+          for (const target of targets) {
+            const url = new URL(target);
+            let dns;
+            try {
+              dns = await lookup(url.hostname, { all: true });
+            } catch (error) {
+              dns = { error: errorRecord(error) };
+            }
+            const attempts = [];
+            for (let i = 1; i <= 2; i += 1) {
+              const startedAt = new Date().toISOString();
+              try {
+                const response = await fetch(target, {
+                  redirect: 'follow',
+                  headers: { 'user-agent': 'FysenMenuBot/0.1' },
+                  signal: AbortSignal.timeout(20000),
+                });
+                const bytes = new Uint8Array(await response.arrayBuffer());
+                attempts.push({ attempt: i, startedAt, ok: response.ok, status: response.status, finalUrl: response.url, bytes: bytes.byteLength, contentType: response.headers.get('content-type'), error: null });
+              } catch (error) {
+                attempts.push({ attempt: i, startedAt, ok: false, status: null, finalUrl: null, bytes: null, contentType: null, error: errorRecord(error) });
+              }
+              if (i === 1) await new Promise((resolve) => setTimeout(resolve, 2000));
+            }
+            out.push({ target, dns, attempts });
+          }
+          const report = { node: process.version, generatedAt: new Date().toISOString(), targets: out };
+          await writeFile('transport-diagnostics.json', JSON.stringify(report, null, 2) + '\n');
+          console.log(JSON.stringify(report, null, 2));
+          NODE
+          node /tmp/transport-diagnostics.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: catalog-transport-diagnostics-v1
+          path: transport-diagnostics.json
+          if-no-files-found: error
