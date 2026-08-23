@@ -1,0 +1,164 @@
+name: TEMP prove six unpromoted Batch 02 sources
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch02-final-six-current-proof.yml"
+
+permissions:
+  contents: read
+
+env:
+  FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+  FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+
+jobs:
+  prove-six:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Build current six-source plan from canonical Batch 02 seed
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { mkdir, readFile, writeFile } from 'node:fs/promises';
+          const seed = JSON.parse(await readFile('apps/menu-worker/research/oslo-batch-02.seed.json', 'utf8'));
+          const bySlug = new Map(seed.restaurants.map((entry) => [entry.restaurant.slug, entry]));
+          const variants = [
+            {slug:'benares-tordenskiolds-gate-oslo',url:'https://benares.no/meny?menu=menu',sourceType:'html',fetchMode:'browser'},
+            {slug:'mesob-motzfeldts-gate-oslo',url:'https://mesobrestaurant.no/menu/',sourceType:'html',fetchMode:'http'},
+            {slug:'sawan-president-harbitz-gate-oslo',url:'https://www.sawan.no/meny',sourceType:'html',fetchMode:'http'},
+            {slug:'the-golden-chimp-torggata-oslo',url:'https://www.thegoldenchimp.no/menu',sourceType:'html',fetchMode:'http'},
+            {slug:'kverneriet-majorstua-oslo',url:'https://kverneriet.com/majorstua/menu/',sourceType:'html',fetchMode:'http'},
+            {slug:'kverneriet-solli-oslo',url:'https://kverneriet.com/solli/menu/',sourceType:'html',fetchMode:'http'},
+          ];
+          const restaurants = variants.map((variant) => {
+            const base = structuredClone(bySlug.get(variant.slug));
+            if (!base) throw new Error(`Missing Batch 02 seed ${variant.slug}`);
+            base.menuSource = {
+              ...base.menuSource,
+              url: variant.url,
+              sourceType: variant.sourceType,
+              fetchMode: variant.fetchMode,
+              sourceSupport: {redirectOrigins: [], browserDataOrigins: []},
+            };
+            return base;
+          });
+          await mkdir('apps/menu-worker/research/final-six-generated', {recursive:true});
+          await writeFile('apps/menu-worker/research/final-six.plan.json', JSON.stringify({
+            version: 1,
+            batch: 'oslo-batch-02-final-six-current',
+            concurrency: 1,
+            outputDirectory: 'research/final-six-generated',
+            restaurants,
+          }, null, 2) + '\n');
+          NODE
+
+      - name: Fresh intake once
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js intake:batch research/final-six.plan.json | tee research/final-six-intake.json
+          echo "intake_exit=${PIPESTATUS[0]}" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Independently validate every generated manifest
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          if compgen -G 'research/final-six-generated/*.json' > /dev/null; then
+            set +e
+            node dist/index.js validate:batch research/final-six-generated | tee research/final-six-validation.json
+            echo "validation_exit=${PIPESTATUS[0]}" >> "$GITHUB_ENV"
+            exit 0
+          fi
+          printf '%s\n' '{"manifestCount":0,"acceptedCount":0,"failedCount":0,"failureFamilyCounts":{},"results":[]}' > research/final-six-validation.json
+          echo "validation_exit=0" >> "$GITHUB_ENV"
+
+      - name: Gate exact current output quality
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const intake = JSON.parse(await readFile('research/final-six-intake.json','utf8'));
+          const validation = JSON.parse(await readFile('research/final-six-validation.json','utf8'));
+          const rows = (validation.results ?? []).map((r) => ({
+            slug:r.slug,
+            accepted:r.accepted,
+            itemCount:r.validation?.menu?.quality?.itemCount ?? null,
+            names:r.validation?.menu?.observedDishNames ?? [],
+            extractorVersion:r.validation?.menu?.extractorVersion ?? null,
+            failureFamilies:r.failureFamilies ?? [],
+            error:r.error ?? r.validation?.menu?.error ?? null,
+          }));
+          const bySlug = new Map(rows.map((r) => [r.slug,r]));
+          const expected = new Map([
+            ['benares-tordenskiolds-gate-oslo',69],
+            ['mesob-motzfeldts-gate-oslo',20],
+            ['sawan-president-harbitz-gate-oslo',40],
+            ['the-golden-chimp-torggata-oslo',15],
+            ['kverneriet-majorstua-oslo',20],
+            ['kverneriet-solli-oslo',20],
+          ]);
+          const failures=[];
+          for (const [slug,min] of expected) {
+            const row=bySlug.get(slug);
+            if(!row){failures.push(`${slug}:missing-validation`);continue;}
+            if(!row.accepted) failures.push(`${slug}:not-accepted:${JSON.stringify(row.failureFamilies)}`);
+            if((row.itemCount??0)<min) failures.push(`${slug}:coverage:${row.itemCount}<${min}`);
+          }
+          const forbiddenExact = new Set([
+            'Chicken','VEG','VEG SPICY','DUMPLINGS','PROTEINS','SIDES','DESSERT','Upgrades & Extras','SN','SY',
+            'SAWAN RAW','SAWAN MAKI','SAWAN TACO','SAWAN SMÅRETTER','SAWAN SALATER','SAWAN VEGANSK','SAWAN SHARING','Satay (2 stk.)','With meat','with meat','Chili nivo','MenuDrinksEvents'
+          ]);
+          for (const row of rows) for (const name of row.names) if(forbiddenExact.has(name)) failures.push(`${row.slug}:forbidden:${name}`);
+          const chimp=bySlug.get('the-golden-chimp-torggata-oslo');
+          for(const prefix of ['Pork Gyoza with Japanese ketchup','Grilled Chicken Yakiniku','Grilled Seabass']) if(chimp && !chimp.names.some((n)=>n.startsWith(prefix))) failures.push(`golden-chimp:missing:${prefix}`);
+          for(const slug of ['kverneriet-majorstua-oslo','kverneriet-solli-oslo']) {
+            const row=bySlug.get(slug);
+            for(const name of ['Triple Chili Cheese','Original Ribs','The Godfather']) if(row && !row.names.includes(name)) failures.push(`${slug}:missing:${name}`);
+          }
+          const mesob=bySlug.get('mesob-motzfeldts-gate-oslo');
+          if(mesob && !mesob.names.some((n)=>n.includes('KITFO'))) failures.push('mesob:missing-KITFO');
+          const sawan=bySlug.get('sawan-president-harbitz-gate-oslo');
+          for(const prefix of ['Chicken satay','Tempura villreker','Trøffelmaki','Crispy duck à la Sawan']) if(sawan && !sawan.names.some((n)=>n.startsWith(prefix))) failures.push(`sawan:missing:${prefix}`);
+          const summary={
+            mainRevision:'eab9c075688d057a3f433976352007abb3cd8721',
+            intake:{requested:intake.requestedCount,generated:intake.generatedCount,failed:intake.failedCount},
+            validation:{manifestCount:validation.manifestCount,accepted:validation.acceptedCount,failed:validation.failedCount},
+            failures,rows,
+          };
+          await writeFile('research/final-six-summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if(failures.length) throw new Error(`Final-six quality failures: ${JSON.stringify(failures)}`);
+          if(intake.requestedCount!==6||intake.generatedCount!==6||intake.failedCount!==0) throw new Error('Final-six intake was not 6/6');
+          if(validation.manifestCount!==6||validation.acceptedCount!==6||validation.failedCount!==0) throw new Error('Final-six validation was not 6/6');
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-final-six-current-proof
+          path: |
+            apps/menu-worker/research/final-six.plan.json
+            apps/menu-worker/research/final-six-intake.json
+            apps/menu-worker/research/final-six-validation.json
+            apps/menu-worker/research/final-six-summary.json
+            apps/menu-worker/research/final-six-generated/*.json
+          if-no-files-found: warn
