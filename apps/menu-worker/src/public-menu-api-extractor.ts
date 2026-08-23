@@ -39,6 +39,27 @@ function normalizedText(value: unknown): string | null {
   return normalized.length > 0 ? normalized : null;
 }
 
+function isWeOrderOperationalParenthetical(value: string): boolean {
+  const compact = value
+    .normalize("NFKC")
+    .toLocaleUpperCase("nb-NO")
+    .replace(/[^\p{L}]/gu, "");
+  return (
+    compact.includes("MÅBESTILLESSOMTILLEGG") ||
+    compact.includes("MUSTBEORDEREDSEPARATELY") ||
+    compact.includes("ORDERSEPARATELY")
+  );
+}
+
+function cleanWeOrderText(value: unknown): string | null {
+  const text = normalizedText(value);
+  if (!text) return null;
+  const cleaned = text.replace(/\(([^()]*)\)/gu, (full, inner: string) =>
+    isWeOrderOperationalParenthetical(inner) ? " " : full,
+  );
+  return normalizedText(cleaned);
+}
+
 function localizedText(value: unknown): string | null {
   const direct = normalizedText(value);
   if (direct) return direct;
@@ -136,7 +157,7 @@ function weOrderPrice(item: JsonRecord): ParsedPrice | null {
   if (amount <= 0) return null;
 
   const displayAmount = nokDisplayAmount(item.dPrice);
-  const name = normalizedText(item.name) ?? "unnamed item";
+  const name = cleanWeOrderText(item.name) ?? normalizedText(item.name) ?? "unnamed item";
   if (displayAmount === null) {
     throw new Error(`Public menu API WeOrder price lacks NOK display evidence for ${name}`);
   }
@@ -243,11 +264,11 @@ function extractWeOrderMenu(root: JsonRecord): readonly MenuObservedItem[] | nul
         if (!entry) continue;
         recognizedEntryCount += 1;
         if (categoryExcluded || entry.isAlcohol === true) continue;
-        const name = normalizedText(entry.name);
+        const name = cleanWeOrderText(entry.name);
         if (!name || !/\p{L}/u.test(name) || NON_DISH_PLACEHOLDER.test(name)) continue;
         const price = weOrderPrice(entry);
         if (!price) continue;
-        const description = normalizedText(entry.desc ?? entry.description);
+        const description = cleanWeOrderText(entry.desc ?? entry.description);
         items.push({
           sourceKey: createMenuItemSourceKey(name, categoryName),
           name,
