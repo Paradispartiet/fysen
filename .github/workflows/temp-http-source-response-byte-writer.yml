@@ -1,0 +1,365 @@
+name: TEMP write bounded HTTP source response override
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/temp-http-source-response-byte-writer.yml"
+
+permissions:
+  contents: write
+
+env:
+  TARGET_BRANCH: agent/http-source-response-byte-override-v1
+
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+
+      - name: Implement persistent bounded HTTP response override
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          # Manifest contract: explicit per-source HTTP cap, never browser/PDF, hard max 4 MiB.
+          path = Path('apps/menu-worker/src/onboarding-manifest.ts')
+          text = path.read_text()
+          text = text.replace(
+          'const httpsUrl = z.string().url().refine((value) => value.startsWith("https://"), "URL must use HTTPS");\n',
+          'const httpsUrl = z.string().url().refine((value) => value.startsWith("https://"), "URL must use HTTPS");\nconst MIN_HTTP_SOURCE_RESPONSE_BYTES = 64 * 1024;\nconst MAX_HTTP_SOURCE_RESPONSE_BYTES = 4 * 1024 * 1024;\n')
+          text = text.replace(
+          '      minimumExpectedItems: z.number().int().min(1).max(500),\n      sourceSupport: sourceSupportSchema,\n',
+          '      minimumExpectedItems: z.number().int().min(1).max(500),\n      maxResponseBytes: z.number().int().min(MIN_HTTP_SOURCE_RESPONSE_BYTES).max(MAX_HTTP_SOURCE_RESPONSE_BYTES).optional(),\n      sourceSupport: sourceSupportSchema,\n')
+          marker = '''    if (\n      manifest.menuSource.fetchMode === "browser" &&\n      manifest.menuSource.sourceType !== "html" &&\n      manifest.menuSource.sourceType !== "json_ld"\n    ) {\n'''
+          insert = '''    if (manifest.menuSource.maxResponseBytes !== undefined) {\n      if (manifest.menuSource.fetchMode !== "http") {\n        context.addIssue({\n          code: "custom",\n          path: ["menuSource", "maxResponseBytes"],\n          message: "maxResponseBytes is only valid for HTTP fetch mode",\n        });\n      }\n      if (manifest.menuSource.sourceType === "pdf") {\n        context.addIssue({\n          code: "custom",\n          path: ["menuSource", "maxResponseBytes"],\n          message: "PDF response limits use the dedicated PDF policy",\n        });\n      }\n    }\n\n'''
+          if marker not in text: raise SystemExit('manifest marker missing')
+          text = text.replace(marker, insert + marker)
+          path.write_text(text)
+
+          # Shared runtime: enforce the same 4 MiB ceiling even for direct callers.
+          path = Path('apps/menu-worker/src/menu-source-runtime.ts')
+          text = path.read_text()
+          text = text.replace(
+          'const DEFAULT_MAX_PDF_RESPONSE_BYTES = 8 * 1024 * 1024;\nconst MAX_PDF_RESPONSE_BYTES = 25 * 1024 * 1024;\n',
+          'const DEFAULT_MAX_PDF_RESPONSE_BYTES = 8 * 1024 * 1024;\nconst MAX_PDF_RESPONSE_BYTES = 25 * 1024 * 1024;\nconst MIN_HTTP_SOURCE_RESPONSE_BYTES = 64 * 1024;\nconst MAX_HTTP_SOURCE_RESPONSE_BYTES = 4 * 1024 * 1024;\n')
+          text = text.replace(
+          '  readonly lastModified: string | null;\n  readonly sourceSupport?: MenuSourceSupportInput;\n',
+          '  readonly lastModified: string | null;\n  readonly maxResponseBytes?: number | null;\n  readonly sourceSupport?: MenuSourceSupportInput;\n')
+          runtime_marker = '''export async function fetchMenuSource(\n  input: MenuSourceRuntimeInput,\n  httpClient = new HttpMenuClient(),\n): Promise<MenuHttpFetchResult> {\n'''
+          runtime_insert = '''export function boundedHttpSourceResponseBytes(\n  value: number | null | undefined,\n): number | undefined {\n  if (value === null || value === undefined) return undefined;\n  if (\n    !Number.isInteger(value) ||\n    value < MIN_HTTP_SOURCE_RESPONSE_BYTES ||\n    value > MAX_HTTP_SOURCE_RESPONSE_BYTES\n  ) {\n    throw new Error(\n      `HTTP source response byte limit must be an integer between ${MIN_HTTP_SOURCE_RESPONSE_BYTES} and ${MAX_HTTP_SOURCE_RESPONSE_BYTES}`,\n    );\n  }\n  return value;\n}\n\n'''
+          if runtime_marker not in text: raise SystemExit('runtime marker missing')
+          text = text.replace(runtime_marker, runtime_insert + runtime_marker)
+          old = '''    {\n      allowedRedirectOrigins: sourceSupport.redirectOrigins,\n      ...(input.sourceType === "pdf"\n        ? { maxResponseBytes: pdfResponseByteLimit() }\n        : {}),\n    },\n'''
+          new = '''    {\n      allowedRedirectOrigins: sourceSupport.redirectOrigins,\n      ...(input.sourceType === "pdf"\n        ? { maxResponseBytes: pdfResponseByteLimit() }\n        : boundedHttpSourceResponseBytes(input.maxResponseBytes) !== undefined\n          ? { maxResponseBytes: boundedHttpSourceResponseBytes(input.maxResponseBytes) }\n          : {}),\n    },\n'''
+          if old not in text: raise SystemExit('runtime fetch options marker missing')
+          text = text.replace(old, new)
+          path.write_text(text)
+
+          # Validator must honor the manifest cap.
+          path = Path('apps/menu-worker/src/manifest-validator.ts')
+          text = path.read_text()
+          text = text.replace(
+          '        lastModified: null,\n        sourceSupport: manifest.menuSource.sourceSupport,\n',
+          '        lastModified: null,\n        maxResponseBytes: manifest.menuSource.maxResponseBytes ?? null,\n        sourceSupport: manifest.menuSource.sourceSupport,\n')
+          path.write_text(text)
+
+          # Database persistence.
+          path = Path('packages/database/src/repository.ts')
+          text = path.read_text()
+          text = text.replace(
+          '  readonly minimumExpectedItems: number;\n}\n\nexport interface StoredMenuSource {\n',
+          '  readonly minimumExpectedItems: number;\n  readonly maxResponseBytes?: number | null;\n}\n\nexport interface StoredMenuSource {\n')
+          text = text.replace(
+          '  readonly minimumExpectedItems: number;\n  readonly etag: string | null;\n',
+          '  readonly minimumExpectedItems: number;\n  readonly maxResponseBytes: number | null;\n  readonly etag: string | null;\n', 1)
+          text = text.replace(
+          '  minimum_expected_items: number;\n  etag: string | null;\n',
+          '  minimum_expected_items: number;\n  max_response_bytes: number | null;\n  etag: string | null;\n')
+          text = text.replace(
+          '    minimumExpectedItems: row.minimum_expected_items,\n    etag: row.etag,\n',
+          '    minimumExpectedItems: row.minimum_expected_items,\n    maxResponseBytes: row.max_response_bytes,\n    etag: row.etag,\n')
+          text = text.replace(
+          '''        INSERT INTO fysen.menu_sources (\n          restaurant_id, url, source_type, fetch_mode, user_agent, check_interval_minutes, minimum_expected_items\n        ) VALUES ($1, $2, $3, $4, $5, $6, $7)\n''',
+          '''        INSERT INTO fysen.menu_sources (\n          restaurant_id, url, source_type, fetch_mode, user_agent, check_interval_minutes, minimum_expected_items, max_response_bytes\n        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)\n''')
+          text = text.replace(
+          '          minimum_expected_items = EXCLUDED.minimum_expected_items,\n          updated_at = now()\n',
+          '          minimum_expected_items = EXCLUDED.minimum_expected_items,\n          max_response_bytes = EXCLUDED.max_response_bytes,\n          updated_at = now()\n')
+          text = text.replace(
+          '        input.minimumExpectedItems,\n      ],\n',
+          '        input.minimumExpectedItems,\n        input.maxResponseBytes ?? null,\n      ],\n', 1)
+          path.write_text(text)
+
+          # Onboarding writes the override into the authoritative source row.
+          path = Path('apps/menu-worker/src/onboarding.ts')
+          text = path.read_text()
+          text = text.replace(
+          '      minimumExpectedItems: manifest.menuSource.minimumExpectedItems,\n    });\n',
+          '      minimumExpectedItems: manifest.menuSource.minimumExpectedItems,\n      maxResponseBytes: manifest.menuSource.maxResponseBytes ?? null,\n    });\n')
+          path.write_text(text)
+
+          # Watcher reuses the persisted policy for all later checks.
+          path = Path('apps/menu-worker/src/watcher.ts')
+          text = path.read_text()
+          text = text.replace(
+          '    lastModified: forceReextract ? null : source.lastModified,\n    sourceSupport,\n',
+          '    lastModified: forceReextract ? null : source.lastModified,\n    maxResponseBytes: source.maxResponseBytes,\n    sourceSupport,\n')
+          text = text.replace(
+          '        maxResponseBytes: source.sourceType === "pdf" ? pdfResponseByteLimit() : null,\n',
+          '        maxResponseBytes: source.sourceType === "pdf" ? pdfResponseByteLimit() : source.maxResponseBytes,\n')
+          path.write_text(text)
+
+          # Migration order and contract.
+          path = Path('packages/database/src/migration.test.ts')
+          text = path.read_text()
+          text = text.replace(
+          '      "0017_aha_min_mat.sql",\n',
+          '      "0017_aha_min_mat.sql",\n      "0018_menu_source_response_limit.sql",\n')
+          tail = '''    expect(ahaMinMatSql).not.toContain("handoff_token");\n'''
+          addition = '''    const menuSourceResponseLimitSql = await readFile(new URL("../migrations/0018_menu_source_response_limit.sql", import.meta.url), "utf8");\n    expect(menuSourceResponseLimitSql).toContain("max_response_bytes integer");\n    expect(menuSourceResponseLimitSql).toContain("max_response_bytes >= 65536");\n    expect(menuSourceResponseLimitSql).toContain("max_response_bytes <= 4194304");\n\n'''
+          if tail not in text: raise SystemExit('migration test tail missing')
+          text = text.replace(tail, tail + '\n' + addition)
+          path.write_text(text)
+          PY
+
+          cat > packages/database/migrations/0018_menu_source_response_limit.sql <<'SQL'
+          ALTER TABLE fysen.menu_sources
+            ADD COLUMN IF NOT EXISTS max_response_bytes integer;
+
+          ALTER TABLE fysen.menu_sources
+            DROP CONSTRAINT IF EXISTS menu_sources_max_response_bytes_check;
+
+          ALTER TABLE fysen.menu_sources
+            ADD CONSTRAINT menu_sources_max_response_bytes_check
+            CHECK (
+              max_response_bytes IS NULL OR (
+                max_response_bytes >= 65536 AND
+                max_response_bytes <= 4194304
+              )
+            );
+          SQL
+
+          cat > apps/menu-worker/src/menu-source-response-byte-limit.test.ts <<'TS'
+          import { describe, expect, it } from "vitest";
+          import { HttpMenuClient } from "./http-client.js";
+          import { fetchMenuSource } from "./menu-source-runtime.js";
+          import { restaurantOnboardingManifestSchema } from "./onboarding-manifest.js";
+
+          const publicResolver = async (): Promise<readonly { address: string }[]> => [
+            { address: "93.184.216.34" },
+          ];
+
+          const baseManifest = {
+            version: 1,
+            restaurant: {
+              slug: "response-limit-test-oslo",
+              name: "Response Limit Test",
+              websiteUrl: "https://restaurant.test/",
+              address: "Testgata 1",
+              city: "Oslo",
+              countryCode: "NO",
+              latitude: 59.91,
+              longitude: 10.75,
+            },
+            menuSource: {
+              url: "https://restaurant.test/menu",
+              sourceType: "html",
+              fetchMode: "http",
+              userAgent: "FysenMenuBot/0.1",
+              checkIntervalMinutes: 720,
+              minimumExpectedItems: 3,
+            },
+            qualityAssertions: { requiredDishNames: ["Testrett"] },
+          } as const;
+
+          function clientForBody(body: string): HttpMenuClient {
+            return new HttpMenuClient({
+              fetchImpl: (async (url: URL) =>
+                url.pathname === "/robots.txt"
+                  ? new Response("User-agent: *\nAllow: /\n", { status: 200 })
+                  : new Response(body, { status: 200, headers: { "Content-Type": "text/html" } })) as typeof fetch,
+              resolver: publicResolver,
+              minHostDelayMs: 1,
+              timeoutMs: 1000,
+            });
+          }
+
+          describe("bounded per-source HTTP response bytes", () => {
+            it("accepts a bounded HTTP override and rejects browser, PDF and values above 4 MiB", () => {
+              expect(
+                restaurantOnboardingManifestSchema.parse({
+                  ...baseManifest,
+                  menuSource: { ...baseManifest.menuSource, maxResponseBytes: 3 * 1024 * 1024 },
+                }).menuSource.maxResponseBytes,
+              ).toBe(3 * 1024 * 1024);
+
+              expect(() =>
+                restaurantOnboardingManifestSchema.parse({
+                  ...baseManifest,
+                  menuSource: { ...baseManifest.menuSource, fetchMode: "browser", maxResponseBytes: 3 * 1024 * 1024 },
+                }),
+              ).toThrow("maxResponseBytes is only valid for HTTP fetch mode");
+
+              expect(() =>
+                restaurantOnboardingManifestSchema.parse({
+                  ...baseManifest,
+                  menuSource: { ...baseManifest.menuSource, sourceType: "pdf", maxResponseBytes: 3 * 1024 * 1024 },
+                }),
+              ).toThrow("PDF response limits use the dedicated PDF policy");
+
+              expect(() =>
+                restaurantOnboardingManifestSchema.parse({
+                  ...baseManifest,
+                  menuSource: { ...baseManifest.menuSource, maxResponseBytes: 4 * 1024 * 1024 + 1 },
+                }),
+              ).toThrow();
+            });
+
+            it("keeps the 2 MiB default but permits an explicitly bounded 3 MiB HTTP source", async () => {
+              const body = `<html><body>${"x".repeat(2 * 1024 * 1024 + 32 * 1024)}</body></html>`;
+              const input = {
+                url: "https://restaurant.test/menu",
+                sourceType: "html",
+                fetchMode: "http" as const,
+                userAgent: "FysenMenuBot/0.1",
+                etag: null,
+                lastModified: null,
+              };
+
+              await expect(fetchMenuSource(input, clientForBody(body))).rejects.toMatchObject({
+                code: "BODY_TOO_LARGE",
+              });
+
+              const fetched = await fetchMenuSource(
+                { ...input, maxResponseBytes: 3 * 1024 * 1024 },
+                clientForBody(body),
+              );
+              expect(fetched.kind).toBe("content");
+              if (fetched.kind === "content") expect(fetched.bodyBytes.byteLength).toBeGreaterThan(2 * 1024 * 1024);
+            });
+
+            it("fails closed for direct runtime callers above the 4 MiB manifest ceiling", async () => {
+              await expect(
+                fetchMenuSource(
+                  {
+                    url: "https://restaurant.test/menu",
+                    sourceType: "html",
+                    fetchMode: "http",
+                    userAgent: "FysenMenuBot/0.1",
+                    etag: null,
+                    lastModified: null,
+                    maxResponseBytes: 4 * 1024 * 1024 + 1,
+                  },
+                  clientForBody("<html></html>"),
+                ),
+              ).rejects.toThrow("HTTP source response byte limit must be an integer between");
+            });
+          });
+          TS
+
+          cat > packages/database/src/menu-source-response-limit.integration.test.ts <<'TS'
+          import { randomUUID } from "node:crypto";
+          import type { Pool } from "pg";
+          import { afterAll, beforeAll, describe, expect, it } from "vitest";
+          import { createDatabasePool } from "./client.js";
+          import { runMigrations } from "./migrate.js";
+          import { MenuIndexRepository } from "./repository.js";
+
+          const databaseUrl = process.env.DATABASE_URL;
+          const integrationDescribe = databaseUrl ? describe : describe.skip;
+
+          integrationDescribe("menu source response limit persistence", () => {
+            let pool: Pool;
+            beforeAll(async () => {
+              if (!databaseUrl) throw new Error("DATABASE_URL is required for integration tests");
+              pool = createDatabasePool({ connectionString: databaseUrl });
+              await runMigrations(pool);
+              await pool.query("TRUNCATE fysen.restaurants CASCADE");
+            });
+            afterAll(async () => { await pool.end(); });
+
+            it("persists and updates the bounded per-source byte limit", async () => {
+              const repository = new MenuIndexRepository(pool);
+              const suffix = randomUUID();
+              const restaurantId = await repository.upsertRestaurant({
+                slug: `response-limit-${suffix}`,
+                name: "Response Limit",
+                websiteUrl: null,
+                address: "Testgata 9",
+                city: "Oslo",
+                countryCode: "NO",
+                latitude: 59.91,
+                longitude: 10.75,
+              });
+              const source = await repository.upsertMenuSource({
+                restaurantId,
+                url: `https://example.com/menu-${suffix}`,
+                sourceType: "html",
+                fetchMode: "http",
+                userAgent: "FysenMenuBot/0.1",
+                checkIntervalMinutes: 720,
+                minimumExpectedItems: 3,
+                maxResponseBytes: 3 * 1024 * 1024,
+              });
+              expect(source.maxResponseBytes).toBe(3 * 1024 * 1024);
+              expect((await repository.getMenuSourceById(source.id))?.maxResponseBytes).toBe(3 * 1024 * 1024);
+
+              const updated = await repository.upsertMenuSource({
+                restaurantId,
+                url: source.url,
+                sourceType: "html",
+                fetchMode: "http",
+                userAgent: "FysenMenuBot/0.1",
+                checkIntervalMinutes: 720,
+                minimumExpectedItems: 3,
+                maxResponseBytes: null,
+              });
+              expect(updated.maxResponseBytes).toBeNull();
+            });
+          });
+          TS
+
+      - run: pnpm --filter @fysen/menu-worker... build
+      - run: pnpm --filter @fysen/menu-worker exec vitest run src/menu-source-response-byte-limit.test.ts src/source-support-manifest.test.ts src/http-client.test.ts src/http-client-support.test.ts
+      - run: pnpm --filter @fysen/database exec vitest run src/migration.test.ts src/menu-source-response-limit.integration.test.ts
+      - run: pnpm --filter @fysen/menu-worker test
+      - run: pnpm --filter @fysen/menu-worker typecheck
+      - run: pnpm --filter @fysen/database test
+      - run: pnpm --filter @fysen/database typecheck
+      - name: Commit permanent files only
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            apps/menu-worker/src/onboarding-manifest.ts \
+            apps/menu-worker/src/menu-source-runtime.ts \
+            apps/menu-worker/src/manifest-validator.ts \
+            apps/menu-worker/src/onboarding.ts \
+            apps/menu-worker/src/watcher.ts \
+            apps/menu-worker/src/menu-source-response-byte-limit.test.ts \
+            packages/database/migrations/0018_menu_source_response_limit.sql \
+            packages/database/src/repository.ts \
+            packages/database/src/migration.test.ts \
+            packages/database/src/menu-source-response-limit.integration.test.ts
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo "No permanent changes to commit"
+            exit 0
+          fi
+          git commit -m "Persist bounded HTTP menu response limits"
+          git push origin "HEAD:${TARGET_BRANCH}"
