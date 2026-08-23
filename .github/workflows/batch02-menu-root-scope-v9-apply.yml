@@ -1,8 +1,8 @@
 name: TEMP apply generic Elementor menu-root parser fix
 
 on:
-  push:
-    branches: [agent/batch02-menu-root-scope-v9]
+  pull_request:
+    branches: [main]
     paths:
       - ".github/workflows/batch02-menu-root-scope-v9-apply.yml"
 
