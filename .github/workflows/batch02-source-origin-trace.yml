@@ -29,13 +29,14 @@ jobs:
       - run: pnpm --filter @fysen/menu-worker... build
 
       - name: Trace requested cross-origin data without fetching it
+        working-directory: apps/menu-worker
         shell: bash
         run: |
           mkdir -p /tmp/batch02-origin-trace
           node --input-type=module <<'NODE'
           import { writeFile } from 'node:fs/promises';
           import { chromium } from 'playwright-core';
-          import { assertPublicHttpUrl } from './apps/menu-worker/dist/security.js';
+          import { assertPublicHttpUrl } from './dist/security.js';
 
           const targets = [
             { name: 'delicatessen-grunerlokka', url: 'https://favrit.com/nb-no/menu/location/LK4AD79J8nO' },
