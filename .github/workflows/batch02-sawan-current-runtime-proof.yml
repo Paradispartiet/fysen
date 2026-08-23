@@ -31,6 +31,7 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
 
           path = Path("apps/menu-worker/src/menu-source-runtime.ts")
           text = path.read_text()
@@ -46,72 +47,59 @@ jobs:
           if "html-strong-title-price-recovery.js" not in text:
               text = text.replace(import_anchor, import_anchor + import_block, 1)
 
-          version_anchor = '+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}'
-          version_new = '+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}'
-          if version_anchor not in text and version_new not in text:
-              raise SystemExit("missing runtime version anchor")
-          text = text.replace(version_anchor, version_new, 1)
+          old_version = '+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}'
+          new_version = '+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}'
+          if old_version not in text and new_version not in text:
+              raise SystemExit("missing version anchor")
+          text = text.replace(old_version, new_version, 1)
 
-          heading_marker = '    const headingPriceItems =\n'
-          strong_block = '''    const strongTitlePriceItems =
+          if "const strongTitlePriceItems =" not in text:
+              marker = "    const headingPriceItems =\n"
+              if marker not in text:
+                  raise SystemExit("missing heading marker")
+              text = text.replace(marker, '''    const strongTitlePriceItems =
               extracted.method === "html_heuristic"
                 ? recoverStrongTitlePriceHtmlItems(recoveryHtml)
                 : [];
-          '''
-          if heading_marker not in text:
-              raise SystemExit("missing heading marker")
-          if "const strongTitlePriceItems =" not in text:
-              text = text.replace(heading_marker, strong_block + heading_marker, 1)
+          ''' + marker, 1)
 
-          semantic_marker = '    const semanticCategoryCardsPreferred =\n'
-          preference_block = '''    const strongTitlePricePreferred =
+          if "const strongTitlePricePreferred =" not in text:
+              marker = "    const semanticCategoryCardsPreferred =\n"
+              if marker not in text:
+                  raise SystemExit("missing semantic marker")
+              text = text.replace(marker, '''    const strongTitlePricePreferred =
               strongTitlePriceItems.length >= 6 &&
               strongTitlePriceItems.length >= recoveredItems.length &&
               strongTitlePriceItems.length >= trailingPriceCardItems.length;
-          '''
-          if semantic_marker not in text:
-              raise SystemExit("missing semantic preference marker")
-          if "const strongTitlePricePreferred =" not in text:
-              text = text.replace(semantic_marker, preference_block + semantic_marker, 1)
+          ''' + marker, 1)
 
-          preferred_old = '''    const preferredItems = trailingPriceCardQualifies
-              ? trailingPriceCardItems
-              : headingPriceItems.length >= 4 &&
-          '''
-          preferred_new = '''    const preferredItems = strongTitlePricePreferred
+          if "const isolatedSemanticRecoveryPreferred =" not in text:
+              pattern = r'(    const isolatedTrailingRecoveryPreferred =\n\s+semanticCategoryCardsPreferred \|\| strongNumberedCardsPreferred;\n)'
+              replacement = r'\1    const isolatedSemanticRecoveryPreferred =\n      isolatedTrailingRecoveryPreferred || strongTitlePricePreferred;\n'
+              text, count = re.subn(pattern, replacement, text, count=1)
+              if count != 1:
+                  raise SystemExit("missing isolated recovery block")
+
+          if "const preferredItems = strongTitlePricePreferred" not in text:
+              pattern = r'    const preferredItems = trailingPriceCardQualifies\n\s+\? trailingPriceCardItems\n\s+: headingPriceItems\.length >= 4 &&\n'
+              replacement = '''    const preferredItems = strongTitlePricePreferred
               ? strongTitlePriceItems
               : trailingPriceCardQualifies
                 ? trailingPriceCardItems
                 : headingPriceItems.length >= 4 &&
           '''
-          if preferred_old not in text and "const preferredItems = strongTitlePricePreferred" not in text:
-              raise SystemExit("missing preferred-items block")
-          text = text.replace(preferred_old, preferred_new, 1)
+              text, count = re.subn(pattern, replacement, text, count=1)
+              if count != 1:
+                  raise SystemExit("missing preferred-items block")
 
-          isolated_line = '    const isolatedTrailingRecoveryPreferred =\n      semanticCategoryCardsPreferred || strongNumberedCardsPreferred;\n'
-          isolated_new = isolated_line + '    const isolatedSemanticRecoveryPreferred =\n      isolatedTrailingRecoveryPreferred || strongTitlePricePreferred;\n'
-          if isolated_line not in text and "const isolatedSemanticRecoveryPreferred =" not in text:
-              raise SystemExit("missing isolated recovery anchor")
-          if "const isolatedSemanticRecoveryPreferred =" not in text:
-              text = text.replace(isolated_line, isolated_new, 1)
+          text = text.replace("!isolatedTrailingRecoveryPreferred", "!isolatedSemanticRecoveryPreferred")
 
-          text = text.replace(
-              "!isolatedTrailingRecoveryPreferred",
-              "!isolatedSemanticRecoveryPreferred",
-          )
-
-          heading_old = '''    const headingSupplementedItems =
-              extracted.method === "html_heuristic"
-                ? supplementStrongHeadingRecovery(
-          '''
-          heading_new = '''    const headingSupplementedItems =
-              extracted.method === "html_heuristic" &&
-              !strongTitlePricePreferred
-                ? supplementStrongHeadingRecovery(
-          '''
-          if heading_old not in text and "!strongTitlePricePreferred\n        ? supplementStrongHeadingRecovery" not in text:
-              raise SystemExit("missing heading supplement block")
-          text = text.replace(heading_old, heading_new, 1)
+          if "!strongTitlePricePreferred\n        ? supplementStrongHeadingRecovery" not in text:
+              pattern = r'(    const headingSupplementedItems =\n\s+)extracted\.method === "html_heuristic"\n(\s+)\? supplementStrongHeadingRecovery\('
+              replacement = r'\1extracted.method === "html_heuristic" &&\n      !strongTitlePricePreferred\n\2? supplementStrongHeadingRecovery('
+              text, count = re.subn(pattern, replacement, text, count=1)
+              if count != 1:
+                  raise SystemExit("missing heading supplement block")
 
           path.write_text(text)
           PY
