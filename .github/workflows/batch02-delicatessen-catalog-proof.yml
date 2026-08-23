@@ -1,0 +1,204 @@
+name: TEMP prove Delicatessen catalog promotion
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch02-delicatessen-catalog-proof.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  new-manifests-live-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/batch02-delicatessen-catalog-proof
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Isolate exactly the two promoted manifests
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf research/delicatessen-catalog-promotion
+          mkdir -p research/delicatessen-catalog-promotion/new
+          cp catalog/delicatessen-grunerlokka-oslo.json research/delicatessen-catalog-promotion/new/
+          cp catalog/delicatessen-majorstuen-oslo.json research/delicatessen-catalog-promotion/new/
+          test "$(find research/delicatessen-catalog-promotion/new -maxdepth 1 -type f -name '*.json' | wc -l | tr -d ' ')" = "2"
+
+      - name: Independently validate both promoted manifests on fresh fetches
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          node dist/index.js validate:batch research/delicatessen-catalog-promotion/new \
+            | tee research/delicatessen-catalog-promotion/new-validation.json
+
+      - name: Gate exact identities and 2 of 2 live acceptance
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const validation = JSON.parse(await readFile('research/delicatessen-catalog-promotion/new-validation.json', 'utf8'));
+          const expected = new Map([
+            ['delicatessen-grunerlokka-oslo', 'https://favrit.com/ws/ordr-service/public/v3/locations/simple/LK4AD79J8nO?caller=GUEST_APP&language=nb'],
+            ['delicatessen-majorstuen-oslo', 'https://favrit.com/ws/ordr-service/public/v3/locations/simple/LgEAQE59pAo?caller=GUEST_APP&language=nb'],
+          ]);
+          if (validation.manifestCount !== 2 || validation.acceptedCount !== 2 || validation.failedCount !== 0) {
+            throw new Error(`New manifest validation not 2/2: ${JSON.stringify(validation)}`);
+          }
+          const rows = [];
+          for (const result of validation.results ?? []) {
+            if (!expected.has(result.slug)) throw new Error(`Unexpected promoted slug ${result.slug}`);
+            if (!result.accepted) throw new Error(`${result.slug}: not accepted`);
+            if (result.validation?.menu?.extractorVersion !== 'public-menu-api-v1') {
+              throw new Error(`${result.slug}: extractor drift ${result.validation?.menu?.extractorVersion}`);
+            }
+            if (result.validation?.menu?.quality?.itemCount !== 51) {
+              throw new Error(`${result.slug}: item count ${result.validation?.menu?.quality?.itemCount}; expected 51`);
+            }
+            if ((result.failureFamilies ?? []).length !== 0) {
+              throw new Error(`${result.slug}: failure families ${JSON.stringify(result.failureFamilies)}`);
+            }
+            rows.push({
+              slug: result.slug,
+              accepted: result.accepted,
+              itemCount: result.validation?.menu?.quality?.itemCount,
+              extractorVersion: result.validation?.menu?.extractorVersion,
+              failureFamilies: result.failureFamilies ?? [],
+            });
+          }
+          const summary = {
+            revision: '5907d783af0328c422eeff5f0a92f361dcc918d4',
+            manifestCount: validation.manifestCount,
+            acceptedCount: validation.acceptedCount,
+            failedCount: validation.failedCount,
+            rows,
+          };
+          await writeFile('research/delicatessen-catalog-promotion/new-summary.json', JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: delicatessen-catalog-new-manifests-proof
+          path: apps/menu-worker/research/delicatessen-catalog-promotion
+          if-no-files-found: error
+
+  strict-58-catalog-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/batch02-delicatessen-catalog-proof
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Prove published-refresh fail-closed safety contract
+        run: pnpm --filter @fysen/menu-worker exec vitest run src/onboarding-refresh-safety.test.ts src/catalog-onboarding-failure-policy.test.ts src/production-menu-mutation-workflow.test.ts
+      - name: Prove exact resulting catalog identity before live validation
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readdir, readFile } from 'node:fs/promises';
+          const files = (await readdir('catalog')).filter((file) => file.endsWith('.json')).sort();
+          const manifests = [];
+          for (const file of files) manifests.push(JSON.parse(await readFile(`catalog/${file}`, 'utf8')));
+          const slugs = manifests.map((manifest) => manifest.restaurant.slug);
+          if (files.length !== 58 || new Set(slugs).size !== 58) {
+            throw new Error(`Catalog identity ${files.length}/${new Set(slugs).size}; expected 58/58`);
+          }
+          for (const slug of ['delicatessen-grunerlokka-oslo', 'delicatessen-majorstuen-oslo']) {
+            const manifest = manifests.find((entry) => entry.restaurant.slug === slug);
+            if (!manifest) throw new Error(`Missing promoted slug ${slug}`);
+            if (manifest.menuSource.sourceType !== 'api' || manifest.menuSource.fetchMode !== 'http') {
+              throw new Error(`${slug}: source identity drift`);
+            }
+            if (manifest.menuSource.minimumExpectedItems !== 51) {
+              throw new Error(`${slug}: minimumExpectedItems=${manifest.menuSource.minimumExpectedItems}; expected 51`);
+            }
+            if (manifest.qualityAssertions.requiredDishNames.length !== 8 || manifest.qualityAssertions.requiredDishVariants.length !== 8) {
+              throw new Error(`${slug}: assertion count drift`);
+            }
+          }
+          console.log(JSON.stringify({ manifestCount: files.length, uniqueSlugCount: new Set(slugs).size }, null, 2));
+          NODE
+      - name: Validate exact 58 catalog once, serially
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p research/delicatessen-catalog-promotion
+          set +e
+          node dist/index.js validate:batch catalog | tee research/delicatessen-catalog-promotion/final58-primary.json
+          status=${PIPESTATUS[0]}
+          set -e
+          printf '%s\n' "$status" > research/delicatessen-catalog-promotion/final58-validator-exit-status.txt
+      - name: Gate strict first-pass 58 of 58 with no retry
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const primary = JSON.parse(await readFile('research/delicatessen-catalog-promotion/final58-primary.json', 'utf8'));
+          const exitStatus = Number((await readFile('research/delicatessen-catalog-promotion/final58-validator-exit-status.txt', 'utf8')).trim());
+          const failed = (primary.results ?? []).filter((entry) => !entry.accepted).map((entry) => ({
+            slug: entry.slug,
+            failureFamilies: entry.failureFamilies ?? [],
+            error: entry.error ?? null,
+            menuError: entry.validation?.menu?.error ?? null,
+            itemCount: entry.validation?.menu?.quality?.itemCount ?? null,
+          }));
+          const summary = {
+            revision: '5907d783af0328c422eeff5f0a92f361dcc918d4',
+            manifestCount: primary.manifestCount,
+            acceptedCount: primary.acceptedCount,
+            failedCount: primary.failedCount,
+            validatorExitStatus: exitStatus,
+            retryCount: 0,
+            failed,
+          };
+          await writeFile('research/delicatessen-catalog-promotion/final58-summary.json', JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          if (primary.manifestCount !== 58) throw new Error(`manifestCount=${primary.manifestCount}; expected 58`);
+          if (primary.acceptedCount !== 58 || primary.failedCount !== 0 || failed.length !== 0) {
+            throw new Error(`Strict first pass failed: ${JSON.stringify(summary)}`);
+          }
+          if (exitStatus !== 0) throw new Error(`validator exit status ${exitStatus}`);
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: delicatessen-catalog-final58-gate
+          path: apps/menu-worker/research/delicatessen-catalog-promotion
+          if-no-files-found: error
