@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "delicatessen-majorstuen-oslo",
+    "name": "Delicatessen Majorstuen",
+    "websiteUrl": "https://delicatessen.no/majorstuen/",
+    "address": "Vibes gate 8, 0356 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.926568,
+    "longitude": 10.722559
+  },
+  "menuSource": {
+    "url": "https://favrit.com/ws/ordr-service/public/v3/locations/simple/LgEAQE59pAo?caller=GUEST_APP&language=nb",
+    "sourceType": "api",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 51,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "The first-party location page links this Favrit service menu directly. Batch 02 tests it as a restaurant-linked secondary priced service-menu source; dine-in completeness is not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Brød & alioli",
+      "Ekstra brød",
+      "Jamón Ibérico Handcut 50g",
+      "Friterte artisjokker",
+      "Entrecote",
+      "Vongole",
+      "Blåskjell escabeche",
+      "Lunsjplanke for to"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Brød & alioli",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Ekstra brød",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Jamón Ibérico Handcut 50g",
+        "priceMinor": 34500
+      },
+      {
+        "name": "Friterte artisjokker",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Entrecote",
+        "priceMinor": 52500
+      },
+      {
+        "name": "Vongole",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Blåskjell escabeche",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Lunsjplanke for to",
+        "priceMinor": 70000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
