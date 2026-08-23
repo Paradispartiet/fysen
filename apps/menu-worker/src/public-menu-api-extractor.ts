@@ -17,7 +17,9 @@ interface ParsedPrice {
 }
 
 const BEVERAGE_SECTION =
-  /(?:alkohol|drikke|drinks?|beverages?|øl|beer|vin|wine|cocktails?|mocktails?|cider|kaffe|coffee|\bte\b|\btea\b)/iu;
+  /(?:alkohol|drikke|drinks?|beverages?|soft\s+drinks?|øl|beer|vin|wine|cava|champagne|prosecco|musserende|sparkling|sangria|cocktails?|mocktails?|cider|kaffe|coffee|\bte\b|\btea\b|avec|brennevin|spirits?|whisk(?:e)?y|bourbon|\brom\b|\brum\b|\bgin\b|vodka|tequila|brandy|cognac|sherry|portvin|dessertvin|digestif)/iu;
+const NON_DISH_PLACEHOLDER =
+  /^(?:test(?:\s+button)?(?:\s*\([^)]*\))?|button(?:\s*\([^)]*\))?)$/iu;
 
 function asRecord(value: unknown): JsonRecord | null {
   return typeof value === "object" && value !== null && !Array.isArray(value)
@@ -67,7 +69,7 @@ function directPrice(value: unknown): { priceMinor: number; currency: string } |
   if (!price) return null;
   const amount = numericAmount(price.amount);
   const currency = normalizedText(price.currency)?.toUpperCase() ?? null;
-  if (amount === null || amount < 0 || !currency || !/^[A-Z]{3}$/u.test(currency)) {
+  if (amount === null || amount <= 0 || !currency || !/^[A-Z]{3}$/u.test(currency)) {
     return null;
   }
   const priceMinor = Math.round(amount * 100);
@@ -171,7 +173,7 @@ export function extractPublicMenuApi(body: string): readonly MenuObservedItem[] 
           const item = asRecord(rawItem);
           if (!item || item.active === false) continue;
           const name = localizedText(item.names ?? item.titles ?? item.name ?? item.title);
-          if (!name || !/\p{L}/u.test(name)) continue;
+          if (!name || !/\p{L}/u.test(name) || NON_DISH_PLACEHOLDER.test(name)) continue;
           const price = itemPrice(item);
           if (!price) continue;
           const description = localizedText(item.descriptions ?? item.description);

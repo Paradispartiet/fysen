@@ -133,3 +133,41 @@ describe("public menu API extractor", () => {
     ).toThrow("conflicting duplicate prices");
   });
 });
+
+describe("public menu API food filtering", () => {
+  it("drops alcohol service sections and zero-priced UI placeholders", () => {
+    const items = extractPublicMenuApi(
+      JSON.stringify({
+        location: {
+          menus: [
+            {
+              menuSections: [
+                {
+                  title: "Cava / Musserende",
+                  menuItems: [
+                    { name: "House Cava", price: { amount: 845, currency: "NOK" } },
+                  ],
+                },
+                {
+                  title: "Gin & Tonic",
+                  menuItems: [
+                    { name: "House Gin & Tonic", price: { amount: 175, currency: "NOK" } },
+                  ],
+                },
+                {
+                  title: "Tapas",
+                  menuItems: [
+                    { name: "Patatas bravas", price: { amount: 105, currency: "NOK" } },
+                    { name: "Test Button (Uteservering)", price: { amount: 0, currency: "NOK" } },
+                    { name: "Test", price: { amount: 50, currency: "NOK" } },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      }),
+    );
+    expect(items.map((item) => item.name)).toEqual(["Patatas bravas"]);
+  });
+});
