@@ -1,0 +1,102 @@
+name: TEMP Golden Chimp direct-priced live proof
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/golden-chimp-direct-priced-live-proof.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Two fresh independent Golden Chimp fetches
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research/golden-chimp-direct-priced-live-proof
+          node --input-type=module <<'NODE'
+          import { writeFile } from 'node:fs/promises';
+          import { HttpMenuClient } from './dist/http-client.js';
+          import { extractMenuSource } from './dist/menu-source-runtime.js';
+
+          const revision='f90d2f88ab9706154de1943ce2625ecfd5fad283';
+          const url='https://www.thegoldenchimp.no/menu';
+          const expected=[
+            ['Pork Gyoza with Japanese ketchup (4 pcs)',19500],
+            ['Chicken Gyoza with Truffle Tosazu (4 pcs)',19500],
+            ['King Crab dumplings with kimchi mayonnaise (4 pcs)',19500],
+            ['Shiitake Wontons with vinegar/soy dip (5 pcs)',20500],
+            ['Spicy Wontons with chili sauce (6 pcs)',20500],
+            ['Scallop dumplings with trout roe (4 pcs)',21500],
+            ['Grilled Chicken Yakiniku, served with Goma Cabbage salad',24500],
+            ['Grilled Seabass with chili/garlic sauce, served with burdock root',27500],
+            ['Golden Shrimp Toast',9500],
+            ['Kimchi',8500],
+            ['Kinpira Gobo (Braised Burdock Root)',8500],
+            ['Goma Cabbage Salad',8500],
+            ['Wood Ear Mushroom',8500],
+            ['Prawn and/or Sweet potato crackers',5000],
+            ['Miso cookie with butter, orange and white chocolate, served with a delicious Five-Spice Ice-Cream',13500],
+          ];
+          const forbidden=new Set(['DUMPLINGS','PROTEINS','SIDES','DESSERT']);
+          const rounds=[];
+          for(let round=1;round<=2;round+=1){
+            const client=new HttpMenuClient();
+            const fetched=await client.fetchSource({url,userAgent:process.env.FYSEN_MENU_BOT_USER_AGENT??'FysenMenuBot/0.1',etag:null,lastModified:null});
+            if(fetched.kind!=='content') throw new Error(`Round ${round}: unexpected ${fetched.kind}`);
+            const extracted=await extractMenuSource('html',fetched);
+            const rows=extracted.items.map((item)=>({name:item.name,priceMinor:item.priceMinor,sectionName:item.sectionName,sourceExcerpt:item.sourceExcerpt}));
+            if(rows.length!==15) throw new Error(`Round ${round}: Golden Chimp output=${rows.length}/15: ${rows.map((row)=>row.name).join(' | ')}`);
+            const byName=new Map(rows.map((row)=>[row.name,row]));
+            for(const [name,priceMinor] of expected){
+              const hit=byName.get(name);
+              if(!hit) throw new Error(`Round ${round}: missing ${name}`);
+              if(Number(hit.priceMinor)!==priceMinor) throw new Error(`Round ${round}: ${name} price=${hit.priceMinor}/${priceMinor}`);
+            }
+            for(const row of rows){
+              if(forbidden.has(row.name)) throw new Error(`Round ${round}: forbidden section label survived: ${row.name}`);
+              if(row.priceMinor===null) throw new Error(`Round ${round}: null price for ${row.name}`);
+            }
+            rounds.push({
+              round,
+              fetchedAt:fetched.fetchedAt,
+              status:fetched.status,
+              rawSha256:fetched.rawSha256,
+              extractorVersion:extracted.extractorVersion,
+              extractionMethod:extracted.method,
+              itemCount:rows.length,
+              rows,
+            });
+          }
+          const first=rounds[0];
+          const second=rounds[1];
+          if(JSON.stringify(first.rows)!==JSON.stringify(second.rows)) throw new Error('Two fresh Golden Chimp outputs differ');
+          const proof={revision,url,expectedCount:15,rounds,outputStable:true};
+          await writeFile('research/golden-chimp-direct-priced-live-proof/proof.json',JSON.stringify(proof,null,2)+'\n');
+          console.log(JSON.stringify(proof,null,2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: golden-chimp-direct-priced-live-proof
+          path: apps/menu-worker/research/golden-chimp-direct-priced-live-proof/proof.json
+          if-no-files-found: error
