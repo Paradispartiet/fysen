@@ -1,0 +1,131 @@
+name: TEMP prove Peppern catalog 59
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/peppern-catalog-59-final-proof.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  peppern-live-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Independently validate new catalog manifest
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research/peppern-catalog-59-proof/new-manifest
+          cp catalog/der-peppern-gror-radhusplassen-oslo.json research/peppern-catalog-59-proof/new-manifest/
+          node dist/index.js validate:batch research/peppern-catalog-59-proof/new-manifest | tee research/peppern-catalog-59-proof/new-validation.json
+      - name: Gate new manifest exact quality
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const validation = JSON.parse(await readFile('research/peppern-catalog-59-proof/new-validation.json', 'utf8'));
+          const result = validation.results?.[0] ?? {};
+          const observed = result.validation?.menu?.observedDishNames ?? [];
+          if (validation.manifestCount !== 1 || validation.acceptedCount !== 1 || validation.failedCount !== 0 || !result.accepted) throw new Error(`New manifest not 1/1: ${JSON.stringify(validation)}`);
+          if (result.validation?.menu?.quality?.itemCount !== 31) throw new Error(`itemCount=${result.validation?.menu?.quality?.itemCount}; expected 31`);
+          if (result.validation?.menu?.extractorVersion !== 'public-menu-api-v2') throw new Error(`extractor=${result.validation?.menu?.extractorVersion}`);
+          if ((result.failureFamilies ?? []).length !== 0) throw new Error(`failureFamilies=${JSON.stringify(result.failureFamilies)}`);
+          for (const forbidden of ['Samosa-CHTNY','Cola Takeaway','Mango Lassi Takeaway']) if (observed.includes(forbidden)) throw new Error(`Forbidden row leaked: ${forbidden}`);
+          if (observed.some((name) => /MÅ BESTILLES SOM TILLEGG/iu.test(name))) throw new Error('Ordering instruction leaked');
+          if (!observed.includes('Chicken Tikka')) throw new Error('Clean Chicken Tikka missing');
+          const summary = { revision: process.env.GITHUB_SHA, permanentCatalogRevision: 'ad95d607f74b4f94b4cceeee5a0115a2ebfba7ce', accepted: result.accepted, itemCount: result.validation?.menu?.quality?.itemCount, extractorVersion: result.validation?.menu?.extractorVersion, failureFamilies: result.failureFamilies ?? [], observedDishNames: observed };
+          await writeFile('research/peppern-catalog-59-proof/new-summary.json', JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: peppern-catalog-59-new-manifest-proof
+          path: apps/menu-worker/research/peppern-catalog-59-proof
+          if-no-files-found: error
+
+  strict-59-catalog-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Prove published-refresh fail-closed safety contract
+        run: pnpm --filter @fysen/menu-worker exec vitest run src/onboarding-refresh-safety.test.ts src/catalog-onboarding-failure-policy.test.ts src/production-menu-mutation-workflow.test.ts
+      - name: Prove exact resulting catalog identity
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research/peppern-catalog-59-gate
+          node --input-type=module <<'NODE'
+          import { readdir, readFile, writeFile } from 'node:fs/promises';
+          const files = (await readdir('catalog')).filter((file) => file.endsWith('.json')).sort();
+          const slugs = [];
+          for (const file of files) slugs.push(JSON.parse(await readFile(`catalog/${file}`, 'utf8')).restaurant.slug);
+          const identity = { manifestCount: files.length, uniqueSlugCount: new Set(slugs).size, peppernCount: slugs.filter((slug) => slug === 'der-peppern-gror-radhusplassen-oslo').length };
+          await writeFile('research/peppern-catalog-59-gate/identity.json', JSON.stringify(identity, null, 2) + '\n');
+          console.log(JSON.stringify(identity, null, 2));
+          if (identity.manifestCount !== 59 || identity.uniqueSlugCount !== 59 || identity.peppernCount !== 1) throw new Error(`Catalog identity drift: ${JSON.stringify(identity)}`);
+          NODE
+      - name: Validate exact 59 catalog once serially
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          set +e
+          node dist/index.js validate:batch catalog | tee research/peppern-catalog-59-gate/primary.json
+          status=${PIPESTATUS[0]}
+          set -e
+          printf '%s\n' "$status" > research/peppern-catalog-59-gate/validator-exit-status.txt
+      - name: Gate strict 59 of 59 first pass no retry
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const primary = JSON.parse(await readFile('research/peppern-catalog-59-gate/primary.json', 'utf8'));
+          const exitStatus = Number((await readFile('research/peppern-catalog-59-gate/validator-exit-status.txt', 'utf8')).trim());
+          const failed = (primary.results ?? []).filter((entry) => !entry.accepted).map((entry) => ({ slug: entry.slug, failureFamilies: entry.failureFamilies ?? [], error: entry.error ?? null, menuError: entry.validation?.menu?.error ?? null, itemCount: entry.validation?.menu?.quality?.itemCount ?? null }));
+          const summary = { revision: process.env.GITHUB_SHA, permanentCatalogRevision: 'ad95d607f74b4f94b4cceeee5a0115a2ebfba7ce', manifestCount: primary.manifestCount, acceptedCount: primary.acceptedCount, failedCount: primary.failedCount, validatorExitStatus: exitStatus, retryCount: 0, failed };
+          await writeFile('research/peppern-catalog-59-gate/summary.json', JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          if (primary.manifestCount !== 59 || primary.acceptedCount !== 59 || primary.failedCount !== 0 || failed.length !== 0 || exitStatus !== 0) throw new Error(`Strict 59 first pass failed: ${JSON.stringify(summary)}`);
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: peppern-catalog-59-final-gate
+          path: apps/menu-worker/research/peppern-catalog-59-gate
+          if-no-files-found: error
