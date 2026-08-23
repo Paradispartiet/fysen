@@ -1,0 +1,106 @@
+name: TEMP Batch 02 Mesob decision trace v2
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch02-mesob-decision-trace-v2.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  trace:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Restore captured Mesob bytes
+        shell: bash
+        run: |
+          mkdir -p trace /tmp/captured
+          gh run download 32628090223 --repo "$GITHUB_REPOSITORY" --name batch02-mesob-sawan-stage-trace --dir /tmp/captured
+          cp /tmp/captured/mesob.html trace/mesob.html
+          sha256sum trace/mesob.html | tee trace/mesob-sha256.txt
+      - name: Trace exact runtime family selection
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE' | tee ../../trace/mesob-decision-trace.json
+          import {readFile} from 'node:fs/promises';
+          import {normalizeHtmlHeadingLineBreaks} from './dist/html-heading-normalizer.js';
+          import {extractHtmlVisibleText,stripExplicitlyHiddenHtmlContent} from './dist/html-extractor.js';
+          import {extractScopedHtmlMenu} from './dist/html-source-extractor.js';
+          import {recoverDescriptionNamedHtmlItems} from './dist/html-description-title-recovery.js';
+          import {recoverTrailingPriceCardHtmlItems,recoverInlineMarkedPriceTextItems,isStrongNumberedTrailingPriceCardRecovery} from './dist/html-trailing-price-card-recovery.js';
+          import {recoverPriceWrappedHtmlItems} from './dist/html-price-wrapped-recovery.js';
+          import {recoverAdjacentHeadingPriceHtmlItems} from './dist/html-adjacent-heading-price-recovery.js';
+          import {recoverExplicitFromPriceHtmlItems} from './dist/html-explicit-from-price-recovery.js';
+          import {recoverFirstCardAfterPlainFoodSections} from './dist/html-section-first-card-recovery.js';
+          import {recoverEmbeddedStructuredMenuJson} from './dist/html-embedded-menu-json-recovery.js';
+          import {filterHtmlBeverageSectionItemsWithScopedProvenance} from './dist/html-text-section-scope.js';
+          import {canonicalizeHtmlOutputItems} from './dist/html-output-canonicalizer.js';
+          import {normalizeHtmlPriceNotation,normalizeHtmlItemName,isCanonicalHtmlMenuItem,extractMenuSource} from './dist/menu-source-runtime.js';
+
+          const raw=await readFile('../../trace/mesob.html','utf8');
+          const normalizedHtml=normalizeHtmlPriceNotation(normalizeHtmlHeadingLineBreaks(raw));
+          const extracted=extractScopedHtmlMenu(normalizedHtml);
+          const recoveryHtml=stripExplicitlyHiddenHtmlContent(normalizedHtml);
+          const fullVisibleText=extractHtmlVisibleText(recoveryHtml);
+          const recovered=recoverDescriptionNamedHtmlItems(extracted.items,extracted.visibleText);
+          const rawTrailing=recoverTrailingPriceCardHtmlItems(recoveryHtml);
+          const trailing=recoverDescriptionNamedHtmlItems(rawTrailing,extracted.visibleText);
+          const wrapped=recoverPriceWrappedHtmlItems(extracted.visibleText);
+          const inline=recoverInlineMarkedPriceTextItems(extracted.visibleText);
+          const heading=recoverAdjacentHeadingPriceHtmlItems(recoveryHtml);
+          const from=recoverExplicitFromPriceHtmlItems(extracted.visibleText);
+          const first=recoverFirstCardAfterPlainFoodSections(extracted.visibleText);
+          const embedded=recoverEmbeddedStructuredMenuJson(recoveryHtml).filter(isCanonicalHtmlMenuItem);
+          const semanticCategoryCardsPreferred=trailing.length>=4&&trailing.every((item)=>item.sectionName!==null&&item.confidence>=0.99);
+          const strongNumberedCardsPreferred=isStrongNumberedTrailingPriceCardRecovery(trailing);
+          const isolatedTrailingRecoveryPreferred=semanticCategoryCardsPreferred||strongNumberedCardsPreferred;
+          const trailingPriceCardQualifies=isolatedTrailingRecoveryPreferred||(trailing.length>=4&&(recovered.length===0||trailing.length>=Math.max(6,Math.ceil(recovered.length*1.5))));
+          const headingThreshold=Math.ceil(recovered.length*0.75);
+          const preferredFamily=trailingPriceCardQualifies?'trailing':heading.length>=4&&(recovered.length===0||heading.length>=headingThreshold)?'heading':wrapped.length>=3&&wrapped.length>=recovered.length*2?'wrapped':'recovered';
+          const baseCanonical=recovered.map(normalizeHtmlItemName).filter(isCanonicalHtmlMenuItem);
+          const baseScoped=filterHtmlBeverageSectionItemsWithScopedProvenance(baseCanonical,extracted.visibleText,fullVisibleText);
+          const baseFinal=canonicalizeHtmlOutputItems(baseScoped);
+          const final=await extractMenuSource('html',{body:raw});
+          const pack=(items)=>({count:items.length,names:items.map((x)=>x.name),rows:items.map((x)=>({name:x.name,priceMinor:x.priceMinor,sectionName:x.sectionName,confidence:x.confidence,sourceExcerpt:x.sourceExcerpt}))});
+          const out={
+            extracted:pack(extracted.items),
+            recovered:pack(recovered),
+            rawTrailing:pack(rawTrailing),
+            trailing:pack(trailing),
+            wrapped:pack(wrapped),
+            inline:pack(inline),
+            heading:pack(heading),
+            explicitFrom:pack(from),
+            sectionFirst:pack(first),
+            embedded:pack(embedded),
+            decision:{semanticCategoryCardsPreferred,strongNumberedCardsPreferred,isolatedTrailingRecoveryPreferred,trailingPriceCardQualifies,headingThreshold,preferredFamily},
+            recoveredOnlyAfterCanonicalScope:pack(baseFinal),
+            actualRuntimeFinal:pack(final.items),
+          };
+          console.log(JSON.stringify(out,null,2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-mesob-decision-trace-v2
+          path: trace/**
+          if-no-files-found: error
