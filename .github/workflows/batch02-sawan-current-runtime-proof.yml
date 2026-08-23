@@ -10,9 +10,9 @@ permissions:
   contents: read
 
 jobs:
-  prove:
+  trace-dom:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
     env:
       FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
     steps:
@@ -28,86 +28,75 @@ jobs:
         with:
           node-version: 24.18.0
       - run: pnpm install --no-frozen-lockfile
-      - run: pnpm --filter @fysen/menu-worker... build
-      - name: Fetch and trace current first-party Sawan menu once
+      - name: Trace strong-title and standalone-price DOM relationships
         working-directory: apps/menu-worker
         shell: bash
         run: |
           mkdir -p research
-          node --input-type=module <<'NODE' | tee research/sawan-current-runtime-proof.json
+          node --input-type=module <<'NODE' | tee research/sawan-current-dom-trace.json
           import {createHash} from 'node:crypto';
-          import {writeFile} from 'node:fs/promises';
           import {load} from 'cheerio';
-          import {normalizeHtmlHeadingLineBreaks} from './dist/html-heading-normalizer.js';
-          import {extractHtmlVisibleText,stripExplicitlyHiddenHtmlContent} from './dist/html-extractor.js';
-          import {extractScopedHtmlMenu,HTML_SOURCE_EXTRACTOR_VERSION} from './dist/html-source-extractor.js';
-          import {recoverDescriptionNamedHtmlItems} from './dist/html-description-title-recovery.js';
-          import {recoverTrailingPriceCardHtmlItems,recoverInlineMarkedPriceTextItems} from './dist/html-trailing-price-card-recovery.js';
-          import {recoverPriceWrappedHtmlItems} from './dist/html-price-wrapped-recovery.js';
-          import {recoverAdjacentHeadingPriceHtmlItems} from './dist/html-adjacent-heading-price-recovery.js';
-          import {recoverExplicitFromPriceHtmlItems} from './dist/html-explicit-from-price-recovery.js';
-          import {recoverFirstCardAfterPlainFoodSections} from './dist/html-section-first-card-recovery.js';
-          import {recoverElementorPriceListHtmlItems,HTML_ELEMENTOR_PRICE_LIST_RECOVERY_VERSION} from './dist/html-elementor-price-list-recovery.js';
-          import {extractMenuSource,normalizeHtmlPriceNotation} from './dist/menu-source-runtime.js';
-          import {HTML_TEXT_SECTION_SCOPE_VERSION} from './dist/html-text-section-scope.js';
 
           const url='https://www.sawan.no/meny';
           const response=await fetch(url,{headers:{'user-agent':process.env.FYSEN_MENU_BOT_USER_AGENT,'accept':'text/html,application/xhtml+xml'}});
           const body=await response.text();
           if(!response.ok) throw new Error(`Sawan HTTP ${response.status}`);
-          const normalized=normalizeHtmlPriceNotation(normalizeHtmlHeadingLineBreaks(body));
-          const extracted=extractScopedHtmlMenu(normalized);
-          const recoveryHtml=stripExplicitlyHiddenHtmlContent(normalized);
-          const fullVisibleText=extractHtmlVisibleText(recoveryHtml);
-          const recovered=recoverDescriptionNamedHtmlItems(extracted.items,extracted.visibleText);
-          const trailing=recoverDescriptionNamedHtmlItems(recoverTrailingPriceCardHtmlItems(recoveryHtml),extracted.visibleText);
-          const wrapped=recoverPriceWrappedHtmlItems(extracted.visibleText);
-          const inline=recoverInlineMarkedPriceTextItems(extracted.visibleText);
-          const heading=recoverAdjacentHeadingPriceHtmlItems(recoveryHtml);
-          const explicitFrom=recoverExplicitFromPriceHtmlItems(extracted.visibleText);
-          const sectionFirst=recoverFirstCardAfterPlainFoodSections(extracted.visibleText);
-          const elementor=recoverElementorPriceListHtmlItems(recoveryHtml);
-          const final=await extractMenuSource('html',{body});
           const $=load(body);
-          const normalize=(value)=>value.normalize('NFKC').replace(/\s+/g,' ').trim();
-          const strong=[];
-          $('strong').each((i,el)=>{
-            const node=$(el);
-            strong.push({i,text:normalize(node.text()).slice(0,240),parent:normalize(node.parent().text()).slice(0,500)});
+          $('script,style,noscript,svg,template').remove();
+          const text=(node)=>$(node).text().normalize('NFKC').replace(/[\u200B-\u200D\uFEFF]/gu,'').replace(/\s+/g,' ').trim();
+          const purePrice=/^(?:(?:NOK|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,?[-–—]|kr\.?|NOK)?(?:\s+per\s+person)?$/iu;
+          const short=(value,max=360)=>value.length<=max?value:`${value.slice(0,max)}…`;
+          const nodeInfo=(node)=>({
+            tag:(node?.tagName??node?.name??'').toLowerCase(),
+            class:($(node).attr('class')??'').trim()||null,
+            text:short(text(node)),
+            strong:[...$(node).find('strong').toArray()].map((s)=>text(s)).filter(Boolean).slice(0,8),
           });
-          const pack=(items)=>({count:items.length,rows:items.map((item)=>({name:item.name,priceMinor:item.priceMinor,sectionName:item.sectionName,confidence:item.confidence,sourceExcerpt:item.sourceExcerpt}))});
-          const names=final.items.map((item)=>item.name);
-          const suspicious=names.filter((name)=>/^(?:with|med)\s+(?:meat|chicken|beef|pork|duck|fish|tofu)$/iu.test(name)||/^(?:starter|starters|curry|main|mains|sharing|salads?|raw|maki|taco)$/iu.test(name));
+          const minimalPrices=[];
+          $('p,div,span,li').each((_,el)=>{
+            const value=text(el);
+            if(!purePrice.test(value)) return;
+            const childExact=$(el).children('p,div,span,li').toArray().some((child)=>purePrice.test(text(child)));
+            if(childExact) return;
+            minimalPrices.push(el);
+          });
+          const priceRows=minimalPrices.slice(0,120).map((el,index)=>{
+            const levels=[];
+            let current=el;
+            for(let depth=0;depth<5&&current;depth+=1){
+              const currentInfo=nodeInfo(current);
+              const previous=$(current).prevAll().slice(0,6).toArray().map(nodeInfo);
+              levels.push({depth,current:currentInfo,previous});
+              current=$(current).parent().get(0);
+            }
+            return {index,price:text(el),levels};
+          });
+          const strongRows=[];
+          $('strong').each((index,el)=>{
+            const value=text(el);
+            if(!value) return;
+            const parent=$(el).parent().get(0);
+            const grandparent=parent?$(parent).parent().get(0):null;
+            const followingParent=parent?$(parent).nextAll().slice(0,5).toArray().map(nodeInfo):[];
+            const followingGrand=grandparent?$(grandparent).nextAll().slice(0,5).toArray().map(nodeInfo):[];
+            strongRows.push({index,strong:value,parent:parent?nodeInfo(parent):null,grandparent:grandparent?nodeInfo(grandparent):null,followingParent,followingGrand});
+          });
           const report={
             url,
             finalUrl:response.url,
             status:response.status,
             sourceSha256:createHash('sha256').update(body).digest('hex'),
             sourceBytes:Buffer.byteLength(body),
-            versions:{html:HTML_SOURCE_EXTRACTOR_VERSION,elementor:HTML_ELEMENTOR_PRICE_LIST_RECOVERY_VERSION,textSectionScope:HTML_TEXT_SECTION_SCOPE_VERSION},
-            visibleTextLength:fullVisibleText.length,
-            strongCount:strong.length,
-            strong:strong.slice(0,120),
-            families:{
-              extracted:pack(extracted.items),
-              recovered:pack(recovered),
-              trailing:pack(trailing),
-              wrapped:pack(wrapped),
-              inline:pack(inline),
-              heading:pack(heading),
-              explicitFrom:pack(explicitFrom),
-              sectionFirst:pack(sectionFirst),
-              elementor:pack(elementor),
-            },
-            final:pack(final.items),
-            suspicious,
-            containsOldWithMeat:names.some((name)=>/^with meat$/iu.test(name)),
+            minimalPriceCount:minimalPrices.length,
+            priceRows,
+            strongCount:strongRows.length,
+            strongRows:strongRows.slice(0,120),
           };
           console.log(JSON.stringify(report,null,2));
           NODE
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: batch02-sawan-current-runtime-proof
-          path: apps/menu-worker/research/sawan-current-runtime-proof.json
+          name: batch02-sawan-current-dom-trace
+          path: apps/menu-worker/research/sawan-current-dom-trace.json
           if-no-files-found: error
