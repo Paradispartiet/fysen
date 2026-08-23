@@ -5,7 +5,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PUBLIC_MENU_API_EXTRACTOR_VERSION = "public-menu-api-v1";
+export const PUBLIC_MENU_API_EXTRACTOR_VERSION = "public-menu-api-v2";
 
 type JsonRecord = Record<string, unknown>;
 
@@ -37,6 +37,27 @@ function normalizedText(value: unknown): string | null {
   if (typeof value !== "string") return null;
   const normalized = value.normalize("NFKC").trim().replace(/\s+/gu, " ");
   return normalized.length > 0 ? normalized : null;
+}
+
+function isWeOrderOperationalParenthetical(value: string): boolean {
+  const compact = value
+    .normalize("NFKC")
+    .toLocaleUpperCase("nb-NO")
+    .replace(/[^\p{L}]/gu, "");
+  return (
+    compact.includes("MÅBESTILLESSOMTILLEGG") ||
+    compact.includes("MUSTBEORDEREDSEPARATELY") ||
+    compact.includes("ORDERSEPARATELY")
+  );
+}
+
+function cleanWeOrderText(value: unknown): string | null {
+  const text = normalizedText(value);
+  if (!text) return null;
+  const cleaned = text.replace(/\(([^()]*)\)/gu, (full, inner: string) =>
+    isWeOrderOperationalParenthetical(inner) ? " " : full,
+  );
+  return normalizedText(cleaned);
 }
 
 function localizedText(value: unknown): string | null {
@@ -121,6 +142,41 @@ function itemPrice(item: JsonRecord): ParsedPrice | null {
   };
 }
 
+function nokDisplayAmount(value: unknown): number | null {
+  const text = normalizedText(value)?.replace(/\s+/gu, "") ?? null;
+  if (!text) return null;
+  const withoutPrefix = text.replace(/^kr/iu, "");
+  const wholeNok = /^(\d+),-$/u.exec(withoutPrefix);
+  if (wholeNok?.[1]) return Number(wholeNok[1]);
+  return null;
+}
+
+function weOrderPrice(item: JsonRecord): ParsedPrice | null {
+  const amount = numericAmount(item.price);
+  if (amount === null) return null;
+  if (amount <= 0) return null;
+
+  const displayAmount = nokDisplayAmount(item.dPrice);
+  const name = cleanWeOrderText(item.name) ?? normalizedText(item.name) ?? "unnamed item";
+  if (displayAmount === null) {
+    throw new Error(`Public menu API WeOrder price lacks NOK display evidence for ${name}`);
+  }
+  if (Math.abs(amount - displayAmount) > 0.005) {
+    throw new Error(`Public menu API WeOrder numeric/display price conflict for ${name}`);
+  }
+
+  const priceMinor = Math.round(amount * 100);
+  if (!Number.isSafeInteger(priceMinor)) {
+    throw new Error(`Public menu API WeOrder price is outside safe integer range for ${name}`);
+  }
+  return {
+    priceMinor,
+    priceKind: "exact",
+    priceMaxMinor: null,
+    currency: "NOK",
+  };
+}
+
 function sourceExcerpt(
   name: string,
   description: string | null,
@@ -138,6 +194,114 @@ function sourceExcerpt(
   }).slice(0, 2000);
 }
 
+function finalizeItems(items: readonly MenuObservedItem[]): readonly MenuObservedItem[] {
+  const bySourceKey = new Map<string, MenuObservedItem>();
+  for (const item of items) {
+    const existing = bySourceKey.get(item.sourceKey);
+    if (!existing) {
+      bySourceKey.set(item.sourceKey, item);
+      continue;
+    }
+    if (
+      existing.priceMinor !== item.priceMinor ||
+      (existing.priceKind ?? "exact") !== (item.priceKind ?? "exact") ||
+      (existing.priceMaxMinor ?? null) !== (item.priceMaxMinor ?? null) ||
+      existing.currency !== item.currency
+    ) {
+      throw new Error(
+        `Public menu API exposed conflicting duplicate prices for ${item.name}`,
+      );
+    }
+  }
+  return [...bySourceKey.values()].map((item, index) => ({
+    ...item,
+    position: index,
+  }));
+}
+
+function extractWeOrderMenu(root: JsonRecord): readonly MenuObservedItem[] | null {
+  const data = asRecord(root.data);
+  if (!data) return null;
+  const menuId = numericAmount(data.id);
+  const menuStructure = numericAmount(data.menuStructure);
+  const menuVersion = normalizedText(data.menuVersion);
+  const menus = asArray(data.menu);
+  if (menuId === null || menuStructure === null || !menuVersion || menus.length === 0) {
+    return null;
+  }
+  if (root.success !== true) {
+    throw new Error("Public menu API WeOrder payload is not successful");
+  }
+
+  const items: MenuObservedItem[] = [];
+  let recognizedFoodMenuCount = 0;
+  let recognizedCategoryCount = 0;
+  let recognizedEntryCount = 0;
+  let position = 0;
+
+  for (const rawMenu of menus) {
+    const menu = asRecord(rawMenu);
+    if (!menu) continue;
+    const menuName = normalizedText(menu.name);
+    const menuType = normalizedText(menu.type)?.toLocaleLowerCase("en-US") ?? null;
+    const categories = asArray(menu.categories);
+    if (!menuName || !menuType || categories.length === 0) continue;
+    if (menuType !== "food") continue;
+    recognizedFoodMenuCount += 1;
+
+    for (const rawCategory of categories) {
+      const category = asRecord(rawCategory);
+      if (!category) continue;
+      const categoryName = normalizedText(category.name) ?? menuName;
+      const entries = asArray(category.entries);
+      if (entries.length === 0) continue;
+      recognizedCategoryCount += 1;
+      const categoryExcluded =
+        BEVERAGE_SECTION.test(categoryName) || NON_DISH_SECTION.test(categoryName);
+
+      for (const rawEntry of entries) {
+        const entry = asRecord(rawEntry);
+        if (!entry) continue;
+        recognizedEntryCount += 1;
+        if (categoryExcluded || entry.isAlcohol === true) continue;
+        const name = cleanWeOrderText(entry.name);
+        if (!name || !/\p{L}/u.test(name) || NON_DISH_PLACEHOLDER.test(name)) continue;
+        const price = weOrderPrice(entry);
+        if (!price) continue;
+        const description = cleanWeOrderText(entry.desc ?? entry.description);
+        items.push({
+          sourceKey: createMenuItemSourceKey(name, categoryName),
+          name,
+          normalizedName: normalizeDishName(name),
+          description,
+          sectionName: categoryName,
+          priceMinor: price.priceMinor,
+          priceKind: price.priceKind,
+          priceMaxMinor: price.priceMaxMinor,
+          currency: price.currency,
+          position,
+          extractionMethod: "api",
+          confidence: 1,
+          sourceExcerpt: sourceExcerpt(name, description, categoryName, price),
+        });
+        position += 1;
+      }
+    }
+  }
+
+  if (
+    recognizedFoodMenuCount === 0 ||
+    recognizedCategoryCount === 0 ||
+    recognizedEntryCount === 0
+  ) {
+    throw new Error("Public menu API WeOrder payload exposed no recognizable food entries");
+  }
+  if (items.length === 0) {
+    throw new Error("Public menu API WeOrder payload exposed no positive-price food items");
+  }
+  return finalizeItems(items);
+}
+
 export function extractPublicMenuApi(body: string): readonly MenuObservedItem[] {
   let parsed: unknown;
   try {
@@ -147,6 +311,10 @@ export function extractPublicMenuApi(body: string): readonly MenuObservedItem[] 
   }
   const root = asRecord(parsed);
   if (!root) throw new Error("Public menu API response must be a JSON object");
+
+  const weOrderItems = extractWeOrderMenu(root);
+  if (weOrderItems) return weOrderItems;
+
   const location = asRecord(root.location);
   const menus = asArray(location?.menus ?? root.menus);
   if (menus.length === 0) {
@@ -219,26 +387,5 @@ export function extractPublicMenuApi(body: string): readonly MenuObservedItem[] 
     throw new Error("Public menu API exposed no recognizable menu sections");
   }
 
-  const bySourceKey = new Map<string, MenuObservedItem>();
-  for (const item of items) {
-    const existing = bySourceKey.get(item.sourceKey);
-    if (!existing) {
-      bySourceKey.set(item.sourceKey, item);
-      continue;
-    }
-    if (
-      existing.priceMinor !== item.priceMinor ||
-      (existing.priceKind ?? "exact") !== (item.priceKind ?? "exact") ||
-      (existing.priceMaxMinor ?? null) !== (item.priceMaxMinor ?? null) ||
-      existing.currency !== item.currency
-    ) {
-      throw new Error(
-        `Public menu API exposed conflicting duplicate prices for ${item.name}`,
-      );
-    }
-  }
-  return [...bySourceKey.values()].map((item, index) => ({
-    ...item,
-    position: index,
-  }));
+  return finalizeItems(items);
 }
