@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "benares-tordenskiolds-gate-oslo",
+    "name": "Benares",
+    "websiteUrl": "https://benares.no/",
+    "address": "Tordenskiolds gate 8, 0160 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.912267,
+    "longitude": 10.735822
+  },
+  "menuSource": {
+    "url": "https://benares.no/meny?menu=menu",
+    "sourceType": "html",
+    "fetchMode": "browser",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 69,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "Batch 02 locks current menu identity first. Kitchen-scoped hours remain unknown until separately verified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pani Puri Shots",
+      "Chicken Majestic",
+      "Chicken Palak",
+      "Lamb Palak",
+      "Veg Biryani",
+      "Tandoori Prawn",
+      "Benares Special Biryani",
+      "Deshi Salad"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pani Puri Shots",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Chicken Majestic",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Chicken Palak",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Lamb Palak",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Veg Biryani",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Tandoori Prawn",
+        "priceMinor": 30900
+      },
+      {
+        "name": "Benares Special Biryani",
+        "priceMinor": 30900
+      },
+      {
+        "name": "Deshi Salad",
+        "priceMinor": 7900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
