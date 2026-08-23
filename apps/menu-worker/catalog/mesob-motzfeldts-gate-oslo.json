@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mesob-motzfeldts-gate-oslo",
+    "name": "Mesob Restaurant",
+    "websiteUrl": "https://mesobrestaurant.no/",
+    "address": "Motzfeldts gate 5, 0187 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.913893,
+    "longitude": 10.762844
+  },
+  "menuSource": {
+    "url": "https://mesobrestaurant.no/menu/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 22,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "Batch 02 locks current menu identity first. Kitchen-scoped hours remain unknown until separately verified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "KITFO / ክትፎ",
+      "MESOB SPECIAL DINNER/ መሶብ ማሕበራዊ",
+      "TIBSI / ጥብሲ",
+      "Zilzil Tebsi/ ዝልዝል ጥብሲ",
+      "VEGAN FIRFR / ናይ ጾም ፍርፍር",
+      "Vegansk suppe",
+      "Vegankake",
+      "Spinat, poteter og gulrøtter"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "KITFO / ክትፎ",
+        "priceMinor": 34900
+      },
+      {
+        "name": "MESOB SPECIAL DINNER/ መሶብ ማሕበራዊ",
+        "priceMinor": 41900
+      },
+      {
+        "name": "TIBSI / ጥብሲ",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Zilzil Tebsi/ ዝልዝል ጥብሲ",
+        "priceMinor": 38900
+      },
+      {
+        "name": "VEGAN FIRFR / ናይ ጾም ፍርፍር",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Vegansk suppe",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Vegankake",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Spinat, poteter og gulrøtter",
+        "priceMinor": 26900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

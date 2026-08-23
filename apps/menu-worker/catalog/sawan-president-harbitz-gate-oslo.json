@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sawan-president-harbitz-gate-oslo",
+    "name": "Sawan",
+    "websiteUrl": "https://www.sawan.no/",
+    "address": "President Harbitz' gate 4, 0259 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.918836,
+    "longitude": 10.715629
+  },
+  "menuSource": {
+    "url": "https://www.sawan.no/meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 44,
+    "maxResponseBytes": 3145728,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-23",
+      "note": "Current first-party /meny source is robots-allowed and requires the generic bounded 3 MiB HTTP source policy. Kitchen-scoped hours remain separately unverified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Åtte smaker fra kjøkkenet",
+      "Kalix Löjrom with lotus chips",
+      "Snøkrabbe",
+      "Kveite sashimi",
+      "Spicy tuna maki",
+      "Bluefin tuna taco (2 stk.)",
+      "Contemporary lamb rack (2 stk.)",
+      "Chicken satay",
+      "The Chef’s Chicken Salad",
+      "Vegan crispy østerssopp (for 2 pers)",
+      "Sawans veganske wok",
+      "Sawans eksklusive wagyu flambé",
+      "Sawans wok"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Åtte smaker fra kjøkkenet",
+        "priceMinor": 99500
+      },
+      {
+        "name": "Kalix Löjrom with lotus chips",
+        "priceMinor": 60000
+      },
+      {
+        "name": "Snøkrabbe",
+        "priceMinor": 28000
+      },
+      {
+        "name": "Kveite sashimi",
+        "priceMinor": 28000
+      },
+      {
+        "name": "Spicy tuna maki",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Bluefin tuna taco (2 stk.)",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Contemporary lamb rack (2 stk.)",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Chicken satay",
+        "priceMinor": 22000
+      },
+      {
+        "name": "The Chef’s Chicken Salad",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Vegan crispy østerssopp (for 2 pers)",
+        "priceMinor": 72000
+      },
+      {
+        "name": "Sawans veganske wok",
+        "priceMinor": 41500
+      },
+      {
+        "name": "Sawans eksklusive wagyu flambé",
+        "priceMinor": 120000
+      },
+      {
+        "name": "Sawans wok",
+        "priceMinor": 48000
+      }
+    ],
+    "forbiddenDishNames": [
+      "SAWAN RAW",
+      "SAWAN MAKI",
+      "SAWAN TACO",
+      "SAWAN SMÅRETTER",
+      "SAWAN SALATER",
+      "SAWAN VEGANSK",
+      "SAWAN SHARING",
+      "Satay (2 stk.)",
+      "With meat",
+      "with meat"
+    ]
+  }
+}
