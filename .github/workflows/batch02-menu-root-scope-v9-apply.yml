@@ -279,10 +279,10 @@ jobs:
               t = t.replace('"text-section-scope-v8"', '"text-section-scope-v9"')
               test.write_text(t)
           PY
-      - name: Targeted parser tests
-        run: pnpm --filter @fysen/menu-worker test -- html-elementor-price-list-recovery.test.ts html-elementor-menu-root-regression.test.ts html-text-section-scope.test.ts html-source-extractor.test.ts menu-source-runtime-version.test.ts html-direct-priced-food-title-regression.test.ts
-      - name: Build menu worker graph
+      - name: Build menu worker dependency graph
         run: pnpm --filter @fysen/menu-worker... build
+      - name: Full menu worker tests
+        run: pnpm --filter @fysen/menu-worker test
       - name: Commit permanent code only
         shell: bash
         run: |
