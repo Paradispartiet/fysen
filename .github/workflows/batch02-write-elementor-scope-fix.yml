@@ -1,0 +1,346 @@
+name: TEMP write Batch 02 Elementor scope fix
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch02-write-elementor-scope-fix.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/batch02-menu-root-scope-v9
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+
+      - name: Apply generic structural recovery and menu-root scoping
+        shell: bash
+        run: |
+          cat > apps/menu-worker/src/html-elementor-price-list-recovery.ts <<'TS'
+          import { load } from "cheerio";
+          import {
+            createMenuItemSourceKey,
+            normalizeDishName,
+            type MenuObservedItem,
+            type MenuPriceKind,
+          } from "@fysen/menu-core";
+
+          export const HTML_ELEMENTOR_PRICE_LIST_RECOVERY_VERSION =
+            "elementor-price-list-v1";
+
+          const CARD = ".elementor-price-list-item";
+          const TITLE = ".elementor-price-list-title";
+          const PRICE = ".elementor-price-list-price";
+          const DESCRIPTION = ".elementor-price-list-description";
+          const MENU_ROOT_SECTION = /^(?:our\s+menu|vår\s+meny|menu|meny)$/iu;
+          const FOOD_SECTION =
+            /^(?:forretter?|starters?|appetizers?|småretter|small\s+plates?|hovedretter?|mains?|main\s+courses?|barne\s*meny|barnemeny|kids?\s+menu|desserter?|desserts?|supper?|soups?|salater?|salads?|sides?|tilbehør|pizza(?:er|s)?|burgers?)$/iu;
+          const BEVERAGE_SECTION =
+            /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|bar(?:\s+menu)?|soft\s+drinks?|mineralvann|wine(?:\s+(?:list|menu))?|vinkart|vin(?:kart|liste|meny)?|beer(?:s)?|øl(?:\s*,?\s*cider.*)?|cocktails?|mocktails?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?)$/iu;
+          const PRICE_LINE =
+            /^(?:(fra|from)\s+)?(?:(?:NOK|kr\.?)\s*)?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
+
+          interface ParsedPrice {
+            readonly priceMinor: number;
+            readonly priceKind: MenuPriceKind;
+          }
+
+          function normalizeText(value: string): string {
+            return value.normalize("NFKC").replace(/\s+/gu, " ").trim();
+          }
+
+          function parsePrice(value: string): ParsedPrice | null {
+            const match = normalizeText(value).match(PRICE_LINE);
+            if (!match?.[2]) return null;
+            const separator = match[3] ?? null;
+            const trailingDigits = match[4] ?? "";
+            let whole = Number(match[2]);
+            let decimals = "";
+            if (separator === "." && trailingDigits.length === 3) {
+              whole = Number(`${match[2]}${trailingDigits}`);
+            } else {
+              if (trailingDigits.length > 2) return null;
+              decimals = trailingDigits.padEnd(2, "0").slice(0, 2);
+            }
+            const priceMinor = whole * 100 + Number(decimals || "0");
+            if (priceMinor < 4_000 || priceMinor > 1_000_000) return null;
+            return {
+              priceMinor,
+              priceKind: match[1] ? "from" : "exact",
+            };
+          }
+
+          export function recoverElementorPriceListHtmlItems(
+            html: string,
+          ): readonly MenuObservedItem[] {
+            const $ = load(html);
+            const totalCards = $(CARD).length;
+            if (totalCards < 4) return [];
+
+            const items: MenuObservedItem[] = [];
+            let currentSection: string | null = null;
+            let sawMenuRoot = false;
+            let sawSpecificFoodSection = false;
+            let position = 0;
+
+            const ordered = $("h1,h2,h3,h4,h5,h6,.elementor-price-list-item").toArray();
+            for (const element of ordered) {
+              if ($(element).is("h1,h2,h3,h4,h5,h6")) {
+                const heading = normalizeText($(element).text());
+                if (!heading) continue;
+                currentSection = heading;
+                if (MENU_ROOT_SECTION.test(heading)) sawMenuRoot = true;
+                if (FOOD_SECTION.test(heading)) sawSpecificFoodSection = true;
+                continue;
+              }
+
+              if (!currentSection || BEVERAGE_SECTION.test(currentSection)) continue;
+              const card = $(element);
+              const name = normalizeText(card.find(TITLE).first().text());
+              const priceText = normalizeText(card.find(PRICE).first().text());
+              const price = parsePrice(priceText);
+              if (!name || !/\p{L}/u.test(name) || !price) continue;
+              const description = normalizeText(card.find(DESCRIPTION).first().text()) || null;
+              const sourceKey = createMenuItemSourceKey(name, currentSection);
+              items.push({
+                sourceKey,
+                name,
+                normalizedName: normalizeDishName(name),
+                description,
+                sectionName: currentSection,
+                priceMinor: price.priceMinor,
+                priceKind: price.priceKind,
+                priceMaxMinor: null,
+                currency: "NOK",
+                position,
+                extractionMethod: "html_heuristic",
+                confidence: 0.99,
+                sourceExcerpt: `${currentSection} — ${name} — ${priceText}`.slice(
+                  0,
+                  1000,
+                ),
+              });
+              position += 1;
+            }
+
+            const strongMenuContext = sawMenuRoot && sawSpecificFoodSection;
+            const structuralCoverage = items.length / totalCards;
+            if (!strongMenuContext || items.length < 4 || structuralCoverage < 0.7)
+              return [];
+            return items;
+          }
+          TS
+
+          cat > apps/menu-worker/src/html-elementor-price-list-recovery.test.ts <<'TS'
+          import { describe, expect, it } from "vitest";
+          import {
+            HTML_ELEMENTOR_PRICE_LIST_RECOVERY_VERSION,
+            recoverElementorPriceListHtmlItems,
+          } from "./html-elementor-price-list-recovery.js";
+
+          describe("Elementor semantic price-list recovery", () => {
+            it("binds title and price inside the same card and preserves menu sections", () => {
+              const items = recoverElementorPriceListHtmlItems(`
+                <html><body>
+                  <h2>MENU</h2><h2>OUR MENU</h2>
+                  <ul>
+                    <li class="elementor-price-list-item"><span class="elementor-price-list-title">KITFO / ክትፎ</span><span class="elementor-price-list-price">kr349.00</span><p class="elementor-price-list-description">Raw beef. <b>Chili nivo</b></p></li>
+                    <li class="elementor-price-list-item"><span class="elementor-price-list-title">GORED GORED / ዝሕላ</span><span class="elementor-price-list-price">kr349.00</span></li>
+                    <li class="elementor-price-list-item"><span class="elementor-price-list-title">TIBSI / ጥብሲ</span><span class="elementor-price-list-price">kr299.00</span></li>
+                    <li class="elementor-price-list-item"><span class="elementor-price-list-title">DULOT</span><span class="elementor-price-list-price">kr289.00</span></li>
+                  </ul>
+                  <h2>BARNE MENY</h2>
+                  <li class="elementor-price-list-item"><span class="elementor-price-list-title">Vegansk suppe</span><span class="elementor-price-list-price">kr215.00</span></li>
+                  <h2>DESSERT</h2>
+                  <li class="elementor-price-list-item"><span class="elementor-price-list-title">Vegankake</span><span class="elementor-price-list-price">kr89.00</span></li>
+                  <h2>DRINKS</h2>
+                  <li class="elementor-price-list-item"><span class="elementor-price-list-title">House Lager</span><span class="elementor-price-list-price">kr109.00</span></li>
+                </body></html>
+              `);
+
+              expect(HTML_ELEMENTOR_PRICE_LIST_RECOVERY_VERSION).toBe(
+                "elementor-price-list-v1",
+              );
+              expect(
+                items.map((item) => [item.sectionName, item.name, item.priceMinor]),
+              ).toEqual([
+                ["OUR MENU", "KITFO / ክትፎ", 34900],
+                ["OUR MENU", "GORED GORED / ዝሕላ", 34900],
+                ["OUR MENU", "TIBSI / ጥብሲ", 29900],
+                ["OUR MENU", "DULOT", 28900],
+                ["BARNE MENY", "Vegansk suppe", 21500],
+                ["DESSERT", "Vegankake", 8900],
+              ]);
+              expect(items.some((item) => item.name === "Chili nivo")).toBe(false);
+              expect(items.some((item) => item.name === "House Lager")).toBe(false);
+              expect(items.every((item) => item.confidence === 0.99)).toBe(true);
+            });
+
+            it("fails closed without both menu-root and specific food-section evidence", () => {
+              expect(
+                recoverElementorPriceListHtmlItems(`
+                  <html><body><h2>OUR MENU</h2>
+                    ${[1, 2, 3, 4]
+                      .map(
+                        (n) => `<li class="elementor-price-list-item"><span class="elementor-price-list-title">Item ${n}</span><span class="elementor-price-list-price">kr${100 + n}.00</span></li>`,
+                      )
+                      .join("")}
+                  </body></html>
+                `),
+              ).toEqual([]);
+            });
+          });
+          TS
+
+          cat > apps/menu-worker/src/html-elementor-price-list-runtime-regression.test.ts <<'TS'
+          import { describe, expect, it } from "vitest";
+          import type { MenuHttpFetchResult } from "./http-client.js";
+          import {
+            extractMenuSource,
+            extractorVersionForSourceType,
+          } from "./menu-source-runtime.js";
+
+          function fetchedHtml(body: string): Extract<MenuHttpFetchResult, { kind: "content" }> {
+            const bodyBytes = new TextEncoder().encode(body);
+            return {
+              kind: "content",
+              fetchedAt: "2026-08-23T00:00:00.000Z",
+              status: 200,
+              contentType: "text/html",
+              body,
+              bodyBytes,
+              rawSha256: "test",
+              etag: null,
+              lastModified: null,
+              durationMs: 0,
+              robotsAllowed: true,
+            };
+          }
+
+          describe("Elementor price-list runtime regression", () => {
+            it("does not let early Drinks navigation collapse a later OUR MENU price list", async () => {
+              const html = `
+                <html><body>
+                  <nav><a>Menu</a><a>Drinks</a><a>Events</a></nav>
+                  <h2>MENU</h2><h2>OUR MENU</h2>
+                  <li class="elementor-price-list-item"><span class="elementor-price-list-title">KITFO / ክትፎ</span><span class="elementor-price-list-price">kr349.00</span><p class="elementor-price-list-description">Raw beef. <b>Chili nivo</b></p></li>
+                  <li class="elementor-price-list-item"><span class="elementor-price-list-title">GORED GORED / ዝሕላ</span><span class="elementor-price-list-price">kr349.00</span></li>
+                  <li class="elementor-price-list-item"><span class="elementor-price-list-title">TIBSI / ጥብሲ</span><span class="elementor-price-list-price">kr299.00</span></li>
+                  <li class="elementor-price-list-item"><span class="elementor-price-list-title">DULOT</span><span class="elementor-price-list-price">kr289.00</span></li>
+                  <h2>BARNE MENY</h2>
+                  <li class="elementor-price-list-item"><span class="elementor-price-list-title">Vegansk suppe</span><span class="elementor-price-list-price">kr215.00</span><p class="elementor-price-list-description">Med linser og pasta. Vegan soup with lenser and pasta</p></li>
+                  <li class="elementor-price-list-item"><span class="elementor-price-list-title">Suppe med linser og pasta</span><span class="elementor-price-list-price">kr239.00</span></li>
+                  <h2>DESSERT</h2>
+                  <li class="elementor-price-list-item"><span class="elementor-price-list-title">Strawberry cheesecace</span><span class="elementor-price-list-price">kr95.00</span></li>
+                  <li class="elementor-price-list-item"><span class="elementor-price-list-title">Vegankake</span><span class="elementor-price-list-price">kr89.00</span></li>
+                  <li class="elementor-price-list-item"><span class="elementor-price-list-title">Eplekake med vanilijeis</span><span class="elementor-price-list-price">kr119.00</span></li>
+                </body></html>
+              `;
+
+              const result = await extractMenuSource("html", fetchedHtml(html));
+              expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual([
+                ["KITFO / ክትፎ", 34900],
+                ["GORED GORED / ዝሕላ", 34900],
+                ["TIBSI / ጥብሲ", 29900],
+                ["DULOT", 28900],
+                ["Vegansk suppe", 21500],
+                ["Suppe med linser og pasta", 23900],
+                ["Strawberry cheesecace", 9500],
+                ["Vegankake", 8900],
+                ["Eplekake med vanilijeis", 11900],
+              ]);
+              expect(result.items.some((item) => item.name === "Chili nivo")).toBe(false);
+              expect(extractorVersionForSourceType("html")).toContain(
+                "trailing-price-card-v11",
+              );
+              expect(extractorVersionForSourceType("html")).toContain(
+                "text-section-scope-v9",
+              );
+            });
+          });
+          TS
+
+          python - <<'PY'
+          from pathlib import Path
+
+          trailing = Path('apps/menu-worker/src/html-trailing-price-card-recovery.ts')
+          s = trailing.read_text()
+          old_import = 'import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recovery.js";\n'
+          new_import = old_import + 'import { recoverElementorPriceListHtmlItems } from "./html-elementor-price-list-recovery.js";\n'
+          assert old_import in s and 'recoverElementorPriceListHtmlItems' not in s
+          s = s.replace(old_import, new_import, 1)
+          assert '"trailing-price-card-v10"' in s
+          s = s.replace('"trailing-price-card-v10"', '"trailing-price-card-v11"', 1)
+          old = '''  const semanticCategoryItems = recoverSemanticCategoryCardHtmlItems(html);\n  if (semanticCategoryItems.length >= 4) return semanticCategoryItems;\n\n  const lines = annotatedLines(html);'''
+          new = '''  const semanticCategoryItems = recoverSemanticCategoryCardHtmlItems(html);\n  if (semanticCategoryItems.length >= 4) return semanticCategoryItems;\n  const elementorPriceListItems = recoverElementorPriceListHtmlItems(html);\n  if (elementorPriceListItems.length >= 4) return elementorPriceListItems;\n\n  const lines = annotatedLines(html);'''
+          assert old in s
+          trailing.write_text(s.replace(old, new, 1))
+
+          scope = Path('apps/menu-worker/src/html-text-section-scope.ts')
+          s = scope.read_text()
+          assert 'text-section-scope-v8' in s
+          s = s.replace('text-section-scope-v8', 'text-section-scope-v9', 1)
+          anchor = 'const MENU_END_SECTION_LABEL =\n'
+          insert = 'const MENU_ROOT_FOOD_SECTION_LABEL = /^(?:our\\s+menu|vår\\s+meny)$/iu;\n'
+          assert anchor in s and insert not in s
+          s = s.replace(anchor, insert + anchor, 1)
+          anchor2 = '  let sawPrice = false;\n\n  for (let index = 0; index < lines.length; index += 1) {'
+          replacement2 = '''  let sawPrice = false;\n  const hasSpecificFoodSection = lines.some((line) =>\n    FOOD_SECTION_LABEL.test(normalizedSectionLabel(line)),\n  );\n\n  for (let index = 0; index < lines.length; index += 1) {'''
+          assert anchor2 in s
+          s = s.replace(anchor2, replacement2, 1)
+          anchor3 = '    if (!countedSection && BEVERAGE_SECTION_LABEL.test(sectionLabel)) {\n'
+          replacement3 = '''    if (\n      !countedSection &&\n      !sawPrice &&\n      hasSpecificFoodSection &&\n      MENU_ROOT_FOOD_SECTION_LABEL.test(sectionLabel)\n    ) {\n      state = "food";\n      states[index] = "unknown";\n      continue;\n    }\n    if (!countedSection && BEVERAGE_SECTION_LABEL.test(sectionLabel)) {\n'''
+          assert anchor3 in s
+          scope.write_text(s.replace(anchor3, replacement3, 1))
+
+          # Keep every explicit version regression aligned with the runtime bump.
+          for path in Path('apps/menu-worker/src').glob('*.test.ts'):
+            t = path.read_text()
+            nt = t.replace('text-section-scope-v8', 'text-section-scope-v9').replace('trailing-price-card-v10', 'trailing-price-card-v11')
+            if nt != t:
+              path.write_text(nt)
+
+          scope_test = Path('apps/menu-worker/src/html-text-section-scope.test.ts')
+          t = scope_test.read_text()
+          marker = 'resets early Drinks navigation at an explicit OUR MENU food root'
+          if marker not in t:
+            t += '''\n\ndescribe("menu-root navigation reset", () => {\n  it("resets early Drinks navigation at an explicit OUR MENU food root", () => {\n    const items = [\n      item("KITFO / ክትፎ", 1, 34900),\n      item("GORED GORED / ዝሕላ", 2, 34900),\n      item("Vegankake", 3, 8900),\n    ];\n    const visibleText = `\n      Menu\n      Drinks\n      Events\n      OUR MENU\n      KITFO / ክትፎ kr349.00\n      GORED GORED / ዝሕላ kr349.00\n      DESSERT\n      Vegankake kr89.00\n    `;\n    expect(\n      filterPlainTextBeverageSectionItems(items, visibleText).map(\n        (entry) => entry.name,\n      ),\n    ).toEqual(["KITFO / ክትፎ", "GORED GORED / ዝሕላ", "Vegankake"]);\n  });\n});\n'''
+            scope_test.write_text(t)
+          PY
+
+      - name: Targeted parser regression suite
+        run: >-
+          pnpm --filter @fysen/menu-worker exec vitest run
+          src/html-elementor-price-list-recovery.test.ts
+          src/html-elementor-price-list-runtime-regression.test.ts
+          src/html-text-section-scope.test.ts
+          src/html-trailing-price-card-section-identity.test.ts
+          src/html-direct-priced-food-title-regression.test.ts
+          src/menu-source-runtime-version.test.ts
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Commit permanent code only
+        shell: bash
+        run: |
+          git status --short
+          test ! -e .github/workflows/batch02-write-elementor-scope-fix.yml
+          git config user.name "Paradispartiet"
+          git config user.email "paradispartiet@gmail.com"
+          git add apps/menu-worker/src
+          git diff --cached --check
+          git commit -m "Recover structured Elementor menu price lists"
+          git push origin HEAD:agent/batch02-menu-root-scope-v9
