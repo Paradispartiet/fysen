@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v7";
+export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v8";
 
 const SECTION_COUNT_SUFFIX = /\s*\(\s*\d{1,3}\s*\)\s*$/u;
 const BEVERAGE_SECTION_LABEL =
@@ -37,6 +37,9 @@ const BARE_DASH_TRAILING_PRICE = /\s+[-–—]\s*([1-9]\d{1,3})\s*$/u;
 const TRAILING_LEADER = /\s*_{3,}\s*$/u;
 const TRAILING_ITEM_ALLERGEN_CODES =
   /\s+\((?:[\p{L}]{1,2}|\d{1,2})(?:\s*[,/+ ]\s*(?:[\p{L}]{1,2}|\d{1,2}))*\)$/u;
+const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
+const DIRECT_SOURCE_PRICE =
+  /^(?:(?:fra|from)\s*)?(?:(?:NOK|kr\.?)\s*)?[1-9]\d{0,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|NOK)?$/iu;
 
 type MenuSectionState = "unknown" | "food" | "beverage";
 
@@ -115,7 +118,10 @@ function looksLikeDescriptionFragment(value: string): boolean {
   return wordCount >= 8 && DESCRIPTION_PHRASE.test(normalized);
 }
 
-function isObviousOutputNoise(value: string): boolean {
+function isObviousOutputNoise(
+  value: string,
+  allowDirectPricedFoodDescription = false,
+): boolean {
   const normalized = normalizeLine(value);
   const unwrapped = stripOuterParentheses(normalized);
   const withoutLeadingDelimiter = unwrapped.replace(/^[/|•]+\s*/u, "").trim();
@@ -125,7 +131,8 @@ function isObviousOutputNoise(value: string): boolean {
     CONTACT_METADATA.test(normalized) ||
     PER_PERSON_PRICE_METADATA.test(normalized) ||
     OUTPUT_METADATA.test(withoutLeadingDelimiter) ||
-    looksLikeDescriptionFragment(withoutLeadingDelimiter) ||
+    (!allowDirectPricedFoodDescription &&
+      looksLikeDescriptionFragment(withoutLeadingDelimiter)) ||
     isBilingualMenuSection(withoutLeadingDelimiter) ||
     BEVERAGE_SECTION_LABEL.test(normalizedSectionLabel(withoutLeadingDelimiter)) ||
     /^(?:gluten[- ]?fri|gluten[- ]?free)$/iu.test(withoutLeadingDelimiter)
@@ -147,6 +154,18 @@ function cleanOutputArtifactName(item: MenuObservedItem): MenuObservedItem {
     normalizedName: normalizeDishName(name),
     sourceKey: createMenuItemSourceKey(name, item.sectionName),
   };
+}
+
+function hasDirectPriceSourceProvenance(item: MenuObservedItem): boolean {
+  const sourceExcerpt = item.sourceExcerpt?.trim() ?? "";
+  if (!sourceExcerpt) return false;
+  const segments = sourceExcerpt
+    .split(SOURCE_EXCERPT_SEPARATOR)
+    .map(normalizeLine)
+    .filter(Boolean);
+  if (segments.length < 2) return false;
+  if (normalizeDishName(segments[0] ?? "") !== item.normalizedName) return false;
+  return DIRECT_SOURCE_PRICE.test(segments[1] ?? "");
 }
 
 function lineReferencesItem(
@@ -201,19 +220,13 @@ export function filterPlainTextBeverageSectionItems(
   options: BeverageSectionFilterOptions = {},
 ): readonly MenuObservedItem[] {
   if (items.length === 0) return items;
-  const cleanedItems = items
-    .map(cleanOutputArtifactName)
-    .filter((item) => !isObviousOutputNoise(item.name));
+  const cleanedItems = items.map(cleanOutputArtifactName);
   const lines = visibleText.split("\n").map(normalizeLine).filter(Boolean);
-  if (
-    !lines.some((line) =>
-      BEVERAGE_SECTION_LABEL.test(normalizedSectionLabel(line)),
-    )
-  ) {
-    return cleanedItems;
-  }
-
+  const hasBeverageSection = lines.some((line) =>
+    BEVERAGE_SECTION_LABEL.test(normalizedSectionLabel(line)),
+  );
   const states = sectionStateByPosition(lines);
+
   return cleanedItems.filter((item) => {
     const evidence = sectionEvidenceForItem(
       item,
@@ -221,7 +234,14 @@ export function filterPlainTextBeverageSectionItems(
       states,
       options.matchTrailingAllergenCodes ?? false,
     );
-    if (!evidence.hasBeverageOccurrence) return true;
+    const allowDirectPricedFoodDescription =
+      looksLikeDescriptionFragment(item.name) &&
+      hasDirectPriceSourceProvenance(item) &&
+      evidence.hasFoodOccurrence &&
+      !evidence.hasBeverageOccurrence;
+    if (isObviousOutputNoise(item.name, allowDirectPricedFoodDescription))
+      return false;
+    if (!hasBeverageSection || !evidence.hasBeverageOccurrence) return true;
     return evidence.hasFoodOccurrence;
   });
 }

@@ -10,7 +10,7 @@ import {
   type ExtractedHtmlMenu,
 } from "./html-extractor.js";
 
-export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v19";
+export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v20";
 
 const HEADING_MARKER = "__FYSEN_HEADING_LEVEL_";
 const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|vin\s*(?:&|og)\s*musserende|wine(?:\s+(?:list|menu))?|wine\s*(?:&|and)\s*sparkling|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
@@ -393,6 +393,35 @@ function looksLikeStandaloneBlockTitle(value: string): boolean {
   return !/^(?:with|served|topped|contains?|including|med|servert|toppet|inneholder|inkludert)\b/iu.test(title);
 }
 
+function nearestHeadingIsExplicitFoodSection(
+  lines: readonly string[],
+  headingLevels: ReadonlyMap<number, number>,
+  position: number,
+): boolean {
+  for (let index = position - 1; index >= 0; index -= 1) {
+    if (!headingLevels.has(index)) continue;
+    return isPlainFoodSectionLabel(lines[index] ?? "");
+  }
+  return false;
+}
+
+function looksLikeDirectPricedFoodTitle(value: string): boolean {
+  const title = canonicalCardTitle(value);
+  if (
+    !plausibleCardTitle(title) ||
+    isBeverageItemName(title) ||
+    isObviousMetadataItem(title) ||
+    isPlainFoodSectionLabel(title)
+  ) {
+    return false;
+  }
+  const words = title.split(/\s+/).filter(Boolean);
+  if (words.length > 20 || /[.!?;:]$/u.test(title)) return false;
+  return !/^(?:with|served|topped|contains?|including|med|servert|toppet|inneholder|inkludert)\b/iu.test(
+    title,
+  );
+}
+
 function looksLikeStandaloneHeadingTitle(value: string): boolean {
   const title = canonicalCardTitle(value);
   if (
@@ -469,9 +498,17 @@ function extractStandalonePriceBlocks(
 
     const immediateTitleIndex = pricePosition - 1;
     const immediateTitle = lines[immediateTitleIndex]?.trim() ?? "";
+    const directPricedFoodTitle =
+      immediateTitleIndex >= blockStart &&
+      nearestHeadingIsExplicitFoodSection(
+        lines,
+        headingLevels,
+        immediateTitleIndex,
+      ) &&
+      looksLikeDirectPricedFoodTitle(immediateTitle);
     if (
       immediateTitleIndex >= blockStart &&
-      looksLikeImmediateUppercaseTitle(immediateTitle)
+      (looksLikeImmediateUppercaseTitle(immediateTitle) || directPricedFoodTitle)
     ) {
       titleIndex = immediateTitleIndex;
       name = canonicalCardTitle(immediateTitle);
