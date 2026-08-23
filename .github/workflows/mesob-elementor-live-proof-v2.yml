@@ -1,0 +1,75 @@
+name: TEMP Mesob Elementor live proof v2
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/mesob-elementor-live-proof-v2.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/mesob-elementor-live-proof-v2
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Two fresh Mesob fetches and exact runtime proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p proof
+          url='https://mesobrestaurant.no/menu/'
+          curl --fail --silent --show-error --location --max-redirs 3 --connect-timeout 15 --max-time 45 --output proof/round1.html "$url"
+          sleep 2
+          curl --fail --silent --show-error --location --max-redirs 3 --connect-timeout 15 --max-time 45 --output proof/round2.html "$url"
+          sha256sum proof/round1.html proof/round2.html | tee proof/source-sha256.txt
+          cd apps/menu-worker
+          node --input-type=module <<'NODE' | tee ../../proof/result.json
+          import {readFile} from 'node:fs/promises';
+          import {extractMenuSource,extractorVersionForSourceType} from './dist/menu-source-runtime.js';
+
+          const expected = new Map([
+            ['KITFO / ክትፎ', 34900],
+            ['Zilzil Tebsi/ ዝልዝል ጥብሲ', 38900],
+            ['Spesialbestiling (to dager før) Dero hel full høne 12 egg Spesialbestilles', 260000],
+            ['Suppe med linser og pasta', 23900],
+          ]);
+          const forbiddenExact = new Set(['Chili nivo', 'Vegan soup with lenser and pasta', 'MenuDrinksEvents']);
+          const bad2600 = /^Linser \(rod eller gul\)/iu;
+          const rounds=[];
+          for (const [index,path] of [[1,'../../proof/round1.html'],[2,'../../proof/round2.html']]) {
+            const body=await readFile(path,'utf8');
+            const result=await extractMenuSource('html',{body});
+            const rows=result.items.map(x=>({name:x.name,priceMinor:x.priceMinor,sectionName:x.sectionName,confidence:x.confidence,sourceExcerpt:x.sourceExcerpt}));
+            if (rows.length < 20) throw new Error(`round ${index}: expected >=20 items, got ${rows.length}`);
+            for (const [name,priceMinor] of expected) {
+              if (!rows.some(x=>x.name===name&&x.priceMinor===priceMinor)) throw new Error(`round ${index}: missing ${name} @ ${priceMinor}`);
+            }
+            if (rows.some(x=>forbiddenExact.has(x.name))) throw new Error(`round ${index}: forbidden description/navigation-derived title present`);
+            if (rows.some(x=>bad2600.test(x.name)&&x.priceMinor===260000)) throw new Error(`round ${index}: 2600 price bound to Linser description instead of structural title`);
+            rounds.push({round:index,count:rows.length,rows});
+          }
+          const stable=(rows)=>JSON.stringify(rows.map(x=>[x.name,x.priceMinor]).sort((a,b)=>String(a[0]).localeCompare(String(b[0]))||Number(a[1])-Number(b[1])));
+          if (stable(rounds[0].rows)!==stable(rounds[1].rows)) throw new Error('two fresh runtime output sets differ');
+          console.log(JSON.stringify({extractorVersion:extractorVersionForSourceType('html'),rounds},null,2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mesob-elementor-live-proof-v2
+          path: proof/**
+          if-no-files-found: error
