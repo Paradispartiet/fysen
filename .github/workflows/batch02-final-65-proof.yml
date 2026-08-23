@@ -1,0 +1,132 @@
+name: TEMP prove final Batch 02 with per-source retry
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch02-final-65-proof.yml"
+
+permissions:
+  contents: read
+
+env:
+  FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+  FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+  FYSEN_CANDIDATE_VALIDATION_MAX_ATTEMPTS: "1"
+
+jobs:
+  strict-65-policy-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - uses: pnpm/action-setup@v4
+        with: { version: 11.4.0, run_install: false }
+      - uses: actions/setup-node@v4
+        with: { node-version: 24.18.0 }
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Prove exact final-two artifact blobs
+        shell: bash
+        run: |
+          test "$(git hash-object apps/menu-worker/catalog/mesob-motzfeldts-gate-oslo.json)" = "eb04a47b307403e54a91ac01a44d7022ba87df6d"
+          test "$(git hash-object apps/menu-worker/catalog/sawan-president-harbitz-gate-oslo.json)" = "55dd0f84bf5304ff5a4737c830dc7a1e66cd5654"
+      - name: Prove published-refresh fail-closed safety contract
+        run: pnpm --filter @fysen/menu-worker exec vitest run src/onboarding-refresh-safety.test.ts src/catalog-onboarding-failure-policy.test.ts src/production-menu-mutation-workflow.test.ts
+      - name: Prove exact catalog identity is 65 unique manifests
+        working-directory: apps/menu-worker
+        run: node --input-type=module -e "const fs=await import('node:fs/promises');const files=(await fs.readdir('catalog')).filter(f=>f.endsWith('.json'));const slugs=[];for(const f of files)slugs.push(JSON.parse(await fs.readFile('catalog/'+f,'utf8')).restaurant.slug);if(files.length!==65||new Set(slugs).size!==65)throw new Error('Catalog identity '+files.length+'/'+new Set(slugs).size+', expected 65/65')"
+      - name: Primary exact 65 validation, one attempt per source
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch catalog | tee research/final65-primary.json
+          echo ${PIPESTATUS[0]} > research/final65-primary-exit.txt
+          exit 0
+      - name: Classify primary and isolate only retryable failures
+        id: classify
+        working-directory: apps/menu-worker
+        run: |
+          node --input-type=module <<'NODE'
+          import {mkdir,readdir,readFile,writeFile,copyFile} from 'node:fs/promises';
+          const v=JSON.parse(await readFile('research/final65-primary.json','utf8'));
+          if(v.manifestCount!==65||v.maxAttempts!==1)throw new Error(`primary contract ${v.manifestCount}/${v.maxAttempts}`);
+          const failed=(v.results??[]).filter(r=>!r.accepted);
+          const allowed=new Set(['transport','action']);
+          const deterministic=failed.filter(r=>!(r.failureFamilies?.length>0&&r.failureFamilies.every(f=>allowed.has(f))));
+          await mkdir('research/final65-retry',{recursive:true});
+          const files=(await readdir('catalog')).filter(f=>f.endsWith('.json'));
+          const bySlug=new Map();
+          for(const file of files){const manifest=JSON.parse(await readFile(`catalog/${file}`,'utf8'));bySlug.set(manifest.restaurant.slug,file);}
+          if(deterministic.length===0){for(const r of failed){const file=bySlug.get(r.slug);if(!file)throw new Error(`Missing catalog file for ${r.slug}`);await copyFile(`catalog/${file}`,`research/final65-retry/${file}`);}}
+          const summary={primaryAccepted:v.acceptedCount,primaryFailed:v.failedCount,failed:failed.map(r=>({slug:r.slug,failureFamilies:r.failureFamilies??[],error:r.error??r.validation?.menu?.error??null,hoursError:r.validation?.hours?.error??null,actionErrors:(r.validation?.actions??[]).filter(a=>!a.accepted).map(a=>a.error)})),deterministic:deterministic.map(r=>r.slug)};
+          await writeFile('research/final65-primary-classification.json',JSON.stringify(summary,null,2)+'\n');
+          await writeFile(process.env.GITHUB_OUTPUT,`needs_retry=${failed.length>0&&deterministic.length===0?'true':'false'}\nhas_deterministic=${deterministic.length>0?'true':'false'}\n`,{flag:'a'});
+          console.log(JSON.stringify(summary,null,2));
+          NODE
+      - name: Retry only primary transport/action failures once
+        if: steps.classify.outputs.needs_retry == 'true'
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/final65-retry | tee research/final65-retry.json
+          echo ${PIPESTATUS[0]} > research/final65-retry-exit.txt
+          exit 0
+      - name: Compose effective 65 result and gate final-two semantics
+        working-directory: apps/menu-worker
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const primary=JSON.parse(await readFile('research/final65-primary.json','utf8'));
+          const classification=JSON.parse(await readFile('research/final65-primary-classification.json','utf8'));
+          const primaryStatus=Number((await readFile('research/final65-primary-exit.txt','utf8')).trim());
+          let retry=null,retryStatus=null;
+          try{retry=JSON.parse(await readFile('research/final65-retry.json','utf8'));retryStatus=Number((await readFile('research/final65-retry-exit.txt','utf8')).trim());}catch{}
+          const failures=[];
+          if(primary.manifestCount!==65||primary.maxAttempts!==1)failures.push('primary-contract');
+          if(classification.deterministic.length)failures.push(`deterministic-primary:${classification.deterministic.join(',')}`);
+          const primaryFailed=(primary.results??[]).filter(r=>!r.accepted);
+          const primaryFailedSlugs=primaryFailed.map(r=>r.slug).sort();
+          const retryRows=retry?.results??[];
+          const retrySlugs=retryRows.map(r=>r.slug).sort();
+          if(primaryFailed.length===0){if(primaryStatus!==0)failures.push(`primary-exit:${primaryStatus}`);}else if(classification.deterministic.length===0){
+            if(!retry)failures.push('missing-retry');
+            else{
+              if(retry.maxAttempts!==1)failures.push(`retry-maxAttempts:${retry.maxAttempts}`);
+              if(JSON.stringify(retrySlugs)!==JSON.stringify(primaryFailedSlugs))failures.push(`retry-scope:${retrySlugs.join(',')}!=${primaryFailedSlugs.join(',')}`);
+              if(retry.failedCount!==0||retryStatus!==0||retryRows.some(r=>!r.accepted))failures.push(`retry-not-green:${retry?.acceptedCount}/${retry?.manifestCount}:exit${retryStatus}`);
+            }
+          }
+          const retryBy=new Map(retryRows.map(r=>[r.slug,r]));
+          const effective=(primary.results??[]).map(r=>r.accepted?r:retryBy.get(r.slug)??r);
+          const effectiveFailed=effective.filter(r=>!r.accepted);
+          if(effective.length!==65||effectiveFailed.length)failures.push(`effective:${effective.length}/failed:${effectiveFailed.map(r=>r.slug).join(',')}`);
+          const by=new Map(effective.map(r=>[r.slug,r]));
+          const mesob=by.get('mesob-motzfeldts-gate-oslo');const mm=mesob?.validation?.menu;
+          if(!mesob?.accepted||mm?.quality?.itemCount!==22)failures.push(`mesob:${mesob?.accepted}:${mm?.quality?.itemCount}`);
+          if(!(mm?.observedDishNames??[]).some(n=>n.includes('KITFO')))failures.push('mesob:missing-KITFO');
+          const sawan=by.get('sawan-president-harbitz-gate-oslo');const sm=sawan?.validation?.menu;
+          if(!sawan?.accepted||sm?.quality?.itemCount!==44)failures.push(`sawan:${sawan?.accepted}:${sm?.quality?.itemCount}`);
+          const required=[['Åtte smaker fra kjøkkenet',99500],['Kalix Löjrom with lotus chips',60000],['Snøkrabbe',28000],['Kveite sashimi',28000],['Spicy tuna maki',27500],['Bluefin tuna taco (2 stk.)',24000],['Contemporary lamb rack (2 stk.)',29500],['Chicken satay',22000],["The Chef’s Chicken Salad",23000],['Vegan crispy østerssopp (for 2 pers)',72000],['Sawans veganske wok',41500],['Sawans eksklusive wagyu flambé',120000],['Sawans wok',48000]];
+          for(const [name,price] of required)if(!(sm?.observedDishVariants??[]).some(x=>x.name===name&&x.priceMinor===price))failures.push(`sawan:missing:${name}:${price}`);
+          const forbidden=new Set(['SAWAN RAW','SAWAN MAKI','SAWAN TACO','SAWAN SMÅRETTER','SAWAN SALATER','SAWAN VEGANSK','SAWAN SHARING','Satay (2 stk.)','With meat','with meat']);
+          for(const name of sm?.observedDishNames??[])if(forbidden.has(name))failures.push(`sawan:forbidden:${name}`);
+          const summary={revision:process.env.GITHUB_SHA,manifestCount:65,primaryAccepted:primary.acceptedCount,primaryFailed:primary.failedCount,primaryValidatorExitStatus:primaryStatus,retrySourceCount:retryRows.length,retryAccepted:retry?.acceptedCount??0,retryFailed:retry?.failedCount??0,retryValidatorExitStatus:retryStatus,effectiveAccepted:effective.filter(r=>r.accepted).length,effectiveFailed:effectiveFailed.map(r=>r.slug),maxAttemptsPerPass:1,outerRetryPolicy:'only primary transport/action failures, once',primaryFailureFamilies:classification.failed,failures};
+          await writeFile('research/final65-composite-summary.json',JSON.stringify(summary,null,2)+'\n');console.log(JSON.stringify(summary,null,2));
+          if(failures.length)throw new Error(`Final 65 policy gate failed ${JSON.stringify(failures)}`);
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-final65-policy-gate
+          path: |
+            apps/menu-worker/research/final65-primary.json
+            apps/menu-worker/research/final65-primary-exit.txt
+            apps/menu-worker/research/final65-primary-classification.json
+            apps/menu-worker/research/final65-retry.json
+            apps/menu-worker/research/final65-retry-exit.txt
+            apps/menu-worker/research/final65-composite-summary.json
+          if-no-files-found: warn
