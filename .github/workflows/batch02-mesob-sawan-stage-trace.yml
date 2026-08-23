@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
@@ -41,62 +40,102 @@ jobs:
           sha256sum trace/mesob.html trace/sawan-menu.html | tee trace/captured-source-sha256.txt
           wc -c trace/mesob.html trace/sawan-menu.html | tee trace/captured-source-bytes.txt
 
-      - name: Compare base and scoped parser stages on captured bytes
+      - name: Replay complete HTML runtime stage chain
         working-directory: apps/menu-worker
         shell: bash
         run: |
-          node --input-type=module <<'NODE' | tee ../../trace/parser-stage-comparison.json
+          node --input-type=module <<'NODE' | tee ../../trace/full-runtime-stage-trace.json
           import {readFile} from 'node:fs/promises';
-          import {extractHtmlMenu,extractHtmlVisibleText} from './dist/html-extractor.js';
+          import {normalizeDishName} from '@fysen/menu-core';
+          import {extractHtmlVisibleText,stripExplicitlyHiddenHtmlContent} from './dist/html-extractor.js';
           import {extractScopedHtmlMenu} from './dist/html-source-extractor.js';
-          const out={};
+          import {normalizeHtmlHeadingLineBreaks} from './dist/html-heading-normalizer.js';
+          import {recoverEmbeddedStructuredMenuJson} from './dist/html-embedded-menu-json-recovery.js';
+          import {recoverDescriptionNamedHtmlItems} from './dist/html-description-title-recovery.js';
+          import {recoverTrailingPriceCardHtmlItems,recoverInlineMarkedPriceTextItems,isStrongNumberedTrailingPriceCardRecovery} from './dist/html-trailing-price-card-recovery.js';
+          import {recoverPriceWrappedHtmlItems} from './dist/html-price-wrapped-recovery.js';
+          import {recoverAdjacentHeadingPriceHtmlItems} from './dist/html-adjacent-heading-price-recovery.js';
+          import {supplementStrongHeadingRecovery} from './dist/html-heading-recovery-supplement.js';
+          import {recoverExplicitFromPriceHtmlItems} from './dist/html-explicit-from-price-recovery.js';
+          import {recoverFirstCardAfterPlainFoodSections} from './dist/html-section-first-card-recovery.js';
+          import {filterHtmlBeverageSectionItemsWithScopedProvenance} from './dist/html-text-section-scope.js';
+          import {canonicalizeHtmlOutputItems} from './dist/html-output-canonicalizer.js';
+          import {normalizeHtmlPriceNotation,normalizeHtmlItemName,isCanonicalHtmlMenuItem} from './dist/menu-source-runtime.js';
+
+          const brief=(items)=>({count:items.length,names:items.map((x)=>x.name),items:items.map((x)=>({name:x.name,priceMinor:x.priceMinor,sectionName:x.sectionName,position:x.position,confidence:x.confidence,sourceExcerpt:x.sourceExcerpt}))});
+          const mergeMissing=(items,recovered)=>{
+            if(!recovered.length) return items;
+            const output=[...items]; const existing=new Set(items.map((x)=>x.normalizedName));
+            for(const candidate of recovered){if(existing.has(candidate.normalizedName)) continue; output.push(candidate); existing.add(candidate.normalizedName);}
+            return output.sort((a,b)=>a.position-b.position);
+          };
+          const mergeFrom=(items,recovered)=>{
+            if(!recovered.length) return items;
+            const output=[...items];
+            for(const candidate of recovered){
+              const matches=output.map((item,index)=>({item,index})).filter(({item})=>item.normalizedName===candidate.normalizedName);
+              if(matches.length===0){output.push(candidate);continue;}
+              if(matches.length!==1) continue;
+              const match=matches[0];
+              output[match.index]={...match.item,priceMinor:candidate.priceMinor,priceKind:'from',priceMaxMinor:null,confidence:Math.max(match.item.confidence,candidate.confidence),sourceExcerpt:candidate.sourceExcerpt??match.item.sourceExcerpt};
+            }
+            return output.sort((a,b)=>a.position-b.position);
+          };
+
+          const reports={};
           for(const [key,path] of [['mesob','../../trace/mesob.html'],['sawan','../../trace/sawan-menu.html']]){
-            const html=await readFile(path,'utf8');
-            const base=extractHtmlMenu(html);
-            const scoped=extractScopedHtmlMenu(html);
-            const visible=extractHtmlVisibleText(html);
-            const pick=(x)=>({method:x.method,count:x.items.length,items:x.items.map((i)=>({name:i.name,priceMinor:i.priceMinor,position:i.position,sourceExcerpt:i.sourceExcerpt}))});
-            out[key]={base:pick(base),scoped:pick(scoped),visibleLineCount:visible.split('\n').length};
+            const original=await readFile(path,'utf8');
+            const normalizedHtml=normalizeHtmlPriceNotation(normalizeHtmlHeadingLineBreaks(original));
+            const extracted=extractScopedHtmlMenu(normalizedHtml);
+            const recoveryHtml=extracted.method==='html_heuristic'?stripExplicitlyHiddenHtmlContent(normalizedHtml):normalizedHtml;
+            const fullVisibleText=extractHtmlVisibleText(recoveryHtml);
+            const embedded=recoverEmbeddedStructuredMenuJson(recoveryHtml).filter(isCanonicalHtmlMenuItem);
+            const recovered=recoverDescriptionNamedHtmlItems(extracted.items,extracted.visibleText);
+            const trailingRaw=recoverTrailingPriceCardHtmlItems(recoveryHtml);
+            const trailing=recoverDescriptionNamedHtmlItems(trailingRaw,extracted.visibleText);
+            const priceWrapped=recoverPriceWrappedHtmlItems(extracted.visibleText);
+            const inlineMarked=recoverInlineMarkedPriceTextItems(extracted.visibleText);
+            const headingPrice=recoverAdjacentHeadingPriceHtmlItems(recoveryHtml);
+            const explicitFrom=recoverExplicitFromPriceHtmlItems(extracted.visibleText);
+            const sectionFirst=recoverFirstCardAfterPlainFoodSections(extracted.visibleText);
+            const semanticCategoryCardsPreferred=trailing.length>=4&&trailing.every((item)=>item.sectionName!==null&&item.confidence>=0.99);
+            const strongNumberedCardsPreferred=isStrongNumberedTrailingPriceCardRecovery(trailing);
+            const isolated=semanticCategoryCardsPreferred||strongNumberedCardsPreferred;
+            const trailingQualifies=isolated||(trailing.length>=4&&(recovered.length===0||trailing.length>=Math.max(6,Math.ceil(recovered.length*1.5))));
+            const headingThreshold=Math.ceil(recovered.length*0.75);
+            const preferred=trailingQualifies?trailing:headingPrice.length>=4&&(recovered.length===0||headingPrice.length>=headingThreshold)?headingPrice:priceWrapped.length>=3&&priceWrapped.length>=recovered.length*2?priceWrapped:recovered;
+            const recoveredSupplemented=extracted.method==='html_heuristic'&&!isolated?mergeMissing(preferred,recovered):preferred;
+            const headingSupplemented=extracted.method==='html_heuristic'?supplementStrongHeadingRecovery(recoveredSupplemented,headingPrice):recoveredSupplemented;
+            const inlineSupplemented=extracted.method==='html_heuristic'&&!isolated?mergeMissing(headingSupplemented,inlineMarked):headingSupplemented;
+            const sectionSupplemented=extracted.method==='html_heuristic'&&!isolated?mergeMissing(inlineSupplemented,sectionFirst):inlineSupplemented;
+            const wrappedSupplemented=extracted.method==='html_heuristic'&&!isolated?mergeMissing(sectionSupplemented,priceWrapped):sectionSupplemented;
+            const priceEnriched=extracted.method==='html_heuristic'&&!isolated?mergeFrom(wrappedSupplemented,explicitFrom):wrappedSupplemented;
+            const normalized=priceEnriched.map(normalizeHtmlItemName);
+            const canonical=normalized.filter(isCanonicalHtmlMenuItem);
+            const beverageScoped=filterHtmlBeverageSectionItemsWithScopedProvenance(canonical,extracted.visibleText,fullVisibleText);
+            const output=canonicalizeHtmlOutputItems(beverageScoped);
+            reports[key]={
+              input:{originalBytes:Buffer.byteLength(original),normalizedBytes:Buffer.byteLength(normalizedHtml),method:extracted.method},
+              decisions:{semanticCategoryCardsPreferred,strongNumberedCardsPreferred,isolatedTrailingRecoveryPreferred:isolated,trailingPriceCardQualifies:trailingQualifies,headingPriceCoverageThreshold:headingThreshold,preferredSource:preferred===trailing?'trailing':preferred===headingPrice?'headingPrice':preferred===priceWrapped?'priceWrapped':'recovered'},
+              stages:{
+                extracted:brief(extracted.items),embedded:brief(embedded),descriptionRecovered:brief(recovered),trailingRaw:brief(trailingRaw),trailingRecovered:brief(trailing),priceWrapped:brief(priceWrapped),inlineMarked:brief(inlineMarked),headingPrice:brief(headingPrice),explicitFrom:brief(explicitFrom),sectionFirst:brief(sectionFirst),preferred:brief(preferred),recoveredSupplemented:brief(recoveredSupplemented),headingSupplemented:brief(headingSupplemented),inlineSupplemented:brief(inlineSupplemented),sectionSupplemented:brief(sectionSupplemented),wrappedSupplemented:brief(wrappedSupplemented),priceEnriched:brief(priceEnriched),normalized:brief(normalized),canonicalFilter:brief(canonical),textSectionScope:brief(beverageScoped),outputCanonical:brief(output)
+              }
+            };
+          }
+          console.log(JSON.stringify(reports,null,2));
+          NODE
+
+      - name: Emit compact transition summary
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE' | tee trace/full-runtime-transition-summary.json
+          import {readFile} from 'node:fs/promises';
+          const all=JSON.parse(await readFile('trace/full-runtime-stage-trace.json','utf8'));
+          const out={};
+          for(const [key,value] of Object.entries(all)){
+            out[key]={decisions:value.decisions,counts:Object.fromEntries(Object.entries(value.stages).map(([stage,v])=>[stage,v.count])),names:Object.fromEntries(Object.entries(value.stages).filter(([stage])=>['extracted','descriptionRecovered','preferred','canonicalFilter','textSectionScope','outputCanonical'].includes(stage)).map(([stage,v])=>[stage,v.names]))};
           }
           console.log(JSON.stringify(out,null,2));
-          NODE
-
-      - name: Fresh Sawan intake using current official HTML source
-        shell: bash
-        run: |
-          rm -rf /tmp/batch02 && mkdir -p /tmp/batch02
-          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
-          node --input-type=module <<'NODE'
-          import {mkdir,readFile,writeFile} from 'node:fs/promises';
-          const source=JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json','utf8'));
-          const base=structuredClone(source.restaurants.find((x)=>x.restaurant.slug==='sawan-president-harbitz-gate-oslo'));
-          if(!base) throw new Error('Missing Sawan seed');
-          base.menuSource={...base.menuSource,url:'https://www.sawan.no/meny',sourceType:'html',fetchMode:'http',sourceSupport:{redirectOrigins:[],browserDataOrigins:[]}};
-          base.assertionCount=0;
-          base.forbiddenDishNames=[];
-          const plan={...source,outputDirectory:'research/sawan-html-generated',concurrency:1,restaurants:[base]};
-          await mkdir('apps/menu-worker/research/sawan-html-generated',{recursive:true});
-          await writeFile('apps/menu-worker/research/sawan-html.plan.json',JSON.stringify(plan,null,2)+'\n');
-          NODE
-          cd apps/menu-worker
-          set +e
-          node dist/index.js intake:batch research/sawan-html.plan.json | tee ../../trace/sawan-html-intake.json
-          intake_exit=${PIPESTATUS[0]}
-          node dist/index.js validate:batch research/sawan-html-generated | tee ../../trace/sawan-html-validation.json
-          validation_exit=${PIPESTATUS[0]}
-          printf 'intake_exit=%s\nvalidation_exit=%s\n' "$intake_exit" "$validation_exit" | tee ../../trace/sawan-html-exits.txt
-          cp research/sawan-html-generated/*.json ../../trace/ 2>/dev/null || true
-          exit 0
-
-      - name: Summarize Sawan HTML observed output
-        shell: bash
-        run: |
-          node --input-type=module <<'NODE' | tee trace/sawan-html-summary.json
-          import {readFile} from 'node:fs/promises';
-          const intake=JSON.parse(await readFile('trace/sawan-html-intake.json','utf8'));
-          const validation=JSON.parse(await readFile('trace/sawan-html-validation.json','utf8'));
-          const rows=(validation.results??[]).map((r)=>({slug:r.slug,accepted:r.accepted,failureFamilies:r.failureFamilies??[],itemCount:r.validation?.menu?.quality?.itemCount??null,names:r.validation?.menu?.observedDishNames??[],variants:r.validation?.menu?.observedDishVariants??[],extractorVersion:r.validation?.menu?.extractorVersion??null,error:r.validation?.menu?.error??r.error??null}));
-          console.log(JSON.stringify({intake:{requested:intake.requestedCount,generated:intake.generatedCount,failed:intake.failedCount,results:intake.results},validation:{manifestCount:validation.manifestCount,accepted:validation.acceptedCount,failed:validation.failedCount},rows},null,2));
           NODE
 
       - uses: actions/upload-artifact@v4
