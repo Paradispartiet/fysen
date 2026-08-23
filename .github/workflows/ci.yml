@@ -13,46 +13,156 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  quality:
+  scope:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    outputs:
+      code: ${{ steps.scope.outputs.code }}
+      full: ${{ steps.scope.outputs.full }}
+      database: ${{ steps.scope.outputs.database }}
+      browser: ${{ steps.scope.outputs.browser }}
+      restaurant_data: ${{ steps.scope.outputs.restaurant_data }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Classify changed scope
+        id: scope
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+
+          if [[ "${GITHUB_EVENT_NAME}" != "pull_request" ]]; then
+            {
+              echo "code=true"
+              echo "full=true"
+              echo "database=true"
+              echo "browser=true"
+              echo "restaurant_data=true"
+            } >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          code=false
+          full=false
+          database=false
+          browser=false
+          restaurant_data=false
+
+          git diff --name-only "$BASE_SHA" "$HEAD_SHA" > /tmp/fysen-changed-files.txt
+          cat /tmp/fysen-changed-files.txt
+
+          while IFS= read -r path; do
+            [[ -z "$path" ]] && continue
+
+            case "$path" in
+              apps/menu-worker/candidates/*|apps/menu-worker/catalog/*)
+                restaurant_data=true
+                ;;
+              apps/menu-worker/research/*|docs/*|README.md|CONTRIBUTING.md)
+                ;;
+              package.json|pnpm-lock.yaml|pnpm-workspace.yaml|turbo.json|tsconfig.base.json|eslint.config.mjs|.nvmrc|.github/*|scripts/*)
+                code=true
+                full=true
+                database=true
+                browser=true
+                ;;
+              apps/menu-worker/src/*|apps/menu-worker/package.json|apps/menu-worker/tsconfig.json)
+                code=true
+                browser=true
+                ;;
+              packages/contracts/*)
+                code=true
+                browser=true
+                ;;
+              packages/database/*|packages/menu-core/*)
+                code=true
+                database=true
+                browser=true
+                ;;
+              apps/api/*|apps/web/*)
+                code=true
+                ;;
+              *)
+                # Unknown paths fail closed into ordinary code CI, but they do
+                # not automatically force unrelated database/browser suites.
+                code=true
+                ;;
+            esac
+          done < /tmp/fysen-changed-files.txt
+
+          {
+            echo "code=$code"
+            echo "full=$full"
+            echo "database=$database"
+            echo "browser=$browser"
+            echo "restaurant_data=$restaurant_data"
+          } >> "$GITHUB_OUTPUT"
+
+  quality:
+    needs: scope
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: No generic code gates required
+        if: needs.scope.outputs.code != 'true'
+        run: echo "Only restaurant data, research or documentation changed; domain-specific workflows own validation."
+
+      - name: Checkout
+        if: needs.scope.outputs.code == 'true'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: pnpm
+        if: needs.scope.outputs.code == 'true'
         uses: pnpm/action-setup@v4
         with:
           version: 11.4.0
           run_install: false
 
       - name: Node
+        if: needs.scope.outputs.code == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 24.18.0
 
       - name: Install dependencies
+        if: needs.scope.outputs.code == 'true'
         run: pnpm install --no-frozen-lockfile
 
       - name: Explicit Vercel release contract
+        if: needs.scope.outputs.full == 'true'
         run: bash scripts/vercel-explicit-release.test.sh
 
-      - name: Lint
-        run: pnpm lint
+      - name: Full quality suite
+        if: needs.scope.outputs.full == 'true'
+        run: |
+          pnpm lint
+          pnpm typecheck
+          pnpm test
+          pnpm build
 
-      - name: Typecheck
-        run: pnpm typecheck
+      - name: Affected package quality suite
+        if: needs.scope.outputs.code == 'true' && needs.scope.outputs.full != 'true'
+        env:
+          TURBO_SCM_BASE: ${{ github.event.pull_request.base.sha }}
+          TURBO_SCM_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: pnpm turbo run lint typecheck test build --affected
 
-      - name: Test
-        run: pnpm test
-
-      - name: Build
-        run: pnpm build
-
-      - name: Browser smoke
-        run: pnpm --filter @fysen/menu-worker browser:smoke
+      - name: Browser smoke for menu runtime changes
+        if: needs.scope.outputs.browser == 'true'
+        run: |
+          pnpm --filter @fysen/menu-worker... build
+          pnpm --filter @fysen/menu-worker browser:smoke
 
   database:
+    needs: scope
+    if: needs.scope.outputs.database == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     services:
