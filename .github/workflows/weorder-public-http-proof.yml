@@ -1,0 +1,141 @@
+name: TEMP prove public WeOrder HTTP menu source
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/weorder-public-http-proof.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+
+      - name: Fetch WeOrder details and menu directly without cookies or auth
+        shell: bash
+        run: |
+          mkdir -p /tmp/weorder-proof
+          node --input-type=module <<'NODE'
+          import { writeFile } from 'node:fs/promises';
+          import crypto from 'node:crypto';
+
+          const ua = process.env.FYSEN_MENU_BOT_USER_AGENT || 'FysenMenuBot/0.1';
+          const detailsUrl = 'https://api.weorder.com/api/restaurant_details/22539/en/0/6.1.7/0';
+          const exactMenuUrl = 'https://api.weorder.com/api/restaurant/22539/restaurant_menu/en/22743.406/0/6.1.7';
+          const candidates = [
+            exactMenuUrl,
+            'https://api.weorder.com/api/restaurant/22539/restaurant_menu/en/0/0/6.1.7',
+            'https://api.weorder.com/api/restaurant/22539/restaurant_menu/en/null/0/6.1.7',
+            'https://api.weorder.com/api/restaurant/22539/restaurant_menu/en/22743/0/6.1.7',
+            'https://api.weorder.com/api/restaurant/22539/restaurant_menu/en/22743.405/0/6.1.7',
+          ];
+
+          async function get(url) {
+            const response = await fetch(url, {
+              method: 'GET',
+              redirect: 'error',
+              signal: AbortSignal.timeout(12000),
+              headers: {
+                'user-agent': ua,
+                accept: 'application/json',
+              },
+            });
+            const body = await response.text();
+            let json = null;
+            try { json = JSON.parse(body); } catch {}
+            return {
+              url,
+              status: response.status,
+              contentType: response.headers.get('content-type'),
+              bytes: Buffer.byteLength(body),
+              sha256: crypto.createHash('sha256').update(body).digest('hex'),
+              json,
+              bodyPrefix: json ? null : body.slice(0, 500),
+            };
+          }
+
+          const detailsA = await get(detailsUrl);
+          const detailsB = await get(detailsUrl);
+          if (detailsA.status !== 200 || detailsB.status !== 200 || !detailsA.json || !detailsB.json) throw new Error('restaurant_details is not direct public JSON');
+          const identity = detailsA.json?.data ?? {};
+          if (identity.restaurantId !== 22539 || identity.name !== 'Avdeling Rådhusplassen' || identity.address !== 'Fridtjof Nansens plass 7') {
+            throw new Error('restaurant_details identity mismatch');
+          }
+
+          const results = [];
+          for (const url of candidates) {
+            try { results.push(await get(url)); }
+            catch (error) { results.push({ url, error: error instanceof Error ? error.message : String(error) }); }
+          }
+
+          const exact = results.find((row) => row.url === exactMenuUrl);
+          if (!exact || exact.status !== 200 || !exact.json?.data) throw new Error('Exact menu endpoint is not direct public JSON');
+          if (exact.json.data.id !== 22743 || exact.json.data.menuVersion !== '22743.406') throw new Error('Unexpected menu identity/version');
+
+          const exactSecond = await get(exactMenuUrl);
+          if (exactSecond.status !== 200 || !exactSecond.json?.data) throw new Error('Second exact menu fetch failed');
+          if (exact.sha256 !== exactSecond.sha256) throw new Error('Direct public menu bytes changed between immediate independent fetches');
+
+          const summarize = (row) => ({
+            url: row.url,
+            status: row.status ?? null,
+            contentType: row.contentType ?? null,
+            bytes: row.bytes ?? null,
+            sha256: row.sha256 ?? null,
+            error: row.error ?? null,
+            success: row.json?.success ?? null,
+            dataKeys: row.json?.data && typeof row.json.data === 'object' ? Object.keys(row.json.data) : [],
+            menuId: row.json?.data?.id ?? null,
+            menuVersion: row.json?.data?.menuVersion ?? null,
+            json: row.json ?? null,
+          });
+
+          const output = {
+            revision: process.env.GITHUB_SHA,
+            authHeadersSent: false,
+            cookiesSent: false,
+            postRequestsSent: false,
+            details: {
+              first: summarize(detailsA),
+              second: summarize(detailsB),
+              identity: {
+                version: identity.version,
+                restaurantId: identity.restaurantId,
+                name: identity.name,
+                address: identity.address,
+                zipCode: identity.zipCode,
+                orgNumber: identity.orgNumber,
+                menuDisclaimer: identity.menuDisclaimer,
+              },
+            },
+            candidateMenus: results.map(summarize),
+            exactSecond: summarize(exactSecond),
+          };
+          await writeFile('/tmp/weorder-proof/result.json', JSON.stringify(output, null, 2) + '\n');
+          console.log(JSON.stringify({
+            authHeadersSent: false,
+            cookiesSent: false,
+            postRequestsSent: false,
+            identity: output.details.identity,
+            candidates: output.candidateMenus.map(({ url, status, bytes, menuId, menuVersion, success, error }) => ({ url, status, bytes, menuId, menuVersion, success, error })),
+            exactStable: exact.sha256 === exactSecond.sha256,
+          }, null, 2));
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: weorder-public-http-proof
+          path: /tmp/weorder-proof/result.json
+          if-no-files-found: error
