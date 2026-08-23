@@ -1,8 +1,8 @@
 name: TEMP structured menu API writer
 
 on:
-  pull_request:
-    branches: [main]
+  push:
+    branches: [agent/structured-menu-api-v1]
     paths:
       - ".github/workflows/temp-structured-menu-api-writer.yml"
       - "apps/menu-worker/src/api-source-extractor.ts"
