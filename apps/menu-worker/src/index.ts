@@ -103,8 +103,13 @@ async function main(): Promise<void> {
       process.env.FYSEN_CANDIDATE_VALIDATION_CONCURRENCY ?? "4",
       10,
     );
+    const configuredMaxAttempts = Number.parseInt(
+      process.env.FYSEN_CANDIDATE_VALIDATION_MAX_ATTEMPTS ?? "3",
+      10,
+    );
     const summary = await validateRestaurantManifestBatch(directory, {
       concurrency: configuredConcurrency,
+      maxAttempts: configuredMaxAttempts,
     });
     print(summary);
     if (summary.failedCount > 0) process.exitCode = 1;

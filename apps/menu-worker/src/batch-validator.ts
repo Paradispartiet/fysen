@@ -28,6 +28,7 @@ export interface RestaurantBatchValidationSummary {
   readonly acceptedCount: number;
   readonly failedCount: number;
   readonly concurrency: number;
+  readonly maxAttempts: number;
   readonly failureFamilyCounts: Readonly<
     Record<RestaurantValidationFailureFamily, number>
   >;
@@ -36,6 +37,7 @@ export interface RestaurantBatchValidationSummary {
 
 interface RestaurantBatchValidationOptions {
   readonly concurrency?: number;
+  readonly maxAttempts?: number;
   readonly validatePath?: (
     path: string,
   ) => Promise<RestaurantManifestValidationResult>;
@@ -56,6 +58,16 @@ function boundedConcurrency(value: number | undefined): number {
   if (!Number.isInteger(value) || value < 1 || value > 12) {
     throw new Error(
       "Batch validation concurrency must be an integer between 1 and 12",
+    );
+  }
+  return value;
+}
+
+function boundedMaxAttempts(value: number | undefined): number {
+  if (value === undefined) return MAX_VALIDATION_ATTEMPTS;
+  if (!Number.isInteger(value) || value < 1 || value > MAX_VALIDATION_ATTEMPTS) {
+    throw new Error(
+      `Batch validation max attempts must be an integer between 1 and ${MAX_VALIDATION_ATTEMPTS}`,
     );
   }
   return value;
@@ -174,11 +186,12 @@ async function validatePathWithTransientRetry(
     path: string,
   ) => Promise<RestaurantManifestValidationResult>,
   retryDelayMs: number,
+  maxAttempts: number,
 ): Promise<RestaurantManifestValidationResult> {
   let validation = await validatePath(path);
   for (
     let attempt = 2;
-    attempt <= MAX_VALIDATION_ATTEMPTS &&
+    attempt <= maxAttempts &&
     isRetryableRestaurantValidationFailure(validation);
     attempt += 1
   ) {
@@ -197,6 +210,7 @@ export async function validateRestaurantManifestBatch(
   options: RestaurantBatchValidationOptions = {},
 ): Promise<RestaurantBatchValidationSummary> {
   const concurrency = boundedConcurrency(options.concurrency);
+  const maxAttempts = boundedMaxAttempts(options.maxAttempts);
   const retryDelayMs = boundedRetryDelayMs(options.retryDelayMs);
   const validatePath = options.validatePath ?? validateRestaurantManifestPath;
   const fileNames = (await readdir(directory))
@@ -209,6 +223,7 @@ export async function validateRestaurantManifestBatch(
         path,
         validatePath,
         retryDelayMs,
+        maxAttempts,
       );
       return {
         path,
@@ -241,6 +256,7 @@ export async function validateRestaurantManifestBatch(
     acceptedCount: results.filter((result) => result.accepted).length,
     failedCount: results.filter((result) => !result.accepted).length,
     concurrency,
+    maxAttempts,
     failureFamilyCounts,
     results,
   };

@@ -160,9 +160,34 @@ describe("restaurant batch validation", () => {
     });
 
     expect(calls).toBe(3);
+    expect(summary.maxAttempts).toBe(3);
     expect(summary.acceptedCount).toBe(1);
     expect(summary.failedCount).toBe(0);
     expect(summary.results[0]?.failureFamilies).toEqual([]);
+  });
+
+  it("supports an explicit one-attempt strict gate without transient retry", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "fysen-batch-validator-"));
+    await writeFile(join(directory, "a.json"), "{}");
+    let calls = 0;
+
+    const summary = await validateRestaurantManifestBatch(directory, {
+      maxAttempts: 1,
+      retryDelayMs: 0,
+      validatePath: async () => {
+        calls += 1;
+        return validation("a", {
+          menuAccepted: false,
+          menuError: "Network timeout fetching source",
+        });
+      },
+    });
+
+    expect(calls).toBe(1);
+    expect(summary.maxAttempts).toBe(1);
+    expect(summary.acceptedCount).toBe(0);
+    expect(summary.failedCount).toBe(1);
+    expect(summary.failureFamilyCounts.transport).toBe(1);
   });
 
   it("does not retry a deterministic quality failure", async () => {
@@ -227,5 +252,11 @@ describe("restaurant batch validation", () => {
     await expect(
       validateRestaurantManifestBatch(directory, { retryDelayMs: -1 }),
     ).rejects.toThrow("between 0 and 10000");
+    await expect(
+      validateRestaurantManifestBatch(directory, { maxAttempts: 0 }),
+    ).rejects.toThrow("between 1 and 3");
+    await expect(
+      validateRestaurantManifestBatch(directory, { maxAttempts: 4 }),
+    ).rejects.toThrow("between 1 and 3");
   });
 });
