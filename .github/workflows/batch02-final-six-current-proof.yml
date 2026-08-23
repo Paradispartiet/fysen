@@ -8,10 +8,12 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 env:
   FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
   FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+  GH_TOKEN: ${{ github.token }}
 
 jobs:
   prove-six:
@@ -31,13 +33,15 @@ jobs:
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm --filter @fysen/menu-worker... build
 
-      - name: Build current six-source plan from canonical Batch 02 seed
+      - name: Restore authoritative geocoded Batch 02 plan and build current six-source plan
         shell: bash
         run: |
+          rm -rf /tmp/batch02 && mkdir -p /tmp/batch02
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
           node --input-type=module <<'NODE'
           import { mkdir, readFile, writeFile } from 'node:fs/promises';
-          const seed = JSON.parse(await readFile('apps/menu-worker/research/oslo-batch-02.seed.json', 'utf8'));
-          const bySlug = new Map(seed.restaurants.map((entry) => [entry.restaurant.slug, entry]));
+          const source = JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json', 'utf8'));
+          const bySlug = new Map(source.restaurants.map((entry) => [entry.restaurant.slug, entry]));
           const variants = [
             {slug:'benares-tordenskiolds-gate-oslo',url:'https://benares.no/meny?menu=menu',sourceType:'html',fetchMode:'browser'},
             {slug:'mesob-motzfeldts-gate-oslo',url:'https://mesobrestaurant.no/menu/',sourceType:'html',fetchMode:'http'},
@@ -48,7 +52,7 @@ jobs:
           ];
           const restaurants = variants.map((variant) => {
             const base = structuredClone(bySlug.get(variant.slug));
-            if (!base) throw new Error(`Missing Batch 02 seed ${variant.slug}`);
+            if (!base) throw new Error(`Missing Batch 02 plan entry ${variant.slug}`);
             base.menuSource = {
               ...base.menuSource,
               url: variant.url,
@@ -60,10 +64,9 @@ jobs:
           });
           await mkdir('apps/menu-worker/research/final-six-generated', {recursive:true});
           await writeFile('apps/menu-worker/research/final-six.plan.json', JSON.stringify({
-            version: 1,
-            batch: 'oslo-batch-02-final-six-current',
-            concurrency: 1,
+            ...source,
             outputDirectory: 'research/final-six-generated',
+            concurrency: 1,
             restaurants,
           }, null, 2) + '\n');
           NODE
