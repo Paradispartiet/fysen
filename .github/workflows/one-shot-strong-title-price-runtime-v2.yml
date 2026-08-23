@@ -1,0 +1,135 @@
+name: TEMP wire strong-title-price runtime v2
+
+on:
+  push:
+    branches: [agent/batch02-strong-title-price-v1]
+    paths:
+      - ".github/workflows/one-shot-strong-title-price-runtime-v2.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build workspace dependencies
+        run: pnpm --filter @fysen/menu-worker... build
+      - name: Wire strong-title-price recovery into runtime
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path("apps/menu-worker/src/menu-source-runtime.ts")
+          source = path.read_text()
+
+          import_anchor = '''import {
+            HTML_SECTION_FIRST_CARD_RECOVERY_VERSION,
+            recoverFirstCardAfterPlainFoodSections,
+          } from "./html-section-first-card-recovery.js";
+          '''
+          import_block = import_anchor + '''import {
+            HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION,
+            recoverStrongTitlePriceHtmlItems,
+          } from "./html-strong-title-price-recovery.js";
+          '''
+          if source.count(import_anchor) != 1:
+              raise SystemExit("strong-title import anchor mismatch")
+          source = source.replace(import_anchor, import_block, 1)
+
+          version_anchor = "${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}"
+          version_replacement = "${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}"
+          if source.count(version_anchor) != 1:
+              raise SystemExit("runtime version anchor mismatch")
+          source = source.replace(version_anchor, version_replacement, 1)
+
+          recovery_anchor = '''    const sectionFirstCardItems =
+            extracted.method === "html_heuristic"
+              ? recoverFirstCardAfterPlainFoodSections(extracted.visibleText)
+              : [];
+          '''
+          recovery_block = recovery_anchor + '''    const strongTitlePriceItems =
+            extracted.method === "html_heuristic"
+              ? recoverStrongTitlePriceHtmlItems(recoveryHtml)
+              : [];
+          '''
+          if source.count(recovery_anchor) != 1:
+              raise SystemExit("strong-title recovery anchor mismatch")
+          source = source.replace(recovery_anchor, recovery_block, 1)
+
+          isolation_anchor = '''    const isolatedTrailingRecoveryPreferred =
+            semanticCategoryCardsPreferred || strongNumberedCardsPreferred;
+          '''
+          isolation_block = isolation_anchor + '''    const strongTitlePricePreferred = strongTitlePriceItems.length >= 6;
+              const isolatedSemanticRecoveryPreferred =
+                isolatedTrailingRecoveryPreferred || strongTitlePricePreferred;
+          '''
+          if source.count(isolation_anchor) != 1:
+              raise SystemExit("semantic isolation anchor mismatch")
+          source = source.replace(isolation_anchor, isolation_block, 1)
+
+          if source.count("    const preferredItems = trailingPriceCardQualifies") != 1:
+              raise SystemExit("preferred-items anchor mismatch")
+          source = source.replace(
+              "    const preferredItems = trailingPriceCardQualifies",
+              "    const legacyPreferredItems = trailingPriceCardQualifies",
+              1,
+          )
+
+          preferred_end = "          : recoveredItems;"
+          preferred_replacement = preferred_end + '''
+              const preferredItems = strongTitlePricePreferred
+                ? strongTitlePriceItems
+                : legacyPreferredItems;
+          '''
+          if source.count(preferred_end) != 1:
+              raise SystemExit("legacy preferred-items end mismatch")
+          source = source.replace(preferred_end, preferred_replacement, 1)
+
+          suppression_count = source.count("!isolatedTrailingRecoveryPreferred")
+          if suppression_count < 5:
+              raise SystemExit(f"expected >=5 supplement guards, got {suppression_count}")
+          source = source.replace(
+              "!isolatedTrailingRecoveryPreferred",
+              "!isolatedSemanticRecoveryPreferred",
+          )
+
+          path.write_text(source)
+          PY
+      - name: Focused strong-title regressions
+        working-directory: apps/menu-worker
+        run: |
+          pnpm exec vitest run \
+            src/html-strong-title-price-recovery.test.ts \
+            src/html-strong-title-price-runtime.test.ts
+      - name: Full menu-worker regression suite
+        working-directory: apps/menu-worker
+        run: pnpm test
+      - name: Typecheck menu-worker
+        working-directory: apps/menu-worker
+        run: pnpm typecheck
+      - name: Commit permanent runtime wiring
+        shell: bash
+        run: |
+          rm -f .github/workflows/one-shot-strong-title-price-runtime-v2.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git commit -m "Wire strong-title price recovery into menu runtime"
+          git push origin HEAD:agent/batch02-strong-title-price-v1
