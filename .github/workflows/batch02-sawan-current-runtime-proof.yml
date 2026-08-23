@@ -1,4 +1,4 @@
-name: TEMP Batch 02 Sawan current runtime proof
+name: TEMP Batch 02 strong-title writer
 
 on:
   pull_request:
@@ -7,19 +7,18 @@ on:
       - ".github/workflows/batch02-sawan-current-runtime-proof.yml"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  trace-dom:
+  write-and-test:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    env:
-      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: agent/batch02-sawan-current-runtime-proof
-          persist-credentials: false
+          ref: agent/batch02-strong-title-price-v1
+          fetch-depth: 0
+          persist-credentials: true
       - uses: pnpm/action-setup@v4
         with:
           version: 11.4.0
@@ -27,76 +26,443 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24.18.0
-      - run: pnpm install --no-frozen-lockfile
-      - name: Trace strong-title and standalone-price DOM relationships
-        working-directory: apps/menu-worker
+      - name: Add generic strong-title price recovery
         shell: bash
         run: |
-          mkdir -p research
-          node --input-type=module <<'NODE' | tee research/sawan-current-dom-trace.json
-          import {createHash} from 'node:crypto';
-          import {load} from 'cheerio';
+          cat > apps/menu-worker/src/html-strong-title-price-recovery.ts <<'EOF'
+          import { load } from "cheerio";
+          import {
+            createMenuItemSourceKey,
+            normalizeDishName,
+            type MenuObservedItem,
+            type MenuPriceKind,
+          } from "@fysen/menu-core";
 
-          const url='https://www.sawan.no/meny';
-          const response=await fetch(url,{headers:{'user-agent':process.env.FYSEN_MENU_BOT_USER_AGENT,'accept':'text/html,application/xhtml+xml'}});
-          const body=await response.text();
-          if(!response.ok) throw new Error(`Sawan HTTP ${response.status}`);
-          const $=load(body);
-          $('script,style,noscript,svg,template').remove();
-          const text=(node)=>$(node).text().normalize('NFKC').replace(/[\u200B-\u200D\uFEFF]/gu,'').replace(/\s+/g,' ').trim();
-          const purePrice=/^(?:(?:NOK|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,?[-–—]|kr\.?|NOK)?(?:\s+per\s+person)?$/iu;
-          const short=(value,max=360)=>value.length<=max?value:`${value.slice(0,max)}…`;
-          const nodeInfo=(node)=>({
-            tag:(node?.tagName??node?.name??'').toLowerCase(),
-            class:($(node).attr('class')??'').trim()||null,
-            text:short(text(node)),
-            strong:[...$(node).find('strong').toArray()].map((s)=>text(s)).filter(Boolean).slice(0,8),
-          });
-          const minimalPrices=[];
-          $('p,div,span,li').each((_,el)=>{
-            const value=text(el);
-            if(!purePrice.test(value)) return;
-            const childExact=$(el).children('p,div,span,li').toArray().some((child)=>purePrice.test(text(child)));
-            if(childExact) return;
-            minimalPrices.push(el);
-          });
-          const priceRows=minimalPrices.slice(0,120).map((el,index)=>{
-            const levels=[];
-            let current=el;
-            for(let depth=0;depth<5&&current;depth+=1){
-              const currentInfo=nodeInfo(current);
-              const previous=$(current).prevAll().slice(0,6).toArray().map(nodeInfo);
-              levels.push({depth,current:currentInfo,previous});
-              current=$(current).parent().get(0);
+          export const HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION = "strong-title-price-v1";
+
+          const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK|kr\.?)\s*)?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?\s*(?:,?[-–—]|,-|kr\.?|NOK)?(?:\s+per\s+(?:person|personer?|persons?))?(?:\s+minimum\s+\d+\s+(?:personer?|persons?))?$/iu;
+          const SEPARATOR_LINE = /^(?:[-–—•·]\s*)+$/u;
+          const ROOT_OR_UI_HEADING = /^(?:menu|meny|our\s+menu|vår\s+meny|opening(?:\s+hours)?|åpningstider|contact|kontakt|booking|reservation(?:s)?|reservasjoner?)$/iu;
+
+          interface ParsedPrice {
+            readonly priceMinor: number;
+            readonly priceKind: MenuPriceKind;
+          }
+
+          function normalizeText(value: string): string {
+            return value
+              .normalize("NFKC")
+              .replace(/[\u200B-\u200D\uFEFF]/gu, "")
+              .replace(/\s+/gu, " ")
+              .trim();
+          }
+
+          function parsePrice(value: string): ParsedPrice | null {
+            const match = normalizeText(value).match(PRICE_LINE);
+            if (!match?.[2]) return null;
+
+            const separator = match[3] ?? null;
+            const trailingDigits = match[4] ?? "";
+            let whole = Number(match[2]);
+            let decimals = "";
+
+            if (separator === "." && trailingDigits.length === 3) {
+              whole = Number(`${match[2]}${trailingDigits}`);
+            } else {
+              if (trailingDigits.length > 2) return null;
+              decimals = trailingDigits.padEnd(2, "0").slice(0, 2);
             }
-            return {index,price:text(el),levels};
+
+            const priceMinor = whole * 100 + Number(decimals || "0");
+            if (priceMinor < 4_000 || priceMinor > 1_000_000) return null;
+            return {
+              priceMinor,
+              priceKind: match[1] ? "from" : "exact",
+            };
+          }
+
+          function looksLikeTitle(value: string): boolean {
+            const title = normalizeText(value);
+            if (!title || title.length < 2 || title.length > 180 || !/\p{L}/u.test(title)) return false;
+            if (PRICE_LINE.test(title) || SEPARATOR_LINE.test(title)) return false;
+            if (/^(?:©|™|https?:\/\/|www\.|phone\s*:|telefon\s*:)/iu.test(title)) return false;
+            return title.split(/\s+/u).filter(Boolean).length <= 16;
+          }
+
+          export function recoverStrongTitlePriceHtmlItems(html: string): readonly MenuObservedItem[] {
+            const $ = load(html);
+            $("script, style, noscript, svg, template").remove();
+
+            const recovered: MenuObservedItem[] = [];
+            let position = 0;
+
+            $("p, li").each((_, element) => {
+              const block = $(element);
+              const fullText = normalizeText(block.text());
+              if (!fullText) return;
+
+              const strongTexts = block
+                .find("strong")
+                .toArray()
+                .map((strong) => normalizeText($(strong).text()))
+                .filter(Boolean);
+              if (strongTexts.length === 0) return;
+
+              const firstStrong = strongTexts[0] ?? "";
+              if (!firstStrong || !fullText.toLocaleLowerCase().startsWith(firstStrong.toLocaleLowerCase())) return;
+
+              const combinedStrong = normalizeText(strongTexts.join(" "));
+              const title =
+                combinedStrong && fullText.toLocaleLowerCase() === combinedStrong.toLocaleLowerCase()
+                  ? combinedStrong
+                  : firstStrong;
+              if (!looksLikeTitle(title)) return;
+
+              const inlineDescription = normalizeText(fullText.slice(title.length)) || null;
+              let sibling = block.next();
+              let standaloneDescription: string | null = null;
+              let price: ParsedPrice | null = null;
+              let priceText: string | null = null;
+
+              for (let step = 0; step < 5 && sibling.length > 0; step += 1) {
+                const siblingText = normalizeText(sibling.text());
+                if (!siblingText || SEPARATOR_LINE.test(siblingText)) {
+                  sibling = sibling.next();
+                  continue;
+                }
+                if (sibling.is("h1, h2, h3, h4, h5, h6")) break;
+
+                if (sibling.is("p, li")) {
+                  const nextStrong = normalizeText(sibling.find("strong").first().text());
+                  if (
+                    nextStrong &&
+                    siblingText.toLocaleLowerCase().startsWith(nextStrong.toLocaleLowerCase())
+                  ) {
+                    break;
+                  }
+                }
+
+                const parsed = parsePrice(siblingText);
+                if (parsed) {
+                  price = parsed;
+                  priceText = siblingText;
+                  break;
+                }
+
+                const canUseStandaloneDescription =
+                  inlineDescription === null &&
+                  standaloneDescription === null &&
+                  sibling.find("strong").length === 0 &&
+                  siblingText.length <= 420;
+                if (!canUseStandaloneDescription) break;
+                standaloneDescription = siblingText;
+                sibling = sibling.next();
+              }
+
+              if (!price || !priceText) return;
+
+              const rawSectionName = normalizeText(
+                block.prevAll("h1, h2, h3, h4, h5, h6").first().text(),
+              );
+              const sectionName =
+                rawSectionName && !ROOT_OR_UI_HEADING.test(rawSectionName)
+                  ? rawSectionName
+                  : null;
+              const description = inlineDescription ?? standaloneDescription;
+              const sourceKey = createMenuItemSourceKey(title, sectionName);
+              recovered.push({
+                sourceKey,
+                name: title,
+                normalizedName: normalizeDishName(title),
+                description,
+                sectionName,
+                priceMinor: price.priceMinor,
+                priceKind: price.priceKind,
+                priceMaxMinor: null,
+                currency: "NOK",
+                position,
+                extractionMethod: "html_heuristic",
+                confidence: 0.995,
+                sourceExcerpt: `${sectionName ? `${sectionName} — ` : ""}${fullText}${standaloneDescription ? ` — ${standaloneDescription}` : ""} — ${priceText}`.slice(0, 1000),
+              });
+              position += 1;
+            });
+
+            if (recovered.length < 6) return [];
+
+            const unique = new Map<string, MenuObservedItem>();
+            for (const item of recovered) {
+              const key = `${item.sourceKey}\u0000${item.priceMinor}\u0000${item.priceKind}`;
+              if (!unique.has(key)) unique.set(key, item);
+            }
+            const items = [...unique.values()];
+            if (items.length < 6) return [];
+            return items.map((item, index) => ({ ...item, position: index }));
+          }
+          EOF
+
+          cat > apps/menu-worker/src/html-strong-title-price-recovery.test.ts <<'EOF'
+          import { describe, expect, it } from "vitest";
+          import {
+            HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION,
+            recoverStrongTitlePriceHtmlItems,
+          } from "./html-strong-title-price-recovery.js";
+
+          describe("strong-title price recovery", () => {
+            it("binds leading strong dish titles to local following prices without promoting section headings", () => {
+              const items = recoverStrongTitlePriceHtmlItems(`
+                <html><body><div>
+                  <h4><strong>SMALL PLATES</strong></h4>
+                  <p><strong>Garden dumplings</strong> herbs and sesame</p><p>120,-</p><p>—</p>
+                  <p><strong>Roasted aubergine</strong> chilli and lime</p><p>180,-</p><p>—</p>
+                  <p><strong>Charred cabbage</strong> miso glaze</p><p>190,-</p><p>—</p>
+                  <h4><strong>MAINS</strong></h4>
+                  <p><strong>Herb chicken</strong> rice and greens</p><p>260,-</p><p>—</p>
+                  <p><strong>Market fish</strong> ginger broth</p><p>310,-</p><p>—</p>
+                  <p><strong>Mushroom rice</strong> crispy shallots</p><p>230,-</p>
+                </div></body></html>
+              `);
+
+              expect(HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION).toBe("strong-title-price-v1");
+              expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+                ["Garden dumplings", 12000],
+                ["Roasted aubergine", 18000],
+                ["Charred cabbage", 19000],
+                ["Herb chicken", 26000],
+                ["Market fish", 31000],
+                ["Mushroom rice", 23000],
+              ]);
+              expect(items.some((item) => item.name === "SMALL PLATES" || item.name === "MAINS")).toBe(false);
+            });
+
+            it("stops a strong group label when a nearer strong dish title appears before the price", () => {
+              const items = recoverStrongTitlePriceHtmlItems(`
+                <html><body><div>
+                  <p><strong>Skewers (2 pcs)</strong></p>
+                  <p><strong>Chicken skewer</strong> coriander marinade</p><p>220,-</p>
+                  <p><strong>Prawn skewer</strong> lime leaf</p><p>230,-</p>
+                  <p><strong>Padron skewer</strong> sesame sauce</p><p>190,-</p>
+                  <p><strong>Spring rolls</strong> herbs</p><p>210,-</p>
+                  <p><strong>Lamb bites</strong> tamarind</p><p>240,-</p>
+                  <p><strong>Crispy tofu</strong> chilli</p><p>200,-</p>
+                </div></body></html>
+              `);
+
+              expect(items.some((item) => item.name === "Skewers (2 pcs)")).toBe(false);
+              expect(items.map((item) => item.name)).toEqual([
+                "Chicken skewer",
+                "Prawn skewer",
+                "Padron skewer",
+                "Spring rolls",
+                "Lamb bites",
+                "Crispy tofu",
+              ]);
+            });
+
+            it("joins a title split across adjacent strong fragments and permits one plain description line before price", () => {
+              const items = recoverStrongTitlePriceHtmlItems(`
+                <html><body><div>
+                  <p><strong>Crispy oyster</strong> <strong>mushrooms</strong></p><p>for two, pancakes and pickles</p><p>720,-</p>
+                  <p><strong>Dish two</strong> description</p><p>220,-</p>
+                  <p><strong>Dish three</strong> description</p><p>230,-</p>
+                  <p><strong>Dish four</strong> description</p><p>240,-</p>
+                  <p><strong>Dish five</strong> description</p><p>250,-</p>
+                  <p><strong>Dish six</strong> description</p><p>260,-</p>
+                </div></body></html>
+              `);
+
+              expect(items[0]?.name).toBe("Crispy oyster mushrooms");
+              expect(items[0]?.description).toBe("for two, pancakes and pickles");
+              expect(items[0]?.priceMinor).toBe(72000);
+            });
+
+            it("parses per-person package prices and deduplicates repeated identical semantic rows", () => {
+              const items = recoverStrongTitlePriceHtmlItems(`
+                <html><body><div>
+                  <p><strong>Six tastes from the kitchen</strong></p><p>995,– per person Minimum 2 persons</p>
+                  <p><strong>Seven tastes from the kitchen</strong></p><p>1095,– per person Minimum 2 persons</p>
+                  <p><strong>Vegetable menu</strong></p><p>975,– per person</p>
+                  <p><strong>Starter one</strong> herbs</p><p>140,-</p>
+                  <p><strong>Starter two</strong> herbs</p><p>150,-</p>
+                  <p><strong>Starter three</strong> herbs</p><p>160,-</p>
+                  <p><strong>Starter three</strong> herbs</p><p>160,-</p>
+                </div></body></html>
+              `);
+
+              expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+                ["Six tastes from the kitchen", 99500],
+                ["Seven tastes from the kitchen", 109500],
+                ["Vegetable menu", 97500],
+                ["Starter one", 14000],
+                ["Starter two", 15000],
+                ["Starter three", 16000],
+              ]);
+            });
+
+            it("fails closed when fewer than six coherent local pairs establish the family", () => {
+              expect(
+                recoverStrongTitlePriceHtmlItems(`
+                  <p><strong>Gift card</strong></p><p>500,-</p>
+                  <p><strong>Merchandise</strong></p><p>600,-</p>
+                `),
+              ).toEqual([]);
+            });
           });
-          const strongRows=[];
-          $('strong').each((index,el)=>{
-            const value=text(el);
-            if(!value) return;
-            const parent=$(el).parent().get(0);
-            const grandparent=parent?$(parent).parent().get(0):null;
-            const followingParent=parent?$(parent).nextAll().slice(0,5).toArray().map(nodeInfo):[];
-            const followingGrand=grandparent?$(grandparent).nextAll().slice(0,5).toArray().map(nodeInfo):[];
-            strongRows.push({index,strong:value,parent:parent?nodeInfo(parent):null,grandparent:grandparent?nodeInfo(grandparent):null,followingParent,followingGrand});
+          EOF
+
+          cat > apps/menu-worker/src/html-strong-title-price-runtime.test.ts <<'EOF'
+          import { describe, expect, it } from "vitest";
+          import { extractMenuSource } from "./menu-source-runtime.js";
+
+          describe("strong-title runtime preference", () => {
+            it("prefers coherent semantic title-price pairs over flattened section-label recovery", async () => {
+              const extracted = await extractMenuSource("html", {
+                body: `
+                  <html><body><div>
+                    <h4><strong>SPECIAL RAW</strong></h4>
+                    <p><strong>Salmon tartare</strong> cucumber and yuzu</p><p>220,-</p><p>—</p>
+                    <p><strong>Tuna tataki</strong> chilli and herbs</p><p>240,-</p><p>—</p>
+                    <h4><strong>SMALL PLATES</strong></h4>
+                    <p><strong>Sharing skewers</strong></p>
+                    <p><strong>Chicken skewer</strong> green curry</p><p>210,-</p><p>—</p>
+                    <p><strong>Prawn tempura</strong> lime leaf</p><p>230,-</p>
+                    <p><strong>Padron skewer</strong> sesame</p><p>190,-</p>
+                    <h4><strong>MAINS</strong></h4>
+                    <p><strong>Crispy oyster</strong> <strong>mushrooms</strong></p><p>for two with pancakes</p><p>720,-</p>
+                  </div></body></html>
+                `,
+              });
+
+              expect(extracted.items.map((item) => [item.name, item.priceMinor])).toEqual([
+                ["Salmon tartare", 22000],
+                ["Tuna tataki", 24000],
+                ["Chicken skewer", 21000],
+                ["Prawn tempura", 23000],
+                ["Padron skewer", 19000],
+                ["Crispy oyster mushrooms", 72000],
+              ]);
+              expect(extracted.items.some((item) => /^(?:SPECIAL RAW|SMALL PLATES|MAINS|Sharing skewers)$/u.test(item.name))).toBe(false);
+              expect(extracted.extractorVersion).toContain("strong-title-price-v1");
+            });
           });
-          const report={
-            url,
-            finalUrl:response.url,
-            status:response.status,
-            sourceSha256:createHash('sha256').update(body).digest('hex'),
-            sourceBytes:Buffer.byteLength(body),
-            minimalPriceCount:minimalPrices.length,
-            priceRows,
-            strongCount:strongRows.length,
-            strongRows:strongRows.slice(0,120),
-          };
-          console.log(JSON.stringify(report,null,2));
-          NODE
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: batch02-sawan-current-dom-trace
-          path: apps/menu-worker/research/sawan-current-dom-trace.json
-          if-no-files-found: error
+          EOF
+
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("apps/menu-worker/src/menu-source-runtime.ts")
+          text = path.read_text()
+
+          old = '''import {
+            HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION,
+            recoverAdjacentHeadingPriceHtmlItems,
+          } from "./html-adjacent-heading-price-recovery.js";
+          '''
+          new = old + '''import {
+            HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION,
+            recoverStrongTitlePriceHtmlItems,
+          } from "./html-strong-title-price-recovery.js";
+          '''
+          if old not in text:
+              raise SystemExit("missing adjacent-heading import anchor")
+          text = text.replace(old, new, 1)
+
+          old = '+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}'
+          new = '+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}'
+          if old not in text:
+              raise SystemExit("missing runtime version anchor")
+          text = text.replace(old, new, 1)
+
+          old = '''    const headingPriceItems =
+              extracted.method === "html_heuristic"
+                ? recoverAdjacentHeadingPriceHtmlItems(recoveryHtml)
+                : [];
+          '''
+          new = '''    const strongTitlePriceItems =
+              extracted.method === "html_heuristic"
+                ? recoverStrongTitlePriceHtmlItems(recoveryHtml)
+                : [];
+          ''' + old
+          if old not in text:
+              raise SystemExit("missing heading family anchor")
+          text = text.replace(old, new, 1)
+
+          old = '''    const semanticCategoryCardsPreferred =
+              trailingPriceCardItems.length >= 4 &&
+          '''
+          new = '''    const strongTitlePricePreferred =
+              strongTitlePriceItems.length >= 6 &&
+              strongTitlePriceItems.length >= recoveredItems.length &&
+              strongTitlePriceItems.length >= trailingPriceCardItems.length;
+            const semanticCategoryCardsPreferred =
+              trailingPriceCardItems.length >= 4 &&
+          '''
+          if old not in text:
+              raise SystemExit("missing preference anchor")
+          text = text.replace(old, new, 1)
+
+          old = '''    const preferredItems = trailingPriceCardQualifies
+              ? trailingPriceCardItems
+              : headingPriceItems.length >= 4 &&
+          '''
+          new = '''    const preferredItems = strongTitlePricePreferred
+              ? strongTitlePriceItems
+              : trailingPriceCardQualifies
+                ? trailingPriceCardItems
+                : headingPriceItems.length >= 4 &&
+          '''
+          if old not in text:
+              raise SystemExit("missing preferredItems anchor")
+          text = text.replace(old, new, 1)
+
+          text = text.replace(
+              '''      !isolatedTrailingRecoveryPreferred
+          ''',
+              '''      !isolatedTrailingRecoveryPreferred &&
+              !strongTitlePricePreferred
+          ''',
+          )
+
+          old = '''    const headingSupplementedItems =
+              extracted.method === "html_heuristic"
+                ? supplementStrongHeadingRecovery(
+                    recoveredSupplementedItems,
+                    headingPriceItems,
+                  )
+                : recoveredSupplementedItems;
+          '''
+          new = '''    const headingSupplementedItems =
+              extracted.method === "html_heuristic"
+                ? strongTitlePricePreferred
+                  ? recoveredSupplementedItems
+                  : supplementStrongHeadingRecovery(
+                      recoveredSupplementedItems,
+                      headingPriceItems,
+                    )
+                : recoveredSupplementedItems;
+          '''
+          if old not in text:
+              raise SystemExit("missing heading supplement anchor")
+          text = text.replace(old, new, 1)
+
+          path.write_text(text)
+          PY
+
+          git diff --check
+          git diff -- apps/menu-worker/src/menu-source-runtime.ts apps/menu-worker/src/html-strong-title-price-recovery.ts apps/menu-worker/src/html-strong-title-price-recovery.test.ts apps/menu-worker/src/html-strong-title-price-runtime.test.ts
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker test -- html-strong-title-price-recovery.test.ts html-strong-title-price-runtime.test.ts
+      - run: pnpm --filter @fysen/menu-worker typecheck
+      - run: pnpm --filter @fysen/menu-worker build
+      - name: Commit permanent parser change
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/menu-worker/src/html-strong-title-price-recovery.ts \
+                  apps/menu-worker/src/html-strong-title-price-recovery.test.ts \
+                  apps/menu-worker/src/html-strong-title-price-runtime.test.ts \
+                  apps/menu-worker/src/menu-source-runtime.ts
+          git diff --cached --check
+          git commit -m "Recover semantic strong-title menu rows"
+          git push origin HEAD:agent/batch02-strong-title-price-v1
