@@ -1,0 +1,131 @@
+name: TEMP Batch 02 residual source discovery
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch02-residual-source-discovery.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+
+      - name: Discover Favrit network data and Der Peppern Gror source objects
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research/residual-source-discovery
+          node --input-type=module <<'NODE'
+          import { writeFile } from 'node:fs/promises';
+          import { chromium } from 'playwright-core';
+          import * as cheerio from 'cheerio';
+
+          const ua = 'FysenMenuBot/0.1';
+          const targets = [
+            { name: 'delicatessen-grunerlokka', kind: 'favrit', url: 'https://favrit.com/nb-no/menu/location/LK4AD79J8nO' },
+            { name: 'delicatessen-majorstuen', kind: 'favrit', url: 'https://favrit.com/nb-no/menu/location/LgEAQE59pAo' },
+            { name: 'der-peppern-gror', kind: 'wordpress-images', url: 'https://radhusplassen.derpepperngror.no/meny-norsk/' },
+          ];
+
+          const rows = [];
+          for (const target of targets) {
+            const response = await fetch(target.url, { redirect: 'follow', headers: { 'user-agent': ua, accept: 'text/html,*/*;q=0.8' } });
+            const html = await response.text();
+            const $ = cheerio.load(html);
+            const http = {
+              status: response.status,
+              finalUrl: response.url,
+              bodyBytes: Buffer.byteLength(html),
+              scripts: $('script[src]').map((_, el) => $(el).attr('src')).get().filter(Boolean),
+              links: $('a[href]').map((_, el) => $(el).attr('href')).get().filter(Boolean),
+              images: $('img').map((_, el) => ({
+                src: $(el).attr('src') ?? null,
+                dataSrc: $(el).attr('data-src') ?? null,
+                srcset: $(el).attr('srcset') ?? null,
+                alt: $(el).attr('alt') ?? null,
+              })).get(),
+            };
+
+            let browser = null;
+            if (target.kind === 'favrit') {
+              const requests = [];
+              const dataResponses = [];
+              const chromiumBrowser = await chromium.launch({ channel: 'chrome', headless: true, chromiumSandbox: true });
+              try {
+                const context = await chromiumBrowser.newContext({ serviceWorkers: 'block', userAgent: ua });
+                const page = await context.newPage();
+                page.on('request', (request) => {
+                  requests.push({ method: request.method(), resourceType: request.resourceType(), url: request.url() });
+                });
+                page.on('response', async (resp) => {
+                  const req = resp.request();
+                  if (!['xhr', 'fetch'].includes(req.resourceType())) return;
+                  const url = resp.url();
+                  let contentType = '';
+                  try { contentType = (await resp.allHeaders())['content-type'] ?? ''; } catch {}
+                  const row = { url, status: resp.status(), resourceType: req.resourceType(), contentType, snippet: null };
+                  if (/json|text|javascript/i.test(contentType)) {
+                    try {
+                      const text = await resp.text();
+                      if (text.length <= 800000 && /(menu|product|price|category|item|location)/i.test(text)) {
+                        row.snippet = text.slice(0, 6000);
+                      }
+                    } catch {}
+                  }
+                  dataResponses.push(row);
+                });
+                await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+                await page.waitForTimeout(8000);
+                const bodyText = await page.locator('body').innerText().catch(() => '');
+                const renderedLinks = await page.locator('a[href]').evaluateAll((els) => els.map((el) => el.href));
+                browser = {
+                  finalUrl: page.url(),
+                  title: await page.title(),
+                  bodyText: bodyText.slice(0, 20000),
+                  renderedLinks: [...new Set(renderedLinks)].slice(0, 200),
+                  requestOrigins: [...new Set(requests.map((entry) => { try { return new URL(entry.url).origin; } catch { return null; } }).filter(Boolean))],
+                  interestingRequests: requests.filter((entry) => /(api|menu|location|product|catalog|order)/i.test(entry.url)).slice(0, 300),
+                  dataResponses: dataResponses.filter((entry) => entry.snippet || /(api|menu|location|product|catalog|order)/i.test(entry.url)).slice(0, 200),
+                };
+                await context.close();
+              } finally {
+                await chromiumBrowser.close();
+              }
+            }
+
+            const sourceObjects = target.kind === 'wordpress-images' ? {
+              imageUrls: [...new Set(http.images.flatMap((img) => [img.src, img.dataSrc, ...(img.srcset ? img.srcset.split(',').map((part) => part.trim().split(/\s+/)[0]) : [])]).filter(Boolean))],
+              pdfLinks: [...new Set(http.links.filter((href) => /\.pdf(?:$|[?#])/i.test(href)))],
+              uploadLinks: [...new Set([...http.links, ...http.images.flatMap((img) => [img.src, img.dataSrc, img.srcset])].filter(Boolean).filter((href) => /wp-content\/uploads/i.test(href)))],
+            } : null;
+
+            rows.push({ name: target.name, kind: target.kind, url: target.url, http, browser, sourceObjects });
+          }
+
+          const report = { testedRevision: process.env.GITHUB_SHA, rows };
+          await writeFile('research/residual-source-discovery/report.json', JSON.stringify(report, null, 2) + '\n');
+          console.log(JSON.stringify(report, null, 2));
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-residual-source-discovery
+          path: apps/menu-worker/research/residual-source-discovery
+          if-no-files-found: error
