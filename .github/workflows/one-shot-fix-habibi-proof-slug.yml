@@ -1,0 +1,39 @@
+name: TEMP fix Habibi proof slug
+
+on:
+  push:
+    branches: [agent/batch02-residual-four-production-aware-final-proof]
+    paths:
+      - ".github/workflows/one-shot-fix-habibi-proof-slug.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Correct Habibi catalog slug and remove one-shot
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path=Path('.github/workflows/batch02-residual-four-production-aware-final-proof.yml')
+          text=path.read_text()
+          old='habibi-storgata-oslo'
+          new='habibi-mollergata-oslo'
+          count=text.count(old)
+          if count != 2:
+              raise SystemExit(f'Expected exactly 2 stale Habibi slug references, found {count}')
+          path.write_text(text.replace(old,new))
+          Path('.github/workflows/one-shot-fix-habibi-proof-slug.yml').unlink()
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git commit -m "Correct Habibi slug in production-aware proof"
+          git push origin HEAD:agent/batch02-residual-four-production-aware-final-proof
