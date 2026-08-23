@@ -1,0 +1,300 @@
+name: TEMP public menu API final proof v2
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/public-menu-api-final-proof-v2.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  delicatessen-live-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/public-menu-api-final-proof-v2
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Restore immutable Batch 02 seeds and create API-source plans
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/batch02
+          mkdir -p /tmp/batch02 apps/menu-worker/research/public-menu-api-proof-v2/generated
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const source = JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json', 'utf8'));
+          const bySlug = new Map(source.restaurants.map((entry) => [entry.restaurant.slug, entry]));
+          const variants = [
+            {
+              slug: 'delicatessen-grunerlokka-oslo',
+              url: 'https://favrit.com/ws/ordr-service/public/v3/locations/simple/LK4AD79J8nO?caller=GUEST_APP&language=nb',
+            },
+            {
+              slug: 'delicatessen-majorstuen-oslo',
+              url: 'https://favrit.com/ws/ordr-service/public/v3/locations/simple/LgEAQE59pAo?caller=GUEST_APP&language=nb',
+            },
+          ];
+          const restaurants = variants.map((variant) => {
+            const base = bySlug.get(variant.slug);
+            if (!base) throw new Error(`Missing immutable Batch 02 seed: ${variant.slug}`);
+            return {
+              ...base,
+              menuSource: {
+                ...base.menuSource,
+                url: variant.url,
+                sourceType: 'api',
+                fetchMode: 'http',
+                sourceSupport: { redirectOrigins: [], browserDataOrigins: [] },
+              },
+              assertionCount: 8,
+              forbiddenDishNames: [],
+            };
+          });
+          await writeFile(
+            'apps/menu-worker/research/public-menu-api-proof-v2/plan.json',
+            JSON.stringify({
+              ...source,
+              outputDirectory: 'research/public-menu-api-proof-v2/generated',
+              concurrency: 1,
+              restaurants,
+            }, null, 2) + '\n',
+          );
+          NODE
+
+      - name: Independently inspect complete extractor output from fresh sources
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { writeFile } from 'node:fs/promises';
+          import { extractPublicMenuApi } from './dist/public-menu-api-extractor.js';
+
+          const targets = [
+            ['delicatessen-grunerlokka-oslo', 'https://favrit.com/ws/ordr-service/public/v3/locations/simple/LK4AD79J8nO?caller=GUEST_APP&language=nb'],
+            ['delicatessen-majorstuen-oslo', 'https://favrit.com/ws/ordr-service/public/v3/locations/simple/LgEAQE59pAo?caller=GUEST_APP&language=nb'],
+          ];
+          const beverageSection = /(?:alkohol|drikke|drinks?|beverages?|soft\s+drinks?|øl|beer|vin|wine|cava|champagne|prosecco|musserende|sparkling|sangria|cocktails?|mocktails?|cider|kaffe|coffee|\bte\b|\btea\b|avec|brennevin|spirits?|whisk(?:e)?y|bourbon|\brom\b|\brum\b|\bgin\b|vodka|tequila|brandy|cognac|sherry|portvin|dessertvin|digestif)/iu;
+          const forbiddenExact = new Set([
+            'Deli cava',
+            'Delicatessen Torello Brut Reserva',
+            '225 Torelló Brut Nature',
+            'Torrens Moliner rosé cava',
+            'Torres 10',
+            'Carlos 1',
+            'Fernando Castilla solera reserva',
+            'Fernando Castilla Grand Reserva',
+            'Plantation Rum Grande Reserve',
+            'Plantation Rum XO',
+            'Dalwhinnie 15YO',
+            'LaPhroaigh 10Y',
+            'Michters',
+            'Jameson',
+            'Jim Beam',
+            'Glass Rød Sangria',
+            'Rødvin Sangria 1L',
+            'Francesc Ricart Brut Cava',
+            'Torelló Brut Reserva Delicatessen',
+            'Torrens Moliner Cava Rose',
+            'At Roca Rosat Reserva Brut Rosé',
+            'Queen of Kings Brut Nature Sauvignon Blanc Especial',
+            'Aroa Le Naturel Pet Nat',
+            'Bombay Gin & Tonic Water',
+            'Astobiza Gin & Yuzu Tonic',
+            'Hendricks Gin & Tonic',
+            'Lemon-Olive Gin & Tonic',
+            'Test Button (Uteservering)',
+            'Test',
+            'Delicatessen Olivenolje extra virgin fra Olis Sole (250ml)',
+          ]);
+          const expectedPairs = new Map([
+            ['Patatas bravas', 10500],
+            ['Pimientos de Padrón', 14000],
+            ['Albóndigas', 17500],
+          ]);
+          const rows = [];
+          for (const [slug, url] of targets) {
+            const response = await fetch(url, {
+              headers: { 'user-agent': process.env.FYSEN_MENU_BOT_USER_AGENT ?? 'FysenMenuBot/0.1', accept: 'application/json' },
+              redirect: 'follow',
+            });
+            if (!response.ok) throw new Error(`${slug}: HTTP ${response.status}`);
+            const body = await response.text();
+            const items = extractPublicMenuApi(body);
+            if (items.length < 20) throw new Error(`${slug}: only ${items.length} food items after filtering`);
+            const zero = items.filter((item) => !Number.isInteger(item.priceMinor) || item.priceMinor <= 0);
+            if (zero.length) throw new Error(`${slug}: non-positive prices ${JSON.stringify(zero)}`);
+            const beverageSections = items.filter((item) => item.sectionName && beverageSection.test(item.sectionName));
+            if (beverageSections.length) throw new Error(`${slug}: beverage sections leaked ${JSON.stringify(beverageSections)}`);
+            const forbidden = items.filter((item) => forbiddenExact.has(item.name));
+            if (forbidden.length) throw new Error(`${slug}: known non-dish output leaked ${JSON.stringify(forbidden)}`);
+            const byName = new Map(items.map((item) => [item.name, item]));
+            for (const [name, priceMinor] of expectedPairs) {
+              const item = byName.get(name);
+              if (!item || item.priceMinor !== priceMinor) {
+                throw new Error(`${slug}: missing/wrong food pair ${name}=${priceMinor}; got ${JSON.stringify(item)}`);
+              }
+            }
+            rows.push({ slug, itemCount: items.length, items });
+          }
+          await writeFile('research/public-menu-api-proof-v2/direct-extractor.json', JSON.stringify({ revision: '4863f504a6450c25fe43c52b6bf77e03f53a3e55', rows }, null, 2) + '\n');
+          console.log(JSON.stringify(rows.map(({slug,itemCount}) => ({slug,itemCount})), null, 2));
+          NODE
+
+      - name: Intake both Delicatessen locations from public API
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          node dist/index.js intake:batch research/public-menu-api-proof-v2/plan.json \
+            | tee research/public-menu-api-proof-v2/intake.json
+
+      - name: Independently validate generated candidates on second fetch
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          node dist/index.js validate:batch research/public-menu-api-proof-v2/generated \
+            | tee research/public-menu-api-proof-v2/validation.json
+
+      - name: Gate two-fetch candidate quality and exact API identity
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readdir, readFile, writeFile } from 'node:fs/promises';
+          const root = 'research/public-menu-api-proof-v2';
+          const intake = JSON.parse(await readFile(`${root}/intake.json`, 'utf8'));
+          const validation = JSON.parse(await readFile(`${root}/validation.json`, 'utf8'));
+          const direct = JSON.parse(await readFile(`${root}/direct-extractor.json`, 'utf8'));
+          const files = (await readdir(`${root}/generated`)).filter((file) => file.endsWith('.json')).sort();
+          if (intake.requestedCount !== 2 || intake.generatedCount !== 2 || intake.failedCount !== 0) {
+            throw new Error(`API intake not 2/2: ${JSON.stringify(intake)}`);
+          }
+          if (validation.manifestCount !== 2 || validation.acceptedCount !== 2 || validation.failedCount !== 0) {
+            throw new Error(`API validation not 2/2: ${JSON.stringify(validation)}`);
+          }
+          if (files.length !== 2) throw new Error(`Generated manifest count ${files.length}, expected 2`);
+          const expectedUrls = new Map([
+            ['delicatessen-grunerlokka-oslo', 'https://favrit.com/ws/ordr-service/public/v3/locations/simple/LK4AD79J8nO?caller=GUEST_APP&language=nb'],
+            ['delicatessen-majorstuen-oslo', 'https://favrit.com/ws/ordr-service/public/v3/locations/simple/LgEAQE59pAo?caller=GUEST_APP&language=nb'],
+          ]);
+          const forbiddenExact = new Set([
+            'Deli cava','Delicatessen Torello Brut Reserva','225 Torelló Brut Nature','Torrens Moliner rosé cava','Torres 10','Carlos 1','Fernando Castilla solera reserva','Fernando Castilla Grand Reserva','Plantation Rum Grande Reserve','Plantation Rum XO','Dalwhinnie 15YO','LaPhroaigh 10Y','Michters','Jameson','Jim Beam','Glass Rød Sangria','Rødvin Sangria 1L','Francesc Ricart Brut Cava','Torelló Brut Reserva Delicatessen','Torrens Moliner Cava Rose','At Roca Rosat Reserva Brut Rosé','Queen of Kings Brut Nature Sauvignon Blanc Especial','Aroa Le Naturel Pet Nat','Bombay Gin & Tonic Water','Astobiza Gin & Yuzu Tonic','Hendricks Gin & Tonic','Lemon-Olive Gin & Tonic','Test Button (Uteservering)','Test','Delicatessen Olivenolje extra virgin fra Olis Sole (250ml)'
+          ]);
+          const rows = [];
+          for (const file of files) {
+            const manifest = JSON.parse(await readFile(`${root}/generated/${file}`, 'utf8'));
+            const slug = manifest.restaurant.slug;
+            if (manifest.menuSource.sourceType !== 'api' || manifest.menuSource.fetchMode !== 'http') throw new Error(`${slug}: not HTTP API`);
+            if (manifest.menuSource.url !== expectedUrls.get(slug)) throw new Error(`${slug}: API URL drift`);
+            if (manifest.menuSource.sourceSupport.redirectOrigins.length !== 0 || manifest.menuSource.sourceSupport.browserDataOrigins.length !== 0) throw new Error(`${slug}: origin relaxation`);
+            if (manifest.menuSource.minimumExpectedItems < 20) throw new Error(`${slug}: item count ${manifest.menuSource.minimumExpectedItems}`);
+            if (manifest.qualityAssertions.requiredDishNames.length !== 8) throw new Error(`${slug}: assertion count drift`);
+            if (manifest.qualityAssertions.requiredDishVariants.some((variant) => !Number.isInteger(variant.priceMinor) || variant.priceMinor <= 0)) throw new Error(`${slug}: non-positive assertion`);
+            if (manifest.qualityAssertions.requiredDishNames.some((name) => forbiddenExact.has(name))) throw new Error(`${slug}: forbidden generated assertion`);
+            rows.push({ slug, itemCount: manifest.menuSource.minimumExpectedItems, requiredDishNames: manifest.qualityAssertions.requiredDishNames, requiredDishVariants: manifest.qualityAssertions.requiredDishVariants });
+          }
+          for (const result of validation.results ?? []) {
+            if (!result.accepted || result.validation?.menu?.extractorVersion !== 'public-menu-api-v1') throw new Error(`${result.slug}: validation/extractor mismatch`);
+            const names = result.validation?.menu?.observedDishNames ?? [];
+            if (names.some((name) => forbiddenExact.has(name))) throw new Error(`${result.slug}: known non-dish leaked on second fetch`);
+            const variants = result.validation?.menu?.observedDishVariants ?? [];
+            if (variants.some((variant) => !Number.isInteger(variant.priceMinor) || variant.priceMinor <= 0)) throw new Error(`${result.slug}: non-positive validated price`);
+          }
+          const summary = { revision: '4863f504a6450c25fe43c52b6bf77e03f53a3e55', generatedCount: intake.generatedCount, acceptedCount: validation.acceptedCount, failedCount: validation.failedCount, directCounts: direct.rows.map(({slug,itemCount}) => ({slug,itemCount})), rows };
+          await writeFile(`${root}/summary.json`, JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: public-menu-api-delicatessen-live-proof-v2
+          path: apps/menu-worker/research/public-menu-api-proof-v2
+          if-no-files-found: error
+
+  strict-56-catalog-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/public-menu-api-final-proof-v2
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Prove published-refresh fail-closed safety contract
+        run: pnpm --filter @fysen/menu-worker exec vitest run src/onboarding-refresh-safety.test.ts src/catalog-onboarding-failure-policy.test.ts src/production-menu-mutation-workflow.test.ts
+      - name: Validate exact current 56 catalog once, serially
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p research
+          node --input-type=module <<'NODE'
+          import {readdir,readFile} from 'node:fs/promises';
+          const files=(await readdir('catalog')).filter((x)=>x.endsWith('.json'));
+          const slugs=[];
+          for(const file of files) slugs.push(JSON.parse(await readFile(`catalog/${file}`,'utf8')).restaurant.slug);
+          if(files.length!==56||new Set(slugs).size!==56) throw new Error(`Catalog=${files.length}/${new Set(slugs).size}; expected 56/56`);
+          NODE
+          set +e
+          node dist/index.js validate:batch catalog | tee research/public-menu-api-v2-final56-primary.json
+          status=${PIPESTATUS[0]}
+          set -e
+          printf '%s\n' "$status" > research/public-menu-api-v2-validator-exit-status.txt
+      - name: Gate strict first-pass 56 of 56 with no retry
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const primary=JSON.parse(await readFile('research/public-menu-api-v2-final56-primary.json','utf8'));
+          const exitStatus=Number((await readFile('research/public-menu-api-v2-validator-exit-status.txt','utf8')).trim());
+          const failed=(primary.results??[]).filter((x)=>!x.accepted).map((x)=>({slug:x.slug,failureFamilies:x.failureFamilies??[],error:x.error??null,menuError:x.validation?.menu?.error??null,itemCount:x.validation?.menu?.quality?.itemCount??null}));
+          const summary={revision:'4863f504a6450c25fe43c52b6bf77e03f53a3e55',manifestCount:primary.manifestCount,acceptedCount:primary.acceptedCount,failedCount:primary.failedCount,validatorExitStatus:exitStatus,retryCount:0,failed};
+          await writeFile('research/public-menu-api-v2-final56-summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if(primary.manifestCount!==56) throw new Error(`manifestCount=${primary.manifestCount}; expected 56`);
+          if(primary.acceptedCount!==56||primary.failedCount!==0||failed.length!==0) throw new Error(`Strict first pass failed: ${JSON.stringify(summary)}`);
+          if(exitStatus!==0) throw new Error(`validator exit status ${exitStatus}`);
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: public-menu-api-v2-final56-gate
+          path: |
+            apps/menu-worker/research/public-menu-api-v2-final56-primary.json
+            apps/menu-worker/research/public-menu-api-v2-final56-summary.json
+            apps/menu-worker/research/public-menu-api-v2-validator-exit-status.txt
+          if-no-files-found: error
