@@ -343,7 +343,7 @@ describe("public menu API WeOrder schema", () => {
     badPrice.data.menu[0]!.categories[0]!.entries[0]!.dPrice = "299,-";
     badPrice.data.menu[0]!.categories[0]!.entries[1]!.dPrice = "299,-";
     expect(() => extractPublicMenuApi(JSON.stringify(badPrice))).toThrow(
-      "no positive-price food items",
+      "numeric/display price conflict for Butter Chicken",
     );
 
     const noCategories = structuredClone(weOrderFixture);
@@ -356,7 +356,7 @@ describe("public menu API WeOrder schema", () => {
       },
     ];
     expect(() => extractPublicMenuApi(JSON.stringify(noCategories))).toThrow(
-      "no recognizable menu entries",
+      "no recognizable food entries",
     );
   });
 });
