@@ -1,0 +1,104 @@
+name: TEMP prove Majorstuen refresh and strict 59 catalog
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/deli-majorstuen-59-proof.yml"
+
+permissions:
+  contents: read
+
+env:
+  FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+  FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+  FYSEN_CANDIDATE_VALIDATION_MAX_ATTEMPTS: "1"
+
+jobs:
+  majorstuen-live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - uses: pnpm/action-setup@v4
+        with: { version: 11.4.0, run_install: false }
+      - uses: actions/setup-node@v4
+        with: { node-version: 24.18.0 }
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Validate refreshed Majorstuen manifest exactly once
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          rm -rf research/deli-majorstuen-59 && mkdir -p research/deli-majorstuen-59
+          cp catalog/delicatessen-majorstuen-oslo.json research/deli-majorstuen-59/
+          set +e
+          node dist/index.js validate:batch research/deli-majorstuen-59 | tee research/deli-majorstuen-validation.json
+          echo ${PIPESTATUS[0]} > research/deli-majorstuen-exit.txt
+          exit 0
+      - name: Gate one attempt and 52-item current menu
+        working-directory: apps/menu-worker
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const v=JSON.parse(await readFile('research/deli-majorstuen-validation.json','utf8'));
+          const status=Number((await readFile('research/deli-majorstuen-exit.txt','utf8')).trim());
+          const r=v.results?.[0];const m=r?.validation?.menu;const names=m?.observedDishNames??[];const vars=m?.observedDishVariants??[];const failures=[];
+          if(v.maxAttempts!==1)failures.push(`maxAttempts:${v.maxAttempts}`);
+          if(v.manifestCount!==1||v.acceptedCount!==1||v.failedCount!==0||!r?.accepted||status!==0)failures.push('not-1/1');
+          if(m?.quality?.itemCount!==52)failures.push(`count:${m?.quality?.itemCount}`);
+          if(!vars.some(x=>x.name==='Plato de Ibérico'&&x.priceMinor===25500))failures.push('missing-current-assertion');
+          if(names.includes('Lunsjplanke for to'))failures.push('stale-lunch-present');
+          const summary={maxAttempts:v.maxAttempts,accepted:r?.accepted,itemCount:m?.quality?.itemCount,extractorVersion:m?.extractorVersion,failureFamilies:r?.failureFamilies??[],validatorExitStatus:status,failures};
+          await writeFile('research/deli-majorstuen-live-summary.json',JSON.stringify(summary,null,2)+'\n');console.log(JSON.stringify(summary,null,2));if(failures.length)throw new Error(JSON.stringify(failures));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: deli-majorstuen-refresh-live-proof
+          path: apps/menu-worker/research/deli-majorstuen-*.json
+          if-no-files-found: error
+
+  strict-59:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - uses: pnpm/action-setup@v4
+        with: { version: 11.4.0, run_install: false }
+      - uses: actions/setup-node@v4
+        with: { node-version: 24.18.0 }
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - run: pnpm --filter @fysen/menu-worker exec vitest run src/onboarding-refresh-safety.test.ts src/catalog-onboarding-failure-policy.test.ts src/production-menu-mutation-workflow.test.ts
+      - name: Require exact 59 unique manifests
+        working-directory: apps/menu-worker
+        run: node --input-type=module -e "const fs=await import('node:fs/promises');const files=(await fs.readdir('catalog')).filter(x=>x.endsWith('.json'));const slugs=[];for(const f of files)slugs.push(JSON.parse(await fs.readFile('catalog/'+f,'utf8')).restaurant.slug);if(files.length!==59||new Set(slugs).size!==59)throw new Error('catalog identity drift '+files.length+'/'+new Set(slugs).size)"
+      - name: Validate exact 59 catalog with one validator attempt
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch catalog | tee research/deli-final59-validation.json
+          echo ${PIPESTATUS[0]} > research/deli-final59-exit.txt
+          exit 0
+      - name: Gate 59 of 59 in one validator attempt
+        working-directory: apps/menu-worker
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const v=JSON.parse(await readFile('research/deli-final59-validation.json','utf8'));
+          const status=Number((await readFile('research/deli-final59-exit.txt','utf8')).trim());
+          const failed=(v.results??[]).filter(r=>!r.accepted).map(r=>({slug:r.slug,failureFamilies:r.failureFamilies??[],error:r.error??r.validation?.menu?.error??null}));
+          const s={manifestCount:v.manifestCount,acceptedCount:v.acceptedCount,failedCount:v.failedCount,maxAttempts:v.maxAttempts,validatorExitStatus:status,failed};
+          await writeFile('research/deli-final59-summary.json',JSON.stringify(s,null,2)+'\n');console.log(JSON.stringify(s,null,2));
+          if(v.maxAttempts!==1||v.manifestCount!==59||v.acceptedCount!==59||v.failedCount!==0||status!==0||failed.length)throw new Error('strict 59 one-attempt gate failed');
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: deli-majorstuen-final59-gate
+          path: apps/menu-worker/research/deli-final59-*.json
+          if-no-files-found: error
