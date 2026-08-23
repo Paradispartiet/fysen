@@ -106,9 +106,10 @@ jobs:
           git diff --check
           git diff -- apps/menu-worker/src/menu-source-runtime.ts
       - run: pnpm install --no-frozen-lockfile
+      - name: Build workspace dependencies before tests
+        run: pnpm --filter @fysen/menu-worker... build
       - run: pnpm --filter @fysen/menu-worker test -- html-strong-title-price-recovery.test.ts html-strong-title-price-runtime.test.ts
       - run: pnpm --filter @fysen/menu-worker typecheck
-      - run: pnpm --filter @fysen/menu-worker build
       - name: Commit runtime wiring
         shell: bash
         run: |
