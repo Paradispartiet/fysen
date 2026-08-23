@@ -1,0 +1,578 @@
+name: TEMP write public menu API extractor
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/public-menu-api-writer.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  write-and-prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/public-menu-api-extractor-v1
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+
+      - name: Add fail-closed nested public menu API extraction
+        shell: bash
+        run: |
+          cat > apps/menu-worker/src/public-menu-api-extractor.ts <<'TS'
+          import {
+            createMenuItemSourceKey,
+            normalizeDishName,
+            type MenuObservedItem,
+            type MenuPriceKind,
+          } from "@fysen/menu-core";
+
+          export const PUBLIC_MENU_API_EXTRACTOR_VERSION = "public-menu-api-v1";
+
+          type JsonRecord = Record<string, unknown>;
+
+          interface ParsedPrice {
+            readonly priceMinor: number;
+            readonly priceKind: MenuPriceKind;
+            readonly priceMaxMinor: number | null;
+            readonly currency: string;
+          }
+
+          const BEVERAGE_SECTION =
+            /(?:alkohol|drikke|drinks?|beverages?|øl|beer|vin|wine|cocktails?|mocktails?|cider|kaffe|coffee|\bte\b|\btea\b)/iu;
+
+          function asRecord(value: unknown): JsonRecord | null {
+            return typeof value === "object" && value !== null && !Array.isArray(value)
+              ? (value as JsonRecord)
+              : null;
+          }
+
+          function asArray(value: unknown): readonly unknown[] {
+            return Array.isArray(value) ? value : [];
+          }
+
+          function normalizedText(value: unknown): string | null {
+            if (typeof value !== "string") return null;
+            const normalized = value.normalize("NFKC").trim().replace(/\s+/gu, " ");
+            return normalized.length > 0 ? normalized : null;
+          }
+
+          function localizedText(value: unknown): string | null {
+            const direct = normalizedText(value);
+            if (direct) return direct;
+            const entries = asArray(value)
+              .map(asRecord)
+              .filter((entry): entry is JsonRecord => entry !== null)
+              .map((entry) => ({
+                language: normalizedText(entry.language)?.toLocaleLowerCase("en-US") ?? "",
+                text: normalizedText(entry.text ?? entry.name ?? entry.value),
+              }))
+              .filter((entry) => entry.text !== null);
+            for (const language of ["nb", "no", "nn", "en"]) {
+              const match = entries.find((entry) => entry.language === language);
+              if (match?.text) return match.text;
+            }
+            return entries[0]?.text ?? null;
+          }
+
+          function numericAmount(value: unknown): number | null {
+            if (typeof value === "number" && Number.isFinite(value)) return value;
+            if (typeof value !== "string") return null;
+            const normalized = value.trim().replace(",", ".");
+            if (!/^\d+(?:\.\d{1,2})?$/u.test(normalized)) return null;
+            const parsed = Number(normalized);
+            return Number.isFinite(parsed) ? parsed : null;
+          }
+
+          function directPrice(value: unknown): { priceMinor: number; currency: string } | null {
+            const price = asRecord(value);
+            if (!price) return null;
+            const amount = numericAmount(price.amount);
+            const currency = normalizedText(price.currency)?.toUpperCase() ?? null;
+            if (amount === null || amount < 0 || !currency || !/^[A-Z]{3}$/u.test(currency)) {
+              return null;
+            }
+            const priceMinor = Math.round(amount * 100);
+            if (!Number.isSafeInteger(priceMinor)) return null;
+            return { priceMinor, currency };
+          }
+
+          function itemPrice(item: JsonRecord): ParsedPrice | null {
+            const direct = directPrice(item.price);
+            if (direct) {
+              return {
+                ...direct,
+                priceKind: "exact",
+                priceMaxMinor: null,
+              };
+            }
+
+            const variantPrices = asArray(item.variants)
+              .map(asRecord)
+              .filter((variant): variant is JsonRecord => variant !== null)
+              .filter((variant) => variant.availability !== "UNAVAILABLE")
+              .map((variant) => directPrice(variant.price))
+              .filter(
+                (price): price is { priceMinor: number; currency: string } => price !== null,
+              );
+            if (variantPrices.length === 0) return null;
+            const currencies = new Set(variantPrices.map((price) => price.currency));
+            if (currencies.size !== 1) return null;
+            const amounts = [...new Set(variantPrices.map((price) => price.priceMinor))].sort(
+              (left, right) => left - right,
+            );
+            const minimum = amounts[0];
+            if (minimum === undefined) return null;
+            if (amounts.length === 1) {
+              return {
+                priceMinor: minimum,
+                priceKind: "exact",
+                priceMaxMinor: null,
+                currency: variantPrices[0]?.currency ?? "NOK",
+              };
+            }
+            return {
+              priceMinor: minimum,
+              priceKind: "multiple",
+              priceMaxMinor: amounts.at(-1) ?? minimum,
+              currency: variantPrices[0]?.currency ?? "NOK",
+            };
+          }
+
+          function sourceExcerpt(
+            name: string,
+            description: string | null,
+            sectionName: string | null,
+            price: ParsedPrice,
+          ): string {
+            return JSON.stringify({
+              name,
+              description,
+              sectionName,
+              priceMinor: price.priceMinor,
+              priceKind: price.priceKind,
+              priceMaxMinor: price.priceMaxMinor,
+              currency: price.currency,
+            }).slice(0, 2000);
+          }
+
+          export function extractPublicMenuApi(body: string): readonly MenuObservedItem[] {
+            let parsed: unknown;
+            try {
+              parsed = JSON.parse(body) as unknown;
+            } catch {
+              throw new Error("Public menu API response is not valid JSON");
+            }
+            const root = asRecord(parsed);
+            if (!root) throw new Error("Public menu API response must be a JSON object");
+            const location = asRecord(root.location);
+            const menus = asArray(location?.menus ?? root.menus);
+            if (menus.length === 0) {
+              throw new Error("Public menu API exposed no menus array");
+            }
+
+            const items: MenuObservedItem[] = [];
+            let recognizedSectionCount = 0;
+            let position = 0;
+
+            const visitSections = (
+              rawSections: unknown,
+              inheritedSectionName: string | null = null,
+            ): void => {
+              for (const rawSection of asArray(rawSections)) {
+                const section = asRecord(rawSection);
+                if (!section) continue;
+                recognizedSectionCount += 1;
+                const sectionName =
+                  localizedText(section.titles ?? section.names ?? section.title ?? section.name) ??
+                  inheritedSectionName;
+                const isBeverageSection = sectionName !== null && BEVERAGE_SECTION.test(sectionName);
+
+                if (!isBeverageSection) {
+                  for (const rawItem of asArray(section.menuItems ?? section.items ?? section.products)) {
+                    const item = asRecord(rawItem);
+                    if (!item || item.active === false) continue;
+                    const name = localizedText(item.names ?? item.titles ?? item.name ?? item.title);
+                    if (!name || !/\p{L}/u.test(name)) continue;
+                    const price = itemPrice(item);
+                    if (!price) continue;
+                    const description = localizedText(item.descriptions ?? item.description);
+                    items.push({
+                      sourceKey: createMenuItemSourceKey(name, sectionName),
+                      name,
+                      normalizedName: normalizeDishName(name),
+                      description,
+                      sectionName,
+                      priceMinor: price.priceMinor,
+                      priceKind: price.priceKind,
+                      priceMaxMinor: price.priceMaxMinor,
+                      currency: price.currency,
+                      position,
+                      extractionMethod: "api",
+                      confidence: 1,
+                      sourceExcerpt: sourceExcerpt(name, description, sectionName, price),
+                    });
+                    position += 1;
+                  }
+                }
+
+                visitSections(
+                  section.subSections ?? section.subsections ?? section.sections,
+                  sectionName,
+                );
+              }
+            };
+
+            for (const rawMenu of menus) {
+              const menu = asRecord(rawMenu);
+              if (!menu) continue;
+              visitSections(menu.menuSections ?? menu.sections);
+            }
+            if (recognizedSectionCount === 0) {
+              throw new Error("Public menu API exposed no recognizable menu sections");
+            }
+
+            const bySourceKey = new Map<string, MenuObservedItem>();
+            for (const item of items) {
+              const existing = bySourceKey.get(item.sourceKey);
+              if (!existing) {
+                bySourceKey.set(item.sourceKey, item);
+                continue;
+              }
+              if (
+                existing.priceMinor !== item.priceMinor ||
+                (existing.priceKind ?? "exact") !== (item.priceKind ?? "exact") ||
+                (existing.priceMaxMinor ?? null) !== (item.priceMaxMinor ?? null) ||
+                existing.currency !== item.currency
+              ) {
+                throw new Error(
+                  `Public menu API exposed conflicting duplicate prices for ${item.name}`,
+                );
+              }
+            }
+            return [...bySourceKey.values()].map((item, index) => ({
+              ...item,
+              position: index,
+            }));
+          }
+          TS
+
+          cat > apps/menu-worker/src/public-menu-api-extractor.test.ts <<'TS'
+          import { describe, expect, it } from "vitest";
+          import {
+            PUBLIC_MENU_API_EXTRACTOR_VERSION,
+            extractPublicMenuApi,
+          } from "./public-menu-api-extractor.js";
+
+          describe("public menu API extractor", () => {
+            it("extracts localized nested service-menu items and skips beverage/inactive sections", () => {
+              const body = JSON.stringify({
+                location: {
+                  menus: [
+                    {
+                      menuSections: [
+                        {
+                          titles: [{ language: "no", text: "Alkoholfri drikke / Alcohol free beverages" }],
+                          menuItems: [
+                            {
+                              names: [{ language: "no", text: "Cola" }],
+                              price: { amount: 65, currency: "NOK" },
+                              active: true,
+                            },
+                          ],
+                        },
+                        {
+                          titles: [{ language: "no", text: "Tapas" }],
+                          menuItems: [
+                            {
+                              names: [{ language: "no", text: "Patatas bravas" }],
+                              descriptions: [{ language: "no", text: "Potet, salsa brava og aioli" }],
+                              price: { amount: 129, currency: "NOK" },
+                              active: true,
+                            },
+                            {
+                              names: [{ language: "no", text: "Utgått rett" }],
+                              price: { amount: 199, currency: "NOK" },
+                              active: false,
+                            },
+                          ],
+                          subSections: [
+                            {
+                              titles: [{ language: "no", text: "Croquetas" }],
+                              menuItems: [
+                                {
+                                  names: [{ language: "no", text: "Croquetas de jamón" }],
+                                  variants: [
+                                    { availability: "AVAILABLE", price: { amount: 149, currency: "NOK" } },
+                                  ],
+                                  active: true,
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              });
+
+              const items = extractPublicMenuApi(body);
+              expect(PUBLIC_MENU_API_EXTRACTOR_VERSION).toBe("public-menu-api-v1");
+              expect(items.map((item) => item.name)).toEqual([
+                "Patatas bravas",
+                "Croquetas de jamón",
+              ]);
+              expect(items[0]).toMatchObject({
+                sectionName: "Tapas",
+                description: "Potet, salsa brava og aioli",
+                priceMinor: 12900,
+                currency: "NOK",
+                extractionMethod: "api",
+                confidence: 1,
+              });
+              expect(items[1]).toMatchObject({
+                sectionName: "Croquetas",
+                priceMinor: 14900,
+                priceKind: "exact",
+              });
+            });
+
+            it("preserves multiple variant prices when no direct price exists", () => {
+              const items = extractPublicMenuApi(
+                JSON.stringify({
+                  menus: [
+                    {
+                      menuSections: [
+                        {
+                          title: "Mat",
+                          menuItems: [
+                            {
+                              name: "Tasting plate",
+                              variants: [
+                                { price: { amount: 200, currency: "NOK" } },
+                                { price: { amount: 250, currency: "NOK" } },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                }),
+              );
+              expect(items[0]).toMatchObject({
+                priceMinor: 20000,
+                priceKind: "multiple",
+                priceMaxMinor: 25000,
+              });
+            });
+
+            it("fails closed on unrelated JSON and conflicting duplicate prices", () => {
+              expect(() => extractPublicMenuApi(JSON.stringify({ ok: true }))).toThrow(
+                "exposed no menus array",
+              );
+              expect(() =>
+                extractPublicMenuApi(
+                  JSON.stringify({
+                    menus: [
+                      {
+                        menuSections: [
+                          {
+                            title: "Tapas",
+                            menuItems: [
+                              { name: "Oliven", price: { amount: 75, currency: "NOK" } },
+                              { name: "Oliven", price: { amount: 85, currency: "NOK" } },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  }),
+                ),
+              ).toThrow("conflicting duplicate prices");
+            });
+          });
+          TS
+
+          cat > apps/menu-worker/src/menu-source-api-runtime.test.ts <<'TS'
+          import { describe, expect, it } from "vitest";
+          import {
+            assertSupportedMenuSource,
+            extractMenuSource,
+            extractorVersionForSourceType,
+          } from "./menu-source-runtime.js";
+          import { PUBLIC_MENU_API_EXTRACTOR_VERSION } from "./public-menu-api-extractor.js";
+
+          describe("API menu source runtime", () => {
+            it("supports HTTP API sources and rejects browser API mode", () => {
+              expect(() =>
+                assertSupportedMenuSource({ sourceType: "api", fetchMode: "http" }),
+              ).not.toThrow();
+              expect(() =>
+                assertSupportedMenuSource({ sourceType: "api", fetchMode: "browser" }),
+              ).toThrow("Browser fetch mode only supports HTML/JSON-LD sources");
+              expect(extractorVersionForSourceType("api")).toBe(
+                PUBLIC_MENU_API_EXTRACTOR_VERSION,
+              );
+            });
+
+            it("extracts structured API payloads through the shared runtime", async () => {
+              const body = JSON.stringify({
+                location: {
+                  menus: [
+                    {
+                      menuSections: [
+                        {
+                          title: "Tapas",
+                          menuItems: [
+                            {
+                              name: "Gambas al ajillo",
+                              price: { amount: 189, currency: "NOK" },
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              });
+              const extracted = await extractMenuSource("api", {
+                kind: "content",
+                fetchedAt: "2026-08-23T10:00:00.000Z",
+                status: 200,
+                contentType: "application/json",
+                body,
+                bodyBytes: new TextEncoder().encode(body),
+                rawSha256: "0".repeat(64),
+                etag: null,
+                lastModified: null,
+                durationMs: 1,
+                robotsAllowed: true,
+              });
+              expect(extracted.method).toBe("api");
+              expect(extracted.extractorVersion).toBe(PUBLIC_MENU_API_EXTRACTOR_VERSION);
+              expect(extracted.items).toHaveLength(1);
+              expect(extracted.items[0]).toMatchObject({
+                name: "Gambas al ajillo",
+                priceMinor: 18900,
+                extractionMethod: "api",
+              });
+            });
+          });
+          TS
+
+          python - <<'PY'
+          from pathlib import Path
+
+          runtime = Path('apps/menu-worker/src/menu-source-runtime.ts')
+          text = runtime.read_text()
+          anchor = 'import { BrowserMenuClient } from "./browser-client.js";\n'
+          addition = anchor + 'import {\n  PUBLIC_MENU_API_EXTRACTOR_VERSION,\n  extractPublicMenuApi,\n} from "./public-menu-api-extractor.js";\n'
+          if anchor not in text:
+              raise SystemExit('runtime import anchor mismatch')
+          text = text.replace(anchor, addition, 1)
+          text = text.replace(
+              'export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";',
+              'export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf" | "api";',
+              1,
+          )
+          old = '  if (sourceType === "pdf") return PDF_SOURCE_EXTRACTOR_VERSION;\n  return null;'
+          new = '  if (sourceType === "pdf") return PDF_SOURCE_EXTRACTOR_VERSION;\n  if (sourceType === "api") return PUBLIC_MENU_API_EXTRACTOR_VERSION;\n  return null;'
+          if old not in text:
+              raise SystemExit('extractorVersion anchor mismatch')
+          text = text.replace(old, new, 1)
+          old = '''  if (\n    input.sourceType !== "html" &&\n    input.sourceType !== "json_ld" &&\n    input.sourceType !== "pdf"\n  ) {'''
+          new = '''  if (\n    input.sourceType !== "html" &&\n    input.sourceType !== "json_ld" &&\n    input.sourceType !== "pdf" &&\n    input.sourceType !== "api"\n  ) {'''
+          if old not in text:
+              raise SystemExit('supported source anchor mismatch')
+          text = text.replace(old, new, 1)
+          anchor = '  if (sourceType === "pdf") {\n'
+          api_block = '''  if (sourceType === "api") {\n    return {\n      items: extractPublicMenuApi(fetched.body),\n      method: "api",\n      extractorVersion: PUBLIC_MENU_API_EXTRACTOR_VERSION,\n    };\n  }\n'''
+          if anchor not in text:
+              raise SystemExit('API extraction insertion anchor mismatch')
+          text = text.replace(anchor, api_block + anchor, 1)
+          runtime.write_text(text)
+
+          manifest = Path('apps/menu-worker/src/onboarding-manifest.ts')
+          text = manifest.read_text()
+          old = 'sourceType: z.enum(["html", "json_ld", "pdf"]),'
+          new = 'sourceType: z.enum(["html", "json_ld", "pdf", "api"]),'
+          if old not in text:
+              raise SystemExit('manifest sourceType anchor mismatch')
+          text = text.replace(old, new, 1)
+          old = 'if (manifest.menuSource.fetchMode === "browser" && manifest.menuSource.sourceType === "pdf") {'
+          new = '''if (\n      manifest.menuSource.fetchMode === "browser" &&\n      manifest.menuSource.sourceType !== "html" &&\n      manifest.menuSource.sourceType !== "json_ld"\n    ) {'''
+          if old not in text:
+              raise SystemExit('manifest browser gate anchor mismatch')
+          text = text.replace(old, new, 1)
+          manifest.write_text(text)
+
+          test = Path('apps/menu-worker/src/onboarding-manifest.test.ts')
+          text = test.read_text()
+          anchor = '  it("accepts PDF sources and explicit section/price assertions", () => {'
+          api_test = '''  it("accepts HTTP API menu sources and rejects browser API mode", () => {\n    const parsed = restaurantOnboardingManifestSchema.parse({\n      ...validManifest,\n      menuSource: {\n        ...validManifest.menuSource,\n        url: "https://example.com/api/menu",\n        sourceType: "api",\n      },\n    });\n    expect(parsed.menuSource.sourceType).toBe("api");\n    expect(parsed.menuSource.fetchMode).toBe("http");\n\n    expect(() =>\n      restaurantOnboardingManifestSchema.parse({\n        ...validManifest,\n        menuSource: {\n          ...validManifest.menuSource,\n          url: "https://example.com/api/menu",\n          sourceType: "api",\n          fetchMode: "browser",\n        },\n      }),\n    ).toThrow("Browser fetch mode only supports HTML/JSON-LD sources");\n  });\n\n'''
+          if anchor not in text:
+              raise SystemExit('manifest test anchor mismatch')
+          text = text.replace(anchor, api_test + anchor, 1)
+          test.write_text(text)
+
+          version_test = Path('apps/menu-worker/src/menu-source-runtime-version.test.ts')
+          text = version_test.read_text()
+          import_anchor = 'import { HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION } from "./html-trailing-price-card-recovery.js";\n'
+          if import_anchor not in text:
+              raise SystemExit('version test import anchor mismatch')
+          text = text.replace(
+              import_anchor,
+              import_anchor + 'import { PUBLIC_MENU_API_EXTRACTOR_VERSION } from "./public-menu-api-extractor.js";\n',
+              1,
+          )
+          assertion_anchor = '    expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);\n'
+          if assertion_anchor not in text:
+              raise SystemExit('version test assertion anchor mismatch')
+          text = text.replace(
+              assertion_anchor,
+              assertion_anchor + '    expect(extractorVersionForSourceType("api")).toBe(PUBLIC_MENU_API_EXTRACTOR_VERSION);\n',
+              1,
+          )
+          version_test.write_text(text)
+          PY
+
+      - name: Build workspace dependencies
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Run complete menu-worker test suite
+        run: pnpm --filter @fysen/menu-worker test
+
+      - name: Typecheck menu-worker
+        run: pnpm --filter @fysen/menu-worker typecheck
+
+      - name: Commit permanent files only
+        shell: bash
+        run: |
+          git config user.name "Paradispartiet"
+          git config user.email "paradispartiet@gmail.com"
+          git add \
+            apps/menu-worker/src/public-menu-api-extractor.ts \
+            apps/menu-worker/src/public-menu-api-extractor.test.ts \
+            apps/menu-worker/src/menu-source-api-runtime.test.ts \
+            apps/menu-worker/src/menu-source-runtime.ts \
+            apps/menu-worker/src/menu-source-runtime-version.test.ts \
+            apps/menu-worker/src/onboarding-manifest.ts \
+            apps/menu-worker/src/onboarding-manifest.test.ts
+          git diff --cached --check
+          git diff --cached --quiet && { echo "No permanent changes"; exit 1; }
+          git commit -m "Support structured public menu API sources"
+          git push origin HEAD:agent/public-menu-api-extractor-v1
