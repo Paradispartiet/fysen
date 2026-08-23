@@ -1,0 +1,81 @@
+name: TEMP harden public menu API food filtering
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/public-menu-api-cleanup-writer.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  write-and-prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/public-menu-api-extractor-v1
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+
+      - name: Harden generic food-only API filtering
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          source = Path('apps/menu-worker/src/public-menu-api-extractor.ts')
+          text = source.read_text()
+          old = '''const BEVERAGE_SECTION =\n  /(?:alkohol|drikke|drinks?|beverages?|øl|beer|vin|wine|cocktails?|mocktails?|cider|kaffe|coffee|\\bte\\b|\\btea\\b)/iu;'''
+          new = '''const BEVERAGE_SECTION =\n  /(?:alkohol|drikke|drinks?|beverages?|soft\\s+drinks?|øl|beer|vin|wine|cava|champagne|prosecco|musserende|sparkling|sangria|cocktails?|mocktails?|cider|kaffe|coffee|\\bte\\b|\\btea\\b|avec|brennevin|spirits?|whisk(?:e)?y|bourbon|\\brom\\b|\\brum\\b|\\bgin\\b|vodka|tequila|brandy|cognac|sherry|portvin|dessertvin|digestif)/iu;\nconst NON_DISH_PLACEHOLDER =\n  /^(?:test(?:\\s+button)?(?:\\s*\\([^)]*\\))?|button(?:\\s*\\([^)]*\\))?)$/iu;'''
+          if old not in text:
+              raise SystemExit('beverage section anchor mismatch')
+          text = text.replace(old, new, 1)
+          old = 'if (amount === null || amount < 0 || !currency || !/^[A-Z]{3}$/u.test(currency)) {'
+          new = 'if (amount === null || amount <= 0 || !currency || !/^[A-Z]{3}$/u.test(currency)) {'
+          if old not in text:
+              raise SystemExit('positive price anchor mismatch')
+          text = text.replace(old, new, 1)
+          old = 'if (!name || !/\\p{L}/u.test(name)) continue;'
+          new = 'if (!name || !/\\p{L}/u.test(name) || NON_DISH_PLACEHOLDER.test(name)) continue;'
+          if old not in text:
+              raise SystemExit('placeholder anchor mismatch')
+          text = text.replace(old, new, 1)
+          source.write_text(text)
+
+          test = Path('apps/menu-worker/src/public-menu-api-extractor.test.ts')
+          text = test.read_text()
+          anchor = '    it("preserves multiple variant prices when no direct price exists", () => {'
+          added = '''    it("drops alcohol service sections and zero-priced UI placeholders", () => {\n      const items = extractPublicMenuApi(\n        JSON.stringify({\n          location: {\n            menus: [\n              {\n                menuSections: [\n                  {\n                    title: "Cava / Musserende",\n                    menuItems: [\n                      { name: "House Cava", price: { amount: 845, currency: "NOK" } },\n                    ],\n                  },\n                  {\n                    title: "Gin & Tonic",\n                    menuItems: [\n                      { name: "House Gin & Tonic", price: { amount: 175, currency: "NOK" } },\n                    ],\n                  },\n                  {\n                    title: "Tapas",\n                    menuItems: [\n                      { name: "Patatas bravas", price: { amount: 105, currency: "NOK" } },\n                      { name: "Test Button (Uteservering)", price: { amount: 0, currency: "NOK" } },\n                      { name: "Test", price: { amount: 50, currency: "NOK" } },\n                    ],\n                  },\n                ],\n              },\n            ],\n          },\n        }),\n      );\n      expect(items.map((item) => item.name)).toEqual(["Patatas bravas"]);\n    });\n\n'''
+          if anchor not in text:
+              raise SystemExit('test insertion anchor mismatch')
+          text = text.replace(anchor, added + anchor, 1)
+          test.write_text(text)
+          PY
+
+      - name: Build workspace dependencies
+        run: pnpm --filter @fysen/menu-worker... build
+      - name: Run complete menu-worker test suite
+        run: pnpm --filter @fysen/menu-worker test
+      - name: Typecheck menu-worker
+        run: pnpm --filter @fysen/menu-worker typecheck
+      - name: Commit permanent hardening only
+        shell: bash
+        run: |
+          git config user.name "Paradispartiet"
+          git config user.email "paradispartiet@gmail.com"
+          git add apps/menu-worker/src/public-menu-api-extractor.ts apps/menu-worker/src/public-menu-api-extractor.test.ts
+          git diff --cached --check
+          git diff --cached --quiet && { echo "No permanent changes"; exit 1; }
+          git commit -m "Filter non-food public menu API entries"
+          git push origin HEAD:agent/public-menu-api-extractor-v1
