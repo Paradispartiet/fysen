@@ -12,7 +12,7 @@ permissions:
 jobs:
   trace:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 12
     env:
       FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
     steps:
@@ -28,7 +28,7 @@ jobs:
           node-version: 24.18.0
       - run: pnpm install --no-frozen-lockfile
 
-      - name: Trace official pages and linked WeOrder source
+      - name: Trace exact official WeOrder chain
         working-directory: apps/menu-worker
         shell: bash
         run: |
@@ -39,13 +39,11 @@ jobs:
 
           const userAgent = process.env.FYSEN_MENU_BOT_USER_AGENT || 'FysenMenuBot/0.1';
           const targets = [
-            { name: 'home', url: 'https://radhusplassen.derpepperngror.no/' },
-            { name: 'menu-no', url: 'https://radhusplassen.derpepperngror.no/meny-norsk/' },
-            { name: 'take-away', url: 'https://radhusplassen.derpepperngror.no/take-away/' },
+            { name: 'official-link-page', url: 'https://derpepperngror.no/juletider/' },
             { name: 'official-weorder-short', url: 'https://weorder.xyz/AvdelingRadhusplassen' },
             { name: 'official-weorder-restaurant', url: 'https://order.weorder.com/restaurant/22539?skipProfile=true' },
           ];
-          const interesting = /(?:weorder|quickorder|orderyoyo|take.?away|bestill|order|menu|meny|api|checkout|shop|restaurant|product|catalog|location|item|category)/i;
+          const interesting = /(?:weorder|quickorder|orderyoyo|order|menu|meny|api|restaurant|product|catalog|location|item|category)/i;
           const absoluteUrlPattern = /https:\/\/[^\s"'<>\\)]+/g;
 
           async function httpProbe(target) {
@@ -53,6 +51,7 @@ jobs:
             try {
               const response = await fetch(target.url, {
                 redirect: 'follow',
+                signal: AbortSignal.timeout(15_000),
                 headers: { 'user-agent': userAgent, accept: 'text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8' },
               });
               const body = await response.text();
@@ -65,14 +64,9 @@ jobs:
                 contentType: response.headers.get('content-type'),
                 bytes: Buffer.byteLength(body),
                 durationMs: Date.now() - started,
-                interestingUrls: urls.filter((url) => interesting.test(url)).slice(0, 150),
+                interestingUrls: urls.filter((url) => interesting.test(url)).slice(0, 200),
                 allOrigins: [...new Set(urls.map((url) => { try { return new URL(url).origin; } catch { return null; } }).filter(Boolean))].sort(),
-                textSignals: {
-                  weorder: /weorder/i.test(body),
-                  quickorder: /quickorder/i.test(body),
-                  orderyoyo: /orderyoyo/i.test(body),
-                  menu: /menu|meny/i.test(body),
-                },
+                officialRadhusplassenLinkPresent: body.includes('https://weorder.xyz/AvdelingRadhusplassen'),
               };
             } catch (error) {
               return { ...target, ok: false, error: error instanceof Error ? error.message : String(error), durationMs: Date.now() - started };
@@ -80,13 +74,7 @@ jobs:
           }
 
           const browser = await chromium.launch({ channel: 'chrome', headless: true, chromiumSandbox: true });
-          const context = await browser.newContext({
-            acceptDownloads: false,
-            ignoreHTTPSErrors: false,
-            javaScriptEnabled: true,
-            serviceWorkers: 'block',
-            userAgent,
-          });
+          const context = await browser.newContext({ acceptDownloads: false, ignoreHTTPSErrors: false, javaScriptEnabled: true, serviceWorkers: 'block', userAgent });
 
           async function browserProbe(target) {
             const page = await context.newPage();
@@ -95,31 +83,30 @@ jobs:
             const jsonBodies = [];
             const bodyTasks = [];
             page.on('request', (request) => {
-              if (requests.length < 1200) requests.push({ url: request.url(), method: request.method(), resourceType: request.resourceType() });
+              if (requests.length < 1000) requests.push({ url: request.url(), method: request.method(), resourceType: request.resourceType() });
             });
             page.on('response', (response) => {
-              if (responses.length < 1200) responses.push({ url: response.url(), status: response.status(), resourceType: response.request().resourceType() });
-              const type = response.request().resourceType();
+              const resourceType = response.request().resourceType();
+              if (responses.length < 1000) responses.push({ url: response.url(), status: response.status(), resourceType });
               const contentType = response.headers()['content-type'] ?? '';
-              if ((type === 'xhr' || type === 'fetch') && /json/i.test(contentType) && jsonBodies.length + bodyTasks.length < 40) {
+              if ((resourceType === 'xhr' || resourceType === 'fetch') && /json/i.test(contentType) && bodyTasks.length < 50) {
                 bodyTasks.push(response.text().then((text) => {
-                  jsonBodies.push({ url: response.url(), status: response.status(), contentType, bytes: Buffer.byteLength(text), sample: text.slice(0, 120000) });
+                  jsonBodies.push({ url: response.url(), status: response.status(), contentType, bytes: Buffer.byteLength(text), sample: text.slice(0, 160000) });
                 }).catch(() => undefined));
               }
             });
             page.on('dialog', (dialog) => void dialog.dismiss());
             const started = Date.now();
             try {
-              const response = await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: 25_000 });
-              await page.waitForLoadState('networkidle', { timeout: 10_000 }).catch(() => undefined);
-              await page.waitForTimeout(2000);
+              const response = await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: 18_000 });
+              await page.waitForLoadState('networkidle', { timeout: 8_000 }).catch(() => undefined);
+              await page.waitForTimeout(1500);
               await Promise.all(bodyTasks);
               const pageData = await page.evaluate(() => ({
                 title: document.title,
-                textSample: (document.body?.innerText ?? '').slice(0, 20000),
+                textSample: (document.body?.innerText ?? '').slice(0, 25000),
                 anchors: Array.from(document.querySelectorAll('a[href]')).map((a) => ({ text: (a.textContent ?? '').replace(/\s+/g, ' ').trim(), href: a.href })),
                 forms: Array.from(document.querySelectorAll('form')).map((form) => ({ action: form.action, method: form.method })),
-                iframes: Array.from(document.querySelectorAll('iframe[src]')).map((frame) => frame.src),
                 scripts: Array.from(document.querySelectorAll('script[src]')).map((script) => script.src),
               }));
               return {
@@ -132,7 +119,6 @@ jobs:
                 textSample: pageData.textSample,
                 interestingAnchors: pageData.anchors.filter(({ text, href }) => interesting.test(`${text} ${href}`)),
                 forms: pageData.forms,
-                iframes: pageData.iframes,
                 interestingScripts: pageData.scripts.filter((url) => interesting.test(url)),
                 requestOrigins: [...new Set(requests.map(({ url }) => { try { return new URL(url).origin; } catch { return null; } }).filter(Boolean))].sort(),
                 documentRequests: requests.filter(({ resourceType }) => resourceType === 'document'),
@@ -167,10 +153,8 @@ jobs:
           const result = {
             baseRevision: process.env.GITHUB_SHA,
             tracedAt: new Date().toISOString(),
-            officialLinkChain: [
-              'https://weorder.xyz/AvdelingRadhusplassen',
-              'https://order.weorder.com/restaurant/22539?skipProfile=true',
-            ],
+            restaurantId: 22539,
+            officialLinkChain: ['https://weorder.xyz/AvdelingRadhusplassen', 'https://order.weorder.com/restaurant/22539?skipProfile=true'],
             http,
             browser: browserRows,
             candidateOrigins: [...new Set(browserRows.flatMap((row) => row.requestOrigins ?? []))].sort(),
