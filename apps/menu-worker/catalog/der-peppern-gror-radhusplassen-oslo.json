@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "der-peppern-gror-radhusplassen-oslo",
+    "name": "Der Peppern Gror Rådhusplassen",
+    "websiteUrl": "https://radhusplassen.derpepperngror.no/",
+    "address": "Fridtjof Nansens plass 7, 0160 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.912606,
+    "longitude": 10.735303
+  },
+  "menuSource": {
+    "url": "https://api.weorder.com/api/restaurant/22539/restaurant_menu/en/0/0/6.1.7",
+    "sourceType": "api",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 31,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-23",
+      "note": "The restaurant first-party site links Rådhusplassen directly to WeOrder restaurant 22539. The stable public menu endpoint is fetched without cookies/auth/POST; candidate validation treats it as the restaurant-linked priced service menu and does not assume broader dine-in completeness."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chicken Tikka",
+      "Chicken Tikka Masala",
+      "Kerala Jhinga Curry",
+      "Daal Makhni",
+      "Tandoori Parantha",
+      "Peshawri Nan",
+      "Tandoori Saus Veg.",
+      "Ekstra Mango Chutney"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chicken Tikka",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Chicken Tikka Masala",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Kerala Jhinga Curry",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Daal Makhni",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Tandoori Parantha",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Peshawri Nan",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Tandoori Saus Veg.",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Ekstra Mango Chutney",
+        "priceMinor": 3000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
