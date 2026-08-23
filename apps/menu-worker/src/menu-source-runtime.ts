@@ -13,6 +13,10 @@ import {
   recoverAdjacentHeadingPriceHtmlItems,
 } from "./html-adjacent-heading-price-recovery.js";
 import {
+  HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION,
+  recoverStrongTitlePriceHtmlItems,
+} from "./html-strong-title-price-recovery.js";
+import {
   HTML_DESCRIPTION_TITLE_RECOVERY_VERSION,
   recoverDescriptionNamedHtmlItems,
 } from "./html-description-title-recovery.js";
@@ -108,7 +112,7 @@ export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v2";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v8";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v9";
-const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}`;
+const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
 export type MenuSourceFetchMode = "http" | "browser";
@@ -406,6 +410,10 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverInlineMarkedPriceTextItems(extracted.visibleText)
         : [];
+    const strongTitlePriceItems =
+    extracted.method === "html_heuristic"
+      ? recoverStrongTitlePriceHtmlItems(recoveryHtml)
+      : [];
     const headingPriceItems =
       extracted.method === "html_heuristic"
         ? recoverAdjacentHeadingPriceHtmlItems(recoveryHtml)
@@ -418,6 +426,10 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverFirstCardAfterPlainFoodSections(extracted.visibleText)
         : [];
+    const strongTitlePricePreferred =
+    strongTitlePriceItems.length >= 6 &&
+    strongTitlePriceItems.length >= recoveredItems.length &&
+    strongTitlePriceItems.length >= trailingPriceCardItems.length;
     const semanticCategoryCardsPreferred =
       trailingPriceCardItems.length >= 4 &&
       trailingPriceCardItems.every(
@@ -427,6 +439,8 @@ export async function extractMenuSource(
       isStrongNumberedTrailingPriceCardRecovery(trailingPriceCardItems);
     const isolatedTrailingRecoveryPreferred =
       semanticCategoryCardsPreferred || strongNumberedCardsPreferred;
+    const isolatedSemanticRecoveryPreferred =
+      isolatedTrailingRecoveryPreferred || strongTitlePricePreferred;
     const trailingPriceCardQualifies =
       isolatedTrailingRecoveryPreferred ||
       (trailingPriceCardItems.length >= 4 &&
@@ -436,7 +450,9 @@ export async function extractMenuSource(
     const headingPriceCoverageThreshold = Math.ceil(
       recoveredItems.length * 0.75,
     );
-    const preferredItems = trailingPriceCardQualifies
+    const preferredItems = strongTitlePricePreferred
+    ? strongTitlePriceItems
+    : trailingPriceCardQualifies
       ? trailingPriceCardItems
       : headingPriceItems.length >= 4 &&
           (recoveredItems.length === 0 ||
@@ -448,11 +464,12 @@ export async function extractMenuSource(
           : recoveredItems;
     const recoveredSupplementedItems =
       extracted.method === "html_heuristic" &&
-      !isolatedTrailingRecoveryPreferred
+      !isolatedSemanticRecoveryPreferred
         ? mergeMissingRecoveredItems(preferredItems, recoveredItems)
         : preferredItems;
     const headingSupplementedItems =
-      extracted.method === "html_heuristic"
+      extracted.method === "html_heuristic" &&
+      !strongTitlePricePreferred
         ? supplementStrongHeadingRecovery(
             recoveredSupplementedItems,
             headingPriceItems,
@@ -460,12 +477,12 @@ export async function extractMenuSource(
         : recoveredSupplementedItems;
     const inlineSupplementedItems =
       extracted.method === "html_heuristic" &&
-      !isolatedTrailingRecoveryPreferred
+      !isolatedSemanticRecoveryPreferred
         ? mergeMissingRecoveredItems(headingSupplementedItems, inlineMarkedPriceItems)
         : headingSupplementedItems;
     const sectionSupplementedItems =
       extracted.method === "html_heuristic" &&
-      !isolatedTrailingRecoveryPreferred
+      !isolatedSemanticRecoveryPreferred
         ? mergeMissingRecoveredItems(
             inlineSupplementedItems,
             sectionFirstCardItems,
@@ -473,7 +490,7 @@ export async function extractMenuSource(
         : inlineSupplementedItems;
     const wrappedSupplementedItems =
       extracted.method === "html_heuristic" &&
-      !isolatedTrailingRecoveryPreferred
+      !isolatedSemanticRecoveryPreferred
         ? mergeMissingRecoveredItems(
             sectionSupplementedItems,
             priceWrappedItems,
@@ -481,7 +498,7 @@ export async function extractMenuSource(
         : sectionSupplementedItems;
     const priceEnrichedItems =
       extracted.method === "html_heuristic" &&
-      !isolatedTrailingRecoveryPreferred
+      !isolatedSemanticRecoveryPreferred
         ? mergeExplicitFromPriceRecovery(
             wrappedSupplementedItems,
             explicitFromPriceItems,
