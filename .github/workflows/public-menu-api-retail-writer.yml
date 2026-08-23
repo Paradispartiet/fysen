@@ -1,0 +1,89 @@
+name: TEMP exclude retail public menu API sections
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/public-menu-api-retail-writer.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  write-and-prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/public-menu-api-extractor-v1
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+
+      - name: Exclude generic retail sections and descendants
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          source = Path('apps/menu-worker/src/public-menu-api-extractor.ts')
+          text = source.read_text()
+
+          anchor = '''const BEVERAGE_SECTION =\n  /(?:alkohol|drikke|drinks?|beverages?|soft\\s+drinks?|øl|beer|vin|wine|cava|champagne|prosecco|musserende|sparkling|sangria|cocktails?|mocktails?|cider|kaffe|coffee|\\bte\\b|\\btea\\b|avec|brennevin|spirits?|whisk(?:e)?y|bourbon|\\brom\\b|\\brum\\b|\\bgin\\b|vodka|tequila|brandy|cognac|sherry|portvin|dessertvin|digestif)/iu;\n'''
+          addition = anchor + '''const NON_DISH_SECTION =\n  /(?:\\bbutikk\\b|\\bshop\\b|retail|merch(?:andise)?|gavekort|gift\\s*cards?)/iu;\n'''
+          if anchor not in text:
+              raise SystemExit('section classifier anchor mismatch')
+          text = text.replace(anchor, addition, 1)
+
+          old = '''  const visitSections = (\n    rawSections: unknown,\n    inheritedSectionName: string | null = null,\n  ): void => {'''
+          new = '''  const visitSections = (\n    rawSections: unknown,\n    inheritedSectionName: string | null = null,\n    inheritedExcluded = false,\n  ): void => {'''
+          if old not in text:
+              raise SystemExit('visitSections signature anchor mismatch')
+          text = text.replace(old, new, 1)
+
+          old = '''      const isBeverageSection = sectionName !== null && BEVERAGE_SECTION.test(sectionName);\n\n      if (!isBeverageSection) {'''
+          new = '''      const isExcludedSection =\n        inheritedExcluded ||\n        (sectionName !== null &&\n          (BEVERAGE_SECTION.test(sectionName) || NON_DISH_SECTION.test(sectionName)));\n\n      if (!isExcludedSection) {'''
+          if old not in text:
+              raise SystemExit('section exclusion anchor mismatch')
+          text = text.replace(old, new, 1)
+
+          old = '''      visitSections(\n        section.subSections ?? section.subsections ?? section.sections,\n        sectionName,\n      );'''
+          new = '''      visitSections(\n        section.subSections ?? section.subsections ?? section.sections,\n        sectionName,\n        isExcludedSection,\n      );'''
+          if old not in text:
+              raise SystemExit('recursive exclusion anchor mismatch')
+          text = text.replace(old, new, 1)
+          source.write_text(text)
+
+          test = Path('apps/menu-worker/src/public-menu-api-extractor.test.ts')
+          test_text = test.read_text()
+          marker = 'drops retail sections and all nested descendants'
+          if marker in test_text:
+              raise SystemExit('retail regression already exists unexpectedly')
+          block = '''\n\ndescribe("public menu API excluded retail sections", () => {\n  it("drops retail sections and all nested descendants while preserving food siblings", () => {\n    const items = extractPublicMenuApi(\n      JSON.stringify({\n        location: {\n          menus: [\n            {\n              menuSections: [\n                {\n                  title: "Butikk",\n                  menuItems: [\n                    {\n                      name: "Olivenolje 250ml",\n                      price: { amount: 120, currency: "NOK" },\n                    },\n                  ],\n                  subSections: [\n                    {\n                      title: "Delikatesser",\n                      menuItems: [\n                        {\n                          name: "Gaveeske",\n                          price: { amount: 299, currency: "NOK" },\n                        },\n                      ],\n                    },\n                  ],\n                },\n                {\n                  title: "Tapas",\n                  menuItems: [\n                    {\n                      name: "Patatas bravas",\n                      price: { amount: 105, currency: "NOK" },\n                    },\n                  ],\n                },\n              ],\n            },\n          ],\n        },\n      }),\n    );\n\n    expect(items.map((item) => item.name)).toEqual(["Patatas bravas"]);\n    expect(items[0]).toMatchObject({\n      sectionName: "Tapas",\n      priceMinor: 10500,\n      extractionMethod: "api",\n    });\n  });\n});\n'''
+          test.write_text(test_text.rstrip() + block)
+          PY
+
+      - name: Build workspace dependencies
+        run: pnpm --filter @fysen/menu-worker... build
+      - name: Run complete menu-worker test suite
+        run: pnpm --filter @fysen/menu-worker test
+      - name: Typecheck menu-worker
+        run: pnpm --filter @fysen/menu-worker typecheck
+      - name: Commit permanent retail exclusion only
+        shell: bash
+        run: |
+          git config user.name "Paradispartiet"
+          git config user.email "paradispartiet@gmail.com"
+          git add apps/menu-worker/src/public-menu-api-extractor.ts apps/menu-worker/src/public-menu-api-extractor.test.ts
+          git diff --cached --check
+          git diff --cached --quiet && { echo "No permanent changes"; exit 1; }
+          git commit -m "Exclude retail sections from public menu APIs"
+          git push origin HEAD:agent/public-menu-api-extractor-v1
