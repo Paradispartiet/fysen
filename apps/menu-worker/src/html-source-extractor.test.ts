@@ -19,7 +19,7 @@ describe("extractScopedHtmlMenu", () => {
     `;
 
     const result = extractScopedHtmlMenu(html);
-    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v18");
+    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v20");
     expect(result.items.map((item) => item.name)).toEqual(["Falafel", "Bakalawa"]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([9800, 12900]);
     expect(result.visibleText).not.toContain("Husets Cabernet");
@@ -461,4 +461,47 @@ describe("extractScopedHtmlMenu", () => {
     expect(result.method).toBe("json_ld");
     expect(result.items.map((item) => item.name)).toEqual(["Hommus"]);
   });
+  it("prefers a plausible long first dish title over its repeated section heading", () => {
+    const html = `
+      <html><body>
+        <h2>DUMPLINGS</h2>
+        <p>Pork Gyoza with Japanese ketchup (4 pcs)</p>
+        <p>195,-</p>
+        <p>Chicken Gyoza with Truffle Tosazu (4 pcs)</p>
+        <p>195,-</p>
+        <h2>PROTEINS</h2>
+        <p>Grilled Chicken Yakiniku with Goma Cabbage salad</p>
+        <p>245,-</p>
+        <p>Grilled Seabass with chili garlic sauce</p>
+        <p>275,-</p>
+      </body></html>
+    `;
+    expect(extractScopedHtmlMenu(html).items.map((entry) => entry.name)).toEqual([
+      "Pork Gyoza with Japanese ketchup",
+      "Chicken Gyoza with Truffle Tosazu",
+      "Grilled Chicken Yakiniku with Goma Cabbage salad",
+      "Grilled Seabass with chili garlic sauce",
+    ]);
+  });
+
+  it("does not treat a section intro as the dish when another title remains before price", () => {
+    const html = `
+      <html><body>
+        <h2>Pizza</h2>
+        <p>Rykende fersk italiensk pizza fra steinovnen</p>
+        <p>Diavola</p>
+        <p>Tomatsaus, ost, ventricina, oliven, rødløk, ruccola, chili</p>
+        <p>259,-</p>
+        <p>Wanna Beef?</p>
+        <p>Tomatsaus, ost, biff, rødløk, sjampinjong, aioli</p>
+        <p>269,-</p>
+        <p>Don't chicken out</p>
+        <p>Tomatsaus, ost, kylling, chili, løk og paprika</p>
+        <p>249,-</p>
+      </body></html>
+    `;
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.some((entry) => entry.name === "Rykende fersk italiensk pizza fra steinovnen")).toBe(false);
+  });
+
 });

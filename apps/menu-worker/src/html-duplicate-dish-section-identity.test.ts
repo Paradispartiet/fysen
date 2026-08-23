@@ -95,4 +95,5 @@ describe("duplicate dish names across semantic menu sections", () => {
     ]);
     expect(new Set(fatouche.map((item) => item.sourceKey)).size).toBe(2);
   });
+
 });

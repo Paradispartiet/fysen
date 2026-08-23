@@ -1,6 +1,6 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v2";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v3";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -12,6 +12,10 @@ const PER_PERSON_PRICE_DISPLAY_ONLY_ITEM =
   /^(?:(?:nok|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*,?[–—-]\s+per\s+(?:person|pers\.?)$/iu;
 const DAILY_MENU_LABEL_ITEM =
   /^dagens\s+(?:veganske|vegetariske)\s+meny$/iu;
+const COMMON_FOOD_SECTION_ITEM = /^(?:dumplings?|proteins?)$/iu;
+const UPGRADE_SECTION_ITEM =
+  /^(?:upgrades?\s*(?:&|and)\s*extras?|give\s+me\s+an\s+upgrade|select\s+your\s+topping!?)$/iu;
+const SHORT_ALLERGEN_CODE_ITEM = /^[A-ZÆØÅ]{1,2}$/u;
 
 function samePrice(
   left: Pick<MenuObservedItem, "priceMinor">,
@@ -84,6 +88,20 @@ function isNumericPrefixSuffixFragment(
   });
 }
 
+function isNumericTitleSuffixMisreadAsPrice(
+  item: MenuObservedItem,
+  items: readonly MenuObservedItem[],
+): boolean {
+  if (item.priceMinor === null || item.priceMinor % 100 !== 0) return false;
+  const numericSuffix = String(item.priceMinor / 100);
+  if (!/^[1-9]\d?$/u.test(numericSuffix)) return false;
+  const expectedFullName = `${item.normalizedName} ${numericSuffix}`;
+  return items.some(
+    (candidate) =>
+      candidate !== item && candidate.normalizedName === expectedFullName,
+  );
+}
+
 function isAddonScopedDuplicate(
   item: MenuObservedItem,
   items: readonly MenuObservedItem[],
@@ -104,6 +122,9 @@ function isOutputNoiseLabel(item: MenuObservedItem): boolean {
   return (
     BADGE_ONLY_ITEM.test(name) ||
     BRANDED_MENU_SECTION_ITEM.test(name) ||
+    COMMON_FOOD_SECTION_ITEM.test(name) ||
+    UPGRADE_SECTION_ITEM.test(name) ||
+    SHORT_ALLERGEN_CODE_ITEM.test(name) ||
     PER_PERSON_PRICE_DISPLAY_ONLY_ITEM.test(name) ||
     DAILY_MENU_LABEL_ITEM.test(name)
   );
@@ -119,6 +140,7 @@ export function canonicalizeHtmlOutputItems(
     (item) =>
       !mirroredNames.has(item.normalizedName) &&
       !isNumericPrefixSuffixFragment(item, labelFilteredItems) &&
+      !isNumericTitleSuffixMisreadAsPrice(item, labelFilteredItems) &&
       !isAddonScopedDuplicate(item, labelFilteredItems),
   );
 }

@@ -98,7 +98,7 @@ describe("Batch 02 generic parser families", () => {
   });
 
   it("filters badge, branded section and per-person display labels while preserving real dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v2");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v3");
     const names = [
       "VEG",
       "VEG SPICY",

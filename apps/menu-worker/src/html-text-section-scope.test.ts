@@ -54,7 +54,7 @@ describe("plain-text HTML section scoping", () => {
       119 NOK
     `;
 
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v6");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v8");
     expect(
       filterPlainTextBeverageSectionItems(items, visibleText).map(
         (entry) => entry.name,
@@ -395,6 +395,30 @@ describe("plain-text HTML section scoping", () => {
         fullVisibleText,
       ).map((entry) => entry.name),
     ).toEqual(["House Special"]);
+  });
+
+  it("resets beverage navigation at small-dishes and classics sections", () => {
+    const items = [
+      item("Triple Chili Cheese", 1, 13500),
+      item("Original Ribs", 2, 36900),
+      item("The Godfather", 3, 26900),
+    ];
+    const visibleText = `
+      Milkshakes
+      Beverage Menu
+      Small Dishes & Sharing Plates
+      Triple Chili Cheese
+      135
+      Classics
+      Original Ribs
+      369
+      Burgers
+      The Godfather
+      269
+    `;
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map((entry) => entry.name),
+    ).toEqual(["Triple Chili Cheese", "Original Ribs", "The Godfather"]);
   });
 
 });
