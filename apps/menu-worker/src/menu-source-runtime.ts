@@ -5,6 +5,10 @@ import {
 } from "@fysen/menu-core";
 import { BrowserMenuClient } from "./browser-client.js";
 import {
+  PUBLIC_MENU_API_EXTRACTOR_VERSION,
+  extractPublicMenuApi,
+} from "./public-menu-api-extractor.js";
+import {
   HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION,
   recoverEmbeddedStructuredMenuJson,
 } from "./html-embedded-menu-json-recovery.js";
@@ -114,7 +118,7 @@ export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v8";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v9";
 const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}`;
 
-export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf";
+export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf" | "api";
 export type MenuSourceFetchMode = "http" | "browser";
 
 export interface MenuSourceSupportInput {
@@ -277,6 +281,7 @@ export function extractorVersionForSourceType(
   if (sourceType === "html" || sourceType === "json_ld")
     return HTML_RUNTIME_EXTRACTOR_VERSION;
   if (sourceType === "pdf") return PDF_SOURCE_EXTRACTOR_VERSION;
+  if (sourceType === "api") return PUBLIC_MENU_API_EXTRACTOR_VERSION;
   return null;
 }
 
@@ -309,7 +314,8 @@ export function assertSupportedMenuSource(
   if (
     input.sourceType !== "html" &&
     input.sourceType !== "json_ld" &&
-    input.sourceType !== "pdf"
+    input.sourceType !== "pdf" &&
+    input.sourceType !== "api"
   ) {
     throw new Error(
       `Menu runtime does not support source type ${input.sourceType}`,
@@ -525,6 +531,13 @@ export async function extractMenuSource(
       items,
       method: extracted.method,
       extractorVersion: HTML_RUNTIME_EXTRACTOR_VERSION,
+    };
+  }
+  if (sourceType === "api") {
+    return {
+      items: extractPublicMenuApi(fetched.body),
+      method: "api",
+      extractorVersion: PUBLIC_MENU_API_EXTRACTOR_VERSION,
     };
   }
   if (sourceType === "pdf") {

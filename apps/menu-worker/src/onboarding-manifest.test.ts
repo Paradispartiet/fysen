@@ -50,6 +50,31 @@ describe("restaurant onboarding manifest", () => {
     expect(parsed.menuSource.sourceType).toBe("html");
   });
 
+  it("accepts HTTP API menu sources and rejects browser API mode", () => {
+    const parsed = restaurantOnboardingManifestSchema.parse({
+      ...validManifest,
+      menuSource: {
+        ...validManifest.menuSource,
+        url: "https://example.com/api/menu",
+        sourceType: "api",
+      },
+    });
+    expect(parsed.menuSource.sourceType).toBe("api");
+    expect(parsed.menuSource.fetchMode).toBe("http");
+
+    expect(() =>
+      restaurantOnboardingManifestSchema.parse({
+        ...validManifest,
+        menuSource: {
+          ...validManifest.menuSource,
+          url: "https://example.com/api/menu",
+          sourceType: "api",
+          fetchMode: "browser",
+        },
+      }),
+    ).toThrow("Browser fetch mode only supports HTML/JSON-LD sources");
+  });
+
   it("accepts PDF sources and explicit section/price assertions", () => {
     const parsed = restaurantOnboardingManifestSchema.parse({
       ...validManifest,
