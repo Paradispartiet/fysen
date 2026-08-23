@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 24
+    "minimumExpectedItems": 25
   },
   "hoursSource": {
     "url": "https://registanrestaurant.no/",
@@ -31,7 +31,7 @@
       "Aubergine Salat",
       "Olivie Salat",
       "Registan Spesial 4 Personer",
-      "Usbekisk Plov",
+      "Usbetisk Plov (Vegetar) 🌱",
       "Lagman",
       "Manty",
       "Stekt Manty",
@@ -44,7 +44,7 @@
       { "name": "Aubergine Salat", "priceMinor": 27900 },
       { "name": "Olivie Salat", "priceMinor": 17900 },
       { "name": "Registan Spesial 4 Personer", "priceMinor": 239600 },
-      { "name": "Usbekisk Plov", "priceMinor": 34900 },
+      { "name": "Usbetisk Plov (Vegetar) 🌱", "priceMinor": 34900 },
       { "name": "Lagman", "priceMinor": 39900 },
       { "name": "Manty", "priceMinor": 39900 },
       { "name": "Stekt Manty", "priceMinor": 44900 },
