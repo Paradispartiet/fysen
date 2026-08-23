@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "the-golden-chimp-torggata-oslo",
+    "name": "The Golden Chimp",
+    "websiteUrl": "https://www.thegoldenchimp.no/",
+    "address": "Torggata 13, 0181 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.915163,
+    "longitude": 10.750261
+  },
+  "menuSource": {
+    "url": "https://www.thegoldenchimp.no/menu",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 15,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "Retry after generic parser hardening. Kitchen-scoped hours remain outside the intake gate."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pork Gyoza with Japanese ketchup (4 pcs)",
+      "King Crab dumplings with kimchi mayonnaise (4 pcs)",
+      "Spicy Wontons with chili sauce (6 pcs)",
+      "Grilled Chicken Yakiniku, served with Goma Cabbage salad",
+      "Golden Shrimp Toast",
+      "Kinpira Gobo (Braised Burdock Root)",
+      "Wood Ear Mushroom",
+      "Miso cookie with butter, orange and white chocolate, served with a delicious Five-Spice Ice-Cream"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pork Gyoza with Japanese ketchup (4 pcs)",
+        "priceMinor": 19500
+      },
+      {
+        "name": "King Crab dumplings with kimchi mayonnaise (4 pcs)",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Spicy Wontons with chili sauce (6 pcs)",
+        "priceMinor": 20500
+      },
+      {
+        "name": "Grilled Chicken Yakiniku, served with Goma Cabbage salad",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Golden Shrimp Toast",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Kinpira Gobo (Braised Burdock Root)",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Wood Ear Mushroom",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Miso cookie with butter, orange and white chocolate, served with a delicious Five-Spice Ice-Cream",
+        "priceMinor": 13500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

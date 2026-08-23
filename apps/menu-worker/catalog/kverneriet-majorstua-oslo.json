@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kverneriet-majorstua-oslo",
+    "name": "Kverneriet Majorstua",
+    "websiteUrl": "https://kverneriet.com/majorstua/",
+    "address": "Kirkeveien 64B, 0366 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92917,
+    "longitude": 10.71481
+  },
+  "menuSource": {
+    "url": "https://kverneriet.com/majorstua/menu/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 23,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "Batch 02 locks current menu identity first. Kitchen hours are verified separately after candidate generation."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Triple Chili Cheese",
+      "Ceasar Salad",
+      "Golden Cauli & Feta",
+      "True Blue",
+      "Umami",
+      "American Fries",
+      "Green Side Salad",
+      "Chocolate Fondant"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Triple Chili Cheese",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Ceasar Salad",
+        "priceMinor": 19000
+      },
+      {
+        "name": "Golden Cauli & Feta",
+        "priceMinor": 24900
+      },
+      {
+        "name": "True Blue",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Umami",
+        "priceMinor": 24900
+      },
+      {
+        "name": "American Fries",
+        "priceMinor": 8400
+      },
+      {
+        "name": "Green Side Salad",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Chocolate Fondant",
+        "priceMinor": 14900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
