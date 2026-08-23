@@ -1,0 +1,72 @@
+name: Fysen restaurant catalog health
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * *"
+  push:
+    branches: [main]
+    paths:
+      - "apps/menu-worker/catalog/**"
+      - "apps/menu-worker/src/**"
+      - "packages/menu-core/src/**"
+      - ".github/workflows/restaurant-catalog-health.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-restaurant-catalog-health
+  cancel-in-progress: true
+
+jobs:
+  full-catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
+      FYSEN_CANDIDATE_VALIDATION_MAX_ATTEMPTS: "3"
+    steps:
+      - name: Checkout canonical revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Setup Fysen workspace
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build menu-worker dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Validate complete canonical catalog
+        id: health
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p reports/restaurant-health
+          set +e
+          pnpm --filter @fysen/menu-worker validate:batch catalog \
+            2>&1 | tee reports/restaurant-health/catalog-health.json
+          status=${PIPESTATUS[0]}
+          set -e
+
+          {
+            echo '## Fysen full restaurant catalog health'
+            echo
+            echo "- Canonical revision: \`${GITHUB_SHA}\`"
+            echo '- Scope: complete `apps/menu-worker/catalog`'
+            echo '- Validator: bounded transport/action retry, deterministic quality failures fail closed'
+            echo '- Role: main/scheduled health signal; this is intentionally not an unrelated PR merge gate'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          exit "$status"
+
+      - name: Upload catalog health evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-restaurant-catalog-health-${{ github.run_id }}
+          path: reports/restaurant-health/catalog-health.json
+          if-no-files-found: error
+          retention-days: 14

@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/materialize-production-catalog.yml"
+      - ".github/actions/setup-node-pnpm/**"
       - "apps/menu-worker/catalog/**"
       - "apps/menu-worker/src/**"
       - "!apps/menu-worker/src/**/*.test.ts"
@@ -43,19 +44,8 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
 
-      - name: pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 11.4.0
-          run_install: false
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24.18.0
-
-      - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+      - name: Setup Fysen workspace
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Build menu worker and dependencies
         run: pnpm --filter @fysen/menu-worker... build

@@ -5,14 +5,55 @@
 - `main` is canonical and should remain green.
 - Product changes go through focused branches and pull requests.
 - Do not mix refactors, dependency upgrades and product behavior in the same PR without a concrete reason.
+- Do not create TEMP/proof/writer/rebase pull requests merely to run GitHub Actions. Evidence belongs on the real PR or in a permanent reusable workflow.
 
-## Required quality gate
+## Quality and CI model
 
-```bash
-pnpm check
+Fysen uses **scope-aware gates**. Quality requirements stay strict, but an unrelated subsystem must not be revalidated merely because another part of the repository changed.
+
+### Pull requests
+
+- Code changes run lint, typecheck, tests and build for the affected workspace graph.
+- Shared/root build configuration still forces the complete suite.
+- Database integration runs only when database/menu-core or shared build configuration can affect it.
+- Menu browser smoke runs only when the menu runtime or its relevant shared dependencies are affected.
+- Restaurant `candidates/` and `catalog/` changes are validated by the restaurant-domain workflow and do not run the generic TypeScript suite by themselves.
+- Documentation/research-only changes do not run generic code gates.
+- Unknown paths fail closed into ordinary code CI.
+
+`pnpm check` remains the full-repository local command and is appropriate for global/shared changes or deliberate full verification. It is **not** a mandatory precondition for every isolated PR; the authoritative PR gate is the scope-aware CI result.
+
+### Restaurant live proof on the real PR
+
+Changed restaurant manifests are live-validated automatically on the exact PR head.
+
+When menu-worker/menu-core runtime code needs one or more concrete live-source proofs, list those existing manifests in the PR body on one line:
+
+```text
+Live-proof manifests: catalog/example-oslo.json, catalog/another-oslo.json
 ```
 
-A change is not complete while lint, typecheck, tests or build are red.
+The permanent restaurant proof workflow validates those manifests on the same PR head. Put semantic expectations in the canonical manifest assertions and permanent tests so the evidence is reproducible.
+
+Do **not** create a second TEMP PR, writer PR or proof branch for:
+
+- source discovery,
+- live menu proof,
+- parser proof,
+- catalog proof,
+- transport retry,
+- rebase/writeback,
+- production smoke.
+
+Use the actual implementation PR, the permanent `workflow_dispatch` entry points, or rerun the failed permanent job when the documented failure is transient. If a new proof capability is genuinely reusable, add it permanently rather than inventing a disposable workflow.
+
+### Full catalog health
+
+The entire live restaurant catalog is a **main/release/health concern**, not a merge gate for an unrelated restaurant PR.
+
+`.github/workflows/restaurant-catalog-health.yml` runs the canonical full catalog after relevant `main` changes, on schedule, and on manual dispatch. Existing restaurant drift discovered there must be repaired as its own source/catalog issue. It must not retroactively invalidate an otherwise correct unrelated PR.
+
+Deterministic extraction, menu-assertion and hours failures remain fail-closed. Transport/action failures keep the validator's bounded retry policy.
 
 ## Deployment discipline
 
@@ -36,8 +77,7 @@ Fysen uses fully explicit, batched Vercel production releases. Git pushes and me
 - Web releases are deployed explicitly with Vercel CLI to the `fysen` production project and then checked through the public production site.
 - API releases are deployed explicitly with Vercel CLI to `fysen-api` and then checked through `/v1/health` and `/v1/dishes/browse?city=Oslo`.
 - A failed verification is a failed production release even if Vercel completed a build. Investigate before retrying.
-- Do not restore `.vercel-release`, `scripts/vercel-ignore.sh`, `ignoreCommand`, or branch allowlists as a deployment mechanism. They are obsolete in the batched explicit-release model.
-- Do not create empty commits to trigger Vercel. Use the next scheduled batch or, for a real production emergency, the manual release override.
+- Do not restore `.vercel-release`, `scripts/vercel-ignore.sh`, `ignoreCommand`, branch allowlists, dated one-shot workflows or empty commits as deployment mechanisms. Use the batched release workflow.
 
 This architecture lets development accumulate safely on `main`, keeps preview work independent on GitHub Pages, and normally caps production activity at two release windows per day instead of turning every merge into a Vercel deployment.
 
