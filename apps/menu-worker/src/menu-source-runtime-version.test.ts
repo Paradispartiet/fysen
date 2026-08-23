@@ -9,6 +9,7 @@ import { HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION } from "./html-heading-recover
 import { HTML_PRICE_WRAPPED_RECOVERY_VERSION } from "./html-price-wrapped-recovery.js";
 import { HTML_SECTION_FIRST_CARD_RECOVERY_VERSION } from "./html-section-first-card-recovery.js";
 import { HTML_SOURCE_EXTRACTOR_VERSION } from "./html-source-extractor.js";
+import { HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION } from "./html-strong-title-price-recovery.js";
 import { HTML_OUTPUT_CANONICALIZER_VERSION } from "./html-output-canonicalizer.js";
 import { HTML_TEXT_SECTION_SCOPE_VERSION } from "./html-text-section-scope.js";
 import { HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION } from "./html-trailing-price-card-recovery.js";
@@ -35,6 +36,7 @@ describe("HTML runtime extractor version", () => {
       HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION,
       HTML_PRICE_WRAPPED_RECOVERY_VERSION,
       HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION,
+      HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION,
       HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION,
       HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION,
       HTML_SECTION_FIRST_CARD_RECOVERY_VERSION,
@@ -49,6 +51,9 @@ describe("HTML runtime extractor version", () => {
     expect(HTML_BEVERAGE_FILTER_VERSION).toBe("beverage-v9");
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
       "trailing-price-card-v10",
+    );
+    expect(HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION).toBe(
+      "strong-title-price-v1",
     );
     expect(HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION).toBe(
       "heading-supplement-v1",
