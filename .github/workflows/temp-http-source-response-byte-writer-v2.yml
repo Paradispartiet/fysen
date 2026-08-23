@@ -1,0 +1,108 @@
+name: TEMP write bounded HTTP source response override v2
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/temp-http-source-response-byte-writer-v2.yml"
+
+permissions:
+  contents: write
+
+env:
+  TARGET_BRANCH: agent/http-source-response-byte-override-v1
+
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/temp-http-source-response-byte-writer
+          fetch-depth: 0
+      - name: Capture the already-reviewed implementation block
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          lines = Path('.github/workflows/temp-http-source-response-byte-writer.yml').read_text().splitlines()
+          name = '      - name: Implement persistent bounded HTTP response override'
+          start = lines.index(name)
+          run_index = next(i for i in range(start + 1, len(lines)) if lines[i] == '        run: |')
+          body = []
+          for line in lines[run_index + 1:]:
+              if line.startswith('      - '):
+                  break
+              body.append(line[10:] if line.startswith('          ') else line)
+          Path('/tmp/implement-response-limit.sh').write_text('\n'.join(body) + '\n')
+          PY
+      - name: Switch to clean permanent branch
+        shell: bash
+        run: |
+          git fetch origin "${TARGET_BRANCH}"
+          git checkout -B "${TARGET_BRANCH}" "origin/${TARGET_BRANCH}"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - name: Apply bounded response implementation
+        run: bash /tmp/implement-response-limit.sh
+      - name: Normalize exact optional runtime typing
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('apps/menu-worker/src/menu-source-runtime.ts')
+          text = path.read_text()
+          text = text.replace(
+              '  readonly maxResponseBytes?: number | null;\n',
+              '  readonly maxResponseBytes?: number | null | undefined;\n',
+          )
+          old_start = '''  const sourceSupport = input.sourceSupport ?? EMPTY_MENU_SOURCE_SUPPORT;\n  if (input.fetchMode === "browser") {\n'''
+          new_start = '''  const sourceSupport = input.sourceSupport ?? EMPTY_MENU_SOURCE_SUPPORT;\n  if (input.maxResponseBytes !== null && input.maxResponseBytes !== undefined) {\n    if (input.fetchMode !== "http") {\n      throw new Error("maxResponseBytes is only valid for HTTP fetch mode");\n    }\n    if (input.sourceType === "pdf") {\n      throw new Error("PDF response limits use the dedicated PDF policy");\n    }\n  }\n  const explicitHttpResponseBytes =\n    input.sourceType === "pdf"\n      ? undefined\n      : boundedHttpSourceResponseBytes(input.maxResponseBytes);\n  if (input.fetchMode === "browser") {\n'''
+          if old_start not in text:
+              raise SystemExit('fetchMenuSource start marker missing')
+          text = text.replace(old_start, new_start)
+          old_options = '''      ...(input.sourceType === "pdf"\n        ? { maxResponseBytes: pdfResponseByteLimit() }\n        : boundedHttpSourceResponseBytes(input.maxResponseBytes) !== undefined\n          ? { maxResponseBytes: boundedHttpSourceResponseBytes(input.maxResponseBytes) }\n          : {}),\n'''
+          new_options = '''      ...(input.sourceType === "pdf"\n        ? { maxResponseBytes: pdfResponseByteLimit() }\n        : explicitHttpResponseBytes !== undefined\n          ? { maxResponseBytes: explicitHttpResponseBytes }\n          : {}),\n'''
+          if old_options not in text:
+              raise SystemExit('fetch options marker missing')
+          text = text.replace(old_options, new_options)
+          path.write_text(text)
+          PY
+      - run: pnpm --filter @fysen/menu-worker... build
+      - run: pnpm --filter @fysen/menu-worker exec vitest run src/menu-source-response-byte-limit.test.ts src/source-support-manifest.test.ts src/http-client.test.ts src/http-client-support.test.ts
+      - run: pnpm --filter @fysen/database exec vitest run src/migration.test.ts src/menu-source-response-limit.integration.test.ts
+      - run: pnpm --filter @fysen/menu-worker test
+      - run: pnpm --filter @fysen/menu-worker typecheck
+      - run: pnpm --filter @fysen/database test
+      - run: pnpm --filter @fysen/database typecheck
+      - name: Commit permanent files only
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            apps/menu-worker/src/onboarding-manifest.ts \
+            apps/menu-worker/src/menu-source-runtime.ts \
+            apps/menu-worker/src/manifest-validator.ts \
+            apps/menu-worker/src/onboarding.ts \
+            apps/menu-worker/src/watcher.ts \
+            apps/menu-worker/src/menu-source-response-byte-limit.test.ts \
+            packages/database/migrations/0018_menu_source_response_limit.sql \
+            packages/database/src/repository.ts \
+            packages/database/src/migration.test.ts \
+            packages/database/src/menu-source-response-limit.integration.test.ts
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo "No permanent changes to commit"
+            exit 0
+          fi
+          git commit -m "Persist bounded HTTP menu response limits"
+          git push origin "HEAD:${TARGET_BRANCH}"
