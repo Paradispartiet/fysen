@@ -49,6 +49,7 @@ export interface UpsertMenuSourceInput {
   readonly userAgent: string;
   readonly checkIntervalMinutes: number;
   readonly minimumExpectedItems: number;
+  readonly maxResponseBytes?: number | null;
 }
 
 export interface StoredMenuSource {
@@ -61,6 +62,7 @@ export interface StoredMenuSource {
   readonly userAgent: string;
   readonly checkIntervalMinutes: number;
   readonly minimumExpectedItems: number;
+  readonly maxResponseBytes: number | null;
   readonly etag: string | null;
   readonly lastModified: string | null;
   readonly lastMenuFingerprint: string | null;
@@ -137,6 +139,7 @@ interface SourceRow extends QueryResultRow {
   user_agent: string;
   check_interval_minutes: number;
   minimum_expected_items: number;
+  max_response_bytes: number | null;
   etag: string | null;
   last_modified: string | null;
   last_menu_fingerprint: string | null;
@@ -183,6 +186,7 @@ function mapSource(row: SourceRow): StoredMenuSource {
     userAgent: row.user_agent,
     checkIntervalMinutes: row.check_interval_minutes,
     minimumExpectedItems: row.minimum_expected_items,
+    maxResponseBytes: row.max_response_bytes,
     etag: row.etag,
     lastModified: row.last_modified,
     lastMenuFingerprint: row.last_menu_fingerprint,
@@ -247,14 +251,15 @@ export class MenuIndexRepository {
     const result = await this.pool.query<SourceRow>(
       `
         INSERT INTO fysen.menu_sources (
-          restaurant_id, url, source_type, fetch_mode, user_agent, check_interval_minutes, minimum_expected_items
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7)
+          restaurant_id, url, source_type, fetch_mode, user_agent, check_interval_minutes, minimum_expected_items, max_response_bytes
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         ON CONFLICT (restaurant_id, url) DO UPDATE SET
           source_type = EXCLUDED.source_type,
           fetch_mode = EXCLUDED.fetch_mode,
           user_agent = EXCLUDED.user_agent,
           check_interval_minutes = EXCLUDED.check_interval_minutes,
           minimum_expected_items = EXCLUDED.minimum_expected_items,
+          max_response_bytes = EXCLUDED.max_response_bytes,
           updated_at = now()
         RETURNING *
       `,
@@ -266,6 +271,7 @@ export class MenuIndexRepository {
         input.userAgent,
         input.checkIntervalMinutes,
         input.minimumExpectedItems,
+        input.maxResponseBytes ?? null,
       ],
     );
     return mapSource(firstRow(result.rows, "menu source upsert"));

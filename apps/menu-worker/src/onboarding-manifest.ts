@@ -3,6 +3,8 @@ import { resolve } from "node:path";
 import { z } from "zod";
 
 const httpsUrl = z.string().url().refine((value) => value.startsWith("https://"), "URL must use HTTPS");
+const MIN_HTTP_SOURCE_RESPONSE_BYTES = 64 * 1024;
+const MAX_HTTP_SOURCE_RESPONSE_BYTES = 4 * 1024 * 1024;
 const httpsOrigin = z.string().url().transform((value, context) => {
   const parsed = new URL(value);
   if (
@@ -91,6 +93,7 @@ export const restaurantOnboardingManifestSchema = z
       userAgent: z.string().trim().min(1).max(300).default("FysenMenuBot/0.1"),
       checkIntervalMinutes: z.number().int().min(60).max(10080),
       minimumExpectedItems: z.number().int().min(1).max(500),
+      maxResponseBytes: z.number().int().min(MIN_HTTP_SOURCE_RESPONSE_BYTES).max(MAX_HTTP_SOURCE_RESPONSE_BYTES).optional(),
       sourceSupport: sourceSupportSchema,
     }),
     hoursSource: z
@@ -125,6 +128,23 @@ export const restaurantOnboardingManifestSchema = z
     }),
   })
   .superRefine((manifest, context) => {
+    if (manifest.menuSource.maxResponseBytes !== undefined) {
+      if (manifest.menuSource.fetchMode !== "http") {
+        context.addIssue({
+          code: "custom",
+          path: ["menuSource", "maxResponseBytes"],
+          message: "maxResponseBytes is only valid for HTTP fetch mode",
+        });
+      }
+      if (manifest.menuSource.sourceType === "pdf") {
+        context.addIssue({
+          code: "custom",
+          path: ["menuSource", "maxResponseBytes"],
+          message: "PDF response limits use the dedicated PDF policy",
+        });
+      }
+    }
+
     if (
       manifest.menuSource.fetchMode === "browser" &&
       manifest.menuSource.sourceType !== "html" &&

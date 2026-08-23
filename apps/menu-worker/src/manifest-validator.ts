@@ -89,6 +89,7 @@ async function validateMenu(
         userAgent: manifest.menuSource.userAgent,
         etag: null,
         lastModified: null,
+        maxResponseBytes: manifest.menuSource.maxResponseBytes ?? null,
         sourceSupport: manifest.menuSource.sourceSupport,
       },
       client,
