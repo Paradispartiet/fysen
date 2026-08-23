@@ -55,12 +55,10 @@ jobs:
 
           test = Path('apps/menu-worker/src/public-menu-api-extractor.test.ts')
           text = test.read_text()
-          anchor = '    it("preserves multiple variant prices when no direct price exists", () => {'
-          added = '''    it("drops alcohol service sections and zero-priced UI placeholders", () => {\n      const items = extractPublicMenuApi(\n        JSON.stringify({\n          location: {\n            menus: [\n              {\n                menuSections: [\n                  {\n                    title: "Cava / Musserende",\n                    menuItems: [\n                      { name: "House Cava", price: { amount: 845, currency: "NOK" } },\n                    ],\n                  },\n                  {\n                    title: "Gin & Tonic",\n                    menuItems: [\n                      { name: "House Gin & Tonic", price: { amount: 175, currency: "NOK" } },\n                    ],\n                  },\n                  {\n                    title: "Tapas",\n                    menuItems: [\n                      { name: "Patatas bravas", price: { amount: 105, currency: "NOK" } },\n                      { name: "Test Button (Uteservering)", price: { amount: 0, currency: "NOK" } },\n                      { name: "Test", price: { amount: 50, currency: "NOK" } },\n                    ],\n                  },\n                ],\n              },\n            ],\n          },\n        }),\n      );\n      expect(items.map((item) => item.name)).toEqual(["Patatas bravas"]);\n    });\n\n'''
-          if anchor not in text:
-              raise SystemExit('test insertion anchor mismatch')
-          text = text.replace(anchor, added + anchor, 1)
-          test.write_text(text)
+          if 'drops alcohol service sections and zero-priced UI placeholders' in text:
+              raise SystemExit('cleanup regression already exists unexpectedly')
+          block = '''\n\ndescribe("public menu API food filtering", () => {\n  it("drops alcohol service sections and zero-priced UI placeholders", () => {\n    const items = extractPublicMenuApi(\n      JSON.stringify({\n        location: {\n          menus: [\n            {\n              menuSections: [\n                {\n                  title: "Cava / Musserende",\n                  menuItems: [\n                    { name: "House Cava", price: { amount: 845, currency: "NOK" } },\n                  ],\n                },\n                {\n                  title: "Gin & Tonic",\n                  menuItems: [\n                    { name: "House Gin & Tonic", price: { amount: 175, currency: "NOK" } },\n                  ],\n                },\n                {\n                  title: "Tapas",\n                  menuItems: [\n                    { name: "Patatas bravas", price: { amount: 105, currency: "NOK" } },\n                    { name: "Test Button (Uteservering)", price: { amount: 0, currency: "NOK" } },\n                    { name: "Test", price: { amount: 50, currency: "NOK" } },\n                  ],\n                },\n              ],\n            },\n          ],\n        },\n      }),\n    );\n    expect(items.map((item) => item.name)).toEqual(["Patatas bravas"]);\n  });\n});\n'''
+          test.write_text(text.rstrip() + block)
           PY
 
       - name: Build workspace dependencies
