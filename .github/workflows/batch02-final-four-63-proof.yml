@@ -1,0 +1,136 @@
+name: TEMP prove four Batch 02 promotions and strict 63 catalog
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch02-final-four-63-proof.yml"
+
+permissions:
+  contents: read
+
+env:
+  FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+  FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+
+jobs:
+  four-live-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Isolate exact four new manifests
+        working-directory: apps/menu-worker
+        run: |
+          rm -rf research/final-four-live && mkdir -p research/final-four-live
+          cp catalog/benares-tordenskiolds-gate-oslo.json research/final-four-live/
+          cp catalog/the-golden-chimp-torggata-oslo.json research/final-four-live/
+          cp catalog/kverneriet-majorstua-oslo.json research/final-four-live/
+          cp catalog/kverneriet-solli-oslo.json research/final-four-live/
+      - name: Independently validate four fresh sources
+        working-directory: apps/menu-worker
+        run: node dist/index.js validate:batch research/final-four-live | tee research/final-four-validation.json
+      - name: Gate exact four identities and output
+        working-directory: apps/menu-worker
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const v=JSON.parse(await readFile('research/final-four-validation.json','utf8'));
+          const rows=(v.results??[]).map(r=>({slug:r.slug,accepted:r.accepted,itemCount:r.validation?.menu?.quality?.itemCount??null,names:r.validation?.menu?.observedDishNames??[],extractorVersion:r.validation?.menu?.extractorVersion??null,failureFamilies:r.failureFamilies??[]}));
+          const by=new Map(rows.map(r=>[r.slug,r]));
+          const exact=new Map([
+            ['benares-tordenskiolds-gate-oslo',69],
+            ['the-golden-chimp-torggata-oslo',15],
+            ['kverneriet-majorstua-oslo',23],
+            ['kverneriet-solli-oslo',22],
+          ]);
+          const failures=[];
+          for(const [slug,count] of exact){const r=by.get(slug);if(!r)failures.push(`${slug}:missing`);else{if(!r.accepted)failures.push(`${slug}:not-accepted`);if(r.itemCount!==count)failures.push(`${slug}:count:${r.itemCount}!=${count}`);}}
+          const forbidden=new Set(['Chicken','VEG','VEG SPICY','DUMPLINGS','PROTEINS','SIDES','DESSERT','Upgrades & Extras','SN','SY']);
+          for(const r of rows)for(const n of r.names)if(forbidden.has(n))failures.push(`${r.slug}:forbidden:${n}`);
+          const chimp=by.get('the-golden-chimp-torggata-oslo');
+          for(const p of ['Pork Gyoza with Japanese ketchup','Grilled Chicken Yakiniku','Grilled Seabass'])if(!chimp?.names.some(n=>n.startsWith(p)))failures.push(`chimp:missing:${p}`);
+          for(const slug of ['kverneriet-majorstua-oslo','kverneriet-solli-oslo'])for(const n of ['Triple Chili Cheese','Original Ribs','The Godfather'])if(!by.get(slug)?.names.includes(n))failures.push(`${slug}:missing:${n}`);
+          const summary={manifestCount:v.manifestCount,acceptedCount:v.acceptedCount,failedCount:v.failedCount,failures,rows};
+          await writeFile('research/final-four-summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if(v.manifestCount!==4||v.acceptedCount!==4||v.failedCount!==0||failures.length)throw new Error(`Four-live gate failed ${JSON.stringify(failures)}`);
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-final-four-live-proof
+          path: |
+            apps/menu-worker/research/final-four-validation.json
+            apps/menu-worker/research/final-four-summary.json
+          if-no-files-found: error
+
+  strict-63-catalog-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Prove published-refresh fail-closed safety contract
+        run: pnpm --filter @fysen/menu-worker exec vitest run src/onboarding-refresh-safety.test.ts src/catalog-onboarding-failure-policy.test.ts src/production-menu-mutation-workflow.test.ts
+      - name: Prove exact catalog identity is 63 unique manifests
+        working-directory: apps/menu-worker
+        run: |
+          node --input-type=module <<'NODE'
+          import {readdir,readFile} from 'node:fs/promises';
+          const files=(await readdir('catalog')).filter(f=>f.endsWith('.json'));
+          const slugs=[];for(const f of files)slugs.push(JSON.parse(await readFile(`catalog/${f}`,'utf8')).restaurant.slug);
+          if(files.length!==63||new Set(slugs).size!==63)throw new Error(`Catalog identity ${files.length}/${new Set(slugs).size}, expected 63/63`);
+          NODE
+      - name: Validate exact 63 catalog once serially
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch catalog | tee research/final63-validation.json
+          status=${PIPESTATUS[0]}
+          echo "$status" > research/final63-exit.txt
+          exit 0
+      - name: Gate strict first-pass 63 of 63 no retry
+        working-directory: apps/menu-worker
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const v=JSON.parse(await readFile('research/final63-validation.json','utf8'));
+          const status=Number((await readFile('research/final63-exit.txt','utf8')).trim());
+          const failed=(v.results??[]).filter(r=>!r.accepted).map(r=>({slug:r.slug,failureFamilies:r.failureFamilies??[],error:r.error??r.validation?.menu?.error??null}));
+          const summary={manifestCount:v.manifestCount,acceptedCount:v.acceptedCount,failedCount:v.failedCount,validatorExitStatus:status,retryCount:0,failed};
+          await writeFile('research/final63-summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if(v.manifestCount!==63||v.acceptedCount!==63||v.failedCount!==0||status!==0||failed.length)throw new Error('Strict 63/63 first-pass gate failed');
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-final63-gate
+          path: |
+            apps/menu-worker/research/final63-validation.json
+            apps/menu-worker/research/final63-exit.txt
+            apps/menu-worker/research/final63-summary.json
+          if-no-files-found: error
