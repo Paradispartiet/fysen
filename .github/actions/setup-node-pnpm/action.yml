@@ -9,6 +9,12 @@ runs:
         version: 11.4.0
         run_install: false
 
+    - name: Configure pnpm store
+      shell: bash
+      run: |
+        pnpm config set store-dir "$HOME/.pnpm-store"
+        mkdir -p "$(pnpm store path --silent)"
+
     - name: Node
       uses: actions/setup-node@v4
       with:
