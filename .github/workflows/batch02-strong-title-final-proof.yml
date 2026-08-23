@@ -1,0 +1,164 @@
+name: TEMP Batch 02 strong-title final proof
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch02-strong-title-final-proof.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  sawan-live-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/batch02-strong-title-final-proof
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Fetch Sawan twice from canonical first-party source
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p proof/sawan
+          url='https://www.sawan.no/meny'
+          curl --fail --silent --show-error --location --max-redirs 3 --connect-timeout 15 --max-time 60 -D proof/sawan/round1-headers.txt -o proof/sawan/round1.html "$url"
+          sleep 2
+          curl --fail --silent --show-error --location --max-redirs 3 --connect-timeout 15 --max-time 60 -D proof/sawan/round2-headers.txt -o proof/sawan/round2.html "$url"
+          sha256sum proof/sawan/round1.html proof/sawan/round2.html | tee proof/sawan/source-sha256.txt
+          wc -c proof/sawan/round1.html proof/sawan/round2.html | tee proof/sawan/source-bytes.txt
+      - name: Prove semantic title-price identity and clean runtime output
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE' | tee ../../proof/sawan/result.json
+          import {readFile} from 'node:fs/promises';
+          import {recoverStrongTitlePriceHtmlItems,HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION} from './dist/html-strong-title-price-recovery.js';
+          import {extractMenuSource,extractorVersionForSourceType} from './dist/menu-source-runtime.js';
+
+          const normalize=(s)=>s.normalize('NFKC').replace(/[\u200B-\u200D\uFEFF]/gu,'').replace(/\s+/gu,' ').trim().toLocaleLowerCase('nb-NO');
+          const expected=[
+            ['Thai sashimi med laks',26500],
+            ['New style maki',29500],
+            ['Laksetartar taco',22000],
+            ['Money bags (2 stk.)',23000],
+            ['Chicken satay',22000],
+            ['Tempura villreker',23000],
+            ['Padron satay',19000],
+            ['The Chef’s Chicken Salad',23000],
+            ['Vegan crispy østerssopp (for 2 pers)',72000],
+            ['Trøffelmaki',20500],
+            ['Crispy duck à la Sawan (for 2 pers)',79500],
+            ['Vegan crispy oyster mushrooms',72000],
+            ['Woket kylling med cashew og grønnsaker',45000],
+          ];
+          const forbidden=new Set([
+            'sawan raw','sawan maki','sawan taco','sawan småretter','sawan salater','sawan vegansk','sawan sharing','satay (2 stk.)','with meat'
+          ]);
+          const version=extractorVersionForSourceType('html');
+          if(!version.includes(HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION)) throw new Error(`runtime version missing ${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}: ${version}`);
+
+          const rounds=[];
+          for(const [index,path] of [[1,'../../proof/sawan/round1.html'],[2,'../../proof/sawan/round2.html']]){
+            const body=await readFile(path,'utf8');
+            const structural=recoverStrongTitlePriceHtmlItems(body);
+            const result=await extractMenuSource('html',{body});
+            const rows=result.items.map(x=>({name:x.name,priceMinor:x.priceMinor,sectionName:x.sectionName,confidence:x.confidence,sourceExcerpt:x.sourceExcerpt}));
+            if(structural.length < 20) throw new Error(`round ${index}: strong-title structural recovery only ${structural.length} items`);
+            if(rows.length < 20) throw new Error(`round ${index}: final runtime only ${rows.length} items`);
+            const actual=new Map(rows.map(x=>[normalize(x.name),x.priceMinor]));
+            for(const [name,priceMinor] of expected){
+              const got=actual.get(normalize(name));
+              if(got!==priceMinor) throw new Error(`round ${index}: ${name} expected ${priceMinor}, got ${got ?? 'missing'}`);
+            }
+            const forbiddenRows=rows.filter(x=>forbidden.has(normalize(x.name)));
+            if(forbiddenRows.length) throw new Error(`round ${index}: forbidden section/group title output ${JSON.stringify(forbiddenRows)}`);
+            rounds.push({round:index,strongCount:structural.length,runtimeCount:rows.length,rows});
+          }
+          const stable=(rows)=>JSON.stringify(rows.map(x=>[normalize(x.name),x.priceMinor]).sort((a,b)=>String(a[0]).localeCompare(String(b[0]))||Number(a[1])-Number(b[1])));
+          if(stable(rounds[0].rows)!==stable(rounds[1].rows)) throw new Error('two fresh Sawan runtime output sets differ');
+          console.log(JSON.stringify({revision:'9af0983f4f1023a05fc48b8774493ee34c8c56ed',version,expectedPairs:expected.length,rounds},null,2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-strong-title-sawan-proof
+          path: proof/sawan/**
+          if-no-files-found: error
+
+  strict-56-catalog-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/batch02-strong-title-final-proof
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Prove published-refresh fail-closed safety contract
+        run: pnpm --filter @fysen/menu-worker exec vitest run src/onboarding-refresh-safety.test.ts src/catalog-onboarding-failure-policy.test.ts src/production-menu-mutation-workflow.test.ts
+      - name: Validate exact current 56 catalog once, serially
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p research
+          node --input-type=module <<'NODE'
+          import {readdir,readFile} from 'node:fs/promises';
+          const files=(await readdir('catalog')).filter((x)=>x.endsWith('.json'));
+          const slugs=[];
+          for(const file of files) slugs.push(JSON.parse(await readFile(`catalog/${file}`,'utf8')).restaurant.slug);
+          if(files.length!==56||new Set(slugs).size!==56) throw new Error(`Catalog=${files.length}/${new Set(slugs).size}; expected 56/56`);
+          NODE
+          set +e
+          node dist/index.js validate:batch catalog | tee research/final56-primary.json
+          status=${PIPESTATUS[0]}
+          set -e
+          printf '%s\n' "$status" > research/validator-exit-status.txt
+      - name: Gate strict first-pass 56 of 56 with no retry
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const primary=JSON.parse(await readFile('research/final56-primary.json','utf8'));
+          const exitStatus=Number((await readFile('research/validator-exit-status.txt','utf8')).trim());
+          const failed=(primary.results??[]).filter((x)=>!x.accepted).map((x)=>({slug:x.slug,failureFamilies:x.failureFamilies??[],error:x.error??null,menuError:x.validation?.menu?.error??null,itemCount:x.validation?.menu?.quality?.itemCount??null}));
+          const summary={revision:'9af0983f4f1023a05fc48b8774493ee34c8c56ed',manifestCount:primary.manifestCount,acceptedCount:primary.acceptedCount,failedCount:primary.failedCount,validatorExitStatus:exitStatus,retryCount:0,failed};
+          await writeFile('research/final56-summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if(primary.manifestCount!==56) throw new Error(`manifestCount=${primary.manifestCount}; expected 56`);
+          if(primary.acceptedCount!==56||primary.failedCount!==0||failed.length!==0) throw new Error(`Strict first pass failed: ${JSON.stringify(summary)}`);
+          if(exitStatus!==0) throw new Error(`validator exit status ${exitStatus} despite claimed 56/56`);
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-strong-title-final56-gate
+          path: |
+            apps/menu-worker/research/final56-primary.json
+            apps/menu-worker/research/final56-summary.json
+            apps/menu-worker/research/validator-exit-status.txt
+          if-no-files-found: error
