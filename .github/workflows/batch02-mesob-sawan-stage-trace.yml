@@ -44,33 +44,44 @@ jobs:
             grep -n '^export ' apps/menu-worker/src/html-source-extractor.ts || true
             echo
             echo '=== related html exports ==='
-            grep -n '^export ' apps/menu-worker/src/html-description-title-recovery.ts apps/menu-worker/src/html-text-section-scope.ts apps/menu-worker/src/html-output-canonicalizer.ts || true
+            grep -n '^export ' apps/menu-worker/src/html-extractor.ts apps/menu-worker/src/html-description-title-recovery.ts apps/menu-worker/src/html-text-section-scope.ts apps/menu-worker/src/html-output-canonicalizer.ts || true
           } > trace/source-policy-and-exports.txt
           cat trace/source-policy-and-exports.txt
 
-      - name: Capture Sawan redirect chain from runner
+      - name: Capture exact Sawan source redirect chains from runner
         shell: bash
         run: |
-          node --input-type=module <<'NODE' | tee trace/sawan-node-redirect-chain.json
-          const target='https://www.sawan.no/meny';
-          const out=[];
-          let current=target;
-          for(let hop=0;hop<8;hop++){
-            try{
-              const response=await fetch(current,{redirect:'manual',headers:{'user-agent':'FysenMenuBot/0.1'},signal:AbortSignal.timeout(20000)});
-              out.push({hop,url:current,status:response.status,location:response.headers.get('location'),contentType:response.headers.get('content-type')});
-              const loc=response.headers.get('location');
-              if(!(response.status>=300&&response.status<400&&loc)) break;
-              current=new URL(loc,current).href;
-            }catch(error){
-              out.push({hop,url:current,error:{name:error?.name??null,message:error?.message??String(error),cause:error?.cause?{name:error.cause.name??null,message:error.cause.message??String(error.cause),code:error.cause.code??null}:null}});
-              break;
+          node --input-type=module <<'NODE' | tee trace/sawan-node-redirect-chains.json
+          const targets=[
+            'https://sawan.no/SawanAlacarteActive.pdf',
+            'https://www.sawan.no/SawanAlacarteActive.pdf',
+            'https://www.sawan.no/meny',
+          ];
+          const reports=[];
+          for(const target of targets){
+            const hops=[]; let current=target;
+            for(let hop=0;hop<8;hop++){
+              try{
+                const response=await fetch(current,{redirect:'manual',headers:{'user-agent':'FysenMenuBot/0.1'},signal:AbortSignal.timeout(20000)});
+                hops.push({hop,url:current,status:response.status,location:response.headers.get('location'),contentType:response.headers.get('content-type'),contentLength:response.headers.get('content-length')});
+                const loc=response.headers.get('location');
+                await response.body?.cancel();
+                if(!(response.status>=300&&response.status<400&&loc)) break;
+                current=new URL(loc,current).href;
+              }catch(error){
+                hops.push({hop,url:current,error:{name:error?.name??null,message:error?.message??String(error),cause:error?.cause?{name:error.cause.name??null,message:error.cause.message??String(error.cause),code:error.cause.code??null}:null}});
+                break;
+              }
             }
+            reports.push({target,hops});
           }
-          console.log(JSON.stringify(out,null,2));
+          console.log(JSON.stringify(reports,null,2));
           NODE
           set +e
-          curl -sS -L --max-redirs 8 --connect-timeout 10 --max-time 40 -A 'FysenMenuBot/0.1' -D trace/sawan-curl-headers.txt -o trace/sawan-final.html -w '%{http_code} %{url_effective}\n' 'https://www.sawan.no/meny' | tee trace/sawan-curl-result.txt
+          for target in 'https://sawan.no/SawanAlacarteActive.pdf' 'https://www.sawan.no/SawanAlacarteActive.pdf' 'https://www.sawan.no/meny'; do
+            safe=$(printf '%s' "$target" | tr '/:' '__')
+            curl -sS -L --max-redirs 8 --connect-timeout 10 --max-time 40 -A 'FysenMenuBot/0.1' -D "trace/sawan-${safe}.headers" -o "trace/sawan-${safe}.body" -w "$target -> %{http_code} %{url_effective} %{content_type} %{size_download}\n" "$target"
+          done | tee trace/sawan-curl-results.txt
           exit 0
 
       - name: Capture Mesob raw card structure
@@ -93,12 +104,29 @@ jobs:
           } > trace/mesob-raw-context.txt
           cat trace/mesob-raw-context.txt
 
+      - name: Compare Mesob base and scoped parser stages
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE' | tee ../../trace/mesob-stage-comparison.json
+          import {readFile} from 'node:fs/promises';
+          import {extractHtmlMenu,extractHtmlVisibleText} from './dist/html-extractor.js';
+          import {extractScopedHtmlMenu} from './dist/html-source-extractor.js';
+          const html=await readFile('../../trace/mesob-menu.html','utf8');
+          const base=extractHtmlMenu(html);
+          const scoped=extractScopedHtmlMenu(html);
+          const visible=extractHtmlVisibleText(html);
+          const pick=(x)=>({method:x.method,count:x.items.length,items:x.items.map((i)=>({name:i.name,priceMinor:i.priceMinor,position:i.position,sourceExcerpt:i.sourceExcerpt}))});
+          const interesting=visible.split('\n').filter((line)=>/KITFO|DERO WET|Strawberry cheesecace|kr349|kr299|kr95/i.test(line));
+          console.log(JSON.stringify({base:pick(base),scoped:pick(scoped),visibleInteresting:interesting},null,2));
+          NODE
+
       - name: Capture runtime module exports
         working-directory: apps/menu-worker
         shell: bash
         run: |
           node --input-type=module <<'NODE' | tee ../../trace/runtime-exports.json
-          const modules=['html-source-extractor','html-description-title-recovery','html-text-section-scope','html-output-canonicalizer'];
+          const modules=['html-extractor','html-source-extractor','html-description-title-recovery','html-text-section-scope','html-output-canonicalizer'];
           const out={};
           for(const name of modules){
             const mod=await import(`./dist/${name}.js`);
