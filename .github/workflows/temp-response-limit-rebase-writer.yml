@@ -1,0 +1,45 @@
+name: TEMP rebase bounded response limit onto 63 baseline
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/temp-response-limit-rebase-writer.yml"
+
+permissions:
+  contents: write
+
+env:
+  TARGET_BRANCH: agent/http-source-response-byte-override-v1
+
+jobs:
+  rebase:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          fetch-depth: 0
+      - name: Rebase permanent branch onto current main
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git rebase origin/main
+      - uses: pnpm/action-setup@v4
+        with: { version: 11.4.0, run_install: false }
+      - uses: actions/setup-node@v4
+        with: { node-version: 24.18.0 }
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - run: pnpm --filter @fysen/menu-worker exec vitest run src/menu-source-response-byte-limit.test.ts src/source-support-manifest.test.ts src/http-client.test.ts src/http-client-support.test.ts
+      - run: pnpm --filter @fysen/database exec vitest run src/migration.test.ts src/menu-source-response-limit.integration.test.ts
+      - run: pnpm --filter @fysen/menu-worker test
+      - run: pnpm --filter @fysen/menu-worker typecheck
+      - run: pnpm --filter @fysen/database test
+      - run: pnpm --filter @fysen/database typecheck
+      - name: Push rebased permanent branch
+        shell: bash
+        run: git push --force-with-lease origin "HEAD:${TARGET_BRANCH}"
