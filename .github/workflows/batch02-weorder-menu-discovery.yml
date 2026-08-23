@@ -1,0 +1,130 @@
+name: TEMP Batch 02 WeOrder menu discovery
+
+on:
+  push:
+    branches: [agent/batch02-residual-three-post-435-recheck]
+    paths:
+      - ".github/workflows/batch02-weorder-menu-discovery.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Capture public WeOrder data requests and JSON responses
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p /tmp/weorder-discovery
+          node --input-type=module <<'NODE'
+          import { writeFile } from 'node:fs/promises';
+          import { chromium } from 'playwright-core';
+          import { assertPublicHttpUrl } from './dist/security.js';
+
+          const source = await assertPublicHttpUrl('https://order.weorder.com/app/derpeppern');
+          const allowedDataOrigins = new Set(['https://api.weorder.com', 'https://cdn.quickorder.io']);
+          const browser = await chromium.launch({ channel: 'chrome', headless: true, chromiumSandbox: true });
+          const context = await browser.newContext({
+            acceptDownloads: false,
+            ignoreHTTPSErrors: false,
+            javaScriptEnabled: true,
+            serviceWorkers: 'block',
+            userAgent: 'FysenMenuBot/0.1',
+          });
+          const requests = [];
+          const responses = [];
+          const seen = new Set();
+          await context.route('**/*', async (route) => {
+            const request = route.request();
+            let url;
+            try { url = new URL(request.url()); } catch { await route.abort('blockedbyclient'); return; }
+            const type = request.resourceType();
+            const data = type === 'xhr' || type === 'fetch';
+            if (data && !seen.has(url.href)) {
+              seen.add(url.href);
+              requests.push({ type, url: url.href, origin: url.origin });
+            }
+            const isSource = url.origin === source.origin;
+            const isAllowedData = allowedDataOrigins.has(url.origin);
+            if (url.protocol !== 'https:' || (data && !isSource && !isAllowedData)) {
+              await route.abort('blockedbyclient');
+              return;
+            }
+            if (type === 'document' && !isSource) {
+              await route.abort('blockedbyclient');
+              return;
+            }
+            try {
+              await assertPublicHttpUrl(url);
+              await route.continue();
+            } catch {
+              await route.abort('blockedbyclient');
+            }
+          });
+          const page = await context.newPage();
+          page.on('response', async (response) => {
+            const request = response.request();
+            if (!['xhr', 'fetch'].includes(request.resourceType())) return;
+            const url = new URL(response.url());
+            if (!allowedDataOrigins.has(url.origin) && url.origin !== source.origin) return;
+            const contentType = response.headers()['content-type'] ?? '';
+            let body = '';
+            if (/json|text/i.test(contentType)) {
+              try { body = await response.text(); } catch {}
+            }
+            responses.push({
+              url: response.url(),
+              status: response.status(),
+              contentType,
+              body: body.slice(0, 50000),
+              bodyLength: body.length,
+            });
+          });
+          let navigationError = null;
+          try {
+            await page.goto(source.toString(), { waitUntil: 'domcontentloaded', timeout: 20000 });
+            await page.waitForTimeout(8000);
+          } catch (error) {
+            navigationError = error instanceof Error ? error.message : String(error);
+          }
+          const report = {
+            source: source.toString(),
+            finalUrl: page.url(),
+            title: await page.title().catch(() => ''),
+            navigationError,
+            requests,
+            responses,
+            bodyText: (await page.locator('body').innerText().catch(() => '')).slice(0, 30000),
+          };
+          await writeFile('/tmp/weorder-discovery/report.json', JSON.stringify(report, null, 2) + '\n');
+          console.log(JSON.stringify({
+            finalUrl: report.finalUrl,
+            navigationError,
+            requests,
+            responses: responses.map(({ url, status, contentType, bodyLength }) => ({ url, status, contentType, bodyLength })),
+            bodyPreview: report.bodyText.slice(0, 4000),
+          }, null, 2));
+          await context.close();
+          await browser.close();
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-weorder-menu-discovery
+          path: /tmp/weorder-discovery
+          if-no-files-found: error
