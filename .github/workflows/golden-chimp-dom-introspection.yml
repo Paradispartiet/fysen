@@ -1,0 +1,150 @@
+name: TEMP Golden Chimp DOM introspection
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/golden-chimp-dom-introspection.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Capture exact HTTP DOM and parser evidence
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research/golden-chimp-dom
+          node --input-type=module <<'NODE'
+          import { writeFile } from 'node:fs/promises';
+          import { load } from 'cheerio';
+          import { HttpMenuClient } from './dist/http-client.js';
+          import { extractMenuSource } from './dist/menu-source-runtime.js';
+
+          const url='https://www.thegoldenchimp.no/menu';
+          const client=new HttpMenuClient();
+          const fetched=await client.fetchSource({
+            url,
+            userAgent: process.env.FYSEN_MENU_BOT_USER_AGENT ?? 'FysenMenuBot/0.1',
+            etag:null,
+            lastModified:null,
+          });
+          if(fetched.kind!=='content') throw new Error(`Unexpected ${fetched.kind}`);
+          const extracted=await extractMenuSource('html',fetched);
+          await writeFile('research/golden-chimp-dom/source.html',fetched.body);
+
+          const $=load(fetched.body);
+          const compact=(value)=>value.normalize('NFKC').replace(/\s+/gu,' ').trim();
+          const attrObject=(element)=>{
+            const attrs={};
+            for(const [key,value] of Object.entries(element.attribs??{})){
+              if(/^(?:class|id|style|hidden|aria-|data-|role)/u.test(key)) attrs[key]=value;
+            }
+            return attrs;
+          };
+          const ancestry=(element)=>{
+            const chain=[];
+            let current=element;
+            for(let depth=0;current&&depth<8;depth+=1,current=current.parent){
+              if(current.type!=='tag') continue;
+              chain.push({tag:current.name,attrs:attrObject(current),text:compact($(current).text()).slice(0,500)});
+            }
+            return chain;
+          };
+          const probes=[
+            'Pork Gyoza',
+            'Chicken Gyoza',
+            'Grilled Chicken Yakiniku',
+            'Grilled Seabass',
+            'Golden Shrimp Toast',
+            'Miso cookie',
+            '5 piece dumpling menu',
+            '10 piece dumpling menu',
+            'Geisha',
+            'Sakura',
+            'DUMPLINGS',
+            'PROTEINS',
+            'SIDES',
+            'DESSERT',
+          ];
+          const matches={};
+          for(const probe of probes){
+            const needle=probe.toLocaleLowerCase('en');
+            const candidates=$('*').toArray().filter((element)=>{
+              const direct=compact($(element).clone().children().remove().end().text());
+              return direct.toLocaleLowerCase('en').includes(needle);
+            });
+            matches[probe]=candidates.slice(0,12).map((element)=>({
+              tag:element.name,
+              attrs:attrObject(element),
+              directText:compact($(element).clone().children().remove().end().text()).slice(0,500),
+              fullText:compact($(element).text()).slice(0,1000),
+              ancestry:ancestry(element),
+            }));
+          }
+
+          const suspicious=$('[hidden],[aria-hidden="true"],[style*="display: none" i],[style*="display:none" i],.w-condition-invisible,.w-tab-pane,.w--tab-active').toArray().map((element)=>({
+            tag:element.name,
+            attrs:attrObject(element),
+            text:compact($(element).text()).slice(0,1500),
+          })).filter((row)=>/Pork|Chicken|Seabass|dumpling|Geisha|Sakura|PROTEINS|DUMPLINGS/iu.test(row.text)).slice(0,100);
+
+          const structural=$('h1,h2,h3,h4,h5,h6,[role="heading"],section,article,.w-tab-pane,[class*="menu" i],[class*="food" i],[class*="dish" i]').toArray().map((element)=>({
+            tag:element.name,
+            attrs:attrObject(element),
+            text:compact($(element).text()).slice(0,1200),
+          })).filter((row)=>/Pork|Chicken|Seabass|dumpling|Geisha|Sakura|PROTEINS|DUMPLINGS|SIDES|DESSERT/iu.test(row.text)).slice(0,200);
+
+          const evidence={
+            revision:'22deb94684a622f36b3cb9c6003d535b682bd221',
+            url,
+            fetchedAt:fetched.fetchedAt,
+            status:fetched.status,
+            contentType:fetched.contentType,
+            rawSha256:fetched.rawSha256,
+            bodyBytes:fetched.bodyBytes.length,
+            extractorVersion:extracted.extractorVersion,
+            extractionMethod:extracted.method,
+            extractedCount:extracted.items.length,
+            extractedItems:extracted.items.map((item)=>({name:item.name,priceMinor:item.priceMinor,sectionName:item.sectionName,position:item.position,sourceExcerpt:item.sourceExcerpt})),
+            matches,
+            suspicious,
+            structural,
+          };
+          await writeFile('research/golden-chimp-dom/evidence.json',JSON.stringify(evidence,null,2)+'\n');
+          console.log(JSON.stringify({
+            status:evidence.status,
+            bodyBytes:evidence.bodyBytes,
+            rawSha256:evidence.rawSha256,
+            extractorVersion:evidence.extractorVersion,
+            extractedCount:evidence.extractedCount,
+            extractedItems:evidence.extractedItems,
+            probeCounts:Object.fromEntries(Object.entries(matches).map(([key,value])=>[key,value.length])),
+            suspiciousCount:suspicious.length,
+            structuralCount:structural.length,
+          },null,2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: golden-chimp-dom-introspection
+          path: apps/menu-worker/research/golden-chimp-dom
+          if-no-files-found: error
