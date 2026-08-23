@@ -1,4 +1,4 @@
-name: TEMP trace Der Peppern Gror public source graph
+name: TEMP build tested WeOrder API v2 patch
 
 on:
   pull_request:
@@ -8,16 +8,16 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
-  trace:
+  build-patch:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
-    env:
-      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: agent/public-menu-api-weorder-v2
           persist-credentials: false
       - uses: pnpm/action-setup@v4
         with:
@@ -28,148 +28,616 @@ jobs:
           node-version: 24.18.0
       - run: pnpm install --no-frozen-lockfile
 
-      - name: Trace exact official WeOrder chain
-        working-directory: apps/menu-worker
+      - name: Apply generic persisted-currency and WeOrder API-shape patch
         shell: bash
         run: |
-          mkdir -p research/der-peppern-gror-source-trace
-          node --input-type=module <<'NODE'
-          import { chromium } from 'playwright-core';
-          import { writeFile } from 'node:fs/promises';
+          python3 <<'PY'
+          from pathlib import Path
 
-          const userAgent = process.env.FYSEN_MENU_BOT_USER_AGENT || 'FysenMenuBot/0.1';
-          const targets = [
-            { name: 'official-link-page', url: 'https://derpepperngror.no/juletider/' },
-            { name: 'official-weorder-short', url: 'https://weorder.xyz/AvdelingRadhusplassen' },
-            { name: 'official-weorder-restaurant', url: 'https://order.weorder.com/restaurant/22539?skipProfile=true' },
-          ];
-          const interesting = /(?:weorder|quickorder|orderyoyo|order|menu|meny|api|restaurant|product|catalog|location|item|category)/i;
-          const absoluteUrlPattern = /https:\/\/[^\s"'<>\\)]+/g;
+          def replace_once(path, old, new):
+              p = Path(path)
+              text = p.read_text()
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f"{path}: expected one anchor, got {count}: {old!r}")
+              p.write_text(text.replace(old, new, 1))
 
-          async function httpProbe(target) {
-            const started = Date.now();
+          # Manifest: explicit persisted currency hint is API-only.
+          replace_once(
+              'apps/menu-worker/src/onboarding-manifest.ts',
+              '      minimumExpectedItems: z.number().int().min(1).max(500),\n      sourceSupport: sourceSupportSchema,',
+              '      minimumExpectedItems: z.number().int().min(1).max(500),\n      priceCurrency: z.string().regex(/^[A-Z]{3}$/).optional(),\n      sourceSupport: sourceSupportSchema,',
+          )
+          replace_once(
+              'apps/menu-worker/src/onboarding-manifest.ts',
+              '    const sourceOrigin = new URL(manifest.menuSource.url).origin;',
+              '''    if (manifest.menuSource.priceCurrency && manifest.menuSource.sourceType !== "api") {
+      context.addIssue({
+        code: "custom",
+        path: ["menuSource", "priceCurrency"],
+        message: "priceCurrency is only supported for API menu sources",
+      });
+    }
+
+    const sourceOrigin = new URL(manifest.menuSource.url).origin;''',
+          )
+
+          # Runtime extraction options are deliberately separate from fetch/network policy.
+          replace_once(
+              'apps/menu-worker/src/menu-source-runtime.ts',
+              'export interface ExtractedMenuSource {\n',
+              '''export interface MenuSourceExtractionOptions {
+  readonly priceCurrency?: string | null;
+}
+
+export interface ExtractedMenuSource {
+''',
+          )
+          replace_once(
+              'apps/menu-worker/src/menu-source-runtime.ts',
+              'export async function extractMenuSource(\n  sourceType: string,\n  fetched: MenuContentFetchResult,\n): Promise<ExtractedMenuSource> {',
+              '''export async function extractMenuSource(
+  sourceType: string,
+  fetched: MenuContentFetchResult,
+  options: MenuSourceExtractionOptions = {},
+): Promise<ExtractedMenuSource> {''',
+          )
+          replace_once(
+              'apps/menu-worker/src/menu-source-runtime.ts',
+              '      items: extractPublicMenuApi(fetched.body),',
+              '      items: extractPublicMenuApi(fetched.body, { priceCurrency: options.priceCurrency ?? null }),',
+          )
+
+          # Candidate/live validation must use the same declared currency contract as production watches.
+          replace_once(
+              'apps/menu-worker/src/batch-intake.ts',
+              '        const extracted = await extractMenuSource(\n          entry.menuSource.sourceType,\n          fetched,\n        );',
+              '        const extracted = await extractMenuSource(\n          entry.menuSource.sourceType,\n          fetched,\n          { priceCurrency: entry.menuSource.priceCurrency ?? null },\n        );',
+          )
+          replace_once(
+              'apps/menu-worker/src/manifest-validator.ts',
+              '    const extracted = await extractMenuSource(manifest.menuSource.sourceType, fetched);',
+              '    const extracted = await extractMenuSource(manifest.menuSource.sourceType, fetched, {\n      priceCurrency: manifest.menuSource.priceCurrency ?? null,\n    });',
+          )
+          replace_once(
+              'apps/menu-worker/src/watcher.ts',
+              '    const rawExtracted = await extractMenuSource(source.sourceType, fetched);',
+              '    const rawExtracted = await extractMenuSource(source.sourceType, fetched, {\n      priceCurrency: source.priceCurrency ?? null,\n    });',
+          )
+          replace_once(
+              'apps/menu-worker/src/watcher.ts',
+              '          : source.sourceType === "json_ld"\n            ? "JSON_LD_EXTRACTION_REQUIRED"\n            : "HTML_EXTRACTION_ERROR";',
+              '          : source.sourceType === "json_ld"\n            ? "JSON_LD_EXTRACTION_REQUIRED"\n            : source.sourceType === "api"\n              ? "API_EXTRACTION_ERROR"\n              : "HTML_EXTRACTION_ERROR";',
+          )
+
+          # Persist price currency on the menu source so scheduled refreshes cannot lose semantics.
+          replace_once(
+              'apps/menu-worker/src/onboarding.ts',
+              '      minimumExpectedItems: manifest.menuSource.minimumExpectedItems,\n    });',
+              '      minimumExpectedItems: manifest.menuSource.minimumExpectedItems,\n      priceCurrency: manifest.menuSource.priceCurrency ?? null,\n    });',
+          )
+          replace_once(
+              'packages/database/src/repository.ts',
+              '  readonly minimumExpectedItems: number;\n}\n\nexport interface StoredMenuSource {',
+              '  readonly minimumExpectedItems: number;\n  readonly priceCurrency?: string | null;\n}\n\nexport interface StoredMenuSource {',
+          )
+          replace_once(
+              'packages/database/src/repository.ts',
+              '  readonly minimumExpectedItems: number;\n  readonly etag: string | null;',
+              '  readonly minimumExpectedItems: number;\n  readonly priceCurrency?: string | null;\n  readonly etag: string | null;',
+          )
+          replace_once(
+              'packages/database/src/repository.ts',
+              '  minimum_expected_items: number;\n  etag: string | null;',
+              '  minimum_expected_items: number;\n  price_currency: string | null;\n  etag: string | null;',
+          )
+          replace_once(
+              'packages/database/src/repository.ts',
+              '    minimumExpectedItems: row.minimum_expected_items,\n    etag: row.etag,',
+              '    minimumExpectedItems: row.minimum_expected_items,\n    priceCurrency: row.price_currency ?? null,\n    etag: row.etag,',
+          )
+          replace_once(
+              'packages/database/src/repository.ts',
+              '          restaurant_id, url, source_type, fetch_mode, user_agent, check_interval_minutes, minimum_expected_items\n        ) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+              '          restaurant_id, url, source_type, fetch_mode, price_currency, user_agent, check_interval_minutes, minimum_expected_items\n        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+          )
+          replace_once(
+              'packages/database/src/repository.ts',
+              '          fetch_mode = EXCLUDED.fetch_mode,\n          user_agent = EXCLUDED.user_agent,',
+              '          fetch_mode = EXCLUDED.fetch_mode,\n          price_currency = EXCLUDED.price_currency,\n          user_agent = EXCLUDED.user_agent,',
+          )
+          replace_once(
+              'packages/database/src/repository.ts',
+              '        input.fetchMode ?? "http",\n        input.userAgent,\n        input.checkIntervalMinutes,\n        input.minimumExpectedItems,',
+              '        input.fetchMode ?? "http",\n        input.priceCurrency ?? null,\n        input.userAgent,\n        input.checkIntervalMinutes,\n        input.minimumExpectedItems,',
+          )
+
+          # Migration registry contract.
+          replace_once(
+              'packages/database/src/migration.test.ts',
+              '      "0017_aha_min_mat.sql",\n    ]);',
+              '      "0017_aha_min_mat.sql",\n      "0018_menu_source_price_currency.sql",\n    ]);',
+          )
+          replace_once(
+              'packages/database/src/migration.test.ts',
+              '    expect(ahaMinMatSql).not.toContain("handoff_token");\n  });',
+              '''    expect(ahaMinMatSql).not.toContain("handoff_token");
+
+    const sourceCurrencySql = await readFile(
+      new URL("../migrations/0018_menu_source_price_currency.sql", import.meta.url),
+      "utf8",
+    );
+    expect(sourceCurrencySql).toContain("price_currency char(3)");
+    expect(sourceCurrencySql).toContain("menu_sources_price_currency_check");
+    expect(sourceCurrencySql).toContain("price_currency ~ '^[A-Z]{3}$'");
+  });''',
+          )
+          PY
+
+          cat > packages/database/migrations/0018_menu_source_price_currency.sql <<'SQL'
+          ALTER TABLE fysen.menu_sources
+            ADD COLUMN IF NOT EXISTS price_currency char(3);
+
+          ALTER TABLE fysen.menu_sources
+            DROP CONSTRAINT IF EXISTS menu_sources_price_currency_check;
+
+          ALTER TABLE fysen.menu_sources
+            ADD CONSTRAINT menu_sources_price_currency_check
+            CHECK (price_currency IS NULL OR price_currency ~ '^[A-Z]{3}$');
+          SQL
+
+          cat > apps/menu-worker/src/public-menu-api-extractor.ts <<'TS'
+          import {
+            createMenuItemSourceKey,
+            normalizeDishName,
+            type MenuObservedItem,
+            type MenuPriceKind,
+          } from "@fysen/menu-core";
+
+          export const PUBLIC_MENU_API_EXTRACTOR_VERSION = "public-menu-api-v2";
+
+          type JsonRecord = Record<string, unknown>;
+
+          export interface PublicMenuApiExtractionOptions {
+            readonly priceCurrency?: string | null;
+          }
+
+          interface ParsedPrice {
+            readonly priceMinor: number;
+            readonly priceKind: MenuPriceKind;
+            readonly priceMaxMinor: number | null;
+            readonly currency: string;
+          }
+
+          const BEVERAGE_SECTION =
+            /(?:alkohol|drikke|drinks?|beverages?|soft\s+drinks?|øl|beer|vin|wine|cava|champagne|prosecco|musserende|sparkling|sangria|cocktails?|mocktails?|cider|kaffe|coffee|\bte\b|\btea\b|avec|brennevin|spirits?|whisk(?:e)?y|bourbon|\brom\b|\brum\b|\bgin\b|vodka|tequila|brandy|cognac|sherry|portvin|dessertvin|digestif)/iu;
+          const NON_DISH_SECTION =
+            /(?:\bbutikk\b|\bshop\b|retail|merch(?:andise)?|gavekort|gift\s*cards?)/iu;
+          const NON_DISH_PLACEHOLDER =
+            /^(?:test(?:\s+button)?(?:\s*\([^)]*\))?|button(?:\s*\([^)]*\))?)$/iu;
+
+          function asRecord(value: unknown): JsonRecord | null {
+            return typeof value === "object" && value !== null && !Array.isArray(value)
+              ? (value as JsonRecord)
+              : null;
+          }
+
+          function asArray(value: unknown): readonly unknown[] {
+            return Array.isArray(value) ? value : [];
+          }
+
+          function normalizedText(value: unknown): string | null {
+            if (typeof value !== "string") return null;
+            const normalized = value.normalize("NFKC").trim().replace(/\s+/gu, " ");
+            return normalized.length > 0 ? normalized : null;
+          }
+
+          function localizedText(value: unknown): string | null {
+            const direct = normalizedText(value);
+            if (direct) return direct;
+            const entries = asArray(value)
+              .map(asRecord)
+              .filter((entry): entry is JsonRecord => entry !== null)
+              .map((entry) => ({
+                language: normalizedText(entry.language)?.toLocaleLowerCase("en-US") ?? "",
+                text: normalizedText(entry.text ?? entry.name ?? entry.value),
+              }))
+              .filter((entry) => entry.text !== null);
+            for (const language of ["nb", "no", "nn", "en"]) {
+              const match = entries.find((entry) => entry.language === language);
+              if (match?.text) return match.text;
+            }
+            return entries[0]?.text ?? null;
+          }
+
+          function numericAmount(value: unknown): number | null {
+            if (typeof value === "number" && Number.isFinite(value)) return value;
+            if (typeof value !== "string") return null;
+            const normalized = value.trim().replace(",", ".");
+            if (!/^\d+(?:\.\d{1,2})?$/u.test(normalized)) return null;
+            const parsed = Number(normalized);
+            return Number.isFinite(parsed) ? parsed : null;
+          }
+
+          function normalizedCurrencyHint(value: string | null | undefined): string | null {
+            if (value === null || value === undefined) return null;
+            const normalized = value.trim().toUpperCase();
+            if (!/^[A-Z]{3}$/u.test(normalized)) {
+              throw new Error(`Public menu API priceCurrency must be a three-letter ISO code, got ${value}`);
+            }
+            return normalized;
+          }
+
+          function directPrice(
+            value: unknown,
+            fallbackCurrency: string | null,
+          ): { priceMinor: number; currency: string } | null {
+            const price = asRecord(value);
+            const amount = numericAmount(price?.amount ?? value);
+            if (amount === null || amount <= 0) return null;
+            const embeddedCurrency = normalizedText(price?.currency)?.toUpperCase() ?? null;
+            if (embeddedCurrency !== null && !/^[A-Z]{3}$/u.test(embeddedCurrency)) return null;
+            if (
+              embeddedCurrency !== null &&
+              fallbackCurrency !== null &&
+              embeddedCurrency !== fallbackCurrency
+            ) {
+              throw new Error(
+                `Public menu API currency conflict: embedded ${embeddedCurrency}, declared ${fallbackCurrency}`,
+              );
+            }
+            const currency = embeddedCurrency ?? fallbackCurrency;
+            if (!currency) {
+              throw new Error("Public menu API numeric price requires explicit priceCurrency");
+            }
+            const priceMinor = Math.round(amount * 100);
+            if (!Number.isSafeInteger(priceMinor)) return null;
+            return { priceMinor, currency };
+          }
+
+          function itemPrice(item: JsonRecord, fallbackCurrency: string | null): ParsedPrice | null {
+            const direct = directPrice(item.price, fallbackCurrency);
+            if (direct) {
+              return { ...direct, priceKind: "exact", priceMaxMinor: null };
+            }
+
+            const variantPrices = asArray(item.variants)
+              .map(asRecord)
+              .filter((variant): variant is JsonRecord => variant !== null)
+              .filter((variant) => variant.availability !== "UNAVAILABLE")
+              .map((variant) => directPrice(variant.price, fallbackCurrency))
+              .filter(
+                (price): price is { priceMinor: number; currency: string } => price !== null,
+              );
+            if (variantPrices.length === 0) return null;
+            const currencies = new Set(variantPrices.map((price) => price.currency));
+            if (currencies.size !== 1) return null;
+            const amounts = [...new Set(variantPrices.map((price) => price.priceMinor))].sort(
+              (left, right) => left - right,
+            );
+            const minimum = amounts[0];
+            const currency = variantPrices[0]?.currency;
+            if (minimum === undefined || currency === undefined) return null;
+            if (amounts.length === 1) {
+              return { priceMinor: minimum, priceKind: "exact", priceMaxMinor: null, currency };
+            }
+            return {
+              priceMinor: minimum,
+              priceKind: "multiple",
+              priceMaxMinor: amounts.at(-1) ?? minimum,
+              currency,
+            };
+          }
+
+          function sourceExcerpt(
+            name: string,
+            description: string | null,
+            sectionName: string | null,
+            price: ParsedPrice,
+          ): string {
+            return JSON.stringify({
+              name,
+              description,
+              sectionName,
+              priceMinor: price.priceMinor,
+              priceKind: price.priceKind,
+              priceMaxMinor: price.priceMaxMinor,
+              currency: price.currency,
+            }).slice(0, 2000);
+          }
+
+          export function extractPublicMenuApi(
+            body: string,
+            options: PublicMenuApiExtractionOptions = {},
+          ): readonly MenuObservedItem[] {
+            let parsed: unknown;
             try {
-              const response = await fetch(target.url, {
-                redirect: 'follow',
-                signal: AbortSignal.timeout(15_000),
-                headers: { 'user-agent': userAgent, accept: 'text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8' },
+              parsed = JSON.parse(body) as unknown;
+            } catch {
+              throw new Error("Public menu API response is not valid JSON");
+            }
+            const root = asRecord(parsed);
+            if (!root) throw new Error("Public menu API response must be a JSON object");
+            const fallbackCurrency = normalizedCurrencyHint(options.priceCurrency);
+            const items: MenuObservedItem[] = [];
+            let recognizedSectionCount = 0;
+            let position = 0;
+
+            const addItem = (
+              item: JsonRecord,
+              sectionName: string | null,
+            ): void => {
+              if (item.active === false) return;
+              const name = localizedText(item.names ?? item.titles ?? item.name ?? item.title);
+              if (!name || !/\p{L}/u.test(name) || NON_DISH_PLACEHOLDER.test(name)) return;
+              const price = itemPrice(item, fallbackCurrency);
+              if (!price) return;
+              const description = localizedText(item.descriptions ?? item.description);
+              items.push({
+                sourceKey: createMenuItemSourceKey(name, sectionName),
+                name,
+                normalizedName: normalizeDishName(name),
+                description,
+                sectionName,
+                priceMinor: price.priceMinor,
+                priceKind: price.priceKind,
+                priceMaxMinor: price.priceMaxMinor,
+                currency: price.currency,
+                position,
+                extractionMethod: "api",
+                confidence: 1,
+                sourceExcerpt: sourceExcerpt(name, description, sectionName, price),
               });
-              const body = await response.text();
-              const urls = [...new Set(body.match(absoluteUrlPattern) ?? [])].slice(0, 500);
-              return {
-                ...target,
-                ok: response.ok,
-                status: response.status,
-                finalUrl: response.url,
-                contentType: response.headers.get('content-type'),
-                bytes: Buffer.byteLength(body),
-                durationMs: Date.now() - started,
-                interestingUrls: urls.filter((url) => interesting.test(url)).slice(0, 200),
-                allOrigins: [...new Set(urls.map((url) => { try { return new URL(url).origin; } catch { return null; } }).filter(Boolean))].sort(),
-                officialRadhusplassenLinkPresent: body.includes('https://weorder.xyz/AvdelingRadhusplassen'),
-              };
-            } catch (error) {
-              return { ...target, ok: false, error: error instanceof Error ? error.message : String(error), durationMs: Date.now() - started };
-            }
-          }
+              position += 1;
+            };
 
-          const browser = await chromium.launch({ channel: 'chrome', headless: true, chromiumSandbox: true });
-          const context = await browser.newContext({ acceptDownloads: false, ignoreHTTPSErrors: false, javaScriptEnabled: true, serviceWorkers: 'block', userAgent });
-
-          async function browserProbe(target) {
-            const page = await context.newPage();
-            const requests = [];
-            const responses = [];
-            const jsonBodies = [];
-            const bodyTasks = [];
-            page.on('request', (request) => {
-              if (requests.length < 1000) requests.push({ url: request.url(), method: request.method(), resourceType: request.resourceType() });
-            });
-            page.on('response', (response) => {
-              const resourceType = response.request().resourceType();
-              if (responses.length < 1000) responses.push({ url: response.url(), status: response.status(), resourceType });
-              const contentType = response.headers()['content-type'] ?? '';
-              if ((resourceType === 'xhr' || resourceType === 'fetch') && /json/i.test(contentType) && bodyTasks.length < 50) {
-                bodyTasks.push(response.text().then((text) => {
-                  jsonBodies.push({ url: response.url(), status: response.status(), contentType, bytes: Buffer.byteLength(text), sample: text.slice(0, 160000) });
-                }).catch(() => undefined));
+            const data = asRecord(root.data);
+            const providerMenus = asArray(data?.menu);
+            if (providerMenus.length > 0) {
+              for (const rawMenu of providerMenus) {
+                const menu = asRecord(rawMenu);
+                if (!menu || normalizedText(menu.type)?.toLowerCase() !== "food") continue;
+                for (const rawCategory of asArray(menu.categories)) {
+                  const category = asRecord(rawCategory);
+                  if (!category) continue;
+                  recognizedSectionCount += 1;
+                  const sectionName = localizedText(category.names ?? category.titles ?? category.name ?? category.title);
+                  if (
+                    sectionName !== null &&
+                    (BEVERAGE_SECTION.test(sectionName) || NON_DISH_SECTION.test(sectionName))
+                  ) {
+                    continue;
+                  }
+                  for (const rawEntry of asArray(category.entries ?? category.items ?? category.products)) {
+                    const entry = asRecord(rawEntry);
+                    if (entry) addItem(entry, sectionName);
+                  }
+                }
               }
-            });
-            page.on('dialog', (dialog) => void dialog.dismiss());
-            const started = Date.now();
-            try {
-              const response = await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: 18_000 });
-              await page.waitForLoadState('networkidle', { timeout: 8_000 }).catch(() => undefined);
-              await page.waitForTimeout(1500);
-              await Promise.all(bodyTasks);
-              const pageData = await page.evaluate(() => ({
-                title: document.title,
-                textSample: (document.body?.innerText ?? '').slice(0, 25000),
-                anchors: Array.from(document.querySelectorAll('a[href]')).map((a) => ({ text: (a.textContent ?? '').replace(/\s+/g, ' ').trim(), href: a.href })),
-                forms: Array.from(document.querySelectorAll('form')).map((form) => ({ action: form.action, method: form.method })),
-                scripts: Array.from(document.querySelectorAll('script[src]')).map((script) => script.src),
-              }));
-              return {
-                ...target,
-                ok: true,
-                status: response?.status() ?? null,
-                finalUrl: page.url(),
-                durationMs: Date.now() - started,
-                title: pageData.title,
-                textSample: pageData.textSample,
-                interestingAnchors: pageData.anchors.filter(({ text, href }) => interesting.test(`${text} ${href}`)),
-                forms: pageData.forms,
-                interestingScripts: pageData.scripts.filter((url) => interesting.test(url)),
-                requestOrigins: [...new Set(requests.map(({ url }) => { try { return new URL(url).origin; } catch { return null; } }).filter(Boolean))].sort(),
-                documentRequests: requests.filter(({ resourceType }) => resourceType === 'document'),
-                dataRequests: requests.filter(({ resourceType }) => resourceType === 'xhr' || resourceType === 'fetch'),
-                interestingRequests: requests.filter(({ url, resourceType }) => ['document', 'xhr', 'fetch', 'script'].includes(resourceType) && interesting.test(url)),
-                jsonBodies,
+              if (recognizedSectionCount === 0) {
+                throw new Error("Public menu API exposed no recognizable food sections");
+              }
+            } else {
+              const location = asRecord(root.location);
+              const menus = asArray(location?.menus ?? root.menus);
+              if (menus.length === 0) {
+                throw new Error("Public menu API exposed no menus array");
+              }
+
+              const visitSections = (
+                rawSections: unknown,
+                inheritedSectionName: string | null = null,
+                inheritedExcluded = false,
+              ): void => {
+                for (const rawSection of asArray(rawSections)) {
+                  const section = asRecord(rawSection);
+                  if (!section) continue;
+                  recognizedSectionCount += 1;
+                  const sectionName =
+                    localizedText(section.titles ?? section.names ?? section.title ?? section.name) ??
+                    inheritedSectionName;
+                  const isExcludedSection =
+                    inheritedExcluded ||
+                    (sectionName !== null &&
+                      (BEVERAGE_SECTION.test(sectionName) || NON_DISH_SECTION.test(sectionName)));
+
+                  if (!isExcludedSection) {
+                    for (const rawItem of asArray(section.menuItems ?? section.items ?? section.products)) {
+                      const item = asRecord(rawItem);
+                      if (item) addItem(item, sectionName);
+                    }
+                  }
+
+                  visitSections(
+                    section.subSections ?? section.subsections ?? section.sections,
+                    sectionName,
+                    isExcludedSection,
+                  );
+                }
               };
-            } catch (error) {
-              await Promise.all(bodyTasks);
-              return {
-                ...target,
-                ok: false,
-                finalUrl: page.url(),
-                error: error instanceof Error ? error.message : String(error),
-                requestOrigins: [...new Set(requests.map(({ url }) => { try { return new URL(url).origin; } catch { return null; } }).filter(Boolean))].sort(),
-                documentRequests: requests.filter(({ resourceType }) => resourceType === 'document'),
-                dataRequests: requests.filter(({ resourceType }) => resourceType === 'xhr' || resourceType === 'fetch'),
-                jsonBodies,
-              };
-            } finally {
-              await page.close().catch(() => undefined);
+
+              for (const rawMenu of menus) {
+                const menu = asRecord(rawMenu);
+                if (!menu) continue;
+                visitSections(menu.menuSections ?? menu.sections);
+              }
+              if (recognizedSectionCount === 0) {
+                throw new Error("Public menu API exposed no recognizable menu sections");
+              }
             }
+
+            const bySourceKey = new Map<string, MenuObservedItem>();
+            for (const item of items) {
+              const existing = bySourceKey.get(item.sourceKey);
+              if (!existing) {
+                bySourceKey.set(item.sourceKey, item);
+                continue;
+              }
+              if (
+                existing.priceMinor !== item.priceMinor ||
+                (existing.priceKind ?? "exact") !== (item.priceKind ?? "exact") ||
+                (existing.priceMaxMinor ?? null) !== (item.priceMaxMinor ?? null) ||
+                existing.currency !== item.currency
+              ) {
+                throw new Error(`Public menu API exposed conflicting duplicate prices for ${item.name}`);
+              }
+            }
+            return [...bySourceKey.values()].map((item, index) => ({ ...item, position: index }));
           }
+          TS
 
-          const http = [];
-          const browserRows = [];
-          for (const target of targets) {
-            http.push(await httpProbe(target));
-            browserRows.push(await browserProbe(target));
-          }
+          cat >> apps/menu-worker/src/public-menu-api-extractor.test.ts <<'TS'
 
-          const result = {
-            baseRevision: process.env.GITHUB_SHA,
-            tracedAt: new Date().toISOString(),
-            restaurantId: 22539,
-            officialLinkChain: ['https://weorder.xyz/AvdelingRadhusplassen', 'https://order.weorder.com/restaurant/22539?skipProfile=true'],
-            http,
-            browser: browserRows,
-            candidateOrigins: [...new Set(browserRows.flatMap((row) => row.requestOrigins ?? []))].sort(),
-            candidateDataUrls: [...new Set(browserRows.flatMap((row) => row.dataRequests?.map((entry) => entry.url) ?? []))].slice(0, 400),
-          };
+          describe("public menu API numeric-provider shape", () => {
+            const weOrderBody = JSON.stringify({
+              data: {
+                menu: [
+                  {
+                    name: "Sharing Market",
+                    type: "food",
+                    categories: [
+                      {
+                        name: "Sharing",
+                        entries: [
+                          { name: "Rådhusplassen sharing meny", description: "For bordet", price: 649, soldOut: false },
+                          { name: "Makhani", description: "Aromatisk curry", price: 229, soldOut: true },
+                          { name: "Bestill saus", price: 0 },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    name: "Drikke",
+                    type: "drinks",
+                    categories: [{ name: "Drikke", entries: [{ name: "Cola", price: 55 }] }],
+                  },
+                  {
+                    name: "Annet",
+                    type: "misc",
+                    categories: [{ name: "Wine List", entries: [{ name: "House wine", price: 700 }] }],
+                  },
+                ],
+              },
+            });
 
-          await writeFile('research/der-peppern-gror-source-trace/result.json', JSON.stringify(result, null, 2) + '\n');
-          console.log(JSON.stringify(result, null, 2));
-          await context.close();
-          await browser.close();
-          NODE
+            it("extracts only positive-priced food entries with an explicit persisted currency", () => {
+              const items = extractPublicMenuApi(weOrderBody, { priceCurrency: "NOK" });
+              expect(PUBLIC_MENU_API_EXTRACTOR_VERSION).toBe("public-menu-api-v2");
+              expect(items.map((item) => item.name)).toEqual([
+                "Rådhusplassen sharing meny",
+                "Makhani",
+              ]);
+              expect(items[0]).toMatchObject({
+                sectionName: "Sharing",
+                priceMinor: 64900,
+                currency: "NOK",
+                extractionMethod: "api",
+              });
+              expect(items[1]).toMatchObject({ priceMinor: 22900 });
+            });
+
+            it("fails closed when numeric prices do not carry a declared currency", () => {
+              expect(() => extractPublicMenuApi(weOrderBody)).toThrow(
+                "numeric price requires explicit priceCurrency",
+              );
+            });
+
+            it("fails closed when a declared currency conflicts with embedded API currency", () => {
+              expect(() =>
+                extractPublicMenuApi(
+                  JSON.stringify({
+                    menus: [{
+                      menuSections: [{
+                        title: "Mat",
+                        menuItems: [{ name: "Curry", price: { amount: 229, currency: "NOK" } }],
+                      }],
+                    }],
+                  }),
+                  { priceCurrency: "SEK" },
+                ),
+              ).toThrow("currency conflict: embedded NOK, declared SEK");
+            });
+          });
+          TS
+
+          cat > apps/menu-worker/src/menu-source-price-currency.test.ts <<'TS'
+          import { describe, expect, it } from "vitest";
+          import { restaurantOnboardingManifestSchema } from "./onboarding-manifest.js";
+
+          const base = {
+            version: 1,
+            restaurant: {
+              slug: "api-bistro-oslo",
+              name: "API Bistro",
+              websiteUrl: "https://example.com/",
+              address: "Testgata 1",
+              city: "Oslo",
+              countryCode: "NO",
+              latitude: 59.91,
+              longitude: 10.75,
+            },
+            menuSource: {
+              url: "https://example.com/api/menu",
+              sourceType: "api",
+              checkIntervalMinutes: 360,
+              minimumExpectedItems: 5,
+            },
+            qualityAssertions: { requiredDishNames: ["Makhani"] },
+          } as const;
+
+          describe("menu source price currency", () => {
+            it("accepts explicit ISO currency for API sources", () => {
+              const parsed = restaurantOnboardingManifestSchema.parse({
+                ...base,
+                menuSource: { ...base.menuSource, priceCurrency: "NOK" },
+              });
+              expect(parsed.menuSource.priceCurrency).toBe("NOK");
+            });
+
+            it("rejects malformed currency and use on non-API sources", () => {
+              expect(() => restaurantOnboardingManifestSchema.parse({
+                ...base,
+                menuSource: { ...base.menuSource, priceCurrency: "kr" },
+              })).toThrow();
+              expect(() => restaurantOnboardingManifestSchema.parse({
+                ...base,
+                menuSource: { ...base.menuSource, sourceType: "html", priceCurrency: "NOK" },
+              })).toThrow("priceCurrency is only supported for API menu sources");
+            });
+          });
+          TS
+
+      - name: Build workspace graph after patch
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Run complete menu-worker and database gates
+        run: |
+          pnpm --filter @fysen/menu-worker test
+          pnpm --filter @fysen/menu-worker typecheck
+          pnpm --filter @fysen/database test
+          pnpm --filter @fysen/database typecheck
+
+      - name: Stage tested permanent patch
+        shell: bash
+        run: |
+          rm -rf /tmp/weorder-v2-patch
+          mkdir -p /tmp/weorder-v2-patch/apps/menu-worker/src /tmp/weorder-v2-patch/packages/database/src /tmp/weorder-v2-patch/packages/database/migrations
+          cp apps/menu-worker/src/public-menu-api-extractor.ts /tmp/weorder-v2-patch/apps/menu-worker/src/
+          cp apps/menu-worker/src/public-menu-api-extractor.test.ts /tmp/weorder-v2-patch/apps/menu-worker/src/
+          cp apps/menu-worker/src/menu-source-price-currency.test.ts /tmp/weorder-v2-patch/apps/menu-worker/src/
+          cp apps/menu-worker/src/onboarding-manifest.ts /tmp/weorder-v2-patch/apps/menu-worker/src/
+          cp apps/menu-worker/src/menu-source-runtime.ts /tmp/weorder-v2-patch/apps/menu-worker/src/
+          cp apps/menu-worker/src/batch-intake.ts /tmp/weorder-v2-patch/apps/menu-worker/src/
+          cp apps/menu-worker/src/manifest-validator.ts /tmp/weorder-v2-patch/apps/menu-worker/src/
+          cp apps/menu-worker/src/watcher.ts /tmp/weorder-v2-patch/apps/menu-worker/src/
+          cp apps/menu-worker/src/onboarding.ts /tmp/weorder-v2-patch/apps/menu-worker/src/
+          cp packages/database/src/repository.ts /tmp/weorder-v2-patch/packages/database/src/
+          cp packages/database/src/migration.test.ts /tmp/weorder-v2-patch/packages/database/src/
+          cp packages/database/migrations/0018_menu_source_price_currency.sql /tmp/weorder-v2-patch/packages/database/migrations/
+          printf '%s\n' 'base=442751a11b90f750242e28ade32729121c78883b' > /tmp/weorder-v2-patch/EVIDENCE.txt
 
       - uses: actions/upload-artifact@v4
-        if: always()
         with:
-          name: batch02-der-peppern-gror-source-trace
-          path: apps/menu-worker/research/der-peppern-gror-source-trace/result.json
+          name: batch02-weorder-v2-tested-patch
+          path: /tmp/weorder-v2-patch
           if-no-files-found: error
