@@ -1,0 +1,131 @@
+name: TEMP prove final Peppern WeOrder candidate
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/peppern-weorder-candidate-proof-v2.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  candidate-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Restore immutable seed and bind canonical WeOrder source
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02 apps/menu-worker/research/peppern-weorder-candidate-final
+          mkdir -p /tmp/batch02 apps/menu-worker/research/peppern-weorder-candidate-final/generated
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const source = JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json', 'utf8'));
+          const seed = source.restaurants.find((entry) => entry.restaurant.slug === 'der-peppern-gror-radhusplassen-oslo');
+          if (!seed) throw new Error('Missing immutable Der Peppern Gror Batch 02 seed');
+          const entry = {
+            ...seed,
+            restaurant: { ...seed.restaurant, address: 'Fridtjof Nansens plass 7, 0160 Oslo' },
+            menuSource: {
+              ...seed.menuSource,
+              url: 'https://api.weorder.com/api/restaurant/22539/restaurant_menu/en/0/0/6.1.7',
+              sourceType: 'api',
+              fetchMode: 'http',
+              sourceSupport: { redirectOrigins: [], browserDataOrigins: [] },
+            },
+            verification: {
+              ...seed.verification,
+              hours: {
+                ...seed.verification.hours,
+                checkedAt: '2026-08-23',
+                note: 'The restaurant first-party site links Rådhusplassen directly to WeOrder restaurant 22539. The stable public menu endpoint is fetched without cookies/auth/POST; candidate validation treats it as the restaurant-linked priced service menu and does not assume broader dine-in completeness.',
+              },
+            },
+          };
+          await writeFile('apps/menu-worker/research/peppern-weorder-candidate-final/plan.json', JSON.stringify({ ...source, outputDirectory: 'research/peppern-weorder-candidate-final/generated', concurrency: 1, restaurants: [entry] }, null, 2) + '\n');
+          NODE
+
+      - name: Generate candidate through normal intake
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          node dist/index.js intake:batch research/peppern-weorder-candidate-final/plan.json | tee research/peppern-weorder-candidate-final/intake.json
+
+      - name: Independently validate candidate on second fetch
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          node dist/index.js validate:batch research/peppern-weorder-candidate-final/generated | tee research/peppern-weorder-candidate-final/validation.json
+
+      - name: Gate candidate identity quality and cleaned output
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readdir, readFile, writeFile } from 'node:fs/promises';
+          const root = 'research/peppern-weorder-candidate-final';
+          const intake = JSON.parse(await readFile(`${root}/intake.json`, 'utf8'));
+          const validation = JSON.parse(await readFile(`${root}/validation.json`, 'utf8'));
+          const files = (await readdir(`${root}/generated`)).filter((file) => file.endsWith('.json'));
+          if (files.length !== 1) throw new Error(`Expected one candidate, got ${files.length}`);
+          const manifest = JSON.parse(await readFile(`${root}/generated/${files[0]}`, 'utf8'));
+          const intakeResult = intake.results?.[0] ?? {};
+          const validationResult = validation.results?.[0] ?? {};
+          if (intakeResult.outcome !== 'generated') throw new Error(`Intake outcome ${intakeResult.outcome}`);
+          if (validation.manifestCount !== 1 || validation.acceptedCount !== 1 || validation.failedCount !== 0 || !validationResult.accepted) throw new Error(`Candidate validation not 1/1: ${JSON.stringify(validation)}`);
+          if (manifest.restaurant?.slug !== 'der-peppern-gror-radhusplassen-oslo') throw new Error('Candidate slug drift');
+          if (manifest.restaurant?.address !== 'Fridtjof Nansens plass 7, 0160 Oslo') throw new Error(`Address drift: ${manifest.restaurant?.address}`);
+          if (manifest.menuSource?.url !== 'https://api.weorder.com/api/restaurant/22539/restaurant_menu/en/0/0/6.1.7') throw new Error('Source URL drift');
+          if (manifest.menuSource?.sourceType !== 'api' || manifest.menuSource?.fetchMode !== 'http') throw new Error('Source type drift');
+          if (manifest.menuSource?.minimumExpectedItems !== 31) throw new Error(`minimumExpectedItems=${manifest.menuSource?.minimumExpectedItems}; expected 31`);
+          if (validationResult.validation?.menu?.extractorVersion !== 'public-menu-api-v2') throw new Error(`Extractor ${validationResult.validation?.menu?.extractorVersion}`);
+          if (validationResult.validation?.menu?.quality?.itemCount !== 31) throw new Error(`Item count ${validationResult.validation?.menu?.quality?.itemCount}; expected 31`);
+          if ((validationResult.failureFamilies ?? []).length !== 0) throw new Error(`Failure families ${JSON.stringify(validationResult.failureFamilies)}`);
+          const names = manifest.qualityAssertions?.requiredDishNames ?? [];
+          const variants = manifest.qualityAssertions?.requiredDishVariants ?? [];
+          if (names.length !== 8 || variants.length !== 8) throw new Error(`Assertion count ${names.length}/${variants.length}; expected 8/8`);
+          if (names.includes('Samosa-CHTNY') || variants.some((entry) => entry.name === 'Samosa-CHTNY')) throw new Error('Non-food Samosa assertion leaked');
+          if (names.some((name) => /MÅ BESTILLES SOM TILLEGG/iu.test(name)) || variants.some((entry) => /MÅ BESTILLES SOM TILLEGG/iu.test(entry.name))) throw new Error('Ordering instruction leaked into candidate assertions');
+          const required = new Map(variants.map((entry) => [entry.name, entry.priceMinor]));
+          if (required.get('Chicken Tikka') !== 26500) throw new Error(`Clean Chicken Tikka assertion missing: ${required.get('Chicken Tikka')}`);
+          const summary = {
+            revision: process.env.GITHUB_SHA,
+            permanentRevision: 'cd2f262d048981a732febfb31b3282530fcfd24d',
+            intakeOutcome: intakeResult.outcome,
+            observedItemCount: intakeResult.observedItemCount ?? null,
+            candidateFile: files[0],
+            candidate: manifest,
+            validation: { accepted: validationResult.accepted, itemCount: validationResult.validation?.menu?.quality?.itemCount, extractorVersion: validationResult.validation?.menu?.extractorVersion, failureFamilies: validationResult.failureFamilies ?? [] },
+          };
+          await writeFile(`${root}/summary.json`, JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: peppern-weorder-final-candidate-proof
+          path: apps/menu-worker/research/peppern-weorder-candidate-final
+          if-no-files-found: error
