@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 51,
+    "minimumExpectedItems": 52,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -39,7 +39,7 @@
       "Entrecote",
       "Vongole",
       "Blåskjell escabeche",
-      "Lunsjplanke for to"
+      "Plato de Ibérico"
     ],
     "requiredDishVariants": [
       {
@@ -71,8 +71,8 @@
         "priceMinor": 23000
       },
       {
-        "name": "Lunsjplanke for to",
-        "priceMinor": 70000
+        "name": "Plato de Ibérico",
+        "priceMinor": 25500
       }
     ],
     "forbiddenDishNames": []
