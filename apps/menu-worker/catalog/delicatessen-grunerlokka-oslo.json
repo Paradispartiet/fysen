@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "delicatessen-grunerlokka-oslo",
+    "name": "Delicatessen Grünerløkka",
+    "websiteUrl": "https://delicatessen.no/grunerlokka/",
+    "address": "Søndre gate 8, 0550 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.918801,
+    "longitude": 10.758278
+  },
+  "menuSource": {
+    "url": "https://favrit.com/ws/ordr-service/public/v3/locations/simple/LK4AD79J8nO?caller=GUEST_APP&language=nb",
+    "sourceType": "api",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 51,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-20",
+      "note": "The first-party location page links this Favrit service menu directly. Batch 02 tests it as a restaurant-linked secondary priced service-menu source; dine-in completeness is not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Brød & alioli",
+      "Salte mandler",
+      "Trøffelmanchego",
+      "Ibéricotallerken",
+      "Bakt sjampinjong salat",
+      "Bikinitoast",
+      "Bonito del Norte – hvit tunfisk",
+      "Sorbet"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Brød & alioli",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Salte mandler",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Trøffelmanchego",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Ibéricotallerken",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Bakt sjampinjong salat",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Bikinitoast",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Bonito del Norte – hvit tunfisk",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Sorbet",
+        "priceMinor": 5000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
