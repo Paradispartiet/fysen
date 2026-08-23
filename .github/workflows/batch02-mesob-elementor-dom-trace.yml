@@ -1,0 +1,62 @@
+name: TEMP Batch 02 Mesob Elementor DOM trace
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch02-mesob-elementor-dom-trace.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  trace:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - name: Restore captured Mesob bytes and inspect Elementor cards
+        shell: bash
+        run: |
+          mkdir -p trace /tmp/captured
+          gh run download 32628090223 --repo "$GITHUB_REPOSITORY" --name batch02-mesob-sawan-stage-trace --dir /tmp/captured
+          cp /tmp/captured/mesob.html trace/mesob.html
+          node --input-type=module <<'NODE' | tee trace/mesob-elementor-dom.json
+          import {readFile} from 'node:fs/promises';
+          import {load} from 'cheerio';
+          const raw=await readFile('trace/mesob.html','utf8');
+          const $=load(raw);
+          const selectors=['.elementor-price-list-item','.elementor-price-list-header','.elementor-price-list-title','.elementor-price-list-price'];
+          const counts=Object.fromEntries(selectors.map(s=>[s,$(s).length]));
+          const cards=[];
+          $('.elementor-price-list-item').each((i,el)=>{
+            const card=$(el);
+            cards.push({
+              i,
+              title:card.find('.elementor-price-list-title').first().text().normalize('NFKC').replace(/\s+/g,' ').trim(),
+              price:card.find('.elementor-price-list-price').first().text().normalize('NFKC').replace(/\s+/g,' ').trim(),
+              header:card.find('.elementor-price-list-header').first().text().normalize('NFKC').replace(/\s+/g,' ').trim(),
+              text:card.text().normalize('NFKC').replace(/\s+/g,' ').trim().slice(0,500)
+            });
+          });
+          console.log(JSON.stringify({counts,cards},null,2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-mesob-elementor-dom-trace
+          path: trace/**
+          if-no-files-found: error
