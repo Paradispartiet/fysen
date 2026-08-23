@@ -67,4 +67,29 @@ describe("public menu API WeOrder strict boundary", () => {
     );
     expect(items.map((item) => item.name)).toEqual(["Butter Chicken"]);
   });
+
+  it("removes parenthetical ordering instructions while preserving semantic parentheses", () => {
+    const items = extractPublicMenuApi(
+      payload([
+        {
+          name: "Chicken Tikka(TANDORISAUS MÅ BESTILLES SOM TILLEGG)",
+          price: 265,
+          dPrice: "265,-",
+          isAlcohol: false,
+          desc: "(TANDORISAUSMÅBESTILLESSOMTILLEGG)Benfrie kyllingstykker marinert og grillet.",
+        },
+        {
+          name: "Naan (glutenfri)",
+          price: 70,
+          dPrice: "70,-",
+          isAlcohol: false,
+          desc: "Brød (glutenfri variant).",
+        },
+      ]),
+    );
+
+    expect(items.map((item) => item.name)).toEqual(["Chicken Tikka", "Naan (glutenfri)"]);
+    expect(items[0]?.description).toBe("Benfrie kyllingstykker marinert og grillet.");
+    expect(items[1]?.description).toBe("Brød (glutenfri variant).");
+  });
 });
