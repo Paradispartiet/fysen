@@ -8,13 +8,15 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   trace:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 18
     env:
       FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -29,110 +31,96 @@ jobs:
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm --filter @fysen/menu-worker... build
 
-      - name: Capture parser/source policy locations
+      - name: Capture exact Sawan stale-source chain
         shell: bash
         run: |
           mkdir -p trace
-          {
-            echo '=== cross-origin error location ==='
-            grep -R -n -C 12 'Cross-origin crawler redirect blocked' apps/menu-worker/src || true
-            echo
-            echo '=== redirectOrigins references ==='
-            grep -R -n -C 8 'redirectOrigins' apps/menu-worker/src || true
-            echo
-            echo '=== html source extractor exports ==='
-            grep -n '^export ' apps/menu-worker/src/html-source-extractor.ts || true
-            echo
-            echo '=== related html exports ==='
-            grep -n '^export ' apps/menu-worker/src/html-extractor.ts apps/menu-worker/src/html-description-title-recovery.ts apps/menu-worker/src/html-text-section-scope.ts apps/menu-worker/src/html-output-canonicalizer.ts || true
-          } > trace/source-policy-and-exports.txt
-          cat trace/source-policy-and-exports.txt
-
-      - name: Capture exact Sawan source redirect chains from runner
-        shell: bash
-        run: |
-          node --input-type=module <<'NODE' | tee trace/sawan-node-redirect-chains.json
-          const targets=[
-            'https://sawan.no/SawanAlacarteActive.pdf',
-            'https://www.sawan.no/SawanAlacarteActive.pdf',
-            'https://www.sawan.no/meny',
-          ];
+          node --input-type=module <<'NODE' | tee trace/sawan-source-chain.json
+          const targets=['https://sawan.no/SawanAlacarteActive.pdf','https://www.sawan.no/SawanAlacarteActive.pdf','https://www.sawan.no/meny'];
           const reports=[];
           for(const target of targets){
             const hops=[]; let current=target;
             for(let hop=0;hop<8;hop++){
-              try{
-                const response=await fetch(current,{redirect:'manual',headers:{'user-agent':'FysenMenuBot/0.1'},signal:AbortSignal.timeout(20000)});
-                hops.push({hop,url:current,status:response.status,location:response.headers.get('location'),contentType:response.headers.get('content-type'),contentLength:response.headers.get('content-length')});
-                const loc=response.headers.get('location');
-                await response.body?.cancel();
-                if(!(response.status>=300&&response.status<400&&loc)) break;
-                current=new URL(loc,current).href;
-              }catch(error){
-                hops.push({hop,url:current,error:{name:error?.name??null,message:error?.message??String(error),cause:error?.cause?{name:error.cause.name??null,message:error.cause.message??String(error.cause),code:error.cause.code??null}:null}});
-                break;
-              }
+              const response=await fetch(current,{redirect:'manual',headers:{'user-agent':'FysenMenuBot/0.1'},signal:AbortSignal.timeout(20000)});
+              hops.push({hop,url:current,status:response.status,location:response.headers.get('location'),contentType:response.headers.get('content-type')});
+              const loc=response.headers.get('location');
+              await response.body?.cancel();
+              if(!(response.status>=300&&response.status<400&&loc)) break;
+              current=new URL(loc,current).href;
             }
             reports.push({target,hops});
           }
           console.log(JSON.stringify(reports,null,2));
           NODE
-          set +e
-          for target in 'https://sawan.no/SawanAlacarteActive.pdf' 'https://www.sawan.no/SawanAlacarteActive.pdf' 'https://www.sawan.no/meny'; do
-            safe=$(printf '%s' "$target" | tr '/:' '__')
-            curl -sS -L --max-redirs 8 --connect-timeout 10 --max-time 40 -A 'FysenMenuBot/0.1' -D "trace/sawan-${safe}.headers" -o "trace/sawan-${safe}.body" -w "$target -> %{http_code} %{url_effective} %{content_type} %{size_download}\n" "$target"
-          done | tee trace/sawan-curl-results.txt
-          exit 0
 
-      - name: Capture Mesob raw card structure
+      - name: Fetch current Mesob and Sawan HTML with bounded retry
         shell: bash
         run: |
-          curl -sS -L --max-redirs 8 --connect-timeout 10 --max-time 40 -A 'FysenMenuBot/0.1' -D trace/mesob-curl-headers.txt -o trace/mesob-menu.html 'https://mesobrestaurant.no/menu/'
+          curl --retry 4 --retry-delay 2 --retry-all-errors -fsSL --max-redirs 8 --connect-timeout 10 --max-time 60 -A 'FysenMenuBot/0.1' -D trace/mesob.headers -o trace/mesob.html 'https://mesobrestaurant.no/menu/'
+          curl --retry 4 --retry-delay 2 --retry-all-errors -fsSL --max-redirs 8 --connect-timeout 10 --max-time 60 -A 'FysenMenuBot/0.1' -D trace/sawan-menu.headers -o trace/sawan-menu.html 'https://www.sawan.no/meny'
           {
-            echo '=== byte/count overview ==='
-            wc -c trace/mesob-menu.html
-            printf 'price-like kr nodes: '; grep -Eo 'kr[[:space:]]*[0-9]+([.,][0-9]+)?|[0-9]+([.,][0-9]+)?[[:space:]]*kr' trace/mesob-menu.html | wc -l
-            echo
-            echo '=== KITFO context ==='
-            grep -in -C 18 'KITFO' trace/mesob-menu.html | head -n 180 || true
-            echo
-            echo '=== DERO WET context ==='
-            grep -in -C 18 'DERO WET' trace/mesob-menu.html | head -n 180 || true
-            echo
-            echo '=== Strawberry context ==='
-            grep -in -C 18 'Strawberry cheesecace' trace/mesob-menu.html | head -n 180 || true
-          } > trace/mesob-raw-context.txt
-          cat trace/mesob-raw-context.txt
+            echo "Mesob bytes $(wc -c < trace/mesob.html)"
+            echo "Sawan bytes $(wc -c < trace/sawan-menu.html)"
+            printf 'Mesob elementor price-list titles: '; grep -Eo 'elementor-price-list-title' trace/mesob.html | wc -l
+            printf 'Mesob elementor price-list prices: '; grep -Eo 'elementor-price-list-price' trace/mesob.html | wc -l
+          } | tee trace/source-structure-counts.txt
 
-      - name: Compare Mesob base and scoped parser stages
+      - name: Compare base and scoped parser stages
         working-directory: apps/menu-worker
         shell: bash
         run: |
-          node --input-type=module <<'NODE' | tee ../../trace/mesob-stage-comparison.json
+          node --input-type=module <<'NODE' | tee ../../trace/parser-stage-comparison.json
           import {readFile} from 'node:fs/promises';
           import {extractHtmlMenu,extractHtmlVisibleText} from './dist/html-extractor.js';
           import {extractScopedHtmlMenu} from './dist/html-source-extractor.js';
-          const html=await readFile('../../trace/mesob-menu.html','utf8');
-          const base=extractHtmlMenu(html);
-          const scoped=extractScopedHtmlMenu(html);
-          const visible=extractHtmlVisibleText(html);
-          const pick=(x)=>({method:x.method,count:x.items.length,items:x.items.map((i)=>({name:i.name,priceMinor:i.priceMinor,position:i.position,sourceExcerpt:i.sourceExcerpt}))});
-          const interesting=visible.split('\n').filter((line)=>/KITFO|DERO WET|Strawberry cheesecace|kr349|kr299|kr95/i.test(line));
-          console.log(JSON.stringify({base:pick(base),scoped:pick(scoped),visibleInteresting:interesting},null,2));
-          NODE
-
-      - name: Capture runtime module exports
-        working-directory: apps/menu-worker
-        shell: bash
-        run: |
-          node --input-type=module <<'NODE' | tee ../../trace/runtime-exports.json
-          const modules=['html-extractor','html-source-extractor','html-description-title-recovery','html-text-section-scope','html-output-canonicalizer'];
           const out={};
-          for(const name of modules){
-            const mod=await import(`./dist/${name}.js`);
-            out[name]=Object.entries(mod).map(([key,value])=>({key,type:typeof value,arity:typeof value==='function'?value.length:null}));
+          for(const [key,path] of [['mesob','../../trace/mesob.html'],['sawan','../../trace/sawan-menu.html']]){
+            const html=await readFile(path,'utf8');
+            const base=extractHtmlMenu(html);
+            const scoped=extractScopedHtmlMenu(html);
+            const visible=extractHtmlVisibleText(html);
+            const pick=(x)=>({method:x.method,count:x.items.length,items:x.items.map((i)=>({name:i.name,priceMinor:i.priceMinor,position:i.position,sourceExcerpt:i.sourceExcerpt}))});
+            out[key]={base:pick(base),scoped:pick(scoped),visibleLineCount:visible.split('\n').length};
           }
           console.log(JSON.stringify(out,null,2));
+          NODE
+
+      - name: Fresh Sawan intake using current official HTML source
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02 && mkdir -p /tmp/batch02
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import {mkdir,readFile,writeFile} from 'node:fs/promises';
+          const source=JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json','utf8'));
+          const base=structuredClone(source.restaurants.find((x)=>x.restaurant.slug==='sawan-president-harbitz-gate-oslo'));
+          if(!base) throw new Error('Missing Sawan seed');
+          base.menuSource={...base.menuSource,url:'https://www.sawan.no/meny',sourceType:'html',fetchMode:'http',sourceSupport:{redirectOrigins:[],browserDataOrigins:[]}};
+          base.assertionCount=0;
+          base.forbiddenDishNames=[];
+          const plan={...source,outputDirectory:'research/sawan-html-generated',concurrency:1,restaurants:[base]};
+          await mkdir('apps/menu-worker/research/sawan-html-generated',{recursive:true});
+          await writeFile('apps/menu-worker/research/sawan-html.plan.json',JSON.stringify(plan,null,2)+'\n');
+          NODE
+          cd apps/menu-worker
+          set +e
+          node dist/index.js intake:batch research/sawan-html.plan.json | tee ../../trace/sawan-html-intake.json
+          intake_exit=${PIPESTATUS[0]}
+          node dist/index.js validate:batch research/sawan-html-generated | tee ../../trace/sawan-html-validation.json
+          validation_exit=${PIPESTATUS[0]}
+          printf 'intake_exit=%s\nvalidation_exit=%s\n' "$intake_exit" "$validation_exit" | tee ../../trace/sawan-html-exits.txt
+          cp research/sawan-html-generated/*.json ../../trace/ 2>/dev/null || true
+          exit 0
+
+      - name: Summarize Sawan HTML observed output
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE' | tee trace/sawan-html-summary.json
+          import {readFile} from 'node:fs/promises';
+          const intake=JSON.parse(await readFile('trace/sawan-html-intake.json','utf8'));
+          const validation=JSON.parse(await readFile('trace/sawan-html-validation.json','utf8'));
+          const rows=(validation.results??[]).map((r)=>({slug:r.slug,accepted:r.accepted,failureFamilies:r.failureFamilies??[],itemCount:r.validation?.menu?.quality?.itemCount??null,names:r.validation?.menu?.observedDishNames??[],variants:r.validation?.menu?.observedDishVariants??[],extractorVersion:r.validation?.menu?.extractorVersion??null,error:r.validation?.menu?.error??r.error??null}));
+          console.log(JSON.stringify({intake:{requested:intake.requestedCount,generated:intake.generatedCount,failed:intake.failedCount,results:intake.results},validation:{manifestCount:validation.manifestCount,accepted:validation.acceptedCount,failed:validation.failedCount},rows},null,2));
           NODE
 
       - uses: actions/upload-artifact@v4
