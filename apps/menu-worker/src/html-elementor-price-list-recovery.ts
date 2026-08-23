@@ -92,7 +92,10 @@ export function recoverElementorPriceListHtmlItems(
       position,
       extractionMethod: "html_heuristic",
       confidence: 0.995,
-      sourceExcerpt: [name, priceText, description]
+      sourceExcerpt: [
+        `${name} ${priceText}`,
+        description,
+      ]
         .filter(Boolean)
         .join(" — ")
         .slice(0, 1000),
