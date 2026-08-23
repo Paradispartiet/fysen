@@ -1,0 +1,70 @@
+name: TEMP prove Viet Kitchen current menu drift
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/viet-kitchen-current-menu-drift-proof.yml"
+
+permissions:
+  contents: read
+
+env:
+  FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - uses: pnpm/action-setup@v4
+        with: { version: 11.4.0, run_install: false }
+      - uses: actions/setup-node@v4
+        with: { node-version: 24.18.0 }
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Fetch and extract current Viet Kitchen Wolt menu twice
+        working-directory: apps/menu-worker
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          import {HttpMenuClient} from './dist/http-client.js';
+          import {fetchMenuSource,extractMenuSource} from './dist/menu-source-runtime.js';
+          import {canonicalizeUniqueMenuSourceKeys} from './dist/menu-source-key-canonicalizer.js';
+          const manifest=JSON.parse(await readFile('catalog/viet-kitchen-bjolsen-oslo.json','utf8'));
+          const rounds=[];
+          for(let i=0;i<2;i++){
+            const client=new HttpMenuClient();
+            const fetched=await fetchMenuSource({...manifest.menuSource,etag:null,lastModified:null},client);
+            if(fetched.kind!=='content')throw new Error('Unexpected 304');
+            const extracted=await extractMenuSource(manifest.menuSource.sourceType,fetched);
+            const items=canonicalizeUniqueMenuSourceKeys(extracted.items);
+            rounds.push({status:fetched.status,rawSha256:fetched.rawSha256,itemCount:items.length,extractorVersion:extracted.extractorVersion,variants:items.map(x=>({name:x.name,priceMinor:x.priceMinor}))});
+          }
+          const key=(r)=>r.variants.map(x=>`${x.name}\u0000${x.priceMinor}`).sort();
+          const failures=[];
+          if(rounds[0].itemCount!==66||rounds[1].itemCount!==66)failures.push(`count:${rounds[0].itemCount}/${rounds[1].itemCount}`);
+          if(JSON.stringify(key(rounds[0]))!==JSON.stringify(key(rounds[1])))failures.push('name-price-set-not-stable');
+          const current=[
+            ['BÁNH CUỐN NHÂN THỊT - Dampede rullinger av rismel',25900],
+            ['BÁNH BÈO NÓNG - Rundt dampet rismel',25900],
+            ['BÁNH HỎI HEO QUAY - Tynne rismelark med ribbe',25900],
+          ];
+          const retained=[
+            ['Spring Rolls',9500],['Summer Rolls',12500],['Wonton Suppe',12500],['PHỞ BIFF BÒ TÁI',24900],['PHỞ KYLLING GÀ',24900],['BÚN BÒ NỨC NỞ',26900],['MÌ XÀO - Stir-fried egg noodles',23900],
+          ];
+          for(const [name,price] of [...current,...retained])if(!rounds[1].variants.some(x=>x.name===name&&x.priceMinor===price))failures.push(`missing:${name}:${price}`);
+          for(const stale of ['BÁNH MÌ ĐẶC BIỆT - Special','BÁNH MÌ HEO QUAY - Ribbe','BÁNH MÌ BÒ - Biff'])if(rounds[1].variants.some(x=>x.name===stale))failures.push(`stale-present:${stale}`);
+          const summary={rounds:rounds.map(({status,rawSha256,itemCount,extractorVersion})=>({status,rawSha256,itemCount,extractorVersion})),stableNamePriceSet:JSON.stringify(key(rounds[0]))===JSON.stringify(key(rounds[1])),currentReplacementAssertions:current,retainedAssertionCount:retained.length,failures};
+          await writeFile('research/viet-kitchen-current-menu-drift.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if(failures.length)throw new Error(JSON.stringify(failures));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: viet-kitchen-current-menu-drift-proof
+          path: apps/menu-worker/research/viet-kitchen-current-menu-drift.json
+          if-no-files-found: error
