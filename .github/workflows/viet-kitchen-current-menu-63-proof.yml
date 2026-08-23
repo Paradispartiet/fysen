@@ -1,0 +1,107 @@
+name: TEMP prove Viet Kitchen refresh and strict 63 catalog
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/viet-kitchen-current-menu-63-proof.yml"
+
+permissions:
+  contents: read
+
+env:
+  FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+  FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+  FYSEN_CANDIDATE_VALIDATION_MAX_ATTEMPTS: "1"
+
+jobs:
+  viet-live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - uses: pnpm/action-setup@v4
+        with: { version: 11.4.0, run_install: false }
+      - uses: actions/setup-node@v4
+        with: { node-version: 24.18.0 }
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Validate refreshed Viet manifest once
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          rm -rf research/viet-current-live && mkdir -p research/viet-current-live
+          cp catalog/viet-kitchen-bjolsen-oslo.json research/viet-current-live/
+          set +e
+          node dist/index.js validate:batch research/viet-current-live | tee research/viet-current-validation.json
+          echo ${PIPESTATUS[0]} > research/viet-current-exit.txt
+          exit 0
+      - name: Gate current 66-item Viet menu
+        working-directory: apps/menu-worker
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const v=JSON.parse(await readFile('research/viet-current-validation.json','utf8'));
+          const status=Number((await readFile('research/viet-current-exit.txt','utf8')).trim());
+          const r=v.results?.[0], m=r?.validation?.menu;const failures=[];
+          if(v.maxAttempts!==1||v.manifestCount!==1||v.acceptedCount!==1||v.failedCount!==0||status!==0||!r?.accepted)failures.push('not-1/1-one-attempt');
+          if(m?.quality?.itemCount!==66||m?.quality?.minimumExpectedItems!==66)failures.push(`count:${m?.quality?.itemCount}/${m?.quality?.minimumExpectedItems}`);
+          for(const [name,price] of [
+            ['BÁNH CUỐN NHÂN THỊT - Dampede rullinger av rismel',25900],
+            ['BÁNH BÈO NÓNG - Rundt dampet rismel',25900],
+            ['BÁNH HỎI HEO QUAY - Tynne rismelark med ribbe',25900],
+          ]) if(!(m?.observedDishVariants??[]).some(x=>x.name===name&&x.priceMinor===price))failures.push(`missing:${name}:${price}`);
+          for(const stale of ['BÁNH MÌ ĐẶC BIỆT - Special','BÁNH MÌ HEO QUAY - Ribbe','BÁNH MÌ BÒ - Biff'])if((m?.observedDishNames??[]).includes(stale))failures.push(`stale:${stale}`);
+          const summary={manifestCount:v.manifestCount,acceptedCount:v.acceptedCount,failedCount:v.failedCount,maxAttempts:v.maxAttempts,validatorExitStatus:status,itemCount:m?.quality?.itemCount??null,minimumExpectedItems:m?.quality?.minimumExpectedItems??null,extractorVersion:m?.extractorVersion??null,failures};
+          await writeFile('research/viet-current-summary.json',JSON.stringify(summary,null,2)+'\n');console.log(JSON.stringify(summary,null,2));if(failures.length)throw new Error(JSON.stringify(failures));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: viet-kitchen-current-live-proof
+          path: apps/menu-worker/research/viet-current-*.json
+          if-no-files-found: error
+
+  strict-63:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - uses: pnpm/action-setup@v4
+        with: { version: 11.4.0, run_install: false }
+      - uses: actions/setup-node@v4
+        with: { node-version: 24.18.0 }
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - run: pnpm --filter @fysen/menu-worker exec vitest run src/onboarding-refresh-safety.test.ts src/catalog-onboarding-failure-policy.test.ts src/production-menu-mutation-workflow.test.ts
+      - name: Require exact 63 unique manifests
+        working-directory: apps/menu-worker
+        run: node --input-type=module -e "const fs=await import('node:fs/promises');const files=(await fs.readdir('catalog')).filter(f=>f.endsWith('.json'));const slugs=[];for(const f of files)slugs.push(JSON.parse(await fs.readFile('catalog/'+f,'utf8')).restaurant.slug);if(files.length!==63||new Set(slugs).size!==63)throw new Error('catalog '+files.length+'/'+new Set(slugs).size)"
+      - name: Validate exact 63 catalog with one validator attempt
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch catalog | tee research/viet-final63-validation.json
+          echo ${PIPESTATUS[0]} > research/viet-final63-exit.txt
+          exit 0
+      - name: Gate exact 63 result
+        working-directory: apps/menu-worker
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const v=JSON.parse(await readFile('research/viet-final63-validation.json','utf8'));
+          const status=Number((await readFile('research/viet-final63-exit.txt','utf8')).trim());
+          const failed=(v.results??[]).filter(r=>!r.accepted).map(r=>({slug:r.slug,failureFamilies:r.failureFamilies??[],error:r.error??r.validation?.menu?.error??null,hoursError:r.validation?.hours?.error??null,actionErrors:(r.validation?.actions??[]).filter(a=>!a.accepted).map(a=>a.error)}));
+          const summary={manifestCount:v.manifestCount,acceptedCount:v.acceptedCount,failedCount:v.failedCount,maxAttempts:v.maxAttempts,validatorExitStatus:status,failed};
+          await writeFile('research/viet-final63-summary.json',JSON.stringify(summary,null,2)+'\n');console.log(JSON.stringify(summary,null,2));
+          if(v.maxAttempts!==1||v.manifestCount!==63||v.acceptedCount!==63||v.failedCount!==0||status!==0||failed.length)throw new Error('strict 63 failed');
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: viet-kitchen-final63-gate
+          path: apps/menu-worker/research/viet-final63-*.json
+          if-no-files-found: error
