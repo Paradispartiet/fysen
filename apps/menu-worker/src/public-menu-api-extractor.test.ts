@@ -58,7 +58,7 @@ describe("public menu API extractor", () => {
     });
 
     const items = extractPublicMenuApi(body);
-    expect(PUBLIC_MENU_API_EXTRACTOR_VERSION).toBe("public-menu-api-v1");
+    expect(PUBLIC_MENU_API_EXTRACTOR_VERSION).toBe("public-menu-api-v2");
     expect(items.map((item) => item.name)).toEqual([
       "Patatas bravas",
       "Croquetas de jamón",
@@ -222,5 +222,141 @@ describe("public menu API excluded retail sections", () => {
       priceMinor: 10500,
       extractionMethod: "api",
     });
+  });
+});
+
+describe("public menu API WeOrder schema", () => {
+  const weOrderFixture = {
+    data: {
+      id: 22743,
+      menuStructure: 9,
+      menuVersion: "22743.406",
+      isAlcoholClosed: false,
+      modifierGroups: [],
+      menu: [
+        {
+          id: 43028,
+          name: "Restaurant Curries",
+          type: "food",
+          categories: [
+            {
+              id: 71699,
+              name: "Restaurant Curries",
+              entries: [
+                {
+                  id: 463250,
+                  name: "Butter Chicken",
+                  price: 279,
+                  dPrice: "279,-",
+                  isAlcohol: false,
+                  isSoldOut: false,
+                  desc: "Grillede kyllingbiter i aromatisk tomatsaus.",
+                },
+                {
+                  id: 463248,
+                  name: "Chicken Korma",
+                  price: 279,
+                  dPrice: "279,-",
+                  isAlcohol: false,
+                  isSoldOut: false,
+                  desc: "Kylling i aromatisk kryddersaus.",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: 43033,
+          name: "Drikke",
+          type: "drinks",
+          categories: [
+            {
+              id: 71475,
+              name: "Mineralvann",
+              entries: [
+                {
+                  id: 1494452,
+                  name: "Cola Zero Takeaway",
+                  price: 55,
+                  dPrice: "55,-",
+                  isAlcohol: false,
+                },
+                {
+                  id: 2257896,
+                  name: "Ønsker å bestille mere",
+                  price: 0,
+                  dPrice: "0,-",
+                  isAlcohol: false,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      programTypes: [],
+      iconPaths: [],
+      imgPaths: [],
+      thumbnailPaths: [],
+    },
+    success: true,
+    messages: [],
+  };
+
+  it("extracts positive-price food entries and excludes drink menus", () => {
+    const items = extractPublicMenuApi(JSON.stringify(weOrderFixture));
+    expect(items.map((item) => item.name)).toEqual(["Butter Chicken", "Chicken Korma"]);
+    expect(items[0]).toMatchObject({
+      sectionName: "Restaurant Curries",
+      description: "Grillede kyllingbiter i aromatisk tomatsaus.",
+      priceMinor: 27900,
+      priceKind: "exact",
+      priceMaxMinor: null,
+      currency: "NOK",
+      extractionMethod: "api",
+      confidence: 1,
+    });
+  });
+
+  it("filters alcohol entries even inside otherwise-food menus", () => {
+    const fixture = structuredClone(weOrderFixture);
+    fixture.data.menu[0]!.categories[0]!.entries.push({
+      id: 999999,
+      name: "House wine",
+      price: 165,
+      dPrice: "165,-",
+      isAlcohol: true,
+      isSoldOut: false,
+      desc: "",
+    });
+    expect(extractPublicMenuApi(JSON.stringify(fixture)).map((item) => item.name)).toEqual([
+      "Butter Chicken",
+      "Chicken Korma",
+    ]);
+  });
+
+  it("fails closed on unsuccessful, malformed-price and unrecognizable WeOrder payloads", () => {
+    expect(() =>
+      extractPublicMenuApi(JSON.stringify({ ...weOrderFixture, success: false })),
+    ).toThrow("WeOrder payload is not successful");
+
+    const badPrice = structuredClone(weOrderFixture);
+    badPrice.data.menu[0]!.categories[0]!.entries[0]!.dPrice = "299,-";
+    badPrice.data.menu[0]!.categories[0]!.entries[1]!.dPrice = "299,-";
+    expect(() => extractPublicMenuApi(JSON.stringify(badPrice))).toThrow(
+      "no positive-price food items",
+    );
+
+    const noCategories = structuredClone(weOrderFixture);
+    noCategories.data.menu = [
+      {
+        id: 1,
+        name: "Food",
+        type: "food",
+        categories: [],
+      },
+    ];
+    expect(() => extractPublicMenuApi(JSON.stringify(noCategories))).toThrow(
+      "no recognizable menu entries",
+    );
   });
 });
