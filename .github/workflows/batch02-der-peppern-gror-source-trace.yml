@@ -1,0 +1,197 @@
+name: TEMP trace Der Peppern Gror public source graph
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch02-der-peppern-gror-source-trace.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  trace:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+
+      - name: Trace public HTTP and browser source graph
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research/der-peppern-gror-source-trace
+          node --input-type=module <<'NODE'
+          import { chromium } from 'playwright-core';
+          import { writeFile } from 'node:fs/promises';
+
+          const userAgent = process.env.FYSEN_MENU_BOT_USER_AGENT || 'FysenMenuBot/0.1';
+          const targets = [
+            { name: 'home', url: 'https://radhusplassen.derpepperngror.no/' },
+            { name: 'menu-no', url: 'https://radhusplassen.derpepperngror.no/meny-norsk/' },
+            { name: 'take-away', url: 'https://radhusplassen.derpepperngror.no/take-away/' },
+          ];
+          const interesting = /(?:weorder|quickorder|orderyoyo|take.?away|bestill|order|menu|meny|api|checkout|shop)/i;
+          const absoluteUrlPattern = /https:\/\/[^\s"'<>\\)]+/g;
+
+          async function httpProbe(target) {
+            const started = Date.now();
+            try {
+              const response = await fetch(target.url, {
+                redirect: 'follow',
+                headers: { 'user-agent': userAgent, accept: 'text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8' },
+              });
+              const body = await response.text();
+              const urls = [...new Set(body.match(absoluteUrlPattern) ?? [])].slice(0, 300);
+              return {
+                ...target,
+                ok: response.ok,
+                status: response.status,
+                finalUrl: response.url,
+                contentType: response.headers.get('content-type'),
+                bytes: Buffer.byteLength(body),
+                durationMs: Date.now() - started,
+                interestingUrls: urls.filter((url) => interesting.test(url)).slice(0, 100),
+                allOrigins: [...new Set(urls.map((url) => { try { return new URL(url).origin; } catch { return null; } }).filter(Boolean))].sort(),
+                bodySignals: {
+                  weorder: /weorder/i.test(body),
+                  quickorder: /quickorder/i.test(body),
+                  orderyoyo: /orderyoyo/i.test(body),
+                  takeaway: /take.?away/i.test(body),
+                },
+              };
+            } catch (error) {
+              return { ...target, ok: false, error: error instanceof Error ? error.message : String(error), durationMs: Date.now() - started };
+            }
+          }
+
+          const browser = await chromium.launch({ channel: 'chrome', headless: true, chromiumSandbox: true });
+          const context = await browser.newContext({
+            acceptDownloads: false,
+            ignoreHTTPSErrors: false,
+            javaScriptEnabled: true,
+            serviceWorkers: 'block',
+            userAgent,
+          });
+
+          async function browserProbe(target) {
+            const page = await context.newPage();
+            const requests = [];
+            const responses = [];
+            page.on('request', (request) => {
+              if (requests.length < 800) requests.push({ url: request.url(), method: request.method(), resourceType: request.resourceType() });
+            });
+            page.on('response', (response) => {
+              if (responses.length < 800) responses.push({ url: response.url(), status: response.status(), resourceType: response.request().resourceType() });
+            });
+            page.on('dialog', (dialog) => void dialog.dismiss());
+            const started = Date.now();
+            try {
+              const response = await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: 20_000 });
+              await page.waitForLoadState('networkidle', { timeout: 7_000 }).catch(() => undefined);
+              await page.waitForTimeout(1500);
+              const pageData = await page.evaluate(() => ({
+                title: document.title,
+                textSample: (document.body?.innerText ?? '').slice(0, 12000),
+                anchors: Array.from(document.querySelectorAll('a[href]')).map((a) => ({
+                  text: (a.textContent ?? '').replace(/\s+/g, ' ').trim(),
+                  href: a.href,
+                })),
+                forms: Array.from(document.querySelectorAll('form')).map((form) => ({ action: form.action, method: form.method })),
+                iframes: Array.from(document.querySelectorAll('iframe[src]')).map((frame) => frame.src),
+                scripts: Array.from(document.querySelectorAll('script[src]')).map((script) => script.src),
+                images: Array.from(document.querySelectorAll('img[src]')).map((img) => ({ src: img.src, alt: img.alt, title: img.title })),
+              }));
+              const requestOrigins = [...new Set(requests.map(({ url }) => { try { return new URL(url).origin; } catch { return null; } }).filter(Boolean))].sort();
+              const interestingRequests = requests.filter(({ url, resourceType }) => ['document', 'xhr', 'fetch', 'script'].includes(resourceType) && interesting.test(url));
+              const interestingAnchors = pageData.anchors.filter(({ text, href }) => interesting.test(`${text} ${href}`));
+              const interestingScripts = pageData.scripts.filter((url) => interesting.test(url));
+              const interestingImages = pageData.images.filter(({ src, alt, title }) => interesting.test(`${src} ${alt} ${title}`));
+              return {
+                ...target,
+                ok: true,
+                status: response?.status() ?? null,
+                finalUrl: page.url(),
+                durationMs: Date.now() - started,
+                title: pageData.title,
+                textSample: pageData.textSample,
+                interestingAnchors,
+                forms: pageData.forms,
+                iframes: pageData.iframes,
+                interestingScripts,
+                interestingImages,
+                requestOrigins,
+                interestingRequests,
+                documentRequests: requests.filter(({ resourceType }) => resourceType === 'document'),
+                dataRequests: requests.filter(({ resourceType }) => resourceType === 'xhr' || resourceType === 'fetch'),
+                responseSignals: responses.filter(({ url, resourceType }) => ['document', 'xhr', 'fetch'].includes(resourceType) && interesting.test(url)),
+              };
+            } catch (error) {
+              return {
+                ...target,
+                ok: false,
+                finalUrl: page.url(),
+                error: error instanceof Error ? error.message : String(error),
+                requestOrigins: [...new Set(requests.map(({ url }) => { try { return new URL(url).origin; } catch { return null; } }).filter(Boolean))].sort(),
+                interestingRequests: requests.filter(({ url }) => interesting.test(url)),
+                documentRequests: requests.filter(({ resourceType }) => resourceType === 'document'),
+                dataRequests: requests.filter(({ resourceType }) => resourceType === 'xhr' || resourceType === 'fetch'),
+              };
+            } finally {
+              await page.close().catch(() => undefined);
+            }
+          }
+
+          const http = [];
+          const browserRows = [];
+          for (const target of targets) {
+            http.push(await httpProbe(target));
+            browserRows.push(await browserProbe(target));
+          }
+
+          const discoveredLinks = [...new Set(browserRows.flatMap((row) => row.interestingAnchors?.map((entry) => entry.href) ?? []))]
+            .filter((url) => url.startsWith('https://'))
+            .slice(0, 12);
+          const followed = [];
+          for (const [index, url] of discoveredLinks.entries()) {
+            followed.push(await browserProbe({ name: `follow-${index + 1}`, url }));
+          }
+
+          const result = {
+            baseRevision: process.env.GITHUB_SHA,
+            tracedAt: new Date().toISOString(),
+            targets,
+            http,
+            browser: browserRows,
+            discoveredLinks,
+            followed,
+            candidateOrigins: [...new Set([...browserRows, ...followed].flatMap((row) => row.requestOrigins ?? []))].sort(),
+            candidateDataUrls: [...new Set([...browserRows, ...followed].flatMap((row) => row.dataRequests?.map((entry) => entry.url) ?? []))]
+              .filter((url) => interesting.test(url))
+              .slice(0, 200),
+          };
+
+          await writeFile('research/der-peppern-gror-source-trace/result.json', JSON.stringify(result, null, 2) + '\n');
+          console.log(JSON.stringify(result, null, 2));
+          await context.close();
+          await browser.close();
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-der-peppern-gror-source-trace
+          path: apps/menu-worker/research/der-peppern-gror-source-trace/result.json
+          if-no-files-found: error
