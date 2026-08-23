@@ -1,0 +1,123 @@
+name: TEMP Batch 02 Mesob Sawan current probe
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch02-mesob-sawan-current-probe.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Restore authoritative Batch 02 plan and select Mesob/Sawan
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02 && mkdir -p /tmp/batch02
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import {mkdir,readFile,writeFile} from 'node:fs/promises';
+          const source=JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json','utf8'));
+          const wanted=new Set(['mesob-motzfeldts-gate-oslo','sawan-president-harbitz-gate-oslo']);
+          const restaurants=source.restaurants.filter((x)=>wanted.has(x.restaurant.slug));
+          if(restaurants.length!==2) throw new Error(`Expected 2 Batch 02 seeds, got ${restaurants.length}`);
+          const plan={...source,outputDirectory:'research/mesob-sawan-current-generated',concurrency:1,restaurants};
+          await mkdir('apps/menu-worker/research/mesob-sawan-current-generated',{recursive:true});
+          await writeFile('apps/menu-worker/research/mesob-sawan-current.plan.json',JSON.stringify(plan,null,2)+'\n');
+          console.log(JSON.stringify(restaurants.map((x)=>({slug:x.restaurant.slug,menuSource:x.menuSource})),null,2));
+          NODE
+
+      - name: Fresh current-parser intake
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js intake:batch research/mesob-sawan-current.plan.json | tee research/mesob-sawan-current-intake.json
+          printf '%s\n' "${PIPESTATUS[0]}" > research/mesob-sawan-current-intake.exit
+          exit 0
+
+      - name: Independent current-parser validation
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/mesob-sawan-current-generated | tee research/mesob-sawan-current-validation.json
+          printf '%s\n' "${PIPESTATUS[0]}" > research/mesob-sawan-current-validation.exit
+          exit 0
+
+      - name: Summarize exact observed output
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,readdir,writeFile} from 'node:fs/promises';
+          const intake=JSON.parse(await readFile('research/mesob-sawan-current-intake.json','utf8'));
+          const validation=JSON.parse(await readFile('research/mesob-sawan-current-validation.json','utf8'));
+          const files=(await readdir('research/mesob-sawan-current-generated')).filter((x)=>x.endsWith('.json'));
+          const generated=[];
+          for(const file of files){
+            const candidate=JSON.parse(await readFile(`research/mesob-sawan-current-generated/${file}`,'utf8'));
+            generated.push({
+              file,
+              slug:candidate.restaurant?.slug??null,
+              source:candidate.menuSource??null,
+              dishCount:candidate.menu?.items?.length??candidate.menu?.dishes?.length??null,
+            });
+          }
+          const rows=(validation.results??[]).map((r)=>({
+            slug:r.slug,
+            accepted:r.accepted,
+            failureFamilies:r.failureFamilies??[],
+            itemCount:r.validation?.menu?.quality?.itemCount??null,
+            names:r.validation?.menu?.observedDishNames??[],
+            variants:r.validation?.menu?.observedDishVariants??[],
+            extractorVersion:r.validation?.menu?.extractorVersion??null,
+            menuError:r.validation?.menu?.error??null,
+            error:r.error??null,
+          }));
+          const summary={
+            revision:process.env.GITHUB_SHA,
+            intake:{requested:intake.requestedCount,generated:intake.generatedCount,failed:intake.failedCount,failures:intake.failures??[]},
+            validation:{manifestCount:validation.manifestCount,accepted:validation.acceptedCount,failed:validation.failedCount},
+            generated,
+            rows,
+          };
+          await writeFile('research/mesob-sawan-current-summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-mesob-sawan-current-probe
+          path: |
+            apps/menu-worker/research/mesob-sawan-current.plan.json
+            apps/menu-worker/research/mesob-sawan-current-intake.json
+            apps/menu-worker/research/mesob-sawan-current-intake.exit
+            apps/menu-worker/research/mesob-sawan-current-validation.json
+            apps/menu-worker/research/mesob-sawan-current-validation.exit
+            apps/menu-worker/research/mesob-sawan-current-summary.json
+            apps/menu-worker/research/mesob-sawan-current-generated/*.json
+          if-no-files-found: warn
