@@ -1,0 +1,71 @@
+name: TEMP run Batch 02 permanent writer
+
+on:
+  push:
+    branches:
+      - agent/batch02-mesob-sawan-stage-trace
+    paths:
+      - ".github/workflows/batch02-run-writer-on-push.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Extract validated apply block from TEMP writer
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          src = Path('.github/workflows/batch02-write-elementor-scope-fix.yml').read_text().splitlines()
+          start = next(i for i, line in enumerate(src) if line.strip() == '- name: Apply generic structural recovery and menu-root scoping')
+          run_line = next(i for i in range(start + 1, len(src)) if src[i].strip() == 'run: |')
+          end = next(i for i in range(run_line + 1, len(src)) if src[i].strip() == '- name: Targeted parser regression suite')
+          block = src[run_line + 1:end]
+          indent = min(len(line) - len(line.lstrip()) for line in block if line.strip())
+          Path('/tmp/apply-batch02.sh').write_text('\n'.join(line[indent:] if line.strip() else '' for line in block) + '\n')
+          PY
+          test -s /tmp/apply-batch02.sh
+      - name: Switch to permanent branch
+        shell: bash
+        run: |
+          git fetch origin agent/batch02-menu-root-scope-v9
+          git checkout -B agent/batch02-menu-root-scope-v9 origin/agent/batch02-menu-root-scope-v9
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - name: Apply permanent code patch
+        run: bash /tmp/apply-batch02.sh
+      - name: Targeted parser regression suite
+        run: >-
+          pnpm --filter @fysen/menu-worker exec vitest run
+          src/html-elementor-price-list-recovery.test.ts
+          src/html-elementor-price-list-runtime-regression.test.ts
+          src/html-text-section-scope.test.ts
+          src/html-trailing-price-card-section-identity.test.ts
+          src/html-direct-priced-food-title-regression.test.ts
+          src/menu-source-runtime-version.test.ts
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Commit permanent code only
+        shell: bash
+        run: |
+          git status --short
+          test ! -e .github/workflows/batch02-run-writer-on-push.yml
+          test ! -e .github/workflows/batch02-write-elementor-scope-fix.yml
+          git config user.name "Paradispartiet"
+          git config user.email "paradispartiet@gmail.com"
+          git add apps/menu-worker/src
+          git diff --cached --check
+          git commit -m "Recover structured Elementor menu price lists"
+          git push origin HEAD:agent/batch02-menu-root-scope-v9
