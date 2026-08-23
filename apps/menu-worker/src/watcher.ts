@@ -58,6 +58,7 @@ export async function watchMenuSourceOnce(
     userAgent: source.userAgent,
     etag: forceReextract ? null : source.etag,
     lastModified: forceReextract ? null : source.lastModified,
+    maxResponseBytes: source.maxResponseBytes,
     sourceSupport,
   } as const;
 
@@ -83,7 +84,7 @@ export async function watchMenuSourceOnce(
       details: {
         url: source.url,
         fetchMode: source.fetchMode,
-        maxResponseBytes: source.sourceType === "pdf" ? pdfResponseByteLimit() : null,
+        maxResponseBytes: source.sourceType === "pdf" ? pdfResponseByteLimit() : source.maxResponseBytes,
         forceReextract,
         redirectOrigins: sourceSupport.redirectOrigins,
         browserDataOrigins: sourceSupport.browserDataOrigins,

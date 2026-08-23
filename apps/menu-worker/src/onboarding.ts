@@ -232,6 +232,7 @@ async function onboardOne(
       userAgent: manifest.menuSource.userAgent,
       checkIntervalMinutes: manifest.menuSource.checkIntervalMinutes,
       minimumExpectedItems: manifest.menuSource.minimumExpectedItems,
+      maxResponseBytes: manifest.menuSource.maxResponseBytes ?? null,
     });
     menuSourceId = source.id;
     await replaceMenuSourceSupport(pool, source.id, manifest.menuSource.sourceSupport);

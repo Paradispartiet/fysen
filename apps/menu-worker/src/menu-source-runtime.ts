@@ -75,6 +75,8 @@ import {
 
 const DEFAULT_MAX_PDF_RESPONSE_BYTES = 8 * 1024 * 1024;
 const MAX_PDF_RESPONSE_BYTES = 25 * 1024 * 1024;
+const MIN_HTTP_SOURCE_RESPONSE_BYTES = 64 * 1024;
+const MAX_HTTP_SOURCE_RESPONSE_BYTES = 4 * 1024 * 1024;
 const TRAILING_ALLERGEN_CODES =
   /\s+\((?:[A-Z0-9]{1,3})(?:\s*[,/+ ]\s*[A-Z0-9]{1,3})*\)$/u;
 const TRAILING_INLINE_PRICE =
@@ -138,6 +140,7 @@ export interface MenuSourceRuntimeInput {
   readonly userAgent: string;
   readonly etag: string | null;
   readonly lastModified: string | null;
+  readonly maxResponseBytes?: number | null | undefined;
   readonly sourceSupport?: MenuSourceSupportInput;
 }
 
@@ -332,12 +335,40 @@ export function assertSupportedMenuSource(
   }
 }
 
+export function boundedHttpSourceResponseBytes(
+  value: number | null | undefined,
+): number | undefined {
+  if (value === null || value === undefined) return undefined;
+  if (
+    !Number.isInteger(value) ||
+    value < MIN_HTTP_SOURCE_RESPONSE_BYTES ||
+    value > MAX_HTTP_SOURCE_RESPONSE_BYTES
+  ) {
+    throw new Error(
+      `HTTP source response byte limit must be an integer between ${MIN_HTTP_SOURCE_RESPONSE_BYTES} and ${MAX_HTTP_SOURCE_RESPONSE_BYTES}`,
+    );
+  }
+  return value;
+}
+
 export async function fetchMenuSource(
   input: MenuSourceRuntimeInput,
   httpClient = new HttpMenuClient(),
 ): Promise<MenuHttpFetchResult> {
   assertSupportedMenuSource(input);
   const sourceSupport = input.sourceSupport ?? EMPTY_MENU_SOURCE_SUPPORT;
+  if (input.maxResponseBytes !== null && input.maxResponseBytes !== undefined) {
+    if (input.fetchMode !== "http") {
+      throw new Error("maxResponseBytes is only valid for HTTP fetch mode");
+    }
+    if (input.sourceType === "pdf") {
+      throw new Error("PDF response limits use the dedicated PDF policy");
+    }
+  }
+  const explicitHttpResponseBytes =
+    input.sourceType === "pdf"
+      ? undefined
+      : boundedHttpSourceResponseBytes(input.maxResponseBytes);
   if (input.fetchMode === "browser") {
     return new BrowserMenuClient(httpClient).fetchSource({
       url: input.url,
@@ -357,7 +388,9 @@ export async function fetchMenuSource(
       allowedRedirectOrigins: sourceSupport.redirectOrigins,
       ...(input.sourceType === "pdf"
         ? { maxResponseBytes: pdfResponseByteLimit() }
-        : {}),
+        : explicitHttpResponseBytes !== undefined
+          ? { maxResponseBytes: explicitHttpResponseBytes }
+          : {}),
     },
   );
 }
