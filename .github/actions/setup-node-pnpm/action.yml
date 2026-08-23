@@ -1,5 +1,5 @@
 name: Setup Fysen Node workspace
-description: Install the canonical pnpm and Node versions and workspace dependencies.
+description: Install the canonical pnpm and Node versions, cache the pnpm store and install locked workspace dependencies.
 runs:
   using: composite
   steps:
@@ -13,7 +13,9 @@ runs:
       uses: actions/setup-node@v4
       with:
         node-version: 24.18.0
+        cache: pnpm
+        cache-dependency-path: pnpm-lock.yaml
 
     - name: Install dependencies
       shell: bash
-      run: pnpm install --no-frozen-lockfile
+      run: pnpm install --frozen-lockfile
