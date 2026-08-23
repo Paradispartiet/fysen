@@ -1,0 +1,268 @@
+name: TEMP prove strict WeOrder v2 final gates
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/weorder-v2-strict-final-proof.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  peppern-live-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Prove stable public Radhusplassen menu twice through strict v2
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research/weorder-v2-strict-proof
+          node --input-type=module <<'NODE'
+          import crypto from 'node:crypto';
+          import { writeFile } from 'node:fs/promises';
+          import { extractPublicMenuApi, PUBLIC_MENU_API_EXTRACTOR_VERSION } from './dist/public-menu-api-extractor.js';
+          const url = 'https://api.weorder.com/api/restaurant/22539/restaurant_menu/en/0/0/6.1.7';
+          const ua = process.env.FYSEN_MENU_BOT_USER_AGENT || 'FysenMenuBot/0.1';
+          async function round() {
+            const response = await fetch(url, {
+              method: 'GET', redirect: 'error', signal: AbortSignal.timeout(15000),
+              headers: { 'user-agent': ua, accept: 'application/json' },
+            });
+            const body = await response.text();
+            if (response.status !== 200) throw new Error(`WeOrder HTTP ${response.status}`);
+            const raw = JSON.parse(body);
+            if (raw?.success !== true || raw?.data?.id !== 22743 || typeof raw?.data?.menuVersion !== 'string') {
+              throw new Error('WeOrder identity/schema mismatch');
+            }
+            const items = extractPublicMenuApi(body);
+            return {
+              sha256: crypto.createHash('sha256').update(body).digest('hex'),
+              bytes: Buffer.byteLength(body), menuId: raw.data.id, menuVersion: raw.data.menuVersion, items,
+            };
+          }
+          const a = await round();
+          const b = await round();
+          if (PUBLIC_MENU_API_EXTRACTOR_VERSION !== 'public-menu-api-v2') throw new Error(`version=${PUBLIC_MENU_API_EXTRACTOR_VERSION}`);
+          if (a.sha256 !== b.sha256) throw new Error('Source bytes changed between independent rounds');
+          const setA = a.items.map((item) => `${item.name}\u0000${item.priceMinor}`).sort();
+          const setB = b.items.map((item) => `${item.name}\u0000${item.priceMinor}`).sort();
+          if (JSON.stringify(setA) !== JSON.stringify(setB)) throw new Error('Extracted name/price sets changed between rounds');
+          if (a.items.length !== 31 || b.items.length !== 31) throw new Error(`Expected 31 strict food items, got ${a.items.length}/${b.items.length}`);
+          const expected = new Map([
+            ['Chicken Tikka Masala', 27900],
+            ['Butter Chicken', 27900],
+            ['Bhuna Gosht', 25000],
+            ['Palak Paneer', 25500],
+            ['Tadka Daal', 24500],
+            ['Plain Naan', 6000],
+            ['Peshawri Nan', 7500],
+            ['Murgh Pankh', 22000],
+          ]);
+          const actual = new Map(a.items.map((item) => [item.name, item.priceMinor]));
+          for (const [name, price] of expected) {
+            if (actual.get(name) !== price) throw new Error(`${name}: ${actual.get(name)}; expected ${price}`);
+          }
+          const forbidden = [
+            'Samosa-CHTNY', 'Cola Zero Takeaway', 'Cola Takeaway', 'Mango Lassi Takeaway',
+            'Luscombe Ginger Beer Takeaway', 'Ønsker å bestille mere', 'Ønsker å betale',
+          ];
+          for (const name of forbidden) if (actual.has(name)) throw new Error(`Forbidden misc/drink/UI row leaked: ${name}`);
+          if (a.items.some((item) => item.priceMinor <= 0 || item.currency !== 'NOK' || item.extractionMethod !== 'api')) {
+            throw new Error('Invalid price/currency/method leaked');
+          }
+          const summary = {
+            revision: process.env.GITHUB_SHA, sourceUrl: url, authHeadersSent: false, cookiesSent: false, postRequestsSent: false,
+            extractorVersion: PUBLIC_MENU_API_EXTRACTOR_VERSION,
+            roundA: { sha256: a.sha256, bytes: a.bytes, menuId: a.menuId, menuVersion: a.menuVersion, itemCount: a.items.length },
+            roundB: { sha256: b.sha256, bytes: b.bytes, menuId: b.menuId, menuVersion: b.menuVersion, itemCount: b.items.length },
+            expectedPairs: [...expected].map(([name, priceMinor]) => ({ name, priceMinor })), forbidden,
+            observed: a.items.map(({ name, priceMinor, sectionName, description }) => ({ name, priceMinor, sectionName, description })),
+          };
+          await writeFile('research/weorder-v2-strict-proof/result.json', JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify({ ...summary, observed: summary.observed.map(({ name, priceMinor, sectionName }) => ({ name, priceMinor, sectionName })) }, null, 2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: weorder-v2-strict-live-proof
+          path: apps/menu-worker/research/weorder-v2-strict-proof
+          if-no-files-found: error
+
+  peppern-candidate-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Restore immutable seed and bind stable official WeOrder source
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02 apps/menu-worker/research/peppern-weorder-strict-candidate
+          mkdir -p /tmp/batch02 apps/menu-worker/research/peppern-weorder-strict-candidate/generated
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const source = JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json', 'utf8'));
+          const seed = source.restaurants.find((entry) => entry.restaurant.slug === 'der-peppern-gror-radhusplassen-oslo');
+          if (!seed) throw new Error('Missing immutable Der Peppern Gror Batch 02 seed');
+          const entry = {
+            ...seed,
+            menuSource: {
+              ...seed.menuSource,
+              url: 'https://api.weorder.com/api/restaurant/22539/restaurant_menu/en/0/0/6.1.7',
+              sourceType: 'api', fetchMode: 'http',
+              sourceSupport: { redirectOrigins: [], browserDataOrigins: [] },
+            },
+          };
+          await writeFile(
+            'apps/menu-worker/research/peppern-weorder-strict-candidate/plan.json',
+            JSON.stringify({ ...source, outputDirectory: 'research/peppern-weorder-strict-candidate/generated', concurrency: 1, restaurants: [entry] }, null, 2) + '\n',
+          );
+          NODE
+      - name: Generate through normal intake
+        working-directory: apps/menu-worker
+        run: node dist/index.js intake:batch research/peppern-weorder-strict-candidate/plan.json | tee research/peppern-weorder-strict-candidate/intake.json
+      - name: Independently validate on second fetch
+        working-directory: apps/menu-worker
+        run: node dist/index.js validate:batch research/peppern-weorder-strict-candidate/generated | tee research/peppern-weorder-strict-candidate/validation.json
+      - name: Gate candidate identity and strict quality
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readdir, readFile, writeFile } from 'node:fs/promises';
+          const root = 'research/peppern-weorder-strict-candidate';
+          const intake = JSON.parse(await readFile(`${root}/intake.json`, 'utf8'));
+          const validation = JSON.parse(await readFile(`${root}/validation.json`, 'utf8'));
+          const files = (await readdir(`${root}/generated`)).filter((file) => file.endsWith('.json'));
+          if (files.length !== 1) throw new Error(`Expected one candidate, got ${files.length}`);
+          const manifest = JSON.parse(await readFile(`${root}/generated/${files[0]}`, 'utf8'));
+          const intakeResult = intake.results?.[0] ?? {};
+          const validationResult = validation.results?.[0] ?? {};
+          if (intakeResult.outcome !== 'generated') throw new Error(`Intake outcome ${intakeResult.outcome}`);
+          if (validation.manifestCount !== 1 || validation.acceptedCount !== 1 || validation.failedCount !== 0 || !validationResult.accepted) {
+            throw new Error(`Candidate validation not 1/1: ${JSON.stringify(validation)}`);
+          }
+          if (manifest.restaurant?.slug !== 'der-peppern-gror-radhusplassen-oslo') throw new Error('Candidate slug drift');
+          if (manifest.menuSource?.url !== 'https://api.weorder.com/api/restaurant/22539/restaurant_menu/en/0/0/6.1.7') throw new Error('Source URL drift');
+          if (manifest.menuSource?.sourceType !== 'api' || manifest.menuSource?.fetchMode !== 'http') throw new Error('Source type drift');
+          if (validationResult.validation?.menu?.extractorVersion !== 'public-menu-api-v2') throw new Error(`Extractor ${validationResult.validation?.menu?.extractorVersion}`);
+          if (validationResult.validation?.menu?.quality?.itemCount !== 31) throw new Error(`Item count ${validationResult.validation?.menu?.quality?.itemCount}; expected 31`);
+          if ((validationResult.failureFamilies ?? []).length !== 0) throw new Error(`Failure families ${JSON.stringify(validationResult.failureFamilies)}`);
+          if ((manifest.qualityAssertions?.requiredDishNames ?? []).length !== 8 || (manifest.qualityAssertions?.requiredDishVariants ?? []).length !== 8) {
+            throw new Error('Expected eight generated name and exact-price assertions');
+          }
+          const summary = {
+            revision: process.env.GITHUB_SHA,
+            intakeOutcome: intakeResult.outcome,
+            observedItemCount: intakeResult.observedItemCount ?? null,
+            candidateFile: files[0], candidate: manifest,
+            validation: { accepted: validationResult.accepted, itemCount: validationResult.validation?.menu?.quality?.itemCount, extractorVersion: validationResult.validation?.menu?.extractorVersion, failureFamilies: validationResult.failureFamilies ?? [] },
+          };
+          await writeFile(`${root}/summary.json`, JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: peppern-weorder-strict-candidate-proof
+          path: apps/menu-worker/research/peppern-weorder-strict-candidate
+          if-no-files-found: error
+
+  strict-58-catalog-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Prove published-refresh fail-closed safety contract
+        run: pnpm --filter @fysen/menu-worker exec vitest run src/onboarding-refresh-safety.test.ts src/catalog-onboarding-failure-policy.test.ts src/production-menu-mutation-workflow.test.ts
+      - name: Prove exact current 58 catalog identity
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readdir, readFile } from 'node:fs/promises';
+          const files = (await readdir('catalog')).filter((file) => file.endsWith('.json')).sort();
+          const slugs = [];
+          for (const file of files) slugs.push(JSON.parse(await readFile(`catalog/${file}`, 'utf8')).restaurant.slug);
+          if (files.length !== 58 || new Set(slugs).size !== 58) throw new Error(`Catalog identity ${files.length}/${new Set(slugs).size}; expected 58/58`);
+          console.log(JSON.stringify({ manifestCount: files.length, uniqueSlugCount: new Set(slugs).size }, null, 2));
+          NODE
+      - name: Validate exact 58 catalog once, serially
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p research/weorder-v2-strict-catalog-gate
+          set +e
+          node dist/index.js validate:batch catalog | tee research/weorder-v2-strict-catalog-gate/primary.json
+          status=${PIPESTATUS[0]}
+          set -e
+          printf '%s\n' "$status" > research/weorder-v2-strict-catalog-gate/validator-exit-status.txt
+      - name: Gate strict first-pass 58 of 58 with no retry
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const primary = JSON.parse(await readFile('research/weorder-v2-strict-catalog-gate/primary.json', 'utf8'));
+          const exitStatus = Number((await readFile('research/weorder-v2-strict-catalog-gate/validator-exit-status.txt', 'utf8')).trim());
+          const failed = (primary.results ?? []).filter((entry) => !entry.accepted).map((entry) => ({ slug: entry.slug, failureFamilies: entry.failureFamilies ?? [], error: entry.error ?? null, menuError: entry.validation?.menu?.error ?? null, itemCount: entry.validation?.menu?.quality?.itemCount ?? null }));
+          const summary = { revision: process.env.GITHUB_SHA, manifestCount: primary.manifestCount, acceptedCount: primary.acceptedCount, failedCount: primary.failedCount, validatorExitStatus: exitStatus, retryCount: 0, failed };
+          await writeFile('research/weorder-v2-strict-catalog-gate/summary.json', JSON.stringify(summary, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          if (primary.manifestCount !== 58 || primary.acceptedCount !== 58 || primary.failedCount !== 0 || failed.length !== 0 || exitStatus !== 0) {
+            throw new Error(`Strict 58 first pass failed: ${JSON.stringify(summary)}`);
+          }
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: weorder-v2-strict-final58-gate
+          path: apps/menu-worker/research/weorder-v2-strict-catalog-gate
+          if-no-files-found: error
