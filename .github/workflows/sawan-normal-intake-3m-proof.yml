@@ -1,0 +1,130 @@
+name: TEMP prove Sawan normal intake with bounded 3 MiB source
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/sawan-normal-intake-3m-proof.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+  FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+  FYSEN_CANDIDATE_VALIDATION_MAX_ATTEMPTS: "1"
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  sawan-normal-intake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - uses: pnpm/action-setup@v4
+        with: { version: 11.4.0, run_install: false }
+      - uses: actions/setup-node@v4
+        with: { node-version: 24.18.0 }
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Restore authoritative geocoded Batch 02 plan and build Sawan intake
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02 && mkdir -p /tmp/batch02
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import {mkdir,readFile,writeFile} from 'node:fs/promises';
+          const source=JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json','utf8'));
+          const base=structuredClone(source.restaurants.find((entry)=>entry.restaurant.slug==='sawan-president-harbitz-gate-oslo'));
+          if(!base) throw new Error('Missing geocoded Sawan Batch-02 entry');
+          base.menuSource={
+            ...base.menuSource,
+            url:'https://www.sawan.no/meny',
+            sourceType:'html',
+            fetchMode:'http',
+            maxResponseBytes:3*1024*1024,
+            sourceSupport:{redirectOrigins:[],browserDataOrigins:[]},
+          };
+          base.verification={hours:{status:'unverified',checkedAt:'2026-08-23',note:'Current first-party /meny source is robots-allowed and requires the generic bounded 3 MiB HTTP source policy. Kitchen-scoped hours remain separately unverified.'}};
+          base.assertionCount=13;
+          base.forbiddenDishNames=['SAWAN RAW','SAWAN MAKI','SAWAN TACO','SAWAN SMÅRETTER','SAWAN SALATER','SAWAN VEGANSK','SAWAN SHARING','Satay (2 stk.)','With meat','with meat'];
+          await mkdir('apps/menu-worker/research/sawan-normal-generated',{recursive:true});
+          await writeFile('apps/menu-worker/research/sawan-normal.plan.json',JSON.stringify({...source,outputDirectory:'research/sawan-normal-generated',concurrency:1,restaurants:[base]},null,2)+'\n');
+          NODE
+
+      - name: Normal Sawan intake
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js intake:batch research/sawan-normal.plan.json | tee research/sawan-normal-intake.json
+          echo ${PIPESTATUS[0]} > research/sawan-normal-intake-exit.txt
+          exit 0
+
+      - name: Independently validate generated manifest once
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          if compgen -G 'research/sawan-normal-generated/*.json' > /dev/null; then
+            set +e
+            node dist/index.js validate:batch research/sawan-normal-generated | tee research/sawan-normal-validation.json
+            echo ${PIPESTATUS[0]} > research/sawan-normal-validation-exit.txt
+            exit 0
+          fi
+          printf '%s\n' '{"manifestCount":0,"acceptedCount":0,"failedCount":0,"maxAttempts":1,"results":[]}' > research/sawan-normal-validation.json
+          echo 1 > research/sawan-normal-validation-exit.txt
+
+      - name: Gate normal Sawan production candidate semantics
+        working-directory: apps/menu-worker
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const intake=JSON.parse(await readFile('research/sawan-normal-intake.json','utf8'));
+          const intakeStatus=Number((await readFile('research/sawan-normal-intake-exit.txt','utf8')).trim());
+          const validation=JSON.parse(await readFile('research/sawan-normal-validation.json','utf8'));
+          const validationStatus=Number((await readFile('research/sawan-normal-validation-exit.txt','utf8')).trim());
+          const row=validation.results?.[0];
+          const menu=row?.validation?.menu;
+          const names=menu?.observedDishNames??[];
+          const variants=menu?.observedDishVariants??[];
+          const manifest=JSON.parse(await readFile('research/sawan-normal-generated/sawan-president-harbitz-gate-oslo.json','utf8'));
+          const failures=[];
+          if(intake.requestedCount!==1||intake.generatedCount!==1||intake.failedCount!==0||intakeStatus!==0)failures.push('intake-not-1/1');
+          if(validation.maxAttempts!==1||validation.manifestCount!==1||validation.acceptedCount!==1||validation.failedCount!==0||validationStatus!==0||!row?.accepted)failures.push('validation-not-1/1-one-attempt');
+          if(manifest.menuSource.maxResponseBytes!==3145728)failures.push(`manifest-cap:${manifest.menuSource.maxResponseBytes}`);
+          if((menu?.quality?.itemCount??0)<40)failures.push(`coverage:${menu?.quality?.itemCount}`);
+          const required=[
+            ['Thai sashimi med laks',26500],['New style maki',29500],['Laksetartar taco',22000],['Money bags (2 stk.)',23000],
+            ['Chicken satay',22000],['Tempura villreker',23000],['Padron satay',19000],["The Chef’s Chicken Salad",23000],
+            ['Vegan crispy østerssopp (for 2 pers)',72000],['Trøffelmaki',20500],['Crispy duck à la Sawan (for 2 pers)',79500],
+            ['Vegan crispy oyster mushrooms',72000],['Woket kylling med cashew og grønnsaker',45000],
+          ];
+          for(const [name,price] of required)if(!variants.some((v)=>v.name===name&&v.priceMinor===price))failures.push(`missing:${name}:${price}`);
+          const forbidden=new Set(['SAWAN RAW','SAWAN MAKI','SAWAN TACO','SAWAN SMÅRETTER','SAWAN SALATER','SAWAN VEGANSK','SAWAN SHARING','Satay (2 stk.)','With meat','with meat']);
+          for(const name of names)if(forbidden.has(name))failures.push(`forbidden:${name}`);
+          const summary={
+            intake:{requested:intake.requestedCount,generated:intake.generatedCount,failed:intake.failedCount,exit:intakeStatus,observedItemCount:intake.results?.[0]?.observedItemCount??null},
+            validation:{manifestCount:validation.manifestCount,acceptedCount:validation.acceptedCount,failedCount:validation.failedCount,maxAttempts:validation.maxAttempts,exit:validationStatus,itemCount:menu?.quality?.itemCount??null,extractorVersion:menu?.extractorVersion??null},
+            manifestMaxResponseBytes:manifest.menuSource.maxResponseBytes,
+            requiredPairCount:required.length,
+            failures,
+          };
+          await writeFile('research/sawan-normal-summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if(failures.length)throw new Error(`Sawan normal candidate gate failed: ${JSON.stringify(failures)}`);
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sawan-normal-intake-3m-proof
+          path: |
+            apps/menu-worker/research/sawan-normal.plan.json
+            apps/menu-worker/research/sawan-normal-intake.json
+            apps/menu-worker/research/sawan-normal-validation.json
+            apps/menu-worker/research/sawan-normal-summary.json
+            apps/menu-worker/research/sawan-normal-generated/*.json
+          if-no-files-found: warn
