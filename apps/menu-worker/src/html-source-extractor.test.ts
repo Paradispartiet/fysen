@@ -19,7 +19,7 @@ describe("extractScopedHtmlMenu", () => {
     `;
 
     const result = extractScopedHtmlMenu(html);
-    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v20");
+    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v21");
     expect(result.items.map((item) => item.name)).toEqual(["Falafel", "Bakalawa"]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([9800, 12900]);
     expect(result.visibleText).not.toContain("Husets Cabernet");
