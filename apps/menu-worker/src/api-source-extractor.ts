@@ -157,6 +157,8 @@ export function extractStructuredApiMenu(body: string): readonly MenuObservedIte
           priceMinor,
           priceKind: prices.length > 1 ? "multiple" : "exact",
           priceMaxMinor,
+          currency: "NOK",
+          extractionMethod: "api",
           sourceKey: createMenuItemSourceKey(name, sectionName),
           sourceExcerpt: `${sectionName} — ${name} — ${prices.map((value) => `${value / 100} NOK`).join(" / ")}`,
           confidence: 1,
