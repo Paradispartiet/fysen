@@ -1,0 +1,73 @@
+name: TEMP discover compliant Sawan structured source
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/sawan-structured-source-discovery.yml"
+
+permissions:
+  contents: read
+
+env:
+  FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Inspect robots and only fetch permitted first-party variants
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research/sawan-source-discovery
+          node --input-type=module <<'NODE'
+          import {writeFile} from 'node:fs/promises';
+          import robotsParser from 'robots-parser';
+          import {extractMenuSource} from './dist/menu-source-runtime.js';
+          const ua='FysenMenuBot/0.1';
+          const base='https://www.sawan.no/meny';
+          const robotsUrl='https://www.sawan.no/robots.txt';
+          const robotsResponse=await fetch(robotsUrl,{headers:{'User-Agent':ua}});
+          const robotsText=await robotsResponse.text();
+          const parser=robotsParser(robotsUrl,robotsText);
+          const variants=[base,`${base}?format=json-pretty`,`${base}?format=json`,`${base}?format=main-content`];
+          const rows=[];
+          for(const url of variants){
+            const allowed=parser.isAllowed(url,ua)!==false;
+            if(!allowed){rows.push({url,robotsAllowed:false});continue;}
+            const response=await fetch(url,{headers:{'User-Agent':ua,'Accept':'text/html,application/json,*/*;q=0.1'}});
+            const bytes=new Uint8Array(await response.arrayBuffer());
+            const contentType=response.headers.get('content-type');
+            const body=Buffer.from(bytes).toString('utf8');
+            let extraction=null;
+            try{
+              const sourceType=(contentType??'').includes('json')?'api':'html';
+              const result=await extractMenuSource(sourceType,{body});
+              extraction={sourceType,itemCount:result.items.length,extractorVersion:result.extractorVersion,names:result.items.map(x=>x.name)};
+            }catch(error){extraction={error:error instanceof Error?error.message:String(error)};}
+            rows.push({url,robotsAllowed:true,status:response.status,contentType,bytes:bytes.length,sha256:await crypto.subtle.digest('SHA-256',bytes).then(x=>Buffer.from(x).toString('hex')),extraction});
+          }
+          const summary={robotsStatus:robotsResponse.status,robotsText,rows};
+          await writeFile('research/sawan-source-discovery/summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sawan-structured-source-discovery
+          path: apps/menu-worker/research/sawan-source-discovery/summary.json
+          if-no-files-found: error
