@@ -127,18 +127,27 @@ function nokDisplayAmount(value: unknown): number | null {
   const withoutPrefix = text.replace(/^kr/iu, "");
   const wholeNok = /^(\d+),-$/u.exec(withoutPrefix);
   if (wholeNok?.[1]) return Number(wholeNok[1]);
-  if (!/^\d+(?:[.,]\d{1,2})?$/u.test(withoutPrefix)) return null;
-  const parsed = Number(withoutPrefix.replace(",", "."));
-  return Number.isFinite(parsed) ? parsed : null;
+  return null;
 }
 
 function weOrderPrice(item: JsonRecord): ParsedPrice | null {
   const amount = numericAmount(item.price);
+  if (amount === null) return null;
+  if (amount <= 0) return null;
+
   const displayAmount = nokDisplayAmount(item.dPrice);
-  if (amount === null || amount <= 0 || displayAmount === null) return null;
-  if (Math.abs(amount - displayAmount) > 0.005) return null;
+  const name = normalizedText(item.name) ?? "unnamed item";
+  if (displayAmount === null) {
+    throw new Error(`Public menu API WeOrder price lacks NOK display evidence for ${name}`);
+  }
+  if (Math.abs(amount - displayAmount) > 0.005) {
+    throw new Error(`Public menu API WeOrder numeric/display price conflict for ${name}`);
+  }
+
   const priceMinor = Math.round(amount * 100);
-  if (!Number.isSafeInteger(priceMinor)) return null;
+  if (!Number.isSafeInteger(priceMinor)) {
+    throw new Error(`Public menu API WeOrder price is outside safe integer range for ${name}`);
+  }
   return {
     priceMinor,
     priceKind: "exact",
@@ -204,7 +213,7 @@ function extractWeOrderMenu(root: JsonRecord): readonly MenuObservedItem[] | nul
   }
 
   const items: MenuObservedItem[] = [];
-  let recognizedMenuCount = 0;
+  let recognizedFoodMenuCount = 0;
   let recognizedCategoryCount = 0;
   let recognizedEntryCount = 0;
   let position = 0;
@@ -216,12 +225,8 @@ function extractWeOrderMenu(root: JsonRecord): readonly MenuObservedItem[] | nul
     const menuType = normalizedText(menu.type)?.toLocaleLowerCase("en-US") ?? null;
     const categories = asArray(menu.categories);
     if (!menuName || !menuType || categories.length === 0) continue;
-    recognizedMenuCount += 1;
-    const menuExcluded =
-      menuType === "drinks" ||
-      menuType === "beverage" ||
-      BEVERAGE_SECTION.test(menuName) ||
-      NON_DISH_SECTION.test(menuName);
+    if (menuType !== "food") continue;
+    recognizedFoodMenuCount += 1;
 
     for (const rawCategory of categories) {
       const category = asRecord(rawCategory);
@@ -231,9 +236,7 @@ function extractWeOrderMenu(root: JsonRecord): readonly MenuObservedItem[] | nul
       if (entries.length === 0) continue;
       recognizedCategoryCount += 1;
       const categoryExcluded =
-        menuExcluded ||
-        BEVERAGE_SECTION.test(categoryName) ||
-        NON_DISH_SECTION.test(categoryName);
+        BEVERAGE_SECTION.test(categoryName) || NON_DISH_SECTION.test(categoryName);
 
       for (const rawEntry of entries) {
         const entry = asRecord(rawEntry);
@@ -265,8 +268,12 @@ function extractWeOrderMenu(root: JsonRecord): readonly MenuObservedItem[] | nul
     }
   }
 
-  if (recognizedMenuCount === 0 || recognizedCategoryCount === 0 || recognizedEntryCount === 0) {
-    throw new Error("Public menu API WeOrder payload exposed no recognizable menu entries");
+  if (
+    recognizedFoodMenuCount === 0 ||
+    recognizedCategoryCount === 0 ||
+    recognizedEntryCount === 0
+  ) {
+    throw new Error("Public menu API WeOrder payload exposed no recognizable food entries");
   }
   if (items.length === 0) {
     throw new Error("Public menu API WeOrder payload exposed no positive-price food items");
