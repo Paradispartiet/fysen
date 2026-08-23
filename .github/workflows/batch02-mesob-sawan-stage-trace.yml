@@ -13,7 +13,7 @@ permissions:
 jobs:
   trace:
     runs-on: ubuntu-latest
-    timeout-minutes: 18
+    timeout-minutes: 15
     env:
       FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
       GH_TOKEN: ${{ github.token }}
@@ -31,41 +31,17 @@ jobs:
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm --filter @fysen/menu-worker... build
 
-      - name: Capture exact Sawan stale-source chain
+      - name: Restore captured Mesob and Sawan source bytes
         shell: bash
         run: |
-          mkdir -p trace
-          node --input-type=module <<'NODE' | tee trace/sawan-source-chain.json
-          const targets=['https://sawan.no/SawanAlacarteActive.pdf','https://www.sawan.no/SawanAlacarteActive.pdf','https://www.sawan.no/meny'];
-          const reports=[];
-          for(const target of targets){
-            const hops=[]; let current=target;
-            for(let hop=0;hop<8;hop++){
-              const response=await fetch(current,{redirect:'manual',headers:{'user-agent':'FysenMenuBot/0.1'},signal:AbortSignal.timeout(20000)});
-              hops.push({hop,url:current,status:response.status,location:response.headers.get('location'),contentType:response.headers.get('content-type')});
-              const loc=response.headers.get('location');
-              await response.body?.cancel();
-              if(!(response.status>=300&&response.status<400&&loc)) break;
-              current=new URL(loc,current).href;
-            }
-            reports.push({target,hops});
-          }
-          console.log(JSON.stringify(reports,null,2));
-          NODE
+          mkdir -p trace /tmp/captured
+          gh run download 32627799893 --repo "$GITHUB_REPOSITORY" --name batch02-mesob-sawan-stage-trace --dir /tmp/captured
+          cp /tmp/captured/mesob-menu.html trace/mesob.html
+          cp /tmp/captured/sawan-final.html trace/sawan-menu.html
+          sha256sum trace/mesob.html trace/sawan-menu.html | tee trace/captured-source-sha256.txt
+          wc -c trace/mesob.html trace/sawan-menu.html | tee trace/captured-source-bytes.txt
 
-      - name: Fetch current Mesob and Sawan HTML with bounded retry
-        shell: bash
-        run: |
-          curl --retry 4 --retry-delay 2 --retry-all-errors -fsSL --max-redirs 8 --connect-timeout 10 --max-time 60 -A 'FysenMenuBot/0.1' -D trace/mesob.headers -o trace/mesob.html 'https://mesobrestaurant.no/menu/'
-          curl --retry 4 --retry-delay 2 --retry-all-errors -fsSL --max-redirs 8 --connect-timeout 10 --max-time 60 -A 'FysenMenuBot/0.1' -D trace/sawan-menu.headers -o trace/sawan-menu.html 'https://www.sawan.no/meny'
-          {
-            echo "Mesob bytes $(wc -c < trace/mesob.html)"
-            echo "Sawan bytes $(wc -c < trace/sawan-menu.html)"
-            printf 'Mesob elementor price-list titles: '; grep -Eo 'elementor-price-list-title' trace/mesob.html | wc -l
-            printf 'Mesob elementor price-list prices: '; grep -Eo 'elementor-price-list-price' trace/mesob.html | wc -l
-          } | tee trace/source-structure-counts.txt
-
-      - name: Compare base and scoped parser stages
+      - name: Compare base and scoped parser stages on captured bytes
         working-directory: apps/menu-worker
         shell: bash
         run: |
