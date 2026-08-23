@@ -1,0 +1,338 @@
+name: TEMP Batch 02 production-aware final proof v2
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch02-residual-four-production-aware-final-proof-v2.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "1"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Validate exact current catalog serially
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          mkdir -p research/production-aware-final-v2
+          node --input-type=module <<'NODE'
+          import {readdir,readFile} from 'node:fs/promises';
+          const files=(await readdir('catalog')).filter((name)=>name.endsWith('.json')).sort();
+          const slugs=[];
+          for(const file of files){
+            const manifest=JSON.parse(await readFile(`catalog/${file}`,'utf8'));
+            slugs.push(manifest.restaurant.slug);
+          }
+          if(files.length!==56||new Set(slugs).size!==56) throw new Error(`Catalog=${files.length}/${new Set(slugs).size}; expected 56/56`);
+          if(!slugs.includes('habibi-mollergata-oslo')) throw new Error('Canonical Habibi slug missing from catalog');
+          NODE
+          set +e
+          node dist/index.js validate:batch catalog | tee research/production-aware-final-v2/all56-primary.json
+          exit 0
+
+      - name: Build one-shot retry set for transport/action failures only
+        id: retryset
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          rm -rf research/production-aware-final-v2/retry
+          mkdir -p research/production-aware-final-v2/retry
+          node --input-type=module <<'NODE'
+          import {readdir,readFile,writeFile} from 'node:fs/promises';
+          const root='research/production-aware-final-v2';
+          const primary=JSON.parse(await readFile(`${root}/all56-primary.json`,'utf8'));
+          const retryable=[];
+          const nonRetryable=[];
+          const allowed=new Set(['transport','action']);
+          for(const result of (primary.results??[]).filter((entry)=>!entry.accepted)){
+            const failureFamilies=result.failureFamilies??[];
+            const row={
+              slug:result.slug,
+              failureFamilies,
+              error:result.error??null,
+              menuOutcome:result.validation?.menu?.outcome??null,
+              menuError:result.validation?.menu?.error??null,
+              itemCount:result.validation?.menu?.quality?.itemCount??null,
+            };
+            if(failureFamilies.length>0&&failureFamilies.every((family)=>allowed.has(family))) retryable.push(row);
+            else nonRetryable.push(row);
+          }
+          const retrySlugs=new Set(retryable.map((row)=>row.slug));
+          let copied=0;
+          for(const file of (await readdir('catalog')).filter((name)=>name.endsWith('.json'))){
+            const raw=await readFile(`catalog/${file}`,'utf8');
+            const manifest=JSON.parse(raw);
+            if(!retrySlugs.has(manifest.restaurant.slug)) continue;
+            await writeFile(`${root}/retry/${file}`,raw);
+            copied++;
+          }
+          if(copied!==retryable.length) throw new Error(`Retry manifest mismatch ${copied}/${retryable.length}`);
+          await writeFile(`${root}/retryset.json`,JSON.stringify({retryable,nonRetryable},null,2)+'\n');
+          await writeFile(process.env.GITHUB_OUTPUT,`retry_count=${retryable.length}\n`,{flag:'a'});
+          NODE
+
+      - name: Retry transport/action failures once
+        if: steps.retryset.outputs.retry_count != '0'
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          set +e
+          node dist/index.js validate:batch research/production-aware-final-v2/retry | tee research/production-aware-final-v2/retry-results.json
+          exit 0
+
+      - name: Create empty retry result when none needed
+        if: steps.retryset.outputs.retry_count == '0'
+        working-directory: apps/menu-worker
+        run: printf '%s\n' '{"manifestCount":0,"acceptedCount":0,"failedCount":0,"results":[]}' > research/production-aware-final-v2/retry-results.json
+
+      - name: Gate 56 live states with canonical Habibi exception
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const root='research/production-aware-final-v2';
+          const primary=JSON.parse(await readFile(`${root}/all56-primary.json`,'utf8'));
+          const retryset=JSON.parse(await readFile(`${root}/retryset.json`,'utf8'));
+          const retry=JSON.parse(await readFile(`${root}/retry-results.json`,'utf8'));
+          const accepted=new Set((primary.results??[]).filter((entry)=>entry.accepted).map((entry)=>entry.slug));
+          for(const entry of retry.results??[]) if(entry.accepted) accepted.add(entry.slug);
+          const unresolvedRetry=(retry.results??[]).filter((entry)=>!entry.accepted).map((entry)=>({slug:entry.slug,failureFamilies:entry.failureFamilies??[],error:entry.error??null}));
+          if(unresolvedRetry.length) throw new Error(`Unresolved retry failures ${JSON.stringify(unresolvedRetry)}`);
+
+          const habibiSlug='habibi-mollergata-oslo';
+          const nonRetryable=retryset.nonRetryable??[];
+          const unexpected=nonRetryable.filter((row)=>row.slug!==habibiSlug);
+          if(unexpected.length) throw new Error(`Unexpected non-retryable live failures ${JSON.stringify(unexpected)}`);
+
+          let habibiMode='live_accepted';
+          let habibiFailure=null;
+          if(!accepted.has(habibiSlug)){
+            if(nonRetryable.length!==1) throw new Error(`Habibi missing without one explicit degradation ${JSON.stringify(nonRetryable)}`);
+            const row=nonRetryable[0];
+            if(row.slug!==habibiSlug) throw new Error(`Unexpected degraded slug ${JSON.stringify(row)}`);
+            if(JSON.stringify(row.failureFamilies)!==JSON.stringify(['source'])) throw new Error(`Habibi degradation must be source-only ${JSON.stringify(row)}`);
+            habibiMode='degraded_live_safe_fallback_required';
+            habibiFailure=row;
+          }
+          const covered=accepted.size+(habibiMode==='degraded_live_safe_fallback_required'?1:0);
+          const summary={
+            primaryAccepted:primary.acceptedCount,
+            primaryFailed:primary.failedCount,
+            retryable:retryset.retryable,
+            nonRetryable,
+            retryAccepted:retry.acceptedCount,
+            retryFailed:retry.failedCount,
+            acceptedLiveCount:accepted.size,
+            habibiMode,
+            habibiFailure,
+            coveredCatalogCount:covered,
+          };
+          await writeFile(`${root}/all56-summary.json`,JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if(covered!==56) throw new Error(`Production-aware catalog coverage=${covered}/56`);
+          NODE
+
+      - name: Prove Habibi persisted production fallback read-only
+        working-directory: apps/menu-worker
+        shell: bash
+        env:
+          DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
+          DATABASE_SSL: "verify-full"
+          NODE_ENV: production
+        run: |
+          test -n "$DATABASE_URL" || { echo "FYSEN_PRODUCTION_DATABASE_URL is not configured" >&2; exit 1; }
+          node --input-type=module <<'NODE'
+          import {readdir,readFile,writeFile} from 'node:fs/promises';
+          import {createDatabasePool,MenuIndexRepository} from '../../packages/database/dist/index.js';
+          import {evaluateManifestMenuQuality} from './dist/manifest-quality.js';
+          const root='research/production-aware-final-v2';
+          const slug='habibi-mollergata-oslo';
+          const liveSummary=JSON.parse(await readFile(`${root}/all56-summary.json`,'utf8'));
+          let manifest=null;
+          for(const file of (await readdir('catalog')).filter((name)=>name.endsWith('.json'))){
+            const candidate=JSON.parse(await readFile(`catalog/${file}`,'utf8'));
+            if(candidate.restaurant.slug===slug){manifest=candidate;break;}
+          }
+          if(!manifest) throw new Error('Habibi catalog manifest missing');
+          const pool=createDatabasePool();
+          try{
+            const restaurants=await pool.query(`SELECT id,slug,active FROM fysen.restaurants WHERE slug=$1`,[slug]);
+            if(restaurants.rows.length!==1) throw new Error(`Habibi production rows=${restaurants.rows.length}/1`);
+            const restaurant=restaurants.rows[0];
+            if(!restaurant.active) throw new Error('Habibi production restaurant inactive');
+            const sources=await pool.query(
+              `SELECT id,url,enabled,minimum_expected_items,last_http_status,consecutive_failures,last_checked_at
+                 FROM fysen.menu_sources
+                WHERE restaurant_id=$1 AND enabled=true
+                ORDER BY created_at ASC`,
+              [restaurant.id],
+            );
+            if(sources.rows.length!==1) throw new Error(`Habibi enabled sources=${sources.rows.length}/1`);
+            const source=sources.rows[0];
+            if(source.url!==manifest.menuSource.url) throw new Error(`Habibi source URL drift ${source.url}`);
+            if(Number(source.minimum_expected_items)!==Number(manifest.menuSource.minimumExpectedItems)) throw new Error(`Habibi minimum drift ${source.minimum_expected_items}/${manifest.menuSource.minimumExpectedItems}`);
+            const repository=new MenuIndexRepository(pool);
+            const snapshot=await repository.getLatestSnapshotWithItems(source.id);
+            if(!snapshot) throw new Error('Habibi persisted snapshot missing');
+            const quality=evaluateManifestMenuQuality(manifest,snapshot.items);
+            if(!quality.accepted) throw new Error(`Habibi persisted fallback is not manifest-valid ${JSON.stringify(quality)}`);
+            const watches=await pool.query(
+              `SELECT outcome,http_status,extracted_item_count,error_code,error_message,started_at,completed_at
+                 FROM fysen.menu_watch_runs
+                WHERE menu_source_id=$1
+                ORDER BY started_at DESC
+                LIMIT 1`,
+              [source.id],
+            );
+            const latestWatch=watches.rows[0]??null;
+            if(liveSummary.habibiMode==='degraded_live_safe_fallback_required'){
+              if(!latestWatch) throw new Error('Habibi degraded state lacks production watch evidence');
+              if(latestWatch.outcome!=='quarantined') throw new Error(`Habibi latest watch=${latestWatch.outcome}; expected quarantined`);
+              if(Number(latestWatch.extracted_item_count)>=Number(manifest.menuSource.minimumExpectedItems)) throw new Error(`Habibi degraded watch items=${latestWatch.extracted_item_count} not below ${manifest.menuSource.minimumExpectedItems}`);
+            }
+            const proof={
+              liveMode:liveSummary.habibiMode,
+              liveFailure:liveSummary.habibiFailure,
+              restaurant,
+              source,
+              persistedSnapshot:{itemCount:snapshot.items.length},
+              persistedQuality:quality,
+              latestWatch,
+              safeFallbackProven:Boolean(quality.accepted&&restaurant.active&&source.enabled),
+            };
+            await writeFile(`${root}/habibi-production-fallback.json`,JSON.stringify(proof,null,2)+'\n');
+            console.log(JSON.stringify(proof,null,2));
+          } finally {
+            await pool.end();
+          }
+          NODE
+
+      - name: Build exact residual-four fresh-intake plan
+        shell: bash
+        run: |
+          rm -rf /tmp/batch02 && mkdir -p /tmp/batch02
+          gh run download 32412810199 --repo "$GITHUB_REPOSITORY" --name oslo-batch-02-research --dir /tmp/batch02
+          node --input-type=module <<'NODE'
+          import {mkdir,readFile,writeFile} from 'node:fs/promises';
+          const source=JSON.parse(await readFile('/tmp/batch02/oslo-batch-02.plan.json','utf8'));
+          const bySlug=new Map(source.restaurants.map((entry)=>[entry.restaurant.slug,entry]));
+          const specs=[
+            {slug:'benares-tordenskiolds-gate-oslo',url:'https://benares.no/meny?menu=menu',fetchMode:'browser'},
+            {slug:'the-golden-chimp-torggata-oslo',url:'https://www.thegoldenchimp.no/menu',fetchMode:'http'},
+            {slug:'kverneriet-majorstua-oslo',url:'https://kverneriet.com/majorstua/menu/',fetchMode:'http'},
+            {slug:'kverneriet-solli-oslo',url:'https://kverneriet.com/solli/menu/',fetchMode:'http'},
+          ];
+          const restaurants=specs.map((spec)=>{
+            const base=bySlug.get(spec.slug);
+            if(!base) throw new Error(`Missing immutable Batch 02 seed ${spec.slug}`);
+            const entry=structuredClone(base);
+            entry.menuSource={...entry.menuSource,url:spec.url,sourceType:'html',fetchMode:spec.fetchMode,sourceSupport:{redirectOrigins:[],browserDataOrigins:[]}};
+            return entry;
+          });
+          const outputDirectory='research/production-aware-final-v2/generated';
+          await mkdir(`apps/menu-worker/${outputDirectory}`,{recursive:true});
+          await writeFile('apps/menu-worker/research/production-aware-final-v2/residual-four.plan.json',JSON.stringify({...source,outputDirectory,concurrency:1,restaurants},null,2)+'\n');
+          NODE
+
+      - name: Fresh residual-four intake
+        working-directory: apps/menu-worker
+        run: node dist/index.js intake:batch research/production-aware-final-v2/residual-four.plan.json | tee research/production-aware-final-v2/residual-four-intake.json
+
+      - name: Independent residual-four second-fetch validation
+        working-directory: apps/menu-worker
+        run: node dist/index.js validate:batch research/production-aware-final-v2/generated | tee research/production-aware-final-v2/residual-four-validation.json
+
+      - name: Gate exact residual-four output quality
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile,writeFile} from 'node:fs/promises';
+          const root='research/production-aware-final-v2';
+          const intake=JSON.parse(await readFile(`${root}/residual-four-intake.json`,'utf8'));
+          const validation=JSON.parse(await readFile(`${root}/residual-four-validation.json`,'utf8'));
+          const rows=(validation.results??[]).map((result)=>({
+            slug:result.slug,
+            accepted:result.accepted,
+            itemCount:result.validation?.menu?.quality?.itemCount??null,
+            names:result.validation?.menu?.observedDishNames??[],
+            extractorVersion:result.validation?.menu?.extractorVersion??null,
+            error:result.validation?.menu?.error??result.error??null,
+          }));
+          const bySlug=new Map(rows.map((row)=>[row.slug,row]));
+          const benares=bySlug.get('benares-tordenskiolds-gate-oslo');
+          const chimp=bySlug.get('the-golden-chimp-torggata-oslo');
+          const major=bySlug.get('kverneriet-majorstua-oslo');
+          const solli=bySlug.get('kverneriet-solli-oslo');
+          if(!benares||!chimp||!major||!solli) throw new Error('Missing residual-four result');
+          const failures=[];
+          const forbidden=new Set(['Chicken','DUMPLINGS','PROTEINS','SIDES','DESSERT','Upgrades & Extras','SN','SY']);
+          for(const row of rows) for(const name of row.names) if(forbidden.has(name)) failures.push(`${row.slug}:forbidden:${name}`);
+          const expectedChimp=[
+            'Pork Gyoza with Japanese ketchup (4 pcs)',
+            'Chicken Gyoza with Truffle Tosazu (4 pcs)',
+            'King Crab dumplings with kimchi mayonnaise (4 pcs)',
+            'Shiitake Wontons with vinegar/soy dip (5 pcs)',
+            'Spicy Wontons with chili sauce (6 pcs)',
+            'Scallop dumplings with trout roe (4 pcs)',
+            'Grilled Chicken Yakiniku, served with Goma Cabbage salad',
+            'Grilled Seabass with chili/garlic sauce, served with burdock root',
+            'Golden Shrimp Toast',
+            'Kimchi',
+            'Kinpira Gobo (Braised Burdock Root)',
+            'Goma Cabbage Salad',
+            'Wood Ear Mushroom',
+            'Prawn and/or Sweet potato crackers',
+            'Miso cookie with butter, orange and white chocolate, served with a delicious Five-Spice Ice-Cream',
+          ];
+          if(chimp.itemCount!==15) failures.push(`golden-chimp:coverage:${chimp.itemCount}/15`);
+          for(const name of expectedChimp) if(!chimp.names.includes(name)) failures.push(`golden-chimp:missing:${name}`);
+          if((benares.itemCount??0)<69) failures.push(`benares:coverage:${benares.itemCount}`);
+          for(const row of [major,solli]){
+            if((row.itemCount??0)<20) failures.push(`${row.slug}:coverage:${row.itemCount}`);
+            for(const name of ['Triple Chili Cheese','Original Ribs','The Godfather']) if(!row.names.includes(name)) failures.push(`${row.slug}:missing:${name}`);
+          }
+          const summary={
+            permanentRevision:'f90d2f88ab9706154de1943ce2625ecfd5fad283',
+            intake:{requested:intake.requestedCount,generated:intake.generatedCount,failed:intake.failedCount},
+            validation:{manifestCount:validation.manifestCount,accepted:validation.acceptedCount,failed:validation.failedCount},
+            counts:{benares:benares.itemCount,goldenChimp:chimp.itemCount,kvernerietMajorstua:major.itemCount,kvernerietSolli:solli.itemCount},
+            failures,
+            rows,
+          };
+          await writeFile(`${root}/residual-four-summary.json`,JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify(summary,null,2));
+          if(intake.requestedCount!==4||intake.generatedCount!==4||intake.failedCount!==0) throw new Error('Residual-four intake gate failed');
+          if(validation.manifestCount!==4||validation.acceptedCount!==4||validation.failedCount!==0) throw new Error('Residual-four second-fetch gate failed');
+          if(failures.length) throw new Error(`Residual-four quality failures ${JSON.stringify(failures)}`);
+          NODE
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: batch02-production-aware-final-proof-v2
+          path: apps/menu-worker/research/production-aware-final-v2
+          if-no-files-found: error
