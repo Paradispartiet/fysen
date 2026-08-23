@@ -63,9 +63,9 @@ jobs:
               apps/menu-worker/candidates/*|apps/menu-worker/catalog/*)
                 restaurant_data=true
                 ;;
-              apps/menu-worker/research/*|docs/*|README.md|CONTRIBUTING.md)
+              apps/menu-worker/research/*|docs/*|README.md|CONTRIBUTING.md|.github/pull_request_template.md)
                 ;;
-              package.json|pnpm-lock.yaml|pnpm-workspace.yaml|turbo.json|tsconfig.base.json|eslint.config.mjs|.nvmrc|.github/*|scripts/*)
+              package.json|pnpm-lock.yaml|pnpm-workspace.yaml|turbo.json|tsconfig.base.json|eslint.config.mjs|.nvmrc|.github/actions/*|.github/workflows/*|scripts/*)
                 code=true
                 full=true
                 database=true
@@ -118,22 +118,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: pnpm
+      - name: Setup Fysen workspace
         if: needs.scope.outputs.code == 'true'
-        uses: pnpm/action-setup@v4
-        with:
-          version: 11.4.0
-          run_install: false
-
-      - name: Node
-        if: needs.scope.outputs.code == 'true'
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24.18.0
-
-      - name: Install dependencies
-        if: needs.scope.outputs.code == 'true'
-        run: pnpm install --no-frozen-lockfile
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Explicit Vercel release contract
         if: needs.scope.outputs.full == 'true'
@@ -186,19 +173,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 11.4.0
-          run_install: false
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24.18.0
-
-      - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+      - name: Setup Fysen workspace
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Build database dependency graph
         run: pnpm --filter @fysen/database... build

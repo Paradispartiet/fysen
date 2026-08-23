@@ -1,14 +1,18 @@
-name: Validate Fysen restaurant candidates
+name: Validate Fysen restaurant changes
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, edited]
     paths:
       - "apps/menu-worker/candidates/*.json"
       - "apps/menu-worker/catalog/*.json"
+      - "apps/menu-worker/src/**"
+      - "packages/menu-core/src/**"
+      - ".github/workflows/validate-restaurant-candidates.yml"
   workflow_dispatch:
     inputs:
       manifest_path:
-        description: "Path relative to apps/menu-worker, e.g. candidates/example.json or candidates"
+        description: "Path relative to apps/menu-worker, e.g. candidates/example.json, catalog/example.json or a directory"
         required: true
         default: "candidates"
         type: string
@@ -17,13 +21,13 @@ permissions:
   contents: read
 
 concurrency:
-  group: fysen-candidate-validation-${{ github.ref }}
+  group: fysen-restaurant-proof-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
       FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
     steps:
@@ -33,48 +37,119 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 11.4.0
-          run_install: false
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24.18.0
-
-      - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+      - name: Setup Fysen workspace
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Build menu-worker dependency graph
         run: pnpm --filter @fysen/menu-worker... build
 
-      - name: Validate changed restaurant manifests
+      - name: Collect exact-head PR proof manifests
         if: github.event_name == 'pull_request'
+        id: proof
         shell: bash
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BODY: ${{ github.event.pull_request.body }}
         run: |
           set -euo pipefail
 
-          mapfile -t manifests < <(
-            git diff --name-only --diff-filter=ACMRT "$BASE_SHA" "$HEAD_SHA" -- \
-              'apps/menu-worker/candidates/*.json' \
-              'apps/menu-worker/catalog/*.json'
-          )
+          proof_file="$RUNNER_TEMP/fysen-proof-manifests.txt"
+          changed_file="$RUNNER_TEMP/fysen-changed-files.txt"
+          : > "$proof_file"
 
-          if [[ ${#manifests[@]} -eq 0 ]]; then
-            echo "No added or modified restaurant manifests require validation."
+          git diff --name-only "$BASE_SHA" "$HEAD_SHA" > "$changed_file"
+
+          # Manifest changes prove themselves. Deleted manifests are intentionally
+          # excluded because there is no source contract left to validate.
+          git diff --name-only --diff-filter=ACMRT "$BASE_SHA" "$HEAD_SHA" -- \
+            'apps/menu-worker/candidates/*.json' \
+            'apps/menu-worker/catalog/*.json' \
+            | sed 's#^apps/menu-worker/##' \
+            >> "$proof_file"
+
+          runtime_changed=false
+          while IFS= read -r path; do
+            case "$path" in
+              apps/menu-worker/src/*.test.ts|packages/menu-core/src/*.test.ts)
+                ;;
+              apps/menu-worker/src/*|packages/menu-core/src/*)
+                runtime_changed=true
+                ;;
+            esac
+          done < "$changed_file"
+
+          # A parser/runtime PR can request concrete live proofs directly in its
+          # normal PR body. This replaces disposable proof branches/workflows.
+          requested="$(
+            printf '%s\n' "$PR_BODY" \
+              | sed -nE 's/^[[:space:]]*Live-proof manifests:[[:space:]]*(.*)$/\1/ip' \
+              | tail -n 1
+          )"
+
+          if [[ -n "${requested//[[:space:]]/}" ]]; then
+            IFS=',' read -ra entries <<< "$requested"
+            for raw in "${entries[@]}"; do
+              manifest="$(printf '%s' "$raw" | xargs)"
+              [[ -n "$manifest" ]] || continue
+              case "$manifest" in
+                catalog/*.json|candidates/*.json)
+                  ;;
+                *)
+                  echo "Live-proof manifest must be catalog/*.json or candidates/*.json: $manifest" >&2
+                  exit 1
+                  ;;
+              esac
+              case "$manifest" in
+                *..*)
+                  echo "Live-proof manifest may not contain '..': $manifest" >&2
+                  exit 1
+                  ;;
+              esac
+              if [[ ! -f "apps/menu-worker/$manifest" ]]; then
+                echo "Requested live-proof manifest does not exist on PR head: $manifest" >&2
+                exit 1
+              fi
+              echo "$manifest" >> "$proof_file"
+            done
+          fi
+
+          sort -u "$proof_file" -o "$proof_file"
+
+          if [[ "$runtime_changed" == "true" && ! -s "$proof_file" ]]; then
+            cat >&2 <<'EOF'
+          Menu runtime code changed, but this PR declares no concrete live-source proof.
+          Add a line to the PR body, for example:
+          Live-proof manifests: catalog/example-oslo.json
+          The permanent workflow will validate it on this exact PR head; do not create a TEMP proof PR.
+          EOF
+            exit 1
+          fi
+
+          echo "Runtime changed: $runtime_changed"
+          echo "Exact-head live-proof manifests:"
+          cat "$proof_file" || true
+          echo "proof_file=$proof_file" >> "$GITHUB_OUTPUT"
+
+      - name: Strictly validate changed/requested manifests
+        if: github.event_name == 'pull_request'
+        shell: bash
+        env:
+          PROOF_FILE: ${{ steps.proof.outputs.proof_file }}
+        run: |
+          set -euo pipefail
+          if [[ ! -s "$PROOF_FILE" ]]; then
+            echo "No restaurant manifests require live validation."
             exit 0
           fi
 
-          for path in "${manifests[@]}"; do
-            relative_path="${path#apps/menu-worker/}"
-            echo "Validating $relative_path"
-            pnpm --filter @fysen/menu-worker validate:manifest "$relative_path"
-          done
+          while IFS= read -r manifest; do
+            [[ -n "$manifest" ]] || continue
+            echo "Strict live validation: $manifest"
+            # validate:manifest performs one direct validation; it does not hide
+            # a first-pass failure behind batch retry behavior.
+            pnpm --filter @fysen/menu-worker validate:manifest "$manifest"
+          done < "$PROOF_FILE"
 
       - name: Validate requested manifest or directory
         if: github.event_name == 'workflow_dispatch'
@@ -82,6 +157,7 @@ jobs:
         env:
           MANIFEST_PATH: ${{ inputs.manifest_path }}
         run: |
+          set -euo pipefail
           case "$MANIFEST_PATH" in
             /*|*".."*)
               echo "manifest_path must stay inside apps/menu-worker" >&2

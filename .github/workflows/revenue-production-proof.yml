@@ -1,17 +1,17 @@
-name: Fysen production pilot proof
+name: Fysen revenue and AHA production proof
 
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["Materialize Fysen production catalog", "Fysen batched Vercel production release"]
+    workflows: ["Fysen batched Vercel production release"]
     types: [completed]
 
 permissions:
   contents: read
 
 concurrency:
-  group: fysen-production-pilot-proof
-  cancel-in-progress: false
+  group: fysen-revenue-production-proof
+  cancel-in-progress: true
 
 jobs:
   proof:
@@ -27,6 +27,8 @@ jobs:
       NODE_ENV: production
       FYSEN_PUBLIC_API_URL: https://fysen-api.vercel.app
       FYSEN_PUBLIC_WEB_URL: https://fysen.vercel.app
+      AHA_PUBLIC_API_URL: https://aha-canonical-api-production.redground-9c6e20c2.northeurope.azurecontainerapps.io
+      AHA_PUBLIC_WEB_URL: https://paradispartiet.github.io/AHA-EchoNet
     steps:
       - name: Require production database secret
         shell: bash
@@ -50,18 +52,16 @@ jobs:
           pnpm --filter @fysen/menu-core build
           pnpm --filter @fysen/database build
 
-      - name: Verify catalog, watcher, direct production search, API and web
+      - name: Verify Demand, Revenue R3/R4 and AHA Min mat production boundaries
         shell: bash
         run: |
-          node scripts/production-pilot-proof.mjs | tee /tmp/fysen-production-pilot-proof.json
+          node scripts/revenue-production-proof.mjs | tee /tmp/fysen-revenue-production-proof.json
           {
-            echo '## Fysen production pilot proof'
+            echo '## Fysen revenue + AHA Min mat production proof'
             echo
-            echo 'This proof reads the canonical production catalog dynamically, verifies every catalog restaurant against production DB + watcher state, runs the locked Oslo v1 search scenarios directly without recording funnel events, then verifies the canonical consumer browse API and web surface.'
-            echo
-            echo 'Revenue/Pro/AHA boundaries are intentionally owned by the separate revenue production proof and are not rerun after every restaurant materialization.'
+            echo 'This proof is non-mutating and runs after product deployment or explicit manual dispatch, not after unrelated restaurant catalog materialization.'
             echo
             echo '```json'
-            cat /tmp/fysen-production-pilot-proof.json
+            cat /tmp/fysen-revenue-production-proof.json
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
