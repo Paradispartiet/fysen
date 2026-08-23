@@ -1,0 +1,65 @@
+name: TEMP prove Delicatessen Majorstuen live drift
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/deli-majorstuen-live-drift-proof.yml"
+
+permissions:
+  contents: read
+
+env:
+  FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Fetch and extract same public Majorstuen API twice
+        working-directory: apps/menu-worker
+        run: |
+          mkdir -p research/deli-majorstuen-drift
+          node --input-type=module <<'NODE'
+          import {createHash} from 'node:crypto';
+          import {writeFile} from 'node:fs/promises';
+          import {extractMenuSource} from './dist/menu-source-runtime.js';
+          const url='https://favrit.com/ws/ordr-service/public/v3/locations/simple/LgEAQE59pAo?caller=GUEST_APP&language=nb';
+          const rounds=[];
+          for(let i=0;i<2;i++){
+            const res=await fetch(url,{headers:{'User-Agent':'FysenMenuBot/0.1','Accept':'application/json'}});
+            if(!res.ok)throw new Error(`HTTP ${res.status}`);
+            const body=await res.text();
+            const extracted=await extractMenuSource('api',{body});
+            rounds.push({status:res.status,sha256:createHash('sha256').update(body).digest('hex'),bytes:Buffer.byteLength(body),itemCount:extracted.items.length,extractorVersion:extracted.extractorVersion,items:extracted.items.map(x=>({name:x.name,priceMinor:x.priceMinor,sectionName:x.sectionName}))});
+          }
+          const sets=rounds.map(r=>new Set(r.items.map(x=>`${x.name}\u0000${x.priceMinor}`)));
+          const failures=[];
+          if(rounds.some(r=>r.itemCount!==52))failures.push(`counts:${rounds.map(r=>r.itemCount).join(',')}`);
+          if(sets[0].size!==sets[1].size||[...sets[0]].some(x=>!sets[1].has(x)))failures.push('rounds-not-stable');
+          for(const [name,price] of [['Plato de Ibérico',25500],['Chorizo Ibérico de Bellota',15000],['Grillet ytrefilet 220gr',31000]])if(!rounds.every(r=>r.items.some(x=>x.name===name&&x.priceMinor===price)))failures.push(`missing:${name}@${price}`);
+          if(rounds.some(r=>r.items.some(x=>x.name==='Lunsjplanke for to')))failures.push('stale-lunch-still-present');
+          const summary={url,rounds,failures};
+          await writeFile('research/deli-majorstuen-drift/summary.json',JSON.stringify(summary,null,2)+'\n');
+          console.log(JSON.stringify({rounds:rounds.map(r=>({sha256:r.sha256,bytes:r.bytes,itemCount:r.itemCount,extractorVersion:r.extractorVersion})),failures},null,2));
+          if(failures.length)throw new Error(JSON.stringify(failures));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: deli-majorstuen-live-drift-proof
+          path: apps/menu-worker/research/deli-majorstuen-drift/summary.json
+          if-no-files-found: error
