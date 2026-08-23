@@ -171,3 +171,56 @@ describe("public menu API food filtering", () => {
     expect(items.map((item) => item.name)).toEqual(["Patatas bravas"]);
   });
 });
+
+describe("public menu API excluded retail sections", () => {
+  it("drops retail sections and all nested descendants while preserving food siblings", () => {
+    const items = extractPublicMenuApi(
+      JSON.stringify({
+        location: {
+          menus: [
+            {
+              menuSections: [
+                {
+                  title: "Butikk",
+                  menuItems: [
+                    {
+                      name: "Olivenolje 250ml",
+                      price: { amount: 120, currency: "NOK" },
+                    },
+                  ],
+                  subSections: [
+                    {
+                      title: "Delikatesser",
+                      menuItems: [
+                        {
+                          name: "Gaveeske",
+                          price: { amount: 299, currency: "NOK" },
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  title: "Tapas",
+                  menuItems: [
+                    {
+                      name: "Patatas bravas",
+                      price: { amount: 105, currency: "NOK" },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      }),
+    );
+
+    expect(items.map((item) => item.name)).toEqual(["Patatas bravas"]);
+    expect(items[0]).toMatchObject({
+      sectionName: "Tapas",
+      priceMinor: 10500,
+      extractionMethod: "api",
+    });
+  });
+});

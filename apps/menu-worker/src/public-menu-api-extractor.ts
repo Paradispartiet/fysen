@@ -18,6 +18,8 @@ interface ParsedPrice {
 
 const BEVERAGE_SECTION =
   /(?:alkohol|drikke|drinks?|beverages?|soft\s+drinks?|øl|beer|vin|wine|cava|champagne|prosecco|musserende|sparkling|sangria|cocktails?|mocktails?|cider|kaffe|coffee|\bte\b|\btea\b|avec|brennevin|spirits?|whisk(?:e)?y|bourbon|\brom\b|\brum\b|\bgin\b|vodka|tequila|brandy|cognac|sherry|portvin|dessertvin|digestif)/iu;
+const NON_DISH_SECTION =
+  /(?:\bbutikk\b|\bshop\b|retail|merch(?:andise)?|gavekort|gift\s*cards?)/iu;
 const NON_DISH_PLACEHOLDER =
   /^(?:test(?:\s+button)?(?:\s*\([^)]*\))?|button(?:\s*\([^)]*\))?)$/iu;
 
@@ -158,6 +160,7 @@ export function extractPublicMenuApi(body: string): readonly MenuObservedItem[] 
   const visitSections = (
     rawSections: unknown,
     inheritedSectionName: string | null = null,
+    inheritedExcluded = false,
   ): void => {
     for (const rawSection of asArray(rawSections)) {
       const section = asRecord(rawSection);
@@ -166,9 +169,12 @@ export function extractPublicMenuApi(body: string): readonly MenuObservedItem[] 
       const sectionName =
         localizedText(section.titles ?? section.names ?? section.title ?? section.name) ??
         inheritedSectionName;
-      const isBeverageSection = sectionName !== null && BEVERAGE_SECTION.test(sectionName);
+      const isExcludedSection =
+        inheritedExcluded ||
+        (sectionName !== null &&
+          (BEVERAGE_SECTION.test(sectionName) || NON_DISH_SECTION.test(sectionName)));
 
-      if (!isBeverageSection) {
+      if (!isExcludedSection) {
         for (const rawItem of asArray(section.menuItems ?? section.items ?? section.products)) {
           const item = asRecord(rawItem);
           if (!item || item.active === false) continue;
@@ -199,6 +205,7 @@ export function extractPublicMenuApi(body: string): readonly MenuObservedItem[] 
       visitSections(
         section.subSections ?? section.subsections ?? section.sections,
         sectionName,
+        isExcludedSection,
       );
     }
   };
