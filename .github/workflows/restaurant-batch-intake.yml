@@ -1,0 +1,227 @@
+name: Restaurant batch intake
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "apps/menu-worker/research/*.seed.json"
+      - ".github/workflows/restaurant-batch-intake.yml"
+  workflow_dispatch:
+    inputs:
+      seed_path:
+        description: "Research seed relative to repository root"
+        required: true
+        default: "apps/menu-worker/research/oslo-batch-03.seed.json"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-restaurant-batch-intake-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  intake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
+      FYSEN_CANDIDATE_VALIDATION_MAX_ATTEMPTS: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Fysen workspace
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build menu-worker dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Select exactly one research seed
+        id: seed
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          DISPATCH_SEED: ${{ inputs.seed_path }}
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            seed="$DISPATCH_SEED"
+            case "$seed" in
+              apps/menu-worker/research/*.seed.json) ;;
+              *) echo "seed_path must be apps/menu-worker/research/*.seed.json" >&2; exit 1 ;;
+            esac
+            [[ -f "$seed" ]] || { echo "Seed does not exist: $seed" >&2; exit 1; }
+          else
+            mapfile -t seeds < <(git diff --name-only --diff-filter=ACMRT "$BASE_SHA" "$HEAD_SHA" -- 'apps/menu-worker/research/*.seed.json')
+            if [[ "${#seeds[@]}" -ne 1 ]]; then
+              echo "A restaurant intake PR must change exactly one research seed; found ${#seeds[@]}." >&2
+              printf '%s\n' "${seeds[@]}" >&2
+              exit 1
+            fi
+            seed="${seeds[0]}"
+          fi
+          echo "Selected seed: $seed"
+          echo "path=$seed" >> "$GITHUB_OUTPUT"
+
+      - name: Resolve Oslo coordinates and dedupe against catalog
+        id: resolve
+        shell: bash
+        env:
+          SEED_PATH: ${{ steps.seed.outputs.path }}
+        run: |
+          set -euo pipefail
+          resolved="$RUNNER_TEMP/restaurant-batch-resolved.json"
+          report="$RUNNER_TEMP/restaurant-batch-coordinate-report.json"
+          node --input-type=module - "$SEED_PATH" "$resolved" "$report" <<'NODE'
+          import { readFile, readdir, writeFile } from "node:fs/promises";
+          import { join } from "node:path";
+
+          const [, , seedPath, resolvedPath, reportPath] = process.argv;
+          const seed = JSON.parse(await readFile(seedPath, "utf8"));
+          if (seed.version !== 1 || !Array.isArray(seed.restaurants) || seed.restaurants.length === 0) {
+            throw new Error("Research seed must be version 1 with at least one restaurant");
+          }
+
+          const catalogDirectory = "apps/menu-worker/catalog";
+          const catalogSlugs = new Set();
+          for (const fileName of (await readdir(catalogDirectory)).filter((name) => name.endsWith(".json"))) {
+            const manifest = JSON.parse(await readFile(join(catalogDirectory, fileName), "utf8"));
+            if (manifest?.restaurant?.slug) catalogSlugs.add(manifest.restaurant.slug);
+          }
+
+          const seedSlugs = seed.restaurants.map((entry) => entry?.restaurant?.slug);
+          if (new Set(seedSlugs).size !== seedSlugs.length) {
+            throw new Error("Research seed contains duplicate restaurant slugs");
+          }
+          const collisions = seedSlugs.filter((slug) => catalogSlugs.has(slug));
+          if (collisions.length > 0) {
+            throw new Error(`Research seed collides with canonical catalog: ${collisions.join(", ")}`);
+          }
+
+          async function geocode(entry) {
+            const restaurant = entry.restaurant;
+            if (Number.isFinite(restaurant.latitude) && Number.isFinite(restaurant.longitude)) {
+              return {
+                restaurant: { ...restaurant },
+                evidence: {
+                  slug: restaurant.slug,
+                  inputAddress: restaurant.address,
+                  provider: "seed",
+                  latitude: restaurant.latitude,
+                  longitude: restaurant.longitude
+                }
+              };
+            }
+
+            const queryUrl = new URL("https://ws.geonorge.no/adresser/v1/sok");
+            queryUrl.searchParams.set("sok", restaurant.address);
+            queryUrl.searchParams.set("treffPerSide", "10");
+            const response = await fetch(queryUrl, {
+              headers: { "user-agent": "FysenMenuBot/0.1 restaurant-batch-geocoder" }
+            });
+            if (!response.ok) {
+              throw new Error(`${restaurant.slug}: Kartverket address lookup returned HTTP ${response.status}`);
+            }
+            const payload = await response.json();
+            const hits = Array.isArray(payload?.adresser) ? payload.adresser : [];
+            const postalMatch = restaurant.address.match(/\b(\d{4})\s+Oslo\b/i)?.[1] ?? null;
+            const osloHits = hits.filter((hit) => !hit.kommunenummer || String(hit.kommunenummer) === "0301");
+            const hit = osloHits.find((candidate) => !postalMatch || String(candidate.postnummer ?? "") === postalMatch) ?? osloHits[0];
+            if (!hit?.representasjonspunkt) {
+              throw new Error(`${restaurant.slug}: no Oslo address point returned by Kartverket for ${restaurant.address}`);
+            }
+            if (hit.kommunenummer && String(hit.kommunenummer) !== "0301") {
+              throw new Error(`${restaurant.slug}: Kartverket resolved outside Oslo municipality`);
+            }
+            const latitude = Number(hit.representasjonspunkt.lat);
+            const longitude = Number(hit.representasjonspunkt.lon);
+            if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+              throw new Error(`${restaurant.slug}: Kartverket returned invalid coordinates`);
+            }
+            return {
+              restaurant: { ...restaurant, latitude, longitude },
+              evidence: {
+                slug: restaurant.slug,
+                inputAddress: restaurant.address,
+                matchedAddress: hit.adressetekst ?? null,
+                postnummer: hit.postnummer ?? null,
+                kommunenummer: hit.kommunenummer ?? null,
+                provider: "Kartverket Adresser API v1",
+                latitude,
+                longitude
+              }
+            };
+          }
+
+          const resolvedRestaurants = [];
+          const evidence = [];
+          for (const entry of seed.restaurants) {
+            if (entry.version !== 1 || !entry?.restaurant?.slug || !entry?.restaurant?.address) {
+              throw new Error("Every research seed entry must be version 1 with restaurant slug and address");
+            }
+            const result = await geocode(entry);
+            resolvedRestaurants.push({ ...entry, restaurant: result.restaurant });
+            evidence.push(result.evidence);
+          }
+
+          const runtimePlan = {
+            version: 1,
+            outputDirectory: "candidates",
+            concurrency: seed.concurrency ?? 4,
+            restaurants: resolvedRestaurants
+          };
+          await writeFile(resolvedPath, `${JSON.stringify(runtimePlan, null, 2)}\n`);
+          await writeFile(reportPath, `${JSON.stringify({
+            version: 1,
+            seed: seed.batch ?? seedPath,
+            requestedCount: resolvedRestaurants.length,
+            catalogBaselineCount: catalogSlugs.size,
+            evidence
+          }, null, 2)}\n`);
+          console.log(`Resolved ${resolvedRestaurants.length} restaurant address points against catalog baseline ${catalogSlugs.size}.`);
+          NODE
+          echo "resolved=$resolved" >> "$GITHUB_OUTPUT"
+          echo "report=$report" >> "$GITHUB_OUTPUT"
+
+      - name: Generate candidates from live menu sources
+        id: intake
+        shell: bash
+        env:
+          RESOLVED_PLAN: ${{ steps.resolve.outputs.resolved }}
+        run: |
+          set -euo pipefail
+          rm -f apps/menu-worker/candidates/*.json
+          cd apps/menu-worker
+          pnpm intake:batch "$RESOLVED_PLAN" | tee "$RUNNER_TEMP/restaurant-batch-intake-summary.json"
+
+      - name: Assert full generation and strict live validation
+        shell: bash
+        env:
+          SEED_PATH: ${{ steps.seed.outputs.path }}
+        run: |
+          set -euo pipefail
+          requested="$(node -e 'const x=require("./"+process.argv[1]); console.log(x.restaurants.length)' "$SEED_PATH")"
+          generated="$(find apps/menu-worker/candidates -maxdepth 1 -type f -name '*.json' | wc -l | tr -d ' ')"
+          echo "Requested: $requested; generated: $generated"
+          [[ "$generated" -eq "$requested" ]] || { echo "Batch generation was incomplete" >&2; exit 1; }
+          cd apps/menu-worker
+          pnpm validate:batch candidates
+
+      - name: Upload exact-head intake artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: restaurant-batch-intake-${{ github.sha }}
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            apps/menu-worker/candidates/*.json
+            ${{ steps.resolve.outputs.resolved }}
+            ${{ steps.resolve.outputs.report }}
+            ${{ runner.temp }}/restaurant-batch-intake-summary.json
