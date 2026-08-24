@@ -30,6 +30,7 @@ jobs:
     timeout-minutes: 20
     env:
       FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
+      FYSEN_MAX_PDF_RESPONSE_BYTES: "26214400"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
