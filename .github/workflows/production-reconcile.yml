@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - "scripts/production-reconcile.mjs"
+      - "scripts/refresh-published-menu-source.mjs"
       - ".github/workflows/production-reconcile.yml"
   workflow_run:
     workflows: ["Materialize Fysen production catalog"]
@@ -25,7 +26,7 @@ jobs:
       (github.event.workflow_run.conclusion == 'success' &&
        github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     env:
       DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
       DATABASE_SSL: "verify-full"
@@ -48,10 +49,16 @@ jobs:
       - name: Setup Fysen workspace
         uses: ./.github/actions/setup-node-pnpm
 
-      - name: Build reconcile dependency graph
+      - name: Build menu-worker dependency graph
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Repair current published source drift
+        shell: bash
         run: |
-          pnpm --filter @fysen/menu-core build
-          pnpm --filter @fysen/database build
+          node scripts/refresh-published-menu-source.mjs \
+            apps/menu-worker/catalog/1947-gandhi-majorstuen-oslo.json \
+            apps/menu-worker/catalog/habibi-mollergata-oslo.json \
+            apps/menu-worker/catalog/hanami-tjuvholmen-oslo.json
 
       - name: Reconcile canonical catalog against production
         shell: bash
