@@ -61,19 +61,20 @@ describe("Batch 03 HTML output quality", () => {
   it("drops role, section, bare quantity and trailing-separator artifacts while preserving actual dishes", () => {
     const items = [
       item("– Head Chef", 48900, 1),
-      item("En boks med 10 gram Oscietra kaviar", 48900, 2),
-      item("Hanamis spesialiteter", 85600, 3),
-      item("Ovnsstekt hummer", 85600, 4),
-      item("Barnemeny", 20500, 5),
-      item("Mini Hanami", 20500, 6),
-      item("Gunkan maki – 2 biter", 14900, 7),
-      item("Ikura: Lakserogn", 14900, 8),
-      item("Maki – 6 biter", 24500, 9),
-      item("California maki", 24500, 10),
-      item("6 Slices •", 21900, 11),
-      item("6 slices of salmon", 21900, 12),
-      item("Deep fried ebi (scampi) rolled with avocado •", 17900, 13),
-      item("Tempura", 17900, 14),
+      item("Zensai", 48900, 2),
+      item("En boks med 10 gram Oscietra kaviar", 48900, 3),
+      item("Hanamis spesialiteter", 85600, 4),
+      item("Ovnsstekt hummer", 85600, 5),
+      item("Barnemeny", 20500, 6),
+      item("Mini Hanami", 20500, 7),
+      item("Gunkan maki – 2 biter", 14900, 8),
+      item("Ikura: Lakserogn", 14900, 9),
+      item("Maki – 6 biter", 24500, 10),
+      item("California maki", 24500, 11),
+      item("6 Slices •", 21900, 12),
+      item("6 slices of salmon", 21900, 13),
+      item("Deep fried ebi (scampi) rolled with avocado •", 17900, 14),
+      item("Tempura", 17900, 15),
     ];
 
     expect(
