@@ -13,7 +13,7 @@
   "menuSource": {
     "url": "https://www.1947gandhi.no/",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 41,
