@@ -5,8 +5,9 @@ import {
   type MenuObservedItem,
   type MenuPriceKind,
 } from "@fysen/menu-core";
+import { recoverAdjacentHeadingPriceHtmlItems } from "./html-adjacent-heading-price-recovery.js";
 
-export const HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION = "strong-title-price-v1";
+export const HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION = "strong-title-price-v2";
 
 const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK|kr\.?)\s*)?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?\s*(?:,?[-–—]|,-|kr\.?|NOK)?(?:\s+per\s+(?:person|personer?|persons?))?(?:\s+minimum\s+\d+\s+(?:personer?|persons?))?$/iu;
 const SEPARATOR_LINE = /^(?:[-–—•·]\s*)+$/u;
@@ -165,5 +166,15 @@ export function recoverStrongTitlePriceHtmlItems(html: string): readonly MenuObs
   }
   const items = [...unique.values()];
   if (items.length < 6) return [];
+
+  // Strong-title recovery is deliberately an isolated semantic path. It must
+  // not replace a substantially broader, already-conservative heading/price
+  // recovery from the same document. This prevents a coherent suffix (for
+  // example desserts) from hiding the larger canonical menu.
+  const adjacentHeadingItems = recoverAdjacentHeadingPriceHtmlItems(html);
+  const strongerAdjacentCoverage =
+    adjacentHeadingItems.length >= Math.max(6, Math.ceil(items.length * 1.5));
+  if (strongerAdjacentCoverage) return [];
+
   return items.map((item, index) => ({ ...item, position: index }));
 }
