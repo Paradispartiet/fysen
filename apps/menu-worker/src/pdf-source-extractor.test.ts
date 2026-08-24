@@ -28,7 +28,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v15");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v16");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -88,6 +88,30 @@ describe("PDF source scope", () => {
       ["Kylling Tawok", 31000],
     ]);
     expect(scoped.some((item) => /^(?:kr\.?|nok)\s*\d/iu.test(item.name))).toBe(false);
+  });
+
+  it("drops standalone preparation notes that inherit adjacent PDF prices", () => {
+    const lines = [
+      "HOVEDRETTER",
+      "Lammegryte",
+      "310",
+      "Kan fås glutenfri",
+      "220",
+      "Kylling Tawok",
+      "310",
+      "Can be made vegan",
+      "249",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Lammegryte", 31000],
+      ["Kylling Tawok", 31000],
+    ]);
+    expect(
+      scoped.some((item) => /^(?:kan\s+(?:fås|lages)|can\s+be\s+made)/iu.test(item.name)),
+    ).toBe(false);
   });
 
   it("recovers an explicit low per-item price from the next PDF text line", () => {
