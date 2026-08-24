@@ -120,8 +120,15 @@ jobs:
           }
 
           function chooseOsloHit(hits, postalMatch) {
-            const osloHits = hits.filter((hit) => !hit.kommunenummer || String(hit.kommunenummer) === "0301");
-            return osloHits.find((candidate) => !postalMatch || String(candidate.postnummer ?? "") === postalMatch) ?? osloHits[0] ?? null;
+            const osloHits = hits.filter(
+              (hit) => !hit.kommunenummer || String(hit.kommunenummer) === "0301"
+            );
+            if (postalMatch) {
+              return osloHits.find(
+                (candidate) => String(candidate.postnummer ?? "") === postalMatch
+              ) ?? null;
+            }
+            return osloHits[0] ?? null;
           }
 
           function canonicalAddressFromHit(hit, fallback) {
@@ -156,11 +163,10 @@ jobs:
               const range = restaurant.address.match(/^(.*?\s)(\d+)([A-Za-z]?)-(\d+)([A-Za-z]?)(,?\s+\d{4}\s+Oslo)$/i);
               if (range) {
                 const [, prefix, firstNumber, firstSuffix, lastNumber, lastSuffix, tail] = range;
-                const fallbackAddresses = [
+                for (const fallbackAddress of [
                   `${prefix}${firstNumber}${firstSuffix}${tail}`,
                   `${prefix}${lastNumber}${lastSuffix}${tail}`
-                ];
-                for (const fallbackAddress of fallbackAddresses) {
+                ]) {
                   const fallbackHit = chooseOsloHit(await addressHits(fallbackAddress), postalMatch);
                   if (fallbackHit?.representasjonspunkt) {
                     lookupAddress = fallbackAddress;
@@ -190,20 +196,26 @@ jobs:
             }
 
             if (!hit?.representasjonspunkt) {
-              throw new Error(`${restaurant.slug}: no Oslo address point returned by Kartverket for ${restaurant.address}`);
+              throw new Error(
+                `${restaurant.slug}: no Oslo address point matching published postcode returned by Kartverket for ${restaurant.address}`
+              );
             }
             if (hit.kommunenummer && String(hit.kommunenummer) !== "0301") {
               throw new Error(`${restaurant.slug}: Kartverket resolved outside Oslo municipality`);
             }
+            if (postalMatch && String(hit.postnummer ?? "") !== postalMatch) {
+              throw new Error(
+                `${restaurant.slug}: Kartverket postcode ${String(hit.postnummer ?? "") || "missing"} does not match published postcode ${postalMatch}`
+              );
+            }
+
             const latitude = Number(hit.representasjonspunkt.lat);
             const longitude = Number(hit.representasjonspunkt.lon);
             if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
               throw new Error(`${restaurant.slug}: Kartverket returned invalid coordinates`);
             }
 
-            const postalMismatch = Boolean(postalMatch && String(hit.postnummer ?? "") && String(hit.postnummer) !== postalMatch);
-            const canonicalizeAddress = fallbackFromMissingHouseSuffix || postalMismatch;
-            const resolvedAddress = canonicalizeAddress
+            const resolvedAddress = fallbackFromMissingHouseSuffix
               ? canonicalAddressFromHit(hit, restaurant.address)
               : restaurant.address;
 
@@ -216,7 +228,6 @@ jobs:
                 lookupAddress,
                 fallbackFromPublishedRange,
                 fallbackFromMissingHouseSuffix,
-                postalMismatch,
                 matchedAddress: hit.adressetekst ?? null,
                 postnummer: hit.postnummer ?? null,
                 kommunenummer: hit.kommunenummer ?? null,
@@ -252,7 +263,9 @@ jobs:
             catalogBaselineCount: catalogSlugs.size,
             evidence
           }, null, 2)}\n`);
-          console.log(`Resolved ${resolvedRestaurants.length} restaurant address points against catalog baseline ${catalogSlugs.size}.`);
+          console.log(
+            `Resolved ${resolvedRestaurants.length} restaurant address points against catalog baseline ${catalogSlugs.size}.`
+          );
           NODE
           echo "resolved=$resolved" >> "$GITHUB_OUTPUT"
           echo "report=$report" >> "$GITHUB_OUTPUT"
@@ -277,7 +290,10 @@ jobs:
           requested="$(node -e 'const x=require("./"+process.argv[1]); console.log(x.restaurants.length)' "$SEED_PATH")"
           generated="$(find apps/menu-worker/candidates -maxdepth 1 -type f -name '*.json' | wc -l | tr -d ' ')"
           echo "Requested: $requested; generated: $generated"
-          [[ "$generated" -eq "$requested" ]] || { echo "Batch generation was incomplete" >&2; exit 1; }
+          [[ "$generated" -eq "$requested" ]] || {
+            echo "Batch generation was incomplete" >&2
+            exit 1
+          }
           cd apps/menu-worker
           pnpm validate:batch candidates
 
