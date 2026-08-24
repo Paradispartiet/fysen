@@ -69,37 +69,37 @@
     },
     {
       "version": 1,
-      "restaurant": {"slug":"egon-ulleval-oslo","name":"Egon Ullevål","websiteUrl":"https://egon.no/no/restauranter","address":"Sognsveien 77C, 0855 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://egon.no/no/menyen","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
-      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-24","note":"Batch 03 locks the current first-party Egon menu first. Kitchen-scoped hours remain unknown until separately verified."}},
+      "restaurant": {"slug":"egon-ulleval-oslo","name":"Egon Ullevål","websiteUrl":"https://ordering.egon.no/restaurant/?id=4523","address":"Sognsveien 77C, 0855 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://ordering.egon.no/shop/?orderType=DINE_IN&restaurantId=4523","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-24","note":"Batch 03 locks the current first-party Egon ordering menu for this location. Kitchen-scoped hours remain unknown until separately verified."}},
       "actions":[],"assertionCount":8,"forbiddenDishNames":[]
     },
     {
       "version": 1,
-      "restaurant": {"slug":"egon-storo-oslo","name":"Egon Storo","websiteUrl":"https://egon.no/no/restauranter","address":"Vitaminveien 9-11, 0485 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://egon.no/no/menyen","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
-      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-24","note":"Batch 03 locks the current first-party Egon menu first. Kitchen-scoped hours remain unknown until separately verified."}},
+      "restaurant": {"slug":"egon-storo-oslo","name":"Egon Storo","websiteUrl":"https://ordering.egon.no/restaurant/?id=4521","address":"Vitaminveien 9-11, 0485 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://ordering.egon.no/shop/?orderType=DINE_IN&restaurantId=4521","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-24","note":"Batch 03 locks the current first-party Egon ordering menu for this location. Kitchen-scoped hours remain unknown until separately verified."}},
       "actions":[],"assertionCount":8,"forbiddenDishNames":[]
     },
     {
       "version": 1,
-      "restaurant": {"slug":"egon-karl-johan-oslo","name":"Egon Karl Johan","websiteUrl":"https://egon.no/restauranter/oslo/egon-karl-johan","address":"Karl Johans gate 37, 0162 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://egon.no/no/menyen","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
-      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-24","note":"Batch 03 locks the current first-party Egon menu first. Kitchen-scoped hours remain unknown until separately verified."}},
+      "restaurant": {"slug":"egon-karl-johan-oslo","name":"Egon Karl Johan","websiteUrl":"https://ordering.egon.no/restaurant/?id=4680","address":"Karl Johans gate 37, 0162 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://ordering.egon.no/shop/?orderType=DINE_IN&restaurantId=4680","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-24","note":"Batch 03 locks the current first-party Egon ordering menu for this location. Kitchen-scoped hours remain unknown until separately verified."}},
       "actions":[],"assertionCount":8,"forbiddenDishNames":[]
     },
     {
       "version": 1,
-      "restaurant": {"slug":"egon-byporten-oslo","name":"Egon Byporten","websiteUrl":"https://egon.no/en/restaurants/oslo/egon-byporten","address":"Jernbanetorget 6, 0154 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://egon.no/no/menyen","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
-      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-24","note":"Batch 03 locks the current first-party Egon menu first. Kitchen-scoped hours remain unknown until separately verified."}},
+      "restaurant": {"slug":"egon-byporten-oslo","name":"Egon Byporten","websiteUrl":"https://ordering.egon.no/restaurant/?id=4676","address":"Jernbanetorget 6, 0154 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://ordering.egon.no/shop/?orderType=DINE_IN&restaurantId=4676","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-24","note":"Batch 03 locks the current first-party Egon ordering menu for this location. Kitchen-scoped hours remain unknown until separately verified."}},
       "actions":[],"assertionCount":8,"forbiddenDishNames":[]
     },
     {
       "version": 1,
-      "restaurant": {"slug":"egon-nordstrand-oslo","name":"Egon Nordstrand","websiteUrl":"https://egon.no/no/restauranter","address":"Ekebergveien 228B, 1162 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://egon.no/no/menyen","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
-      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-24","note":"Batch 03 locks the current first-party Egon menu first. Kitchen-scoped hours remain unknown until separately verified."}},
+      "restaurant": {"slug":"egon-nordstrand-oslo","name":"Egon Nordstrand","websiteUrl":"https://ordering.egon.no/restaurant/?id=3106","address":"Ekebergveien 228B, 1162 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://ordering.egon.no/shop/?orderType=DINE_IN&restaurantId=3106","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
+      "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-24","note":"Batch 03 locks the current first-party Egon ordering menu for this location. Kitchen-scoped hours remain unknown until separately verified."}},
       "actions":[],"assertionCount":8,"forbiddenDishNames":[]
     },
     {
