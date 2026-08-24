@@ -44,8 +44,12 @@ const EXPLICIT_TRAILING_PRICE =
 const BARE_DASH_TRAILING_PRICE = /\s+[-–—]\s*([1-9]\d{1,3})\s*$/u;
 const TRAILING_DASH_ALLERGEN_CODES =
   /\s+[-–—]\s*[A-Z]{1,3}(?:\s*,\s*[A-Z]{1,3}){1,9}$/u;
+const TRAILING_SINGLE_KNOWN_ALLERGEN_CODE =
+  /\s+[-–—]\s*(?:AL|B|BL|CA|E|F|G|H|HA|HN|HNE|LU|M|MA|MK|MO|MU|N|P|PE|PI|R|SE|SEM|SEN|SF|SK|SL|SN|SO|SU|SY|VA|W|WA)$/u;
 const TRAILING_BARE_ALLERGEN_CODES =
   /\s+[A-Z]{1,3}(?:\s*,\s*[A-Z]{1,3}){2,9}$/u;
+const TRAILING_ALLERGEN_NOTE =
+  /\s+[-–—]\s*\((?:spør|ask)\b[^)]*\ballerg(?:en|ener|ens)\b[^)]*\)$/iu;
 const TRAILING_LEADER = /\s*_{3,}\s*$/u;
 const TRAILING_ITEM_ALLERGEN_CODES =
   /\s+\((?:[\p{L}]{1,2}|\d{1,2})(?:\s*[,/+ ]\s*(?:[\p{L}]{1,2}|\d{1,2}))*\)$/u;
@@ -163,7 +167,9 @@ function isObviousOutputNoise(
 function cleanOutputArtifactName(item: MenuObservedItem): MenuObservedItem {
   let name = normalizeLine(item.name).replace(TRAILING_LEADER, "").trim();
   name = name.replace(EXPLICIT_TRAILING_PRICE, "").trim();
+  name = name.replace(TRAILING_ALLERGEN_NOTE, "").trim();
   name = name.replace(TRAILING_DASH_ALLERGEN_CODES, "").trim();
+  name = name.replace(TRAILING_SINGLE_KNOWN_ALLERGEN_CODE, "").trim();
   name = name.replace(TRAILING_BARE_ALLERGEN_CODES, "").trim();
   const barePrice = name.match(BARE_DASH_TRAILING_PRICE);
   if (barePrice?.[1] && Number(barePrice[1]) >= 40 && item.priceMinor === Number(barePrice[1]) * 100) {
