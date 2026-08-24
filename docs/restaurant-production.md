@@ -4,21 +4,50 @@ Dette dokumentet beskriver den permanente produksjonsmetoden for restaurantdekni
 
 ## Aktuell Oslo-status 2026-08-24
 
-Canonical `main` etter fullført Oslo Batch 03 er `b935d4d8a323108b2c26de550c77a0e90c50e07f` (`Promote Oslo restaurant Batch 03`, PR #488).
+Canonical `main` etter fullført Oslo Batch 04 er `19ad53c4a7588487ad0314aec1d7553691e1b275` (`Promote Oslo restaurant Batch 04 Peppes`, PR #492).
 
-- **85 unike canonical restaurantmanifester** er nå den dokumenterte Git-baselinen: 65 fra lukket Batch 02 + 20 nye manifestfiler i PR #488;
-- **Batch-03-residualen for den valgte 20-restaurantsseeden er 0**: alle 20 ble generert, output-kvalitetssikret, exact-head livevalidert, promotert og deretter funnet direkte i production search;
-- permanent intake/proof ble etablert i PR #486 og brukt videre uten disposable TEMP-/proof-PR-er;
-- endelig parser-/output-herding ble merget i PR #487 etter full CI, exact-head changed-manifest proof og ny 20/20 batch-intake på head `3ef5b8ccf5ee6d4e5b4534975b4f16eec160776e`;
-- den endelige intake-artifacten var `restaurant-batch-intake-3ef5b8ccf5ee6d4e5b4534975b4f16eec160776e`, digest `sha256:bd42fda78d2544f51fdb8bd31db3b4253dbc6bb611e457e27cc73af7db77a97c`, med **20 requested / 20 generated / 0 failed**;
-- PR #488 promoterte nøyaktig de 20 bevist rene manifestene og passerte exact-head livevalidering av alle endrede katalogfiler før merge;
-- post-merge public production-search viste **alle 20 nye restaurant-slugs** med ferske snapshots etter promotion-mergen. Den observerte materialiseringssekvensen lå fra `2026-08-24T08:34:10Z` til `2026-08-24T08:39:20Z` i `observedAt`/`lastCheckedAt` for de nye restaurantene;
-- production-beviset omfatter 5 DIGG, 5 Sumo, 4 Olivia, 2 Dinner, Delicatessen Aker Brygge, Hanami, Nodee Sky og Villa Paradiso Frogner;
-- representative production-søk bekreftet blant annet `Pesto & potet` **99 kr** hos alle fem DIGG, `Sim-Sim Poké` **269 kr** hos alle fem Sumo, `Panna cotta` **145 kr** hos de nye Olivia-lokasjonene, `VÅRRULLER` **169 kr** hos begge Dinner, `Plato de Ibérico` **255 kr** hos Delicatessen Aker Brygge, Hanamis signatursalat **179 kr**, Nodee Sky `MYSTERY GARDEN` **279 kr** og Villa Paradiso Frogner `Fusilli alla Montecarlo` **275 kr**.
+- **97 unike canonical restaurantmanifester** er nå den dokumenterte Git-baselinen: 85 fra lukket Batch 03 + 12 nye Peppes-manifester i PR #492;
+- **Batch-04-residualen for den valgte 12-restaurantsseeden er 0**: alle 12 ble generert, output-kvalitetssikret, strict livevalidert, promotert og deretter funnet direkte i production search;
+- intake-PR #491 ble merget fra exact head `2a237421b186afb4d9c334d81ed36f14137e0b6a` etter grønn CI og `Restaurant batch intake`;
+- endelig intake-artifact var `restaurant-batch-intake-2a237421b186afb4d9c334d81ed36f14137e0b6a`, digest `sha256:fcf4ae3d69c96a3fc8c902350c78408c45f6df6895cbfbb8b1369eea206b475c`, med **12 requested / 12 generated / 12 strict live-valid / 0 failed** og `maxAttempts=1`;
+- alle 12 hadde **8 prisbundne quality assertions**. Observerte menyfloors var 59 items for ti lokasjoner, 58 for Løren og 42 for Nydalen; den mindre Nydalen-menyen ble bevart som faktisk live-kilde, ikke fylt kunstig opp;
+- PR #492 promoterte nøyaktig 12 nye catalog-manifester og ingen andre filer. Exact promotion head `e78503d16a7e7b3aee7d1d5ddcab53a5916d3752` bestod både ordinær CI og `Validate Fysen restaurant changes`, inkludert `Strictly validate changed/requested manifests`;
+- post-merge production-materialisering ble observert fra Ensjø `observedAt=2026-08-24T10:53:41.736Z` til Tåsen `lastCheckedAt=2026-08-24T10:57:32.442Z`;
+- public production search returnerte til slutt **12/12 nye Peppes-slugs** for den eksakte retten `49. New Dehli Supreme`, pris **238 kr**, med korrekt lokasjonsspesifikk Wolt-kilde og ferske post-merge snapshots;
+- Peppes Karl Johan og Peppes Aker Brygge er **ikke** med i denne promotionen. Karl Johan mangler entydig støtte i den valgte nåværende Wolt-familien, mens Aker Brygge har motstridende aktuell identitet/aktiv-status. Begge forblir fail-closed til separat kildebevis finnes;
+- Gardermoen og Lysaker ble korrekt ekskludert fordi de ligger utenfor Oslo kommune.
 
-Denne statusen skiller bevisst mellom **catalog baseline = 85** og et eksplisitt **fullt 85/85 DB-reconcile**. De 20 nye restaurantene er direkte production-bevist etter merge, men dokumentasjonen skal ikke konvertere Git-katalogtellingen eller et 20/20 promotion-bevis til et påstått fullreconcile-resultat for alle 85 uten at `production-pilot-proof`/catalog-health faktisk har fanget den målingen.
+Denne statusen skiller bevisst mellom **catalog baseline = 97**, **12/12 new promotion materialized** og et eksplisitt **fullt 97/97 DB-reconcile**. Batch 04 beviser de tolv nye restaurantene direkte etter merge, men er ikke et samlet bevis for at alle 97 canonical slugs samtidig er active, har nøyaktig forventet enabled source og at `active-not-catalog=0`. Et slikt utsagn krever egen `production-pilot-proof`/catalog-health-måling.
 
-### Oslo Batch 03 — 65 -> 85
+### Oslo Batch 04 — 85 -> 97
+
+Batch 04 brukte 85-katalogen som dedupe-baseline og promoterte følgende 12 canonical restauranter:
+
+1. Peppes Pizza Stortingsgata;
+2. Peppes Pizza Oslo S;
+3. Peppes Pizza Solli plass;
+4. Peppes Pizza Ensjø;
+5. Peppes Pizza Skøyen;
+6. Peppes Pizza Tåsen;
+7. Peppes Pizza Løren;
+8. Peppes Pizza Nydalen;
+9. Peppes Pizza Røa;
+10. Peppes Pizza Lambertseter;
+11. Peppes Pizza Hauketo;
+12. Peppes Pizza Grorud.
+
+Batch 04 bekreftet gjennomstrømningsmodellen uten å redusere kvalitetskravene:
+
+- én research-seed kunne representere en dokumentert restaurantfamilie med lokasjonsspesifikke kilder;
+- geokoding og canonical adressekontroll forble fail-closed mot Kartverket og publisert postnummer;
+- en utgått Peppes-PDF og en utilstrekkelig statisk førstpartsside ble ikke tvunget gjennom parseren; produksjonen flyttet til aktuelle Wolt-restaurantflater som allerede er en støttet Fysen-kildefamilie;
+- et mislykket browser-eksperiment ble fullstendig revertet før final proof; Batch 04 krevde ingen browser-runtime-endring;
+- ingen minstekrav, assertions eller validatorbudsjett ble senket;
+- teknisk grønn output ble kontrollert semantisk før promotion. Observerte navn var reelle Peppes-retter/tilbehør, ikke rolle-, layout-, navigasjons- eller drikkestøy;
+- promotion-gaten ble kjørt på den faktiske catalog-headen, ikke bare på intake-artifactet;
+- materializeren fikk arbeide serialisert etter merge, og production API ble brukt som konkret post-merge-bevis for alle tolv.
+
+## Oslo Batch 03 — 65 -> 85
 
 Batch 03 brukte 65-katalogen som dedupe-baseline og endte med følgende 20 canonical restauranter:
 
@@ -45,7 +74,7 @@ Batch 03 brukte 65-katalogen som dedupe-baseline og endte med følgende 20 canon
 
 Egon og Los Tacos/Ninito ble **ikke** tvunget inn for å nå et batchtall. Egon-kilden ga ikke canonical matoutput i den valgte statiske flaten, og Ninito var allerede dokumentert robots-/source-blokkert. De ble erstattet av kilder som kunne bestå den samme fail-closed-produksjonskontrakten uten nye unntak.
 
-Endelig clean artifact hadde følgende observerte canonical item-dekning før promotion:
+Endelig clean Batch-03-artifact hadde følgende observerte canonical item-dekning før promotion:
 
 - Olivia: 53 / 53 / 58 / 53;
 - Sumo: 71 per lokasjon;
@@ -56,24 +85,21 @@ Endelig clean artifact hadde følgende observerte canonical item-dekning før pr
 - Nodee Sky: 25;
 - Hanami: 37.
 
-Artifact-inspeksjon var en egen kvalitetsport, ikke pynt etter grønn CI. Før #487 ble blant annet vin/øl/sake-rader fra feil seksjonsproveniens, `– Head Chef`, `Barnemeny`, `Hanamis spesialiteter`, `6 Slices •`, donasjons-/serviceinnhold og `Orujos / Liquors`-innhold identifisert som ikke-canonical output. Dette ble løst generisk før promotion.
+Artifact-inspeksjon var en egen kvalitetsport, ikke pynt etter grønn CI. Før #487 ble blant annet vin/øl/sake-rader fra feil seksjonsproveniens, `– Head Chef`, `Barnemeny`, `Hanamis spesialiteter`, `6 Slices •`, donasjons-/serviceinnhold og `Orujos / Liquors` identifisert som ikke-canonical output. Dette ble løst generisk før promotion.
 
-### Permanente produksjonskontrakter etter Batch 03
-
-Batch 03 videreførte Batch-02-reglene og gjorde flere av dem mer effektive:
+Batch 03 etablerte eller herdede følgende permanente kontrakter:
 
 - `.github/workflows/restaurant-batch-intake.yml` er permanent writer/proof for batch research seeds. Den geokoder mot Kartverket, deduper mot canonical katalog, genererer fra live kilder, krever full generering og kjører strict validation med `maxAttempts=1`;
-- parser-/runtime-PR-er kan deklarere `Batch-intake seed: apps/menu-worker/research/<batch>.seed.json` i PR-body og få ny exact-head batch-reproof uten meningsløse seed-touch-commits eller TEMP-brancher;
-- Kartverket-resolusjon er fail-closed på publisert postnummer. Sumo Hegdehaugsveien ble derfor korrigert til dokumentert `Hegdehaugsveien 31, 0352 Oslo` i seed-data i stedet for at geokoderen ble svekket;
-- HTML scoped output revalideres også mot fullside-seksjonsproveniens (`text-section-scope-v10`). Et element som bare har beverage-evidens på fullsiden faller ut selv om scoped fragment mistet `Drinks`-overskriften; ekte food-evidens kan fortsatt vinne;
-- layoutfragmenter, rolle-signaturer, rene seksjonstitler og konservativt identifiserbare trailing allergenkoder fjernes uten å strippe semantiske dash-kvalifikatorer;
-- `public-menu-api-v3` viderefører offentlig Favrit-/WeOrder-støtte og filtrerer rekursivt drikke-, retail-, donasjons-/veldedighets- og liquor/liqueur/orujo-seksjoner. `doner` brukes bevisst **ikke** som donasjonsmatch fordi `Doner kebab` er en reell rett;
-- exact-head restaurantproof på den faktiske permanente PR-en er promotion-gaten. Full live-katalog eies separat av catalog-health/reconcile, slik at urelatert transport-health ikke ugyldiggjør korrekt proof for nye restauranter;
-- full katalog-health skal fortsatt være synlig og fail-closed for deterministiske feil. Skillet mellom promotion-proof og health er ikke en terskelsvekkelse.
+- parser-/runtime-PR-er kan deklarere `Batch-intake seed: apps/menu-worker/research/<batch>.seed.json` i PR-body og få ny exact-head batch-reproof uten seed-touch-commits eller disposable TEMP-/proof-PR-er;
+- Kartverket-resolusjon er fail-closed på publisert postnummer;
+- HTML scoped output revalideres mot fullside-seksjonsproveniens (`text-section-scope-v10`), slik at beverage-evidens ikke blir mat bare fordi en scoped overskrift forsvinner;
+- layoutfragmenter, rolle-signaturer, rene seksjonstitler og konservativt identifiserbare trailing allergenkoder filtreres uten å strippe semantiske dash-kvalifikatorer;
+- `public-menu-api-v3` filtrerer rekursivt drikke-, retail-, donasjons-/veldedighets- og liquor/liqueur/orujo-seksjoner. `Doner kebab` er eksplisitt positiv kontroll mot falsk donasjonsmatching;
+- exact-head restaurantproof på den permanente promotion-PR-en er gaten for det som endres. Full live-katalog eies separat av catalog-health/reconcile.
 
 ## Historisk fullreconcile 2026-08-22
 
-Siste eksplisitt arkiverte fullreconcile før 65- og 85-katalogene brukte production revision `2e57e1d324415f2a296b43b54c13e58cb23d4292`. Run `32600667247` / artifact `9483248543` viste:
+Siste eksplisitt arkiverte fullreconcile før 65-, 85- og 97-katalogene brukte production revision `2e57e1d324415f2a296b43b54c13e58cb23d4292`. Run `32600667247` / artifact `9483248543` viste:
 
 - **56 canonical produksjonsmanifester**;
 - **56/56 aktive canonical restauranter** i production DB;
@@ -84,7 +110,7 @@ Siste eksplisitt arkiverte fullreconcile før 65- og 85-katalogene brukte produc
 - nøyaktig én enabled canonical menu source per katalogrestaurant;
 - fersk snapshot-/watcher-dekning for de promoterte kildene.
 
-Dette er fortsatt referansepunktet for hva ordet **fullreconcile** betyr. Senere 65- og 85-baseliner skal ikke beskrives som fullreconcilet før en tilsvarende eksplisitt måling er fanget.
+Dette er referansepunktet for hva ordet **fullreconcile** betyr. Senere baseliner skal ikke beskrives som fullreconcilet før en tilsvarende eksplisitt måling er fanget.
 
 ## Oslo Batch 01
 
@@ -98,30 +124,30 @@ PR #294 (`700d24cb3c1e96a8fb5db5f2aa5f2457132d24c5`) var første reelle høy-thr
 - Castello ble holdt tilbake på parserlekkasje;
 - sluttresultatet var **7 nye production-klare restauranter**: Dalat Café, Kebabish Original, Kinabolle Ensjø, Kinabolle Grønland, Oche Aker Brygge, Oche Torggata og Villa Paradiso Tivoli.
 
-Batch 01 etablerte dermed prinsippet som fortsatt gjelder: en batch kan promotere den rene delmengden mens vanskelige kilder forblir fail-closed.
+Batch 01 etablerte prinsippet som fortsatt gjelder: en batch kan promotere den rene delmengden mens vanskelige kilder forblir fail-closed.
 
 ## Oslo Batch 02 — cleanup og sluttføring
 
-Batch 02 startet med 20 seed-restauranter og utviklet store deler av den generiske parser-/proof-infrastrukturen som Batch 03 bygger videre på.
+Batch 02 startet med 20 seed-restauranter og utviklet store deler av den generiske parser-/proof-infrastrukturen som senere batcher bygger videre på.
 
 Viktige permanente milepæler:
 
 - PR #365: generisk output-cleanup etter A/B-isolering, inkludert mat-/drikkescope, allergenkoder, duplicate/CTA-/mengdefragmenter og konservativ skjult-DOM-håndtering;
 - autoritativ proof #393 / run `32596872644` / artifact `9481858862`, digest `sha256:fef15609a9b0f98e381fb1127501d4c497e90b83ce2b39f6315d49cc95eba436`, med 50/50 eksisterende catalog i primary serial pass og 5/5 fresh kandidater uten output-quality-feil;
-- #395 promoterte fem byte-identiske kandidatmanifester og løftet daværende production-baseline til 55;
-- New Delhi ble deretter promotert via #408 etter `titles-v14` + `beverage-v9`, med 81-item proof og production search-bevis;
+- #395 promoterte fem byte-identiske kandidatmanifester og løftet daværende baseline til 55;
+- New Delhi ble promotert via #408 etter `titles-v14` + `beverage-v9`, med 81-item proof og production search-bevis;
 - historisk read-only #409 beviste **56 active / 56 enabled** og null drift på den daværende baselinen;
 - PR #446 promoterte Delicatessen Grünerløkka og Majorstuen via offentlig Favrit API;
 - PR #457 promoterte Der Peppern Gror Rådhusplassen via offentlig WeOrder;
 - PR #460 promoterte Benares, Golden Chimp, Kverneriet Majorstua og Kverneriet Solli;
 - PR #468 gjorde validatorbudsjettet eksplisitt og muliggjorde bokstavelig `maxAttempts=1` proof;
 - PR #471 innførte bounded, persistért HTTP `maxResponseBytes`, slik at Sawan kunne bruke 3 MiB uten å heve standardgrensen globalt;
-- Viet Kitchen- og Registan-drift som sluttgatene oppdaget ble reparert separat uten svekkede assertions;
+- Viet Kitchen- og Registan-drift ble reparert separat uten svekkede assertions;
 - Mesob ble sluttbevist med 22 items og Sawan med 44 items;
 - PR #475 promoterte Mesob og Sawan og løftet canonical katalog til **65**;
 - PR #481 etablerte den permanente proof-modellen: exact-head livevalidering av restaurantene som faktisk endres, med full catalog-health separat.
 
-**Batch-02 residual count er 0.** Senere feil på de 65 gamle restaurantene er catalog-health/source-drift og skal behandles som egne driftsfeil, ikke som gjenåpnet Batch 02.
+**Batch-02 residual count er 0.** Senere feil på gamle restauranter er catalog-health/source-drift og skal behandles som egne driftsfeil, ikke som gjenåpnet batch.
 
 ## Rødlistelukking og source-drift
 
@@ -131,18 +157,18 @@ Tidligere produksjonsfeil viser hvordan fail-closed-regelen skal brukes:
 - **Hrimnir:** redundant duplicate Oslo-manifest ble fjernet mens canonical manifest forble publisert;
 - **La Mayor:** runtime-floor ble justert til faktisk observert kildebevis uten å fjerne rett-/prisassertions;
 - **Café Sara:** gammel førstpartsmeny ga 404 og alternativer beviste ikke full canonical meny. Restauranten ble derfor fjernet fra aktiv katalog i stedet for å tvinges grønn;
-- **Coyo:** transport-/bookingflak skal rapporteres i catalog-health og ikke blokkere en urelatert promotion. Deterministiske Coyo-feil skal fortsatt stoppe health-gaten;
+- **Coyo:** transport-/bookingflak rapporteres i catalog-health og skal ikke blokkere en urelatert promotion. Deterministiske feil skal fortsatt stoppe health-gaten;
 - **Kain / Tyrkisk / Confusion inactive drift:** ble reparert gjennom kontrollert re-onboarding/parserherding, ikke gjennom manuell DB-maskering.
 
-Som ekstern størrelsesreferanse viste Mattilsynets Smilefjes-oversikt 1 345 spisesteder i Oslo ved kontroll 2026-08-20: <https://smilefjes.mattilsynet.no/kommune/oslo/>. Dette omfatter flere typer spisesteder og er ikke Fysens canonical backlog. Katalogbaseline på **85** betyr derfor ikke «85 av alle Oslo-restauranter er ferdige»; den beskriver det nåværende canonicale produksjonssettet som skal utvides batchvis.
+Som ekstern størrelsesreferanse viste Mattilsynets Smilefjes-oversikt 1 345 spisesteder i Oslo ved kontroll 2026-08-20: <https://smilefjes.mattilsynet.no/kommune/oslo/>. Dette omfatter flere typer spisesteder og er ikke Fysens canonical backlog. Katalogbaseline på **97** betyr derfor ikke «97 av alle Oslo-restauranter er ferdige»; den beskriver det nåværende canonicale produksjonssettet som skal utvides batchvis.
 
 ## Produksjonslinjen
 
 Restaurantarbeidet kjøres som batcher, mens hver restaurant fortsatt består eller feiler uavhengig:
 
 1. research låser identitet, adresse, koordinater og canonical meny-/timer-/handlingskilder for en gruppe restauranter;
-2. intake kjøres normalt i grupper på **20–30 restauranter**;
-3. 65/85-katalogen brukes som dedupe-baseline før nye kandidater kan genereres;
+2. intake kjøres normalt i grupper på **20–30 restauranter**, men en mindre source-familiebatch er riktig når identitet og kilder tilsier det;
+3. den **aktuelle canonical katalogen** brukes som dedupe-baseline før nye kandidater kan genereres;
 4. `intake:batch` henter flere menyer med avgrenset parallellitet og genererer candidate-manifester fra faktisk observerte retter;
 5. standard parallellitet er **4**; høyere parallellitet brukes bare når kilder og nettverksporter tåler det;
 6. generatoren setter `minimumExpectedItems` til hele det observerte canonicale item-antallet og velger spredte, prisede retter som permanente assertions;
@@ -153,7 +179,7 @@ Restaurantarbeidet kjøres som batcher, mens hver restaurant fortsatt består el
 11. systematiske lekkasjer løses i felles runtime med versjonsbump og positive/negative regresjoner; restaurantspesielle hacks unngås;
 12. source-spesifikke `forbiddenDishNames` kan brukes som fail-closed regresjonsperre når en konkret lekkasje er observert;
 13. bare output-rene, blocking-grønne kandidater promoteres til `catalog/`;
-14. candidate -> catalog skal være byte-for-byte når manifestet allerede er bevist;
+14. candidate -> catalog skal være semantisk identisk med det beviste manifestet; formatering alene skal ikke endre produksjonskontrakten;
 15. endrede candidate/catalog-manifester live-valideres på **eksakt permanent PR-head**;
 16. runtime/parser-endringer skal deklarere konkrete `Live-proof manifests:` og/eller `Batch-intake seed:` på samme PR når relevant;
 17. transportflak håndteres per source. Deterministiske extraction/menu-assertion/hours-feil kan aldri retryes bort;
@@ -211,7 +237,7 @@ Web/API-deploy er en separat releaseflate. Restaurantmaterialisering og DB/watch
 Dekning bygges i trinn, ikke ved å gjøre hele Oslo til én blokkende kø:
 
 - hold den aktive produksjonsbaselinen grønn før hver ny batch;
-- kjør nye research-/intake-batcher på 20–30 restauranter;
+- kjør nye research-/intake-batcher normalt på 20–30 restauranter, eller som dokumenterte source-familier når det gir høyere gjennomstrømning uten kvalitetsreduksjon;
 - prioriter geografisk og kulinarisk bredde samt dokumentert brukeretterspørsel;
 - bygg generiske adaptere når samme plattformfeil gjentas;
 - promoter den grønne delmengden samlet i stedet for å vente på vanskelige kilder;
