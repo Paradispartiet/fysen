@@ -58,7 +58,7 @@ describe("Batch 03 HTML output quality", () => {
     ).toEqual(["Morudoba Sake"]);
   });
 
-  it("drops role, section and bare quantity artifacts while preserving actual dishes", () => {
+  it("drops role, section, bare quantity and trailing-separator artifacts while preserving actual dishes", () => {
     const items = [
       item("– Head Chef", 48900, 1),
       item("En boks med 10 gram Oscietra kaviar", 48900, 2),
@@ -72,6 +72,8 @@ describe("Batch 03 HTML output quality", () => {
       item("California maki", 24500, 10),
       item("6 Slices •", 21900, 11),
       item("6 slices of salmon", 21900, 12),
+      item("Deep fried ebi (scampi) rolled with avocado •", 17900, 13),
+      item("Tempura", 17900, 14),
     ];
 
     expect(
@@ -86,6 +88,7 @@ describe("Batch 03 HTML output quality", () => {
       "Ikura: Lakserogn",
       "California maki",
       "6 slices of salmon",
+      "Tempura",
     ]);
   });
 
