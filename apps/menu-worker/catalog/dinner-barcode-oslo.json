@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dinner-barcode-oslo",
+    "name": "Dinner Barcode",
+    "websiteUrl": "https://www.dinner.no/barcode",
+    "address": "Dronning Eufemias gate 28, 0191 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90775987495522,
+    "longitude": 10.759247622048393
+  },
+  "menuSource": {
+    "url": "https://www.dinner.no/barcode/meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 43,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-24",
+      "note": "Batch 03 locks the current first-party priced menu. Kitchen-scoped hours remain separately verified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "JIANGNAN SNACKS 江南四小碟",
+      "VÅRRULLER 特 色 春 卷",
+      "VEGANSKE VÅRRULLER 素 春 卷",
+      "SHUI ZHU BIFF 水 煮牛 肉",
+      "DAMPET HAVABBOR 特 色 蒸 海 鱼",
+      "VEGANSK CRISPY DUCK 豆 腐 煲",
+      "MANGOPUDDING",
+      "TIRAMISÙ ALLA DINNER"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "JIANGNAN SNACKS 江南四小碟",
+        "priceMinor": 9900
+      },
+      {
+        "name": "VÅRRULLER 特 色 春 卷",
+        "priceMinor": 16900
+      },
+      {
+        "name": "VEGANSKE VÅRRULLER 素 春 卷",
+        "priceMinor": 15900
+      },
+      {
+        "name": "SHUI ZHU BIFF 水 煮牛 肉",
+        "priceMinor": 33900
+      },
+      {
+        "name": "DAMPET HAVABBOR 特 色 蒸 海 鱼",
+        "priceMinor": 39800
+      },
+      {
+        "name": "VEGANSK CRISPY DUCK 豆 腐 煲",
+        "priceMinor": 33900
+      },
+      {
+        "name": "MANGOPUDDING",
+        "priceMinor": 13500
+      },
+      {
+        "name": "TIRAMISÙ ALLA DINNER",
+        "priceMinor": 15800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

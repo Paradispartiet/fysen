@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "olivia-eger-oslo",
+    "name": "Olivia Eger",
+    "websiteUrl": "https://oliviarestauranter.no/restauranter/eger/",
+    "address": "Karl Johans gate 23, 0159 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9128597925287,
+    "longitude": 10.742596076851655
+  },
+  "menuSource": {
+    "url": "https://oliviarestauranter.no/wp-content/uploads/2020/10/Felles-NO-mat-web-sommer26.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 53,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-24",
+      "note": "Batch 03 locks the current first-party menu identity first. Kitchen-scoped hours remain unknown until separately verified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Antipasto all’Italiana",
+      "Carpaccio",
+      "Insalata Amalfitana",
+      "Pasta pollo ubriaco",
+      "Diavola",
+      "Quattro formaggi",
+      "Panna cotta",
+      "Gelato bambino"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Antipasto all’Italiana",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Carpaccio",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Insalata Amalfitana",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Pasta pollo ubriaco",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Diavola",
+        "priceMinor": 26000
+      },
+      {
+        "name": "Quattro formaggi",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Panna cotta",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Gelato bambino",
+        "priceMinor": 9900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

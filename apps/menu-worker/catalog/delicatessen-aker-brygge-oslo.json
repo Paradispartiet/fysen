@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "delicatessen-aker-brygge-oslo",
+    "name": "Delicatessen Aker Brygge",
+    "websiteUrl": "https://delicatessen.no/aker-brygge/",
+    "address": "Holmens gate 2, 0250 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91062337959851,
+    "longitude": 10.72690172391362
+  },
+  "menuSource": {
+    "url": "https://favrit.com/ws/ordr-service/public/v3/locations/simple/L9Vnx8N1NnD?caller=GUEST_APP&language=nb",
+    "sourceType": "api",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 58,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-24",
+      "note": "The first-party Delicatessen Aker Brygge page links Favrit location L9Vnx8N1NnD directly. Batch 03 uses the proven public-menu-api Favrit family and does not assume broader dine-in completeness."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Brød & alioli",
+      "Manchego 6mnd",
+      "Plato de Ibérico",
+      "Ukens croqueta (1stk)",
+      "Stekt kamskjell",
+      "Carpaccio av Kveite",
+      "Blåskjell escabeche",
+      "Kule vaniljeis"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Brød & alioli",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Manchego 6mnd",
+        "priceMinor": 13000
+      },
+      {
+        "name": "Plato de Ibérico",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Ukens croqueta (1stk)",
+        "priceMinor": 5000
+      },
+      {
+        "name": "Stekt kamskjell",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Carpaccio av Kveite",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Blåskjell escabeche",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Kule vaniljeis",
+        "priceMinor": 5000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sumo-hegdehaugsveien-oslo",
+    "name": "Sumo Hegdehaugsveien",
+    "websiteUrl": "https://sumorestaurant.no/en/restaurants/hegdehaugsveien",
+    "address": "Hegdehaugsveien 31, 0352 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92215563673165,
+    "longitude": 10.727234437666613
+  },
+  "menuSource": {
+    "url": "https://sumorestaurant.no/en/our-concept",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 71,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-24",
+      "note": "Batch 03 locks the current first-party Sumo menu first. Kitchen-scoped hours remain unknown until separately verified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Juicy Chicken Karaage",
+      "Sim-Sim Poké",
+      "Cheesy Tteokbokki",
+      "Veggie Ringo",
+      "Dirty Ushi Maki",
+      "Family Combo",
+      "Fish Sticks",
+      "Kimchi Salad"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Juicy Chicken Karaage",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Sim-Sim Poké",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Cheesy Tteokbokki",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Veggie Ringo",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Dirty Ushi Maki",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Family Combo",
+        "priceMinor": 119900
+      },
+      {
+        "name": "Fish Sticks",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Kimchi Salad",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

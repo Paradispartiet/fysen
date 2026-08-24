@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "digg-torggata-oslo",
+    "name": "DIGG Torggata",
+    "websiteUrl": "https://digg.no/torggata",
+    "address": "Torggata 18, 0181 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91610742089069,
+    "longitude": 10.751479195079456
+  },
+  "menuSource": {
+    "url": "https://digg.no/meny-2",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 13,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-24",
+      "note": "Batch 03 locks DIGG's current first-party priced menu. Third-party Ninito ordering is intentionally outside the source contract."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Pepperoni",
+      "Pesto & potet",
+      "Grisedigg",
+      "Trøffel",
+      "Kortreist parma",
+      "Bygg din egen",
+      "Nutella calzone"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Pepperoni",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Pesto & potet",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Grisedigg",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Trøffel",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Kortreist parma",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Bygg din egen",
+        "priceMinor": 9900,
+        "priceKind": "from"
+      },
+      {
+        "name": "Nutella calzone",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

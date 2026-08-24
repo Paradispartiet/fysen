@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "olivia-ostbanehallen-oslo",
+    "name": "Olivia Østbanehallen",
+    "websiteUrl": "https://oliviarestauranter.no/restauranter/ostbanehallen/",
+    "address": "Jernbanetorget 1, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91087480164096,
+    "longitude": 10.750736725832216
+  },
+  "menuSource": {
+    "url": "https://oliviarestauranter.no/wp-content/uploads/2020/10/O-NO-mat-web-sommer26.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 58,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-24",
+      "note": "Batch 03 locks the current first-party menu identity first. Kitchen-scoped hours remain unknown until separately verified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Antipasto all’Italiana",
+      "Calamari fritti",
+      "Frittata Olivia",
+      "Pasta alla zozzona",
+      "Salame al tartufo",
+      "Pollo bianco",
+      "‘nduja",
+      "Gelato e sorbetto"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Antipasto all’Italiana",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Calamari fritti",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Frittata Olivia",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Pasta alla zozzona",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Salame al tartufo",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Pollo bianco",
+        "priceMinor": 25500
+      },
+      {
+        "name": "‘nduja",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Gelato e sorbetto",
+        "priceMinor": 6900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

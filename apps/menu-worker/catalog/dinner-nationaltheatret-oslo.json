@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dinner-nationaltheatret-oslo",
+    "name": "Dinner Nationaltheatret",
+    "websiteUrl": "https://www.dinner.no/nationaltheatret",
+    "address": "Stortingsgata 22, 0161 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.913831752684075,
+    "longitude": 10.734752180219115
+  },
+  "menuSource": {
+    "url": "https://www.dinner.no/nationaltheatret/meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 45,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-24",
+      "note": "Batch 03 locks the current first-party priced menu. Kitchen-scoped hours remain separately verified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "JIANGNAN SNACKS 江 南 四 小 碟",
+      "DIM SUM KURV 四 色 點 心",
+      "INNBAKT KAMSKJELL 酥 炸 帶 子 卷",
+      "KAM KON POT 錦 江 煲",
+      "KYLLING GONGBAO 宮 保 雞 丁",
+      "GRILLET INDREFILET AV OKSE 炭 燒 牛 柳",
+      "STEKTE NUDLER 炒 麵",
+      "TIRAMISÙ A LA DINNER"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "JIANGNAN SNACKS 江 南 四 小 碟",
+        "priceMinor": 9900
+      },
+      {
+        "name": "DIM SUM KURV 四 色 點 心",
+        "priceMinor": 23900
+      },
+      {
+        "name": "INNBAKT KAMSKJELL 酥 炸 帶 子 卷",
+        "priceMinor": 19900
+      },
+      {
+        "name": "KAM KON POT 錦 江 煲",
+        "priceMinor": 29800
+      },
+      {
+        "name": "KYLLING GONGBAO 宮 保 雞 丁",
+        "priceMinor": 21900
+      },
+      {
+        "name": "GRILLET INDREFILET AV OKSE 炭 燒 牛 柳",
+        "priceMinor": 39800
+      },
+      {
+        "name": "STEKTE NUDLER 炒 麵",
+        "priceMinor": 9900
+      },
+      {
+        "name": "TIRAMISÙ A LA DINNER",
+        "priceMinor": 15800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

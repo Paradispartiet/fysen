@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "nodee-sky-oslo",
+    "name": "Nodee Sky",
+    "websiteUrl": "https://www.nodee.no/",
+    "address": "Trelastgata 15, 0191 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90848554056058,
+    "longitude": 10.759990615631896
+  },
+  "menuSource": {
+    "url": "https://www.nodee.no/meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 25,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-24",
+      "note": "Batch 03 locks Nodee Sky's current first-party priced menu. Kitchen-scoped hours remain separately verified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "BLUEFIN AKAMI TUNA",
+      "WAGYU",
+      "KYLLINGSPYD",
+      "GULHALEKONGEFISK HAMACHI KAMA TORO",
+      "SPINACH SALAD",
+      "KONGEØSTERSOPPSPYD",
+      "ASSORTERT SORBET",
+      "MYSTERY GARDEN"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "BLUEFIN AKAMI TUNA",
+        "priceMinor": 17400
+      },
+      {
+        "name": "WAGYU",
+        "priceMinor": 27400
+      },
+      {
+        "name": "KYLLINGSPYD",
+        "priceMinor": 22900
+      },
+      {
+        "name": "GULHALEKONGEFISK HAMACHI KAMA TORO",
+        "priceMinor": 29900
+      },
+      {
+        "name": "SPINACH SALAD",
+        "priceMinor": 17900
+      },
+      {
+        "name": "KONGEØSTERSOPPSPYD",
+        "priceMinor": 19900
+      },
+      {
+        "name": "ASSORTERT SORBET",
+        "priceMinor": 15900
+      },
+      {
+        "name": "MYSTERY GARDEN",
+        "priceMinor": 27900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
