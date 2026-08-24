@@ -1,0 +1,77 @@
+name: Fysen production reconcile
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/production-reconcile.mjs"
+      - ".github/workflows/production-reconcile.yml"
+  workflow_run:
+    workflows: ["Materialize Fysen production catalog"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-production-reconcile
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
+      DATABASE_SSL: "verify-full"
+      NODE_ENV: production
+    steps:
+      - name: Require production database secret
+        shell: bash
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "FYSEN_PRODUCTION_DATABASE_URL is not configured." >&2
+            exit 1
+          fi
+
+      - name: Checkout exact revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+
+      - name: Setup Fysen workspace
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build database dependency
+        run: pnpm --filter @fysen/database build
+
+      - name: Reconcile canonical catalog against production
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p reports/production-reconcile
+          node scripts/production-reconcile.mjs | tee reports/production-reconcile/reconcile.json
+          {
+            echo '## Fysen production reconcile'
+            echo
+            echo 'Exact-set proof for canonical restaurants, active production restaurants, enabled menu sources, fresh snapshots, and watcher/source health.'
+            echo
+            echo '```json'
+            cat reports/production-reconcile/reconcile.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload reconcile evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-production-reconcile-${{ github.run_id }}
+          path: reports/production-reconcile/reconcile.json
+          if-no-files-found: error
+          retention-days: 30
