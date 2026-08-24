@@ -58,23 +58,25 @@ describe("Batch 03 HTML output quality", () => {
     ).toEqual(["Morudoba Sake"]);
   });
 
-  it("drops role, section, bare quantity and trailing-separator artifacts while preserving actual dishes", () => {
+  it("drops role, section, description, bare quantity and trailing-separator artifacts while preserving actual dishes", () => {
     const items = [
       item("– Head Chef", 48900, 1),
       item("Zensai", 48900, 2),
-      item("En boks med 10 gram Oscietra kaviar", 48900, 3),
-      item("Hanamis spesialiteter", 85600, 4),
-      item("Ovnsstekt hummer", 85600, 5),
-      item("Barnemeny", 20500, 6),
-      item("Mini Hanami", 20500, 7),
-      item("Gunkan maki – 2 biter", 14900, 8),
-      item("Ikura: Lakserogn", 14900, 9),
-      item("Maki – 6 biter", 24500, 10),
-      item("California maki", 24500, 11),
-      item("6 Slices •", 21900, 12),
-      item("6 slices of salmon", 21900, 13),
-      item("Deep fried ebi (scampi) rolled with avocado •", 17900, 14),
-      item("Tempura", 17900, 15),
+      item("Zensai er små matbiter som serveres før middagen", 48900, 3),
+      item("Robatagrill", 76900, 4),
+      item("En boks med 10 gram Oscietra kaviar", 48900, 5),
+      item("Hanamis spesialiteter", 85600, 6),
+      item("Ovnsstekt hummer", 85600, 7),
+      item("Barnemeny", 20500, 8),
+      item("Mini Hanami", 20500, 9),
+      item("Gunkan maki – 2 biter", 14900, 10),
+      item("Ikura: Lakserogn", 14900, 11),
+      item("Maki – 6 biter", 24500, 12),
+      item("California maki", 24500, 13),
+      item("6 Slices •", 21900, 14),
+      item("6 slices of salmon", 21900, 15),
+      item("Deep fried ebi (scampi) rolled with avocado •", 17900, 16),
+      item("Tempura", 17900, 17),
     ];
 
     expect(
@@ -93,12 +95,14 @@ describe("Batch 03 HTML output quality", () => {
     ]);
   });
 
-  it("removes only structured trailing allergen-code artifacts from dish names", () => {
+  it("removes only conservative trailing allergen-code artifacts from dish names", () => {
     const items = [
       item("Black cod - H, SO, F", 44900, 1),
       item("Sake: Laks - F, SEN", 16900, 2),
-      item("Duck - smoked", 28900, 3),
-      item("Tuna - SPICY", 19900, 4),
+      item("Spinatsalat med trøffelolje, parmesan og tørr miso H, SO, M", 17900, 3),
+      item("Duck - smoked", 28900, 4),
+      item("Tuna - SPICY", 19900, 5),
+      item("Pizza BBQ, XL", 19900, 6),
     ];
 
     expect(
@@ -106,7 +110,14 @@ describe("Batch 03 HTML output quality", () => {
         items,
         items.map((entry) => `${entry.name} ${entry.priceMinor / 100}`).join("\n"),
       ).map((entry) => entry.name),
-    ).toEqual(["Black cod", "Sake: Laks", "Duck - smoked", "Tuna - SPICY"]);
+    ).toEqual([
+      "Black cod",
+      "Sake: Laks",
+      "Spinatsalat med trøffelolje, parmesan og tørr miso",
+      "Duck - smoked",
+      "Tuna - SPICY",
+      "Pizza BBQ, XL",
+    ]);
   });
 });
 
