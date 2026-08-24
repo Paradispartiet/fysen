@@ -29,9 +29,10 @@ jobs:
       FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
       FYSEN_CANDIDATE_VALIDATION_MAX_ATTEMPTS: "1"
     steps:
-      - name: Checkout
+      - name: Checkout exact PR head
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
 
@@ -249,7 +250,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: restaurant-batch-intake-${{ github.sha }}
+          name: restaurant-batch-intake-${{ github.event.pull_request.head.sha || github.sha }}
           if-no-files-found: warn
           retention-days: 14
           path: |
