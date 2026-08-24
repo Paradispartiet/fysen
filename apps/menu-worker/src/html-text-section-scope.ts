@@ -32,7 +32,7 @@ const OUTPUT_METADATA =
 const OUTPUT_ROLE_SIGNATURE =
   /^(?:[-–—]\s*)?(?:(?:head|executive|sous|pastry)\s+chef|kjøkkensjef)$/iu;
 const OUTPUT_SECTION_LABEL =
-  /^(?:barnemeny|children'?s\s+menu|kids?\s+menu|(?:[\p{L}][\p{L}'’.-]*\s+)?(?:spesialiteter|specialties)|(?:nigiri|sashimi|gunkan(?:\s+maki)?|hoso(?:\s+maki)?|tempura(?:\s+maki)?|maki)\s*[-–—]?\s*\d{1,2}\s*(?:biter|pieces?))$/iu;
+  /^(?:zensai|barnemeny|children'?s\s+menu|kids?\s+menu|(?:[\p{L}][\p{L}'’.-]*\s+)?(?:spesialiteter|specialties)|(?:nigiri|sashimi|gunkan(?:\s+maki)?|hoso(?:\s+maki)?|tempura(?:\s+maki)?|maki)\s*[-–—]?\s*\d{1,2}\s*(?:biter|pieces?))$/iu;
 const DESCRIPTION_FRAGMENT =
   /^(?:pieces?\s+of\b|served\s+with\b|topped\s+with\b|glazed\s+with\b|all\s+dishes\s+are\s+served\b|can\s+be\s+made\b|homemade\s+.+\s+cooked\s+in\b|chicken\s+cooked\s+in\b|grilled\s+chicken\s+in\b|traditional\s+.+\s+dessert\s+with\b)/iu;
 const DESCRIPTION_PHRASE =
