@@ -58,7 +58,7 @@ describe("Batch 03 HTML output quality", () => {
     ).toEqual(["Morudoba Sake"]);
   });
 
-  it("drops role signatures and unpriced menu headings while preserving actual dishes", () => {
+  it("drops role, section and bare quantity artifacts while preserving actual dishes", () => {
     const items = [
       item("– Head Chef", 48900, 1),
       item("En boks med 10 gram Oscietra kaviar", 48900, 2),
@@ -70,6 +70,8 @@ describe("Batch 03 HTML output quality", () => {
       item("Ikura: Lakserogn", 14900, 8),
       item("Maki – 6 biter", 24500, 9),
       item("California maki", 24500, 10),
+      item("6 Slices •", 21900, 11),
+      item("6 slices of salmon", 21900, 12),
     ];
 
     expect(
@@ -83,12 +85,29 @@ describe("Batch 03 HTML output quality", () => {
       "Mini Hanami",
       "Ikura: Lakserogn",
       "California maki",
+      "6 slices of salmon",
     ]);
+  });
+
+  it("removes only structured trailing allergen-code artifacts from dish names", () => {
+    const items = [
+      item("Black cod - H, SO, F", 44900, 1),
+      item("Sake: Laks - F, SEN", 16900, 2),
+      item("Duck - smoked", 28900, 3),
+      item("Tuna - SPICY", 19900, 4),
+    ];
+
+    expect(
+      filterPlainTextBeverageSectionItems(
+        items,
+        items.map((entry) => `${entry.name} ${entry.priceMinor / 100}`).join("\n"),
+      ).map((entry) => entry.name),
+    ).toEqual(["Black cod", "Sake: Laks", "Duck - smoked", "Tuna - SPICY"]);
   });
 });
 
 describe("Batch 03 public API output quality", () => {
-  it("drops donation/service sections while preserving priced food siblings", () => {
+  it("drops donation and liquor sections while preserving priced food siblings", () => {
     const items = extractPublicMenuApi(
       JSON.stringify({
         location: {
@@ -105,11 +124,35 @@ describe("Batch 03 public API output quality", () => {
                   ],
                 },
                 {
+                  title: "Orujos / Liquors",
+                  menuItems: [
+                    {
+                      name: "Hiervas Pazo de Valdomino",
+                      price: { amount: 145, currency: "NOK" },
+                    },
+                  ],
+                  subSections: [
+                    {
+                      title: "Liqueurs",
+                      menuItems: [
+                        {
+                          name: "House liqueur",
+                          price: { amount: 125, currency: "NOK" },
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
                   title: "Tapas",
                   menuItems: [
                     {
                       name: "Patatas bravas",
                       price: { amount: 105, currency: "NOK" },
+                    },
+                    {
+                      name: "Doner kebab",
+                      price: { amount: 195, currency: "NOK" },
                     },
                   ],
                 },
@@ -120,6 +163,9 @@ describe("Batch 03 public API output quality", () => {
       }),
     );
 
-    expect(items.map((entry) => entry.name)).toEqual(["Patatas bravas"]);
+    expect(items.map((entry) => entry.name)).toEqual([
+      "Patatas bravas",
+      "Doner kebab",
+    ]);
   });
 });
