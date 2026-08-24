@@ -260,22 +260,25 @@ export class BrowserMenuClient {
       const bodyBytes = new TextEncoder().encode(body);
       if (bodyBytes.length > MAX_RENDERED_HTML_BYTES) {
         throw new MenuFetchError(
-          "BROWSER_RENDERED_HTML_TOO_LARGE",
-          `Rendered source exceeded ${MAX_RENDERED_HTML_BYTES} bytes`,
+          "BROWSER_DOM_TOO_LARGE",
+          `Rendered DOM exceeded ${MAX_RENDERED_HTML_BYTES} bytes`,
           response?.status() ?? null,
         );
       }
 
+      const fetchedAt = new Date().toISOString();
       return {
         kind: "content",
         status: response?.status() ?? preflight.status,
-        url: finalUrl.toString(),
-        contentType: response?.headers()["content-type"] ?? preflight.contentType,
-        body: new Uint8Array(bodyBytes),
-        etag: response?.headers().etag ?? preflight.etag,
-        lastModified: response?.headers()["last-modified"] ?? preflight.lastModified,
-        sha256: sha256(bodyBytes),
+        contentType: "text/html; charset=utf-8",
+        body,
+        bodyBytes,
+        rawSha256: sha256(body),
+        etag: null,
+        lastModified: null,
+        robotsAllowed: preflight.robotsAllowed,
         durationMs: Date.now() - started,
+        fetchedAt,
       };
     } finally {
       await context.close().catch(() => undefined);
