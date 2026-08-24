@@ -32,11 +32,11 @@ const OUTPUT_METADATA =
 const OUTPUT_ROLE_SIGNATURE =
   /^(?:[-–—]\s*)?(?:(?:head|executive|sous|pastry)\s+chef|kjøkkensjef)$/iu;
 const OUTPUT_SECTION_LABEL =
-  /^(?:zensai|barnemeny|children'?s\s+menu|kids?\s+menu|(?:[\p{L}][\p{L}'’.-]*\s+)?(?:spesialiteter|specialties)|(?:nigiri|sashimi|gunkan(?:\s+maki)?|hoso(?:\s+maki)?|tempura(?:\s+maki)?|maki)\s*[-–—]?\s*\d{1,2}\s*(?:biter|pieces?))$/iu;
+  /^(?:zensai|izakaya\s+style(?:\s*[-–—]\s*japanske\s+småretter)?|robata(?:grill|\s+grill)|fra\s+sushibaren|supper|soups|salater|salads|ekstra|extra|barnemeny|children'?s\s+menu|kids?\s+menu|(?:[\p{L}][\p{L}'’.-]*\s+)?(?:spesialiteter|specialties|spesialnigiri|spesialsashimi)|(?:nigiri|sashimi|gunkan(?:\s+maki)?|hoso(?:\s+maki)?|tempura(?:\s+maki)?|maki)\s*[-–—]?\s*\d{1,2}\s*(?:biter|pieces?))$/iu;
 const DESCRIPTION_FRAGMENT =
   /^(?:pieces?\s+of\b|served\s+with\b|topped\s+with\b|glazed\s+with\b|all\s+dishes\s+are\s+served\b|can\s+be\s+made\b|homemade\s+.+\s+cooked\s+in\b|chicken\s+cooked\s+in\b|grilled\s+chicken\s+in\b|traditional\s+.+\s+dessert\s+with\b)/iu;
 const DESCRIPTION_PHRASE =
-  /\b(?:served\s+with|topped\s+with|glazed\s+with|comes\s+with|cooked\s+in|prepared\s+(?:in|with))\b/iu;
+  /\b(?:served\s+with|topped\s+with|glazed\s+with|comes\s+with|cooked\s+in|prepared\s+(?:in|with)|serveres(?:\s+med)?|servert(?:\s+med)?|laget\s+for\s+å\s+deles)\b/iu;
 const BILINGUAL_SECTION_PART =
   /^(?:forretter?|ap+etizers?|starters?|kjøtt\s+curries|non[- ]veg\s+curries|vegetar\s+curries|vegetarian\s+curries|nanbrød|nanbread|fat\s+øl|tap\s+beer|flaske\s+øl|bottle\s+beer|musserende|sparkling\s+wine|soft\s+drinks?)$/iu;
 const EXPLICIT_TRAILING_PRICE =
@@ -44,6 +44,8 @@ const EXPLICIT_TRAILING_PRICE =
 const BARE_DASH_TRAILING_PRICE = /\s+[-–—]\s*([1-9]\d{1,3})\s*$/u;
 const TRAILING_DASH_ALLERGEN_CODES =
   /\s+[-–—]\s*[A-Z]{1,3}(?:\s*,\s*[A-Z]{1,3}){1,9}$/u;
+const TRAILING_BARE_ALLERGEN_CODES =
+  /\s+[A-Z]{1,3}(?:\s*,\s*[A-Z]{1,3}){2,9}$/u;
 const TRAILING_LEADER = /\s*_{3,}\s*$/u;
 const TRAILING_ITEM_ALLERGEN_CODES =
   /\s+\((?:[\p{L}]{1,2}|\d{1,2})(?:\s*[,/+ ]\s*(?:[\p{L}]{1,2}|\d{1,2}))*\)$/u;
@@ -162,6 +164,7 @@ function cleanOutputArtifactName(item: MenuObservedItem): MenuObservedItem {
   let name = normalizeLine(item.name).replace(TRAILING_LEADER, "").trim();
   name = name.replace(EXPLICIT_TRAILING_PRICE, "").trim();
   name = name.replace(TRAILING_DASH_ALLERGEN_CODES, "").trim();
+  name = name.replace(TRAILING_BARE_ALLERGEN_CODES, "").trim();
   const barePrice = name.match(BARE_DASH_TRAILING_PRICE);
   if (barePrice?.[1] && Number(barePrice[1]) >= 40 && item.priceMinor === Number(barePrice[1]) * 100) {
     name = name.replace(BARE_DASH_TRAILING_PRICE, "").trim();
