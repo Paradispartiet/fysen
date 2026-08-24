@@ -11,9 +11,9 @@
     "longitude": 10.715439
   },
   "menuSource": {
-    "url": "https://www.1947gandhi.no/",
+    "url": "https://www.1947gandhi.no/indisk-meny-oslo/",
     "sourceType": "html",
-    "fetchMode": "browser",
+    "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 41,
