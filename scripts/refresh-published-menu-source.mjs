@@ -1,8 +1,11 @@
 import { resolve } from "node:path";
 import {
   createDatabasePool,
+  listEnabledMenuSourcesForRestaurant,
   MenuIndexRepository,
   replaceMenuSourceSupport,
+  replacePublishedMenuSourceAuthority,
+  setMenuSourceEnabled,
 } from "../packages/database/dist/index.js";
 import { HttpMenuClient } from "../apps/menu-worker/dist/http-client.js";
 import { readRestaurantOnboardingManifest } from "../apps/menu-worker/dist/onboarding-manifest.js";
@@ -34,6 +37,7 @@ async function refreshManifest(manifestPath) {
     if (restaurant.active !== true) fail(`Canonical restaurant is inactive in production: ${manifest.restaurant.slug}`);
 
     const repository = new MenuIndexRepository(pool);
+    const enabledSourcesBefore = await listEnabledMenuSourcesForRestaurant(pool, restaurant.id);
     const source = await repository.upsertMenuSource({
       restaurantId: restaurant.id,
       url: manifest.menuSource.url,
@@ -44,7 +48,10 @@ async function refreshManifest(manifestPath) {
       minimumExpectedItems: manifest.menuSource.minimumExpectedItems,
       maxResponseBytes: manifest.menuSource.maxResponseBytes ?? null,
     });
-    if (!source.enabled) {
+    const stagedMigration = enabledSourcesBefore.some((enabledSource) => enabledSource.id !== source.id);
+    if (stagedMigration && source.enabled) {
+      await setMenuSourceEnabled(pool, source.id, false);
+    } else if (!stagedMigration && !source.enabled) {
       fail(`Canonical menu source is disabled in production: ${manifest.restaurant.slug}`, {
         menuSourceId: source.id,
         sourceUrl: source.url,
@@ -57,15 +64,26 @@ async function refreshManifest(manifestPath) {
       source.id,
       new HttpMenuClient(),
       manifest.menuSource.sourceSupport,
+      { allowDisabled: stagedMigration },
     );
     if (!acceptedOutcomes.has(watch.outcome)) {
-      fail(`Published menu refresh failed for ${manifest.restaurant.slug}`, watch);
+      fail(`Published menu refresh failed for ${manifest.restaurant.slug}`, {
+        ...watch,
+        stagedMigration,
+      });
     }
 
     const snapshot = await repository.getLatestSnapshotWithItems(source.id);
     const quality = evaluateManifestMenuQuality(manifest, snapshot?.items ?? []);
     if (!quality.accepted) {
-      fail(`Published menu refresh violated canonical assertions for ${manifest.restaurant.slug}`, quality);
+      fail(`Published menu refresh violated canonical assertions for ${manifest.restaurant.slug}`, {
+        ...quality,
+        stagedMigration,
+      });
+    }
+
+    if (stagedMigration) {
+      await replacePublishedMenuSourceAuthority(pool, restaurant.id, source.id);
     }
 
     return {
@@ -73,6 +91,7 @@ async function refreshManifest(manifestPath) {
       menuSourceId: source.id,
       sourceUrl: source.url,
       fetchMode: manifest.menuSource.fetchMode,
+      stagedMigration,
       watch,
       snapshotFetchedAt: snapshot?.fetchedAt ?? null,
       itemCount: quality.itemCount,
