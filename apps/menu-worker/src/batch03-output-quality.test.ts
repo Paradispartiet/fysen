@@ -95,14 +95,17 @@ describe("Batch 03 HTML output quality", () => {
     ]);
   });
 
-  it("removes only conservative trailing allergen-code artifacts from dish names", () => {
+  it("removes only conservative trailing allergen artifacts from dish names", () => {
     const items = [
       item("Black cod - H, SO, F", 44900, 1),
       item("Sake: Laks - F, SEN", 16900, 2),
       item("Spinatsalat med trøffelolje, parmesan og tørr miso H, SO, M", 17900, 3),
-      item("Duck - smoked", 28900, 4),
-      item("Tuna - SPICY", 19900, 5),
-      item("Pizza BBQ, XL", 19900, 6),
+      item("Hanamis signatursalat med honning- og kokosdressing - SEN", 18900, 4),
+      item("Kappa maki – agurk - SEN", 14900, 5),
+      item("Wagyu steak - (spør din servitør om allergener)", 76900, 6),
+      item("Duck - smoked", 28900, 7),
+      item("Tuna - SPICY", 19900, 8),
+      item("Pizza BBQ, XL", 19900, 9),
     ];
 
     expect(
@@ -114,6 +117,9 @@ describe("Batch 03 HTML output quality", () => {
       "Black cod",
       "Sake: Laks",
       "Spinatsalat med trøffelolje, parmesan og tørr miso",
+      "Hanamis signatursalat med honning- og kokosdressing",
+      "Kappa maki – agurk",
+      "Wagyu steak",
       "Duck - smoked",
       "Tuna - SPICY",
       "Pizza BBQ, XL",
