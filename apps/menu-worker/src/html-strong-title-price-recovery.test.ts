@@ -16,12 +16,33 @@ describe("strong-title price recovery", () => {
       <p><strong>Market fish</strong> ginger</p><p>310,-</p><p>—</p>
       <p><strong>Mushroom rice</strong> shallots</p><p>230,-</p>
     `);
-    expect(HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION).toBe("strong-title-price-v1");
+    expect(HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION).toBe("strong-title-price-v2");
     expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
       ["Garden dumplings", 12000], ["Roasted aubergine", 18000], ["Charred cabbage", 19000],
       ["Herb chicken", 26000], ["Market fish", 31000], ["Mushroom rice", 23000],
     ]);
     expect(items.some((item) => item.name === "SMALL PLATES" || item.name === "MAINS")).toBe(false);
+  });
+
+  it("defers a coherent strong-title suffix to substantially broader heading-price coverage", () => {
+    const headingCards = Array.from({ length: 10 }, (_, index) => `
+      <h4>Main dish ${index + 1}</h4>
+      <p>Canonical main description ${index + 1}</p>
+      <h5>${210 + index},-</h5>
+    `).join("");
+    const strongCards = Array.from({ length: 6 }, (_, index) => `
+      <p><strong>Dessert ${index + 1}</strong> sweet finish</p>
+      <p>${120 + index},-</p>
+    `).join("");
+
+    const items = recoverStrongTitlePriceHtmlItems(`
+      <html><body>
+        <h2>Hovedretter</h2>${headingCards}
+        <h2>Dessert</h2>${strongCards}
+      </body></html>
+    `);
+
+    expect(items).toEqual([]);
   });
 
   it("stops a group label when a nearer strong dish appears before price", () => {
