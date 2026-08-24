@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v15";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v16";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -13,6 +13,8 @@ const LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]\s*/u;
 const SECTION_PRICE_SIGNAL = /(?:^|\s)(?:kr\.?|nok)?\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)?$/iu;
 const PRICE_DISPLAY_ONLY_ITEM =
   /^(?:(?:kr\.?|nok)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*\/\s*(?:(?:kr\.?|nok)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?)?\s*(?:,-|kr\.?|nok)?$/iu;
+const PREPARATION_NOTE_ITEM =
+  /^(?:kan\s+(?:fås|lages|serveres)|can\s+be\s+(?:made|prepared|served))\s+(?:som\s+)?(?:glutenfri|gluten[- ]?free|vegansk|vegan|vegetar(?:isk)?|vegetarian)\b/iu;
 const VARIANT_SECTION_KEYWORD =
   /\b(?:sashimi|nigiri|maki|uramaki|futomaki|temaki|sushi|tacos?|pizza(?:er|s)?|pasta|dessert(?:er|s)?|starters?|forretter?|mains?|hovedretter?|grill|bowls?)\b/iu;
 const TRAILING_SHARING_TAGLINE =
@@ -202,7 +204,7 @@ export function disambiguateConflictingPdfSourceKeys(
 
 function looksLikePricingMetadata(name: string): boolean {
   const visible = normalizeVisibleLine(name);
-  if (PRICE_DISPLAY_ONLY_ITEM.test(visible)) return true;
+  if (PRICE_DISPLAY_ONLY_ITEM.test(visible) || PREPARATION_NOTE_ITEM.test(visible)) return true;
   const normalized = normalizeScopeLine(visible);
   return /^(?:minimum|min)\s+\d+\s+(?:personer|persons?|people)\b.*\b(?:pris|price)\s+(?:per|pr)\s+(?:person|personer)\b/u.test(
     normalized,
