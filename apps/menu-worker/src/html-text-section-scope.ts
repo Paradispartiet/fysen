@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v9";
+export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v10";
 
 const SECTION_COUNT_SUFFIX = /\s*\(\s*\d{1,3}\s*\)\s*$/u;
 const BEVERAGE_SECTION_LABEL =
@@ -26,6 +26,10 @@ const PER_PERSON_PRICE_METADATA =
   /^(?:(?:nok|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)?\s*(?:per|pr)\s+(?:person|personer|persons?|people)$/iu;
 const OUTPUT_METADATA =
   /^(?:our\s+menu|all\s+dishes\s+are\s+served\s+with\s+rice|contents?\s*:.*|druer\s*:.*|grapes?\s*:.*)$/iu;
+const OUTPUT_ROLE_SIGNATURE =
+  /^(?:[-–—]\s*)?(?:(?:head|executive|sous|pastry)\s+chef|kjøkkensjef)$/iu;
+const OUTPUT_SECTION_LABEL =
+  /^(?:barnemeny|children'?s\s+menu|kids?\s+menu|(?:[\p{L}][\p{L}'’.-]*\s+)?(?:spesialiteter|specialties)|(?:nigiri|sashimi|gunkan(?:\s+maki)?|hoso(?:\s+maki)?|tempura(?:\s+maki)?|maki)\s*[-–—]?\s*\d{1,2}\s*(?:biter|pieces?))$/iu;
 const DESCRIPTION_FRAGMENT =
   /^(?:pieces?\s+of\b|served\s+with\b|topped\s+with\b|glazed\s+with\b|all\s+dishes\s+are\s+served\b|can\s+be\s+made\b|homemade\s+.+\s+cooked\s+in\b|chicken\s+cooked\s+in\b|grilled\s+chicken\s+in\b|traditional\s+.+\s+dessert\s+with\b)/iu;
 const DESCRIPTION_PHRASE =
@@ -137,6 +141,8 @@ function isObviousOutputNoise(
     CONTACT_METADATA.test(normalized) ||
     PER_PERSON_PRICE_METADATA.test(normalized) ||
     OUTPUT_METADATA.test(withoutLeadingDelimiter) ||
+    OUTPUT_ROLE_SIGNATURE.test(withoutLeadingDelimiter) ||
+    OUTPUT_SECTION_LABEL.test(withoutLeadingDelimiter) ||
     (!allowDirectPricedFoodDescription &&
       looksLikeDescriptionFragment(withoutLeadingDelimiter)) ||
     isBilingualMenuSection(withoutLeadingDelimiter) ||
@@ -282,6 +288,11 @@ export function filterHtmlBeverageSectionItemsWithScopedProvenance(
     scopedItems,
     scopedVisibleText,
   );
+  const scopedFullPageFiltered = filterPlainTextBeverageSectionItems(
+    scopedFiltered,
+    fullVisibleText,
+    { matchTrailingAllergenCodes: true },
+  );
   const fullPageFiltered = filterPlainTextBeverageSectionItems(
     fullPageRecoveryItems,
     fullVisibleText,
@@ -290,6 +301,6 @@ export function filterHtmlBeverageSectionItemsWithScopedProvenance(
 
   const unique = new Map<string, MenuObservedItem>();
   for (const item of fullPageFiltered) unique.set(item.sourceKey, item);
-  for (const item of scopedFiltered) unique.set(item.sourceKey, item);
+  for (const item of scopedFullPageFiltered) unique.set(item.sourceKey, item);
   return [...unique.values()].sort((left, right) => left.position - right.position);
 }
