@@ -5,11 +5,13 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v17";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v18";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
 const LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]\s*/u;
+const NUMBERED_PARENT_DISH = /^\d{1,3}\s*[.)]?\s+(.+)$/u;
+const ADDON_ITEM_NAME = /^(?:ekstra|extra|tillegg|add[- ]?ons?)\b/iu;
 const SECTION_PRICE_SIGNAL = /(?:^|\s)(?:kr\.?|nok)?\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)?$/iu;
 const PRICE_DISPLAY_ONLY_ITEM =
   /^(?:(?:kr\.?|nok)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*\/\s*(?:(?:kr\.?|nok)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?)?\s*(?:,-|kr\.?|nok)?$/iu;
@@ -146,6 +148,34 @@ function nearestVariantSectionHeading(
   return null;
 }
 
+function nearestNumberedParentDish(
+  lines: readonly string[],
+  dishLineIndex: number,
+): string | null {
+  for (let index = dishLineIndex - 1; index >= Math.max(0, dishLineIndex - 24); index -= 1) {
+    const line = normalizeVisibleLine(lines[index] ?? "");
+    const match = line.match(NUMBERED_PARENT_DISH);
+    const name = normalizeVisibleLine(match?.[1] ?? "");
+    if (!name || name.length > 180 || !/\p{L}/u.test(name)) continue;
+    if (PRICE_DISPLAY_ONLY_ITEM.test(name) || PREPARATION_NOTE_ITEM.test(name)) continue;
+    return name.replace(SECTION_PRICE_SIGNAL, "").trim() || null;
+  }
+  return null;
+}
+
+function distinctCompleteContexts(
+  group: readonly MenuObservedItem[],
+  contexts: ReadonlyMap<MenuObservedItem, string>,
+): boolean {
+  const values = group
+    .map((item) => contexts.get(item) ?? null)
+    .filter((value): value is string => Boolean(value));
+  return (
+    values.length === group.length &&
+    new Set(values.map(normalizeDishName)).size >= 2
+  );
+}
+
 export function disambiguateConflictingPdfSourceKeys(
   visibleText: string,
   items: readonly MenuObservedItem[],
@@ -172,6 +202,7 @@ export function disambiguateConflictingPdfSourceKeys(
 
   const lines = visibleText.split("\n").map(normalizeVisibleLine);
   const sectionByItem = new Map<MenuObservedItem, string>();
+  const parentByItem = new Map<MenuObservedItem, string>();
   let searchFrom = 0;
   for (const item of items) {
     const lineIndex = findNextDishLine(lines, item.name, searchFrom);
@@ -179,22 +210,39 @@ export function disambiguateConflictingPdfSourceKeys(
     if (lineIndex === null || !conflictingKeys.has(item.sourceKey)) continue;
     const section = nearestVariantSectionHeading(lines, lineIndex);
     if (section) sectionByItem.set(item, section);
+    if (ADDON_ITEM_NAME.test(item.name)) {
+      const parent = nearestNumberedParentDish(lines, lineIndex);
+      if (parent) parentByItem.set(item, parent);
+    }
   }
 
+  const contextByItem = new Map<MenuObservedItem, string>();
   const resolvedKeys = new Set<string>();
   for (const sourceKey of conflictingKeys) {
     const group = groups.get(sourceKey) ?? [];
-    const sections = group
-      .map((item) => sectionByItem.get(item) ?? null)
-      .filter((value): value is string => Boolean(value));
-    if (sections.length !== group.length) continue;
-    const distinctSections = new Set(sections.map(normalizeDishName));
-    if (distinctSections.size >= 2) resolvedKeys.add(sourceKey);
+    if (distinctCompleteContexts(group, sectionByItem)) {
+      for (const item of group) {
+        const section = sectionByItem.get(item);
+        if (section) contextByItem.set(item, section);
+      }
+      resolvedKeys.add(sourceKey);
+      continue;
+    }
+    if (
+      group.every((item) => ADDON_ITEM_NAME.test(item.name)) &&
+      distinctCompleteContexts(group, parentByItem)
+    ) {
+      for (const item of group) {
+        const parent = parentByItem.get(item);
+        if (parent) contextByItem.set(item, parent);
+      }
+      resolvedKeys.add(sourceKey);
+    }
   }
 
   return items.map((item) => {
     if (!resolvedKeys.has(item.sourceKey)) return item;
-    const sectionName = sectionByItem.get(item);
+    const sectionName = contextByItem.get(item);
     if (!sectionName) return item;
     return {
       ...item,
