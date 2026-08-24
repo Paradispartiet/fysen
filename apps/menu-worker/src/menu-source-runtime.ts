@@ -114,7 +114,7 @@ const BOTTLED_BEVERAGE_VOLUME =
   /(?:^flaske$|\b(?:flaske\s+0[,.]\d{1,2}(?:\s*l)?|0[,.]\d{1,2}\s*l?\s+flaske)\)?\s*[-–—]?$)/iu;
 const COCKTAIL_DESCRIPTION_ITEM =
   /^(?:(?:mimosa|(?:black|white)\s+russian(?:\s+kahlua)?|classic\s+mojito|vodka\s+cranberry)$|(?=.*,)(?=.*\b(?:gin|vodka|rom|rum|tequila|whisk(?:e)?y|bourbon|aperol|prosecco|kahlua|makers\s+mark|jack\s+daniels|cointreau)\b)(?=.*\b(?:tonic|cola|cranberry|prosecco|lime|sitron|lemon|appelsin|orange|eggehvite|egg\s*whites?|ginger\s+ale|ingefærøl|lemon\s+soda|sitronbrus)\b).+)$/iu;
-export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v2";
+export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v3";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v8";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v9";
@@ -157,6 +157,7 @@ type MenuContentFetchResult = Extract<
 
 export function normalizeHtmlPriceNotation(html: string): string {
   return html
+    .replace(/(\b(?:kr\.?\s*)?[1-9]\d{1,3})\s*;-/giu, "$1,-")
     .replace(/(\b(?:kr\.?\s*)?[1-9]\d{1,3})(?:\s*,)?\s*\/-/giu, "$1,-")
     .replace(/(\b[1-9]\d{1,3})\s*-(?=\s*(?:<|$))/gmu, "$1,-");
 }
