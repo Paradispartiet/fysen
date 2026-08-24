@@ -22,6 +22,7 @@ const QUANTITY_OPTION_ONLY =
   /^(?:(?:\d+\s+)?(?:kule(?:r)?|scoops?)|\d+\s+(?:per|pers?\.?|personer?|persons?|people))(?:\s*[_-]{2,})?$/iu;
 const OUTPUT_QUANTITY_FRAGMENT =
   /^\d{1,2}\s+(?:slices?|pieces?|biter)\s*[•·|]?$/iu;
+const OUTPUT_TRAILING_LAYOUT_BULLET = /[•·]\s*$/u;
 const CONTACT_METADATA =
   /^(?:ring\s+oss\s+på|call\s+us(?:\s+(?:at|on))?|tel(?:efon)?|tlf|phone)\s*:?\s*\+?\d[\d\s()+.-]{4,}$/iu;
 const PER_PERSON_PRICE_METADATA =
@@ -143,6 +144,7 @@ function isObviousOutputNoise(
     ALLERGEN_CODE_ONLY.test(normalized) ||
     QUANTITY_OPTION_ONLY.test(normalized) ||
     OUTPUT_QUANTITY_FRAGMENT.test(normalized) ||
+    OUTPUT_TRAILING_LAYOUT_BULLET.test(normalized) ||
     CONTACT_METADATA.test(normalized) ||
     PER_PERSON_PRICE_METADATA.test(normalized) ||
     OUTPUT_METADATA.test(withoutLeadingDelimiter) ||
