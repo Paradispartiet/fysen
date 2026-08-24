@@ -11,9 +11,9 @@
     "longitude": 10.747066
   },
   "menuSource": {
-    "url": "https://www.habibi.no/meny/",
-    "sourceType": "html",
-    "fetchMode": "browser",
+    "url": "https://www.habibi.no/ws/media-library/820be17e4861830e77990a9c8b6cdc17/habibi-meny-norsk-17.04.2025.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
     "minimumExpectedItems": 18
