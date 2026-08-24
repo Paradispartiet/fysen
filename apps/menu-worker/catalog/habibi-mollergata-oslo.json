@@ -13,7 +13,7 @@
   "menuSource": {
     "url": "https://www.habibi.no/meny/",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
     "minimumExpectedItems": 18
