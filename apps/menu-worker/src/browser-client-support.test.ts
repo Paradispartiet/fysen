@@ -39,6 +39,16 @@ describe("browser support origins", () => {
     ).toMatchObject({ action: "block", fatal: true });
   });
 
+  it("blocks stylesheets non-fatally before they consume the semantic network budget", () => {
+    expect(
+      browserRequestDecision({
+        sourceOrigin,
+        requestUrl: "https://restaurant.example/assets/menu.css",
+        resourceType: "stylesheet",
+      }),
+    ).toEqual({ action: "block", reason: "blocked resource type: stylesheet", fatal: false });
+  });
+
   it("keeps undeclared cross-origin document/xhr/fetch fail-closed", () => {
     for (const resourceType of ["document", "xhr", "fetch"]) {
       expect(
