@@ -53,7 +53,7 @@
   ],
   "qualityAssertions": {
     "requiredDishNames": [
-      "TUNFISK KEBAB",
+      "LAMB CHOPS",
       "Plain Butter Naan",
       "MIX GRILL",
       "LAMB ROGAN JOSH",
@@ -64,8 +64,8 @@
     ],
     "requiredDishVariants": [
       {
-        "name": "TUNFISK KEBAB",
-        "priceMinor": 16900
+        "name": "LAMB CHOPS",
+        "priceMinor": 17900
       },
       {
         "name": "Plain Butter Naan",
