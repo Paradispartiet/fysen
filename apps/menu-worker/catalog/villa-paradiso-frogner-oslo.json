@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "villa-paradiso-frogner-oslo",
+    "name": "Villa Paradiso Frogner",
+    "websiteUrl": "https://www.villaparadiso.no/restauranter/frogner",
+    "address": "Sommerrogata 17, 0255 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.914994335853144,
+    "longitude": 10.717781330973223
+  },
+  "menuSource": {
+    "url": "https://cdn.prod.website-files.com/5c77c5f7f7364239e114229f/6a0f213ea806bff6bd427849_Villa%20Paradiso%20Frogner%20meny.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 49,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-24",
+      "note": "Batch 03 uses the current first-party linked Villa Paradiso Frogner food-menu PDF. Kitchen-scoped hours remain separately verified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Husets focaccia med aioli",
+      "Tagliere misto all’italiana",
+      "Fusilli alla Montecarlo",
+      "Capricciosa",
+      "Parmigiana",
+      "Mortazza",
+      "Gelati e sorbetti",
+      "Bolognese"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Husets focaccia med aioli",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Tagliere misto all’italiana",
+        "priceMinor": 31000
+      },
+      {
+        "name": "Fusilli alla Montecarlo",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Capricciosa",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Parmigiana",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Mortazza",
+        "priceMinor": 26000
+      },
+      {
+        "name": "Gelati e sorbetti",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Bolognese",
+        "priceMinor": 13000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
