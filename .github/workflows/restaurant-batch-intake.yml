@@ -296,7 +296,7 @@ jobs:
           const runtimePlan = {
             version: 1,
             outputDirectory: "candidates",
-            concurrency: seed.concurrency ?? 4,
+            concurrency: reproof ? 1 : (seed.concurrency ?? 4),
             restaurants: resolvedRestaurants
           };
           await writeFile(resolvedPath, `${JSON.stringify(runtimePlan, null, 2)}\n`);
