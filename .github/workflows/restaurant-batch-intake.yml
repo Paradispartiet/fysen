@@ -30,7 +30,6 @@ jobs:
     env:
       FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
       FYSEN_CANDIDATE_VALIDATION_MAX_ATTEMPTS: "1"
-      FYSEN_MAX_PDF_RESPONSE_BYTES: "26214400"
     steps:
       - name: Checkout exact PR head
         uses: actions/checkout@v4
