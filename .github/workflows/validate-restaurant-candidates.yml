@@ -8,6 +8,7 @@ on:
       - "apps/menu-worker/catalog/*.json"
       - "apps/menu-worker/src/**"
       - "packages/menu-core/src/**"
+      - "scripts/diagnose-html-recovery.mjs"
       - ".github/workflows/validate-restaurant-candidates.yml"
   workflow_dispatch:
     inputs:
@@ -44,6 +45,12 @@ jobs:
       - name: Build menu-worker dependency graph
         run: pnpm --filter @fysen/menu-worker... build
 
+      - name: Diagnose current HTML recovery families
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        shell: bash
+        run: node scripts/diagnose-html-recovery.mjs apps/menu-worker/catalog/habibi-mollergata-oslo.json
+
       - name: Collect exact-head PR proof manifests
         if: github.event_name == 'pull_request'
         id: proof
@@ -61,8 +68,6 @@ jobs:
 
           git diff --name-only "$BASE_SHA" "$HEAD_SHA" > "$changed_file"
 
-          # Manifest changes prove themselves. Deleted manifests are intentionally
-          # excluded because there is no source contract left to validate.
           git diff --name-only --diff-filter=ACMRT "$BASE_SHA" "$HEAD_SHA" -- \
             'apps/menu-worker/candidates/*.json' \
             'apps/menu-worker/catalog/*.json' \
@@ -80,8 +85,6 @@ jobs:
             esac
           done < "$changed_file"
 
-          # A parser/runtime PR can request concrete live proofs directly in its
-          # normal PR body. This replaces disposable proof branches/workflows.
           requested="$(
             printf '%s\n' "$PR_BODY" \
               | sed -nE 's/^[[:space:]]*Live-proof manifests:[[:space:]]*(.*)$/\1/ip' \
@@ -147,8 +150,6 @@ jobs:
           while IFS= read -r manifest; do
             [[ -n "$manifest" ]] || continue
             echo "Strict live validation: $manifest"
-            # validate:manifest performs one direct validation; it does not hide
-            # a first-pass failure behind batch retry behavior.
             pnpm --filter @fysen/menu-worker validate:manifest "$manifest"
           done < "$PROOF_FILE"
 
