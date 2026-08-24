@@ -30,7 +30,6 @@ jobs:
       FYSEN_HOURS_WATCH_BATCH_SIZE: "25"
       FYSEN_ACTION_VERIFY_BATCH_SIZE: "25"
       FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
-      FYSEN_MAX_PDF_RESPONSE_BYTES: "26214400"
     steps:
       - name: Require production database secret
         shell: bash

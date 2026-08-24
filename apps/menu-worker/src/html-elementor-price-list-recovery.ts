@@ -3,10 +3,10 @@ import {
   normalizeDishName,
   type MenuObservedItem,
 } from "@fysen/menu-core";
-import { load, type CheerioAPI } from "cheerio";
+import { load } from "cheerio";
 
 export const HTML_ELEMENTOR_PRICE_LIST_RECOVERY_VERSION =
-  "elementor-price-list-v2";
+  "elementor-price-list-v1";
 
 const CARD_SELECTOR = ".elementor-price-list-item";
 const TITLE_SELECTOR = ".elementor-price-list-title";
@@ -41,45 +41,6 @@ function plausibleTitle(value: string): boolean {
     !UI_TITLE.test(title) &&
     !/^(?:https?:\/\/|www\.|©|™)/iu.test(title)
   );
-}
-
-function headingLevel(tagName: string): number | null {
-  const match = tagName.toLocaleLowerCase().match(/^h([1-6])$/u);
-  return match?.[1] ? Number(match[1]) : null;
-}
-
-function broaderHeadingPriceCardCount($: CheerioAPI): number {
-  const headings = $("h1, h2, h3, h4, h5, h6").toArray();
-  let count = 0;
-
-  for (let index = 0; index < headings.length; index += 1) {
-    const heading = headings[index];
-    if (!heading) continue;
-    const level = headingLevel(heading.tagName);
-    const title = normalizeText($(heading).text());
-    if (level === null || !plausibleTitle(title) || parsePriceMinor(title) !== null)
-      continue;
-
-    for (let nextIndex = index + 1; nextIndex < headings.length; nextIndex += 1) {
-      const nextHeading = headings[nextIndex];
-      if (!nextHeading) break;
-      const nextLevel = headingLevel(nextHeading.tagName);
-      const nextText = normalizeText($(nextHeading).text());
-      if (nextLevel === null) continue;
-      if (nextLevel <= level) break;
-
-      if (parsePriceMinor(nextText) !== null) {
-        count += 1;
-        break;
-      }
-
-      // A nested semantic heading before a price means the outer heading was a
-      // section/container label, not the dish title for that price.
-      if (plausibleTitle(nextText)) break;
-    }
-  }
-
-  return count;
 }
 
 export function recoverElementorPriceListHtmlItems(
@@ -142,16 +103,5 @@ export function recoverElementorPriceListHtmlItems(
   });
 
   if (invalid || items.length !== cards.length) return [];
-
-  const broaderHeadingCards = broaderHeadingPriceCardCount($);
-  if (
-    broaderHeadingCards >= Math.max(
-      items.length + 2,
-      Math.ceil(items.length * 1.5),
-    )
-  ) {
-    return [];
-  }
-
   return items;
 }

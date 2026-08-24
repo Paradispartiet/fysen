@@ -28,7 +28,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v18");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v14");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -61,33 +61,6 @@ describe("PDF source scope", () => {
     expect(new Set(scopedSalmon.map((item) => item.sourceKey)).size).toBe(2);
   });
 
-  it("disambiguates conflicting explicit add-ons only when distinct numbered parent dishes are visible", () => {
-    const lines = [
-      "4. Kyllinggryte",
-      "Serveres med salat og bulgur",
-      "Ekstra bulgur 45",
-      "5. Kylling Tawok",
-      "310",
-      "14. Mashawi",
-      "Serveres med salat og bulgur",
-      "Ekstra bulgur 49",
-      "15. Dønner kebab",
-      "350",
-    ];
-    const parsed = extractMenuItemsFromPdfLines(lines);
-    const extras = parsed.filter((item) => item.normalizedName === "ekstra bulgur");
-    expect(extras).toHaveLength(2);
-    expect(new Set(extras.map((item) => item.sourceKey)).size).toBe(1);
-
-    const disambiguated = disambiguateConflictingPdfSourceKeys(lines.join("\n"), parsed);
-    const scopedExtras = disambiguated.filter((item) => item.normalizedName === "ekstra bulgur");
-    expect(scopedExtras.map((item) => [item.sectionName, item.priceMinor])).toEqual([
-      ["Kyllinggryte", 4500],
-      ["Mashawi", 4900],
-    ]);
-    expect(new Set(scopedExtras.map((item) => item.sourceKey)).size).toBe(2);
-  });
-
   it("fails closed when conflicting same-name prices cannot be bound to distinct menu sections", () => {
     const lines = ["LAKS 139", "LAKS 159"];
     const parsed = extractMenuItemsFromPdfLines(lines);
@@ -96,81 +69,6 @@ describe("PDF source scope", () => {
     expect(disambiguated.map((item) => item.sourceKey)).toEqual(
       parsed.map((item) => item.sourceKey),
     );
-  });
-
-  it("fails closed for an add-on conflict without distinct numbered parents", () => {
-    const lines = ["Ekstra bulgur 45", "Ekstra bulgur 49"];
-    const parsed = extractMenuItemsFromPdfLines(lines);
-    const disambiguated = disambiguateConflictingPdfSourceKeys(lines.join("\n"), parsed);
-
-    expect(disambiguated.map((item) => item.sourceKey)).toEqual(
-      parsed.map((item) => item.sourceKey),
-    );
-  });
-
-  it("drops standalone currency-price rows that PDF column ordering can expose as pseudo dish names", () => {
-    const lines = [
-      "HOVEDRETTER",
-      "Kofta (arabisk gryterett med kjøttboller)",
-      "kr. 310",
-      "kr. 290",
-      "Kylling Tawok",
-      "kr. 310",
-    ];
-    const parsed = extractMenuItemsFromPdfLines(lines);
-    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
-
-    expect(scoped.map((item) => [item.name, item.priceMinor])).toEqual([
-      ["Kofta (arabisk gryterett med kjøttboller)", 31000],
-      ["Kylling Tawok", 31000],
-    ]);
-    expect(scoped.some((item) => /^(?:kr\.?|nok)\s*\d/iu.test(item.name))).toBe(false);
-  });
-
-  it("drops standalone preparation notes that inherit adjacent PDF prices", () => {
-    const lines = [
-      "HOVEDRETTER",
-      "Lammegryte",
-      "310",
-      "Kan fås glutenfri",
-      "220",
-      "Kylling Tawok",
-      "310",
-      "Can be made vegan",
-      "249",
-    ];
-    const parsed = extractMenuItemsFromPdfLines(lines);
-    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
-
-    expect(scoped.map((item) => [item.name, item.priceMinor])).toEqual([
-      ["Lammegryte", 31000],
-      ["Kylling Tawok", 31000],
-    ]);
-    expect(
-      scoped.some((item) => /^(?:kan\s+(?:fås|lages)|can\s+be\s+made)/iu.test(item.name)),
-    ).toBe(false);
-  });
-
-  it("drops standalone allergen labels that inherit adjacent PDF prices", () => {
-    const lines = [
-      "TILBEHØR",
-      "Ekstra hvitløkbrød",
-      "49",
-      "Hvete",
-      "49",
-      "Ekstra timianbrød",
-      "49",
-      "Wheat",
-      "49",
-    ];
-    const parsed = extractMenuItemsFromPdfLines(lines);
-    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
-
-    expect(scoped.map((item) => [item.name, item.priceMinor])).toEqual([
-      ["Ekstra hvitløkbrød", 4900],
-      ["Ekstra timianbrød", 4900],
-    ]);
-    expect(scoped.some((item) => /^(?:hvete|wheat)$/iu.test(item.name))).toBe(false);
   });
 
   it("recovers an explicit low per-item price from the next PDF text line", () => {
