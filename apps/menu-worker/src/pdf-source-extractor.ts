@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v13";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v14";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -13,6 +13,8 @@ const LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]\s*/u;
 const SECTION_PRICE_SIGNAL = /(?:^|\s)(?:kr\.?|nok)?\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)?$/iu;
 const VARIANT_SECTION_KEYWORD =
   /\b(?:sashimi|nigiri|maki|uramaki|futomaki|temaki|sushi|tacos?|pizza(?:er|s)?|pasta|dessert(?:er|s)?|starters?|forretter?|mains?|hovedretter?|grill|bowls?)\b/iu;
+const TRAILING_SHARING_TAGLINE =
+  /\s+(?:perfekt\s+å\s+dele|perfect\s+for\s+sharing)!?$/iu;
 const RECOVERY_ALLERGEN_CODES = new Set([
   "al",
   "b",
@@ -203,6 +205,17 @@ function looksLikePricingMetadata(name: string): boolean {
   );
 }
 
+function cleanPdfOutputItemName(item: MenuObservedItem): MenuObservedItem {
+  const name = normalizeVisibleLine(item.name).replace(TRAILING_SHARING_TAGLINE, "").trim();
+  if (!name || name === item.name) return item;
+  return {
+    ...item,
+    name,
+    normalizedName: normalizeDishName(name),
+    sourceKey: createMenuItemSourceKey(name, item.sectionName),
+  };
+}
+
 function canonicalRecoveredDishName(value: string): string {
   const tokens = normalizeVisibleLine(value)
     .replace(LEADING_MENU_NUMBER, "")
@@ -276,7 +289,7 @@ export function scopePdfMenuItems(
     const lineIndex = findNextDishLine(lines, item.name, searchFrom);
     if (lineIndex !== null) searchFrom = lineIndex + 1;
     if (lineIndex !== null && blocked[lineIndex]) continue;
-    scoped.push(item);
+    scoped.push(cleanPdfOutputItemName(item));
   }
 
   return scoped.map((item, position) => ({ ...item, position }));

@@ -2,9 +2,11 @@ name: Restaurant batch intake
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, edited]
     paths:
       - "apps/menu-worker/research/*.seed.json"
+      - "apps/menu-worker/src/**"
+      - "packages/menu-core/src/**"
       - ".github/workflows/restaurant-batch-intake.yml"
   workflow_dispatch:
     inputs:
@@ -42,30 +44,57 @@ jobs:
       - name: Build menu-worker dependency graph
         run: pnpm --filter @fysen/menu-worker... build
 
-      - name: Select exactly one research seed
+      - name: Select research seed
         id: seed
         shell: bash
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BODY: ${{ github.event.pull_request.body }}
           DISPATCH_SEED: ${{ inputs.seed_path }}
         run: |
           set -euo pipefail
+          validate_seed() {
+            local candidate="$1"
+            case "$candidate" in
+              apps/menu-worker/research/*.seed.json) ;;
+              *) echo "Seed must be apps/menu-worker/research/*.seed.json: $candidate" >&2; exit 1 ;;
+            esac
+            case "$candidate" in
+              *..*) echo "Seed may not contain '..': $candidate" >&2; exit 1 ;;
+            esac
+            [[ -f "$candidate" ]] || { echo "Seed does not exist: $candidate" >&2; exit 1; }
+          }
+
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             seed="$DISPATCH_SEED"
-            case "$seed" in
-              apps/menu-worker/research/*.seed.json) ;;
-              *) echo "seed_path must be apps/menu-worker/research/*.seed.json" >&2; exit 1 ;;
-            esac
-            [[ -f "$seed" ]] || { echo "Seed does not exist: $seed" >&2; exit 1; }
+            validate_seed "$seed"
           else
             mapfile -t seeds < <(git diff --name-only --diff-filter=ACMRT "$BASE_SHA" "$HEAD_SHA" -- 'apps/menu-worker/research/*.seed.json')
-            if [[ "${#seeds[@]}" -ne 1 ]]; then
-              echo "A restaurant intake PR must change exactly one research seed; found ${#seeds[@]}." >&2
+            if [[ "${#seeds[@]}" -gt 1 ]]; then
+              echo "A restaurant intake PR may change at most one research seed; found ${#seeds[@]}." >&2
               printf '%s\n' "${seeds[@]}" >&2
               exit 1
             fi
-            seed="${seeds[0]}"
+            if [[ "${#seeds[@]}" -eq 1 ]]; then
+              seed="${seeds[0]}"
+            else
+              seed="$(
+                printf '%s\n' "$PR_BODY" \
+                  | sed -nE 's/^[[:space:]]*Batch-intake seed:[[:space:]]*(.*)$/\1/ip' \
+                  | tail -n 1 \
+                  | xargs
+              )"
+              if [[ -z "$seed" ]]; then
+                cat >&2 <<'EOF'
+          Menu runtime changed without a changed research seed.
+          Declare the exact existing seed to remeasure in the PR body, for example:
+          Batch-intake seed: apps/menu-worker/research/oslo-batch-03.seed.json
+          EOF
+                exit 1
+              fi
+            fi
+            validate_seed "$seed"
           fi
           echo "Selected seed: $seed"
           echo "path=$seed" >> "$GITHUB_OUTPUT"

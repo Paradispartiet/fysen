@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v9";
+export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v10";
 
 const SECTION_COUNT_SUFFIX = /\s*\(\s*\d{1,3}\s*\)\s*$/u;
 const BEVERAGE_SECTION_LABEL =
@@ -20,21 +20,36 @@ const ALLERGEN_CODE_ONLY =
   /^\(\s*[a-z]{1,4}\+?(?:\s*[,/]\s*[a-z]{1,4}\+?)*\s*\)\.?$/iu;
 const QUANTITY_OPTION_ONLY =
   /^(?:(?:\d+\s+)?(?:kule(?:r)?|scoops?)|\d+\s+(?:per|pers?\.?|personer?|persons?|people))(?:\s*[_-]{2,})?$/iu;
+const OUTPUT_QUANTITY_FRAGMENT =
+  /^\d{1,2}\s+(?:slices?|pieces?|biter)\s*[•·|]?$/iu;
+const OUTPUT_TRAILING_LAYOUT_BULLET = /[•·]\s*$/u;
 const CONTACT_METADATA =
   /^(?:ring\s+oss\s+på|call\s+us(?:\s+(?:at|on))?|tel(?:efon)?|tlf|phone)\s*:?\s*\+?\d[\d\s()+.-]{4,}$/iu;
 const PER_PERSON_PRICE_METADATA =
   /^(?:(?:nok|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)?\s*(?:per|pr)\s+(?:person|personer|persons?|people)$/iu;
 const OUTPUT_METADATA =
   /^(?:our\s+menu|all\s+dishes\s+are\s+served\s+with\s+rice|contents?\s*:.*|druer\s*:.*|grapes?\s*:.*)$/iu;
+const OUTPUT_ROLE_SIGNATURE =
+  /^(?:[-–—]\s*)?(?:(?:head|executive|sous|pastry)\s+chef|kjøkkensjef)$/iu;
+const OUTPUT_SECTION_LABEL =
+  /^(?:zensai|izakaya\s+style(?:\s*[-–—]\s*japanske\s+småretter)?|robata(?:grill|\s+grill)|fra\s+sushibaren|supper|soups|salater|salads|ekstra|extra|barnemeny|children'?s\s+menu|kids?\s+menu|(?:[\p{L}][\p{L}'’.-]*\s+)?(?:spesialiteter|specialties|spesialnigiri|spesialsashimi)|(?:nigiri|sashimi|gunkan(?:\s+maki)?|hoso(?:\s+maki)?|tempura(?:\s+maki)?|maki)\s*[-–—]?\s*\d{1,2}\s*(?:biter|pieces?))$/iu;
 const DESCRIPTION_FRAGMENT =
   /^(?:pieces?\s+of\b|served\s+with\b|topped\s+with\b|glazed\s+with\b|all\s+dishes\s+are\s+served\b|can\s+be\s+made\b|homemade\s+.+\s+cooked\s+in\b|chicken\s+cooked\s+in\b|grilled\s+chicken\s+in\b|traditional\s+.+\s+dessert\s+with\b)/iu;
 const DESCRIPTION_PHRASE =
-  /\b(?:served\s+with|topped\s+with|glazed\s+with|comes\s+with|cooked\s+in|prepared\s+(?:in|with))\b/iu;
+  /\b(?:served\s+with|topped\s+with|glazed\s+with|comes\s+with|cooked\s+in|prepared\s+(?:in|with)|serveres(?:\s+med)?|servert(?:\s+med)?|laget\s+for\s+å\s+deles)\b/iu;
 const BILINGUAL_SECTION_PART =
   /^(?:forretter?|ap+etizers?|starters?|kjøtt\s+curries|non[- ]veg\s+curries|vegetar\s+curries|vegetarian\s+curries|nanbrød|nanbread|fat\s+øl|tap\s+beer|flaske\s+øl|bottle\s+beer|musserende|sparkling\s+wine|soft\s+drinks?)$/iu;
 const EXPLICIT_TRAILING_PRICE =
   /\s+(?:(?:nok|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)\s*$/iu;
 const BARE_DASH_TRAILING_PRICE = /\s+[-–—]\s*([1-9]\d{1,3})\s*$/u;
+const TRAILING_DASH_ALLERGEN_CODES =
+  /\s+[-–—]\s*[A-Z]{1,3}(?:\s*,\s*[A-Z]{1,3}){1,9}$/u;
+const TRAILING_SINGLE_KNOWN_ALLERGEN_CODE =
+  /\s+[-–—]\s*(?:AL|B|BL|CA|E|F|G|H|HA|HN|HNE|LU|M|MA|MK|MO|MU|N|P|PE|PI|R|SE|SEM|SEN|SF|SK|SL|SN|SO|SU|SY|VA|W|WA)$/u;
+const TRAILING_BARE_ALLERGEN_CODES =
+  /\s+[A-Z]{1,3}(?:\s*,\s*[A-Z]{1,3}){2,9}$/u;
+const TRAILING_ALLERGEN_NOTE =
+  /\s+[-–—]\s*\((?:spør|ask)\b[^)]*\ballerg(?:en|ener|ens)\b[^)]*\)$/iu;
 const TRAILING_LEADER = /\s*_{3,}\s*$/u;
 const TRAILING_ITEM_ALLERGEN_CODES =
   /\s+\((?:[\p{L}]{1,2}|\d{1,2})(?:\s*[,/+ ]\s*(?:[\p{L}]{1,2}|\d{1,2}))*\)$/u;
@@ -134,9 +149,13 @@ function isObviousOutputNoise(
   return (
     ALLERGEN_CODE_ONLY.test(normalized) ||
     QUANTITY_OPTION_ONLY.test(normalized) ||
+    OUTPUT_QUANTITY_FRAGMENT.test(normalized) ||
+    OUTPUT_TRAILING_LAYOUT_BULLET.test(normalized) ||
     CONTACT_METADATA.test(normalized) ||
     PER_PERSON_PRICE_METADATA.test(normalized) ||
     OUTPUT_METADATA.test(withoutLeadingDelimiter) ||
+    OUTPUT_ROLE_SIGNATURE.test(withoutLeadingDelimiter) ||
+    OUTPUT_SECTION_LABEL.test(withoutLeadingDelimiter) ||
     (!allowDirectPricedFoodDescription &&
       looksLikeDescriptionFragment(withoutLeadingDelimiter)) ||
     isBilingualMenuSection(withoutLeadingDelimiter) ||
@@ -148,6 +167,10 @@ function isObviousOutputNoise(
 function cleanOutputArtifactName(item: MenuObservedItem): MenuObservedItem {
   let name = normalizeLine(item.name).replace(TRAILING_LEADER, "").trim();
   name = name.replace(EXPLICIT_TRAILING_PRICE, "").trim();
+  name = name.replace(TRAILING_ALLERGEN_NOTE, "").trim();
+  name = name.replace(TRAILING_DASH_ALLERGEN_CODES, "").trim();
+  name = name.replace(TRAILING_SINGLE_KNOWN_ALLERGEN_CODE, "").trim();
+  name = name.replace(TRAILING_BARE_ALLERGEN_CODES, "").trim();
   const barePrice = name.match(BARE_DASH_TRAILING_PRICE);
   if (barePrice?.[1] && Number(barePrice[1]) >= 40 && item.priceMinor === Number(barePrice[1]) * 100) {
     name = name.replace(BARE_DASH_TRAILING_PRICE, "").trim();
@@ -282,6 +305,11 @@ export function filterHtmlBeverageSectionItemsWithScopedProvenance(
     scopedItems,
     scopedVisibleText,
   );
+  const scopedFullPageFiltered = filterPlainTextBeverageSectionItems(
+    scopedFiltered,
+    fullVisibleText,
+    { matchTrailingAllergenCodes: true },
+  );
   const fullPageFiltered = filterPlainTextBeverageSectionItems(
     fullPageRecoveryItems,
     fullVisibleText,
@@ -290,6 +318,6 @@ export function filterHtmlBeverageSectionItemsWithScopedProvenance(
 
   const unique = new Map<string, MenuObservedItem>();
   for (const item of fullPageFiltered) unique.set(item.sourceKey, item);
-  for (const item of scopedFiltered) unique.set(item.sourceKey, item);
+  for (const item of scopedFullPageFiltered) unique.set(item.sourceKey, item);
   return [...unique.values()].sort((left, right) => left.position - right.position);
 }

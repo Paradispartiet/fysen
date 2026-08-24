@@ -54,7 +54,7 @@ describe("plain-text HTML section scoping", () => {
       119 NOK
     `;
 
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v9");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v10");
     expect(
       filterPlainTextBeverageSectionItems(items, visibleText).map(
         (entry) => entry.name,
@@ -367,7 +367,7 @@ describe("plain-text HTML section scoping", () => {
     ).toEqual(["House Special"]);
   });
 
-  it("uses full-page drink evidence only for items absent from scoped food text", () => {
+  it("uses full-page drink evidence for scoped items when they are beverage-only", () => {
     const items = [
       item("House Special", 1, 24900),
       item("House Soda", 2, 5500),
@@ -394,7 +394,7 @@ describe("plain-text HTML section scoping", () => {
         scopedVisibleText,
         fullVisibleText,
       ).map((entry) => entry.name),
-    ).toEqual(["House Special"]);
+    ).toEqual([]);
   });
 
   it("resets beverage navigation at small-dishes and classics sections", () => {
@@ -420,5 +420,4 @@ describe("plain-text HTML section scoping", () => {
       filterPlainTextBeverageSectionItems(items, visibleText).map((entry) => entry.name),
     ).toEqual(["Triple Chili Cheese", "Original Ribs", "The Godfather"]);
   });
-
 });

@@ -58,7 +58,7 @@ describe("public menu API extractor", () => {
     });
 
     const items = extractPublicMenuApi(body);
-    expect(PUBLIC_MENU_API_EXTRACTOR_VERSION).toBe("public-menu-api-v2");
+    expect(PUBLIC_MENU_API_EXTRACTOR_VERSION).toBe("public-menu-api-v3");
     expect(items.map((item) => item.name)).toEqual([
       "Patatas bravas",
       "Croquetas de jamón",
