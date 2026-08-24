@@ -53,9 +53,10 @@ jobs:
       - name: Build menu-worker dependency graph
         run: pnpm --filter @fysen/menu-worker... build
 
-      - name: Repair current published source drift
+      - name: Restore canonical production coverage and source health
         shell: bash
         run: |
+          pnpm --filter @fysen/menu-worker onboard:manifest catalog/habibi-mollergata-oslo.json
           node scripts/refresh-published-menu-source.mjs \
             apps/menu-worker/catalog/1947-gandhi-majorstuen-oslo.json \
             apps/menu-worker/catalog/habibi-mollergata-oslo.json \
