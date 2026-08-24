@@ -49,7 +49,11 @@ proof_workflow=.github/workflows/production-pilot-proof.yml
 test -f "$proof_workflow"
 grep -F 'workflow_dispatch:' "$proof_workflow" >/dev/null
 grep -F 'Materialize Fysen production catalog' "$proof_workflow" >/dev/null
-grep -F 'Fysen batched Vercel production release' "$proof_workflow" >/dev/null
+grep -F 'workflow_call:' "$proof_workflow" >/dev/null
+grep -F 'source_sha:' "$proof_workflow" >/dev/null
+grep -F 'uses: ./.github/workflows/production-pilot-proof.yml' "$workflow" >/dev/null
+grep -F 'source_sha: ${{ needs.prepare.outputs.source_sha }}' "$workflow" >/dev/null
+grep -F 'secrets: inherit' "$workflow" >/dev/null
 grep -F 'github.event.workflow_run.head_sha' "$proof_workflow" >/dev/null
 grep -F 'FYSEN_PUBLIC_WEB_URL: https://fysen.vercel.app' "$proof_workflow" >/dev/null
 if grep -Eq '^  push:' "$proof_workflow"; then

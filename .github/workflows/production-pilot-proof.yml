@@ -2,8 +2,18 @@ name: Fysen production pilot proof
 
 on:
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      source_sha:
+        description: Exact source revision that was materially deployed
+        required: false
+        type: string
+        default: ''
+    secrets:
+      FYSEN_PRODUCTION_DATABASE_URL:
+        required: true
   workflow_run:
-    workflows: ["Materialize Fysen production catalog", "Fysen batched Vercel production release"]
+    workflows: ["Materialize Fysen production catalog"]
     types: [completed]
 
 permissions:
@@ -39,7 +49,7 @@ jobs:
       - name: Checkout verified revision
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+          ref: ${{ inputs.source_sha || (github.event_name == 'workflow_run' && github.event.workflow_run.head_sha) || github.sha }}
           persist-credentials: false
 
       - name: Setup Fysen workspace

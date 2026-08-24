@@ -2,9 +2,7 @@ name: Fysen batched Vercel production release
 
 on:
   schedule:
-    # Candidate UTC hours for 10:23 and 22:23 Europe/Oslo across CET/CEST.
-    # Run away from :00 because GitHub documents schedule delays/drops at the start of an hour.
-    # The window job below keeps only the two actual Oslo-local release windows.
+    # Candidate UTC hours cover 10:23 and 22:23 Europe/Oslo across CET/CEST.
     - cron: "23 8,9,20,21 * * *"
   workflow_dispatch:
     inputs:
@@ -13,11 +11,7 @@ on:
         required: true
         default: auto
         type: choice
-        options:
-          - auto
-          - web
-          - api
-          - both
+        options: [auto, web, api, both]
 
 permissions:
   contents: read
@@ -46,7 +40,6 @@ jobs:
           REQUESTED_TARGET: ${{ inputs.target || 'auto' }}
         run: |
           set -euo pipefail
-
           if [[ "$GITHUB_EVENT_NAME" == "schedule" ]]; then
             oslo_hour="$(TZ=Europe/Oslo date +%H)"
             if [[ "$oslo_hour" != "10" && "$oslo_hour" != "22" ]]; then
@@ -56,7 +49,6 @@ jobs:
               echo "Skipping candidate UTC trigger because Oslo local hour is $oslo_hour."
               exit 0
             fi
-
             echo "active=true" >> "$GITHUB_OUTPUT"
             echo "target=auto" >> "$GITHUB_OUTPUT"
             echo "release_mode=scheduled-${oslo_hour}23-oslo" >> "$GITHUB_OUTPUT"
@@ -67,7 +59,6 @@ jobs:
             echo "::error title=Invalid production release ref::Manual Fysen production releases must be dispatched from main."
             exit 1
           fi
-
           echo "active=true" >> "$GITHUB_OUTPUT"
           echo "target=${REQUESTED_TARGET:-auto}" >> "$GITHUB_OUTPUT"
           echo "release_mode=manual-${REQUESTED_TARGET:-auto}" >> "$GITHUB_OUTPUT"
@@ -107,7 +98,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-
           source_sha="$(git rev-parse HEAD)"
           if [[ "$source_sha" != "$GITHUB_SHA" ]]; then
             echo "Locked release source $source_sha does not match workflow trigger $GITHUB_SHA" >&2
@@ -117,19 +107,15 @@ jobs:
           latest_production_sha() {
             local project_id="$1"
             local response
-            response="$(
-              curl --fail --silent --show-error --get \
-                'https://api.vercel.com/v7/deployments' \
-                -H "Authorization: Bearer $VERCEL_TOKEN" \
-                --data-urlencode "projectId=$project_id" \
-                --data-urlencode "teamId=$VERCEL_ORG_ID" \
-                --data-urlencode 'target=production' \
-                --data-urlencode 'state=READY' \
-                --data-urlencode 'limit=20'
-            )"
-
-            printf '%s' "$response" | jq -r \
-              '[.deployments[] | (.meta.fysenSourceSha // .meta.githubCommitSha // empty)] | .[0] // ""'
+            response="$(curl --fail --silent --show-error --get \
+              'https://api.vercel.com/v7/deployments' \
+              -H "Authorization: Bearer $VERCEL_TOKEN" \
+              --data-urlencode "projectId=$project_id" \
+              --data-urlencode "teamId=$VERCEL_ORG_ID" \
+              --data-urlencode 'target=production' \
+              --data-urlencode 'state=READY' \
+              --data-urlencode 'limit=20')"
+            printf '%s' "$response" | jq -r '[.deployments[] | (.meta.fysenSourceSha // .meta.githubCommitSha // empty)] | .[0] // ""'
           }
 
           web_production_sha="$(latest_production_sha "$FYSEN_WEB_PROJECT_ID")"
@@ -137,58 +123,29 @@ jobs:
 
           path_requires_web() {
             case "$1" in
-              apps/web/*|packages/contracts/*|package.json|pnpm-lock.yaml|pnpm-workspace.yaml|turbo.json|tsconfig.json|tsconfig.*.json|.npmrc)
-                return 0
-                ;;
-              *)
-                return 1
-                ;;
+              apps/web/*|packages/contracts/*|package.json|pnpm-lock.yaml|pnpm-workspace.yaml|turbo.json|tsconfig.json|tsconfig.*.json|.npmrc) return 0 ;;
+              *) return 1 ;;
             esac
           }
-
           path_requires_api() {
             case "$1" in
-              apps/api/*|packages/contracts/*|packages/database/*|packages/menu-core/*|package.json|pnpm-lock.yaml|pnpm-workspace.yaml|turbo.json|tsconfig.json|tsconfig.*.json|.npmrc)
-                return 0
-                ;;
-              *)
-                return 1
-                ;;
+              apps/api/*|packages/contracts/*|packages/database/*|packages/menu-core/*|package.json|pnpm-lock.yaml|pnpm-workspace.yaml|turbo.json|tsconfig.json|tsconfig.*.json|.npmrc) return 0 ;;
+              *) return 1 ;;
             esac
           }
-
           app_changed_since_production() {
             local app="$1"
             local production_sha="$2"
             local path
-
-            if [[ -z "$production_sha" ]]; then
+            if [[ -z "$production_sha" ]] || ! git cat-file -e "${production_sha}^{commit}" 2>/dev/null || ! git merge-base --is-ancestor "$production_sha" "$source_sha"; then
               echo true
               return
             fi
-
-            if ! git cat-file -e "${production_sha}^{commit}" 2>/dev/null; then
-              echo true
-              return
-            fi
-
-            if ! git merge-base --is-ancestor "$production_sha" "$source_sha"; then
-              echo true
-              return
-            fi
-
             while IFS= read -r path; do
               [[ -n "$path" ]] || continue
-              if [[ "$app" == "web" ]] && path_requires_web "$path"; then
-                echo true
-                return
-              fi
-              if [[ "$app" == "api" ]] && path_requires_api "$path"; then
-                echo true
-                return
-              fi
+              if [[ "$app" == "web" ]] && path_requires_web "$path"; then echo true; return; fi
+              if [[ "$app" == "api" ]] && path_requires_api "$path"; then echo true; return; fi
             done < <(git diff --name-only "$production_sha..$source_sha")
-
             echo false
           }
 
@@ -197,29 +154,19 @@ jobs:
               web_needed="$(app_changed_since_production web "$web_production_sha")"
               api_needed="$(app_changed_since_production api "$api_production_sha")"
               ;;
-            web)
-              web_needed=true
-              api_needed=false
-              ;;
-            api)
-              web_needed=false
-              api_needed=true
-              ;;
-            both)
-              web_needed=true
-              api_needed=true
-              ;;
-            *)
-              echo "Unknown release target: $REQUESTED_TARGET" >&2
-              exit 1
-              ;;
+            web) web_needed=true; api_needed=false ;;
+            api) web_needed=false; api_needed=true ;;
+            both) web_needed=true; api_needed=true ;;
+            *) echo "Unknown release target: $REQUESTED_TARGET" >&2; exit 1 ;;
           esac
 
-          echo "source_sha=$source_sha" >> "$GITHUB_OUTPUT"
-          echo "web_needed=$web_needed" >> "$GITHUB_OUTPUT"
-          echo "api_needed=$api_needed" >> "$GITHUB_OUTPUT"
-          echo "web_production_sha=$web_production_sha" >> "$GITHUB_OUTPUT"
-          echo "api_production_sha=$api_production_sha" >> "$GITHUB_OUTPUT"
+          {
+            echo "source_sha=$source_sha"
+            echo "web_needed=$web_needed"
+            echo "api_needed=$api_needed"
+            echo "web_production_sha=$web_production_sha"
+            echo "api_production_sha=$api_production_sha"
+          } >> "$GITHUB_OUTPUT"
 
           {
             echo '## Fysen batched production plan'
@@ -232,7 +179,7 @@ jobs:
             echo "- Deploy API: \`$api_needed\`"
             if [[ "$web_needed" == "false" && "$api_needed" == "false" ]]; then
               echo
-              echo 'No production-relevant changes have accumulated; this window creates no Vercel deployment.'
+              echo 'No production-relevant changes have accumulated; this window creates no Vercel deployment and no production proof.'
             fi
           } >> "$GITHUB_STEP_SUMMARY"
 
@@ -252,25 +199,10 @@ jobs:
         with:
           ref: ${{ needs.prepare.outputs.source_sha }}
           fetch-depth: 1
-
-      - name: pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 11.4.0
-          run_install: false
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24.18.0
-
+      - name: Setup cached Fysen workspace
+        uses: ./.github/actions/setup-node-pnpm
       - name: Build web workspace dependencies
-        shell: bash
-        run: |
-          set -euo pipefail
-          corepack pnpm install --no-frozen-lockfile
-          corepack pnpm --filter @fysen/contracts build
-
+        run: pnpm --filter @fysen/contracts build
       - name: Deploy web explicitly to production
         id: deploy
         shell: bash
@@ -279,21 +211,16 @@ jobs:
           rm -rf .vercel
           pnpm dlx vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
           pnpm dlx vercel@latest build --prod --token="$VERCEL_TOKEN"
-          deployment_url="$(
-            pnpm dlx vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN" \
-              --meta "fysenSourceSha=$SOURCE_SHA" \
-              --meta "fysenReleaseMode=$RELEASE_MODE"
-          )"
+          deployment_url="$(pnpm dlx vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN" \
+            --meta "fysenSourceSha=$SOURCE_SHA" --meta "fysenReleaseMode=$RELEASE_MODE")"
           echo "deployment_url=$deployment_url" >> "$GITHUB_OUTPUT"
           echo "Web production deployment: $deployment_url"
-
       - name: Verify public web
         shell: bash
         run: |
           set -euo pipefail
           for attempt in $(seq 1 18); do
-            if curl --fail --silent --show-error --location --max-time 20 \
-              'https://fysen.vercel.app/' >/dev/null; then
+            if curl --fail --silent --show-error --location --max-time 20 'https://fysen.vercel.app/' >/dev/null; then
               echo "Fysen web is reachable after release of $SOURCE_SHA"
               exit 0
             fi
@@ -301,7 +228,6 @@ jobs:
             sleep 5
           done
           exit 1
-
       - name: Summarize web release
         shell: bash
         run: |
@@ -329,27 +255,13 @@ jobs:
         with:
           ref: ${{ needs.prepare.outputs.source_sha }}
           fetch-depth: 1
-
-      - name: pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 11.4.0
-          run_install: false
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24.18.0
-
+      - name: Setup cached Fysen workspace
+        uses: ./.github/actions/setup-node-pnpm
       - name: Build API workspace dependencies
-        shell: bash
         run: |
-          set -euo pipefail
-          corepack pnpm install --no-frozen-lockfile
-          corepack pnpm --filter @fysen/contracts build
-          corepack pnpm --filter @fysen/menu-core build
-          corepack pnpm --filter @fysen/database build
-
+          pnpm --filter @fysen/contracts build
+          pnpm --filter @fysen/menu-core build
+          pnpm --filter @fysen/database build
       - name: Deploy API explicitly to production
         id: deploy
         shell: bash
@@ -358,23 +270,17 @@ jobs:
           rm -rf .vercel
           pnpm dlx vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
           pnpm dlx vercel@latest build --prod --token="$VERCEL_TOKEN"
-          deployment_url="$(
-            pnpm dlx vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN" \
-              --meta "fysenSourceSha=$SOURCE_SHA" \
-              --meta "fysenReleaseMode=$RELEASE_MODE"
-          )"
+          deployment_url="$(pnpm dlx vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN" \
+            --meta "fysenSourceSha=$SOURCE_SHA" --meta "fysenReleaseMode=$RELEASE_MODE")"
           echo "deployment_url=$deployment_url" >> "$GITHUB_OUTPUT"
           echo "API production deployment: $deployment_url"
-
       - name: Verify public API
         shell: bash
         run: |
           set -euo pipefail
           for attempt in $(seq 1 18); do
-            health="$(curl --fail --silent --show-error --location --max-time 20 \
-              'https://fysen-api.vercel.app/v1/health' 2>/dev/null || true)"
-            browse="$(curl --fail --silent --show-error --location --max-time 20 \
-              'https://fysen-api.vercel.app/v1/dishes/browse?city=Oslo' 2>/dev/null || true)"
+            health="$(curl --fail --silent --show-error --location --max-time 20 'https://fysen-api.vercel.app/v1/health' 2>/dev/null || true)"
+            browse="$(curl --fail --silent --show-error --location --max-time 20 'https://fysen-api.vercel.app/v1/dishes/browse?city=Oslo' 2>/dev/null || true)"
             if printf '%s' "$health" | jq -e '.service == "fysen-api" and .status == "ok"' >/dev/null 2>&1 \
               && printf '%s' "$browse" | jq -e '.city == "Oslo" and (.dishes | type == "array")' >/dev/null 2>&1; then
               echo "Fysen API is live with browse support after release of $SOURCE_SHA"
@@ -384,7 +290,6 @@ jobs:
             sleep 5
           done
           exit 1
-
       - name: Summarize API release
         shell: bash
         run: |
@@ -395,3 +300,16 @@ jobs:
             echo "- Mode: \`$RELEASE_MODE\`"
             echo '- Deployment: `${{ steps.deploy.outputs.deployment_url }}`'
           } >> "$GITHUB_STEP_SUMMARY"
+
+  proof:
+    needs: [prepare, web, api]
+    if: >-
+      always() &&
+      needs.prepare.result == 'success' &&
+      (needs.prepare.outputs.web_needed == 'true' || needs.prepare.outputs.api_needed == 'true') &&
+      (needs.web.result == 'success' || needs.web.result == 'skipped') &&
+      (needs.api.result == 'success' || needs.api.result == 'skipped')
+    uses: ./.github/workflows/production-pilot-proof.yml
+    with:
+      source_sha: ${{ needs.prepare.outputs.source_sha }}
+    secrets: inherit

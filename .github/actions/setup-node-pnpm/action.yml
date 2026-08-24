@@ -1,5 +1,5 @@
 name: Setup Fysen Node workspace
-description: Install the canonical pnpm and Node versions and workspace dependencies.
+description: Install the canonical pnpm and Node versions, cache the pnpm store and install workspace dependencies using the repository's current lockfile-free contract.
 runs:
   using: composite
   steps:
@@ -13,6 +13,18 @@ runs:
       uses: actions/setup-node@v4
       with:
         node-version: 24.18.0
+
+    - name: Configure pnpm store
+      shell: bash
+      run: pnpm config set store-dir "$HOME/.pnpm-store"
+
+    - name: Cache pnpm store
+      uses: actions/cache@v4
+      with:
+        path: ~/.pnpm-store
+        key: pnpm-${{ runner.os }}-node24-${{ hashFiles('package.json', 'pnpm-workspace.yaml', 'apps/*/package.json', 'packages/*/package.json') }}
+        restore-keys: |
+          pnpm-${{ runner.os }}-node24-
 
     - name: Install dependencies
       shell: bash
