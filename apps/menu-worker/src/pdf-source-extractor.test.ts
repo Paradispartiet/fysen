@@ -28,7 +28,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v17");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v18");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -61,8 +61,45 @@ describe("PDF source scope", () => {
     expect(new Set(scopedSalmon.map((item) => item.sourceKey)).size).toBe(2);
   });
 
+  it("disambiguates conflicting explicit add-ons only when distinct numbered parent dishes are visible", () => {
+    const lines = [
+      "4. Kyllinggryte",
+      "Serveres med salat og bulgur",
+      "Ekstra bulgur 45",
+      "5. Kylling Tawok",
+      "310",
+      "14. Mashawi",
+      "Serveres med salat og bulgur",
+      "Ekstra bulgur 49",
+      "15. Dønner kebab",
+      "350",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const extras = parsed.filter((item) => item.normalizedName === "ekstra bulgur");
+    expect(extras).toHaveLength(2);
+    expect(new Set(extras.map((item) => item.sourceKey)).size).toBe(1);
+
+    const disambiguated = disambiguateConflictingPdfSourceKeys(lines.join("\n"), parsed);
+    const scopedExtras = disambiguated.filter((item) => item.normalizedName === "ekstra bulgur");
+    expect(scopedExtras.map((item) => [item.sectionName, item.priceMinor])).toEqual([
+      ["Kyllinggryte", 4500],
+      ["Mashawi", 4900],
+    ]);
+    expect(new Set(scopedExtras.map((item) => item.sourceKey)).size).toBe(2);
+  });
+
   it("fails closed when conflicting same-name prices cannot be bound to distinct menu sections", () => {
     const lines = ["LAKS 139", "LAKS 159"];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const disambiguated = disambiguateConflictingPdfSourceKeys(lines.join("\n"), parsed);
+
+    expect(disambiguated.map((item) => item.sourceKey)).toEqual(
+      parsed.map((item) => item.sourceKey),
+    );
+  });
+
+  it("fails closed for an add-on conflict without distinct numbered parents", () => {
+    const lines = ["Ekstra bulgur 45", "Ekstra bulgur 49"];
     const parsed = extractMenuItemsFromPdfLines(lines);
     const disambiguated = disambiguateConflictingPdfSourceKeys(lines.join("\n"), parsed);
 
