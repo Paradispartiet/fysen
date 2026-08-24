@@ -104,6 +104,25 @@ jobs:
             throw new Error(`Research seed collides with canonical catalog: ${collisions.join(", ")}`);
           }
 
+          async function addressHits(address) {
+            const queryUrl = new URL("https://ws.geonorge.no/adresser/v1/sok");
+            queryUrl.searchParams.set("sok", address);
+            queryUrl.searchParams.set("treffPerSide", "10");
+            const response = await fetch(queryUrl, {
+              headers: { "user-agent": "FysenMenuBot/0.1 restaurant-batch-geocoder" }
+            });
+            if (!response.ok) {
+              throw new Error(`Kartverket address lookup returned HTTP ${response.status} for ${address}`);
+            }
+            const payload = await response.json();
+            return Array.isArray(payload?.adresser) ? payload.adresser : [];
+          }
+
+          function chooseOsloHit(hits, postalMatch) {
+            const osloHits = hits.filter((hit) => !hit.kommunenummer || String(hit.kommunenummer) === "0301");
+            return osloHits.find((candidate) => !postalMatch || String(candidate.postnummer ?? "") === postalMatch) ?? osloHits[0] ?? null;
+          }
+
           async function geocode(entry) {
             const restaurant = entry.restaurant;
             if (Number.isFinite(restaurant.latitude) && Number.isFinite(restaurant.longitude)) {
@@ -119,20 +138,31 @@ jobs:
               };
             }
 
-            const queryUrl = new URL("https://ws.geonorge.no/adresser/v1/sok");
-            queryUrl.searchParams.set("sok", restaurant.address);
-            queryUrl.searchParams.set("treffPerSide", "10");
-            const response = await fetch(queryUrl, {
-              headers: { "user-agent": "FysenMenuBot/0.1 restaurant-batch-geocoder" }
-            });
-            if (!response.ok) {
-              throw new Error(`${restaurant.slug}: Kartverket address lookup returned HTTP ${response.status}`);
-            }
-            const payload = await response.json();
-            const hits = Array.isArray(payload?.adresser) ? payload.adresser : [];
             const postalMatch = restaurant.address.match(/\b(\d{4})\s+Oslo\b/i)?.[1] ?? null;
-            const osloHits = hits.filter((hit) => !hit.kommunenummer || String(hit.kommunenummer) === "0301");
-            const hit = osloHits.find((candidate) => !postalMatch || String(candidate.postnummer ?? "") === postalMatch) ?? osloHits[0];
+            let lookupAddress = restaurant.address;
+            let hit = chooseOsloHit(await addressHits(lookupAddress), postalMatch);
+            let fallbackFromPublishedRange = false;
+
+            if (!hit?.representasjonspunkt) {
+              const range = restaurant.address.match(/^(.*?\s)(\d+)([A-Za-z]?)-(\d+)([A-Za-z]?)(,?\s+\d{4}\s+Oslo)$/i);
+              if (range) {
+                const [, prefix, firstNumber, firstSuffix, lastNumber, lastSuffix, tail] = range;
+                const fallbackAddresses = [
+                  `${prefix}${firstNumber}${firstSuffix}${tail}`,
+                  `${prefix}${lastNumber}${lastSuffix}${tail}`
+                ];
+                for (const fallbackAddress of fallbackAddresses) {
+                  const fallbackHit = chooseOsloHit(await addressHits(fallbackAddress), postalMatch);
+                  if (fallbackHit?.representasjonspunkt) {
+                    lookupAddress = fallbackAddress;
+                    hit = fallbackHit;
+                    fallbackFromPublishedRange = true;
+                    break;
+                  }
+                }
+              }
+            }
+
             if (!hit?.representasjonspunkt) {
               throw new Error(`${restaurant.slug}: no Oslo address point returned by Kartverket for ${restaurant.address}`);
             }
@@ -149,6 +179,8 @@ jobs:
               evidence: {
                 slug: restaurant.slug,
                 inputAddress: restaurant.address,
+                lookupAddress,
+                fallbackFromPublishedRange,
                 matchedAddress: hit.adressetekst ?? null,
                 postnummer: hit.postnummer ?? null,
                 kommunenummer: hit.kommunenummer ?? null,
