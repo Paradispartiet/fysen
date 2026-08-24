@@ -124,6 +124,13 @@ jobs:
             return osloHits.find((candidate) => !postalMatch || String(candidate.postnummer ?? "") === postalMatch) ?? osloHits[0] ?? null;
           }
 
+          function canonicalAddressFromHit(hit, fallback) {
+            if (!hit?.adressetekst) return fallback;
+            const postnummer = String(hit.postnummer ?? "").trim();
+            const poststed = String(hit.poststed ?? "Oslo").trim() || "Oslo";
+            return postnummer ? `${hit.adressetekst}, ${postnummer} ${poststed}` : fallback;
+          }
+
           async function geocode(entry) {
             const restaurant = entry.restaurant;
             if (Number.isFinite(restaurant.latitude) && Number.isFinite(restaurant.longitude)) {
@@ -143,6 +150,7 @@ jobs:
             let lookupAddress = restaurant.address;
             let hit = chooseOsloHit(await addressHits(lookupAddress), postalMatch);
             let fallbackFromPublishedRange = false;
+            let fallbackFromMissingHouseSuffix = false;
 
             if (!hit?.representasjonspunkt) {
               const range = restaurant.address.match(/^(.*?\s)(\d+)([A-Za-z]?)-(\d+)([A-Za-z]?)(,?\s+\d{4}\s+Oslo)$/i);
@@ -165,6 +173,23 @@ jobs:
             }
 
             if (!hit?.representasjonspunkt) {
+              const unsuffixed = restaurant.address.match(/^(.*?\s)(\d+)(,?\s+\d{4}\s+Oslo)$/i);
+              if (unsuffixed) {
+                const [, prefix, number, tail] = unsuffixed;
+                for (const suffix of ["A", "B", "C", "D"]) {
+                  const fallbackAddress = `${prefix}${number}${suffix}${tail}`;
+                  const fallbackHit = chooseOsloHit(await addressHits(fallbackAddress), postalMatch);
+                  if (fallbackHit?.representasjonspunkt) {
+                    lookupAddress = fallbackAddress;
+                    hit = fallbackHit;
+                    fallbackFromMissingHouseSuffix = true;
+                    break;
+                  }
+                }
+              }
+            }
+
+            if (!hit?.representasjonspunkt) {
               throw new Error(`${restaurant.slug}: no Oslo address point returned by Kartverket for ${restaurant.address}`);
             }
             if (hit.kommunenummer && String(hit.kommunenummer) !== "0301") {
@@ -175,13 +200,23 @@ jobs:
             if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
               throw new Error(`${restaurant.slug}: Kartverket returned invalid coordinates`);
             }
+
+            const postalMismatch = Boolean(postalMatch && String(hit.postnummer ?? "") && String(hit.postnummer) !== postalMatch);
+            const canonicalizeAddress = fallbackFromMissingHouseSuffix || postalMismatch;
+            const resolvedAddress = canonicalizeAddress
+              ? canonicalAddressFromHit(hit, restaurant.address)
+              : restaurant.address;
+
             return {
-              restaurant: { ...restaurant, latitude, longitude },
+              restaurant: { ...restaurant, address: resolvedAddress, latitude, longitude },
               evidence: {
                 slug: restaurant.slug,
                 inputAddress: restaurant.address,
+                resolvedAddress,
                 lookupAddress,
                 fallbackFromPublishedRange,
+                fallbackFromMissingHouseSuffix,
+                postalMismatch,
                 matchedAddress: hit.adressetekst ?? null,
                 postnummer: hit.postnummer ?? null,
                 kommunenummer: hit.kommunenummer ?? null,
