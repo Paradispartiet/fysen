@@ -13,13 +13,15 @@
   "menuSource": {
     "url": "https://hanami.no/meny/",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 37,
     "sourceSupport": {
       "redirectOrigins": [],
-      "browserDataOrigins": []
+      "browserDataOrigins": [
+        "https://cdn-cookieyes.com"
+      ]
     }
   },
   "verification": {
