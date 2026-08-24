@@ -28,7 +28,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v16");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v17");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -112,6 +112,28 @@ describe("PDF source scope", () => {
     expect(
       scoped.some((item) => /^(?:kan\s+(?:fås|lages)|can\s+be\s+made)/iu.test(item.name)),
     ).toBe(false);
+  });
+
+  it("drops standalone allergen labels that inherit adjacent PDF prices", () => {
+    const lines = [
+      "TILBEHØR",
+      "Ekstra hvitløkbrød",
+      "49",
+      "Hvete",
+      "49",
+      "Ekstra timianbrød",
+      "49",
+      "Wheat",
+      "49",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Ekstra hvitløkbrød", 4900],
+      ["Ekstra timianbrød", 4900],
+    ]);
+    expect(scoped.some((item) => /^(?:hvete|wheat)$/iu.test(item.name))).toBe(false);
   });
 
   it("recovers an explicit low per-item price from the next PDF text line", () => {
