@@ -20,6 +20,8 @@ const ALLERGEN_CODE_ONLY =
   /^\(\s*[a-z]{1,4}\+?(?:\s*[,/]\s*[a-z]{1,4}\+?)*\s*\)\.?$/iu;
 const QUANTITY_OPTION_ONLY =
   /^(?:(?:\d+\s+)?(?:kule(?:r)?|scoops?)|\d+\s+(?:per|pers?\.?|personer?|persons?|people))(?:\s*[_-]{2,})?$/iu;
+const OUTPUT_QUANTITY_FRAGMENT =
+  /^\d{1,2}\s+(?:slices?|pieces?|biter)\s*[•·|]?$/iu;
 const CONTACT_METADATA =
   /^(?:ring\s+oss\s+på|call\s+us(?:\s+(?:at|on))?|tel(?:efon)?|tlf|phone)\s*:?\s*\+?\d[\d\s()+.-]{4,}$/iu;
 const PER_PERSON_PRICE_METADATA =
@@ -39,6 +41,8 @@ const BILINGUAL_SECTION_PART =
 const EXPLICIT_TRAILING_PRICE =
   /\s+(?:(?:nok|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)\s*$/iu;
 const BARE_DASH_TRAILING_PRICE = /\s+[-–—]\s*([1-9]\d{1,3})\s*$/u;
+const TRAILING_DASH_ALLERGEN_CODES =
+  /\s+[-–—]\s*[A-Z]{1,3}(?:\s*,\s*[A-Z]{1,3}){1,9}$/u;
 const TRAILING_LEADER = /\s*_{3,}\s*$/u;
 const TRAILING_ITEM_ALLERGEN_CODES =
   /\s+\((?:[\p{L}]{1,2}|\d{1,2})(?:\s*[,/+ ]\s*(?:[\p{L}]{1,2}|\d{1,2}))*\)$/u;
@@ -138,6 +142,7 @@ function isObviousOutputNoise(
   return (
     ALLERGEN_CODE_ONLY.test(normalized) ||
     QUANTITY_OPTION_ONLY.test(normalized) ||
+    OUTPUT_QUANTITY_FRAGMENT.test(normalized) ||
     CONTACT_METADATA.test(normalized) ||
     PER_PERSON_PRICE_METADATA.test(normalized) ||
     OUTPUT_METADATA.test(withoutLeadingDelimiter) ||
@@ -154,6 +159,7 @@ function isObviousOutputNoise(
 function cleanOutputArtifactName(item: MenuObservedItem): MenuObservedItem {
   let name = normalizeLine(item.name).replace(TRAILING_LEADER, "").trim();
   name = name.replace(EXPLICIT_TRAILING_PRICE, "").trim();
+  name = name.replace(TRAILING_DASH_ALLERGEN_CODES, "").trim();
   const barePrice = name.match(BARE_DASH_TRAILING_PRICE);
   if (barePrice?.[1] && Number(barePrice[1]) >= 40 && item.priceMinor === Number(barePrice[1]) * 100) {
     name = name.replace(BARE_DASH_TRAILING_PRICE, "").trim();
