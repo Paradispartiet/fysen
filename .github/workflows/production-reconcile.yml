@@ -6,7 +6,6 @@ on:
     branches: [main]
     paths:
       - "scripts/production-reconcile.mjs"
-      - "scripts/refresh-published-menu-source.mjs"
       - ".github/workflows/production-reconcile.yml"
   workflow_run:
     workflows: ["Materialize Fysen production catalog"]
@@ -31,7 +30,6 @@ jobs:
       DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
       DATABASE_SSL: "verify-full"
       NODE_ENV: production
-      FYSEN_MAX_PDF_RESPONSE_BYTES: "26214400"
     steps:
       - name: Require production database secret
         shell: bash
@@ -53,14 +51,6 @@ jobs:
       - name: Build menu-worker dependency graph
         run: pnpm --filter @fysen/menu-worker... build
 
-      - name: Repair current published source drift
-        shell: bash
-        run: |
-          node scripts/refresh-published-menu-source.mjs \
-            apps/menu-worker/catalog/1947-gandhi-majorstuen-oslo.json \
-            apps/menu-worker/catalog/habibi-mollergata-oslo.json \
-            apps/menu-worker/catalog/hanami-tjuvholmen-oslo.json
-
       - name: Reconcile canonical catalog against production
         shell: bash
         run: |
@@ -70,7 +60,7 @@ jobs:
           {
             echo '## Fysen production reconcile'
             echo
-            echo 'Exact-set proof for canonical restaurants, active production restaurants, enabled menu sources, fresh snapshots, and watcher/source health.'
+            echo 'Exact-set read-only proof for canonical restaurants, active production restaurants, enabled menu sources, fresh snapshots, and watcher/source health.'
             echo
             echo '```json'
             cat reports/production-reconcile/reconcile.json
