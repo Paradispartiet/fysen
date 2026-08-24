@@ -54,7 +54,6 @@ async function readCatalog() {
 async function reconcileProduction(pool, manifests) {
   const cities = [...new Set(manifests.map((manifest) => manifest.city))].sort((a, b) => a.localeCompare(b, "en"));
   const expectedSlugs = new Set(manifests.map((manifest) => manifest.slug));
-  const manifestBySlug = new Map(manifests.map((manifest) => [manifest.slug, manifest]));
   const expectedSourceKeys = new Set(manifests.map((manifest) => sourceKey(manifest.slug, manifest.sourceUrl)));
 
   const restaurantsResult = await pool.query(
@@ -82,7 +81,13 @@ async function reconcileProduction(pool, manifests) {
                WHERE item.snapshot_id = snapshot.id
             ), 0) AS item_count,
             watch.outcome AS latest_watch_outcome,
-            watch.started_at AS latest_watch_started_at
+            watch.started_at AS latest_watch_started_at,
+            watch.completed_at AS latest_watch_completed_at,
+            watch.http_status AS latest_watch_http_status,
+            watch.extracted_item_count AS latest_watch_extracted_item_count,
+            watch.error_code AS latest_watch_error_code,
+            watch.error_message AS latest_watch_error_message,
+            watch.details AS latest_watch_details
        FROM fysen.restaurants AS restaurant
        JOIN fysen.menu_sources AS source
          ON source.restaurant_id = restaurant.id
@@ -95,7 +100,14 @@ async function reconcileProduction(pool, manifests) {
           LIMIT 1
        ) AS snapshot ON true
        LEFT JOIN LATERAL (
-         SELECT watch_run.outcome, watch_run.started_at
+         SELECT watch_run.outcome,
+                watch_run.started_at,
+                watch_run.completed_at,
+                watch_run.http_status,
+                watch_run.extracted_item_count,
+                watch_run.error_code,
+                watch_run.error_message,
+                watch_run.details
            FROM fysen.menu_watch_runs AS watch_run
           WHERE watch_run.menu_source_id = source.id
           ORDER BY watch_run.started_at DESC, watch_run.id DESC
@@ -177,6 +189,12 @@ async function reconcileProduction(pool, manifests) {
       snapshotFetchedAt: iso(row.snapshot_fetched_at),
       latestWatchOutcome: row.latest_watch_outcome ?? null,
       latestWatchStartedAt: iso(row.latest_watch_started_at),
+      latestWatchCompletedAt: iso(row.latest_watch_completed_at),
+      latestWatchHttpStatus: row.latest_watch_http_status ?? null,
+      latestWatchExtractedItemCount: row.latest_watch_extracted_item_count ?? null,
+      latestWatchErrorCode: row.latest_watch_error_code ?? null,
+      latestWatchErrorMessage: row.latest_watch_error_message ?? null,
+      latestWatchDetails: row.latest_watch_details ?? null,
     };
 
     if (reasons.length > 0) {
@@ -198,7 +216,7 @@ async function reconcileProduction(pool, manifests) {
   const hasResiduals = Object.values(failures).some((entries) => entries.length > 0);
   const countMismatch = activeRestaurants.length !== manifests.length || enabledSources.length !== manifests.length;
 
-  const reconcile = {
+  return {
     status: hasResiduals || countMismatch ? "failed" : "verified",
     cities,
     canonicalCount: manifests.length,
@@ -212,18 +230,22 @@ async function reconcileProduction(pool, manifests) {
     extraEnabledSourceCount: extraEnabledSources.length,
     duplicateEnabledCanonicalSourceCount: duplicateEnabledCanonicalSources.length,
     sourceHealthFailureCount: sourceHealthFailures.length,
-    watcherOutcomes: healthySources.reduce((counts, source) => {
-      counts[source.latestWatchOutcome] = (counts[source.latestWatchOutcome] ?? 0) + 1;
+    watcherOutcomes: [...healthySources, ...sourceHealthFailures].reduce((counts, source) => {
+      const outcome = source.latestWatchOutcome ?? "missing";
+      counts[outcome] = (counts[outcome] ?? 0) + 1;
       return counts;
     }, {}),
-    oldestLastCheckedAt: healthySources.map((source) => source.lastCheckedAt).filter(Boolean).sort()[0] ?? null,
-    oldestSnapshotFetchedAt: healthySources.map((source) => source.snapshotFetchedAt).filter(Boolean).sort()[0] ?? null,
+    oldestLastCheckedAt: [...healthySources, ...sourceHealthFailures]
+      .map((source) => source.lastCheckedAt)
+      .filter(Boolean)
+      .sort()[0] ?? null,
+    oldestSnapshotFetchedAt: [...healthySources, ...sourceHealthFailures]
+      .map((source) => source.snapshotFetchedAt)
+      .filter(Boolean)
+      .sort()[0] ?? null,
     failures,
     sources: healthySources,
   };
-
-  if (hasResiduals || countMismatch) fail("Production reconcile failed", reconcile);
-  return reconcile;
 }
 
 const pool = createDatabasePool({ maxConnections: 2 });
@@ -231,6 +253,7 @@ try {
   const manifests = await readCatalog();
   const reconcile = await reconcileProduction(pool, manifests);
   process.stdout.write(`${JSON.stringify(reconcile, null, 2)}\n`);
+  if (reconcile.status !== "verified") process.exitCode = 1;
 } finally {
   await pool.end();
 }
