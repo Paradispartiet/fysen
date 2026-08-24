@@ -9,10 +9,14 @@ import {
 } from "./menu-source-runtime.js";
 
 describe("HTML menu runtime normalization", () => {
-  it("normalizes common slash-style NOK prices without changing ordinary prices", () => {
-    expect(HTML_PRICE_NOTATION_NORMALIZER_VERSION).toBe("price-notation-v2");
-    expect(normalizeHtmlPriceNotation("<p>KR. 179,/-</p><p>165/-</p><p>260-</p>")).toBe(
-      "<p>KR. 179,-</p><p>165,-</p><p>260,-</p>",
+  it("normalizes common slash- and semicolon-style NOK prices without changing ordinary prices", () => {
+    expect(HTML_PRICE_NOTATION_NORMALIZER_VERSION).toBe("price-notation-v3");
+    expect(
+      normalizeHtmlPriceNotation(
+        "<p>KR. 179,/-</p><p>165/-</p><p>260-</p><p>229;-</p><p>KR. 199;-</p>",
+      ),
+    ).toBe(
+      "<p>KR. 179,-</p><p>165,-</p><p>260,-</p><p>229,-</p><p>KR. 199,-</p>",
     );
   });
 
@@ -45,6 +49,37 @@ describe("HTML menu runtime normalization", () => {
       "Tangy Lamb Chop",
     ]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([17900, 16500, 19900]);
+  });
+
+  it("makes heading-description-price cards with semicolon-style prices canonical-extractable", () => {
+    const html = `
+      <html><body>
+        <h2>Starters</h2>
+        <article>
+          <h3>Juicy Chicken Karaage</h3>
+          <p>Crispy chicken with Japanese mayo.</p>
+          <p>229;-</p>
+        </article>
+        <article>
+          <h3>Gyoza Dumplings</h3>
+          <p>Chicken gyoza with Cantonese sauce.</p>
+          <p>199;-</p>
+        </article>
+        <article>
+          <h3>Sumo Spring Rolls</h3>
+          <p>Chicken spring rolls with sweet chili sauce.</p>
+          <p>169;-</p>
+        </article>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(normalizeHtmlPriceNotation(html));
+    expect(result.items.map((item) => item.name)).toEqual([
+      "Juicy Chicken Karaage",
+      "Gyoza Dumplings",
+      "Sumo Spring Rolls",
+    ]);
+    expect(result.items.map((item) => item.priceMinor)).toEqual([22900, 19900, 16900]);
   });
 
   it("strips short uppercase allergen-code lists while preserving semantic parentheses", () => {
