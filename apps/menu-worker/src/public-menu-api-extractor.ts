@@ -5,7 +5,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PUBLIC_MENU_API_EXTRACTOR_VERSION = "public-menu-api-v2";
+export const PUBLIC_MENU_API_EXTRACTOR_VERSION = "public-menu-api-v3";
 
 type JsonRecord = Record<string, unknown>;
 
@@ -19,7 +19,7 @@ interface ParsedPrice {
 const BEVERAGE_SECTION =
   /(?:alkohol|drikke|drinks?|beverages?|soft\s+drinks?|øl|beer|vin|wine|cava|champagne|prosecco|musserende|sparkling|sangria|cocktails?|mocktails?|cider|kaffe|coffee|\bte\b|\btea\b|avec|brennevin|spirits?|whisk(?:e)?y|bourbon|\brom\b|\brum\b|\bgin\b|vodka|tequila|brandy|cognac|sherry|portvin|dessertvin|digestif)/iu;
 const NON_DISH_SECTION =
-  /(?:\bbutikk\b|\bshop\b|retail|merch(?:andise)?|gavekort|gift\s*cards?)/iu;
+  /(?:\bbutikk\b|\bshop\b|retail|merch(?:andise)?|gavekort|gift\s*cards?|\bdonat(?:e|ion)\b|\bdoner\b|\bcharity\b|\bveldedighet\b)/iu;
 const NON_DISH_PLACEHOLDER =
   /^(?:test(?:\s+button)?(?:\s*\([^)]*\))?|button(?:\s*\([^)]*\))?)$/iu;
 
