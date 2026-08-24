@@ -17,7 +17,6 @@ const blockedResourceTypes = new Set([
   "image",
   "media",
   "font",
-  "stylesheet",
   "texttrack",
   "eventsource",
   "websocket",
