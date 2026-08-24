@@ -28,7 +28,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v13");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v14");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -140,5 +140,22 @@ describe("PDF source scope", () => {
     const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
 
     expect(scoped.map((item) => item.name)).toEqual(["Beer battered fish", "Coffee caramel cake"]);
+  });
+
+  it("strips trailing sharing taglines while preserving semantic sharing words inside a dish name", () => {
+    const lines = [
+      "ANTIPASTI",
+      "Antipasto all’Italiana Perfekt å dele! 299",
+      "Sharing platter 349",
+      "Perfect for sharing pie 259",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual([
+      "Antipasto all’Italiana",
+      "Sharing platter",
+      "Perfect for sharing pie",
+    ]);
   });
 });
