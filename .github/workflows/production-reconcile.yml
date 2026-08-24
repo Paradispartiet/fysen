@@ -48,8 +48,10 @@ jobs:
       - name: Setup Fysen workspace
         uses: ./.github/actions/setup-node-pnpm
 
-      - name: Build database dependency
-        run: pnpm --filter @fysen/database build
+      - name: Build reconcile dependency graph
+        run: |
+          pnpm --filter @fysen/menu-core build
+          pnpm --filter @fysen/database build
 
       - name: Reconcile canonical catalog against production
         shell: bash
