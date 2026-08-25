@@ -168,7 +168,9 @@ async function installNetworkPolicy(
         resourceType: request.resourceType(),
         redirectOrigins: support.redirectOrigins,
         browserDataOrigins: support.browserDataOrigins,
-        browserBlockedOrigins: support.browserBlockedOrigins,
+        ...(support.browserBlockedOrigins !== undefined
+          ? { browserBlockedOrigins: support.browserBlockedOrigins }
+          : {}),
       });
       const accounted = accountBrowserRequest(budget, decision);
       budget = accounted.budget;
