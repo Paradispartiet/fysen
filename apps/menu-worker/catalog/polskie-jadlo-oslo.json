@@ -19,7 +19,9 @@
     "minimumExpectedItems": 9,
     "sourceSupport": {
       "redirectOrigins": [],
-      "browserDataOrigins": []
+      "browserDataOrigins": [
+        "https://ift.px-cloud.net"
+      ]
     }
   },
   "actions": [],
