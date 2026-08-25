@@ -1,0 +1,8 @@
+{
+  "version":1,
+  "restaurant":{"slug":"wu-restaurant-bislett-oslo","name":"WU Restaurant Bislett","websiteUrl":null,"address":"Thereses gate 30D, 0168 Oslo","city":"Oslo","countryCode":"NO","latitude":59.928217720977905,"longitude":10.732464985687937},
+  "menuSource":{"url":"https://semeny.no/sted/122wurestaurantbislett","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":64,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["EDAMAME","COMBO 2 (14 pcs.)","HAMACHI FUSION (8 slices)","SPICY SCALLOPS ROLL","ASIAN ROLL","CRISPY SALMON CURRY","Beijing Oyster Soya","TOFU SCHEZUAN"],"requiredDishVariants":[{"name":"EDAMAME","priceMinor":5500},{"name":"COMBO 2 (14 pcs.)","priceMinor":20500},{"name":"HAMACHI FUSION (8 slices)","priceMinor":17000},{"name":"SPICY SCALLOPS ROLL","priceMinor":14000},{"name":"ASIAN ROLL","priceMinor":16000},{"name":"CRISPY SALMON CURRY","priceMinor":22500},{"name":"Beijing Oyster Soya","priceMinor":22500},{"name":"TOFU SCHEZUAN","priceMinor":22500}],"forbiddenDishNames":[]}
+}

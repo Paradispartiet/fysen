@@ -1,0 +1,8 @@
+{
+  "version":1,
+  "restaurant":{"slug":"royal-grill-haugenstua-oslo","name":"Royal Grill Haugenstua","websiteUrl":null,"address":"Garver Ytteborgs vei 98, 0977 Oslo","city":"Oslo","countryCode":"NO","latitude":59.95313236958036,"longitude":10.908134425081686},
+  "menuSource":{"url":"https://semeny.no/sted/royalgrillhaugenstua","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":26,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["Royal Spesial","Bahamas","Nemo","Döner Kebab I Pita / Rull","Kebabmiddag","Kyllingsnadder","King Kong Burger Middag","Urge 1,5 L"],"requiredDishVariants":[{"name":"Royal Spesial","priceMinor":26900},{"name":"Bahamas","priceMinor":24900},{"name":"Nemo","priceMinor":24900},{"name":"Döner Kebab I Pita / Rull","priceMinor":16500},{"name":"Kebabmiddag","priceMinor":15500},{"name":"Kyllingsnadder","priceMinor":19900},{"name":"King Kong Burger Middag","priceMinor":21500},{"name":"Urge 1,5 L","priceMinor":4500}],"forbiddenDishNames":[]}
+}

@@ -1,0 +1,8 @@
+{
+  "version":1,
+  "restaurant":{"slug":"lett-bislett-oslo","name":"LETT Bislett","websiteUrl":null,"address":"Bogstadveien 39D, 0365 OSLO","city":"Oslo","countryCode":"NO","latitude":59.92716698154689,"longitude":10.720316278278657},
+  "menuSource":{"url":"https://semeny.no/sted/lettbislett","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":37,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["Søtpotet feta bowl","Asiatisk bowl","Poké wrap","Kylling Cæsar wrap","Kylling avokado sandwich","Snickerskake","Bris","Hydrate Coconut water"],"requiredDishVariants":[{"name":"Søtpotet feta bowl","priceMinor":19700},{"name":"Asiatisk bowl","priceMinor":17700},{"name":"Poké wrap","priceMinor":20700},{"name":"Kylling Cæsar wrap","priceMinor":19700},{"name":"Kylling avokado sandwich","priceMinor":11900},{"name":"Snickerskake","priceMinor":7000},{"name":"Bris","priceMinor":4900},{"name":"Hydrate Coconut water","priceMinor":5900}],"forbiddenDishNames":[]}
+}

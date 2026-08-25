@@ -1,0 +1,8 @@
+{
+  "version":1,
+  "restaurant":{"slug":"osike-nordstrand-oslo","name":"Osike Nordstrand","websiteUrl":null,"address":"Mikrobølgen 27, 1150 Oslo","city":"Oslo","countryCode":"NO","latitude":59.86770690050462,"longitude":10.81301598266857},
+  "menuSource":{"url":"https://semeny.no/sted/427osikenordstrand","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":85,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["Misosuppe","Tempura Salat","Sushi Meny 45 Biter","Crispy Laks Maki 8 Biter","Nigiri Scampi 2 stk.","Mango Laks Maki","Teriyakisaus","Burrito"],"requiredDishVariants":[{"name":"Misosuppe","priceMinor":8000},{"name":"Tempura Salat","priceMinor":17900},{"name":"Sushi Meny 45 Biter","priceMinor":69800},{"name":"Crispy Laks Maki 8 Biter","priceMinor":12800},{"name":"Nigiri Scampi 2 stk.","priceMinor":6000},{"name":"Mango Laks Maki","priceMinor":17800},{"name":"Teriyakisaus","priceMinor":3200},{"name":"Burrito","priceMinor":22800}],"forbiddenDishNames":[]}
+}

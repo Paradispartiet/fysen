@@ -1,0 +1,8 @@
+{
+  "version":1,
+  "restaurant":{"slug":"tunco-st-hanshaugen-oslo","name":"TUNCO St. Hanshaugen","websiteUrl":null,"address":"Bjerregaards gate 2A, 0172 Oslo","city":"Oslo","countryCode":"NO","latitude":59.92333170100254,"longitude":10.74065837560094},
+  "menuSource":{"url":"https://www.meny.semeny.no/public/sted/tuncosthanshaugen","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":18,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["Orange Chicken + Pepsi 0.5L","Chili Edamame","Orange Bites","Orange Chicken","Koh Tao","Bangkok","Surprise me!","Ginger Beer 0.27cl Fentimans"],"requiredDishVariants":[{"name":"Orange Chicken + Pepsi 0.5L","priceMinor":24900},{"name":"Chili Edamame","priceMinor":6900},{"name":"Orange Bites","priceMinor":19600},{"name":"Orange Chicken","priceMinor":21600},{"name":"Koh Tao","priceMinor":22900},{"name":"Bangkok","priceMinor":22900},{"name":"Surprise me!","priceMinor":22900},{"name":"Ginger Beer 0.27cl Fentimans","priceMinor":4900}],"forbiddenDishNames":[]}
+}
