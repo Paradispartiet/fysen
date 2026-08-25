@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { shouldStagePublishedSourceMigration } from "./onboarding.js";
+import {
+  requiredPublishedSourceMigrationWatchCount,
+  shouldStagePublishedSourceMigration,
+} from "./onboarding.js";
 
 describe("published source migration detection", () => {
   it("stages only when an active restaurant has another enabled source", () => {
@@ -20,5 +23,10 @@ describe("published source migration detection", () => {
         { id: "canonical" },
       ]),
     ).toBe(false);
+  });
+
+  it("requires two fresh watches for a new staged source but only one when a prior staged snapshot is already manifest-valid", () => {
+    expect(requiredPublishedSourceMigrationWatchCount(false)).toBe(2);
+    expect(requiredPublishedSourceMigrationWatchCount(true)).toBe(1);
   });
 });
