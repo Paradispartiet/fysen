@@ -39,6 +39,32 @@ describe("browser support origins", () => {
     ).toMatchObject({ action: "block", fatal: true });
   });
 
+  it("nonfatally blocks explicitly declared telemetry origins without authorizing navigation", () => {
+    for (const resourceType of ["xhr", "fetch", "script"]) {
+      expect(
+        browserRequestDecision({
+          sourceOrigin,
+          requestUrl: "https://telemetry.example/collect",
+          resourceType,
+          browserBlockedOrigins: ["https://telemetry.example"],
+        }),
+      ).toEqual({
+        action: "block",
+        reason: "explicitly blocked browser origin: https://telemetry.example",
+        fatal: false,
+      });
+    }
+
+    expect(
+      browserRequestDecision({
+        sourceOrigin,
+        requestUrl: "https://telemetry.example/landing",
+        resourceType: "document",
+        browserBlockedOrigins: ["https://telemetry.example"],
+      }),
+    ).toMatchObject({ action: "block", fatal: true });
+  });
+
   it("keeps undeclared cross-origin document/xhr/fetch fail-closed", () => {
     for (const resourceType of ["document", "xhr", "fetch"]) {
       expect(
@@ -48,6 +74,7 @@ describe("browser support origins", () => {
           resourceType,
           redirectOrigins: ["https://order.example"],
           browserDataOrigins: ["https://menu-data.example"],
+          browserBlockedOrigins: ["https://telemetry.example"],
         }),
       ).toMatchObject({ action: "block", fatal: true });
     }
