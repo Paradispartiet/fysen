@@ -4,13 +4,13 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v10";
+export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v11";
 
 const SECTION_COUNT_SUFFIX = /\s*\(\s*\d{1,3}\s*\)\s*$/u;
 const BEVERAGE_SECTION_LABEL =
   /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|mineralvann|mineral\s+water|soft\s+drinks?|sodas?|brus|milkshakes?|coffee(?:\s+and\s+tea|\s+drinks?)?|tea|kaffe\s*[/|]\s*coffee|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|vin\s+glass\s*[/|]\s*wine\s+glass(?:\s*\(\s*\d+\s*cl\s*\))?|hvitvin\s*[/|]\s*white\s+wine|rødvin\s*[/|]\s*red\s+wine|cocktails?|mocktails?|aperitifs?|draught\s+beer|draft\s+beer|beer\s+on\s+tap|fat\s+øl\s*[/|]\s*tap\s+beer|flaske\s+øl\s*[/|]\s*bottle\s+beer|musserende\s*[/|]\s*sparkling\s+wine|øl\s*[/|]\s*beer|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|cider|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?)$/iu;
 const FOOD_SECTION_LABEL =
-  /^(?:food|mat|forretter?|starters?|appetizers?|small\s+plates?|small\s+dishes?\s*(?:&|and)\s*sharing\s+plates?|classics?|dumplings?|proteins?|småretter|burgers?|hovedretter?|mains?|main\s+courses?|supper?|soups?|barnemeny|children'?s\s+menu|kids?\s+menu|sauser?|sauces?|desserter?|desserts?|sides?|tilbehør|salater?|salads?|pizza(?:er|s)?|noodles?|nudler|curr(?:y|ies)|wok|grillretter?|snacks?(?:\s+menu)?|fries|kylling|chicken|lam|lamb|kebab|vegetar|vegetarian|spesial|special|nan|naan)$/iu;
+  /^(?:food|mat|à\s+la\s+carte|forretter?|starters?|appetizers?|small\s+plates?|small\s+dishes?\s*(?:&|and)\s*sharing\s+plates?|classics?|dumplings?|proteins?|småretter|burgers?|hovedretter?|mains?|main\s+courses?|supper?|soups?|barnemeny|children'?s\s+menu|kids?\s+menu|sauser?|sauces?|desserter?|desserts?|sides?|tilbehør|salater?|salads?|pizza(?:er|s)?|noodles?|nudler|curr(?:y|ies)|wok|grillretter?|grill(?:retter)?|grilled\s+dishes?|snacks?(?:\s+menu)?|fries|kylling|chicken|lam|lamb|kebab|gaza[- ]kebab|kylling\s+og\s+lam|chicken\s+(?:&|and)\s+lamb|mezah[- ]retter|mezeh?[- ]dishes?|mezze[- ]dishes?|vegetar|vegetarian|spesial|special|nan|naan)$/iu;
 const MENU_ROOT_SECTION_LABEL = /^(?:menu|meny|our\s+menu|vår\s+meny)$/iu;
 const MENU_END_SECTION_LABEL =
   /^(?:product\s+information|restaurant\s+information|restaurantinformasjon|allergen(?:oversikt|er|s)?|reservasjoner?|reservations?|kontakt(?:\s+oss)?|contact(?:\s+us)?|booking|bordbestilling)$/iu;
@@ -228,9 +228,7 @@ function sectionEvidenceForItem(
     const state = states[index] ?? "unknown";
     if (state === "unknown") continue;
     const line = lines[index] ?? "";
-    if (
-      !lineReferencesItem(line, item.name, matchTrailingAllergenCodes)
-    )
+    if (!lineReferencesItem(line, item.name, matchTrailingAllergenCodes))
       continue;
     if (state === "food") evidence.hasFoodOccurrence = true;
     if (state === "beverage") evidence.hasBeverageOccurrence = true;
@@ -291,9 +289,7 @@ export function filterHtmlBeverageSectionItemsWithScopedProvenance(
 
   for (const item of items) {
     if (
-      scopedLines.some((line) =>
-        lineReferencesItem(line, item.name, true),
-      )
+      scopedLines.some((line) => lineReferencesItem(line, item.name, true))
     ) {
       scopedItems.push(item);
     } else {

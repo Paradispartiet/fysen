@@ -66,6 +66,7 @@ jobs:
             [[ -f "$candidate" ]] || { echo "Seed does not exist: $candidate" >&2; exit 1; }
           }
 
+          reproof=false
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             seed="$DISPATCH_SEED"
             validate_seed "$seed"
@@ -93,17 +94,21 @@ jobs:
           EOF
                 exit 1
               fi
+              reproof=true
             fi
             validate_seed "$seed"
           fi
           echo "Selected seed: $seed"
+          echo "Historical reproof: $reproof"
           echo "path=$seed" >> "$GITHUB_OUTPUT"
+          echo "reproof=$reproof" >> "$GITHUB_OUTPUT"
 
       - name: Resolve Oslo coordinates and dedupe against catalog
         id: resolve
         shell: bash
         env:
           SEED_PATH: ${{ steps.seed.outputs.path }}
+          REPROOF: ${{ steps.seed.outputs.reproof }}
         run: |
           set -euo pipefail
           resolved="$RUNNER_TEMP/restaurant-batch-resolved.json"
@@ -113,6 +118,7 @@ jobs:
           import { join } from "node:path";
 
           const [, , seedPath, resolvedPath, reportPath] = process.argv;
+          const reproof = process.env.REPROOF === "true";
           const seed = JSON.parse(await readFile(seedPath, "utf8"));
           if (seed.version !== 1 || !Array.isArray(seed.restaurants) || seed.restaurants.length === 0) {
             throw new Error("Research seed must be version 1 with at least one restaurant");
@@ -130,8 +136,17 @@ jobs:
             throw new Error("Research seed contains duplicate restaurant slugs");
           }
           const collisions = seedSlugs.filter((slug) => catalogSlugs.has(slug));
-          if (collisions.length > 0) {
+          if (!reproof && collisions.length > 0) {
             throw new Error(`Research seed collides with canonical catalog: ${collisions.join(", ")}`);
+          }
+          if (reproof) {
+            const nonCanonical = seedSlugs.filter((slug) => !catalogSlugs.has(slug));
+            if (nonCanonical.length > 0) {
+              throw new Error(
+                `Historical reproof seed contains non-canonical slugs: ${nonCanonical.join(", ")}`
+              );
+            }
+            console.log(`Historical reproof accepted ${collisions.length} canonical catalog collisions by design.`);
           }
 
           async function addressHits(address) {
@@ -281,7 +296,7 @@ jobs:
           const runtimePlan = {
             version: 1,
             outputDirectory: "candidates",
-            concurrency: seed.concurrency ?? 4,
+            concurrency: reproof ? 1 : (seed.concurrency ?? 4),
             restaurants: resolvedRestaurants
           };
           await writeFile(resolvedPath, `${JSON.stringify(runtimePlan, null, 2)}\n`);
@@ -290,10 +305,12 @@ jobs:
             seed: seed.batch ?? seedPath,
             requestedCount: resolvedRestaurants.length,
             catalogBaselineCount: catalogSlugs.size,
+            reproof,
+            catalogCollisions: collisions,
             evidence
           }, null, 2)}\n`);
           console.log(
-            `Resolved ${resolvedRestaurants.length} restaurant address points against catalog baseline ${catalogSlugs.size}.`
+            `Resolved ${resolvedRestaurants.length} restaurant address points against catalog baseline ${catalogSlugs.size}; reproof=${reproof}.`
           );
           NODE
           echo "resolved=$resolved" >> "$GITHUB_OUTPUT"
