@@ -28,7 +28,11 @@ const manifest = {
 describe("menu source support origins", () => {
   it("defaults to no cross-origin support", () => {
     const parsed = restaurantOnboardingManifestSchema.parse(manifest);
-    expect(parsed.menuSource.sourceSupport).toEqual({ redirectOrigins: [], browserDataOrigins: [] });
+    expect(parsed.menuSource.sourceSupport).toEqual({
+      redirectOrigins: [],
+      browserDataOrigins: [],
+      browserBlockedOrigins: [],
+    });
   });
 
   it("normalizes exact HTTPS origins and keeps redirect/data purposes separate", () => {
@@ -45,6 +49,7 @@ describe("menu source support origins", () => {
     expect(parsed.menuSource.sourceSupport).toEqual({
       redirectOrigins: ["https://order.example"],
       browserDataOrigins: ["https://menu-data.example"],
+      browserBlockedOrigins: [],
     });
   });
 
