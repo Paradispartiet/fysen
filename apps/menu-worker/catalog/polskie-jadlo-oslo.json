@@ -21,6 +21,7 @@
       "redirectOrigins": [],
       "browserDataOrigins": [
         "https://no.fd-api.com",
+        "https://reviews-api-no.fd-api.com",
         "https://static.fd-api.com"
       ],
       "browserBlockedOrigins": [
@@ -30,8 +31,7 @@
         "https://ift.px-cloud.net",
         "https://o516780.ingest.sentry.io",
         "https://pagespeed.deliveryhero.net",
-        "https://perseus-productanalytics.deliveryhero.net",
-        "https://reviews-api-no.fd-api.com"
+        "https://perseus-productanalytics.deliveryhero.net"
       ]
     }
   },
