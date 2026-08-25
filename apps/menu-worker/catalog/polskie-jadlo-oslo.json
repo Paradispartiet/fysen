@@ -13,7 +13,7 @@
   "menuSource": {
     "url": "https://www.foodora.no/restaurant/wobf/polskie-jadlo",
     "sourceType": "html",
-    "fetchMode": "browser",
+    "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
     "minimumExpectedItems": 9,
