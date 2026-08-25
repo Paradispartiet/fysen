@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { shouldStagePublishedSourceMigration } from "./onboarding.js";
+import {
+  shouldRequireSecondPublishedSourceMigrationWatch,
+  shouldStagePublishedSourceMigration,
+} from "./onboarding.js";
 
 describe("published source migration detection", () => {
   it("stages only when an active restaurant has another enabled source", () => {
@@ -20,5 +23,20 @@ describe("published source migration detection", () => {
         { id: "canonical" },
       ]),
     ).toBe(false);
+  });
+
+  it("does not refetch a fully validated unchanged staged source", () => {
+    expect(
+      shouldRequireSecondPublishedSourceMigrationWatch({ outcome: "unchanged" }),
+    ).toBe(false);
+  });
+
+  it("keeps the second proof for changed or not-modified staged sources", () => {
+    expect(
+      shouldRequireSecondPublishedSourceMigrationWatch({ outcome: "changed" }),
+    ).toBe(true);
+    expect(
+      shouldRequireSecondPublishedSourceMigrationWatch({ outcome: "not_modified" }),
+    ).toBe(true);
   });
 });
