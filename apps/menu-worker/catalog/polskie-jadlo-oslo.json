@@ -21,7 +21,8 @@
       "redirectOrigins": [],
       "browserDataOrigins": [
         "https://collector-pxljub4etb.cl6.px-cloud.net",
-        "https://ift.px-cloud.net"
+        "https://ift.px-cloud.net",
+        "https://o516780.ingest.sentry.io"
       ]
     }
   },
