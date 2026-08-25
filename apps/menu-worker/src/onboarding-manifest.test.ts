@@ -33,6 +33,11 @@ describe("restaurant onboarding manifest", () => {
     const parsed = restaurantOnboardingManifestSchema.parse(validManifest);
     expect(parsed.menuSource.userAgent).toBe("FysenMenuBot/0.1");
     expect(parsed.menuSource.fetchMode).toBe("http");
+    expect(parsed.menuSource.sourceSupport).toEqual({
+      redirectOrigins: [],
+      browserDataOrigins: [],
+      browserBlockedOrigins: [],
+    });
     expect(parsed.actions).toEqual([]);
     expect(parsed.verification).toEqual({});
     expect(getHoursVerificationStatus(parsed)).toBe("verified");
@@ -48,6 +53,52 @@ describe("restaurant onboarding manifest", () => {
     });
     expect(parsed.menuSource.fetchMode).toBe("browser");
     expect(parsed.menuSource.sourceType).toBe("html");
+  });
+
+  it("accepts bounded explicit browser data and blocked origins without overlap", () => {
+    const parsed = restaurantOnboardingManifestSchema.parse({
+      ...validManifest,
+      menuSource: {
+        ...validManifest.menuSource,
+        fetchMode: "browser",
+        sourceSupport: {
+          redirectOrigins: [],
+          browserDataOrigins: ["https://menu-data.example"],
+          browserBlockedOrigins: ["https://telemetry.example"],
+        },
+      },
+    });
+    expect(parsed.menuSource.sourceSupport.browserDataOrigins).toEqual(["https://menu-data.example"]);
+    expect(parsed.menuSource.sourceSupport.browserBlockedOrigins).toEqual(["https://telemetry.example"]);
+
+    expect(() =>
+      restaurantOnboardingManifestSchema.parse({
+        ...validManifest,
+        menuSource: {
+          ...validManifest.menuSource,
+          sourceSupport: {
+            redirectOrigins: [],
+            browserDataOrigins: [],
+            browserBlockedOrigins: ["https://telemetry.example"],
+          },
+        },
+      }),
+    ).toThrow("browserBlockedOrigins require browser fetch mode");
+
+    expect(() =>
+      restaurantOnboardingManifestSchema.parse({
+        ...validManifest,
+        menuSource: {
+          ...validManifest.menuSource,
+          fetchMode: "browser",
+          sourceSupport: {
+            redirectOrigins: [],
+            browserDataOrigins: ["https://menu-data.example"],
+            browserBlockedOrigins: ["https://menu-data.example"],
+          },
+        },
+      }),
+    ).toThrow("A blocked browser origin must not also be declared as an allowed redirect or data origin");
   });
 
   it("accepts HTTP API menu sources and rejects browser API mode", () => {

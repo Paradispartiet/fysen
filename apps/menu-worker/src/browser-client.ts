@@ -27,6 +27,7 @@ type RenderedMenuFetch = Extract<MenuHttpFetchResult, { readonly kind: "content"
 export interface BrowserMenuSourceSupport {
   readonly redirectOrigins: readonly string[];
   readonly browserDataOrigins: readonly string[];
+  readonly browserBlockedOrigins?: readonly string[];
 }
 
 export interface BrowserMenuSource {
@@ -41,6 +42,7 @@ export interface BrowserRequestPolicyInput {
   readonly resourceType: string;
   readonly redirectOrigins?: readonly string[];
   readonly browserDataOrigins?: readonly string[];
+  readonly browserBlockedOrigins?: readonly string[];
 }
 
 export type BrowserRequestDecision =
@@ -78,6 +80,17 @@ export function browserRequestDecision(input: BrowserRequestPolicyInput): Browse
 
   if (requestUrl.protocol !== "https:") {
     return { action: "block", reason: `browser request must use HTTPS: ${requestUrl.protocol}`, fatal: true };
+  }
+
+  if (
+    input.resourceType !== "document" &&
+    (input.browserBlockedOrigins ?? []).includes(requestUrl.origin)
+  ) {
+    return {
+      action: "block",
+      reason: `explicitly blocked browser origin: ${requestUrl.origin}`,
+      fatal: false,
+    };
   }
 
   const documentOrigins = new Set([input.sourceOrigin, ...(input.redirectOrigins ?? [])]);
@@ -155,6 +168,9 @@ async function installNetworkPolicy(
         resourceType: request.resourceType(),
         redirectOrigins: support.redirectOrigins,
         browserDataOrigins: support.browserDataOrigins,
+        ...(support.browserBlockedOrigins !== undefined
+          ? { browserBlockedOrigins: support.browserBlockedOrigins }
+          : {}),
       });
       const accounted = accountBrowserRequest(budget, decision);
       budget = accounted.budget;

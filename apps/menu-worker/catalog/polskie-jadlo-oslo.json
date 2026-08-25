@@ -11,12 +11,30 @@
     "longitude": 10.75865
   },
   "menuSource": {
-    "url": "https://www.foodora.no/en/restaurant/wobf/polskie-jadlo",
+    "url": "https://www.foodora.no/restaurant/wobf/polskie-jadlo",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 9
+    "minimumExpectedItems": 9,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [
+        "https://no.fd-api.com",
+        "https://reviews-api-no.fd-api.com",
+        "https://static.fd-api.com"
+      ],
+      "browserBlockedOrigins": [
+        "https://action-log.foodora.no",
+        "https://api.usercentrics.eu",
+        "https://collector-pxljub4etb.cl6.px-cloud.net",
+        "https://conn-check.icg-in.info",
+        "https://ift.px-cloud.net",
+        "https://o516780.ingest.sentry.io",
+        "https://pagespeed.deliveryhero.net",
+        "https://perseus-productanalytics.deliveryhero.net"
+      ]
+    }
   },
   "actions": [],
   "qualityAssertions": {
