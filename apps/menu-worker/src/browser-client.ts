@@ -192,6 +192,27 @@ async function installNetworkPolicy(
       if (support.browserDataOrigins.includes(url.origin)) {
         console.error(`[browser-data-request] ${request.resourceType()} ${url.toString()}`);
       }
+      if (url.origin === "https://no.fd-api.com" && url.pathname === "/graphql") {
+        const postData = request.postData();
+        if (postData) {
+          try {
+            const parsed = JSON.parse(postData) as {
+              operationName?: unknown;
+              variables?: unknown;
+              extensions?: unknown;
+            };
+            console.error(
+              `[browser-graphql-request] ${JSON.stringify({
+                operationName: parsed.operationName ?? null,
+                variables: parsed.variables ?? null,
+                extensions: parsed.extensions ?? null,
+              })}`,
+            );
+          } catch {
+            console.error("[browser-graphql-request] non-json-payload");
+          }
+        }
+      }
       const networkKey = `${url.protocol}//${url.hostname}:${url.port || "443"}`;
       let validation = validatedUrls.get(networkKey);
       if (!validation) {
