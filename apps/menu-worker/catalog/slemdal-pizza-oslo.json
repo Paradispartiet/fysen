@@ -1,0 +1,8 @@
+{
+  "version":1,
+  "restaurant":{"slug":"slemdal-pizza-oslo","name":"Slemdal Pizza","websiteUrl":null,"address":"Risalléen 41, 0776 Oslo","city":"Oslo","countryCode":"NO","latitude":59.950762184253485,"longitude":10.694270501937568},
+  "menuSource":{"url":"https://www.meny.semeny.no/public/sted/484slemdalpizza","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":29,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["Skinkepizza","Kylling pizza","Hamburger","Kebab I Rull","Kyllingkebabmiddag","Kyllingsnadder","Telemark Naturell u/Kullsyre","Battery Charged"],"requiredDishVariants":[{"name":"Skinkepizza","priceMinor":16900},{"name":"Kylling pizza","priceMinor":23900},{"name":"Hamburger","priceMinor":9900},{"name":"Kebab I Rull","priceMinor":12900},{"name":"Kyllingkebabmiddag","priceMinor":18900},{"name":"Kyllingsnadder","priceMinor":21900},{"name":"Telemark Naturell u/Kullsyre","priceMinor":3900},{"name":"Battery Charged","priceMinor":5900}],"forbiddenDishNames":[]}
+}

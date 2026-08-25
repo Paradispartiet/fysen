@@ -1,0 +1,8 @@
+{
+  "version":1,
+  "restaurant":{"slug":"fly-chicken-carl-berner-oslo","name":"Fly Chicken Carl Berner","websiteUrl":null,"address":"Trondheimsveien 133, 0571 Oslo","city":"Oslo","countryCode":"NO","latitude":59.92701078071817,"longitude":10.77719743216361},
+  "menuSource":{"url":"https://semeny.no/sted/529flychickencarlberner","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":52,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["Fried Chicken Wings x 10","Fly Classic","Loaded Chicken Fries","Habanero Paste","Sparkling Water 0,5l","Monster Ultra White 0,5L","Cheddar","Fly Kids Menu"],"requiredDishVariants":[{"name":"Fried Chicken Wings x 10","priceMinor":12400},{"name":"Fly Classic","priceMinor":18000},{"name":"Loaded Chicken Fries","priceMinor":19500},{"name":"Habanero Paste","priceMinor":3500},{"name":"Sparkling Water 0,5l","priceMinor":4300},{"name":"Monster Ultra White 0,5L","priceMinor":5100},{"name":"Cheddar","priceMinor":3500},{"name":"Fly Kids Menu","priceMinor":10500}],"forbiddenDishNames":[]}
+}

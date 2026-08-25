@@ -1,0 +1,8 @@
+{
+  "version":1,
+  "restaurant":{"slug":"smestad-sushi-oslo","name":"Smestad Sushi","websiteUrl":null,"address":"Hoffsveien 92, 0377 Oslo","city":"Oslo","countryCode":"NO","latitude":59.93689843642487,"longitude":10.683486531156603},
+  "menuSource":{"url":"https://semeny.no/public/sted/425smestadsushi","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":50,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["Dining For 2 Personer","Vegetar Våruller 2 Stk. 🌱","Tuna Yellowfin 2 Biter","Sashimi Laks - 10 Skiver","Tempura Scampi - 8 Biter","Mango Spesial - 10 Biter","Mangomajones","Chupa Chups"],"requiredDishVariants":[{"name":"Dining For 2 Personer","priceMinor":43600},{"name":"Vegetar Våruller 2 Stk. 🌱","priceMinor":9900},{"name":"Tuna Yellowfin 2 Biter","priceMinor":5900},{"name":"Sashimi Laks - 10 Skiver","priceMinor":16500},{"name":"Tempura Scampi - 8 Biter","priceMinor":11500},{"name":"Mango Spesial - 10 Biter","priceMinor":17500},{"name":"Mangomajones","priceMinor":2500},{"name":"Chupa Chups","priceMinor":1000}],"forbiddenDishNames":[]}
+}

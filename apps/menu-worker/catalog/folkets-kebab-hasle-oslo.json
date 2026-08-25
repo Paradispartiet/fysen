@@ -1,0 +1,8 @@
+{
+  "version":1,
+  "restaurant":{"slug":"folkets-kebab-hasle-oslo","name":"Folkets Kebab Avd Hasle","websiteUrl":null,"address":"Grenseveien 40, 0575 Oslo","city":"Oslo","countryCode":"NO","latitude":59.92463682768221,"longitude":10.788963237208261},
+  "menuSource":{"url":"https://semeny.no/sted/368folketskebabavdhasle","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":30,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["Kebab I Pita","Døner I Pita","Kebabtallerken","Falafeltallerken 🌱","Kyllingburger","Chili Onion Burger","Nuggetstallerken","7Up 0,33L"],"requiredDishVariants":[{"name":"Kebab I Pita","priceMinor":14900},{"name":"Døner I Pita","priceMinor":18900},{"name":"Kebabtallerken","priceMinor":20900},{"name":"Falafeltallerken 🌱","priceMinor":18900},{"name":"Kyllingburger","priceMinor":14900},{"name":"Chili Onion Burger","priceMinor":14900},{"name":"Nuggetstallerken","priceMinor":14900},{"name":"7Up 0,33L","priceMinor":4900}],"forbiddenDishNames":[]}
+}

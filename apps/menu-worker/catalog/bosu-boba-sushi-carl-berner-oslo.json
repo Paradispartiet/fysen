@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bosu-boba-sushi-carl-berner-oslo",
+    "name": "BoSu Boba & Sushi Carl Berner",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 111B, 0565 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.925568460159745,
+    "longitude": 10.776256076693993
+  },
+  "menuSource": {"url":"https://semeny.no/sted/527bosubobasushicarlberner","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":95,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions": [],
+  "qualityAssertions": {"requiredDishNames":["Vårruller","Tuna Kimchi Maki Roll","Snow White","S22. Snow White","Stor Boks","B12. Bosu Sashimi & Nigiri","Chilimajones","BonSu Sparkling"],"requiredDishVariants":[{"name":"Vårruller","priceMinor":8800},{"name":"Tuna Kimchi Maki Roll","priceMinor":10800},{"name":"Snow White","priceMinor":16800},{"name":"S22. Snow White","priceMinor":18800},{"name":"Stor Boks","priceMinor":20800},{"name":"B12. Bosu Sashimi & Nigiri","priceMinor":23800},{"name":"Chilimajones","priceMinor":1800},{"name":"BonSu Sparkling","priceMinor":4800}],"forbiddenDishNames":[]}
+}

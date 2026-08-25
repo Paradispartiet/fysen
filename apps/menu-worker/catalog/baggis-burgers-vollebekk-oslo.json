@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "baggis-burgers-vollebekk-oslo",
+    "name": "Baggis & Burgers",
+    "websiteUrl": null,
+    "address": "Lunden 61, 0598 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93624692013634,
+    "longitude": 10.8312613406718
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/baggisburgers",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 36,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-25",
+      "note": "Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Smash Cheese Meal 🍔🍟",
+      "Smashing Mango, Biff, Bacon",
+      "Veitvet",
+      "Stovner",
+      "Reker og Majones",
+      "Barnemeny Hamburger",
+      "Imsdal 0,5l",
+      "Kyllingmiddag"
+    ],
+    "requiredDishVariants": [
+      {"name": "Smash Cheese Meal 🍔🍟", "priceMinor": 28900},
+      {"name": "Smashing Mango, Biff, Bacon", "priceMinor": 19900},
+      {"name": "Veitvet", "priceMinor": 34900},
+      {"name": "Stovner", "priceMinor": 30800},
+      {"name": "Reker og Majones", "priceMinor": 11500},
+      {"name": "Barnemeny Hamburger", "priceMinor": 12900},
+      {"name": "Imsdal 0,5l", "priceMinor": 5000},
+      {"name": "Kyllingmiddag", "priceMinor": 21900}
+    ],
+    "forbiddenDishNames": []
+  }
+}

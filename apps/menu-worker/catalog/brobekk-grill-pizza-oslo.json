@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"brobekk-grill-pizza-oslo","name":"Brobekk Grill & Pizza","websiteUrl":null,"address":"Brobekkveien 100, 0582 Oslo","city":"Oslo","countryCode":"NO","latitude":59.928534153829006,"longitude":10.831278143373428},
+  "menuSource": {"url":"https://semeny.no/sted/brobekkgrillpizza","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":94,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["Familietilbud","Pizza 20","Fishburgermiddag","Biffsnadder i Pita","Skinkesalat","Kvikk Lunsj","Ben & Jerry's Chocolate Fudge Brownie","Redbull 447"],"requiredDishVariants":[{"name":"Familietilbud","priceMinor":65900},{"name":"Pizza 20","priceMinor":27810},{"name":"Fishburgermiddag","priceMinor":18109},{"name":"Biffsnadder i Pita","priceMinor":17010},{"name":"Skinkesalat","priceMinor":17010},{"name":"Kvikk Lunsj","priceMinor":5900},{"name":"Ben & Jerry's Chocolate Fudge Brownie","priceMinor":15900},{"name":"Redbull 447","priceMinor":5900}],"forbiddenDishNames":[]}
+}

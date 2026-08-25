@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"heim-st-hanshaugen-oslo","name":"Heim St. Hanshaugen","websiteUrl":null,"address":"Colletts gate 33, 0169 Oslo","city":"Oslo","countryCode":"NO","latitude":59.92706983629181,"longitude":10.738270466636544},
+  "menuSource": {"url":"https://semeny.no/sted/341heimsthanshaugen","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":18,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["Rett Heim","Heimburger","Boeuf Bourguignon","Bangers & Mash","Bangers & Mash (barn)","Søtpotetfries","Chipotledressing","Karridip"],"requiredDishVariants":[{"name":"Rett Heim","priceMinor":26500},{"name":"Heimburger","priceMinor":19900},{"name":"Boeuf Bourguignon","priceMinor":27900},{"name":"Bangers & Mash","priceMinor":26500},{"name":"Bangers & Mash (barn)","priceMinor":12500},{"name":"Søtpotetfries","priceMinor":6900},{"name":"Chipotledressing","priceMinor":3500},{"name":"Karridip","priceMinor":3500}],"forbiddenDishNames":[]}
+}

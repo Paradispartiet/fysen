@@ -1,0 +1,8 @@
+{
+  "version":1,
+  "restaurant":{"slug":"roma-pizza-haugerud-oslo","name":"Roma Pizza Haugerud","websiteUrl":null,"address":"Haugerudsenteret 1, 0673 Oslo","city":"Oslo","countryCode":"NO","latitude":59.922677125705384,"longitude":10.856396626515965},
+  "menuSource":{"url":"https://semeny.no/public/sted/443romapizzahaugerud","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":93,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["Biff Original","Pizza Hot","Roma","Chiliburger 160g","Mix Grill","Mix kebabtallerken","Villa","Gaffel&knife"],"requiredDishVariants":[{"name":"Biff Original","priceMinor":29900},{"name":"Pizza Hot","priceMinor":29900},{"name":"Roma","priceMinor":19900},{"name":"Chiliburger 160g","priceMinor":14000},{"name":"Mix Grill","priceMinor":21900},{"name":"Mix kebabtallerken","priceMinor":19900},{"name":"Villa","priceMinor":5900},{"name":"Gaffel&knife","priceMinor":500}],"forbiddenDishNames":[]}
+}

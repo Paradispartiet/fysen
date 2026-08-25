@@ -1,0 +1,8 @@
+{
+  "version":1,
+  "restaurant":{"slug":"stykke-hasle-oslo","name":"Stykke - Hasle","websiteUrl":null,"address":"Bøkkerveien 11, 0579 Oslo","city":"Oslo","countryCode":"NO","latitude":59.92738973688297,"longitude":10.796159721571657},
+  "menuSource":{"url":"https://semeny.no/sted/566stykkehasle","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":23,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["Stor meny (2-4 personer)","Pepperoni (Stykke)","Månedens \"Mc Lovin\" (Stykke)","White (Hel pizza)","Szechuan wings (Spicy)","Urge","Stykke syltet jalapeño","Cookie"],"requiredDishVariants":[{"name":"Stor meny (2-4 personer)","priceMinor":55000},{"name":"Pepperoni (Stykke)","priceMinor":7800},{"name":"Månedens \"Mc Lovin\" (Stykke)","priceMinor":8200},{"name":"White (Hel pizza)","priceMinor":47100},{"name":"Szechuan wings (Spicy)","priceMinor":19800},{"name":"Urge","priceMinor":5400},{"name":"Stykke syltet jalapeño","priceMinor":3800},{"name":"Cookie","priceMinor":6500}],"forbiddenDishNames":[]}
+}

@@ -1,0 +1,8 @@
+{
+  "version":1,
+  "restaurant":{"slug":"lofthus-samvirkelag-roa-oslo","name":"Lofthus Samvirkelag Røa","websiteUrl":null,"address":"Tore Hals Mejdells vei 5, 0751 Oslo","city":"Oslo","countryCode":"NO","latitude":59.946188372601256,"longitude":10.643122615389483},
+  "menuSource":{"url":"https://semeny.no/public/sted/lofthussamvirkelagroa","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":20,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["Rød Elsa 13 År","Reinsdyr","Fenikkelsalami","Trøffelsalami","Pikante","Kylling Rød","Tomat","Rømmedressing"],"requiredDishVariants":[{"name":"Rød Elsa 13 År","priceMinor":19500},{"name":"Reinsdyr","priceMinor":27500},{"name":"Fenikkelsalami","priceMinor":27500},{"name":"Trøffelsalami","priceMinor":27500},{"name":"Pikante","priceMinor":27500},{"name":"Kylling Rød","priceMinor":27500},{"name":"Tomat","priceMinor":26000},{"name":"Rømmedressing","priceMinor":5500}],"forbiddenDishNames":[]}
+}

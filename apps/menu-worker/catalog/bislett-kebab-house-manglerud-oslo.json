@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bislett-kebab-house-manglerud-oslo",
+    "name": "Bislett Kebab House Manglerud",
+    "websiteUrl": null,
+    "address": "Plogveien 6, 0679 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.89729012445715,
+    "longitude": 10.812860159653528
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/bislettkebabhousemanglerud",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 73,
+    "sourceSupport": {"redirectOrigins": [], "browserDataOrigins": [], "browserBlockedOrigins": []}
+  },
+  "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-25", "note": "Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": ["Shawarma Combo","Dönertallerken","Mix Döner & Kyllingtallerken","Falafel i Pita","Kyllingburger","Cheesy Fries (Stor)","Smash Fries","Powerade Cherry 0,5L"],
+    "requiredDishVariants": [{"name":"Shawarma Combo","priceMinor":23900},{"name":"Dönertallerken","priceMinor":24600},{"name":"Mix Döner & Kyllingtallerken","priceMinor":26100},{"name":"Falafel i Pita","priceMinor":13300},{"name":"Kyllingburger","priceMinor":14500},{"name":"Cheesy Fries (Stor)","priceMinor":10900},{"name":"Smash Fries","priceMinor":12100},{"name":"Powerade Cherry 0,5L","priceMinor":5500}],
+    "forbiddenDishNames": []
+  }
+}

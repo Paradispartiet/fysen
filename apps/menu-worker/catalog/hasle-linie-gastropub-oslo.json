@@ -1,0 +1,8 @@
+{
+  "version":1,
+  "restaurant":{"slug":"hasle-linie-gastropub-oslo","name":"Hasle Linie Gastropub","websiteUrl":null,"address":"Bøkkerveien 4, 0579 Oslo","city":"Oslo","countryCode":"NO","latitude":59.92697997404906,"longitude":10.793997531465484},
+  "menuSource":{"url":"https://semeny.no/sted/491hasleliniegastropub","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":26,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["Margherita","Diavola","Rustica","Cæsarsalat","Sweet & Smokey Burger","Pulled Pork Burger","Pommes Frites","Solo Super"],"requiredDishVariants":[{"name":"Margherita","priceMinor":19500},{"name":"Diavola","priceMinor":24500},{"name":"Rustica","priceMinor":24500},{"name":"Cæsarsalat","priceMinor":26500},{"name":"Sweet & Smokey Burger","priceMinor":30500},{"name":"Pulled Pork Burger","priceMinor":27500},{"name":"Pommes Frites","priceMinor":5500},{"name":"Solo Super","priceMinor":5600}],"forbiddenDishNames":[]}
+}

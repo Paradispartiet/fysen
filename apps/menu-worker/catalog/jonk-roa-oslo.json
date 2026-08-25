@@ -1,0 +1,8 @@
+{
+  "version":1,
+  "restaurant":{"slug":"jonk-roa-oslo","name":"Jønk Røa","websiteUrl":null,"address":"Tore Hals Mejdells vei 5, 0751 Oslo","city":"Oslo","countryCode":"NO","latitude":59.946188372601256,"longitude":10.643122615389483},
+  "menuSource":{"url":"https://semeny.no/sted/579jonkroa","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":109,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 06 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["BBQ Burger Meal","Fried Chicken BBQ Burger","Beyond Meat BBQ Meal","Beyond Meat Classic","Chicken & Fries 🌶","House Dressing Dip","Mathea Bjørndalens Kylling Burger Meny🌶","Vanilla Milkshake"],"requiredDishVariants":[{"name":"BBQ Burger Meal","priceMinor":29500},{"name":"Fried Chicken BBQ Burger","priceMinor":16900},{"name":"Beyond Meat BBQ Meal","priceMinor":29500},{"name":"Beyond Meat Classic","priceMinor":18500},{"name":"Chicken & Fries 🌶","priceMinor":19500},{"name":"House Dressing Dip","priceMinor":3500},{"name":"Mathea Bjørndalens Kylling Burger Meny🌶","priceMinor":33000},{"name":"Vanilla Milkshake","priceMinor":11500}],"forbiddenDishNames":[]}
+}
