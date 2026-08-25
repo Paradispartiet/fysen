@@ -52,4 +52,5 @@ jobs:
         run: pnpm --filter @fysen/menu-worker... build
 
       - name: Materialize canonical production catalog
-        run: node apps/menu-worker/dist/catalog-materialization-cli.js
+        working-directory: apps/menu-worker
+        run: node dist/catalog-materialization-cli.js
