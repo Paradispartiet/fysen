@@ -13,15 +13,12 @@
   "menuSource": {
     "url": "https://hanami.no/meny/",
     "sourceType": "html",
-    "fetchMode": "browser",
+    "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 37,
     "sourceSupport": {
-      "redirectOrigins": [],
-      "browserDataOrigins": [
-        "https://cdn-cookieyes.com"
-      ]
+      "redirectOrigins": []
     }
   },
   "verification": {
@@ -44,38 +41,14 @@
       "Ostekake med pasjonsfruktsorbet"
     ],
     "requiredDishVariants": [
-      {
-        "name": "Østers med ponzusalsa – 2 stk",
-        "priceMinor": 18900
-      },
-      {
-        "name": "Wagyu steak",
-        "priceMinor": 74900
-      },
-      {
-        "name": "Hanamis signatursalat med honning- og kokosdressing",
-        "priceMinor": 17900
-      },
-      {
-        "name": "Chutoro: Halvfet tunfisk",
-        "priceMinor": 17900
-      },
-      {
-        "name": "Kani: Kongekrabbe",
-        "priceMinor": 32900
-      },
-      {
-        "name": "Kappa maki – agurk",
-        "priceMinor": 10900
-      },
-      {
-        "name": "Ebi og avokado med spicy shisosmør",
-        "priceMinor": 18900
-      },
-      {
-        "name": "Ostekake med pasjonsfruktsorbet",
-        "priceMinor": 18900
-      }
+      { "name": "Østers med ponzusalsa – 2 stk", "priceMinor": 18900 },
+      { "name": "Wagyu steak", "priceMinor": 74900 },
+      { "name": "Hanamis signatursalat med honning- og kokosdressing", "priceMinor": 17900 },
+      { "name": "Chutoro: Halvfet tunfisk", "priceMinor": 17900 },
+      { "name": "Kani: Kongekrabbe", "priceMinor": 32900 },
+      { "name": "Kappa maki – agurk", "priceMinor": 10900 },
+      { "name": "Ebi og avokado med spicy shisosmør", "priceMinor": 18900 },
+      { "name": "Ostekake med pasjonsfruktsorbet", "priceMinor": 18900 }
     ],
     "forbiddenDishNames": []
   }
