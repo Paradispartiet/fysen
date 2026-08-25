@@ -102,6 +102,12 @@ export function shouldStagePublishedSourceMigration(
   );
 }
 
+export function shouldRequireSecondPublishedSourceMigrationWatch(
+  firstWatch: Pick<MenuWatchSummary, "outcome">,
+): boolean {
+  return firstWatch.outcome !== "unchanged";
+}
+
 function acceptedHours(summary: OpeningHoursWatchResult): boolean {
   return summary.outcome === "changed" || summary.outcome === "unchanged" || summary.outcome === "not_modified";
 }
@@ -277,18 +283,20 @@ async function onboardOne(
           );
         }
 
-        secondWatch = await watchMenu();
-        if (!accepted(secondWatch)) {
-          throw new Error(`Second staged source migration watch was ${secondWatch.outcome}`);
-        }
-        latestQuality = await assertLatestSnapshot(repository, source.id, manifest);
-        if (!latestQuality.accepted) {
-          throw new Error(
-            qualityFailure(
-              "Second staged source migration snapshot failed assertions",
-              latestQuality,
-            ),
-          );
+        if (shouldRequireSecondPublishedSourceMigrationWatch(firstWatch)) {
+          secondWatch = await watchMenu();
+          if (!accepted(secondWatch)) {
+            throw new Error(`Second staged source migration watch was ${secondWatch.outcome}`);
+          }
+          latestQuality = await assertLatestSnapshot(repository, source.id, manifest);
+          if (!latestQuality.accepted) {
+            throw new Error(
+              qualityFailure(
+                "Second staged source migration snapshot failed assertions",
+                latestQuality,
+              ),
+            );
+          }
         }
 
         const metadata = await ensureMetadata(pool, manifest, candidate.id);
