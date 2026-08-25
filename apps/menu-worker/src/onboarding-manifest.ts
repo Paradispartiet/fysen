@@ -28,8 +28,9 @@ const sourceSupportSchema = z
   .object({
     redirectOrigins: z.array(httpsOrigin).max(2).default([]),
     browserDataOrigins: z.array(httpsOrigin).max(3).default([]),
+    browserBlockedOrigins: z.array(httpsOrigin).max(3).default([]),
   })
-  .default({ redirectOrigins: [], browserDataOrigins: [] });
+  .default({ redirectOrigins: [], browserDataOrigins: [], browserBlockedOrigins: [] });
 
 const requiredDishVariantSchema = z
   .object({
@@ -162,6 +163,7 @@ export const restaurantOnboardingManifestSchema = z
     for (const [field, origins] of [
       ["redirectOrigins", support.redirectOrigins],
       ["browserDataOrigins", support.browserDataOrigins],
+      ["browserBlockedOrigins", support.browserBlockedOrigins],
     ] as const) {
       if (new Set(origins).size !== origins.length) {
         context.addIssue({
@@ -185,11 +187,29 @@ export const restaurantOnboardingManifestSchema = z
         message: "browserDataOrigins require browser fetch mode",
       });
     }
+    if (manifest.menuSource.fetchMode !== "browser" && support.browserBlockedOrigins.length > 0) {
+      context.addIssue({
+        code: "custom",
+        path: ["menuSource", "sourceSupport", "browserBlockedOrigins"],
+        message: "browserBlockedOrigins require browser fetch mode",
+      });
+    }
     if (support.redirectOrigins.some((origin) => support.browserDataOrigins.includes(origin))) {
       context.addIssue({
         code: "custom",
         path: ["menuSource", "sourceSupport"],
         message: "A redirect origin already permits browser data and must not also be listed as browserDataOrigins",
+      });
+    }
+    if (
+      support.browserBlockedOrigins.some(
+        (origin) => support.redirectOrigins.includes(origin) || support.browserDataOrigins.includes(origin),
+      )
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["menuSource", "sourceSupport"],
+        message: "A blocked browser origin must not also be declared as an allowed redirect or data origin",
       });
     }
 
