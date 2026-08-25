@@ -11,7 +11,7 @@
     "longitude": 10.7735
   },
   "menuSource": {
-    "url": "https://wolt.com/nb/nor/oslo/restaurant/registan-reg",
+    "url": "https://semeny.no/sted/345registan",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -40,17 +40,17 @@
       "Honning Kake"
     ],
     "requiredDishVariants": [
-      { "name": "Usbekisk Brød", "priceMinor": 9900 },
-      { "name": "Aubergine Salat", "priceMinor": 27900 },
-      { "name": "Olivie Salat", "priceMinor": 17900 },
-      { "name": "Registan Spesial 4 Personer", "priceMinor": 239600 },
-      { "name": "Usbetisk Plov (Vegetar) 🌱", "priceMinor": 34900 },
-      { "name": "Lagman", "priceMinor": 39900 },
-      { "name": "Manty", "priceMinor": 39900 },
-      { "name": "Stekt Manty", "priceMinor": 44900 },
-      { "name": "Stekt Lagman", "priceMinor": 39900 },
-      { "name": "Kylling Qazon Kebab", "priceMinor": 30900 },
-      { "name": "Honning Kake", "priceMinor": 10900 }
+      { "name": "Usbekisk Brød", "priceMinor": 6900 },
+      { "name": "Aubergine Salat", "priceMinor": 19400 },
+      { "name": "Olivie Salat", "priceMinor": 13900 },
+      { "name": "Registan Spesial 4 Personer", "priceMinor": 183600 },
+      { "name": "Usbetisk Plov (Vegetar) 🌱", "priceMinor": 24900 },
+      { "name": "Lagman", "priceMinor": 24900 },
+      { "name": "Manty", "priceMinor": 29900 },
+      { "name": "Stekt Manty", "priceMinor": 34900 },
+      { "name": "Stekt Lagman", "priceMinor": 29900 },
+      { "name": "Kylling Qazon Kebab", "priceMinor": 22900 },
+      { "name": "Honning Kake", "priceMinor": 10500 }
     ],
     "forbiddenDishNames": [
       "Kuli Appelsin",
