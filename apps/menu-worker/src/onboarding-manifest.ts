@@ -28,7 +28,7 @@ const sourceSupportSchema = z
   .object({
     redirectOrigins: z.array(httpsOrigin).max(2).default([]),
     browserDataOrigins: z.array(httpsOrigin).max(3).default([]),
-    browserBlockedOrigins: z.array(httpsOrigin).max(6).default([]),
+    browserBlockedOrigins: z.array(httpsOrigin).max(7).default([]),
   })
   .default({ redirectOrigins: [], browserDataOrigins: [], browserBlockedOrigins: [] });
 
