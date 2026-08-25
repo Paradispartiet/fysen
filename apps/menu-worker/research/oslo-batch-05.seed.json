@@ -6,196 +6,168 @@
   "restaurants": [
     {
       "version": 1,
-      "restaurant": {"slug":"sallora-toyen-oslo","name":"Sallora Oslo","websiteUrl":"https://www.sallora.no/","address":"Tøyenbekken 14, 0188 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"sallora-toyen-oslo","name":"Sallora Oslo","websiteUrl":"https://www.sallora.no/","address":"Tøyenbekken 14","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://www.sallora.no/menu","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 locks the current priced menu identity first. Kitchen-scoped hours remain separately unverified."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"dronningens-kebab-gronland-oslo","name":"Dronningens Kebab Grønland","websiteUrl":null,"address":"Grønlandsleiret 47, 0190 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"dronningens-kebab-gronland-oslo","name":"Dronningens Kebab Grønland","websiteUrl":null,"address":"Grønlandsleiret 47","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/dronningenskebabgronland","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"istanbul-kebab-gronland-oslo","name":"Istanbul Kebab Grønland","websiteUrl":null,"address":"Grønland 14, 0188 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"istanbul-kebab-gronland-oslo","name":"Istanbul Kebab Grønland","websiteUrl":null,"address":"Grønland 14","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/istanbulkebabgronland","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"toyen-halal-burger-oslo","name":"Tøyen Halal Burger","websiteUrl":null,"address":"Jens Bjelkes gate 82, 0578 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"toyen-halal-burger-oslo","name":"Tøyen Halal Burger","websiteUrl":null,"address":"Jens Bjelkes gate 82","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/417toyenhalalburger","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"silin-bakeri-gronland-oslo","name":"Silin Bakeri Grønland","websiteUrl":null,"address":"Grønlandsleiret 61C, 0190 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"silin-bakeri-gronland-oslo","name":"Silin Bakeri Grønland","websiteUrl":null,"address":"Grønlandsleiret 61C","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/639silinbakerigronland","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"handbakt-toyen-oslo","name":"Håndbakt Tøyen","websiteUrl":null,"address":"Kjølberggata 21, 0653 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"handbakt-toyen-oslo","name":"Håndbakt Tøyen","websiteUrl":null,"address":"Kjølberggata 21","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/handbakttoyen","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"balkan-pizza-kebab-gronland-oslo","name":"Balkan Pizza & Kebab Grønland","websiteUrl":null,"address":"Åkebergveien 24, 0650 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"balkan-pizza-kebab-gronland-oslo","name":"Balkan Pizza & Kebab Grønland","websiteUrl":null,"address":"Åkebergveien 24","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/518balkanpizzakebabgronland","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"east-kitchen-grunerlokka-oslo","name":"East Kitchen Grünerløkka","websiteUrl":null,"address":"Markveien 50A, 0554 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"east-kitchen-grunerlokka-oslo","name":"East Kitchen Grünerløkka","websiteUrl":null,"address":"Markveien 50A","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/eastkitchengrunerlokka","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"troys-burger-grunerlokka-oslo","name":"Troys Burger Grünerløkka","websiteUrl":null,"address":"Helgesens gate 16A, 0553 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"troys-burger-grunerlokka-oslo","name":"Troys Burger Grünerløkka","websiteUrl":null,"address":"Helgesens gate 16A","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/troysburgergrunerlokka","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"mac-cheese-bar-grunerlokka-oslo","name":"Mac + Cheese Bar Grünerløkka","websiteUrl":null,"address":"Sannergata 13B, 0557 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"mac-cheese-bar-grunerlokka-oslo","name":"Mac + Cheese Bar Grünerløkka","websiteUrl":null,"address":"Sannergata 13B","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/maccheesebargrunerlokka","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"handmade-grunerlokka-oslo","name":"Handmade Grünerløkka","websiteUrl":null,"address":"Trondheimsveien 8, 0560 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://semeny.no/sted/handmadegrunerlokka","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
-      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
-      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {"slug":"bamboo-sagene-oslo","name":"Bamboo Sagene","websiteUrl":null,"address":"Stockfleths gate 53B, 0461 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"bamboo-sagene-oslo","name":"Bamboo Sagene","websiteUrl":null,"address":"Stockfleths gate 53B","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/bamboosagene","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"jungel-pizza-sagene-oslo","name":"Jungel Pizza Sagene","websiteUrl":null,"address":"Dannevigsveien 18C, 0463 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"jungel-pizza-sagene-oslo","name":"Jungel Pizza Sagene","websiteUrl":null,"address":"Dannevigsveien 18C","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/530jungelpizzasagene","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"sushi-og-thai-torshov-oslo","name":"Sushi og Thai Torshov","websiteUrl":null,"address":"Vogts gate 39, 0474 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"sushi-og-thai-torshov-oslo","name":"Sushi og Thai Torshov","websiteUrl":null,"address":"Vogts gate 39","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/sushiogthaitorshov","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"silver-chopsticks-sushi-torshov-oslo","name":"Silver Chopsticks & Sushi Torshov","websiteUrl":null,"address":"Vogts gate 38, 0474 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"silver-chopsticks-sushi-torshov-oslo","name":"Silver Chopsticks & Sushi Torshov","websiteUrl":null,"address":"Vogts gate 38","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/silverchopstickssushitorshov","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"sun-sushi-torshov-oslo","name":"Sun Sushi Torshov","websiteUrl":null,"address":"Vogts gate 56A, 0477 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"sun-sushi-torshov-oslo","name":"Sun Sushi Torshov","websiteUrl":null,"address":"Vogts gate 56A","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/437sunsushitorshov","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"majorstuen-sushi-oslo","name":"Majorstuen Sushi","websiteUrl":null,"address":"Bogstadveien 53, 0366 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"majorstuen-sushi-oslo","name":"Majorstuen Sushi","websiteUrl":null,"address":"Bogstadveien 53","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/333majorstuensushi","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"sushi-city-wok-majorstuen-oslo","name":"Sushi City Wok Majorstuen","websiteUrl":null,"address":"Valkyriegata 19, 0366 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"sushi-city-wok-majorstuen-oslo","name":"Sushi City Wok Majorstuen","websiteUrl":null,"address":"Valkyriegata 19","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/sushicitywokmajorstuen","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"majorstuen-grill-kebab-oslo","name":"Majorstuen Grill & Kebab","websiteUrl":null,"address":"Bogstadveien 53B, 0366 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"majorstuen-grill-kebab-oslo","name":"Majorstuen Grill & Kebab","websiteUrl":null,"address":"Bogstadveien 53B","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/majorstuengrillkebab","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"kammis-grill-frogner-oslo","name":"Kammis Grill Frogner","websiteUrl":null,"address":"Frognerveien 9B, 0257 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"kammis-grill-frogner-oslo","name":"Kammis Grill Frogner","websiteUrl":null,"address":"Frognerveien 9B","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/kammisgrillfrogner","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"winther-frognerparken-oslo","name":"Winther Frognerparken","websiteUrl":null,"address":"Middelthuns gate 17P, 0368 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://meny.semeny.no/sted/380wintherfrognerparken","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
-      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
-      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {"slug":"oslo-raw-frogner-oslo","name":"Oslo Raw Frogner","websiteUrl":null,"address":"Skovveien 16, 0257 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"oslo-raw-frogner-oslo","name":"Oslo Raw Frogner","websiteUrl":null,"address":"Skovveien 16","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/oslorawfrogner","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"mini-thai-sushi-majorstuen-oslo","name":"Mini Thai & Sushi","websiteUrl":null,"address":"Middelthuns gate 17N, 0368 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"mini-thai-sushi-majorstuen-oslo","name":"Mini Thai & Sushi","websiteUrl":null,"address":"Middelthuns gate 17N","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/minithaisushi","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"pizzabua-lambertseter-oslo","name":"Pizzabua Lambertseter","websiteUrl":null,"address":"Cecilie Thoresens vei 13, 1153 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"pizzabua-lambertseter-oslo","name":"Pizzabua Lambertseter","websiteUrl":null,"address":"Cecilie Thoresens vei 13","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/676pizzabualambertseter","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"koi-sushi-nordstrand-oslo","name":"Koi Sushi Nordstrand","websiteUrl":null,"address":"Oberst Rodes vei 68A, 1165 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"koi-sushi-nordstrand-oslo","name":"Koi Sushi Nordstrand","websiteUrl":null,"address":"Oberst Rodes vei 68A","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/koisushinordstrand","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
     },
     {
       "version": 1,
-      "restaurant": {"slug":"lambertseter-kro-kinesisk-oslo","name":"Lambertseter Kro – Kinesisk Restaurant","websiteUrl":null,"address":"Langbølgen 3, 1150 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://www.meny.semeny.no/sted/435lambertseterkrokinesiskrestaurant","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
-      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
-      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {"slug":"osike-nordstrand-oslo","name":"Osike Nordstrand","websiteUrl":null,"address":"Mikrobølgen 27, 1150 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://www.meny.semeny.no/public/sted/427osikenordstrand","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
-      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
-      "actions": [], "assertionCount": 8, "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {"slug":"meraki-bryn-senter-oslo","name":"Meraki Bryn Senter Greek Food & Gyros","websiteUrl":null,"address":"Østensjøveien 79, 0667 Oslo","city":"Oslo","countryCode":"NO"},
+      "restaurant": {"slug":"meraki-bryn-senter-oslo","name":"Meraki Bryn Senter Greek Food & Gyros","websiteUrl":null,"address":"Østensjøveien 79","city":"Oslo","countryCode":"NO"},
       "menuSource": {"url":"https://semeny.no/sted/merakibrynsentergreekfoodgyros","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[]}},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-25","note":"Batch 05 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": [], "assertionCount": 8, "forbiddenDishNames": []
