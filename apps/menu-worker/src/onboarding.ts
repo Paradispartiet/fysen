@@ -102,6 +102,12 @@ export function shouldStagePublishedSourceMigration(
   );
 }
 
+export function requiredPublishedSourceMigrationWatchCount(
+  hasManifestValidStagedSnapshot: boolean,
+): 1 | 2 {
+  return hasManifestValidStagedSnapshot ? 1 : 2;
+}
+
 function acceptedHours(summary: OpeningHoursWatchResult): boolean {
   return summary.outcome === "changed" || summary.outcome === "unchanged" || summary.outcome === "not_modified";
 }
@@ -263,6 +269,11 @@ async function onboardOne(
 
     if (candidate.active) {
       if (publishedSourceMigration) {
+        const stagedSnapshotQuality = await assertLatestSnapshot(repository, source.id, manifest);
+        const requiredWatchCount = requiredPublishedSourceMigrationWatchCount(
+          stagedSnapshotQuality.accepted,
+        );
+
         firstWatch = await watchMenu();
         if (!accepted(firstWatch)) {
           throw new Error(`First staged source migration watch was ${firstWatch.outcome}`);
@@ -277,17 +288,23 @@ async function onboardOne(
           );
         }
 
-        secondWatch = await watchMenu();
-        if (!accepted(secondWatch)) {
-          throw new Error(`Second staged source migration watch was ${secondWatch.outcome}`);
-        }
-        latestQuality = await assertLatestSnapshot(repository, source.id, manifest);
-        if (!latestQuality.accepted) {
-          throw new Error(
-            qualityFailure(
-              "Second staged source migration snapshot failed assertions",
-              latestQuality,
-            ),
+        if (requiredWatchCount === 2) {
+          secondWatch = await watchMenu();
+          if (!accepted(secondWatch)) {
+            throw new Error(`Second staged source migration watch was ${secondWatch.outcome}`);
+          }
+          latestQuality = await assertLatestSnapshot(repository, source.id, manifest);
+          if (!latestQuality.accepted) {
+            throw new Error(
+              qualityFailure(
+                "Second staged source migration snapshot failed assertions",
+                latestQuality,
+              ),
+            );
+          }
+        } else {
+          warnings.push(
+            "staged source migration resumed from a manifest-valid prior snapshot and one fresh accepted watch",
           );
         }
 
