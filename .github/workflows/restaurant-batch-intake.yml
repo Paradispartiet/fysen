@@ -136,17 +136,23 @@ jobs:
             throw new Error("Research seed contains duplicate restaurant slugs");
           }
           const collisions = seedSlugs.filter((slug) => catalogSlugs.has(slug));
+          const nonCanonical = seedSlugs.filter((slug) => !catalogSlugs.has(slug));
           if (!reproof && collisions.length > 0) {
             throw new Error(`Research seed collides with canonical catalog: ${collisions.join(", ")}`);
           }
+
+          let selectedEntries = seed.restaurants;
           if (reproof) {
-            const nonCanonical = seedSlugs.filter((slug) => !catalogSlugs.has(slug));
-            if (nonCanonical.length > 0) {
-              throw new Error(
-                `Historical reproof seed contains non-canonical slugs: ${nonCanonical.join(", ")}`
-              );
+            selectedEntries = seed.restaurants.filter((entry) => catalogSlugs.has(entry?.restaurant?.slug));
+            if (selectedEntries.length === 0) {
+              throw new Error("Historical reproof seed has no currently canonical restaurants to remeasure");
             }
-            console.log(`Historical reproof accepted ${collisions.length} canonical catalog collisions by design.`);
+            console.log(
+              `Historical reproof selected ${selectedEntries.length}/${seed.restaurants.length} currently canonical restaurants; skipped ${nonCanonical.length} non-canonical seed entries.`
+            );
+            if (nonCanonical.length > 0) {
+              console.log(`Historical reproof skipped non-canonical slugs: ${nonCanonical.join(", ")}`);
+            }
           }
 
           async function addressHits(address) {
@@ -284,7 +290,7 @@ jobs:
 
           const resolvedRestaurants = [];
           const evidence = [];
-          for (const entry of seed.restaurants) {
+          for (const entry of selectedEntries) {
             if (entry.version !== 1 || !entry?.restaurant?.slug || !entry?.restaurant?.address) {
               throw new Error("Every research seed entry must be version 1 with restaurant slug and address");
             }
@@ -303,10 +309,12 @@ jobs:
           await writeFile(reportPath, `${JSON.stringify({
             version: 1,
             seed: seed.batch ?? seedPath,
+            seedRequestedCount: seed.restaurants.length,
             requestedCount: resolvedRestaurants.length,
             catalogBaselineCount: catalogSlugs.size,
             reproof,
             catalogCollisions: collisions,
+            skippedNonCanonicalSlugs: reproof ? nonCanonical : [],
             evidence
           }, null, 2)}\n`);
           console.log(
@@ -330,10 +338,10 @@ jobs:
       - name: Assert full generation and strict live validation
         shell: bash
         env:
-          SEED_PATH: ${{ steps.seed.outputs.path }}
+          RESOLVED_PLAN: ${{ steps.resolve.outputs.resolved }}
         run: |
           set -euo pipefail
-          requested="$(node -e 'const x=require("./"+process.argv[1]); console.log(x.restaurants.length)' "$SEED_PATH")"
+          requested="$(node -e 'const x=require(process.argv[1]); console.log(x.restaurants.length)' "$RESOLVED_PLAN")"
           generated="$(find apps/menu-worker/candidates -maxdepth 1 -type f -name '*.json' | wc -l | tr -d ' ')"
           echo "Requested: $requested; generated: $generated"
           [[ "$generated" -eq "$requested" ]] || {

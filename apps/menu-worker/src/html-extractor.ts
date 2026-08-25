@@ -5,7 +5,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EXTRACTOR_VERSION = "html-v8";
+export const HTML_EXTRACTOR_VERSION = "html-v9";
 
 export interface ExtractedHtmlMenu {
   readonly items: readonly MenuObservedItem[];
@@ -21,7 +21,14 @@ export function stripExplicitlyHiddenHtmlContent(html: string): string {
 
 type JsonRecord = Record<string, unknown>;
 
+interface JsonLdMenuItemNode {
+  readonly node: JsonRecord;
+  readonly sectionName: string | null;
+}
+
 const SHORT_ALLERGEN_SUFFIX = /\s+\((?:[\p{L}\d]{1,5}\s*(?:[,/+ ]\s*)?){1,20}\)$/u;
+const JSON_LD_BEVERAGE_SECTION =
+  /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|mineralvann|mineral\s+water|soft\s+drinks?|sodas?|brus|juice|juices|milkshakes?|coffee(?:\s+and\s+tea|\s+drinks?)?|tea|kaffe(?:\s*[/|]\s*coffee)?|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|cocktails?|mocktails?|beer(?:s)?|øl|cider|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?)$/iu;
 
 function isRecord(value: unknown): value is JsonRecord {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -32,14 +39,33 @@ function hasMenuItemType(value: unknown): boolean {
   return Array.isArray(value) && value.some(hasMenuItemType);
 }
 
-function collectMenuItemNodes(value: unknown, output: JsonRecord[]): void {
+function hasMenuSectionType(value: unknown): boolean {
+  if (typeof value === "string") return value === "MenuSection" || value.endsWith("/MenuSection");
+  return Array.isArray(value) && value.some(hasMenuSectionType);
+}
+
+function collectMenuItemNodes(
+  value: unknown,
+  output: JsonLdMenuItemNode[],
+  inheritedSectionName: string | null = null,
+): void {
   if (Array.isArray(value)) {
-    for (const item of value) collectMenuItemNodes(item, output);
+    for (const item of value) collectMenuItemNodes(item, output, inheritedSectionName);
     return;
   }
   if (!isRecord(value)) return;
-  if (hasMenuItemType(value["@type"])) output.push(value);
-  for (const child of Object.values(value)) collectMenuItemNodes(child, output);
+
+  const sectionName =
+    hasMenuSectionType(value["@type"]) && typeof value.name === "string" && value.name.trim()
+      ? value.name.normalize("NFKC").replace(/\s+/g, " ").trim()
+      : inheritedSectionName;
+
+  if (hasMenuItemType(value["@type"])) {
+    output.push({ node: value, sectionName });
+  }
+  for (const child of Object.values(value)) {
+    collectMenuItemNodes(child, output, sectionName);
+  }
 }
 
 function parsePriceMinor(value: unknown): number | null {
@@ -69,7 +95,7 @@ function canonicalJsonLdName(value: string): string {
 
 function extractJsonLdItems(html: string): readonly MenuObservedItem[] {
   const $ = load(html);
-  const nodes: JsonRecord[] = [];
+  const nodes: JsonLdMenuItemNode[] = [];
 
   $("script[type='application/ld+json']").each((_, element) => {
     const source = $(element).text().trim();
@@ -82,7 +108,9 @@ function extractJsonLdItems(html: string): readonly MenuObservedItem[] {
   });
 
   const unique = new Map<string, MenuObservedItem>();
-  for (const [position, node] of nodes.entries()) {
+  for (const [position, entry] of nodes.entries()) {
+    const { node, sectionName } = entry;
+    if (sectionName && JSON_LD_BEVERAGE_SECTION.test(sectionName)) continue;
     if (typeof node.name !== "string" || !node.name.trim()) continue;
     const name = canonicalJsonLdName(node.name);
     if (!name || looksLikeNonDish(name)) continue;
