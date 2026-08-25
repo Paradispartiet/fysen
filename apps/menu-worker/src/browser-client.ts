@@ -189,6 +189,9 @@ async function installNetworkPolicy(
       }
 
       const url = new URL(request.url());
+      if (support.browserDataOrigins.includes(url.origin)) {
+        console.error(`[browser-data-request] ${request.resourceType()} ${url.toString()}`);
+      }
       const networkKey = `${url.protocol}//${url.hostname}:${url.port || "443"}`;
       let validation = validatedUrls.get(networkKey);
       if (!validation) {
