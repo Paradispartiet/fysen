@@ -79,34 +79,20 @@ function errorMessage(error: unknown): string {
 
 type ManifestMenuSourceFetchPolicy = Pick<
   RestaurantOnboardingManifest["menuSource"],
-  "url" | "sourceType" | "fetchMode" | "maxResponseBytes"
+  "url" | "fetchMode"
 >;
 
 /**
- * Semeny renders the canonical menu client-side while its initial HTML can be a
- * shell with no dishes. Fresh catalog validation therefore needs the existing
- * hardened browser client for Semeny HTML sources. Keep explicit response-byte
- * caps on HTTP, and leave all unrelated providers on their declared policy.
+ * The manifest is the source of truth for transport. Catalog validation must
+ * not silently promote a provider from HTTP to browser mode: doing so gives the
+ * health gate a different network contract than onboarding and production
+ * watching, and can turn unrelated third-party navigation into a catalog-wide
+ * failure.
  */
 export function resolveManifestMenuFetchMode(
   menuSource: ManifestMenuSourceFetchPolicy,
 ): RestaurantOnboardingManifest["menuSource"]["fetchMode"] {
-  if (menuSource.fetchMode === "browser") return "browser";
-  if (menuSource.maxResponseBytes !== null && menuSource.maxResponseBytes !== undefined) {
-    return "http";
-  }
-  if (menuSource.sourceType !== "html" && menuSource.sourceType !== "json_ld") {
-    return "http";
-  }
-
-  try {
-    const hostname = new URL(menuSource.url).hostname.toLowerCase().replace(/\.$/u, "");
-    return hostname === "semeny.no" || hostname.endsWith(".semeny.no")
-      ? "browser"
-      : "http";
-  } catch {
-    return "http";
-  }
+  return menuSource.fetchMode;
 }
 
 function manifestBrowserReadinessTexts(
