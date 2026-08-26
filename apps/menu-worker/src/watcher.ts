@@ -3,6 +3,7 @@ import {
   assessExtraction,
   createMenuFingerprint,
   diffMenuItems,
+  type ExtractionAssessment,
   type MenuObservedItem,
 } from "@fysen/menu-core";
 import { HttpMenuClient, MenuFetchError } from "./http-client.js";
@@ -33,6 +34,15 @@ export interface MenuWatchOptions {
 
 function evidenceText(items: readonly MenuObservedItem[]): string {
   return items.map((item) => item.sourceExcerpt ?? item.name).join("\n");
+}
+
+export function shouldConfirmRejectedExtraction(
+  assessment: ExtractionAssessment,
+): boolean {
+  return (
+    !assessment.accepted &&
+    (assessment.code === "below_minimum" || assessment.code === "suspicious_drop")
+  );
 }
 
 export { extractorVersionForSourceType, shouldForceReextract } from "./menu-source-runtime.js";
@@ -166,11 +176,54 @@ export async function watchMenuSourceOnce(
   }
 
   const previousItems: readonly MenuObservedItem[] = previous?.items ?? [];
-  const assessment = assessExtraction(
+  let assessment = assessExtraction(
     previousItems.length,
     extracted.items.length,
     source.minimumExpectedItems,
   );
+  let confirmationAttempted = false;
+  let firstRejectedItemCount: number | null = null;
+  let firstRejectedCode: ExtractionAssessment["code"] | null = null;
+  let confirmationError: string | null = null;
+
+  if (shouldConfirmRejectedExtraction(assessment)) {
+    confirmationAttempted = true;
+    firstRejectedItemCount = extracted.items.length;
+    firstRejectedCode = assessment.code;
+    try {
+      const confirmationFetched = await fetchMenuSource(
+        {
+          ...fetchInput,
+          etag: null,
+          lastModified: null,
+        },
+        httpClient,
+      );
+      if (confirmationFetched.kind === "not_modified") {
+        confirmationError =
+          "Unconditional extraction confirmation unexpectedly returned HTTP 304";
+      } else {
+        const rawConfirmationExtracted = await extractMenuSource(
+          source.sourceType,
+          confirmationFetched,
+        );
+        const confirmationExtracted = {
+          ...rawConfirmationExtracted,
+          items: canonicalizeUniqueMenuSourceKeys(rawConfirmationExtracted.items),
+        };
+        const confirmationAssessment = assessExtraction(
+          previousItems.length,
+          confirmationExtracted.items.length,
+          source.minimumExpectedItems,
+        );
+        fetched = confirmationFetched;
+        extracted = confirmationExtracted;
+        assessment = confirmationAssessment;
+      }
+    } catch (error) {
+      confirmationError = error instanceof Error ? error.message : String(error);
+    }
+  }
 
   if (!assessment.accepted) {
     const outcome = assessment.code === "suspicious_drop" ? "quarantined" : "extraction_error";
@@ -189,6 +242,10 @@ export async function watchMenuSourceOnce(
         previousItemCount: previousItems.length,
         method: extracted.method,
         fetchMode: source.fetchMode,
+        confirmationAttempted,
+        firstRejectedItemCount,
+        firstRejectedCode,
+        confirmationError,
       },
     });
     return {
@@ -211,7 +268,14 @@ export async function watchMenuSourceOnce(
         etag: fetched.etag,
         lastModified: fetched.lastModified,
         extractedItemCount: extracted.items.length,
-        details: { durationMs: fetched.durationMs, method: extracted.method, fetchMode: source.fetchMode },
+        details: {
+          durationMs: fetched.durationMs,
+          method: extracted.method,
+          fetchMode: source.fetchMode,
+          confirmationAttempted,
+          firstRejectedItemCount,
+          firstRejectedCode,
+        },
       },
       "unchanged",
     );
