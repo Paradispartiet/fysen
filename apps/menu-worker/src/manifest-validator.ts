@@ -1,5 +1,6 @@
 import { createMenuFingerprint } from "@fysen/menu-core";
 import { verifyActionSource } from "./action-source-runtime.js";
+import { BrowserMenuClient } from "./browser-client.js";
 import { HttpMenuClient } from "./http-client.js";
 import {
   evaluateManifestMenuQuality,
@@ -76,24 +77,74 @@ function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
+type ManifestMenuSourceFetchPolicy = Pick<
+  RestaurantOnboardingManifest["menuSource"],
+  "url" | "sourceType" | "fetchMode" | "maxResponseBytes"
+>;
+
+/**
+ * Semeny renders the canonical menu client-side while its initial HTML can be a
+ * shell with no dishes. Fresh catalog validation therefore needs the existing
+ * hardened browser client for Semeny HTML sources. Keep explicit response-byte
+ * caps on HTTP, and leave all unrelated providers on their declared policy.
+ */
+export function resolveManifestMenuFetchMode(
+  menuSource: ManifestMenuSourceFetchPolicy,
+): RestaurantOnboardingManifest["menuSource"]["fetchMode"] {
+  if (menuSource.fetchMode === "browser") return "browser";
+  if (menuSource.maxResponseBytes !== null && menuSource.maxResponseBytes !== undefined) {
+    return "http";
+  }
+  if (menuSource.sourceType !== "html" && menuSource.sourceType !== "json_ld") {
+    return "http";
+  }
+
+  try {
+    const hostname = new URL(menuSource.url).hostname.toLowerCase().replace(/\.$/u, "");
+    return hostname === "semeny.no" || hostname.endsWith(".semeny.no")
+      ? "browser"
+      : "http";
+  } catch {
+    return "http";
+  }
+}
+
+function manifestBrowserReadinessTexts(
+  manifest: RestaurantOnboardingManifest,
+): readonly string[] {
+  return [
+    ...manifest.qualityAssertions.requiredDishNames,
+    ...manifest.qualityAssertions.requiredDishVariants.map((variant) => variant.name),
+  ];
+}
+
 async function validateMenu(
   manifest: RestaurantOnboardingManifest,
   client: HttpMenuClient,
 ): Promise<ManifestMenuValidationResult> {
   try {
-    const fetched = await fetchMenuSource(
-      {
-        url: manifest.menuSource.url,
-        sourceType: manifest.menuSource.sourceType,
-        fetchMode: manifest.menuSource.fetchMode,
-        userAgent: manifest.menuSource.userAgent,
-        etag: null,
-        lastModified: null,
-        maxResponseBytes: manifest.menuSource.maxResponseBytes ?? null,
-        sourceSupport: manifest.menuSource.sourceSupport,
-      },
-      client,
-    );
+    const fetchMode = resolveManifestMenuFetchMode(manifest.menuSource);
+    const fetched =
+      fetchMode === "browser"
+        ? await new BrowserMenuClient(client).fetchSource({
+            url: manifest.menuSource.url,
+            userAgent: manifest.menuSource.userAgent,
+            sourceSupport: manifest.menuSource.sourceSupport,
+            readinessTexts: manifestBrowserReadinessTexts(manifest),
+          })
+        : await fetchMenuSource(
+            {
+              url: manifest.menuSource.url,
+              sourceType: manifest.menuSource.sourceType,
+              fetchMode,
+              userAgent: manifest.menuSource.userAgent,
+              etag: null,
+              lastModified: null,
+              maxResponseBytes: manifest.menuSource.maxResponseBytes ?? null,
+              sourceSupport: manifest.menuSource.sourceSupport,
+            },
+            client,
+          );
     if (fetched.kind === "not_modified") {
       throw new Error(`Manifest validation unexpectedly returned HTTP 304 for ${manifest.menuSource.url}`);
     }
