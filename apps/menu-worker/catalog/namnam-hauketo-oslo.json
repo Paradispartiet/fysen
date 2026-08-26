@@ -1,0 +1,7 @@
+{
+  "version":1,
+  "restaurant":{"slug":"namnam-hauketo-oslo","name":"NamNam Hauketo","websiteUrl":null,"address":"Hauketoveien 8, 1266 Oslo","city":"Oslo","countryCode":"NO","latitude":59.84714153380792,"longitude":10.804517790499649},
+  "menuSource":{"url":"https://semeny.no/sted/namnamhauketo","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":84,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 07 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Nummer 1","Kaos","Vesuvio","Tandoori","Kyllingburger","Dønersalat","Kyllingsnaddertallerken","Burgerost (dobbel)"],"requiredDishVariants":[{"name":"Nummer 1","priceMinor":20000},{"name":"Kaos","priceMinor":31900},{"name":"Vesuvio","priceMinor":29900},{"name":"Tandoori","priceMinor":29900},{"name":"Kyllingburger","priceMinor":12900},{"name":"Dønersalat","priceMinor":19900},{"name":"Kyllingsnaddertallerken","priceMinor":19900},{"name":"Burgerost (dobbel)","priceMinor":1000}],"forbiddenDishNames":[]}
+}

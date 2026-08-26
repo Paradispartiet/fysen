@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "drop-in-bjorvika-oslo",
+    "name": "Drop-In",
+    "websiteUrl": null,
+    "address": "Dronning Eufemias gate 9, 0150 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.908390648395034,
+    "longitude": 10.754577745562502
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/dropin",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 47,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-26",
+      "note": "Batch 07 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kyllingpizza",
+      "Olympia",
+      "Viking Pizza",
+      "Atlantic",
+      "Kebabtallerken",
+      "Hamburgermeny",
+      "1/2 Kylling",
+      "Dressing"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kyllingpizza",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Olympia",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Viking Pizza",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Atlantic",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Kebabtallerken",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Hamburgermeny",
+        "priceMinor": 21000
+      },
+      {
+        "name": "1/2 Kylling",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Dressing",
+        "priceMinor": 3000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

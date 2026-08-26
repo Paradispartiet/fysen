@@ -1,0 +1,7 @@
+{
+  "version":1,
+  "restaurant":{"slug":"subway-lambertseter-oslo","name":"Subway Lambertseter","websiteUrl":null,"address":"Cecilie Thoresens vei 17, 1153 Oslo","city":"Oslo","countryCode":"NO","latitude":59.874913885569924,"longitude":10.810462446756771},
+  "menuSource":{"url":"https://semeny.no/public/sted/subwaylambertseter","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":92,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 07 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Veggie Delite®, 30cm","American Steakhouse Melt, 30cm","Steak & Cheese, 15cm","The Steakmaster, 30 cm","Big Mamma Mia, 15 cm","Chicken Teriyaki Wrap","Lays Chips Salt","Lipton Iste Sitron 0,5l"],"requiredDishVariants":[{"name":"Veggie Delite®, 30cm","priceMinor":12000},{"name":"American Steakhouse Melt, 30cm","priceMinor":17400},{"name":"Steak & Cheese, 15cm","priceMinor":10000},{"name":"The Steakmaster, 30 cm","priceMinor":18600},{"name":"Big Mamma Mia, 15 cm","priceMinor":11200},{"name":"Chicken Teriyaki Wrap","priceMinor":13600},{"name":"Lays Chips Salt","priceMinor":1800},{"name":"Lipton Iste Sitron 0,5l","priceMinor":4300}],"forbiddenDishNames":[]}
+}

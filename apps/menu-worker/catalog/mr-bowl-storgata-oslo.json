@@ -1,0 +1,7 @@
+{
+  "version":1,
+  "restaurant":{"slug":"mr-bowl-storgata-oslo","name":"Mr. Bowl","websiteUrl":null,"address":"Storgata 17, 0184 Oslo","city":"Oslo","countryCode":"NO","latitude":59.913740130191826,"longitude":10.749771553595936},
+  "menuSource":{"url":"https://semeny.no/sted/105mrbowl","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":38,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 07 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Chicken Spring Rolls 3pc","Kimchi Temptation","Chicken Salad Bowl","Sesame Chicken Bowl","Marinated Beef Noodle","Fried Rice Scampi","Soyasaus","Urge"],"requiredDishVariants":[{"name":"Chicken Spring Rolls 3pc","priceMinor":15900},{"name":"Kimchi Temptation","priceMinor":5900},{"name":"Chicken Salad Bowl","priceMinor":22900},{"name":"Sesame Chicken Bowl","priceMinor":25900},{"name":"Marinated Beef Noodle","priceMinor":29900},{"name":"Fried Rice Scampi","priceMinor":25900},{"name":"Soyasaus","priceMinor":3500},{"name":"Urge","priceMinor":4500}],"forbiddenDishNames":[]}
+}

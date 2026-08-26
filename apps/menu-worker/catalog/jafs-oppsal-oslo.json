@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jafs-oppsal-oslo",
+    "name": "Jafs Oppsal",
+    "websiteUrl": null,
+    "address": "Haakon Tveters vei 67, 0686 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.893243601548356,
+    "longitude": 10.839774323328696
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/586jafsoppsal",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 63,
+    "sourceSupport": {"redirectOrigins": [], "browserDataOrigins": [], "browserBlockedOrigins": []}
+  },
+  "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-26", "note": "Batch 07 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": ["Hamburger","Kyllingkebab i Rull","Skinke Pizza (Medium)","Raffaele (Stor)","Pizza Bearnaise (Stor)","Innbakt Kjøttdeig & Bacon","Biffsnaddertallerken","Villa"],
+    "requiredDishVariants": [
+      {"name":"Hamburger","priceMinor":9500},{"name":"Kyllingkebab i Rull","priceMinor":13100},{"name":"Skinke Pizza (Medium)","priceMinor":16900},{"name":"Raffaele (Stor)","priceMinor":23900},{"name":"Pizza Bearnaise (Stor)","priceMinor":23900},{"name":"Innbakt Kjøttdeig & Bacon","priceMinor":17900},{"name":"Biffsnaddertallerken","priceMinor":20900},{"name":"Villa","priceMinor":4000}
+    ],
+    "forbiddenDishNames": []
+  }
+}

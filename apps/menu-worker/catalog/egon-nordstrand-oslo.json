@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "egon-nordstrand-oslo",
+    "name": "Egon Nordstrand",
+    "websiteUrl": null,
+    "address": "Ekebergveien 228B, 1162 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.86118584900978,
+    "longitude": 10.800472975270184
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/585egonnordstrand",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 129,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-26",
+      "note": "Batch 07 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Philly Steak Sandwich",
+      "Entrecôte 350g",
+      "Torsk fra Nord-Norge",
+      "Hamburger",
+      "Salat",
+      "Currysaus",
+      "Bakt Potet Bacon og Skinke",
+      "Creme Brulee"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Philly Steak Sandwich",
+        "priceMinor": 31100
+      },
+      {
+        "name": "Entrecôte 350g",
+        "priceMinor": 49200
+      },
+      {
+        "name": "Torsk fra Nord-Norge",
+        "priceMinor": 38900
+      },
+      {
+        "name": "Hamburger",
+        "priceMinor": 12300
+      },
+      {
+        "name": "Salat",
+        "priceMinor": 4000
+      },
+      {
+        "name": "Currysaus",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Bakt Potet Bacon og Skinke",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Creme Brulee",
+        "priceMinor": 13500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

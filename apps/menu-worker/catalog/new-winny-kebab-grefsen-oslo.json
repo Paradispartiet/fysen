@@ -1,0 +1,7 @@
+{
+  "version":1,
+  "restaurant":{"slug":"new-winny-kebab-grefsen-oslo","name":"New Winny Kebab","websiteUrl":null,"address":"Grefsenveien 57, 0487 Oslo","city":"Oslo","countryCode":"NO","latitude":59.9453596103728,"longitude":10.780555355551074},
+  "menuSource":{"url":"https://semeny.no/sted/newwinnykebab","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":54,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 07 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Kebab i Pita","Kebab Rull","Kylling Gyros","Kylling Mealbox","Dobbel Burger","Løkringer","Jarritos Mango","Ali Baba Mango Juice 500 ml"],"requiredDishVariants":[{"name":"Kebab i Pita","priceMinor":14000},{"name":"Kebab Rull","priceMinor":15000},{"name":"Kylling Gyros","priceMinor":21500},{"name":"Kylling Mealbox","priceMinor":25000},{"name":"Dobbel Burger","priceMinor":28000},{"name":"Løkringer","priceMinor":11000},{"name":"Jarritos Mango","priceMinor":6000},{"name":"Ali Baba Mango Juice 500 ml","priceMinor":6000}],"forbiddenDishNames":[]}
+}

@@ -1,0 +1,7 @@
+{
+  "version":1,
+  "restaurant":{"slug":"nori-sushi-ullevalsveien-oslo","name":"Nori Sushi","websiteUrl":null,"address":"Ullevålsveien 10, 0171 Oslo","city":"Oslo","countryCode":"NO","latitude":59.922733884349874,"longitude":10.741244289730426},
+  "menuSource":{"url":"https://semeny.no/sted/273norisushi","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":60,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 07 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Dagens Sushi Nr 1","Sashimi Medium","Norway Futo Maki","Spicy Laks Maki","Ingefær","Philadelphia Maki","Tuna Maki","Snow Maki"],"requiredDishVariants":[{"name":"Dagens Sushi Nr 1","priceMinor":19800},{"name":"Sashimi Medium","priceMinor":30800},{"name":"Norway Futo Maki","priceMinor":26800},{"name":"Spicy Laks Maki","priceMinor":11800},{"name":"Ingefær","priceMinor":2500},{"name":"Philadelphia Maki","priceMinor":11800},{"name":"Tuna Maki","priceMinor":11800},{"name":"Snow Maki","priceMinor":20800}],"forbiddenDishNames":[]}
+}

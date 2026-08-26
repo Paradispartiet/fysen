@@ -1,0 +1,7 @@
+{
+  "version":1,
+  "restaurant":{"slug":"pizza-route-oslo","name":"Pizza Route","websiteUrl":null,"address":"Trygve Nilsens vei 8, 1061 Oslo","city":"Oslo","countryCode":"NO","latitude":59.938519130614424,"longitude":10.905885887623826},
+  "menuSource":{"url":"https://semeny.no/sted/pizzaroute","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":283,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 07 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Pizza Scampi","Penne Fungi","Christinen Lemon Fruit 0,33 l","All American Burger Menü","Süßkartoffeln","Crispy Guacamole Burger","Heineken 0,33 l","Meter-Pizza"],"requiredDishVariants":[{"name":"Pizza Scampi","priceMinor":1390},{"name":"Penne Fungi","priceMinor":1490},{"name":"Christinen Lemon Fruit 0,33 l","priceMinor":305},{"name":"All American Burger Menü","priceMinor":1490},{"name":"Süßkartoffeln","priceMinor":550},{"name":"Crispy Guacamole Burger","priceMinor":890},{"name":"Heineken 0,33 l","priceMinor":390},{"name":"Meter-Pizza","priceMinor":2990}],"forbiddenDishNames":[]}
+}
