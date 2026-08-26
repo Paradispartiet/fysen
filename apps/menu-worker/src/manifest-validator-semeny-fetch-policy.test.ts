@@ -54,4 +54,8 @@ describe("resolveManifestMenuFetchMode", () => {
       }),
     ).toBe("http");
   });
+
+  it("fails closed to HTTP when the source URL cannot be parsed", () => {
+    expect(resolveManifestMenuFetchMode({ ...base, url: "not-a-url" })).toBe("http");
+  });
 });
