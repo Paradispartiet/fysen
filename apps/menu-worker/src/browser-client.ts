@@ -29,6 +29,13 @@ const nonEssentialTelemetryHosts = new Set([
   "www.google-analytics.com",
 ]);
 
+const googleMeasurementPathPrefixes = [
+  "/ccm/collect",
+  "/pagead/",
+  "/rmkt/collect/",
+  "/ads/ga-audiences",
+] as const;
+
 type RenderedMenuFetch = Extract<MenuHttpFetchResult, { readonly kind: "content" }>;
 
 export interface BrowserMenuSourceSupport {
@@ -83,9 +90,23 @@ export function normalizedBrowserReadinessTexts(
   ).slice(0, MAX_RENDER_READINESS_TEXTS);
 }
 
-function isNonEssentialTelemetryHost(hostname: string): boolean {
-  const normalized = hostname.toLowerCase().replace(/\.$/u, "");
-  return nonEssentialTelemetryHosts.has(normalized) || normalized.endsWith(".google-analytics.com");
+function normalizedHostname(hostname: string): string {
+  return hostname.toLowerCase().replace(/\.$/u, "");
+}
+
+function isNonEssentialTelemetryRequest(requestUrl: URL): boolean {
+  const hostname = normalizedHostname(requestUrl.hostname);
+  if (
+    nonEssentialTelemetryHosts.has(hostname) ||
+    hostname.endsWith(".google-analytics.com")
+  ) {
+    return true;
+  }
+
+  if (hostname !== "www.google.com" && hostname !== "google.com") return false;
+  return googleMeasurementPathPrefixes.some((prefix) =>
+    requestUrl.pathname.startsWith(prefix),
+  );
 }
 
 export function browserRequestDecision(input: BrowserRequestPolicyInput): BrowserRequestDecision {
@@ -104,7 +125,7 @@ export function browserRequestDecision(input: BrowserRequestPolicyInput): Browse
     return { action: "block", reason: `browser request must use HTTPS: ${requestUrl.protocol}`, fatal: true };
   }
 
-  if (input.resourceType !== "document" && isNonEssentialTelemetryHost(requestUrl.hostname)) {
+  if (input.resourceType !== "document" && isNonEssentialTelemetryRequest(requestUrl)) {
     return {
       action: "block",
       reason: `blocked non-essential telemetry origin: ${requestUrl.origin}`,
