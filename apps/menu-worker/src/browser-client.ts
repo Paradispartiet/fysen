@@ -24,6 +24,11 @@ const blockedResourceTypes = new Set([
   "websocket",
 ]);
 
+const nonEssentialTelemetryHosts = new Set([
+  "google-analytics.com",
+  "www.google-analytics.com",
+]);
+
 type RenderedMenuFetch = Extract<MenuHttpFetchResult, { readonly kind: "content" }>;
 
 export interface BrowserMenuSourceSupport {
@@ -78,6 +83,11 @@ export function normalizedBrowserReadinessTexts(
   ).slice(0, MAX_RENDER_READINESS_TEXTS);
 }
 
+function isNonEssentialTelemetryHost(hostname: string): boolean {
+  const normalized = hostname.toLowerCase().replace(/\.$/u, "");
+  return nonEssentialTelemetryHosts.has(normalized) || normalized.endsWith(".google-analytics.com");
+}
+
 export function browserRequestDecision(input: BrowserRequestPolicyInput): BrowserRequestDecision {
   if (blockedResourceTypes.has(input.resourceType)) {
     return { action: "block", reason: `blocked resource type: ${input.resourceType}`, fatal: false };
@@ -92,6 +102,14 @@ export function browserRequestDecision(input: BrowserRequestPolicyInput): Browse
 
   if (requestUrl.protocol !== "https:") {
     return { action: "block", reason: `browser request must use HTTPS: ${requestUrl.protocol}`, fatal: true };
+  }
+
+  if (input.resourceType !== "document" && isNonEssentialTelemetryHost(requestUrl.hostname)) {
+    return {
+      action: "block",
+      reason: `blocked non-essential telemetry origin: ${requestUrl.origin}`,
+      fatal: false,
+    };
   }
 
   if (
