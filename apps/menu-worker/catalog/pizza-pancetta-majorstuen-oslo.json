@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"pizza-pancetta-majorstuen-oslo","name":"Pizza Pancetta Majorstuen","websiteUrl":null,"address":"Kirkeveien 69, 0364 Oslo","city":"Oslo","countryCode":"NO","latitude":59.93028946336422,"longitude":10.71958503483142},
+  "menuSource": {"url":"https://semeny.no/sted/555pizzapancettamajorstuen","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":108,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Margherita [Medium]","Carne [Medium]","Roma [Stor]","San Remo [Stor]","Bacon Bianca [Stor]","Spinachio [Medium]","Pancetta [Stor]","Solo 1,5l [Drikke]"],"requiredDishVariants":[{"name":"Margherita [Medium]","priceMinor":18500},{"name":"Carne [Medium]","priceMinor":16800},{"name":"Roma [Stor]","priceMinor":31500},{"name":"San Remo [Stor]","priceMinor":31500},{"name":"Bacon Bianca [Stor]","priceMinor":33500},{"name":"Spinachio [Medium]","priceMinor":23000},{"name":"Pancetta [Stor]","priceMinor":33500},{"name":"Solo 1,5l [Drikke]","priceMinor":5500}],"forbiddenDishNames":[]}
+}

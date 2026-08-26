@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"sushi-special-bergensgata-oslo","name":"Sushi Special","websiteUrl":null,"address":"Bergensgata 4, 0468 Oslo","city":"Oslo","countryCode":"NO","latitude":59.94012581374859,"longitude":10.758955507159552},
+  "menuSource": {"url":"https://semeny.no/sted/sushispecial","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":72,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["HOT DOG MED LAKS","Vegetar Gyoza","Sweet potato maki","Special maki","City Special (DEEP-FRIED WHOLE)","Medium Sashimi (15 pieces)","Wasabi","Villa"],"requiredDishVariants":[{"name":"HOT DOG MED LAKS","priceMinor":16030},{"name":"Vegetar Gyoza","priceMinor":10900},{"name":"Sweet potato maki","priceMinor":10900},{"name":"Special maki","priceMinor":13900},{"name":"City Special (DEEP-FRIED WHOLE)","priceMinor":17150},{"name":"Medium Sashimi (15 pieces)","priceMinor":26900},{"name":"Wasabi","priceMinor":2900},{"name":"Villa","priceMinor":4900}],"forbiddenDishNames":[]}
+}

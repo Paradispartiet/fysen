@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"noa-asiatisk-mat-loren-oslo","name":"Noa Asiatisk Mat","websiteUrl":null,"address":"Lørenveien 66, 0585 Oslo","city":"Oslo","countryCode":"NO","latitude":59.929964607315945,"longitude":10.79906907681982},
+  "menuSource": {"url":"https://semeny.no/sted/312noaasiatiskmat","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":87,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Spicy koreanske kyllingvinger","Crispy Chicken Bao","Yaki Udon","Nigiri (6 biter)","Crunchy Laks Futo (6 biter)","Stekt Ris (Barn)","Sursøtsaus","Pepsi 0,5L"],"requiredDishVariants":[{"name":"Spicy koreanske kyllingvinger","priceMinor":11900},{"name":"Crispy Chicken Bao","priceMinor":10900},{"name":"Yaki Udon","priceMinor":20900},{"name":"Nigiri (6 biter)","priceMinor":13900},{"name":"Crunchy Laks Futo (6 biter)","priceMinor":10900},{"name":"Stekt Ris (Barn)","priceMinor":13900},{"name":"Sursøtsaus","priceMinor":1500},{"name":"Pepsi 0,5L","priceMinor":4500}],"forbiddenDishNames":[]}
+}

@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"italiensk-pizza-vika-oslo","name":"Italiensk Pizza","websiteUrl":null,"address":"Ruseløkkveien 26, 0251 Oslo","city":"Oslo","countryCode":"NO","latitude":59.91255854088901,"longitude":10.726927133845678},
+  "menuSource": {"url":"https://semeny.no/sted/italienskpizza","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":47,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Pizza Margarita","Kyllingpizza","Habibi Spesial","Monica Spesial","Napoli Calzone","Kebabtallerken","Kebabsalat","Pepsi Max 0,5l"],"requiredDishVariants":[{"name":"Pizza Margarita","priceMinor":25000},{"name":"Kyllingpizza","priceMinor":25000},{"name":"Habibi Spesial","priceMinor":27000},{"name":"Monica Spesial","priceMinor":25000},{"name":"Napoli Calzone","priceMinor":26000},{"name":"Kebabtallerken","priceMinor":22900},{"name":"Kebabsalat","priceMinor":19900},{"name":"Pepsi Max 0,5l","priceMinor":4000}],"forbiddenDishNames":[]}
+}

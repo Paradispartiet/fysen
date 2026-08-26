@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"nydalen-pizza-grill-oslo","name":"Nydalen Pizza & Grill","websiteUrl":null,"address":"Nydalen allé 19, 0484 Oslo","city":"Oslo","countryCode":"NO","latitude":59.947611607254366,"longitude":10.767373254602118},
+  "menuSource": {"url":"https://semeny.no/sted/407nydalenpizzagrill","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":52,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Cheeseburgertallerken","Biffsnadder","Dönerrull","Kyllingtallerken","Falafeltallerken","Texas","Lammepizza","Calzone m/ Pepperoni"],"requiredDishVariants":[{"name":"Cheeseburgertallerken","priceMinor":19900},{"name":"Biffsnadder","priceMinor":22500},{"name":"Dönerrull","priceMinor":14900},{"name":"Kyllingtallerken","priceMinor":22900},{"name":"Falafeltallerken","priceMinor":14900},{"name":"Texas","priceMinor":29900},{"name":"Lammepizza","priceMinor":29900},{"name":"Calzone m/ Pepperoni","priceMinor":19900}],"forbiddenDishNames":[]}
+}

@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"dinner-sushi-hegdehaugsveien-oslo","name":"Dinner Sushi","websiteUrl":null,"address":"Hegdehaugsveien 1, 0352 Oslo","city":"Oslo","countryCode":"NO","latitude":59.9204273658018,"longitude":10.732797673147669},
+  "menuSource": {"url":"https://semeny.no/sted/dinnersushi1","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":170,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Laksetatar","201.Dinner Box 2 (14 stk)","Iki Ginger Beer 5.5% 0,33 l","046.Hell's Laks Roll","084.Futomaki Tun Big","122.Nigiri Avocado","Ingefær","Mango Chokolade Cake /K"],"requiredDishVariants":[{"name":"Laksetatar","priceMinor":9900},{"name":"201.Dinner Box 2 (14 stk)","priceMinor":16500},{"name":"Iki Ginger Beer 5.5% 0,33 l","priceMinor":5800},{"name":"046.Hell's Laks Roll","priceMinor":13800},{"name":"084.Futomaki Tun Big","priceMinor":7500},{"name":"122.Nigiri Avocado","priceMinor":2000},{"name":"Ingefær","priceMinor":500},{"name":"Mango Chokolade Cake /K","priceMinor":4000}],"forbiddenDishNames":[]}
+}

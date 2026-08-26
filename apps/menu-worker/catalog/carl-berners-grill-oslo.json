@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"carl-berners-grill-oslo","name":"Carl Berners Grill","websiteUrl":null,"address":"Christian Michelsens gate 2B, 0568 Oslo","city":"Oslo","countryCode":"NO","latitude":59.92635500259003,"longitude":10.775206664252929},
+  "menuSource": {"url":"https://semeny.no/public/sted/carlbernersgrill","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":52,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Margarita Medium","50/50 Medium","Min Favoritt Medium","Carl Berners Spesial Stor","Verona Stor","Kebab","Halv Kyllingtallerken","Villa"],"requiredDishVariants":[{"name":"Margarita Medium","priceMinor":15000},{"name":"50/50 Medium","priceMinor":22000},{"name":"Min Favoritt Medium","priceMinor":22000},{"name":"Carl Berners Spesial Stor","priceMinor":30000},{"name":"Verona Stor","priceMinor":24000},{"name":"Kebab","priceMinor":14000},{"name":"Halv Kyllingtallerken","priceMinor":21000},{"name":"Villa","priceMinor":4500}],"forbiddenDishNames":[]}
+}

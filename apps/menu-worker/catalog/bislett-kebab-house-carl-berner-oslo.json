@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"bislett-kebab-house-carl-berner-oslo","name":"Bislett Kebab House Carl Berner","websiteUrl":null,"address":"Trondheimsveien 139A, 0570 OSLO","city":"Oslo","countryCode":"NO","latitude":59.929340078974555,"longitude":10.77830087243118},
+  "menuSource": {"url":"https://semeny.no/public/sted/541bislettkebabhousecarlberner","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":94,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Kebab Meal Deal","Shishtallerken","Fish i Rull","Chillicheeseburger Tallerken","Pommes Frites (Liten)","BKH Chips Med Kebabkick","Grønnsaker i Rull","Powerade Cherry 0,5L"],"requiredDishVariants":[{"name":"Kebab Meal Deal","priceMinor":16700},{"name":"Shishtallerken","priceMinor":24000},{"name":"Fish i Rull","priceMinor":12100},{"name":"Chillicheeseburger Tallerken","priceMinor":21800},{"name":"Pommes Frites (Liten)","priceMinor":6000},{"name":"BKH Chips Med Kebabkick","priceMinor":3500},{"name":"Grønnsaker i Rull","priceMinor":10900},{"name":"Powerade Cherry 0,5L","priceMinor":5500}],"forbiddenDishNames":[]}
+}

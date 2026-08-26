@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"sushi-thai-ensjo-oslo","name":"Sushi & Thai Ensjø","websiteUrl":null,"address":"Gladengveien 7G, 0661 Oslo","city":"Oslo","countryCode":"NO","latitude":59.91549271490488,"longitude":10.789624766390068},
+  "menuSource": {"url":"https://semeny.no/public/sted/381sushithaiensjo","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":80,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Laks Forrett","Spesial Sushi (52 Biter)","Mix Poké","Asia Maki","Laks Spesial Roll Spesialmaki (8 Biter)","Stekt Nudler","Sjøgress Salat","FuzeTea Iste Black Tea Peach Hibiscus"],"requiredDishVariants":[{"name":"Laks Forrett","priceMinor":13500},{"name":"Spesial Sushi (52 Biter)","priceMinor":79500},{"name":"Mix Poké","priceMinor":23500},{"name":"Asia Maki","priceMinor":13500},{"name":"Laks Spesial Roll Spesialmaki (8 Biter)","priceMinor":17100},{"name":"Stekt Nudler","priceMinor":23900},{"name":"Sjøgress Salat","priceMinor":4900},{"name":"FuzeTea Iste Black Tea Peach Hibiscus","priceMinor":5500}],"forbiddenDishNames":[]}
+}

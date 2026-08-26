@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"smoothiexchange-frogner-oslo","name":"SmoothieXchange Frogner","websiteUrl":null,"address":"Niels Juels gate 31, 0257 Oslo","city":"Oslo","countryCode":"NO","latitude":59.91678012722737,"longitude":10.714861384364317},
+  "menuSource": {"url":"https://semeny.no/sted/734smoothiexchangefrogner","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":46,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Fresh","Abc","Nutty Cacao","Vanilla Xtreme","Flu Fighter","All In","Coconut Crunch (1 stk)","Isklar Naturell M/Kullsyre"],"requiredDishVariants":[{"name":"Fresh","priceMinor":10700},{"name":"Abc","priceMinor":10700},{"name":"Nutty Cacao","priceMinor":11400},{"name":"Vanilla Xtreme","priceMinor":10300},{"name":"Flu Fighter","priceMinor":12400},{"name":"All In","priceMinor":11900},{"name":"Coconut Crunch (1 stk)","priceMinor":3600},{"name":"Isklar Naturell M/Kullsyre","priceMinor":3400}],"forbiddenDishNames":[]}
+}

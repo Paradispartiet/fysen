@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"otsu-sushi-poke-bowl-sagene-oslo","name":"Otsu Sushi & Poke Bowl Sagene","websiteUrl":null,"address":"Maridalsveien 154B, 0461 Oslo","city":"Oslo","countryCode":"NO","latitude":59.93767545873606,"longitude":10.756140888174595},
+  "menuSource": {"url":"https://semeny.no/sted/289otsusushipokebowlsagene","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":74,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Vegetable Spring Roll 🌱","Chirashi","Sashimi Tunfisk","Laks Maki","Yaki Dragon","Futo Crispy","Teriyaki Saus","Bonaqua"],"requiredDishVariants":[{"name":"Vegetable Spring Roll 🌱","priceMinor":8900},{"name":"Chirashi","priceMinor":19900},{"name":"Sashimi Tunfisk","priceMinor":10900},{"name":"Laks Maki","priceMinor":10900},{"name":"Yaki Dragon","priceMinor":16900},{"name":"Futo Crispy","priceMinor":11900},{"name":"Teriyaki Saus","priceMinor":1700},{"name":"Bonaqua","priceMinor":4900}],"forbiddenDishNames":[]}
+}

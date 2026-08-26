@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"crispy-crust-majorstuen-oslo","name":"Crispy Crust Majorstuen","websiteUrl":null,"address":"Majorstuveien 34, 0367 Oslo","city":"Oslo","countryCode":"NO","latitude":59.92764006133679,"longitude":10.715439808958331},
+  "menuSource": {"url":"https://semeny.no/sted/286crispycrustmajorstuen","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":41,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Døner Baguette + drikke","Tandoori Chicken","Kjøttboller","Cheeseburger","Biff Kebab","Biff Baguette","Urge 0,5l","Fresher Guava"],"requiredDishVariants":[{"name":"Døner Baguette + drikke","priceMinor":15800},{"name":"Tandoori Chicken","priceMinor":29900},{"name":"Kjøttboller","priceMinor":28500},{"name":"Cheeseburger","priceMinor":10900},{"name":"Biff Kebab","priceMinor":15500},{"name":"Biff Baguette","priceMinor":9900},{"name":"Urge 0,5l","priceMinor":3900},{"name":"Fresher Guava","priceMinor":4900}],"forbiddenDishNames":[]}
+}

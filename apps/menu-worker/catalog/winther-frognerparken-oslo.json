@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"winther-frognerparken-oslo","name":"Winther Frognerparken","websiteUrl":null,"address":"Middelthuns gate 17P, 0368 Oslo","city":"Oslo","countryCode":"NO","latitude":59.92815575299148,"longitude":10.711141572215348},
+  "menuSource": {"url":"https://meny.semeny.no/sted/380wintherfrognerparken","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":25,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Enkel snadderboks","Formaggi - Ost","Trøffel Pasta","Gnocchi","Soppessens","Calabria","Winther 4 Oster","7up Free"],"requiredDishVariants":[{"name":"Enkel snadderboks","priceMinor":17400},{"name":"Formaggi - Ost","priceMinor":19900},{"name":"Trøffel Pasta","priceMinor":32000},{"name":"Gnocchi","priceMinor":29500},{"name":"Soppessens","priceMinor":25900},{"name":"Calabria","priceMinor":25000},{"name":"Winther 4 Oster","priceMinor":25000},{"name":"7up Free","priceMinor":4900}],"forbiddenDishNames":[]}
+}

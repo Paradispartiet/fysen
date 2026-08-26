@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"lett-frogner-oslo","name":"LETT Frogner","websiteUrl":null,"address":"Frognerveien 8, 0257 Oslo","city":"Oslo","countryCode":"NO","latitude":59.91614827590023,"longitude":10.715241976051932},
+  "menuSource": {"url":"https://semeny.no/sted/lettfrogner","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":44,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Søtpotet feta bowl","Kylling Cæsar bowl","Meksikansk wrap","Røbet chèvre wrap","Chili tuna sandwich","Bananbrød","Imsdal 0,5 L","Hydrate Coconut water"],"requiredDishVariants":[{"name":"Søtpotet feta bowl","priceMinor":19700},{"name":"Kylling Cæsar bowl","priceMinor":19700},{"name":"Meksikansk wrap","priceMinor":18700},{"name":"Røbet chèvre wrap","priceMinor":19200},{"name":"Chili tuna sandwich","priceMinor":11900},{"name":"Bananbrød","priceMinor":6900},{"name":"Imsdal 0,5 L","priceMinor":4900},{"name":"Hydrate Coconut water","priceMinor":5900}],"forbiddenDishNames":[]}
+}
