@@ -3,4 +3,4 @@
 # workflow_dispatch remains the preferred manual trigger. When an automation
 # client cannot call workflow_dispatch, update the nonce below in a small PR.
 # The health workflow is read-only and validates the complete canonical catalog.
-nonce: 2026-08-26-post-semeny-production-gates-retry-02
+nonce: 2026-08-26-actions-recovered-retry-03
