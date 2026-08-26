@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/materialize-production-catalog.yml"
+      - ".github/materialize-production-catalog.trigger"
       - ".github/actions/setup-node-pnpm/**"
       - "apps/menu-worker/catalog/**"
       - "apps/menu-worker/src/**"
