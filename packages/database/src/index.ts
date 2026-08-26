@@ -1,5 +1,6 @@
 export * from "./aha-min-mat.js";
 export * from "./browse.js";
+export * from "./catalog-coverage.js";
 export * from "./discovery-catalog.js";
 export * from "./client.js";
 export * from "./coverage.js";
@@ -10,6 +11,7 @@ export * from "./funnel.js";
 export * from "./fysen-pro.js";
 export * from "./menu-source-state.js";
 export * from "./menu-source-support.js";
+export * from "./menu-watch-health.js";
 export * from "./migrate.js";
 export * from "./quality-dashboard.js";
 export * from "./quality-dashboard-markdown.js";
