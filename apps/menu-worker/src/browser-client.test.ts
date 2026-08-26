@@ -53,12 +53,33 @@ describe("browser request policy", () => {
     ).toEqual({ action: "allow", validatePublicNetwork: true });
   });
 
-  it("fails closed on cross-origin document, xhr and fetch", () => {
+  it("fails closed on undeclared cross-origin document, xhr and fetch", () => {
     for (const resourceType of ["document", "xhr", "fetch"]) {
       expect(
         browserRequestDecision({ sourceOrigin, requestUrl: "https://api.other.example/menu", resourceType }),
       ).toMatchObject({ action: "block", fatal: true });
     }
+  });
+
+  it("blocks known telemetry non-fatally instead of treating it as menu data", () => {
+    expect(
+      browserRequestDecision({
+        sourceOrigin,
+        requestUrl: "https://www.google-analytics.com/g/collect?v=2",
+        resourceType: "fetch",
+      }),
+    ).toEqual({
+      action: "block",
+      reason: "blocked non-essential telemetry origin: https://www.google-analytics.com",
+      fatal: false,
+    });
+    expect(
+      browserRequestDecision({
+        sourceOrigin,
+        requestUrl: "https://region1.google-analytics.com/g/collect?v=2",
+        resourceType: "xhr",
+      }),
+    ).toMatchObject({ action: "block", fatal: false });
   });
 
   it("permits public HTTPS script/style candidates to pass the network validator", () => {
@@ -129,7 +150,7 @@ describe("browser request budget", () => {
     const overflow = accountBrowserRequest(budget, blocked);
     expect(overflow.violation).toEqual({
       code: "BROWSER_ROUTE_EVENT_LIMIT",
-      message: "Rendered source exceeded 1000 allowed browser route events".replace(" allowed", ""),
+      message: "Rendered source exceeded 1000 browser route events",
     });
     expect(overflow.budget.networkRequests).toBe(0);
   });
