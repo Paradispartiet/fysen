@@ -2,6 +2,11 @@ name: Fysen production reconcile
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/production-reconcile.mjs"
+      - ".github/workflows/production-reconcile.yml"
   pull_request:
     branches: [main]
     paths:
