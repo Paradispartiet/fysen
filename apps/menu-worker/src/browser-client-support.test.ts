@@ -65,6 +65,46 @@ describe("browser support origins", () => {
     ).toMatchObject({ action: "block", fatal: true });
   });
 
+  it("nonfatally blocks narrow Google measurement endpoints used by rendered pages", () => {
+    for (const requestUrl of [
+      "https://www.google.com/ccm/collect?en=page_view",
+      "https://www.google.com/pagead/1p-conversion/12345/",
+      "https://www.google.com/pagead/1p-user-list/12345/",
+      "https://www.google.com/rmkt/collect/12345/",
+      "https://www.google.com/ads/ga-audiences",
+    ]) {
+      expect(
+        browserRequestDecision({
+          sourceOrigin,
+          requestUrl,
+          resourceType: "fetch",
+        }),
+      ).toEqual({
+        action: "block",
+        reason: "blocked non-essential telemetry origin: https://www.google.com",
+        fatal: false,
+      });
+    }
+  });
+
+  it("does not turn the Google origin into a general browser-data allowlist", () => {
+    expect(
+      browserRequestDecision({
+        sourceOrigin,
+        requestUrl: "https://www.google.com/api/menu",
+        resourceType: "xhr",
+      }),
+    ).toMatchObject({ action: "block", fatal: true });
+
+    expect(
+      browserRequestDecision({
+        sourceOrigin,
+        requestUrl: "https://www.google.com/ccm/collect",
+        resourceType: "document",
+      }),
+    ).toMatchObject({ action: "block", fatal: true });
+  });
+
   it("keeps undeclared cross-origin document/xhr/fetch fail-closed", () => {
     for (const resourceType of ["document", "xhr", "fetch"]) {
       expect(
