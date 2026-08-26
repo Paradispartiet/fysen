@@ -11,12 +11,16 @@
     "longitude": 10.759895
   },
   "menuSource": {
-    "url": "https://wolt.com/nb/nor/oslo/restaurant/viet-kitchen-oslo",
+    "url": "https://www.foodora.no/restaurant/x0nn/viet-kitchen",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 66
+    "minimumExpectedItems": 66,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
   },
   "hoursSource": {
     "url": "https://www.vietkitchen.no/",
@@ -27,8 +31,8 @@
   "verification": {
     "hours": {
       "status": "provisional",
-      "checkedAt": "2026-08-19",
-      "note": "Viet Kitchen's first-party homepage explicitly publishes Mon-Sun 13:00-21:00, but labels these as general venue hours rather than separate kitchen hours. Keep open/closed unknown until the schedule is explicitly kitchen-scoped."
+      "checkedAt": "2026-08-26",
+      "note": "Viet Kitchen's first-party homepage and company registration now identify Sarpsborggata 12C as the current restaurant address and the homepage publishes Mon-Sun 13:00-21:00 as venue hours. Keep open/closed unknown until the schedule is explicitly kitchen-scoped. The current Foodora menu is used as independently matched priced service-menu evidence and must not be described as complete dine-in coverage."
     }
   },
   "actions": [
@@ -41,41 +45,40 @@
   ],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Spring Rolls",
-      "Summer Rolls",
-      "Wonton Suppe",
-      "BÁNH CUỐN NHÂN THỊT - Dampede rullinger av rismel",
-      "BÁNH BÈO NÓNG - Rundt dampet rismel",
-      "BÁNH HỎI HEO QUAY - Tynne rismelark med ribbe",
-      "PHỞ BIFF BÒ TÁI",
-      "PHỞ KYLLING GÀ",
-      "BÚN BÒ NỨC NỞ",
-      "MÌ XÀO - Stir-fried egg noodles"
+      "Crispy Duck Wraps",
+      "CHẢ GIÒ 2pcs - Vårruller",
+      "GỎI CUỐN - Summer Rolls",
+      "SÚP HOÀNH THÁNH - Wonton Suppe",
+      "BÁNH MÌ ĐẶC BIỆT - Special",
+      "Phở Đặc Biệt",
+      "Phở Biff Bò Tái",
+      "MÌ XÀO - Stekte eggnudler",
+      "BÚN NEM NƯỚNG - Risnudler m/ Grillede Nem Svinnekjøttkaker",
+      "Mama's Duck Rice"
     ],
     "requiredDishVariants": [
-      { "name": "Spring Rolls", "priceMinor": 9500 },
-      { "name": "Summer Rolls", "priceMinor": 12500 },
-      { "name": "Wonton Suppe", "priceMinor": 12500 },
-      { "name": "BÁNH CUỐN NHÂN THỊT - Dampede rullinger av rismel", "priceMinor": 25900 },
-      { "name": "BÁNH BÈO NÓNG - Rundt dampet rismel", "priceMinor": 25900 },
-      { "name": "BÁNH HỎI HEO QUAY - Tynne rismelark med ribbe", "priceMinor": 25900 },
-      { "name": "PHỞ BIFF BÒ TÁI", "priceMinor": 24900 },
-      { "name": "PHỞ KYLLING GÀ", "priceMinor": 24900 },
-      { "name": "BÚN BÒ NỨC NỞ", "priceMinor": 26900 },
-      { "name": "MÌ XÀO - Stir-fried egg noodles", "priceMinor": 23900 }
+      { "name": "Crispy Duck Wraps", "priceMinor": 12900 },
+      { "name": "CHẢ GIÒ 2pcs - Vårruller", "priceMinor": 9500 },
+      { "name": "GỎI CUỐN - Summer Rolls", "priceMinor": 12500 },
+      { "name": "SÚP HOÀNH THÁNH - Wonton Suppe", "priceMinor": 12500 },
+      { "name": "BÁNH MÌ ĐẶC BIỆT - Special", "priceMinor": 16800, "priceKind": "from" },
+      { "name": "Phở Đặc Biệt", "priceMinor": 25900, "priceKind": "from" },
+      { "name": "Phở Biff Bò Tái", "priceMinor": 24900, "priceKind": "from" },
+      { "name": "MÌ XÀO - Stekte eggnudler", "priceMinor": 23900 },
+      { "name": "BÚN NEM NƯỚNG - Risnudler m/ Grillede Nem Svinnekjøttkaker", "priceMinor": 23900, "priceKind": "from" },
+      { "name": "Mama's Duck Rice", "priceMinor": 28900 }
     ],
     "forbiddenDishNames": [
       "Signature Milk Tea",
       "Brown Sugar Boba Milk",
+      "Matcha Milk Latte Cheese",
       "Taro Milk",
       "Chocolate Milk",
-      "Matcha Milk Latte Cheese",
-      "Egg Cafe",
-      "Lemonade with mint",
-      "Cola Original 0.5L",
-      "Cola Zero 0.5L",
-      "Sprite 0.5L",
-      "Farris 0.5L"
+      "Red Bull 250ml",
+      "Coca-Cola",
+      "Coca-Cola Zero",
+      "Fanta Appelsin",
+      "Sprite"
     ]
   }
 }
