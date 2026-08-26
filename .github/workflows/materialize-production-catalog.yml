@@ -2,6 +2,8 @@ name: Materialize Fysen production catalog
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "9 16 26 8 *"
   push:
     branches: [main]
     paths:
