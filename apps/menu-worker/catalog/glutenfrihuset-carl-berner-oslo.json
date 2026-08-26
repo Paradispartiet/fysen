@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"glutenfrihuset-carl-berner-oslo","name":"Glutenfrihuset Carl Berner","websiteUrl":null,"address":"Åkebergveien 50A, 0650 Oslo","city":"Oslo","countryCode":"NO","latitude":59.90982296211601,"longitude":10.776988542827576},
+  "menuSource": {"url":"https://semeny.no/public/sted/glutenfrihusetcarlberner","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":35,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Pizza Margherita","Bagel (2pk)","Fint Brød","Kanelsnurr","Kanelsnurr m/ Pistasj","Berlinerboller m/ Bringebær","Sjokolademuffins","Ciabatta m/ Roastbeef"],"requiredDishVariants":[{"name":"Pizza Margherita","priceMinor":19900},{"name":"Bagel (2pk)","priceMinor":8900},{"name":"Fint Brød","priceMinor":8900},{"name":"Kanelsnurr","priceMinor":6900},{"name":"Kanelsnurr m/ Pistasj","priceMinor":6900},{"name":"Berlinerboller m/ Bringebær","priceMinor":6500},{"name":"Sjokolademuffins","priceMinor":6500},{"name":"Ciabatta m/ Roastbeef","priceMinor":12900}],"forbiddenDishNames":[]}
+}

@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"peoples-arbeidersamfunnets-plass-oslo","name":"People's","websiteUrl":null,"address":"Arbeidersamfunnets plass 1, 0181 Oslo","city":"Oslo","countryCode":"NO","latitude":59.91552200049789,"longitude":10.751804295846025},
+  "menuSource": {"url":"https://semeny.no/sted/peoples","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":38,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Feta Omelett","Skagen Sandwich","Søtpoteter","Classic Burger","Mushroom Burger","Nacho m/ Kylling","Rødbet Aioli","Arctic Water"],"requiredDishVariants":[{"name":"Feta Omelett","priceMinor":19400},{"name":"Skagen Sandwich","priceMinor":22800},{"name":"Søtpoteter","priceMinor":13200},{"name":"Classic Burger","priceMinor":24200},{"name":"Mushroom Burger","priceMinor":24800},{"name":"Nacho m/ Kylling","priceMinor":23200},{"name":"Rødbet Aioli","priceMinor":2000},{"name":"Arctic Water","priceMinor":6200}],"forbiddenDishNames":[]}
+}

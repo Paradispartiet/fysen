@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "anatolia-restaurant-toyen-torg-oslo",
+    "name": "Anatolia Restaurant Tøyen Torg",
+    "websiteUrl": null,
+    "address": "Økernveien 9, 0653 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91486369136373,
+    "longitude": 10.776166932249932
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/396anatoliarestauranttoyentorg",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 59,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-26",
+      "note": "Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": ["Tyrkisk Frokost","Pita m/ Hvitløk, Feta & Oliven","Vegetar Pasta","Vegetar Saute","Kebabtallerken","Saute","Pommes Frites (For Barn)","Ayran"],
+    "requiredDishVariants": [{"name":"Tyrkisk Frokost","priceMinor":27500},{"name":"Pita m/ Hvitløk, Feta & Oliven","priceMinor":9800},{"name":"Vegetar Pasta","priceMinor":19800},{"name":"Vegetar Saute","priceMinor":24800},{"name":"Kebabtallerken","priceMinor":27800},{"name":"Saute","priceMinor":29800},{"name":"Pommes Frites (For Barn)","priceMinor":8900},{"name":"Ayran","priceMinor":3900}],
+    "forbiddenDishNames": []
+  }
+}

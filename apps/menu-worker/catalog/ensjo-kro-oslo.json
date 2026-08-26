@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ensjo-kro-oslo",
+    "name": "Ensjø Kro",
+    "websiteUrl": null,
+    "address": "Rolf Hofmos gate 34, 0655 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.913194969763076,
+    "longitude": 10.788651482221038
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/433ensjokro",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 36,
+    "sourceSupport": {"redirectOrigins": [],"browserDataOrigins": [],"browserBlockedOrigins": []}
+  },
+  "verification": {"hours": {"status": "unverified","checkedAt": "2026-08-26","note": "Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions": [],
+  "qualityAssertions": {"requiredDishNames": ["Margherita","Vegetar","Kylling Pizza","Hamburger m/Pommes Frites","Shawarma Kyllingrull","Falafelrull","Sterk Saus","Villa Champagnebrus"],"requiredDishVariants": [{"name":"Margherita","priceMinor":16065},{"name":"Vegetar","priceMinor":16065},{"name":"Kylling Pizza","priceMinor":16632},{"name":"Hamburger m/Pommes Frites","priceMinor":22500},{"name":"Shawarma Kyllingrull","priceMinor":14900},{"name":"Falafelrull","priceMinor":12665},{"name":"Sterk Saus","priceMinor":3900},{"name":"Villa Champagnebrus","priceMinor":5400}],"forbiddenDishNames": []}
+}
