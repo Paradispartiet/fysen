@@ -1,0 +1,7 @@
+{
+  "version":1,
+  "restaurant":{"slug":"pizza-italiano-bislett-oslo","name":"Pizza Italiano Bislett","websiteUrl":null,"address":"Thereses gate 30E, 0168 Oslo","city":"Oslo","countryCode":"NO","latitude":59.9281580331329,"longitude":10.732427875170208},
+  "menuSource":{"url":"https://semeny.no/sted/pizzaitalianobislett","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":58,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 07 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Pizza Margarita","Bolognese Italiano","Napoletana","Negras","Pizza Med Pommes","Calzone","Bistecca Verde","Orju Appelsin"],"requiredDishVariants":[{"name":"Pizza Margarita","priceMinor":17600},{"name":"Bolognese Italiano","priceMinor":20500},{"name":"Napoletana","priceMinor":21400},{"name":"Negras","priceMinor":21600},{"name":"Pizza Med Pommes","priceMinor":21600},{"name":"Calzone","priceMinor":20000},{"name":"Bistecca Verde","priceMinor":20700},{"name":"Orju Appelsin","priceMinor":4500}],"forbiddenDishNames":[]}
+}

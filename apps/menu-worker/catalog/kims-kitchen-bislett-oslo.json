@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"kims-kitchen-bislett-oslo","name":"Kim's Kitchen","websiteUrl":null,"address":"Thereses gate 47A, 0354 OSLO","city":"Oslo","countryCode":"NO","latitude":59.92643863273372,"longitude":10.731087519176947},
+  "menuSource": {"url":"https://semeny.no/sted/274kimskitchen","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":29,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 07 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions":[],
+  "qualityAssertions":{"requiredDishNames":["STOR TEMPURA LAKS + 2 VÅRRULLER M/ KJØTT","Liten Rice Bowl m/ Ponzumarinert Laks + 2 Vårruller M/ Vegetar","Tempura kylling","Tempurianer Sushi Wrap","Biff Teriyaki Sushi Wrap","Gyoza","Sweet potato fries","Telemark m/ Kullsyre"],"requiredDishVariants":[{"name":"STOR TEMPURA LAKS + 2 VÅRRULLER M/ KJØTT","priceMinor":25000},{"name":"Liten Rice Bowl m/ Ponzumarinert Laks + 2 Vårruller M/ Vegetar","priceMinor":25900},{"name":"Tempura kylling","priceMinor":22900},{"name":"Tempurianer Sushi Wrap","priceMinor":11900},{"name":"Biff Teriyaki Sushi Wrap","priceMinor":13900},{"name":"Gyoza","priceMinor":12900},{"name":"Sweet potato fries","priceMinor":8900},{"name":"Telemark m/ Kullsyre","priceMinor":4500}],"forbiddenDishNames":[]}
+}

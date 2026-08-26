@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"nabo-kitchen-bar-majorstuen-oslo","name":"Nabo Kitchen & Bar","websiteUrl":null,"address":"Essendrops gate 9, 0368 Oslo","city":"Oslo","countryCode":"NO","latitude":59.92954763794543,"longitude":10.71171251690627},
+  "menuSource": {"url":"https://semeny.no/sted/nabokitchenbar","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":56,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 07 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Dimsum Våruller","Tempura Scampi","Sushi Main","Scampi Maki","Spicy Halibut Maki","Yaki Tori Ramen","Kveite Nigiri","Redbull 0,25l"],"requiredDishVariants":[{"name":"Dimsum Våruller","priceMinor":11500},{"name":"Tempura Scampi","priceMinor":3500},{"name":"Sushi Main","priceMinor":23500},{"name":"Scampi Maki","priceMinor":10500},{"name":"Spicy Halibut Maki","priceMinor":10500},{"name":"Yaki Tori Ramen","priceMinor":21500},{"name":"Kveite Nigiri","priceMinor":4800},{"name":"Redbull 0,25l","priceMinor":5900}],"forbiddenDishNames":[]}
+}

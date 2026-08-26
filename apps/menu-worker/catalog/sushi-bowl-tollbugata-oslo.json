@@ -1,0 +1,7 @@
+{
+  "version":1,
+  "restaurant":{"slug":"sushi-bowl-tollbugata-oslo","name":"Sushi Bowl","websiteUrl":null,"address":"Tollbugata 17, 0152 Oslo","city":"Oslo","countryCode":"NO","latitude":59.910474015232175,"longitude":10.744384624925965},
+  "menuSource":{"url":"https://semeny.no/sted/589sushibowl","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":66,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 07 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Kylling Gyoza","Yam Nua🌶️","Pad Gai m/ Mamuang","Pad Tom Kaah","Sushi Bowl Stor","Laks Deluxe","Philadelphia","Avokado Nigiri"],"requiredDishVariants":[{"name":"Kylling Gyoza","priceMinor":14900},{"name":"Yam Nua🌶️","priceMinor":29900},{"name":"Pad Gai m/ Mamuang","priceMinor":22900},{"name":"Pad Tom Kaah","priceMinor":22900},{"name":"Sushi Bowl Stor","priceMinor":33900},{"name":"Laks Deluxe","priceMinor":17900},{"name":"Philadelphia","priceMinor":12500},{"name":"Avokado Nigiri","priceMinor":13000}],"forbiddenDishNames":[]}
+}

@@ -1,0 +1,7 @@
+{
+  "version":1,
+  "restaurant":{"slug":"oslo-fried-chicken-smash-burgers-st-hanshaugen-oslo","name":"Oslo Fried Chicken & Smash Burgers","websiteUrl":null,"address":"Waldemar Thranes gate 63A, 0173 OSLO","city":"Oslo","countryCode":"NO","latitude":59.927581463388805,"longitude":10.748958098572125},
+  "menuSource":{"url":"https://semeny.no/sted/oslofriedchickensmashburgers","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":32,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 07 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
+  "qualityAssertions":{"requiredDishNames":["Dobbel Cheese Meny","Classic Meny","Fried Chicken Meny","Tenders + 1 Klubbe","Sweet Potato Fries","OFC Classic Mayo","Chili Mayo","Urge 0,5l"],"requiredDishVariants":[{"name":"Dobbel Cheese Meny","priceMinor":26900},{"name":"Classic Meny","priceMinor":23900},{"name":"Fried Chicken Meny","priceMinor":21500},{"name":"Tenders + 1 Klubbe","priceMinor":17900},{"name":"Sweet Potato Fries","priceMinor":7000},{"name":"OFC Classic Mayo","priceMinor":3500},{"name":"Chili Mayo","priceMinor":3500},{"name":"Urge 0,5l","priceMinor":4300}],"forbiddenDishNames":[]}
+}
