@@ -11,7 +11,7 @@
     "longitude": 10.715439
   },
   "menuSource": {
-    "url": "https://www.1947gandhi.no/indisk-meny-oslo/",
+    "url": "https://www.1947gandhi.no/",
     "sourceType": "html",
     "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
@@ -56,38 +56,14 @@
       "ALOO CHANA CHAAT"
     ],
     "requiredDishVariants": [
-      {
-        "name": "LAMB CHOPS",
-        "priceMinor": 17900
-      },
-      {
-        "name": "Plain Butter Naan",
-        "priceMinor": 4900
-      },
-      {
-        "name": "MIX GRILL",
-        "priceMinor": 32900
-      },
-      {
-        "name": "LAMB ROGAN JOSH",
-        "priceMinor": 31900
-      },
-      {
-        "name": "HVITLØK CHICKEN TIKKA",
-        "priceMinor": 28900
-      },
-      {
-        "name": "CHICKEN TIKKA MASALA",
-        "priceMinor": 27900
-      },
-      {
-        "name": "CHICKEN MOMO",
-        "priceMinor": 12900
-      },
-      {
-        "name": "ALOO CHANA CHAAT",
-        "priceMinor": 13900
-      }
+      {"name": "LAMB CHOPS", "priceMinor": 17900},
+      {"name": "Plain Butter Naan", "priceMinor": 4900},
+      {"name": "MIX GRILL", "priceMinor": 32900},
+      {"name": "LAMB ROGAN JOSH", "priceMinor": 31900},
+      {"name": "HVITLØK CHICKEN TIKKA", "priceMinor": 28900},
+      {"name": "CHICKEN TIKKA MASALA", "priceMinor": 27900},
+      {"name": "CHICKEN MOMO", "priceMinor": 12900},
+      {"name": "ALOO CHANA CHAAT", "priceMinor": 13900}
     ],
     "forbiddenDishNames": []
   }
