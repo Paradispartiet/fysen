@@ -1,5 +1,6 @@
 import { createMenuFingerprint } from "@fysen/menu-core";
 import { verifyActionSource } from "./action-source-runtime.js";
+import { BrowserMenuClient } from "./browser-client.js";
 import { HttpMenuClient } from "./http-client.js";
 import {
   evaluateManifestMenuQuality,
@@ -108,24 +109,42 @@ export function resolveManifestMenuFetchMode(
   }
 }
 
+function manifestBrowserReadinessTexts(
+  manifest: RestaurantOnboardingManifest,
+): readonly string[] {
+  return [
+    ...manifest.qualityAssertions.requiredDishNames,
+    ...manifest.qualityAssertions.requiredDishVariants.map((variant) => variant.name),
+  ];
+}
+
 async function validateMenu(
   manifest: RestaurantOnboardingManifest,
   client: HttpMenuClient,
 ): Promise<ManifestMenuValidationResult> {
   try {
-    const fetched = await fetchMenuSource(
-      {
-        url: manifest.menuSource.url,
-        sourceType: manifest.menuSource.sourceType,
-        fetchMode: resolveManifestMenuFetchMode(manifest.menuSource),
-        userAgent: manifest.menuSource.userAgent,
-        etag: null,
-        lastModified: null,
-        maxResponseBytes: manifest.menuSource.maxResponseBytes ?? null,
-        sourceSupport: manifest.menuSource.sourceSupport,
-      },
-      client,
-    );
+    const fetchMode = resolveManifestMenuFetchMode(manifest.menuSource);
+    const fetched =
+      fetchMode === "browser"
+        ? await new BrowserMenuClient(client).fetchSource({
+            url: manifest.menuSource.url,
+            userAgent: manifest.menuSource.userAgent,
+            sourceSupport: manifest.menuSource.sourceSupport,
+            readinessTexts: manifestBrowserReadinessTexts(manifest),
+          })
+        : await fetchMenuSource(
+            {
+              url: manifest.menuSource.url,
+              sourceType: manifest.menuSource.sourceType,
+              fetchMode,
+              userAgent: manifest.menuSource.userAgent,
+              etag: null,
+              lastModified: null,
+              maxResponseBytes: manifest.menuSource.maxResponseBytes ?? null,
+              sourceSupport: manifest.menuSource.sourceSupport,
+            },
+            client,
+          );
     if (fetched.kind === "not_modified") {
       throw new Error(`Manifest validation unexpectedly returned HTTP 304 for ${manifest.menuSource.url}`);
     }
