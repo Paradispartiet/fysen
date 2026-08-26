@@ -11,15 +11,12 @@
     "longitude": 10.759374578071943
   },
   "menuSource": {
-    "url": "https://takeaway.punjabtandoori.no/",
+    "url": "https://order.punjabtandoori.no/no/menu",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 24,
-    "sourceSupport": {
-      "redirectOrigins": ["https://order.punjabtandoori.no"]
-    }
+    "minimumExpectedItems": 24
   },
   "hoursSource": {
     "url": "https://punjabtandoori.no/",
