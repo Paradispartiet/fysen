@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   mapWithBoundedConcurrency,
   parseCatalogMaterializationConcurrency,
+  shouldRepairCatalogSourceHealth,
 } from "./catalog-materialization.js";
 
 describe("catalog materialization concurrency", () => {
@@ -27,5 +28,18 @@ describe("catalog materialization concurrency", () => {
 
     expect(maxActive).toBe(3);
     expect(result).toEqual(["item-0", "item-1", "item-2", "item-3", "item-4", "item-5"]);
+  });
+});
+
+describe("catalog source health repair selection", () => {
+  it("repairs missing or failed latest watcher outcomes without re-fetching healthy sources", () => {
+    expect(shouldRepairCatalogSourceHealth(null)).toBe(true);
+    expect(shouldRepairCatalogSourceHealth("fetch_error")).toBe(true);
+    expect(shouldRepairCatalogSourceHealth("extraction_error")).toBe(true);
+    expect(shouldRepairCatalogSourceHealth("quarantined")).toBe(true);
+    expect(shouldRepairCatalogSourceHealth("blocked_by_robots")).toBe(true);
+    expect(shouldRepairCatalogSourceHealth("changed")).toBe(false);
+    expect(shouldRepairCatalogSourceHealth("unchanged")).toBe(false);
+    expect(shouldRepairCatalogSourceHealth("not_modified")).toBe(false);
   });
 });
