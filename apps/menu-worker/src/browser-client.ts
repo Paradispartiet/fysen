@@ -12,6 +12,8 @@ const MAX_BROWSER_ROUTE_EVENTS = 1000;
 const MAX_BROWSER_NETWORK_REQUESTS = 120;
 const NAVIGATION_TIMEOUT_MS = 15_000;
 const NETWORK_IDLE_TIMEOUT_MS = 5_000;
+const RENDER_READINESS_TIMEOUT_MS = 10_000;
+const MAX_RENDER_READINESS_TEXTS = 8;
 
 const blockedResourceTypes = new Set([
   "image",
@@ -34,6 +36,7 @@ export interface BrowserMenuSource {
   readonly url: string;
   readonly userAgent: string;
   readonly sourceSupport?: BrowserMenuSourceSupport;
+  readonly readinessTexts?: readonly string[];
 }
 
 export interface BrowserRequestPolicyInput {
@@ -64,6 +67,15 @@ export type BrowserRequestBudgetViolation =
 export interface BrowserRequestBudgetResult {
   readonly budget: BrowserRequestBudget;
   readonly violation: BrowserRequestBudgetViolation;
+}
+
+export function normalizedBrowserReadinessTexts(
+  values: readonly string[] | undefined,
+): readonly string[] {
+  if (!values) return [];
+  return Array.from(
+    new Set(values.map((value) => value.trim()).filter((value) => value.length > 0)),
+  ).slice(0, MAX_RENDER_READINESS_TEXTS);
 }
 
 export function browserRequestDecision(input: BrowserRequestPolicyInput): BrowserRequestDecision {
@@ -217,6 +229,7 @@ export class BrowserMenuClient {
       redirectOrigins: [],
       browserDataOrigins: [],
     };
+    const readinessTexts = normalizedBrowserReadinessTexts(source.readinessTexts);
 
     const preflight = await this.httpClient.fetchSource(
       {
@@ -258,6 +271,21 @@ export class BrowserMenuClient {
         waitUntil: "domcontentloaded",
       });
       await page.waitForLoadState("networkidle", { timeout: NETWORK_IDLE_TIMEOUT_MS }).catch(() => undefined);
+
+      if (readinessTexts.length > 0) {
+        await page
+          .waitForFunction(
+            (expectedTexts: readonly string[]) => {
+              const renderedText = (document.body?.innerText ?? "").toLowerCase();
+              return expectedTexts.some((expected) =>
+                renderedText.includes(expected.toLowerCase()),
+              );
+            },
+            readinessTexts,
+            { timeout: RENDER_READINESS_TIMEOUT_MS },
+          )
+          .catch(() => undefined);
+      }
 
       if (violation.value) throw violation.value;
       const finalUrl = new URL(page.url());
