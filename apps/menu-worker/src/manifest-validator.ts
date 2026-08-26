@@ -76,6 +76,38 @@ function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
+type ManifestMenuSourceFetchPolicy = Pick<
+  RestaurantOnboardingManifest["menuSource"],
+  "url" | "sourceType" | "fetchMode" | "maxResponseBytes"
+>;
+
+/**
+ * Semeny renders the canonical menu client-side while its initial HTML can be a
+ * shell with no dishes. Fresh catalog validation therefore needs the existing
+ * hardened browser client for Semeny HTML sources. Keep explicit response-byte
+ * caps on HTTP, and leave all unrelated providers on their declared policy.
+ */
+export function resolveManifestMenuFetchMode(
+  menuSource: ManifestMenuSourceFetchPolicy,
+): RestaurantOnboardingManifest["menuSource"]["fetchMode"] {
+  if (menuSource.fetchMode === "browser") return "browser";
+  if (menuSource.maxResponseBytes !== null && menuSource.maxResponseBytes !== undefined) {
+    return "http";
+  }
+  if (menuSource.sourceType !== "html" && menuSource.sourceType !== "json_ld") {
+    return "http";
+  }
+
+  try {
+    const hostname = new URL(menuSource.url).hostname.toLowerCase().replace(/\.$/u, "");
+    return hostname === "semeny.no" || hostname.endsWith(".semeny.no")
+      ? "browser"
+      : "http";
+  } catch {
+    return "http";
+  }
+}
+
 async function validateMenu(
   manifest: RestaurantOnboardingManifest,
   client: HttpMenuClient,
@@ -85,7 +117,7 @@ async function validateMenu(
       {
         url: manifest.menuSource.url,
         sourceType: manifest.menuSource.sourceType,
-        fetchMode: manifest.menuSource.fetchMode,
+        fetchMode: resolveManifestMenuFetchMode(manifest.menuSource),
         userAgent: manifest.menuSource.userAgent,
         etag: null,
         lastModified: null,
