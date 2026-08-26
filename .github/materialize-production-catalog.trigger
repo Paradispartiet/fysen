@@ -3,4 +3,4 @@
 # workflow_dispatch remains the preferred manual trigger. When an automation
 # client cannot call workflow_dispatch, update the nonce below in a small PR.
 # The materializer is idempotent and production reconcile runs after success.
-nonce: 2026-08-26-post-viet-source-final-07
+nonce: 2026-08-26-production-proof-react-ssr-08
