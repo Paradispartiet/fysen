@@ -103,63 +103,67 @@ async function repairUnhealthyCanonicalSources(
     return [{ entry, result }];
   });
 
-  const repairs = await mapWithBoundedConcurrency(candidates, concurrency, async ({ entry, result }) => {
-    const menuSourceId = result.menuSourceId as string;
-    const restaurantId = result.restaurantId as string;
-    const previousOutcome = await getLatestMenuWatchOutcome(pool, menuSourceId);
-    if (!shouldRepairCatalogSourceHealth(previousOutcome)) return null;
+  const repairs = await mapWithBoundedConcurrency(
+    candidates,
+    concurrency,
+    async ({ entry, result }): Promise<CatalogHealthRepairResult | null> => {
+      const menuSourceId = result.menuSourceId as string;
+      const restaurantId = result.restaurantId as string;
+      const previousOutcome = await getLatestMenuWatchOutcome(pool, menuSourceId);
+      if (!shouldRepairCatalogSourceHealth(previousOutcome)) return null;
 
-    try {
-      const watch = await watchMenuSourceOnce(
-        repository,
-        menuSourceId,
-        new HttpMenuClient(),
-        entry.manifest.menuSource.sourceSupport,
-      );
-      if (!ACCEPTED_WATCH_OUTCOMES.has(watch.outcome)) {
-        return {
-          slug: entry.manifest.restaurant.slug,
+      try {
+        const watch = await watchMenuSourceOnce(
+          repository,
           menuSourceId,
-          previousOutcome,
-          outcome: watch.outcome,
-          itemCount: watch.itemCount,
-          error: `Health repair watch ended with ${watch.outcome}`,
-        } satisfies CatalogHealthRepairResult;
-      }
+          new HttpMenuClient(),
+          entry.manifest.menuSource.sourceSupport,
+        );
+        if (!ACCEPTED_WATCH_OUTCOMES.has(watch.outcome)) {
+          return {
+            slug: entry.manifest.restaurant.slug,
+            menuSourceId,
+            previousOutcome,
+            outcome: watch.outcome,
+            itemCount: watch.itemCount,
+            error: `Health repair watch ended with ${watch.outcome}`,
+          };
+        }
 
-      const snapshot = await repository.getLatestSnapshotWithItems(menuSourceId);
-      const quality = evaluateManifestMenuQuality(entry.manifest, snapshot?.items ?? []);
-      if (!quality.accepted) {
-        await setRestaurantCoverageActive(pool, restaurantId, false);
+        const snapshot = await repository.getLatestSnapshotWithItems(menuSourceId);
+        const quality = evaluateManifestMenuQuality(entry.manifest, snapshot?.items ?? []);
+        if (!quality.accepted) {
+          await setRestaurantCoverageActive(pool, restaurantId, false);
+          return {
+            slug: entry.manifest.restaurant.slug,
+            menuSourceId,
+            previousOutcome,
+            outcome: watch.outcome,
+            itemCount: quality.itemCount,
+            error: `Fresh health repair snapshot failed manifest assertions: items=${quality.itemCount}/${quality.minimumExpectedItems}, missing=${quality.missingRequiredDishes.join(",") || "none"}, forbidden=${quality.forbiddenDishesPresent.join(",") || "none"}`,
+          };
+        }
+
         return {
           slug: entry.manifest.restaurant.slug,
           menuSourceId,
           previousOutcome,
           outcome: watch.outcome,
           itemCount: quality.itemCount,
-          error: `Fresh health repair snapshot failed manifest assertions: items=${quality.itemCount}/${quality.minimumExpectedItems}, missing=${quality.missingRequiredDishes.join(",") || "none"}, forbidden=${quality.forbiddenDishesPresent.join(",") || "none"}`,
-        } satisfies CatalogHealthRepairResult;
+          error: null,
+        };
+      } catch (error) {
+        return {
+          slug: entry.manifest.restaurant.slug,
+          menuSourceId,
+          previousOutcome,
+          outcome: await getLatestMenuWatchOutcome(pool, menuSourceId),
+          itemCount: null,
+          error: error instanceof Error ? error.message : String(error),
+        };
       }
-
-      return {
-        slug: entry.manifest.restaurant.slug,
-        menuSourceId,
-        previousOutcome,
-        outcome: watch.outcome,
-        itemCount: quality.itemCount,
-        error: null,
-      } satisfies CatalogHealthRepairResult;
-    } catch (error) {
-      return {
-        slug: entry.manifest.restaurant.slug,
-        menuSourceId,
-        previousOutcome,
-        outcome: await getLatestMenuWatchOutcome(pool, menuSourceId),
-        itemCount: null,
-        error: error instanceof Error ? error.message : String(error),
-      } satisfies CatalogHealthRepairResult;
-    }
-  });
+    },
+  );
 
   return repairs.filter((repair): repair is CatalogHealthRepairResult => repair !== null);
 }
