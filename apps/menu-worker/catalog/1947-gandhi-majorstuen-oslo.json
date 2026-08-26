@@ -13,7 +13,7 @@
   "menuSource": {
     "url": "https://www.1947gandhi.no/indisk-meny-oslo/",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 41,
@@ -43,14 +43,7 @@
       "note": "First-party site publishes venue opening hours Monday-Sunday 16:00-22:00, but does not separately publish a kitchen-scoped closing schedule. Keep open/closed unknown until kitchen hours are canonical."
     }
   },
-  "actions": [
-    {
-      "type": "booking",
-      "url": "https://www.1947gandhi.no/reservation/",
-      "sourceUrl": "https://www.1947gandhi.no/",
-      "provider": "easyTable"
-    }
-  ],
+  "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
       "LAMB CHOPS",
