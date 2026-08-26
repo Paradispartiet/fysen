@@ -23,6 +23,7 @@ describe("database migrations", () => {
       "0016_fysen_pro_sessions.sql",
       "0017_aha_min_mat.sql",
       "0018_menu_source_response_limit.sql",
+      "0019_spring_rolls_dish_concept.sql",
     ]);
 
     const schemaSql = await readFile(new URL("../migrations/0001_menu_index.sql", import.meta.url), "utf8");
@@ -153,5 +154,13 @@ describe("database migrations", () => {
     expect(menuSourceResponseLimitSql).toContain("max_response_bytes >= 65536");
     expect(menuSourceResponseLimitSql).toContain("max_response_bytes <= 4194304");
 
+    const springRollsConceptSql = await readFile(
+      new URL("../migrations/0019_spring_rolls_dish_concept.sql", import.meta.url),
+      "utf8",
+    );
+    expect(springRollsConceptSql).toContain("'spring-rolls'");
+    expect(springRollsConceptSql).toContain("'Spring Rolls'");
+    expect(springRollsConceptSql).toContain("'spring rolls'");
+    expect(springRollsConceptSql).toContain("'both'");
   });
 });
