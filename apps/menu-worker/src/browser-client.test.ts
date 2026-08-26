@@ -2,9 +2,44 @@ import { describe, expect, it } from "vitest";
 import {
   accountBrowserRequest,
   browserRequestDecision,
+  normalizedBrowserReadinessTexts,
   type BrowserRequestBudget,
   type BrowserRequestDecision,
 } from "./browser-client.js";
+
+describe("browser render readiness", () => {
+  it("trims, deduplicates and bounds manifest readiness assertions", () => {
+    expect(
+      normalizedBrowserReadinessTexts([
+        " Tyrkisk Frokost ",
+        "Tyrkisk Frokost",
+        "Ayran",
+        "",
+        "One",
+        "Two",
+        "Three",
+        "Four",
+        "Five",
+        "Six",
+        "Seven",
+        "Eight",
+      ]),
+    ).toEqual([
+      "Tyrkisk Frokost",
+      "Ayran",
+      "One",
+      "Two",
+      "Three",
+      "Four",
+      "Five",
+      "Six",
+    ]);
+  });
+
+  it("keeps browser sources without assertions on the normal readiness path", () => {
+    expect(normalizedBrowserReadinessTexts(undefined)).toEqual([]);
+  });
+});
 
 describe("browser request policy", () => {
   const sourceOrigin = "https://order.example.com";
@@ -94,7 +129,7 @@ describe("browser request budget", () => {
     const overflow = accountBrowserRequest(budget, blocked);
     expect(overflow.violation).toEqual({
       code: "BROWSER_ROUTE_EVENT_LIMIT",
-      message: "Rendered source exceeded 1000 browser route events",
+      message: "Rendered source exceeded 1000 allowed browser route events".replace(" allowed", ""),
     });
     expect(overflow.budget.networkRequests).toBe(0);
   });
