@@ -11,6 +11,7 @@ on:
       - "apps/menu-worker/src/**"
       - "packages/menu-core/src/**"
       - ".github/workflows/restaurant-catalog-health.yml"
+      - ".github/restaurant-catalog-health.trigger"
 
 permissions:
   contents: read
