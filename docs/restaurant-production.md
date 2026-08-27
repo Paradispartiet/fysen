@@ -230,7 +230,7 @@ Et restaurantarbeid er ikke ferdig ved grønn PR-CI. Etter merge skal produksjon
 
 Production-proof skal som hovedregel være read-only. Materialisering skjer gjennom den permanente, serialiserte `Materialize Fysen production catalog`-workflowen, ikke gjennom direkte SQL-aktivering eller manuell snapshot-skriving. `scripts/production-pilot-proof.mjs` og permanent catalog-health er de autoritative fullkatalogkontrollene; public API-søk er et sterkt tillegg for å bevise konkrete nye promotions etter merge, men erstatter ikke et fullreconcile.
 
-Web/API-deploy er en separat releaseflate. Restaurantmaterialisering og DB/watcher-proof skal ikke brukes som grunn til å bryte den låste Vercel-regelen på maksimalt to ordinære produksjonsdeployvinduer per døgn.
+Web/API-deploy er en separat releaseflate. Restaurantmaterialisering og DB/watcher-proof skal ikke brukes som grunn til å bryte den låste Vercel-regelen på maksimalt tre endringskvalifiserte produksjonsbatcher per Europe/Oslo-døgn, uten faste klokkeslett.
 
 ## Prioritering mot Oslo-dekning
 

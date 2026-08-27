@@ -4,10 +4,10 @@ Dette er den permanente ferdigdefinisjonen for Oslo v1. Et grønt mergebevis er 
 
 ## Releasekontrakt
 
-- Produksjon deployes maksimalt to ganger per døgn: kl. **10:00 og 22:00 Europe/Oslo**.
-- Merge, CI, materialisering og ikke-muterende inspeksjon kan skje mellom vinduene.
-- Ingen closeout-gate utløser en ekstra eller manuell Vercel-deploy.
-- Production proof skal lese både API og web etter et ordinært vindu og bevise at de kjører forventet `main`-SHA.
+- Produksjon deployes i maksimalt tre batcher per Europe/Oslo-døgn, uten faste klokkeslett.
+- En grønn `main`-CI evaluerer om nok produksjonsrelevante endringer har samlet seg; uten relevante endringer opprettes ingen Vercel-deploy.
+- Når dagsgrensen er nådd, blir ventende endringer stående til neste Europe/Oslo-døgn.
+- Production proof skal lese både API og web etter en faktisk release og bevise at de kjører forventet `main`-SHA.
 
 ## Restaurantproduksjonsbaseline 2026-08-22
 

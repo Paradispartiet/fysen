@@ -57,15 +57,13 @@ Deterministic extraction, menu-assertion and hours failures remain fail-closed. 
 
 ## Deployment discipline
 
-Fysen uses fully explicit, batched Vercel production releases. Git pushes and merges must not create Vercel deployments automatically.
+Fysen uses batched Vercel production releases. Vercel Git integration must not create deployments directly from pushes or merges.
 
 - `apps/web/vercel.json` and `apps/api/vercel.json` set `git.deploymentEnabled` to `false`. This applies to `main`, feature branches and preview branches alike.
 - GitHub Pages is the normal Fysen working preview. Do not use Vercel Git previews for ordinary visual QA.
-- Merging to `main` only changes canonical source. It does not deploy web or API to Vercel.
-- The normal production cadence is **twice per day at 10:00 and 22:00 Europe/Oslo** through `.github/workflows/vercel-production-release.yml`.
-- The workflow uses UTC candidate triggers plus an `Europe/Oslo` guard so the two release windows stay at 10:00 and 22:00 through both CET and CEST.
-- Scheduled runs use `auto` mode. They query each Vercel project's latest successful production deployment and compare its recorded Fysen source SHA with fresh canonical `main`.
-- A scheduled window creates **no Vercel deployment** when no production-relevant changes have accumulated.
+- A successful `main` CI run invokes `.github/workflows/vercel-production-release.yml` in `auto` mode. The evaluator queries each Vercel project's latest successful production deployment and compares its recorded Fysen source SHA with the exact green `main` SHA.
+- Production is limited to **three release batches per Europe/Oslo day**. There are no fixed deployment times.
+- An evaluation creates **no Vercel deployment** when no production-relevant changes have accumulated. Pending changes remain queued when the daily batch limit has been reached.
 - Web is deployed only when `apps/web`, `packages/contracts`, or shared root build/workspace configuration changed since the latest successful web production release.
 - API is deployed only when `apps/api`, `packages/contracts`, `packages/database`, `packages/menu-core`, or shared root build/workspace configuration changed since the latest successful API production release.
 - Documentation-only changes therefore wait on `main` without consuming Vercel deployment quota.
@@ -79,7 +77,7 @@ Fysen uses fully explicit, batched Vercel production releases. Git pushes and me
 - A failed verification is a failed production release even if Vercel completed a build. Investigate before retrying.
 - Do not restore `.vercel-release`, `scripts/vercel-ignore.sh`, `ignoreCommand`, branch allowlists, dated one-shot workflows or empty commits as deployment mechanisms. Use the batched release workflow.
 
-This architecture lets development accumulate safely on `main`, keeps preview work independent on GitHub Pages, and normally caps production activity at two release windows per day instead of turning every merge into a Vercel deployment.
+This architecture lets development accumulate safely on `main`, keeps preview work independent on GitHub Pages, and caps production activity at three change-qualified batches per Europe/Oslo day.
 
 ## Domain rule
 
