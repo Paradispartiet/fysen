@@ -39,7 +39,7 @@ jobs:
               try {
                 const response = await fetch(url, {
                   cache: "no-store",
-                  headers: { "user-agent": "FysenMatlystProductionProof/1.0" },
+                  headers: { "user-agent": "FysenMatlystProductionProof/1.1" },
                   signal: AbortSignal.timeout(15_000),
                 });
                 lastStatus = response.status;
@@ -59,42 +59,55 @@ jobs:
             }
           }
 
+          function requireOccurrences(surface, text, minimum) {
+            const count = surface.html.split(text).length - 1;
+            if (count < minimum) {
+              throw new Error(`${surface.url} has ${count} occurrences of ${text}; expected at least ${minimum}`);
+            }
+          }
+
           const home = await fetchHtml("/");
+          const homeCuisines = ["Asiatisk", "Indisk", "Fast food", "Italiensk", "Midtøsten", "Mexicansk"];
           requireText(
             home,
             "Hva har du lyst på?",
-            "Finn maten du faktisk har lyst på",
-            "Velg etter lyst",
-            "Utforsk verden",
-            "Asia",
-            "Europa",
-            "Afrika",
-            "Amerika",
-            "Alle kjøkken (19)",
+            "Søk etter en rett og se hvilke restauranter som har den på menyen nå.",
+            "Se alle retter i Oslo",
+            "Matlyst",
+            "På menyen nå",
+            ...homeCuisines,
           );
+          requireOccurrences(home, "cuisineCard cuisineCardInteractive", homeCuisines.length);
+          requireOccurrences(home, "cuisineRestaurantNames", homeCuisines.length);
 
           const journeys = [
-            ["Asia → Øst-Asia → Japansk", "/search?city=Oslo&world=asia&region=east-asia&cuisine=Japansk", "Ramen"],
-            ["Europa → Sør-Europa → Italiensk", "/search?city=Oslo&world=europe&region=southern-europe&cuisine=Italiensk", "Carbonara"],
-            ["Asia → Sør-Asia → Nepalsk", "/search?city=Oslo&world=asia&region=south-asia&cuisine=Nepalsk", "Momo"],
-            ["Europa → Øst-Europa → Polsk", "/search?city=Oslo&world=europe&region=eastern-europe&cuisine=Polsk", "Pierogi"],
-            ["Afrika → Øst-Afrika → Etiopisk", "/search?city=Oslo&world=africa&region=east-africa&cuisine=Etiopisk", "Doro wat"],
-            ["Asia → Sørøst-Asia → Filippinsk", "/search?city=Oslo&world=asia&region=southeast-asia&cuisine=Filippinsk", "Sisig"],
-            ["Afrika → Nord-Afrika → Egyptisk", "/search?city=Oslo&world=africa&region=north-africa&cuisine=Egyptisk", "Koshari"],
-            ["Asia → Vest-Asia → Levantinsk", "/search?city=Oslo&world=asia&region=west-asia&cuisine=Levantinsk", "Falafel"],
+            ["Japansk", "/search?city=Oslo&cuisine=Japansk", "Ramen"],
+            ["Italiensk", "/search?city=Oslo&cuisine=Italiensk", "Carbonara"],
+            ["Nepalsk", "/search?city=Oslo&cuisine=Nepalsk", "Momo"],
+            ["Polsk", "/search?city=Oslo&cuisine=Polsk", "Pierogi"],
+            ["Etiopisk", "/search?city=Oslo&cuisine=Etiopisk", "Doro wat"],
+            ["Filippinsk", "/search?city=Oslo&cuisine=Filippinsk", "Sisig"],
+            ["Egyptisk", "/search?city=Oslo&cuisine=Egyptisk", "Koshari"],
+            ["Levantinsk", "/search?city=Oslo&cuisine=Levantinsk", "Falafel"],
           ];
 
           const verified = [];
-          for (const [pathLabel, path, representativeDish] of journeys) {
+          for (const [cuisine, path, representativeDish] of journeys) {
             const surface = await fetchHtml(path);
-            requireText(surface, "Alle retter i Oslo", pathLabel, representativeDish);
-            verified.push({ path: pathLabel, representativeDish, url: surface.url });
+            requireText(
+              surface,
+              "Alle retter i Oslo",
+              cuisine,
+              representativeDish,
+              "Production-backed canonical Matlyst-retter",
+            );
+            verified.push({ cuisine, representativeDish, url: surface.url });
           }
 
           process.stdout.write(`${JSON.stringify({
             status: "verified",
             home: home.url,
-            worlds: ["Asia", "Europa", "Afrika", "Amerika"],
+            homeCuisines,
             activeCuisineCount: 19,
             journeys: verified,
           }, null, 2)}\n`);
