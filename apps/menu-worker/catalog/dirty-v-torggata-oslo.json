@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dirty-v-torggata-oslo",
+    "name": "Dirty V Torggata",
+    "websiteUrl": null,
+    "address": "Torggata 23, 0183 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91662280540833,
+    "longitude": 10.752774577727639
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/dirtyvtorggata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 41,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Future Classic Meal Deal",
+      "Tasty Clucker Meal Deal 🌶️",
+      "West Coast",
+      "Garlic B.L.T.",
+      "Sweet Potato Fries",
+      "Nuggets 8 pcs",
+      "Fritz-Kola",
+      "Heineken 0,0 %"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Future Classic Meal Deal",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Tasty Clucker Meal Deal 🌶️",
+        "priceMinor": 26900
+      },
+      {
+        "name": "West Coast",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Garlic B.L.T.",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Sweet Potato Fries",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Nuggets 8 pcs",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Fritz-Kola",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Heineken 0,0 %",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

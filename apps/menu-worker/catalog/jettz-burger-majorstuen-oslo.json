@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jettz-burger-majorstuen-oslo",
+    "name": "Jettz Burger Majorstuen",
+    "websiteUrl": null,
+    "address": "Kirkeveien 46A, 0368 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92745915535486,
+    "longitude": 10.71270534075297
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/290jettzburgermajorstuen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 58,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Cheese - Meal Deal",
+      "Ortens Favoritt",
+      "Double - Ortens Favoritt",
+      "Cheese Fries",
+      "BBQ",
+      "Sharebox",
+      "Bris Sitrongress & Lime",
+      "Meal Deal - Spicy Jalapeños"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Cheese - Meal Deal",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Ortens Favoritt",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Double - Ortens Favoritt",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Cheese Fries",
+        "priceMinor": 10900
+      },
+      {
+        "name": "BBQ",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Sharebox",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Bris Sitrongress & Lime",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Meal Deal - Spicy Jalapeños",
+        "priceMinor": 31900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

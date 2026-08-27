@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "flamme-burger-frogner-oslo",
+    "name": "Flamme Burger Frogner",
+    "websiteUrl": null,
+    "address": "Skovveien 3, 0257 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91586677568926,
+    "longitude": 10.716030572009782
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/flammeburgerfrogner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 68,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Crispy Chicken Burger Menu Deal",
+      "Classic Burger Menu Deal",
+      "Chicken Nuggets (5stk)",
+      "Flamme Truffle Dip",
+      "Monster Energy Zero Sugar 0,5l",
+      "Chicken Truffle Burger",
+      "Beyond Truffle Burger",
+      "Kids Chicken Nugget Deal - Small"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Crispy Chicken Burger Menu Deal",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Classic Burger Menu Deal",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Chicken Nuggets (5stk)",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Flamme Truffle Dip",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Monster Energy Zero Sugar 0,5l",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Chicken Truffle Burger",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Beyond Truffle Burger",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Kids Chicken Nugget Deal - Small",
+        "priceMinor": 14500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

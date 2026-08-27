@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dronningens-kebab-youngstorget-oslo",
+    "name": "Dronningens Kebab Youngstorget",
+    "websiteUrl": null,
+    "address": "Youngstorget 4, 0181 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91429755281609,
+    "longitude": 10.748645446004854
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/dronningenskebabyoungstorget",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 19,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Dronningens Spesial Mix Kebab",
+      "Kebabtallerken",
+      "Kebab i Box",
+      "Falafel 🌱",
+      "Hamburgertallerken",
+      "Pepsi Max 0.33l",
+      "Shweppes Zero Citrus Mix 0.5l",
+      "Villa 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Dronningens Spesial Mix Kebab",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Kebabtallerken",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Kebab i Box",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Falafel 🌱",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Hamburgertallerken",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Pepsi Max 0.33l",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Shweppes Zero Citrus Mix 0.5l",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Villa 0,5l",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

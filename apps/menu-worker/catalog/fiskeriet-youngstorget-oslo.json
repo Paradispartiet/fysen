@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "fiskeriet-youngstorget-oslo",
+    "name": "Fiskeriet Youngstorget",
+    "websiteUrl": null,
+    "address": "Youngstorget 2, 0181 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9145532904993,
+    "longitude": 10.749678422671124
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/615fiskerietyoungstorget",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 23,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fish & Chips",
+      "Laksetartar",
+      "Reker",
+      "Chips",
+      "Ketchup",
+      "Eddik",
+      "Pepsi 0,33L",
+      "Ringi Eplejuice 0,25L"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fish & Chips",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Laksetartar",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Reker",
+        "priceMinor": 27000
+      },
+      {
+        "name": "Chips",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Ketchup",
+        "priceMinor": 1000
+      },
+      {
+        "name": "Eddik",
+        "priceMinor": 500
+      },
+      {
+        "name": "Pepsi 0,33L",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Ringi Eplejuice 0,25L",
+        "priceMinor": 8900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

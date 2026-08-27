@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizza-ricetta-alexander-kiellands-plass-oslo",
+    "name": "Pizza Ricetta Alexander Kiellands Plass",
+    "websiteUrl": null,
+    "address": "Waldemar Thranes gate 86, 0175 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.928303950990006,
+    "longitude": 10.753730829501807
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/99pizzaricettaalexanderkiellandsplass",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 81,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Valentino",
+      "Vegetar Nr. 2",
+      "Stor Roma",
+      "Paganini",
+      "Stor Aubergino",
+      "Döner Kebab i Rull",
+      "Villa 1,5L"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Valentino",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Vegetar Nr. 2",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Stor Roma",
+        "priceMinor": 30900
+      },
+      {
+        "name": "Paganini",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Stor Aubergino",
+        "priceMinor": 32900
+      },
+      {
+        "name": "Döner Kebab i Rull",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Villa 1,5L",
+        "priceMinor": 6900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

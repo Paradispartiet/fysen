@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "el-camino-barcode-oslo",
+    "name": "El Camino Barcode",
+    "websiteUrl": null,
+    "address": "Dronning Eufemias gate 11, 0150 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.908275237730535,
+    "longitude": 10.755151064837957
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/elcaminobarcode",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 23,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Small family bundle",
+      "Barbacoa Beef Burrito",
+      "Barbacoa Beef Bowl",
+      "Chips & Dip Snack Size",
+      "Salsa cup - Spicy",
+      "Salsa cup - Pico de Gallo",
+      "Jarritos - Grapefruit",
+      "Jarritos - Pineapple"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Small family bundle",
+        "priceMinor": 59200
+      },
+      {
+        "name": "Barbacoa Beef Burrito",
+        "priceMinor": 25200
+      },
+      {
+        "name": "Barbacoa Beef Bowl",
+        "priceMinor": 25200
+      },
+      {
+        "name": "Chips & Dip Snack Size",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Salsa cup - Spicy",
+        "priceMinor": 5100
+      },
+      {
+        "name": "Salsa cup - Pico de Gallo",
+        "priceMinor": 5100
+      },
+      {
+        "name": "Jarritos - Grapefruit",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Jarritos - Pineapple",
+        "priceMinor": 7900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
