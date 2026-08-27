@@ -9,11 +9,15 @@ const watcher = readFileSync(
   new URL("../../../.github/workflows/watch-menus.yml", import.meta.url),
   "utf8",
 );
+const catalogHealth = readFileSync(
+  new URL("../../../.github/workflows/restaurant-catalog-health.yml", import.meta.url),
+  "utf8",
+);
 
-describe("production menu mutation workflows", () => {
-  it("serializes materializer and watcher through one production mutation queue", () => {
-    for (const workflow of [materializer, watcher]) {
-      expect(workflow).toContain("group: fysen-production-menu-mutation");
+describe("production live menu-source workflows", () => {
+  it("serializes every live menu-source workflow through one shared queue", () => {
+    for (const workflow of [materializer, watcher, catalogHealth]) {
+      expect(workflow).toContain("group: fysen-production-menu-source");
       expect(workflow).toContain("cancel-in-progress: false");
     }
   });
