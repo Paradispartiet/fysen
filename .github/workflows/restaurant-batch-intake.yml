@@ -155,18 +155,53 @@ jobs:
             }
           }
 
+          const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+          const transientStatuses = new Set([429, 500, 502, 503, 504]);
+
           async function addressHits(address) {
             const queryUrl = new URL("https://ws.geonorge.no/adresser/v1/sok");
             queryUrl.searchParams.set("sok", address);
             queryUrl.searchParams.set("treffPerSide", "10");
-            const response = await fetch(queryUrl, {
-              headers: { "user-agent": "FysenMenuBot/0.1 restaurant-batch-geocoder" }
-            });
-            if (!response.ok) {
-              throw new Error(`Kartverket address lookup returned HTTP ${response.status} for ${address}`);
+
+            const maxAttempts = 5;
+            for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+              let response;
+              try {
+                response = await fetch(queryUrl, {
+                  headers: { "user-agent": "FysenMenuBot/0.1 restaurant-batch-geocoder" }
+                });
+              } catch (error) {
+                if (attempt === maxAttempts) {
+                  const detail = error instanceof Error ? error.message : String(error);
+                  throw new Error(
+                    `Kartverket address lookup failed after ${maxAttempts} attempts for ${address}: ${detail}`
+                  );
+                }
+                const delayMs = 1000 * (2 ** (attempt - 1));
+                console.warn(
+                  `Kartverket address lookup transport failure for ${address}; retry ${attempt}/${maxAttempts - 1} in ${delayMs}ms.`
+                );
+                await sleep(delayMs);
+                continue;
+              }
+
+              if (response.ok) {
+                const payload = await response.json();
+                return Array.isArray(payload?.adresser) ? payload.adresser : [];
+              }
+
+              if (!transientStatuses.has(response.status) || attempt === maxAttempts) {
+                throw new Error(`Kartverket address lookup returned HTTP ${response.status} for ${address}`);
+              }
+
+              const delayMs = 1000 * (2 ** (attempt - 1));
+              console.warn(
+                `Kartverket address lookup returned HTTP ${response.status} for ${address}; retry ${attempt}/${maxAttempts - 1} in ${delayMs}ms.`
+              );
+              await sleep(delayMs);
             }
-            const payload = await response.json();
-            return Array.isArray(payload?.adresser) ? payload.adresser : [];
+
+            throw new Error(`Kartverket address lookup exhausted retries for ${address}`);
           }
 
           function chooseOsloHit(hits, postalMatch) {
