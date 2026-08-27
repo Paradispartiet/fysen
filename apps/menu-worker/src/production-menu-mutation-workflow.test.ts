@@ -14,7 +14,7 @@ const catalogHealth = readFileSync(
   "utf8",
 );
 
-describe("production menu mutation workflows", () => {
+describe("production live menu-source workflows", () => {
   it("serializes every live menu-source workflow through one shared queue", () => {
     for (const workflow of [materializer, watcher, catalogHealth]) {
       expect(workflow).toContain("group: fysen-production-menu-source");
