@@ -18,10 +18,8 @@ permissions:
   contents: read
 
 concurrency:
-  # Share one queue with production materialization so separate runners do
-  # not hit the same upstream menu hosts concurrently.
-  group: fysen-production-menu-source
-  cancel-in-progress: false
+  group: fysen-restaurant-catalog-health
+  cancel-in-progress: true
 
 jobs:
   full-catalog:
