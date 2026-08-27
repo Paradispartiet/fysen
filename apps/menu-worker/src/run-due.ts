@@ -1,7 +1,7 @@
 import {
   createDatabasePool,
   getMenuSourceSupport,
-  listDueMenuSourceIds,
+  listDueMenuSources,
   MenuIndexRepository,
   type WatchOutcome,
 } from "@fysen/database";
@@ -17,6 +17,8 @@ const failingOutcomes = new Set<WatchOutcome>([
 
 export interface DueMenuSourceResult {
   readonly menuSourceId: string;
+  readonly restaurantSlug: string;
+  readonly sourceUrl: string;
   readonly summary: MenuWatchSummary | null;
   readonly error: string | null;
 }
@@ -32,27 +34,41 @@ export async function runDueMenuSources(limit = 25): Promise<DueMenuRunSummary> 
   try {
     const repository = new MenuIndexRepository(pool);
     const httpClient = new HttpMenuClient();
-    const sourceIds = await listDueMenuSourceIds(pool, limit);
+    const sources = await listDueMenuSources(pool, limit);
     const results: DueMenuSourceResult[] = [];
     let failedCount = 0;
 
-    for (const menuSourceId of sourceIds) {
+    for (const source of sources) {
+      const menuSourceId = source.id;
       try {
         const sourceSupport = await getMenuSourceSupport(pool, menuSourceId);
-        const summary = await watchMenuSourceOnce(repository, menuSourceId, httpClient, sourceSupport);
+        const summary = await watchMenuSourceOnce(
+          repository,
+          menuSourceId,
+          httpClient,
+          sourceSupport,
+        );
         if (failingOutcomes.has(summary.outcome)) failedCount += 1;
-        results.push({ menuSourceId, summary, error: null });
+        results.push({
+          menuSourceId,
+          restaurantSlug: source.restaurantSlug,
+          sourceUrl: source.url,
+          summary,
+          error: null,
+        });
       } catch (error) {
         failedCount += 1;
         results.push({
           menuSourceId,
+          restaurantSlug: source.restaurantSlug,
+          sourceUrl: source.url,
           summary: null,
           error: error instanceof Error ? error.message : String(error),
         });
       }
     }
 
-    return { dueCount: sourceIds.length, failedCount, results };
+    return { dueCount: sources.length, failedCount, results };
   } finally {
     await pool.end();
   }
