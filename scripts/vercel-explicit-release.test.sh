@@ -19,11 +19,18 @@ if grep -Eq '^[[:space:]]+schedule:' "$workflow" || grep -F 'cron:' "$workflow" 
   echo "Production releases must be on demand, not tied to unreliable clock windows" >&2
   exit 1
 fi
+grep -F 'workflow_run:' "$workflow" >/dev/null
+grep -F 'workflows: [CI]' "$workflow" >/dev/null
+grep -F 'types: [completed]' "$workflow" >/dev/null
+grep -F 'branches: [main]' "$workflow" >/dev/null
+grep -F 'COMPLETED_CI_CONCLUSION: ${{ github.event.workflow_run.conclusion }}' "$workflow" >/dev/null
+grep -F 'COMPLETED_CI_SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}' "$workflow" >/dev/null
+grep -F 'release_mode=qualified-main' "$workflow" >/dev/null
 grep -F 'workflow_dispatch:' "$workflow" >/dev/null
 grep -F 'default: auto' "$workflow" >/dev/null
 grep -F 'Manual Fysen production releases must be dispatched from main.' "$workflow" >/dev/null
-grep -F 'ref: ${{ github.sha }}' "$workflow" >/dev/null
-grep -F 'Locked release source $source_sha does not match workflow trigger $GITHUB_SHA' "$workflow" >/dev/null
+grep -F 'ref: ${{ needs.request.outputs.source_sha }}' "$workflow" >/dev/null
+grep -F 'Locked release source $source_sha does not match qualified source $LOCKED_SOURCE_SHA' "$workflow" >/dev/null
 if grep -F 'ref: main' "$workflow" >/dev/null; then
   echo "Production release must checkout the immutable trigger SHA, not a moving main ref" >&2
   exit 1

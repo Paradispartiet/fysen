@@ -1,6 +1,10 @@
 name: Fysen batched Vercel production release
 
 on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
     inputs:
       target:
@@ -29,14 +33,36 @@ jobs:
       active: ${{ steps.window.outputs.active }}
       target: ${{ steps.window.outputs.target }}
       release_mode: ${{ steps.window.outputs.release_mode }}
+      source_sha: ${{ steps.window.outputs.source_sha }}
     steps:
       - name: Resolve on-demand release request
         id: window
         shell: bash
         env:
           REQUESTED_TARGET: ${{ inputs.target || 'auto' }}
+          COMPLETED_CI_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          COMPLETED_CI_SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
           set -euo pipefail
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_run" ]]; then
+            if [[ "$COMPLETED_CI_CONCLUSION" != "success" ]]; then
+              echo "active=false" >> "$GITHUB_OUTPUT"
+              echo "target=auto" >> "$GITHUB_OUTPUT"
+              echo "release_mode=ci-not-green" >> "$GITHUB_OUTPUT"
+              echo "source_sha=$COMPLETED_CI_SOURCE_SHA" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            if [[ -z "$COMPLETED_CI_SOURCE_SHA" ]]; then
+              echo "Completed CI run did not provide an immutable source SHA" >&2
+              exit 1
+            fi
+            echo "active=true" >> "$GITHUB_OUTPUT"
+            echo "target=auto" >> "$GITHUB_OUTPUT"
+            echo "release_mode=qualified-main" >> "$GITHUB_OUTPUT"
+            echo "source_sha=$COMPLETED_CI_SOURCE_SHA" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
           if [[ "$GITHUB_REF" != "refs/heads/main" ]]; then
             echo "::error title=Invalid production release ref::Manual Fysen production releases must be dispatched from main."
             exit 1
@@ -44,6 +70,7 @@ jobs:
           echo "active=true" >> "$GITHUB_OUTPUT"
           echo "target=${REQUESTED_TARGET:-auto}" >> "$GITHUB_OUTPUT"
           echo "release_mode=on-demand-${REQUESTED_TARGET:-auto}" >> "$GITHUB_OUTPUT"
+          echo "source_sha=$GITHUB_SHA" >> "$GITHUB_OUTPUT"
 
   prepare:
     if: ${{ needs.request.outputs.active == 'true' }}
@@ -61,6 +88,7 @@ jobs:
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       REQUESTED_TARGET: ${{ needs.request.outputs.target }}
+      LOCKED_SOURCE_SHA: ${{ needs.request.outputs.source_sha }}
     steps:
       - name: Require Vercel token
         shell: bash
@@ -74,7 +102,7 @@ jobs:
       - name: Checkout locked trigger history
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ needs.request.outputs.source_sha }}
           fetch-depth: 0
 
       - name: Build batched release plan
@@ -83,8 +111,8 @@ jobs:
         run: |
           set -euo pipefail
           source_sha="$(git rev-parse HEAD)"
-          if [[ "$source_sha" != "$GITHUB_SHA" ]]; then
-            echo "Locked release source $source_sha does not match workflow trigger $GITHUB_SHA" >&2
+          if [[ "$source_sha" != "$LOCKED_SOURCE_SHA" ]]; then
+            echo "Locked release source $source_sha does not match qualified source $LOCKED_SOURCE_SHA" >&2
             exit 1
           fi
 
