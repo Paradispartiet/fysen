@@ -24,6 +24,45 @@ describe("HttpMenuClient", () => {
     expect(boundedHttpTimeoutMs("invalid")).toBe(20_000);
   });
 
+  it("reserves same-origin request slots before concurrent fetches can race", async () => {
+    const requestPaths: string[] = [];
+    const fetchImpl = asFetch(async (input) => {
+      requestPaths.push(input.pathname);
+      if (input.pathname === "/robots.txt") {
+        return new Response("User-agent: *\nAllow: /\n", { status: 200 });
+      }
+      return new Response("<html><body>menu</body></html>", { status: 200 });
+    });
+    const firstClient = new HttpMenuClient({
+      fetchImpl,
+      resolver: publicResolver,
+      minHostDelayMs: 30,
+      timeoutMs: 1000,
+    });
+    const secondClient = new HttpMenuClient({
+      fetchImpl,
+      resolver: publicResolver,
+      minHostDelayMs: 30,
+      timeoutMs: 1000,
+    });
+    const source = (path: string) => ({
+      url: `https://restaurant.test/${path}`,
+      userAgent: "FysenMenuBot/0.1",
+      etag: null,
+      lastModified: null,
+    });
+
+    const pending = Promise.all([
+      firstClient.fetchSource(source("one")),
+      secondClient.fetchSource(source("two")),
+    ]);
+    await new Promise((resolve) => setTimeout(resolve, 10));
+
+    expect(requestPaths).toEqual(["/robots.txt"]);
+    await pending;
+    expect(requestPaths).toEqual(["/robots.txt", "/robots.txt", "/one", "/two"]);
+  });
+
   it("honors robots.txt and sends conditional validators to the menu request", async () => {
     const calls: { readonly url: string; readonly headers: Headers }[] = [];
     const fetchImpl = asFetch(async (input, init) => {
