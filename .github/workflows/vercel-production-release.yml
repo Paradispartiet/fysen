@@ -1,11 +1,6 @@
 name: Fysen batched Vercel production release
 
 on:
-  schedule:
-    - cron: "23 10 * * *"
-      timezone: "Europe/Oslo"
-    - cron: "23 22 * * *"
-      timezone: "Europe/Oslo"
   workflow_dispatch:
     inputs:
       target:
@@ -28,44 +23,31 @@ env:
   FYSEN_API_PROJECT_ID: prj_sSNtWlPc13Lgr2ws6DdhCfPFtr4E
 
 jobs:
-  window:
+  request:
     runs-on: ubuntu-latest
     outputs:
       active: ${{ steps.window.outputs.active }}
       target: ${{ steps.window.outputs.target }}
       release_mode: ${{ steps.window.outputs.release_mode }}
     steps:
-      - name: Resolve release window
+      - name: Resolve on-demand release request
         id: window
         shell: bash
         env:
           REQUESTED_TARGET: ${{ inputs.target || 'auto' }}
-          SCHEDULE_EXPRESSION: ${{ github.event.schedule }}
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "schedule" ]]; then
-            case "$SCHEDULE_EXPRESSION" in
-              "23 10 * * *") release_mode="scheduled-1023-oslo" ;;
-              "23 22 * * *") release_mode="scheduled-2223-oslo" ;;
-              *) echo "Unknown scheduled release expression: $SCHEDULE_EXPRESSION" >&2; exit 1 ;;
-            esac
-            echo "active=true" >> "$GITHUB_OUTPUT"
-            echo "target=auto" >> "$GITHUB_OUTPUT"
-            echo "release_mode=$release_mode" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
           if [[ "$GITHUB_REF" != "refs/heads/main" ]]; then
             echo "::error title=Invalid production release ref::Manual Fysen production releases must be dispatched from main."
             exit 1
           fi
           echo "active=true" >> "$GITHUB_OUTPUT"
           echo "target=${REQUESTED_TARGET:-auto}" >> "$GITHUB_OUTPUT"
-          echo "release_mode=manual-${REQUESTED_TARGET:-auto}" >> "$GITHUB_OUTPUT"
+          echo "release_mode=on-demand-${REQUESTED_TARGET:-auto}" >> "$GITHUB_OUTPUT"
 
   prepare:
-    if: ${{ needs.window.outputs.active == 'true' }}
-    needs: window
+    if: ${{ needs.request.outputs.active == 'true' }}
+    needs: request
     runs-on: ubuntu-latest
     outputs:
       source_sha: ${{ steps.plan.outputs.source_sha }}
@@ -73,17 +55,19 @@ jobs:
       api_needed: ${{ steps.plan.outputs.api_needed }}
       web_production_sha: ${{ steps.plan.outputs.web_production_sha }}
       api_production_sha: ${{ steps.plan.outputs.api_production_sha }}
-      release_mode: ${{ needs.window.outputs.release_mode }}
+      release_capacity_available: ${{ steps.plan.outputs.release_capacity_available }}
+      releases_today: ${{ steps.plan.outputs.releases_today }}
+      release_mode: ${{ needs.request.outputs.release_mode }}
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      REQUESTED_TARGET: ${{ needs.window.outputs.target }}
+      REQUESTED_TARGET: ${{ needs.request.outputs.target }}
     steps:
       - name: Require Vercel token
         shell: bash
         run: |
           set -euo pipefail
           if [[ -z "${VERCEL_TOKEN:-}" ]]; then
-            echo "::error title=Missing VERCEL_TOKEN::Add a Vercel access token as the repository secret VERCEL_TOKEN before scheduled or manual production releases can run."
+            echo "::error title=Missing VERCEL_TOKEN::Add a Vercel access token as the repository secret VERCEL_TOKEN before on-demand production releases can run."
             exit 1
           fi
 
@@ -104,22 +88,39 @@ jobs:
             exit 1
           fi
 
-          latest_production_sha() {
+          production_deployments() {
             local project_id="$1"
-            local response
-            response="$(curl --fail --silent --show-error --get \
+            curl --fail --silent --show-error --get \
               'https://api.vercel.com/v7/deployments' \
               -H "Authorization: Bearer $VERCEL_TOKEN" \
               --data-urlencode "projectId=$project_id" \
               --data-urlencode "teamId=$VERCEL_ORG_ID" \
               --data-urlencode 'target=production' \
               --data-urlencode 'state=READY' \
-              --data-urlencode 'limit=20')"
-            printf '%s' "$response" | jq -r '[.deployments[] | (.meta.fysenSourceSha // .meta.githubCommitSha // empty)] | .[0] // ""'
+              --data-urlencode 'limit=100'
           }
 
-          web_production_sha="$(latest_production_sha "$FYSEN_WEB_PROJECT_ID")"
-          api_production_sha="$(latest_production_sha "$FYSEN_API_PROJECT_ID")"
+          web_deployments="$(production_deployments "$FYSEN_WEB_PROJECT_ID")"
+          api_deployments="$(production_deployments "$FYSEN_API_PROJECT_ID")"
+          web_production_sha="$(printf '%s' "$web_deployments" | jq -r '[.deployments[] | (.meta.fysenSourceSha // .meta.githubCommitSha // empty)] | .[0] // ""')"
+          api_production_sha="$(printf '%s' "$api_deployments" | jq -r '[.deployments[] | (.meta.fysenSourceSha // .meta.githubCommitSha // empty)] | .[0] // ""')"
+
+          oslo_day_start_seconds="$(TZ=Europe/Oslo date -d "$(TZ=Europe/Oslo date +%F) 00:00:00" +%s)"
+          oslo_day_start_ms="$((oslo_day_start_seconds * 1000))"
+          releases_today="$(jq -n \
+            --argjson web "$web_deployments" \
+            --argjson api "$api_deployments" \
+            --argjson since "$oslo_day_start_ms" '
+              [($web.deployments + $api.deployments)[]
+                | select((.createdAt // 0) >= $since)
+                | (.meta.fysenReleaseBatch // .meta.fysenSourceSha // .meta.githubCommitSha // .uid)]
+              | unique
+              | length')"
+          if (( releases_today < 3 )); then
+            release_capacity_available=true
+          else
+            release_capacity_available=false
+          fi
 
           path_requires_web() {
             case "$1" in
@@ -160,26 +161,38 @@ jobs:
             *) echo "Unknown release target: $REQUESTED_TARGET" >&2; exit 1 ;;
           esac
 
+          if [[ "$release_capacity_available" == "false" && ("$web_needed" == "true" || "$api_needed" == "true") ]]; then
+            web_needed=false
+            api_needed=false
+          fi
+
           {
             echo "source_sha=$source_sha"
             echo "web_needed=$web_needed"
             echo "api_needed=$api_needed"
             echo "web_production_sha=$web_production_sha"
             echo "api_production_sha=$api_production_sha"
+            echo "release_capacity_available=$release_capacity_available"
+            echo "releases_today=$releases_today"
           } >> "$GITHUB_OUTPUT"
 
           {
             echo '## Fysen batched production plan'
             echo
-            echo "- Release mode: \`${{ needs.window.outputs.release_mode }}\`"
+            echo "- Release mode: \`${{ needs.request.outputs.release_mode }}\`"
             echo "- Canonical source: \`$source_sha\`"
             echo "- Web currently released from: \`${web_production_sha:-unknown}\`"
             echo "- API currently released from: \`${api_production_sha:-unknown}\`"
+            echo "- Production batches today (Europe/Oslo): \`$releases_today/3\`"
             echo "- Deploy web: \`$web_needed\`"
             echo "- Deploy API: \`$api_needed\`"
+            if [[ "$release_capacity_available" == "false" ]]; then
+              echo
+              echo 'The daily limit of three production batches has been reached; pending changes remain queued for the next Oslo day.'
+            fi
             if [[ "$web_needed" == "false" && "$api_needed" == "false" ]]; then
               echo
-              echo 'No production-relevant changes have accumulated; this window creates no Vercel deployment and no production proof.'
+              echo 'No production-relevant changes have accumulated; this request creates no Vercel deployment and no production proof.'
             fi
           } >> "$GITHUB_STEP_SUMMARY"
 
@@ -212,7 +225,8 @@ jobs:
           pnpm dlx vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
           pnpm dlx vercel@latest build --prod --token="$VERCEL_TOKEN"
           deployment_url="$(pnpm dlx vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN" \
-            --meta "fysenSourceSha=$SOURCE_SHA" --meta "fysenReleaseMode=$RELEASE_MODE")"
+            --meta "fysenSourceSha=$SOURCE_SHA" --meta "fysenReleaseMode=$RELEASE_MODE" \
+            --meta "fysenReleaseBatch=$GITHUB_RUN_ID")"
           echo "deployment_url=$deployment_url" >> "$GITHUB_OUTPUT"
           echo "Web production deployment: $deployment_url"
       - name: Verify public web
@@ -271,7 +285,8 @@ jobs:
           pnpm dlx vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
           pnpm dlx vercel@latest build --prod --token="$VERCEL_TOKEN"
           deployment_url="$(pnpm dlx vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN" \
-            --meta "fysenSourceSha=$SOURCE_SHA" --meta "fysenReleaseMode=$RELEASE_MODE")"
+            --meta "fysenSourceSha=$SOURCE_SHA" --meta "fysenReleaseMode=$RELEASE_MODE" \
+            --meta "fysenReleaseBatch=$GITHUB_RUN_ID")"
           echo "deployment_url=$deployment_url" >> "$GITHUB_OUTPUT"
           echo "API production deployment: $deployment_url"
       - name: Verify public API
