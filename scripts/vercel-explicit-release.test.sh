@@ -15,18 +15,8 @@ done
 
 workflow=.github/workflows/vercel-production-release.yml
 test -f "$workflow"
-grep -F 'schedule:' "$workflow" >/dev/null
-grep -F 'cron: "23 10 * * *"' "$workflow" >/dev/null
-grep -F 'cron: "23 22 * * *"' "$workflow" >/dev/null
-if [[ "$(grep -Fc 'timezone: "Europe/Oslo"' "$workflow")" -ne 2 ]]; then
-  echo "Both production release windows must use the Europe/Oslo timezone" >&2
-  exit 1
-fi
-grep -F 'SCHEDULE_EXPRESSION: ${{ github.event.schedule }}' "$workflow" >/dev/null
-grep -F '"23 10 * * *") release_mode="scheduled-1023-oslo"' "$workflow" >/dev/null
-grep -F '"23 22 * * *") release_mode="scheduled-2223-oslo"' "$workflow" >/dev/null
-if grep -F 'TZ=Europe/Oslo date +%H' "$workflow" >/dev/null; then
-  echo "Scheduled releases must not be skipped because GitHub started a queued run late" >&2
+if grep -Eq '^[[:space:]]+schedule:' "$workflow" || grep -F 'cron:' "$workflow" >/dev/null; then
+  echo "Production releases must be on demand, not tied to unreliable clock windows" >&2
   exit 1
 fi
 grep -F 'workflow_dispatch:' "$workflow" >/dev/null
@@ -47,8 +37,12 @@ grep -F '.meta.fysenSourceSha // .meta.githubCommitSha' "$workflow" >/dev/null
 grep -F 'packages/contracts/*' "$workflow" >/dev/null
 grep -F 'packages/database/*' "$workflow" >/dev/null
 grep -F 'packages/menu-core/*' "$workflow" >/dev/null
-grep -F 'No production-relevant changes have accumulated' "$workflow" >/dev/null
+grep -F 'No production-relevant changes have accumulated; this request creates no Vercel deployment' "$workflow" >/dev/null
+grep -F 'releases_today < 3' "$workflow" >/dev/null
+grep -F 'fysenReleaseBatch // .meta.fysenSourceSha' "$workflow" >/dev/null
+grep -F 'The daily limit of three production batches has been reached' "$workflow" >/dev/null
 grep -F -- '--meta "fysenSourceSha=$SOURCE_SHA"' "$workflow" >/dev/null
+grep -F -- '--meta "fysenReleaseBatch=$GITHUB_RUN_ID"' "$workflow" >/dev/null
 grep -F 'deploy --prebuilt --prod' "$workflow" >/dev/null
 grep -F 'https://fysen.vercel.app/' "$workflow" >/dev/null
 if grep -F 'https://fysen-matsgran-8572s-projects.vercel.app/' "$workflow" >/dev/null; then
@@ -87,4 +81,4 @@ for obsolete in \
   fi
 done
 
-echo "Twice-daily batched Vercel production release contract passed"
+echo "On-demand, maximum-three-daily Vercel production release contract passed"
