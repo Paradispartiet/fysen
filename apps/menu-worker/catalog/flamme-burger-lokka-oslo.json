@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "flamme-burger-lokka-oslo",
+    "name": "Flamme Burger Løkka",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 87A, 0550 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91906446241224,
+    "longitude": 10.759210953318204
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/93flammeburgerlokka",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 72,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bearnaise Burger Menu Deal",
+      "Cheese Burger Menu Deal",
+      "Onion Rings (6pcs)",
+      "Spicy Cheddar Fries",
+      "Monster Energy Ultra White 0,5l",
+      "Chicken BBQ Burger",
+      "Beyond Truffle Burger",
+      "Kids Chicken Nugget Deal - Small"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bearnaise Burger Menu Deal",
+        "priceMinor": 32400
+      },
+      {
+        "name": "Cheese Burger Menu Deal",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Onion Rings (6pcs)",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Spicy Cheddar Fries",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Monster Energy Ultra White 0,5l",
+        "priceMinor": 5000
+      },
+      {
+        "name": "Chicken BBQ Burger",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Beyond Truffle Burger",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Kids Chicken Nugget Deal - Small",
+        "priceMinor": 14500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

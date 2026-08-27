@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "hovseter-grill-oslo",
+    "name": "Hovseter Grill",
+    "websiteUrl": null,
+    "address": "Hovseterveien 84A, 0768 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.95000487314143,
+    "longitude": 10.654230008840106
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/453hovsetergrill",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 80,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hamburger",
+      "Kyllingkebab Tallerken",
+      "Kebab i Pita",
+      "Pepperoni",
+      "New York",
+      "Knock-Out",
+      "Døner fries",
+      "Ben & Jerry's Half Baked 465ml"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hamburger",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Kyllingkebab Tallerken",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Kebab i Pita",
+        "priceMinor": 10000
+      },
+      {
+        "name": "Pepperoni",
+        "priceMinor": 20000
+      },
+      {
+        "name": "New York",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Knock-Out",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Døner fries",
+        "priceMinor": 16000
+      },
+      {
+        "name": "Ben & Jerry's Half Baked 465ml",
+        "priceMinor": 14500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lille-amerika-bislett-oslo",
+    "name": "Lille Amerika Bislett",
+    "websiteUrl": null,
+    "address": "Pilestredet 65A, 0350 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9246109645514,
+    "longitude": 10.730741813336728
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/520lilleamerikabislett",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 27,
+    "sourceSupport": {"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}
+  },
+  "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-27","note":"Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": ["CLASSIC SMASHBURGER","VEGETAR SMASHBURGER","Sweet Potato Fries","Aioli Mayo","Chili Mayo","7up","TEXAS SMASHBURGER MENU","CHICACO SMASHBURGER MENU"],
+    "requiredDishVariants": [
+      {"name":"CLASSIC SMASHBURGER","priceMinor":13600},{"name":"VEGETAR SMASHBURGER","priceMinor":14872},{"name":"Sweet Potato Fries","priceMinor":7500},{"name":"Aioli Mayo","priceMinor":2500},{"name":"Chili Mayo","priceMinor":2500},{"name":"7up","priceMinor":5500},{"name":"TEXAS SMASHBURGER MENU","priceMinor":26588},{"name":"CHICACO SMASHBURGER MENU","priceMinor":26877}
+    ],
+    "forbiddenDishNames": []
+  }
+}

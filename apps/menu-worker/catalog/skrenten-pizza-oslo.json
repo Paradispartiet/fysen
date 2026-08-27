@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"skrenten-pizza-oslo","name":"Skrenten Pizza","websiteUrl":null,"address":"Alnafetgata 1b, 0192 Oslo","city":"Oslo","countryCode":"NO","latitude":59.902583952779516,"longitude":10.772044089751835},
+  "menuSource": {"url":"https://semeny.no/public/sted/444skrentenpizza","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":21,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-27","note":"Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions": [],
+  "qualityAssertions": {"requiredDishNames":["Skrik","Biff Bærrne","Spicy Bacon","Veggis Deluxe","Dyrenes Venn","Kylling BBQ","Jarritos Mango","Jarritos Mandarin"],"requiredDishVariants":[{"name":"Skrik","priceMinor":25000},{"name":"Biff Bærrne","priceMinor":25500},{"name":"Spicy Bacon","priceMinor":25000},{"name":"Veggis Deluxe","priceMinor":25000},{"name":"Dyrenes Venn","priceMinor":25000},{"name":"Kylling BBQ","priceMinor":25000},{"name":"Jarritos Mango","priceMinor":6900},{"name":"Jarritos Mandarin","priceMinor":6900}],"forbiddenDishNames":[]}
+}

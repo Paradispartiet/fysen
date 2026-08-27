@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "limon-hegdehaugsveien-oslo",
+    "name": "Limón Hegdehaugsveien",
+    "websiteUrl": null,
+    "address": "Hegdehaugsveien 27A, 0352 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.921413090992495,
+    "longitude": 10.727355062791892
+  },
+  "menuSource": {"url":"https://semeny.no/public/sted/limonhegdehaugsveien","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":25,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-27","note":"Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": ["Hawaiian Salmon","Mango Chicken","Tuna Freshness","Strawberry Banana Apple","Chips + Guac","Kokosris","Chilimayo","Sprudlende vann"],
+    "requiredDishVariants": [{"name":"Hawaiian Salmon","priceMinor":22900},{"name":"Mango Chicken","priceMinor":21900},{"name":"Tuna Freshness","priceMinor":23900},{"name":"Strawberry Banana Apple","priceMinor":7400},{"name":"Chips + Guac","priceMinor":9900},{"name":"Kokosris","priceMinor":3900},{"name":"Chilimayo","priceMinor":2900},{"name":"Sprudlende vann","priceMinor":4900}],
+    "forbiddenDishNames": []
+  }
+}

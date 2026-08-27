@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ekte-thaimat-smileclub-sentrum-oslo",
+    "name": "Ekte Thaimat Smileclub",
+    "websiteUrl": null,
+    "address": "Storgata 9, 0155 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91332372653907,
+    "longitude": 10.748934046387715
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/ektethaimatsmileclub",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 97,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Thai Kyllingvinger",
+      "Rød Karri",
+      "TH03. Yam Nuea🌶️",
+      "Taro Fishsnack Chilli Flavoured 🌶️🌶️ (Halal)",
+      "Ekstra Srirachasaus",
+      "Thai Kaffe med melk 250ml",
+      "TYMBARK MANGO DRINK",
+      "Bestikk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Thai Kyllingvinger",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Rød Karri",
+        "priceMinor": 25900
+      },
+      {
+        "name": "TH03. Yam Nuea🌶️",
+        "priceMinor": 32900
+      },
+      {
+        "name": "Taro Fishsnack Chilli Flavoured 🌶️🌶️ (Halal)",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Ekstra Srirachasaus",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Thai Kaffe med melk 250ml",
+        "priceMinor": 9900
+      },
+      {
+        "name": "TYMBARK MANGO DRINK",
+        "priceMinor": 1960
+      },
+      {
+        "name": "Bestikk",
+        "priceMinor": 200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

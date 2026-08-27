@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "brobekk-baguetter-burger-oslo",
+    "name": "Brobekk Baguetter & Burger",
+    "websiteUrl": null,
+    "address": "Brobekkveien 103, 0582 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9276498338805,
+    "longitude": 10.83028102362001
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/brobekkbaguetterburger",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 63,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Baguette Meal Deal",
+      "Burrito Kylling Meal Deal",
+      "Varm Baguette m/ Kylling Tandoori",
+      "Brobekk Spesial Middag",
+      "Burrito Bowl",
+      "Chocolate Cookie",
+      "Majones",
+      "Monster Ultra White 500ml bx"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Baguette Meal Deal",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Burrito Kylling Meal Deal",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Varm Baguette m/ Kylling Tandoori",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Brobekk Spesial Middag",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Burrito Bowl",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Chocolate Cookie",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Majones",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Monster Ultra White 500ml bx",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

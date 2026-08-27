@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "chili-og-wok-sentrum-oslo",
+    "name": "Chili og Wok",
+    "websiteUrl": null,
+    "address": "Calmeyers gate 10, 0183 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91637882252317,
+    "longitude": 10.754371574690026
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/282chiliogwok",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 39,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Stor Vårrull",
+      "Innbakt Scampi med ris",
+      "Grillet And med Ris 🌶️🌶️",
+      "Biff Chop Suey med ris",
+      "Kylling Nuggets",
+      "Sursøt Saus",
+      "Pepsi 0,5l",
+      "Villa 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Stor Vårrull",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Innbakt Scampi med ris",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Grillet And med Ris 🌶️🌶️",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Biff Chop Suey med ris",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Kylling Nuggets",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Sursøt Saus",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Pepsi 0,5l",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Villa 0,5l",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
