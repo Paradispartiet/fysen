@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 52,
+    "minimumExpectedItems": 50,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -39,7 +39,8 @@
       "Entrecote",
       "Vongole",
       "Blåskjell escabeche",
-      "Plato de Ibérico"
+      "Presa Ibérica (200 g)",
+      "Ukens fisk (Lysing)"
     ],
     "requiredDishVariants": [
       {
@@ -71,8 +72,12 @@
         "priceMinor": 23000
       },
       {
-        "name": "Plato de Ibérico",
-        "priceMinor": 25500
+        "name": "Presa Ibérica (200 g)",
+        "priceMinor": 33000
+      },
+      {
+        "name": "Ukens fisk (Lysing)",
+        "priceMinor": 25000
       }
     ],
     "forbiddenDishNames": []
