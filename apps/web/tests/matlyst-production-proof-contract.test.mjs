@@ -28,3 +28,10 @@ test("Matlyst production proof bruker dagens direkte kjøkken-deep links", () =>
   assert.doesNotMatch(proofSource, /[?&]region=/u);
   assert.match(proofSource, /Production-backed canonical Matlyst-retter/u);
 });
+
+test("Matlyst production proof normaliserer bare Reacts tomme SSR-separator", () => {
+  assert.match(proofSource, /function normalizeRenderedHtml\(html\)/u);
+  assert.match(proofSource, /replaceAll\("<!-- -->", ""\)/u);
+  assert.match(proofSource, /const renderedHtml = normalizeRenderedHtml\(surface\.html\)/u);
+  assert.match(proofSource, /"Alle retter i Oslo"/u);
+});
