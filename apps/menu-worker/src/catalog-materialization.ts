@@ -102,6 +102,7 @@ async function repairUnhealthyCanonicalSources(
     if (!entry || result.outcome === "failed" || !result.menuSourceId || !result.restaurantId) return [];
     return [{ entry, result }];
   });
+  const httpClient = new HttpMenuClient();
 
   const repairs = await mapWithBoundedConcurrency(
     candidates,
@@ -116,7 +117,7 @@ async function repairUnhealthyCanonicalSources(
         const watch = await watchMenuSourceOnce(
           repository,
           menuSourceId,
-          new HttpMenuClient(),
+          httpClient,
           entry.manifest.menuSource.sourceSupport,
         );
         if (!ACCEPTED_WATCH_OUTCOMES.has(watch.outcome)) {
