@@ -2,8 +2,10 @@ name: Fysen batched Vercel production release
 
 on:
   schedule:
-    # Candidate UTC hours cover 10:23 and 22:23 Europe/Oslo across CET/CEST.
-    - cron: "23 8,9,20,21 * * *"
+    - cron: "23 10 * * *"
+      timezone: "Europe/Oslo"
+    - cron: "23 22 * * *"
+      timezone: "Europe/Oslo"
   workflow_dispatch:
     inputs:
       target:
@@ -38,20 +40,18 @@ jobs:
         shell: bash
         env:
           REQUESTED_TARGET: ${{ inputs.target || 'auto' }}
+          SCHEDULE_EXPRESSION: ${{ github.event.schedule }}
         run: |
           set -euo pipefail
           if [[ "$GITHUB_EVENT_NAME" == "schedule" ]]; then
-            oslo_hour="$(TZ=Europe/Oslo date +%H)"
-            if [[ "$oslo_hour" != "10" && "$oslo_hour" != "22" ]]; then
-              echo "active=false" >> "$GITHUB_OUTPUT"
-              echo "target=auto" >> "$GITHUB_OUTPUT"
-              echo "release_mode=scheduled-window-guard" >> "$GITHUB_OUTPUT"
-              echo "Skipping candidate UTC trigger because Oslo local hour is $oslo_hour."
-              exit 0
-            fi
+            case "$SCHEDULE_EXPRESSION" in
+              "23 10 * * *") release_mode="scheduled-1023-oslo" ;;
+              "23 22 * * *") release_mode="scheduled-2223-oslo" ;;
+              *) echo "Unknown scheduled release expression: $SCHEDULE_EXPRESSION" >&2; exit 1 ;;
+            esac
             echo "active=true" >> "$GITHUB_OUTPUT"
             echo "target=auto" >> "$GITHUB_OUTPUT"
-            echo "release_mode=scheduled-${oslo_hour}23-oslo" >> "$GITHUB_OUTPUT"
+            echo "release_mode=$release_mode" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
