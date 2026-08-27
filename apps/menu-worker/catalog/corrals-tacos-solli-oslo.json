@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "corrals-tacos-solli-oslo",
+    "name": "Corral's Tacos Solli",
+    "websiteUrl": null,
+    "address": "Frognerveien 9D, 0257 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91662004003637,
+    "longitude": 10.71522339227928
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/corralstacossolli",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 24,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Charro Gryte",
+      "Birria Taco",
+      "Tortillachips",
+      "Fetaost",
+      "Grønn saus (mild)",
+      "Jarritos Cola 0,37l",
+      "Jarritos Grapefruit 0,37l",
+      "7up Zero 0,33l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Charro Gryte",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Birria Taco",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Tortillachips",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Fetaost",
+        "priceMinor": 2000
+      },
+      {
+        "name": "Grønn saus (mild)",
+        "priceMinor": 1900
+      },
+      {
+        "name": "Jarritos Cola 0,37l",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Jarritos Grapefruit 0,37l",
+        "priceMinor": 4900
+      },
+      {
+        "name": "7up Zero 0,33l",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

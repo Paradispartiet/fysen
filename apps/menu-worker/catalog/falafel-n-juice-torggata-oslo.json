@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "falafel-n-juice-torggata-oslo",
+    "name": "Falafel n' Juice Torggata",
+    "websiteUrl": null,
+    "address": "Torggata 29, 0183 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91700868024456,
+    "longitude": 10.753474660431511
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/falafelnjuicetorggata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 16,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Falafel i Rull",
+      "Falafelmiddag",
+      "Falafel Deluxe",
+      "Hummus 'n' Salat",
+      "Eple, Gulrot og Ingefær",
+      "Rødbeter og Appelsin",
+      "Pepsi Max 0,5l",
+      "Imsdal 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Falafel i Rull",
+        "priceMinor": 11400
+      },
+      {
+        "name": "Falafelmiddag",
+        "priceMinor": 17400
+      },
+      {
+        "name": "Falafel Deluxe",
+        "priceMinor": 12400
+      },
+      {
+        "name": "Hummus 'n' Salat",
+        "priceMinor": 12400
+      },
+      {
+        "name": "Eple, Gulrot og Ingefær",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Rødbeter og Appelsin",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Pepsi Max 0,5l",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Imsdal 0,5l",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

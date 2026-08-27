@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mad-love-pizza-gronland-oslo",
+    "name": "Mad Love Pizza Grønland",
+    "websiteUrl": null,
+    "address": "Grønlandsleiret 61B, 0190 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90975810213249,
+    "longitude": 10.767985897593661
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/305madlovepizzagronland",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 39,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Parma Classic",
+      "Margherita",
+      "WhatSopp",
+      "Jarritos Guava 0,37l",
+      "Frus med Eple og Kiwi 0,5L",
+      "Rømmedressing",
+      "Vaniljepannacotta",
+      "Ost og Skinke"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Parma Classic",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Margherita",
+        "priceMinor": 21200
+      },
+      {
+        "name": "WhatSopp",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Jarritos Guava 0,37l",
+        "priceMinor": 6300
+      },
+      {
+        "name": "Frus med Eple og Kiwi 0,5L",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Rømmedressing",
+        "priceMinor": 4000
+      },
+      {
+        "name": "Vaniljepannacotta",
+        "priceMinor": 14300
+      },
+      {
+        "name": "Ost og Skinke",
+        "priceMinor": 20000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

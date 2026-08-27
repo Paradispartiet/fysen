@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "banh-mi-xo-storgata-oslo",
+    "name": "Banh Mi Xo Storgata",
+    "websiteUrl": null,
+    "address": "Storgata 23, 0184 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.913892126752145,
+    "longitude": 10.750770440067233
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/banhmixostorgata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 44,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Banh Mi Dac Biet (Husets Spesial)",
+      "Bánh Mi Sharsiu (Svin)",
+      "Vårruller med Kylling (2 stk)",
+      "Risnuddelsalat m/Kylling",
+      "Lichi IsTe🧊",
+      "Foco Roasted Coconut Juice 0,33l",
+      "Chin Chin Grass Jelly Juice Drink",
+      "Taka Pickled Ginger Sliced"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Banh Mi Dac Biet (Husets Spesial)",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Bánh Mi Sharsiu (Svin)",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Vårruller med Kylling (2 stk)",
+        "priceMinor": 9000
+      },
+      {
+        "name": "Risnuddelsalat m/Kylling",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Lichi IsTe🧊",
+        "priceMinor": 9000
+      },
+      {
+        "name": "Foco Roasted Coconut Juice 0,33l",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Chin Chin Grass Jelly Juice Drink",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Taka Pickled Ginger Sliced",
+        "priceMinor": 5000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

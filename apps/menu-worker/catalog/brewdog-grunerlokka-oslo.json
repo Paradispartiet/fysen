@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "brewdog-grunerlokka-oslo",
+    "name": "BrewDog Grünerløkka",
+    "websiteUrl": null,
+    "address": "Markveien 57, 0550 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91995854348851,
+    "longitude": 10.757226055971147
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/brewdoggrunerlokka",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 18,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Patriot",
+      "Chipotle Chorizo",
+      "Oklahoma Smash Burger",
+      "Clucky This Time",
+      "Buffalo Chicken Wings",
+      "Fries",
+      "Loaded Buffalo Fries",
+      "Barbeque Corn Ribs"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Patriot",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Chipotle Chorizo",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Oklahoma Smash Burger",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Clucky This Time",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Buffalo Chicken Wings",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Fries",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Loaded Buffalo Fries",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Barbeque Corn Ribs",
+        "priceMinor": 8900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

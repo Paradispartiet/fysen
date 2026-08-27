@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "yayas-vika-oslo",
+    "name": "Yaya's Restaurant Vika",
+    "websiteUrl": null,
+    "address": "Munkedamsveien 53B, 0250 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.910976855505666,
+    "longitude": 10.722538424547666
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/272yayasrestaurantvika",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 35,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tom Kha Gai Starter",
+      "Tom Kha Phak Starter 🌱",
+      "Red Curry Goong",
+      "Moo Baikaprao",
+      "Tom Kha Gai",
+      "Pad See Ew Tofu 🌱",
+      "Noodle Soup w/ Tofu 🌱",
+      "Arctic Mineral Vann sparkling 0.5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Tom Kha Gai Starter",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Tom Kha Phak Starter 🌱",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Red Curry Goong",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Moo Baikaprao",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Tom Kha Gai",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Pad See Ew Tofu 🌱",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Noodle Soup w/ Tofu 🌱",
+        "priceMinor": 26600
+      },
+      {
+        "name": "Arctic Mineral Vann sparkling 0.5l",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

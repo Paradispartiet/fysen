@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bambus-frogner-oslo",
+    "name": "Bambus Frogner",
+    "websiteUrl": null,
+    "address": "Niels Juels gate 29, 0257 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.916475485963815,
+    "longitude": 10.714736554428395
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/123bambusfrogner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 58,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Familie Favoritt + 4 stk mineralvann",
+      "Frogner Luksus For 2",
+      "Familie Combo",
+      "Sakura",
+      "Kaeng Phet Kung",
+      "Chilimajones",
+      "Rekechips",
+      "San Pellegrino 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Familie Favoritt + 4 stk mineralvann",
+        "priceMinor": 94500
+      },
+      {
+        "name": "Frogner Luksus For 2",
+        "priceMinor": 74900
+      },
+      {
+        "name": "Familie Combo",
+        "priceMinor": 87500
+      },
+      {
+        "name": "Sakura",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Kaeng Phet Kung",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Chilimajones",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Rekechips",
+        "priceMinor": 4500
+      },
+      {
+        "name": "San Pellegrino 0,5l",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "indian-street-food-frognerveien-oslo",
+    "name": "Indian Street Food N Co Frognerveien",
+    "websiteUrl": null,
+    "address": "Frognerveien 2B, 0257 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9151925358805,
+    "longitude": 10.717019410875954
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/indianstreetfoodncofrognerveien",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 48,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Palak Paneer Lasooni",
+      "Street Style Chili Chicken",
+      "Tandoori Chicken Tikkas",
+      "Chicken Chettinad",
+      "Palakh Paneer",
+      "ISF & Co Spiced Naan",
+      "Pickle",
+      "Saag Mutton"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Palak Paneer Lasooni",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Street Style Chili Chicken",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Tandoori Chicken Tikkas",
+        "priceMinor": 30500
+      },
+      {
+        "name": "Chicken Chettinad",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Palakh Paneer",
+        "priceMinor": 26900
+      },
+      {
+        "name": "ISF & Co Spiced Naan",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Pickle",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Saag Mutton",
+        "priceMinor": 27000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

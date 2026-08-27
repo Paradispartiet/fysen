@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lett-aker-brygge-oslo",
+    "name": "LETT Aker Brygge",
+    "websiteUrl": null,
+    "address": "Grundingen 1, 0250 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91046431668052,
+    "longitude": 10.728073809915267
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/738lettakerbrygge",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 38,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Poké bowl",
+      "Kylling Cæsar bowl",
+      "Spicy kylling wrap",
+      "Røbet chèvre wrap",
+      "Kylling avokado sandwich",
+      "Bris",
+      "Bananbrød",
+      "Kakao med kokos 3pak"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Poké bowl",
+        "priceMinor": 20700
+      },
+      {
+        "name": "Kylling Cæsar bowl",
+        "priceMinor": 19700
+      },
+      {
+        "name": "Spicy kylling wrap",
+        "priceMinor": 20200
+      },
+      {
+        "name": "Røbet chèvre wrap",
+        "priceMinor": 19200
+      },
+      {
+        "name": "Kylling avokado sandwich",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Bris",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Bananbrød",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Kakao med kokos 3pak",
+        "priceMinor": 7900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

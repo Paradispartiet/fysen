@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "guilty-gronland-oslo",
+    "name": "Guilty Grønland",
+    "websiteUrl": null,
+    "address": "Tøyenbekken 10F, 0188 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91242705468458,
+    "longitude": 10.762713962629896
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/301guiltygronland",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 53,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 12 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Snack Burger",
+      "Hangover Cure",
+      "Classic Quorn Filet Burger",
+      "Chicken Combo Meal",
+      "Parmesan Fries",
+      "Signature Dressing",
+      "Up Free",
+      "Jarritos Strawberry"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Snack Burger",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Hangover Cure",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Classic Quorn Filet Burger",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Chicken Combo Meal",
+        "priceMinor": 31300
+      },
+      {
+        "name": "Parmesan Fries",
+        "priceMinor": 12800
+      },
+      {
+        "name": "Signature Dressing",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Up Free",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Jarritos Strawberry",
+        "priceMinor": 6500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
