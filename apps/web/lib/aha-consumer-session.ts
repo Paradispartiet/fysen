@@ -13,7 +13,7 @@ export function fysenPublicWebOrigin(): string {
   const configured = process.env.FYSEN_PUBLIC_WEB_URL?.trim();
   if (configured) return new URL(configured).origin;
   if (process.env.NODE_ENV === "development") return "http://localhost:3000";
-  return "https://fysen-matsgran-8572s-projects.vercel.app";
+  return "https://fysen.vercel.app";
 }
 
 export function ahaFysenCallbackUrl(): string {
