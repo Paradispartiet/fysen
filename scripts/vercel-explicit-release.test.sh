@@ -16,8 +16,19 @@ done
 workflow=.github/workflows/vercel-production-release.yml
 test -f "$workflow"
 grep -F 'schedule:' "$workflow" >/dev/null
-grep -F 'cron: "23 8,9,20,21 * * *"' "$workflow" >/dev/null
-grep -F 'TZ=Europe/Oslo date +%H' "$workflow" >/dev/null
+grep -F 'cron: "23 10 * * *"' "$workflow" >/dev/null
+grep -F 'cron: "23 22 * * *"' "$workflow" >/dev/null
+if [[ "$(grep -Fc 'timezone: "Europe/Oslo"' "$workflow")" -ne 2 ]]; then
+  echo "Both production release windows must use the Europe/Oslo timezone" >&2
+  exit 1
+fi
+grep -F 'SCHEDULE_EXPRESSION: ${{ github.event.schedule }}' "$workflow" >/dev/null
+grep -F '"23 10 * * *") release_mode="scheduled-1023-oslo"' "$workflow" >/dev/null
+grep -F '"23 22 * * *") release_mode="scheduled-2223-oslo"' "$workflow" >/dev/null
+if grep -F 'TZ=Europe/Oslo date +%H' "$workflow" >/dev/null; then
+  echo "Scheduled releases must not be skipped because GitHub started a queued run late" >&2
+  exit 1
+fi
 grep -F 'workflow_dispatch:' "$workflow" >/dev/null
 grep -F 'default: auto' "$workflow" >/dev/null
 grep -F 'Manual Fysen production releases must be dispatched from main.' "$workflow" >/dev/null
