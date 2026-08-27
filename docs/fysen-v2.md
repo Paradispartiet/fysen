@@ -27,7 +27,7 @@ Det innebærer blant annet:
 - de fem mobile brukerreisene bevist;
 - representativ production E2E grønn;
 - web og API bekreftet på forventet `main`;
-- releasekontrakten på maksimalt to deployvinduer per døgn bevart.
+- releasekontrakten på maksimalt tre endringskvalifiserte produksjonsbatcher per Europe/Oslo-døgn, uten faste klokkeslett, bevart.
 
 Restaurant-onboarding fortsetter som løpende innholdsproduksjon og er ikke en generell v2-blocker.
 
