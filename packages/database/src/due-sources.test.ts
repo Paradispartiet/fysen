@@ -29,6 +29,7 @@ describe("due menu sources", () => {
   });
 
   it("returns public source context for operational diagnostics", async () => {
+    // Slugs and source URLs are public catalog metadata and make failures actionable.
     const query = vi.fn().mockResolvedValue({
       rows: [
         {
