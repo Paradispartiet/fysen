@@ -18,6 +18,7 @@ const TRANSIENT_HTTP_STATUSES = new Set([408, 500, 502, 503, 504]);
 const DEFAULT_HTTP_TIMEOUT_MS = 20_000;
 const MAX_HTTP_TIMEOUT_MS = 30_000;
 const nextAllowedHttpRequestAt = new Map<string, number>();
+const httpRequestThrottleTails = new Map<string, Promise<void>>();
 
 export interface MenuHttpSourceState {
   readonly url: string;
@@ -356,13 +357,28 @@ export class HttpMenuClient {
   }
 
   private async throttle(origin: string): Promise<void> {
-    const now = Date.now();
-    const reservedAt = Math.max(nextAllowedHttpRequestAt.get(origin) ?? now, now);
-    nextAllowedHttpRequestAt.set(origin, reservedAt + this.minHostDelayMs);
-    if (reservedAt > now) {
-      await new Promise<void>((resolve) =>
-        setTimeout(resolve, reservedAt - now),
-      );
+    const previous = httpRequestThrottleTails.get(origin) ?? Promise.resolve();
+    let release = (): void => undefined;
+    const current = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    httpRequestThrottleTails.set(origin, current);
+
+    await previous;
+    try {
+      const now = Date.now();
+      const allowedAt = nextAllowedHttpRequestAt.get(origin) ?? now;
+      if (allowedAt > now) {
+        await new Promise<void>((resolve) =>
+          setTimeout(resolve, allowedAt - now),
+        );
+      }
+      nextAllowedHttpRequestAt.set(origin, Date.now() + this.minHostDelayMs);
+    } finally {
+      release();
+      if (httpRequestThrottleTails.get(origin) === current) {
+        httpRequestThrottleTails.delete(origin);
+      }
     }
   }
 
