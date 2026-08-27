@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"valkyrien-grill-majorstuen-oslo","name":"Valkyrien Grill","websiteUrl":null,"address":"Bogstadveien 71B, 0366 Oslo","city":"Oslo","countryCode":"NO","latitude":59.928139360155015,"longitude":10.718273085900798},
+  "menuSource": {"url":"https://semeny.no/public/sted/valkyriengrill","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":30,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-27","note":"Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions": [],
+  "qualityAssertions": {"requiredDishNames":["Hamburger","Meny Indrefiletburger","Kebab I Pita","Kebabtallerken Med Pommes Frites","Falafeltallerken Med Pommes Frites","Stor Kyllingkebab I Pita","Pitabrød","Bonaqua u/ Kullsyre 0,5l"],"requiredDishVariants":[{"name":"Hamburger","priceMinor":15500},{"name":"Meny Indrefiletburger","priceMinor":31000},{"name":"Kebab I Pita","priceMinor":13000},{"name":"Kebabtallerken Med Pommes Frites","priceMinor":18500},{"name":"Falafeltallerken Med Pommes Frites","priceMinor":18500},{"name":"Stor Kyllingkebab I Pita","priceMinor":18000},{"name":"Pitabrød","priceMinor":2000},{"name":"Bonaqua u/ Kullsyre 0,5l","priceMinor":4600}],"forbiddenDishNames":[]}
+}

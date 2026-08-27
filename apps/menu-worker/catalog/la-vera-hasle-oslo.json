@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "la-vera-hasle-oslo",
+    "name": "LA VERA",
+    "websiteUrl": null,
+    "address": "Hasleveien 10, 0571 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.927615664678804,
+    "longitude": 10.778897468272195
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/lavera",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 17,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Basis Pizza",
+      "Milano",
+      "Salsiccia e Miele",
+      "Tonno & Cipolla",
+      "Quattro Formaggio",
+      "Tartufo",
+      "Rosemary & Lemon",
+      "Jarritos - Pineapple 0,37 l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Basis Pizza",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Milano",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Salsiccia e Miele",
+        "priceMinor": 24600
+      },
+      {
+        "name": "Tonno & Cipolla",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Quattro Formaggio",
+        "priceMinor": 22400
+      },
+      {
+        "name": "Tartufo",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Rosemary & Lemon",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Jarritos - Pineapple 0,37 l",
+        "priceMinor": 6000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

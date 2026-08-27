@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"lofthus-samvirkelag-torshov-oslo","name":"Lofthus Samvirkelag Torshov","websiteUrl":null,"address":"Åsengata 42A, 0480 OSLO","city":"Oslo","countryCode":"NO","latitude":59.9393731766597,"longitude":10.773575591957421},
+  "menuSource": {"url":"https://semeny.no/public/sted/lofthussamvirkelagtorshov","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":19,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-27","note":"Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions": [],
+  "qualityAssertions": {"requiredDishNames":["Reinsdyr","Fem Oster","Trøffelsalami","Mortadella","Skinke","Ansjos","Artisjokk","Hvit Elsa 13 År"],"requiredDishVariants":[{"name":"Reinsdyr","priceMinor":27500},{"name":"Fem Oster","priceMinor":27500},{"name":"Trøffelsalami","priceMinor":27500},{"name":"Mortadella","priceMinor":27500},{"name":"Skinke","priceMinor":27500},{"name":"Ansjos","priceMinor":27500},{"name":"Artisjokk","priceMinor":27500},{"name":"Hvit Elsa 13 År","priceMinor":19500}],"forbiddenDishNames":[]}
+}

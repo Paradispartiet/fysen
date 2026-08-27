@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"mega-sushi-grefsenveien-oslo","name":"Mega Sushi","websiteUrl":null,"address":"Grefsenveien 6A, 0482 Oslo","city":"Oslo","countryCode":"NO","latitude":59.94179098018424,"longitude":10.770768951708686},
+  "menuSource": {"url":"https://semeny.no/public/sted/336megasushi","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":84,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-27","note":"Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions": [],
+  "qualityAssertions": {"requiredDishNames":["Vietnamesiske Vårruller","Sashimi Liten 14 biter","Red dragon maki","Scampi maki","Rainbow maki","Laks Nigiri","Soyasaus","Ris"],"requiredDishVariants":[{"name":"Vietnamesiske Vårruller","priceMinor":8500},{"name":"Sashimi Liten 14 biter","priceMinor":21000},{"name":"Red dragon maki","priceMinor":17900},{"name":"Scampi maki","priceMinor":9900},{"name":"Rainbow maki","priceMinor":14500},{"name":"Laks Nigiri","priceMinor":2300},{"name":"Soyasaus","priceMinor":1700},{"name":"Ris","priceMinor":3500}],"forbiddenDishNames":[]}
+}

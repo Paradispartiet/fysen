@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kylling-pizza-grefsen-oslo",
+    "name": "Kylling & Pizza Grefsen",
+    "websiteUrl": null,
+    "address": "Grefsenveien 90, 0489 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.955248272300196,
+    "longitude": 10.785204860673984
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/kyllingpizzagrefsen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 119,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Mini Chicken Burger Box",
+      "Golden Bite Box",
+      "Crispy Legs & Thigh Tallerken",
+      "The Ultimate KyllingKebab Deluxe Combo",
+      "Fish Burger",
+      "Chilli chicken",
+      "Daim Cheesecake",
+      "Kuli"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Mini Chicken Burger Box",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Golden Bite Box",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Crispy Legs & Thigh Tallerken",
+        "priceMinor": 20900
+      },
+      {
+        "name": "The Ultimate KyllingKebab Deluxe Combo",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Fish Burger",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Chilli chicken",
+        "priceMinor": 32900
+      },
+      {
+        "name": "Daim Cheesecake",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Kuli",
+        "priceMinor": 2500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

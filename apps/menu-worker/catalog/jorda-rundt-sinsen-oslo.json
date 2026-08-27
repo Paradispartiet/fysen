@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jorda-rundt-sinsen-oslo",
+    "name": "Jorda Rundt",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 235, 0586 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93867004017634,
+    "longitude": 10.790649976121692
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/477jordarundt",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 27,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Aleida Margherita",
+      "Mazari Pollo",
+      "Kylling Toast",
+      "Kylling Burrito",
+      "Kyllingsalat",
+      "Cortado",
+      "Varm Sjokolade",
+      "Imsdal Vann"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Aleida Margherita",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Mazari Pollo",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Kylling Toast",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Kylling Burrito",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Kyllingsalat",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Cortado",
+        "priceMinor": 4000
+      },
+      {
+        "name": "Varm Sjokolade",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Imsdal Vann",
+        "priceMinor": 4600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

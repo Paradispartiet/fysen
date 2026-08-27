@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "burger-joint-aker-brygge-oslo",
+    "name": "Burger Joint",
+    "websiteUrl": null,
+    "address": "Holmens gate 3, 0250 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.910708605467626,
+    "longitude": 10.726566351242763
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/337burgerjoint",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-27",
+      "note": "Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Classic Menu",
+      "Jucy Lucy",
+      "Bacon Cheeseburger",
+      "'Sweet' Baby Blue",
+      "Fries Royale",
+      "Aioli",
+      "Truffle Dressing",
+      "The Spicy Purest 🌱"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Classic Menu",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Jucy Lucy",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Bacon Cheeseburger",
+        "priceMinor": 23500
+      },
+      {
+        "name": "'Sweet' Baby Blue",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Fries Royale",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Aioli",
+        "priceMinor": 2300
+      },
+      {
+        "name": "Truffle Dressing",
+        "priceMinor": 2300
+      },
+      {
+        "name": "The Spicy Purest 🌱",
+        "priceMinor": 21500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

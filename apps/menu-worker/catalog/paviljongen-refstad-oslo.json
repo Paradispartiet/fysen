@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"paviljongen-refstad-oslo","name":"Paviljongen","websiteUrl":null,"address":"Refstadveien 73, 0584 Oslo","city":"Oslo","countryCode":"NO","latitude":59.93882124131512,"longitude":10.822104352972906},
+  "menuSource": {"url":"https://semeny.no/public/sted/493paviljongen","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":12,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-27","note":"Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions": [],
+  "qualityAssertions": {"requiredDishNames":["Classic Cheeseburger","Bluecheese Burger","Jalpenoburger","Trøffelmayo","BBQ-Aioli","Mayo","Kuli m/ Jordbær & Eple","Vann m/ Kullsyre - Sitron"],"requiredDishVariants":[{"name":"Classic Cheeseburger","priceMinor":16900},{"name":"Bluecheese Burger","priceMinor":16900},{"name":"Jalpenoburger","priceMinor":16900},{"name":"Trøffelmayo","priceMinor":3900},{"name":"BBQ-Aioli","priceMinor":3900},{"name":"Mayo","priceMinor":3900},{"name":"Kuli m/ Jordbær & Eple","priceMinor":4500},{"name":"Vann m/ Kullsyre - Sitron","priceMinor":4500}],"forbiddenDishNames":[]}
+}

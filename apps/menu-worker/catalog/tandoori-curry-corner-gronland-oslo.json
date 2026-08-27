@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"tandoori-curry-corner-gronland-oslo","name":"Tandoori Curry Corner","websiteUrl":null,"address":"Grønland 22, 0188 Oslo","city":"Oslo","countryCode":"NO","latitude":59.91297310368579,"longitude":10.76177530816169},
+  "menuSource": {"url":"https://semeny.no/public/sted/347tandooricurrycorner","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":18,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-27","note":"Batch 09 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions": [],
+  "qualityAssertions": {"requiredDishNames":["Chicken Curry","Chicken Tikka Masala","Tandoori Chicken","Lam Karahi","Lam Saag Gosht","Palak Paneer","Nan","Urge"],"requiredDishVariants":[{"name":"Chicken Curry","priceMinor":14900},{"name":"Chicken Tikka Masala","priceMinor":15900},{"name":"Tandoori Chicken","priceMinor":19900},{"name":"Lam Karahi","priceMinor":18900},{"name":"Lam Saag Gosht","priceMinor":19900},{"name":"Palak Paneer","priceMinor":18900},{"name":"Nan","priceMinor":4500},{"name":"Urge","priceMinor":3900}],"forbiddenDishNames":[]}
+}
