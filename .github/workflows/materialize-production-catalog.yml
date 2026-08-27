@@ -20,9 +20,7 @@ permissions:
   contents: read
 
 concurrency:
-  # Share one queue with full-catalog live validation so separate runners do
-  # not hit the same upstream menu hosts concurrently.
-  group: fysen-production-menu-source
+  group: fysen-production-menu-mutation
   cancel-in-progress: false
 
 jobs:
