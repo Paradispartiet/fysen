@@ -19,8 +19,12 @@ on:
 permissions:
   contents: read
 
+# Keep materialization independent: GitHub replaces an older pending run when a
+# newer run enters the same concurrency group, even with cancel-in-progress false.
+# Sharing this queue with Watch Fysen menus can therefore cancel a catalog push
+# before its materialization job ever starts.
 concurrency:
-  group: fysen-production-menu-mutation
+  group: fysen-production-catalog-materialization
   cancel-in-progress: false
 
 jobs:
