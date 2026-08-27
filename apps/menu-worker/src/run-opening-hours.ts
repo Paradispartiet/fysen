@@ -23,6 +23,8 @@ import {
 
 export interface OpeningHoursWatchResult {
   readonly sourceId: string;
+  readonly restaurantSlug: string;
+  readonly sourceUrl: string;
   readonly outcome: RestaurantHoursWatchOutcome | "unexpected_error";
   readonly intervalCount: number | null;
   readonly snapshotId: string | null;
@@ -135,6 +137,8 @@ async function watchRestaurantHoursTargetOnce(
         });
         return {
           sourceId: source.id,
+          restaurantSlug: source.restaurantSlug,
+          sourceUrl: source.url,
           outcome: "fetch_error",
           intervalCount: null,
           snapshotId: null,
@@ -151,6 +155,8 @@ async function watchRestaurantHoursTargetOnce(
       });
       return {
         sourceId: source.id,
+        restaurantSlug: source.restaurantSlug,
+        sourceUrl: source.url,
         outcome: "not_modified",
         intervalCount: null,
         snapshotId: null,
@@ -174,6 +180,8 @@ async function watchRestaurantHoursTargetOnce(
     });
     return {
       sourceId: source.id,
+      restaurantSlug: source.restaurantSlug,
+      sourceUrl: source.url,
       outcome: observed.outcome,
       intervalCount: resolved.extracted.intervals.length,
       snapshotId: observed.snapshotId,
@@ -198,6 +206,8 @@ async function watchRestaurantHoursTargetOnce(
       });
       return {
         sourceId: source.id,
+        restaurantSlug: source.restaurantSlug,
+        sourceUrl: source.url,
         outcome,
         intervalCount: null,
         snapshotId: null,
@@ -206,6 +216,8 @@ async function watchRestaurantHoursTargetOnce(
     } catch (auditError) {
       return {
         sourceId: source.id,
+        restaurantSlug: source.restaurantSlug,
+        sourceUrl: source.url,
         outcome: "unexpected_error",
         intervalCount: null,
         snapshotId: null,
