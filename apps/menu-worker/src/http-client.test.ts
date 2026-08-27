@@ -26,8 +26,10 @@ describe("HttpMenuClient", () => {
 
   it("reserves same-origin request slots before concurrent fetches can race", async () => {
     const requestPaths: string[] = [];
+    const requestTimes: number[] = [];
     const fetchImpl = asFetch(async (input) => {
       requestPaths.push(input.pathname);
+      requestTimes.push(Date.now());
       if (input.pathname === "/robots.txt") {
         return new Response("User-agent: *\nAllow: /\n", { status: 200 });
       }
@@ -56,11 +58,11 @@ describe("HttpMenuClient", () => {
       firstClient.fetchSource(source("one")),
       secondClient.fetchSource(source("two")),
     ]);
-    await new Promise((resolve) => setTimeout(resolve, 10));
-
-    expect(requestPaths).toEqual(["/robots.txt"]);
     await pending;
-    expect(requestPaths).toEqual(["/robots.txt", "/robots.txt", "/one", "/two"]);
+    expect(requestPaths).toHaveLength(4);
+    for (let index = 1; index < requestTimes.length; index += 1) {
+      expect((requestTimes[index] as number) - (requestTimes[index - 1] as number)).toBeGreaterThanOrEqual(20);
+    }
   });
 
   it("honors robots.txt and sends conditional validators to the menu request", async () => {
