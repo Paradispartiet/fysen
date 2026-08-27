@@ -11,11 +11,13 @@ const watcher = readFileSync(
 );
 
 describe("production menu mutation workflows", () => {
-  it("serializes materializer and watcher through one production mutation queue", () => {
-    for (const workflow of [materializer, watcher]) {
-      expect(workflow).toContain("group: fysen-production-menu-mutation");
-      expect(workflow).toContain("cancel-in-progress: false");
-    }
+  it("keeps materialization independent from the watcher pending queue", () => {
+    expect(materializer).toContain("group: fysen-production-catalog-materialization");
+    expect(materializer).toContain("cancel-in-progress: false");
+    expect(materializer).not.toContain("group: fysen-production-menu-mutation");
+
+    expect(watcher).toContain("group: fysen-production-menu-mutation");
+    expect(watcher).toContain("cancel-in-progress: false");
   });
 
   it("re-materializes the exact main SHA after catalog or parser/runtime changes", () => {
