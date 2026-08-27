@@ -11,6 +11,8 @@ function failedResult(
 ): OpeningHoursWatchResult {
   return {
     sourceId,
+    restaurantSlug: `${sourceId}-restaurant`,
+    sourceUrl: `https://example.com/${sourceId}`,
     outcome,
     intervalCount: null,
     snapshotId: null,
@@ -36,6 +38,8 @@ describe("restaurant hours watcher failure classification", () => {
       failedResult("audit", "unexpected_error"),
       {
         sourceId: "healthy",
+        restaurantSlug: "verified-place",
+        sourceUrl: "https://example.com/healthy",
         outcome: "unchanged",
         intervalCount: 7,
         snapshotId: null,
