@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jagger-storgata-oslo",
+    "name": "Jagger Storgata",
+    "websiteUrl": null,
+    "address": "Storgata 31, 0184 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91430504880354,
+    "longitude": 10.752206990997845
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/268jaggerstorgata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 39,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Mini Jagger Burger Combo",
+      "Cheeseburger Combo",
+      "Cheeseburger",
+      "Mini Cheeseburger",
+      "Ketchup",
+      "Økologisk Limonade 0,45 l",
+      "Coffee Shake 0,45 l",
+      "Kullsyrevann 0,5 l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Mini Jagger Burger Combo",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Cheeseburger Combo",
+        "priceMinor": 30800
+      },
+      {
+        "name": "Cheeseburger",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Mini Cheeseburger",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Ketchup",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Økologisk Limonade 0,45 l",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Coffee Shake 0,45 l",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Kullsyrevann 0,5 l",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

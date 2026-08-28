@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bislett-kebab-house-pilestredet-oslo",
+    "name": "Bislett Kebab House Pilestredet",
+    "websiteUrl": null,
+    "address": "Pilestredet 55A, 0350 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92249370315363,
+    "longitude": 10.731862405126185
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/bislettkebabhousepilestredet",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 85,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebab Meal Deal",
+      "Shishtallerken",
+      "Kylling Shawarma Tallerken",
+      "BKH Vegetar Burger",
+      "Chillicheeseburger Tallerken",
+      "Kyllingballs med Ost og Chili (10 stk.)",
+      "Urge 0,5l",
+      "Smash Fries"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebab Meal Deal",
+        "priceMinor": 16700
+      },
+      {
+        "name": "Shishtallerken",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Kylling Shawarma Tallerken",
+        "priceMinor": 24000
+      },
+      {
+        "name": "BKH Vegetar Burger",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Chillicheeseburger Tallerken",
+        "priceMinor": 19400
+      },
+      {
+        "name": "Kyllingballs med Ost og Chili (10 stk.)",
+        "priceMinor": 13300
+      },
+      {
+        "name": "Urge 0,5l",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Smash Fries",
+        "priceMinor": 12100
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dougs-hamburgers-bjorvika-oslo",
+    "name": "Dougs Hamburgers Bjørvika",
+    "websiteUrl": null,
+    "address": "Operagata 61A, 0194 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90675291217908,
+    "longitude": 10.757844236286818
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/dougshamburgersbjorvika",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 17,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kombo Deal",
+      "Classic Fried Chicken Kombo Deal",
+      "Crispy Vegan",
+      "Buffalo HOT Fried Chicken Burger",
+      "French Fries",
+      "Bacon, Egg & Cheese",
+      "Doug's Burger Sauce",
+      "Buffalo Hot Sauce"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kombo Deal",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Classic Fried Chicken Kombo Deal",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Crispy Vegan",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Buffalo HOT Fried Chicken Burger",
+        "priceMinor": 22500
+      },
+      {
+        "name": "French Fries",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Bacon, Egg & Cheese",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Doug's Burger Sauce",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Buffalo Hot Sauce",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

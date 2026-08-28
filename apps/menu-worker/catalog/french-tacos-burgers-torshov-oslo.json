@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "french-tacos-burgers-torshov-oslo",
+    "name": "French Tacos & Burgers Avenue Torshov",
+    "websiteUrl": null,
+    "address": "Torshovgata 1A, 0476 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93398539683528,
+    "longitude": 10.762102302167186
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/frenchtacosburgersavenuetorshov",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 18,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Medium Tacos",
+      "fjell French Tacos",
+      "Blue Cheese",
+      "Avokado Vegetar Burger",
+      "Chili Cheese Tops",
+      "Onion Rings",
+      "Kylling Tenders",
+      "Urge"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Medium Tacos",
+        "priceMinor": 18900
+      },
+      {
+        "name": "fjell French Tacos",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Blue Cheese",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Avokado Vegetar Burger",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Chili Cheese Tops",
+        "priceMinor": 6200
+      },
+      {
+        "name": "Onion Rings",
+        "priceMinor": 5600
+      },
+      {
+        "name": "Kylling Tenders",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Urge",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

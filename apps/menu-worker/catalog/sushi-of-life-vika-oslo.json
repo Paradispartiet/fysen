@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sushi-of-life-vika-oslo",
+    "name": "Sushi of Life Vika",
+    "websiteUrl": null,
+    "address": "Haakon VIIs gate 5, 0161 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91384567767234,
+    "longitude": 10.731164993047344
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/617sushioflifevika",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 76,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Dagens Sushi 12 Biter",
+      "Sushi Stor 15 Biter",
+      "Flambert Tunfisk Nigiri",
+      "Kamskjell Rull",
+      "Famile Meny #3",
+      "New York Maki",
+      "Lux #3",
+      "Bonaqua Sitron 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Dagens Sushi 12 Biter",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Sushi Stor 15 Biter",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Flambert Tunfisk Nigiri",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Kamskjell Rull",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Famile Meny #3",
+        "priceMinor": 63900
+      },
+      {
+        "name": "New York Maki",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Lux #3",
+        "priceMinor": 32900
+      },
+      {
+        "name": "Bonaqua Sitron 0,5l",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dirty-vegan-barcode-street-food-oslo",
+    "name": "Dirty Vegan Barcode Street Food",
+    "websiteUrl": null,
+    "address": "Dronning Eufemias gate 14, 0191 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90843779479827,
+    "longitude": 10.758251636671032
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/316dirtyveganbarcodestreetfood",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Future Classic",
+      "Tasty Clucker 🌶️",
+      "Sidechick 🌶️",
+      "Falafel",
+      "Fries",
+      "Chili Cheeze Poppers 4 pcs 🌶️",
+      "Nuggets 4 pcs",
+      "Brownie"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Future Classic",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Tasty Clucker 🌶️",
+        "priceMinor": 13520
+      },
+      {
+        "name": "Sidechick 🌶️",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Falafel",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Fries",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Chili Cheeze Poppers 4 pcs 🌶️",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Nuggets 4 pcs",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Brownie",
+        "priceMinor": 6500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

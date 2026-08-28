@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "balkan-pizza-kebab-bislett-oslo",
+    "name": "Balkan Pizza & Kebab Bislett",
+    "websiteUrl": null,
+    "address": "Mauritz Hansens gate 5, 0350 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.921459110337274,
+    "longitude": 10.73206252352756
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/balkanpizzakebabbislett",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 95,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebabsaus",
+      "Funghi",
+      "Asteka",
+      "Hawaii (Stor)",
+      "Colosseum (Stor)",
+      "Cheeseburger",
+      "Pokemon Pizza",
+      "Pepsi 1,5L"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebabsaus",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Funghi",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Asteka",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Hawaii (Stor)",
+        "priceMinor": 34500
+      },
+      {
+        "name": "Colosseum (Stor)",
+        "priceMinor": 35000
+      },
+      {
+        "name": "Cheeseburger",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Pokemon Pizza",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Pepsi 1,5L",
+        "priceMinor": 6500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

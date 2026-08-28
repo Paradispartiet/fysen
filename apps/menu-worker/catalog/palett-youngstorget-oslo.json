@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "palett-youngstorget-oslo",
+    "name": "Palett Youngstorget",
+    "websiteUrl": null,
+    "address": "Møllergata 26, 0179 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91643313801384,
+    "longitude": 10.749473295742824
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/587palettyoungstorget",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 43,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Supreme Poké",
+      "Thaisalat med kylling",
+      "California Poke",
+      "Guacamole",
+      "DIG Swedish Chocolate Ball",
+      "Bountiful Coconut Choc – Oat & Nut Butter Bar",
+      "Cold Pressed Juice Appelsin 250ml",
+      "Cold Pressed Juice Mango, Ananas&Pasjon 250ml"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Supreme Poké",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Thaisalat med kylling",
+        "priceMinor": 18900
+      },
+      {
+        "name": "California Poke",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Guacamole",
+        "priceMinor": 6900
+      },
+      {
+        "name": "DIG Swedish Chocolate Ball",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Bountiful Coconut Choc – Oat & Nut Butter Bar",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Cold Pressed Juice Appelsin 250ml",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Cold Pressed Juice Mango, Ananas&Pasjon 250ml",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

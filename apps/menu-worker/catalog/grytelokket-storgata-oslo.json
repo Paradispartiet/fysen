@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "grytelokket-storgata-oslo",
+    "name": "Grytelokket Storgata",
+    "websiteUrl": null,
+    "address": "Storgata 45A, 0182 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91559629172078,
+    "longitude": 10.75567179297147
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/grytelokketstorgata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 28,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Dobbel BigBurger Middag",
+      "Trippel Mania 300g",
+      "Triple Mania Middag",
+      "BigMeal Dobbel BigBurger",
+      "Kyllingmiddag",
+      "Kyllingrull",
+      "Potetbåter",
+      "Kebabmiddag"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Dobbel BigBurger Middag",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Trippel Mania 300g",
+        "priceMinor": 24300
+      },
+      {
+        "name": "Triple Mania Middag",
+        "priceMinor": 33700
+      },
+      {
+        "name": "BigMeal Dobbel BigBurger",
+        "priceMinor": 30700
+      },
+      {
+        "name": "Kyllingmiddag",
+        "priceMinor": 20800
+      },
+      {
+        "name": "Kyllingrull",
+        "priceMinor": 17100
+      },
+      {
+        "name": "Potetbåter",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Kebabmiddag",
+        "priceMinor": 18200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
