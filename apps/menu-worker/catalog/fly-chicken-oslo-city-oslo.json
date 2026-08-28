@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "fly-chicken-oslo-city-oslo",
+    "name": "Fly Chicken Oslo City",
+    "websiteUrl": null,
+    "address": "Stenersgata 1A, 0050 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91260649124485,
+    "longitude": 10.751543339510427
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/718flychickenoslocity",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 50,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 14 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fried Chicken Wings x 10",
+      "Fried Chicken Tenders",
+      "Loaded Chicken Fries",
+      "Chili Cheese 4pc",
+      "Cocio Delight No Sugar",
+      "Monster Lando Norris Zero Sugar0,5L",
+      "Cheddar",
+      "Fly Kids Menu"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fried Chicken Wings x 10",
+        "priceMinor": 12400
+      },
+      {
+        "name": "Fried Chicken Tenders",
+        "priceMinor": 9000
+      },
+      {
+        "name": "Loaded Chicken Fries",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Chili Cheese 4pc",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Cocio Delight No Sugar",
+        "priceMinor": 4300
+      },
+      {
+        "name": "Monster Lando Norris Zero Sugar0,5L",
+        "priceMinor": 5100
+      },
+      {
+        "name": "Cheddar",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Fly Kids Menu",
+        "priceMinor": 10500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

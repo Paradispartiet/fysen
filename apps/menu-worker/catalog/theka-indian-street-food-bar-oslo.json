@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "theka-indian-street-food-bar-oslo",
+    "name": "Theka - Indian Street Food & Bar Oslo",
+    "websiteUrl": null,
+    "address": "Olaf Ryes plass 10, 0552 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92349514526736,
+    "longitude": 10.758057168450028
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/thekaindianstreetfoodbaroslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 29,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 14 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Samosa Chaat",
+      "Chana Masala",
+      "Chicken Ruby",
+      "Saag Gosht",
+      "Garlic Naan",
+      "Papadums",
+      "Peshwari Naan",
+      "Clausthaler"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Samosa Chaat",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Chana Masala",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Chicken Ruby",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Saag Gosht",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Garlic Naan",
+        "priceMinor": 5200
+      },
+      {
+        "name": "Papadums",
+        "priceMinor": 3200
+      },
+      {
+        "name": "Peshwari Naan",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Clausthaler",
+        "priceMinor": 5200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

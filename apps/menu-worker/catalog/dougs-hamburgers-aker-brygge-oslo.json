@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dougs-hamburgers-aker-brygge-oslo",
+    "name": "Dougs Hamburgers Aker Brygge",
+    "websiteUrl": null,
+    "address": "Fjordalléen 4, 0250 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.909137290853884,
+    "longitude": 10.725161382753559
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/722dougshamburgersakerbrygge",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 21,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 14 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kombo Deal",
+      "Double Royale",
+      "Crispy Vegan",
+      "Chicken Tenders",
+      "Doug’s Loaded Fries",
+      "Bacon, Egg & Cheese",
+      "House Mayo",
+      "Buffalo Hot Sauce"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kombo Deal",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Double Royale",
+        "priceMinor": 21400
+      },
+      {
+        "name": "Crispy Vegan",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Chicken Tenders",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Doug’s Loaded Fries",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Bacon, Egg & Cheese",
+        "priceMinor": 13900
+      },
+      {
+        "name": "House Mayo",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Buffalo Hot Sauce",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
