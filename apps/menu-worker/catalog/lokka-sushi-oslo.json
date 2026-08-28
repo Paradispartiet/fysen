@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lokka-sushi-oslo",
+    "name": "Løkka Sushi",
+    "websiteUrl": null,
+    "address": "Sannergata 28A, 0557 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9288249848316,
+    "longitude": 10.764494795858065
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/106lokkasushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 63,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Ferske vårruller (2 stk)",
+      "Medium sashimi meny",
+      "Spesial familie pakke",
+      "Kamskjell roll",
+      "Asian futo roll",
+      "Scampi",
+      "Tempura tallerken",
+      "Pepsi Max 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Ferske vårruller (2 stk)",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Medium sashimi meny",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Spesial familie pakke",
+        "priceMinor": 99900
+      },
+      {
+        "name": "Kamskjell roll",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Asian futo roll",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Scampi",
+        "priceMinor": 5600
+      },
+      {
+        "name": "Tempura tallerken",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Pepsi Max 0,5l",
+        "priceMinor": 4100
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

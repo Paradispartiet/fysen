@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "espresso-house-bogstadveien-oslo",
+    "name": "Espresso House Bogstadveien",
+    "websiteUrl": null,
+    "address": "Valkyriegata 9, 0366 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92890550788691,
+    "longitude": 10.717580850549531
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/espressohousebogstadveien",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 71,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Ost og Kalkunskinke Toast",
+      "Surdeigsrundstykke Ost & Kalkunskinke",
+      "Kanelbolle",
+      "Brownie bite Melkesjokolade",
+      "Islatte Vanilje",
+      "Vegansk Frapino Sjokolade",
+      "Solrik Jordbær & Appelsin",
+      "Mozell Light"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Ost og Kalkunskinke Toast",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Surdeigsrundstykke Ost & Kalkunskinke",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Kanelbolle",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Brownie bite Melkesjokolade",
+        "priceMinor": 2600
+      },
+      {
+        "name": "Islatte Vanilje",
+        "priceMinor": 7600
+      },
+      {
+        "name": "Vegansk Frapino Sjokolade",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Solrik Jordbær & Appelsin",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Mozell Light",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

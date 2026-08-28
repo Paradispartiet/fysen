@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "starbucks-aker-brygge-oslo",
+    "name": "Starbucks Aker Brygge",
+    "websiteUrl": null,
+    "address": "Stranden 7, 0250 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90975324320049,
+    "longitude": 10.726820759182809
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/starbucksakerbrygge",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 46,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Lavender Cream Frappuccino",
+      "Iced Caramel Macchiato",
+      "Caramel Frappuccino",
+      "Croissant Ost & Skinke",
+      "Chiapudding med Banan og Bær",
+      "Croissant Sjokolade",
+      "Bonaqua Naturell m/ Kullsyre 0,5l",
+      "Gingerbread Cookie"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Lavender Cream Frappuccino",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Iced Caramel Macchiato",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Caramel Frappuccino",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Croissant Ost & Skinke",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Chiapudding med Banan og Bær",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Croissant Sjokolade",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Bonaqua Naturell m/ Kullsyre 0,5l",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Gingerbread Cookie",
+        "priceMinor": 4400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

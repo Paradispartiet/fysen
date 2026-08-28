@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "smoothiexchange-bogstadveien-oslo",
+    "name": "SmoothieXchange Bogstadveien",
+    "websiteUrl": null,
+    "address": "Bogstadveien 46A, 0366 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92715358078229,
+    "longitude": 10.719691118116614
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/737smoothiexchangebogstadveien",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 51,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fresh",
+      "Hollywood",
+      "Super Protein++",
+      "Açaí Coconut Crunch",
+      "Lean Green",
+      "Almond Butter 250g",
+      "Star Nutrition, Choco Brownie",
+      "Isklar Naturell M/Kullsyre"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fresh",
+        "priceMinor": 10700
+      },
+      {
+        "name": "Hollywood",
+        "priceMinor": 10700
+      },
+      {
+        "name": "Super Protein++",
+        "priceMinor": 11400
+      },
+      {
+        "name": "Açaí Coconut Crunch",
+        "priceMinor": 12400
+      },
+      {
+        "name": "Lean Green",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Almond Butter 250g",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Star Nutrition, Choco Brownie",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Isklar Naturell M/Kullsyre",
+        "priceMinor": 3400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

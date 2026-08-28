@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "tgi-fridays-oslo-city-oslo",
+    "name": "TGI Fridays Oslo City",
+    "websiteUrl": null,
+    "address": "Biskop Gunnerus' gate 3, 0155 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91245685133331,
+    "longitude": 10.749961553126727
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/tgifridaysoslocity",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 34,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chips & Salsa",
+      "Fridays Three For All",
+      "Chicken Quesadilla",
+      "BBQ Burger",
+      "Kid Chicken Tenders",
+      "Fries",
+      "Coleslaw",
+      "Buffalo Sauce 🌶"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chips & Salsa",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Fridays Three For All",
+        "priceMinor": 33900
+      },
+      {
+        "name": "Chicken Quesadilla",
+        "priceMinor": 25900
+      },
+      {
+        "name": "BBQ Burger",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Kid Chicken Tenders",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Fries",
+        "priceMinor": 5000
+      },
+      {
+        "name": "Coleslaw",
+        "priceMinor": 5000
+      },
+      {
+        "name": "Buffalo Sauce 🌶",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sunt-og-godt-lokka-oslo",
+    "name": "Sunt og Godt Løkka",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 18A, 0555 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9282031873354,
+    "longitude": 10.759272573870298
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/683suntoggodtlokka",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 25,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vegetarsalat",
+      "The green bowl",
+      "Avocadoblend",
+      "Magisk Ananas",
+      "Cocopeanut",
+      "Eplejuice",
+      "Pure energi",
+      "Kokosbolle fra den lille kokosbollefabrikken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vegetarsalat",
+        "priceMinor": 17900
+      },
+      {
+        "name": "The green bowl",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Avocadoblend",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Magisk Ananas",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Cocopeanut",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Eplejuice",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Pure energi",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Kokosbolle fra den lille kokosbollefabrikken",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
