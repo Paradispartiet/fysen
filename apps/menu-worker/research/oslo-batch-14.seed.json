@@ -19,13 +19,6 @@
     },
     {
       "version": 1,
-      "restaurant": { "slug": "tgi-fridays-aker-brygge-oslo", "name": "TGI Fridays Aker Brygge", "websiteUrl": null, "address": "Stranden 39, 0250 Oslo", "city": "Oslo", "countryCode": "NO" },
-      "menuSource": { "url": "https://semeny.no/sted/542tgifridaysakerbrygge", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
-      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 14 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
-      "actions": []
-    },
-    {
-      "version": 1,
       "restaurant": { "slug": "oslo-raw-adamstuen-oslo", "name": "Oslo Raw Cafe and Bakery Adamstuen", "websiteUrl": null, "address": "Ullevålsveien 82, 0454 Oslo", "city": "Oslo", "countryCode": "NO" },
       "menuSource": { "url": "https://semeny.no/sted/611oslorawcafeandbakeryadamstuen", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
       "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 14 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
