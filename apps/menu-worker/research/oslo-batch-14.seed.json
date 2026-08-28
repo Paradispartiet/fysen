@@ -61,13 +61,6 @@
     },
     {
       "version": 1,
-      "restaurant": { "slug": "los-tacos-bjorvika-oslo", "name": "Los Tacos Bjørvika", "websiteUrl": null, "address": "Operagata 35, 0176 Oslo", "city": "Oslo", "countryCode": "NO" },
-      "menuSource": { "url": "https://semeny.no/sted/725lostacosbjorvika", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
-      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 14 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
-      "actions": []
-    },
-    {
-      "version": 1,
       "restaurant": { "slug": "espresso-house-pilestredet-oslo", "name": "Espresso House Pilestredet", "websiteUrl": null, "address": "Pilestredet 39D, 0166 Oslo", "city": "Oslo", "countryCode": "NO" },
       "menuSource": { "url": "https://semeny.no/sted/726espressohousepilestredet", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
       "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 14 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
