@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "espresso-house-pilestredet-oslo",
+    "name": "Espresso House Pilestredet",
+    "websiteUrl": null,
+    "address": "Pilestredet 39, 0166 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92017676435174,
+    "longitude": 10.734643306940942
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/726espressohousepilestredet",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 94,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 14 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Focaccia Lunch",
+      "Focaccia med Spicy Tuna",
+      "Muslibolle med Brunost",
+      "Pecan Dulce Crumb",
+      "Signaturbrygg",
+      "Frapino Sjokolade",
+      "Iste Pasjonsfrukt & Sitron",
+      "Mozell Light"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Focaccia Lunch",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Focaccia med Spicy Tuna",
+        "priceMinor": 13400
+      },
+      {
+        "name": "Muslibolle med Brunost",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Pecan Dulce Crumb",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Signaturbrygg",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Frapino Sjokolade",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Iste Pasjonsfrukt & Sitron",
+        "priceMinor": 7400
+      },
+      {
+        "name": "Mozell Light",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

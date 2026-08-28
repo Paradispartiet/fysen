@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "oslo-raw-adamstuen-oslo",
+    "name": "Oslo Raw Cafe and Bakery Adamstuen",
+    "websiteUrl": null,
+    "address": "Ullevålsveien 82A, 0454 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.932882816475185,
+    "longitude": 10.734161473901933
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/611oslorawcafeandbakeryadamstuen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 31,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 14 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chocolate Crisp x2",
+      "Licorice Fudge x8",
+      "Chocolate Vanilla Cake",
+      "Keto Brownie",
+      "Raw Cake Slices 5pk",
+      "Overnight Oats",
+      "Cacao Mix",
+      "Hazelnutella"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chocolate Crisp x2",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Licorice Fudge x8",
+        "priceMinor": 31500
+      },
+      {
+        "name": "Chocolate Vanilla Cake",
+        "priceMinor": 7800
+      },
+      {
+        "name": "Keto Brownie",
+        "priceMinor": 7800
+      },
+      {
+        "name": "Raw Cake Slices 5pk",
+        "priceMinor": 31000
+      },
+      {
+        "name": "Overnight Oats",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Cacao Mix",
+        "priceMinor": 17800
+      },
+      {
+        "name": "Hazelnutella",
+        "priceMinor": 18900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

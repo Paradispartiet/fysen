@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizza-baronen-bislett-oslo",
+    "name": "Pizza Baronen Bislett - Leveres av Restauranten",
+    "websiteUrl": null,
+    "address": "Pilestredet 63A, 0350 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92377984160333,
+    "longitude": 10.73111002065035
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/263pizzabaronenbislettleveresavrestauranten",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 108,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 14 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Döner Pizza (Stor)",
+      "Crunchy Pizza (Stor)",
+      "Baronens Knock Out (Medium)",
+      "Baronens Spesial (glutenfri)",
+      "Pisa (glutenfri)",
+      "Kebab i pita",
+      "Kyllingsalat",
+      "Baronen Spesial + Meatballs Deal"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Döner Pizza (Stor)",
+        "priceMinor": 29100
+      },
+      {
+        "name": "Crunchy Pizza (Stor)",
+        "priceMinor": 32500
+      },
+      {
+        "name": "Baronens Knock Out (Medium)",
+        "priceMinor": 21600
+      },
+      {
+        "name": "Baronens Spesial (glutenfri)",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Pisa (glutenfri)",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Kebab i pita",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Kyllingsalat",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Baronen Spesial + Meatballs Deal",
+        "priceMinor": 56900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

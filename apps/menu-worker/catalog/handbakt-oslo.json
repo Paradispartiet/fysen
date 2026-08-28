@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "handbakt-oslo",
+    "name": "Håndbakt OSLO",
+    "websiteUrl": null,
+    "address": "Kjølberggata 21, 0653 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91113787529822,
+    "longitude": 10.778385870870046
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/664handbaktoslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 21,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 14 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Surdeigsciabatta med eggesalat",
+      "Granola bowl",
+      "Bollepakke 4 stk",
+      "Solskinnsbolle",
+      "Espressobolle",
+      "Empress kombucha jordbær",
+      "Fountain of youth kokosvann",
+      "Kaffe fra Romerike kaffebrenneri"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Surdeigsciabatta med eggesalat",
+        "priceMinor": 13000
+      },
+      {
+        "name": "Granola bowl",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Bollepakke 4 stk",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Solskinnsbolle",
+        "priceMinor": 6300
+      },
+      {
+        "name": "Espressobolle",
+        "priceMinor": 6300
+      },
+      {
+        "name": "Empress kombucha jordbær",
+        "priceMinor": 7400
+      },
+      {
+        "name": "Fountain of youth kokosvann",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Kaffe fra Romerike kaffebrenneri",
+        "priceMinor": 20000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
