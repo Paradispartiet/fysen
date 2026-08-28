@@ -75,7 +75,7 @@
     },
     {
       "version": 1,
-      "restaurant": { "slug": "bislett-kebab-house-grunerlokka-oslo", "name": "Bislett Kebab House Grünerløkka", "websiteUrl": null, "address": "Thorvald Meyers gate 83, 0550 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "restaurant": { "slug": "bislett-kebab-house-grunerlokka-oslo", "name": "Bislett Kebab House Grünerløkka", "websiteUrl": null, "address": "Thorvald Meyers gate 83A, 0552 Oslo", "city": "Oslo", "countryCode": "NO" },
       "menuSource": { "url": "https://semeny.no/sted/bislettkebabhousegrunerlokka", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
       "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 14 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
       "actions": []
