@@ -89,8 +89,8 @@
     },
     {
       "version": 1,
-      "restaurant": { "slug": "dominos-pizza-storgata-oslo", "name": "Domino's Pizza Storgata", "websiteUrl": null, "address": "Kirkeristen 2, 0155 Oslo", "city": "Oslo", "countryCode": "NO" },
-      "menuSource": { "url": "https://semeny.no/sted/dominospizzastorgata", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
+      "restaurant": { "slug": "joe-the-juice-torggata-oslo", "name": "Joe & The Juice Torggata", "websiteUrl": null, "address": "Torggata 9A, 0181 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "menuSource": { "url": "https://semeny.no/sted/87joethejuicetorggata", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
       "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 14 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
       "actions": []
     },
