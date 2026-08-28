@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "xin-chao-oslo",
+    "name": "Xin Chào Oslo",
+    "websiteUrl": null,
+    "address": "Møllergata 42, 0179 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91802569638082,
+    "longitude": 10.750612532877085
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/278xinchaooslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 15,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Sommerruller (scampi eller vegetar)",
+      "Goi Du Du",
+      "Tempura Scampi",
+      "Bun Cha Ha Noi",
+      "Bun Bo Xao Cha Gio",
+      "Pho Bo",
+      "Bánh Xeo",
+      "Bánh Mì Storfe"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Sommerruller (scampi eller vegetar)",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Goi Du Du",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Tempura Scampi",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Bun Cha Ha Noi",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Bun Bo Xao Cha Gio",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Pho Bo",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Bánh Xeo",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Bánh Mì Storfe",
+        "priceMinor": 13500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
