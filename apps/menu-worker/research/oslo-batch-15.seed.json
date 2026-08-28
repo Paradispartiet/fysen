@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "batch": "oslo-batch-15",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": { "slug": "falafel-n-juice-lokka-oslo", "name": "_FALAFEL n' JUICE Løkka", "websiteUrl": null, "address": "Thorvald Meyers gate 33D, 0555 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "menuSource": { "url": "https://semeny.no/sted/falafelnjuicelokka", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
+      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": { "slug": "sultan-oslo-food-sweets-oslo", "name": "Sultan Oslo Food & Sweets", "websiteUrl": null, "address": "Grønlandsleiret 16B, 0190 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "menuSource": { "url": "https://semeny.no/sted/sultanoslofoodsweets", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
+      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": { "slug": "lokka-sushi-oslo", "name": "Løkka Sushi", "websiteUrl": null, "address": "Sannergata 28A, 0557 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "menuSource": { "url": "https://semeny.no/sted/106lokkasushi", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
+      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": { "slug": "xin-chao-oslo", "name": "Xin Chào Oslo", "websiteUrl": null, "address": "Møllergata 42, 0179 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "menuSource": { "url": "https://semeny.no/sted/278xinchaooslo", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
+      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": { "slug": "lille-amerika-lokka-oslo", "name": "Lille Amerika Løkka", "websiteUrl": null, "address": "Osterhaus' gate 6D, 0183 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "menuSource": { "url": "https://semeny.no/sted/521lilleamerikalokka", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
+      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": { "slug": "sunt-og-godt-lokka-oslo", "name": "Sunt og Godt Løkka", "websiteUrl": null, "address": "Thorvald Meyers gate 18A, 0555 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "menuSource": { "url": "https://semeny.no/sted/683suntoggodtlokka", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
+      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": { "slug": "jungel-pizza-adamstuen-oslo", "name": "Jungel Pizza Adamstuen", "websiteUrl": null, "address": "Ullevålsveien 88A, 0451 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "menuSource": { "url": "https://semeny.no/sted/557jungelpizzaadamstuen", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
+      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": { "slug": "lokka-deli-oslo", "name": "Løkka Deli", "websiteUrl": null, "address": "Olaf Ryes plass 3A, 0552 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "menuSource": { "url": "https://semeny.no/sted/603lokkadeli", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
+      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": { "slug": "pizza-pancetta-adamstuen-oslo", "name": "Pizza Pancetta Adamstuen", "websiteUrl": null, "address": "Brageveien 2A, 0452 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "menuSource": { "url": "https://semeny.no/sted/pizzapancettaadamstuen", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
+      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": { "slug": "creamy-lokka-oslo", "name": "Creamy Løkka", "websiteUrl": null, "address": "Thorvald Meyers gate 32B, 0555 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "menuSource": { "url": "https://semeny.no/sted/96creamylokka", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
+      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": { "slug": "starbucks-aker-brygge-oslo", "name": "Starbucks Aker Brygge", "websiteUrl": null, "address": "Stranden 7, 0250 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "menuSource": { "url": "https://semeny.no/sted/starbucksakerbrygge", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
+      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": { "slug": "espresso-house-bogstadveien-oslo", "name": "Espresso House Bogstadveien", "websiteUrl": null, "address": "Valkyriegata 9, 0366 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "menuSource": { "url": "https://semeny.no/sted/espressohousebogstadveien", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
+      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": { "slug": "smoothiexchange-bogstadveien-oslo", "name": "SmoothieXchange Bogstadveien", "websiteUrl": null, "address": "Bogstadveien 46A, 0366 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "menuSource": { "url": "https://semeny.no/sted/737smoothiexchangebogstadveien", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
+      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": { "slug": "tgi-fridays-oslo-city-oslo", "name": "TGI Fridays Oslo City", "websiteUrl": null, "address": "Biskop Gunnerus' gate 3, 0155 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "menuSource": { "url": "https://semeny.no/sted/tgifridaysoslocity", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
+      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": { "slug": "oslo-kebab-pizzahus-oslo", "name": "Oslo Kebab & Pizzahus", "websiteUrl": null, "address": "Tøyengata 1, 0190 Oslo", "city": "Oslo", "countryCode": "NO" },
+      "menuSource": { "url": "https://semeny.no/sted/354oslokebabpizzahus", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720 },
+      "verification": { "hours": { "status": "unverified", "checkedAt": "2026-08-28", "note": "Batch 15 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed." } },
+      "actions": []
+    }
+  ]
+}
