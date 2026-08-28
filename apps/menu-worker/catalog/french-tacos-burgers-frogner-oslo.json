@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "french-tacos-burgers-frogner-oslo",
+    "name": "French Tacos & Burgers Frogner",
+    "websiteUrl": null,
+    "address": "Skovveien 8, 0257 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.916457054484106,
+    "longitude": 10.716222032803696
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/598frenchtacosburgersfrogner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 24,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Medium Tacos",
+      "fjell French Tacos",
+      "Crispy Pollo",
+      "American Tasty",
+      "Gratinert Nachos",
+      "Pommes Frites",
+      "Mozzarella Sticks",
+      "Iste i glass flaske fra Creta Fersken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Medium Tacos",
+        "priceMinor": 16900
+      },
+      {
+        "name": "fjell French Tacos",
+        "priceMinor": 20500
+      },
+      {
+        "name": "Crispy Pollo",
+        "priceMinor": 18900
+      },
+      {
+        "name": "American Tasty",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Gratinert Nachos",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Pommes Frites",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Mozzarella Sticks",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Iste i glass flaske fra Creta Fersken",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

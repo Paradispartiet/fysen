@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "tunco-oslo-street-food-oslo",
+    "name": "Tunco Oslo Street Food",
+    "websiteUrl": null,
+    "address": "Torggata 16A, 0181 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.915849239409766,
+    "longitude": 10.75083417633427
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/115tuncooslostreetfood",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 18,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chopsticks Helper",
+      "Prawn Crackers",
+      "Kids Bowl",
+      "Bangkok",
+      "The Plantie",
+      "Bangkok (Gluten-Free)",
+      "Orange Chicken (Special)",
+      "Prawn Crackers (Special)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chopsticks Helper",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Prawn Crackers",
+        "priceMinor": 4000
+      },
+      {
+        "name": "Kids Bowl",
+        "priceMinor": 9800
+      },
+      {
+        "name": "Bangkok",
+        "priceMinor": 22900
+      },
+      {
+        "name": "The Plantie",
+        "priceMinor": 21800
+      },
+      {
+        "name": "Bangkok (Gluten-Free)",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Orange Chicken (Special)",
+        "priceMinor": 21600
+      },
+      {
+        "name": "Prawn Crackers (Special)",
+        "priceMinor": 4000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

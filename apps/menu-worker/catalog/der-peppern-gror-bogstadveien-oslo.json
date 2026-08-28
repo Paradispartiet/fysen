@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "der-peppern-gror-bogstadveien-oslo",
+    "name": "Der Peppern Gror Bogstadveien",
+    "websiteUrl": null,
+    "address": "Bogstadveien 1, 0355 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92409482601102,
+    "longitude": 10.725580094746746
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/derpepperngrorbogstadveien",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 30,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chicken 65",
+      "Chicken Hariyali Tikka",
+      "Butter Chicken",
+      "Tadka Daal",
+      "Tandoori Parantha",
+      "Peshwari Naan",
+      "Desi-Salat",
+      "Luscombe Cool Ginger Beer 0,33l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chicken 65",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Chicken Hariyali Tikka",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Butter Chicken",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Tadka Daal",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Tandoori Parantha",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Peshwari Naan",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Desi-Salat",
+        "priceMinor": 5000
+      },
+      {
+        "name": "Luscombe Cool Ginger Beer 0,33l",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

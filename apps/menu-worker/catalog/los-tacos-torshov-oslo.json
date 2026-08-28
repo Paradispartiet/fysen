@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "los-tacos-torshov-oslo",
+    "name": "Los Tacos Torshov",
+    "websiteUrl": null,
+    "address": "Vogts gate 60A, 0477 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.935846260309866,
+    "longitude": 10.765333168426574
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/lostacostorshov",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 64,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bestikk/Cutlery",
+      "Combo: Dirty Fries Burrito + Nachos or Fries + Drink",
+      "Chipotle Chicken Burrito",
+      "Cheesy Crunch Bowl",
+      "Premium Quesadilla",
+      "Jalapeño Nachos",
+      "Salsa Mild",
+      "MER"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bestikk/Cutlery",
+        "priceMinor": 500
+      },
+      {
+        "name": "Combo: Dirty Fries Burrito + Nachos or Fries + Drink",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Chipotle Chicken Burrito",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Cheesy Crunch Bowl",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Premium Quesadilla",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Jalapeño Nachos",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Salsa Mild",
+        "priceMinor": 2900
+      },
+      {
+        "name": "MER",
+        "priceMinor": 2900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

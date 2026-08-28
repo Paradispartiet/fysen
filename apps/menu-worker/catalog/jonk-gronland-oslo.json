@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jonk-gronland-oslo",
+    "name": "Jønk Grønland",
+    "websiteUrl": null,
+    "address": "Smalgangen 43, 0188 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91252625772406,
+    "longitude": 10.761608543395763
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/499jonkgronland",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 113,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "BBQ Burger Meal",
+      "Chicken Meal Deal (Build your own)",
+      "Beyond Meat Helt Texas Meal",
+      "NO Chicken Helt Texas",
+      "Jønk Fries 🌶",
+      "Gunshot Dip 🌶🌶🌶",
+      "Mozell Light (0,33L) - Eple & Drue",
+      "Kids Meal,Fresh Chicken Fillet Nuggets"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "BBQ Burger Meal",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Chicken Meal Deal (Build your own)",
+        "priceMinor": 30000
+      },
+      {
+        "name": "Beyond Meat Helt Texas Meal",
+        "priceMinor": 29500
+      },
+      {
+        "name": "NO Chicken Helt Texas",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Jønk Fries 🌶",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Gunshot Dip 🌶🌶🌶",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Mozell Light (0,33L) - Eple & Drue",
+        "priceMinor": 5200
+      },
+      {
+        "name": "Kids Meal,Fresh Chicken Fillet Nuggets",
+        "priceMinor": 17000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jungel-pizza-torshov-oslo",
+    "name": "Jungel Pizza Torshov",
+    "websiteUrl": null,
+    "address": "Vogts gate 54, 0477 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9353680206142,
+    "longitude": 10.764828090746901
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/jungelpizzatorshov",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 26,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Carne 1",
+      "Carne 17",
+      "Vegetar 10 🌱",
+      "Vegan 18 🌱",
+      "Vegan 21 🌱",
+      "Hvit Pizza",
+      "Utopiabrus Mango",
+      "Sjure Eplemost"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Carne 1",
+        "priceMinor": 19600
+      },
+      {
+        "name": "Carne 17",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Vegetar 10 🌱",
+        "priceMinor": 16800
+      },
+      {
+        "name": "Vegan 18 🌱",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Vegan 21 🌱",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Hvit Pizza",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Utopiabrus Mango",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Sjure Eplemost",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

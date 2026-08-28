@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "digg-burger-jd-bislett-oslo",
+    "name": "Digg Burger by J.D Bislett",
+    "websiteUrl": null,
+    "address": "Pilestredet 39, 0166 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92017676435174,
+    "longitude": 10.734643306940942
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/diggburgerbyjdbislett",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 23,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Classic Cheese",
+      "Chicago Streets",
+      "Veggie Burger 🌱",
+      "Sweet Potato Fries",
+      "DIGG Loaded Fries",
+      "Onion Rings",
+      "Villa Farris",
+      "Mozell"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Classic Cheese",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Chicago Streets",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Veggie Burger 🌱",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Sweet Potato Fries",
+        "priceMinor": 5900
+      },
+      {
+        "name": "DIGG Loaded Fries",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Onion Rings",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Villa Farris",
+        "priceMinor": 5200
+      },
+      {
+        "name": "Mozell",
+        "priceMinor": 5200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

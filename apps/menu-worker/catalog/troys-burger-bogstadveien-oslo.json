@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "troys-burger-bogstadveien-oslo",
+    "name": "Troys Burger Bogstadveien",
+    "websiteUrl": null,
+    "address": "Hegdehaugsveien 36A, 0352 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92337921407447,
+    "longitude": 10.725564401081366
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/troysburgerbogstadveien",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 47,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Trøffel Burger",
+      "Burger of the Month: Double Trouble",
+      "Bluecifer Burger Menu",
+      "Chicken BBQ Burger",
+      "Chili Cheese Fries",
+      "Classic Mayo Dip",
+      "Jarritos Guava 0,37L",
+      "Jarritos Grapefruit 0,37L"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Trøffel Burger",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Burger of the Month: Double Trouble",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Bluecifer Burger Menu",
+        "priceMinor": 28400
+      },
+      {
+        "name": "Chicken BBQ Burger",
+        "priceMinor": 16400
+      },
+      {
+        "name": "Chili Cheese Fries",
+        "priceMinor": 8300
+      },
+      {
+        "name": "Classic Mayo Dip",
+        "priceMinor": 2700
+      },
+      {
+        "name": "Jarritos Guava 0,37L",
+        "priceMinor": 5800
+      },
+      {
+        "name": "Jarritos Grapefruit 0,37L",
+        "priceMinor": 5800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

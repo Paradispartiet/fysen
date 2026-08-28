@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "massimo-pizza-frogner-oslo",
+    "name": "Massimo Pizza Frogner",
+    "websiteUrl": null,
+    "address": "Niels Juels gate 27, 0257 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91627527389314,
+    "longitude": 10.714316610115434
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/265massimopizzafrogner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 50,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-28",
+      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita 🌱",
+      "Capricciosa",
+      "Parma",
+      "Pepperoni og Potet med Brokkoli",
+      "Parma Spesial",
+      "Vegansk Sjampignong, Løk & Potet",
+      "Kuli Appelsin",
+      "Urge 330ml Boks"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita 🌱",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Capricciosa",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Parma",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Pepperoni og Potet med Brokkoli",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Parma Spesial",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Vegansk Sjampignong, Løk & Potet",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Kuli Appelsin",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Urge 330ml Boks",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
