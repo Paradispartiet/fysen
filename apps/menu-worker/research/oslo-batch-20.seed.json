@@ -58,15 +58,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "tgi-fridays-aker-brygge-oslo",
-        "name": "TGI Fridays Aker Brygge",
+        "slug": "ferrys-pizzeria-filipstad-oslo",
+        "name": "Ferrys Pizzeria",
         "websiteUrl": null,
-        "address": "Stranden 39, 0250 Oslo",
+        "address": "Filipstadveien 25, 0250 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/542tgifridaysakerbrygge",
+        "url": "https://semeny.no/sted/ferryspizzeria",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
