@@ -1,0 +1,399 @@
+{
+  "version": 1,
+  "batch": "oslo-batch-19",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "render-burger-grunerlokka-oslo",
+        "name": "Render Burger",
+        "websiteUrl": null,
+        "address": "Toftes gate 19B, 0556 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/114renderburger",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "refresh-mathallen-oslo",
+        "name": "Refresh Mathallen",
+        "websiteUrl": null,
+        "address": "Vulkan 5, 0178 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/642refreshmathallen",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "haralds-vaffel-grunerlokka-oslo",
+        "name": "Haralds Vaffel",
+        "websiteUrl": null,
+        "address": "Olaf Ryes plass 3, 0552 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/682haraldsvaffel",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "cafe-sara-hausmanns-gate-oslo",
+        "name": "Cafe Sara",
+        "websiteUrl": null,
+        "address": "Hausmanns gate 29, 0182 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/cafesara",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "bastard-burgers-torggata-oslo",
+        "name": "Bastard Burgers Torggata",
+        "websiteUrl": null,
+        "address": "Torggata 18, 0181 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/bastardburgerstorggata",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "maxin-fried-chicken-gronland-oslo",
+        "name": "Maxin Fried Chicken Grønland",
+        "websiteUrl": null,
+        "address": "Grønland T-banestasjon, Oslo",
+        "city": "Oslo",
+        "countryCode": "NO",
+        "latitude": 59.9126879,
+        "longitude": 10.7613293
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/686maxinfriedchickengronland",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "munch-kafe-bjorvika-oslo",
+        "name": "MUNCH Kafé",
+        "websiteUrl": null,
+        "address": "Edvard Munchs plass 1, 0194 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/632munchkafe",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "olearys-vika-oslo",
+        "name": "O'Learys Oslo Vika",
+        "websiteUrl": null,
+        "address": "Ruseløkkveien 26, 0251 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/369olearysoslovika",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "happy-foods-majorstuen-oslo",
+        "name": "Happy Foods",
+        "websiteUrl": null,
+        "address": "Neuberggata 2A, 0367 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/636happyfoods",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "bakt-potet-kongen-grunerlokka-oslo",
+        "name": "Bakt Potet Kongen Oslo",
+        "websiteUrl": null,
+        "address": "Thorvald Meyers gate 68, 0552 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/baktpotetkongenoslo",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "big-bite-oslo-city-oslo",
+        "name": "Big Bite Oslo City",
+        "websiteUrl": null,
+        "address": "Stenersgata 1E, 0050 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/596bigbiteoslocity",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "smoothiexchange-egertorget-oslo",
+        "name": "SmoothieXchange Egertorget",
+        "websiteUrl": null,
+        "address": "Karl Johans gate 20, 0159 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/723smoothiexchangeegertorget",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "la-baguette-oslo-s-oslo",
+        "name": "La Baguette Oslo S",
+        "websiteUrl": null,
+        "address": "Jernbanetorget 1, 0154 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/labaguetteoslos",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "de-mi-tierra-oslo-street-food-oslo",
+        "name": "De Mi Tierra - Oslo Street Food",
+        "websiteUrl": null,
+        "address": "Torggata 16, 0181 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/demitierraoslostreetfood",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "fulani-bjorvika-oslo",
+        "name": "Fulani - Oslo Street Food",
+        "websiteUrl": null,
+        "address": "Dronning Eufemias gate 14, 0191 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/fulanioslostreetfood",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    }
+  ]
+}
