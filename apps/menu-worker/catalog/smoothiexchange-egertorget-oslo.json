@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "smoothiexchange-egertorget-oslo",
+    "name": "SmoothieXchange Egertorget",
+    "websiteUrl": null,
+    "address": "Karl Johans gate 20, 0159 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.912900228457886,
+    "longitude": 10.74150718437996
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/723smoothiexchangeegertorget",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 54,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fresh",
+      "Detox",
+      "Deluxe",
+      "Açaí Cacao Crunch",
+      "Go Nuts",
+      "Hemp Protein 500g",
+      "Star Nutrition, Fudge & Sea Salt",
+      "Isklar Naturell M/Kullsyre"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fresh",
+        "priceMinor": 10700
+      },
+      {
+        "name": "Detox",
+        "priceMinor": 10700
+      },
+      {
+        "name": "Deluxe",
+        "priceMinor": 11400
+      },
+      {
+        "name": "Açaí Cacao Crunch",
+        "priceMinor": 12400
+      },
+      {
+        "name": "Go Nuts",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Hemp Protein 500g",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Star Nutrition, Fudge & Sea Salt",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Isklar Naturell M/Kullsyre",
+        "priceMinor": 3400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
