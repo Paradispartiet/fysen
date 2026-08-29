@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "creperie-de-mari-grunerlokka-oslo",
+    "name": "Creperie De Mari",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 63-67, 0552 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.921882071031845,
+    "longitude": 10.759134699452707
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/628creperiedemari",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 34,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 17 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Crêpe Monsieur",
+      "Spinatcrêpe",
+      "Grünerløkka",
+      "Gino fra Sverige",
+      "Crepes",
+      "🌱Vegan Skogen",
+      "🌱Sjokolade og jordbær",
+      "🌱Bare sjokolade"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Crêpe Monsieur",
+        "priceMinor": 19200
+      },
+      {
+        "name": "Spinatcrêpe",
+        "priceMinor": 17600
+      },
+      {
+        "name": "Grünerløkka",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Gino fra Sverige",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Crepes",
+        "priceMinor": 6200
+      },
+      {
+        "name": "🌱Vegan Skogen",
+        "priceMinor": 18900
+      },
+      {
+        "name": "🌱Sjokolade og jordbær",
+        "priceMinor": 13000
+      },
+      {
+        "name": "🌱Bare sjokolade",
+        "priceMinor": 7900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

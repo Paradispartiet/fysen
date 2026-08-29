@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pacific-poke-markveien-oslo",
+    "name": "Pacific Poke Markveien",
+    "websiteUrl": null,
+    "address": "Markveien 50A, 0554 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.920761540745474,
+    "longitude": 10.757626312317388
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/98pacificpokemarkveien",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 38,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 17 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Spicy Salmon",
+      "Tropical Tuna",
+      "Vegan Bowl",
+      "Philadelphia Salmon Glutenfri",
+      "Spicy Chicken Glutenfri",
+      "Jarritos Lime 0,37l",
+      "Norsk Kombucha Mojitomagic 0,5l",
+      "Arctic Water Sparkling"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Spicy Salmon",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Tropical Tuna",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Vegan Bowl",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Philadelphia Salmon Glutenfri",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Spicy Chicken Glutenfri",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Jarritos Lime 0,37l",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Norsk Kombucha Mojitomagic 0,5l",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Arctic Water Sparkling",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

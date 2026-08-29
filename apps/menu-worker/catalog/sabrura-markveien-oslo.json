@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sabrura-markveien-oslo",
+    "name": "Sabrura Markveien",
+    "websiteUrl": null,
+    "address": "Markveien 67A, 0550 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.918883193407254,
+    "longitude": 10.757043975605846
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/545sabruramarkveien",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 72,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 17 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Barnekombo",
+      "Nigirikombo",
+      "Tempura Futomaki",
+      "Nigiri Tunfisk",
+      "Kyllingklubber (2 stk)",
+      "Agurk- og avokadosalat",
+      "Sjøgressalat",
+      "MER jordbær og eple 200 ml"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Barnekombo",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Nigirikombo",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Tempura Futomaki",
+        "priceMinor": 13800
+      },
+      {
+        "name": "Nigiri Tunfisk",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Kyllingklubber (2 stk)",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Agurk- og avokadosalat",
+        "priceMinor": 5400
+      },
+      {
+        "name": "Sjøgressalat",
+        "priceMinor": 3300
+      },
+      {
+        "name": "MER jordbær og eple 200 ml",
+        "priceMinor": 3000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

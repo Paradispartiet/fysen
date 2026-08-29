@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "viet-food-grunerlokka-oslo",
+    "name": "Viet Food",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 83A, 0552 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.919762268960454,
+    "longitude": 10.75914771292617
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/vietfood",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 52,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 17 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Dagens varmmat med kylking",
+      "1B. Vegetar Våruller (3 stk)",
+      "M1 Meny 1",
+      "M10 Spicy Laks Maki",
+      "M52 Stor Sashimi",
+      "M60 Avokado & Agurk",
+      "E1. Soyasaus",
+      "Lunsj 3"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Dagens varmmat med kylking",
+        "priceMinor": 14900
+      },
+      {
+        "name": "1B. Vegetar Våruller (3 stk)",
+        "priceMinor": 10900
+      },
+      {
+        "name": "M1 Meny 1",
+        "priceMinor": 18900
+      },
+      {
+        "name": "M10 Spicy Laks Maki",
+        "priceMinor": 13900
+      },
+      {
+        "name": "M52 Stor Sashimi",
+        "priceMinor": 42900
+      },
+      {
+        "name": "M60 Avokado & Agurk",
+        "priceMinor": 11000
+      },
+      {
+        "name": "E1. Soyasaus",
+        "priceMinor": 1200
+      },
+      {
+        "name": "Lunsj 3",
+        "priceMinor": 15900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

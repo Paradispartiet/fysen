@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "indian-street-food-n-co-sorengkaia-oslo",
+    "name": "Indian Street Food N Co Sørengkaia",
+    "websiteUrl": null,
+    "address": "Sørengkaia 7, 0194 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90387930060334,
+    "longitude": 10.756866244245135
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/559indianstreetfoodncosorengkaia",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 49,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 17 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Palak Paneer Lasooni",
+      "Paneer Chilli Street Style",
+      "Tandoori Chicken Tikkas",
+      "Chicken Chettinad",
+      "Hara Bhara Paneer Kofta",
+      "ISF & Co Spiced Naan",
+      "Pickel",
+      "Methi Murg"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Palak Paneer Lasooni",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Paneer Chilli Street Style",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Tandoori Chicken Tikkas",
+        "priceMinor": 30500
+      },
+      {
+        "name": "Chicken Chettinad",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Hara Bhara Paneer Kofta",
+        "priceMinor": 27500
+      },
+      {
+        "name": "ISF & Co Spiced Naan",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Pickel",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Methi Murg",
+        "priceMinor": 26900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "hana-sweet-cafe-gronland-oslo",
+    "name": "Hana Sweet Cafe",
+    "websiteUrl": null,
+    "address": "Grønlandsleiret 61A, 0190 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90982974856057,
+    "longitude": 10.767934267558164
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/hanasweetcafe",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 73,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 17 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Crepe Sjokolade & Oreo",
+      "Rull au Hana",
+      "Mini Pancake White Chocolate",
+      "Strawberry Milkshake",
+      "Bubble Gum",
+      "Monster Energy",
+      "Redbull The Yellow edition",
+      "Lutos Combo"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Crepe Sjokolade & Oreo",
+        "priceMinor": 16600
+      },
+      {
+        "name": "Rull au Hana",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Mini Pancake White Chocolate",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Strawberry Milkshake",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Bubble Gum",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Monster Energy",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Redbull The Yellow edition",
+        "priceMinor": 4600
+      },
+      {
+        "name": "Lutos Combo",
+        "priceMinor": 26900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

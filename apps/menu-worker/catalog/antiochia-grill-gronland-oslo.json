@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "antiochia-grill-gronland-oslo",
+    "name": "Antiochia Grill",
+    "websiteUrl": null,
+    "address": "Grønlandsleiret 10, 0190 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91251673436934,
+    "longitude": 10.765006253382397
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/antiochiagrill",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 17,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 17 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Antiochia Deal",
+      "Berlin gemüse Box",
+      "Klassiske pommes frites",
+      "Kylling",
+      "Brød",
+      "Søt paprika saus",
+      "7up Uten Sukker 0,33l",
+      "Ayran 0,25l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Antiochia Deal",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Berlin gemüse Box",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Klassiske pommes frites",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Kylling",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Brød",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Søt paprika saus",
+        "priceMinor": 3000
+      },
+      {
+        "name": "7up Uten Sukker 0,33l",
+        "priceMinor": 4000
+      },
+      {
+        "name": "Ayran 0,25l",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "listen-to-baljit-frogner-oslo",
+    "name": "Listen to Baljit",
+    "websiteUrl": null,
+    "address": "Frognerveien 1, 0257 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91523917463707,
+    "longitude": 10.717670566645548
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/listentobaljit",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 47,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 17 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tandoori Jhinga",
+      "Agni \"Fire\" Wings",
+      "Bhuna Saag",
+      "Pav Bhaji",
+      "Vegetable Tikka Masala",
+      "Kids Veg",
+      "Amritsari Kulcha",
+      "Frisk Salat"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Tandoori Jhinga",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Agni \"Fire\" Wings",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Bhuna Saag",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Pav Bhaji",
+        "priceMinor": 23800
+      },
+      {
+        "name": "Vegetable Tikka Masala",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Kids Veg",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Amritsari Kulcha",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Frisk Salat",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
