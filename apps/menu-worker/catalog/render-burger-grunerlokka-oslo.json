@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "render-burger-grunerlokka-oslo",
+    "name": "Render Burger",
+    "websiteUrl": null,
+    "address": "Toftes gate 19B, 0556 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.929612780258616,
+    "longitude": 10.760857522753795
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/114renderburger",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 16,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Oslohoma Smash",
+      "Baconator",
+      "Sausage & Egg Burger",
+      "Hash Browns",
+      "Roasted Garlic Aioli",
+      "Render Sauce",
+      "Tomato Relish",
+      "Bonaqua Telemark Vann"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Oslohoma Smash",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Baconator",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Sausage & Egg Burger",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Hash Browns",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Roasted Garlic Aioli",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Render Sauce",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Tomato Relish",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Bonaqua Telemark Vann",
+        "priceMinor": 5400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

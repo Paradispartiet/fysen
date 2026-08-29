@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "maxin-fried-chicken-gronland-oslo",
+    "name": "Maxin Fried Chicken Grønland",
+    "websiteUrl": null,
+    "address": "Grønland T-banestasjon, Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9126879,
+    "longitude": 10.7613293
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/686maxinfriedchickengronland",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 22,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hot Wings",
+      "Fries",
+      "Mix Deal",
+      "Ris",
+      "Chicken Burger Deal",
+      "Infierno Wrap",
+      "Tender Bowl",
+      "Pepsi 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hot Wings",
+        "priceMinor": 1500
+      },
+      {
+        "name": "Fries",
+        "priceMinor": 4000
+      },
+      {
+        "name": "Mix Deal",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Ris",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Chicken Burger Deal",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Infierno Wrap",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Tender Bowl",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Pepsi 0,5l",
+        "priceMinor": 4000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

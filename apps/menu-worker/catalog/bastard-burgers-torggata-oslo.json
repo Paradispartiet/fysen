@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bastard-burgers-torggata-oslo",
+    "name": "Bastard Burgers Torggata",
+    "websiteUrl": null,
+    "address": "Torggata 18, 0181 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91610742089069,
+    "longitude": 10.751479195079456
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/bastardburgerstorggata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 80,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "The Notorious Chili Cheese Meal",
+      "Double New York Meal",
+      "Kids Meal - Hamburger",
+      "London",
+      "The Green Bastard",
+      "Onion Rings 4 pcs",
+      "Melted Cheese Dip",
+      "Solrik Appelsin"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "The Notorious Chili Cheese Meal",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Double New York Meal",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Kids Meal - Hamburger",
+        "priceMinor": 9900
+      },
+      {
+        "name": "London",
+        "priceMinor": 15900
+      },
+      {
+        "name": "The Green Bastard",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Onion Rings 4 pcs",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Melted Cheese Dip",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Solrik Appelsin",
+        "priceMinor": 2900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

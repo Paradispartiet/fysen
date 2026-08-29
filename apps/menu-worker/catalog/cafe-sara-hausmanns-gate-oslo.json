@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "cafe-sara-hausmanns-gate-oslo",
+    "name": "Cafe Sara",
+    "websiteUrl": null,
+    "address": "Hausmanns gate 29A, 0182 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91763234677038,
+    "longitude": 10.753920778354333
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/cafesara",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 34,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kylling i Pitabrød",
+      "Tortilla m/ Kylling & Ost",
+      "Nachos",
+      "BlueCheese Burger",
+      "Mix Grill",
+      "Biff Bearnaise",
+      "Pizza Vegetar",
+      "Club Mate"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kylling i Pitabrød",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Tortilla m/ Kylling & Ost",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Nachos",
+        "priceMinor": 22900
+      },
+      {
+        "name": "BlueCheese Burger",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Mix Grill",
+        "priceMinor": 38900
+      },
+      {
+        "name": "Biff Bearnaise",
+        "priceMinor": 39800
+      },
+      {
+        "name": "Pizza Vegetar",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Club Mate",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

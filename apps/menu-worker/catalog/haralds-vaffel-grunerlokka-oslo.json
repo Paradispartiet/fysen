@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "haralds-vaffel-grunerlokka-oslo",
+    "name": "Haralds Vaffel",
+    "websiteUrl": null,
+    "address": "Olaf Ryes plass 3A, 0552 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92220042354785,
+    "longitude": 10.757487733573631
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/682haraldsvaffel",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 13,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vaffel with traditional toppings 🧡🙏🏼🇳🇴",
+      "Sausage in Vaffel 🌭",
+      "Plain vaffel",
+      "Handcraft Ice Crime ice-cream 🍨",
+      "Plain smultring",
+      "Chocolate, caramel smultring",
+      "Apple, cinnamon smultring",
+      "Redcurrant, coconut Smultring"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vaffel with traditional toppings 🧡🙏🏼🇳🇴",
+        "priceMinor": 9100
+      },
+      {
+        "name": "Sausage in Vaffel 🌭",
+        "priceMinor": 11300
+      },
+      {
+        "name": "Plain vaffel",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Handcraft Ice Crime ice-cream 🍨",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Plain smultring",
+        "priceMinor": 3300
+      },
+      {
+        "name": "Chocolate, caramel smultring",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Apple, cinnamon smultring",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Redcurrant, coconut Smultring",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

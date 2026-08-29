@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "la-baguette-oslo-s-oslo",
+    "name": "La Baguette Oslo S",
+    "websiteUrl": null,
+    "address": "Jernbanetorget 1, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91087480164096,
+    "longitude": 10.750736725832216
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/labaguetteoslos",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 44,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Baguette m/ Eggesalat",
+      "Baguette m/ Club Kylling & Bacon",
+      "Croissant m/ Ost & Skinke",
+      "Croissant m/ Sjokolade",
+      "Pipers Chips",
+      "Kakao",
+      "Bonaqua Eple 0,5l",
+      "Fuzetea Fersken 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Baguette m/ Eggesalat",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Baguette m/ Club Kylling & Bacon",
+        "priceMinor": 11400
+      },
+      {
+        "name": "Croissant m/ Ost & Skinke",
+        "priceMinor": 7100
+      },
+      {
+        "name": "Croissant m/ Sjokolade",
+        "priceMinor": 4600
+      },
+      {
+        "name": "Pipers Chips",
+        "priceMinor": 3700
+      },
+      {
+        "name": "Kakao",
+        "priceMinor": 5400
+      },
+      {
+        "name": "Bonaqua Eple 0,5l",
+        "priceMinor": 5600
+      },
+      {
+        "name": "Fuzetea Fersken 0,5l",
+        "priceMinor": 5600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
