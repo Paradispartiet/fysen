@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "fulani-bjorvika-oslo",
+    "name": "Fulani - Oslo Street Food",
+    "websiteUrl": null,
+    "address": "Dronning Eufemias gate 14, 0191 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90843779479827,
+    "longitude": 10.758251636671032
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/fulanioslostreetfood",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 11,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Ndambé Beef🌶️",
+      "Vegan Ndambé Mix 🌱 🌶️",
+      "Jerk Chicken w/ Plantains 🌶️",
+      "Jerk Chicken Wrap 🌶️",
+      "Fried Plantains",
+      "Jollof Rice",
+      "Chili Tomato Sauce",
+      "Guacamole"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Ndambé Beef🌶️",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Vegan Ndambé Mix 🌱 🌶️",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Jerk Chicken w/ Plantains 🌶️",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Jerk Chicken Wrap 🌶️",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Fried Plantains",
+        "priceMinor": 9800
+      },
+      {
+        "name": "Jollof Rice",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Chili Tomato Sauce",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Guacamole",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
