@@ -11,7 +11,7 @@
     "longitude": 10.759895
   },
   "menuSource": {
-    "url": "https://wolt.com/nb/nor/oslo/restaurant/viet-kitchen-oslo",
+    "url": "https://wolt.com/en/nor/oslo/restaurant/viet-kitchen-oslo",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -45,7 +45,7 @@
       "Summer Rolls",
       "Wonton Suppe",
       "BÁNH CUỐN NHÂN THỊT - Dampede rullinger av rismel",
-      "BÁNH BÈO NÓNG - Rundt dampet rismel",
+      "Mama's Duck Rice",
       "BÁNH HỎI HEO QUAY - Tynne rismelark med ribbe",
       "PHỞ BIFF BÒ TÁI",
       "PHỞ KYLLING GÀ",
@@ -57,7 +57,7 @@
       { "name": "Summer Rolls", "priceMinor": 12500 },
       { "name": "Wonton Suppe", "priceMinor": 12500 },
       { "name": "BÁNH CUỐN NHÂN THỊT - Dampede rullinger av rismel", "priceMinor": 25900 },
-      { "name": "BÁNH BÈO NÓNG - Rundt dampet rismel", "priceMinor": 25900 },
+      { "name": "Mama's Duck Rice", "priceMinor": 28900 },
       { "name": "BÁNH HỎI HEO QUAY - Tynne rismelark med ribbe", "priceMinor": 25900 },
       { "name": "PHỞ BIFF BÒ TÁI", "priceMinor": 24900 },
       { "name": "PHỞ KYLLING GÀ", "priceMinor": 24900 },

@@ -18,7 +18,7 @@
     "minimumExpectedItems": 10
   },
   "hoursSource": {
-    "url": "https://www.hrimnir-ramen.no/meny-storgata",
+    "url": "https://www.hrimnir-ramen.no/",
     "timeZone": "Europe/Oslo",
     "checkIntervalMinutes": 720,
     "minimumExpectedIntervals": 7,
@@ -26,11 +26,18 @@
       "Storgata"
     ]
   },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-29",
+      "note": "Hrimnir's first-party homepage publishes distinct Storgata venue and kitchen hours, but the page also carries Fredensborg hours and multiple absolute kitchen-close regimes. Keep open/closed unknown until the extractor can isolate the Storgata schedule without ambiguity."
+    }
+  },
   "actions": [
     {
       "type": "booking",
       "url": "https://book.dinnerbooking.com/no/nb-NO/book/index/4014/2",
-      "sourceUrl": "https://www.hrimnir-ramen.no/meny-storgata",
+      "sourceUrl": "https://www.hrimnir-ramen.no/",
       "provider": "DinnerBooking"
     }
   ],

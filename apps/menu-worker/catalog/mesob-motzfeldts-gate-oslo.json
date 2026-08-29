@@ -11,12 +11,12 @@
     "longitude": 10.762844
   },
   "menuSource": {
-    "url": "https://mesobrestaurant.no/menu/",
+    "url": "https://semeny.no/sted/275mesobrestaurant",
     "sourceType": "html",
-    "fetchMode": "browser",
+    "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 22,
+    "minimumExpectedItems": 16,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -32,46 +32,46 @@
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "KITFO / ክትፎ",
-      "MESOB SPECIAL DINNER/ መሶብ ማሕበራዊ",
-      "TIBSI / ጥብሲ",
-      "Zilzil Tebsi/ ዝልዝል ጥብሲ",
-      "VEGAN FIRFR / ናይ ጾም ፍርፍር",
-      "Vegansk suppe",
-      "Vegankake",
-      "Spinat, poteter og gulrøtter"
+      "Kitfo",
+      "Mesob Special Dinner",
+      "Tibsi Red/White",
+      "Zilzil Tebsi",
+      "Shiro",
+      "Gored Gored",
+      "Doro Wet",
+      "Vegansk Valgfri 🌱"
     ],
     "requiredDishVariants": [
       {
-        "name": "KITFO / ክትፎ",
+        "name": "Kitfo",
         "priceMinor": 34900
       },
       {
-        "name": "MESOB SPECIAL DINNER/ መሶብ ማሕበራዊ",
+        "name": "Mesob Special Dinner",
         "priceMinor": 41900
       },
       {
-        "name": "TIBSI / ጥብሲ",
+        "name": "Tibsi Red/White",
         "priceMinor": 29900
       },
       {
-        "name": "Zilzil Tebsi/ ዝልዝል ጥብሲ",
+        "name": "Zilzil Tebsi",
         "priceMinor": 38900
       },
       {
-        "name": "VEGAN FIRFR / ናይ ጾም ፍርፍር",
-        "priceMinor": 26900
+        "name": "Shiro",
+        "priceMinor": 27900
       },
       {
-        "name": "Vegansk suppe",
-        "priceMinor": 21500
+        "name": "Gored Gored",
+        "priceMinor": 34900
       },
       {
-        "name": "Vegankake",
-        "priceMinor": 8900
+        "name": "Doro Wet",
+        "priceMinor": 29900
       },
       {
-        "name": "Spinat, poteter og gulrøtter",
+        "name": "Vegansk Valgfri 🌱",
         "priceMinor": 26900
       }
     ],
