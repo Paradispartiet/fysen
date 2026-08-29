@@ -20,13 +20,7 @@
         "userAgent": "FysenMenuBot/0.1",
         "checkIntervalMinutes": 720
       },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
@@ -46,13 +40,7 @@
         "userAgent": "FysenMenuBot/0.1",
         "checkIntervalMinutes": 720
       },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
@@ -72,13 +60,7 @@
         "userAgent": "FysenMenuBot/0.1",
         "checkIntervalMinutes": 720
       },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
@@ -98,13 +80,7 @@
         "userAgent": "FysenMenuBot/0.1",
         "checkIntervalMinutes": 720
       },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
@@ -124,13 +100,7 @@
         "userAgent": "FysenMenuBot/0.1",
         "checkIntervalMinutes": 720
       },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
@@ -150,13 +120,7 @@
         "userAgent": "FysenMenuBot/0.1",
         "checkIntervalMinutes": 720
       },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
@@ -176,13 +140,7 @@
         "userAgent": "FysenMenuBot/0.1",
         "checkIntervalMinutes": 720
       },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
@@ -202,13 +160,7 @@
         "userAgent": "FysenMenuBot/0.1",
         "checkIntervalMinutes": 720
       },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
@@ -228,39 +180,27 @@
         "userAgent": "FysenMenuBot/0.1",
         "checkIntervalMinutes": 720
       },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
       "version": 1,
       "restaurant": {
-        "slug": "sushihjornet-adamstuen-oslo",
-        "name": "Sushihjørnet Adamstuen",
+        "slug": "doner-bros-oslo-s-oslo",
+        "name": "Døner Bros Oslo S",
         "websiteUrl": null,
-        "address": "Ullevålsveien 82 A, 0454 Oslo",
+        "address": "Osterhaus' gate 12, 0183 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/310sushihjornetadamstuen",
+        "url": "https://semeny.no/sted/donerbrososlos",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
         "checkIntervalMinutes": 720
       },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
@@ -280,13 +220,7 @@
         "userAgent": "FysenMenuBot/0.1",
         "checkIntervalMinutes": 720
       },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
@@ -306,13 +240,7 @@
         "userAgent": "FysenMenuBot/0.1",
         "checkIntervalMinutes": 720
       },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
@@ -332,13 +260,7 @@
         "userAgent": "FysenMenuBot/0.1",
         "checkIntervalMinutes": 720
       },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
@@ -358,13 +280,7 @@
         "userAgent": "FysenMenuBot/0.1",
         "checkIntervalMinutes": 720
       },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
@@ -384,13 +300,7 @@
         "userAgent": "FysenMenuBot/0.1",
         "checkIntervalMinutes": 720
       },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     }
   ]
