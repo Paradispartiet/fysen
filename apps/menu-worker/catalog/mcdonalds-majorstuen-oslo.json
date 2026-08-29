@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mcdonalds-majorstuen-oslo",
+    "name": "McDonald's Majorstuen",
+    "websiteUrl": null,
+    "address": "Valkyriegata 13A, 0366 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92929866605056,
+    "longitude": 10.717046458974222
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/mcdonaldsmajorstuen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 104,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 17 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Homestyle Hot Chipotle Beef",
+      "Dobbel Quarter Pounder",
+      "Big Tasty Bacon Chicken",
+      "Fish McFeast",
+      "Happy Meal Vegetar",
+      "Karri Dip",
+      "McPops 3 stk (velg smak)",
+      "Donut Sukker"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Homestyle Hot Chipotle Beef",
+        "priceMinor": 14400
+      },
+      {
+        "name": "Dobbel Quarter Pounder",
+        "priceMinor": 11600
+      },
+      {
+        "name": "Big Tasty Bacon Chicken",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Fish McFeast",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Happy Meal Vegetar",
+        "priceMinor": 7100
+      },
+      {
+        "name": "Karri Dip",
+        "priceMinor": 1500
+      },
+      {
+        "name": "McPops 3 stk (velg smak)",
+        "priceMinor": 5300
+      },
+      {
+        "name": "Donut Sukker",
+        "priceMinor": 2200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

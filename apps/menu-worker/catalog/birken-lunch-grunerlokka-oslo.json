@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "birken-lunch-grunerlokka-oslo",
+    "name": "Birken Lunch",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 33A, 0555 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9260012685911,
+    "longitude": 10.758708662968845
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/314birkenlunch",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 38,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 17 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chicken Tikka",
+      "Vegetar Pakora",
+      "Gyros Lam",
+      "Gyrosmiddag Lam",
+      "Cairo Falafel 🌱",
+      "Souvlaki m/ Kylling",
+      "Siracha Spicy Burger",
+      "Urge"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chicken Tikka",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Vegetar Pakora",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Gyros Lam",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Gyrosmiddag Lam",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Cairo Falafel 🌱",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Souvlaki m/ Kylling",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Siracha Spicy Burger",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Urge",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jewel-of-india-bjorvika-oslo",
+    "name": "Jewel of India Bjørvika",
+    "websiteUrl": null,
+    "address": "Dronning Eufemias gate 11, 0150 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.908275237730535,
+    "longitude": 10.755151064837957
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/jewelofindiabjorvika",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 65,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 17 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Onion Palak Bhaji",
+      "Adraki Lamb Chops",
+      "Chicken Tikka Masala",
+      "King Prawn Jalfrezi ”Chef’s Special”",
+      "Dal Makhni",
+      "Amritsari Kulcha",
+      "Kesar Phirni",
+      "Ekstra Salat"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Onion Palak Bhaji",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Adraki Lamb Chops",
+        "priceMinor": 42900
+      },
+      {
+        "name": "Chicken Tikka Masala",
+        "priceMinor": 31900
+      },
+      {
+        "name": "King Prawn Jalfrezi ”Chef’s Special”",
+        "priceMinor": 33500
+      },
+      {
+        "name": "Dal Makhni",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Amritsari Kulcha",
+        "priceMinor": 7000
+      },
+      {
+        "name": "Kesar Phirni",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Ekstra Salat",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

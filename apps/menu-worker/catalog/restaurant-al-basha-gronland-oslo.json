@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "restaurant-al-basha-gronland-oslo",
+    "name": "Restaurant Al Basha",
+    "websiteUrl": null,
+    "address": "Grønlandsleiret 4, 0190 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91257285456831,
+    "longitude": 10.76416862041014
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/restaurantalbasha",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 34,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 17 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Shawarma Sandwich (lamb)",
+      "Supreme Sandwich",
+      "Zinger Sandwich",
+      "Cheese Beef Burger",
+      "Garlic sauce",
+      "Zinger Menu",
+      "Arabic Shawarma Menu (chicken)",
+      "Chicken Nuggets Menu"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Shawarma Sandwich (lamb)",
+        "priceMinor": 600
+      },
+      {
+        "name": "Supreme Sandwich",
+        "priceMinor": 800
+      },
+      {
+        "name": "Zinger Sandwich",
+        "priceMinor": 700
+      },
+      {
+        "name": "Cheese Beef Burger",
+        "priceMinor": 750
+      },
+      {
+        "name": "Garlic sauce",
+        "priceMinor": 200
+      },
+      {
+        "name": "Zinger Menu",
+        "priceMinor": 1000
+      },
+      {
+        "name": "Arabic Shawarma Menu (chicken)",
+        "priceMinor": 800
+      },
+      {
+        "name": "Chicken Nuggets Menu",
+        "priceMinor": 1000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
