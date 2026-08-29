@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "maxin-indisk-gronland-oslo",
+    "name": "Maxin Indisk Grønland",
+    "websiteUrl": null,
+    "address": "Grønland 24, 0188 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.912935531022846,
+    "longitude": 10.761898515757228
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/685maxinindiskgronland",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 18 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chicken Chettinadu",
+      "Chicken Curry",
+      "Chenna Masala",
+      "Butter Chicken",
+      "Chicken Biryani",
+      "Naan",
+      "Pepsi Max 0,5l",
+      "Pepsi 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chicken Chettinadu",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Chicken Curry",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Chenna Masala",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Butter Chicken",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Chicken Biryani",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Naan",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Pepsi Max 0,5l",
+        "priceMinor": 4000
+      },
+      {
+        "name": "Pepsi 0,5l",
+        "priceMinor": 4000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

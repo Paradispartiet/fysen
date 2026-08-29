@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "persia-restaurant-sentrum-oslo",
+    "name": "Persia Restaurant",
+    "websiteUrl": null,
+    "address": "Keysers gate 7B, 0165 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.916894157498,
+    "longitude": 10.74246773018922
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/persiarestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 23,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 18 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kashk & Badenjan",
+      "Suppe Morgh",
+      "Mast Mosir",
+      "Mast Khiyar",
+      "Mix Grill",
+      "Lobia Polo",
+      "Barne Joojeh",
+      "Doogh (Ayran)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kashk & Badenjan",
+        "priceMinor": 13000
+      },
+      {
+        "name": "Suppe Morgh",
+        "priceMinor": 13000
+      },
+      {
+        "name": "Mast Mosir",
+        "priceMinor": 5000
+      },
+      {
+        "name": "Mast Khiyar",
+        "priceMinor": 5000
+      },
+      {
+        "name": "Mix Grill",
+        "priceMinor": 34000
+      },
+      {
+        "name": "Lobia Polo",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Barne Joojeh",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Doogh (Ayran)",
+        "priceMinor": 5000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

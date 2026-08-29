@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "munchies-bjorvika-oslo",
+    "name": "Munchies Bjørvika",
+    "websiteUrl": null,
+    "address": "Operagata 13, 0194 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90707325306249,
+    "longitude": 10.755979945602126
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/116munchies",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 61,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 18 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Oslohoma Smash",
+      "Munchies Fries",
+      "Special Sauce",
+      "Bonaqua Telemark Vann",
+      "Chopsticks Helper",
+      "The Vegan",
+      "Halloumi Meal",
+      "Chicken Burger"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Oslohoma Smash",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Munchies Fries",
+        "priceMinor": 15700
+      },
+      {
+        "name": "Special Sauce",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Bonaqua Telemark Vann",
+        "priceMinor": 5400
+      },
+      {
+        "name": "Chopsticks Helper",
+        "priceMinor": 2500
+      },
+      {
+        "name": "The Vegan",
+        "priceMinor": 21800
+      },
+      {
+        "name": "Halloumi Meal",
+        "priceMinor": 24100
+      },
+      {
+        "name": "Chicken Burger",
+        "priceMinor": 15700
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

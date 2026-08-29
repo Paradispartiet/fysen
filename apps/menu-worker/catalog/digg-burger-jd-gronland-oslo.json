@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "digg-burger-jd-gronland-oslo",
+    "name": "Digg Burger by J.D Grønland",
+    "websiteUrl": null,
+    "address": "Grønland 18, 0188 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91302299503146,
+    "longitude": 10.761402354667814
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/567diggburgerbyjdgronland",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 81,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 18 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "TAKIS Bomb Burger Meal",
+      "CLASSIC CHEESE Meal",
+      "BARBI Burger",
+      "BARBI Chicken Burger Meny",
+      "Fries",
+      "Chicken Nuggets",
+      "Super Solo 0,33 uten Sukker",
+      "DIGG Kylling Kebab - Stor Tallerken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "TAKIS Bomb Burger Meal",
+        "priceMinor": 27500
+      },
+      {
+        "name": "CLASSIC CHEESE Meal",
+        "priceMinor": 23900
+      },
+      {
+        "name": "BARBI Burger",
+        "priceMinor": 17900
+      },
+      {
+        "name": "BARBI Chicken Burger Meny",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Fries",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Chicken Nuggets",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Super Solo 0,33 uten Sukker",
+        "priceMinor": 4500
+      },
+      {
+        "name": "DIGG Kylling Kebab - Stor Tallerken",
+        "priceMinor": 23900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

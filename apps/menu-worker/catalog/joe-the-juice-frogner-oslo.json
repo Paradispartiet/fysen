@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "joe-the-juice-frogner-oslo",
+    "name": "Joe & The Juice Frogner",
+    "websiteUrl": null,
+    "address": "Skovveien 5, 0257 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91630075009017,
+    "longitude": 10.71650015653133
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/joethejuicefrogner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 90,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 18 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Acai Breakfast Combo Offer",
+      "NEW Feel Good",
+      "Carrot Cake",
+      "JOEs Spicy Caesar",
+      "Green Shield",
+      "Sjokoladebrownie",
+      "Espresso Macchiato",
+      "Stille vann"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Acai Breakfast Combo Offer",
+        "priceMinor": 16400
+      },
+      {
+        "name": "NEW Feel Good",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Carrot Cake",
+        "priceMinor": 4300
+      },
+      {
+        "name": "JOEs Spicy Caesar",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Green Shield",
+        "priceMinor": 12200
+      },
+      {
+        "name": "Sjokoladebrownie",
+        "priceMinor": 5200
+      },
+      {
+        "name": "Espresso Macchiato",
+        "priceMinor": 5200
+      },
+      {
+        "name": "Stille vann",
+        "priceMinor": 3300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
