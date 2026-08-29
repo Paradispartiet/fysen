@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "hells-kitchen-oslo",
+    "name": "Hells Kitchen Oslo",
+    "websiteUrl": null,
+    "address": "Møllergata 23, 0179 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91563512459411,
+    "longitude": 10.74856019808857
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/365hellskitchenoslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 16 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "NR 1",
+      "NR 4",
+      "NR 6",
+      "NR 9",
+      "NR 12",
+      "NR 15",
+      "NR 17",
+      "7up Sugar Free 0,33l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "NR 1",
+        "priceMinor": 19000
+      },
+      {
+        "name": "NR 4",
+        "priceMinor": 24500
+      },
+      {
+        "name": "NR 6",
+        "priceMinor": 24500
+      },
+      {
+        "name": "NR 9",
+        "priceMinor": 24000
+      },
+      {
+        "name": "NR 12",
+        "priceMinor": 26000
+      },
+      {
+        "name": "NR 15",
+        "priceMinor": 26000
+      },
+      {
+        "name": "NR 17",
+        "priceMinor": 26500
+      },
+      {
+        "name": "7up Sugar Free 0,33l",
+        "priceMinor": 5200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

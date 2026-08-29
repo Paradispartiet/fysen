@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sabrura-stortorvet-oslo",
+    "name": "Sabrura Stortorvet",
+    "websiteUrl": null,
+    "address": "Grensen 4, 0159 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91342977714921,
+    "longitude": 10.743979907185755
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/sabrurastortorvet",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 72,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 16 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Barnekombo",
+      "Nigirikombo",
+      "Tempura Futomaki",
+      "Nigiri Tunfisk (2 biter)",
+      "Kyllingklubber (2 stk)",
+      "Agurk- og Avokadosalat",
+      "Sjøgressalat",
+      "MER jordbær og eple 200 ml"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Barnekombo",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Nigirikombo",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Tempura Futomaki",
+        "priceMinor": 13800
+      },
+      {
+        "name": "Nigiri Tunfisk (2 biter)",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Kyllingklubber (2 stk)",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Agurk- og Avokadosalat",
+        "priceMinor": 5400
+      },
+      {
+        "name": "Sjøgressalat",
+        "priceMinor": 3300
+      },
+      {
+        "name": "MER jordbær og eple 200 ml",
+        "priceMinor": 3000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

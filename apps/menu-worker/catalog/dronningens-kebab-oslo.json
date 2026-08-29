@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dronningens-kebab-oslo",
+    "name": "Dronningens Kebab",
+    "websiteUrl": null,
+    "address": "Skippergata 32, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91116686771414,
+    "longitude": 10.748355577383965
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/dronningenskebab",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 17,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 16 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Dronningens Spesial Mix Kebab",
+      "Kylling Kebab",
+      "Kyllingtallerken",
+      "Kebab i Box m/ Pasta",
+      "Pommes",
+      "Solo Super Tropisk 0.5l",
+      "7up 0.5l",
+      "Villa 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Dronningens Spesial Mix Kebab",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Kylling Kebab",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Kyllingtallerken",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Kebab i Box m/ Pasta",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Pommes",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Solo Super Tropisk 0.5l",
+        "priceMinor": 4500
+      },
+      {
+        "name": "7up 0.5l",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Villa 0,5l",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

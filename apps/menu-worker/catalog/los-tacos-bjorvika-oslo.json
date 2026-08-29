@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "los-tacos-bjorvika-oslo",
+    "name": "Los Tacos Bjørvika",
+    "websiteUrl": null,
+    "address": "Operagata 35, 0194 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90675116937476,
+    "longitude": 10.756560201523174
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/725lostacosbjorvika",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 69,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 16 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bestikk/Cutlery",
+      "Combo: Crunchy Quesadilla + Nachos or fries + Dip + Drink",
+      "The BJK Burrito",
+      "The Friday Bowl",
+      "Nachos with Salsa & Nacho Cheese",
+      "Chipotle Mayo",
+      "Solo 0.33",
+      "The Crunch Wrap"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bestikk/Cutlery",
+        "priceMinor": 500
+      },
+      {
+        "name": "Combo: Crunchy Quesadilla + Nachos or fries + Dip + Drink",
+        "priceMinor": 26900
+      },
+      {
+        "name": "The BJK Burrito",
+        "priceMinor": 19900
+      },
+      {
+        "name": "The Friday Bowl",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Nachos with Salsa & Nacho Cheese",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Chipotle Mayo",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Solo 0.33",
+        "priceMinor": 5500
+      },
+      {
+        "name": "The Crunch Wrap",
+        "priceMinor": 18500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "chinatown-majorstuen-oslo",
+    "name": "Chinatown Majorstuen",
+    "websiteUrl": null,
+    "address": "Valkyriegata 15A, 0366 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92953003341045,
+    "longitude": 10.716521589261841
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/124chinatownmajorstuen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 61,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 16 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fritert Wonton av Biff",
+      "Stekt Kylling",
+      "Biff i Karrisaus",
+      "Kylling Jingdu",
+      "Innbakt And med Sursøtsaus",
+      "Kinesisk Pepperkylling",
+      "Vegetar Chopsuey",
+      "Eplekake"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fritert Wonton av Biff",
+        "priceMinor": 9200
+      },
+      {
+        "name": "Stekt Kylling",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Biff i Karrisaus",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Kylling Jingdu",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Innbakt And med Sursøtsaus",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Kinesisk Pepperkylling",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Vegetar Chopsuey",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Eplekake",
+        "priceMinor": 7300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
