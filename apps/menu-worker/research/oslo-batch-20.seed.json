@@ -188,15 +188,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "yokoso-aker-brygge-oslo",
-        "name": "Yokoso",
+        "slug": "illegal-burger-mollergata-oslo",
+        "name": "Illegal Burger Møllergata",
         "websiteUrl": null,
-        "address": "Stranden 63, 0250 Oslo",
+        "address": "Møllergata 23, 0179 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/287yokoso",
+        "url": "https://semeny.no/sted/illegalburgermollergata",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
