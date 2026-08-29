@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 49,
+    "minimumExpectedItems": 42,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,7 +39,7 @@
       "Lam Karahi Fresh",
       "Chana Masala",
       "Garlic Naan",
-      "Mango Lassi"
+      "Peshwari Naan"
     ],
     "requiredDishVariants": [
       {
@@ -71,8 +71,8 @@
         "priceMinor": 5900
       },
       {
-        "name": "Mango Lassi",
-        "priceMinor": 4900
+        "name": "Peshwari Naan",
+        "priceMinor": 8900
       }
     ],
     "forbiddenDishNames": []
