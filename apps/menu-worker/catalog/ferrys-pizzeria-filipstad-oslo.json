@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ferrys-pizzeria-filipstad-oslo",
+    "name": "Ferrys Pizzeria",
+    "websiteUrl": null,
+    "address": "Filipstadveien 25, 0250 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90867902777656,
+    "longitude": 10.710705973750548
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/ferryspizzeria",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 63,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Calzone 5",
+      "Skaldjurssallad",
+      "Marinara",
+      "Hawaii",
+      "Eatalia",
+      "Margherita - Barn",
+      "Salsicciapasta",
+      "Trocadero Zero 33cl"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Calzone 5",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Skaldjurssallad",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Marinara",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Hawaii",
+        "priceMinor": 13000
+      },
+      {
+        "name": "Eatalia",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Margherita - Barn",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Salsicciapasta",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Trocadero Zero 33cl",
+        "priceMinor": 3000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

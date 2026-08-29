@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "july-tea-food-pilestredet-oslo",
+    "name": "July Tea & Food",
+    "websiteUrl": null,
+    "address": "Pilestredet 53C, 0350 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92177724727372,
+    "longitude": 10.73191093816186
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/julyteafood",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 32,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Dagens Ris Matpakke Med Biff 沙茶牛肉饭 (Inneholder peanøtter)",
+      "Dagens ris med biff 沙茶牛肉饭",
+      "Taiwanese Popcorn Fried Chicken Nuggets (Spicy)",
+      "Mochi sticks",
+      "Mixed fruit ice tea bucket",
+      "Brown Sugar Tapioca Milk",
+      "Matcha Latte with tapioca",
+      "Peach oolong tea 白桃烏龍茶"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Dagens Ris Matpakke Med Biff 沙茶牛肉饭 (Inneholder peanøtter)",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Dagens ris med biff 沙茶牛肉饭",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Taiwanese Popcorn Fried Chicken Nuggets (Spicy)",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Mochi sticks",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Mixed fruit ice tea bucket",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Brown Sugar Tapioca Milk",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Matcha Latte with tapioca",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Peach oolong tea 白桃烏龍茶",
+        "priceMinor": 9900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

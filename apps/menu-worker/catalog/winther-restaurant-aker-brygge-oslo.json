@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "winther-restaurant-aker-brygge-oslo",
+    "name": "Winther Restaurant",
+    "websiteUrl": null,
+    "address": "Grundingen 3, 0250 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.910666224425675,
+    "longitude": 10.727744505665155
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/729wintherrestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 29,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Puglia",
+      "Margherita",
+      "Soppessens",
+      "Carbonara",
+      "Burrata salat",
+      "Spekemat",
+      "Makroner (5stk)",
+      "Imsdal 0,5L"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Puglia",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Margherita",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Soppessens",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Carbonara",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Burrata salat",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Spekemat",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Makroner (5stk)",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Imsdal 0,5L",
+        "priceMinor": 2500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "doner-bros-oslo-s-oslo",
+    "name": "Døner Bros Oslo S",
+    "websiteUrl": null,
+    "address": "Osterhaus' gate 12A, 0183 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91675378521042,
+    "longitude": 10.753731315215898
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/donerbrososlos",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 27,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chili Cheese Tops",
+      "Berliner Döner",
+      "🌱Aunties Falafel Roll",
+      "Torggata Cheesesteak Meal",
+      "Kylling Madness Meal",
+      "Kylling Shawarma box",
+      "Classic Fries",
+      "Bestikk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chili Cheese Tops",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Berliner Döner",
+        "priceMinor": 15800
+      },
+      {
+        "name": "🌱Aunties Falafel Roll",
+        "priceMinor": 14800
+      },
+      {
+        "name": "Torggata Cheesesteak Meal",
+        "priceMinor": 26800
+      },
+      {
+        "name": "Kylling Madness Meal",
+        "priceMinor": 25800
+      },
+      {
+        "name": "Kylling Shawarma box",
+        "priceMinor": 22800
+      },
+      {
+        "name": "Classic Fries",
+        "priceMinor": 6800
+      },
+      {
+        "name": "Bestikk",
+        "priceMinor": 100
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
