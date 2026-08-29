@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 22,
+    "minimumExpectedItems": 16,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -37,9 +37,9 @@
       "Tibsi Red/White",
       "Zilzil Tebsi",
       "Shiro",
-      "Coca-Cola 0,5l",
-      "Coca-Cola Zero Sugar 0,5l",
-      "Fanta Appelsin 0,5l"
+      "Gored Gored",
+      "Doro Wet",
+      "Vegansk Valgfri 🌱"
     ],
     "requiredDishVariants": [
       {
@@ -63,16 +63,16 @@
         "priceMinor": 27900
       },
       {
-        "name": "Coca-Cola 0,5l",
-        "priceMinor": 5800
+        "name": "Gored Gored",
+        "priceMinor": 34900
       },
       {
-        "name": "Coca-Cola Zero Sugar 0,5l",
-        "priceMinor": 5800
+        "name": "Doro Wet",
+        "priceMinor": 29900
       },
       {
-        "name": "Fanta Appelsin 0,5l",
-        "priceMinor": 5800
+        "name": "Vegansk Valgfri 🌱",
+        "priceMinor": 26900
       }
     ],
     "forbiddenDishNames": []
