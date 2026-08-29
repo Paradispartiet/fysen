@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "los-tacos-alexander-kiellands-plass-oslo",
+    "name": "Los Tacos Alexander Kiellands Plass",
+    "websiteUrl": null,
+    "address": "Darres gate 1A, 0175 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92743899200387,
+    "longitude": 10.751233784845315
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/525lostacosalexanderkiellandsplass",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 67,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bestikk/Cutlery",
+      "Combo: Premium Quesadilla + Nachos or fries + Dip + Drink",
+      "Chipotle Chicken Burrito",
+      "Cheesy Crunch Bowl",
+      "Crunchy Quesadilla",
+      "Jalapeños",
+      "Salsa Verde",
+      "The Crunch Wrap"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bestikk/Cutlery",
+        "priceMinor": 500
+      },
+      {
+        "name": "Combo: Premium Quesadilla + Nachos or fries + Dip + Drink",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Chipotle Chicken Burrito",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Cheesy Crunch Bowl",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Crunchy Quesadilla",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Jalapeños",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Salsa Verde",
+        "priceMinor": 2900
+      },
+      {
+        "name": "The Crunch Wrap",
+        "priceMinor": 18500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

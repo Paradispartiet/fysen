@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "illegal-burger-mollergata-oslo",
+    "name": "Illegal Burger Møllergata",
+    "websiteUrl": null,
+    "address": "Møllergata 23, 0179 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91563512459411,
+    "longitude": 10.74856019808857
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/illegalburgermollergata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 24,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hot Mama",
+      "Cheese Royale",
+      "Gourmet",
+      "The Kidz",
+      "🌱BlueCheese - Vegetar",
+      "🌱The Kidz - Vegetar",
+      "Aioli",
+      "Urge"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hot Mama",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Cheese Royale",
+        "priceMinor": 17600
+      },
+      {
+        "name": "Gourmet",
+        "priceMinor": 17600
+      },
+      {
+        "name": "The Kidz",
+        "priceMinor": 14800
+      },
+      {
+        "name": "🌱BlueCheese - Vegetar",
+        "priceMinor": 17200
+      },
+      {
+        "name": "🌱The Kidz - Vegetar",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Aioli",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Urge",
+        "priceMinor": 4800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

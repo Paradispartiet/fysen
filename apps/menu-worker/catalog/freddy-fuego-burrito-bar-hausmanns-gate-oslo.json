@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "freddy-fuego-burrito-bar-hausmanns-gate-oslo",
+    "name": "Freddy Fuego Burrito Bar",
+    "websiteUrl": null,
+    "address": "Hausmanns gate 31a, 0182 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.917787314162716,
+    "longitude": 10.75388423609935
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/freddyfuegoburritobar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 35,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tortilla Chips",
+      "El Pollo Pachanga - Juicy Chicken",
+      "Vegetarian Box 🌱",
+      "Eira Still Norwegian Springwater 0,4l",
+      "Jarritos Grapefruit",
+      "Mountain Dew",
+      "Urge",
+      "El Pollo Pachanga - Juicy Chicken m/ Valgfri Drikke"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Tortilla Chips",
+        "priceMinor": 5900
+      },
+      {
+        "name": "El Pollo Pachanga - Juicy Chicken",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Vegetarian Box 🌱",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Eira Still Norwegian Springwater 0,4l",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Jarritos Grapefruit",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Mountain Dew",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Urge",
+        "priceMinor": 4900
+      },
+      {
+        "name": "El Pollo Pachanga - Juicy Chicken m/ Valgfri Drikke",
+        "priceMinor": 27900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

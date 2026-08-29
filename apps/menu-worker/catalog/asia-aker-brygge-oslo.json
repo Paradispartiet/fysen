@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "asia-aker-brygge-oslo",
+    "name": "Asia Aker Brygge",
+    "websiteUrl": null,
+    "address": "Stranden 1, 0250 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91050356944812,
+    "longitude": 10.728505068447141
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/asiaakerbrygge",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 42,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Crispy Squid",
+      "Asia Taquitos",
+      "Flamed Salmon Nigiri",
+      "Scallop & Halibut Ceviche",
+      "Szechuan Beef Stirfry",
+      "Chili Majones",
+      "Pepsi Max - 0,33L",
+      "🌱 Roasted Broccolini"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Crispy Squid",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Asia Taquitos",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Flamed Salmon Nigiri",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Scallop & Halibut Ceviche",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Szechuan Beef Stirfry",
+        "priceMinor": 38500
+      },
+      {
+        "name": "Chili Majones",
+        "priceMinor": 2800
+      },
+      {
+        "name": "Pepsi Max - 0,33L",
+        "priceMinor": 5800
+      },
+      {
+        "name": "🌱 Roasted Broccolini",
+        "priceMinor": 9500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
