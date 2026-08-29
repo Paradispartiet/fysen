@@ -26,6 +26,13 @@
       "Storgata"
     ]
   },
+  "verification": {
+    "hours": {
+      "status": "provisional",
+      "checkedAt": "2026-08-29",
+      "note": "Hrimnir's first-party homepage publishes distinct Storgata venue and kitchen hours, but the page also carries Fredensborg hours and multiple absolute kitchen-close regimes. Keep open/closed unknown until the extractor can isolate the Storgata schedule without ambiguity."
+    }
+  },
   "actions": [
     {
       "type": "booking",
