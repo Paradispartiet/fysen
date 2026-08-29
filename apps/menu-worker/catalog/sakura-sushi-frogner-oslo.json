@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sakura-sushi-frogner-oslo",
+    "name": "Sakura Sushi Frogner",
+    "websiteUrl": null,
+    "address": "Eckersbergs gate 41A, 0266 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92002376292526,
+    "longitude": 10.70783732553166
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/374sakurasushifrogner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 39,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 18 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Sushi burrito (Laks)",
+      "Medium Sushi",
+      "Liten Sashimi",
+      "Tunfisk Nigiri",
+      "Spicy Kamskjell",
+      "Mixrull",
+      "Laks Fritert",
+      "Pepsi Max 05l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Sushi burrito (Laks)",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Medium Sushi",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Liten Sashimi",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Tunfisk Nigiri",
+        "priceMinor": 2400
+      },
+      {
+        "name": "Spicy Kamskjell",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Mixrull",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Laks Fritert",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Pepsi Max 05l",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

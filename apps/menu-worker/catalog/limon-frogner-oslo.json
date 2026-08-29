@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "limon-frogner-oslo",
+    "name": "Limón Frogner",
+    "websiteUrl": null,
+    "address": "Hegdehaugsveien 27A, 0352 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.921413090992495,
+    "longitude": 10.727355062791892
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/limonfrogner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 30,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 18 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chia Pudding Mango",
+      "Spicy Salmon",
+      "Beef - NEW!",
+      "Açaí Berry (Vegan) 🌱",
+      "Strawberry Limónade",
+      "Ris",
+      "Sjøgress",
+      "Sprudlende vann"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chia Pudding Mango",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Spicy Salmon",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Beef - NEW!",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Açaí Berry (Vegan) 🌱",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Strawberry Limónade",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Ris",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Sjøgress",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Sprudlende vann",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

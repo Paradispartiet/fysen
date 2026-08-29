@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "phuket-restaurant-gronland-oslo",
+    "name": "Phuket Restaurant",
+    "websiteUrl": null,
+    "address": "Herslebs gate 4A, 0561 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91949396102019,
+    "longitude": 10.762425101716783
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/phuketrestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 55,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 18 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Valgfri Forrett & Karrirett m/ Drikke",
+      "Vårruller m/ Kylling",
+      "King Pad",
+      "T3. Panang (แกงแพนง)",
+      "Geang Karri",
+      "W3. Wok Med Østersaus (ผัดน้ํามันหอย)",
+      "S1. Fritert Ris med Egg",
+      "E4. Soyasaus"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Valgfri Forrett & Karrirett m/ Drikke",
+        "priceMinor": 32900
+      },
+      {
+        "name": "Vårruller m/ Kylling",
+        "priceMinor": 9900
+      },
+      {
+        "name": "King Pad",
+        "priceMinor": 21900
+      },
+      {
+        "name": "T3. Panang (แกงแพนง)",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Geang Karri",
+        "priceMinor": 21900
+      },
+      {
+        "name": "W3. Wok Med Østersaus (ผัดน้ํามันหอย)",
+        "priceMinor": 21900
+      },
+      {
+        "name": "S1. Fritert Ris med Egg",
+        "priceMinor": 21900
+      },
+      {
+        "name": "E4. Soyasaus",
+        "priceMinor": 1500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

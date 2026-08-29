@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "thai-orchid-sentrum-oslo",
+    "name": "Thai Orchid",
+    "websiteUrl": null,
+    "address": "Calmeyers gate 11A, 0183 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91625802985027,
+    "longitude": 10.75467464935417
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/593thaiorchid",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 40,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 18 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Goong Tod",
+      "Tom Kha Kai 🌶",
+      "Keang Ped Kai",
+      "Goong Pad Kratiam Prik Thai",
+      "Giow Tiew Moo Tom Yam 🌶",
+      "Kaeng Ped Taow Hoo",
+      "Yam Woonsen Ruam Mith Med Ris",
+      "Peanøttsaus (Satay Saus)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Goong Tod",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Tom Kha Kai 🌶",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Keang Ped Kai",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Goong Pad Kratiam Prik Thai",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Giow Tiew Moo Tom Yam 🌶",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Kaeng Ped Taow Hoo",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Yam Woonsen Ruam Mith Med Ris",
+        "priceMinor": 31500
+      },
+      {
+        "name": "Peanøttsaus (Satay Saus)",
+        "priceMinor": 1500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

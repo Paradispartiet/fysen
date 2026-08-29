@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "max-gronland-oslo",
+    "name": "MAX Grønland",
+    "websiteUrl": null,
+    "address": "Tøyengata 2, 0190 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91278287002734,
+    "longitude": 10.76391148376898
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/maxgronland",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 162,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 18 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Brooklyn Tribute-meny",
+      "Minimeny, Crispy Green Nuggets 4 stykker",
+      "Smokey BBQ 'n' Bacon Grand Chicken",
+      "Telemark Eple kullsyre",
+      "Dobbel Friscomeny",
+      "Crispy Chicken 'n' Cheese-meny",
+      "Chicken Nuggets, 4 stykker",
+      "Chocolate Lava Cake"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Brooklyn Tribute-meny",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Minimeny, Crispy Green Nuggets 4 stykker",
+        "priceMinor": 10000
+      },
+      {
+        "name": "Smokey BBQ 'n' Bacon Grand Chicken",
+        "priceMinor": 19200
+      },
+      {
+        "name": "Telemark Eple kullsyre",
+        "priceMinor": 4600
+      },
+      {
+        "name": "Dobbel Friscomeny",
+        "priceMinor": 22700
+      },
+      {
+        "name": "Crispy Chicken 'n' Cheese-meny",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Chicken Nuggets, 4 stykker",
+        "priceMinor": 6200
+      },
+      {
+        "name": "Chocolate Lava Cake",
+        "priceMinor": 4600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
