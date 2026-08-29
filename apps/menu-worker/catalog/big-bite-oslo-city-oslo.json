@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "big-bite-oslo-city-oslo",
+    "name": "Big Bite Oslo City",
+    "websiteUrl": null,
+    "address": "Stenersgata 1E, 0050 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.912359778120006,
+    "longitude": 10.753211549379843
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/596bigbiteoslocity",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 64,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Ost & Skinke Hel",
+      "Green Fajitas Hel",
+      "Kylling Fajitas Halv",
+      "Gresk Kylling Halv",
+      "Gresk Kylling Wrap",
+      "Fuze Tea Peach 0,4l",
+      "BBQ Kylling Glutenfri",
+      "Fajitas Bowl"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Ost & Skinke Hel",
+        "priceMinor": 14200
+      },
+      {
+        "name": "Green Fajitas Hel",
+        "priceMinor": 14700
+      },
+      {
+        "name": "Kylling Fajitas Halv",
+        "priceMinor": 9300
+      },
+      {
+        "name": "Gresk Kylling Halv",
+        "priceMinor": 10100
+      },
+      {
+        "name": "Gresk Kylling Wrap",
+        "priceMinor": 10100
+      },
+      {
+        "name": "Fuze Tea Peach 0,4l",
+        "priceMinor": 3900
+      },
+      {
+        "name": "BBQ Kylling Glutenfri",
+        "priceMinor": 12100
+      },
+      {
+        "name": "Fajitas Bowl",
+        "priceMinor": 9200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
