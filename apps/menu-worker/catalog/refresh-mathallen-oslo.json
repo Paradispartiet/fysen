@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "refresh-mathallen-oslo",
+    "name": "Refresh Mathallen",
+    "websiteUrl": null,
+    "address": "Vulkan 5, 0178 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92225253860743,
+    "longitude": 10.751749415749577
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/642refreshmathallen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 30,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hot Tuna 🌶",
+      "Cheesy Piggy",
+      "Vitamin Booster",
+      "Yoga",
+      "Oslo",
+      "Is Mocca",
+      "Hot Chocolate Basic uten Krem",
+      "Golden Milk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hot Tuna 🌶",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Cheesy Piggy",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Vitamin Booster",
+        "priceMinor": 9400
+      },
+      {
+        "name": "Yoga",
+        "priceMinor": 9400
+      },
+      {
+        "name": "Oslo",
+        "priceMinor": 9400
+      },
+      {
+        "name": "Is Mocca",
+        "priceMinor": 6100
+      },
+      {
+        "name": "Hot Chocolate Basic uten Krem",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Golden Milk",
+        "priceMinor": 6500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
