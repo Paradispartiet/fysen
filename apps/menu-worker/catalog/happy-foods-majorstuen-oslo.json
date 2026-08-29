@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "happy-foods-majorstuen-oslo",
+    "name": "Happy Foods",
+    "websiteUrl": null,
+    "address": "Neuberggata 2A, 0367 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92477120380503,
+    "longitude": 10.713107113458022
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/636happyfoods",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 40,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Dagens salat u/nøttebasert dipp",
+      "Gulrotkake",
+      "Rå sjokoladebolle",
+      "Hasselnøttsmør",
+      "Tahini granola:",
+      "Kombucha Gingeraid",
+      "Gry Hammer solbær",
+      "Rødbete pannekake"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Dagens salat u/nøttebasert dipp",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Gulrotkake",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Rå sjokoladebolle",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Hasselnøttsmør",
+        "priceMinor": 30000
+      },
+      {
+        "name": "Tahini granola:",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Kombucha Gingeraid",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Gry Hammer solbær",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Rødbete pannekake",
+        "priceMinor": 16500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
