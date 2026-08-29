@@ -6,240 +6,6 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "kammis-grill-frogner-oslo",
-        "name": "Kammis Grill Frogner",
-        "websiteUrl": null,
-        "address": "Frognerveien 9b, 0257 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://semeny.no/sted/kammisgrillfrogner",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "winther-frognerparken-oslo",
-        "name": "Winther Frognerparken",
-        "websiteUrl": null,
-        "address": "Middelthuns gate 17 P, 0368 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://semeny.no/sted/380wintherfrognerparken",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "villa-paradiso-frogner-oslo",
-        "name": "Villa Paradiso Frogner",
-        "websiteUrl": null,
-        "address": "Sommerrogata 17, 0255 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://semeny.no/sted/villaparadisofrogner",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "majorstuen-sushi-oslo",
-        "name": "Majorstuen Sushi",
-        "websiteUrl": null,
-        "address": "Bogstadveien 53, 0366 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://semeny.no/sted/333majorstuensushi",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "crispy-crust-majorstuen-oslo",
-        "name": "Crispy Crust Majorstuen",
-        "websiteUrl": null,
-        "address": "Majorstuveien 34, 0367 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://semeny.no/sted/286crispycrustmajorstuen",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "chinatown-majorstuen-oslo",
-        "name": "Chinatown Majorstuen",
-        "websiteUrl": null,
-        "address": "Valkyriegata 15, 0366 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://semeny.no/sted/124chinatownmajorstuen",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "bambus-frogner-oslo",
-        "name": "Bambus Frogner",
-        "websiteUrl": null,
-        "address": "Niels Juels gate 29, 0257 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://semeny.no/sted/123bambusfrogner",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "lofthus-samvirkelag-torshov-oslo",
-        "name": "Lofthus Samvirkelag Torshov",
-        "websiteUrl": null,
-        "address": "Åsengata 42, 0480 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://semeny.no/sted/lofthussamvirkelagtorshov",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "wu-restaurant-bislett-oslo",
-        "name": "WU Restaurant Bislett",
-        "websiteUrl": null,
-        "address": "Thereses gate 30 d, 0168 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://semeny.no/sted/122wurestaurantbislett",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
         "slug": "espresso-house-aker-brygge-oslo",
         "name": "Espresso House Aker Brygge",
         "websiteUrl": null,
@@ -266,32 +32,6 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "olivia-aker-brygge-oslo",
-        "name": "Olivia Aker Brygge",
-        "websiteUrl": null,
-        "address": "Stranden 3, 0250 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://semeny.no/sted/535oliviaakerbrygge",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
         "slug": "lett-grensen-oslo",
         "name": "LETT Grensen",
         "websiteUrl": null,
@@ -301,32 +41,6 @@
       },
       "menuSource": {
         "url": "https://semeny.no/sted/lettgrensen",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-08-29",
-          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
-        }
-      },
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "delicatessen-aker-brygge-oslo",
-        "name": "Delicatessen Aker Brygge",
-        "websiteUrl": null,
-        "address": "Holmens gate 2, 0250 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://semeny.no/sted/delicatessenakerbrygge",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -379,6 +93,292 @@
       },
       "menuSource": {
         "url": "https://semeny.no/sted/asiaakerbrygge",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "meiwei-spiseri-tullins-gate-oslo",
+        "name": "MeiWei Spiseri",
+        "websiteUrl": null,
+        "address": "Tullins gate 6, 0166 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/public/sted/meiweispiseri",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "eataly-ristorante-aker-brygge-oslo",
+        "name": "Eataly Ristorante",
+        "websiteUrl": null,
+        "address": "Bryggetorget 18, 0250 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/671eatalyristorante",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "winther-restaurant-aker-brygge-oslo",
+        "name": "Winther Restaurant",
+        "websiteUrl": null,
+        "address": "Grundingen 3, 0250 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/729wintherrestaurant",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "yokoso-aker-brygge-oslo",
+        "name": "Yokoso",
+        "websiteUrl": null,
+        "address": "Stranden 63, 0250 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/287yokoso",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "los-tacos-alexander-kiellands-plass-oslo",
+        "name": "Los Tacos Alexander Kiellands Plass",
+        "websiteUrl": null,
+        "address": "Darres gate 1A, 0175 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/525lostacosalexanderkiellandsplass",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "sushihjornet-adamstuen-oslo",
+        "name": "Sushihjørnet Adamstuen",
+        "websiteUrl": null,
+        "address": "Ullevålsveien 82 A, 0454 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/310sushihjornetadamstuen",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "freddy-fuego-burrito-bar-hausmanns-gate-oslo",
+        "name": "Freddy Fuego Burrito Bar",
+        "websiteUrl": null,
+        "address": "Hausmanns gate 31a, 0182 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/freddyfuegoburritobar",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "cafe-cathedral-dronningens-gate-oslo",
+        "name": "Café Cathedral",
+        "websiteUrl": null,
+        "address": "Dronningens gt. 27, 0154 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/cafecathedral",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "subway-byporten-oslo",
+        "name": "Subway Byporten",
+        "websiteUrl": null,
+        "address": "Jernbanetorget 6, 0154 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/735subwaybyporten",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "yo-sushi-oslo-s-oslo",
+        "name": "YO! Sushi",
+        "websiteUrl": null,
+        "address": "Jernbanetorget 1, 0154 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/693yosushi",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-29",
+          "note": "Batch 20 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "smoothiexchange-byporten-oslo",
+        "name": "SmoothieXchange Byporten",
+        "websiteUrl": null,
+        "address": "Jernbanetorget 6, 0154 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/739smoothiexchangebyporten",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
