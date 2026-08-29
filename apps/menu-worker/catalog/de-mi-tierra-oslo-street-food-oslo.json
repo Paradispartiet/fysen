@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "de-mi-tierra-oslo-street-food-oslo",
+    "name": "De Mi Tierra - Oslo Street Food",
+    "websiteUrl": null,
+    "address": "Torggata 16A, 0181 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.915849239409766,
+    "longitude": 10.75083417633427
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/demitierraoslostreetfood",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 5,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "x Empanadas (Serves 2 People)",
+      "x Empanadas (Serves 4 People)",
+      "Chimichurri (oregano-parsley-garlic)",
+      "Salsa Criolla (Onion-Coriander-Tomato)",
+      "Chimichurri Mayonnaise (Oregano-Parsley-Mayonnaise)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "x Empanadas (Serves 2 People)",
+        "priceMinor": 49000
+      },
+      {
+        "name": "x Empanadas (Serves 4 People)",
+        "priceMinor": 98000
+      },
+      {
+        "name": "Chimichurri (oregano-parsley-garlic)",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Salsa Criolla (Onion-Coriander-Tomato)",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Chimichurri Mayonnaise (Oregano-Parsley-Mayonnaise)",
+        "priceMinor": 2500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
