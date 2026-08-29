@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "egon-karl-johan-oslo",
+    "name": "Egon Karl Johan",
+    "websiteUrl": null,
+    "address": "Karl Johans gate 37, 0162 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91419703909273,
+    "longitude": 10.737908468704974
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/egonkarljohan",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 125,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 16 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Engelsk Frokost",
+      "Egon Birria Sandwich",
+      "Lørdagspizza",
+      "Chickenparty",
+      "Golden State Burger",
+      "Potetpurè",
+      "Bearnaise",
+      "Creme Brulee"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Engelsk Frokost",
+        "priceMinor": 24600
+      },
+      {
+        "name": "Egon Birria Sandwich",
+        "priceMinor": 24800
+      },
+      {
+        "name": "Lørdagspizza",
+        "priceMinor": 37200
+      },
+      {
+        "name": "Chickenparty",
+        "priceMinor": 31000
+      },
+      {
+        "name": "Golden State Burger",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Potetpurè",
+        "priceMinor": 4600
+      },
+      {
+        "name": "Bearnaise",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Creme Brulee",
+        "priceMinor": 13500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

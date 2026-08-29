@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "arte-pazza-pizza-parkveien-oslo",
+    "name": "Arte Pazza Pizza Parkveien",
+    "websiteUrl": null,
+    "address": "Parkveien 10, 0350 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.920984127937,
+    "longitude": 10.729246966682158
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/artepazzapizzaparkveien",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 23,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 16 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Romana",
+      "Calzone",
+      "Süd-Nord",
+      "Bufala Margherita",
+      "Arte Pazza",
+      "Piccante",
+      "Salsicciosa",
+      "San Pellegrino Limonata"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Romana",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Calzone",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Süd-Nord",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Bufala Margherita",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Arte Pazza",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Piccante",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Salsicciosa",
+        "priceMinor": 19500
+      },
+      {
+        "name": "San Pellegrino Limonata",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bob-the-bagel-bjorvika-oslo",
+    "name": "Bob The Bagel Bjørvika",
+    "websiteUrl": null,
+    "address": "Dronning Eufemias gate 42, 0191 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90746298306307,
+    "longitude": 10.762109224839529
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/bobthebagelbjorvika",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 9,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 16 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Schmear",
+      "Egg, Bacon & Double Melted Cheddar",
+      "Notorious Pig",
+      "Nova Lox",
+      "Bob ́s Favorite",
+      "Ginna Mozza",
+      "All Green",
+      "The Almigthy Chocolate Chip Cookie"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Schmear",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Egg, Bacon & Double Melted Cheddar",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Notorious Pig",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Nova Lox",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Bob ́s Favorite",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Ginna Mozza",
+        "priceMinor": 19500
+      },
+      {
+        "name": "All Green",
+        "priceMinor": 18500
+      },
+      {
+        "name": "The Almigthy Chocolate Chip Cookie",
+        "priceMinor": 6500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

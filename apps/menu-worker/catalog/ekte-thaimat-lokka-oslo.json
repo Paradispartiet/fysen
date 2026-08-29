@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ekte-thaimat-lokka-oslo",
+    "name": "Ekte Thaimat Løkka",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 64, 0552 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92140209497143,
+    "longitude": 10.759431312470678
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/ektethaimatlokka",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 111,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 16 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Thai Kyllingvinger",
+      "Vårruller m/ Ris",
+      "Kaen Ped Bet Yang",
+      "Samyang Sterk Kylling Ramen Rød",
+      "Koa Tom Mad m/ Taro",
+      "Ekstra Cashewnøtter",
+      "Melon Water Sparkling Drink",
+      "Thai Kaffe 300ml"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Thai Kyllingvinger",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Vårruller m/ Ris",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Kaen Ped Bet Yang",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Samyang Sterk Kylling Ramen Rød",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Koa Tom Mad m/ Taro",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Ekstra Cashewnøtter",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Melon Water Sparkling Drink",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Thai Kaffe 300ml",
+        "priceMinor": 8900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

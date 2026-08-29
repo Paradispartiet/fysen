@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "burek-factory-trondheimsveien-oslo",
+    "name": "Burek Factory Trondheimsveien",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 4A, 0560 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.919162969349095,
+    "longitude": 10.762997882752652
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/297burekfactorytrondheimsveien",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 27,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 16 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Burek m/ Kjøttdeig",
+      "Burek Middag m/ Salat",
+      "Tulumba",
+      "Pommes Frites m/ Fetaost",
+      "Pepsi Max 0,33l",
+      "Ayran",
+      "Pleskavicia Tallerken Halal u/ Ost",
+      "Cevapi Tallerken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Burek m/ Kjøttdeig",
+        "priceMinor": 10000
+      },
+      {
+        "name": "Burek Middag m/ Salat",
+        "priceMinor": 15600
+      },
+      {
+        "name": "Tulumba",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Pommes Frites m/ Fetaost",
+        "priceMinor": 9400
+      },
+      {
+        "name": "Pepsi Max 0,33l",
+        "priceMinor": 4600
+      },
+      {
+        "name": "Ayran",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Pleskavicia Tallerken Halal u/ Ost",
+        "priceMinor": 26800
+      },
+      {
+        "name": "Cevapi Tallerken",
+        "priceMinor": 29000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
