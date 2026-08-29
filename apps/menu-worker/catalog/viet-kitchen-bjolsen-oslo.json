@@ -11,7 +11,7 @@
     "longitude": 10.759895
   },
   "menuSource": {
-    "url": "https://wolt.com/nb/nor/oslo/restaurant/viet-kitchen-oslo",
+    "url": "https://wolt.com/en/nor/oslo/restaurant/viet-kitchen-oslo",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",

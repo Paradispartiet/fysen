@@ -11,56 +11,70 @@
     "longitude": 10.76559
   },
   "menuSource": {
-    "url": "https://lahoridera.no/",
+    "url": "https://semeny.no/sted/285lahoridera",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 27
+    "minimumExpectedItems": 49,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
   },
   "hoursSource": {
-    "url": "https://lahoridera.no/",
+    "url": "https://semeny.no/sted/285lahoridera",
     "timeZone": "Europe/Oslo",
     "checkIntervalMinutes": 360,
     "minimumExpectedIntervals": 7
   },
-  "actions": [
-    {
-      "type": "order",
-      "url": "https://lahoridera.no/shop/",
-      "sourceUrl": "https://lahoridera.no/",
-      "provider": "Lahori Dera"
-    }
-  ],
+  "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Kylling Tikka Masala",
-      "Lahori Lam Karahi Fresh",
-      "Chapli Kebab",
-      "Saag Paneer",
-      "Mix Grill"
+      "Naan Kebab Roll",
+      "Chicken Tikka",
+      "Mix Grill",
+      "Chicken Tikka Masala",
+      "Lam Karahi Fresh",
+      "Chana Masala",
+      "Garlic Naan",
+      "Mango Lassi"
     ],
     "requiredDishVariants": [
       {
-        "name": "Kylling Tikka Masala",
-        "priceMinor": 20900
+        "name": "Naan Kebab Roll",
+        "priceMinor": 9900
       },
       {
-        "name": "Lahori Lam Karahi Fresh",
-        "priceMinor": 20900
-      },
-      {
-        "name": "Chapli Kebab",
-        "priceMinor": 19400
-      },
-      {
-        "name": "Saag Paneer",
-        "priceMinor": 16900
+        "name": "Chicken Tikka",
+        "priceMinor": 25900
       },
       {
         "name": "Mix Grill",
         "priceMinor": 37900
+      },
+      {
+        "name": "Chicken Tikka Masala",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Lam Karahi Fresh",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Chana Masala",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Garlic Naan",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Mango Lassi",
+        "priceMinor": 4900
       }
-    ]
+    ],
+    "forbiddenDishNames": []
   }
 }
