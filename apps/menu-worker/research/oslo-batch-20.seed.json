@@ -136,15 +136,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "eataly-ristorante-aker-brygge-oslo",
-        "name": "Eataly Ristorante",
+        "slug": "july-tea-food-pilestredet-oslo",
+        "name": "July Tea & Food",
         "websiteUrl": null,
-        "address": "Bryggetorget 18, 0250 Oslo",
+        "address": "Pilestredet 53C, 0350 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/671eatalyristorante",
+        "url": "https://semeny.no/sted/julyteafood",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
