@@ -36,6 +36,11 @@ describe("production menu mutation workflows", () => {
     expect(watcher).toContain("run: pnpm --filter @fysen/menu-worker onboard:catalog");
   });
 
+  it("keeps enough menu-source capacity and runtime headroom for the production catalog", () => {
+    expect(watcher).toContain("timeout-minutes: 30");
+    expect(watcher).toContain('FYSEN_MENU_WATCH_BATCH_SIZE: "50"');
+  });
+
   it("reconciles canonical catalog metadata before watching due restaurant hours", () => {
     const onboardingStep = watcher.indexOf("name: Onboard catalog candidates");
     const hoursStep = watcher.indexOf("name: Watch due restaurant hours");
