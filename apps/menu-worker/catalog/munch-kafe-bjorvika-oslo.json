@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "munch-kafe-bjorvika-oslo",
+    "name": "MUNCH Kafé",
+    "websiteUrl": null,
+    "address": "Edvard Munchs plass 1, 0194 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90610626117622,
+    "longitude": 10.75534950637971
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/632munchkafe",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 61,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Croissant",
+      "Sitronterte med Marengs",
+      "Mormors Kake, hel",
+      "Croissant med Skagenrøre",
+      "Boks med Croissanter #2",
+      "Skrik Cookie med Sjokolade",
+      "Parmaskinke & Spicy Salami (120 gram)",
+      "Venus Rose Munch Kombucha"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Croissant",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Sitronterte med Marengs",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Mormors Kake, hel",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Croissant med Skagenrøre",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Boks med Croissanter #2",
+        "priceMinor": 72900
+      },
+      {
+        "name": "Skrik Cookie med Sjokolade",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Parmaskinke & Spicy Salami (120 gram)",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Venus Rose Munch Kombucha",
+        "priceMinor": 9600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
