@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "olearys-vika-oslo",
+    "name": "O'Learys Oslo Vika",
+    "websiteUrl": null,
+    "address": "Ruseløkkveien 26, 0251 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91255854088901,
+    "longitude": 10.726927133845678
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/369olearysoslovika",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 42,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-29",
+      "note": "Batch 19 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Nachos",
+      "Parmesan & Garlic Wings",
+      "Spicy Steak Sandwich",
+      "Classic Steak",
+      "O'Learys Garden Salad",
+      "Ranch Dressing",
+      "Bonaqua Sparkling Sitron",
+      "Carlsberg Non Alcoholic"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Nachos",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Parmesan & Garlic Wings",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Spicy Steak Sandwich",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Classic Steak",
+        "priceMinor": 35900
+      },
+      {
+        "name": "O'Learys Garden Salad",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Ranch Dressing",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Bonaqua Sparkling Sitron",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Carlsberg Non Alcoholic",
+        "priceMinor": 8900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
