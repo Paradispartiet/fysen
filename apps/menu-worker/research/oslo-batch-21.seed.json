@@ -188,15 +188,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "sabi-sushi-frogner-oslo",
-        "name": "Sabi Sushi Frogner",
+        "slug": "bonbon-bjorvika-oslo",
+        "name": "BonBon Oslo",
         "websiteUrl": null,
-        "address": "Bygdøy allé 63C, 0265 Oslo",
+        "address": "Dronning Eufemias gate 43, 0194 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/sabisushifrogner",
+        "url": "https://semeny.no/sted/635bonbonoslo",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
