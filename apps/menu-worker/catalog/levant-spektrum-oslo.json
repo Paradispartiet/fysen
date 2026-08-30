@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "levant-spektrum-oslo",
+    "name": "Levant Spektrum بلاد الشام",
+    "websiteUrl": null,
+    "address": "Stenersgata 10, 0184 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91326585186491,
+    "longitude": 10.752615452267422
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/levantspektrumbladalsham",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 31,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 22 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hummus",
+      "Kibbeh Nayyeh",
+      "Batata Harrah",
+      "Falafel Tallerken",
+      "Muhammara Manakish",
+      "Shish Kebab",
+      "Falafel Wrap",
+      "Ayran"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hummus",
+        "priceMinor": 13100
+      },
+      {
+        "name": "Kibbeh Nayyeh",
+        "priceMinor": 13100
+      },
+      {
+        "name": "Batata Harrah",
+        "priceMinor": 14300
+      },
+      {
+        "name": "Falafel Tallerken",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Muhammara Manakish",
+        "priceMinor": 14300
+      },
+      {
+        "name": "Shish Kebab",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Falafel Wrap",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Ayran",
+        "priceMinor": 6500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "valerenga-halal-burger-oslo",
+    "name": "Vålerenga Halal Burger",
+    "websiteUrl": null,
+    "address": "Strømsveien 25A, 0658 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.908672278325774,
+    "longitude": 10.787031140214772
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/334valerengahalalburger",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 47,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 22 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hamburger",
+      "HJEMMELAGET HAMBURGER m/ost",
+      "Shiskebab Middag",
+      "Chili & Cheese Nuggets",
+      "Vegetar",
+      "Pommes Frites Liten",
+      "Ekstra Pitabrød",
+      "Fuze Tea Lemon Lemongrass 0,4l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hamburger",
+        "priceMinor": 10800
+      },
+      {
+        "name": "HJEMMELAGET HAMBURGER m/ost",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Shiskebab Middag",
+        "priceMinor": 23400
+      },
+      {
+        "name": "Chili & Cheese Nuggets",
+        "priceMinor": 24200
+      },
+      {
+        "name": "Vegetar",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Pommes Frites Liten",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Ekstra Pitabrød",
+        "priceMinor": 1500
+      },
+      {
+        "name": "Fuze Tea Lemon Lemongrass 0,4l",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "buldak-korean-fried-chicken-mathallen-oslo",
+    "name": "Buldak - Korean Fried Chicken",
+    "websiteUrl": null,
+    "address": "Vulkan 5, 0178 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92225253860743,
+    "longitude": 10.751749415749577
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/602buldakkoreanfriedchicken",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 16,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 22 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Buldak Combo 🔥🐔🍟",
+      "Buldak 🔥🐔",
+      "Mom’s Traditional Kimchi 🥗",
+      "Soy Garlic Mayo (6pcs) 🐔",
+      "치즈불닭 Fire Chicken Combo 🔥🐔🍟",
+      "감자튀김 Buldak Potato Fries 🍟",
+      "불닥 나지만 - Fire Chicken (6pcs) 🔥",
+      "꿀 간장 - Honey Soy (6pcs) 🐔"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Buldak Combo 🔥🐔🍟",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Buldak 🔥🐔",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Mom’s Traditional Kimchi 🥗",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Soy Garlic Mayo (6pcs) 🐔",
+        "priceMinor": 20900
+      },
+      {
+        "name": "치즈불닭 Fire Chicken Combo 🔥🐔🍟",
+        "priceMinor": 23900
+      },
+      {
+        "name": "감자튀김 Buldak Potato Fries 🍟",
+        "priceMinor": 8900
+      },
+      {
+        "name": "불닥 나지만 - Fire Chicken (6pcs) 🔥",
+        "priceMinor": 20900
+      },
+      {
+        "name": "꿀 간장 - Honey Soy (6pcs) 🐔",
+        "priceMinor": 20900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sushi-godbit-majorstuen-oslo",
+    "name": "Sushi Godbit",
+    "websiteUrl": null,
+    "address": "Sørkedalsveien 3C, 0369 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93040575491723,
+    "longitude": 10.71271947067945
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/353sushigodbit",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 51,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 22 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vietnamesiske Vårruller",
+      "Ris",
+      "Sushi Kombo",
+      "Spicy Tuna",
+      "Crispy Maki",
+      "Scampi Maki",
+      "Flambert Laks Nigiri",
+      "Imsdal"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vietnamesiske Vårruller",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Ris",
+        "priceMinor": 4000
+      },
+      {
+        "name": "Sushi Kombo",
+        "priceMinor": 39900
+      },
+      {
+        "name": "Spicy Tuna",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Crispy Maki",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Scampi Maki",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Flambert Laks Nigiri",
+        "priceMinor": 2700
+      },
+      {
+        "name": "Imsdal",
+        "priceMinor": 3800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

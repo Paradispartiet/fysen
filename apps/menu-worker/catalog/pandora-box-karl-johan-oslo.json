@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pandora-box-karl-johan-oslo",
+    "name": "Pandora Box",
+    "websiteUrl": null,
+    "address": "Karl Johans gate 5, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91158209734912,
+    "longitude": 10.748198567519214
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/348pandorabox",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 18,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 22 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Duck Salad",
+      "Crispy Salmon Salad",
+      "Poké Bowl - Crispy Duck",
+      "Poké Bowl - Crispy Chili Salmon",
+      "Poké Bowl - Chili Salmon Tartar",
+      "Edamame Spicy Special (vegan)",
+      "Crispy Chicken Gyoza",
+      "Money Bag"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Duck Salad",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Crispy Salmon Salad",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Poké Bowl - Crispy Duck",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Poké Bowl - Crispy Chili Salmon",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Poké Bowl - Chili Salmon Tartar",
+        "priceMinor": 20500
+      },
+      {
+        "name": "Edamame Spicy Special (vegan)",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Crispy Chicken Gyoza",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Money Bag",
+        "priceMinor": 13500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

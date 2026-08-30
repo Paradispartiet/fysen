@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "polka-pierogi-hausmanns-gate-oslo",
+    "name": "Polka Pierogi",
+    "websiteUrl": null,
+    "address": "Hausmanns gate 31C, 0182 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.917837111752995,
+    "longitude": 10.75378669032489
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/polkapierogi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 26,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 22 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Schabowy",
+      "Ruskie",
+      "Fried Ruskie",
+      "Polsk Ramen",
+      "Ex-Wife saus - 40ml",
+      "Grzesiek",
+      "On Lemon Blackcurrant",
+      "Kompot - 230ml"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Schabowy",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Ruskie",
+        "priceMinor": 17400
+      },
+      {
+        "name": "Fried Ruskie",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Polsk Ramen",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Ex-Wife saus - 40ml",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Grzesiek",
+        "priceMinor": 1700
+      },
+      {
+        "name": "On Lemon Blackcurrant",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Kompot - 230ml",
+        "priceMinor": 5200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

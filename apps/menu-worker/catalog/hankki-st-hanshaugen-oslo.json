@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "hankki-st-hanshaugen-oslo",
+    "name": "Hankki",
+    "websiteUrl": null,
+    "address": "Waldemar Thranes gate 32A, 0171 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.924975632851364,
+    "longitude": 10.74260526077912
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/101hankki",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 26,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 22 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chicken Mandu",
+      "Japchae🌱",
+      "Dak-Bokkeum",
+      "Original Bibimbap🌶",
+      "Hansik Set",
+      "Kimchi 1kg",
+      "Milkis",
+      "Korean sweet chili sauce pot"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chicken Mandu",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Japchae🌱",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Dak-Bokkeum",
+        "priceMinor": 27000
+      },
+      {
+        "name": "Original Bibimbap🌶",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Hansik Set",
+        "priceMinor": 79900
+      },
+      {
+        "name": "Kimchi 1kg",
+        "priceMinor": 38000
+      },
+      {
+        "name": "Milkis",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Korean sweet chili sauce pot",
+        "priceMinor": 2900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

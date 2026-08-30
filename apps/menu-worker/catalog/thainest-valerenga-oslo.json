@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "thainest-valerenga-oslo",
+    "name": "ThaiNest",
+    "websiteUrl": null,
+    "address": "Strømsveien 22A, 0657 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90887796488801,
+    "longitude": 10.786434157120249
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/419thainest",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 29,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 22 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vegetar Vårruller",
+      "Friterte Kyllingvinger",
+      "Laab Mo",
+      "Pad Priew Wan",
+      "Grønn Karri (Gaeng Kiew Wan)",
+      "Pad Thai Risnudler",
+      "Egg nudler (Pad Mama)",
+      "Solo Super 0,33 L"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vegetar Vårruller",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Friterte Kyllingvinger",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Laab Mo",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Pad Priew Wan",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Grønn Karri (Gaeng Kiew Wan)",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Pad Thai Risnudler",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Egg nudler (Pad Mama)",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Solo Super 0,33 L",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
