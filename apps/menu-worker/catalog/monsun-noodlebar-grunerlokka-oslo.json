@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "monsun-noodlebar-grunerlokka-oslo",
+    "name": "Monsun Noodlebar",
+    "websiteUrl": null,
+    "address": "Helgesens gate 14C, 0553 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.924622436386166,
+    "longitude": 10.758385192884612
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/511monsunnoodlebar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 145,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Sommerruller",
+      "Spicy Chinese Noodle Wok 🌶",
+      "Wonton Ramen",
+      "Vegan Spicy Miso Ramen",
+      "Red Curry Beef",
+      "Spicy Salmon Maki",
+      "Salmon nigiri",
+      "Masropone Lemon"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Sommerruller",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Spicy Chinese Noodle Wok 🌶",
+        "priceMinor": 33000
+      },
+      {
+        "name": "Wonton Ramen",
+        "priceMinor": 31000
+      },
+      {
+        "name": "Vegan Spicy Miso Ramen",
+        "priceMinor": 28000
+      },
+      {
+        "name": "Red Curry Beef",
+        "priceMinor": 26000
+      },
+      {
+        "name": "Spicy Salmon Maki",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Salmon nigiri",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Masropone Lemon",
+        "priceMinor": 13000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

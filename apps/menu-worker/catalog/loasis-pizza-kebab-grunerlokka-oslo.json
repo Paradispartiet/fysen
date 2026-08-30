@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "loasis-pizza-kebab-grunerlokka-oslo",
+    "name": "L’Oasis Pizza & Kebab",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 14A, 0560 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91965254820225,
+    "longitude": 10.764669659851116
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/loasispizzakebab",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 89,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margarita",
+      "Husets Spesial",
+      "Egg og Ost Burek",
+      "Mixed grill",
+      "Lam shawarma - Pita eller Rull",
+      "Meksikansk burger tallerken (100g)",
+      "Kylling shawarma baguett",
+      "Mix baguett"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margarita",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Husets Spesial",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Egg og Ost Burek",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Mixed grill",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Lam shawarma - Pita eller Rull",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Meksikansk burger tallerken (100g)",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Kylling shawarma baguett",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Mix baguett",
+        "priceMinor": 16900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

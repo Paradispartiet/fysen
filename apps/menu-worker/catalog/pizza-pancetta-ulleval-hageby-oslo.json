@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizza-pancetta-ulleval-hageby-oslo",
+    "name": "Pizza Pancetta Ullevål Hageby",
+    "websiteUrl": null,
+    "address": "Vestgrensa 4, 0851 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94103263296363,
+    "longitude": 10.729091627336755
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/580pizzapancettaullevalhageby",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 105,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Roma [Medium] m/ Coca-Cola Uten Sukker",
+      "Carne [Medium]",
+      "Roma [Stor]",
+      "San Remo [Stor]",
+      "Formaggi Bianca [Stor]",
+      "Chorizo [Medium]",
+      "Chorizo [Stor]",
+      "Sriracha Hvitløksdressing"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Roma [Medium] m/ Coca-Cola Uten Sukker",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Carne [Medium]",
+        "priceMinor": 16800
+      },
+      {
+        "name": "Roma [Stor]",
+        "priceMinor": 31500
+      },
+      {
+        "name": "San Remo [Stor]",
+        "priceMinor": 31500
+      },
+      {
+        "name": "Formaggi Bianca [Stor]",
+        "priceMinor": 32500
+      },
+      {
+        "name": "Chorizo [Medium]",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Chorizo [Stor]",
+        "priceMinor": 33500
+      },
+      {
+        "name": "Sriracha Hvitløksdressing",
+        "priceMinor": 2900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

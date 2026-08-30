@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kammis-grill-loren-oslo",
+    "name": "Kammis Grill Løren",
+    "websiteUrl": null,
+    "address": "Lørenveien 44B, 0585 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93065997255975,
+    "longitude": 10.79358246826888
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/kammisgrillloren",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 24,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kammis Boks: Ekte Døner",
+      "Kammis Boks: Original Kebab",
+      "Kammis Bernaise Burger",
+      "Bakt Potet m/ Kylling Tandoori",
+      "Bakt Potet Cheese",
+      "Biff Kebab",
+      "Chilli Cheese Nuggets",
+      "7up Zero 0.33"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kammis Boks: Ekte Døner",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Kammis Boks: Original Kebab",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Kammis Bernaise Burger",
+        "priceMinor": 17910
+      },
+      {
+        "name": "Bakt Potet m/ Kylling Tandoori",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Bakt Potet Cheese",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Biff Kebab",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Chilli Cheese Nuggets",
+        "priceMinor": 8900
+      },
+      {
+        "name": "7up Zero 0.33",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

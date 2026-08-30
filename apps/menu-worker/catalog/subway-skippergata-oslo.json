@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "subway-skippergata-oslo",
+    "name": "Subway Skippergata",
+    "websiteUrl": null,
+    "address": "Skippergata 25A, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.911163106874966,
+    "longitude": 10.747961919719568
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/537subwayskippergata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 130,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Footlong Cookie",
+      "American Steakhouse Meal Deal, 30cm",
+      "Veggie Delite®, 30cm",
+      "B.L.T., 15cm",
+      "Mighty BMT, 15 cm",
+      "Taco Wrap",
+      "Double Chocolate Cookie Vegan",
+      "Lipton Iste Sitron 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Footlong Cookie",
+        "priceMinor": 8300
+      },
+      {
+        "name": "American Steakhouse Meal Deal, 30cm",
+        "priceMinor": 23200
+      },
+      {
+        "name": "Veggie Delite®, 30cm",
+        "priceMinor": 12000
+      },
+      {
+        "name": "B.L.T., 15cm",
+        "priceMinor": 8600
+      },
+      {
+        "name": "Mighty BMT, 15 cm",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Taco Wrap",
+        "priceMinor": 10800
+      },
+      {
+        "name": "Double Chocolate Cookie Vegan",
+        "priceMinor": 1800
+      },
+      {
+        "name": "Lipton Iste Sitron 0,5l",
+        "priceMinor": 4300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

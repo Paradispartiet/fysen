@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizza-pancetta-grefsen-oslo",
+    "name": "Pizza Pancetta Grefsen",
+    "websiteUrl": null,
+    "address": "Grefsenveien 6A, 0482 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94179098018424,
+    "longitude": 10.770768951708686
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/577pizzapancettagrefsen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 101,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita [Medium]",
+      "Fire Årstider [Medium]",
+      "Hawaii [Stor]",
+      "Bari [Stor]",
+      "Vegetar Bianca [Medium]",
+      "Zucchini [Medium]",
+      "Verona [Stor]",
+      "Sriracha Hvitløksdressing"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita [Medium]",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Fire Årstider [Medium]",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Hawaii [Stor]",
+        "priceMinor": 28000
+      },
+      {
+        "name": "Bari [Stor]",
+        "priceMinor": 31500
+      },
+      {
+        "name": "Vegetar Bianca [Medium]",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Zucchini [Medium]",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Verona [Stor]",
+        "priceMinor": 33500
+      },
+      {
+        "name": "Sriracha Hvitløksdressing",
+        "priceMinor": 2900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
