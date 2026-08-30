@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bosu-boba-sushi-sannergata-oslo",
+    "name": "BoSu Boba & Sushi Sannergata",
+    "websiteUrl": null,
+    "address": "Sannergata 5A, 0557 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92823171651676,
+    "longitude": 10.757806794816386
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/509bosubobasushisannergata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 91,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 24 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vårruller",
+      "Kylling Maki",
+      "S11. Colorful Row",
+      "Deefried Salmon w/ Cheese",
+      "BoSu Nigiri Boks",
+      "Bosu Salmon Boks",
+      "Teriyaki",
+      "Sweet jagaimo futo maki roll"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vårruller",
+        "priceMinor": 8800
+      },
+      {
+        "name": "Kylling Maki",
+        "priceMinor": 10800
+      },
+      {
+        "name": "S11. Colorful Row",
+        "priceMinor": 18800
+      },
+      {
+        "name": "Deefried Salmon w/ Cheese",
+        "priceMinor": 11800
+      },
+      {
+        "name": "BoSu Nigiri Boks",
+        "priceMinor": 20800
+      },
+      {
+        "name": "Bosu Salmon Boks",
+        "priceMinor": 29800
+      },
+      {
+        "name": "Teriyaki",
+        "priceMinor": 2800
+      },
+      {
+        "name": "Sweet jagaimo futo maki roll",
+        "priceMinor": 10800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

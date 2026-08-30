@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "golden-falafel-grunerlokka-oslo",
+    "name": "Golden Falafel",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 33D, 0555 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.925703658304954,
+    "longitude": 10.758800263756706
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/goldenfalafel",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 17,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 24 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Falafel Middag",
+      "Babaghanush",
+      "Parmesan Fries",
+      "Mix Falafel",
+      "Halloumi & Arabisk Pølse Rull",
+      "Tahini",
+      "Jarritos Mango",
+      "Palestine Cola U/Sukker"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Falafel Middag",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Babaghanush",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Parmesan Fries",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Mix Falafel",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Halloumi & Arabisk Pølse Rull",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Tahini",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Jarritos Mango",
+        "priceMinor": 5400
+      },
+      {
+        "name": "Palestine Cola U/Sukker",
+        "priceMinor": 4400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

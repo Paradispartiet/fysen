@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dirty-taco-grunerlokka-oslo",
+    "name": "Dirty Taco Grünerløkka",
+    "websiteUrl": null,
+    "address": "Olaf Ryes plass 9, 0552 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.923489745666124,
+    "longitude": 10.75778851443441
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/dirtytaco",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 19,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 24 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "TRE TACOS + BRUS",
+      "Dirty Nacho",
+      "Parmesan pommes",
+      "Banh Mi",
+      "Dirty Pig",
+      "Sticky Chicken",
+      "Sticky no-chicken",
+      "Korean no-chicken BOWL"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "TRE TACOS + BRUS",
+        "priceMinor": 40600
+      },
+      {
+        "name": "Dirty Nacho",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Parmesan pommes",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Banh Mi",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Dirty Pig",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Sticky Chicken",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Sticky no-chicken",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Korean no-chicken BOWL",
+        "priceMinor": 26900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

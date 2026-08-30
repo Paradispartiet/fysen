@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "cici-kirkegata-oslo",
+    "name": "CiCi Kirkegata",
+    "websiteUrl": null,
+    "address": "Kirkegata 23, 0153 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91151135637597,
+    "longitude": 10.744725211914448
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/cicikirkegata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 13,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 24 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Diavola",
+      "Il Classico",
+      "Margherita Cotto",
+      "Perche no?",
+      "Tartufata",
+      "Bambino Margherita",
+      "San Pellegrino 0.5"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 16000
+      },
+      {
+        "name": "Diavola",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Il Classico",
+        "priceMinor": 29000
+      },
+      {
+        "name": "Margherita Cotto",
+        "priceMinor": 16000
+      },
+      {
+        "name": "Perche no?",
+        "priceMinor": 26000
+      },
+      {
+        "name": "Tartufata",
+        "priceMinor": 28000
+      },
+      {
+        "name": "Bambino Margherita",
+        "priceMinor": 7500
+      },
+      {
+        "name": "San Pellegrino 0.5",
+        "priceMinor": 8900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

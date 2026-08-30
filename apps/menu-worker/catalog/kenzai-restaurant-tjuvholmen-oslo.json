@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kenzai-restaurant-tjuvholmen-oslo",
+    "name": "Kenzai Restaurant",
+    "websiteUrl": null,
+    "address": "Olav Selvaags plass 1, 0252 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90823587765817,
+    "longitude": 10.722664660280351
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/kenzairestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 16,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 24 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Beef Gyoza - 4 Stk.",
+      "Kimchi",
+      "Sichuan Beef Wok",
+      "Sichuan Vegetar Wok",
+      "Yu-Xiang Aubergine",
+      "Stekt Ris",
+      "Fever Tree Tonic Water, 200 ml",
+      "San Pellegrino Mineralvann 750ml"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Beef Gyoza - 4 Stk.",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Kimchi",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Sichuan Beef Wok",
+        "priceMinor": 30900
+      },
+      {
+        "name": "Sichuan Vegetar Wok",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Yu-Xiang Aubergine",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Stekt Ris",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Fever Tree Tonic Water, 200 ml",
+        "priceMinor": 6900
+      },
+      {
+        "name": "San Pellegrino Mineralvann 750ml",
+        "priceMinor": 12900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

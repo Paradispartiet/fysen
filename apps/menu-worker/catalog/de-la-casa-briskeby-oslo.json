@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "de-la-casa-briskeby-oslo",
+    "name": "De La Casa Briskeby - by Bonita",
+    "websiteUrl": null,
+    "address": "Briskebyveien 28, 0259 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.919954899606175,
+    "longitude": 10.71797690997722
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/601delacasabriskebybybonita",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 34,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 24 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "The Spanish Sandwich",
+      "The Italian Sandwich",
+      "Mediterranean Pasta",
+      "Primavera Salad",
+      "Bonita Green",
+      "Bonaqua Sparkling",
+      "Egg Sandwich",
+      "The Cuban Deal"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "The Spanish Sandwich",
+        "priceMinor": 20500
+      },
+      {
+        "name": "The Italian Sandwich",
+        "priceMinor": 20600
+      },
+      {
+        "name": "Mediterranean Pasta",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Primavera Salad",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Bonita Green",
+        "priceMinor": 9800
+      },
+      {
+        "name": "Bonaqua Sparkling",
+        "priceMinor": 6300
+      },
+      {
+        "name": "Egg Sandwich",
+        "priceMinor": 9500
+      },
+      {
+        "name": "The Cuban Deal",
+        "priceMinor": 29400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
