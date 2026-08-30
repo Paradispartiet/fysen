@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "luu-luus-vietnamese-youngstorget-oslo",
+    "name": "Luu Luu`s Vietnamese x Potetheaven",
+    "websiteUrl": null,
+    "address": "Youngs gate 7, 0181 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91482944478244,
+    "longitude": 10.750796557563785
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/luuluusvietnamesexpotetheaven",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 16,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 25 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bakt Potet m/ Skinke",
+      "Bakt Potet m/ Skinke & Kylling",
+      "Vårruller",
+      "Banh Mi Biff",
+      "Banh Mi Tofu",
+      "Risnudler m/ Biff",
+      "Risnudler m/ Tofu",
+      "Imsdal Naturell 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bakt Potet m/ Skinke",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Bakt Potet m/ Skinke & Kylling",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Vårruller",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Banh Mi Biff",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Banh Mi Tofu",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Risnudler m/ Biff",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Risnudler m/ Tofu",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Imsdal Naturell 0,5l",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

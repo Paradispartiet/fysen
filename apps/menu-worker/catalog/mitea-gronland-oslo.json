@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mitea-gronland-oslo",
+    "name": "MiTea",
+    "websiteUrl": null,
+    "address": "Lakkegata 3, 0187 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91378893840582,
+    "longitude": 10.759868972480923
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/599mitea",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 103,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 25 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hjemmelaget Vårruller (Nem Ran)",
+      "Stir Fried Noodles",
+      "Mitea Maki (8 Biter)",
+      "Meny 1 (12 Biter)",
+      "Meny 7 (30 Bitter)",
+      "Ebi Sashimi",
+      "Tofu Rolls",
+      "Sushiris"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hjemmelaget Vårruller (Nem Ran)",
+        "priceMinor": 7110
+      },
+      {
+        "name": "Stir Fried Noodles",
+        "priceMinor": 20340
+      },
+      {
+        "name": "Mitea Maki (8 Biter)",
+        "priceMinor": 14940
+      },
+      {
+        "name": "Meny 1 (12 Biter)",
+        "priceMinor": 14940
+      },
+      {
+        "name": "Meny 7 (30 Bitter)",
+        "priceMinor": 34110
+      },
+      {
+        "name": "Ebi Sashimi",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Tofu Rolls",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Sushiris",
+        "priceMinor": 2000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

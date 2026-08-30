@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "babas-grill-lofthus-oslo",
+    "name": "Baba`s Grill",
+    "websiteUrl": null,
+    "address": "Lofthusveien 1A, 0488 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94351309805225,
+    "longitude": 10.786261987624481
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/babasgrill",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 38,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 25 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kylling Tandoori",
+      "Biff Pizza",
+      "Kebab Baguetee",
+      "Biff Kebab",
+      "Cheeseburger 200g",
+      "Biffsnadder",
+      "1/4 Pmd Monster Bad Apple & Mango Loco 500ml bx",
+      "Solo boks"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kylling Tandoori",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Biff Pizza",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Kebab Baguetee",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Biff Kebab",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Cheeseburger 200g",
+        "priceMinor": 18600
+      },
+      {
+        "name": "Biffsnadder",
+        "priceMinor": 26900
+      },
+      {
+        "name": "1/4 Pmd Monster Bad Apple & Mango Loco 500ml bx",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Solo boks",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

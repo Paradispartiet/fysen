@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "smash-by-ghost-town-grunerlokka-oslo",
+    "name": "Smash by Ghost Town",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 73B, 0552 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92093253428474,
+    "longitude": 10.759014663531422
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/590smashbyghosttown",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 28,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 25 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Ghost Town Smash Burger",
+      "Crispy Chickpea Burger 🌱",
+      "Dirty Fries",
+      "Chicken Nuggets",
+      "No Worries - Alkoholfri",
+      "Mer Pære",
+      "Som-gai",
+      "Ghost Town Smash ́n Fries"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Ghost Town Smash Burger",
+        "priceMinor": 20600
+      },
+      {
+        "name": "Crispy Chickpea Burger 🌱",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Dirty Fries",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Chicken Nuggets",
+        "priceMinor": 9900
+      },
+      {
+        "name": "No Worries - Alkoholfri",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Mer Pære",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Som-gai",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Ghost Town Smash ́n Fries",
+        "priceMinor": 17900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

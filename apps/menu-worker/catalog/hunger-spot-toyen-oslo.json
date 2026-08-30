@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "hunger-spot-toyen-oslo",
+    "name": "Hunger Spot",
+    "websiteUrl": null,
+    "address": "Kolstadgata 22, 0653 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91391878295484,
+    "longitude": 10.774236606879459
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/hungerspot",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 78,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 25 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tripple Cheeseburger",
+      "BBQ Burger",
+      "Cheese Crispy Chicken",
+      "BBQ Crispy Chicken Menu",
+      "Mozzarella Sticks",
+      "BBQ Dip",
+      "Pepsi glass 0,33l",
+      "Jarritos Lime 0,37l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Tripple Cheeseburger",
+        "priceMinor": 22800
+      },
+      {
+        "name": "BBQ Burger",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Cheese Crispy Chicken",
+        "priceMinor": 18900
+      },
+      {
+        "name": "BBQ Crispy Chicken Menu",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Mozzarella Sticks",
+        "priceMinor": 9900
+      },
+      {
+        "name": "BBQ Dip",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Pepsi glass 0,33l",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Jarritos Lime 0,37l",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
