@@ -39,7 +39,7 @@
       "Entrecote",
       "Vongole",
       "Blåskjell escabeche",
-      "Presa Ibérica (200 g)",
+      "Grillet ytrefilet 220gr",
       "Ukens fisk (Lysing)"
     ],
     "requiredDishVariants": [
@@ -72,8 +72,8 @@
         "priceMinor": 23000
       },
       {
-        "name": "Presa Ibérica (200 g)",
-        "priceMinor": 33000
+        "name": "Grillet ytrefilet 220gr",
+        "priceMinor": 31000
       },
       {
         "name": "Ukens fisk (Lysing)",
