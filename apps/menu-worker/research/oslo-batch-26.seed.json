@@ -1,0 +1,397 @@
+{
+  "version": 1,
+  "batch": "oslo-batch-26",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "atelier-asian-tapas-mathallen-oslo",
+        "name": "Atelier Asian Tapas",
+        "websiteUrl": null,
+        "address": "Vulkan 5, 0178 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/atelierasiantapas",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-30",
+          "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "bob-the-bagel-carl-berner-oslo",
+        "name": "Bob The Bagel",
+        "websiteUrl": null,
+        "address": "Trondheimsveien 111C, 0565 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/bobthebagel",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-30",
+          "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "corrals-tacos-gronland-oslo",
+        "name": "Corral's Tacos",
+        "websiteUrl": null,
+        "address": "Schweigaards gate 34C, 0191 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/608corralstacos",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-30",
+          "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "egon-byporten-oslo",
+        "name": "Egon Byporten",
+        "websiteUrl": null,
+        "address": "Jernbanetorget 6, 0154 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/539egonbyporten",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-30",
+          "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "kammis-grill-loren-oslo",
+        "name": "Kammis Grill Løren",
+        "websiteUrl": null,
+        "address": "Lørenveien 44B, 0585 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/kammisgrillloren",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-30",
+          "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "loasis-pizza-kebab-grunerlokka-oslo",
+        "name": "L’Oasis Pizza & Kebab",
+        "websiteUrl": null,
+        "address": "Trondheimsveien 14A, 0560 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/loasispizzakebab",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-30",
+          "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "meraki-via-village-vika-oslo",
+        "name": "Meraki Via Village Greek Food & Gyros",
+        "websiteUrl": null,
+        "address": "Munkedamsveien 29, 0251 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/merakiviavillagegreekfoodgyros",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-30",
+          "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "monsun-noodlebar-grunerlokka-oslo",
+        "name": "Monsun Noodlebar",
+        "websiteUrl": null,
+        "address": "Helgesens gate 14C, 0553 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/511monsunnoodlebar",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-30",
+          "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "pizza-pancetta-bjolsen-oslo",
+        "name": "Pizza Pancetta Bjølsen",
+        "websiteUrl": null,
+        "address": "Bentsebrugata 31B, 0469 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/556pizzapancettabjolsen",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-30",
+          "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "pizza-pancetta-grefsen-oslo",
+        "name": "Pizza Pancetta Grefsen",
+        "websiteUrl": null,
+        "address": "Grefsenveien 6A, 0482 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/577pizzapancettagrefsen",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-30",
+          "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "pizza-pancetta-ulleval-hageby-oslo",
+        "name": "Pizza Pancetta Ullevål Hageby",
+        "websiteUrl": null,
+        "address": "Vestgrensa 4, 0851 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/580pizzapancettaullevalhageby",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-30",
+          "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "sabi-sushi-storo-oslo",
+        "name": "Sabi Sushi Storo",
+        "websiteUrl": null,
+        "address": "Nycoveien 2, 0483 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/573sabisushistoro",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-30",
+          "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "subway-galleriet-oslo",
+        "name": "Subway Galleriet",
+        "websiteUrl": null,
+        "address": "Schweigaards gate 6, 0185 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/533subwaygalleriet",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-30",
+          "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "subway-skippergata-oslo",
+        "name": "Subway Skippergata",
+        "websiteUrl": null,
+        "address": "Skippergata 25A, 0154 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/537subwayskippergata",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-30",
+          "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "crispy-clubs-storgata-oslo",
+        "name": "Crispy Clubs",
+        "websiteUrl": null,
+        "address": "Storgata 32, 0184 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/591crispyclubs",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-08-30",
+          "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    }
+  ]
+}
