@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "shanghai-2k18-sentrum-oslo",
+    "name": "Shanghai 2k18",
+    "websiteUrl": null,
+    "address": "Kirkegata 30, 0153 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91149741303305,
+    "longitude": 10.745100058921274
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/267shanghai2k18",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 12,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 27 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Szehuan Suppe",
+      "Crispy Very Good Eggplant",
+      "Fried Spicy chicken w/ Nuts 🌶🌶🌶",
+      "Shanghai2K18 Treasure Of The Family Lamb",
+      "Chicken w/ Teriyaki Sauce",
+      "1/4 Peking Duck",
+      "Mapotofu w/ Minced Meat 🌶🌶🌶",
+      "up"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Szehuan Suppe",
+        "priceMinor": 12800
+      },
+      {
+        "name": "Crispy Very Good Eggplant",
+        "priceMinor": 28800
+      },
+      {
+        "name": "Fried Spicy chicken w/ Nuts 🌶🌶🌶",
+        "priceMinor": 33800
+      },
+      {
+        "name": "Shanghai2K18 Treasure Of The Family Lamb",
+        "priceMinor": 39800
+      },
+      {
+        "name": "Chicken w/ Teriyaki Sauce",
+        "priceMinor": 33800
+      },
+      {
+        "name": "1/4 Peking Duck",
+        "priceMinor": 40800
+      },
+      {
+        "name": "Mapotofu w/ Minced Meat 🌶🌶🌶",
+        "priceMinor": 27800
+      },
+      {
+        "name": "up",
+        "priceMinor": 4800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

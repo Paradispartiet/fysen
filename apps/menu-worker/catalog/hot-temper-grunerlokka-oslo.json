@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "hot-temper-grunerlokka-oslo",
+    "name": "Hot Temper",
+    "websiteUrl": null,
+    "address": "Nordre gate 24, 0551 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.921160357752726,
+    "longitude": 10.758498968854573
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/hottemper",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 36,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 27 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Breast Feed",
+      "6pcs Nashville Nugget ROULETTE",
+      "Halloumi Classic Burger",
+      "Hot Temper Burger, Fries, Aioli & Drink.",
+      "Fries",
+      "Chicken Gravy",
+      "Blue Cheese Dip",
+      "Gloves"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Breast Feed",
+        "priceMinor": 28000
+      },
+      {
+        "name": "6pcs Nashville Nugget ROULETTE",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Halloumi Classic Burger",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Hot Temper Burger, Fries, Aioli & Drink.",
+        "priceMinor": 36900
+      },
+      {
+        "name": "Fries",
+        "priceMinor": 7300
+      },
+      {
+        "name": "Chicken Gravy",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Blue Cheese Dip",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Gloves",
+        "priceMinor": 500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

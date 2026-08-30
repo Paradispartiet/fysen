@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizzeria-la-pietra-valerenga-oslo",
+    "name": "Pizzeria la Pietra",
+    "websiteUrl": null,
+    "address": "Ingeborgs gate 4, 0658 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90835861897358,
+    "longitude": 10.787377310523576
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/307pizzerialapietra",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 43,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 27 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Capricciosa",
+      "Quattro Con Fungi (kan variere etter sesong)",
+      "Roma",
+      "Cacciatore",
+      "Napoli",
+      "Ventricina",
+      "Jalapenos",
+      "Solo Super"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Capricciosa",
+        "priceMinor": 15200
+      },
+      {
+        "name": "Quattro Con Fungi (kan variere etter sesong)",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Roma",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Cacciatore",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Napoli",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Ventricina",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Jalapenos",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Solo Super",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

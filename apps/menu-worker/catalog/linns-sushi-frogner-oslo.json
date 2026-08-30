@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "linns-sushi-frogner-oslo",
+    "name": "Linns Sushi",
+    "websiteUrl": null,
+    "address": "Bygdøy allé 62A, 0265 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91870447626084,
+    "longitude": 10.702206239032057
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/294linnssushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 103,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 27 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vårruller (2 stk.)",
+      "Familie Deluxe (72 stk.)",
+      "Kappa Maki A",
+      "Flambert Lakserull",
+      "Futo maki kokt scampi - 12 biter",
+      "Kokt Scampi",
+      "Ekstra Soyasaus",
+      "Stor Sashimi"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vårruller (2 stk.)",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Familie Deluxe (72 stk.)",
+        "priceMinor": 98900
+      },
+      {
+        "name": "Kappa Maki A",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Flambert Lakserull",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Futo maki kokt scampi - 12 biter",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Kokt Scampi",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Ekstra Soyasaus",
+        "priceMinor": 2000
+      },
+      {
+        "name": "Stor Sashimi",
+        "priceMinor": 33900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "apsorn-thai-torshov-oslo",
+    "name": "Apsorn Thai Restaurant",
+    "websiteUrl": null,
+    "address": "Vogts gate 64, 0477 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93614662464408,
+    "longitude": 10.765707096077625
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/688apsornthairestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 26,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 27 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Som Tam Gung Sod (Papaya Salad)",
+      "Tom Yum Suppe",
+      "Gai Yaang",
+      "Lamb Kapraow",
+      "Pad Thai",
+      "Pad Nuea Nam Man Hoi",
+      "Pad Phak Ruam Mitr Tofu",
+      "Yam Wun Sen Gung Plamuuk Hoi (Glassnudler Salat)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Som Tam Gung Sod (Papaya Salad)",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Tom Yum Suppe",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Gai Yaang",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Lamb Kapraow",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Pad Thai",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Pad Nuea Nam Man Hoi",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Pad Phak Ruam Mitr Tofu",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Yam Wun Sen Gung Plamuuk Hoi (Glassnudler Salat)",
+        "priceMinor": 23500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
