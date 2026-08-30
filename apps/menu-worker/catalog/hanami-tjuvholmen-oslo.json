@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "hanami-tjuvholmen-oslo",
+    "name": "Hanami",
+    "websiteUrl": null,
+    "address": "Kanalen 1, 0252 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.908191726906175,
+    "longitude": 10.721231747304556
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/hanami",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 47,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 24 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Akami Nigiri",
+      "Suzuki Nigiri",
+      "Hirame Sashimi",
+      "Tataki-Kamskjell",
+      "Hamachi m/ Yuzu-Soya Dressing",
+      "Fritert Maki m/ Spicy Tunfisk",
+      "Tunfisk, Spicy Majones, Vårløk & Sesamfrø",
+      "Nigiri & Sashimi Collection"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Akami Nigiri",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Suzuki Nigiri",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Hirame Sashimi",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Tataki-Kamskjell",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Hamachi m/ Yuzu-Soya Dressing",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Fritert Maki m/ Spicy Tunfisk",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Tunfisk, Spicy Majones, Vårløk & Sesamfrø",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Nigiri & Sashimi Collection",
+        "priceMinor": 189900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

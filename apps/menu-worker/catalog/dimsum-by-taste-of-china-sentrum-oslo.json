@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dimsum-by-taste-of-china-sentrum-oslo",
+    "name": "DimSum by Taste of China",
+    "websiteUrl": null,
+    "address": "Tordenskiolds gate 10, 0160 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91206273081714,
+    "longitude": 10.735614922168164
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/dimsumbytasteofchina",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 91,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 24 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Ekstra 4 poser Soyasaus",
+      "Har Gow (蝦餃) I",
+      "PEKING DUCK l",
+      "🌱11A Veggie Woh Tip (齋鍋貼)",
+      "Rismel rull fylt med svinekjøtt",
+      "H1. Hoi Sin Ap Pin (海鮮鴨片)",
+      "N3. Singapore Nudler (星洲炒米) glutenfritt",
+      "Sparkling Tea Blå 75CL"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Ekstra 4 poser Soyasaus",
+        "priceMinor": 1500
+      },
+      {
+        "name": "Har Gow (蝦餃) I",
+        "priceMinor": 14900
+      },
+      {
+        "name": "PEKING DUCK l",
+        "priceMinor": 66800
+      },
+      {
+        "name": "🌱11A Veggie Woh Tip (齋鍋貼)",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Rismel rull fylt med svinekjøtt",
+        "priceMinor": 13900
+      },
+      {
+        "name": "H1. Hoi Sin Ap Pin (海鮮鴨片)",
+        "priceMinor": 29800
+      },
+      {
+        "name": "N3. Singapore Nudler (星洲炒米) glutenfritt",
+        "priceMinor": 24800
+      },
+      {
+        "name": "Sparkling Tea Blå 75CL",
+        "priceMinor": 29800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

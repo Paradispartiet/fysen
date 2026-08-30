@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "curry-og-kos-majorstuen-oslo",
+    "name": "Curry og Kos",
+    "websiteUrl": null,
+    "address": "Kirkeveien 51, 0368 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.927661452118606,
+    "longitude": 10.713794733133769
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/curryogkos",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 21,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 24 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Samosa m/ Potet",
+      "Classic Butter Chicken",
+      "Chicken Saag Wala",
+      "Lahori Chloe",
+      "Butter Paneer",
+      "Veg Biriyani",
+      "Naan Garlic",
+      "Raita"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Samosa m/ Potet",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Classic Butter Chicken",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Chicken Saag Wala",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Lahori Chloe",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Butter Paneer",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Veg Biriyani",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Naan Garlic",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Raita",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

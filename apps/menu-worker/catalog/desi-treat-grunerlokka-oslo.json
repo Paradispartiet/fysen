@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "desi-treat-grunerlokka-oslo",
+    "name": "Desi Treat",
+    "websiteUrl": null,
+    "address": "Helgesens gate 73B, 0563 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92156954187041,
+    "longitude": 10.774414301352698
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/desitreatindiskindian",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 59,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 24 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Butter Chicken meal deal med pepsi",
+      "Murgh Tandoori Tikka",
+      "Murgh Lahsun Karahi / Karahi chicken",
+      "Lamb Tikka Masala",
+      "Chana Masala",
+      "Jhinga Biryani",
+      "Tamarind Chutney",
+      "Tandoori Chicken with Rice & Salad Barneporsjon"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Butter Chicken meal deal med pepsi",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Murgh Tandoori Tikka",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Murgh Lahsun Karahi / Karahi chicken",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Lamb Tikka Masala",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Chana Masala",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Jhinga Biryani",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Tamarind Chutney",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Tandoori Chicken with Rice & Salad Barneporsjon",
+        "priceMinor": 17000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

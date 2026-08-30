@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "cici-tollgaarden-oslo",
+    "name": "CiCi Tollgaarden",
+    "websiteUrl": null,
+    "address": "Schweigaards gate 15, 0191 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91100902898706,
+    "longitude": 10.759542963734678
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/cicitollgaarden",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 22,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 24 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Il Classico",
+      "Bresaola Di Manzo",
+      "Saltede Mandler",
+      "Insalata Parma Noci e Pere",
+      "Pappardelle Alla Bolognese",
+      "Mandarino Verde",
+      "7UP Uten"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Il Classico",
+        "priceMinor": 29000
+      },
+      {
+        "name": "Bresaola Di Manzo",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Saltede Mandler",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Insalata Parma Noci e Pere",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Pappardelle Alla Bolognese",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Mandarino Verde",
+        "priceMinor": 7500
+      },
+      {
+        "name": "7UP Uten",
+        "priceMinor": 6500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

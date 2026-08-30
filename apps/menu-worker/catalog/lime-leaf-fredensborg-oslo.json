@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lime-leaf-fredensborg-oslo",
+    "name": "Lime & Leaf",
+    "websiteUrl": null,
+    "address": "Fredensborgveien 29, 0177 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91914561324256,
+    "longitude": 10.748113421105357
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/limeleaf",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 17,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 24 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vårruller 🌱",
+      "Veggie Bun",
+      "Veggie Stekte Dumplings - 6 Stk.",
+      "The Signature Pho",
+      "Veggie Udon Wok",
+      "Veggie Stekt Ris",
+      "Vietnamesisk Iskaffe",
+      "Berga Eple, Drue, Solbær Juice 0,25l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vårruller 🌱",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Veggie Bun",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Veggie Stekte Dumplings - 6 Stk.",
+        "priceMinor": 9900
+      },
+      {
+        "name": "The Signature Pho",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Veggie Udon Wok",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Veggie Stekt Ris",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Vietnamesisk Iskaffe",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Berga Eple, Drue, Solbær Juice 0,25l",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

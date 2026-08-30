@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kemi-restaurant-brugata-oslo",
+    "name": "Kemi Restaurant",
+    "websiteUrl": null,
+    "address": "Brugata 8, 0186 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91407676797765,
+    "longitude": 10.754446821567253
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/kemirestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 32,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 24 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Koshari",
+      "Kjøttgryte med poteter & ris",
+      "Spaghetti med hvit saus & kvlling",
+      "Egg & Cheese Sandwich",
+      "Baba Ghanoush",
+      "Lever Sandwich",
+      "Vegetarian Hawawshi",
+      "Vann 0,5L"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Koshari",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Kjøttgryte med poteter & ris",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Spaghetti med hvit saus & kvlling",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Egg & Cheese Sandwich",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Baba Ghanoush",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Lever Sandwich",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Vegetarian Hawawshi",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Vann 0,5L",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

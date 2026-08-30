@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "braud-toastbar-grunerlokka-oslo",
+    "name": "Braud Toastbar",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 47A, 0555 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.924155024866074,
+    "longitude": 10.758884680364185
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/595braudtoastbar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 35,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 24 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hummus, Soltørkede Tomater & Oliven",
+      "Taleggio, Blåmuggost & Brie",
+      "Pulled Pork, Taleggio & BBQ-saus",
+      "Eggerøre & Bacon",
+      "Chiliaioli",
+      "Mango & Eplejuice",
+      "Mocca",
+      "Espresso tonic"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hummus, Soltørkede Tomater & Oliven",
+        "priceMinor": 14700
+      },
+      {
+        "name": "Taleggio, Blåmuggost & Brie",
+        "priceMinor": 16300
+      },
+      {
+        "name": "Pulled Pork, Taleggio & BBQ-saus",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Eggerøre & Bacon",
+        "priceMinor": 16300
+      },
+      {
+        "name": "Chiliaioli",
+        "priceMinor": 1500
+      },
+      {
+        "name": "Mango & Eplejuice",
+        "priceMinor": 5800
+      },
+      {
+        "name": "Mocca",
+        "priceMinor": 5800
+      },
+      {
+        "name": "Espresso tonic",
+        "priceMinor": 7200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
