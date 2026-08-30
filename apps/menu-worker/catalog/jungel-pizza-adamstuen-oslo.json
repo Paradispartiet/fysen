@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jungel-pizza-adamstuen-oslo",
+    "name": "Jungel Pizza Adamstuen",
+    "websiteUrl": null,
+    "address": "Ullevålsveien 88A, 0451 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93322636319803,
+    "longitude": 10.73351187667163
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/557jungelpizzaadamstuen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 30,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 25 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Carne [1]",
+      "Carne",
+      "Vegetar [4]",
+      "Vegan [3]",
+      "Hvit Pizza",
+      "Utopiabrus Blåbær",
+      "Sitronola",
+      "BRLO"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Carne [1]",
+        "priceMinor": 19600
+      },
+      {
+        "name": "Carne",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Vegetar [4]",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Vegan [3]",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Hvit Pizza",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Utopiabrus Blåbær",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Sitronola",
+        "priceMinor": 4900
+      },
+      {
+        "name": "BRLO",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

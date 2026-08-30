@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dr-gyros-bislett-oslo",
+    "name": "Dr. Gyros - Smaken Av Hellas",
+    "websiteUrl": null,
+    "address": "Pilestredet 51B, 0350 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.921605754364336,
+    "longitude": 10.73197534958032
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/drgyrossmakenavhellas",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 28,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 25 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Gyros i Gresk Pita",
+      "Club Sandwich Tallerken",
+      "Falafel i Pita 🌱",
+      "Pizza Santorini",
+      "Pizza Kriti",
+      "Dr. Gyros Burger",
+      "Tzatziki",
+      "Pepsi Max 0,33L"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Gyros i Gresk Pita",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Club Sandwich Tallerken",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Falafel i Pita 🌱",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Pizza Santorini",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Pizza Kriti",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Dr. Gyros Burger",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Tzatziki",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Pepsi Max 0,33L",
+        "priceMinor": 4700
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

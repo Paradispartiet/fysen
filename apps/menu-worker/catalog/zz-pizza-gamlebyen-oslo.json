@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "zz-pizza-gamlebyen-oslo",
+    "name": "ZZ Pizza",
+    "websiteUrl": null,
+    "address": "St. Halvards gate 33, 0192 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90603682814937,
+    "longitude": 10.774753026335564
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/588zzpizza",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 17,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 25 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Nr1 Margherita",
+      "Nr3 Pepperoni",
+      "Nr6 Sopp",
+      "Nr8 Løksuppepizza",
+      "Nr10 Guanciale Pecorino",
+      "Nr13 Marinara",
+      "Solo 0,33l boks",
+      "Hvitløk-dressing"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Nr1 Margherita",
+        "priceMinor": 20500
+      },
+      {
+        "name": "Nr3 Pepperoni",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Nr6 Sopp",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Nr8 Løksuppepizza",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Nr10 Guanciale Pecorino",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Nr13 Marinara",
+        "priceMinor": 20500
+      },
+      {
+        "name": "Solo 0,33l boks",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Hvitløk-dressing",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

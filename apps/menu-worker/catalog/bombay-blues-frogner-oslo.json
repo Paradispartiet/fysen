@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bombay-blues-frogner-oslo",
+    "name": "Bombay Blues",
+    "websiteUrl": null,
+    "address": "Bygdøy allé 8, 0262 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91569366170816,
+    "longitude": 10.713250965991737
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/bombayblues",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 53,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 25 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chilli Chicken",
+      "Mango Chicken",
+      "Lam Palak",
+      "Chana Masala",
+      "Lam Chops",
+      "Peshawari Naan",
+      "Blandet Sylteagurk",
+      "Pepsi Max 330ml"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chilli Chicken",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Mango Chicken",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Lam Palak",
+        "priceMinor": 30500
+      },
+      {
+        "name": "Chana Masala",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Lam Chops",
+        "priceMinor": 37900
+      },
+      {
+        "name": "Peshawari Naan",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Blandet Sylteagurk",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Pepsi Max 330ml",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

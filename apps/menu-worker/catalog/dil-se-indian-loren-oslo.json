@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dil-se-indian-loren-oslo",
+    "name": "DIL SE Indian Kitchen N Bar Oslo",
+    "websiteUrl": null,
+    "address": "Lørenveien 64D, 0585 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92922241436319,
+    "longitude": 10.797906896076022
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/dilseindiankitchennbaroslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 40,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 25 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Signatur Svart Trøffel Butter Chicken",
+      "Kathi-Wrap",
+      "Kashmiri Lam Rogan Josh",
+      "Palak Paneer",
+      "Prawn Tikka",
+      "Raita",
+      "Gulab Jamun m/ Trøffelrabri",
+      "Bestikk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Signatur Svart Trøffel Butter Chicken",
+        "priceMinor": 24750
+      },
+      {
+        "name": "Kathi-Wrap",
+        "priceMinor": 14310
+      },
+      {
+        "name": "Kashmiri Lam Rogan Josh",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Palak Paneer",
+        "priceMinor": 21510
+      },
+      {
+        "name": "Prawn Tikka",
+        "priceMinor": 24750
+      },
+      {
+        "name": "Raita",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Gulab Jamun m/ Trøffelrabri",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Bestikk",
+        "priceMinor": 200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "greasy-house-sagene-oslo",
+    "name": "Greasy House",
+    "websiteUrl": null,
+    "address": "Arendalsgata 14, 0463 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93789188847847,
+    "longitude": 10.754455511268894
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/greasyhouse",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 73,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 25 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "💙 BBQ Lunch Deal",
+      "💙 Beyond Burger Meal Deal",
+      "Chilli Cheese Poppers",
+      "Fanta-Exotic 0,50l",
+      "Jarritos Mandarin",
+      "Monster Ultra Rosa",
+      "BonSu-Pink Guava",
+      "Ben & Jerry's Half Baked 465ml"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "💙 BBQ Lunch Deal",
+        "priceMinor": 21900
+      },
+      {
+        "name": "💙 Beyond Burger Meal Deal",
+        "priceMinor": 29000
+      },
+      {
+        "name": "Chilli Cheese Poppers",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Fanta-Exotic 0,50l",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Jarritos Mandarin",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Monster Ultra Rosa",
+        "priceMinor": 4900
+      },
+      {
+        "name": "BonSu-Pink Guava",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Ben & Jerry's Half Baked 465ml",
+        "priceMinor": 12900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

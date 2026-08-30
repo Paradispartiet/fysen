@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "fresh-asian-fusion-ensjo-oslo",
+    "name": "Fresh Asian Fusion",
+    "websiteUrl": null,
+    "address": "Grensesvingen 7, 0661 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91409187984396,
+    "longitude": 10.798644547147703
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/freshasianfusion",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 45,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 25 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vårrull Vegetar",
+      "Sursøt Saus innbakt",
+      "Pepperbiff",
+      "Fresh Combo 30 Biter + 2 vårruller",
+      "Avokado / Tofu - 5 Biter 🌱",
+      "Hot Philly",
+      "Stekt Ris",
+      "Sjokoladeterrin"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vårrull Vegetar",
+        "priceMinor": 9085
+      },
+      {
+        "name": "Sursøt Saus innbakt",
+        "priceMinor": 20585
+      },
+      {
+        "name": "Pepperbiff",
+        "priceMinor": 34385
+      },
+      {
+        "name": "Fresh Combo 30 Biter + 2 vårruller",
+        "priceMinor": 59685
+      },
+      {
+        "name": "Avokado / Tofu - 5 Biter 🌱",
+        "priceMinor": 12535
+      },
+      {
+        "name": "Hot Philly",
+        "priceMinor": 18285
+      },
+      {
+        "name": "Stekt Ris",
+        "priceMinor": 14835
+      },
+      {
+        "name": "Sjokoladeterrin",
+        "priceMinor": 12535
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

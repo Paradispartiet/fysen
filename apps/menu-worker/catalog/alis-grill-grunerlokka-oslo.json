@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "alis-grill-grunerlokka-oslo",
+    "name": "Ali´s Grill",
+    "websiteUrl": null,
+    "address": "Schleppegrells gate 9A, 0556 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.927077714951935,
+    "longitude": 10.76149972196278
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/alisgrill",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 43,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 25 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebab i Pita/Rull",
+      "Biffkebabtallerken",
+      "Falafel i Pita/Rull",
+      "Kyllingburgertallerken",
+      "Tunfisk Pizza",
+      "Skinke Pizza",
+      "Pepsi Max 0,5l",
+      "Pepsi Max 1,5 Liter"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebab i Pita/Rull",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Biffkebabtallerken",
+        "priceMinor": 22800
+      },
+      {
+        "name": "Falafel i Pita/Rull",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Kyllingburgertallerken",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Tunfisk Pizza",
+        "priceMinor": 29800
+      },
+      {
+        "name": "Skinke Pizza",
+        "priceMinor": 27200
+      },
+      {
+        "name": "Pepsi Max 0,5l",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Pepsi Max 1,5 Liter",
+        "priceMinor": 6500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
