@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "roots-of-india-grefsen-oslo",
+    "name": "Roots Of India",
+    "websiteUrl": null,
+    "address": "Grefsenveien 6D, 0482 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94167271046585,
+    "longitude": 10.771550291869605
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/343rootsofindia",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 61,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 27 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Mix Sabzi Pakora",
+      "Garlic Chicken",
+      "Chicken Nuggets",
+      "Methi Chicken",
+      "Fish Tikka Masala",
+      "Malai Kofta",
+      "Jhinga Biryani",
+      "Pudina Raita"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Mix Sabzi Pakora",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Garlic Chicken",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Chicken Nuggets",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Methi Chicken",
+        "priceMinor": 27000
+      },
+      {
+        "name": "Fish Tikka Masala",
+        "priceMinor": 27000
+      },
+      {
+        "name": "Malai Kofta",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Jhinga Biryani",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Pudina Raita",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

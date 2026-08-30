@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mehfel-kirkegata-oslo",
+    "name": "Mehfel",
+    "websiteUrl": null,
+    "address": "Kirkegata 15, 0153 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91018115242356,
+    "longitude": 10.743439290922616
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/mehfel",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 53,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 27 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chicken Pakora",
+      "Butter Chicken",
+      "Lamb Bhuna Garlic",
+      "Lamb Sharabi",
+      "Fish Bhuna",
+      "Aloo Mattar/Paneer",
+      "Naan",
+      "up"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chicken Pakora",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Butter Chicken",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Lamb Bhuna Garlic",
+        "priceMinor": 31900
+      },
+      {
+        "name": "Lamb Sharabi",
+        "priceMinor": 31900
+      },
+      {
+        "name": "Fish Bhuna",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Aloo Mattar/Paneer",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Naan",
+        "priceMinor": 4900
+      },
+      {
+        "name": "up",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

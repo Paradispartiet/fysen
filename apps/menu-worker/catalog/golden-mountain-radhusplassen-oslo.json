@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "golden-mountain-radhusplassen-oslo",
+    "name": "Golden Mountain Restaurant",
+    "websiteUrl": null,
+    "address": "Fridtjof Nansens plass 4, 0160 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91321454837157,
+    "longitude": 10.734083243973915
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/269goldenmountainrestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 31,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 27 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Edamame",
+      "Frityrstekt Won-Ton",
+      "Scampi Kongbao",
+      "Mala Biff",
+      "Sursøt Kylling",
+      "Honey Glazed Char Siu",
+      "Mala And",
+      "Vegetarisk Chopsuey med tofu 🌱"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Edamame",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Frityrstekt Won-Ton",
+        "priceMinor": 9800
+      },
+      {
+        "name": "Scampi Kongbao",
+        "priceMinor": 30800
+      },
+      {
+        "name": "Mala Biff",
+        "priceMinor": 28800
+      },
+      {
+        "name": "Sursøt Kylling",
+        "priceMinor": 25800
+      },
+      {
+        "name": "Honey Glazed Char Siu",
+        "priceMinor": 29800
+      },
+      {
+        "name": "Mala And",
+        "priceMinor": 32800
+      },
+      {
+        "name": "Vegetarisk Chopsuey med tofu 🌱",
+        "priceMinor": 21800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

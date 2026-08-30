@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "korean-corndogs-teaology-posthallen-oslo",
+    "name": "Korean Corndogs & TeaOlogy Posthallen",
+    "websiteUrl": null,
+    "address": "Dronningens gate 15, 0152 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91038965689687,
+    "longitude": 10.746007652609869
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/koreancorndogsteaologyposthallen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 67,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 27 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Saigon Silk",
+      "Red Guava",
+      "Sunrise",
+      "Cheese Pull",
+      "Milky Passionate🌱",
+      "Passionate",
+      "Gift card - 1 bubble tea cup (Large size)",
+      "Joyful Taste Combo (Cheese Doodle)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Saigon Silk",
+        "priceMinor": 11100
+      },
+      {
+        "name": "Red Guava",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Sunrise",
+        "priceMinor": 9000
+      },
+      {
+        "name": "Cheese Pull",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Milky Passionate🌱",
+        "priceMinor": 9000
+      },
+      {
+        "name": "Passionate",
+        "priceMinor": 8300
+      },
+      {
+        "name": "Gift card - 1 bubble tea cup (Large size)",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Joyful Taste Combo (Cheese Doodle)",
+        "priceMinor": 11610
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
