@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "fiorentino-gronland-oslo",
+    "name": "Fiorentino",
+    "websiteUrl": null,
+    "address": "Grønlandsleiret 55, 0190 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.910247695446344,
+    "longitude": 10.767643520899417
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/697fiorentino",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 23,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 23 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Paradiso",
+      "Lussurioso",
+      "Inferno",
+      "Primavera",
+      "Formaggi",
+      "Mortadella",
+      "Imsdal 0,5l",
+      "Up Zero 0,25l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Paradiso",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Lussurioso",
+        "priceMinor": 16000
+      },
+      {
+        "name": "Inferno",
+        "priceMinor": 16000
+      },
+      {
+        "name": "Primavera",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Formaggi",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Mortadella",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Imsdal 0,5l",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Up Zero 0,25l",
+        "priceMinor": 4000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

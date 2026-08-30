@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mini-sushi-carl-berner-oslo",
+    "name": "Mini Sushi",
+    "websiteUrl": null,
+    "address": "Christian Michelsens gate 1B, 0568 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92666811450739,
+    "longitude": 10.775498947177285
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/110minisushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 90,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 23 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Edamamebønner",
+      "Liten sushi (7 biter)",
+      "Combo 2 (20 biter)",
+      "Hoisinsaus",
+      "Crabstick",
+      "Kappa maki",
+      "Kylling maki",
+      "Hotate tempura maki"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Edamamebønner",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Liten sushi (7 biter)",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Combo 2 (20 biter)",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Hoisinsaus",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Crabstick",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Kappa maki",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Kylling maki",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Hotate tempura maki",
+        "priceMinor": 17000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

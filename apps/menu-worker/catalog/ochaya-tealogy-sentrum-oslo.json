@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ochaya-tealogy-sentrum-oslo",
+    "name": "Ochaya x Tealogy",
+    "websiteUrl": null,
+    "address": "Bernt Ankers gate 6A, 0183 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.915917051372055,
+    "longitude": 10.75242254675648
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/ochayaxtealogy",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 59,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 23 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Usucha",
+      "Slushy Taro",
+      "Brown Sugar Boba",
+      "Citrus Straw",
+      "Milky Berry Sweet",
+      "Warm Milky Mangolden",
+      "Organic Matcha (30g) - Senchado Tokyo",
+      "Teaology bubble tea keychain"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Usucha",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Slushy Taro",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Brown Sugar Boba",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Citrus Straw",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Milky Berry Sweet",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Warm Milky Mangolden",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Organic Matcha (30g) - Senchado Tokyo",
+        "priceMinor": 63000
+      },
+      {
+        "name": "Teaology bubble tea keychain",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

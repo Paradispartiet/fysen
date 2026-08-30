@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "azadi-restaurant-gronland-oslo",
+    "name": "Azadi Restaurant",
+    "websiteUrl": null,
+    "address": "Mandalls gate 2P, 0190 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9122533376142,
+    "longitude": 10.763883385712726
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/azadirestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 40,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 23 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hummus",
+      "Turshy",
+      "Lammelever",
+      "Spesial Grill",
+      "Dolma",
+      "Qozy m/ Lam",
+      "Deyeyanetn Inside Keywot",
+      "Ayran (flaske)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hummus",
+        "priceMinor": 8000
+      },
+      {
+        "name": "Turshy",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Lammelever",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Spesial Grill",
+        "priceMinor": 49900
+      },
+      {
+        "name": "Dolma",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Qozy m/ Lam",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Deyeyanetn Inside Keywot",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Ayran (flaske)",
+        "priceMinor": 5000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

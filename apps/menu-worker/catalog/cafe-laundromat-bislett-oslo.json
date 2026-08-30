@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "cafe-laundromat-bislett-oslo",
+    "name": "Café Laundromat",
+    "websiteUrl": null,
+    "address": "Underhaugsveien 2, 0354 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.925400612505996,
+    "longitude": 10.730385741682442
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/cafelaundromat",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 28,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 23 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Loaded Fries",
+      "Mozzarella Sticks",
+      "Picante",
+      "Chicken Rustic",
+      "Spicy Burger 🌶",
+      "Chevre Salad 🌱",
+      "Beetrot Aioli",
+      "Cuban Sandwich"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Loaded Fries",
+        "priceMinor": 12800
+      },
+      {
+        "name": "Mozzarella Sticks",
+        "priceMinor": 11800
+      },
+      {
+        "name": "Picante",
+        "priceMinor": 23600
+      },
+      {
+        "name": "Chicken Rustic",
+        "priceMinor": 23600
+      },
+      {
+        "name": "Spicy Burger 🌶",
+        "priceMinor": 23800
+      },
+      {
+        "name": "Chevre Salad 🌱",
+        "priceMinor": 21200
+      },
+      {
+        "name": "Beetrot Aioli",
+        "priceMinor": 2100
+      },
+      {
+        "name": "Cuban Sandwich",
+        "priceMinor": 20600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

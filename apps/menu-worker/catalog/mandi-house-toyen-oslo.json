@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mandi-house-toyen-oslo",
+    "name": "Mandi House Restaurant",
+    "websiteUrl": null,
+    "address": "Tøyengata 29A, 0578 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.914179609456134,
+    "longitude": 10.768260416032925
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/677mandihouserestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 36,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 23 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hubla",
+      "Fatta Tamr",
+      "Vegetarrett Okra",
+      "Lam Okra",
+      "Zurbiyan Kjøtt",
+      "Muqalqal Biff m/ mandi ris",
+      "Mandi Fisk",
+      "Ayran Yoghurt Drikke"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hubla",
+        "priceMinor": 4000
+      },
+      {
+        "name": "Fatta Tamr",
+        "priceMinor": 10000
+      },
+      {
+        "name": "Vegetarrett Okra",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Lam Okra",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Zurbiyan Kjøtt",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Muqalqal Biff m/ mandi ris",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Mandi Fisk",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Ayran Yoghurt Drikke",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

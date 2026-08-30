@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "gohan-matcha-youngstorget-oslo",
+    "name": "Gohan Matcha",
+    "websiteUrl": null,
+    "address": "Youngstorget 2, 0181 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9145532904993,
+    "longitude": 10.749678422671124
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/613gohanmatcha",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 27,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 23 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Karaage 9 stk",
+      "Karaagedon",
+      "Vegandon",
+      "Mayonnaise",
+      "mayonaise",
+      "karage 6 stk",
+      "うなぎ丼 Unagidon",
+      "strawberry cheesecake"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Karaage 9 stk",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Karaagedon",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Vegandon",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Mayonnaise",
+        "priceMinor": 2500
+      },
+      {
+        "name": "mayonaise",
+        "priceMinor": 2500
+      },
+      {
+        "name": "karage 6 stk",
+        "priceMinor": 17900
+      },
+      {
+        "name": "うなぎ丼 Unagidon",
+        "priceMinor": 23900
+      },
+      {
+        "name": "strawberry cheesecake",
+        "priceMinor": 9900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

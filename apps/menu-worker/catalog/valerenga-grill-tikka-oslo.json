@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "valerenga-grill-tikka-oslo",
+    "name": "Vålerenga Grill & Tikka",
+    "websiteUrl": null,
+    "address": "Hedmarksgata 10A, 0658 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.910047409433155,
+    "longitude": 10.78828540965583
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/478valerengagrilltikka",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 21,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 23 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kyllingkebab i Rull",
+      "Pommes Frites",
+      "Kebab i rull",
+      "160g Hamburger tallerken",
+      "Chicken Tikka Pizza",
+      "Skinke spesial",
+      "Lam Curry",
+      "Nan m/ Hvitløk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kyllingkebab i Rull",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Pommes Frites",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Kebab i rull",
+        "priceMinor": 17500
+      },
+      {
+        "name": "160g Hamburger tallerken",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Chicken Tikka Pizza",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Skinke spesial",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Lam Curry",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Nan m/ Hvitløk",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

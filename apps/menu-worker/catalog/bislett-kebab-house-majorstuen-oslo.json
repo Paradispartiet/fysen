@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bislett-kebab-house-majorstuen-oslo",
+    "name": "Bislett Kebab House Majorstuen",
+    "websiteUrl": null,
+    "address": "Bogstadveien 62B, 0366 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92840100398757,
+    "longitude": 10.716320103651258
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/bislettkebabhousemajorstuen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 75,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 23 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Shawarma Combo",
+      "Fish i Pita",
+      "Mix Döner & Kyllingtallerken",
+      "Falafel i Rull",
+      "BKH Fish (Fish burger)",
+      "Kyllingballs med Ost og Chili (10 stk.)",
+      "Loaded Fries",
+      "Powerade Cherry 0,5L"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Shawarma Combo",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Fish i Pita",
+        "priceMinor": 12100
+      },
+      {
+        "name": "Mix Döner & Kyllingtallerken",
+        "priceMinor": 26100
+      },
+      {
+        "name": "Falafel i Rull",
+        "priceMinor": 13300
+      },
+      {
+        "name": "BKH Fish (Fish burger)",
+        "priceMinor": 12100
+      },
+      {
+        "name": "Kyllingballs med Ost og Chili (10 stk.)",
+        "priceMinor": 13300
+      },
+      {
+        "name": "Loaded Fries",
+        "priceMinor": 12100
+      },
+      {
+        "name": "Powerade Cherry 0,5L",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
