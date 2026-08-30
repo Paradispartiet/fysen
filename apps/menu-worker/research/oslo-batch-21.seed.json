@@ -5,99 +5,99 @@
   "restaurants": [
     {
       "version": 1,
-      "restaurant": {"slug": "focacceria-grunerlokka-oslo", "name": "Focacceria Grünerløkka", "websiteUrl": null, "address": "Markveien 34, 0554 Oslo", "city": "Oslo", "countryCode": "NO"},
-      "menuSource": {"url": "https://semeny.no/sted/653focacceriagrunerlokka", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
-      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+      "restaurant": {"slug": "flavour-oslo", "name": "Flavour", "websiteUrl": null, "address": "Heimdalsgata 37, 0578 Oslo", "city": "Oslo", "countryCode": "NO"},
+      "menuSource": {"url": "https://semeny.no/sted/flavour", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-30", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
       "version": 1,
-      "restaurant": {"slug": "lett-frogner-oslo", "name": "LETT Frogner", "websiteUrl": null, "address": "Frognerveien 8, 0257 Oslo", "city": "Oslo", "countryCode": "NO"},
-      "menuSource": {"url": "https://semeny.no/sted/lettfrogner", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
-      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+      "restaurant": {"slug": "rice-bowl-oslo", "name": "Rice Bowl", "websiteUrl": null, "address": "Kirkegata 20, 0153 Oslo", "city": "Oslo", "countryCode": "NO"},
+      "menuSource": {"url": "https://semeny.no/sted/ricebowl", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-30", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
       "version": 1,
-      "restaurant": {"slug": "jagger-grunerlokka-oslo", "name": "Jagger Grünerløkka", "websiteUrl": null, "address": "Thorvald Meyers gate 36, 0555 Oslo", "city": "Oslo", "countryCode": "NO"},
-      "menuSource": {"url": "https://semeny.no/sted/548jaggergrunerlokka", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
-      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+      "restaurant": {"slug": "kebab-house-sentrum-oslo", "name": "Kebab House Sentrum", "websiteUrl": null, "address": "Storgata 16, Oslo", "city": "Oslo", "countryCode": "NO"},
+      "menuSource": {"url": "https://semeny.no/sted/kebabhousesentrum", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-30", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
       "version": 1,
-      "restaurant": {"slug": "troys-burger-grunerlokka-oslo", "name": "Troys Burger Grünerløkka", "websiteUrl": null, "address": "Helgesens gate 16A, 0553 Oslo", "city": "Oslo", "countryCode": "NO"},
-      "menuSource": {"url": "https://semeny.no/sted/troysburgergrunerlokka", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
-      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+      "restaurant": {"slug": "falafel-station-oslo", "name": "Falafel Station", "websiteUrl": null, "address": "Brugata 1, 0186 Oslo", "city": "Oslo", "countryCode": "NO"},
+      "menuSource": {"url": "https://semeny.no/sted/falafelstation", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-30", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug": "peoples-oslo", "name": "People's", "websiteUrl": null, "address": "Arbeidersamfunnets Plass 1, 0181 Oslo", "city": "Oslo", "countryCode": "NO"},
+      "menuSource": {"url": "https://semeny.no/sted/peoples", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-30", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug": "thaisty-oslo", "name": "Thaisty", "websiteUrl": null, "address": "Grønland 12B, 0188 Oslo", "city": "Oslo", "countryCode": "NO"},
+      "menuSource": {"url": "https://semeny.no/sted/thaisty", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-30", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug": "registan-oslo", "name": "Registan", "websiteUrl": null, "address": "Grønlandsleiret 79, 0190 Oslo", "city": "Oslo", "countryCode": "NO"},
+      "menuSource": {"url": "https://semeny.no/sted/345registan", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-30", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug": "cafekontoret-oslo", "name": "Cafékontoret", "websiteUrl": null, "address": "Grønlandsleiret 46, 0190 Oslo", "city": "Oslo", "countryCode": "NO"},
+      "menuSource": {"url": "https://semeny.no/sted/357cafekontoret", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-30", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug": "listen-to-delhi-oslo", "name": "Listen to Delhi", "websiteUrl": null, "address": "Frognerveien 1A, 0257 Oslo", "city": "Oslo", "countryCode": "NO"},
+      "menuSource": {"url": "https://semeny.no/sted/listentodelhi", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-30", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug": "kverneriet-majorstuen-oslo", "name": "Kverneriet Majorstuen", "websiteUrl": null, "address": "Kirkeveien 64B, 0366 Oslo", "city": "Oslo", "countryCode": "NO"},
+      "menuSource": {"url": "https://semeny.no/sted/721kvernerietmajorstuen", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-30", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug": "kverneriet-solli-plass-oslo", "name": "Kverneriet Solli Plass", "websiteUrl": null, "address": "Henrik Ibsens gate 100, 0255 Oslo", "city": "Oslo", "countryCode": "NO"},
+      "menuSource": {"url": "https://semeny.no/sted/102kvernerietsolliplass", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-30", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug": "bistro-budapest-oslo", "name": "Bistro Budapest", "websiteUrl": null, "address": "Vulkan 5, 0178 Oslo", "city": "Oslo", "countryCode": "NO"},
+      "menuSource": {"url": "https://semeny.no/sted/bistrobudapest", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-30", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug": "new-anarkali-oslo", "name": "New Anarkali", "websiteUrl": null, "address": "Thorvald Meyers gate 76, 0550 Oslo", "city": "Oslo", "countryCode": "NO"},
+      "menuSource": {"url": "https://www.meny.semeny.no/sted/654newanarkali", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
+      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-30", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
     {
       "version": 1,
       "restaurant": {"slug": "subway-pilestredet-oslo", "name": "Subway Pilestredet", "websiteUrl": null, "address": "Pilestredet 41C, 0167 Oslo", "city": "Oslo", "countryCode": "NO"},
       "menuSource": {"url": "https://semeny.no/public/sted/subwaypilestredet", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
-      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {"slug": "handmade-grunerlokka-oslo", "name": "Handmade Grünerløkka", "websiteUrl": null, "address": "Trondheimsveien 8, 0560 Oslo", "city": "Oslo", "countryCode": "NO"},
-      "menuSource": {"url": "https://semeny.no/sted/handmadegrunerlokka", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
-      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {"slug": "east-kitchen-grunerlokka-oslo", "name": "East Kitchen Grünerløkka", "websiteUrl": null, "address": "Markveien 50A, 0554 Oslo", "city": "Oslo", "countryCode": "NO"},
-      "menuSource": {"url": "https://semeny.no/public/sted/eastkitchengrunerlokka", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
-      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {"slug": "olivia-hegdehaugsveien-oslo", "name": "Olivia Hegdehaugsveien", "websiteUrl": null, "address": "Hegdehaugsveien 34, 0352 Oslo", "city": "Oslo", "countryCode": "NO"},
-      "menuSource": {"url": "https://semeny.no/sted/513oliviahegdehaugsveien", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
-      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {"slug": "sumo-hegdehaugsveien-oslo", "name": "Sumo Hegdehaugsveien", "websiteUrl": null, "address": "Hegdehaugsveien 31, 0352 Oslo", "city": "Oslo", "countryCode": "NO"},
-      "menuSource": {"url": "https://www.meny.semeny.no/public/sted/97sumohegdehaugsveien", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
-      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {"slug": "limon-hegdehaugsveien-oslo", "name": "Limón Hegdehaugsveien", "websiteUrl": null, "address": "Hegdehaugsveien 27, 0352 Oslo", "city": "Oslo", "countryCode": "NO"},
-      "menuSource": {"url": "https://semeny.no/sted/limonhegdehaugsveien", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
-      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {"slug": "el-camino-bogstadveien-oslo", "name": "El Camino Bogstadveien", "websiteUrl": null, "address": "Bogstadveien 20, 0355 Oslo", "city": "Oslo", "countryCode": "NO"},
-      "menuSource": {"url": "https://semeny.no/sted/730elcaminobogstadveien", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
-      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {"slug": "pacific-poke-markveien-oslo", "name": "Pacific Poke Markveien", "websiteUrl": null, "address": "Markveien 50, 0554 Oslo", "city": "Oslo", "countryCode": "NO"},
-      "menuSource": {"url": "https://www.meny.semeny.no/sted/98pacificpokemarkveien", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
-      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {"slug": "sabrura-markveien-oslo", "name": "Sabrura Markveien", "websiteUrl": null, "address": "Markveien 67A, 0550 Oslo", "city": "Oslo", "countryCode": "NO"},
-      "menuSource": {"url": "https://semeny.no/sted/545sabruramarkveien", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
-      "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {"slug": "fly-chicken-kirkeveien-oslo", "name": "Fly Chicken Kirkeveien", "websiteUrl": null, "address": "Kirkeveien 43, 0360 Oslo", "city": "Oslo", "countryCode": "NO"},
-      "menuSource": {"url": "https://semeny.no/sted/flychickenkirkeveien", "sourceType": "html", "fetchMode": "http", "userAgent": "FysenMenuBot/0.1", "checkIntervalMinutes": 720},
       "verification": {"hours": {"status": "unverified", "checkedAt": "2026-08-29", "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
       "actions": []
     },
