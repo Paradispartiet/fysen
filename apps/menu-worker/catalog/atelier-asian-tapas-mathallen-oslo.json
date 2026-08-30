@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "atelier-asian-tapas-mathallen-oslo",
+    "name": "Atelier Asian Tapas",
+    "websiteUrl": null,
+    "address": "Vulkan 5, 0178 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92225253860743,
+    "longitude": 10.751749415749577
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/atelierasiantapas",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 74,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Salte Edamamebønner",
+      "Hjortefilet",
+      "Hoành thánh chiên (6 stk)",
+      "Pommes Frites",
+      "Mix Wok",
+      "Vegetar À la Atelier",
+      "Dirty Fried Chicken Wings (5 stk) med pommes frites",
+      "Bánh mì thịt bò kho"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Salte Edamamebønner",
+        "priceMinor": 11200
+      },
+      {
+        "name": "Hjortefilet",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Hoành thánh chiên (6 stk)",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Pommes Frites",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Mix Wok",
+        "priceMinor": 37200
+      },
+      {
+        "name": "Vegetar À la Atelier",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Dirty Fried Chicken Wings (5 stk) med pommes frites",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Bánh mì thịt bò kho",
+        "priceMinor": 19000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

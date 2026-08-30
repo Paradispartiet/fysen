@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "egon-byporten-oslo",
+    "name": "Egon Byporten",
+    "websiteUrl": null,
+    "address": "Jernbanetorget 6, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.911771086559426,
+    "longitude": 10.7515529777059
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/539egonbyporten",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 129,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Engelsk Frokost",
+      "Philly Steak Sandwich",
+      "Diablo",
+      "Kyllingconfit",
+      "Golden State Burger",
+      "Fløtegratinerte Poteter",
+      "Chipotleaioli",
+      "Creme Brulee"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Engelsk Frokost",
+        "priceMinor": 25600
+      },
+      {
+        "name": "Philly Steak Sandwich",
+        "priceMinor": 31100
+      },
+      {
+        "name": "Diablo",
+        "priceMinor": 39100
+      },
+      {
+        "name": "Kyllingconfit",
+        "priceMinor": 26400
+      },
+      {
+        "name": "Golden State Burger",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Fløtegratinerte Poteter",
+        "priceMinor": 6300
+      },
+      {
+        "name": "Chipotleaioli",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Creme Brulee",
+        "priceMinor": 13500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizza-pancetta-bjolsen-oslo",
+    "name": "Pizza Pancetta Bjølsen",
+    "websiteUrl": null,
+    "address": "Bentsebrugata 31B, 0469 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93931089632432,
+    "longitude": 10.759449332983484
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/556pizzapancettabjolsen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 56,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita [Medium]",
+      "Vichingo [Medium]",
+      "Bari [Medium]",
+      "Velg Selv [Medium]",
+      "Quattro Formaggi [Medium]",
+      "Verona [Medium]",
+      "Calzone Vegetar [Medium]",
+      "Solo 0,5l [Medium]"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita [Medium]",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Vichingo [Medium]",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Bari [Medium]",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Velg Selv [Medium]",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Quattro Formaggi [Medium]",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Verona [Medium]",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Calzone Vegetar [Medium]",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Solo 0,5l [Medium]",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
