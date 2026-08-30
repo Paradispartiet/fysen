@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "cartels-solli-plass-oslo",
+    "name": "Cartel's Solli Plass",
+    "websiteUrl": null,
+    "address": "Henrik Ibsens gate 90, 0255 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91457328585731,
+    "longitude": 10.719421203157822
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/cartelssolliplass",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Cheese Empenada",
+      "Coxinhas",
+      "Mørke Ostekakekuler",
+      "Latinske Bakte Poteter",
+      "Pico De Gallo",
+      "Diablo Saus",
+      "Sylteagurk",
+      "Orju"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Cheese Empenada",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Coxinhas",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Mørke Ostekakekuler",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Latinske Bakte Poteter",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Pico De Gallo",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Diablo Saus",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Sylteagurk",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Orju",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

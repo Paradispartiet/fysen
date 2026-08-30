@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "subway-pilestredet-oslo",
+    "name": "Subway Pilestredet",
+    "websiteUrl": null,
+    "address": "Pilestredet 41C, 0166 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.920095779470415,
+    "longitude": 10.73431349476613
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/subwaypilestredet",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 97,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Footlong Cookie",
+      "Spicy Vegan Meal Deal, 30cm",
+      "Italian B.M.T Meal Deal, 15cm",
+      "Kalkun & Skinke, 30cm",
+      "B.L.T., 15cm",
+      "The Captain, 30 cm",
+      "Caesar Salad",
+      "Vann, Stor"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Footlong Cookie",
+        "priceMinor": 8300
+      },
+      {
+        "name": "Spicy Vegan Meal Deal, 30cm",
+        "priceMinor": 20700
+      },
+      {
+        "name": "Italian B.M.T Meal Deal, 15cm",
+        "priceMinor": 14400
+      },
+      {
+        "name": "Kalkun & Skinke, 30cm",
+        "priceMinor": 14900
+      },
+      {
+        "name": "B.L.T., 15cm",
+        "priceMinor": 8600
+      },
+      {
+        "name": "The Captain, 30 cm",
+        "priceMinor": 16100
+      },
+      {
+        "name": "Caesar Salad",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Vann, Stor",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

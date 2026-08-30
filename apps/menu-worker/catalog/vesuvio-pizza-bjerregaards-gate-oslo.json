@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "vesuvio-pizza-bjerregaards-gate-oslo",
+    "name": "Vesuvio Pizza Bjerregaards gate",
+    "websiteUrl": null,
+    "address": "Bjerregaards gate 29B, 0172 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92502399584801,
+    "longitude": 10.745738894256649
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/vesuviopizza",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 32,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Parma",
+      "Delizia",
+      "Blandet Kjøtt",
+      "Bianca Di Terra",
+      "Cacciatora",
+      "Eple & Solbær (Bønder i Byen)",
+      "Limonata Øko"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Parma",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Delizia",
+        "priceMinor": 26000
+      },
+      {
+        "name": "Blandet Kjøtt",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Bianca Di Terra",
+        "priceMinor": 26000
+      },
+      {
+        "name": "Cacciatora",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Eple & Solbær (Bønder i Byen)",
+        "priceMinor": 5400
+      },
+      {
+        "name": "Limonata Øko",
+        "priceMinor": 5800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

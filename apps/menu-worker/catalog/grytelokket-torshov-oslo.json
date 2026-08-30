@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "grytelokket-torshov-oslo",
+    "name": "Grytelokket Torshov",
+    "websiteUrl": null,
+    "address": "Vogts gate 39, 0474 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.933256761133755,
+    "longitude": 10.763531159728682
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/grytelokkettorshov",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 45,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "BigBurger",
+      "BigBurger Middag",
+      "BigMeal Dobbel BigBurger",
+      "Falafel Rull",
+      "Potetbåter",
+      "Classic Margarita",
+      "Grytelokket Deluxe",
+      "Kebab dressing svak"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "BigBurger",
+        "priceMinor": 12800
+      },
+      {
+        "name": "BigBurger Middag",
+        "priceMinor": 18800
+      },
+      {
+        "name": "BigMeal Dobbel BigBurger",
+        "priceMinor": 30700
+      },
+      {
+        "name": "Falafel Rull",
+        "priceMinor": 14200
+      },
+      {
+        "name": "Potetbåter",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Classic Margarita",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Grytelokket Deluxe",
+        "priceMinor": 32700
+      },
+      {
+        "name": "Kebab dressing svak",
+        "priceMinor": 3000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

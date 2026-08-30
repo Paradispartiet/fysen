@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mamma-pizza-vika-oslo",
+    "name": "Mamma Pizza Vika",
+    "websiteUrl": null,
+    "address": "Ruseløkkveien 26, 0251 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91255854088901,
+    "longitude": 10.726927133845678
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/mammapizzavika",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 51,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tagliere Mamma",
+      "Madreperla",
+      "Garganelli Mediterraneo",
+      "Formaggi",
+      "‘Nduja",
+      "Tiramisu",
+      "Insalata Mediterranea",
+      "Non-alcoholic Carlsberg"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Tagliere Mamma",
+        "priceMinor": 35000
+      },
+      {
+        "name": "Madreperla",
+        "priceMinor": 33500
+      },
+      {
+        "name": "Garganelli Mediterraneo",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Formaggi",
+        "priceMinor": 27500
+      },
+      {
+        "name": "‘Nduja",
+        "priceMinor": 28700
+      },
+      {
+        "name": "Tiramisu",
+        "priceMinor": 16700
+      },
+      {
+        "name": "Insalata Mediterranea",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Non-alcoholic Carlsberg",
+        "priceMinor": 8900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
