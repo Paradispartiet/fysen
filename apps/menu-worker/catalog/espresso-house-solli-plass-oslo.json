@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "espresso-house-solli-plass-oslo",
+    "name": "Espresso House Solli Plass",
+    "websiteUrl": null,
+    "address": "Henrik Ibsens gate 90, 0255 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91457328585731,
+    "longitude": 10.719421203157822
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/espressohousesolliplass",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 96,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Ost og Kalkunskinke Toast",
+      "Surdeigsrundstykke Ost & Kalkunskinke",
+      "Lys Scone",
+      "Karamell cookie",
+      "YT Islatte",
+      "Energy Booster Pomegranate-Rhubarb",
+      "Ginger Sparkling Fruit Drink",
+      "Bagel Bundle Deluxe"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Ost og Kalkunskinke Toast",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Surdeigsrundstykke Ost & Kalkunskinke",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Lys Scone",
+        "priceMinor": 5400
+      },
+      {
+        "name": "Karamell cookie",
+        "priceMinor": 4900
+      },
+      {
+        "name": "YT Islatte",
+        "priceMinor": 7600
+      },
+      {
+        "name": "Energy Booster Pomegranate-Rhubarb",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Ginger Sparkling Fruit Drink",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Bagel Bundle Deluxe",
+        "priceMinor": 42900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

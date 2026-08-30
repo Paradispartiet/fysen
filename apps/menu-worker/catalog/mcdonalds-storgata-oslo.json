@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mcdonalds-storgata-oslo",
+    "name": "McDonald's Storgata",
+    "websiteUrl": null,
+    "address": "Storgata 15, 0155 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91351287987298,
+    "longitude": 10.74957000176913
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/mcdonaldsstorgata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 113,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "McMuffin Beef & Egg",
+      "Big Mac Meny",
+      "McCrispy Meny",
+      "Veggie Salsa Meny",
+      "Happy Meal Vegetar",
+      "Sennep Dip",
+      "Kanelbolle",
+      "Makron Sjokolade"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "McMuffin Beef & Egg",
+        "priceMinor": 5200
+      },
+      {
+        "name": "Big Mac Meny",
+        "priceMinor": 13600
+      },
+      {
+        "name": "McCrispy Meny",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Veggie Salsa Meny",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Happy Meal Vegetar",
+        "priceMinor": 7100
+      },
+      {
+        "name": "Sennep Dip",
+        "priceMinor": 1500
+      },
+      {
+        "name": "Kanelbolle",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Makron Sjokolade",
+        "priceMinor": 1600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

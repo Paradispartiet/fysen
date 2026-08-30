@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "burger-king-storgata-oslo",
+    "name": "Burger King Storgata",
+    "websiteUrl": null,
+    "address": "Storgata 14-18, 0184 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91346841631464,
+    "longitude": 10.750551379943996
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/514burgerkingstorgata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 112,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Northugs Gourmet Grill",
+      "Gourmet Chicken Bacon Cheese",
+      "X-Long Chili Cheese Meny",
+      "Chicken Nuggets 6 Biter Meny",
+      "WHOPPER®",
+      "Chimichurri db Gourmet",
+      "Chili Cheese",
+      "st Pannekaker"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Northugs Gourmet Grill",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Gourmet Chicken Bacon Cheese",
+        "priceMinor": 23500
+      },
+      {
+        "name": "X-Long Chili Cheese Meny",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Chicken Nuggets 6 Biter Meny",
+        "priceMinor": 14200
+      },
+      {
+        "name": "WHOPPER®",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Chimichurri db Gourmet",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Chili Cheese",
+        "priceMinor": 5900
+      },
+      {
+        "name": "st Pannekaker",
+        "priceMinor": 1900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

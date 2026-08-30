@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "de-mi-tierra-mathallen-oslo",
+    "name": "De Mi Tierra Mathallen",
+    "websiteUrl": null,
+    "address": "Vulkan 5, 0178 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92225253860743,
+    "longitude": 10.751749415749577
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/demitierramathallen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "x Empanadas + Dip (Serves 3 people)",
+      "x Empanadas + Fries + Dip",
+      "x Empanadas + 2 Dips (Serves 4 people)",
+      "Chimichurri (oregano-parsley-garlic)",
+      "Salsa Criolla (Onion-Coriander-Tomato)",
+      "Chimichurri Mayonnaise (Oregano-Parsley-Mayonnaise)",
+      "Pure Kaktai Organisk Kaktusvann med Ingefær",
+      "Pure Kaktai Organisk Kaktusvann med Jalapeño og Lime"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "x Empanadas + Dip (Serves 3 people)",
+        "priceMinor": 56610
+      },
+      {
+        "name": "x Empanadas + Fries + Dip",
+        "priceMinor": 23900
+      },
+      {
+        "name": "x Empanadas + 2 Dips (Serves 4 people)",
+        "priceMinor": 84000
+      },
+      {
+        "name": "Chimichurri (oregano-parsley-garlic)",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Salsa Criolla (Onion-Coriander-Tomato)",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Chimichurri Mayonnaise (Oregano-Parsley-Mayonnaise)",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Pure Kaktai Organisk Kaktusvann med Ingefær",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Pure Kaktai Organisk Kaktusvann med Jalapeño og Lime",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

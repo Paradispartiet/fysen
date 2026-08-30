@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bistro-budapest-oslo",
+    "name": "Bistro Budapest",
+    "websiteUrl": null,
+    "address": "Vulkan 5, 0178 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92225253860743,
+    "longitude": 10.751749415749577
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/bistrobudapest",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 58,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "LANGOS PULLED PORK",
+      "LANGOS BACON",
+      "VEGETAR LANGOS",
+      "CHICKEN STEW with mashed potatoes",
+      "BBQ PULLED BEEF BURGER",
+      "Homemade Jalapeno Sauce",
+      "Brooklyn Special Effect / alcohol free beer",
+      "Bestikk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "LANGOS PULLED PORK",
+        "priceMinor": 20900
+      },
+      {
+        "name": "LANGOS BACON",
+        "priceMinor": 19900
+      },
+      {
+        "name": "VEGETAR LANGOS",
+        "priceMinor": 19900
+      },
+      {
+        "name": "CHICKEN STEW with mashed potatoes",
+        "priceMinor": 31900
+      },
+      {
+        "name": "BBQ PULLED BEEF BURGER",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Homemade Jalapeno Sauce",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Brooklyn Special Effect / alcohol free beer",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Bestikk",
+        "priceMinor": 600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

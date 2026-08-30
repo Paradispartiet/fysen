@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "breddos-tacos-mathallen-oslo",
+    "name": "Breddos Tacos Mathallen",
+    "websiteUrl": null,
+    "address": "Vulkan 5, 0178 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92225253860743,
+    "longitude": 10.751749415749577
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/624breddostacosmathallen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Beef Short Rib & Oxtail Birria Burrito",
+      "Pork Al Pastor Burrito",
+      "Chicken Tinga Bowl",
+      "Quesadilla w/ Mushroom Guisado 🌱 (V)",
+      "Quesadilla w/ Chicken tinga",
+      "Salsa Roja",
+      "Habanero Salsa🌶🌶",
+      "Askim Eplemost"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Beef Short Rib & Oxtail Birria Burrito",
+        "priceMinor": 20500
+      },
+      {
+        "name": "Pork Al Pastor Burrito",
+        "priceMinor": 20500
+      },
+      {
+        "name": "Chicken Tinga Bowl",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Quesadilla w/ Mushroom Guisado 🌱 (V)",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Quesadilla w/ Chicken tinga",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Salsa Roja",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Habanero Salsa🌶🌶",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Askim Eplemost",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

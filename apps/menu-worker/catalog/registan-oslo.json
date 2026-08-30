@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "registan-oslo",
+    "name": "Registan",
+    "websiteUrl": null,
+    "address": "Grønlandsleiret 79, 0190 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90918616620299,
+    "longitude": 10.768239831915157
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/345registan",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 37,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Biff Somsa",
+      "Cæsar Salat",
+      "Kylling Qazon Kebab",
+      "Lagman",
+      "Chili Olje",
+      "Spinat Kake",
+      "Natakhtari Estragon",
+      "kuli Jordbær&Eple"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Biff Somsa",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Cæsar Salat",
+        "priceMinor": 19400
+      },
+      {
+        "name": "Kylling Qazon Kebab",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Lagman",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Chili Olje",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Spinat Kake",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Natakhtari Estragon",
+        "priceMinor": 6400
+      },
+      {
+        "name": "kuli Jordbær&Eple",
+        "priceMinor": 4000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

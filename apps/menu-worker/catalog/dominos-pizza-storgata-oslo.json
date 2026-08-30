@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dominos-pizza-storgata-oslo",
+    "name": "Domino's Pizza Storgata",
+    "websiteUrl": null,
+    "address": "Kirkeristen 6, 0155 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91299778606158,
+    "longitude": 10.74736979969005
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/dominospizzastorgata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 78,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 21 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Stor Deal",
+      "Pepperoni & Ananas",
+      "Spicy Chicken 🌶️",
+      "Ben & Jerry's Half Baked 465ml",
+      "BBQ Sauce 80g",
+      "Breadsticks",
+      "Cookies 2stk - NYHET!",
+      "Villa 1.5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Stor Deal",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Pepperoni & Ananas",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Spicy Chicken 🌶️",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Ben & Jerry's Half Baked 465ml",
+        "priceMinor": 10900
+      },
+      {
+        "name": "BBQ Sauce 80g",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Breadsticks",
+        "priceMinor": 8700
+      },
+      {
+        "name": "Cookies 2stk - NYHET!",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Villa 1.5l",
+        "priceMinor": 5800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
