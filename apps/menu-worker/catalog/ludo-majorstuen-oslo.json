@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ludo-majorstuen-oslo",
+    "name": "Ludo",
+    "websiteUrl": null,
+    "address": "Vibes gate 11A, 0356 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92665798810513,
+    "longitude": 10.72394183475458
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/317ludo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 23,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 22 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Inferno🌶",
+      "Meat lover 2.0",
+      "Focaccia med aioli",
+      "Leonardo 2.0",
+      "Carbonara",
+      "Mortazza",
+      "up zero"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Inferno🌶",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Meat lover 2.0",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Focaccia med aioli",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Leonardo 2.0",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Carbonara",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Mortazza",
+        "priceMinor": 30900
+      },
+      {
+        "name": "up zero",
+        "priceMinor": 6500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

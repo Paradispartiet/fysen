@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "boom-sushi-trondheimsveien-oslo",
+    "name": "Boom Sushi",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 21, 0560 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91977532381437,
+    "longitude": 10.766232544738205
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/313boomsushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 71,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 22 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Sushi boom burrito",
+      "Tempura Salat",
+      "Asparges Maki 🌱",
+      "Lakserogn Maki",
+      "Tempura Scampi Maki",
+      "Volcano Maki",
+      "Scampi Nigiri",
+      "San Pellegrino Brus Aranciata, 330 ml"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Sushi boom burrito",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Tempura Salat",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Asparges Maki 🌱",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Lakserogn Maki",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Tempura Scampi Maki",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Volcano Maki",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Scampi Nigiri",
+        "priceMinor": 2700
+      },
+      {
+        "name": "San Pellegrino Brus Aranciata, 330 ml",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
