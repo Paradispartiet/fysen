@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sonnys-kebab-grill-sentrum-oslo",
+    "name": "Sonnys Kebab & Grill",
+    "websiteUrl": null,
+    "address": "Langes gate 5, 0165 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91869415113883,
+    "longitude": 10.740147147301675
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/sonnyskebabgrill",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 75,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 23 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Håkon",
+      "Margherita",
+      "Baconburger m/ Ost",
+      "Snadderkebab Pita",
+      "Kylling Kebab Rull",
+      "Veggis Crispy Kebab Rull",
+      "Mix-kebabtallerken",
+      "Solo (Stor) 1,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Håkon",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Margherita",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Baconburger m/ Ost",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Snadderkebab Pita",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Kylling Kebab Rull",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Veggis Crispy Kebab Rull",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Mix-kebabtallerken",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Solo (Stor) 1,5l",
+        "priceMinor": 6900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

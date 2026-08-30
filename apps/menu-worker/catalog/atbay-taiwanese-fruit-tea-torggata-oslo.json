@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "atbay-taiwanese-fruit-tea-torggata-oslo",
+    "name": "AtBay Taiwanese Fruit Tea",
+    "websiteUrl": null,
+    "address": "Torggata 7, 0181 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9137633387488,
+    "longitude": 10.747615730723611
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/665atbaytaiwanesefruittea",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 9,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 23 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Brown Sugar Signature w/ Ceremonial Matcha",
+      "Taiwanese Winter Melon",
+      "Taiwanese Winter Melon w/ foam topping",
+      "Passion Fruit w/ Ceremonial Matcha",
+      "Mango w/ Ceremonial Matcha",
+      "Ground Taro",
+      "Passion Fruit and Mango w/ Kyoto Ground Hōjicha",
+      "Mango & Lychee w/ Ground Hojicha"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Brown Sugar Signature w/ Ceremonial Matcha",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Taiwanese Winter Melon",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Taiwanese Winter Melon w/ foam topping",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Passion Fruit w/ Ceremonial Matcha",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Mango w/ Ceremonial Matcha",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Ground Taro",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Passion Fruit and Mango w/ Kyoto Ground Hōjicha",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Mango & Lychee w/ Ground Hojicha",
+        "priceMinor": 8900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

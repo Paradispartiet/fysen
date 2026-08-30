@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "creamy-toyen-oslo",
+    "name": "Creamy Tøyen",
+    "websiteUrl": null,
+    "address": "Tøyengata 13, 0190 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91320721937243,
+    "longitude": 10.765758344718655
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/56creamy",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 37,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 23 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bueno Waffle + Creamy Energi Drikke Meal Deal",
+      "The Nutella Mess",
+      "Melted Belgian White Chocolate Indulgence",
+      "Crepe au Oreo",
+      "Crepe de Bueno",
+      "Chocolate Madness",
+      "Smarties All The Way",
+      "Creamy Energi Drikke"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bueno Waffle + Creamy Energi Drikke Meal Deal",
+        "priceMinor": 21900
+      },
+      {
+        "name": "The Nutella Mess",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Melted Belgian White Chocolate Indulgence",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Crepe au Oreo",
+        "priceMinor": 15400
+      },
+      {
+        "name": "Crepe de Bueno",
+        "priceMinor": 17400
+      },
+      {
+        "name": "Chocolate Madness",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Smarties All The Way",
+        "priceMinor": 15400
+      },
+      {
+        "name": "Creamy Energi Drikke",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

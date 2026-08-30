@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mimi-sushi-st-hanshaugen-oslo",
+    "name": "Mimi Sushi",
+    "websiteUrl": null,
+    "address": "Ullevålsveien 1, 0165 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.918071080680576,
+    "longitude": 10.743799498989171
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/656mimisushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 75,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 23 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kylling Vårruller",
+      "STOR FAMILIE PAKKE (FOR 4 PERSONER) - 72 Biter",
+      "SPICY TUNA",
+      "CRISPY SCAMPI",
+      "TOBIKO NIGIRI",
+      "MANGO MAKI",
+      "LAKS FUTO MAKI",
+      "SOYASAUS"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kylling Vårruller",
+        "priceMinor": 11900
+      },
+      {
+        "name": "STOR FAMILIE PAKKE (FOR 4 PERSONER) - 72 Biter",
+        "priceMinor": 149900
+      },
+      {
+        "name": "SPICY TUNA",
+        "priceMinor": 13900
+      },
+      {
+        "name": "CRISPY SCAMPI",
+        "priceMinor": 13900
+      },
+      {
+        "name": "TOBIKO NIGIRI",
+        "priceMinor": 5400
+      },
+      {
+        "name": "MANGO MAKI",
+        "priceMinor": 24900
+      },
+      {
+        "name": "LAKS FUTO MAKI",
+        "priceMinor": 21900
+      },
+      {
+        "name": "SOYASAUS",
+        "priceMinor": 2900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

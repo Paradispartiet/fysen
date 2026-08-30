@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "hoa-sen-hammersborggata-oslo",
+    "name": "Hoa Sen",
+    "websiteUrl": null,
+    "address": "Hammersborggata 9, 0181 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91491309077352,
+    "longitude": 10.752274817113525
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/339hoasen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 61,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-30",
+      "note": "Batch 23 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Poke Bowl",
+      "Hoa Sen Spesial",
+      "Hoa Sen Crispy Kylling",
+      "Tuna Spesial Maki",
+      "Tunfisk",
+      "Vårrull",
+      "Crispy And",
+      "Cafe Sua Da"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Poke Bowl",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Hoa Sen Spesial",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Hoa Sen Crispy Kylling",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Tuna Spesial Maki",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Tunfisk",
+        "priceMinor": 3700
+      },
+      {
+        "name": "Vårrull",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Crispy And",
+        "priceMinor": 34900
+      },
+      {
+        "name": "Cafe Sua Da",
+        "priceMinor": 8900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
