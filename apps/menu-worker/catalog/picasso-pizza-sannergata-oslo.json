@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "picasso-pizza-sannergata-oslo",
+    "name": "Picasso Pizza",
+    "websiteUrl": null,
+    "address": "Sannergata 30B, 0557 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9288605268357,
+    "longitude": 10.765194555428849
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/373picassopizza",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 101,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 29 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Burrata heaven",
+      "Hot Ginger Chicken Chili (Medium)",
+      "Napoli (Medium)",
+      "Cambiration Miami (Stor)",
+      "Schmell`n inn (Stor)",
+      "Vegetarburger",
+      "Vegetar Falafel I Pita",
+      "Mozell"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Burrata heaven",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Hot Ginger Chicken Chili (Medium)",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Napoli (Medium)",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Cambiration Miami (Stor)",
+        "priceMinor": 31900
+      },
+      {
+        "name": "Schmell`n inn (Stor)",
+        "priceMinor": 31900
+      },
+      {
+        "name": "Vegetarburger",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Vegetar Falafel I Pita",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Mozell",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

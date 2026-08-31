@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "umami-sushi-rodelokka-oslo",
+    "name": "Umami Sushi",
+    "websiteUrl": null,
+    "address": "Langgata 2A, 0566 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9239798303477,
+    "longitude": 10.768155733761917
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/276umamisushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 79,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 29 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Crazy Laks Maki",
+      "Laks Burger",
+      "Grillet Laks",
+      "Medium Umami",
+      "Biter Rødskjell Nigiri",
+      "Scampi Maki",
+      "Avokado Maki 🌱",
+      "Chiliolje"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Crazy Laks Maki",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Laks Burger",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Grillet Laks",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Medium Umami",
+        "priceMinor": 13100
+      },
+      {
+        "name": "Biter Rødskjell Nigiri",
+        "priceMinor": 4000
+      },
+      {
+        "name": "Scampi Maki",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Avokado Maki 🌱",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Chiliolje",
+        "priceMinor": 1000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

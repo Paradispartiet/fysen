@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "happy-sushi-rosteds-gate-oslo",
+    "name": "Happy Sushi",
+    "websiteUrl": null,
+    "address": "Rosteds gate 16B, 0178 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.919403997484636,
+    "longitude": 10.748270124291682
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/happysushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 60,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 29 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vegetar Vårrull",
+      "Bento 2",
+      "Tempura Maki",
+      "Tofu Maki",
+      "Happy Maki Kamskjell",
+      "Chopsuey",
+      "Laks Chilipickles",
+      "Futo Maki"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vegetar Vårrull",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Bento 2",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Tempura Maki",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Tofu Maki",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Happy Maki Kamskjell",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Chopsuey",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Laks Chilipickles",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Futo Maki",
+        "priceMinor": 16900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

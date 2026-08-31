@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "happy-time-grunerlokka-oslo",
+    "name": "Happy Time",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 76C, 0550 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.919125898128875,
+    "longitude": 10.759722249592533
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/happytime",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 59,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 29 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebabtallerken & Coca Cola uten sukker",
+      "Casablanca",
+      "Norge",
+      "Innbakt kebabpizza",
+      "Hamburger med Ost",
+      "Kyllingtallerken",
+      "Pommes frites med kebabsaus",
+      "Imsdal"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebabtallerken & Coca Cola uten sukker",
+        "priceMinor": 26000
+      },
+      {
+        "name": "Casablanca",
+        "priceMinor": 37500
+      },
+      {
+        "name": "Norge",
+        "priceMinor": 39000
+      },
+      {
+        "name": "Innbakt kebabpizza",
+        "priceMinor": 37500
+      },
+      {
+        "name": "Hamburger med Ost",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Kyllingtallerken",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Pommes frites med kebabsaus",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Imsdal",
+        "priceMinor": 4000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

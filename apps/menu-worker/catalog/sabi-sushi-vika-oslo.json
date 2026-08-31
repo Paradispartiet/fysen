@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sabi-sushi-vika-oslo",
+    "name": "Sabi Sushi Vika",
+    "websiteUrl": null,
+    "address": "Ruseløkkveien 3, 0251 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91424251675373,
+    "longitude": 10.728985668783727
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/sabi-sushi-vika",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 39,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 29 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bento Box Deal",
+      "Sabi Pokebowl",
+      "Laks vårløk",
+      "Sabi Vårruller Wagyu",
+      "Laks tempura mango",
+      "Shiro",
+      "Spicy laks special",
+      "Tuna avokado kimchi"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bento Box Deal",
+        "priceMinor": 33000
+      },
+      {
+        "name": "Sabi Pokebowl",
+        "priceMinor": 31000
+      },
+      {
+        "name": "Laks vårløk",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Sabi Vårruller Wagyu",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Laks tempura mango",
+        "priceMinor": 25300
+      },
+      {
+        "name": "Shiro",
+        "priceMinor": 118400
+      },
+      {
+        "name": "Spicy laks special",
+        "priceMinor": 25300
+      },
+      {
+        "name": "Tuna avokado kimchi",
+        "priceMinor": 20400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

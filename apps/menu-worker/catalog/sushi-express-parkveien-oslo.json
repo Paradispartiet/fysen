@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sushi-express-parkveien-oslo",
+    "name": "Sushi Express",
+    "websiteUrl": null,
+    "address": "Parkveien 6A, 0350 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.921206462042825,
+    "longitude": 10.730099359674934
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/89sushiexpress",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 93,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 29 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Express Vårrull m/ And",
+      "Edamamebønner",
+      "Sushi Stor",
+      "Kamskjell Philadelphia Maki",
+      "Futo Vegetar - 13 Biter",
+      "Avokado Nigiri",
+      "Kveite Sashimi",
+      "Sweet Chilisaus"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Express Vårrull m/ And",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Edamamebønner",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Sushi Stor",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Kamskjell Philadelphia Maki",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Futo Vegetar - 13 Biter",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Avokado Nigiri",
+        "priceMinor": 3300
+      },
+      {
+        "name": "Kveite Sashimi",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Sweet Chilisaus",
+        "priceMinor": 2500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

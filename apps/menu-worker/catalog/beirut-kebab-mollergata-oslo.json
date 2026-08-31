@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "beirut-kebab-mollergata-oslo",
+    "name": "Beirut Kebab",
+    "websiteUrl": null,
+    "address": "Møllergata 8, 0179 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91418119883677,
+    "longitude": 10.746582416476732
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/beirutkebab",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 28,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 29 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebab i Pita/Rull",
+      "Shish Kebab Rull",
+      "Bifftalerken/ snadder",
+      "Hamburger",
+      "Rømmedressing",
+      "Kebab Pizza",
+      "Margherita Pizza",
+      "Mix Pizza"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebab i Pita/Rull",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Shish Kebab Rull",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Bifftalerken/ snadder",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Hamburger",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Rømmedressing",
+        "priceMinor": 2000
+      },
+      {
+        "name": "Kebab Pizza",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Margherita Pizza",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Mix Pizza",
+        "priceMinor": 24000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
