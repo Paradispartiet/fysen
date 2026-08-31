@@ -344,15 +344,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "uchi-grensen-oslo",
-        "name": "Uchi",
+        "slug": "the-cakery-kongens-gate-oslo",
+        "name": "The Cakery",
         "websiteUrl": null,
-        "address": "Grensen 20, 0180 Oslo",
+        "address": "Kongens gate 10E, 0153 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/619uchi",
+        "url": "https://semeny.no/sted/631thecakery",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
