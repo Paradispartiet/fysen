@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kinnara-storo-oslo",
+    "name": "Kinnara",
+    "websiteUrl": null,
+    "address": "Vitaminveien 24, 0483 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9468869875906,
+    "longitude": 10.771978944066428
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/382kinnara",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 41,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 29 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tempura Scampi",
+      "Tom Kha Gai",
+      "Moo Pad Gratiem Prik Thai",
+      "Keang Ped",
+      "Keng Ped Pat Yang",
+      "Pad Sukiyaki",
+      "Stekt Ris",
+      "7-up"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Tempura Scampi",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Tom Kha Gai",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Moo Pad Gratiem Prik Thai",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Keang Ped",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Keng Ped Pat Yang",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Pad Sukiyaki",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Stekt Ris",
+        "priceMinor": 13900
+      },
+      {
+        "name": "7-up",
+        "priceMinor": 5000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
