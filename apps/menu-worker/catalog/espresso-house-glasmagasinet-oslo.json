@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "espresso-house-glasmagasinet-oslo",
+    "name": "Espresso House Glasmagasinet",
+    "websiteUrl": null,
+    "address": "Stortorvet, 0155 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91266533589023,
+    "longitude": 10.746431229351575
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/espressohouseglasmagasinet",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 69,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Focaccia for 2",
+      "Bagel Bundle Deluxe",
+      "Muslibolle med Brunost",
+      "Sitronkake",
+      "YT Varm Sjokolade",
+      "Ismatcha Vanilje",
+      "Iste Jordbær & Sitron",
+      "Mozell Light"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Focaccia for 2",
+        "priceMinor": 39900
+      },
+      {
+        "name": "Bagel Bundle Deluxe",
+        "priceMinor": 42900
+      },
+      {
+        "name": "Muslibolle med Brunost",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Sitronkake",
+        "priceMinor": 4900
+      },
+      {
+        "name": "YT Varm Sjokolade",
+        "priceMinor": 7800
+      },
+      {
+        "name": "Ismatcha Vanilje",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Iste Jordbær & Sitron",
+        "priceMinor": 7400
+      },
+      {
+        "name": "Mozell Light",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

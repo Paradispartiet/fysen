@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ladegarden-kro-oslo",
+    "name": "Ladegården Kro",
+    "websiteUrl": null,
+    "address": "Oslo gate 13, 0192 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.906175969346684,
+    "longitude": 10.767673829543098
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/ladegardenkro",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 33,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Rekesmørbrød m/ Egg",
+      "Blandet Salat 🌱",
+      "Stekt Makrell",
+      "Eplekake",
+      "Grissini",
+      "Sparkling Ingefær",
+      "Skinka eller Pølsa",
+      "Bacon Cheeseburger"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Rekesmørbrød m/ Egg",
+        "priceMinor": 21800
+      },
+      {
+        "name": "Blandet Salat 🌱",
+        "priceMinor": 20500
+      },
+      {
+        "name": "Stekt Makrell",
+        "priceMinor": 34500
+      },
+      {
+        "name": "Eplekake",
+        "priceMinor": 9000
+      },
+      {
+        "name": "Grissini",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Sparkling Ingefær",
+        "priceMinor": 6800
+      },
+      {
+        "name": "Skinka eller Pølsa",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Bacon Cheeseburger",
+        "priceMinor": 25000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

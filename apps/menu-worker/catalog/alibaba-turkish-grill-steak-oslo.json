@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "alibaba-turkish-grill-steak-oslo",
+    "name": "Alibaba Turkish Grill & Steak",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 6A, 0560 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91918511328498,
+    "longitude": 10.76335683604881
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/612alibabaturkishgrillsteak",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 72,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Gulrot Trator",
+      "Kyllingvinger",
+      "Lamme Kotelett",
+      "Beyti Døner",
+      "Memili Stek",
+      "Kylling Kebab m/ Mozzarella",
+      "Ayran",
+      "Bestikk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Gulrot Trator",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Kyllingvinger",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Lamme Kotelett",
+        "priceMinor": 33900
+      },
+      {
+        "name": "Beyti Døner",
+        "priceMinor": 31900
+      },
+      {
+        "name": "Memili Stek",
+        "priceMinor": 54900
+      },
+      {
+        "name": "Kylling Kebab m/ Mozzarella",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Ayran",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Bestikk",
+        "priceMinor": 200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

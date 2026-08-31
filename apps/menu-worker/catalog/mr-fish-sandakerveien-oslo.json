@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mr-fish-sandakerveien-oslo",
+    "name": "Mr. Fish",
+    "websiteUrl": null,
+    "address": "Sandakerveien 22A, 0473 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93412331446413,
+    "longitude": 10.76159418656258
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/644mrfish",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 42,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Liten Sushi",
+      "Spicy Laks Maki",
+      "Kamskjell Maki",
+      "Rainbow Maki",
+      "Wakamesalat med Sesam",
+      "Aburi Nigiri Kveite",
+      "Scampi nigiri x 2",
+      "Hjemmelagde vårruller"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Liten Sushi",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Spicy Laks Maki",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Kamskjell Maki",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Rainbow Maki",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Wakamesalat med Sesam",
+        "priceMinor": 4000
+      },
+      {
+        "name": "Aburi Nigiri Kveite",
+        "priceMinor": 7000
+      },
+      {
+        "name": "Scampi nigiri x 2",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Hjemmelagde vårruller",
+        "priceMinor": 8500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

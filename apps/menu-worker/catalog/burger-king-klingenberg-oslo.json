@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "burger-king-klingenberg-oslo",
+    "name": "Burger King Klingenberg",
+    "websiteUrl": null,
+    "address": "Klingenberggata 5, 0161 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91360791283421,
+    "longitude": 10.732172099794877
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/burgerkingklingenberg",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 112,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Northugs Gourmet Grill Dobbel",
+      "Whopper Bacon Cheese Meal",
+      "Steakhouse Bacon King Meny",
+      "CC Wrap",
+      "Chili Mayo Long Chicken Meny",
+      "WHOPPER® Jr Cheese",
+      "Plant-Based Whopper",
+      "Sirup"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Northugs Gourmet Grill Dobbel",
+        "priceMinor": 20500
+      },
+      {
+        "name": "Whopper Bacon Cheese Meal",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Steakhouse Bacon King Meny",
+        "priceMinor": 23500
+      },
+      {
+        "name": "CC Wrap",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Chili Mayo Long Chicken Meny",
+        "priceMinor": 19900
+      },
+      {
+        "name": "WHOPPER® Jr Cheese",
+        "priceMinor": 7400
+      },
+      {
+        "name": "Plant-Based Whopper",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Sirup",
+        "priceMinor": 1700
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

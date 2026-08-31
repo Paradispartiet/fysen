@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "burger-king-majorstuen-oslo",
+    "name": "Burger King Majorstuen",
+    "websiteUrl": null,
+    "address": "Valkyriegata 11A, 0366 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.929070790036846,
+    "longitude": 10.717303091431473
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/717burgerkingmajorstuen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 115,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Northugs Gourmet Grill",
+      "Gourmet Chicken Bacon Cheese",
+      "Gourmet Grill Northug G.O.A.T",
+      "Chicken Nuggets 9 Biter Meny",
+      "Double WHOPPER®",
+      "Chimichurri db Gourmet",
+      "Onion Rings x12",
+      "st Pannekaker"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Northugs Gourmet Grill",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Gourmet Chicken Bacon Cheese",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Gourmet Grill Northug G.O.A.T",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Chicken Nuggets 9 Biter Meny",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Double WHOPPER®",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Chimichurri db Gourmet",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Onion Rings x12",
+        "priceMinor": 7300
+      },
+      {
+        "name": "st Pannekaker",
+        "priceMinor": 1900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

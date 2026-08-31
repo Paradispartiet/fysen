@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "chicken-house-gronland-oslo",
+    "name": "Chicken House",
+    "websiteUrl": null,
+    "address": "Grønland 30, 0188 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.912835744488085,
+    "longitude": 10.762644418111051
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/chickenhouse",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 51,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "House Shawarma Tallerken",
+      "Coleslaw",
+      "Shawarma Crystal-rull",
+      "Shawarma kjøtt-rull",
+      "Shish Taouk-baguette",
+      "Chili kyllingburger",
+      "Syltegrønnsaker",
+      "URGE"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "House Shawarma Tallerken",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Coleslaw",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Shawarma Crystal-rull",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Shawarma kjøtt-rull",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Shish Taouk-baguette",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Chili kyllingburger",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Syltegrønnsaker",
+        "priceMinor": 6900
+      },
+      {
+        "name": "URGE",
+        "priceMinor": 6900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

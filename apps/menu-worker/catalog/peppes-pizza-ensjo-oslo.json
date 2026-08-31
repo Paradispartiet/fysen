@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "peppes-pizza-ensjo-oslo",
+    "name": "Peppes Pizza - Ensjø",
+    "websiteUrl": null,
+    "address": "Rolf Hofmos gate 34, 0655 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.913194969763076,
+    "longitude": 10.788651482221038
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/peppespizzaensjo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 69,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "For Deg",
+      "Thai Chicken",
+      "Beef'n Ham",
+      "Italian Margherita",
+      "Italian Chicken Alfredo",
+      "Quesadilla",
+      "Salsa",
+      "Mer Fruktdrikk Appelsin"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "For Deg",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Thai Chicken",
+        "priceMinor": 24800
+      },
+      {
+        "name": "Beef'n Ham",
+        "priceMinor": 20800
+      },
+      {
+        "name": "Italian Margherita",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Italian Chicken Alfredo",
+        "priceMinor": 24800
+      },
+      {
+        "name": "Quesadilla",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Salsa",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Mer Fruktdrikk Appelsin",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
