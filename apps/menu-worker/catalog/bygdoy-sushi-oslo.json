@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bygdoy-sushi-oslo",
+    "name": "Bygdøy Sushi",
+    "websiteUrl": null,
+    "address": "Bygdøy allé 66, 0265 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91890634260345,
+    "longitude": 10.701179045849036
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/bygdoysushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 130,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 28 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Rekechips",
+      "Friterte bowls Scampi 6stk",
+      "Laks Nigiri",
+      "Laks Maki",
+      "Soft-Shell Crab",
+      "Spesial Futo Maki",
+      "Chili Mayonnaise",
+      "Kylling Futo maki helfritert"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Rekechips",
+        "priceMinor": 5100
+      },
+      {
+        "name": "Friterte bowls Scampi 6stk",
+        "priceMinor": 10100
+      },
+      {
+        "name": "Laks Nigiri",
+        "priceMinor": 3200
+      },
+      {
+        "name": "Laks Maki",
+        "priceMinor": 12700
+      },
+      {
+        "name": "Soft-Shell Crab",
+        "priceMinor": 13700
+      },
+      {
+        "name": "Spesial Futo Maki",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Chili Mayonnaise",
+        "priceMinor": 2000
+      },
+      {
+        "name": "Kylling Futo maki helfritert",
+        "priceMinor": 23300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

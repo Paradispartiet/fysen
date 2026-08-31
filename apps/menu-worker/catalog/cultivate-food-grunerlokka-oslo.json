@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "cultivate-food-grunerlokka-oslo",
+    "name": "Cultivate Food",
+    "websiteUrl": null,
+    "address": "Helgesens gate 18, 0553 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92462536046032,
+    "longitude": 10.75951253343463
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/264cultivatefood",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 42,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 28 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "\"Chicken\" Cæsar Salat",
+      "«CHICKEN» Style Wrap",
+      "Trøffelburger",
+      "1/2 \"Chicken\" Cæsar Salat",
+      "Guacamole",
+      "Cronut",
+      "Lykki Sitronbrus",
+      "Vibe By Voe Hibiscus"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "\"Chicken\" Cæsar Salat",
+        "priceMinor": 14900
+      },
+      {
+        "name": "«CHICKEN» Style Wrap",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Trøffelburger",
+        "priceMinor": 17900
+      },
+      {
+        "name": "1/2 \"Chicken\" Cæsar Salat",
+        "priceMinor": 7450
+      },
+      {
+        "name": "Guacamole",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Cronut",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Lykki Sitronbrus",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Vibe By Voe Hibiscus",
+        "priceMinor": 6900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

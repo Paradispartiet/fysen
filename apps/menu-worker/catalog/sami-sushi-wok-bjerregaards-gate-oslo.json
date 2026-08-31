@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sami-sushi-wok-bjerregaards-gate-oslo",
+    "name": "Sami Sushi & Wok",
+    "websiteUrl": null,
+    "address": "Bjerregaards gate 6, 0172 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9235207041525,
+    "longitude": 10.741240793711286
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/samisushiwok",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 68,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 28 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Sushi Burrito",
+      "Rød Karri Panang",
+      "Bento 2",
+      "Kamskjell Nigiri",
+      "Spicy Laks",
+      "Fritert Scampi",
+      "Chilimajones",
+      "Villa 0,5L"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Sushi Burrito",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Rød Karri Panang",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Bento 2",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Kamskjell Nigiri",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Spicy Laks",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Fritert Scampi",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Chilimajones",
+        "priceMinor": 2000
+      },
+      {
+        "name": "Villa 0,5L",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

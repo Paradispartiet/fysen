@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sudost-trondheimsveien-oslo",
+    "name": "SüdØst",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 5A, 0560 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.918183081134416,
+    "longitude": 10.760713432104797
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/sudost",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 67,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 28 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Våtserviett",
+      "Tunfisk Nigiri",
+      "Japansk Hamachi",
+      "Dampet Siu Mai",
+      "Dry Red Curry Kylling",
+      "Val de France Apple",
+      "Clausthaler",
+      "Ekstra Mango&chili saus"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Våtserviett",
+        "priceMinor": 500
+      },
+      {
+        "name": "Tunfisk Nigiri",
+        "priceMinor": 7300
+      },
+      {
+        "name": "Japansk Hamachi",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Dampet Siu Mai",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Dry Red Curry Kylling",
+        "priceMinor": 20300
+      },
+      {
+        "name": "Val de France Apple",
+        "priceMinor": 10800
+      },
+      {
+        "name": "Clausthaler",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Ekstra Mango&chili saus",
+        "priceMinor": 2000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

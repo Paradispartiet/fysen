@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "masala-politics-karl-johans-gate-oslo",
+    "name": "Masala Politics",
+    "websiteUrl": null,
+    "address": "Karl Johans gate 13, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91241927274563,
+    "longitude": 10.744665552215912
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/masalapolitics",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 55,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 28 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Punjabi Murga",
+      "Samosa Papdi Chaat",
+      "Chicken Tikka Masala",
+      "Maa De Dal 🌱",
+      "Chicken Tikka 6 stk.",
+      "Lamb Biryani",
+      "Peshawari Naan",
+      "Salt Chatti Lassi"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Punjabi Murga",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Samosa Papdi Chaat",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Chicken Tikka Masala",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Maa De Dal 🌱",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Chicken Tikka 6 stk.",
+        "priceMinor": 31900
+      },
+      {
+        "name": "Lamb Biryani",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Peshawari Naan",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Salt Chatti Lassi",
+        "priceMinor": 7500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
