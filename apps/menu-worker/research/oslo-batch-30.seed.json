@@ -84,15 +84,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "espresso-house-continental-oslo",
-        "name": "Espresso House Continental",
+        "slug": "mcdonalds-klingenberggata-oslo",
+        "name": "McDonald's Klingenberggaten",
         "websiteUrl": null,
-        "address": "Olav Vs gate 2, 0166 Oslo",
+        "address": "Klingenberggata 4, 0160 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/espressohousecontinental",
+        "url": "https://semeny.no/sted/86mcdonaldsklingenberggaten",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
