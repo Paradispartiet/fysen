@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bislett-grill-hegdehaugsveien-oslo",
+    "name": "Bislett Grill",
+    "websiteUrl": null,
+    "address": "Hegdehaugsveien 2, 0167 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.920415253838684,
+    "longitude": 10.73358238841204
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/bislettgrillleveresavrestauranten",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 51,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebabtallerken",
+      "Döner i pita",
+      "DOUBLE DECKER Cheeseburger-tallerken",
+      "Ham time",
+      "Chicken n'Beef",
+      "Salsasaus i beger",
+      "200g Freia Firkløver",
+      "Villa 1,5L"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebabtallerken",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Döner i pita",
+        "priceMinor": 14900
+      },
+      {
+        "name": "DOUBLE DECKER Cheeseburger-tallerken",
+        "priceMinor": 30900
+      },
+      {
+        "name": "Ham time",
+        "priceMinor": 20200
+      },
+      {
+        "name": "Chicken n'Beef",
+        "priceMinor": 20600
+      },
+      {
+        "name": "Salsasaus i beger",
+        "priceMinor": 3600
+      },
+      {
+        "name": "200g Freia Firkløver",
+        "priceMinor": 8000
+      },
+      {
+        "name": "Villa 1,5L",
+        "priceMinor": 6900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

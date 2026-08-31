@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "joe-the-juice-oscars-gate-oslo",
+    "name": "Joe & The Juice Oscars Gate",
+    "websiteUrl": null,
+    "address": "Oscars gate 19, 0352 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92261085645322,
+    "longitude": 10.726902076755508
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/500joethejuiceoscarsgate",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 82,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "JOEs Spicy Caesar",
+      "Go Away DOC",
+      "Blueberry Muffin",
+      "Acai Breakfast Combo Offer",
+      "Feel Good",
+      "Bananbrød",
+      "Flat White",
+      "Stille vann"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "JOEs Spicy Caesar",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Go Away DOC",
+        "priceMinor": 9800
+      },
+      {
+        "name": "Blueberry Muffin",
+        "priceMinor": 4300
+      },
+      {
+        "name": "Acai Breakfast Combo Offer",
+        "priceMinor": 16400
+      },
+      {
+        "name": "Feel Good",
+        "priceMinor": 12200
+      },
+      {
+        "name": "Bananbrød",
+        "priceMinor": 5200
+      },
+      {
+        "name": "Flat White",
+        "priceMinor": 5700
+      },
+      {
+        "name": "Stille vann",
+        "priceMinor": 3300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "helt-ratt-stockfleths-gate-oslo",
+    "name": "Helt Rått",
+    "websiteUrl": null,
+    "address": "Stockfleths gate 51A, 0461 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.936224192982884,
+    "longitude": 10.752484532952998
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/104heltratt",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 73,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vårruller",
+      "Stor Sushi",
+      "Tempura",
+      "Hummer",
+      "Flambert meny",
+      "Stekt Biff",
+      "Crispy Duck",
+      "Grønnsaks Wok"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vårruller",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Stor Sushi",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Tempura",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Hummer",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Flambert meny",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Stekt Biff",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Crispy Duck",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Grønnsaks Wok",
+        "priceMinor": 18500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
