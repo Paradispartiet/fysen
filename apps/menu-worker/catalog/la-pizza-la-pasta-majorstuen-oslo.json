@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "la-pizza-la-pasta-majorstuen-oslo",
+    "name": "La Pizza La Pasta",
+    "websiteUrl": null,
+    "address": "Middelthuns gate 25A, 0368 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9282734621654,
+    "longitude": 10.708851889647498
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/670lapizzalapasta",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 19,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 29 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hvitløksbrød",
+      "Capricciosa",
+      "Funghi",
+      "Quattro Formaggi",
+      "Contadina",
+      "Prosciutto Cotto",
+      "Penne all Arrabbiata",
+      "Hvitløk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hvitløksbrød",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Capricciosa",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Funghi",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Quattro Formaggi",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Contadina",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Prosciutto Cotto",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Penne all Arrabbiata",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Hvitløk",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
