@@ -84,15 +84,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "mcdonalds-klingenberggata-oslo",
-        "name": "McDonald's Klingenberggaten",
+        "slug": "mr-fish-sandakerveien-oslo",
+        "name": "Mr. Fish",
         "websiteUrl": null,
-        "address": "Klingenberggata 4, 0160 Oslo",
+        "address": "Sandakerveien 22, 0473 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/86mcdonaldsklingenberggaten",
+        "url": "https://semeny.no/sted/644mrfish",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
