@@ -11,8 +11,8 @@
     },
     {
       "version": 1,
-      "restaurant": {"slug":"tgi-fridays-aker-brygge-oslo","name":"TGI Fridays Aker Brygge","websiteUrl":null,"address":"Stranden 39, 0250 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://semeny.no/sted/542tgifridaysakerbrygge","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "restaurant": {"slug":"lett-steen-strom-oslo","name":"LETT Steen & Strøm","websiteUrl":null,"address":"Nedre Slottsgate 8, 0157 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/728lettsteenstrom","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
