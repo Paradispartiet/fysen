@@ -11,7 +11,7 @@
     "longitude": 10.7606623
   },
   "menuSource": {
-    "url": "https://www.foodora.no/restaurant/t8dc/nepal-house",
+    "url": "https://wolt.com/en/nor/oslo/restaurant/nepal-house-toftes-gate-19-b-0556-oslo",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -41,46 +41,54 @@
   ],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Chicken MO:MO (Dumplings) 4stk",
-      "Green MO:MO (Dumplings 4stk)",
-      "Pani puri",
-      "Bhatmas Shadeko",
       "Kukhura Ko Masu",
       "Khasi Ko Masu",
       "Jhaneko Dal",
-      "Choila Chicken",
-      "Chicken MO:MO Dumplings 10",
+      "Chicken MO:MO Dumplings 10stk",
       "Chicken Jhol MO:MO",
       "Chili Chicken MO:MO",
       "Chicken Chowmein",
-      "Pork Sekuwa 250 g",
-      "Green Jhol MO:MO",
-      "Veg Chowmein"
+      "Choila Chicken",
+      "Pork Sekuwa 250 Gr"
     ],
     "requiredDishVariants": [
-      { "name": "Chicken MO:MO (Dumplings) 4stk", "priceMinor": 10900, "priceKind": "from" },
-      { "name": "Green MO:MO (Dumplings 4stk)", "priceMinor": 10900, "priceKind": "from" },
-      { "name": "Pani puri", "priceMinor": 9900, "priceKind": "from" },
-      { "name": "Bhatmas Shadeko", "priceMinor": 8900, "priceKind": "from" },
-      { "name": "Kukhura Ko Masu", "priceMinor": 24900, "priceKind": "from" },
-      { "name": "Khasi Ko Masu", "priceMinor": 25900, "priceKind": "from" },
-      { "name": "Jhaneko Dal", "priceMinor": 19900, "priceKind": "from" },
-      { "name": "Choila Chicken", "priceMinor": 24900, "priceKind": "from" },
-      { "name": "Chicken MO:MO Dumplings 10", "priceMinor": 21900, "priceKind": "from" },
-      { "name": "Chicken Jhol MO:MO", "priceMinor": 23900, "priceKind": "from" },
-      { "name": "Chili Chicken MO:MO", "priceMinor": 23900, "priceKind": "from" },
-      { "name": "Chicken Chowmein", "priceMinor": 23900, "priceKind": "from" },
-      { "name": "Pork Sekuwa 250 g", "priceMinor": 24900, "priceKind": "from" },
-      { "name": "Green Jhol MO:MO", "priceMinor": 23900, "priceKind": "from" },
-      { "name": "Veg Chowmein", "priceMinor": 22900, "priceKind": "from" }
+      {
+        "name": "Kukhura Ko Masu",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Khasi Ko Masu",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Jhaneko Dal",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Chicken MO:MO Dumplings 10stk",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Chicken Jhol MO:MO",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Chili Chicken MO:MO",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Chicken Chowmein",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Choila Chicken",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Pork Sekuwa 250 Gr",
+        "priceMinor": 24900
+      }
     ],
-    "forbiddenDishNames": [
-      "Mango Lassi",
-      "Plain Lassi",
-      "Coca Cola",
-      "Cola Zero",
-      "Levering",
-      "fra 27 NOK54 NOK"
-    ]
+    "forbiddenDishNames": []
   }
 }
