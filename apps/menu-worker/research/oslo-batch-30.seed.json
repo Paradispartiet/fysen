@@ -6,15 +6,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "lett-frogner-oslo",
-        "name": "LETT Frogner",
+        "slug": "burger-king-majorstuen-oslo",
+        "name": "Burger King Majorstuen",
         "websiteUrl": null,
-        "address": "Frognerveien 8, 0257 Oslo",
+        "address": "Valkyriegata 11, 0366 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/lettfrogner",
+        "url": "https://semeny.no/sted/717burgerkingmajorstuen",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -32,15 +32,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "oslo-raw-frogner-oslo",
-        "name": "Oslo Raw Frogner",
+        "slug": "sabrura-valkyrien-oslo",
+        "name": "Sabrura Valkyrien",
         "websiteUrl": null,
-        "address": "Skovveien 16, 0257 Oslo",
+        "address": "Valkyriegata 1, 0366 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/oslorawfrogner",
+        "url": "https://semeny.no/sted/743sabruravalkyrien",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -58,15 +58,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "winther-frognerparken-oslo",
-        "name": "Winther Frognerparken",
+        "slug": "espresso-house-glasmagasinet-oslo",
+        "name": "Espresso House Glasmagasinet",
         "websiteUrl": null,
-        "address": "Middelthuns gate 17 P, 0368 Oslo",
+        "address": "Stortorvet, 0155 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/380wintherfrognerparken",
+        "url": "https://semeny.no/sted/espressohouseglasmagasinet",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -84,15 +84,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "jagger-frogner-oslo",
-        "name": "Jagger Frogner",
+        "slug": "espresso-house-continental-oslo",
+        "name": "Espresso House Continental",
         "websiteUrl": null,
-        "address": "Skovveien 4, 0257 Oslo",
+        "address": "Olav Vs gate 2, 0166 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/550jaggerfrogner",
+        "url": "https://semeny.no/sted/espressohousecontinental",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -110,15 +110,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "kammis-grill-frogner-oslo",
-        "name": "Kammis Grill Frogner",
+        "slug": "joe-the-juice-oscars-gate-oslo",
+        "name": "Joe & The Juice Oscars Gate",
         "websiteUrl": null,
-        "address": "Frognerveien 9b, 0257 Oslo",
+        "address": "Oscars gate 19, 0352 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/kammisgrillfrogner",
+        "url": "https://semeny.no/sted/500joethejuiceoscarsgate",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -136,15 +136,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "majorstuen-sushi-oslo",
-        "name": "Majorstuen Sushi",
+        "slug": "burger-king-klingenberg-oslo",
+        "name": "Burger King Klingenberg",
         "websiteUrl": null,
-        "address": "Bogstadveien 53, 0366 Oslo",
+        "address": "Klingenberggata 5, 0161 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/333majorstuensushi",
+        "url": "https://semeny.no/sted/burgerkingklingenberg",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -162,15 +162,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "lett-bislett-oslo",
-        "name": "LETT Bislett",
+        "slug": "chicken-house-gronland-oslo",
+        "name": "Chicken House",
         "websiteUrl": null,
-        "address": "Bogstadveien 39, 0365 Oslo",
+        "address": "Grønland 30, 0188 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/lettbislett",
+        "url": "https://semeny.no/sted/chickenhouse",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -188,15 +188,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "sushi-og-thai-torshov-oslo",
-        "name": "Sushi og Thai Torshov",
+        "slug": "shebis-burger-gronland-oslo",
+        "name": "Shebi's Burger",
         "websiteUrl": null,
-        "address": "Vogts gate 39, 0474 Oslo",
+        "address": "Grønlandsleiret 77, 0190 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/sushiogthaitorshov",
+        "url": "https://semeny.no/public/sted/shebisburger",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -214,15 +214,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "focacceria-grunerlokka-oslo",
-        "name": "Focacceria Grünerløkka",
+        "slug": "american-burgers-hegdehaugsveien-oslo",
+        "name": "American Burgers",
         "websiteUrl": null,
-        "address": "Markveien 34, 0554 Oslo",
+        "address": "Hegdehaugsveien 32b, 0352 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/653focacceriagrunerlokka",
+        "url": "https://semeny.no/sted/americanburgers",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -240,15 +240,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "smoothiexchange-frogner-oslo",
-        "name": "SmoothieXchange Frogner",
+        "slug": "ladegarden-kro-oslo",
+        "name": "Ladegården Kro",
         "websiteUrl": null,
-        "address": "Niels Juels gate 31, 0257 Oslo",
+        "address": "Oslo gate 13, 0192 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/734smoothiexchangefrogner",
+        "url": "https://semeny.no/sted/ladegardenkro",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -266,15 +266,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "handmade-grunerlokka-oslo",
-        "name": "Handmade Grünerløkka",
+        "slug": "alibaba-turkish-grill-steak-oslo",
+        "name": "Alibaba Turkish Grill & Steak",
         "websiteUrl": null,
-        "address": "Trondheimsveien 8, 0560 Oslo",
+        "address": "Trondheimsveien 6A, 0560 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/handmadegrunerlokka",
+        "url": "https://semeny.no/sted/612alibabaturkishgrillsteak",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -292,15 +292,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "starbucks-bogstadveien-oslo",
-        "name": "Starbucks Bogstadveien",
+        "slug": "bislett-grill-hegdehaugsveien-oslo",
+        "name": "Bislett Grill",
         "websiteUrl": null,
-        "address": "Bogstadveien 60A, 0366 Oslo",
+        "address": "Hegdehaugsveien 2, 0167 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/starbucksbogstadveien",
+        "url": "https://semeny.no/public/sted/bislettgrillleveresavrestauranten",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -318,15 +318,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "yayas-restaurant-vika-oslo",
-        "name": "Yaya's Restaurant Vika",
+        "slug": "jonoe-ringnes-park-oslo",
+        "name": "Jonoe Ringnes Park",
         "websiteUrl": null,
-        "address": "Munkedamsveien 53B, 0250 Oslo",
+        "address": "Thorvald Meyers gate 14, 0555 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/272yayasrestaurantvika",
+        "url": "https://semeny.no/sted/361jonoeringnespark",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -344,15 +344,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "subway-bogstadveien-oslo",
-        "name": "Subway Bogstadveien",
+        "slug": "peppes-pizza-ensjo-oslo",
+        "name": "Peppes Pizza - Ensjø",
         "websiteUrl": null,
-        "address": "Bogstadveien 41, 0366 Oslo",
+        "address": "Rolf Hofmos gate 34, 0655 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/522subwaybogstadveien",
+        "url": "https://semeny.no/sted/peppespizzaensjo",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -370,15 +370,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "oakberry-vika-oslo",
-        "name": "Oakberry Vika",
+        "slug": "espresso-house-hovedhallen-oslo",
+        "name": "Espresso House Hovedhallen",
         "websiteUrl": null,
-        "address": "Haakon VIIs gate 10, 0161 Oslo",
+        "address": "Jernbanetorget 1, 0191 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/oakberryvika",
+        "url": "https://semeny.no/sted/748espressohousehovedhallen",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
