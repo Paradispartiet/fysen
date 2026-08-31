@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "batch": "oslo-batch-30",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "burger-king-majorstuen-oslo",
+        "name": "Burger King Majorstuen",
+        "websiteUrl": null,
+        "address": "Valkyriegata 11, 0366 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/717burgerkingmajorstuen",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"sabrura-valkyrien-oslo","name":"Sabrura Valkyrien","websiteUrl":null,"address":"Valkyriegata 1, 0366 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/743sabruravalkyrien","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"espresso-house-glasmagasinet-oslo","name":"Espresso House Glasmagasinet","websiteUrl":null,"address":"Stortorvet, 0155 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/espressohouseglasmagasinet","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"mr-fish-sandakerveien-oslo","name":"Mr. Fish","websiteUrl":null,"address":"Sandakerveien 22, 0473 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/644mrfish","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"joe-the-juice-oscars-gate-oslo","name":"Joe & The Juice Oscars Gate","websiteUrl":null,"address":"Oscars gate 19, 0352 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/500joethejuiceoscarsgate","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"burger-king-klingenberg-oslo","name":"Burger King Klingenberg","websiteUrl":null,"address":"Klingenberggata 5, 0161 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/burgerkingklingenberg","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"chicken-house-gronland-oslo","name":"Chicken House","websiteUrl":null,"address":"Grønland 30, 0188 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/chickenhouse","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"shebis-burger-gronland-oslo","name":"Shebi's Burger","websiteUrl":null,"address":"Grønlandsleiret 77, 0190 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/public/sted/shebisburger","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"american-burgers-hegdehaugsveien-oslo","name":"American Burgers","websiteUrl":null,"address":"Hegdehaugsveien 32b, 0352 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/americanburgers","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"ladegarden-kro-oslo","name":"Ladegården Kro","websiteUrl":null,"address":"Oslo gate 13, 0192 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/ladegardenkro","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"alibaba-turkish-grill-steak-oslo","name":"Alibaba Turkish Grill & Steak","websiteUrl":null,"address":"Trondheimsveien 6A, 0560 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/612alibabaturkishgrillsteak","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"bislett-grill-hegdehaugsveien-oslo","name":"Bislett Grill","websiteUrl":null,"address":"Hegdehaugsveien 2, 0167 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/public/sted/bislettgrillleveresavrestauranten","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"jonoe-ringnes-park-oslo","name":"Jonoe Ringnes Park","websiteUrl":null,"address":"Thorvald Meyers gate 14, 0555 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/361jonoeringnespark","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"peppes-pizza-ensjo-oslo","name":"Peppes Pizza - Ensjø","websiteUrl":null,"address":"Rolf Hofmos gate 34, 0655 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/peppespizzaensjo","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"helt-ratt-stockfleths-gate-oslo","name":"Helt Rått","websiteUrl":null,"address":"Stockfleths gate 51A, 0461 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/104heltratt","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 30 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    }
+  ]
+}
