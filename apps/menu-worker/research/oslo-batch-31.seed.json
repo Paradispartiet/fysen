@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "batch": "oslo-batch-31",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {"slug":"sea-sushi-bar-toftes-gate-oslo","name":"Sea Sushi Bar Toftes Gate","websiteUrl":null,"address":"Toftes gate 20, 0556 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/370seasushibartoftesgate","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"lett-steen-strom-oslo","name":"LETT Steen & Strøm","websiteUrl":null,"address":"Nedre Slottsgate 8, 0157 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/728lettsteenstrom","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"egon-storo-oslo","name":"Egon Storo","websiteUrl":null,"address":"Vitaminveien 9-11, 0485 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/563egonstoro","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"jordbaerpikene-storo-oslo","name":"Jordbærpikene Storo","websiteUrl":null,"address":"Vitaminveien 7-9, 0485 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/689jordbaerpikenestoro","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"bambus-storo-oslo","name":"Bambus Storo","websiteUrl":null,"address":"Vitaminveien 7, 0485 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/bambusstoro","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"big-bite-storo-oslo","name":"Big Bite Storo","websiteUrl":null,"address":"Vitaminveien 7-9, 0485 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/750bigbitestoro","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"lett-bogstadveien-oslo","name":"LETT Bogstadveien","websiteUrl":null,"address":"Bogstadveien 39, 0365 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/724lettbogstadveien","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"fly-chicken-storo-oslo","name":"Fly Chicken Storo","websiteUrl":null,"address":"Vitaminveien 31, 0485 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/547flychickenstoro","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"espresso-house-byporten-oslo","name":"Espresso House Byporten","websiteUrl":null,"address":"Jernbanetorget 6, 0154 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/public/sted/espressohousebyporten","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"joe-the-juice-colosseum-oslo","name":"Joe & The Juice Colosseum","websiteUrl":null,"address":"Essendrops gate 9, 0368 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/joethejuicecolosseum","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"joe-the-juice-storo-storsenter-oslo","name":"Joe & The Juice Storo Storsenter","websiteUrl":null,"address":"Vitaminveien 7-9, 0485 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/joethejuicestorostorsenter","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"fly-chicken-steen-strom-oslo","name":"Fly Chicken Steen & Strøm","websiteUrl":null,"address":"Kongens gate 23, 0153 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/720flychickensteenstrom","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"jonathan-sushi-steen-strom-oslo","name":"Jonathan Sushi Steen & Strøm","websiteUrl":null,"address":"Kongens gate 23, 0153 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/jonathansushisteenstrom","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"helt-vilt-vulkan-oslo","name":"Helt Vilt","websiteUrl":null,"address":"Vulkan 5, 0178 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/308heltvilt","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    },
+    {
+      "version": 1,
+      "restaurant": {"slug":"johnny-rockets-storo-oslo","name":"Johnny Rockets Storo","websiteUrl":null,"address":"Vitaminveien 29, 0485 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/372johnnyrocketsstoro","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-08-31","note":"Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
+    }
+  ]
+}
