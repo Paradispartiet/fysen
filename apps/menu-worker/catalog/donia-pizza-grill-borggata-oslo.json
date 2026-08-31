@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "donia-pizza-grill-borggata-oslo",
+    "name": "Donia Pizza & Grill",
+    "websiteUrl": null,
+    "address": "Borggata 12B, 0650 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91347321939604,
+    "longitude": 10.772105865454442
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/379doniapizzagrill",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 50,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 28 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margarita (medium)",
+      "Hot Pizza (medium)",
+      "Leonardo (medium)",
+      "Bari (medium)",
+      "Husets Spesial (stor)",
+      "Salami (stor)",
+      "Pepperoni (stor)",
+      "Urge"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margarita (medium)",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Hot Pizza (medium)",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Leonardo (medium)",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Bari (medium)",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Husets Spesial (stor)",
+        "priceMinor": 30900
+      },
+      {
+        "name": "Salami (stor)",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Pepperoni (stor)",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Urge",
+        "priceMinor": 6900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

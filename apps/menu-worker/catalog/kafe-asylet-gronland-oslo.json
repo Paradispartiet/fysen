@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kafe-asylet-gronland-oslo",
+    "name": "Kafe Asylet",
+    "websiteUrl": null,
+    "address": "Grønland 28, 0188 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91287451264932,
+    "longitude": 10.76243184744465
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/412kafeasylet",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 28 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Asylburger",
+      "Karbonadesmørdbrød",
+      "Ribbeburger",
+      "Vegetarburger 🌱",
+      "Kjøttkaker",
+      "Ørretfilet",
+      "Lammeburger med chipotledressing",
+      "Favorittsalat m/ Kylling"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Asylburger",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Karbonadesmørdbrød",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Ribbeburger",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Vegetarburger 🌱",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Kjøttkaker",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Ørretfilet",
+        "priceMinor": 32900
+      },
+      {
+        "name": "Lammeburger med chipotledressing",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Favorittsalat m/ Kylling",
+        "priceMinor": 21900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

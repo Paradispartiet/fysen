@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ploy-thaimat-reepia-oslo",
+    "name": "Ploy Thaimat Reepia",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 161, 0570 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93140921099274,
+    "longitude": 10.778715870046891
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/408ploythaimatreepia",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 29,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 28 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pho Pia Tod",
+      "Pad Kra Pao 🌶️🌶️",
+      "Khao Pad",
+      "Gaeng Panaeng 🌶️🌶️",
+      "Gaeng Massama🌶️",
+      "Som Tam 🌶️🌶️",
+      "Moo Ping",
+      "Imsdal"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pho Pia Tod",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Pad Kra Pao 🌶️🌶️",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Khao Pad",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Gaeng Panaeng 🌶️🌶️",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Gaeng Massama🌶️",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Som Tam 🌶️🌶️",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Moo Ping",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Imsdal",
+        "priceMinor": 4000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

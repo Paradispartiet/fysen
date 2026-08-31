@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kylling-pizza-rosenhoff-oslo",
+    "name": "Kylling & Pizza Rosenhoff",
+    "websiteUrl": null,
+    "address": "Konghellegata 8, 0570 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.929638718187675,
+    "longitude": 10.778800014409562
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/309kyllingpizzarosenhoff",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 133,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 28 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Single Box",
+      "Beef Tacos",
+      "Kylling & Pizza Special Rice",
+      "Milk Cookies",
+      "Special Kylling Saus",
+      "Rice Chicken Crunch",
+      "Kebab Rull",
+      "Strawberry MilkTea"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Single Box",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Beef Tacos",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Kylling & Pizza Special Rice",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Milk Cookies",
+        "priceMinor": 3400
+      },
+      {
+        "name": "Special Kylling Saus",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Rice Chicken Crunch",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Kebab Rull",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Strawberry MilkTea",
+        "priceMinor": 7900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

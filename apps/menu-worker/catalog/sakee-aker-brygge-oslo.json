@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sakee-aker-brygge-oslo",
+    "name": "Sakee",
+    "websiteUrl": null,
+    "address": "Holmens gate 6, 0250 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91016977119147,
+    "longitude": 10.72587666329103
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/sakee",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 56,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 28 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Springrolls",
+      "Chicken Red Curry",
+      "Sushi Naka (14pcs)",
+      "Nigiri Scampi",
+      "Sashimi Scampi",
+      "Scampi Maki",
+      "Sakura Avokado Maki",
+      "Extra Sushi Rice"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Springrolls",
+        "priceMinor": 8800
+      },
+      {
+        "name": "Chicken Red Curry",
+        "priceMinor": 20800
+      },
+      {
+        "name": "Sushi Naka (14pcs)",
+        "priceMinor": 20500
+      },
+      {
+        "name": "Nigiri Scampi",
+        "priceMinor": 4600
+      },
+      {
+        "name": "Sashimi Scampi",
+        "priceMinor": 4600
+      },
+      {
+        "name": "Scampi Maki",
+        "priceMinor": 9200
+      },
+      {
+        "name": "Sakura Avokado Maki",
+        "priceMinor": 9400
+      },
+      {
+        "name": "Extra Sushi Rice",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

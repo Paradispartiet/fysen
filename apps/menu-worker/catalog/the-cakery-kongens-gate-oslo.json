@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "the-cakery-kongens-gate-oslo",
+    "name": "The Cakery",
+    "websiteUrl": null,
+    "address": "Kongens gate 10E, 0153 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.910436646303985,
+    "longitude": 10.74232062441153
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/631thecakery",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 15,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 28 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Best Seller Cake Box",
+      "Brunch Meny #1",
+      "Cheese Bread",
+      "Vegetarian Quiche Slice",
+      "Choco Pistache",
+      "Full Chocolate",
+      "Carrot And Cheese",
+      "Chocolate Delices Box"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Best Seller Cake Box",
+        "priceMinor": 45000
+      },
+      {
+        "name": "Brunch Meny #1",
+        "priceMinor": 29000
+      },
+      {
+        "name": "Cheese Bread",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Vegetarian Quiche Slice",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Choco Pistache",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Full Chocolate",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Carrot And Cheese",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Chocolate Delices Box",
+        "priceMinor": 11000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

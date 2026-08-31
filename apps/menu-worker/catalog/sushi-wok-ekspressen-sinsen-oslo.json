@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sushi-wok-ekspressen-sinsen-oslo",
+    "name": "Sushi Wok Ekspressen",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 162A, 0570 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93011868307474,
+    "longitude": 10.777841496832986
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/sushiwokekspressen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 144,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 28 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Alle dumplings",
+      "Medium Combo Familiepakke",
+      "Laksburrito",
+      "Familie LaksOnly - 30biter",
+      "Tempura Laks & scampi",
+      "Spicy tofu",
+      "Chop Suey",
+      "Ice tea fersken/Lime"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Alle dumplings",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Medium Combo Familiepakke",
+        "priceMinor": 90000
+      },
+      {
+        "name": "Laksburrito",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Familie LaksOnly - 30biter",
+        "priceMinor": 49500
+      },
+      {
+        "name": "Tempura Laks & scampi",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Spicy tofu",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Chop Suey",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Ice tea fersken/Lime",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

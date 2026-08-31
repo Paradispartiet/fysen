@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "tullins-cafe-oslo",
+    "name": "Tullins Café",
+    "websiteUrl": null,
+    "address": "Tullins gate 2, 0166 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91875608659247,
+    "longitude": 10.734765928922572
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/tullinscafe",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 25,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 28 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Krydret Linsesuppe",
+      "Cæsarsalat",
+      "The Jack Burger",
+      "Crispy Kyllingburger",
+      "Hjemmelaget Fish & Chips",
+      "Chicken Tikka Masala",
+      "Marinerte oliven",
+      "Bonaqua Naturell 0,33l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Krydret Linsesuppe",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Cæsarsalat",
+        "priceMinor": 19900
+      },
+      {
+        "name": "The Jack Burger",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Crispy Kyllingburger",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Hjemmelaget Fish & Chips",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Chicken Tikka Masala",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Marinerte oliven",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Bonaqua Naturell 0,33l",
+        "priceMinor": 5400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

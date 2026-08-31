@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pane-vino-trondheimsveien-oslo",
+    "name": "Pane & Vino",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 37, 0560 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.921147841331695,
+    "longitude": 10.769704596302763
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/329panevino",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 53,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 28 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Gusti",
+      "Parmigiana",
+      "Primavera",
+      "Giardiniera",
+      "Quattro Formaggi",
+      "Aceitunas",
+      "Eplekake",
+      "Eplemost, 0,33L"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Gusti",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Parmigiana",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Primavera",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Giardiniera",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Quattro Formaggi",
+        "priceMinor": 24700
+      },
+      {
+        "name": "Aceitunas",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Eplekake",
+        "priceMinor": 9700
+      },
+      {
+        "name": "Eplemost, 0,33L",
+        "priceMinor": 5400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

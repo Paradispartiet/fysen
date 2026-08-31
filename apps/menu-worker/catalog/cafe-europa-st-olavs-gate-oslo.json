@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "cafe-europa-st-olavs-gate-oslo",
+    "name": "Café Europa",
+    "websiteUrl": null,
+    "address": "St. Olavs gate 31, 0166 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91791809447868,
+    "longitude": 10.734972622053673
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/650cafeeuropa",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 54,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 28 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Gambas al Ajillo",
+      "Panert kylling 3 stk",
+      "Kjøttkaker",
+      "Pasta bolognese",
+      "Hamburger med brie",
+      "🌱Vegansk Pizza",
+      "Is-Cocktail",
+      "batteri"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Gambas al Ajillo",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Panert kylling 3 stk",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Kjøttkaker",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Pasta bolognese",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Hamburger med brie",
+        "priceMinor": 27900
+      },
+      {
+        "name": "🌱Vegansk Pizza",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Is-Cocktail",
+        "priceMinor": 14900
+      },
+      {
+        "name": "batteri",
+        "priceMinor": 9900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
