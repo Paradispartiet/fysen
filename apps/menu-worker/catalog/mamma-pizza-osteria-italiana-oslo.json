@@ -11,7 +11,7 @@
     "longitude": 10.74664
   },
   "menuSource": {
-    "url": "https://www.foodora.no/restaurant/n9kb/mamma-pizza-dronningensgate",
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/mamma-pizza-1",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -43,44 +43,47 @@
     "requiredDishNames": [
       "Regina Margherita",
       "Capricciosa",
-      "Diavola",
-      "Vegetariana",
-      "Napoli",
       "Formaggi",
       "Sana",
       "Crudo di Parma",
       "Parmigiana",
       "Principessa",
-      "Tartufo",
-      "'Nduja"
+      "Tartufo"
     ],
     "requiredDishVariants": [
-      { "name": "Regina Margherita", "priceMinor": 21900, "priceKind": "from" },
-      { "name": "Capricciosa", "priceMinor": 27500, "priceKind": "from" },
-      { "name": "Diavola", "priceMinor": 27900, "priceKind": "from" },
-      { "name": "Vegetariana", "priceMinor": 27000, "priceKind": "from" },
-      { "name": "Napoli", "priceMinor": 28000, "priceKind": "from" },
-      { "name": "Formaggi", "priceMinor": 27500, "priceKind": "from" },
-      { "name": "Sana", "priceMinor": 27000, "priceKind": "from" },
-      { "name": "Crudo di Parma", "priceMinor": 29000, "priceKind": "from" },
-      { "name": "Parmigiana", "priceMinor": 28000, "priceKind": "from" },
-      { "name": "Principessa", "priceMinor": 29500, "priceKind": "from" },
-      { "name": "Tartufo", "priceMinor": 29500, "priceKind": "from" },
-      { "name": "'Nduja", "priceMinor": 29500, "priceKind": "from" }
+      {
+        "name": "Regina Margherita",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Capricciosa",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Formaggi",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Sana",
+        "priceMinor": 27000
+      },
+      {
+        "name": "Crudo di Parma",
+        "priceMinor": 29000
+      },
+      {
+        "name": "Parmigiana",
+        "priceMinor": 28000
+      },
+      {
+        "name": "Principessa",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Tartufo",
+        "priceMinor": 29500
+      }
     ],
-    "forbiddenDishNames": [
-      "Aranciata",
-      "Galvanina Bellini Mocktail Økol 200ml",
-      "Galvanina Spritz Mocktail Økol 200ml",
-      "Pepsi",
-      "Pepsi Max",
-      "Chinotto",
-      "Gazzosa",
-      "Limonata",
-      "Ice Tea Lemon",
-      "Ice Tea Peach",
-      "Apple Juice",
-      "Pizzakutter"
-    ]
+    "forbiddenDishNames": []
   }
 }
