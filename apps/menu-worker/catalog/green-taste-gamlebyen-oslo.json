@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "green-taste-gamlebyen-oslo",
+    "name": "Green Taste",
+    "websiteUrl": null,
+    "address": "Oslo gate 39A, 0192 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.902967189593504,
+    "longitude": 10.76718141938065
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/greentaste",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 108,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 29 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Liten Meny",
+      "Tofu Maki",
+      "Alaska Maki",
+      "Philadephia Fritert Laks Maki",
+      "Rød Karri",
+      "Innbakt Scampi",
+      "Rødskjell",
+      "Urge 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Liten Meny",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Tofu Maki",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Alaska Maki",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Philadephia Fritert Laks Maki",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Rød Karri",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Innbakt Scampi",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Rødskjell",
+        "priceMinor": 2300
+      },
+      {
+        "name": "Urge 0,5l",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
