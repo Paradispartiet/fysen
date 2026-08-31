@@ -17,7 +17,7 @@
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 44,
-    "maxResponseBytes": 3145728,
+    "maxResponseBytes": 4194304,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-08-23",
-      "note": "Current first-party /meny source is robots-allowed and requires the generic bounded 3 MiB HTTP source policy. Kitchen-scoped hours remain separately unverified."
+      "checkedAt": "2026-08-31",
+      "note": "Current first-party /meny source is robots-allowed and requires the maximum supported bounded 4 MiB HTTP source policy after its decompressed Squarespace payload exceeded 3 MiB. Kitchen-scoped hours remain separately unverified."
     }
   },
   "actions": [],
