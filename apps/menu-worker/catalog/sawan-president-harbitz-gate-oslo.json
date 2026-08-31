@@ -11,7 +11,7 @@
     "longitude": 10.715629
   },
   "menuSource": {
-    "url": "https://www.sawan.no/meny",
+    "url": "https://www.sawan.no/meny/",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-08-31",
-      "note": "Current first-party /meny source is robots-allowed and requires the maximum supported bounded 4 MiB HTTP source policy after its decompressed Squarespace payload exceeded 3 MiB. Kitchen-scoped hours remain separately unverified."
+      "note": "Current first-party /meny/ source is robots-allowed and uses the maximum supported bounded 4 MiB HTTP policy. The stable trailing-slash route exposes the complete 44-item menu below that limit. Kitchen-scoped hours remain separately unverified."
     }
   },
   "actions": [],
