@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizza-pancetta-briskeby-oslo",
+    "name": "Pizza Pancetta Briskeby",
+    "websiteUrl": null,
+    "address": "Briskebyveien 54, 0259 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9209747332408,
+    "longitude": 10.716632448763606
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/100pizzapancettabriskeby",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 97,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 29 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita [Medium]",
+      "Fire Årstider [Medium]",
+      "Margherita [Stor]",
+      "Fire Årstider [Stor]",
+      "Formaggi Bianca [Medium]",
+      "Don Giovanni [Medium]",
+      "Figaro [Stor]",
+      "Sriracha Hvitløksdressing"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita [Medium]",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Fire Årstider [Medium]",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Margherita [Stor]",
+        "priceMinor": 27000
+      },
+      {
+        "name": "Fire Årstider [Stor]",
+        "priceMinor": 31500
+      },
+      {
+        "name": "Formaggi Bianca [Medium]",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Don Giovanni [Medium]",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Figaro [Stor]",
+        "priceMinor": 33500
+      },
+      {
+        "name": "Sriracha Hvitløksdressing",
+        "priceMinor": 2900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
