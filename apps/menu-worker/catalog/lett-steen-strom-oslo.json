@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lett-steen-strom-oslo",
+    "name": "LETT Steen & Strøm",
+    "websiteUrl": null,
+    "address": "Nedre Slottsgate 8, 0157 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91215712574447,
+    "longitude": 10.742755978420295
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/728lettsteenstrom",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 38,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Søtpotet feta bowl",
+      "Asiatisk bowl",
+      "Spicy kylling wrap",
+      "Røbet chèvre wrap",
+      "Kylling avokado sandwich",
+      "Bris",
+      "Imsdal 0,65 L",
+      "Kakao med kokos 3pak"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Søtpotet feta bowl",
+        "priceMinor": 19700
+      },
+      {
+        "name": "Asiatisk bowl",
+        "priceMinor": 17700
+      },
+      {
+        "name": "Spicy kylling wrap",
+        "priceMinor": 20200
+      },
+      {
+        "name": "Røbet chèvre wrap",
+        "priceMinor": 19200
+      },
+      {
+        "name": "Kylling avokado sandwich",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Bris",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Imsdal 0,65 L",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Kakao med kokos 3pak",
+        "priceMinor": 7900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

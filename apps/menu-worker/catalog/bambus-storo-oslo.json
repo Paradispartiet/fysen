@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bambus-storo-oslo",
+    "name": "Bambus Storo",
+    "websiteUrl": null,
+    "address": "Vitaminveien 7, 0485 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94684205812542,
+    "longitude": 10.77538723559638
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/bambusstoro",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 45,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vårrull 4 Stk.",
+      "Bambus Signatur",
+      "Flambert Maki",
+      "Spicy Laks",
+      "Nudler m/ Biff",
+      "Chilimajones",
+      "Sweet Chili Saus",
+      "Surf Kombucha Lime"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vårrull 4 Stk.",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Bambus Signatur",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Flambert Maki",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Spicy Laks",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Nudler m/ Biff",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Chilimajones",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Sweet Chili Saus",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Surf Kombucha Lime",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

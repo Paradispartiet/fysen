@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "fly-chicken-storo-oslo",
+    "name": "Fly Chicken Storo",
+    "websiteUrl": null,
+    "address": "Vitaminveien 31, 0485 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94723453570206,
+    "longitude": 10.77158033094486
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/547flychickenstoro",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 51,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fried Chicken Wings x 10",
+      "Fly Classic",
+      "Loaded Chicken Fries",
+      "Habanero Paste",
+      "Still Water",
+      "Monster Ultra White 0,5L",
+      "Cheddar",
+      "Fly Kids Menu"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fried Chicken Wings x 10",
+        "priceMinor": 12400
+      },
+      {
+        "name": "Fly Classic",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Loaded Chicken Fries",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Habanero Paste",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Still Water",
+        "priceMinor": 4200
+      },
+      {
+        "name": "Monster Ultra White 0,5L",
+        "priceMinor": 5100
+      },
+      {
+        "name": "Cheddar",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Fly Kids Menu",
+        "priceMinor": 10500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

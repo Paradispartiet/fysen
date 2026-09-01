@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "johnny-rockets-storo-oslo",
+    "name": "Johnny Rockets Storo",
+    "websiteUrl": null,
+    "address": "Vitaminveien 29, 0485 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.947597761721006,
+    "longitude": 10.771819938500935
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/372johnnyrocketsstoro",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 87,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Jonny's Mix",
+      "Bacon Cheddar",
+      "Chipotle Bacon Burger Double",
+      "Chipotle Cheese Fries",
+      "Crispy Chicken Salad",
+      "Crispy Chicken Club Sandwich",
+      "Strawberry Oreo Crumble",
+      "Urge 0,33l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Jonny's Mix",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Bacon Cheddar",
+        "priceMinor": 26800
+      },
+      {
+        "name": "Chipotle Bacon Burger Double",
+        "priceMinor": 35300
+      },
+      {
+        "name": "Chipotle Cheese Fries",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Crispy Chicken Salad",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Crispy Chicken Club Sandwich",
+        "priceMinor": 26800
+      },
+      {
+        "name": "Strawberry Oreo Crumble",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Urge 0,33l",
+        "priceMinor": 6700
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

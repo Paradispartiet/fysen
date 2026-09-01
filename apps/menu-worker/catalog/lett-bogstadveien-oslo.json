@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lett-bogstadveien-oslo",
+    "name": "LETT Bogstadveien",
+    "websiteUrl": null,
+    "address": "Bogstadveien 39D, 0365 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92716698154689,
+    "longitude": 10.720316278278657
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/724lettbogstadveien",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 38,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Søtpotet feta bowl",
+      "Asiatisk bowl",
+      "Spicy kylling wrap",
+      "Røbet chèvre wrap",
+      "Kylling avokado sandwich",
+      "Bris",
+      "Bananbrød",
+      "Kakao med kokos 3pak"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Søtpotet feta bowl",
+        "priceMinor": 19700
+      },
+      {
+        "name": "Asiatisk bowl",
+        "priceMinor": 17700
+      },
+      {
+        "name": "Spicy kylling wrap",
+        "priceMinor": 20200
+      },
+      {
+        "name": "Røbet chèvre wrap",
+        "priceMinor": 19200
+      },
+      {
+        "name": "Kylling avokado sandwich",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Bris",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Bananbrød",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Kakao med kokos 3pak",
+        "priceMinor": 7900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "big-bite-storo-oslo",
+    "name": "Big Bite Storo",
+    "websiteUrl": null,
+    "address": "Vitaminveien 7-9, 0485 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94684205812542,
+    "longitude": 10.77538723559638
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/750bigbitestoro",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 66,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Ost & Skinke Hel",
+      "Thai Fusion Hel",
+      "Tex Mex Halv",
+      "BBQ Kylling Halv",
+      "Thai Fusion Wrap",
+      "Telemark Naturell u/ Kullsyre 0,5l",
+      "MER Pære",
+      "Frostachips Salt"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Ost & Skinke Hel",
+        "priceMinor": 14200
+      },
+      {
+        "name": "Thai Fusion Hel",
+        "priceMinor": 14700
+      },
+      {
+        "name": "Tex Mex Halv",
+        "priceMinor": 9300
+      },
+      {
+        "name": "BBQ Kylling Halv",
+        "priceMinor": 10300
+      },
+      {
+        "name": "Thai Fusion Wrap",
+        "priceMinor": 9800
+      },
+      {
+        "name": "Telemark Naturell u/ Kullsyre 0,5l",
+        "priceMinor": 3900
+      },
+      {
+        "name": "MER Pære",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Frostachips Salt",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
