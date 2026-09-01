@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jonathan-sushi-steen-strom-oslo",
+    "name": "Jonathan Sushi Steen & Strøm",
+    "websiteUrl": null,
+    "address": "Kongens gate 23, 0153 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.911562042330516,
+    "longitude": 10.743066380237748
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/jonathansushisteenstrom",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 52,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chicken Bao",
+      "Hjemmelaget Vårruller",
+      "Nigiri & Maki Main",
+      "Sharing 42 Biter",
+      "Kamskjell & Rogn",
+      "Tuna Tataki",
+      "Sweet Chilisaus",
+      "Bonaqua Sitron"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chicken Bao",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Hjemmelaget Vårruller",
+        "priceMinor": 10000
+      },
+      {
+        "name": "Nigiri & Maki Main",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Sharing 42 Biter",
+        "priceMinor": 69800
+      },
+      {
+        "name": "Kamskjell & Rogn",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Tuna Tataki",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Sweet Chilisaus",
+        "priceMinor": 2000
+      },
+      {
+        "name": "Bonaqua Sitron",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

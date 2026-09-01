@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "espresso-house-byporten-oslo",
+    "name": "Espresso House Byporten",
+    "websiteUrl": null,
+    "address": "Jernbanetorget 6, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.911771086559426,
+    "longitude": 10.7515529777059
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/espressohousebyporten",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 89,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Ost og Kalkunskinke Toast",
+      "Surdeigsrundstykke Tomat & Avokado",
+      "Pecan Dulce Crumb",
+      "Sukkerbolle",
+      "YT Islatte",
+      "Rabarbra Booster",
+      "San Pellegrino Aranciata Limonata",
+      "Bagel Bundle Deluxe"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Ost og Kalkunskinke Toast",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Surdeigsrundstykke Tomat & Avokado",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Pecan Dulce Crumb",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Sukkerbolle",
+        "priceMinor": 5500
+      },
+      {
+        "name": "YT Islatte",
+        "priceMinor": 7600
+      },
+      {
+        "name": "Rabarbra Booster",
+        "priceMinor": 7400
+      },
+      {
+        "name": "San Pellegrino Aranciata Limonata",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Bagel Bundle Deluxe",
+        "priceMinor": 42900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

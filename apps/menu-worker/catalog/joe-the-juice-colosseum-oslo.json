@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "joe-the-juice-colosseum-oslo",
+    "name": "Joe & The Juice Colosseum",
+    "websiteUrl": null,
+    "address": "Essendrops gate 9, 0368 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92954763794543,
+    "longitude": 10.71171251690627
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/joethejuicecolosseum",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 76,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Acai Bowl",
+      "Avokado Sandwich",
+      "Sandwich & Juice/Shake Combo (1+1)",
+      "Feel Good",
+      "Avo Shake 16oz",
+      "Rå pasjonsfrukt- og bringebærfirkant",
+      "Iced Latte 12 oz",
+      "Stille vann"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Acai Bowl",
+        "priceMinor": 12300
+      },
+      {
+        "name": "Avokado Sandwich",
+        "priceMinor": 14700
+      },
+      {
+        "name": "Sandwich & Juice/Shake Combo (1+1)",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Feel Good",
+        "priceMinor": 12200
+      },
+      {
+        "name": "Avo Shake 16oz",
+        "priceMinor": 10800
+      },
+      {
+        "name": "Rå pasjonsfrukt- og bringebærfirkant",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Iced Latte 12 oz",
+        "priceMinor": 7300
+      },
+      {
+        "name": "Stille vann",
+        "priceMinor": 3300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

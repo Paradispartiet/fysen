@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "egon-storo-oslo",
+    "name": "Egon Storo",
+    "websiteUrl": null,
+    "address": "Vitaminveien 9-11, 0485 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94658508837636,
+    "longitude": 10.77472716705884
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/563egonstoro",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 125,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Crispy Chicken BLT Sandwich",
+      "Pasta Pollo",
+      "Egons Baconsurrede Indrefilet 180g",
+      "Curry Chicken Bowl",
+      "Pasta Bolognese",
+      "Chilinøtter",
+      "Tacosalat",
+      "Creme Brulee"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Crispy Chicken BLT Sandwich",
+        "priceMinor": 22200
+      },
+      {
+        "name": "Pasta Pollo",
+        "priceMinor": 26600
+      },
+      {
+        "name": "Egons Baconsurrede Indrefilet 180g",
+        "priceMinor": 45800
+      },
+      {
+        "name": "Curry Chicken Bowl",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Pasta Bolognese",
+        "priceMinor": 10300
+      },
+      {
+        "name": "Chilinøtter",
+        "priceMinor": 6600
+      },
+      {
+        "name": "Tacosalat",
+        "priceMinor": 22400
+      },
+      {
+        "name": "Creme Brulee",
+        "priceMinor": 13500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

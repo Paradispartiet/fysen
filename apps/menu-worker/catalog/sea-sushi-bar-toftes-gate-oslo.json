@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sea-sushi-bar-toftes-gate-oslo",
+    "name": "Sea Sushi Bar Toftes Gate",
+    "websiteUrl": null,
+    "address": "Toftes gate 20A, 0556 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92829169649805,
+    "longitude": 10.76138873171495
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/370seasushibartoftesgate",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 41,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Sea Sushi's Vårruller",
+      "Sea Sushi (20 biter)",
+      "Stor Mixed (58 biter)",
+      "Avokado Laks",
+      "Vegetar Maki",
+      "Kai Phad Ped",
+      "Gai Phad Mamoang",
+      "Pad Pak Luam Mit"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Sea Sushi's Vårruller",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Sea Sushi (20 biter)",
+        "priceMinor": 32900
+      },
+      {
+        "name": "Stor Mixed (58 biter)",
+        "priceMinor": 103000
+      },
+      {
+        "name": "Avokado Laks",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Vegetar Maki",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Kai Phad Ped",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Gai Phad Mamoang",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Pad Pak Luam Mit",
+        "priceMinor": 22900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

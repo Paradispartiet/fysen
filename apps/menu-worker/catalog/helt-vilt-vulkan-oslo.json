@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "helt-vilt-vulkan-oslo",
+    "name": "Helt Vilt",
+    "websiteUrl": null,
+    "address": "Vulkan 5, 0178 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92225253860743,
+    "longitude": 10.751749415749577
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/308heltvilt",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 40,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pommes Frites",
+      "BBQ Saus",
+      "Finnbiff",
+      "Blåbær Brus",
+      "Reinpølse / Fjord og Fjellmat",
+      "Gavepakke med spekepølser \"Nordlys 3\"",
+      "Tipsy Moose Burger",
+      "Vegetarburger"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pommes Frites",
+        "priceMinor": 6900
+      },
+      {
+        "name": "BBQ Saus",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Finnbiff",
+        "priceMinor": 37900
+      },
+      {
+        "name": "Blåbær Brus",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Reinpølse / Fjord og Fjellmat",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Gavepakke med spekepølser \"Nordlys 3\"",
+        "priceMinor": 38000
+      },
+      {
+        "name": "Tipsy Moose Burger",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Vegetarburger",
+        "priceMinor": 21500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "joe-the-juice-storo-storsenter-oslo",
+    "name": "Joe & The Juice Storo Storsenter",
+    "websiteUrl": null,
+    "address": "Vitaminveien 7-9, 0485 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94684205812542,
+    "longitude": 10.77538723559638
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/joethejuicestorostorsenter",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 87,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Green Tuna Bowl (New Recipe)",
+      "Green Shield (new recipe)",
+      "Raw Passionfruit & Raspberry Square",
+      "Sandwich & Juice/Shake Combo (1+1)",
+      "Prince of Green 16oz",
+      "Trust Your Gut",
+      "Americano 12oz",
+      "Stille vann"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Green Tuna Bowl (New Recipe)",
+        "priceMinor": 12700
+      },
+      {
+        "name": "Green Shield (new recipe)",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Raw Passionfruit & Raspberry Square",
+        "priceMinor": 3600
+      },
+      {
+        "name": "Sandwich & Juice/Shake Combo (1+1)",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Prince of Green 16oz",
+        "priceMinor": 10800
+      },
+      {
+        "name": "Trust Your Gut",
+        "priceMinor": 12200
+      },
+      {
+        "name": "Americano 12oz",
+        "priceMinor": 5400
+      },
+      {
+        "name": "Stille vann",
+        "priceMinor": 3300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

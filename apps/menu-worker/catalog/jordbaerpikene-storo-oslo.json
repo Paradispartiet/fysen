@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jordbaerpikene-storo-oslo",
+    "name": "Jordbærpikene Storo",
+    "websiteUrl": null,
+    "address": "Vitaminveien 7-9, 0485 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94684205812542,
+    "longitude": 10.77538723559638
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/689jordbaerpikenestoro",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 56,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-31",
+      "note": "Batch 31 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Søtpotetsalat",
+      "Cheddar & Bacon Burger m/ Fries",
+      "Kremet Pasta m/ Kylling",
+      "Pannekaker m/ Rørte Jordbær",
+      "Kremet pasta med kylling (barn)",
+      "Urtestekt brød m/ Aioli",
+      "Ostekake jordbær",
+      "Mer Jordbær & Eple 0,2l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Søtpotetsalat",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Cheddar & Bacon Burger m/ Fries",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Kremet Pasta m/ Kylling",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Pannekaker m/ Rørte Jordbær",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Kremet pasta med kylling (barn)",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Urtestekt brød m/ Aioli",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Ostekake jordbær",
+        "priceMinor": 8100
+      },
+      {
+        "name": "Mer Jordbær & Eple 0,2l",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
