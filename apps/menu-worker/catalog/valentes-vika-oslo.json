@@ -44,24 +44,24 @@
   ],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Tagliere Italiano",
+      "Tagliere Salumi e Formaggi",
       "Insalata Nicoise",
-      "Pizza Rucola",
-      "Spaghetti Carbonara",
-      "Tagliatelle al Tartufo",
-      "Spaghetti Vongole Veraci",
-      "Agnello",
+      "Pizza Rucolina Parma",
+      "Carbonara",
+      "Fettuccine al Tartufo",
+      "Spaghetti alle Vongole",
+      "Filetto di Agnello al Gorgonzola",
       "Valentes Spesial"
     ],
     "requiredDishVariants": [
-      { "name": "Tagliere Italiano", "priceMinor": 24500 },
-      { "name": "Insalata Nicoise", "priceMinor": 21500 },
-      { "name": "Pizza Rucola", "priceMinor": 24500 },
-      { "name": "Spaghetti Carbonara", "priceMinor": 26500 },
-      { "name": "Tagliatelle al Tartufo", "priceMinor": 31500 },
-      { "name": "Spaghetti Vongole Veraci", "priceMinor": 29500 },
-      { "name": "Agnello", "priceMinor": 38500 },
-      { "name": "Valentes Spesial", "priceMinor": 36500 }
+      { "name": "Tagliere Salumi e Formaggi", "priceMinor": 34500 },
+      { "name": "Insalata Nicoise", "priceMinor": 23000 },
+      { "name": "Pizza Rucolina Parma", "priceMinor": 29700 },
+      { "name": "Carbonara", "priceMinor": 31000 },
+      { "name": "Fettuccine al Tartufo", "priceMinor": 37000 },
+      { "name": "Spaghetti alle Vongole", "priceMinor": 36000 },
+      { "name": "Filetto di Agnello al Gorgonzola", "priceMinor": 44900 },
+      { "name": "Valentes Spesial", "priceMinor": 39800 }
     ],
     "forbiddenDishNames": [
       "Antipasti",
