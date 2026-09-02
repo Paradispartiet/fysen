@@ -162,15 +162,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "mon-amour-oslo",
-        "name": "Mon Amour",
+        "slug": "gangnam-korean-restaurant-oslo",
+        "name": "Gangnam Korean Restaurant",
         "websiteUrl": null,
-        "address": "Waldemar Thranes gate 70, 0173 Oslo",
+        "address": "Munkedamsveien 59, 0270 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/public/sted/monamour",
+        "url": "https://semeny.no/sted/117gangnamkoreanrestaurant",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -318,15 +318,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "pele-pele-oslo",
-        "name": "Pele Pele",
+        "slug": "paleet-food-hall-oslo",
+        "name": "Paleet Food Hall",
         "websiteUrl": null,
-        "address": "Smalgangen 11, 0188 Oslo",
+        "address": "Karl Johans gate 39, 0162 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/pelepele",
+        "url": "https://semeny.no/sted/paleetfoodhall",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -344,15 +344,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "jimmys-restaurant-bar-oslo",
-        "name": "Jimmy's Restaurant & Bar",
+        "slug": "damaskus-huset-restaurant-oslo",
+        "name": "Damaskus Huset Restaurant",
         "websiteUrl": null,
-        "address": "Leirfallsgata 6, 0550 Oslo",
+        "address": "Trondheimsveien 12, 0560 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/jimmysrestaurantbar",
+        "url": "https://semeny.no/sted/634damaskushusetrestaurant",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -370,15 +370,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "arte-pazza-pizza-parkveien-oslo",
-        "name": "Arte Pazza Pizza Parkveien",
+        "slug": "sunt-nam-oslo",
+        "name": "Sunt & Nam Oslo",
         "websiteUrl": null,
-        "address": "Parkveien 10, 0350 Oslo",
+        "address": "Tordenskiolds gate 6, 0160 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/artepazzapizzaparkveien",
+        "url": "https://semeny.no/sted/suntnamoslo",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
