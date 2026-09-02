@@ -23,14 +23,14 @@
     },
     {
       "version": 1,
-      "restaurant": {"slug":"oakberry-vika-oslo","name":"Oakberry Vika","websiteUrl":null,"address":"Haakon VIIs gate 10, 0161 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://semeny.no/sted/oakberryvika","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "restaurant": {"slug":"nabo-kitchen-bar-oslo","name":"Nabo Kitchen & Bar","websiteUrl":null,"address":"Essendrops gate 9, 0368 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/nabokitchenbar","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
       "version": 1,
-      "restaurant": {"slug":"oakberry-storgata-oslo","name":"Oakberry Storgata","websiteUrl":null,"address":"Storgata 10A, 0155 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://semeny.no/sted/oakberry","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "restaurant": {"slug":"indian-street-food-n-co-sorengkaia-oslo","name":"Indian Street Food N Co Sørengkaia","websiteUrl":null,"address":"Sørengkaia 7, 0194 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/559indianstreetfoodncosorengkaia","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
@@ -59,14 +59,14 @@
     },
     {
       "version": 1,
-      "restaurant": {"slug":"theka-indian-street-food-bar-oslo","name":"Theka - Indian Street Food & Bar Oslo","websiteUrl":null,"address":"Olaf Ryes plass 10, 0552 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://semeny.no/sted/thekaindianstreetfoodbaroslo","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "restaurant": {"slug":"chaskka-oslo","name":"Chaskka","websiteUrl":null,"address":"Frognerveien 1B, 0257 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/chaskka","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
       "version": 1,
-      "restaurant": {"slug":"listen-to-baljit-frogner-oslo","name":"Listen to Baljit","websiteUrl":null,"address":"Frognerveien 1A, 0257 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://semeny.no/sted/listentobaljit","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "restaurant": {"slug":"chaiwala-oslo","name":"Chaiwala","websiteUrl":null,"address":"Smalgangen 14, 0188 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/chaiwala","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
@@ -77,20 +77,20 @@
     },
     {
       "version": 1,
-      "restaurant": {"slug":"jagger-frogner-oslo","name":"Jagger Frogner","websiteUrl":null,"address":"Skovveien 4, 0257 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://semeny.no/sted/550jaggerfrogner","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "restaurant": {"slug":"benares-indisk-restaurant-bar-oslo","name":"Benares Indisk Restaurant & Bar","websiteUrl":"https://benares.no/","address":"Tordenskiolds gate 8, 0160 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/638benaresindiskrestaurantbar","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
       "version": 1,
-      "restaurant": {"slug":"smoothiexchange-frogner-oslo","name":"SmoothieXchange Frogner","websiteUrl":null,"address":"Niels Juels gate 31, 0257 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://semeny.no/sted/734smoothiexchangefrogner","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "restaurant": {"slug":"punjabi-tadka-oslo","name":"Punjabi Tadka","websiteUrl":null,"address":"Grønland 24, 0188 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/446punjabitadka","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
       "version": 1,
-      "restaurant": {"slug":"flamme-burger-frogner-oslo","name":"Flamme Burger Frogner","websiteUrl":null,"address":"Skovveien 3, 0257 Oslo","city":"Oslo","countryCode":"NO"},
-      "menuSource": {"url":"https://semeny.no/sted/flammeburgerfrogner","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "restaurant": {"slug":"oslo-kebab-pizzahus-toyengata-oslo","name":"Oslo Kebab & Pizzahus","websiteUrl":null,"address":"Tøyengata 1, 0190 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/354oslokebabpizzahus","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
       "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     }
   ]
