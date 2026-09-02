@@ -110,15 +110,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "lett-frogner-oslo",
-        "name": "LETT Frogner",
+        "slug": "braud-toastbar-oslo",
+        "name": "Braud Toastbar",
         "websiteUrl": null,
-        "address": "Frognerveien 8, 0257 Oslo",
+        "address": "Thorvald Meyers gate 47 A, 0555 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/lettfrogner",
+        "url": "https://semeny.no/sted/595braudtoastbar",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -370,15 +370,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "focacceria-grunerlokka-oslo",
-        "name": "Focacceria Grünerløkka",
+        "slug": "mucho-mas-grunerlokka-oslo",
+        "name": "Mucho Mas",
         "websiteUrl": null,
-        "address": "Markveien 34, 0554 Oslo",
+        "address": "Thorvald Meyers gate 36, 0555 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/653focacceriagrunerlokka",
+        "url": "https://semeny.no/sted/91muchomas",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
