@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jimmys-restaurant-bar-oslo",
+    "name": "Jimmy's Restaurant & Bar",
+    "websiteUrl": null,
+    "address": "Leirfallsgata 6, 0550 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9193349691899,
+    "longitude": 10.75751508558808
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/jimmysrestaurantbar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 39,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 34 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pepper Steak Salad",
+      "Fajitas Tower Dobbel",
+      "Jimmys Spareribs",
+      "Kids Tagliatelle Pasta",
+      "Parmesan & Hvitløksbrød",
+      "Bakt Potet med Hvitløkssmør",
+      "Chili Tigersaus",
+      "Honning Sennepdressing"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pepper Steak Salad",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Fajitas Tower Dobbel",
+        "priceMinor": 68900
+      },
+      {
+        "name": "Jimmys Spareribs",
+        "priceMinor": 36900
+      },
+      {
+        "name": "Kids Tagliatelle Pasta",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Parmesan & Hvitløksbrød",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Bakt Potet med Hvitløkssmør",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Chili Tigersaus",
+        "priceMinor": 2000
+      },
+      {
+        "name": "Honning Sennepdressing",
+        "priceMinor": 2000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

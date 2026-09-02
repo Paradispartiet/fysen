@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "foodie-restaurant-oslo",
+    "name": "Foodie Restaurant",
+    "websiteUrl": null,
+    "address": "Tordenskiolds gate 6, 0160 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9127805474354,
+    "longitude": 10.736349928884477
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/foodierestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 106,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 34 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vårruller (2stk) 鸭肉春卷",
+      "Spissekummin Lammekjøtt 🌶️ 孜然羊肉",
+      "Spicy & Sur Suppe 🌶️ 酸辣汤",
+      "Big plate chicken 🌶️🌶️ 新疆大盘鸡",
+      "Griddle cooked scampi 🌶️🌶️🌶️ 干锅虾",
+      "3064. Coriander beef 香菜拌牛肉",
+      "3033. Fried pak choi 炒上海青",
+      "Pepsi Max 0,33L"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vårruller (2stk) 鸭肉春卷",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Spissekummin Lammekjøtt 🌶️ 孜然羊肉",
+        "priceMinor": 31900
+      },
+      {
+        "name": "Spicy & Sur Suppe 🌶️ 酸辣汤",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Big plate chicken 🌶️🌶️ 新疆大盘鸡",
+        "priceMinor": 47900
+      },
+      {
+        "name": "Griddle cooked scampi 🌶️🌶️🌶️ 干锅虾",
+        "priceMinor": 47900
+      },
+      {
+        "name": "3064. Coriander beef 香菜拌牛肉",
+        "priceMinor": 29900
+      },
+      {
+        "name": "3033. Fried pak choi 炒上海青",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Pepsi Max 0,33L",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

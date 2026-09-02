@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "buns-sorengkaia-oslo",
+    "name": "BUN'S",
+    "websiteUrl": null,
+    "address": "Sørengkaia 71, 0194 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90309346232277,
+    "longitude": 10.753895945806901
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/buns",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 55,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 34 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bun's Burger Meal Deal",
+      "Natural",
+      "Pastor",
+      "Southern Fried Chicken",
+      "Cheesus Fries",
+      "Chipotle Mayo",
+      "BBQ",
+      "JUUN DRINK"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bun's Burger Meal Deal",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Natural",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Pastor",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Southern Fried Chicken",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Cheesus Fries",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Chipotle Mayo",
+        "priceMinor": 3000
+      },
+      {
+        "name": "BBQ",
+        "priceMinor": 3000
+      },
+      {
+        "name": "JUUN DRINK",
+        "priceMinor": 4200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

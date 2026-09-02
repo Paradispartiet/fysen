@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "city-work-akersgata-oslo",
+    "name": "City Work",
+    "websiteUrl": null,
+    "address": "Akersgata 34, 0180 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91439020650903,
+    "longitude": 10.743209318144071
+  },
+  "menuSource": {
+    "url": "https://www.meny.semeny.no/public/dk/sted/citywork1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 31,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 34 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Stegte nudler med and",
+      "Stegte nudler med rejer og krabbekød",
+      "Kung Pao Kylling Ris Bowl",
+      "Braiseret Oksekød Ris Bowl",
+      "Yangzhou stegte ris",
+      "Pepsi Max 0,33 l",
+      "Kylling Gyoza (5 stk.)",
+      "Spring Rolls (10 stk.)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Stegte nudler med and",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Stegte nudler med rejer og krabbekød",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Kung Pao Kylling Ris Bowl",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Braiseret Oksekød Ris Bowl",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Yangzhou stegte ris",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Pepsi Max 0,33 l",
+        "priceMinor": 1800
+      },
+      {
+        "name": "Kylling Gyoza (5 stk.)",
+        "priceMinor": 7000
+      },
+      {
+        "name": "Spring Rolls (10 stk.)",
+        "priceMinor": 6500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

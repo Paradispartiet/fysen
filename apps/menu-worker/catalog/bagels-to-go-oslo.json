@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bagels-to-go-oslo",
+    "name": "Bagels To Go",
+    "websiteUrl": null,
+    "address": "Dronning Eufemias gate 42, 0191 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90746298306307,
+    "longitude": 10.762109224839529
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/bagelstogo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 65,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 34 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Menu med kildevand",
+      "XL Myslibar m/mørk chokolade",
+      "Bagel med oksepastrami",
+      "Faxe Kondi Appelsin 33 cl",
+      "Cocio-iskaffe m/hasselnød",
+      "Othello lagkage",
+      "Saltkaramel milkshake",
+      "Faxe Kondi Booster 0,5 l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Menu med kildevand",
+        "priceMinor": 10900
+      },
+      {
+        "name": "XL Myslibar m/mørk chokolade",
+        "priceMinor": 1000
+      },
+      {
+        "name": "Bagel med oksepastrami",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Faxe Kondi Appelsin 33 cl",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Cocio-iskaffe m/hasselnød",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Othello lagkage",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Saltkaramel milkshake",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Faxe Kondi Booster 0,5 l",
+        "priceMinor": 3200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

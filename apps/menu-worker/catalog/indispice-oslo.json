@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "indispice-oslo",
+    "name": "IndiSpice",
+    "websiteUrl": null,
+    "address": "Welhavens gate 2A, 0166 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91984130728711,
+    "longitude": 10.733516670167784
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/indispice",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 46,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 34 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Butter Chicken m/ Nan & Drikke",
+      "Aloo Tikki Channa Chat",
+      "Lam Balbosti Tikka",
+      "Prawn Hyderabadi",
+      "Panir Makhni",
+      "Channa Masala Vegan",
+      "Salat",
+      "Bestikk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Butter Chicken m/ Nan & Drikke",
+        "priceMinor": 31440
+      },
+      {
+        "name": "Aloo Tikki Channa Chat",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Lam Balbosti Tikka",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Prawn Hyderabadi",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Panir Makhni",
+        "priceMinor": 15540
+      },
+      {
+        "name": "Channa Masala Vegan",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Salat",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Bestikk",
+        "priceMinor": 200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
