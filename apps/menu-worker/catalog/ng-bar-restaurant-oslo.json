@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ng-bar-restaurant-oslo",
+    "name": "NG Bar & Restaurant",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 43A, 0555 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92447311112001,
+    "longitude": 10.758806692451982
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/ngbarrestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 52,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Coq Au Vin",
+      "Croquetas m/ Okse og Svensk Ost",
+      "Chicken Goujons",
+      "Pommes Puré",
+      "Husets Fries",
+      "Angus Okseburger m/ Kyllingpaté",
+      "Husets Salat + Kylling",
+      "Kimchi Mayo"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Coq Au Vin",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Croquetas m/ Okse og Svensk Ost",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Chicken Goujons",
+        "priceMinor": 14800
+      },
+      {
+        "name": "Pommes Puré",
+        "priceMinor": 7800
+      },
+      {
+        "name": "Husets Fries",
+        "priceMinor": 7800
+      },
+      {
+        "name": "Angus Okseburger m/ Kyllingpaté",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Husets Salat + Kylling",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Kimchi Mayo",
+        "priceMinor": 3000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
