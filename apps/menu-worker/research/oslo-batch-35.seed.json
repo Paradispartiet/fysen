@@ -1,0 +1,397 @@
+{
+  "version": 1,
+  "batch": "oslo-batch-35",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "flavour-oslo",
+        "name": "Flavour",
+        "websiteUrl": null,
+        "address": "Heimdalsgata 37, 0578 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/flavour",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-02",
+          "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "tarka-oslo",
+        "name": "Tarka",
+        "websiteUrl": null,
+        "address": "Maridalsveien 21, 0178 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.meny.semeny.no/public/sted/630tarka",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-02",
+          "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "meiwei-spiseri-oslo",
+        "name": "MeiWei Spiseri",
+        "websiteUrl": null,
+        "address": "Tullins gate 6, 0166 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/public/sted/meiweispiseri",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-02",
+          "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "cafe-di-roma-oslo",
+        "name": "Cafe Di Roma",
+        "websiteUrl": null,
+        "address": "Sofienberggata 6, 0551 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/651cafediroma",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-02",
+          "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "texas-grill-pizza-oslo",
+        "name": "Texas Grill Og Pizza",
+        "websiteUrl": null,
+        "address": "Thorvald Meyers gate 77, 0552 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/319texasgrillogpizza",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-02",
+          "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "brunch-lunch-oslo",
+        "name": "Brunch & Lunch",
+        "websiteUrl": null,
+        "address": "Briskebyveien 28, 0259 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.meny.semeny.no/public/dk/sted/brunchlunch",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-02",
+          "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "gangnam-korean-restaurant-oslo",
+        "name": "Gangnam Korean Restaurant",
+        "websiteUrl": null,
+        "address": "Munkedamsveien 59, 0270 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/117gangnamkoreanrestaurant",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-02",
+          "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "sushi-dinner-oslo",
+        "name": "Sushi & Dinner",
+        "websiteUrl": null,
+        "address": "Hegdehaugsveien 1, 0352 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/public/sted/sushidinner",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-02",
+          "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "all-day-brunch-comfort-food-oslo",
+        "name": "All Day Brunch and Comfort Food",
+        "websiteUrl": null,
+        "address": "Tordenskiolds gate 12, 0160 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/alldaybrunchandcomfortfood",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-02",
+          "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "asian-home-cooking-oslo",
+        "name": "Asian Home Cooking",
+        "websiteUrl": null,
+        "address": "Klingenberggata 4, 0161 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/asianhomecooking",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-02",
+          "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "falafel-station-oslo",
+        "name": "Falafel station",
+        "websiteUrl": null,
+        "address": "Brugata 1, 0186 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/falafelstation",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-02",
+          "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "palette-mollergata-oslo",
+        "name": "Palette",
+        "websiteUrl": null,
+        "address": "Møllergata 26, 0179 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/public/se/sted/palette",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-02",
+          "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "paleet-food-hall-oslo",
+        "name": "Paleet Food Hall",
+        "websiteUrl": null,
+        "address": "Karl Johans gate 39, 0162 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/paleetfoodhall",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-02",
+          "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "damaskus-huset-restaurant-oslo",
+        "name": "Damaskus Huset Restaurant",
+        "websiteUrl": null,
+        "address": "Trondheimsveien 12, 0560 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/634damaskushusetrestaurant",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-02",
+          "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "sunt-nam-oslo",
+        "name": "Sunt & Nam Oslo",
+        "websiteUrl": null,
+        "address": "Tordenskiolds gate 6, 0160 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/suntnamoslo",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-02",
+          "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    }
+  ]
+}
