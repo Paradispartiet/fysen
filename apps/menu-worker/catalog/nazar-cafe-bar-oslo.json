@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "nazar-cafe-bar-oslo",
+    "name": "Nazar Café & Bar",
+    "websiteUrl": null,
+    "address": "Kristiansands gate 2, 0463 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93826767400498,
+    "longitude": 10.752807162919128
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/391nazarcafebar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 52,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 33 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Alaturka m/ Köfte",
+      "Libawrap m/ Halloumi 🌱",
+      "La Det Burger",
+      "Minus på Kontoen? 🌱",
+      "Vegansk Brownie🌱",
+      "Cappucino",
+      "Roiboos",
+      "Valleløkka Solbærbrus"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Alaturka m/ Köfte",
+        "priceMinor": 31100
+      },
+      {
+        "name": "Libawrap m/ Halloumi 🌱",
+        "priceMinor": 29900
+      },
+      {
+        "name": "La Det Burger",
+        "priceMinor": 31100
+      },
+      {
+        "name": "Minus på Kontoen? 🌱",
+        "priceMinor": 14100
+      },
+      {
+        "name": "Vegansk Brownie🌱",
+        "priceMinor": 8100
+      },
+      {
+        "name": "Cappucino",
+        "priceMinor": 4800
+      },
+      {
+        "name": "Roiboos",
+        "priceMinor": 5400
+      },
+      {
+        "name": "Valleløkka Solbærbrus",
+        "priceMinor": 6200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

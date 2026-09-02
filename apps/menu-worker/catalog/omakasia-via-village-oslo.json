@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "omakasia-via-village-oslo",
+    "name": "OmakAsia - VIA Village",
+    "websiteUrl": null,
+    "address": "Munkedamsveien 29, 0251 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91216960578757,
+    "longitude": 10.726724502423542
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/646omakasiaviavillage",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 35,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 33 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "CHEF'S BOX - 5 COURSE TASTING",
+      "Crispy Duck 1/2",
+      "Flambé Salmon and Scampi",
+      "Flambé Halibut and Tempura",
+      "Salmon Nigiri",
+      "Chicken Spring Rolls with Avocado Salsa and Chili Mayo",
+      "Crispy Scampi Wontons - 5 PCS",
+      "Crispy Chicken Bowl"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "CHEF'S BOX - 5 COURSE TASTING",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Crispy Duck 1/2",
+        "priceMinor": 39900
+      },
+      {
+        "name": "Flambé Salmon and Scampi",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Flambé Halibut and Tempura",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Salmon Nigiri",
+        "priceMinor": 5000
+      },
+      {
+        "name": "Chicken Spring Rolls with Avocado Salsa and Chili Mayo",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Crispy Scampi Wontons - 5 PCS",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Crispy Chicken Bowl",
+        "priceMinor": 18500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

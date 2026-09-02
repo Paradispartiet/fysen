@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mela-cafe-oslo",
+    "name": "Mela Cafe",
+    "websiteUrl": null,
+    "address": "Mariboes gate 8, 0183 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.916682443768366,
+    "longitude": 10.750516739441013
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/669melacafe",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 67,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 33 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Mezah Vegetar",
+      "Squashboller",
+      "Ris",
+      "Lammecarre",
+      "Lammekoteletter",
+      "Dolma 🌱",
+      "Børek Minirull med Hummus",
+      "Kjøttboller med Hummus"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Mezah Vegetar",
+        "priceMinor": 35900
+      },
+      {
+        "name": "Squashboller",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Ris",
+        "priceMinor": 8400
+      },
+      {
+        "name": "Lammecarre",
+        "priceMinor": 14400
+      },
+      {
+        "name": "Lammekoteletter",
+        "priceMinor": 30900
+      },
+      {
+        "name": "Dolma 🌱",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Børek Minirull med Hummus",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Kjøttboller med Hummus",
+        "priceMinor": 27900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
