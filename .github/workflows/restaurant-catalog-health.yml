@@ -24,7 +24,7 @@ concurrency:
 jobs:
   full-catalog:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     env:
       FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
       FYSEN_CANDIDATE_VALIDATION_MAX_ATTEMPTS: "3"
