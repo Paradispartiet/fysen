@@ -162,15 +162,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "lett-frogner-oslo",
-        "name": "LETT Frogner",
+        "slug": "drop-in-oslo",
+        "name": "Drop-In",
         "websiteUrl": null,
-        "address": "Frognerveien 8, 0257 Oslo",
+        "address": "Dronning Eufemias gate 9, 0191 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/lettfrogner",
+        "url": "https://semeny.no/sted/dropin",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -188,15 +188,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "oslo-raw-frogner-oslo",
-        "name": "Oslo Raw Frogner",
+        "slug": "sushi-dinner-oslo",
+        "name": "Sushi & Dinner",
         "websiteUrl": null,
-        "address": "Skovveien 16, 0257 Oslo",
+        "address": "Hegdehaugsveien 1, 0352 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/oslorawfrogner",
+        "url": "https://semeny.no/public/sted/sushidinner",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -214,15 +214,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "kammis-grill-frogner-oslo",
-        "name": "Kammis Grill Frogner",
+        "slug": "all-day-brunch-comfort-food-oslo",
+        "name": "All Day Brunch and Comfort Food",
         "websiteUrl": null,
-        "address": "Frognerveien 9B, 0257 Oslo",
+        "address": "Tordenskiolds gate 12, 0160 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/kammisgrillfrogner",
+        "url": "https://semeny.no/sted/alldaybrunchandcomfortfood",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -240,15 +240,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "lett-bislett-oslo",
-        "name": "LETT Bislett",
+        "slug": "asian-home-cooking-oslo",
+        "name": "Asian Home Cooking",
         "websiteUrl": null,
-        "address": "Bogstadveien 39, 0365 Oslo",
+        "address": "Klingenberggata 4, 0161 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/lettbislett",
+        "url": "https://semeny.no/sted/asianhomecooking",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -266,15 +266,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "foodie-restaurant-oslo",
-        "name": "Foodie Restaurant",
+        "slug": "falafel-station-oslo",
+        "name": "Falafel station",
         "websiteUrl": null,
-        "address": "Tordenskiolds gate 6, 0160 Oslo",
+        "address": "Brugata 1, 0186 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/public/sted/foodierestaurant",
+        "url": "https://semeny.no/sted/falafelstation",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -292,15 +292,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "handmade-grunerlokka-oslo",
-        "name": "Handmade Grünerløkka",
+        "slug": "palette-mollergata-oslo",
+        "name": "Palette",
         "websiteUrl": null,
-        "address": "Trondheimsveien 8, 0560 Oslo",
+        "address": "Møllergata 26, 0179 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/handmadegrunerlokka",
+        "url": "https://semeny.no/public/se/sted/palette",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -318,15 +318,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "winther-frognerparken-oslo",
-        "name": "Winther Frognerparken",
+        "slug": "oakberry-vika-oslo",
+        "name": "Oakberry Vika",
         "websiteUrl": null,
-        "address": "Middelthuns gate 17P, 0368 Oslo",
+        "address": "Haakon VIIs gate 10, 0161 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://meny.semeny.no/sted/380wintherfrognerparken",
+        "url": "https://semeny.no/public/sted/oakberryvika",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -344,15 +344,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "majorstuen-sushi-oslo",
-        "name": "Majorstuen Sushi",
+        "slug": "nabo-kitchen-bar-oslo",
+        "name": "Nabo Kitchen & Bar",
         "websiteUrl": null,
-        "address": "Bogstadveien 53, 0366 Oslo",
+        "address": "Essendrops gate 9, 0368 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/333majorstuensushi",
+        "url": "https://semeny.no/public/sted/nabokitchenbar",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -370,15 +370,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "majorstuen-grill-kebab-oslo",
-        "name": "Majorstuen Grill & Kebab",
+        "slug": "ng-bar-restaurant-oslo",
+        "name": "NG Bar & Restaurant",
         "websiteUrl": null,
-        "address": "Bogstadveien 53B, 0366 Oslo",
+        "address": "Thorvald Meyers gate 43, 0555 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/majorstuengrillkebab",
+        "url": "https://www.meny.semeny.no/sted/ngbarrestaurant",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
