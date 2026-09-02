@@ -11,18 +11,25 @@
     "longitude": 10.7530356
   },
   "menuSource": {
-    "url": "https://district4.no/wp-content/uploads/2026/06/D4_innemeny_A3_2026_sommermeny.pdf",
-    "sourceType": "pdf",
+    "url": "https://www.foodora.no/restaurant/t8cf/district-4-t8cf",
+    "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 25
+    "minimumExpectedItems": 19
   },
   "hoursSource": {
     "url": "https://district4.no/",
     "timeZone": "Europe/Oslo",
     "checkIntervalMinutes": 360,
     "minimumExpectedIntervals": 7
+  },
+  "verification": {
+    "menu": {
+      "status": "verified",
+      "checkedAt": "2026-09-02",
+      "note": "District 4's first-party summer-menu PDF remains linked publicly but returns HTTP 404 to GitHub-hosted Fysen validation runners. The current Foodora service menu is independently matched to District 4 at Kristiansands gate 1 and is used as the live priced fallback source."
+    }
   },
   "actions": [
     {
@@ -40,32 +47,32 @@
   ],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Chả giò / Springrolls",
-      "Bánh mì / Vietnamese baguette",
-      "Phở bò tái / Pho beef noodle soup",
-      "Bún Bò Huế / Spicy noodle soup",
-      "Cà ri gà / Chicken curry"
+      "Dragon Ball",
+      "Pepper biff",
+      "Gà xào lá Huế",
+      "Bò tái chanh",
+      "Mực Chiên Giòn"
     ],
     "requiredDishVariants": [
       {
-        "name": "Chả giò / Springrolls",
-        "priceMinor": 11900
+        "name": "Dragon Ball",
+        "priceMinor": 18900
       },
       {
-        "name": "Bánh mì / Vietnamese baguette",
-        "priceMinor": 16800
+        "name": "Pepper biff",
+        "priceMinor": 37900
       },
       {
-        "name": "Phở bò tái / Pho beef noodle soup",
-        "priceMinor": 22900
+        "name": "Gà xào lá Huế",
+        "priceMinor": 31000
       },
       {
-        "name": "Bún Bò Huế / Spicy noodle soup",
-        "priceMinor": 22900
+        "name": "Bò tái chanh",
+        "priceMinor": 21500
       },
       {
-        "name": "Cà ri gà / Chicken curry",
-        "priceMinor": 23900
+        "name": "Mực Chiên Giòn",
+        "priceMinor": 17500
       }
     ],
     "forbiddenDishNames": [
