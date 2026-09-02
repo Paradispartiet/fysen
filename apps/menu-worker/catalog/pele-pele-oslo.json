@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pele-pele-oslo",
+    "name": "Pele Pele",
+    "websiteUrl": null,
+    "address": "Smalgangen 11, 0188 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91220239268513,
+    "longitude": 10.760303649456482
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/pelepele",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 36,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Quarter Chicken",
+      "Whole Chicken & Two Sides",
+      "Veggie Burger",
+      "Sweet Potato Fries",
+      "Mac & Cheese",
+      "Lemon & Herbs",
+      "Solo 0.33",
+      "Juun Pink Guava 0.33"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Quarter Chicken",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Whole Chicken & Two Sides",
+        "priceMinor": 45800
+      },
+      {
+        "name": "Veggie Burger",
+        "priceMinor": 24800
+      },
+      {
+        "name": "Sweet Potato Fries",
+        "priceMinor": 7800
+      },
+      {
+        "name": "Mac & Cheese",
+        "priceMinor": 7800
+      },
+      {
+        "name": "Lemon & Herbs",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Solo 0.33",
+        "priceMinor": 4800
+      },
+      {
+        "name": "Juun Pink Guava 0.33",
+        "priceMinor": 4800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

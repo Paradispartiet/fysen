@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "benares-indisk-restaurant-bar-oslo",
+    "name": "Benares Indisk Restaurant & Bar",
+    "websiteUrl": "https://benares.no/",
+    "address": "Tordenskiolds gate 8, 0160 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.912266573160615,
+    "longitude": 10.73582230062182
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/638benaresindiskrestaurantbar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 49,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Mix vegetable",
+      "Lam Balti",
+      "Chicken Tikka Masala",
+      "Tandoori Lamb Chops",
+      "Veg Biryani",
+      "Garlic Nan",
+      "Tandoori Roti",
+      "Chilly Paneer"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Mix vegetable",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Lam Balti",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Chicken Tikka Masala",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Tandoori Lamb Chops",
+        "priceMinor": 36900
+      },
+      {
+        "name": "Veg Biryani",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Garlic Nan",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Tandoori Roti",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Chilly Paneer",
+        "priceMinor": 14900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "yo-sushi-oslo-city",
+    "name": "YO! Sushi",
+    "websiteUrl": null,
+    "address": "Jernbanetorget 1, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91087480164096,
+    "longitude": 10.750736725832216
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/693yosushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 59,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tempura Prawn & Avocado Maki",
+      "Avocado Maki 🌱",
+      "Ebi Nigiri",
+      "Spicy Seafood Ramen 🌶️🌶️",
+      "Plain Steamed Rice",
+      "Japanese Fried Chicken",
+      "Salmon & Avocado Box",
+      "Oreo Cake"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Tempura Prawn & Avocado Maki",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Avocado Maki 🌱",
+        "priceMinor": 7200
+      },
+      {
+        "name": "Ebi Nigiri",
+        "priceMinor": 5100
+      },
+      {
+        "name": "Spicy Seafood Ramen 🌶️🌶️",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Plain Steamed Rice",
+        "priceMinor": 3200
+      },
+      {
+        "name": "Japanese Fried Chicken",
+        "priceMinor": 9700
+      },
+      {
+        "name": "Salmon & Avocado Box",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Oreo Cake",
+        "priceMinor": 6100
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

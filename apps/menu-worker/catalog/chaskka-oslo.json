@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "chaskka-oslo",
+    "name": "Chaskka",
+    "websiteUrl": null,
+    "address": "Frognerveien 1B, 0257 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91536464989251,
+    "longitude": 10.717346147609533
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/chaskka",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 31,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Iftar Package - 2 Biryani & 2 Curry",
+      "Chicken Tikka Masala with Naan & Rice",
+      "Vegetarian Biryani",
+      "Beef Tikka Roll",
+      "Paneer Tikka with Rice",
+      "Garlic Chicken in Pita",
+      "Pepsi Max 0,5l",
+      "Barne Meny"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Iftar Package - 2 Biryani & 2 Curry",
+        "priceMinor": 74900
+      },
+      {
+        "name": "Chicken Tikka Masala with Naan & Rice",
+        "priceMinor": 19600
+      },
+      {
+        "name": "Vegetarian Biryani",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Beef Tikka Roll",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Paneer Tikka with Rice",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Garlic Chicken in Pita",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Pepsi Max 0,5l",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Barne Meny",
+        "priceMinor": 8900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

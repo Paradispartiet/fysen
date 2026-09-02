@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pappabuene-oslo",
+    "name": "Pappabuene",
+    "websiteUrl": null,
+    "address": "Rådhusbrygge 1, 0160 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90991423475986,
+    "longitude": 10.73371437786273
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/pappabuene",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Cotto e Funghi",
+      "Vegetariana 🌱",
+      "Formaggi",
+      "Verde e Rosso",
+      "Crudo di Parma",
+      "Tartufo",
+      "‘Nduja"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Cotto e Funghi",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Vegetariana 🌱",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Formaggi",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Verde e Rosso",
+        "priceMinor": 27000
+      },
+      {
+        "name": "Crudo di Parma",
+        "priceMinor": 26000
+      },
+      {
+        "name": "Tartufo",
+        "priceMinor": 29000
+      },
+      {
+        "name": "‘Nduja",
+        "priceMinor": 29500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

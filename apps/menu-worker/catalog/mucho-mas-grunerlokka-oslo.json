@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mucho-mas-grunerlokka-oslo",
+    "name": "Mucho Mas",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 36A, 0555 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92420472221219,
+    "longitude": 10.759400800425365
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/91muchomas",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 38,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Classic Bowl",
+      "Classic Nacho Kit",
+      "Portobello Sopp Burrito",
+      "Portobello Sopp Quesadilla",
+      "Chips & Salsa",
+      "Rømme",
+      "Rød Ris",
+      "Bestikk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Classic Bowl",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Classic Nacho Kit",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Portobello Sopp Burrito",
+        "priceMinor": 25700
+      },
+      {
+        "name": "Portobello Sopp Quesadilla",
+        "priceMinor": 25700
+      },
+      {
+        "name": "Chips & Salsa",
+        "priceMinor": 11200
+      },
+      {
+        "name": "Rømme",
+        "priceMinor": 3100
+      },
+      {
+        "name": "Rød Ris",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Bestikk",
+        "priceMinor": 500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
