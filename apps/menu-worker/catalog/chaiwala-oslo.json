@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "chaiwala-oslo",
+    "name": "Chaiwala",
+    "websiteUrl": null,
+    "address": "Smalgangen 14, 0188 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91239063202529,
+    "longitude": 10.760331502649066
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/chaiwala",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 57,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Mumbai Bhel Puri",
+      "Pani Puri",
+      "Tandoori Zinger Pav",
+      "Butter Naan",
+      "Papadums",
+      "Masala Chai",
+      "Lunch Thali Meat Meal Deal",
+      "Chole Bhature"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Mumbai Bhel Puri",
+        "priceMinor": 7800
+      },
+      {
+        "name": "Pani Puri",
+        "priceMinor": 10200
+      },
+      {
+        "name": "Tandoori Zinger Pav",
+        "priceMinor": 15800
+      },
+      {
+        "name": "Butter Naan",
+        "priceMinor": 4800
+      },
+      {
+        "name": "Papadums",
+        "priceMinor": 4800
+      },
+      {
+        "name": "Masala Chai",
+        "priceMinor": 5400
+      },
+      {
+        "name": "Lunch Thali Meat Meal Deal",
+        "priceMinor": 34500
+      },
+      {
+        "name": "Chole Bhature",
+        "priceMinor": 27500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
