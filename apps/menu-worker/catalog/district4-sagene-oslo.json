@@ -47,7 +47,7 @@
   ],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Lemongrass Biff",
+      "Dragon Ball",
       "Pepper biff",
       "Gà xào lá Huế",
       "Bò tái chanh",
@@ -55,8 +55,8 @@
     ],
     "requiredDishVariants": [
       {
-        "name": "Lemongrass Biff",
-        "priceMinor": 33900
+        "name": "Dragon Ball",
+        "priceMinor": 18900
       },
       {
         "name": "Pepper biff",
