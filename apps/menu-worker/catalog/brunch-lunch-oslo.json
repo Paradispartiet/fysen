@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "brunch-lunch-oslo",
+    "name": "Brunch & Lunch",
+    "websiteUrl": null,
+    "address": "Briskebyveien 28, 0259 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.919954899606175,
+    "longitude": 10.71797690997722
+  },
+  "menuSource": {
+    "url": "https://www.meny.semeny.no/public/dk/sted/brunchlunch",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 48,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pommes frittes (V)",
+      "Harboe Cola 0,33 l",
+      "Faxe Kondi Free 0.33 l",
+      "Tyrkisk brød Menu",
+      "Arabisk brød med langtidsstegt oksekød",
+      "Tyrkisk brød med sucuk",
+      "Ayran 0,25 l",
+      "Brunch menu"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pommes frittes (V)",
+        "priceMinor": 3959
+      },
+      {
+        "name": "Harboe Cola 0,33 l",
+        "priceMinor": 1523
+      },
+      {
+        "name": "Faxe Kondi Free 0.33 l",
+        "priceMinor": 2300
+      },
+      {
+        "name": "Tyrkisk brød Menu",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Arabisk brød med langtidsstegt oksekød",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Tyrkisk brød med sucuk",
+        "priceMinor": 9200
+      },
+      {
+        "name": "Ayran 0,25 l",
+        "priceMinor": 1523
+      },
+      {
+        "name": "Brunch menu",
+        "priceMinor": 15834
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

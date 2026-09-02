@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "palette-mollergata-oslo",
+    "name": "Palette",
+    "websiteUrl": null,
+    "address": "Møllergata 26, 0179 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91643313801384,
+    "longitude": 10.749473295742824
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/se/sted/palette",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 126,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Marinerad kycklingfilérulle + valfri dryck",
+      "Al tonno",
+      "Kebabpizza special",
+      "Meat Lovers",
+      "Falafel med bröd",
+      "Palette Share Box",
+      "Ben & Jerry's Cookie Dough 465ml",
+      "Powerking 25 cl"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Marinerad kycklingfilérulle + valfri dryck",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Al tonno",
+        "priceMinor": 13000
+      },
+      {
+        "name": "Kebabpizza special",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Meat Lovers",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Falafel med bröd",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Palette Share Box",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Ben & Jerry's Cookie Dough 465ml",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Powerking 25 cl",
+        "priceMinor": 2200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

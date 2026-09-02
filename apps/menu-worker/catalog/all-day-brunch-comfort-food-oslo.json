@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "all-day-brunch-comfort-food-oslo",
+    "name": "All Day Brunch and Comfort Food",
+    "websiteUrl": null,
+    "address": "Tordenskiolds gate 12, 0160 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91159268876643,
+    "longitude": 10.73516114875097
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/alldaybrunchandcomfortfood",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 100,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Profiterole With Semolina Cream",
+      "Smoked Eggplant",
+      "Fish and Chips",
+      "Croque Madame",
+      "Espresso Macchiato",
+      "Fimi Tonic 0.25l",
+      "Paloma",
+      "Virgin Citrus"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Profiterole With Semolina Cream",
+        "priceMinor": 760
+      },
+      {
+        "name": "Smoked Eggplant",
+        "priceMinor": 1400
+      },
+      {
+        "name": "Fish and Chips",
+        "priceMinor": 1500
+      },
+      {
+        "name": "Croque Madame",
+        "priceMinor": 820
+      },
+      {
+        "name": "Espresso Macchiato",
+        "priceMinor": 190
+      },
+      {
+        "name": "Fimi Tonic 0.25l",
+        "priceMinor": 300
+      },
+      {
+        "name": "Paloma",
+        "priceMinor": 1050
+      },
+      {
+        "name": "Virgin Citrus",
+        "priceMinor": 700
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

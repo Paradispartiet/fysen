@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sushi-dinner-oslo",
+    "name": "Sushi & Dinner",
+    "websiteUrl": null,
+    "address": "Hegdehaugsveien 1, 0352 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9204273658018,
+    "longitude": 10.732797673147669
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/sushidinner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 95,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Dagens Sushi 1",
+      "Vegetar Vårruller",
+      "Flyverfiskrogn",
+      "Spicy Tuna",
+      "Tempura Kylling (Futo Maki)",
+      "Kokt Scampi (Futo Maki)",
+      "Kylling Chopsuey",
+      "Fuze Tea Peach Hibiscus 0,4L"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Dagens Sushi 1",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Vegetar Vårruller",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Flyverfiskrogn",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Spicy Tuna",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Tempura Kylling (Futo Maki)",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Kokt Scampi (Futo Maki)",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Kylling Chopsuey",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Fuze Tea Peach Hibiscus 0,4L",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

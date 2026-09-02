@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "gangnam-korean-restaurant-oslo",
+    "name": "Gangnam Korean Restaurant",
+    "websiteUrl": null,
+    "address": "Munkedamsveien 59, 0270 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91106686690051,
+    "longitude": 10.721148107958168
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/117gangnamkoreanrestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 23,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kimchi Mandu",
+      "Toppoki",
+      "Haemul Pajon",
+      "Bulgogi",
+      "Podobongbong Druejuice (238ml)",
+      "Demisoda Eple 250ml",
+      "Pepsi 0,3l",
+      "Spisepinner"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kimchi Mandu",
+        "priceMinor": 12100
+      },
+      {
+        "name": "Toppoki",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Haemul Pajon",
+        "priceMinor": 15200
+      },
+      {
+        "name": "Bulgogi",
+        "priceMinor": 34200
+      },
+      {
+        "name": "Podobongbong Druejuice (238ml)",
+        "priceMinor": 5300
+      },
+      {
+        "name": "Demisoda Eple 250ml",
+        "priceMinor": 5800
+      },
+      {
+        "name": "Pepsi 0,3l",
+        "priceMinor": 5800
+      },
+      {
+        "name": "Spisepinner",
+        "priceMinor": 300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
