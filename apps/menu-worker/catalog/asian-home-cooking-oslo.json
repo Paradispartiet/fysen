@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "asian-home-cooking-oslo",
+    "name": "Asian Home Cooking",
+    "websiteUrl": null,
+    "address": "Klingenberggata 4, 0161 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91375950755647,
+    "longitude": 10.734031186469126
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/asianhomecooking",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 66,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Crispy Duck Meal Kit (for 2 pers)",
+      "Japanese Ramen",
+      "Moneybags (3 stk)",
+      "Mixed Green Salad",
+      "Olden m /Kullsyre",
+      "Uncle Saba's High Protein Chipotle Chilli & Lime Snacks",
+      "Lemper (5 pcs)",
+      "Koningsvogel Rawon Mix"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Crispy Duck Meal Kit (for 2 pers)",
+        "priceMinor": 34900
+      },
+      {
+        "name": "Japanese Ramen",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Moneybags (3 stk)",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Mixed Green Salad",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Olden m /Kullsyre",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Uncle Saba's High Protein Chipotle Chilli & Lime Snacks",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Lemper (5 pcs)",
+        "priceMinor": 9950
+      },
+      {
+        "name": "Koningsvogel Rawon Mix",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

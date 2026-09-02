@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "flavour-oslo",
+    "name": "Flavour",
+    "websiteUrl": null,
+    "address": "Heimdalsgata 37, 0578 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.914321079077624,
+    "longitude": 10.767087443889661
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/flavour",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 44,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Shanghai Xiaolongbao",
+      "Vegetar Vårruller (2 Stykk)",
+      "Lilla Trøffel Iberico Xiaolongbao",
+      "Gongbao Kylling",
+      "Hunansk krydret biff",
+      "Ekstra ris",
+      "San Pellegrino aranciata sparkling",
+      "Delemeny for 4 personer"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Shanghai Xiaolongbao",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Vegetar Vårruller (2 Stykk)",
+        "priceMinor": 9025
+      },
+      {
+        "name": "Lilla Trøffel Iberico Xiaolongbao",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Gongbao Kylling",
+        "priceMinor": 24210
+      },
+      {
+        "name": "Hunansk krydret biff",
+        "priceMinor": 29610
+      },
+      {
+        "name": "Ekstra ris",
+        "priceMinor": 3000
+      },
+      {
+        "name": "San Pellegrino aranciata sparkling",
+        "priceMinor": 3800
+      },
+      {
+        "name": "Delemeny for 4 personer",
+        "priceMinor": 99900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

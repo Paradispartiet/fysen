@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sunt-nam-oslo",
+    "name": "Sunt & Nam Oslo",
+    "websiteUrl": null,
+    "address": "Tordenskiolds gate 6, 0160 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9127805474354,
+    "longitude": 10.736349928884477
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/suntnamoslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 62,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Innbakt Kylling i Sursøt Saus",
+      "Sunt & Nam Spesial Biff",
+      "Vegetar Vårruller (2 stk)",
+      "Sushi Large (20 biter)",
+      "Spicy Tuna Maki",
+      "Peking Duck Futo Maki",
+      "Fruit Ice Tea / 水果冰茶",
+      "Wakame Salat"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Innbakt Kylling i Sursøt Saus",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Sunt & Nam Spesial Biff",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Vegetar Vårruller (2 stk)",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Sushi Large (20 biter)",
+        "priceMinor": 31900
+      },
+      {
+        "name": "Spicy Tuna Maki",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Peking Duck Futo Maki",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Fruit Ice Tea / 水果冰茶",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Wakame Salat",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

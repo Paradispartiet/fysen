@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "damaskus-huset-restaurant-oslo",
+    "name": "Damaskus Huset Restaurant",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 12A, 0560 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91962823008125,
+    "longitude": 10.764339207748682
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/634damaskushusetrestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 38,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hummus m/ Lammekjøtt",
+      "Linsesuppe",
+      "Mtabel",
+      "Shawarma",
+      "Kylling Shawarma Tallerken m/ Hummus",
+      "Aubergin Kebab",
+      "Halvgrillet Kylling",
+      "Baklawa"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hummus m/ Lammekjøtt",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Linsesuppe",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Mtabel",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Shawarma",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Kylling Shawarma Tallerken m/ Hummus",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Aubergin Kebab",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Halvgrillet Kylling",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Baklawa",
+        "priceMinor": 11900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "meiwei-spiseri-oslo",
+    "name": "MeiWei Spiseri",
+    "websiteUrl": null,
+    "address": "Tullins gate 6, 0166 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91829811327496,
+    "longitude": 10.734759912212166
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/meiweispiseri",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 108,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Sprø Samosa med kylling (2 pcs)",
+      "Sprøstekte Wonton (10 pcs)",
+      "Sprøstekte Wonton",
+      "Japansk Teriyaki Kylling",
+      "Kylling Gong Bao 🌶️",
+      "Hjemmelagete Dumplings med svinekjøtt (frossen)",
+      "Sprø vegetar Buns (6 stk)",
+      "F8 Husets Andefilet Vårruller"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Sprø Samosa med kylling (2 pcs)",
+        "priceMinor": 6230
+      },
+      {
+        "name": "Sprøstekte Wonton (10 pcs)",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Sprøstekte Wonton",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Japansk Teriyaki Kylling",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Kylling Gong Bao 🌶️",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Hjemmelagete Dumplings med svinekjøtt (frossen)",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Sprø vegetar Buns (6 stk)",
+        "priceMinor": 17850
+      },
+      {
+        "name": "F8 Husets Andefilet Vårruller",
+        "priceMinor": 25000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

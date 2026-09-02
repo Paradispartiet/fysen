@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "paleet-food-hall-oslo",
+    "name": "Paleet Food Hall",
+    "websiteUrl": null,
+    "address": "Karl Johans gate 39, 0162 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.914317251572676,
+    "longitude": 10.737646461010332
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/paleetfoodhall",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 56,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Panna Cotta",
+      "Tempura Scampi Strawberry",
+      "Seared Salmon Nigiri",
+      "Pasta Pollo Gorgonzola",
+      "Diavola",
+      "Chicken Barbacoa Queso",
+      "Salsa",
+      "Chicken Karaage"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Panna Cotta",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Tempura Scampi Strawberry",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Seared Salmon Nigiri",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Pasta Pollo Gorgonzola",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Diavola",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Chicken Barbacoa Queso",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Salsa",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Chicken Karaage",
+        "priceMinor": 16900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

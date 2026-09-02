@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "falafel-station-oslo",
+    "name": "Falafel station",
+    "websiteUrl": null,
+    "address": "Brugata 1, 0186 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.914409149483035,
+    "longitude": 10.753766798872537
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/falafelstation",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 66,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Crispy Chicken (3 stk)",
+      "Crispy chicken Box",
+      "Falafel og aubrergine Durum",
+      "Crispy chicken Tallerken",
+      "Pepsi 0,33 l",
+      "Falafel Bowl",
+      "Durum (VG)",
+      "Danskvand 0,5 l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Crispy Chicken (3 stk)",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Crispy chicken Box",
+        "priceMinor": 9000
+      },
+      {
+        "name": "Falafel og aubrergine Durum",
+        "priceMinor": 10000
+      },
+      {
+        "name": "Crispy chicken Tallerken",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Pepsi 0,33 l",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Falafel Bowl",
+        "priceMinor": 10000
+      },
+      {
+        "name": "Durum (VG)",
+        "priceMinor": 8000
+      },
+      {
+        "name": "Danskvand 0,5 l",
+        "priceMinor": 2500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
