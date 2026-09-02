@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bahn-mi-cousins-storgata-oslo",
+    "name": "Bahn Mi Cousins",
+    "websiteUrl": null,
+    "address": "Storgata 25, 0184 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91401231902849,
+    "longitude": 10.751188150585149
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/620bahnmicousins",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 46,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Servietter",
+      "Bánh Mì Pulled pork",
+      "Ris m/Oksekjøtt",
+      "Karamellisert svinekjøtt/ Thit kho tau",
+      "RIS",
+      "stor Cousins Chilisaus",
+      "Cousins Creamy Taro",
+      "Bestikk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Servietter",
+        "priceMinor": 500
+      },
+      {
+        "name": "Bánh Mì Pulled pork",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Ris m/Oksekjøtt",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Karamellisert svinekjøtt/ Thit kho tau",
+        "priceMinor": 18900
+      },
+      {
+        "name": "RIS",
+        "priceMinor": 6000
+      },
+      {
+        "name": "stor Cousins Chilisaus",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Cousins Creamy Taro",
+        "priceMinor": 9800
+      },
+      {
+        "name": "Bestikk",
+        "priceMinor": 1500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
