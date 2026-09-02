@@ -14,7 +14,7 @@
     "url": "https://district4.no/wp-content/uploads/2026/06/D4_innemeny_A3_2026_sommermeny.pdf",
     "sourceType": "pdf",
     "fetchMode": "http",
-    "userAgent": "FysenMenuBot/0.1",
+    "userAgent": "Mozilla/5.0 (compatible; FysenMenuClient/0.1; +https://fysen.no/)",
     "checkIntervalMinutes": 360,
     "minimumExpectedItems": 25
   },
