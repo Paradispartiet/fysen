@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "punjabi-tadka-oslo",
+    "name": "Punjabi Tadka",
+    "websiteUrl": null,
+    "address": "Grønland 24, 0188 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.912935531022846,
+    "longitude": 10.761898515757228
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/446punjabitadka",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 61,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Aloo Tikki Papdi Chaat",
+      "Tandoori Kongereker",
+      "Karahi Chicken",
+      "Butter Lamb",
+      "Punjabi Chana Masala",
+      "Lamb Biryani",
+      "Butter Nan",
+      "Mix Salad"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Aloo Tikki Papdi Chaat",
+        "priceMinor": 11000
+      },
+      {
+        "name": "Tandoori Kongereker",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Karahi Chicken",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Butter Lamb",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Punjabi Chana Masala",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Lamb Biryani",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Butter Nan",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Mix Salad",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
