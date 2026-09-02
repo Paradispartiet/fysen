@@ -1,111 +1,97 @@
 {
+  "version": 1,
   "batch": "oslo-batch-32",
-  "generatedAt": "2026-09-02T08:22:37+02:00",
-  "candidates": [
+  "concurrency": 4,
+  "restaurants": [
     {
-      "name": "Pele Pele",
-      "slug": "pele-pele-oslo",
-      "url": "https://semeny.no/sted/pelepele",
-      "address": "Smalgangen 11, 0188 Oslo",
-      "notes": "Current public SeMeny menu reviewed 2026-09-02; priced food items and Oslo address are publicly listed. Service-menu evidence only; hours intentionally unverified and repository intake remains authoritative."
+      "version": 1,
+      "restaurant": {"slug":"pele-pele-oslo","name":"Pele Pele","websiteUrl":null,"address":"Smalgangen 11, 0188 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/pelepele","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
-      "name": "Pappabuene",
-      "slug": "pappabuene-oslo",
-      "url": "https://semeny.no/sted/pappabuene",
-      "address": "Rådhusbrygge 1, 0160 Oslo",
-      "notes": "Current public SeMeny menu reviewed 2026-09-02; priced food items and Oslo address are publicly listed. Service-menu evidence only; hours intentionally unverified and repository intake remains authoritative."
+      "version": 1,
+      "restaurant": {"slug":"pappabuene-oslo","name":"Pappabuene","websiteUrl":null,"address":"Rådhusbrygge 1, 0160 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/pappabuene","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
-      "name": "Oslo Fried Chicken & Smash Burgers",
-      "slug": "oslo-fried-chicken-smash-burgers-oslo",
-      "url": "https://semeny.no/public/sted/oslofriedchickensmashburgers",
-      "address": "Waldemar Thranes gate 63, 0173 Oslo",
-      "notes": "Current public SeMeny menu reviewed 2026-09-02; priced food items and Oslo address are publicly listed. Service-menu evidence only; hours intentionally unverified and repository intake remains authoritative."
+      "version": 1,
+      "restaurant": {"slug":"oslo-fried-chicken-smash-burgers-oslo","name":"Oslo Fried Chicken & Smash Burgers","websiteUrl":null,"address":"Waldemar Thranes gate 63, 0173 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/public/sted/oslofriedchickensmashburgers","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
-      "name": "Oakberry Vika",
-      "slug": "oakberry-vika-oslo",
-      "url": "https://semeny.no/sted/oakberryvika",
-      "address": "Haakon VIIs gate 10, 0161 Oslo",
-      "notes": "Current public SeMeny menu reviewed 2026-09-02; priced food items and Oslo address are publicly listed. Service-menu evidence only; hours intentionally unverified and repository intake remains authoritative."
+      "version": 1,
+      "restaurant": {"slug":"oakberry-vika-oslo","name":"Oakberry Vika","websiteUrl":null,"address":"Haakon VIIs gate 10, 0161 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/oakberryvika","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
-      "name": "Oakberry Storgata",
-      "slug": "oakberry-storgata-oslo",
-      "url": "https://semeny.no/sted/oakberry",
-      "address": "Storgata 10A, 0155 Oslo",
-      "notes": "Current public SeMeny menu reviewed 2026-09-02; priced food items and Oslo address are publicly listed. Service-menu evidence only; hours intentionally unverified and repository intake remains authoritative."
+      "version": 1,
+      "restaurant": {"slug":"oakberry-storgata-oslo","name":"Oakberry Storgata","websiteUrl":null,"address":"Storgata 10A, 0155 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/oakberry","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
-      "name": "Noods",
-      "slug": "noods-oslo",
-      "url": "https://semeny.no/sted/noods",
-      "address": "Klingenberggata 4, 0161 Oslo",
-      "notes": "Current public SeMeny menu reviewed 2026-09-02; priced food items and Oslo address are publicly listed. Service-menu evidence only; hours intentionally unverified and repository intake remains authoritative."
+      "version": 1,
+      "restaurant": {"slug":"ng-bar-restaurant-oslo","name":"NG Bar & Restaurant","websiteUrl":null,"address":"Thorvald Meyers gate 43, 0555 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/ngbarrestaurant","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
-      "name": "NG Bar & Restaurant",
-      "slug": "ng-bar-restaurant-oslo",
-      "url": "https://www.meny.semeny.no/sted/ngbarrestaurant",
-      "address": "Thorvald Meyers gate 43, 0555 Oslo",
-      "notes": "Current public SeMeny menu reviewed 2026-09-02; priced food items and Oslo address are publicly listed. Service-menu evidence only; hours intentionally unverified and repository intake remains authoritative."
+      "version": 1,
+      "restaurant": {"slug":"mon-amour-oslo","name":"Mon Amour","websiteUrl":null,"address":"Waldemar Thranes gate 70, 0173 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/public/sted/monamour","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
-      "name": "Nabo Kitchen & Bar",
-      "slug": "nabo-kitchen-bar-oslo",
-      "url": "https://semeny.no/sted/nabokitchenbar",
-      "address": "Essendrops gate 9, 0368 Oslo",
-      "notes": "Current public SeMeny menu reviewed 2026-09-02; priced food items and Oslo address are publicly listed. Service-menu evidence only; hours intentionally unverified and repository intake remains authoritative."
+      "version": 1,
+      "restaurant": {"slug":"khanateria-oslo","name":"Khanateria","websiteUrl":null,"address":"Torggata 30, 0183 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/384khanateria","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
-      "name": "Mon Amour",
-      "slug": "mon-amour-oslo",
-      "url": "https://semeny.no/public/sted/monamour",
-      "address": "Waldemar Thranes gate 70, 0173 Oslo",
-      "notes": "Current public SeMeny menu reviewed 2026-09-02; priced food items and Oslo address are publicly listed. Service-menu evidence only; hours intentionally unverified and repository intake remains authoritative."
+      "version": 1,
+      "restaurant": {"slug":"bahn-mi-cousins-storgata-oslo","name":"Bahn Mi Cousins","websiteUrl":null,"address":"Storgata 25, 0184 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/620bahnmicousins","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
-      "name": "Khanateria",
-      "slug": "khanateria-oslo",
-      "url": "https://semeny.no/sted/384khanateria",
-      "address": "Torggata 30, 0183 Oslo",
-      "notes": "Current public SeMeny menu reviewed 2026-09-02; priced food items and Oslo address are publicly listed. Service-menu evidence only; hours intentionally unverified and repository intake remains authoritative."
+      "version": 1,
+      "restaurant": {"slug":"theka-indian-street-food-bar-oslo","name":"Theka - Indian Street Food & Bar Oslo","websiteUrl":null,"address":"Olaf Ryes plass 10, 0552 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/thekaindianstreetfoodbaroslo","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
-      "name": "Bahn Mi Cousins",
-      "slug": "bahn-mi-cousins-storgata-oslo",
-      "url": "https://semeny.no/sted/620bahnmicousins",
-      "address": "Storgata 25, 0184 Oslo",
-      "notes": "Current public SeMeny menu reviewed 2026-09-02; priced food items and Oslo address are publicly listed. Service-menu evidence only; hours intentionally unverified and repository intake remains authoritative."
+      "version": 1,
+      "restaurant": {"slug":"listen-to-baljit-frogner-oslo","name":"Listen to Baljit","websiteUrl":null,"address":"Frognerveien 1A, 0257 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/listentobaljit","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
-      "name": "Theka - Indian Street Food & Bar Oslo",
-      "slug": "theka-indian-street-food-bar-oslo",
-      "url": "https://semeny.no/sted/thekaindianstreetfoodbaroslo",
-      "address": "Olaf Ryes plass 10, 0552 Oslo",
-      "notes": "Current public SeMeny menu reviewed 2026-09-02; priced food items and Oslo address are publicly listed. Service-menu evidence only; hours intentionally unverified and repository intake remains authoritative."
+      "version": 1,
+      "restaurant": {"slug":"yo-sushi-oslo-city","name":"YO! Sushi","websiteUrl":null,"address":"Jernbanetorget 1, 0154 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/693yosushi","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
-      "name": "Listen to Baljit",
-      "slug": "listen-to-baljit-frogner-oslo",
-      "url": "https://semeny.no/sted/listentobaljit",
-      "address": "Frognerveien 1A, 0257 Oslo",
-      "notes": "Current public SeMeny menu reviewed 2026-09-02; priced food items and Oslo address are publicly listed. Service-menu evidence only; hours intentionally unverified and repository intake remains authoritative."
+      "version": 1,
+      "restaurant": {"slug":"jagger-frogner-oslo","name":"Jagger Frogner","websiteUrl":null,"address":"Skovveien 4, 0257 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/550jaggerfrogner","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
-      "name": "IndiSpice",
-      "slug": "indispice-oslo",
-      "url": "https://semeny.no/public/sted/indispice",
-      "address": "Welhavens gate 2, 0166 Oslo",
-      "notes": "Current public SeMeny menu reviewed 2026-09-02; priced food items and Oslo address are publicly listed. Service-menu evidence only; hours intentionally unverified and repository intake remains authoritative."
+      "version": 1,
+      "restaurant": {"slug":"smoothiexchange-frogner-oslo","name":"SmoothieXchange Frogner","websiteUrl":null,"address":"Niels Juels gate 31, 0257 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/734smoothiexchangefrogner","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     },
     {
-      "name": "YO! Sushi",
-      "slug": "yo-sushi-oslo-city",
-      "url": "https://semeny.no/sted/693yosushi",
-      "address": "Jernbanetorget 1, 0154 Oslo",
-      "notes": "Current public SeMeny menu reviewed 2026-09-02; priced food items and Oslo address are publicly listed. Service-menu evidence only; hours intentionally unverified and repository intake remains authoritative."
+      "version": 1,
+      "restaurant": {"slug":"flamme-burger-frogner-oslo","name":"Flamme Burger Frogner","websiteUrl":null,"address":"Skovveien 3, 0257 Oslo","city":"Oslo","countryCode":"NO"},
+      "menuSource": {"url":"https://semeny.no/sted/flammeburgerfrogner","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720},
+      "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-02","note":"Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[]
     }
   ]
 }
