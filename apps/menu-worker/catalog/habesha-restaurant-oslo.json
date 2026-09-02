@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "habesha-restaurant-oslo",
+    "name": "Habesha Restaurant",
+    "websiteUrl": null,
+    "address": "Møllergata 38A, 0179 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.917668833928005,
+    "longitude": 10.750296794139926
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/habesharestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 28,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 34 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bysø 6,5% 0,5 l",
+      "Tuborg Squash 0,5 l",
+      "Danskvand 0,5 l",
+      "Shikla med oksekød",
+      "Kike (V)",
+      "Spaghetti med kødsovs",
+      "Regnbueis",
+      "Capuccino 0,24 l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bysø 6,5% 0,5 l",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Tuborg Squash 0,5 l",
+        "priceMinor": 4200
+      },
+      {
+        "name": "Danskvand 0,5 l",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Shikla med oksekød",
+        "priceMinor": 19000
+      },
+      {
+        "name": "Kike (V)",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Spaghetti med kødsovs",
+        "priceMinor": 11000
+      },
+      {
+        "name": "Regnbueis",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Capuccino 0,24 l",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

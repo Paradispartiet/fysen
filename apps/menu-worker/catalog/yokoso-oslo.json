@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "yokoso-oslo",
+    "name": "Yokoso",
+    "websiteUrl": null,
+    "address": "Stranden 15, 0250 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.909256114470885,
+    "longitude": 10.725689743894222
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/287yokoso",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 34,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 34 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kochi (10 biter)",
+      "Ebi Nigiri",
+      "Flambert Kveite Belly m/ Teriyaki",
+      "Tempura Scampi & Avokado (Maki)",
+      "Kveite Sashimi",
+      "Marinert Kylling med plommesaus",
+      "Ingefær",
+      "Solo (Drikke)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kochi (10 biter)",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Ebi Nigiri",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Flambert Kveite Belly m/ Teriyaki",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Tempura Scampi & Avokado (Maki)",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Kveite Sashimi",
+        "priceMinor": 16000
+      },
+      {
+        "name": "Marinert Kylling med plommesaus",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Ingefær",
+        "priceMinor": 2000
+      },
+      {
+        "name": "Solo (Drikke)",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

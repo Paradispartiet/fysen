@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "arte-pazza-pizza-pasta-oslo",
+    "name": "Arte Pazza Pizza Pasta",
+    "websiteUrl": null,
+    "address": "Parkveien 10, 0350 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.920984127937,
+    "longitude": 10.729246966682158
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/artepazzapizzapasta",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 50,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 34 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Antipasto all'italiana",
+      "🌱 Insalata del Giorno/ dagens salat liten",
+      "Tortelli (gresskar) alla Mantovana",
+      "Trentina",
+      "Glutenfri pizza",
+      "Nduja",
+      "San Pellegrino Limonata",
+      "Bestikk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Antipasto all'italiana",
+        "priceMinor": 25000
+      },
+      {
+        "name": "🌱 Insalata del Giorno/ dagens salat liten",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Tortelli (gresskar) alla Mantovana",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Trentina",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Glutenfri pizza",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Nduja",
+        "priceMinor": 26500
+      },
+      {
+        "name": "San Pellegrino Limonata",
+        "priceMinor": 4800
+      },
+      {
+        "name": "Bestikk",
+        "priceMinor": 1000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

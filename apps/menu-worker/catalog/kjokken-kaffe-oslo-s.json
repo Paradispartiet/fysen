@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kjokken-kaffe-oslo-s",
+    "name": "Kjøkken & Kaffe Oslo S",
+    "websiteUrl": null,
+    "address": "Jernbanetorget 1, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91087480164096,
+    "longitude": 10.750736725832216
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/kjokkenkaffeoslos",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 40,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 34 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "BBQ Burger Meny",
+      "Lasagne",
+      "Lun Kylling & Bacon",
+      "Stekte Kyllinglår",
+      "Smørbrød m/ Karbonade",
+      "Eplekake",
+      "Appelsinjuice 0,3l",
+      "Mer Jordbær & Eple 0,2l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "BBQ Burger Meny",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Lasagne",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Lun Kylling & Bacon",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Stekte Kyllinglår",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Smørbrød m/ Karbonade",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Eplekake",
+        "priceMinor": 7600
+      },
+      {
+        "name": "Appelsinjuice 0,3l",
+        "priceMinor": 5400
+      },
+      {
+        "name": "Mer Jordbær & Eple 0,2l",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

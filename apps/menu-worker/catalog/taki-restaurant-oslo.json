@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "taki-restaurant-oslo",
+    "name": "Taki Restaurant",
+    "websiteUrl": null,
+    "address": "Middelthuns gate 25A, 0368 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9282734621654,
+    "longitude": 10.708851889647498
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/takirestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 43,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 34 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Manchester United",
+      "Leeds United",
+      "Borussia Dortmund",
+      "Cheeseburgertallerken",
+      "Kyllingkebab i Pita",
+      "Kebab m/ Pommes Frites",
+      "Kebab Mix Tallerken",
+      "Urge"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Manchester United",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Leeds United",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Borussia Dortmund",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Cheeseburgertallerken",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Kyllingkebab i Pita",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Kebab m/ Pommes Frites",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Kebab Mix Tallerken",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Urge",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "basara-sushi-grensen-oslo",
+    "name": "Basara Sushi Restaurant",
+    "websiteUrl": null,
+    "address": "Grensen 4, 0159 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91342977714921,
+    "longitude": 10.743979907185755
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/basarasushirestaurant1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 66,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 34 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Edamame (V)",
+      "Wasabimayo",
+      "Trøffelmayonnaise",
+      "Grated Lobster",
+      "Veg box (16 stk)",
+      "Spicy Salmon Tartare",
+      "Mixed Sashimi",
+      "Yakitori"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Edamame (V)",
+        "priceMinor": 5400
+      },
+      {
+        "name": "Wasabimayo",
+        "priceMinor": 1600
+      },
+      {
+        "name": "Trøffelmayonnaise",
+        "priceMinor": 1600
+      },
+      {
+        "name": "Grated Lobster",
+        "priceMinor": 15600
+      },
+      {
+        "name": "Veg box (16 stk)",
+        "priceMinor": 19000
+      },
+      {
+        "name": "Spicy Salmon Tartare",
+        "priceMinor": 17800
+      },
+      {
+        "name": "Mixed Sashimi",
+        "priceMinor": 16300
+      },
+      {
+        "name": "Yakitori",
+        "priceMinor": 6600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
