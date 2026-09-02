@@ -5,9 +5,10 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION = "embedded-menu-json-v2";
+export const HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION = "embedded-menu-json-v3";
 
 const MIN_CATEGORIES = 2;
+const MIN_SCHEMA_CATEGORIES = 1;
 const MIN_ITEMS = 4;
 const MIN_BOUND_RATIO = 0.7;
 const GENERIC_CATEGORY =
@@ -45,10 +46,27 @@ function integerPriceMinor(value: unknown): number | null {
   return value;
 }
 
+function majorUnitPriceMinor(value: unknown): number | null {
+  const normalized =
+    typeof value === "number"
+      ? value
+      : typeof value === "string"
+        ? Number(value.trim().replace(",", "."))
+        : Number.NaN;
+  if (!Number.isFinite(normalized) || normalized <= 0) return null;
+  const priceMinor = Math.round(normalized * 100);
+  if (Math.abs(priceMinor / 100 - normalized) > 0.000_001) return null;
+  return integerPriceMinor(priceMinor);
+}
+
 function asRecord(value: unknown): Record<string, unknown> | null {
   return value !== null && typeof value === "object" && !Array.isArray(value)
     ? (value as Record<string, unknown>)
     : null;
+}
+
+function asArray(value: unknown): readonly unknown[] {
+  return Array.isArray(value) ? value : value === undefined || value === null ? [] : [value];
 }
 
 function parseCategory(value: unknown): EmbeddedCategory | null {
@@ -79,7 +97,69 @@ function parseItem(value: unknown): EmbeddedItem | null {
   return { id, name, description, priceMinor };
 }
 
+function schemaOfferPriceMinor(value: unknown): number | null {
+  for (const candidate of asArray(value)) {
+    const offer = asRecord(candidate);
+    if (!offer) continue;
+    const currency = normalizeText(offer.priceCurrency).toUpperCase();
+    if (currency !== "NOK") continue;
+    const priceMinor = majorUnitPriceMinor(offer.price);
+    if (priceMinor !== null) return priceMinor;
+  }
+  return null;
+}
+
+function candidateFromSchemaMenu(record: Record<string, unknown>): Candidate | null {
+  const rawSections = asArray(record.hasMenuSection);
+  if (rawSections.length === 0) return null;
+
+  const categories: EmbeddedCategory[] = [];
+  const items: EmbeddedItem[] = [];
+  let syntheticId = 0;
+
+  for (const rawSection of rawSections) {
+    const section = asRecord(rawSection);
+    if (!section) continue;
+    const sectionName = normalizeText(section.name);
+    if (!sectionName) continue;
+
+    const itemIds: string[] = [];
+    for (const rawItem of asArray(section.hasMenuItem)) {
+      const item = asRecord(rawItem);
+      if (!item) continue;
+      const itemType = normalizeText(item["@type"]);
+      if (itemType && itemType !== "MenuItem") continue;
+      const name = normalizeText(item.name);
+      const priceMinor = schemaOfferPriceMinor(item.offers);
+      if (!name || priceMinor === null) continue;
+      const explicitId = normalizeText(item["@id"]);
+      const id = explicitId || `schema-menu-item-${syntheticId++}`;
+      itemIds.push(id);
+      items.push({
+        id,
+        name,
+        description: normalizeText(item.description) || null,
+        priceMinor,
+      });
+    }
+    if (itemIds.length > 0) categories.push({ name: sectionName, itemIds });
+  }
+
+  if (categories.length < MIN_SCHEMA_CATEGORIES || items.length < MIN_ITEMS) {
+    return null;
+  }
+
+  return {
+    categories,
+    items,
+    score: items.length * 100 + categories.length,
+  };
+}
+
 function candidateFromRecord(record: Record<string, unknown>): Candidate | null {
+  const schemaCandidate = candidateFromSchemaMenu(record);
+  if (schemaCandidate) return schemaCandidate;
+
   if (!Array.isArray(record.categories) || !Array.isArray(record.items)) {
     return null;
   }
