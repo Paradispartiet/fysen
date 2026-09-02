@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "meraki-via-village-oslo",
+    "name": "Meraki Via Village",
+    "websiteUrl": null,
+    "address": "Munkedamsveien 29, 0251 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91216960578757,
+    "longitude": 10.726724502423542
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/741merakiviavillage",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 16,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 33 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pork Gyros Plate",
+      "Gyros Club",
+      "Pita Gyros Chicken",
+      "Greek Salad",
+      "Pitabrød m/ Tzatziki",
+      "Pitabrød",
+      "Tzatziki",
+      "Halloumi"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pork Gyros Plate",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Gyros Club",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Pita Gyros Chicken",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Greek Salad",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Pitabrød m/ Tzatziki",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Pitabrød",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Tzatziki",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Halloumi",
+        "priceMinor": 5000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

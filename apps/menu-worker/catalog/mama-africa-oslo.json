@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mama-africa-oslo",
+    "name": "Mama Africa",
+    "websiteUrl": null,
+    "address": "Storgata 24, 0184 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91389725522861,
+    "longitude": 10.751736555577164
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/694mamaafrica",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 15,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 33 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tibsi Firfir",
+      "Gored Gored",
+      "Kitfo",
+      "Dulot",
+      "Tsebhi Derho",
+      "Shiro",
+      "Kicha Fata m/ Biff",
+      "Tibisi"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Tibsi Firfir",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Gored Gored",
+        "priceMinor": 31900
+      },
+      {
+        "name": "Kitfo",
+        "priceMinor": 31900
+      },
+      {
+        "name": "Dulot",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Tsebhi Derho",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Shiro",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Kicha Fata m/ Biff",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Tibisi",
+        "priceMinor": 24900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
