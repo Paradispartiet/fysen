@@ -162,15 +162,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "drop-in-oslo",
-        "name": "Drop-In",
+        "slug": "mon-amour-oslo",
+        "name": "Mon Amour",
         "websiteUrl": null,
-        "address": "Dronning Eufemias gate 9, 0191 Oslo",
+        "address": "Waldemar Thranes gate 70, 0173 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/sted/dropin",
+        "url": "https://semeny.no/public/sted/monamour",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -318,15 +318,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "oakberry-vika-oslo",
-        "name": "Oakberry Vika",
+        "slug": "pele-pele-oslo",
+        "name": "Pele Pele",
         "websiteUrl": null,
-        "address": "Haakon VIIs gate 10, 0161 Oslo",
+        "address": "Smalgangen 11, 0188 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/public/sted/oakberryvika",
+        "url": "https://semeny.no/sted/pelepele",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -344,15 +344,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "nabo-kitchen-bar-oslo",
-        "name": "Nabo Kitchen & Bar",
+        "slug": "jimmys-restaurant-bar-oslo",
+        "name": "Jimmy's Restaurant & Bar",
         "websiteUrl": null,
-        "address": "Essendrops gate 9, 0368 Oslo",
+        "address": "Leirfallsgata 6, 0550 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://semeny.no/public/sted/nabokitchenbar",
+        "url": "https://semeny.no/sted/jimmysrestaurantbar",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -370,15 +370,15 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "ng-bar-restaurant-oslo",
-        "name": "NG Bar & Restaurant",
+        "slug": "arte-pazza-pizza-parkveien-oslo",
+        "name": "Arte Pazza Pizza Parkveien",
         "websiteUrl": null,
-        "address": "Thorvald Meyers gate 43, 0555 Oslo",
+        "address": "Parkveien 10, 0350 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://www.meny.semeny.no/sted/ngbarrestaurant",
+        "url": "https://semeny.no/sted/artepazzapizzaparkveien",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
