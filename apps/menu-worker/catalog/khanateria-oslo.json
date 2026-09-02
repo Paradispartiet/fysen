@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "khanateria-oslo",
+    "name": "Khanateria",
+    "websiteUrl": null,
+    "address": "Torggata 30, 0183 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9170483133188,
+    "longitude": 10.753195914002022
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/384khanateria",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-02",
+      "note": "Batch 32 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Onion Bhaji",
+      "Loaded Papadums",
+      "Bombay Potatoes",
+      "Garlic Naan with Garlic Butter",
+      "Butter Chicken",
+      "Paneer Tikka Masala",
+      "Cucumber Raita",
+      "7Up"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Onion Bhaji",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Loaded Papadums",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Bombay Potatoes",
+        "priceMinor": 11000
+      },
+      {
+        "name": "Garlic Naan with Garlic Butter",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Butter Chicken",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Paneer Tikka Masala",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Cucumber Raita",
+        "priceMinor": 4000
+      },
+      {
+        "name": "7Up",
+        "priceMinor": 5600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
