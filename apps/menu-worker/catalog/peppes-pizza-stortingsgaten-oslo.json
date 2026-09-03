@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "peppes-pizza-stortingsgaten-oslo",
+    "name": "Peppes Pizza - Stortingsgaten",
+    "websiteUrl": null,
+    "address": "Stortingsgata 4, 0158 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91292328073435,
+    "longitude": 10.738467865838835
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/peppespizzastortingsgaten",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 65,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-03",
+      "note": "Batch 36 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "For Deg",
+      "Even Heavier Heaven",
+      "The Tropical",
+      "07.Make Your Own",
+      "Italian Vegetariano",
+      "Chocolate Cookie",
+      "Urge 0,5l",
+      "Mer Fruktdrikk Appelsin"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "For Deg",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Even Heavier Heaven",
+        "priceMinor": 24800
+      },
+      {
+        "name": "The Tropical",
+        "priceMinor": 20800
+      },
+      {
+        "name": "07.Make Your Own",
+        "priceMinor": 27800
+      },
+      {
+        "name": "Italian Vegetariano",
+        "priceMinor": 22800
+      },
+      {
+        "name": "Chocolate Cookie",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Urge 0,5l",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Mer Fruktdrikk Appelsin",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

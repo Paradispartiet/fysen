@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ugly-duckling-oslo",
+    "name": "Ugly Duckling",
+    "websiteUrl": null,
+    "address": "Torggata 21b, 0183 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91642796562587,
+    "longitude": 10.752567541399648
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/109uglyduckling",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 12,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-03",
+      "note": "Batch 36 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Meal Deal - Chicken Sandwich",
+      "Meal Deal - Porchetta Sandwich",
+      "Porchetta Sandwich",
+      "Hjorte Sandwich",
+      "Roasted Potatoes",
+      "Choco Chip Cookie",
+      "Estragon Mayo",
+      "Rosmarin Mayo"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Meal Deal - Chicken Sandwich",
+        "priceMinor": 30560
+      },
+      {
+        "name": "Meal Deal - Porchetta Sandwich",
+        "priceMinor": 30560
+      },
+      {
+        "name": "Porchetta Sandwich",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Hjorte Sandwich",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Roasted Potatoes",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Choco Chip Cookie",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Estragon Mayo",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Rosmarin Mayo",
+        "priceMinor": 3000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
