@@ -18,7 +18,9 @@
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 23,
     "sourceSupport": {
-      "redirectOrigins": [],
+      "redirectOrigins": [
+        "https://semeny.no"
+      ],
       "browserDataOrigins": [],
       "browserBlockedOrigins": []
     }
@@ -43,38 +45,14 @@
       "Up Zero 0,25l"
     ],
     "requiredDishVariants": [
-      {
-        "name": "Paradiso",
-        "priceMinor": 15000
-      },
-      {
-        "name": "Lussurioso",
-        "priceMinor": 16000
-      },
-      {
-        "name": "Inferno",
-        "priceMinor": 16000
-      },
-      {
-        "name": "Primavera",
-        "priceMinor": 8500
-      },
-      {
-        "name": "Formaggi",
-        "priceMinor": 7500
-      },
-      {
-        "name": "Mortadella",
-        "priceMinor": 8500
-      },
-      {
-        "name": "Imsdal 0,5l",
-        "priceMinor": 4500
-      },
-      {
-        "name": "Up Zero 0,25l",
-        "priceMinor": 4000
-      }
+      { "name": "Paradiso", "priceMinor": 15000 },
+      { "name": "Lussurioso", "priceMinor": 16000 },
+      { "name": "Inferno", "priceMinor": 16000 },
+      { "name": "Primavera", "priceMinor": 8500 },
+      { "name": "Formaggi", "priceMinor": 7500 },
+      { "name": "Mortadella", "priceMinor": 8500 },
+      { "name": "Imsdal 0,5l", "priceMinor": 4500 },
+      { "name": "Up Zero 0,25l", "priceMinor": 4000 }
     ],
     "forbiddenDishNames": []
   }
