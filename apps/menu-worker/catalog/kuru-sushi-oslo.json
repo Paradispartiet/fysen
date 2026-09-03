@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kuru-sushi-oslo",
+    "name": "Kuru Sushi",
+    "websiteUrl": null,
+    "address": "Frydenlundgata 1, 0169 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92329258901707,
+    "longitude": 10.736745348794678
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/108kurusushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 118,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-03",
+      "note": "Batch 36 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kuru Sushi #1",
+      "Tuna og gulrot kimchi. ( 10 biter )",
+      "Kappamaki",
+      "Ponzu soyasaus",
+      "Liten Sushi",
+      "Kylling Chop suey",
+      "Husets maki",
+      "Dagen 2"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kuru Sushi #1",
+        "priceMinor": 33400
+      },
+      {
+        "name": "Tuna og gulrot kimchi. ( 10 biter )",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Kappamaki",
+        "priceMinor": 9700
+      },
+      {
+        "name": "Ponzu soyasaus",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Liten Sushi",
+        "priceMinor": 12600
+      },
+      {
+        "name": "Kylling Chop suey",
+        "priceMinor": 20700
+      },
+      {
+        "name": "Husets maki",
+        "priceMinor": 11300
+      },
+      {
+        "name": "Dagen 2",
+        "priceMinor": 13900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

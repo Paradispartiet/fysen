@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "santa-rosa-oslo",
+    "name": "Santa Rosa",
+    "websiteUrl": null,
+    "address": "Bogstadveien 58, 0366 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.928144701370385,
+    "longitude": 10.71738047451986
+  },
+  "menuSource": {
+    "url": "https://www.meny.semeny.no/public/sted/416santarosa",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 22,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-03",
+      "note": "Batch 36 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Insalata Mista",
+      "Caesarsalat m/ Reker Klassisk",
+      "Penne all Arrabiata",
+      "Pappardelle con Funghi Porcini e Tartufo",
+      "Regina Margherita",
+      "Capricciosa",
+      "Panna Cotta All`amaretto",
+      "Lasagne alia Bolognese Barnemeny"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Insalata Mista",
+        "priceMinor": 16300
+      },
+      {
+        "name": "Caesarsalat m/ Reker Klassisk",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Penne all Arrabiata",
+        "priceMinor": 23600
+      },
+      {
+        "name": "Pappardelle con Funghi Porcini e Tartufo",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Regina Margherita",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Capricciosa",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Panna Cotta All`amaretto",
+        "priceMinor": 15200
+      },
+      {
+        "name": "Lasagne alia Bolognese Barnemeny",
+        "priceMinor": 13700
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

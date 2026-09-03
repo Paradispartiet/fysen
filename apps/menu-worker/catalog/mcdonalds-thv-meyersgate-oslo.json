@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mcdonalds-thv-meyersgate-oslo",
+    "name": "McDonald's Thv. Meyersgate",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 35-41, 0555 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.925267789388926,
+    "longitude": 10.75902231355328
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/498mcdonaldsthvmeyersgate",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 103,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-03",
+      "note": "Batch 36 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Dobbel Quarter Pounder",
+      "McFeast Meny",
+      "Filet-O-Fish",
+      "Big Veggie Salsa Meny",
+      "McWrap Classic Chicken Meny",
+      "Hot Wings",
+      "McFeastTM Dip (Majones)",
+      "Eplepai"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Dobbel Quarter Pounder",
+        "priceMinor": 13800
+      },
+      {
+        "name": "McFeast Meny",
+        "priceMinor": 14700
+      },
+      {
+        "name": "Filet-O-Fish",
+        "priceMinor": 5600
+      },
+      {
+        "name": "Big Veggie Salsa Meny",
+        "priceMinor": 12700
+      },
+      {
+        "name": "McWrap Classic Chicken Meny",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Hot Wings",
+        "priceMinor": 5600
+      },
+      {
+        "name": "McFeastTM Dip (Majones)",
+        "priceMinor": 1500
+      },
+      {
+        "name": "Eplepai",
+        "priceMinor": 2800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

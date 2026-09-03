@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "palazzo-pizzeria-oslo",
+    "name": "Palazzo Pizzeria",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 48A, 0552 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.922955270268886,
+    "longitude": 10.759477770361901
+  },
+  "menuSource": {
+    "url": "https://meny.semeny.no/sted/palazzopizzeria",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 89,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-03",
+      "note": "Batch 36 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Permisan (Liten)",
+      "Hot`n Spicy (Liten)",
+      "Fifty fifty (Liten)",
+      "Fat Tony`s (Stor)",
+      "Naboen (Stor)",
+      "Vanlig Kebab",
+      "Innbakt Skinke",
+      "Vann 1,5L"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Permisan (Liten)",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Hot`n Spicy (Liten)",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Fifty fifty (Liten)",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Fat Tony`s (Stor)",
+        "priceMinor": 30900
+      },
+      {
+        "name": "Naboen (Stor)",
+        "priceMinor": 34900
+      },
+      {
+        "name": "Vanlig Kebab",
+        "priceMinor": 12400
+      },
+      {
+        "name": "Innbakt Skinke",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Vann 1,5L",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pascal-greek-grill-vulkan-oslo",
+    "name": "Pascal Greek & Grill Vulkan",
+    "websiteUrl": null,
+    "address": "Vulkan 5, 0178 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92225253860743,
+    "longitude": 10.751749415749577
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/pascalgreekgrillvulkan",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 33,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-03",
+      "note": "Batch 36 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tzatziki",
+      "Gresk Salat",
+      "Pita Gyros Svin",
+      "Pita Halloumi (Vegetar)",
+      "Souvlaki Pork Plate",
+      "Mix Grill",
+      "Fries",
+      "Mozell Eplemost 0,33l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Tzatziki",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Gresk Salat",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Pita Gyros Svin",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Pita Halloumi (Vegetar)",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Souvlaki Pork Plate",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Mix Grill",
+        "priceMinor": 94900
+      },
+      {
+        "name": "Fries",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Mozell Eplemost 0,33l",
+        "priceMinor": 5400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
