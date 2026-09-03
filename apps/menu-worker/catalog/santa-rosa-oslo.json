@@ -18,7 +18,9 @@
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 22,
     "sourceSupport": {
-      "redirectOrigins": [],
+      "redirectOrigins": [
+        "https://semeny.no"
+      ],
       "browserDataOrigins": [],
       "browserBlockedOrigins": []
     }
@@ -43,38 +45,14 @@
       "Lasagne alia Bolognese Barnemeny"
     ],
     "requiredDishVariants": [
-      {
-        "name": "Insalata Mista",
-        "priceMinor": 16300
-      },
-      {
-        "name": "Caesarsalat m/ Reker Klassisk",
-        "priceMinor": 24900
-      },
-      {
-        "name": "Penne all Arrabiata",
-        "priceMinor": 23600
-      },
-      {
-        "name": "Pappardelle con Funghi Porcini e Tartufo",
-        "priceMinor": 28900
-      },
-      {
-        "name": "Regina Margherita",
-        "priceMinor": 19900
-      },
-      {
-        "name": "Capricciosa",
-        "priceMinor": 24900
-      },
-      {
-        "name": "Panna Cotta All`amaretto",
-        "priceMinor": 15200
-      },
-      {
-        "name": "Lasagne alia Bolognese Barnemeny",
-        "priceMinor": 13700
-      }
+      { "name": "Insalata Mista", "priceMinor": 16300 },
+      { "name": "Caesarsalat m/ Reker Klassisk", "priceMinor": 24900 },
+      { "name": "Penne all Arrabiata", "priceMinor": 23600 },
+      { "name": "Pappardelle con Funghi Porcini e Tartufo", "priceMinor": 28900 },
+      { "name": "Regina Margherita", "priceMinor": 19900 },
+      { "name": "Capricciosa", "priceMinor": 24900 },
+      { "name": "Panna Cotta All`amaretto", "priceMinor": 15200 },
+      { "name": "Lasagne alia Bolognese Barnemeny", "priceMinor": 13700 }
     ],
     "forbiddenDishNames": []
   }
