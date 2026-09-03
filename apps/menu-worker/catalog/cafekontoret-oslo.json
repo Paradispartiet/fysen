@@ -11,16 +11,14 @@
     "longitude": 10.768457940239205
   },
   "menuSource": {
-    "url": "https://www.meny.semeny.no/public/sted/357cafekontoret",
+    "url": "https://semeny.no/sted/357cafekontoret",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 54,
     "sourceSupport": {
-      "redirectOrigins": [
-        "https://semeny.no"
-      ],
+      "redirectOrigins": [],
       "browserDataOrigins": [],
       "browserBlockedOrigins": []
     }
@@ -45,38 +43,14 @@
       "ekstra kjøtt"
     ],
     "requiredDishVariants": [
-      {
-        "name": "Surf'n'Turf Pasta",
-        "priceMinor": 29900
-      },
-      {
-        "name": "Kremet pasta med Laks",
-        "priceMinor": 28900
-      },
-      {
-        "name": "Vegetarburger 🌱",
-        "priceMinor": 27900
-      },
-      {
-        "name": "Gratinert Laks",
-        "priceMinor": 42900
-      },
-      {
-        "name": "Vegetarianeren Pizza",
-        "priceMinor": 25900
-      },
-      {
-        "name": "Nøgne ø HImla Humle",
-        "priceMinor": 6900
-      },
-      {
-        "name": "Omelett m/ Bacon",
-        "priceMinor": 21900
-      },
-      {
-        "name": "ekstra kjøtt",
-        "priceMinor": 5900
-      }
+      { "name": "Surf'n'Turf Pasta", "priceMinor": 29900 },
+      { "name": "Kremet pasta med Laks", "priceMinor": 28900 },
+      { "name": "Vegetarburger 🌱", "priceMinor": 27900 },
+      { "name": "Gratinert Laks", "priceMinor": 42900 },
+      { "name": "Vegetarianeren Pizza", "priceMinor": 25900 },
+      { "name": "Nøgne ø HImla Humle", "priceMinor": 6900 },
+      { "name": "Omelett m/ Bacon", "priceMinor": 21900 },
+      { "name": "ekstra kjøtt", "priceMinor": 5900 }
     ],
     "forbiddenDishNames": []
   }
