@@ -11,16 +11,14 @@
     "longitude": 10.759477770361901
   },
   "menuSource": {
-    "url": "https://meny.semeny.no/sted/palazzopizzeria",
+    "url": "https://semeny.no/sted/palazzopizzeria",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 89,
     "sourceSupport": {
-      "redirectOrigins": [
-        "https://semeny.no"
-      ],
+      "redirectOrigins": [],
       "browserDataOrigins": [],
       "browserBlockedOrigins": []
     }
