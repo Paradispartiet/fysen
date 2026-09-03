@@ -18,7 +18,9 @@
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 89,
     "sourceSupport": {
-      "redirectOrigins": [],
+      "redirectOrigins": [
+        "https://semeny.no"
+      ],
       "browserDataOrigins": [],
       "browserBlockedOrigins": []
     }
@@ -43,38 +45,14 @@
       "Vann 1,5L"
     ],
     "requiredDishVariants": [
-      {
-        "name": "Permisan (Liten)",
-        "priceMinor": 19900
-      },
-      {
-        "name": "Hot`n Spicy (Liten)",
-        "priceMinor": 22900
-      },
-      {
-        "name": "Fifty fifty (Liten)",
-        "priceMinor": 23900
-      },
-      {
-        "name": "Fat Tony`s (Stor)",
-        "priceMinor": 30900
-      },
-      {
-        "name": "Naboen (Stor)",
-        "priceMinor": 34900
-      },
-      {
-        "name": "Vanlig Kebab",
-        "priceMinor": 12400
-      },
-      {
-        "name": "Innbakt Skinke",
-        "priceMinor": 19900
-      },
-      {
-        "name": "Vann 1,5L",
-        "priceMinor": 5900
-      }
+      { "name": "Permisan (Liten)", "priceMinor": 19900 },
+      { "name": "Hot`n Spicy (Liten)", "priceMinor": 22900 },
+      { "name": "Fifty fifty (Liten)", "priceMinor": 23900 },
+      { "name": "Fat Tony`s (Stor)", "priceMinor": 30900 },
+      { "name": "Naboen (Stor)", "priceMinor": 34900 },
+      { "name": "Vanlig Kebab", "priceMinor": 12400 },
+      { "name": "Innbakt Skinke", "priceMinor": 19900 },
+      { "name": "Vann 1,5L", "priceMinor": 5900 }
     ],
     "forbiddenDishNames": []
   }
