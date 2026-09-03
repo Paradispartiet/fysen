@@ -11,16 +11,14 @@
     "longitude": 10.71738047451986
   },
   "menuSource": {
-    "url": "https://www.meny.semeny.no/public/sted/416santarosa",
+    "url": "https://semeny.no/sted/416santarosa",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 22,
     "sourceSupport": {
-      "redirectOrigins": [
-        "https://semeny.no"
-      ],
+      "redirectOrigins": [],
       "browserDataOrigins": [],
       "browserBlockedOrigins": []
     }
