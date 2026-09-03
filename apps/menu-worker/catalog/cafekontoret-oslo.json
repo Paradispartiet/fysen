@@ -18,7 +18,9 @@
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 54,
     "sourceSupport": {
-      "redirectOrigins": [],
+      "redirectOrigins": [
+        "https://semeny.no"
+      ],
       "browserDataOrigins": [],
       "browserBlockedOrigins": []
     }
