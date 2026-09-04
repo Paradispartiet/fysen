@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kverneriet-majorstuen-oslo",
+    "name": "Kverneriet Majorstuen",
+    "websiteUrl": null,
+    "address": "Kirkeveien 64B, 0366 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92916969338455,
+    "longitude": 10.714810190071614
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/721kvernerietmajorstuen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 36,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 37 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hot & Spicy Chicken Wings (6pcs)",
+      "Hot & Spicy Chicken Wings (12pcs)",
+      "The Boss Burger",
+      "Single Cheese Burger",
+      "Thin Cut Fries",
+      "Chili Mayo",
+      "Mustard",
+      "Strawberry"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hot & Spicy Chicken Wings (6pcs)",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Hot & Spicy Chicken Wings (12pcs)",
+        "priceMinor": 31900
+      },
+      {
+        "name": "The Boss Burger",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Single Cheese Burger",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Thin Cut Fries",
+        "priceMinor": 9800
+      },
+      {
+        "name": "Chili Mayo",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Mustard",
+        "priceMinor": 1000
+      },
+      {
+        "name": "Strawberry",
+        "priceMinor": 15900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

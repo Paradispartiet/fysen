@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "oakberry-oslo",
+    "name": "Oakberry",
+    "websiteUrl": null,
+    "address": "Storgata 10A, 0155 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91326936356708,
+    "longitude": 10.749646613321058
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/oakberry",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 21,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 37 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "One 270ml",
+      "Exotic",
+      "Classic 350ml",
+      "Super Glow",
+      "Matcha",
+      "OAK High Protein Bar Vanilla",
+      "Eira Sparkling Still 400ml",
+      "Iced Matcha"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "One 270ml",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Exotic",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Classic 350ml",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Super Glow",
+        "priceMinor": 15600
+      },
+      {
+        "name": "Matcha",
+        "priceMinor": 15000
+      },
+      {
+        "name": "OAK High Protein Bar Vanilla",
+        "priceMinor": 6200
+      },
+      {
+        "name": "Eira Sparkling Still 400ml",
+        "priceMinor": 4600
+      },
+      {
+        "name": "Iced Matcha",
+        "priceMinor": 7500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

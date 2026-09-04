@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "banjos-oslo",
+    "name": "Banjo's",
+    "websiteUrl": null,
+    "address": "Storgata 43, 0182 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91531503686886,
+    "longitude": 10.755209766746264
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/dk/sted/banjos",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 87,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 37 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fish & Chips",
+      "Hvidløgsdressing",
+      "Æblejuice",
+      "Nuggets",
+      "Pepsi 0,5 l",
+      "Bøfsandwich",
+      "Hamburgerryg",
+      "Banjo Vand 0,5 l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fish & Chips",
+        "priceMinor": 12200
+      },
+      {
+        "name": "Hvidløgsdressing",
+        "priceMinor": 900
+      },
+      {
+        "name": "Æblejuice",
+        "priceMinor": 2200
+      },
+      {
+        "name": "Nuggets",
+        "priceMinor": 4400
+      },
+      {
+        "name": "Pepsi 0,5 l",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Bøfsandwich",
+        "priceMinor": 8600
+      },
+      {
+        "name": "Hamburgerryg",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Banjo Vand 0,5 l",
+        "priceMinor": 3300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
