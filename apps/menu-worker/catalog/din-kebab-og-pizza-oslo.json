@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "din-kebab-og-pizza-oslo",
+    "name": "Din Kebab og Pizza",
+    "websiteUrl": null,
+    "address": "Feltspatveien 25, 1155 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.871458761001804,
+    "longitude": 10.820878367626433
+  },
+  "menuSource": {
+    "url": "https://meny.semeny.no/sted/dinkebabogpizza",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 44,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 38 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Lambertseter Spesial Pizza",
+      "Mexicaneren",
+      "Kebab Pizza",
+      "Robeen Spesial",
+      "Kylling kebab i pita 🍗🥙",
+      "Pepsi Max 0,5l",
+      "Mango Fresher",
+      "Maarud Pop Corn"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Lambertseter Spesial Pizza",
+        "priceMinor": 33900
+      },
+      {
+        "name": "Mexicaneren",
+        "priceMinor": 36900
+      },
+      {
+        "name": "Kebab Pizza",
+        "priceMinor": 33900
+      },
+      {
+        "name": "Robeen Spesial",
+        "priceMinor": 38400
+      },
+      {
+        "name": "Kylling kebab i pita 🍗🥙",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Pepsi Max 0,5l",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Mango Fresher",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Maarud Pop Corn",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

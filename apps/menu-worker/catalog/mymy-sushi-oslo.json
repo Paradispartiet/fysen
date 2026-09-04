@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mymy-sushi-oslo",
+    "name": "MyMy Sushi",
+    "websiteUrl": null,
+    "address": "Prinsens gate 2, 0152 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91004055401908,
+    "longitude": 10.748223021269146
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/637mymysushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 59,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 38 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vietnamesiske Vårruller",
+      "Sushi Stor",
+      "Tunfisk Nigiri",
+      "Laks Maki",
+      "Kylling Maki",
+      "Futo Kylling",
+      "Futo Tufo",
+      "Bestikk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vietnamesiske Vårruller",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Sushi Stor",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Tunfisk Nigiri",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Laks Maki",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Kylling Maki",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Futo Kylling",
+        "priceMinor": 17800
+      },
+      {
+        "name": "Futo Tufo",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Bestikk",
+        "priceMinor": 2700
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

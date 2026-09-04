@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "burek-factory-oslo",
+    "name": "Burek Factory",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 4A, 0560 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.919162969349095,
+    "longitude": 10.762997882752652
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/695burekfactory",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 9,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 38 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Burek m/ Kjøttdeig & Løk",
+      "Burek m/ Fetaost",
+      "Burek m/ Spinat & Fetaost",
+      "Burek m/ Potetgryte",
+      "Pepsi Max 0,33l",
+      "Pepsi 0,33l",
+      "Ayran",
+      "Vann u/ Kullsyre"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Burek m/ Kjøttdeig & Løk",
+        "priceMinor": 10000
+      },
+      {
+        "name": "Burek m/ Fetaost",
+        "priceMinor": 10000
+      },
+      {
+        "name": "Burek m/ Spinat & Fetaost",
+        "priceMinor": 10000
+      },
+      {
+        "name": "Burek m/ Potetgryte",
+        "priceMinor": 10000
+      },
+      {
+        "name": "Pepsi Max 0,33l",
+        "priceMinor": 4600
+      },
+      {
+        "name": "Pepsi 0,33l",
+        "priceMinor": 4600
+      },
+      {
+        "name": "Ayran",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Vann u/ Kullsyre",
+        "priceMinor": 4600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

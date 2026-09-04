@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lambertseter-kro-kinesisk-restaurant-oslo",
+    "name": "Lambertseter Kro - Kinesisk Restaurant",
+    "websiteUrl": null,
+    "address": "Langbølgen 3, 1150 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.87336076039086,
+    "longitude": 10.811717830256915
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/435lambertseterkrokinesiskrestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 31,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 38 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Siu mai",
+      "Hjemmelaget dumplings m/svin (11 stk)",
+      "Biff chop suey + 2 stk vårruller",
+      "Vårrull vegetar",
+      "Stekt ris m/vårull",
+      "Biff chop suey",
+      "Vegetar chop suey",
+      "Redbull"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Siu mai",
+        "priceMinor": 13000
+      },
+      {
+        "name": "Hjemmelaget dumplings m/svin (11 stk)",
+        "priceMinor": 28600
+      },
+      {
+        "name": "Biff chop suey + 2 stk vårruller",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Vårrull vegetar",
+        "priceMinor": 8700
+      },
+      {
+        "name": "Stekt ris m/vårull",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Biff chop suey",
+        "priceMinor": 21400
+      },
+      {
+        "name": "Vegetar chop suey",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Redbull",
+        "priceMinor": 5100
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

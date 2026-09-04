@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sanremo-restaurant-pizzeria-oslo",
+    "name": "Sanremo Restaurant & Pizzeria",
+    "websiteUrl": null,
+    "address": "Olaf Helsets vei 1A, 0694 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8663428902946,
+    "longitude": 10.839163222354953
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/490sanremorestaurantpizzeria",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 33,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 38 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Focaccia Sanremo",
+      "Kylling Salat",
+      "Spaghetti Alla Bolognese",
+      "Tagliatelle Ai Frutti Di Mare",
+      "Pizza m/ Røkt Laks",
+      "Laks",
+      "Pepsi 0,33l",
+      "San Pellegrino Lemon 0,2l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Focaccia Sanremo",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Kylling Salat",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Spaghetti Alla Bolognese",
+        "priceMinor": 20400
+      },
+      {
+        "name": "Tagliatelle Ai Frutti Di Mare",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Pizza m/ Røkt Laks",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Laks",
+        "priceMinor": 30500
+      },
+      {
+        "name": "Pepsi 0,33l",
+        "priceMinor": 6500
+      },
+      {
+        "name": "San Pellegrino Lemon 0,2l",
+        "priceMinor": 7500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mr-potet-oslo",
+    "name": "Mr.Potet",
+    "websiteUrl": null,
+    "address": "Østensjøveien 79, 0667 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90319161095408,
+    "longitude": 10.822458320926415
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/mrpotet",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 38 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bakt Potet m/Coleslaw",
+      "Bakt Potet m/Skinke",
+      "Bakt Potet m/Bacon",
+      "Bakt Potet m/Beans",
+      "Bakt Potet m/Tuna Mayo",
+      "Bakt Potet m/Kylling",
+      "Bakt Potet m/Döner",
+      "Urge"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bakt Potet m/Coleslaw",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Bakt Potet m/Skinke",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Bakt Potet m/Bacon",
+        "priceMinor": 19000
+      },
+      {
+        "name": "Bakt Potet m/Beans",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Bakt Potet m/Tuna Mayo",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Bakt Potet m/Kylling",
+        "priceMinor": 19000
+      },
+      {
+        "name": "Bakt Potet m/Döner",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Urge",
+        "priceMinor": 4000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

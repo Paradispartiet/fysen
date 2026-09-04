@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "espresso-house-hovedhallen-oslo",
+    "name": "Espresso House Hovedhallen",
+    "websiteUrl": null,
+    "address": "Jernbanetorget 1, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91087480164096,
+    "longitude": 10.750736725832216
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/748espressohousehovedhallen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 99,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 38 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Focaccia Lunch",
+      "Egg og Bacon Toast",
+      "Surdeigsrundstykke Salami & Brie",
+      "Mudcake",
+      "Sukkerbolle",
+      "Ismatcha Mango",
+      "Energy Booster Peach-Mango",
+      "Mozell Light"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Focaccia Lunch",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Egg og Bacon Toast",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Surdeigsrundstykke Salami & Brie",
+        "priceMinor": 7400
+      },
+      {
+        "name": "Mudcake",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Sukkerbolle",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Ismatcha Mango",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Energy Booster Peach-Mango",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Mozell Light",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
