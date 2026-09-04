@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "haandtryk-oslo",
+    "name": "Haandtryk",
+    "websiteUrl": null,
+    "address": "Skippergata 3, 0152 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.907942752705715,
+    "longitude": 10.744949249406519
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/haandtryk",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 16,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 38 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Burger",
+      "På Havet i Storm",
+      "Vegetar Burger",
+      "Osteburger",
+      "Fries med parmesan",
+      "Fries",
+      "Sennep",
+      "Sriracha Mayo"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Burger",
+        "priceMinor": 17200
+      },
+      {
+        "name": "På Havet i Storm",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Vegetar Burger",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Osteburger",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Fries med parmesan",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Fries",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Sennep",
+        "priceMinor": 2000
+      },
+      {
+        "name": "Sriracha Mayo",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

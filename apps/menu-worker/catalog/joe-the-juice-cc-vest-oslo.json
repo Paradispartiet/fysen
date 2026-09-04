@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "joe-the-juice-cc-vest-oslo",
+    "name": "Joe & The Juice CC Vest",
+    "websiteUrl": null,
+    "address": "Lilleakerveien 16, 0283 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91740452172528,
+    "longitude": 10.63604701516379
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/joethejuiceccvest",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 80,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 38 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Acai Breakfast Combo Offer",
+      "Big Matcha Energy",
+      "Ginger Shot",
+      "Hell Of A Nerve 16oz",
+      "Muscle Up",
+      "Raw Blueberry & Raspberry Square",
+      "Iced Americano 12oz",
+      "Stille vann"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Acai Breakfast Combo Offer",
+        "priceMinor": 16400
+      },
+      {
+        "name": "Big Matcha Energy",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Ginger Shot",
+        "priceMinor": 4100
+      },
+      {
+        "name": "Hell Of A Nerve 16oz",
+        "priceMinor": 10800
+      },
+      {
+        "name": "Muscle Up",
+        "priceMinor": 13300
+      },
+      {
+        "name": "Raw Blueberry & Raspberry Square",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Iced Americano 12oz",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Stille vann",
+        "priceMinor": 3300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

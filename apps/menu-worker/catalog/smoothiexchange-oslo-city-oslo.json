@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "smoothiexchange-oslo-city-oslo",
+    "name": "SmoothieXchange Oslo City",
+    "websiteUrl": null,
+    "address": "Stenersgata 1A, 0050 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91260649124485,
+    "longitude": 10.751543339510427
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/736smoothiexchangeoslocity",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 56,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 38 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fruity",
+      "Detox",
+      "Pink Almond",
+      "Almond Strawberry Crunch",
+      "Green Mango",
+      "Hemp Seeds 500g",
+      "Star Nutrition, Cookie Dough",
+      "Isklar Naturell M/Kullsyre"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fruity",
+        "priceMinor": 10700
+      },
+      {
+        "name": "Detox",
+        "priceMinor": 10700
+      },
+      {
+        "name": "Pink Almond",
+        "priceMinor": 11400
+      },
+      {
+        "name": "Almond Strawberry Crunch",
+        "priceMinor": 12400
+      },
+      {
+        "name": "Green Mango",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Hemp Seeds 500g",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Star Nutrition, Cookie Dough",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Isklar Naturell M/Kullsyre",
+        "priceMinor": 3400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
