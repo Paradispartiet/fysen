@@ -11,7 +11,7 @@
     "longitude": 10.759701229307101
   },
   "menuSource": {
-    "url": "https://www.meny.semeny.no/sted/654newanarkali",
+    "url": "https://semeny.no/sted/654newanarkali",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -43,38 +43,14 @@
       "Ekstra Ris"
     ],
     "requiredDishVariants": [
-      {
-        "name": "Vegetar Pakora",
-        "priceMinor": 9900
-      },
-      {
-        "name": "Kylling Vindaloo",
-        "priceMinor": 28900
-      },
-      {
-        "name": "Lam Karahi",
-        "priceMinor": 29900
-      },
-      {
-        "name": "Lam Garlic",
-        "priceMinor": 29900
-      },
-      {
-        "name": "Chana Masala",
-        "priceMinor": 27900
-      },
-      {
-        "name": "Kongereker Karahi",
-        "priceMinor": 29900
-      },
-      {
-        "name": "Hvitløks Naan",
-        "priceMinor": 6900
-      },
-      {
-        "name": "Ekstra Ris",
-        "priceMinor": 5900
-      }
+      { "name": "Vegetar Pakora", "priceMinor": 9900 },
+      { "name": "Kylling Vindaloo", "priceMinor": 28900 },
+      { "name": "Lam Karahi", "priceMinor": 29900 },
+      { "name": "Lam Garlic", "priceMinor": 29900 },
+      { "name": "Chana Masala", "priceMinor": 27900 },
+      { "name": "Kongereker Karahi", "priceMinor": 29900 },
+      { "name": "Hvitløks Naan", "priceMinor": 6900 },
+      { "name": "Ekstra Ris", "priceMinor": 5900 }
     ],
     "forbiddenDishNames": []
   }

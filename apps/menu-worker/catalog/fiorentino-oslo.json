@@ -11,7 +11,7 @@
     "longitude": 10.767643520899417
   },
   "menuSource": {
-    "url": "https://www.meny.semeny.no/public/sted/697fiorentino",
+    "url": "https://semeny.no/sted/697fiorentino",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -43,38 +43,14 @@
       "Up Zero 0,25l"
     ],
     "requiredDishVariants": [
-      {
-        "name": "Paradiso",
-        "priceMinor": 15000
-      },
-      {
-        "name": "Lussurioso",
-        "priceMinor": 16000
-      },
-      {
-        "name": "Inferno",
-        "priceMinor": 16000
-      },
-      {
-        "name": "Primavera",
-        "priceMinor": 8500
-      },
-      {
-        "name": "Formaggi",
-        "priceMinor": 7500
-      },
-      {
-        "name": "Mortadella",
-        "priceMinor": 8500
-      },
-      {
-        "name": "Imsdal 0,5l",
-        "priceMinor": 4500
-      },
-      {
-        "name": "Up Zero 0,25l",
-        "priceMinor": 4000
-      }
+      { "name": "Paradiso", "priceMinor": 15000 },
+      { "name": "Lussurioso", "priceMinor": 16000 },
+      { "name": "Inferno", "priceMinor": 16000 },
+      { "name": "Primavera", "priceMinor": 8500 },
+      { "name": "Formaggi", "priceMinor": 7500 },
+      { "name": "Mortadella", "priceMinor": 8500 },
+      { "name": "Imsdal 0,5l", "priceMinor": 4500 },
+      { "name": "Up Zero 0,25l", "priceMinor": 4000 }
     ],
     "forbiddenDishNames": []
   }
