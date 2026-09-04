@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "oslo-kebab-pizzahus-oslo",
+    "name": "Oslo Kebab & Pizzahus",
+    "websiteUrl": null,
+    "address": "Tøyengata 1, 0190 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91262885792879,
+    "longitude": 10.76401062389129
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/354oslokebabpizzahus",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 49,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 37 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fish & Chips",
+      "Mafiaso (Stor)",
+      "Mexican (Stor)",
+      "Kyllingburger",
+      "Mix Grill",
+      "Lamb Curry",
+      "Garlic Lamb",
+      "Falafel 🌱"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fish & Chips",
+        "priceMinor": 24995
+      },
+      {
+        "name": "Mafiaso (Stor)",
+        "priceMinor": 35794
+      },
+      {
+        "name": "Mexican (Stor)",
+        "priceMinor": 38669
+      },
+      {
+        "name": "Kyllingburger",
+        "priceMinor": 10580
+      },
+      {
+        "name": "Mix Grill",
+        "priceMinor": 44833
+      },
+      {
+        "name": "Lamb Curry",
+        "priceMinor": 32930
+      },
+      {
+        "name": "Garlic Lamb",
+        "priceMinor": 36898
+      },
+      {
+        "name": "Falafel 🌱",
+        "priceMinor": 11241
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

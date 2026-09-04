@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "der-peppern-gror-via-village-oslo",
+    "name": "Der Peppern Gror - VIA Village",
+    "websiteUrl": null,
+    "address": "Fridtjof Nansens plass 7, 0160 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91260571720129,
+    "longitude": 10.735303452013065
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/668derpepperngrorviavillage",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 9,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 37 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Samosa Chana Chaat (Vegansk)",
+      "Chicken 65",
+      "Butter Paneer med Ris",
+      "Butter Chicken med Ris",
+      "Butter Chicken Burrito Roll",
+      "Channa Masala med Ris",
+      "Nan",
+      "Mango Chutney"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Samosa Chana Chaat (Vegansk)",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Chicken 65",
+        "priceMinor": 16000
+      },
+      {
+        "name": "Butter Paneer med Ris",
+        "priceMinor": 29000
+      },
+      {
+        "name": "Butter Chicken med Ris",
+        "priceMinor": 29000
+      },
+      {
+        "name": "Butter Chicken Burrito Roll",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Channa Masala med Ris",
+        "priceMinor": 29000
+      },
+      {
+        "name": "Nan",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Mango Chutney",
+        "priceMinor": 3000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

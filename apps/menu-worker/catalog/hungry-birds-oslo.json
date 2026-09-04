@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "hungry-birds-oslo",
+    "name": "Hungry Birds",
+    "websiteUrl": null,
+    "address": "Grønland 30, 0188 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.912835744488085,
+    "longitude": 10.762644418111051
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/hungrybirds",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 18,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 37 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Crispy i Rull",
+      "Hungry Birds Baguette",
+      "Baguette m/ Pommes Frites",
+      "Combo Boxes",
+      "Cheese Fries",
+      "Garlic Dip",
+      "Rosa Panter Special 0,5l",
+      "Palestine Cola 0,33l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Crispy i Rull",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Hungry Birds Baguette",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Baguette m/ Pommes Frites",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Combo Boxes",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Cheese Fries",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Garlic Dip",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Rosa Panter Special 0,5l",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Palestine Cola 0,33l",
+        "priceMinor": 2500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

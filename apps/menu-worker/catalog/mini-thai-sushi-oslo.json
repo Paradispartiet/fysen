@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mini-thai-sushi-oslo",
+    "name": "Mini Thai & Sushi",
+    "websiteUrl": null,
+    "address": "Middelthuns gate 17N, 0368 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92806449753911,
+    "longitude": 10.710975830793645
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/minithaisushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 61,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 37 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "TS1. Yam Nuea Yang",
+      "T15. Pad Hoi Shell Kratiem m/ Ris",
+      "V10a. Mi Xao bo",
+      "Medium Sashimi",
+      "Futo 14. Tempura Deluxe",
+      "Spicy Tuna",
+      "Fritert Laks m/ Kimchi",
+      "Ris"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "TS1. Yam Nuea Yang",
+        "priceMinor": 24800
+      },
+      {
+        "name": "T15. Pad Hoi Shell Kratiem m/ Ris",
+        "priceMinor": 26500
+      },
+      {
+        "name": "V10a. Mi Xao bo",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Medium Sashimi",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Futo 14. Tempura Deluxe",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Spicy Tuna",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Fritert Laks m/ Kimchi",
+        "priceMinor": 12600
+      },
+      {
+        "name": "Ris",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "restaurant-kraft-oslo",
+    "name": "Restaurant Kraft",
+    "websiteUrl": null,
+    "address": "Turbinveien 26, 0195 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90411153416888,
+    "longitude": 10.789539703888194
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/707restaurantkraft",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 5,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 37 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Ramsløkpølse og Chorizo m/ Stappe",
+      "Betesalat m/ Stekt Chevre",
+      "Suksesskake",
+      "Ostekake",
+      "Eplekake"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Ramsløkpølse og Chorizo m/ Stappe",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Betesalat m/ Stekt Chevre",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Suksesskake",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Ostekake",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Eplekake",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

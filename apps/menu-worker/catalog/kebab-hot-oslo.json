@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kebab-hot-oslo",
+    "name": "Kebab Hot",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 159, 0570 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.931290847129354,
+    "longitude": 10.77883480049053
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/kebabhot",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 73,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 37 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebab i Pita",
+      "Shishtallerken",
+      "Løvstekburger",
+      "Pepperoni Star (Pizza)",
+      "Biff (Halal)",
+      "Santa Fe",
+      "Burn",
+      "Urge"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebab i Pita",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Shishtallerken",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Løvstekburger",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Pepperoni Star (Pizza)",
+        "priceMinor": 34900
+      },
+      {
+        "name": "Biff (Halal)",
+        "priceMinor": 34900
+      },
+      {
+        "name": "Santa Fe",
+        "priceMinor": 38900
+      },
+      {
+        "name": "Burn",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Urge",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

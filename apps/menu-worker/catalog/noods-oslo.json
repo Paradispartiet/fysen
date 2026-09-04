@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "noods-oslo",
+    "name": "Noods",
+    "websiteUrl": null,
+    "address": "Klingenberggata 4, 0161 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91375950755647,
+    "longitude": 10.734031186469126
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/noods",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 32,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 37 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Japanese Ramen",
+      "Szechuan Braised Beef 🌶",
+      "Veggie BiangBiang🌶",
+      "Char Siu BiangBiang🌶",
+      "Poached Chicken",
+      "Onigiri Crispy Duck",
+      "Sriracha Sour Cream",
+      "Olden m /kullsyre"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Japanese Ramen",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Szechuan Braised Beef 🌶",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Veggie BiangBiang🌶",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Char Siu BiangBiang🌶",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Poached Chicken",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Onigiri Crispy Duck",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Sriracha Sour Cream",
+        "priceMinor": 2000
+      },
+      {
+        "name": "Olden m /kullsyre",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

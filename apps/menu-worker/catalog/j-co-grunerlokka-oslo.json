@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "j-co-grunerlokka-oslo",
+    "name": "J&Co Grünerløkka",
+    "websiteUrl": null,
+    "address": "Kingos gate 1, 0457 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9282583484364,
+    "longitude": 10.7513503408661
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/jcogrunerlokka",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 60,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-04",
+      "note": "Batch 37 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Classic Meal Deal",
+      "BBQ Chicken Burger - Meny",
+      "Cheesy Smash Burger",
+      "Trøffel Chicken Burger",
+      "Trøffel Fries",
+      "Chicken Nuggets",
+      "J&Co Signature Dip",
+      "Cookies & Cream Dream Bar"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Classic Meal Deal",
+        "priceMinor": 19500
+      },
+      {
+        "name": "BBQ Chicken Burger - Meny",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Cheesy Smash Burger",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Trøffel Chicken Burger",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Trøffel Fries",
+        "priceMinor": 10000
+      },
+      {
+        "name": "Chicken Nuggets",
+        "priceMinor": 7500
+      },
+      {
+        "name": "J&Co Signature Dip",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Cookies & Cream Dream Bar",
+        "priceMinor": 9900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
