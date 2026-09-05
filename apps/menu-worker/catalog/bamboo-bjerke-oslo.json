@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bamboo-bjerke-oslo",
+    "name": "Bamboo Bjerke",
+    "websiteUrl": null,
+    "address": "Brobekkveien 31A, 0598 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.939740789250536,
+    "longitude": 10.8243905593964
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/428bamboobjerke",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 96,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 40 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hot Chili Pot",
+      "Ferske Vårruller",
+      "Biff / Kylling i Karri",
+      "Maki Mix",
+      "Tuna Kimchi Roll",
+      "Red & White Sashimi",
+      "Søt Chili Saus",
+      "Bestikk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hot Chili Pot",
+        "priceMinor": 21800
+      },
+      {
+        "name": "Ferske Vårruller",
+        "priceMinor": 8800
+      },
+      {
+        "name": "Biff / Kylling i Karri",
+        "priceMinor": 20800
+      },
+      {
+        "name": "Maki Mix",
+        "priceMinor": 17800
+      },
+      {
+        "name": "Tuna Kimchi Roll",
+        "priceMinor": 10800
+      },
+      {
+        "name": "Red & White Sashimi",
+        "priceMinor": 13800
+      },
+      {
+        "name": "Søt Chili Saus",
+        "priceMinor": 2000
+      },
+      {
+        "name": "Bestikk",
+        "priceMinor": 500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

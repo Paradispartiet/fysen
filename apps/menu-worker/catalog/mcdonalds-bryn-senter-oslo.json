@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mcdonalds-bryn-senter-oslo",
+    "name": "McDonald's Bryn Senter",
+    "websiteUrl": null,
+    "address": "Østensjøveien 79, 0667 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90319161095408,
+    "longitude": 10.822458320926415
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/534mcdonaldsbrynsenter",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 124,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 40 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Big Mac BLT",
+      "Dijon Cheese Vegetar Meny",
+      "Happy Meal Filet-O-Fish",
+      "Telemark uten kullsyre",
+      "Big Arch",
+      "McCrispy Deluxe Meny",
+      "McVegan Meny",
+      "Sour Cream & Onion Vegetar Meny"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Big Mac BLT",
+        "priceMinor": 11300
+      },
+      {
+        "name": "Dijon Cheese Vegetar Meny",
+        "priceMinor": 8600
+      },
+      {
+        "name": "Happy Meal Filet-O-Fish",
+        "priceMinor": 8000
+      },
+      {
+        "name": "Telemark uten kullsyre",
+        "priceMinor": 5000
+      },
+      {
+        "name": "Big Arch",
+        "priceMinor": 18600
+      },
+      {
+        "name": "McCrispy Deluxe Meny",
+        "priceMinor": 17900
+      },
+      {
+        "name": "McVegan Meny",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Sour Cream & Onion Vegetar Meny",
+        "priceMinor": 8600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

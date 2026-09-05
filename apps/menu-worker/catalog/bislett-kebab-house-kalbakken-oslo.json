@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bislett-kebab-house-kalbakken-oslo",
+    "name": "Bislett Kebab House Kalbakken",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 391, 0953 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.952359466756505,
+    "longitude": 10.86736849318855
+  },
+  "menuSource": {
+    "url": "https://meny.semeny.no/sted/bislettkebabhousekalbakken",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 77,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 40 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebab i Pita",
+      "Marinert Kyllingtallerken",
+      "Vegabab i Rull",
+      "Cheeseburger",
+      "Shawarma Pizza",
+      "Pommes Frites m/saus (Liten)",
+      "Kebabdressing Flaske Medium",
+      "Powerade Golden Mango 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebab i Pita",
+        "priceMinor": 12200
+      },
+      {
+        "name": "Marinert Kyllingtallerken",
+        "priceMinor": 24300
+      },
+      {
+        "name": "Vegabab i Rull",
+        "priceMinor": 12800
+      },
+      {
+        "name": "Cheeseburger",
+        "priceMinor": 15300
+      },
+      {
+        "name": "Shawarma Pizza",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Pommes Frites m/saus (Liten)",
+        "priceMinor": 7100
+      },
+      {
+        "name": "Kebabdressing Flaske Medium",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Powerade Golden Mango 0,5l",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

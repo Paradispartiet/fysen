@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ali-baba-pizzeria-oslo",
+    "name": "Ali Baba Pizzeria",
+    "websiteUrl": null,
+    "address": "Stovner Senter 3, 0985 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.96214559760663,
+    "longitude": 10.924523629568801
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/se/sted/alibabapizzeria1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 112,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 40 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Marco Polo",
+      "Diana",
+      "Calzona Madonna",
+      "Tropicana",
+      "Kycklingrulle",
+      "Blandsallad",
+      "Vesuvio + Pizzasallad Stor"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 11000
+      },
+      {
+        "name": "Marco Polo",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Diana",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Calzona Madonna",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Tropicana",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Kycklingrulle",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Blandsallad",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Vesuvio + Pizzasallad Stor",
+        "priceMinor": 12000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mcdonalds-cc-vest-oslo",
+    "name": "McDonald's CC Vest",
+    "websiteUrl": null,
+    "address": "Lilleakerveien 16, 0283 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91740452172528,
+    "longitude": 10.63604701516379
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/558mcdonaldsccvest",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 115,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 40 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Homestyle Hot Chipotle Beef",
+      "Quarter Pounder Meny",
+      "McChicken",
+      "Veggie Salsa",
+      "Happy Meal Happy Fish",
+      "Karri Dip",
+      "Kanelbolle",
+      "Makron Sjokolade"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Homestyle Hot Chipotle Beef",
+        "priceMinor": 14400
+      },
+      {
+        "name": "Quarter Pounder Meny",
+        "priceMinor": 13800
+      },
+      {
+        "name": "McChicken",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Veggie Salsa",
+        "priceMinor": 4000
+      },
+      {
+        "name": "Happy Meal Happy Fish",
+        "priceMinor": 7100
+      },
+      {
+        "name": "Karri Dip",
+        "priceMinor": 1500
+      },
+      {
+        "name": "Kanelbolle",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Makron Sjokolade",
+        "priceMinor": 1600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

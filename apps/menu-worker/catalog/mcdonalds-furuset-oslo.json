@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mcdonalds-furuset-oslo",
+    "name": "McDonald's Furuset",
+    "websiteUrl": null,
+    "address": "Tevlingveien 17, 1081 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93086208970038,
+    "longitude": 10.868674162665043
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/583mcdonaldsfuruset",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 139,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 40 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Dijon Cheese Beef",
+      "Big Arch",
+      "Dijon Cheese Chicken Meny",
+      "McWrap Chicken Meny",
+      "Pink McShaker Fries",
+      "Sakura X Sprite Zero",
+      "Makron Pistasj",
+      "Sour Cream & Onion Vegetar Meny"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Dijon Cheese Beef",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Big Arch",
+        "priceMinor": 19400
+      },
+      {
+        "name": "Dijon Cheese Chicken Meny",
+        "priceMinor": 8600
+      },
+      {
+        "name": "McWrap Chicken Meny",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Pink McShaker Fries",
+        "priceMinor": 5100
+      },
+      {
+        "name": "Sakura X Sprite Zero",
+        "priceMinor": 4400
+      },
+      {
+        "name": "Makron Pistasj",
+        "priceMinor": 1800
+      },
+      {
+        "name": "Sour Cream & Onion Vegetar Meny",
+        "priceMinor": 8600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

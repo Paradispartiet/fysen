@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "burger-king-torggata-oslo",
+    "name": "Burger King Torggata",
+    "websiteUrl": null,
+    "address": "Torggata 24, 0183 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91656687015476,
+    "longitude": 10.752252891345506
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/716burgerkingtorggata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 113,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 40 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Northugs Gourmet Grill Dobbel",
+      "Whopper Meny",
+      "Chili Mayo Bacon King",
+      "Whopper Bacon Cheese",
+      "Onion Rings x12",
+      "Gourmet Grill Bacon Cheese Dobbel",
+      "BK® Fish Meny",
+      "Kids Nuggets Meny"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Northugs Gourmet Grill Dobbel",
+        "priceMinor": 20500
+      },
+      {
+        "name": "Whopper Meny",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Chili Mayo Bacon King",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Whopper Bacon Cheese",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Onion Rings x12",
+        "priceMinor": 7300
+      },
+      {
+        "name": "Gourmet Grill Bacon Cheese Dobbel",
+        "priceMinor": 26100
+      },
+      {
+        "name": "BK® Fish Meny",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Kids Nuggets Meny",
+        "priceMinor": 8900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
