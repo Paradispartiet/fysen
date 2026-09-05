@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sushihjornet-adamstuen-oslo",
+    "name": "Sushihjørnet Adamstuen",
+    "websiteUrl": null,
+    "address": "Ullevålsveien 82A, 0454 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.932882816475185,
+    "longitude": 10.734161473901933
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/310sushihjornetadamstuen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 70,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 39 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Meny 1 (8 biter)",
+      "Familiepakke 2 (64 Biter)",
+      "Kappa Maki (8 biter)",
+      "Laks (1 bit)",
+      "Laks i Chilimix (1 bit)",
+      "Tunfisk Deluxe",
+      "Sweet chilisaus",
+      "Bundaberg Passion Fruit 375ml"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Meny 1 (8 biter)",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Familiepakke 2 (64 Biter)",
+        "priceMinor": 87900
+      },
+      {
+        "name": "Kappa Maki (8 biter)",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Laks (1 bit)",
+        "priceMinor": 2200
+      },
+      {
+        "name": "Laks i Chilimix (1 bit)",
+        "priceMinor": 2800
+      },
+      {
+        "name": "Tunfisk Deluxe",
+        "priceMinor": 3200
+      },
+      {
+        "name": "Sweet chilisaus",
+        "priceMinor": 2000
+      },
+      {
+        "name": "Bundaberg Passion Fruit 375ml",
+        "priceMinor": 6900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

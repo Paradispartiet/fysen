@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "yoyo-dumplings-noodles-oslo",
+    "name": "Yoyo Dumplings & Noodles",
+    "websiteUrl": null,
+    "address": "Pilestredet 55A, 0350 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92249370315363,
+    "longitude": 10.731862405126185
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/94yoyodumplingsnoodles",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 15,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 39 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Biff Dumplings med suppe 牛肉饺子",
+      "Vegetar Dumplings 🌱 蔬菜饺子",
+      "Wonton Suppe 馄饨汤",
+      "KIMBO Dumpling Sauce Hot 190ml 水饺酱",
+      "Char Siew med Nudler i Suppe 叉烧面",
+      "Dumplings med Nudler i Suppe 水饺面",
+      "Beijing-Style Meat Saus Noodles 炸酱面",
+      "NONGSHIM 虾片 Shrimp Flavoured Chips 75g"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Biff Dumplings med suppe 牛肉饺子",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Vegetar Dumplings 🌱 蔬菜饺子",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Wonton Suppe 馄饨汤",
+        "priceMinor": 14900
+      },
+      {
+        "name": "KIMBO Dumpling Sauce Hot 190ml 水饺酱",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Char Siew med Nudler i Suppe 叉烧面",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Dumplings med Nudler i Suppe 水饺面",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Beijing-Style Meat Saus Noodles 炸酱面",
+        "priceMinor": 17900
+      },
+      {
+        "name": "NONGSHIM 虾片 Shrimp Flavoured Chips 75g",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

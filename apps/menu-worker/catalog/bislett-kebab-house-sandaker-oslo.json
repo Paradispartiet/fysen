@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bislett-kebab-house-sandaker-oslo",
+    "name": "Bislett Kebab House Sandaker",
+    "websiteUrl": null,
+    "address": "Sandakerveien 72C, 0484 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94243949372114,
+    "longitude": 10.769962168719067
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/746bislettkebabhousesandaker",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 93,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 39 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebab Meal Deal",
+      "Marinert Kylling i Pita",
+      "Meksikana Dönertallerken",
+      "Hamburger",
+      "Biff Classic",
+      "Kyllingballs med Ost og Chili (6 stk.)",
+      "Urge 0,5l",
+      "Smash Fries"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebab Meal Deal",
+        "priceMinor": 16700
+      },
+      {
+        "name": "Marinert Kylling i Pita",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Meksikana Dönertallerken",
+        "priceMinor": 26100
+      },
+      {
+        "name": "Hamburger",
+        "priceMinor": 13300
+      },
+      {
+        "name": "Biff Classic",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Kyllingballs med Ost og Chili (6 stk.)",
+        "priceMinor": 9600
+      },
+      {
+        "name": "Urge 0,5l",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Smash Fries",
+        "priceMinor": 12100
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

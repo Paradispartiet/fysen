@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "campino-sinsen-oslo",
+    "name": "Campino Sinsen",
+    "websiteUrl": null,
+    "address": "Hans Nielsen Hauges gate 37A, 0481 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.938564170842945,
+    "longitude": 10.780158754021171
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/647campinosinsen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 64,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 39 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Calzone",
+      "Hamburger",
+      "Kylling Kebabtallerken",
+      "Pokerkveld",
+      "Valgfri Topping",
+      "Kjærlighetspizza (Stor)",
+      "Battery Orginal 0,5l",
+      "Solo Super 1,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Calzone",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Hamburger",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Kylling Kebabtallerken",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Pokerkveld",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Valgfri Topping",
+        "priceMinor": 30900
+      },
+      {
+        "name": "Kjærlighetspizza (Stor)",
+        "priceMinor": 32900
+      },
+      {
+        "name": "Battery Orginal 0,5l",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Solo Super 1,5l",
+        "priceMinor": 6900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

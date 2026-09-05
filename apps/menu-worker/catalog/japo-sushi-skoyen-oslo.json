@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "japo-sushi-skoyen-oslo",
+    "name": "Japo Sushi Skøyen",
+    "websiteUrl": null,
+    "address": "Karenslyst Allé 9, 0278 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92046249659422,
+    "longitude": 10.683641337506293
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/387japosushiskoyen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 140,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 39 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Dagens 1 - 10 Biter Sushi",
+      "Nr 19 - Kappet Agurk / Advokado",
+      "Nr 35 - Kongereke Chilipickles",
+      "Nr 49 - Stekt Tofu",
+      "Nr 63 - Kylling & Sopp",
+      "Nr 81 - Stekte Kongereker i Sursøt Saus",
+      "Nr 101 - Softcrab Maki",
+      "Nr 58 - Gyoza: 5 Stk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Dagens 1 - 10 Biter Sushi",
+        "priceMinor": 14800
+      },
+      {
+        "name": "Nr 19 - Kappet Agurk / Advokado",
+        "priceMinor": 9800
+      },
+      {
+        "name": "Nr 35 - Kongereke Chilipickles",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Nr 49 - Stekt Tofu",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Nr 63 - Kylling & Sopp",
+        "priceMinor": 23800
+      },
+      {
+        "name": "Nr 81 - Stekte Kongereker i Sursøt Saus",
+        "priceMinor": 25800
+      },
+      {
+        "name": "Nr 101 - Softcrab Maki",
+        "priceMinor": 14800
+      },
+      {
+        "name": "Nr 58 - Gyoza: 5 Stk",
+        "priceMinor": 10900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
