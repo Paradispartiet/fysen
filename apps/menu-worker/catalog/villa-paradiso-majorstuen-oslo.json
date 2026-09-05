@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "villa-paradiso-majorstuen-oslo",
+    "name": "Villa Paradiso Majorstuen",
+    "websiteUrl": null,
+    "address": "Jacob Aalls gate 28, 0366 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92891455607339,
+    "longitude": 10.717851517064677
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/528villaparadisomajorstuen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 21,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 39 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Capricciosa",
+      "Quattro Stagioni",
+      "Caronte",
+      "Risacca",
+      "Tartufo e Parma",
+      "Bambini Margherita 🌱",
+      "Cedrata"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Capricciosa",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Quattro Stagioni",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Caronte",
+        "priceMinor": 27000
+      },
+      {
+        "name": "Risacca",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Tartufo e Parma",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Bambini Margherita 🌱",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Cedrata",
+        "priceMinor": 6500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

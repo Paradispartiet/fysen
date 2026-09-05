@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "yume-asian-fusion-oslo",
+    "name": "Yume Asian Fusion",
+    "websiteUrl": null,
+    "address": "Briskebyveien 70, 0259 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92146004427595,
+    "longitude": 10.716194169602918
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/yumeasianfusion",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 70,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 39 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vårruller Vegetar (2stk)",
+      "Fresh Laks",
+      "Nigiri Combo Laks",
+      "Scampi Nigiri",
+      "Søtpotet Maki 🌱",
+      "Tuna Lover",
+      "Pad Thai",
+      "Reker Teriyaki"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vårruller Vegetar (2stk)",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Fresh Laks",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Nigiri Combo Laks",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Scampi Nigiri",
+        "priceMinor": 2600
+      },
+      {
+        "name": "Søtpotet Maki 🌱",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Tuna Lover",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Pad Thai",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Reker Teriyaki",
+        "priceMinor": 18900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

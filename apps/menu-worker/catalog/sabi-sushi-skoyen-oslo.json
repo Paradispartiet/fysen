@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sabi-sushi-skoyen-oslo",
+    "name": "Sabi Sushi Skøyen",
+    "websiteUrl": null,
+    "address": "Harbitzalléen 19, 0275 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.924298027547955,
+    "longitude": 10.673158161577483
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/575sabisushiskoyen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 37,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 39 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tempura Scampi Maki",
+      "Tempura Scampi Futomaki",
+      "Spicy Laks Avokado",
+      "Sashimi Mix 12 biter",
+      "Yakitori med ris",
+      "Wasabi",
+      "Rekechips",
+      "Ramune Original"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Tempura Scampi Maki",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Tempura Scampi Futomaki",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Spicy Laks Avokado",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Sashimi Mix 12 biter",
+        "priceMinor": 28800
+      },
+      {
+        "name": "Yakitori med ris",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Wasabi",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Rekechips",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Ramune Original",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

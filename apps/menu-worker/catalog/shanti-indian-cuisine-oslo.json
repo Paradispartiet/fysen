@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "shanti-indian-cuisine-oslo",
+    "name": "Shanti Indian Cuisine",
+    "websiteUrl": null,
+    "address": "Vogts gate 70A, 0477 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.937070452875,
+    "longitude": 10.766472158110265
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/375shantiindiancuisine",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 40,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 39 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Onion Palak Bhaji",
+      "Chicken Korma",
+      "Chicken Chettinad Chefs Special",
+      "Lam Vindaloo",
+      "Goan Fish Curry Chefs Special",
+      "Chana Masala",
+      "Haryaly Naan",
+      "Limbu Pani"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Onion Palak Bhaji",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Chicken Korma",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Chicken Chettinad Chefs Special",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Lam Vindaloo",
+        "priceMinor": 28000
+      },
+      {
+        "name": "Goan Fish Curry Chefs Special",
+        "priceMinor": 28000
+      },
+      {
+        "name": "Chana Masala",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Haryaly Naan",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Limbu Pani",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

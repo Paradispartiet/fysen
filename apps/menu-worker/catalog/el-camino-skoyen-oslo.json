@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "el-camino-skoyen-oslo",
+    "name": "El Camino Skøyen",
+    "websiteUrl": null,
+    "address": "Karenslyst Allé 30, 0278 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.920432514496056,
+    "longitude": 10.6828240697924
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/elcaminoskoyen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 30,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 39 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Classic Chicken Burrito",
+      "Kids Burrito",
+      "Veggie Bowl",
+      "Jarritos - Lime",
+      "Small family bundle",
+      "Chips & Dip Snack Size",
+      "Salsa cup - Spicy",
+      "Sour Cream cup"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Classic Chicken Burrito",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Kids Burrito",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Veggie Bowl",
+        "priceMinor": 22300
+      },
+      {
+        "name": "Jarritos - Lime",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Small family bundle",
+        "priceMinor": 59200
+      },
+      {
+        "name": "Chips & Dip Snack Size",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Salsa cup - Spicy",
+        "priceMinor": 5100
+      },
+      {
+        "name": "Sour Cream cup",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

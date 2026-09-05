@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sushi-city-wok-majorstuen-oslo",
+    "name": "Sushi City Wok Majorstuen",
+    "websiteUrl": null,
+    "address": "Valkyriegata 19, 0366 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92983227052171,
+    "longitude": 10.71607195096365
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/sushicitywokmajorstuen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 63,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 39 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Misosuppe * med scampi, eller laks*",
+      "Edamame",
+      "Flambert Kombo (12 biter)",
+      "Spicy Laks Maki 10 biter",
+      "Rainbow Maki 10 biter",
+      "Spicy Tuna 12 biter",
+      "Poke Bowl Fried Scampi",
+      "Kimchi"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Misosuppe * med scampi, eller laks*",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Edamame",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Flambert Kombo (12 biter)",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Spicy Laks Maki 10 biter",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Rainbow Maki 10 biter",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Spicy Tuna 12 biter",
+        "priceMinor": 13100
+      },
+      {
+        "name": "Poke Bowl Fried Scampi",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Kimchi",
+        "priceMinor": 1300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

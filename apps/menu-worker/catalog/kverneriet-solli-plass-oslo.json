@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kverneriet-solli-plass-oslo",
+    "name": "Kverneriet Solli Plass",
+    "websiteUrl": null,
+    "address": "Henrik Ibsens gate 100, 0255 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91439136564372,
+    "longitude": 10.718977159707656
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/102kvernerietsolliplass",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 43,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 39 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hot & Spicy Chicken Wings (6pcs)",
+      "Caesar Salad",
+      "The Boss Burger",
+      "The Golden Clucker (Burger of the month)",
+      "Barbecue Sauce",
+      "Ketchup",
+      "San Pellegrino 0,25L",
+      "Strawberry"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hot & Spicy Chicken Wings (6pcs)",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Caesar Salad",
+        "priceMinor": 29900
+      },
+      {
+        "name": "The Boss Burger",
+        "priceMinor": 27900
+      },
+      {
+        "name": "The Golden Clucker (Burger of the month)",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Barbecue Sauce",
+        "priceMinor": 4000
+      },
+      {
+        "name": "Ketchup",
+        "priceMinor": 500
+      },
+      {
+        "name": "San Pellegrino 0,25L",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Strawberry",
+        "priceMinor": 14900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

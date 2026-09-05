@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sabaki-skoyen-oslo",
+    "name": "Sabaki Skøyen",
+    "websiteUrl": null,
+    "address": "Drammensveien 126B, 0277 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92120482023325,
+    "longitude": 10.688661215720973
+  },
+  "menuSource": {
+    "url": "https://www.meny.semeny.no/public/sted/692sabakiskoyen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 41,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 39 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Usuba",
+      "Andesalat",
+      "Nigiri Tuna 2 stk.",
+      "Sashimi Hamachi 3 stk.",
+      "Garden Futomaki",
+      "Paneer Tikka",
+      "Syltet Kimchi",
+      "Eira Vann 0,75l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Usuba",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Andesalat",
+        "priceMinor": 29800
+      },
+      {
+        "name": "Nigiri Tuna 2 stk.",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Sashimi Hamachi 3 stk.",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Garden Futomaki",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Paneer Tikka",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Syltet Kimchi",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Eira Vann 0,75l",
+        "priceMinor": 9800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "8-fish-oslo",
+    "name": "8 Fish",
+    "websiteUrl": null,
+    "address": "Bøkkerveien 4, 0579 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92697997404906,
+    "longitude": 10.793997531465484
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/4558fish",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 49,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 39 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Våruller",
+      "Sushi Mix 15",
+      "Nigiri Mix 15",
+      "Fancy Philly",
+      "Tempura Maki",
+      "Spicy Tuna Maki",
+      "Tempura Salat",
+      "Pepsi Max 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Våruller",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Sushi Mix 15",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Nigiri Mix 15",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Fancy Philly",
+        "priceMinor": 16200
+      },
+      {
+        "name": "Tempura Maki",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Spicy Tuna Maki",
+        "priceMinor": 16200
+      },
+      {
+        "name": "Tempura Salat",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Pepsi Max 0,5l",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
