@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizzeria-palermo-oslo",
+    "name": "Pizzeria Palermo",
+    "websiteUrl": null,
+    "address": "Vækerøveien 199, 0751 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.947096290154654,
+    "longitude": 10.643273183414783
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/pizzeriapalermo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 72,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 40 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margarita (Medium)",
+      "Milano (Medium)",
+      "Taco Pizza (Medium)",
+      "Porto Fino (Stor)",
+      "Taco Pizza (Stor)",
+      "Skinkesalat",
+      "Kebab I Pita",
+      "Pølse & Chips"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margarita (Medium)",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Milano (Medium)",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Taco Pizza (Medium)",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Porto Fino (Stor)",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Taco Pizza (Stor)",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Skinkesalat",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Kebab I Pita",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Pølse & Chips",
+        "priceMinor": 10900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

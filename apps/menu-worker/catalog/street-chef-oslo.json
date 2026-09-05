@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "street-chef-oslo",
+    "name": "Street Chef",
+    "websiteUrl": null,
+    "address": "Årvollveien 17, 0590 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.945155015417996,
+    "longitude": 10.809123063003733
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/432streetchef",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 77,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 40 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Street Chef Burger",
+      "Svinekjøtt Spyd",
+      "Tuna Sandwich",
+      "Kyllingsuppe",
+      "Ost & Bacon Omelett",
+      "Mac & Cheese",
+      "Sopp Saus",
+      "Caffe Mocca"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Street Chef Burger",
+        "priceMinor": 20300
+      },
+      {
+        "name": "Svinekjøtt Spyd",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Tuna Sandwich",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Kyllingsuppe",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Ost & Bacon Omelett",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Mac & Cheese",
+        "priceMinor": 6300
+      },
+      {
+        "name": "Sopp Saus",
+        "priceMinor": 4200
+      },
+      {
+        "name": "Caffe Mocca",
+        "priceMinor": 4800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

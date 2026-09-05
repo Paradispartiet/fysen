@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mcdonalds-klingenberggaten-oslo",
+    "name": "McDonald's Klingenberggaten",
+    "websiteUrl": null,
+    "address": "Klingenberggata 4, 0161 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91375950755647,
+    "longitude": 10.734031186469126
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/86mcdonaldsklingenberggaten",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 82,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 40 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Homestyle Hot Chipotle Beef",
+      "Big Tasty Bacon",
+      "Dijon Cheese Beef meny",
+      "Chicken McFeast Meny",
+      "Happy Meal Cheeseburger",
+      "MacFries",
+      "Telemark med sitron",
+      "Mini Donuts 3 stk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Homestyle Hot Chipotle Beef",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Big Tasty Bacon",
+        "priceMinor": 13400
+      },
+      {
+        "name": "Dijon Cheese Beef meny",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Chicken McFeast Meny",
+        "priceMinor": 13700
+      },
+      {
+        "name": "Happy Meal Cheeseburger",
+        "priceMinor": 7900
+      },
+      {
+        "name": "MacFries",
+        "priceMinor": 3600
+      },
+      {
+        "name": "Telemark med sitron",
+        "priceMinor": 3800
+      },
+      {
+        "name": "Mini Donuts 3 stk",
+        "priceMinor": 4400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

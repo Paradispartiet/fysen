@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "burger-king-ulleval-oslo",
+    "name": "Burger King Ullevål",
+    "websiteUrl": null,
+    "address": "Sognsveien 75A, 0855 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94855766850175,
+    "longitude": 10.732822800704366
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/560burgerkingulleval",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 114,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-05",
+      "note": "Batch 40 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Northugs Gourmet Grill Dobbel",
+      "Whopper Bacon Cheese Meal",
+      "Monster Mango Loco",
+      "Kids Cheeseburger Meny",
+      "Gourmet Grill Northug G.O.A.T Dobbel",
+      "Bacon King Crispy Chicken Meny",
+      "Long Chicken",
+      "Chimichurri Chicken Gourmet"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Northugs Gourmet Grill Dobbel",
+        "priceMinor": 20500
+      },
+      {
+        "name": "Whopper Bacon Cheese Meal",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Monster Mango Loco",
+        "priceMinor": 5200
+      },
+      {
+        "name": "Kids Cheeseburger Meny",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Gourmet Grill Northug G.O.A.T Dobbel",
+        "priceMinor": 27400
+      },
+      {
+        "name": "Bacon King Crispy Chicken Meny",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Long Chicken",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Chimichurri Chicken Gourmet",
+        "priceMinor": 21800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
