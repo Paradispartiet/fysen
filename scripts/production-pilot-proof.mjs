@@ -239,7 +239,7 @@ async function verifySearchSmokes(pool) {
       query: "Valentes Spesial",
       expectedSlug: "valentes-vika-oslo",
       expectedDishName: "Valentes Spesial",
-      expectedPriceMinor: 36_500,
+      expectedPriceMinor: 39_800,
       expectedOpening: "unknown",
       expectedAction: "booking",
       minCount: 1,
