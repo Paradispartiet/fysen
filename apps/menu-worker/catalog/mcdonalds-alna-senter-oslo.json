@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mcdonalds-alna-senter-oslo",
+    "name": "McDonald's Alna Senter",
+    "websiteUrl": null,
+    "address": "Strømsveien 245, 0668 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92600081129246,
+    "longitude": 10.847668030277642
+  },
+  "menuSource": {
+    "url": "https://meny.semeny.no/sted/mcdonaldsalnasenter",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 118,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-06",
+      "note": "Batch 43 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Dobbel Quarter Pounder",
+      "Big Arch",
+      "McChicken Meny",
+      "Fish McFeast",
+      "McWrap Classic Chicken Meny",
+      "Cheddar Dip",
+      "Milkshake Jordbærsmak",
+      "Sour Cream & Onion Vegetar Meny"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Dobbel Quarter Pounder",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Big Arch",
+        "priceMinor": 19400
+      },
+      {
+        "name": "McChicken Meny",
+        "priceMinor": 13100
+      },
+      {
+        "name": "Fish McFeast",
+        "priceMinor": 9000
+      },
+      {
+        "name": "McWrap Classic Chicken Meny",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Cheddar Dip",
+        "priceMinor": 800
+      },
+      {
+        "name": "Milkshake Jordbærsmak",
+        "priceMinor": 4600
+      },
+      {
+        "name": "Sour Cream & Onion Vegetar Meny",
+        "priceMinor": 8600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

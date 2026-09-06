@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "yummy-sushi-oslo",
+    "name": "Yummy Sushi",
+    "websiteUrl": null,
+    "address": "Østmarkveien 5, 0687 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.89171011064229,
+    "longitude": 10.842817564232599
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/462yummysushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 59,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-06",
+      "note": "Batch 43 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fritert Scampi",
+      "Mix 20 Biter",
+      "Laks Maki",
+      "Futo Tempura Laks",
+      "Kamskjell Nigiri",
+      "Tom Yum Thai-Sjømat",
+      "Vegetar 🌱",
+      "Rekechips"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fritert Scampi",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Mix 20 Biter",
+        "priceMinor": 31500
+      },
+      {
+        "name": "Laks Maki",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Futo Tempura Laks",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Kamskjell Nigiri",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Tom Yum Thai-Sjømat",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Vegetar 🌱",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Rekechips",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
