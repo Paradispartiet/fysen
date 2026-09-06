@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "prince-lunchbar-oslo",
+    "name": "Prince Lunchbar",
+    "websiteUrl": null,
+    "address": "Kirkegata 20, 0153 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91077869975776,
+    "longitude": 10.744436380626592
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/625princelunchbar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 37,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-06",
+      "note": "Batch 42 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Røkt laks og Omelett",
+      "Kylling Karri",
+      "Karbonade",
+      "Biffsnadder",
+      "Kyllingkebab i Pita",
+      "Gyros - Kylling",
+      "Kyllingsalat",
+      "Kyllingnuggets 4 Biter"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Røkt laks og Omelett",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Kylling Karri",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Karbonade",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Biffsnadder",
+        "priceMinor": 21800
+      },
+      {
+        "name": "Kyllingkebab i Pita",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Gyros - Kylling",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Kyllingsalat",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Kyllingnuggets 4 Biter",
+        "priceMinor": 8900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

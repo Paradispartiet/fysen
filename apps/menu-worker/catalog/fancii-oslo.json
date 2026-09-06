@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "fancii-oslo",
+    "name": "Fancii",
+    "websiteUrl": null,
+    "address": "Myntfunnveien 2, 0382 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92695986283795,
+    "longitude": 10.633418535681553
+  },
+  "menuSource": {
+    "url": "https://www.meny.semeny.no/public/dk/sted/fancii",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 144,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-06",
+      "note": "Batch 42 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Asparges med bacon (1 stk.)",
+      "Asparges Nigiri (V)",
+      "Fancii Crispy Box (32 stk.)",
+      "Laks Aioli Kaburimaki",
+      "Salmon Big Futomaki",
+      "Sparkling tun uramaki",
+      "Mango Hosomaki",
+      "Asahi 5,0% 0,33 l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Asparges med bacon (1 stk.)",
+        "priceMinor": 2200
+      },
+      {
+        "name": "Asparges Nigiri (V)",
+        "priceMinor": 2000
+      },
+      {
+        "name": "Fancii Crispy Box (32 stk.)",
+        "priceMinor": 34900
+      },
+      {
+        "name": "Laks Aioli Kaburimaki",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Salmon Big Futomaki",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Sparkling tun uramaki",
+        "priceMinor": 8000
+      },
+      {
+        "name": "Mango Hosomaki",
+        "priceMinor": 3800
+      },
+      {
+        "name": "Asahi 5,0% 0,33 l",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

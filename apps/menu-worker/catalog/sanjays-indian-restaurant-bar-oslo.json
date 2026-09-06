@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sanjays-indian-restaurant-bar-oslo",
+    "name": "Sanjays Indian Restaurant & Bar",
+    "websiteUrl": null,
+    "address": "Lørenveien 44A, 0585 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93074220644906,
+    "longitude": 10.793479536708285
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/429sanjaysindianrestaurantbar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 59,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-06",
+      "note": "Batch 42 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tandoori Prawns",
+      "Chicken Tikka",
+      "Butter Chicken",
+      "Sanjay's Special Rogan Josh",
+      "Chana Masala 🌱",
+      "Sanjays Tikka Nan",
+      "Grønn Chilli Chutney",
+      "Nimbu Pani Anbefales"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Tandoori Prawns",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Chicken Tikka",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Butter Chicken",
+        "priceMinor": 26800
+      },
+      {
+        "name": "Sanjay's Special Rogan Josh",
+        "priceMinor": 27400
+      },
+      {
+        "name": "Chana Masala 🌱",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Sanjays Tikka Nan",
+        "priceMinor": 7200
+      },
+      {
+        "name": "Grønn Chilli Chutney",
+        "priceMinor": 3200
+      },
+      {
+        "name": "Nimbu Pani Anbefales",
+        "priceMinor": 7200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

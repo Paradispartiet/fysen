@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "hotvedt-esso-haugenstua-oslo",
+    "name": "Hotvedt Esso Haugenstua",
+    "websiteUrl": null,
+    "address": "Garver Ytteborgs vei 100, 0977 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.952735066371176,
+    "longitude": 10.910761927161808
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/hotvedtessohaugenstua",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 31,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-06",
+      "note": "Batch 42 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pizzameny m/ Dressing & 1,5l Drikke",
+      "Hamburger 160g Meny m/ Pommes og 0,5L Drikke",
+      "Kebab i Pita m/ 0,5L Drikke",
+      "Mild Kebabsaus",
+      "Vaffel",
+      "Telemark Naturell 0,5l",
+      "Battery Fresh 0,5l",
+      "Hamar julebrus lett 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pizzameny m/ Dressing & 1,5l Drikke",
+        "priceMinor": 43500
+      },
+      {
+        "name": "Hamburger 160g Meny m/ Pommes og 0,5L Drikke",
+        "priceMinor": 24700
+      },
+      {
+        "name": "Kebab i Pita m/ 0,5L Drikke",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Mild Kebabsaus",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Vaffel",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Telemark Naturell 0,5l",
+        "priceMinor": 5400
+      },
+      {
+        "name": "Battery Fresh 0,5l",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Hamar julebrus lett 0,5l",
+        "priceMinor": 5400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
