@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "restaurant": {"slug":"pizzabakeren-tasen-oslo","name":"Pizzabakeren Tåsen","websiteUrl":null,"address":"Tåsenveien 26, 0853 Oslo","city":"Oslo","countryCode":"NO","latitude":59.94393961795968,"longitude":10.74771804075499},
+  "menuSource": {"url":"https://semeny.no/sted/544pizzabakerentasen","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":66,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-06","note":"Batch 41 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions": [],
+  "qualityAssertions": {"requiredDishNames":["Den Enkle 🌱 (Medium)","Peppersvennen 🌶️ (Medium)","Mr.X (Medium)","Spekeskinka (Medium)","Meksikaneren 🌶️ (Stor)","Kyllingfarmen (Stor)","Hottentoppen 🌶️ (Stor)","Kebabdressing"],"requiredDishVariants":[{"name":"Den Enkle 🌱 (Medium)","priceMinor":14900},{"name":"Peppersvennen 🌶️ (Medium)","priceMinor":21500},{"name":"Mr.X (Medium)","priceMinor":21500},{"name":"Spekeskinka (Medium)","priceMinor":21500},{"name":"Meksikaneren 🌶️ (Stor)","priceMinor":29900},{"name":"Kyllingfarmen (Stor)","priceMinor":29900},{"name":"Hottentoppen 🌶️ (Stor)","priceMinor":29900},{"name":"Kebabdressing","priceMinor":3700}],"forbiddenDishNames":[]}
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bonder-i-byen-oslo",
+    "name": "Bønder i Byen",
+    "websiteUrl": null,
+    "address": "Seilduksgata 15A, 0553 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92537086292454,
+    "longitude": 10.758836323579434
+  },
+  "menuSource": {
+    "url": "https://www.meny.semeny.no/sted/bonderibyen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 16,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-06",
+      "note": "Batch 41 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Langtidsbakt Kylling",
+      "Varmrøkt laks og røkt ørret fra Fiskeeksperten Reinhartsen",
+      "Langtidsbakt Kylling Smørbrød",
+      "Varmrøkt laks og røkt ørret fra Fiskeeksperten Reinhartsen Smørbrød",
+      "Grimstad Brus Sitron og Ingefær",
+      "Grimstad Brus Appelsin",
+      "Fruktsmekk Plomme og Ingefær",
+      "Surf Kombucha Ingefær"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Langtidsbakt Kylling",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Varmrøkt laks og røkt ørret fra Fiskeeksperten Reinhartsen",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Langtidsbakt Kylling Smørbrød",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Varmrøkt laks og røkt ørret fra Fiskeeksperten Reinhartsen Smørbrød",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Grimstad Brus Sitron og Ingefær",
+        "priceMinor": 7000
+      },
+      {
+        "name": "Grimstad Brus Appelsin",
+        "priceMinor": 7000
+      },
+      {
+        "name": "Fruktsmekk Plomme og Ingefær",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Surf Kombucha Ingefær",
+        "priceMinor": 7500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

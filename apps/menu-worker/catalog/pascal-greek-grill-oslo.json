@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pascal-greek-grill-oslo",
+    "name": "Pascal Greek & Grill",
+    "websiteUrl": null,
+    "address": "Kjelsåsveien 18, 0488 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94422098231918,
+    "longitude": 10.786384216393342
+  },
+  "menuSource": {"url":"https://semeny.no/sted/335pascalgreekgrill","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":43,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
+  "verification": {"hours":{"status":"unverified","checkedAt":"2026-09-06","note":"Batch 41 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions": [],
+  "qualityAssertions": {"requiredDishNames":["Tzatziki","Piperies Florinis Salat","Pita Gyros Kylling","Gyros Pork Plate","Club Gyros Pork","Souvlaki 1 stk","Jalapeño Fries","Solo Super 0,33l"],"requiredDishVariants":[{"name":"Tzatziki","priceMinor":10900},{"name":"Piperies Florinis Salat","priceMinor":14400},{"name":"Pita Gyros Kylling","priceMinor":18900},{"name":"Gyros Pork Plate","priceMinor":24900},{"name":"Club Gyros Pork","priceMinor":28900},{"name":"Souvlaki 1 stk","priceMinor":10900},{"name":"Jalapeño Fries","priceMinor":12900},{"name":"Solo Super 0,33l","priceMinor":4900}],"forbiddenDishNames":[]}
+}
