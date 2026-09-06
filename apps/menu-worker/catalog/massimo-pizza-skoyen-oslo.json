@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "massimo-pizza-skoyen-oslo",
+    "name": "Massimo Pizza Skøyen",
+    "websiteUrl": null,
+    "address": "Hovfaret 17, 0275 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92676293086002,
+    "longitude": 10.67679997669383
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/massimopizzaskoyen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 53,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-06",
+      "note": "Batch 41 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita 🌱",
+      "Capricciosa",
+      "Capricciosa Karamellisert Løk 🌱",
+      "Carbonara",
+      "Parma Spesial",
+      "Vegansk Capricciosa",
+      "Gorgonzola-krem",
+      "Vann m/ Kullsyre 0,5l"
+    ],
+    "requiredDishVariants": [
+      {"name":"Margherita 🌱","priceMinor":17000},
+      {"name":"Capricciosa","priceMinor":23000},
+      {"name":"Capricciosa Karamellisert Løk 🌱","priceMinor":23000},
+      {"name":"Carbonara","priceMinor":20500},
+      {"name":"Parma Spesial","priceMinor":28000},
+      {"name":"Vegansk Capricciosa","priceMinor":21500},
+      {"name":"Gorgonzola-krem","priceMinor":3500},
+      {"name":"Vann m/ Kullsyre 0,5l","priceMinor":2900}
+    ],
+    "forbiddenDishNames": []
+  }
+}

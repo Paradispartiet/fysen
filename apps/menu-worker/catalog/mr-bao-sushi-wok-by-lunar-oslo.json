@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mr-bao-sushi-wok-by-lunar-oslo",
+    "name": "Mr.Bao Sushi & Wok (by Lunar)",
+    "websiteUrl": null,
+    "address": "Vetlandsveien 67C, 0685 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.89950949523138,
+    "longitude": 10.847075751426207
+  },
+  "menuSource": {
+    "url": "https://www.meny.semeny.no/public/sted/mrbaosushiwokbylunar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 81,
+    "sourceSupport": {"redirectOrigins": [],"browserDataOrigins": [],"browserBlockedOrigins": []}
+  },
+  "verification": {"hours": {"status": "unverified","checkedAt": "2026-09-06","note": "Batch 41 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": ["Innbakt Scampi 3stk","Maki Party","Special Maki","39a. Husets Futo 6biter","41b. Crispy Duck 12biter","Banh Mi - Eggomlett","Kylling Gongbao","Villa"],
+    "requiredDishVariants": [{"name":"Innbakt Scampi 3stk","priceMinor":7900},{"name":"Maki Party","priceMinor":63900},{"name":"Special Maki","priceMinor":14500},{"name":"39a. Husets Futo 6biter","priceMinor":10900},{"name":"41b. Crispy Duck 12biter","priceMinor":14900},{"name":"Banh Mi - Eggomlett","priceMinor":12500},{"name":"Kylling Gongbao","priceMinor":21500},{"name":"Villa","priceMinor":4900}],
+    "forbiddenDishNames": []
+  }
+}
