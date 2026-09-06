@@ -37,7 +37,7 @@
       "Wonton Suppe (Mì hoành thánh)",
       "Stekt Ris (Cơm chiên dương châu)",
       "Biff & Brokkoli (Bò xào bông cải)",
-      "Innbakt Svinekjøtt (Heo lăn sốt chua ngọt)",
+      "Stekt Nudler (Mì xào thập cẩm)",
       "Biff Chili Satesaus (Bò xào ớt sa tế)",
       "Scampi i Chili Satesaus (Tôm xào ớt sa tế)"
     ],
@@ -67,7 +67,7 @@
         "priceKind": "from"
       },
       {
-        "name": "Innbakt Svinekjøtt (Heo lăn sốt chua ngọt)",
+        "name": "Stekt Nudler (Mì xào thập cẩm)",
         "priceMinor": 27900,
         "priceKind": "from"
       },
