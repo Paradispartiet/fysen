@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kebab-factory-oslo",
+    "name": "Kebab Factory",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 4A, 0560 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.919162969349095,
+    "longitude": 10.762997882752652
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/kebabfactory",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 12,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-06",
+      "note": "Batch 42 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebab",
+      "Kylling Kebab",
+      "Falafel Kebab",
+      "Kebab Wrap",
+      "Kylling Wrap",
+      "Döner Wrap",
+      "Kebab Fries m/ Saus",
+      "Villa"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebab",
+        "priceMinor": 17520
+      },
+      {
+        "name": "Kylling Kebab",
+        "priceMinor": 19920
+      },
+      {
+        "name": "Falafel Kebab",
+        "priceMinor": 17520
+      },
+      {
+        "name": "Kebab Wrap",
+        "priceMinor": 19920
+      },
+      {
+        "name": "Kylling Wrap",
+        "priceMinor": 21165
+      },
+      {
+        "name": "Döner Wrap",
+        "priceMinor": 22320
+      },
+      {
+        "name": "Kebab Fries m/ Saus",
+        "priceMinor": 19465
+      },
+      {
+        "name": "Villa",
+        "priceMinor": 4860
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

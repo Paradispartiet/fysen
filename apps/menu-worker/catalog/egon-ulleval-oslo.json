@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "egon-ulleval-oslo",
+    "name": "Egon Ullevål",
+    "websiteUrl": null,
+    "address": "Sognsveien 77C, 0855 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94992279943269,
+    "longitude": 10.736036457814338
+  },
+  "menuSource": {
+    "url": "https://meny.semeny.no/sted/578egonulleval",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 128,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-06",
+      "note": "Batch 42 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Philly Steak Sandwich",
+      "Pepperstek av Indrefilet 180g",
+      "Torsk fra Nord-Norge",
+      "Hamburger",
+      "Hvitløksbrød",
+      "Bourbon Glaze",
+      "Bakt Potet Bacon og Skinke",
+      "Creme Brulee"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Philly Steak Sandwich",
+        "priceMinor": 31100
+      },
+      {
+        "name": "Pepperstek av Indrefilet 180g",
+        "priceMinor": 45100
+      },
+      {
+        "name": "Torsk fra Nord-Norge",
+        "priceMinor": 38900
+      },
+      {
+        "name": "Hamburger",
+        "priceMinor": 12300
+      },
+      {
+        "name": "Hvitløksbrød",
+        "priceMinor": 6800
+      },
+      {
+        "name": "Bourbon Glaze",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Bakt Potet Bacon og Skinke",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Creme Brulee",
+        "priceMinor": 13500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
