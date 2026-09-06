@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mcdonalds-grorud-oslo",
+    "name": "McDonald's Grorud",
+    "websiteUrl": null,
+    "address": "Grorudveien 73, 0976 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94969,
+    "longitude": 10.88556
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/mcdonaldsgrorud",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 98,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-06",
+      "note": "Batch 43 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Big Arch",
+      "Hamburger",
+      "McChicken Meny",
+      "McWrap Hot Ranch Meny",
+      "Sour Cream & Onion Vegetar",
+      "Chicken McNuggets Meny 9stk",
+      "Telemark med sitron",
+      "Donut Sukker"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Big Arch",
+        "priceMinor": 19400
+      },
+      {
+        "name": "Hamburger",
+        "priceMinor": 3300
+      },
+      {
+        "name": "McChicken Meny",
+        "priceMinor": 13100
+      },
+      {
+        "name": "McWrap Hot Ranch Meny",
+        "priceMinor": 13600
+      },
+      {
+        "name": "Sour Cream & Onion Vegetar",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Chicken McNuggets Meny 9stk",
+        "priceMinor": 13100
+      },
+      {
+        "name": "Telemark med sitron",
+        "priceMinor": 4300
+      },
+      {
+        "name": "Donut Sukker",
+        "priceMinor": 2500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

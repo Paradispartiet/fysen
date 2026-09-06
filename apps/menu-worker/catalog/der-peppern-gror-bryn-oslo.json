@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "der-peppern-gror-bryn-oslo",
+    "name": "Der Peppern Gror Bryn",
+    "websiteUrl": null,
+    "address": "Østensjøveien 79, 0667 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90319161095408,
+    "longitude": 10.822458320926415
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/436derpepperngrorbryn",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 32,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-06",
+      "note": "Batch 43 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chicken 65",
+      "Chicken Hariyali Tikka",
+      "Tariwala Gosht",
+      "Bhindi Do Payaza",
+      "Missi Roti",
+      "Hariyali Naan",
+      "Desi-Salat",
+      "Luscombe Cool Ginger Beer 0,33l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chicken 65",
+        "priceMinor": 16000
+      },
+      {
+        "name": "Chicken Hariyali Tikka",
+        "priceMinor": 29000
+      },
+      {
+        "name": "Tariwala Gosht",
+        "priceMinor": 30500
+      },
+      {
+        "name": "Bhindi Do Payaza",
+        "priceMinor": 26000
+      },
+      {
+        "name": "Missi Roti",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Hariyali Naan",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Desi-Salat",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Luscombe Cool Ginger Beer 0,33l",
+        "priceMinor": 8500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

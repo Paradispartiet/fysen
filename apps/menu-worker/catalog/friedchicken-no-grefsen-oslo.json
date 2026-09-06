@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "friedchicken-no-grefsen-oslo",
+    "name": "Friedchicken.no Grefsen",
+    "websiteUrl": null,
+    "address": "Grefsenveien 90, 0489 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.955248272300196,
+    "longitude": 10.785204860673984
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/friedchickennogrefsen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 33,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-06",
+      "note": "Batch 43 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hot Spice Hotwings",
+      "Crispy Thigh Bucket",
+      "Mix Bucket 16 stk",
+      "Big Mix Box",
+      "Special chicken",
+      "BBQ",
+      "Spicy Mix",
+      "Kuli"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hot Spice Hotwings",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Crispy Thigh Bucket",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Mix Bucket 16 stk",
+        "priceMinor": 39900
+      },
+      {
+        "name": "Big Mix Box",
+        "priceMinor": 45900
+      },
+      {
+        "name": "Special chicken",
+        "priceMinor": 3500
+      },
+      {
+        "name": "BBQ",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Spicy Mix",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Kuli",
+        "priceMinor": 2500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
