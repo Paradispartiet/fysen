@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "village-tandoori-oslo",
+    "name": "Village Tandoori",
+    "websiteUrl": null,
+    "address": "Bygdøy allé 65A, 0265 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91899740394041,
+    "longitude": 10.703169335131495
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/107villagetandoori",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 50,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-07",
+      "note": "Batch 44 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chicken Pakora",
+      "Garlic Chicken",
+      "Chicken Tikka Masala",
+      "Lamb Korma",
+      "Palak Paneer",
+      "Garlic Nan",
+      "Desi Salad",
+      "Gulab Jamun"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chicken Pakora",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Garlic Chicken",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Chicken Tikka Masala",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Lamb Korma",
+        "priceMinor": 30900
+      },
+      {
+        "name": "Palak Paneer",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Garlic Nan",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Desi Salad",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Gulab Jamun",
+        "priceMinor": 11900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
