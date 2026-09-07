@@ -40,7 +40,7 @@
       "Lam Korma",
       "Seekh Kebab",
       "Punjabi Mix Grill",
-      "Paneer Nan",
+      "Potet Nan",
       "Samosa Kjøtt"
     ],
     "requiredDishVariants": [
@@ -50,7 +50,7 @@
       { "name": "Lam Korma", "priceMinor": 20900 },
       { "name": "Seekh Kebab", "priceMinor": 12500 },
       { "name": "Punjabi Mix Grill", "priceMinor": 24000 },
-      { "name": "Paneer Nan", "priceMinor": 5900 }
+      { "name": "Potet Nan", "priceMinor": 5500 }
     ],
     "forbiddenDishNames": [
       "Mango Lassi",
