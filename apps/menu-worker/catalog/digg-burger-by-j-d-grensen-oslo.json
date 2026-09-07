@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "digg-burger-by-j-d-grensen-oslo",
+    "name": "Digg Burger by J.D - Grensen",
+    "websiteUrl": null,
+    "address": "Grønland 18, 0188 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91302299503146,
+    "longitude": 10.761402354667814
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/diggburgerbyjdgrensen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 66,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-07",
+      "note": "Batch 45 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "TAKIS Bomb Burger Meal",
+      "BBQ JACK meal",
+      "HIGH VOLTAGE EXTREME (Veldig Sterk)",
+      "HIGH VOLTAGE - SPICY Meny",
+      "Spicy Fire 🌶",
+      "Fries",
+      "Chicken Nuggets",
+      "Super Solo 0,33 uten Sukker"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "TAKIS Bomb Burger Meal",
+        "priceMinor": 27500
+      },
+      {
+        "name": "BBQ JACK meal",
+        "priceMinor": 27900
+      },
+      {
+        "name": "HIGH VOLTAGE EXTREME (Veldig Sterk)",
+        "priceMinor": 18900
+      },
+      {
+        "name": "HIGH VOLTAGE - SPICY Meny",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Spicy Fire 🌶",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Fries",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Chicken Nuggets",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Super Solo 0,33 uten Sukker",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "norges-burger-oslo",
+    "name": "Norges Burger",
+    "websiteUrl": null,
+    "address": "Møllergata 23, 0179 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91563512459411,
+    "longitude": 10.74856019808857
+  },
+  "menuSource": {
+    "url": "https://www.meny.semeny.no/public/sted/norgesburger",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 13,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-07",
+      "note": "Batch 45 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Norgesburger Kjempemeny",
+      "Norgesburger",
+      "Liten Cheeseburger",
+      "Vaffel",
+      "Chilimajones",
+      "Mozell Eplemost 0,33l",
+      "Pepsi Max 0,5l",
+      "Mack Artic Water 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Norgesburger Kjempemeny",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Norgesburger",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Liten Cheeseburger",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Vaffel",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Chilimajones",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Mozell Eplemost 0,33l",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Pepsi Max 0,5l",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Mack Artic Water 0,5l",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

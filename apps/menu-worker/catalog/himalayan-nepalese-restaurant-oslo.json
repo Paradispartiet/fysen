@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "himalayan-nepalese-restaurant-oslo",
+    "name": "Himalayan Nepalese Restaurant",
+    "websiteUrl": null,
+    "address": "Oslo gate 14, 0192 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90552904200832,
+    "longitude": 10.767693083124534
+  },
+  "menuSource": {
+    "url": "https://www.meny.semeny.no/public/sted/439himalayannepaleserestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 55,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-07",
+      "note": "Batch 45 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Sabji Samosa (2 stk.)",
+      "Chicken Tikka Butter Mashala",
+      "Mutton Tikka Masala",
+      "Tandoori Paneer",
+      "Jhaneko Dal",
+      "Scampi Salad",
+      "Tandoori Roti",
+      "Papadam"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Sabji Samosa (2 stk.)",
+        "priceMinor": 11000
+      },
+      {
+        "name": "Chicken Tikka Butter Mashala",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Mutton Tikka Masala",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Tandoori Paneer",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Jhaneko Dal",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Scampi Salad",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Tandoori Roti",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Papadam",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

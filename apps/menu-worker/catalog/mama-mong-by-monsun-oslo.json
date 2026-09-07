@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mama-mong-by-monsun-oslo",
+    "name": "Mama Mong by Monsun",
+    "websiteUrl": null,
+    "address": "Helgesens gate 14A, 0553 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92468430857506,
+    "longitude": 10.758460034756615
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/mamamongbymonsun",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 18,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-07",
+      "note": "Batch 45 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bun Cha Gio",
+      "Pho Vegan 🌱",
+      "Goi Cuon",
+      "Sushi 20 Biter",
+      "Laks & Avokado Roll",
+      "TAA Roll 🌱 (vegan)",
+      "Spicy Kveite",
+      "Lakse Maki Menu (48 biter)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bun Cha Gio",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Pho Vegan 🌱",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Goi Cuon",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Sushi 20 Biter",
+        "priceMinor": 29800
+      },
+      {
+        "name": "Laks & Avokado Roll",
+        "priceMinor": 9500
+      },
+      {
+        "name": "TAA Roll 🌱 (vegan)",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Spicy Kveite",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Lakse Maki Menu (48 biter)",
+        "priceMinor": 42000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

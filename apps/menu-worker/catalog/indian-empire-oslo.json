@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "indian-empire-oslo",
+    "name": "Indian Empire",
+    "websiteUrl": null,
+    "address": "Niels Juels gate 30, Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91422991530218,
+    "longitude": 10.711367245531173
+  },
+  "menuSource": {
+    "url": "https://www.meny.semeny.no/public/sted/497indianempire",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 16,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-07",
+      "note": "Batch 45 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kyilling Pakora",
+      "Paneer Butter Masala",
+      "Butter Chicken",
+      "Kylling Biryani (alle dager)",
+      "Tandoori Kylling (med bein)",
+      "Plain Naan",
+      "Hvitløks Naan",
+      "Gulab Jamun"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kyilling Pakora",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Paneer Butter Masala",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Butter Chicken",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Kylling Biryani (alle dager)",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Tandoori Kylling (med bein)",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Plain Naan",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Hvitløks Naan",
+        "priceMinor": 3800
+      },
+      {
+        "name": "Gulab Jamun",
+        "priceMinor": 4800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

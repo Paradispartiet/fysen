@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "burger-burger-oslo",
+    "name": "Burger Burger",
+    "websiteUrl": null,
+    "address": "Waldemar Thranes gate 63A, 0173 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.927581463388805,
+    "longitude": 10.748958098572125
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/burgerburger",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 29,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-07",
+      "note": "Batch 45 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Ost ́N",
+      "Tryffeln",
+      "Grislåda",
+      "Pommes",
+      "Bbqsås",
+      "Aioli",
+      "Trocadero 33 cl",
+      "Loka Naturell 33 cl"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Ost ́N",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Tryffeln",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Grislåda",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Pommes",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Bbqsås",
+        "priceMinor": 2400
+      },
+      {
+        "name": "Aioli",
+        "priceMinor": 2400
+      },
+      {
+        "name": "Trocadero 33 cl",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Loka Naturell 33 cl",
+        "priceMinor": 2900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
