@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mamma-pizza-oslo",
+    "name": "Mamma Pizza",
+    "websiteUrl": null,
+    "address": "Dronningens gate 22, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.910774384823526,
+    "longitude": 10.746796884276124
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/mammapizza",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 32,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-07",
+      "note": "Batch 44 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Rustico",
+      "Capricciosa",
+      "`Nduja 🌶️",
+      "Calzone",
+      "Alto Adige",
+      "Insalata Fantasia",
+      "Tiramisu",
+      "San Pellegrino 0,5"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Rustico",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Capricciosa",
+        "priceMinor": 26500
+      },
+      {
+        "name": "`Nduja 🌶️",
+        "priceMinor": 28700
+      },
+      {
+        "name": "Calzone",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Alto Adige",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Insalata Fantasia",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Tiramisu",
+        "priceMinor": 15500
+      },
+      {
+        "name": "San Pellegrino 0,5",
+        "priceMinor": 8900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

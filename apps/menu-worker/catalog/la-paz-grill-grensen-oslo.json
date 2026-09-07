@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "la-paz-grill-grensen-oslo",
+    "name": "La Paz Grill Grensen",
+    "websiteUrl": null,
+    "address": "Kristian IVs gate 1, 0164 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91491841827497,
+    "longitude": 10.740414525243494
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/lapazgrillgrensen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 82,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-07",
+      "note": "Batch 44 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Husets Original",
+      "Din Egen Pizza",
+      "Fishburger",
+      "1/2 Grillet Kylling",
+      "Kylling Shawarma",
+      "Falafel Tallerken",
+      "Mix Deal",
+      "Urge 0.5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Husets Original",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Din Egen Pizza",
+        "priceMinor": 32900
+      },
+      {
+        "name": "Fishburger",
+        "priceMinor": 10900
+      },
+      {
+        "name": "1/2 Grillet Kylling",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Kylling Shawarma",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Falafel Tallerken",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Mix Deal",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Urge 0.5l",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
