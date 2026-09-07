@@ -43,14 +43,38 @@
       "Bonaqua 1,5l"
     ],
     "requiredDishVariants": [
-      {"name": "Dønerkebab", "priceMinor": 26000},
-      {"name": "Kylling Shawarma Rull / Pita", "priceMinor": 16900},
-      {"name": "Aker Spesial", "priceMinor": 18000},
-      {"name": "Capriciosa", "priceMinor": 18000},
-      {"name": "Døner Kebab", "priceMinor": 17500},
-      {"name": "Vesuvio (Stor)", "priceMinor": 24500},
-      {"name": "Kyllingburger", "priceMinor": 12000},
-      {"name": "Bonaqua 1,5l", "priceMinor": 6500}
+      {
+        "name": "Dønerkebab",
+        "priceMinor": 26000
+      },
+      {
+        "name": "Kylling Shawarma Rull / Pita",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Aker Spesial",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Capriciosa",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Døner Kebab",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Vesuvio (Stor)",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Kyllingburger",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Bonaqua 1,5l",
+        "priceMinor": 6500
+      }
     ],
     "forbiddenDishNames": []
   }
