@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dil-se-burger-bar-oslo",
+    "name": "Dil Se Burger Bar",
+    "websiteUrl": null,
+    "address": "Lørenveien 64D, 0585 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92922241436319,
+    "longitude": 10.797906896076022
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/481dilseburgerbar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 23,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-07",
+      "note": "Batch 45 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Signature Honey bunny 🐰 burger",
+      "Hot 2 Handle 🌶️",
+      "BBQ Burger",
+      "BBQ Samosa",
+      "Quick Meal Paneer",
+      "Chilisaus",
+      "Søtpotetfries",
+      "Honey bunny Deal"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Signature Honey bunny 🐰 burger",
+        "priceMinor": 14875
+      },
+      {
+        "name": "Hot 2 Handle 🌶️",
+        "priceMinor": 15725
+      },
+      {
+        "name": "BBQ Burger",
+        "priceMinor": 15215
+      },
+      {
+        "name": "BBQ Samosa",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Quick Meal Paneer",
+        "priceMinor": 14850
+      },
+      {
+        "name": "Chilisaus",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Søtpotetfries",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Honey bunny Deal",
+        "priceMinor": 23500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ki-sushi-ramen-oslo",
+    "name": "Ki Sushi & Ramen",
+    "websiteUrl": null,
+    "address": "Osterhaus' gate 13, 0183 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91709794135986,
+    "longitude": 10.752570671617624
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/kisushiramen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 118,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-07",
+      "note": "Batch 45 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Uramaki Crispy Ebi (8 stk.)",
+      "Tempura Rejer (4 stk.)",
+      "Hosomaki Avocado (8 stk.)",
+      "Futomaki Big California (6 stk.)",
+      "Nigiri Flammegrillet laks (1 stk.)",
+      "TILBUD 1",
+      "Poke Bowl Tempura",
+      "Risruller Tun (8 stk.)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Uramaki Crispy Ebi (8 stk.)",
+        "priceMinor": 8000
+      },
+      {
+        "name": "Tempura Rejer (4 stk.)",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Hosomaki Avocado (8 stk.)",
+        "priceMinor": 4000
+      },
+      {
+        "name": "Futomaki Big California (6 stk.)",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Nigiri Flammegrillet laks (1 stk.)",
+        "priceMinor": 2000
+      },
+      {
+        "name": "TILBUD 1",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Poke Bowl Tempura",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Risruller Tun (8 stk.)",
+        "priceMinor": 8000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

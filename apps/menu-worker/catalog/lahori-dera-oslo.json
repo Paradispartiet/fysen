@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lahori-dera-oslo",
+    "name": "Lahori Dera",
+    "websiteUrl": null,
+    "address": "Norbygata 56A, 0190 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91306577207006,
+    "longitude": 10.76558986032165
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/285lahoridera",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 42,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-07",
+      "note": "Batch 45 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Naan Kebab Roll",
+      "Chicken Garlic Tikka",
+      "Mix Grill",
+      "Chicken Biryani",
+      "Lam Nehari",
+      "Mix Vegetar",
+      "Peshwari Naan",
+      "Raita"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Naan Kebab Roll",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Chicken Garlic Tikka",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Mix Grill",
+        "priceMinor": 37900
+      },
+      {
+        "name": "Chicken Biryani",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Lam Nehari",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Mix Vegetar",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Peshwari Naan",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Raita",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
