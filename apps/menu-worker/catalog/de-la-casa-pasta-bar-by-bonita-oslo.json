@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "de-la-casa-pasta-bar-by-bonita-oslo",
+    "name": "De la Casa Pasta Bar - By Bonita",
+    "websiteUrl": null,
+    "address": "Frognerveien 35A, 0266 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9196428006386,
+    "longitude": 10.708819527446341
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/298delacasapastabarbybonita",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 25,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-07",
+      "note": "Batch 44 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Acai Bowl",
+      "Primavera Salad",
+      "Boloñesa",
+      "Lasagne Boloñesa",
+      "Pollo y Mozzarella",
+      "Soft Red Beef",
+      "Ribeye Linguini",
+      "Bonita's Signature Colombian Coffee Medium Roasted Ground"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Acai Bowl",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Primavera Salad",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Boloñesa",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Lasagne Boloñesa",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Pollo y Mozzarella",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Soft Red Beef",
+        "priceMinor": 29200
+      },
+      {
+        "name": "Ribeye Linguini",
+        "priceMinor": 38000
+      },
+      {
+        "name": "Bonita's Signature Colombian Coffee Medium Roasted Ground",
+        "priceMinor": 28900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
