@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "il-palazzo-oslo",
+    "name": "Il Palazzo",
+    "websiteUrl": null,
+    "address": "Brenneriveien 11A, 0182 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92053312074585,
+    "longitude": 10.752993342993195
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/se/sted/ilpalazzo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 71,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-07",
+      "note": "Batch 44 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Hawaii",
+      "Cozze",
+      "Pizzamix",
+      "Spaghetti À La Bolognese",
+      "Tonfisksallad",
+      "Kycklingkebabsallad",
+      "Pommes Tallrik"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 14400
+      },
+      {
+        "name": "Hawaii",
+        "priceMinor": 15600
+      },
+      {
+        "name": "Cozze",
+        "priceMinor": 16800
+      },
+      {
+        "name": "Pizzamix",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Spaghetti À La Bolognese",
+        "priceMinor": 16800
+      },
+      {
+        "name": "Tonfisksallad",
+        "priceMinor": 16800
+      },
+      {
+        "name": "Kycklingkebabsallad",
+        "priceMinor": 16800
+      },
+      {
+        "name": "Pommes Tallrik",
+        "priceMinor": 5000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
