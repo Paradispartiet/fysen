@@ -61,6 +61,23 @@ describe("browser request policy", () => {
     }
   });
 
+  it("blocks explicitly denied origins non-fatally for document, xhr and fetch", () => {
+    for (const resourceType of ["document", "xhr", "fetch"]) {
+      expect(
+        browserRequestDecision({
+          sourceOrigin,
+          requestUrl: "https://tracking.example.com/collect",
+          resourceType,
+          browserBlockedOrigins: ["https://tracking.example.com"],
+        }),
+      ).toEqual({
+        action: "block",
+        reason: "explicitly blocked browser origin: https://tracking.example.com",
+        fatal: false,
+      });
+    }
+  });
+
   it("blocks known telemetry non-fatally instead of treating it as menu data", () => {
     expect(
       browserRequestDecision({
