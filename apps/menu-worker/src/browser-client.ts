@@ -213,6 +213,14 @@ async function installNetworkPolicy(
   await context.route("**/*", async (route: Route) => {
     try {
       const request = route.request();
+      try {
+        const diagnosticUrl = new URL(request.url());
+        if (diagnosticUrl.origin === "https://api.winorder.no") {
+          console.log(`[browser-winorder-api-request] ${request.method()} ${request.url()}`);
+        }
+      } catch {
+        // Temporary URL-only diagnostic; normal policy handles malformed URLs below.
+      }
       const decision = browserRequestDecision({
         sourceOrigin,
         requestUrl: request.url(),
