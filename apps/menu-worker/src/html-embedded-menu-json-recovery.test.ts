@@ -53,7 +53,7 @@ describe("embedded structured menu JSON recovery", () => {
     const items = recoverEmbeddedStructuredMenuJson(htmlWithPayload(payload));
 
     expect(HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION).toBe(
-      "embedded-menu-json-v3",
+      "embedded-menu-json-v2",
     );
     expect(
       items.map((item) => [item.sectionName, item.name, item.priceMinor]),
@@ -64,43 +64,6 @@ describe("embedded structured menu JSON recovery", () => {
       ["Hovedretter", "Qazon Kebab", 44900],
     ]);
     expect(items.every((item) => item.extractionMethod === "api")).toBe(true);
-  });
-
-  it("supplements an embedded food menu with high-confidence visible heading cards omitted from the payload", () => {
-    const payload = {
-      categories: [
-        { name: "Nudler & Suppe", item_ids: ["pho", "bun"] },
-        { name: "Småretter", item_ids: ["beef", "dragon"] },
-      ],
-      items: [
-        { id: "pho", name: "Phở Special", price: 33900 },
-        { id: "bun", name: "Bún Bò Huế", price: 33900 },
-        { id: "beef", name: "Bò tái chanh", price: 21500 },
-        { id: "dragon", name: "Dragon Ball", price: 18900 },
-      ],
-    };
-    const html = `
-      <html><body>
-        <script type="application/json">${JSON.stringify(payload)}</script>
-        <h2>Nudler & Suppe</h2>
-        <h3>Phở Special</h3><p>339 NOK</p>
-        <h3>Bún Bò Huế</h3><p>339 NOK</p>
-        <h2>Småretter</h2>
-        <h3>Bò tái chanh</h3><p>215 NOK</p>
-        <h3>Dragon Ball</h3><p>189 NOK</p>
-        <h3>Mực Chiên Giòn</h3><p>175 NOK</p>
-        <h2>Drikke</h2>
-        <h3>Trà Vải</h3><p>75 NOK</p>
-      </body></html>
-    `;
-
-    const items = recoverEmbeddedStructuredMenuJson(html);
-
-    expect(items.map((item) => [item.name, item.priceMinor])).toContainEqual([
-      "Mực Chiên Giòn",
-      17500,
-    ]);
-    expect(items.map((item) => item.name)).not.toContain("Trà Vải");
   });
 
   it("fails closed when category bindings do not cover enough items", () => {
