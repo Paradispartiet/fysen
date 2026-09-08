@@ -21,6 +21,9 @@
       "redirectOrigins": [],
       "browserDataOrigins": [
         "https://api.winorder.no"
+      ],
+      "browserBlockedOrigins": [
+        "https://tracking.winorder.no"
       ]
     },
     "readinessTexts": [
@@ -37,7 +40,7 @@
     "menu": {
       "status": "verified",
       "checkedAt": "2026-09-08",
-      "note": "District 4 links directly to its first-party WinOrder ordering surface. The menu validator uses that rendered first-party surface with only api.winorder.no declared as a data origin and waits for Mực Chiên Giòn before extraction."
+      "note": "District 4 links directly to its first-party WinOrder ordering surface. The menu validator allows only api.winorder.no as a data origin, explicitly blocks the nonessential tracking.winorder.no telemetry origin, and waits for Mực Chiên Giòn before extraction."
     }
   },
   "actions": [
