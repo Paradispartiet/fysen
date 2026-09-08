@@ -62,7 +62,11 @@ describe("browser support origins", () => {
         resourceType: "document",
         browserBlockedOrigins: ["https://telemetry.example"],
       }),
-    ).toMatchObject({ action: "block", fatal: true });
+    ).toEqual({
+      action: "block",
+      reason: "explicitly blocked browser origin: https://telemetry.example",
+      fatal: false,
+    });
   });
 
   it("nonfatally blocks narrow Google measurement endpoints used by rendered pages", () => {
