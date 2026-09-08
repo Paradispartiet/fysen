@@ -213,10 +213,11 @@ async function installNetworkPolicy(
   await context.route("**/*", async (route: Route) => {
     try {
       const request = route.request();
+      const resourceType = request.resourceType();
       const decision = browserRequestDecision({
         sourceOrigin,
         requestUrl: request.url(),
-        resourceType: request.resourceType(),
+        resourceType,
         redirectOrigins: support.redirectOrigins,
         browserDataOrigins: support.browserDataOrigins,
         ...(support.browserBlockedOrigins !== undefined
@@ -240,6 +241,12 @@ async function installNetworkPolicy(
       }
 
       const url = new URL(request.url());
+      if (
+        (resourceType === "xhr" || resourceType === "fetch") &&
+        support.browserDataOrigins.includes(url.origin)
+      ) {
+        console.log(`[browser-data-request] ${resourceType} ${url.origin}${url.pathname}${url.search}`);
+      }
       const networkKey = `${url.protocol}//${url.hostname}:${url.port || "443"}`;
       let validation = validatedUrls.get(networkKey);
       if (!validation) {
