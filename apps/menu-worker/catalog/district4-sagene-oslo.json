@@ -32,7 +32,8 @@
         "https://perseus-productanalytics.deliveryhero.net",
         "https://action-log.foodora.no",
         "https://api.usercentrics.eu",
-        "https://conn-check.icg-in.info"
+        "https://conn-check.icg-in.info",
+        "https://pagespeed.deliveryhero.net"
       ]
     }
   },
