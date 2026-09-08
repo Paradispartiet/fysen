@@ -29,7 +29,8 @@
         "https://o516780.ingest.sentry.io",
         "https://images.dhmedia.io",
         "https://reviews-api-no.fd-api.com",
-        "https://perseus-productanalytics.deliveryhero.net"
+        "https://perseus-productanalytics.deliveryhero.net",
+        "https://action-log.foodora.no"
       ]
     }
   },
