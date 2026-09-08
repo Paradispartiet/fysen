@@ -6,20 +6,27 @@ describe("HTML source scope recovery for branded main courses", () => {
     const html = `
       <html><body>
         <h2>Pizza</h2>
-        <p>Pollo 249 kr</p>
+        <p>Pollo</p>
+        <p>249 kr</p>
         <h2>Cocktails</h2>
-        <p>Gin Tonic 159 kr</p>
+        <p>Gin Tonic</p>
+        <p>159 kr</p>
         <div>Big Tactics Main Courses</div>
-        <p>Oche Burger & Fries 279 kr</p>
-        <p>The Vegan Burger V 229 kr</p>
+        <p>Oche Burger & Fries</p>
+        <p>279 kr</p>
+        <p>The Vegan Burger V</p>
+        <p>229 kr</p>
         <h2>Sweets</h2>
-        <p>BROWNIE & ICE CREAM 99 kr</p>
+        <p>BROWNIE & ICE CREAM</p>
+        <p>99 kr</p>
       </body></html>
     `;
 
     const result = extractScopedHtmlMenu(html);
     const names = result.items.map((item) => item.name);
 
+    expect(result.visibleText).toContain("Big Tactics Main Courses");
+    expect(result.visibleText).toContain("Oche Burger & Fries");
     expect(names).toContain("Pollo");
     expect(names).toContain("Oche Burger & Fries");
     expect(names).toContain("The Vegan Burger V");
