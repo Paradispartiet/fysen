@@ -11,7 +11,7 @@
     "longitude": 10.7530356
   },
   "menuSource": {
-    "url": "https://www.foodora.no/restaurant/t8cf/district-4-t8cf/reviews",
+    "url": "https://www.foodora.no/en/restaurant/t8cf/district-4-t8cf",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -28,7 +28,7 @@
     "menu": {
       "status": "verified",
       "checkedAt": "2026-09-08",
-      "note": "District 4's first-party site links its current takeaway flow, while Foodora's server-rendered reviews route exposes the current priced service menu without browser-only cross-origin dependencies. It independently matches District 4 and retains the verified required dishes and prices."
+      "note": "District 4's current Foodora English route is server-rendered with the live priced service menu, including the verified required dishes and prices, while avoiding browser-only cross-origin dependencies seen on the locale-neutral route."
     }
   },
   "actions": [
