@@ -19,7 +19,9 @@
     "minimumExpectedItems": 19,
     "sourceSupport": {
       "redirectOrigins": [],
-      "browserDataOrigins": [],
+      "browserDataOrigins": [
+        "https://no.fd-api.com"
+      ],
       "browserBlockedOrigins": [
         "https://ift.px-cloud.net",
         "https://collector-pxljub4etb.cl6.px-cloud.net",
