@@ -12,8 +12,8 @@
   },
   "menuSource": {
     "url": "https://rollsushi.no/",
-    "sourceType": "json_ld",
-    "fetchMode": "http",
+    "sourceType": "html",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
     "minimumExpectedItems": 70
