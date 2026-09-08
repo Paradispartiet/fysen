@@ -12,7 +12,7 @@
   },
   "menuSource": {
     "url": "https://rollsushi.no/",
-    "sourceType": "json_ld",
+    "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
