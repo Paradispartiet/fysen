@@ -14,11 +14,6 @@ const NAVIGATION_TIMEOUT_MS = 15_000;
 const NETWORK_IDLE_TIMEOUT_MS = 5_000;
 const RENDER_READINESS_TIMEOUT_MS = 10_000;
 const MAX_RENDER_READINESS_TEXTS = 8;
-const GRAPHQL_DIAGNOSTIC_TARGETS = ["Mực Chiên Giòn", "Pepper biff"] as const;
-const GRAPHQL_DIAGNOSTIC_HASHES = new Set([
-  "d0488eafae9339bdc25dabe264921596a02419db1cd02f01d7f1567443aec94a",
-  "f8993944d69dc0400021b74dedbd8cd5d1ac87b16e0dce8e28133c6e13d55639",
-]);
 
 const blockedResourceTypes = new Set([
   "image",
@@ -42,7 +37,6 @@ const googleMeasurementPathPrefixes = [
 ] as const;
 
 type RenderedMenuFetch = Extract<MenuHttpFetchResult, { readonly kind: "content" }>;
-type JsonRecord = Record<string, unknown>;
 
 export interface BrowserMenuSourceSupport {
   readonly redirectOrigins: readonly string[];
@@ -113,144 +107,6 @@ function isNonEssentialTelemetryRequest(requestUrl: URL): boolean {
   return googleMeasurementPathPrefixes.some((prefix) =>
     requestUrl.pathname.startsWith(prefix),
   );
-}
-
-function graphqlOperations(postData: string | null): readonly JsonRecord[] {
-  if (!postData) return [];
-  try {
-    const parsed = JSON.parse(postData) as unknown;
-    const operations = Array.isArray(parsed) ? parsed : [parsed];
-    return operations.filter(
-      (value): value is JsonRecord => Boolean(value) && typeof value === "object" && !Array.isArray(value),
-    );
-  } catch {
-    return [];
-  }
-}
-
-function persistedQueryHash(operation: JsonRecord): string | null {
-  if (!operation.extensions || typeof operation.extensions !== "object" || Array.isArray(operation.extensions)) {
-    return null;
-  }
-  const persistedQuery = (operation.extensions as JsonRecord).persistedQuery;
-  if (!persistedQuery || typeof persistedQuery !== "object" || Array.isArray(persistedQuery)) return null;
-  const hash = (persistedQuery as JsonRecord).sha256Hash;
-  return typeof hash === "string" ? hash : null;
-}
-
-function traceGraphqlRequest(postData: string | null): void {
-  const operations = graphqlOperations(postData);
-  if (operations.length === 0) {
-    if (postData) console.log("[browser-graphql-request] unparseable-post-data");
-    return;
-  }
-  for (const operation of operations) {
-    const rawVariables =
-      operation.variables && typeof operation.variables === "object" && !Array.isArray(operation.variables)
-        ? (operation.variables as JsonRecord)
-        : {};
-    const variables = Object.fromEntries(
-      Object.entries(rawVariables).filter(([, value]) =>
-        value === null || ["string", "number", "boolean"].includes(typeof value),
-      ),
-    );
-    console.log(
-      `[browser-graphql-request] ${JSON.stringify({
-        operationName: typeof operation.operationName === "string" ? operation.operationName : null,
-        variables,
-        extensions:
-          operation.extensions && typeof operation.extensions === "object"
-            ? operation.extensions
-            : null,
-      })}`,
-    );
-  }
-}
-
-function scalarSummary(value: JsonRecord): JsonRecord {
-  return Object.fromEntries(
-    Object.entries(value)
-      .filter(([, field]) =>
-        field === null || ["string", "number", "boolean"].includes(typeof field),
-      )
-      .slice(0, 24),
-  );
-}
-
-function collectTargetMatches(
-  value: unknown,
-  target: string,
-  path = "$",
-  matches: Array<{ readonly path: string; readonly scalars: JsonRecord }> = [],
-): Array<{ readonly path: string; readonly scalars: JsonRecord }> {
-  if (matches.length >= 6) return matches;
-  if (Array.isArray(value)) {
-    value.forEach((entry, index) => {
-      if (matches.length < 6) collectTargetMatches(entry, target, `${path}[${index}]`, matches);
-    });
-    return matches;
-  }
-  if (!value || typeof value !== "object") return matches;
-
-  const record = value as JsonRecord;
-  const hasTarget = Object.values(record).some(
-    (field) => typeof field === "string" && field.includes(target),
-  );
-  if (hasTarget) matches.push({ path, scalars: scalarSummary(record) });
-
-  for (const [key, child] of Object.entries(record)) {
-    if (matches.length >= 6) break;
-    if (child && typeof child === "object") {
-      collectTargetMatches(child, target, `${path}.${key}`, matches);
-    }
-  }
-  return matches;
-}
-
-async function traceGraphqlResponse(response: import("playwright-core").Response): Promise<void> {
-  const request = response.request();
-  const url = new URL(response.url());
-  if (url.origin !== "https://no.fd-api.com" || url.pathname !== "/graphql") return;
-  const operation = graphqlOperations(request.postData()).find((candidate) => {
-    const hash = persistedQueryHash(candidate);
-    return hash !== null && GRAPHQL_DIAGNOSTIC_HASHES.has(hash);
-  });
-  if (!operation) return;
-
-  const hash = persistedQueryHash(operation);
-  const operationName =
-    typeof operation.operationName === "string" ? operation.operationName : "anonymous-persisted-query";
-  try {
-    const body = await response.text();
-    const parsed = JSON.parse(body) as unknown;
-    const topLevelKeys =
-      parsed && typeof parsed === "object" && !Array.isArray(parsed)
-        ? Object.keys(parsed as JsonRecord).slice(0, 24)
-        : [];
-    const targetEvidence = GRAPHQL_DIAGNOSTIC_TARGETS.map((target) => {
-      const matches = collectTargetMatches(parsed, target);
-      return { target, contains: matches.length > 0, matches };
-    });
-    console.log(
-      `[browser-graphql-response] ${JSON.stringify({
-        operationName,
-        persistedQueryHash: hash,
-        status: response.status(),
-        bytes: new TextEncoder().encode(body).length,
-        topLevelKeys,
-        targetEvidence,
-      })}`,
-    );
-  } catch (error) {
-    console.log(
-      `[browser-graphql-response] ${JSON.stringify({
-        operationName,
-        persistedQueryHash: hash,
-        status: response.status(),
-        error: error instanceof Error ? error.message : String(error),
-      })}`,
-    );
-  }
 }
 
 export function browserRequestDecision(input: BrowserRequestPolicyInput): BrowserRequestDecision {
@@ -357,11 +213,10 @@ async function installNetworkPolicy(
   await context.route("**/*", async (route: Route) => {
     try {
       const request = route.request();
-      const resourceType = request.resourceType();
       const decision = browserRequestDecision({
         sourceOrigin,
         requestUrl: request.url(),
-        resourceType,
+        resourceType: request.resourceType(),
         redirectOrigins: support.redirectOrigins,
         browserDataOrigins: support.browserDataOrigins,
         ...(support.browserBlockedOrigins !== undefined
@@ -385,15 +240,6 @@ async function installNetworkPolicy(
       }
 
       const url = new URL(request.url());
-      if (
-        (resourceType === "xhr" || resourceType === "fetch") &&
-        support.browserDataOrigins.includes(url.origin)
-      ) {
-        console.log(`[browser-data-request] ${resourceType} ${url.origin}${url.pathname}${url.search}`);
-        if (url.origin === "https://no.fd-api.com" && url.pathname === "/graphql") {
-          traceGraphqlRequest(request.postData());
-        }
-      }
       const networkKey = `${url.protocol}//${url.hostname}:${url.port || "443"}`;
       let validation = validatedUrls.get(networkKey);
       if (!validation) {
@@ -454,14 +300,10 @@ export class BrowserMenuClient {
     try {
       await installNetworkPolicy(context, target.origin, support, violation);
       const page = await context.newPage();
-      const responseDiagnostics: Promise<void>[] = [];
       context.on("page", (openedPage) => {
         if (openedPage !== page) void openedPage.close();
       });
       page.on("dialog", (dialog) => void dialog.dismiss());
-      page.on("response", (response) => {
-        responseDiagnostics.push(traceGraphqlResponse(response));
-      });
 
       const response = await page.goto(target.toString(), {
         timeout: NAVIGATION_TIMEOUT_MS,
@@ -483,7 +325,6 @@ export class BrowserMenuClient {
           )
           .catch(() => undefined);
       }
-      await Promise.allSettled(responseDiagnostics);
 
       if (violation.value) throw violation.value;
       const finalUrl = new URL(page.url());
