@@ -30,7 +30,7 @@ concurrency:
 jobs:
   materialize:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 60
     env:
       DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
       DATABASE_SSL: "verify-full"
