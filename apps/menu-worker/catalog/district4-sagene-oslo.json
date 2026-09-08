@@ -16,7 +16,14 @@
     "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 19
+    "minimumExpectedItems": 19,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": [
+        "https://ift.px-cloud.net"
+      ]
+    }
   },
   "hoursSource": {
     "url": "https://district4.no/",
