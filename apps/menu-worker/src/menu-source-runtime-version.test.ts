@@ -64,7 +64,7 @@ describe("HTML runtime extractor version", () => {
       "section-first-card-v2",
     );
     expect(HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION).toBe(
-      "embedded-menu-json-v2",
+      "embedded-menu-json-v3",
     );
     expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v11");
     expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v3");
