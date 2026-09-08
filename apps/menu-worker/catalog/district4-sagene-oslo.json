@@ -20,7 +20,8 @@
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [
-        "https://no.fd-api.com"
+        "https://no.fd-api.com",
+        "https://static.fd-api.com"
       ],
       "browserBlockedOrigins": [
         "https://ift.px-cloud.net",
