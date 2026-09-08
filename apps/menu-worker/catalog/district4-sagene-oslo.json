@@ -11,12 +11,34 @@
     "longitude": 10.7530356
   },
   "menuSource": {
-    "url": "https://www.foodora.no/en/restaurant/t8cf/district-4-t8cf",
+    "url": "https://www.foodora.no/restaurant/t8cf/district-4-t8cf",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 19
+    "minimumExpectedItems": 19,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [
+        "https://no.fd-api.com",
+        "https://static.fd-api.com"
+      ],
+      "browserBlockedOrigins": [
+        "https://ift.px-cloud.net",
+        "https://collector-pxljub4etb.cl6.px-cloud.net",
+        "https://o516780.ingest.sentry.io",
+        "https://images.dhmedia.io",
+        "https://reviews-api-no.fd-api.com",
+        "https://perseus-productanalytics.deliveryhero.net",
+        "https://action-log.foodora.no",
+        "https://api.usercentrics.eu",
+        "https://conn-check.icg-in.info",
+        "https://pagespeed.deliveryhero.net"
+      ]
+    },
+    "readinessTexts": [
+      "Mực Chiên Giòn"
+    ]
   },
   "hoursSource": {
     "url": "https://district4.no/",
@@ -28,7 +50,7 @@
     "menu": {
       "status": "verified",
       "checkedAt": "2026-09-08",
-      "note": "District 4's current Foodora English route is server-rendered with the live priced service menu, including the verified required dishes and prices, while avoiding browser-only cross-origin dependencies seen on the locale-neutral route."
+      "note": "District 4's current Foodora service menu is independently matched to District 4 at Kristiansands gate 1. Browser validation waits for the verified Mực Chiên Giòn menu evidence before extracting the rendered menu, with only explicitly declared Foodora data origins allowed."
     }
   },
   "actions": [
