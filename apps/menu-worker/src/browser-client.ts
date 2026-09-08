@@ -109,6 +109,39 @@ function isNonEssentialTelemetryRequest(requestUrl: URL): boolean {
   );
 }
 
+function traceGraphqlRequest(postData: string | null): void {
+  if (!postData) return;
+  try {
+    const parsed = JSON.parse(postData) as unknown;
+    const operations = Array.isArray(parsed) ? parsed : [parsed];
+    for (const rawOperation of operations) {
+      if (!rawOperation || typeof rawOperation !== "object" || Array.isArray(rawOperation)) continue;
+      const operation = rawOperation as Record<string, unknown>;
+      const rawVariables =
+        operation.variables && typeof operation.variables === "object" && !Array.isArray(operation.variables)
+          ? (operation.variables as Record<string, unknown>)
+          : {};
+      const variables = Object.fromEntries(
+        Object.entries(rawVariables).filter(([, value]) =>
+          value === null || ["string", "number", "boolean"].includes(typeof value),
+        ),
+      );
+      console.log(
+        `[browser-graphql-request] ${JSON.stringify({
+          operationName: typeof operation.operationName === "string" ? operation.operationName : null,
+          variables,
+          extensions:
+            operation.extensions && typeof operation.extensions === "object"
+              ? operation.extensions
+              : null,
+        })}`,
+      );
+    }
+  } catch {
+    console.log("[browser-graphql-request] unparseable-post-data");
+  }
+}
+
 export function browserRequestDecision(input: BrowserRequestPolicyInput): BrowserRequestDecision {
   if (blockedResourceTypes.has(input.resourceType)) {
     return { action: "block", reason: `blocked resource type: ${input.resourceType}`, fatal: false };
@@ -246,6 +279,9 @@ async function installNetworkPolicy(
         support.browserDataOrigins.includes(url.origin)
       ) {
         console.log(`[browser-data-request] ${resourceType} ${url.origin}${url.pathname}${url.search}`);
+        if (url.origin === "https://no.fd-api.com" && url.pathname === "/graphql") {
+          traceGraphqlRequest(request.postData());
+        }
       }
       const networkKey = `${url.protocol}//${url.hostname}:${url.port || "443"}`;
       let validation = validatedUrls.get(networkKey);
