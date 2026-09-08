@@ -30,7 +30,8 @@
         "https://images.dhmedia.io",
         "https://reviews-api-no.fd-api.com",
         "https://perseus-productanalytics.deliveryhero.net",
-        "https://action-log.foodora.no"
+        "https://action-log.foodora.no",
+        "https://api.usercentrics.eu"
       ]
     }
   },
