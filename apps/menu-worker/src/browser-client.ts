@@ -14,7 +14,11 @@ const NAVIGATION_TIMEOUT_MS = 15_000;
 const NETWORK_IDLE_TIMEOUT_MS = 5_000;
 const RENDER_READINESS_TIMEOUT_MS = 10_000;
 const MAX_RENDER_READINESS_TEXTS = 8;
-const GRAPHQL_DIAGNOSTIC_TARGET = "Mực Chiên Giòn";
+const GRAPHQL_DIAGNOSTIC_TARGETS = ["Mực Chiên Giòn", "Pepper biff"] as const;
+const GRAPHQL_DIAGNOSTIC_HASHES = new Set([
+  "d0488eafae9339bdc25dabe264921596a02419db1cd02f01d7f1567443aec94a",
+  "f8993944d69dc0400021b74dedbd8cd5d1ac87b16e0dce8e28133c6e13d55639",
+]);
 
 const blockedResourceTypes = new Set([
   "image",
@@ -38,7 +42,6 @@ const googleMeasurementPathPrefixes = [
 ] as const;
 
 type RenderedMenuFetch = Extract<MenuHttpFetchResult, { readonly kind: "content" }>;
-
 type JsonRecord = Record<string, unknown>;
 
 export interface BrowserMenuSourceSupport {
@@ -125,6 +128,16 @@ function graphqlOperations(postData: string | null): readonly JsonRecord[] {
   }
 }
 
+function persistedQueryHash(operation: JsonRecord): string | null {
+  if (!operation.extensions || typeof operation.extensions !== "object" || Array.isArray(operation.extensions)) {
+    return null;
+  }
+  const persistedQuery = (operation.extensions as JsonRecord).persistedQuery;
+  if (!persistedQuery || typeof persistedQuery !== "object" || Array.isArray(persistedQuery)) return null;
+  const hash = (persistedQuery as JsonRecord).sha256Hash;
+  return typeof hash === "string" ? hash : null;
+}
+
 function traceGraphqlRequest(postData: string | null): void {
   const operations = graphqlOperations(postData);
   if (operations.length === 0) {
@@ -198,11 +211,15 @@ async function traceGraphqlResponse(response: import("playwright-core").Response
   const request = response.request();
   const url = new URL(response.url());
   if (url.origin !== "https://no.fd-api.com" || url.pathname !== "/graphql") return;
-  const operation = graphqlOperations(request.postData()).find(
-    (candidate) => candidate.operationName === "GetRestaurantDetailsPage",
-  );
+  const operation = graphqlOperations(request.postData()).find((candidate) => {
+    const hash = persistedQueryHash(candidate);
+    return hash !== null && GRAPHQL_DIAGNOSTIC_HASHES.has(hash);
+  });
   if (!operation) return;
 
+  const hash = persistedQueryHash(operation);
+  const operationName =
+    typeof operation.operationName === "string" ? operation.operationName : "anonymous-persisted-query";
   try {
     const body = await response.text();
     const parsed = JSON.parse(body) as unknown;
@@ -210,21 +227,25 @@ async function traceGraphqlResponse(response: import("playwright-core").Response
       parsed && typeof parsed === "object" && !Array.isArray(parsed)
         ? Object.keys(parsed as JsonRecord).slice(0, 24)
         : [];
-    const matches = collectTargetMatches(parsed, GRAPHQL_DIAGNOSTIC_TARGET);
+    const targetEvidence = GRAPHQL_DIAGNOSTIC_TARGETS.map((target) => {
+      const matches = collectTargetMatches(parsed, target);
+      return { target, contains: matches.length > 0, matches };
+    });
     console.log(
       `[browser-graphql-response] ${JSON.stringify({
-        operationName: "GetRestaurantDetailsPage",
+        operationName,
+        persistedQueryHash: hash,
         status: response.status(),
         bytes: new TextEncoder().encode(body).length,
         topLevelKeys,
-        containsTarget: matches.length > 0,
-        matches,
+        targetEvidence,
       })}`,
     );
   } catch (error) {
     console.log(
       `[browser-graphql-response] ${JSON.stringify({
-        operationName: "GetRestaurantDetailsPage",
+        operationName,
+        persistedQueryHash: hash,
         status: response.status(),
         error: error instanceof Error ? error.message : String(error),
       })}`,
