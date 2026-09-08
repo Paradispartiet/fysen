@@ -133,10 +133,7 @@ export function browserRequestDecision(input: BrowserRequestPolicyInput): Browse
     };
   }
 
-  if (
-    input.resourceType !== "document" &&
-    (input.browserBlockedOrigins ?? []).includes(requestUrl.origin)
-  ) {
+  if ((input.browserBlockedOrigins ?? []).includes(requestUrl.origin)) {
     return {
       action: "block",
       reason: `explicitly blocked browser origin: ${requestUrl.origin}`,

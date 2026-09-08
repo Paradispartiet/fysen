@@ -11,12 +11,24 @@
     "longitude": 10.7530356
   },
   "menuSource": {
-    "url": "https://www.foodora.no/restaurant/t8cf/district-4-t8cf",
+    "url": "https://district4.winorder.no/en",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 19
+    "minimumExpectedItems": 19,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [
+        "https://api.winorder.no"
+      ],
+      "browserBlockedOrigins": [
+        "https://tracking.winorder.no"
+      ]
+    },
+    "readinessTexts": [
+      "Calamari"
+    ]
   },
   "hoursSource": {
     "url": "https://district4.no/",
@@ -27,8 +39,8 @@
   "verification": {
     "menu": {
       "status": "verified",
-      "checkedAt": "2026-09-02",
-      "note": "District 4's first-party summer-menu PDF remains linked publicly but returns HTTP 404 to GitHub-hosted Fysen validation runners. The current Foodora service menu is independently matched to District 4 at Kristiansands gate 1 and is used as the live priced fallback source."
+      "checkedAt": "2026-09-08",
+      "note": "District 4 links directly to its first-party WinOrder ordering surface. The menu validator allows only api.winorder.no as a data origin, explicitly blocks the nonessential tracking.winorder.no telemetry origin, and waits for Calamari before extraction. Canonical dish locks use the exact first-party WinOrder labels and direct-order prices; the prior Foodora labels map to the same dishes but carry third-party delivery pricing."
     }
   },
   "actions": [
@@ -48,31 +60,31 @@
   "qualityAssertions": {
     "requiredDishNames": [
       "Dragon Ball",
-      "Pepper biff",
-      "Gà xào lá Huế",
-      "Bò tái chanh",
-      "Mực Chiên Giòn"
+      "Pepper beef",
+      "Chicken Hue-style",
+      "Beef Carpaccio",
+      "Calamari"
     ],
     "requiredDishVariants": [
       {
         "name": "Dragon Ball",
-        "priceMinor": 14175
+        "priceMinor": 13900
       },
       {
-        "name": "Pepper biff",
-        "priceMinor": 37900
+        "name": "Pepper beef",
+        "priceMinor": 29900
       },
       {
-        "name": "Gà xào lá Huế",
-        "priceMinor": 31000
+        "name": "Chicken Hue-style",
+        "priceMinor": 23900
       },
       {
-        "name": "Bò tái chanh",
-        "priceMinor": 21500
+        "name": "Beef Carpaccio",
+        "priceMinor": 17700
       },
       {
-        "name": "Mực Chiên Giòn",
-        "priceMinor": 17500
+        "name": "Calamari",
+        "priceMinor": 14500
       }
     ],
     "forbiddenDishNames": [
