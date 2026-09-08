@@ -27,7 +27,8 @@
         "https://ift.px-cloud.net",
         "https://collector-pxljub4etb.cl6.px-cloud.net",
         "https://o516780.ingest.sentry.io",
-        "https://images.dhmedia.io"
+        "https://images.dhmedia.io",
+        "https://reviews-api-no.fd-api.com"
       ]
     }
   },
