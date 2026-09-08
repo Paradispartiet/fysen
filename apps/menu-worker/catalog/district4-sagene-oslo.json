@@ -11,31 +11,12 @@
     "longitude": 10.7530356
   },
   "menuSource": {
-    "url": "https://www.foodora.no/restaurant/t8cf/district-4-t8cf",
+    "url": "https://www.foodora.no/restaurant/t8cf/district-4-t8cf/reviews",
     "sourceType": "html",
-    "fetchMode": "browser",
+    "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 19,
-    "sourceSupport": {
-      "redirectOrigins": [],
-      "browserDataOrigins": [
-        "https://no.fd-api.com",
-        "https://static.fd-api.com"
-      ],
-      "browserBlockedOrigins": [
-        "https://ift.px-cloud.net",
-        "https://collector-pxljub4etb.cl6.px-cloud.net",
-        "https://o516780.ingest.sentry.io",
-        "https://images.dhmedia.io",
-        "https://reviews-api-no.fd-api.com",
-        "https://perseus-productanalytics.deliveryhero.net",
-        "https://action-log.foodora.no",
-        "https://api.usercentrics.eu",
-        "https://conn-check.icg-in.info",
-        "https://pagespeed.deliveryhero.net"
-      ]
-    }
+    "minimumExpectedItems": 19
   },
   "hoursSource": {
     "url": "https://district4.no/",
@@ -46,8 +27,8 @@
   "verification": {
     "menu": {
       "status": "verified",
-      "checkedAt": "2026-09-02",
-      "note": "District 4's first-party summer-menu PDF remains linked publicly but returns HTTP 404 to GitHub-hosted Fysen validation runners. The current Foodora service menu is independently matched to District 4 at Kristiansands gate 1 and is used as the live priced fallback source."
+      "checkedAt": "2026-09-08",
+      "note": "District 4's first-party site links its current takeaway flow, while Foodora's server-rendered reviews route exposes the current priced service menu without browser-only cross-origin dependencies. It independently matches District 4 and retains the verified required dishes and prices."
     }
   },
   "actions": [
