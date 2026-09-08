@@ -20,7 +20,7 @@
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [
-        "https://api.weorder.com"
+        "https://api.winorder.no"
       ]
     },
     "readinessTexts": [
@@ -37,7 +37,7 @@
     "menu": {
       "status": "verified",
       "checkedAt": "2026-09-08",
-      "note": "District 4 links directly to its first-party WinOrder ordering surface. The menu validator uses that rendered first-party surface with only api.weorder.com declared as a data origin and waits for Mực Chiên Giòn before extraction."
+      "note": "District 4 links directly to its first-party WinOrder ordering surface. The menu validator uses that rendered first-party surface with only api.winorder.no declared as a data origin and waits for Mực Chiên Giòn before extraction."
     }
   },
   "actions": [
