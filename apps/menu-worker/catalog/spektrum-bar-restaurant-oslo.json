@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "spektrum-bar-restaurant-oslo",
+    "name": "Spektrum Bar & Restaurant",
+    "websiteUrl": null,
+    "address": "Stenersgata 10, 0184 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91326585186491,
+    "longitude": 10.752615452267422
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/691spektrumbarrestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 14,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-08",
+      "note": "Batch 46 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Cevapi 5stk",
+      "Sharr Pleskavica",
+      "Grillspyd Med Biff (Raznjici)",
+      "Pollo Spektrum",
+      "Laksefilet",
+      "Spaghetti Bolognese",
+      "Bacon Cheese Burger",
+      "Pepsi Max 0,5L"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Cevapi 5stk",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Sharr Pleskavica",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Grillspyd Med Biff (Raznjici)",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Pollo Spektrum",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Laksefilet",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Spaghetti Bolognese",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Bacon Cheese Burger",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Pepsi Max 0,5L",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

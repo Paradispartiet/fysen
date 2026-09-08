@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "little-italy-oslo",
+    "name": "Little Italy",
+    "websiteUrl": null,
+    "address": "Slemdalsveien 72, 0373 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.942695526956726,
+    "longitude": 10.704422411384044
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/littleitaly",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 30,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-08",
+      "note": "Batch 46 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Quattro Formaggi Rossa",
+      "Napoli",
+      "Tartufata",
+      "Margherita Burrata Gourmet",
+      "Salsiccia Gourmet",
+      "Porchetta Gourmet",
+      "San Pellegrino Aranciata 0,33l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Quattro Formaggi Rossa",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Napoli",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Tartufata",
+        "priceMinor": 27000
+      },
+      {
+        "name": "Margherita Burrata Gourmet",
+        "priceMinor": 29000
+      },
+      {
+        "name": "Salsiccia Gourmet",
+        "priceMinor": 30500
+      },
+      {
+        "name": "Porchetta Gourmet",
+        "priceMinor": 30000
+      },
+      {
+        "name": "San Pellegrino Aranciata 0,33l",
+        "priceMinor": 5000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "chilango-loren-oslo",
+    "name": "Chilango Løren",
+    "websiteUrl": null,
+    "address": "Lørenveien 40, 0585 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93118552729046,
+    "longitude": 10.791590440345582
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/chilangoloren",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 36,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-08",
+      "note": "Batch 46 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Biff Birria Tacos",
+      "Lunsj Deal Søtpotet Burrito",
+      "Meal Deal Sweetpotato Mix Quesadillas",
+      "Tacos Sweetpotato🌱",
+      "Salsa Diablo Hot",
+      "Consommé",
+      "Churros",
+      "Sparkling Water"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Biff Birria Tacos",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Lunsj Deal Søtpotet Burrito",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Meal Deal Sweetpotato Mix Quesadillas",
+        "priceMinor": 33900
+      },
+      {
+        "name": "Tacos Sweetpotato🌱",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Salsa Diablo Hot",
+        "priceMinor": 2900
+      },
+      {
+        "name": "Consommé",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Churros",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Sparkling Water",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
