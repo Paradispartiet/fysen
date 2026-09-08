@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 26,
+    "minimumExpectedItems": 21,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -37,8 +37,8 @@
       "Margherita",
       "Nduja",
       "Mexican Snack",
-      "Nachos with Salsa & Guacamole V",
-      "Oche Burger & Fries",
+      "Nachos! con salsa y guac",
+      "Oche Italian Sandwich",
       "BROWNIE & ICE CREAM"
     ],
     "requiredDishVariants": [
@@ -63,12 +63,12 @@
         "priceMinor": 29900
       },
       {
-        "name": "Nachos with Salsa & Guacamole V",
+        "name": "Nachos! con salsa y guac",
         "priceMinor": 11900
       },
       {
-        "name": "Oche Burger & Fries",
-        "priceMinor": 27900
+        "name": "Oche Italian Sandwich",
+        "priceMinor": 19900
       },
       {
         "name": "BROWNIE & ICE CREAM",
