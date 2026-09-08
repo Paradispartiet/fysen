@@ -62,7 +62,7 @@ describe("food section state recovery after beverage sections", () => {
       139
     `;
 
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v11");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v12");
     expect(
       filterPlainTextBeverageSectionItems(items, visibleText).map(
         (entry) => entry.name,
@@ -76,5 +76,29 @@ describe("food section state recovery after beverage sections", () => {
       "Mezah med kjøtt",
       "Baklawa med pistasjhonning",
     ]);
+  });
+
+  it("resumes food scope for a branded heading ending in main courses", () => {
+    const items = [
+      item("Gin Tonic", 1, 15900),
+      item("Oche Burger & Fries", 2, 27900),
+      item("The Vegan Burger V", 3, 22900),
+    ];
+    const visibleText = `
+      Cocktails
+      Gin Tonic
+      159
+      Big Tactics Main Courses
+      Oche Burger & Fries
+      279
+      The Vegan Burger V
+      229
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual(["Oche Burger & Fries", "The Vegan Burger V"]);
   });
 });
