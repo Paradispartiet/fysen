@@ -4,12 +4,14 @@ import {
   normalizeDishName,
   type MenuObservedItem,
 } from "@fysen/menu-core";
+import { recoverAdjacentHeadingPriceHtmlItems } from "./html-adjacent-heading-price-recovery.js";
 
-export const HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION = "embedded-menu-json-v2";
+export const HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION = "embedded-menu-json-v3";
 
 const MIN_CATEGORIES = 2;
 const MIN_ITEMS = 4;
 const MIN_BOUND_RATIO = 0.7;
+const MIN_VISIBLE_SUPPLEMENT_CONFIDENCE = 0.95;
 const GENERIC_CATEGORY =
   /^(?:popular|populært|populaert|most\s+ordered|mest\s+bestilt|recommended|anbefalt)$/iu;
 const BEVERAGE_CATEGORY =
@@ -196,6 +198,27 @@ function recoverFromCandidate(
   return recovered.length >= MIN_ITEMS ? recovered : [];
 }
 
+function supplementEmbeddedItemsFromVisibleHeadings(
+  embeddedItems: readonly MenuObservedItem[],
+  html: string,
+): readonly MenuObservedItem[] {
+  const visibleItems = recoverAdjacentHeadingPriceHtmlItems(html).filter(
+    (item) => item.confidence >= MIN_VISIBLE_SUPPLEMENT_CONFIDENCE,
+  );
+  if (visibleItems.length === 0) return embeddedItems;
+
+  const output = [...embeddedItems];
+  const existingNames = new Set(
+    embeddedItems.map((item) => item.normalizedName),
+  );
+  for (const item of visibleItems) {
+    if (existingNames.has(item.normalizedName)) continue;
+    output.push(item);
+    existingNames.add(item.normalizedName);
+  }
+  return output.sort((a, b) => a.position - b.position);
+}
+
 export function recoverEmbeddedStructuredMenuJson(
   html: string,
 ): readonly MenuObservedItem[] {
@@ -217,7 +240,9 @@ export function recoverEmbeddedStructuredMenuJson(
   const ordered = candidates.sort((a, b) => b.score - a.score);
   for (const candidate of ordered) {
     const recovered = recoverFromCandidate(candidate);
-    if (recovered.length >= MIN_ITEMS) return recovered;
+    if (recovered.length >= MIN_ITEMS) {
+      return supplementEmbeddedItemsFromVisibleHeadings(recovered, html);
+    }
   }
   return [];
 }
