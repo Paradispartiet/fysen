@@ -133,10 +133,7 @@ export function browserRequestDecision(input: BrowserRequestPolicyInput): Browse
     };
   }
 
-  if (
-    input.resourceType !== "document" &&
-    (input.browserBlockedOrigins ?? []).includes(requestUrl.origin)
-  ) {
+  if ((input.browserBlockedOrigins ?? []).includes(requestUrl.origin)) {
     return {
       action: "block",
       reason: `explicitly blocked browser origin: ${requestUrl.origin}`,
@@ -213,66 +210,6 @@ async function installNetworkPolicy(
   await context.route("**/*", async (route: Route) => {
     try {
       const request = route.request();
-      try {
-        const diagnosticUrl = new URL(request.url());
-        if (diagnosticUrl.origin === "https://api.winorder.no") {
-          console.log(`[browser-winorder-api-request] ${request.method()} ${request.url()}`);
-          if (diagnosticUrl.pathname === "/graphql" && request.method() === "POST") {
-            const raw = request.postData();
-            if (raw) {
-              const parsed = JSON.parse(raw) as unknown;
-              const operations = Array.isArray(parsed) ? parsed : [parsed];
-              for (const operation of operations) {
-                if (!operation || typeof operation !== "object" || Array.isArray(operation)) continue;
-                const record = operation as Record<string, unknown>;
-                const variables = record.variables;
-                const scalarVariables: Record<string, string | number | boolean | null> = {};
-                const sensitiveKey = /(?:token|auth|cookie|session|email|phone|password|user)/iu;
-                const collect = (value: unknown, path: string, depth: number): void => {
-                  if (depth > 4 || Object.keys(scalarVariables).length >= 24) return;
-                  if (
-                    value === null ||
-                    typeof value === "string" ||
-                    typeof value === "number" ||
-                    typeof value === "boolean"
-                  ) {
-                    const leaf = path.split(".").at(-1) ?? path;
-                    if (!sensitiveKey.test(leaf)) {
-                      scalarVariables[path] =
-                        typeof value === "string" && value.length > 160
-                          ? `${value.slice(0, 160)}…`
-                          : value;
-                    }
-                    return;
-                  }
-                  if (Array.isArray(value)) {
-                    value.slice(0, 8).forEach((child, index) =>
-                      collect(child, `${path}[${index}]`, depth + 1),
-                    );
-                    return;
-                  }
-                  if (value && typeof value === "object") {
-                    for (const [key, child] of Object.entries(value as Record<string, unknown>)) {
-                      if (sensitiveKey.test(key)) continue;
-                      collect(child, path ? `${path}.${key}` : key, depth + 1);
-                    }
-                  }
-                };
-                collect(variables, "variables", 0);
-                console.log(
-                  `[browser-winorder-graphql-request] ${JSON.stringify({
-                    operationName:
-                      typeof record.operationName === "string" ? record.operationName : null,
-                    scalarVariables,
-                  })}`,
-                );
-              }
-            }
-          }
-        }
-      } catch {
-        // Temporary public-request diagnostic; normal policy handles the request below.
-      }
       const decision = browserRequestDecision({
         sourceOrigin,
         requestUrl: request.url(),
