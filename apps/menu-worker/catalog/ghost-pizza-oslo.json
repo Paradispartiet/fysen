@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ghost-pizza-oslo",
+    "name": "Ghost Pizza",
+    "websiteUrl": null,
+    "address": "Kirkeveien 51, 0368 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.927661452118606,
+    "longitude": 10.713794733133769
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/ghostpizza",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 48,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-08",
+      "note": "Batch 46 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Tartufata",
+      "Italia",
+      "Parmagiano",
+      "Salsiccia (italiensk pølse)",
+      "Syltet rødløk",
+      "Hvitløksolje",
+      "San Pellegrino L’Aranciata Amara"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 23400
+      },
+      {
+        "name": "Tartufata",
+        "priceMinor": 30900
+      },
+      {
+        "name": "Italia",
+        "priceMinor": 30900
+      },
+      {
+        "name": "Parmagiano",
+        "priceMinor": 2000
+      },
+      {
+        "name": "Salsiccia (italiensk pølse)",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Syltet rødløk",
+        "priceMinor": 1500
+      },
+      {
+        "name": "Hvitløksolje",
+        "priceMinor": 3000
+      },
+      {
+        "name": "San Pellegrino L’Aranciata Amara",
+        "priceMinor": 7900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
