@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "skoien-gastrobar-oslo",
+    "name": "Skøien Gastrobar",
+    "websiteUrl": null,
+    "address": "Askekroken 11, 0277 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92262672643398,
+    "longitude": 10.682958446129518
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/skoiengastrobar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 47 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Ceasar Salat med Kylling",
+      "Husets Burger",
+      "Husets Burger med Gorgonzola",
+      "Husets Burger med Bacon",
+      "Husets Dobbel Burger",
+      "Avocado Toast med Fries",
+      "Boeuf Bourguignon",
+      "Askim Eplemost"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Ceasar Salat med Kylling",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Husets Burger",
+        "priceMinor": 21200
+      },
+      {
+        "name": "Husets Burger med Gorgonzola",
+        "priceMinor": 24400
+      },
+      {
+        "name": "Husets Burger med Bacon",
+        "priceMinor": 24400
+      },
+      {
+        "name": "Husets Dobbel Burger",
+        "priceMinor": 29200
+      },
+      {
+        "name": "Avocado Toast med Fries",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Boeuf Bourguignon",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Askim Eplemost",
+        "priceMinor": 8500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

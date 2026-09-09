@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "cafe-billabong-oslo",
+    "name": "Café Billabong",
+    "websiteUrl": null,
+    "address": "Bogstadveien 53A, 0366 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.929533812051446,
+    "longitude": 10.714159740005755
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/464cafebillabong",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 38,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 47 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Spicy Billaburger",
+      "Gratinert Pasta",
+      "Pasta Penne Pesto",
+      "Calzone",
+      "Spicy Kjøttboller",
+      "Kokkens Utvalg for 2 pers.",
+      "Karbonademiddag",
+      "Husets Lune Salat"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Spicy Billaburger",
+        "priceMinor": 26400
+      },
+      {
+        "name": "Gratinert Pasta",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Pasta Penne Pesto",
+        "priceMinor": 23600
+      },
+      {
+        "name": "Calzone",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Spicy Kjøttboller",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Kokkens Utvalg for 2 pers.",
+        "priceMinor": 67800
+      },
+      {
+        "name": "Karbonademiddag",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Husets Lune Salat",
+        "priceMinor": 21800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

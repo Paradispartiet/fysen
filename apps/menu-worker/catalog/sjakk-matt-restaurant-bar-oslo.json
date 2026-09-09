@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sjakk-matt-restaurant-bar-oslo",
+    "name": "Sjakk Matt Restaurant & Bar",
+    "websiteUrl": null,
+    "address": "Haakon VIIs gate 5, 0161 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91384567767234,
+    "longitude": 10.731164993047344
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/403sjakkmattrestaurantbar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 23,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 47 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Argentinsk Rekesalat",
+      "Tagliatelle med laks",
+      "Norsk Laksefilet",
+      "Plantebasert Burger",
+      "Edamame",
+      "Potetmos",
+      "7up Zero 0,33l",
+      "Heineken Alkoholfri 0,33l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Argentinsk Rekesalat",
+        "priceMinor": 26400
+      },
+      {
+        "name": "Tagliatelle med laks",
+        "priceMinor": 30400
+      },
+      {
+        "name": "Norsk Laksefilet",
+        "priceMinor": 39600
+      },
+      {
+        "name": "Plantebasert Burger",
+        "priceMinor": 28000
+      },
+      {
+        "name": "Edamame",
+        "priceMinor": 7200
+      },
+      {
+        "name": "Potetmos",
+        "priceMinor": 6400
+      },
+      {
+        "name": "7up Zero 0,33l",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Heineken Alkoholfri 0,33l",
+        "priceMinor": 8000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

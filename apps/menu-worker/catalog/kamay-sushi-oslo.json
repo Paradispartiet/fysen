@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kamay-sushi-oslo",
+    "name": "Kamay Sushi",
+    "websiteUrl": null,
+    "address": "C. J. Hambros plass 2, 0164 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9160025849053,
+    "longitude": 10.741086611182531
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/kamaysushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 53,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 47 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Sashimi Starter",
+      "Tunatataki",
+      "Sprø Kylling Curry",
+      "Cesar Maki",
+      "Spiced Laks Maki",
+      "Scampi & Kamskjell Med Trøffel",
+      "Sashimi 10 Skiver Kamskjell",
+      "Sweetchili-saus"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Sashimi Starter",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Tunatataki",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Sprø Kylling Curry",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Cesar Maki",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Spiced Laks Maki",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Scampi & Kamskjell Med Trøffel",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Sashimi 10 Skiver Kamskjell",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Sweetchili-saus",
+        "priceMinor": 1000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
