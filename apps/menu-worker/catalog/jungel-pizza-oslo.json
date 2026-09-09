@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jungel-pizza-oslo",
+    "name": "Jungel Pizza",
+    "websiteUrl": null,
+    "address": "Vogts gate 54, 0477 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9353680206142,
+    "longitude": 10.764828090746901
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/jungelpizza",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 32,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 48 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Carne 1",
+      "Carne 17",
+      "Vegetar 12",
+      "Vegan 20",
+      "Vegansk Dressing",
+      "Utopiabrus Mango",
+      "Sitronola",
+      "BRLO"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Carne 1",
+        "priceMinor": 19600
+      },
+      {
+        "name": "Carne 17",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Vegetar 12",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Vegan 20",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Vegansk Dressing",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Utopiabrus Mango",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Sitronola",
+        "priceMinor": 4900
+      },
+      {
+        "name": "BRLO",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

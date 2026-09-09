@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "hana-bakeri-oslo",
+    "name": "Hana Bakeri",
+    "websiteUrl": null,
+    "address": "Storgata 32, 0184 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91416271135265,
+    "longitude": 10.752914934865391
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/hanabakeri",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 16,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 48 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Nablus Knafeh",
+      "Layalina-Kake",
+      "Jordbær-ostekake",
+      "Lotus-éclair",
+      "Petit Four 500 g.",
+      "Barazek & Ghraybeh",
+      "Syrlige Nøtter",
+      "Syrlig Pistasj"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Nablus Knafeh",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Layalina-Kake",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Jordbær-ostekake",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Lotus-éclair",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Petit Four 500 g.",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Barazek & Ghraybeh",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Syrlige Nøtter",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Syrlig Pistasj",
+        "priceMinor": 14500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
