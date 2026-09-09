@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizza-plutselig-oslo",
+    "name": "Pizza Plutselig",
+    "websiteUrl": null,
+    "address": "Ullevålsveien 14, 0171 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9231456092158,
+    "longitude": 10.740943827940765
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/383pizzaplutselig",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 40,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 48 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Plutselig Parma (Liten)",
+      "Plutselig Vegetar (Liten)",
+      "Capricciosa (Liten)",
+      "Plutselig Misty (Liten)",
+      "Plutselig Hawaii (Stor)",
+      "Margherita (Stor)",
+      "Plutselig Mista (Stor)",
+      "Pepsi Max stor"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Plutselig Parma (Liten)",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Plutselig Vegetar (Liten)",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Capricciosa (Liten)",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Plutselig Misty (Liten)",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Plutselig Hawaii (Stor)",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Margherita (Stor)",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Plutselig Mista (Stor)",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Pepsi Max stor",
+        "priceMinor": 6000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

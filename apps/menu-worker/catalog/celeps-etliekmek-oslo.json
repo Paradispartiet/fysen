@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "celeps-etliekmek-oslo",
+    "name": "Celeps Etliekmek",
+    "websiteUrl": null,
+    "address": "Pilestredet 53A, 0350 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.921983691537285,
+    "longitude": 10.73178394262658
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/celepsetliekmek",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 9,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 48 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Etliekmek",
+      "Biçakarasi",
+      "Mevlana",
+      "Lahmacun",
+      "Dürüm Döner",
+      "Tombik Döner",
+      "Döner Tabağı",
+      "7-Up"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Etliekmek",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Biçakarasi",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Mevlana",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Lahmacun",
+        "priceMinor": 19000
+      },
+      {
+        "name": "Dürüm Döner",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Tombik Döner",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Döner Tabağı",
+        "priceMinor": 24900
+      },
+      {
+        "name": "7-Up",
+        "priceMinor": 4900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

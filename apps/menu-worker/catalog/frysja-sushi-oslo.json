@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "frysja-sushi-oslo",
+    "name": "Frysja Sushi",
+    "websiteUrl": null,
+    "address": "Frysjaveien 42A, 0884 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.96579986469019,
+    "longitude": 10.77159903798582
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/451frysjasushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 52,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 48 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Family Pack",
+      "Tempura Scampi 4stk",
+      "Poke Bowl",
+      "Avocado Nigiri",
+      "Kamskjell ́roll - 8 Biter",
+      "Frysja Laksmaki - 10 Biter",
+      "Wasabi",
+      "Rekechips"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Family Pack",
+        "priceMinor": 53500
+      },
+      {
+        "name": "Tempura Scampi 4stk",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Poke Bowl",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Avocado Nigiri",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Kamskjell ́roll - 8 Biter",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Frysja Laksmaki - 10 Biter",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Wasabi",
+        "priceMinor": 2000
+      },
+      {
+        "name": "Rekechips",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

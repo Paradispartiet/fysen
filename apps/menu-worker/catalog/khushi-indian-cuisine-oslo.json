@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "khushi-indian-cuisine-oslo",
+    "name": "Khushi Indian Cuisine",
+    "websiteUrl": null,
+    "address": "Seilduksgata 5C, 0553 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92534888700907,
+    "longitude": 10.756779343888628
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/khushiindiancuisine",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 71,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 48 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Christmas Meal Deal",
+      "Mango Chicken",
+      "Chilli Prawns",
+      "Keema Nan",
+      "Butter Chicken Meal Deal",
+      "Starter Mix Platter",
+      "Lam Chili",
+      "Mango Paneer"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Christmas Meal Deal",
+        "priceMinor": 33300
+      },
+      {
+        "name": "Mango Chicken",
+        "priceMinor": 27700
+      },
+      {
+        "name": "Chilli Prawns",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Keema Nan",
+        "priceMinor": 7100
+      },
+      {
+        "name": "Butter Chicken Meal Deal",
+        "priceMinor": 33300
+      },
+      {
+        "name": "Starter Mix Platter",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Lam Chili",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Mango Paneer",
+        "priceMinor": 22900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
