@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sofienberg-grill-oslo",
+    "name": "Sofienberg Grill",
+    "websiteUrl": null,
+    "address": "Teglverksgata 2A, 0553 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92376983676691,
+    "longitude": 10.764589535344468
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/321sofienberggrill",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 46,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 49 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margarita",
+      "Mona Lisa",
+      "Vegetar",
+      "Kyllingburger",
+      "Beef Cheeseburger",
+      "Shishkebab",
+      "Hvitløksdressing",
+      "Burn"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margarita",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Mona Lisa",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Vegetar",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Kyllingburger",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Beef Cheeseburger",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Shishkebab",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Hvitløksdressing",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Burn",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

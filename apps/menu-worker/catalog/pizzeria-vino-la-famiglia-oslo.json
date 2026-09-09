@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizzeria-vino-la-famiglia-oslo",
+    "name": "Pizzeria & Vino La Famiglia",
+    "websiteUrl": null,
+    "address": "Vulkan 5, 0178 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92225253860743,
+    "longitude": 10.751749415749577
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/424pizzeriavinolafamiglia",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 24,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 49 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Marinara",
+      "Diavola",
+      "Cotto",
+      "Calzone Super",
+      "Bella Italia",
+      "Quattro Formagi",
+      "Biancaneve",
+      "Margherita (Barne Pizza)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Marinara",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Diavola",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Cotto",
+        "priceMinor": 25400
+      },
+      {
+        "name": "Calzone Super",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Bella Italia",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Quattro Formagi",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Biancaneve",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Margherita (Barne Pizza)",
+        "priceMinor": 18900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
