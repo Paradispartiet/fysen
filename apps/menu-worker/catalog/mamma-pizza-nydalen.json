@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mamma-pizza-nydalen",
+    "name": "Mamma Pizza Nydalen",
+    "websiteUrl": null,
+    "address": "Nydalsveien 30A, 0484 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.95022697193477,
+    "longitude": 10.764558078610056
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/mammapizzanydalen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 44,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 47 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Arancine Siciliane",
+      "Ravioli Verdi 🌱",
+      "Diavola 🌶️",
+      "Crudo di Parma",
+      "La Bresaolina",
+      "Pomodoro [Children]",
+      "Pepsi Max 0,33l",
+      "San Pellegrino 0,5"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Arancine Siciliane",
+        "priceMinor": 25700
+      },
+      {
+        "name": "Ravioli Verdi 🌱",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Diavola 🌶️",
+        "priceMinor": 27600
+      },
+      {
+        "name": "Crudo di Parma",
+        "priceMinor": 29000
+      },
+      {
+        "name": "La Bresaolina",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Pomodoro [Children]",
+        "priceMinor": 13000
+      },
+      {
+        "name": "Pepsi Max 0,33l",
+        "priceMinor": 6500
+      },
+      {
+        "name": "San Pellegrino 0,5",
+        "priceMinor": 8900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lai-zai-viet-street-food-oslo",
+    "name": "Lai Zai Viet Street Food",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 83A, 0552 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.919762268960454,
+    "longitude": 10.75914771292617
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/laizaivietstreetfood",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 24,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 47 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bánh Mì Xá Xíu 🌶️",
+      "Bánh Mì Trứng ốp la 🌶️ [Vegetarian]",
+      "Cơm Hộp with fried rice [Foodbox]",
+      "Bún Nem Nướng",
+      "Com Xíu Mại",
+      "Chả Giò Chay",
+      "Bánh Phồng Tôm",
+      "Cà Phê Sữa Đá"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bánh Mì Xá Xíu 🌶️",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Bánh Mì Trứng ốp la 🌶️ [Vegetarian]",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Cơm Hộp with fried rice [Foodbox]",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Bún Nem Nướng",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Com Xíu Mại",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Chả Giò Chay",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Bánh Phồng Tôm",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Cà Phê Sữa Đá",
+        "priceMinor": 6500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

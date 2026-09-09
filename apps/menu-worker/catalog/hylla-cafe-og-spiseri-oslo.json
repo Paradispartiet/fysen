@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "hylla-cafe-og-spiseri-oslo",
+    "name": "Hylla Café og Spiseri",
+    "websiteUrl": null,
+    "address": "Plogveien 6, 0679 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.89729012445715,
+    "longitude": 10.812860159653528
+  },
+  "menuSource": {
+    "url": "https://www.meny.semeny.no/public/sted/479hyllacafeogspiseri",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 52,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 47 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Crispy Scampio",
+      "Husets Vårruller",
+      "Frityrstekt Torskeloin 🌶",
+      "Sursøt Svinekjøtt",
+      "Fritert Kyllingfilet",
+      "1A. Stekt Scampi 🌶",
+      "Skagensmørbrød",
+      "Vårrull Kombo"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Crispy Scampio",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Husets Vårruller",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Frityrstekt Torskeloin 🌶",
+        "priceMinor": 29800
+      },
+      {
+        "name": "Sursøt Svinekjøtt",
+        "priceMinor": 27800
+      },
+      {
+        "name": "Fritert Kyllingfilet",
+        "priceMinor": 26800
+      },
+      {
+        "name": "1A. Stekt Scampi 🌶",
+        "priceMinor": 33800
+      },
+      {
+        "name": "Skagensmørbrød",
+        "priceMinor": 29800
+      },
+      {
+        "name": "Vårrull Kombo",
+        "priceMinor": 35000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

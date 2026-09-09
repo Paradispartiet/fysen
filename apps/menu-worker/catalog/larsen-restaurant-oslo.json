@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "larsen-restaurant-oslo",
+    "name": "Larsen Restaurant",
+    "websiteUrl": null,
+    "address": "Sørkedalsveien 1B, 0369 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92996564628083,
+    "longitude": 10.713412559532149
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/398larsenrestaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 30,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 47 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Biff/Indrefilet",
+      "Thaimarinert Scampi",
+      "Kyllingsalat",
+      "Entrecote med Rødvinsaus (200 g)",
+      "Biff/Indrefilét (200g)",
+      "Ostekake med Bringebærsaus",
+      "Hjemmelaget Karbonade med Løk",
+      "Omelett med Fetaost"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Biff/Indrefilet",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Thaimarinert Scampi",
+        "priceMinor": 22800
+      },
+      {
+        "name": "Kyllingsalat",
+        "priceMinor": 24800
+      },
+      {
+        "name": "Entrecote med Rødvinsaus (200 g)",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Biff/Indrefilét (200g)",
+        "priceMinor": 39900
+      },
+      {
+        "name": "Ostekake med Bringebærsaus",
+        "priceMinor": 13800
+      },
+      {
+        "name": "Hjemmelaget Karbonade med Løk",
+        "priceMinor": 19600
+      },
+      {
+        "name": "Omelett med Fetaost",
+        "priceMinor": 19900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

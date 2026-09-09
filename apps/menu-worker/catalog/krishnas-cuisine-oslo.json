@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "krishnas-cuisine-oslo",
+    "name": "Krishna's Cuisine",
+    "websiteUrl": null,
+    "address": "Sørkedalsveien 10, 0369 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.930728937159806,
+    "longitude": 10.709962423944258
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/678krishnascuisine",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 17,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 47 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Liten Tallerken",
+      "Suppe",
+      "Vegansk stor tallerken m/ suppe + salat",
+      "Vegansk liten tallerken",
+      "Karamell Burfi",
+      "Gullkake",
+      "Iste Lime 0,5l",
+      "Carlsberg Alkoholfri 0,33l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Liten Tallerken",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Suppe",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Vegansk stor tallerken m/ suppe + salat",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Vegansk liten tallerken",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Karamell Burfi",
+        "priceMinor": 4000
+      },
+      {
+        "name": "Gullkake",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Iste Lime 0,5l",
+        "priceMinor": 4000
+      },
+      {
+        "name": "Carlsberg Alkoholfri 0,33l",
+        "priceMinor": 4000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

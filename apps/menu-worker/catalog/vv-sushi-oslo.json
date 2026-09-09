@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "vv-sushi-oslo",
+    "name": "VV Sushi",
+    "websiteUrl": null,
+    "address": "Veitvetveien 8, 0596 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94398548402759,
+    "longitude": 10.84781311406986
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/441vvsushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 85,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 47 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Rekechips",
+      "Chopsuey",
+      "Vegetar bowl m/ Ris",
+      "Stor Sashimi",
+      "Tempura Fries",
+      "Kokt Scampi Maki",
+      "Scampi",
+      "Taro"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Rekechips",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Chopsuey",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Vegetar bowl m/ Ris",
+        "priceMinor": 14400
+      },
+      {
+        "name": "Stor Sashimi",
+        "priceMinor": 22300
+      },
+      {
+        "name": "Tempura Fries",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Kokt Scampi Maki",
+        "priceMinor": 9100
+      },
+      {
+        "name": "Scampi",
+        "priceMinor": 2300
+      },
+      {
+        "name": "Taro",
+        "priceMinor": 8500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "saigon-express-oslo",
+    "name": "Saigon Express",
+    "websiteUrl": null,
+    "address": "Maridalsveien 157C, 0465 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93826756546886,
+    "longitude": 10.757135176504235
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/315saigonexpress",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 79,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-09",
+      "note": "Batch 47 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Maki Burrito",
+      "Saigon Spesial Meny 62 Biter",
+      "Sashimi Liten 12 Biter",
+      "Kappa maki",
+      "Softcrab maki",
+      "Laks Bowl",
+      "Gongbao",
+      "Jarritos Lime"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Maki Burrito",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Saigon Spesial Meny 62 Biter",
+        "priceMinor": 86900
+      },
+      {
+        "name": "Sashimi Liten 12 Biter",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Kappa maki",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Softcrab maki",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Laks Bowl",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Gongbao",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Jarritos Lime",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
