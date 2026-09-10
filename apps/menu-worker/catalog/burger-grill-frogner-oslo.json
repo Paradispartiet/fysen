@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "burger-grill-frogner-oslo",
+    "name": "Burger & Grill",
+    "websiteUrl": null,
+    "address": "Frognerveien 9C, 0257 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91652792378056,
+    "longitude": 10.715331328412427
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/burgergrill",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 23,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-10",
+      "note": "Batch 50 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebab I Pita",
+      "Döner Kebabtallerken",
+      "Burger",
+      "Bbq Burger Tallerken",
+      "Kyllingburger Tallerken",
+      "Urge",
+      "Trøffelmajo",
+      "Hvitløks dressing"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebab I Pita",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Döner Kebabtallerken",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Burger",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Bbq Burger Tallerken",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Kyllingburger Tallerken",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Urge",
+        "priceMinor": 3900
+      },
+      {
+        "name": "Trøffelmajo",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Hvitløks dressing",
+        "priceMinor": 2500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
