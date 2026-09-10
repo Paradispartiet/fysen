@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bistro-aqua-oslo",
+    "name": "Bistro Aqua",
+    "websiteUrl": null,
+    "address": "Rådhusgata 27, 0158 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91111003392044,
+    "longitude": 10.736142851630746
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/bistroaqua",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 23,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-10",
+      "note": "Batch 50 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Crispy Chicken Med Pommes",
+      "Schnitzel med Potatis & Bearnaisesås",
+      "Tonfisksallad",
+      "Powerking Original 25 cl",
+      "Energidryck Sunny Soda 33cl - Nocco",
+      "Vilda Västern Burgartallrik",
+      "Husets Burgartallrik",
+      "Kebab Pasta"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Crispy Chicken Med Pommes",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Schnitzel med Potatis & Bearnaisesås",
+        "priceMinor": 13400
+      },
+      {
+        "name": "Tonfisksallad",
+        "priceMinor": 14400
+      },
+      {
+        "name": "Powerking Original 25 cl",
+        "priceMinor": 1500
+      },
+      {
+        "name": "Energidryck Sunny Soda 33cl - Nocco",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Vilda Västern Burgartallrik",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Husets Burgartallrik",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Kebab Pasta",
+        "priceMinor": 13500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
