@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "victoria-cafe-tapas-oslo",
+    "name": "Victoria Café & Tapas",
+    "websiteUrl": null,
+    "address": "Nordstrandveien 32A, 1163 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.861106184026134,
+    "longitude": 10.795848832451902
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/710victoriacafetapas",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 48,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-10",
+      "note": "Batch 50 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Husets Tapastallerken",
+      "Focaccia m/ Aioli",
+      "Baconsurrede Dadler",
+      "Delicata",
+      "Lun Chevre & Valnøttsalat",
+      "Ost & Skinke Sandwich",
+      "Gulasjsuppe 🌶",
+      "PESTO alla Genovese glass 1000 gr"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Husets Tapastallerken",
+        "priceMinor": 27000
+      },
+      {
+        "name": "Focaccia m/ Aioli",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Baconsurrede Dadler",
+        "priceMinor": 9000
+      },
+      {
+        "name": "Delicata",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Lun Chevre & Valnøttsalat",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Ost & Skinke Sandwich",
+        "priceMinor": 13000
+      },
+      {
+        "name": "Gulasjsuppe 🌶",
+        "priceMinor": 16000
+      },
+      {
+        "name": "PESTO alla Genovese glass 1000 gr",
+        "priceMinor": 35000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

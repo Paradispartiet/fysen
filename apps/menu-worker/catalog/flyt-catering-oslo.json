@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "flyt-catering-oslo",
+    "name": "Flyt Catering Oslo",
+    "websiteUrl": null,
+    "address": "Myrerskogveien 12, 0495 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.96085519484161,
+    "longitude": 10.790987475015761
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/711flytcateringoslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 16,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-10",
+      "note": "Batch 50 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Rekesalat Med Egg",
+      "Tapasboks Kalde Retter",
+      "Tapasboks Med Varme & Kalde Retter",
+      "Focaccia Med Løk & Rosmarin",
+      "Jamaican Jerk Chicken",
+      "Fix Ferdig Lapskaus Vegetar",
+      "Fix Ferdig Chili Con Carne",
+      "Iste 0,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Rekesalat Med Egg",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Tapasboks Kalde Retter",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Tapasboks Med Varme & Kalde Retter",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Focaccia Med Løk & Rosmarin",
+        "priceMinor": 1900
+      },
+      {
+        "name": "Jamaican Jerk Chicken",
+        "priceMinor": 3600
+      },
+      {
+        "name": "Fix Ferdig Lapskaus Vegetar",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Fix Ferdig Chili Con Carne",
+        "priceMinor": 8600
+      },
+      {
+        "name": "Iste 0,5l",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

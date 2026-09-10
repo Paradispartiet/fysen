@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "vus-kjokken-hong-oslo",
+    "name": "Vu's Kjøkken Hong",
+    "websiteUrl": null,
+    "address": "Lørenveien 71c, 0585 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.928540593471496,
+    "longitude": 10.799693408103611
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/411vuskjokkenhong",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 30,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-10",
+      "note": "Batch 50 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kylling vårrull",
+      "Friterte Scampiboller",
+      "Won ton nudler Suppe",
+      "Stekte hvetenudler m/ Biff",
+      "Stekt Ris",
+      "Woket Okse m/ Svartpeppersaus",
+      "Char Siu Marinert Svin",
+      "Iskaffe"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kylling vårrull",
+        "priceMinor": 7000
+      },
+      {
+        "name": "Friterte Scampiboller",
+        "priceMinor": 7000
+      },
+      {
+        "name": "Won ton nudler Suppe",
+        "priceMinor": 21800
+      },
+      {
+        "name": "Stekte hvetenudler m/ Biff",
+        "priceMinor": 21800
+      },
+      {
+        "name": "Stekt Ris",
+        "priceMinor": 21800
+      },
+      {
+        "name": "Woket Okse m/ Svartpeppersaus",
+        "priceMinor": 21800
+      },
+      {
+        "name": "Char Siu Marinert Svin",
+        "priceMinor": 21800
+      },
+      {
+        "name": "Iskaffe",
+        "priceMinor": 7500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
