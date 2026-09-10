@@ -21,6 +21,39 @@ Piloten skal ikke optimaliseres for flest mulig restauranter eller flest mulig m
 
 Restaurant-onboarding er en løpende coverage-maskin. Nye restauranter prioriteres når etterspørsel, geografi, kjøkken eller en nødvendig kildetype viser et reelt gap.
 
+## Coverage-policy: rettverdi fremfor restaurantantall
+
+Fysen har **ikke et mål om å dekke alle restauranter i Oslo**, og et høyere restauranttall er ikke i seg selv fremgang. Produktet er dish-first: en restaurant skal først prioriteres når den øker sannsynligheten for at en bruker finner en relevant rett, et kjøkken, en stil eller et geografisk alternativ som ikke allerede er godt dekket.
+
+Den operative hovedtesten er **marginal coverage value**:
+
+> Hvis denne restauranten fjernes eller ikke onboardes, mister Fysen meningsfull rettdekning, kjøkkendekning, geografisk dekning, dokumentert etterspørsel eller et kvalitativt viktig alternativ?
+
+Hvis svaret er nei, skal restauranten normalt ikke prioriteres bare for å øke katalogstørrelsen.
+
+Positive signaler er blant annet:
+
+- nye eller underdekkede retter, regionale kjøkken, spesialisering eller tydelige signaturretter;
+- dokumentert brukeretterspørsel eller et reelt null-/fuzzy-gap;
+- geografisk verdi der eksisterende rettdekning er svak;
+- stabil, aktuell og relativt komplett menyproveniens;
+- faglig eller redaksjonell relevans, tydelig spesialisering, lang levetid eller annen kvalitativ betydning;
+- variasjon i prisnivå, kosthold og serveringsform når dette faktisk øker brukerens valgmuligheter.
+
+Negative signaler er blant annet:
+
+- enda en lokasjon eller restaurant med nesten samme rettsett som allerede er godt dekket i samme område;
+- store mengder generisk pizza, kebab, sushi, burger eller tilsvarende uten særskilt rett-, kvalitets- eller geografisk verdi;
+- kjedelokasjoner med praktisk talt identisk meny når lokasjonen ikke tilfører vesentlig nærhetsverdi;
+- ustabil, svært støyete eller ufullstendig menyflate som gir lavere tillit til rettdataene;
+- catering-only, lukkede kantiner/institusjoner, kiosk/dagligvare med mat som sideprodukt, rene barer uten substansiell matmeny og virtuelle brands som bare dupliserer samme fysiske kjøkken og rettsett.
+
+Ratings alene er **ikke** en hard gate. Kvalitet skal vurderes som et sammensatt signal og må aldri brukes til å overstyre kildebevis, faktisk rettdekning eller dokumentert etterspørsel.
+
+Eksisterende katalog skal også kunne auditeres etter samme prinsipp. En canonical restaurant kan klassifiseres redaksjonelt som **core**, **coverage** eller **redundant**. `redundant` betyr ikke automatisk sletting; det betyr at stedet ikke skal telle som begrunnelse for videre kvantitetsvekst, og at konsolidering, nedprioritering eller representasjon som lokasjon under et felles restaurant-/menykonsept bør vurderes.
+
+Det finnes derfor ingen fast Oslo-kvote som 200, 1 000 eller «alle registrerte restauranter». Coverage vurderes ut fra hvor godt Fysen kan svare på spørsmålet **«hvor kan jeg spise denne retten?»** med ferske, troverdige og nyttige alternativer.
+
 ## Status 20. august 2026
 
 ### Canonical produksjonskatalog
