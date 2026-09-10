@@ -234,14 +234,29 @@ Web/API-deploy er en separat releaseflate. Restaurantmaterialisering og DB/watch
 
 ## Prioritering mot Oslo-dekning
 
-Dekning bygges i trinn, ikke ved å gjøre hele Oslo til én blokkende kø:
+Restaurantproduksjonen skal optimalisere **rettdekning og marginal nytte**, ikke katalogstørrelse. En ny restaurant skal ha en eksplisitt coverage-begrunnelse før intake: minst ett konkret bidrag innen rett/kjøkken, geografi, dokumentert etterspørsel, kvalitativ betydning eller en nødvendig kildetype.
+
+Før en ny seed godtas skal research kontrollere:
+
+1. **Rettverdi:** tilfører kandidaten retter, varianter, regionale kjøkken eller spesialisering som dagens katalog ikke allerede dekker godt?
+2. **Etterspørsel:** løser kandidaten et dokumentert brukerbehov, nulltreff eller annet reelt demand-gap?
+3. **Geografisk verdi:** forbedrer kandidaten relevant nærhetsdekning i et område som ellers er svakt dekket?
+4. **Kvalitativ betydning:** er stedet faglig/redaksjonelt relevant, tydelig spesialisert, etablert eller på annen måte et viktig alternativ i Oslo-matbildet?
+5. **Kildekvalitet:** finnes en stabil, aktuell og tilstrekkelig komplett meny som kan holdes production-green?
+6. **Redundans:** finnes samme eller praktisk talt samme rettsett allerede i nærområdet eller i en kjede med identisk meny?
+
+Generisk volum er ikke en positiv faktor. Nye pizza-, kebab-, sushi-, burger- og grillsteder skal ikke onboardes automatisk bare fordi en maskinlesbar meny finnes. De skal bestå samme marginal-value-test som alle andre restauranter. Kjedelokasjoner med identisk meny skal bare prioriteres når fysisk lokasjon gir reell geografisk/handlingsmessig verdi; på sikt bør datamodellen kunne skille felles meny-/restaurantkonsept fra de fysiske stedene som serverer det.
+
+Dekning bygges derfor slik:
 
 - hold den aktive produksjonsbaselinen grønn før hver ny batch;
-- kjør nye research-/intake-batcher normalt på 20–30 restauranter, eller som dokumenterte source-familier når det gir høyere gjennomstrømning uten kvalitetsreduksjon;
-- prioriter geografisk og kulinarisk bredde samt dokumentert brukeretterspørsel;
-- bygg generiske adaptere når samme plattformfeil gjentas;
-- promoter den grønne delmengden samlet i stedet for å vente på vanskelige kilder;
-- mål både `canonical manifests`, `new promotion materialized`, `active canonical`, `enabled sources` og `active-not-catalog` med riktig bevisnivå;
-- behold ubeviste restauranter fail-closed i source/parser-køen fremfor å senke kvalitetskravene.
+- velg kandidater fra dokumenterte coverage-gap, ikke fra et mål om å fylle en batch eller nå et bestemt restauranttall;
+- prioriter kulinarisk bredde, særpreg, faktisk etterspørsel og geografiske hull;
+- bruk kvalitets-/omdømmesignaler som støtte, men aldri som erstatning for fersk menyproveniens;
+- promoter bare den delen som både er teknisk grønn og har dokumentert marginal nytte;
+- behold ubeviste eller lavverdige kandidater utenfor canonical katalog fremfor å produsere dem for volumets skyld;
+- auditér eksisterende catalog for **core / coverage / redundant**, slik at gammel volumproduksjon ikke blir permanent produktpremiss;
+- vurder konsolidering/nedprioritering av redundante lokasjoner uten å ødelegge nødvendig nærhets- eller handlingsdata;
+- mål suksess i løste retter, kjøkken, geografiske gap og demand-gap, ikke i andel av alle Oslo-serveringssteder.
 
-Et planleggingsnivå på omtrent 200 strategisk valgte, production-green Oslo-restauranter kan brukes som dekningsmilepæl. Det er ikke en kvalitetsport og erstatter ikke etterspørsels-, kilde- eller ferskhetsmålingene i Oslo-piloten.
+Det finnes **ingen fast Oslo-kvote** og ingen canonical målsetting om 200, 1 000 eller full census-dekning. Eksterne restaurantregistre brukes som research-univers for å finne hull, ikke som backlog som automatisk skal materialiseres. Den avgjørende testen er om en kandidat gjør Fysen merkbart bedre til å svare troverdig på **«hvor kan jeg spise denne retten?»**.
