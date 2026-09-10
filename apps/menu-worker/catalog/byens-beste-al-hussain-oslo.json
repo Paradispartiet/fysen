@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "byens-beste-al-hussain-oslo",
+    "name": "Byens Beste Al Hussain",
+    "websiteUrl": null,
+    "address": "Konows gate 80A, 0196 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90174339628556,
+    "longitude": 10.791566772612079
+  },
+  "menuSource": {
+    "url": "https://meny.semeny.no/sted/byensbestealhussain",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 19,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-10",
+      "note": "Batch 50 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebab i Pita",
+      "Kebab Rull",
+      "Karri Kylling",
+      "Salami",
+      "Hawaii",
+      "Villa 0,33l",
+      "Bonaqua Naturell 0,5l",
+      "Bonaqua Naturell 1,5l"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebab i Pita",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Kebab Rull",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Karri Kylling",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Salami",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Hawaii",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Villa 0,33l",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Bonaqua Naturell 0,5l",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Bonaqua Naturell 1,5l",
+        "priceMinor": 6500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
