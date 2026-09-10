@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mon-an-asiatisk-mat-oslo",
+    "name": "Mon An Asiatisk Mat",
+    "websiteUrl": null,
+    "address": "Ulvenveien 82D, 0581 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92585823591022,
+    "longitude": 10.812251944105624
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/418monanasiatiskmat",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 66,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-10",
+      "note": "Batch 50 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Crunchy kylling katsu m/ris",
+      "Thai Green Curry",
+      "Combo Mix 1",
+      "Sakura Maki",
+      "Laks Tartar",
+      "Bun Cha Gio Chay",
+      "7up free",
+      "Tom Yum Suppe"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Crunchy kylling katsu m/ris",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Thai Green Curry",
+        "priceMinor": 21400
+      },
+      {
+        "name": "Combo Mix 1",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Sakura Maki",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Laks Tartar",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Bun Cha Gio Chay",
+        "priceMinor": 21400
+      },
+      {
+        "name": "7up free",
+        "priceMinor": 4200
+      },
+      {
+        "name": "Tom Yum Suppe",
+        "priceMinor": 11900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
