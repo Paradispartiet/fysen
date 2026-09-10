@@ -234,6 +234,8 @@ Web/API-deploy er en separat releaseflate. Restaurantmaterialisering og DB/watch
 
 ## Prioritering mot Oslo-dekning
 
+Siste daterte kvalitets-/redundansaudit for Oslo ligger i [`oslo-restaurant-quality-gap-audit-2026-09-10.md`](./oslo-restaurant-quality-gap-audit-2026-09-10.md). Auditen er et research- og prioriteringssnapshot, ikke en parallell canonical katalog eller restaurantkvote.
+
 Restaurantproduksjonen skal optimalisere **rettdekning og marginal nytte**, ikke katalogstørrelse. En ny restaurant skal ha en eksplisitt coverage-begrunnelse før intake: minst ett konkret bidrag innen rett/kjøkken, geografi, dokumentert etterspørsel, kvalitativ betydning eller en nødvendig kildetype.
 
 Før en ny seed godtas skal research kontrollere:
