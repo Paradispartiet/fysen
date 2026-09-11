@@ -6,34 +6,6 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "madonna-oslo",
-        "name": "Madonna",
-        "websiteUrl": "https://www.madonnaoslo.no/",
-        "address": "Operagata 17, 0194 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.madonnaoslo.no/lunsj",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-11",
-          "note": "Current first-party lunch page publishes a named and individually priced Friday/Saturday lunch menu. The dinner page produced only one canonical priced row via both HTTP and rendered-browser extraction, so this final source-level proof uses the separate current first-party lunch surface without changing the three-dish floor."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
         "slug": "festningen-restaurant-oslo",
         "name": "Festningen Restaurant",
         "websiteUrl": "https://www.festningenrestaurant.no/",
