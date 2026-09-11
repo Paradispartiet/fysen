@@ -19,7 +19,7 @@ describe("trailing-price HTML card recovery", () => {
     `);
 
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
-      "trailing-price-card-v12",
+      "trailing-price-card-v13",
     );
     expect(
       items.map((item) => [item.name, item.priceMinor, item.priceKind]),
@@ -62,6 +62,25 @@ describe("trailing-price HTML card recovery", () => {
       ["Hovedretter", "Lamb Rice", "from"],
       ["Hovedretter", "Chicken Rice", "exact"],
     ]);
+  });
+
+  it("skips price-per-quantity metadata when recovering the canonical dish title", () => {
+    const items = recoverTrailingPriceCardHtmlItems(`
+      <html><body>
+        <div>BLUEFIN TORO</div><div>264,-</div>
+        <div>LAKS</div><div>132,-</div>
+        <div>WAGYU</div><div>274,-</div>
+        <div>NODEE CRAZY DUCK</div>
+        <div>159,- / 2 biter</div>
+        <div>579,-</div>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toContainEqual([
+      "NODEE CRAZY DUCK",
+      57900,
+    ]);
+    expect(items.some((item) => item.name === "159,- / 2 biter")).toBe(false);
   });
 
   it("fails closed on ambiguous multi-price metadata while preserving neighboring cards", () => {
