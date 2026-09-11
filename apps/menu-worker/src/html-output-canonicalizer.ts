@@ -61,7 +61,7 @@ const QUANTITY_SERIES_LABEL_ITEM =
   /^\d+\s*(?:stk\.?|pcs?|pieces?)\s*:?(?:\s*\/\s*\d+\s*(?:stk\.?|pcs?|pieces?)\s*:?)+$/iu;
 const INCOMPLETE_ENGLISH_DESCRIPTION_ITEM =
   /^(?:gratinated|served|fished|breaded)\s+(?:with|in|straight|from)\b/iu;
-const SINGLE_QUANTITY_DISPLAY_ITEM = /^\d+\s*(?:stk\.?|pcs?|pieces?)\s*:$/iu;
+const SINGLE_QUANTITY_DISPLAY_ITEM = /^\d+\s*(?:stk\.?|st\.?|pcs?|pieces?)\s*:$/iu;
 const SIZE_CONTEXT_LABEL_ITEM =
   /^(?:small|large|big|liten|stor)(?:\s+size)?\s*\((?:starter|main(?:\s+course)?|forrett|hovedrett)\)$/iu;
 const MINIMUM_PERSON_INSTRUCTION =
