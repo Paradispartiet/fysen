@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v4");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v5");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -159,21 +159,24 @@ describe("structural HTML output canonicalization", () => {
   });
 
 
-  it("drops a same-price description fragment when a stronger card excerpt contains it verbatim", () => {
+  it("does not globally delete equal-price items from another item excerpt", () => {
     const items = [
       item(
-        "Entrecote",
-        54500,
+        "Diavola",
+        25900,
         null,
-        "Entrecote — Grilla selleri, sellerirot, syltet rødløk — estragonsaus — 545",
+        "Diavola — Tomatsaus, ost, salami — 259",
       ),
-      item("estragonsaus", 54500),
-      item("Svinenakke", 47500, null, "Svinenakke — Mais, nepe, tomat — Sjalottløk- timian saus — 475"),
-      item("Sjalottløk- timian saus", 47500),
+      item(
+        "Rykende fersk italiensk pizza fra steinovnen",
+        25900,
+        null,
+        "Rykende fersk italiensk pizza fra steinovnen — Diavola — Tomatsaus, ost, salami — 259",
+      ),
     ];
     expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
-      "Entrecote",
-      "Svinenakke",
+      "Diavola",
+      "Rykende fersk italiensk pizza fra steinovnen",
     ]);
   });
 
