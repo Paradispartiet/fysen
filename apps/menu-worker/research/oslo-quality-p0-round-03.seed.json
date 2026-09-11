@@ -14,20 +14,17 @@
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://www.madonnaoslo.no/no/meny",
+        "url": "https://www.madonnaoslo.no/lunsj",
         "sourceType": "html",
-        "fetchMode": "browser",
+        "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720,
-        "readinessTexts": [
-          "Entrecôte"
-        ]
+        "checkIntervalMinutes": 720
       },
       "verification": {
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-09-11",
-          "note": "Current first-party page visibly publishes many named and individually priced dinner dishes. The HTTP intake path recovered only one priced dish, so exact-head reproof uses the supported rendered-browser path on the same first-party URL; the three-dish minimum is unchanged."
+          "note": "Current first-party lunch page publishes a named and individually priced Friday/Saturday lunch menu. The dinner page produced only one canonical priced row via both HTTP and rendered-browser extraction, so this final source-level proof uses the separate current first-party lunch surface without changing the three-dish floor."
         }
       },
       "actions": [],
