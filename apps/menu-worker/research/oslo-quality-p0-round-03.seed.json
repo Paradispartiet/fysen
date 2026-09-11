@@ -75,38 +75,6 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "gamle-raadhus-restaurant-oslo",
-        "name": "Gamle Raadhus Restaurant",
-        "websiteUrl": "https://www.gamleraadhus.no/",
-        "address": "Nedre Slottsgate 1, 0157 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.gamleraadhus.no/kveldsmeny",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-11",
-          "note": "Current first-party dinner menu effective 19 August 2026 publishes named and individually priced dishes."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": [
-        "Gjelder fra 19. august",
-        "Large",
-        "Small"
-      ]
-    },
-    {
-      "version": 1,
-      "restaurant": {
         "slug": "frognerseteren-finstua-oslo",
         "name": "Frognerseteren Finstua",
         "websiteUrl": "https://www.frognerseteren.no/",
