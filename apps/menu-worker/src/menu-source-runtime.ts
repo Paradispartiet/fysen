@@ -239,7 +239,7 @@ function mergeMissingRecoveredItems(
   return output.sort((a, b) => a.position - b.position);
 }
 
-function reconcileStrongTitleWithTrailingCards(
+function reconcileSelectedItemsWithTrailingCards(
   items: readonly MenuObservedItem[],
   trailing: readonly MenuObservedItem[],
 ): readonly MenuObservedItem[] {
@@ -522,15 +522,8 @@ export async function extractMenuSource(
     const headingPriceCoverageThreshold = Math.ceil(
       recoveredItems.length * 0.75,
     );
-    const reconciledStrongTitlePriceItems =
-      strongTitlePricePreferred
-        ? reconcileStrongTitleWithTrailingCards(
-            strongTitlePriceItems,
-            trailingPriceCardItems,
-          )
-        : strongTitlePriceItems;
     const preferredItems = strongTitlePricePreferred
-    ? reconciledStrongTitlePriceItems
+    ? strongTitlePriceItems
     : trailingPriceCardQualifies
       ? trailingPriceCardItems
       : headingPriceItems.length >= 4 &&
@@ -541,11 +534,22 @@ export async function extractMenuSource(
             priceWrappedItems.length >= recoveredItems.length * 2
           ? priceWrappedItems
           : recoveredItems;
+    const structurallyReconciledPreferredItems =
+      extracted.method === "html_heuristic" && !strongTitlePricePreferred
+        ? reconcileSelectedItemsWithTrailingCards(
+            preferredItems,
+            trailingPriceCardItems,
+          )
+        : preferredItems;
     const recoveredSupplementedItems =
       extracted.method === "html_heuristic" &&
-      !isolatedSemanticRecoveryPreferred
-        ? mergeMissingRecoveredItems(preferredItems, recoveredItems)
-        : preferredItems;
+      !isolatedSemanticRecoveryPreferred &&
+      preferredItems !== recoveredItems
+        ? mergeMissingRecoveredItems(
+            structurallyReconciledPreferredItems,
+            recoveredItems,
+          )
+        : structurallyReconciledPreferredItems;
     const headingSupplementedItems =
       extracted.method === "html_heuristic" &&
       !strongTitlePricePreferred
