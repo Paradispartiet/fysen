@@ -15,8 +15,13 @@ const VARIANT_SECTION_KEYWORD =
   /\b(?:sashimi|nigiri|maki|uramaki|futomaki|temaki|sushi|tacos?|pizza(?:er|s)?|pasta|dessert(?:er|s)?|starters?|forretter?|mains?|hovedretter?|grill|bowls?|antipasti|primi|secondi|contorni|dolci)\b/iu;
 const SERVICE_CONTEXT_HEADING =
   /^(?:lunsjmeny|lunch\s+menu|kveldsmeny|dinner\s+menu)\b/iu;
-const PDF_ABV_VOLUME_ITEM =
-  /\b\d{1,2}(?:[.,]\d+)?\s*%\s+\d(?:[.,]\d+)(?:\s*\/\s*\d(?:[.,]\d+)?)?\b/u;
+const PDF_ABV_ITEM = /\b\d{1,2}(?:[.,]\d+)?\s*%/u;
+const PDF_BEVERAGE_STYLE_ITEM =
+  /\b(?:øl|ale|ipa|pils(?:ner)?|weissbier|hveteøl|radler|beer|cider|stout|lager)\b/iu;
+const PDF_BEVERAGE_VOLUME_ITEM =
+  /\b\d(?:[.,]\d{1,2})(?:\s*(?:l|cl|ml))?(?:\s*\/\s*\d(?:[.,]\d{1,2})(?:\s*(?:l|cl|ml))?)?\b/iu;
+const PDF_ADDON_INSTRUCTION_ITEM =
+  /^(?:add|legg\s+til)\b.{0,160}\b(?:to\s+any\s+dish|til\s+(?:enhver|alle)\s+rett(?:er)?|for)\b/iu;
 const PDF_LOWERCASE_SENTENCE_FRAGMENT = /^[a-zæøå].{2,220}[.]$/u;
 const PDF_PARENTHETICAL_ALLERGEN_ITEM =
   /^\(\s*(?:(?:fisk|fish|skalldyr|shellfish|bløtdyr|molluscs?|melk|milk|laktose|lactose|egg|eggs?|hvete|wheat|hvetegluten|gluten|soya?|soy|selleri|celery|sennep|mustard|sesam|sesame|sulfitt|sulphites?|nøtter?|nuts?|peanøtter?|peanuts?|lupin|citrus|sitrus)\s*[,/+&]?\s*)+\)$/iu;
@@ -219,14 +224,20 @@ export function disambiguateConflictingPdfSourceKeys(
 }
 
 function looksLikePdfBeverageItem(name: string): boolean {
-  return PDF_ABV_VOLUME_ITEM.test(normalizeVisibleLine(name));
+  const normalized = normalizeVisibleLine(name);
+  return (
+    PDF_ABV_ITEM.test(normalized) &&
+    PDF_BEVERAGE_STYLE_ITEM.test(normalized) &&
+    PDF_BEVERAGE_VOLUME_ITEM.test(normalized)
+  );
 }
 
 function looksLikePdfDescriptionFragment(name: string): boolean {
   const normalized = normalizeVisibleLine(name);
   return (
     PDF_LOWERCASE_SENTENCE_FRAGMENT.test(normalized) ||
-    PDF_PARENTHETICAL_ALLERGEN_ITEM.test(normalized)
+    PDF_PARENTHETICAL_ALLERGEN_ITEM.test(normalized) ||
+    PDF_ADDON_INSTRUCTION_ITEM.test(normalized)
   );
 }
 
