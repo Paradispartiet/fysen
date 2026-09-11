@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sjomagasinet-oslo",
+    "name": "Sjømagasinet",
+    "websiteUrl": "https://www.sjomagasinet.no/",
+    "address": "Tjuvholmen Allé 14, 0252 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90788151722504,
+    "longitude": 10.722015042761493
+  },
+  "menuSource": {
+    "url": "https://www.sjomagasinet.no/english",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "Exact-head semantic parser proof for current first-party lunch/dinner menu; promotion remains blocked until artifact QA is clean."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Today’s Starter",
+      "Today’s Catch",
+      "Sjømagasinet's Fish Soup",
+      "Selection of Ice Cream and Sorbet",
+      "Lobster Salad",
+      "Dry-aged Entrecote 250 gram from Josheim",
+      "Today's Dessert"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Today’s Starter",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Today’s Catch",
+        "priceMinor": 48500
+      },
+      {
+        "name": "Sjømagasinet's Fish Soup",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Selection of Ice Cream and Sorbet",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Lobster Salad",
+        "priceMinor": 69500
+      },
+      {
+        "name": "Dry-aged Entrecote 250 gram from Josheim",
+        "priceMinor": 68500
+      },
+      {
+        "name": "Today's Dessert",
+        "priceMinor": 16500
+      }
+    ],
+    "forbiddenDishNames": [
+      "fresh truffle and truffle and shallot dressing",
+      "daikon salad with citrus ponzu sauce",
+      "selection of seasonal vegetables from local producers",
+      "lemon and ginger butter, wine and cream",
+      "98 piece / 495 1⁄2 dozen",
+      "2 Types of oysters",
+      "Supplement:",
+      "Wine pairing NOK",
+      "Wine Pairing"
+    ]
+  }
+}

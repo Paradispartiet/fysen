@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v11";
+  "trailing-price-card-v12";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -34,6 +34,10 @@ const NEXT_MENU_SCOPE =
   /^(?:breakfast|frokost|brunch|lunch|lunsj|tasting\s+menu|set\s+menu|drinks?|drikke(?:meny)?|bar\s+menu)$/iu;
 const PLAIN_FOOD_SECTION_BOUNDARY =
   /^(?:forretter?|starters?|appetizers?|småretter|small\s+plates?|hovedretter?|mains?|main\s+courses?|desserter?|desserts?|tilbehør|sides?|salater?|salads?|supper?|soups?)$/iu;
+const DYNAMIC_PRICE_BOUNDARY =
+  /^(?:dagens\s+pris|market\s+price|mkt\.?\s*price)$/iu;
+const MULTI_PRICE_BOUNDARY =
+  /^(?:(?:kr\.?|nok)\s*)?[1-9]\d{1,3}\s*(?:(?:piece|pieces|pcs?|stk)\s*)?\/\s*(?:(?:kr\.?|nok)\s*)?[1-9]\d{1,3}\b/iu;
 const EXPLICIT_A_LA_CARTE_SECTION = "A LA CARTA";
 const MAX_PRECEDING_TITLE_DISTANCE = 12;
 
@@ -294,6 +298,8 @@ function precedingNumberedTitle(
 interface StructuredLeadingTitle {
   readonly position: number;
   readonly title: string;
+  readonly candidateCount: number;
+  readonly nearestTitle: string;
 }
 
 function isHeadingTitleLine(
@@ -302,6 +308,26 @@ function isHeadingTitleLine(
 ): boolean {
   if (position <= 0) return false;
   return (lines[position - 1] ?? "").startsWith(HEADING_MARKER);
+}
+
+function isUnpricedPriceBoundary(value: string): boolean {
+  const line = normalizeVisibleLine(value);
+  return DYNAMIC_PRICE_BOUNDARY.test(line) || MULTI_PRICE_BOUNDARY.test(line);
+}
+
+function firstLetterMatches(value: string, pattern: RegExp): boolean {
+  const letter = normalizeVisibleLine(value).match(/\p{L}/u)?.[0] ?? "";
+  return Boolean(letter && pattern.test(letter));
+}
+
+function isStrongLocalStructuredLeadingTitle(
+  structured: StructuredLeadingTitle,
+): boolean {
+  if (structured.candidateCount >= 3) return true;
+  return (
+    firstLetterMatches(structured.title, /\p{Lu}/u) &&
+    firstLetterMatches(structured.nearestTitle, /\p{Ll}/u)
+  );
 }
 
 function precedingStructuredLeadingTitle(
@@ -313,6 +339,10 @@ function precedingStructuredLeadingTitle(
   for (let index = pricePosition - 1; index >= blockStart; index -= 1) {
     const line = lines[index] ?? "";
     if (parseTrailingPrice(line)) {
+      blockStart = index + 1;
+      break;
+    }
+    if (isUnpricedPriceBoundary(line)) {
       blockStart = index + 1;
       break;
     }
@@ -349,7 +379,15 @@ function precedingStructuredLeadingTitle(
   // title path. This recovery is only for repeated card layouts where both the
   // leading dish name and a short trailing component (often a sauce/garnish)
   // look title-like.
-  return candidates.length >= 2 ? (candidates[0] ?? null) : null;
+  if (candidates.length < 2) return null;
+  const first = candidates[0];
+  const nearest = candidates[candidates.length - 1];
+  if (!first || !nearest) return null;
+  return {
+    ...first,
+    candidateCount: candidates.length,
+    nearestTitle: nearest.title,
+  };
 }
 
 function canonicalizeStrongNumberedMenu(
@@ -460,9 +498,14 @@ export function recoverTrailingPriceCardHtmlItems(
     let titlePosition: number | null = null;
     let title: string | null = null;
     const numberedTitle = precedingNumberedTitle(lines, pricePosition);
-    const structuredLeadingTitle = useStructuredLeadingLayout
-      ? (structuredLeadingByPricePosition.get(pricePosition) ?? null)
-      : null;
+    const structuredCandidate =
+      structuredLeadingByPricePosition.get(pricePosition) ?? null;
+    const structuredLeadingTitle =
+      structuredCandidate &&
+      (useStructuredLeadingLayout ||
+        isStrongLocalStructuredLeadingTitle(structuredCandidate))
+        ? structuredCandidate
+        : null;
     if (numberedTitle) {
       titlePosition = numberedTitle.position;
       title = numberedTitle.title;
@@ -480,7 +523,8 @@ export function recoverTrailingPriceCardHtmlItems(
       ) {
         const candidate = lines[index] ?? "";
         if (candidate.startsWith(HEADING_MARKER)) continue;
-        if (parseTrailingPrice(candidate)) break;
+        if (parseTrailingPrice(candidate) || isUnpricedPriceBoundary(candidate))
+          break;
         if (!looksLikeDishTitle(candidate)) continue;
         titlePosition = index;
         title = normalizeVisibleLine(candidate);
