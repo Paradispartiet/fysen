@@ -38,9 +38,9 @@
   },
   "verification": {
     "menu": {
-      "status": "verified",
-      "checkedAt": "2026-09-08",
-      "note": "District 4 links directly to its first-party WinOrder ordering surface. The menu validator allows only api.winorder.no as a data origin, explicitly blocks the nonessential tracking.winorder.no telemetry origin, and waits for Calamari before extraction. Canonical dish locks use the exact first-party WinOrder labels and direct-order prices; the prior Foodora labels map to the same dishes but carry third-party delivery pricing. Reproof requested 2026-09-11 after catalog-health source-drift residual; no source, minimum or assertion contract is weakened pending exact-head live validation."
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "Exact live reproof on PR #670 returned 36 items from the current first-party WinOrder source. Pepper beef and Beef Carpaccio are no longer present, so the assertion set is refreshed to five currently observed canonical dishes; the 19-item floor and source contract remain unchanged."
     }
   },
   "actions": [
@@ -60,9 +60,9 @@
   "qualityAssertions": {
     "requiredDishNames": [
       "Dragon Ball",
-      "Pepper beef",
+      "Tartar av indrefilet servert med hjemmelaget lotus chips",
       "Chicken Hue-style",
-      "Beef Carpaccio",
+      "Pho special noodle soup",
       "Calamari"
     ],
     "requiredDishVariants": [
@@ -71,16 +71,16 @@
         "priceMinor": 13900
       },
       {
-        "name": "Pepper beef",
-        "priceMinor": 29900
+        "name": "Tartar av indrefilet servert med hjemmelaget lotus chips",
+        "priceMinor": 22500
       },
       {
         "name": "Chicken Hue-style",
         "priceMinor": 23900
       },
       {
-        "name": "Beef Carpaccio",
-        "priceMinor": 17700
+        "name": "Pho special noodle soup",
+        "priceMinor": 24900
       },
       {
         "name": "Calamari",
