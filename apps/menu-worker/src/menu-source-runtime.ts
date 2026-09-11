@@ -249,6 +249,7 @@ function reconcileSelectedItemsWithTrailingCards(
     if (item.priceMinor === null) return item;
     const matches = trailing.filter((candidate) => {
       if (
+        candidate.confidence < 0.99 ||
         candidate.priceMinor !== item.priceMinor ||
         candidate.normalizedName === item.normalizedName
       )
