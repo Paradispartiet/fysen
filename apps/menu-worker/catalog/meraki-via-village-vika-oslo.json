@@ -11,12 +11,12 @@
     "longitude": 10.726724502423542
   },
   "menuSource": {
-    "url": "https://semeny.no/sted/merakiviavillagegreekfoodgyros",
+    "url": "https://semeny.no/sted/741merakiviavillage",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 13,
+    "minimumExpectedItems": 16,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-08-30",
-      "note": "Batch 26 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+      "checkedAt": "2026-09-02",
+      "note": "Batch 33 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
     }
   },
   "actions": [],
@@ -35,12 +35,12 @@
     "requiredDishNames": [
       "Pork Gyros Plate",
       "Gyros Club",
-      "Pita Gyros Pork",
+      "Pita Gyros Chicken",
       "Greek Salad",
-      "Loaded Fries",
       "Pitabrød m/ Tzatziki",
       "Pitabrød",
-      "Tzatziki"
+      "Tzatziki",
+      "Halloumi"
     ],
     "requiredDishVariants": [
       {
@@ -49,31 +49,31 @@
       },
       {
         "name": "Gyros Club",
-        "priceMinor": 25900
+        "priceMinor": 24900
       },
       {
-        "name": "Pita Gyros Pork",
-        "priceMinor": 20500
-      },
-      {
-        "name": "Greek Salad",
-        "priceMinor": 22500
-      },
-      {
-        "name": "Loaded Fries",
+        "name": "Pita Gyros Chicken",
         "priceMinor": 19500
       },
       {
+        "name": "Greek Salad",
+        "priceMinor": 18000
+      },
+      {
         "name": "Pitabrød m/ Tzatziki",
-        "priceMinor": 11500
+        "priceMinor": 10500
       },
       {
         "name": "Pitabrød",
-        "priceMinor": 5500
+        "priceMinor": 4500
       },
       {
         "name": "Tzatziki",
         "priceMinor": 4500
+      },
+      {
+        "name": "Halloumi",
+        "priceMinor": 5000
       }
     ],
     "forbiddenDishNames": []

@@ -11,12 +11,12 @@
     "longitude": 10.732797673147669
   },
   "menuSource": {
-    "url": "https://semeny.no/public/sted/sushidinner",
+    "url": "https://semeny.no/sted/dinnersushi1",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 95,
+    "minimumExpectedItems": 170,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,54 +26,54 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-02",
-      "note": "Batch 35 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+      "checkedAt": "2026-09-07",
+      "note": "Batch 44 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Dagens Sushi 1",
-      "Vegetar Vårruller",
-      "Flyverfiskrogn",
-      "Spicy Tuna",
-      "Tempura Kylling (Futo Maki)",
-      "Kokt Scampi (Futo Maki)",
-      "Kylling Chopsuey",
-      "Fuze Tea Peach Hibiscus 0,4L"
+      "Laksetatar",
+      "201.Dinner Box 2 (14 stk)",
+      "Iki Ginger Beer 5.5% 0,33 l",
+      "046.Hell's Laks Roll",
+      "084.Futomaki Tun Big",
+      "122.Nigiri Avocado",
+      "Ingefær",
+      "Mango Chokolade Cake /K"
     ],
     "requiredDishVariants": [
       {
-        "name": "Dagens Sushi 1",
-        "priceMinor": 18900
-      },
-      {
-        "name": "Vegetar Vårruller",
-        "priceMinor": 7900
-      },
-      {
-        "name": "Flyverfiskrogn",
-        "priceMinor": 2900
-      },
-      {
-        "name": "Spicy Tuna",
+        "name": "Laksetatar",
         "priceMinor": 9900
       },
       {
-        "name": "Tempura Kylling (Futo Maki)",
-        "priceMinor": 11900
+        "name": "201.Dinner Box 2 (14 stk)",
+        "priceMinor": 16500
       },
       {
-        "name": "Kokt Scampi (Futo Maki)",
-        "priceMinor": 14500
+        "name": "Iki Ginger Beer 5.5% 0,33 l",
+        "priceMinor": 5800
       },
       {
-        "name": "Kylling Chopsuey",
-        "priceMinor": 17900
+        "name": "046.Hell's Laks Roll",
+        "priceMinor": 13800
       },
       {
-        "name": "Fuze Tea Peach Hibiscus 0,4L",
-        "priceMinor": 4500
+        "name": "084.Futomaki Tun Big",
+        "priceMinor": 7500
+      },
+      {
+        "name": "122.Nigiri Avocado",
+        "priceMinor": 2000
+      },
+      {
+        "name": "Ingefær",
+        "priceMinor": 500
+      },
+      {
+        "name": "Mango Chokolade Cake /K",
+        "priceMinor": 4000
       }
     ],
     "forbiddenDishNames": []
