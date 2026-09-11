@@ -1,6 +1,7 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
+import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v5";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v6";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -145,6 +146,11 @@ export function isUnambiguousSamePriceExcerptFragment(
     candidate.normalizedName === fragment.normalizedName
   )
     return false;
+
+  // A structurally nearby line is not stronger evidence when the line itself
+  // is semantically description-like. This protects real dish titles such as
+  // a named bánh mì from being replaced by its ingredient sentence.
+  if (looksLikeHtmlDescription(candidate.name)) return false;
 
   const candidateParts = excerptParts(candidate);
   if (
