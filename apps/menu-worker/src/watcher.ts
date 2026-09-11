@@ -30,6 +30,29 @@ export interface MenuWatchSummary {
 
 export interface MenuWatchOptions {
   readonly allowDisabled?: boolean;
+  readonly acceptConfirmedSuspiciousDrop?: boolean;
+}
+
+export interface ConfirmedSuspiciousDropInput {
+  readonly forceReextract: boolean;
+  readonly firstAssessment: ExtractionAssessment;
+  readonly confirmationAssessment: ExtractionAssessment | null;
+  readonly firstFingerprint: string | null;
+  readonly confirmationFingerprint: string | null;
+}
+
+export function shouldAcceptConfirmedSuspiciousDrop(
+  input: ConfirmedSuspiciousDropInput,
+): boolean {
+  return (
+    input.forceReextract &&
+    input.firstAssessment.accepted === false &&
+    input.firstAssessment.code === "suspicious_drop" &&
+    input.confirmationAssessment?.accepted === false &&
+    input.confirmationAssessment.code === "suspicious_drop" &&
+    input.firstFingerprint !== null &&
+    input.firstFingerprint === input.confirmationFingerprint
+  );
 }
 
 function evidenceText(items: readonly MenuObservedItem[]): string {
@@ -181,15 +204,20 @@ export async function watchMenuSourceOnce(
     extracted.items.length,
     source.minimumExpectedItems,
   );
+  const firstAssessment = assessment;
   let confirmationAttempted = false;
   let firstRejectedItemCount: number | null = null;
   let firstRejectedCode: ExtractionAssessment["code"] | null = null;
+  let firstRejectedFingerprint: string | null = null;
+  let confirmationAssessment: ExtractionAssessment | null = null;
+  let confirmationFingerprint: string | null = null;
   let confirmationError: string | null = null;
 
   if (shouldConfirmRejectedExtraction(assessment)) {
     confirmationAttempted = true;
     firstRejectedItemCount = extracted.items.length;
     firstRejectedCode = assessment.code;
+    firstRejectedFingerprint = createMenuFingerprint(extracted.items);
     try {
       const confirmationFetched = await fetchMenuSource(
         {
@@ -211,11 +239,12 @@ export async function watchMenuSourceOnce(
           ...rawConfirmationExtracted,
           items: canonicalizeUniqueMenuSourceKeys(rawConfirmationExtracted.items),
         };
-        const confirmationAssessment = assessExtraction(
+        confirmationAssessment = assessExtraction(
           previousItems.length,
           confirmationExtracted.items.length,
           source.minimumExpectedItems,
         );
+        confirmationFingerprint = createMenuFingerprint(confirmationExtracted.items);
         fetched = confirmationFetched;
         extracted = confirmationExtracted;
         assessment = confirmationAssessment;
@@ -223,6 +252,23 @@ export async function watchMenuSourceOnce(
     } catch (error) {
       confirmationError = error instanceof Error ? error.message : String(error);
     }
+  }
+
+  if (
+    options.acceptConfirmedSuspiciousDrop === true &&
+    shouldAcceptConfirmedSuspiciousDrop({
+      forceReextract,
+      firstAssessment,
+      confirmationAssessment,
+      firstFingerprint: firstRejectedFingerprint,
+      confirmationFingerprint,
+    })
+  ) {
+    assessment = {
+      accepted: true,
+      code: "ok",
+      message: "Confirmed extractor-refresh drop accepted after two identical full extractions.",
+    };
   }
 
   if (!assessment.accepted) {
