@@ -1,6 +1,6 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v9";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v10";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -45,8 +45,8 @@ const QUANTITY_PRICE_SPLIT_ITEM =
 const WINE_VINTAGE_ITEM =
   /\b(?:gew(?:ü|u)r(?:z|s)traminer|riesling|chardonnay|pinot\s+noir|cabernet|merlot|sauvignon)\b.*\b(?:19|20)\d{2}\b/iu;
 const BARE_UNIT_ITEM = /^(?:gr\.?|gram|grams?|stk|pcs?)$/iu;
-const LOWERCASE_ALLERGEN_DESCRIPTION_ITEM =
-  /^[a-zæøå].*\([^)]*\b(?:milk|egg|wheat|gluten|sulfite|sulphite|melk|egg|hvete|skalldyr|shellfish|nuts?|nøtter?)\b[^)]*\)$/iu;
+const ALLERGEN_DESCRIPTION_PAREN =
+  /\([^)]*\b(?:milk|egg|wheat|gluten|sulfite|sulphite|melk|egg|hvete|skalldyr|shellfish|nuts?|nøtter?)\b[^)]*\)$/iu;
 
 
 function samePrice(
@@ -242,6 +242,10 @@ function isExtremeDuplicatePriceOutlier(
   return lowest > 0 && item.priceMinor >= lowest * 4;
 }
 
+function isLowercaseAllergenDescriptionItem(name: string): boolean {
+  return /^[a-zæøå]/u.test(name) && ALLERGEN_DESCRIPTION_PAREN.test(name);
+}
+
 function isOutputNoiseLabel(item: MenuObservedItem): boolean {
   const name = item.name.trim();
   return (
@@ -267,7 +271,7 @@ function isOutputNoiseLabel(item: MenuObservedItem): boolean {
     QUANTITY_PRICE_SPLIT_ITEM.test(name) ||
     WINE_VINTAGE_ITEM.test(name) ||
     BARE_UNIT_ITEM.test(name) ||
-    LOWERCASE_ALLERGEN_DESCRIPTION_ITEM.test(name) ||
+    isLowercaseAllergenDescriptionItem(name) ||
     PER_PERSON_PRICE_DISPLAY_ONLY_ITEM.test(name) ||
     DAILY_MENU_LABEL_ITEM.test(name)
   );
