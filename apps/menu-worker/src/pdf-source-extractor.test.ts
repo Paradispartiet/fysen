@@ -28,7 +28,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v14");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v15");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -59,6 +59,45 @@ describe("PDF source scope", () => {
       ["Klassisk Nigiri", 15900],
     ]);
     expect(new Set(scopedSalmon.map((item) => item.sourceKey)).size).toBe(2);
+  });
+
+  it("disambiguates same-name lunch and dinner PDF dishes by service context", () => {
+    const lines = [
+      "LUNSJMENY, 11:30 – 22:00",
+      "ANTIPASTI",
+      "KRABBE 195",
+      "KVELDSMENY 17:00-22:00",
+      "ANTIPASTI",
+      "KRABBE 210",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const crab = parsed.filter((item) => item.normalizedName === "krabbe");
+    expect(new Set(crab.map((item) => item.sourceKey)).size).toBe(1);
+
+    const disambiguated = disambiguateConflictingPdfSourceKeys(lines.join("\n"), parsed);
+    const scopedCrab = disambiguated.filter((item) => item.normalizedName === "krabbe");
+    expect(scopedCrab.map((item) => [item.sectionName, item.priceMinor])).toEqual([
+      ["LUNSJMENY, 11:30 – 22:00", 19500],
+      ["KVELDSMENY 17:00-22:00", 21000],
+    ]);
+    expect(new Set(scopedCrab.map((item) => item.sourceKey)).size).toBe(2);
+  });
+
+  it("drops PDF ABV-volume rows and lowercase sentence fragments without hiding real dishes", () => {
+    const lines = [
+      "HOVEDRETTER",
+      "Grisens burger 295",
+      "Grisens Bayer 5,0% 0,25/0,4 95 / 137",
+      "marinated in Erling Skakke XO Cognac. 265",
+      "tartar sauce. 295",
+      "Beer battered fish 249",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+    expect(scoped.map((item) => item.name)).toEqual([
+      "Grisens burger",
+      "Beer battered fish",
+    ]);
   });
 
   it("fails closed when conflicting same-name prices cannot be bound to distinct menu sections", () => {
