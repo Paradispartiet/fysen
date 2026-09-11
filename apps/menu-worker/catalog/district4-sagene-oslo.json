@@ -39,8 +39,8 @@
   "verification": {
     "menu": {
       "status": "verified",
-      "checkedAt": "2026-09-08",
-      "note": "District 4 links directly to its first-party WinOrder ordering surface. The menu validator allows only api.winorder.no as a data origin, explicitly blocks the nonessential tracking.winorder.no telemetry origin, and waits for Calamari before extraction. Canonical dish locks use the exact first-party WinOrder labels and direct-order prices; the prior Foodora labels map to the same dishes but carry third-party delivery pricing."
+      "checkedAt": "2026-09-11",
+      "note": "Source-drift reproof against the current first-party WinOrder surface. Pepper beef and Beef Carpaccio are no longer in the observed menu; current Tartar and Black garlic chicken wings replace those locks. Generic runtime filters remove WinOrder count/from/non-alcohol UI labels and Kirin Free beverage leakage."
     }
   },
   "actions": [
@@ -60,9 +60,9 @@
   "qualityAssertions": {
     "requiredDishNames": [
       "Dragon Ball",
-      "Pepper beef",
+      "Tartar av indrefilet servert med hjemmelaget lotus chips",
       "Chicken Hue-style",
-      "Beef Carpaccio",
+      "Black garlic chicken wings",
       "Calamari"
     ],
     "requiredDishVariants": [
@@ -71,16 +71,16 @@
         "priceMinor": 13900
       },
       {
-        "name": "Pepper beef",
-        "priceMinor": 29900
+        "name": "Tartar av indrefilet servert med hjemmelaget lotus chips",
+        "priceMinor": 22500
       },
       {
         "name": "Chicken Hue-style",
         "priceMinor": 23900
       },
       {
-        "name": "Beef Carpaccio",
-        "priceMinor": 17700
+        "name": "Black garlic chicken wings",
+        "priceMinor": 14500
       },
       {
         "name": "Calamari",
@@ -91,7 +91,12 @@
       "Rosegarden",
       "Yuzu Sake Sour",
       "Mango daquiri",
-      "Saigon bottle 0,33L *Hvetemel, sulfit"
+      "Saigon bottle 0,33L *Hvetemel, sulfit",
+      "NON-ALCOHOL",
+      "(15 Varer)",
+      "(2 Varer)",
+      "Fra",
+      "Kirin free 0.33L"
     ]
   }
 }
