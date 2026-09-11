@@ -248,8 +248,29 @@ function reconcileSelectedItemsWithTrailingCards(
   if (items.length === 0 || trailing.length === 0) return items;
 
   const reconciled = items.map((item) => {
-    if (item.priceMinor === null || isStrongCanonicalDishTitle(item.name))
-      return item;
+    if (item.priceMinor === null) return item;
+
+    const allergenBoundMatches = trailing.filter((candidate) => {
+      if (
+        candidate.confidence !== 1 ||
+        candidate.priceMinor !== item.priceMinor ||
+        candidate.normalizedName === item.normalizedName
+      )
+        return false;
+      const candidateParts = (candidate.sourceExcerpt ?? "")
+        .split(SOURCE_EXCERPT_SEPARATOR)
+        .map((part) => normalizeDishName(part.trim()))
+        .filter(Boolean);
+      return (
+        candidateParts.length >= 2 &&
+        candidateParts[0] === candidate.normalizedName &&
+        candidateParts.slice(1).includes(item.normalizedName)
+      );
+    });
+    if (allergenBoundMatches.length === 1)
+      return allergenBoundMatches[0] ?? item;
+
+    if (isStrongCanonicalDishTitle(item.name)) return item;
     const matches = trailing.filter((candidate) =>
       isUnambiguousSamePriceExcerptFragment(item, candidate),
     );
