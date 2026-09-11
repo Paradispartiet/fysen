@@ -62,6 +62,8 @@ import {
 import {
   canonicalizeHtmlOutputItems,
   HTML_OUTPUT_CANONICALIZER_VERSION,
+  isStrongCanonicalDishTitle,
+  isUnambiguousSamePriceExcerptFragment,
 } from "./html-output-canonicalizer.js";
 import {
   filterHtmlBeverageSectionItemsWithScopedProvenance,
@@ -239,34 +241,25 @@ function mergeMissingRecoveredItems(
   return output.sort((a, b) => a.position - b.position);
 }
 
-function reconcileSelectedItemsWithStrongLocalTrailingCards(
+function reconcileSelectedItemsWithTrailingCards(
   items: readonly MenuObservedItem[],
   trailing: readonly MenuObservedItem[],
 ): readonly MenuObservedItem[] {
   if (items.length === 0 || trailing.length === 0) return items;
 
   const reconciled = items.map((item) => {
-    if (item.priceMinor === null) return item;
-    const matches = trailing.filter((candidate) => {
-      if (
-        candidate.confidence !== 1 ||
-        candidate.priceMinor !== item.priceMinor ||
-        candidate.normalizedName === item.normalizedName
-      )
-        return false;
-      const parts = (candidate.sourceExcerpt ?? "")
-        .split(SOURCE_EXCERPT_SEPARATOR)
-        .map((part) => normalizeDishName(part.trim()))
-        .filter(Boolean);
-      if (parts.length < 2) return false;
-      if (parts[0] !== candidate.normalizedName) return false;
-      return parts.slice(1).includes(item.normalizedName);
-    });
+    if (item.priceMinor === null || isStrongCanonicalDishTitle(item.name))
+      return item;
+    const matches = trailing.filter((candidate) =>
+      isUnambiguousSamePriceExcerptFragment(item, candidate),
+    );
     return matches.length === 1 ? (matches[0] ?? item) : item;
   });
 
   const unique = new Map<string, MenuObservedItem>();
-  for (const item of reconciled) unique.set(item.sourceKey, item);
+  for (const item of reconciled) {
+    unique.set(item.sourceKey, item);
+  }
   return [...unique.values()].sort((a, b) => a.position - b.position);
 }
 
@@ -533,9 +526,9 @@ export async function extractMenuSource(
             priceWrappedItems.length >= recoveredItems.length * 2
           ? priceWrappedItems
           : recoveredItems;
-    const strongLocalReconciledItems =
+    const structurallyReconciledPreferredItems =
       extracted.method === "html_heuristic" && !strongTitlePricePreferred
-        ? reconcileSelectedItemsWithStrongLocalTrailingCards(
+        ? reconcileSelectedItemsWithTrailingCards(
             preferredItems,
             trailingPriceCardItems,
           )
@@ -544,8 +537,11 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic" &&
       !isolatedSemanticRecoveryPreferred &&
       preferredItems !== recoveredItems
-        ? mergeMissingRecoveredItems(strongLocalReconciledItems, recoveredItems)
-        : strongLocalReconciledItems;
+        ? mergeMissingRecoveredItems(
+            structurallyReconciledPreferredItems,
+            recoveredItems,
+          )
+        : structurallyReconciledPreferredItems;
     const headingSupplementedItems =
       extracted.method === "html_heuristic" &&
       !strongTitlePricePreferred
