@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 43,
+    "minimumExpectedItems": 40,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -25,8 +25,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-08-20",
-      "note": "No complete machine-readable first-party source was established in the Batch 01 research pass. The matched priced Foodora service menu is tested as secondary evidence only; open/closed remains unknown."
+      "checkedAt": "2026-09-11",
+      "note": "Source-drift reproof: the Foodora service-menu fingerprint changed from the prior 43-item snapshot to a stable 40-item current menu. All eight locked dishes and prices remain present; the floor follows the observed published source rather than inventing removed items."
     }
   },
   "actions": [],
