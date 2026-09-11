@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v10";
+  "trailing-price-card-v11";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -289,6 +289,55 @@ function precedingNumberedTitle(
   return null;
 }
 
+interface StructuredLeadingTitle {
+  readonly position: number;
+  readonly title: string;
+}
+
+function isHeadingTitleLine(
+  lines: readonly string[],
+  position: number,
+): boolean {
+  if (position <= 0) return false;
+  return (lines[position - 1] ?? "").startsWith(HEADING_MARKER);
+}
+
+function precedingStructuredLeadingTitle(
+  lines: readonly string[],
+  pricePosition: number,
+): StructuredLeadingTitle | null {
+  let blockStart = Math.max(0, pricePosition - MAX_PRECEDING_TITLE_DISTANCE);
+
+  for (let index = pricePosition - 1; index >= blockStart; index -= 1) {
+    const line = lines[index] ?? "";
+    if (parseTrailingPrice(line)) {
+      blockStart = index + 1;
+      break;
+    }
+    if (line.startsWith(HEADING_MARKER)) {
+      // The marker's following line is the section heading itself. Start after
+      // both so headings such as "Forretter" cannot become dish titles.
+      blockStart = Math.min(pricePosition, index + 2);
+      break;
+    }
+  }
+
+  const candidates: StructuredLeadingTitle[] = [];
+  for (let index = blockStart; index < pricePosition; index += 1) {
+    const line = lines[index] ?? "";
+    if (!line || line.startsWith(HEADING_MARKER) || isHeadingTitleLine(lines, index))
+      continue;
+    if (!looksLikeDishTitle(line)) continue;
+    candidates.push({ position: index, title: normalizeVisibleLine(line) });
+  }
+
+  // A single candidate is already handled safely by the established nearest-
+  // title path. This recovery is only for repeated card layouts where both the
+  // leading dish name and a short trailing component (often a sauce/garnish)
+  // look title-like.
+  return candidates.length >= 2 ? (candidates[0] ?? null) : null;
+}
+
 function canonicalizeStrongNumberedMenu(
   candidates: readonly TrailingPriceCandidate[],
 ): readonly TrailingPriceCandidate[] | null {
@@ -364,6 +413,27 @@ export function recoverTrailingPriceCardHtmlItems(
 
   const lines = annotatedLines(html);
   const candidates: TrailingPriceCandidate[] = [];
+  const structuredLeadingByPricePosition = new Map<
+    number,
+    StructuredLeadingTitle
+  >();
+  let parsedPriceCount = 0;
+
+  for (let pricePosition = 0; pricePosition < lines.length; pricePosition += 1) {
+    const endpoint = parseTrailingPrice(lines[pricePosition] ?? "");
+    if (!endpoint) continue;
+    parsedPriceCount += 1;
+    if (endpoint.residual) continue;
+    const structured = precedingStructuredLeadingTitle(lines, pricePosition);
+    if (structured) {
+      structuredLeadingByPricePosition.set(pricePosition, structured);
+    }
+  }
+
+  const useStructuredLeadingLayout =
+    structuredLeadingByPricePosition.size >= 4 &&
+    parsedPriceCount >= 4 &&
+    structuredLeadingByPricePosition.size * 4 >= parsedPriceCount * 3;
 
   for (
     let pricePosition = 0;
@@ -376,9 +446,15 @@ export function recoverTrailingPriceCardHtmlItems(
     let titlePosition: number | null = null;
     let title: string | null = null;
     const numberedTitle = precedingNumberedTitle(lines, pricePosition);
+    const structuredLeadingTitle = useStructuredLeadingLayout
+      ? (structuredLeadingByPricePosition.get(pricePosition) ?? null)
+      : null;
     if (numberedTitle) {
       titlePosition = numberedTitle.position;
       title = numberedTitle.title;
+    } else if (structuredLeadingTitle) {
+      titlePosition = structuredLeadingTitle.position;
+      title = structuredLeadingTitle.title;
     } else if (endpoint.residual && looksLikeDishTitle(endpoint.residual)) {
       titlePosition = pricePosition;
       title = normalizeVisibleLine(endpoint.residual);

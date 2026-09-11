@@ -19,7 +19,7 @@ describe("trailing-price HTML card recovery", () => {
     `);
 
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
-      "trailing-price-card-v10",
+      "trailing-price-card-v11",
     );
     expect(
       items.map((item) => [item.name, item.priceMinor, item.priceKind]),
@@ -185,4 +185,49 @@ describe("trailing-price HTML card recovery", () => {
 
     expect(items).toEqual([]);
   });
+
+  it("prefers the leading dish name in repeated title-description-component-price cards", () => {
+    const items = recoverTrailingPriceCardHtmlItems(`
+      <html><body>
+        <h2>Forretter</h2>
+        <div>Kamskjell</div>
+        <div>Fennikel, agurk, blomkål, stikkelsbær og persille</div>
+        <div>Vin Jaunesaus</div>
+        <div>Kr. 495,-</div>
+
+        <div>Sjøkreps</div>
+        <div>Nypotet, rødløk og dill</div>
+        <div>Sjøkreps-pepperrotsaus</div>
+        <div>Kr. 650,-</div>
+
+        <h2>Hovedretter</h2>
+        <div>Skate</div>
+        <div>Spinat, shimegi, ingefær, dumpling og koriander</div>
+        <div>Kylling-sitrongressbuljong</div>
+        <div>Kr. 755,-</div>
+
+        <div>Breiflabb</div>
+        <div>Grønnkål, squash og purre</div>
+        <div>Tomat-løpstikkeemulsjon</div>
+        <div>Kr. 755,-</div>
+
+        <h2>Desserter</h2>
+        <div>Norske oster</div>
+        <div>Rosiner, aprikos, pekannøtter og basilikumhonning</div>
+        <div>Maltbrød</div>
+        <div>Kr. 395,-</div>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Kamskjell", 49500],
+      ["Sjøkreps", 65000],
+      ["Skate", 75500],
+      ["Breiflabb", 75500],
+      ["Norske oster", 39500],
+    ]);
+    expect(items[0]?.description).toContain("Vin Jaunesaus");
+    expect(items[4]?.description).toContain("Maltbrød");
+  });
+
 });
