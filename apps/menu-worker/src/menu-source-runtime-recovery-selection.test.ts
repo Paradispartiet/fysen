@@ -167,6 +167,35 @@ describe("HTML runtime recovery selection", () => {
     ]);
   });
 
+  it("does not replace canonical-looking titles with same-price neighboring card text", async () => {
+    const result = await extract(`
+      <html><body>
+        <h2>Hovedretter</h2>
+        <p>NO 7 Spicy Cumin Lamb</p>
+        <p>Homemade Noodles</p>
+        <p>209,-</p>
+        <p>DAMPET HAVABBOR 特 色 蒸 海 鱼</p>
+        <p>Signatur Klassisk</p>
+        <p>398,-</p>
+        <p>Diavola</p>
+        <p>Tomato, mozzarella, spicy salami</p>
+        <p>259,-</p>
+        <p>BLUEFIN AKAMI TUNA</p>
+        <p>Wasabi and ponzu</p>
+        <p>174,-</p>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => item.name)).toEqual(
+      expect.arrayContaining([
+        "NO 7 Spicy Cumin Lamb",
+        "DAMPET HAVABBOR 特 色 蒸 海 鱼",
+        "Diavola",
+        "BLUEFIN AKAMI TUNA",
+      ]),
+    );
+  });
+
   it("keeps structured Statholderens-style dish titles and removes same-price sauce fragments", async () => {
     const result = await extract(`
       <html><body>
