@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "statholdergaarden-oslo",
+    "name": "Statholdergaarden",
+    "websiteUrl": "https://statholdergaarden.no/",
+    "address": "Rådhusgate 11, 0151 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.909372909195,
+    "longitude": 10.74343267394393
+  },
+  "menuSource": {
+    "url": "https://statholdergaarden.no/statholdergaarden/meny/alacarte",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 11,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "Official first-party page publishes a current priced à la carte menu. This intake does not claim complete canonical kitchen-hours coverage."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hellefisk",
+      "Kamskjell",
+      "Kantarell",
+      "Ishavsrøye",
+      "Breiflabb",
+      "Due",
+      "Lam",
+      "Norske oster",
+      "Blåbær & tonka",
+      "Eple",
+      "Liten frisk avslutning"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hellefisk",
+        "priceMinor": 49500
+      },
+      {
+        "name": "Kamskjell",
+        "priceMinor": 65000
+      },
+      {
+        "name": "Kantarell",
+        "priceMinor": 49500
+      },
+      {
+        "name": "Ishavsrøye",
+        "priceMinor": 75500
+      },
+      {
+        "name": "Breiflabb",
+        "priceMinor": 75500
+      },
+      {
+        "name": "Due",
+        "priceMinor": 79500
+      },
+      {
+        "name": "Lam",
+        "priceMinor": 75500
+      },
+      {
+        "name": "Norske oster",
+        "priceMinor": 39500
+      },
+      {
+        "name": "Blåbær & tonka",
+        "priceMinor": 39500
+      },
+      {
+        "name": "Eple",
+        "priceMinor": 39500
+      },
+      {
+        "name": "Liten frisk avslutning",
+        "priceMinor": 33500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
