@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 13,
+    "minimumExpectedItems": 15,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -31,7 +31,7 @@
     "menu": {
       "status": "unverified",
       "checkedAt": "2026-09-11",
-      "note": "Catalog-health #131 observed the current first-party source at 13 items; Grilled Chicken Yakiniku and the Miso cookie were absent. The floor is aligned 15→13 and those two stale assertions are replaced with current first-party dishes; source identity and the other six assertions remain unchanged."
+      "note": "Fresh first-party recheck on 2026-09-11 publishes 15 priced dishes again, including Grilled Chicken Yakiniku 245 and the Miso cookie dessert 135. Restore the 15-item floor and original assertions; exact-head live validation must prove the current source/parser state."
     }
   },
   "actions": [],
@@ -40,11 +40,11 @@
       "Pork Gyoza with Japanese ketchup (4 pcs)",
       "King Crab dumplings with kimchi mayonnaise (4 pcs)",
       "Spicy Wontons with chili sauce (6 pcs)",
-      "Chicken Gyoza with Truffle Tosazu (4 pcs)",
+      "Grilled Chicken Yakiniku, served with Goma Cabbage salad",
       "Golden Shrimp Toast",
       "Kinpira Gobo (Braised Burdock Root)",
       "Wood Ear Mushroom",
-      "Grilled Seabass with chili/garlic sauce, served with burdock root"
+      "Miso cookie with butter, orange and white chocolate, served with a delicious Five-Spice Ice-Cream"
     ],
     "requiredDishVariants": [
       {
@@ -60,8 +60,8 @@
         "priceMinor": 20500
       },
       {
-        "name": "Chicken Gyoza with Truffle Tosazu (4 pcs)",
-        "priceMinor": 19500
+        "name": "Grilled Chicken Yakiniku, served with Goma Cabbage salad",
+        "priceMinor": 24500
       },
       {
         "name": "Golden Shrimp Toast",
@@ -76,8 +76,8 @@
         "priceMinor": 8500
       },
       {
-        "name": "Grilled Seabass with chili/garlic sauce, served with burdock root",
-        "priceMinor": 27500
+        "name": "Miso cookie with butter, orange and white chocolate, served with a delicious Five-Spice Ice-Cream",
+        "priceMinor": 13500
       }
     ],
     "forbiddenDishNames": []
