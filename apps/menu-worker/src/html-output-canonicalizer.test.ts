@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v9");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v10");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -233,6 +233,23 @@ describe("structural HTML output canonicalization", () => {
     expect(canonicalizeHtmlOutputItems(items).map((entry) => [entry.name, entry.priceMinor])).toEqual([
       ["Tilslørte bondepiker", 14500],
       ["BEEF TARTARE", 27500],
+    ]);
+  });
+
+  it("preserves uppercase dish titles with parenthetical allergen metadata", () => {
+    const items = [
+      item("VEGETABLE SAMOSA (GLUTEN)", 11900),
+      item("GULAB JAMUN (GLUTEN)", 12900),
+      item("NO 5 Sweet potato noodles (Vegan/gluten free)", 18900),
+      item("trufle and porcini (wheat, milk, egg, sulfite)", 21000),
+      item("60G", 45900),
+      item("120G", 92000),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "VEGETABLE SAMOSA (GLUTEN)",
+      "GULAB JAMUN (GLUTEN)",
+      "NO 5 Sweet potato noodles (Vegan/gluten free)",
     ]);
   });
 
