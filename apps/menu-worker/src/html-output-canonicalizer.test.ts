@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v3");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v4");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -123,6 +123,23 @@ describe("structural HTML output canonicalization", () => {
     expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
       "Chicken 65",
       "Rice",
+    ]);
+  });
+
+
+  it("drops menu-package, pairing, supplement and multi-price display labels", () => {
+    const items = [
+      item("2-course", 49500),
+      item("Supplement:", 35500),
+      item("Wine pairing NOK", 85000),
+      item("Wine Pairing", 149500),
+      item("98 piece / 495 1⁄2 dozen", 39500),
+      item("Mussels", 39500),
+      item("Catch of the Day", 52500),
+    ];
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Mussels",
+      "Catch of the Day",
     ]);
   });
 

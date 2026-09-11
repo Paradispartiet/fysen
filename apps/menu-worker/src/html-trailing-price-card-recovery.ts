@@ -38,6 +38,10 @@ const DYNAMIC_PRICE_BOUNDARY =
   /^(?:dagens\s+pris|market\s+price|mkt\.?\s*price)$/iu;
 const MULTI_PRICE_BOUNDARY =
   /^(?:(?:kr\.?|nok)\s*)?[1-9]\d{1,3}\s*(?:(?:piece|pieces|pcs?|stk)\s*)?\/\s*(?:(?:kr\.?|nok)\s*)?[1-9]\d{1,3}\b/iu;
+const SHORT_PREPARATION_TITLE =
+  /^(?:bakt|grillet|stekt|fritert|braisert|røkt|baked|grilled|fried|braised|smoked)\s+\p{L}+(?:\s+\p{L}+){0,2}$/iu;
+const COMPONENT_QUANTITY_LABEL =
+  /^\d+\s+(?:types?\s+of|pieces?\s+of|pcs?\s+of)\b/iu;
 const EXPLICIT_A_LA_CARTE_SECTION = "A LA CARTA";
 const MAX_PRECEDING_TITLE_DISTANCE = 12;
 
@@ -300,6 +304,7 @@ interface StructuredLeadingTitle {
   readonly title: string;
   readonly candidateCount: number;
   readonly nearestTitle: string;
+  readonly hardBoundary: boolean;
 }
 
 function isHeadingTitleLine(
@@ -323,7 +328,16 @@ function firstLetterMatches(value: string, pattern: RegExp): boolean {
 function isStrongLocalStructuredLeadingTitle(
   structured: StructuredLeadingTitle,
 ): boolean {
-  if (structured.candidateCount >= 3) return true;
+  if (structured.hardBoundary) return true;
+  if (SHORT_PREPARATION_TITLE.test(structured.title)) return true;
+  const titleWords = structured.title.split(/\s+/u).filter(Boolean);
+  if (
+    titleWords.length <= 4 &&
+    /[,;]/u.test(structured.nearestTitle)
+  ) {
+    return true;
+  }
+  if (COMPONENT_QUANTITY_LABEL.test(structured.nearestTitle)) return true;
   return (
     firstLetterMatches(structured.title, /\p{Lu}/u) &&
     firstLetterMatches(structured.nearestTitle, /\p{Ll}/u)
@@ -335,6 +349,7 @@ function precedingStructuredLeadingTitle(
   pricePosition: number,
 ): StructuredLeadingTitle | null {
   let blockStart = Math.max(0, pricePosition - MAX_PRECEDING_TITLE_DISTANCE);
+  let hardBoundary = false;
 
   for (let index = pricePosition - 1; index >= blockStart; index -= 1) {
     const line = lines[index] ?? "";
@@ -344,6 +359,7 @@ function precedingStructuredLeadingTitle(
     }
     if (isUnpricedPriceBoundary(line)) {
       blockStart = index + 1;
+      hardBoundary = true;
       break;
     }
     if (PLAIN_FOOD_SECTION_BOUNDARY.test(normalizeVisibleLine(line))) {
@@ -371,7 +387,11 @@ function precedingStructuredLeadingTitle(
     const line = lines[index] ?? "";
     if (!line || line.startsWith(HEADING_MARKER) || isHeadingTitleLine(lines, index))
       continue;
-    if (!looksLikeDishTitle(line)) continue;
+    if (
+      !looksLikeDishTitle(line) &&
+      !SHORT_PREPARATION_TITLE.test(normalizeVisibleLine(line))
+    )
+      continue;
     candidates.push({ position: index, title: normalizeVisibleLine(line) });
   }
 
@@ -379,7 +399,7 @@ function precedingStructuredLeadingTitle(
   // title path. This recovery is only for repeated card layouts where both the
   // leading dish name and a short trailing component (often a sauce/garnish)
   // look title-like.
-  if (candidates.length < 2) return null;
+  if (candidates.length < (hardBoundary ? 1 : 2)) return null;
   const first = candidates[0];
   const nearest = candidates[candidates.length - 1];
   if (!first || !nearest) return null;
@@ -387,6 +407,7 @@ function precedingStructuredLeadingTitle(
     ...first,
     candidateCount: candidates.length,
     nearestTitle: nearest.title,
+    hardBoundary,
   };
 }
 
