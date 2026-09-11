@@ -33,7 +33,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v7");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v8");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -271,5 +271,44 @@ describe("structural HTML output canonicalization", () => {
       "Krabbesalat",
     ]);
   });
+
+  it("allows short and all-caps preparation-led dishes to remove same-price fragments", () => {
+    const items = [
+      item(
+        "Bakt Røye",
+        53500,
+        null,
+        "Bakt Røye — Pepperrot- sennep beurre blanc — 535",
+        10,
+      ),
+      item(
+        "Pepperrot- sennep beurre blanc",
+        53500,
+        null,
+        "Pepperrot- sennep beurre blanc — Bakt Røye — 535",
+        11,
+      ),
+      item(
+        "DAMPET HAVABBOR 特 色 蒸 海 鱼",
+        39800,
+        null,
+        "DAMPET HAVABBOR 特 色 蒸 海 鱼 — Signatur Klassisk — 398",
+        20,
+      ),
+      item(
+        "Signatur Klassisk",
+        39800,
+        null,
+        "Signatur Klassisk — DAMPET HAVABBOR 特 色 蒸 海 鱼 — 398",
+        21,
+      ),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Bakt Røye",
+      "DAMPET HAVABBOR 特 色 蒸 海 鱼",
+    ]);
+  });
+
 
 });
