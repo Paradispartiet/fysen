@@ -33,7 +33,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v8");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v9");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -307,6 +307,53 @@ describe("structural HTML output canonicalization", () => {
     expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
       "Bakt Røye",
       "DAMPET HAVABBOR 特 色 蒸 海 鱼",
+    ]);
+  });
+
+
+  it("keeps strong all-caps preferred titles over same-price labels", () => {
+    const items = [
+      item(
+        "DAMPET HAVABBOR 特 色 蒸 海 鱼",
+        39800,
+        null,
+        "DAMPET HAVABBOR 特 色 蒸 海 鱼 — 398",
+        20,
+      ),
+      item(
+        "Signatur Klassisk",
+        39800,
+        null,
+        "Signatur Klassisk — DAMPET HAVABBOR 特 色 蒸 海 鱼 — 398",
+        19,
+      ),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toContain(
+      "DAMPET HAVABBOR 特 色 蒸 海 鱼",
+    );
+  });
+
+  it("drops a lower-case same-price prose fragment after a named dish", () => {
+    const items = [
+      item(
+        "Josper Grilled Langoustines",
+        39500,
+        null,
+        "Josper Grilled Langoustines — lemon and ginger butter, wine and cream — 395",
+        30,
+      ),
+      item(
+        "lemon and ginger butter, wine and cream",
+        39500,
+        null,
+        "lemon and ginger butter, wine and cream — 395",
+        31,
+      ),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Josper Grilled Langoustines",
     ]);
   });
 
