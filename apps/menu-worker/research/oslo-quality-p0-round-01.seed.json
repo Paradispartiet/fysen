@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-quality-p0-round-01",
+  "concurrency": 2,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "statholdergaarden-oslo",
+        "name": "Statholdergaarden",
+        "websiteUrl": "https://statholdergaarden.no/",
+        "address": "Rådhusgate 11, 0151 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://statholdergaarden.no/statholdergaarden/meny/alacarte",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Official first-party page publishes a current priced à la carte menu. This intake does not claim complete canonical kitchen-hours coverage."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "izakaya-by-vladimir-pak-oslo",
+        "name": "Izakaya by Vladimir Pak",
+        "websiteUrl": "https://izakayabyvladimirpak.omakasegroup.no/",
+        "address": "Kirkegata 1-3, 0153 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://izakayabyvladimirpak.omakasegroup.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Official first-party page publishes current priced lunch and dinner dishes. Visible venue hours are not promoted to canonical kitchen hours in this intake."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ]
+}
