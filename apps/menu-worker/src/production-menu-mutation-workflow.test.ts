@@ -31,9 +31,10 @@ describe("production menu mutation workflows", () => {
     expect(materializer).not.toContain("ref: main");
   });
 
-  it("keeps catalog onboarding inside the serialized watcher job", () => {
-    expect(watcher).toContain("name: Onboard catalog candidates");
-    expect(watcher).toContain("run: pnpm --filter @fysen/menu-worker onboard:catalog");
+  it("keeps full catalog onboarding out of the bounded hourly watcher", () => {
+    expect(materializer).toContain("name: Materialize canonical production catalog");
+    expect(watcher).not.toContain("name: Onboard catalog candidates");
+    expect(watcher).not.toContain("run: pnpm --filter @fysen/menu-worker onboard:catalog");
   });
 
   it("keeps enough menu-source capacity and runtime headroom for the production catalog", () => {
@@ -41,12 +42,15 @@ describe("production menu mutation workflows", () => {
     expect(watcher).toContain('FYSEN_MENU_WATCH_BATCH_SIZE: "50"');
   });
 
-  it("reconciles canonical catalog metadata before watching due restaurant hours", () => {
-    const onboardingStep = watcher.indexOf("name: Onboard catalog candidates");
+  it("runs only bounded operational watcher stages before preserving failure signal", () => {
+    const menuStep = watcher.indexOf("name: Watch due menu sources");
     const hoursStep = watcher.indexOf("name: Watch due restaurant hours");
+    const actionsStep = watcher.indexOf("name: Reverify expiring restaurant actions");
+    const failureSignalStep = watcher.indexOf("name: Preserve operational failure signal");
 
-    expect(onboardingStep).toBeGreaterThan(-1);
-    expect(hoursStep).toBeGreaterThan(-1);
-    expect(onboardingStep).toBeLessThan(hoursStep);
+    expect(menuStep).toBeGreaterThan(-1);
+    expect(hoursStep).toBeGreaterThan(menuStep);
+    expect(actionsStep).toBeGreaterThan(hoursStep);
+    expect(failureSignalStep).toBeGreaterThan(actionsStep);
   });
 });
