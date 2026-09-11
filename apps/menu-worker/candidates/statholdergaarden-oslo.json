@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "statholdergaarden-oslo",
+    "name": "Statholdergaarden",
+    "websiteUrl": "https://statholdergaarden.no/",
+    "address": "Rådhusgate 11, 0151 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.909372909195,
+    "longitude": 10.74343267394393
+  },
+  "menuSource": {
+    "url": "https://statholdergaarden.no/statholdergaarden/meny/alacarte",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 11,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "Official first-party page publishes a current priced à la carte menu. This intake does not claim complete canonical kitchen-hours coverage."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Sitrussaus",
+      "Pepperrotsaus",
+      "Smørsaus",
+      "Plommesaus",
+      "Lammesaus",
+      "Maltbrød",
+      "Sjokolade, karamell og hasselnøtt",
+      "Sorbet"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Sitrussaus",
+        "priceMinor": 49500
+      },
+      {
+        "name": "Pepperrotsaus",
+        "priceMinor": 65000
+      },
+      {
+        "name": "Smørsaus",
+        "priceMinor": 75500
+      },
+      {
+        "name": "Plommesaus",
+        "priceMinor": 75500
+      },
+      {
+        "name": "Lammesaus",
+        "priceMinor": 75500
+      },
+      {
+        "name": "Maltbrød",
+        "priceMinor": 39500
+      },
+      {
+        "name": "Sjokolade, karamell og hasselnøtt",
+        "priceMinor": 39500
+      },
+      {
+        "name": "Sorbet",
+        "priceMinor": 33500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
