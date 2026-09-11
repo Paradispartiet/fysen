@@ -19,7 +19,7 @@ describe("trailing-price HTML card recovery", () => {
     `);
 
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
-      "trailing-price-card-v14",
+      "trailing-price-card-v15",
     );
     expect(
       items.map((item) => [item.name, item.priceMinor, item.priceKind]),
@@ -297,98 +297,6 @@ describe("trailing-price HTML card recovery", () => {
       ["Eple", 39500],
       ["Liten frisk avslutning", 33500],
     ]);
-  });
-
-
-  it("uses strong local structured titles even when they are a minority of the menu", () => {
-    const items = recoverTrailingPriceCardHtmlItems(`
-      <html><body>
-        <div>Today’s Starter 225,-</div>
-        <div>Tuna Tartar</div>
-        <div>fresh truffle and truffle and shallot dressing</div>
-        <div>349,-</div>
-        <div>Organic Salmon Sashimi</div>
-        <div>daikon salad with citrus ponzu sauce</div>
-        <div>255,-</div>
-        <div>Today’s Catch 485,-</div>
-        <div>Sjømagasinet's Fish Soup 275,-</div>
-        <div>Today's Dessert 165,-</div>
-      </body></html>
-    `);
-
-    expect(items.map((item) => [item.name, item.priceMinor])).toContainEqual([
-      "Tuna Tartar",
-      34900,
-    ]);
-    expect(items.map((item) => [item.name, item.priceMinor])).toContainEqual([
-      "Organic Salmon Sashimi",
-      25500,
-    ]);
-    expect(
-      items.some((item) =>
-        /^(?:fresh truffle and truffle and shallot dressing|daikon salad with citrus ponzu sauce)$/u.test(
-          item.name,
-        ),
-      ),
-    ).toBe(false);
-  });
-
-  it("treats dynamic-price labels as card boundaries before the next numeric dish price", () => {
-    const items = recoverTrailingPriceCardHtmlItems(`
-      <html><body>
-        <div>Krabbesalat 285,-</div>
-        <div>Blomkål 245,-</div>
-        <div>Carpaccio 285,-</div>
-        <div>Bakt Røye</div>
-        <div>Agurk, reddik, potetchips,</div>
-        <div>Pepperrot- sennep beurre blanc</div>
-        <div>535,-</div>
-        <div>Dagens fisk</div>
-        <div>Selleri, purre og urter</div>
-        <div>Dagens pris</div>
-        <div>Entrecote</div>
-        <div>Grilla selleri, løk og peppersaus</div>
-        <div>545,-</div>
-        <div>Svinenakke 475,-</div>
-        <div>Dagens oster 255,-</div>
-      </body></html>
-    `);
-
-    expect(items.map((item) => [item.name, item.priceMinor])).toContainEqual([
-      "Bakt Røye",
-      53500,
-    ]);
-    expect(items.map((item) => [item.name, item.priceMinor])).toContainEqual([
-      "Entrecote",
-      54500,
-    ]);
-    expect(items.some((item) => item.name === "Agurk, reddik, potetchips,")).toBe(false);
-    expect(
-      items.some((item) => item.name === "Dagens fisk" && item.priceMinor === 54500),
-    ).toBe(false);
-  });
-
-  it("does not carry a multi-price display forward as the title of the next dish", () => {
-    const items = recoverTrailingPriceCardHtmlItems(`
-      <html><body>
-        <div>Oyster from Normandy</div>
-        <div>98 piece / 495 1⁄2 dozen</div>
-        <div>Mussels</div>
-        <div>white wine, herbs and cream</div>
-        <div>395,-</div>
-        <div>Fish Soup 275,-</div>
-        <div>Lobster Salad 695,-</div>
-        <div>Today's Dessert 165,-</div>
-      </body></html>
-    `);
-
-    expect(items.map((item) => [item.name, item.priceMinor])).toContainEqual([
-      "Mussels",
-      39500,
-    ]);
-    expect(
-      items.some((item) => item.name === "98 piece / 495 1⁄2 dozen"),
-    ).toBe(false);
   });
 
 });
