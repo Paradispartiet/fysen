@@ -14,6 +14,7 @@ function item(
   priceMinor: number,
   sectionName: string | null = null,
   sourceExcerpt = `${name} — ${priceMinor / 100}`,
+  position = 0,
 ): MenuObservedItem {
   return {
     sourceKey: createMenuItemSourceKey(name, sectionName),
@@ -23,7 +24,7 @@ function item(
     sectionName,
     priceMinor,
     currency: "NOK",
-    position: 0,
+    position,
     extractionMethod: "html_heuristic",
     confidence: 0.95,
     sourceExcerpt,
@@ -32,7 +33,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v6");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v7");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -199,40 +200,63 @@ describe("structural HTML output canonicalization", () => {
     ]);
   });
 
-  it("preserves reciprocal same-price title/description evidence instead of deleting the real dish", () => {
+  it("uses source order to keep the leading dish title in reciprocal same-price pairs", () => {
     const items = [
       item(
         "Diavola",
         25900,
         null,
         "Diavola — Rykende fersk italiensk pizza fra steinovnen — 259",
+        10,
       ),
       item(
         "Rykende fersk italiensk pizza fra steinovnen",
         25900,
         null,
         "Rykende fersk italiensk pizza fra steinovnen — Diavola — 259",
+        11,
       ),
       item(
         "Hommus",
         9800,
         null,
         "Hommus — Moste kikerter med sesam, hvitløk og olivenolje — 98",
+        20,
       ),
       item(
         "Moste kikerter med sesam, hvitløk og olivenolje",
         9800,
         null,
         "Moste kikerter med sesam, hvitløk og olivenolje — Hommus — 98",
+        21,
       ),
     ];
 
     expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
       "Diavola",
-      "Rykende fersk italiensk pizza fra steinovnen",
       "Hommus",
-      "Moste kikerter med sesam, hvitløk og olivenolje",
     ]);
+  });
+
+  it("preserves reciprocal evidence when source order does not prove a leading title", () => {
+    const items = [
+      item(
+        "Description first",
+        19900,
+        null,
+        "Description first — Real Dish — 199",
+        10,
+      ),
+      item(
+        "Real Dish",
+        19900,
+        null,
+        "Real Dish — Description first — 199",
+        10,
+      ),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items)).toHaveLength(2);
   });
 
   it("drops temporary closure notices that were misread as priced first cards", () => {
