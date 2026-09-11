@@ -25,8 +25,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-08-20",
-      "note": "The first-party location page links this Favrit service menu directly. Batch 02 tests it as a restaurant-linked secondary priced service-menu source; dine-in completeness is not assumed."
+      "checkedAt": "2026-09-11",
+      "note": "Post-dedupe health reproof on 2026-09-11 revalidates the current menu source; kitchen-hours completeness remains unverified."
     }
   },
   "actions": [],
