@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 25,
+    "minimumExpectedItems": 24,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -25,14 +25,14 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-08-24",
-      "note": "Batch 03 locks Nodee Sky's current first-party priced menu. Kitchen-scoped hours remain separately verified."
+      "checkedAt": "2026-09-11",
+      "note": "Source-drift reproof: Nodee Sky's first-party menu fingerprint changed on 2026-09-11. BLUEFIN AKAMI TUNA is no longer published; NODEE CRAZY DUCK remains current. Runtime v13 rejects the intervening price-per-quantity label so it cannot become a dish title."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "BLUEFIN AKAMI TUNA",
+      "NODEE CRAZY DUCK",
       "WAGYU",
       "KYLLINGSPYD",
       "GULHALEKONGEFISK HAMACHI KAMA TORO",
@@ -43,8 +43,8 @@
     ],
     "requiredDishVariants": [
       {
-        "name": "BLUEFIN AKAMI TUNA",
-        "priceMinor": 17400
+        "name": "NODEE CRAZY DUCK",
+        "priceMinor": 57900
       },
       {
         "name": "WAGYU",
@@ -75,6 +75,8 @@
         "priceMinor": 27900
       }
     ],
-    "forbiddenDishNames": []
+    "forbiddenDishNames": [
+      "159,- / 2 biter"
+    ]
   }
 }
