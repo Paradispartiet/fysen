@@ -14,6 +14,8 @@ function item(
   priceMinor: number,
   sectionName: string | null = null,
   sourceExcerpt = `${name} — ${priceMinor / 100}`,
+  confidence = 0.95,
+  position = 0,
 ): MenuObservedItem {
   return {
     sourceKey: createMenuItemSourceKey(name, sectionName),
@@ -23,16 +25,16 @@ function item(
     sectionName,
     priceMinor,
     currency: "NOK",
-    position: 0,
+    position,
     extractionMethod: "html_heuristic",
-    confidence: 0.95,
+    confidence,
     sourceExcerpt,
   };
 }
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v5");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v6");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -177,6 +179,48 @@ describe("structural HTML output canonicalization", () => {
     expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
       "Diavola",
       "Rykende fersk italiensk pizza fra steinovnen",
+    ]);
+  });
+
+  it("drops weaker same-price excerpt artifacts in either containment direction", () => {
+    const items = [
+      item(
+        "Bakt Røye",
+        53500,
+        null,
+        "Bakt Røye — Agurk, reddik, potetchips, — Pepperrot- sennep beurre blanc — 535",
+        1,
+        10,
+      ),
+      item(
+        "Agurk, reddik, potetchips,",
+        53500,
+        null,
+        "Agurk, reddik, potetchips, — Pepperrot- sennep beurre blanc — 535",
+        0.72,
+        11,
+      ),
+      item(
+        "Diavola",
+        25900,
+        null,
+        "Diavola — Tomatsaus, ost, salami — 259",
+        0.95,
+        21,
+      ),
+      item(
+        "Rykende fersk italiensk pizza fra steinovnen",
+        25900,
+        null,
+        "Rykende fersk italiensk pizza fra steinovnen — Diavola — Tomatsaus, ost, salami — 259",
+        0.72,
+        20,
+      ),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Bakt Røye",
+      "Diavola",
     ]);
   });
 
