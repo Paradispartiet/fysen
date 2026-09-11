@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v12";
+  "trailing-price-card-v13";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -524,10 +524,12 @@ export function recoverTrailingPriceCardHtmlItems(
     const numberedTitle = precedingNumberedTitle(lines, pricePosition);
     const structuredCandidate =
       structuredLeadingByPricePosition.get(pricePosition) ?? null;
+    const strongLocalStructuredTitle =
+      structuredCandidate !== null &&
+      isStrongLocalStructuredLeadingTitle(structuredCandidate);
     const structuredLeadingTitle =
       structuredCandidate &&
-      (useStructuredLeadingLayout ||
-        isStrongLocalStructuredLeadingTitle(structuredCandidate))
+      (useStructuredLeadingLayout || strongLocalStructuredTitle)
         ? structuredCandidate
         : null;
     if (numberedTitle) {
@@ -581,7 +583,13 @@ export function recoverTrailingPriceCardHtmlItems(
         currency: "NOK",
         position: titlePosition,
         extractionMethod: "html_heuristic",
-        confidence: 0.95,
+        confidence:
+          structuredLeadingTitle !== null &&
+          strongLocalStructuredTitle &&
+          titlePosition === structuredLeadingTitle.position &&
+          title === structuredLeadingTitle.title
+            ? 0.99
+            : 0.95,
         sourceExcerpt: lines
           .slice(titlePosition, pricePosition + 1)
           .filter((line) => !line.startsWith(HEADING_MARKER))
