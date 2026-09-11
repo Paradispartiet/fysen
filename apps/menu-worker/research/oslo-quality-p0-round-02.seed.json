@@ -62,62 +62,6 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "brasserie-hansken-oslo",
-        "name": "Brasserie Hansken",
-        "websiteUrl": "https://brasseriehansken.no/",
-        "address": "Christiania Torv 4, 0158 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://brasseriehansken.no/uploads/X1JUCwPz/MENYKVELDMARS20261.pdf",
-        "sourceType": "pdf",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-11",
-          "note": "Current first-party site links this detailed dinner PDF; live PDF extraction and freshness are fail-closed intake requirements."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "cru-oslo",
-        "name": "Cru",
-        "websiteUrl": "https://www.cru.no/",
-        "address": "Dronning Eufemias gate 6A, 0191 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.cru.no/s/dinner-meny-cru-with-english-2jef.pdf",
-        "sourceType": "pdf",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-11",
-          "note": "Current first-party menu page links this dinner menu PDF; no menu data is copied from secondary sources."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
         "slug": "vaaghals-oslo",
         "name": "Vaaghals",
         "websiteUrl": "https://www.vaaghals.com/",
@@ -130,7 +74,14 @@
         "sourceType": "pdf",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
+        "checkIntervalMinutes": 720,
+        "sourceSupport": {
+          "redirectOrigins": [
+            "https://static1.squarespace.com"
+          ],
+          "browserDataOrigins": [],
+          "browserBlockedOrigins": []
+        }
       },
       "verification": {
         "hours": {
@@ -193,34 +144,6 @@
           "status": "unverified",
           "checkedAt": "2026-09-11",
           "note": "Current first-party site links this detailed menu PDF; live intake must prove PDF extraction and minimum coverage."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "brasserie-blanche-oslo",
-        "name": "Brasserie Blanche",
-        "websiteUrl": "https://blanche.no/",
-        "address": "Josefines gate 23, 0351 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://blanche.no/",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-11",
-          "note": "Current first-party HTML publishes the September 2026 à la carte with explicit prices; bilingual duplicate handling is left to canonical extraction and live validation."
         }
       },
       "actions": [],
