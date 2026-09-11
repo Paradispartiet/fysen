@@ -14,7 +14,7 @@ Research contract:
 
 ## Result
 
-**12 researched → 5 intake proofs → 7 review**
+**12 researched → 4 intake proofs → 8 review**
 
 | # | Restaurant | Decision | First-party menu evidence | Rationale |
 |---|---|---|---|---|
@@ -25,7 +25,7 @@ Research contract:
 | 17 | Varemottaket | `review` | current first-party/booking presence; no stable dish list | Active tasting-menu restaurant, but no stable public first-party named dish output was found. |
 | 18 | Kolonialen Bislett | `review` | https://www.kolonialenbislett.no/ | Active restaurant and current opening information, but the public page does not expose a stable named priced menu. |
 | 19 | Cru | `review` | https://www.cru.no/s/dinner-meny-cru-with-english-2jef.pdf | The current first-party menu link used in research returns HTTP 404 to the production fetcher. Keep in review until a live canonical first-party menu URL is available. |
-| 20 | Vaaghals | **`intake`** | https://www.vaaghals.com/s/Kveldsmeny-fra-19-mai-2026_NO.pdf | Current first-party menu page links the dinner PDF; use PDF source and require live extraction proof. |
+| 20 | Vaaghals | `review` | https://www.vaaghals.com/s/Kveldsmeny-fra-19-mai-2026_NO.pdf | The current first-party page links the dinner PDF and the redirect is legitimate, but production PDF extraction exposes only 1 unique priced dish; keep in review rather than weakening the 3-dish floor. |
 | 21 | Smalhans | **`intake`** | https://www.smalhans.no/menu-english | Current first-party HTML exposes the September menu with named dishes and menu prices. |
 | 22 | Arakataka | **`intake`** | https://www.arakataka.no/_files/ugd/ae3af9_4ec3189fb8bf4ab7a9f6b65a061a0a0d.pdf | Current first-party site links a detailed menu PDF with named dishes, snacks and prices; live intake must prove PDF extraction. |
 | 23 | Plah | `review` | https://www.plah.no/menu | Active current tasting menu, but public first-party output gives menu/package price rather than named current courses. |
@@ -33,12 +33,14 @@ Research contract:
 
 ## Intake policy
 
-The five candidates below are **research proofs, not automatic additions**. The batch-intake workflow must still resolve Oslo coordinates, reject canonical/physical-identity collisions, generate candidates from the live first-party source and pass strict validation. Any candidate that fails those gates returns to `review`; no validator or minimum is weakened to force it through.
+The four candidates below are **research proofs, not automatic additions**. The batch-intake workflow must still resolve Oslo coordinates, reject canonical/physical-identity collisions, generate candidates from the live first-party source and pass strict validation. Any candidate that fails those gates returns to `review`; no validator or minimum is weakened to force it through.
 
 ## Review policy
 
-Betong, Brasserie Hansken, Varemottaket, Kolonialen Bislett, Cru, Plah and Brasserie Blanche remain P0 review items. Their restaurant quality is not in dispute; the blocker is Fysen-specific dish-first evidence. They can be reconsidered when a stable named first-party dish surface is available.
+Betong, Brasserie Hansken, Varemottaket, Kolonialen Bislett, Cru, Vaaghals, Plah and Brasserie Blanche remain P0 review items. Their restaurant quality is not in dispute; the blocker is Fysen-specific dish-first evidence. They can be reconsidered when a stable named first-party dish surface is available.
 
 ## First live-intake result
 
 The first exact-head intake attempted eight candidates. Four generated immediately: `sjomagasinet-oslo`, `statholderens-mat-vinkjeller-oslo`, `smalhans-oslo` and `arakataka-oslo`. Brasserie Hansken failed closed on a PDF title/price conflict; Cru returned HTTP 404; Brasserie Blanche failed source acquisition. Vaaghals reached a legitimate cross-origin first-party CDN redirect, so the second proof declares only `https://static1.squarespace.com` as an allowed redirect origin rather than weakening crawler policy.
+
+The second exact-head proof confirmed the declared Vaaghals CDN redirect but extracted only 1 unique priced dish from the PDF. The canonical minimum remains 3, so Vaaghals is returned to `review`. The final round-2 seed therefore contains only Sjømagasinet, Statholderens Mat og Vinkjeller, Smalhans and Arakataka.

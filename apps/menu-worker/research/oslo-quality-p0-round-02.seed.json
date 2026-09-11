@@ -62,41 +62,6 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "vaaghals-oslo",
-        "name": "Vaaghals",
-        "websiteUrl": "https://www.vaaghals.com/",
-        "address": "Dronning Eufemias gate 8, 0191 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.vaaghals.com/s/Kveldsmeny-fra-19-mai-2026_NO.pdf",
-        "sourceType": "pdf",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720,
-        "sourceSupport": {
-          "redirectOrigins": [
-            "https://static1.squarespace.com"
-          ],
-          "browserDataOrigins": [],
-          "browserBlockedOrigins": []
-        }
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-11",
-          "note": "Current first-party menu page links this dinner PDF; exact menu extraction must pass live validation."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
         "slug": "smalhans-oslo",
         "name": "Smalhans",
         "websiteUrl": "https://www.smalhans.no/",
