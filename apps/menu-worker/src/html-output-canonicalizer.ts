@@ -1,7 +1,7 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v9";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v10";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -56,10 +56,7 @@ function looksLikeLowercaseSamePriceDescription(value: string): boolean {
   if (!firstLetter || firstLetter !== firstLetter.toLocaleLowerCase("nb-NO"))
     return false;
   const words = name.split(/\s+/u).filter(Boolean);
-  return (
-    words.length >= 5 &&
-    (/[,;]/u.test(name) || /\b(?:and|with|og|med)\b/iu.test(name))
-  );
+  return words.length >= 2;
 }
 
 function samePrice(
@@ -193,15 +190,6 @@ export function isUnambiguousSamePriceExcerptFragment(
   )
     return false;
 
-  // A lower-case prose fragment following a stronger same-price title is
-  // description evidence even when it is shorter than the global description
-  // detector threshold (for example a sauce/butter line).
-  if (
-    looksLikeLowercaseSamePriceDescription(fragment.name) &&
-    candidate.position < fragment.position
-  )
-    return true;
-
   const candidateParts = excerptParts(candidate);
   if (
     candidateParts.length < 2 ||
@@ -209,6 +197,12 @@ export function isUnambiguousSamePriceExcerptFragment(
     !candidateParts.slice(1).includes(fragment.normalizedName)
   )
     return false;
+
+  // Lower-case multiword text explicitly embedded after a stronger same-price
+  // candidate is component/description evidence. Requiring excerpt containment
+  // prevents price coincidence alone from filtering legitimate lower-case dish
+  // names.
+  if (looksLikeLowercaseSamePriceDescription(fragment.name)) return true;
 
   // Reciprocal excerpts are ambiguous unless source order identifies the
   // leading title. In a normal card the canonical dish title precedes its
