@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v17";
+  "trailing-price-card-v18";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -36,6 +36,8 @@ const PLAIN_FOOD_SECTION_BOUNDARY =
   /^(?:forretter?|starters?|appetizers?|småretter|small\s+plates?|hovedretter?|mains?|main\s+courses?|desserter?|desserts?|tilbehør|sides?|salater?|salads?|supper?|soups?)$/iu;
 const DYNAMIC_PRICE_BOUNDARY =
   /^(?:dagens\s+pris|market\s+price|mkt\.?\s*price)(?:\s*,?\s*-)?$/iu;
+const CARD_ALLERGEN_TERM =
+  /^(?:fisk|fish|melk|milk|sulfitt|sulfite|sulfites|sulphite|sulphites|sennep|mustard|egg|eggs|hvete|wheat|selleri|celery|skalldyr|shellfish|crustaceans?|soya?|soy|sesam|sesame|nøtter?|nuts?|mandel|almond|bygg|barley|gluten|peanøtter?|peanuts?|cashew(?:nøtter?)?|pekannøtter?|pecans?)$/iu;
 const MULTI_PRICE_BOUNDARY =
   /^(?=.*\b[1-9]\d{1,3}\b)(?=.*\/.*\b[1-9]\d{1,3}\b).+$/u;
 const SHORT_PREPARATION_TITLE =
@@ -304,6 +306,7 @@ interface StructuredLeadingTitle {
   readonly position: number;
   readonly title: string;
   readonly candidateCount: number;
+  readonly nearestPosition: number;
   readonly nearestTitle: string;
   readonly hardBoundary: boolean;
 }
@@ -314,6 +317,24 @@ function isHeadingTitleLine(
 ): boolean {
   if (position <= 0) return false;
   return (lines[position - 1] ?? "").startsWith(HEADING_MARKER);
+}
+
+function hasAllergenMetadataBeforePrice(
+  lines: readonly string[],
+  titlePosition: number,
+  pricePosition: number,
+): boolean {
+  return lines.slice(titlePosition + 1, pricePosition).some((value) => {
+    const parts = normalizeVisibleLine(value)
+      .replace(/^\(+|\)+$/gu, "")
+      .split(/[,;/]/u)
+      .map((part) => part.trim())
+      .filter(Boolean);
+    const allergenCount = parts.filter((part) =>
+      CARD_ALLERGEN_TERM.test(part),
+    ).length;
+    return allergenCount >= 2;
+  });
 }
 
 function isUnpricedPriceBoundary(value: string): boolean {
@@ -400,6 +421,7 @@ function precedingStructuredLeadingTitle(
   return {
     ...first,
     candidateCount: candidates.length,
+    nearestPosition: nearest.position,
     nearestTitle: nearest.title,
     hardBoundary,
   };
@@ -515,9 +537,17 @@ export function recoverTrailingPriceCardHtmlItems(
     const numberedTitle = precedingNumberedTitle(lines, pricePosition);
     const structuredCandidate =
       structuredLeadingByPricePosition.get(pricePosition) ?? null;
+    const strongLocalAllergenStructuredTitle =
+      structuredCandidate !== null &&
+      hasAllergenMetadataBeforePrice(
+        lines,
+        structuredCandidate.nearestPosition,
+        pricePosition,
+      );
     const structuredLeadingTitle =
       structuredCandidate &&
       (useStructuredLeadingLayout ||
+        strongLocalAllergenStructuredTitle ||
         isStrongLocalStructuredLeadingTitle(structuredCandidate))
         ? structuredCandidate
         : null;
@@ -572,7 +602,13 @@ export function recoverTrailingPriceCardHtmlItems(
         currency: "NOK",
         position: titlePosition,
         extractionMethod: "html_heuristic",
-        confidence: 0.95,
+        confidence:
+          structuredLeadingTitle !== null &&
+          strongLocalAllergenStructuredTitle &&
+          titlePosition === structuredLeadingTitle.position &&
+          title === structuredLeadingTitle.title
+            ? 1
+            : 0.95,
         sourceExcerpt: lines
           .slice(titlePosition, pricePosition + 1)
           .filter((line) => !line.startsWith(HEADING_MARKER))
