@@ -1,7 +1,7 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v10";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v11";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -50,13 +50,22 @@ export function isStrongCanonicalDishTitle(value: string): boolean {
   return allUpper || isPreparationLedDishTitle(name);
 }
 
-function looksLikeLowercaseSamePriceDescription(value: string): boolean {
+function isLowercaseMultiword(value: string): boolean {
   const name = value.trim();
   const firstLetter = name.match(/\p{L}/u)?.[0] ?? "";
   if (!firstLetter || firstLetter !== firstLetter.toLocaleLowerCase("nb-NO"))
     return false;
+  return name.split(/\s+/u).filter(Boolean).length >= 2;
+}
+
+function looksLikeLowercaseSamePriceProse(value: string): boolean {
+  const name = value.trim();
+  if (!isLowercaseMultiword(name)) return false;
   const words = name.split(/\s+/u).filter(Boolean);
-  return words.length >= 2;
+  return (
+    words.length >= 5 &&
+    (/[,;]/u.test(name) || /\b(?:and|with|og|med)\b/iu.test(name))
+  );
 }
 
 function samePrice(
@@ -190,6 +199,15 @@ export function isUnambiguousSamePriceExcerptFragment(
   )
     return false;
 
+  // Longer lower-case prose is description evidence when it follows a
+  // stronger same-price title in source order, even if the two recovery paths
+  // do not carry identical excerpts.
+  if (
+    looksLikeLowercaseSamePriceProse(fragment.name) &&
+    candidate.position < fragment.position
+  )
+    return true;
+
   const candidateParts = excerptParts(candidate);
   if (
     candidateParts.length < 2 ||
@@ -202,7 +220,7 @@ export function isUnambiguousSamePriceExcerptFragment(
   // candidate is component/description evidence. Requiring excerpt containment
   // prevents price coincidence alone from filtering legitimate lower-case dish
   // names.
-  if (looksLikeLowercaseSamePriceDescription(fragment.name)) return true;
+  if (isLowercaseMultiword(fragment.name)) return true;
 
   // Reciprocal excerpts are ambiguous unless source order identifies the
   // leading title. In a normal card the canonical dish title precedes its
