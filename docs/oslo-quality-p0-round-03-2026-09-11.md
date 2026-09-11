@@ -15,22 +15,22 @@ Research contract:
 
 ## Result
 
-**12 researched → 7 intake → 5 review**
+**12 researched → 1 promoted → 6 semantic-review → 5 source-review**
 
 | # | Restaurant | Decision | First-party menu evidence | Dish-first rationale |
 |---|---|---|---|---|
 | 25 | Madonna | `review` | https://www.madonnaoslo.no/no/meny | The visible first-party pages publish named/priced dishes, but exact-head production extraction recovered only 1 canonical item from dinner through both HTTP/browser and 0 from the separate lunch page. Keep in review rather than adding a restaurant-specific parser exception. |
-| 26 | Festningen Restaurant | **`intake`** | https://www.festningenrestaurant.no/middag | Current first-party dinner page exposes named, individually priced starters and other à la carte dishes in addition to chef-menu packages. |
-| 27 | FYR Bistronomi & Bar | **`intake`** | https://www.fyrbistronomi.no/sommermeny | Current first-party seasonal page exposes named, individually priced seafood, meat, vegetable dishes and desserts. |
+| 26 | Festningen Restaurant | `semantic-review` | https://www.festningenrestaurant.no/middag | Current first-party dinner page exposes named, individually priced starters and other à la carte dishes in addition to chef-menu packages. |
+| 27 | FYR Bistronomi & Bar | `semantic-review` | https://www.fyrbistronomi.no/sommermeny | Current first-party seasonal page exposes named, individually priced seafood, meat, vegetable dishes and desserts. |
 | 28 | Eero | `review` | https://www.eero.no/ | Active Oslo venue, but current first-party food output is primarily event/set-menu packages priced per person rather than stable individually priced dishes. |
 | 29 | PANU | `review` | https://www.restaurant-panu.com/ | Active restaurant and the site advertises set menu/à la carte, but the public first-party dish menu is image-led and does not expose a stable textual named priced list suitable for canonical extraction. |
 | 30 | Le Benjamin | `review` | https://lebenjamin.no/wp-content/uploads/2026/09/Meny-9.-september-2026.pdf | Fresh first-party PDF contains individually priced dishes, but exact-head production intake respects the site's `robots.txt`, which disallows fetching this PDF. Keep in review rather than bypass crawler policy. |
-| 31 | Kaffistova | **`intake`** | https://www.bondeheimen.no/menyar/a-la-carte | Current first-party à la carte publishes individually priced Norwegian dishes across starters, mains and desserts. |
-| 32 | Rorbua | **`intake`** | https://rorbua.as/page/ | Current first-party HTML publishes a broad named and priced Norwegian menu; live intake must resolve the current HTML semantics rather than rely on older PDF pricing. |
+| 31 | Kaffistova | `semantic-review` | https://www.bondeheimen.no/menyar/a-la-carte | Current first-party à la carte publishes individually priced Norwegian dishes across starters, mains and desserts. |
+| 32 | Rorbua | **`promoted`** | https://rorbua.as/page/ | Current first-party HTML publishes a broad named and priced Norwegian menu; live intake must resolve the current HTML semantics rather than rely on older PDF pricing. |
 | 33 | Stortorvets Gjæstgiveri | `review` | current first-party/operator presence; no stable public first-party dish list proven | Active physical restaurant is supported, but this pass did not find a stable current first-party named priced menu suitable for canonical extraction. |
-| 34 | Gamle Raadhus Restaurant | **`intake`** | https://www.gamleraadhus.no/kveldsmeny | Current first-party dinner menu, effective 19 August 2026, exposes named and individually priced dishes. |
-| 35 | Frognerseteren Finstua | **`intake`** | https://www.frognerseteren.no/restaurant-finstua-meny | Current first-party Finstua page publishes a large named and priced lunch/dinner menu. |
-| 36 | Bristol Grill | **`intake`** | https://hotelbristol.no/spise-pa-bristol/bristol-grill/ | Current first-party Bristol Grill page exposes a substantial à la carte, meat list, sides and sauces with explicit prices. |
+| 34 | Gamle Raadhus Restaurant | `semantic-review` | https://www.gamleraadhus.no/kveldsmeny | Current first-party dinner menu, effective 19 August 2026, exposes named and individually priced dishes. |
+| 35 | Frognerseteren Finstua | `semantic-review` | https://www.frognerseteren.no/restaurant-finstua-meny | Current first-party Finstua page publishes a large named and priced lunch/dinner menu. |
+| 36 | Bristol Grill | `semantic-review` | https://hotelbristol.no/spise-pa-bristol/bristol-grill/ | Current first-party Bristol Grill page exposes a substantial à la carte, meat list, sides and sauces with explicit prices. |
 
 ## Intake candidates
 
@@ -65,3 +65,20 @@ The first exact-head proof after address resolution requested nine candidates an
 ## Final source decision
 
 A final exact-head source-level reproof tested Madonna's separate first-party lunch surface after the dinner surface had failed identically under HTTP and browser rendering. The lunch page exposed zero canonical items to the production extractor. Madonna therefore returns to `review`. The round closes with seven intake candidates and five review candidates; no extraction floor, robots policy or parser quality gate is weakened.
+
+
+## Semantic artifact QA and promotion
+
+Exact-head intake run #442 on `c03de300fb87eeb87780cb2a10ce7c50fd899ba9` generated and strict-validated all seven final intake candidates (7/7 generated, 7/7 accepted). The artifact digest is `sha256:07f14f452964c4033dbe1655006a912ea558d438cdcccd328ae65f12294da895`.
+
+Workflow-green is not sufficient for promotion. Full observed-name inspection found:
+
+- **Rorbua:** 19/19 output is semantically coherent dish output. No observed UI, beverage, copyright, address, section-label or description-fragment leakage. Promoted with eight priced assertions.
+- **Festningen Restaurant:** output contains menu-package labels and component/description fragments such as `kr 195`, `toast`, `egg cream`, `mushroom mayonnaise`, `mushroom velouté`, `potato puré` and `pommes Anna`. Remains fail-closed.
+- **FYR Bistronomi & Bar:** only three items are recovered; `KALDE FORRETTER` is a section heading and the observed dessert-price association is not trustworthy. Remains fail-closed.
+- **Kaffistova:** output includes malformed multi-price names and beverage leakage, including `Delefat for 2 eller 4 personar 295/` and `Gewürstraminer Vendage Tardive 2015, Hugel`. Remains fail-closed.
+- **Gamle Raadhus Restaurant:** output includes date and size labels (`Gjelder fra 19. august`, `Large`, `Small`) as dishes. Remains fail-closed.
+- **Frognerseteren Finstua:** output includes description fragments and page metadata such as `røkt persillemajones`, `30 gr.`, `Holmenkollveien` and `Copyright © Frognerseteren`. Remains fail-closed.
+- **Bristol Grill:** output includes quantity/price metadata and section/display labels such as `3 stk 195 kr / 6 stk`, `100 gr`, `For hele bordet` and `Sideretter`. Remains fail-closed.
+
+The six semantic-review candidates are not rejected. They should be reconsidered after generic parser/output hardening and exact-head reproof. No restaurant-specific exception, assertion weakening or artificial item-floor reduction is used.
