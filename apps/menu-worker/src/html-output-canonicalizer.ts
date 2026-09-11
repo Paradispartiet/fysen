@@ -1,6 +1,6 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v5";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v9";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -22,11 +22,32 @@ const SUPPLEMENT_LABEL_ITEM = /^(?:supplement|tillegg)\s*:?$/iu;
 const WINE_PAIRING_LABEL_ITEM =
   /^(?:wine\s+pairing(?:\s+nok)?|vinpakke(?:\s+nok)?)$/iu;
 const COURSE_PACKAGE_LABEL_ITEM =
-  /^(?:\d+\s*[- ]?course(?:\s+menu)?|\d+\s*[- ]?retters?\s+meny)\s*\/?\/?$/iu;
+  /^(?:\d+\s*[- ]?(?:course(?:\s+menu)?|retters?\s+meny))(?:\s*\/\/\s*\d+\s*[- ]?(?:course(?:\s+menu)?|retters?\s+meny))?(?:\s+kr)?$/iu;
 const COMPONENT_QUANTITY_LABEL_ITEM =
   /^\d+\s+(?:types?|pieces?|kinds?)\s+of\b/iu;
 const TEMPORARY_CLOSURE_NOTICE_ITEM =
   /\b(?:sommerlukket|feriestengt|midlertidig\s+stengt|temporarily\s+closed|closed)\b.*\b\d{1,2}[./-]\d{1,2}/iu;
+
+const PRICE_ONLY_ITEM = /^(?:kr\.?|nok)\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?$/iu;
+const SIZE_ONLY_ITEM = /^(?:small|large|liten|stor)$/iu;
+const QUANTITY_ONLY_ITEM = /^\d+(?:[.,]\d+)?\s*(?:gr\.?|g|kg|stk|pcs?)$/iu;
+const DATE_NOTICE_ITEM = /^(?:gjelder|gyldig|valid)\b.*\b\d{1,2}\.?\s+[\p{L}]+/iu;
+const COPYRIGHT_METADATA_ITEM = /^copyright\s*©?/iu;
+const ADDRESS_METADATA_ITEM =
+  /^(?:[A-ZÆØÅ][\p{L}.-]+(?:veien|gata|gaten|gate|allé|alle|plass|torget))$/u;
+const COMMON_DISPLAY_LABEL_ITEM =
+  /^(?:kalde?\s+forretter|sideretter|for\s+hele\s+bordet)$/iu;
+const SHARE_DISPLAY_ITEM =
+  /^(?:større\s+cuts?\s+laget\s+for\s+deling.*)$/iu;
+const TRAILING_INCOMPLETE_MULTI_PRICE_ITEM = /\b[1-9]\d{1,3}\s*\/\s*$/u;
+const QUANTITY_PRICE_SPLIT_ITEM =
+  /^\d+\s*(?:stk|pcs?|pieces?)\s+[1-9]\d{1,3}\s*(?:kr\.?|nok)?\s*\/\s*\d+\s*(?:stk|pcs?|pieces?)?$/iu;
+const WINE_VINTAGE_ITEM =
+  /\b(?:gew(?:ü|u)r(?:z|s)traminer|riesling|chardonnay|pinot\s+noir|cabernet|merlot|sauvignon)\b.*\b(?:19|20)\d{2}\b/iu;
+const BARE_UNIT_ITEM = /^(?:gr\.?|gram|grams?|stk|pcs?)$/iu;
+const LOWERCASE_ALLERGEN_DESCRIPTION_ITEM =
+  /^[a-zæøå].*\([^)]*\b(?:milk|egg|wheat|gluten|sulfite|sulphite|melk|egg|hvete|skalldyr|shellfish|nuts?|nøtter?)\b[^)]*\)$/iu;
+
 
 function samePrice(
   left: Pick<MenuObservedItem, "priceMinor">,
@@ -178,6 +199,49 @@ function isHighPricedComponentQuantity(item: MenuObservedItem): boolean {
   );
 }
 
+function isLowInformationSamePriceFragment(
+  item: MenuObservedItem,
+  items: readonly MenuObservedItem[],
+): boolean {
+  const name = item.name.trim();
+  const words = name.split(/\s+/u).filter(Boolean);
+  const fragmentLike =
+    /^[a-zæøå]/u.test(name) &&
+    words.length <= 6 &&
+    (words.length === 1 ||
+      /(?:cream|majones|mayonnaise|velout[eé]|pur[eé]|toast|potet|potato|hasselback|pommes|saus|sauce|dressing)/iu.test(name));
+  if (!fragmentLike || item.priceMinor === null) return false;
+  const titleCaseDensity = items.filter((candidate) =>
+    /^[A-ZÆØÅ]/u.test(candidate.name.trim()),
+  ).length;
+  if (titleCaseDensity >= 4) return true;
+  return items.some(
+    (candidate) =>
+      candidate !== item &&
+      samePrice(candidate, item) &&
+      !/^[a-zæøå]/u.test(candidate.name.trim()) &&
+      candidate.name.trim().split(/\s+/u).length >= 2,
+  );
+}
+
+function isExtremeDuplicatePriceOutlier(
+  item: MenuObservedItem,
+  items: readonly MenuObservedItem[],
+): boolean {
+  if (item.priceMinor === null || item.priceMinor < 50_000) return false;
+  const sameNamePrices = items
+    .filter(
+      (candidate) =>
+        candidate !== item &&
+        candidate.normalizedName === item.normalizedName &&
+        candidate.priceMinor !== null,
+    )
+    .map((candidate) => candidate.priceMinor as number);
+  if (sameNamePrices.length === 0) return false;
+  const lowest = Math.min(...sameNamePrices);
+  return lowest > 0 && item.priceMinor >= lowest * 4;
+}
+
 function isOutputNoiseLabel(item: MenuObservedItem): boolean {
   const name = item.name.trim();
   return (
@@ -191,6 +255,19 @@ function isOutputNoiseLabel(item: MenuObservedItem): boolean {
     WINE_PAIRING_LABEL_ITEM.test(name) ||
     COURSE_PACKAGE_LABEL_ITEM.test(name) ||
     TEMPORARY_CLOSURE_NOTICE_ITEM.test(name) ||
+    PRICE_ONLY_ITEM.test(name) ||
+    SIZE_ONLY_ITEM.test(name) ||
+    QUANTITY_ONLY_ITEM.test(name) ||
+    DATE_NOTICE_ITEM.test(name) ||
+    COPYRIGHT_METADATA_ITEM.test(name) ||
+    ADDRESS_METADATA_ITEM.test(name) ||
+    COMMON_DISPLAY_LABEL_ITEM.test(name) ||
+    SHARE_DISPLAY_ITEM.test(name) ||
+    TRAILING_INCOMPLETE_MULTI_PRICE_ITEM.test(name) ||
+    QUANTITY_PRICE_SPLIT_ITEM.test(name) ||
+    WINE_VINTAGE_ITEM.test(name) ||
+    BARE_UNIT_ITEM.test(name) ||
+    LOWERCASE_ALLERGEN_DESCRIPTION_ITEM.test(name) ||
     PER_PERSON_PRICE_DISPLAY_ONLY_ITEM.test(name) ||
     DAILY_MENU_LABEL_ITEM.test(name)
   );
@@ -209,6 +286,8 @@ export function canonicalizeHtmlOutputItems(
       !isNumericTitleSuffixMisreadAsPrice(item, labelFilteredItems) &&
       !isAddonScopedDuplicate(item, labelFilteredItems) &&
       !isHighPricedComponentQuantity(item) &&
-      !isSamePriceExcerptFragment(item, labelFilteredItems),
+      !isSamePriceExcerptFragment(item, labelFilteredItems) &&
+      !isLowInformationSamePriceFragment(item, labelFilteredItems) &&
+      !isExtremeDuplicatePriceOutlier(item, labelFilteredItems),
   );
 }
