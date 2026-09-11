@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "frognerseteren-finstua-oslo",
+    "name": "Frognerseteren Finstua",
+    "websiteUrl": "https://www.frognerseteren.no/",
+    "address": "Holmenkollveien 200, 0791 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.97754451986929,
+    "longitude": 10.677378363757521
+  },
+  "menuSource": {
+    "url": "https://www.frognerseteren.no/restaurant-finstua-meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 27,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "Current first-party Finstua page publishes a broad named and priced lunch/dinner menu."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kremet fiskesuppe med med reker",
+      "Toast Skagen servert på landbrød med ørretrogn",
+      "Mørk sjokoladecremeux på kjeks med basilikum-lime-sorbet og limecurds",
+      "Petit four",
+      "Hvit aspargessuppe",
+      "Saltbakt rødbetsbygotto",
+      "Ost",
+      "Frognerseterens berømte eplekake"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kremet fiskesuppe med med reker",
+        "priceMinor": 31500
+      },
+      {
+        "name": "Toast Skagen servert på landbrød med ørretrogn",
+        "priceMinor": 32500
+      },
+      {
+        "name": "Mørk sjokoladecremeux på kjeks med basilikum-lime-sorbet og limecurds",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Petit four",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Hvit aspargessuppe",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Saltbakt rødbetsbygotto",
+        "priceMinor": 37500
+      },
+      {
+        "name": "Ost",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Frognerseterens berømte eplekake",
+        "priceMinor": 18500
+      }
+    ],
+    "forbiddenDishNames": [
+      "røkt persillemajones",
+      "30 gr.",
+      "syltet delikatesseløk og hasselbackpotet",
+      "Holmenkollveien",
+      "Copyright © Frognerseteren"
+    ]
+  }
+}
