@@ -1,6 +1,6 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v5";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v6";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -128,6 +128,41 @@ function isAddonScopedDuplicate(
   );
 }
 
+function excerptParts(item: MenuObservedItem): readonly string[] {
+  return (item.sourceExcerpt ?? "")
+    .split(SOURCE_EXCERPT_SEPARATOR)
+    .map((part) => normalizeDishName(part.trim()))
+    .filter(Boolean);
+}
+
+function isLowerConfidenceSamePriceExcerptArtifact(
+  item: MenuObservedItem,
+  items: readonly MenuObservedItem[],
+): boolean {
+  return items.some((candidate) => {
+    if (
+      candidate === item ||
+      !samePrice(candidate, item) ||
+      candidate.normalizedName === item.normalizedName ||
+      candidate.confidence < item.confidence + 0.1
+    )
+      return false;
+
+    const itemParts = excerptParts(item);
+    const candidateParts = excerptParts(candidate);
+    if (itemParts.length < 2 && candidateParts.length < 2) return false;
+
+    const itemMentionsCandidate =
+      itemParts[0] === item.normalizedName &&
+      itemParts.slice(1).includes(candidate.normalizedName);
+    const candidateMentionsItem =
+      candidateParts[0] === candidate.normalizedName &&
+      candidateParts.slice(1).includes(item.normalizedName);
+
+    return itemMentionsCandidate || candidateMentionsItem;
+  });
+}
+
 function isHighPricedComponentQuantity(item: MenuObservedItem): boolean {
   return Boolean(
     item.priceMinor !== null &&
@@ -166,6 +201,7 @@ export function canonicalizeHtmlOutputItems(
       !isNumericPrefixSuffixFragment(item, labelFilteredItems) &&
       !isNumericTitleSuffixMisreadAsPrice(item, labelFilteredItems) &&
       !isAddonScopedDuplicate(item, labelFilteredItems) &&
-      !isHighPricedComponentQuantity(item),
+      !isHighPricedComponentQuantity(item) &&
+      !isLowerConfidenceSamePriceExcerptArtifact(item, labelFilteredItems),
   );
 }
