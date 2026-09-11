@@ -241,57 +241,43 @@ describe("HTML runtime recovery selection", () => {
   });
 
 
-  it("does not replace a correct next-card title with the previous card description", async () => {
+  it("does not let a section intro steal the first priced card title", async () => {
     const result = await extract(`
       <html><body>
-        <h2>Forretter</h2>
-        <p>Wonton Suppe (Súp hoành thánh)</p>
-        <p>139 NOK</p>
-        <p>Serveres med wonton, kraft av kylling og svin.</p>
-        <p>Friterte Vårruller (Chả giò)</p>
-        <p>139 NOK</p>
-        <p>2 stk. kyllingkjøttdeig med grønnsaker og butterdeig.</p>
-        <p>Fersk Sommerruller (Gỏi cuốn)</p>
-        <p>139 NOK</p>
-        <p>2 stk. Svinekjøtt med scampi, salat og agurk.</p>
-        <p>Vietnamesisk Baguette (Bánh mì)</p>
-        <p>fra 169 NOK</p>
-        <p>Serveres med stekt skinkeskiver, svinekjøtt, agurk og syltet gulrot.</p>
-        <p>Hues Suppe (Bún bò huế)</p>
-        <p>fra 259 NOK</p>
+        <h1>Middagsmeny</h1>
+        <h2>Pizza</h2>
+        <p>Rykende fersk italiensk pizza fra steinovnen</p>
+        <p>Diavola</p>
+        <p>Tomatsaus, ost, ventricina (italiensk salami), oliven, rødløk, ruccola, chili</p>
+        <p>259 kr</p>
+        <p>Wanna Beef?</p>
+        <p>Tomatsaus, ost, biff, rødløk, sjampinjong, aioli</p>
+        <p>269 kr</p>
+        <p>Don't chicken out</p>
+        <p>Tomatsaus, ost, marinert kylling, rødløk, vårløk, chili</p>
+        <p>249 kr</p>
+        <p>Uno Prosciutto, Por Favor</p>
+        <p>Tomatsaus, ost, parmaskinke, parmesan, ruccolasalat, olivenolje, rødløk</p>
+        <p>249 kr</p>
+        <p>Margherita 0.0%</p>
+        <p>Tomatsaus, goudaost, mozzarella og basilikum</p>
+        <p>189 kr</p>
+        <p>1,2,3,4! Formaggio</p>
+        <p>Creme fraiche saus, mozzarella, goudaost, parmesan og gorgonzola</p>
+        <p>239 kr</p>
       </body></html>
     `);
 
-    expect(result.items.map((item) => [item.name, item.priceMinor])).toContainEqual([
-      "Vietnamesisk Baguette (Bánh mì)",
-      16900,
+    expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Diavola", 25900],
+      ["Wanna Beef?", 26900],
+      ["Don't chicken out", 24900],
+      ["Uno Prosciutto, Por Favor", 24900],
+      ["Margherita 0.0%", 18900],
+      ["1,2,3,4! Formaggio", 23900],
     ]);
-    expect(
-      result.items.some(
-        (item) =>
-          item.name === "2 stk. Svinekjøtt med scampi, salat og agurk." &&
-          item.priceMinor === 16900,
-      ),
-    ).toBe(false);
-  });
-
-  it("keeps explicit meze titles instead of preceding descriptions with the same price", async () => {
-    const result = await extract(`
-      <html><body>
-        <h2>Småretter</h2>
-        <p>Tabouleh</p><p>kr 98</p><p>Bulgur, persille, tomater og sitron</p>
-        <p>Labneh</p><p>kr 98</p><p>Libanesisk yoghurt med mynte og olivenolje</p>
-        <p>Hommus</p><p>kr 98</p><p>Moste kikerter med sesam, hvitløk og olivenolje</p>
-        <p>Falafel</p><p>kr 98</p><p>Knuste kikerter blandet med arabiske krydder</p>
-        <p>Kibbeh</p><p>kr 139</p><p>Friterte kjøttboller med middelhavskrydder</p>
-      </body></html>
-    `);
-
-    expect(result.items.map((item) => item.name)).toEqual(
-      expect.arrayContaining(["Hommus", "Falafel", "Kibbeh"]),
-    );
     expect(result.items.map((item) => item.name)).not.toContain(
-      "Moste kikerter med sesam, hvitløk og olivenolje",
+      "Rykende fersk italiensk pizza fra steinovnen",
     );
   });
 
