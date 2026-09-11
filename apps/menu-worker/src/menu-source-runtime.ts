@@ -247,8 +247,7 @@ function reconcileSelectedItemsWithTrailingCards(
   if (items.length === 0 || trailing.length === 0) return items;
 
   const reconciled = items.map((item) => {
-    if (item.priceMinor === null || !isLikelySamePriceCardFragment(item))
-      return item;
+    if (item.priceMinor === null) return item;
     const matches = trailing.filter((candidate) => {
       if (
         candidate.priceMinor !== item.priceMinor ||
@@ -262,7 +261,21 @@ function reconcileSelectedItemsWithTrailingCards(
         .filter(Boolean);
       if (parts.length < 2) return false;
       if (parts[0] !== candidate.normalizedName) return false;
-      return parts.slice(1).includes(item.normalizedName);
+      const itemPartIndex = parts.slice(1).indexOf(item.normalizedName) + 1;
+      if (itemPartIndex <= 0) return false;
+      const itemWords = item.name.trim().split(/\s+/u).filter(Boolean);
+      const interveningParts = parts.slice(1, itemPartIndex);
+      const contextualComponent =
+        (itemWords.length === 1 &&
+          interveningParts.some((part) => /[,;]/u.test(part))) ||
+        (itemWords.length <= 5 &&
+          /\b(?:and|og|with|med|&|\/|\+)\b/iu.test(item.name));
+      if (
+        !isLikelySamePriceCardFragment(item) &&
+        !contextualComponent
+      )
+        return false;
+      return true;
     });
     return matches.length === 1 ? (matches[0] ?? item) : item;
   });
