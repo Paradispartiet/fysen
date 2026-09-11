@@ -33,7 +33,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v10");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v11");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -382,6 +382,30 @@ describe("structural HTML output canonicalization", () => {
       "Krabbesalat",
       "cacio e pepe",
       "Other Dish",
+    ]);
+  });
+
+
+  it("drops long lower-case prose by source order when recovery excerpts differ", () => {
+    const items = [
+      item(
+        "Josper Grilled Langoustines",
+        39500,
+        null,
+        "Josper Grilled Langoustines — 395",
+        30,
+      ),
+      item(
+        "lemon and ginger butter, wine and cream",
+        39500,
+        null,
+        "lemon and ginger butter, wine and cream — 395",
+        31,
+      ),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Josper Grilled Langoustines",
     ]);
   });
 
