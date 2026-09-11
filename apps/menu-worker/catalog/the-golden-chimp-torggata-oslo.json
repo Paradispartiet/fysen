@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 15,
+    "minimumExpectedItems": 13,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -25,8 +25,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-08-20",
-      "note": "Retry after generic parser hardening. Kitchen-scoped hours remain outside the intake gate."
+      "checkedAt": "2026-09-11",
+      "note": "Source-drift reproof: the first-party menu now publishes 13 priced dishes. Grilled Chicken Yakiniku and the Miso cookie dessert were removed from the current source; assertions are replaced with current first-party dishes at the same strict coverage count."
     }
   },
   "actions": [],
@@ -35,11 +35,11 @@
       "Pork Gyoza with Japanese ketchup (4 pcs)",
       "King Crab dumplings with kimchi mayonnaise (4 pcs)",
       "Spicy Wontons with chili sauce (6 pcs)",
-      "Grilled Chicken Yakiniku, served with Goma Cabbage salad",
+      "Chicken Gyoza with Truffle Tosazu (4 pcs)",
       "Golden Shrimp Toast",
       "Kinpira Gobo (Braised Burdock Root)",
       "Wood Ear Mushroom",
-      "Miso cookie with butter, orange and white chocolate, served with a delicious Five-Spice Ice-Cream"
+      "Grilled Seabass with chili/garlic sauce, served with burdock root"
     ],
     "requiredDishVariants": [
       {
@@ -55,8 +55,8 @@
         "priceMinor": 20500
       },
       {
-        "name": "Grilled Chicken Yakiniku, served with Goma Cabbage salad",
-        "priceMinor": 24500
+        "name": "Chicken Gyoza with Truffle Tosazu (4 pcs)",
+        "priceMinor": 19500
       },
       {
         "name": "Golden Shrimp Toast",
@@ -71,8 +71,8 @@
         "priceMinor": 8500
       },
       {
-        "name": "Miso cookie with butter, orange and white chocolate, served with a delicious Five-Spice Ice-Cream",
-        "priceMinor": 13500
+        "name": "Grilled Seabass with chili/garlic sauce, served with burdock root",
+        "priceMinor": 27500
       }
     ],
     "forbiddenDishNames": []
