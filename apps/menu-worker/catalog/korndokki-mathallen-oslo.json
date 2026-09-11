@@ -50,7 +50,6 @@
       "Beef Bulgogi Bowl",
       "Spicy Pork Bulgogi Bowl",
       "Tteokbokki",
-      "KornDoKKi Combo",
       "Deep-fried Mandu"
     ],
     "requiredDishVariants": [
@@ -61,7 +60,6 @@
       { "name": "Bibimbap", "priceMinor": 22900 },
       { "name": "Bibimbap (Vegan)", "priceMinor": 22900, "priceKind": "from" },
       { "name": "Spicy Pork Bulgogi Bowl", "priceMinor": 23900 },
-      { "name": "KornDoKKi Combo", "priceMinor": 19900, "priceKind": "from" },
       { "name": "Deep-fried Mandu", "priceMinor": 7900 }
     ],
     "forbiddenDishNames": [
