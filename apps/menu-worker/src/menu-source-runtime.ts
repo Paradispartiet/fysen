@@ -239,6 +239,38 @@ function mergeMissingRecoveredItems(
   return output.sort((a, b) => a.position - b.position);
 }
 
+function reconcileStrongTitleWithTrailingCards(
+  items: readonly MenuObservedItem[],
+  trailing: readonly MenuObservedItem[],
+): readonly MenuObservedItem[] {
+  if (items.length === 0 || trailing.length === 0) return items;
+
+  const reconciled = items.map((item) => {
+    if (item.priceMinor === null) return item;
+    const matches = trailing.filter((candidate) => {
+      if (
+        candidate.priceMinor !== item.priceMinor ||
+        candidate.normalizedName === item.normalizedName
+      )
+        return false;
+      const parts = (candidate.sourceExcerpt ?? "")
+        .split(SOURCE_EXCERPT_SEPARATOR)
+        .map((part) => normalizeDishName(part.trim()))
+        .filter(Boolean);
+      if (parts.length < 2) return false;
+      if (parts[0] !== candidate.normalizedName) return false;
+      return parts.slice(1).includes(item.normalizedName);
+    });
+    return matches.length === 1 ? (matches[0] ?? item) : item;
+  });
+
+  const unique = new Map<string, MenuObservedItem>();
+  for (const item of reconciled) {
+    unique.set(item.sourceKey, item);
+  }
+  return [...unique.values()].sort((a, b) => a.position - b.position);
+}
+
 function mergeExplicitFromPriceRecovery(
   items: readonly MenuObservedItem[],
   recovered: readonly MenuObservedItem[],
@@ -490,8 +522,15 @@ export async function extractMenuSource(
     const headingPriceCoverageThreshold = Math.ceil(
       recoveredItems.length * 0.75,
     );
+    const reconciledStrongTitlePriceItems =
+      strongTitlePricePreferred
+        ? reconcileStrongTitleWithTrailingCards(
+            strongTitlePriceItems,
+            trailingPriceCardItems,
+          )
+        : strongTitlePriceItems;
     const preferredItems = strongTitlePricePreferred
-    ? strongTitlePriceItems
+    ? reconciledStrongTitlePriceItems
     : trailingPriceCardQualifies
       ? trailingPriceCardItems
       : headingPriceItems.length >= 4 &&
@@ -502,18 +541,11 @@ export async function extractMenuSource(
             priceWrappedItems.length >= recoveredItems.length * 2
           ? priceWrappedItems
           : recoveredItems;
-    const structurallySupplementedPreferredItems =
-      extracted.method === "html_heuristic" && strongTitlePricePreferred
-        ? mergeMissingRecoveredItems(preferredItems, trailingPriceCardItems)
-        : preferredItems;
     const recoveredSupplementedItems =
       extracted.method === "html_heuristic" &&
       !isolatedSemanticRecoveryPreferred
-        ? mergeMissingRecoveredItems(
-            structurallySupplementedPreferredItems,
-            recoveredItems,
-          )
-        : structurallySupplementedPreferredItems;
+        ? mergeMissingRecoveredItems(preferredItems, recoveredItems)
+        : preferredItems;
     const headingSupplementedItems =
       extracted.method === "html_heuristic" &&
       !strongTitlePricePreferred
