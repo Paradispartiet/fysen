@@ -1,0 +1,315 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-quality-p0-round-04",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "restaurant-schroder-oslo",
+        "name": "Restaurant Schrøder",
+        "websiteUrl": "https://www.xn--restaurant-schrder-u4b.no/",
+        "address": "Waldemar Thranes gate 8, 0171 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.xn--restaurant-schrder-u4b.no/meny/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party menu publishes named and individually priced Norwegian dishes; opening hours are also published first-party but are not promoted by this research seed."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "den-glade-gris-oslo",
+        "name": "Den Glade Gris",
+        "websiteUrl": "https://www.dengladegris.no/",
+        "address": "St. Olavs gate 33, 0166 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://cdn.prod.website-files.com/5aabb3484dc7fe62cb3f222a/6a1e98ce9f4ba81ca0222243_DGG_spiralhefte_mai2026.1_ENKELTSIDER.pdf",
+        "sourceType": "pdf",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "The first-party site links directly to the May 2026 food-menu PDF; current site identity and kitchen hours are published separately."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "lorry-restaurant-oslo",
+        "name": "Lorry Restaurant",
+        "websiteUrl": "https://lorry.no/",
+        "address": "Parkveien 12, 0350 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://lorry.no/meny/middag",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party dinner menu publishes a broad set of named and individually priced dishes."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "engebret-cafe-oslo",
+        "name": "Engebret Café",
+        "websiteUrl": "https://www.engebret-cafe.no/",
+        "address": "Bankplassen 1, 0151 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.engebret-cafe.no/menymenu",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party à la carte page publishes named and individually priced dishes and current kitchen hours."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dovrehallen-oslo",
+        "name": "Dovrehallen",
+        "websiteUrl": "https://www.dovrehallen.no/",
+        "address": "Storgata 22, 0184 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.dovrehallen.no/var-meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party menu publishes a large priced traditional menu. Seasonal Christmas entries coexist with the ordinary menu and must be handled semantically by the runtime."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "the-salmon-oslo",
+        "name": "The Salmon",
+        "websiteUrl": "https://www.thesalmon.com/",
+        "address": "Strandpromenaden 11, 0252 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.thesalmon.com/menu/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party Summer 2026 menu publishes multiple individually priced salmon, oyster and sushi dishes."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "louise-restaurant-oslo",
+        "name": "Louise",
+        "websiteUrl": "https://www.restaurantlouise.no/no",
+        "address": "Stranden 3, 0250 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.restaurantlouise.no/no/meny_pdf",
+        "sourceType": "pdf",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party site exposes its menu through the /no/meny_pdf endpoint. Intake must prove that endpoint resolves to a current parseable priced food menu; otherwise Louise remains review."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "lofoten-fiskerestaurant-oslo",
+        "name": "Lofoten Fiskerestaurant",
+        "websiteUrl": "https://www.lofoten-fiskerestaurant.no/",
+        "address": "Stranden 75, 0250 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.lofoten-fiskerestaurant.no/menu-eng",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party menu publishes priced lunch, dinner and shellfish dishes; source page also publishes 2026 opening-hour exceptions."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "havsmak-oslo",
+        "name": "Havsmak",
+        "websiteUrl": "https://www.havsmak.no/",
+        "address": "Kirsten Flagstads plass 1, 0150 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.havsmak.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party menu publishes seasonal named dishes, course menus and individually priced snacks; intake must preserve dish-first output rather than menu-package labels."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "skur-33-oslo",
+        "name": "Skur 33",
+        "websiteUrl": "https://skur33.no/",
+        "address": "Akershusstranda 11, 0150 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://skur33.no/wp-content/uploads/2016/10/Meny-web-sider.pdf",
+        "sourceType": "pdf",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party site links a priced food-menu PDF from the restaurant domain; the menu surface contains seafood, pasta, pizza and desserts."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "solsiden-restaurant-oslo",
+        "name": "Solsiden Restaurant",
+        "websiteUrl": "https://solsiden.no/",
+        "address": "Akershusstranda 13, 0150 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://solsiden.no/meny-menu",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party 2026 seasonal menu publishes individually priced seafood dishes. The restaurant states the 2026 season ends 12 September, so future materialization must remain source-current."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ]
+}
