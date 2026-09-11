@@ -240,4 +240,32 @@ describe("HTML runtime recovery selection", () => {
     ]);
   });
 
+  it("preserves dish titles when same-price description lines are also recoverable", async () => {
+    const result = await extract(`
+      <html><body>
+        <h2>Småretter</h2>
+        <p>Hommus</p>
+        <p>Moste kikerter med sesam, hvitløk og olivenolje</p>
+        <p>98,-</p>
+        <p>Falafel</p>
+        <p>Knuste kikerter blandet med arabiske krydder</p>
+        <p>98,-</p>
+        <p>Kibbeh</p>
+        <p>Friterte kjøttboller med bulgur og krydret kjøtt</p>
+        <p>139,-</p>
+        <p>Fatouche</p>
+        <p>Salat med grønnsaker, urter og sprøtt brød</p>
+        <p>179,-</p>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Hommus", 9800],
+      ["Falafel", 9800],
+      ["Kibbeh", 13900],
+      ["Fatouche", 17900],
+    ]);
+  });
+
+
 });
