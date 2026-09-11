@@ -232,6 +232,10 @@ Production-proof skal som hovedregel være read-only. Materialisering skjer gjen
 
 Web/API-deploy er en separat releaseflate. Restaurantmaterialisering og DB/watcher-proof skal ikke brukes som grunn til å bryte den låste Vercel-regelen på maksimalt tre endringskvalifiserte produksjonsbatcher per Europe/Oslo-døgn, uten faste klokkeslett.
 
+## Oslo quality audit
+
+Den første dish-first kvalitetsauditten av Oslo-katalogen ligger i [`oslo-restaurant-quality-audit-2026-09-11.md`](./oslo-restaurant-quality-audit-2026-09-11.md). Auditten er den operative researchkøen for restaurantdekning og erstatter ikke `catalog/` som produksjonssannhet.
+
 ## Prioritering mot Oslo-dekning
 
 Siste daterte kvalitets-/redundansaudit for Oslo ligger i [`oslo-restaurant-quality-gap-audit-2026-09-10.md`](./oslo-restaurant-quality-gap-audit-2026-09-10.md). Auditen er et research- og prioriteringssnapshot, ikke en parallell canonical katalog eller restaurantkvote.
