@@ -127,7 +127,7 @@ jobs:
           function normalizeIdentityText(value) {
             return String(value ?? "")
               .normalize("NFKD")
-              .replace(/[\\u0300-\\u036f]/g, "")
+              .replace(/[\u0300-\u036f]/g, "")
               .toLowerCase()
               .replace(/['’]/g, "")
               .replace(/[^a-z0-9]+/g, " ")
@@ -158,11 +158,11 @@ jobs:
               const url = new URL(value);
               const hostname = url.hostname
                 .toLowerCase()
-                .replace(/^www\\./, "")
-                .replace(/^meny\\./, "");
+                .replace(/^www\./, "")
+                .replace(/^meny\./, "");
               const pathname = url.pathname
-                .replace(/^\\/public\\//, "/")
-                .replace(/\\/+$/, "");
+                .replace(/^\/public\//, "/")
+                .replace(/\/+$/, "");
               return `${hostname}${pathname}`;
             } catch {
               return normalizeIdentityText(value);

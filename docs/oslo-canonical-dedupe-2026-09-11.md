@@ -46,7 +46,7 @@ Policy:
 ## Contract migrations
 
 - `sushi-dinner-oslo` keeps its established slug and absorbs the broader 170-item menu source/assertion contract from `dinner-sushi-oslo`.
-- `meraki-via-village-vika-oslo` keeps its established slug and absorbs the broader 16-item menu source/assertion contract from `meraki-via-village-oslo`.
+- `meraki-via-village-vika-oslo` keeps its established slug and its previously proven 13-item menu contract; the broader duplicate source was rejected after exact-head live validation returned 0/16.
 - `oslo-raw-frogner-oslo` keeps its established slug and absorbs the complete postal address and later verification metadata from `oslo-raw-frogner`.
 - `kinabolle-ensjo-oslo` and `kverneriet-solli-oslo` deliberately keep their first-party menu sources rather than replacing them with later secondary SeMeny duplicates.
 
