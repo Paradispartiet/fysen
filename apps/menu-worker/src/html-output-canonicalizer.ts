@@ -1,7 +1,7 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v7";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v8";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -28,6 +28,18 @@ const COMPONENT_QUANTITY_LABEL_ITEM =
   /^\d+\s+(?:types?|pieces?|kinds?)\s+of\b/iu;
 const TEMPORARY_CLOSURE_NOTICE_ITEM =
   /\b(?:sommerlukket|feriestengt|midlertidig\s+stengt|temporarily\s+closed|closed)\b.*\b\d{1,2}[./-]\d{1,2}/iu;
+const PREPARATION_LED_DISH_TITLE =
+  /^(?:bakt|grillet|stekt|fritert|braisert|røkt|dampet|baked|grilled|fried|braised|smoked|steamed)\s+\S+(?:\s+\S+){0,5}$/iu;
+
+function isPreparationLedDishTitle(value: string): boolean {
+  const name = value.trim();
+  if (!PREPARATION_LED_DISH_TITLE.test(name)) return false;
+  const letters = name.replace(/[^\p{L}]+/gu, "");
+  if (!letters) return false;
+  const allUpper = letters === letters.toLocaleUpperCase("nb-NO");
+  const words = name.split(/\s+/u).filter(Boolean);
+  return allUpper || words.length <= 4;
+}
 
 function samePrice(
   left: Pick<MenuObservedItem, "priceMinor">,
@@ -150,7 +162,11 @@ export function isUnambiguousSamePriceExcerptFragment(
   // A structurally nearby line is not stronger evidence when the line itself
   // is semantically description-like. This protects real dish titles such as
   // a named bánh mì from being replaced by its ingredient sentence.
-  if (looksLikeHtmlDescription(candidate.name)) return false;
+  if (
+    looksLikeHtmlDescription(candidate.name) &&
+    !isPreparationLedDishTitle(candidate.name)
+  )
+    return false;
 
   const candidateParts = excerptParts(candidate);
   if (
