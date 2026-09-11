@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "arakataka-oslo",
+    "name": "Arakataka",
+    "websiteUrl": "https://www.arakataka.no/",
+    "address": "Mariboes gate 7A, 0183 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91642422994796,
+    "longitude": 10.750685591240584
+  },
+  "menuSource": {
+    "url": "https://www.arakataka.no/_files/ugd/ae3af9_4ec3189fb8bf4ab7a9f6b65a061a0a0d.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 5,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "Current first-party site links this detailed menu PDF; live intake must prove PDF extraction and minimum coverage."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "6-retters meny",
+      "Charcuterie",
+      "Arakataco",
+      "Kongekrabbe & vaffel",
+      "Spaghetti & Löjrom"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "6-retters meny",
+        "priceMinor": 94500
+      },
+      {
+        "name": "Charcuterie",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Arakataco",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Kongekrabbe & vaffel",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Spaghetti & Löjrom",
+        "priceMinor": 31500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
