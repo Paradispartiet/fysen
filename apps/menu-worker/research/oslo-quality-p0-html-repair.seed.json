@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-quality-p0-html-repair",
+  "concurrency": 2,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "sjomagasinet-oslo",
+        "name": "Sjømagasinet",
+        "websiteUrl": "https://www.sjomagasinet.no/",
+        "address": "Tjuvholmen Allé 14, 0252 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.sjomagasinet.no/english",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Parser-repair proof for current first-party dish-level menu. Promotion remains blocked until semantic artifact QA is clean."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "fresh truffle and truffle and shallot dressing",
+        "daikon salad with citrus ponzu sauce",
+        "selection of seasonal vegetables from local producers",
+        "lemon and ginger butter, wine and cream"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "statholderens-mat-vinkjeller-oslo",
+        "name": "Statholderens Mat og Vinkjeller",
+        "websiteUrl": "https://statholdergaarden.no/",
+        "address": "Rådhusgate 11, 0151 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://statholdergaarden.no/smv/meny/alacarte",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Parser-repair proof for current first-party à la carte. Must recover Bakt Røye/Entrecote semantics before promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Agurk, reddik, potetchips,"
+      ]
+    }
+  ]
+}

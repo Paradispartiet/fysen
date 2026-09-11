@@ -19,7 +19,7 @@ describe("extractScopedHtmlMenu", () => {
     `;
 
     const result = extractScopedHtmlMenu(html);
-    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v21");
+    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v22");
     expect(result.items.map((item) => item.name)).toEqual(["Falafel", "Bakalawa"]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([9800, 12900]);
     expect(result.visibleText).not.toContain("Husets Cabernet");
@@ -502,6 +502,51 @@ describe("extractScopedHtmlMenu", () => {
     `;
     const result = extractScopedHtmlMenu(html);
     expect(result.items.some((entry) => entry.name === "Rykende fersk italiensk pizza fra steinovnen")).toBe(false);
+  });
+
+
+  it("applies strong local card-title recoveries even when they are a minority of a larger menu", () => {
+    const html = `
+      <html><body>
+        <h2>Forretter</h2>
+        <p>Krabbesalat 285 kr</p>
+        <p>Blomkål 245 kr</p>
+        <p>Carpaccio 285 kr</p>
+
+        <h2>Hovedretter</h2>
+        <div>
+          <h3>Bakt Røye</h3>
+          <p>Agurk, reddik, potetchips,</p>
+          <p>Pepperrot- sennep beurre blanc</p>
+          <p>535,-</p>
+        </div>
+        <p>Entrecote 545 kr</p>
+        <p>Svinenakke 475 kr</p>
+
+        <h2>Desserter</h2>
+        <div>
+          <h3>Norske oster</h3>
+          <p>Rosiner, aprikos, pekannøtter og basilikumhonning.</p>
+          <p>Maltbrød</p>
+          <p>395,-</p>
+        </div>
+      </body></html>
+    `;
+
+    const result = extractScopedHtmlMenu(html);
+    expect(result.items.map((item) => item.name)).toEqual([
+      "Krabbesalat",
+      "Blomkål",
+      "Carpaccio",
+      "Bakt Røye",
+      "Entrecote",
+      "Svinenakke",
+      "Norske oster",
+    ]);
+    expect(result.items.find((item) => item.name === "Bakt Røye")?.priceMinor).toBe(53500);
+    expect(result.items.find((item) => item.name === "Norske oster")?.priceMinor).toBe(39500);
+    expect(result.items.some((item) => item.name === "Agurk, reddik, potetchips,")).toBe(false);
+    expect(result.items.some((item) => item.name === "Maltbrød")).toBe(false);
   });
 
 });

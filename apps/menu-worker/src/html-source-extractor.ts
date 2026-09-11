@@ -11,7 +11,7 @@ import {
 } from "./html-extractor.js";
 import { recoverElementorPriceListHtmlItems } from "./html-elementor-price-list-recovery.js";
 
-export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v21";
+export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v22";
 
 const HEADING_MARKER = "__FYSEN_HEADING_LEVEL_";
 const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|vin\s*(?:&|og)\s*musserende|wine(?:\s+(?:list|menu))?|wine\s*(?:&|and)\s*sparkling|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
@@ -640,6 +640,7 @@ function extractStandalonePriceBlocks(
 interface CardRecovery {
   readonly lineIndex: number;
   readonly title: string;
+  readonly strength: "strong" | "fallback";
   readonly description?: string | null;
 }
 
@@ -691,6 +692,7 @@ function headingCardRecoveryAtItemPosition(
   return {
     lineIndex: position,
     title,
+    strength: "strong",
     description: descriptionLines.join(" ").trim() || null,
   };
 }
@@ -702,14 +704,14 @@ function cardRecoveryAtItemPosition(lines: readonly string[], item: MenuObserved
 
   if (PRICE_AT_END.test(pricedLine) && pricedLine.startsWith(item.name)) {
     const title = recoveredTitle(lines, position - 1);
-    return title ? { lineIndex: position, title } : null;
+    return title ? { lineIndex: position, title, strength: "strong" } : null;
   }
 
   if (STANDALONE_PRICE.test(pricedLine)) {
     const descriptionLine = lines[position - 1]?.trim() ?? "";
     if (!descriptionLine || !descriptionLine.startsWith(item.name)) return null;
     const title = recoveredTitle(lines, position - 2);
-    return title ? { lineIndex: position, title } : null;
+    return title ? { lineIndex: position, title, strength: "strong" } : null;
   }
 
   return null;
@@ -724,7 +726,7 @@ function findFallbackCardRecovery(
     const line = lines[index] ?? "";
     if (!PRICE_AT_END.test(line) || !line.startsWith(item.name)) continue;
     const title = recoveredTitle(lines, index - 1);
-    if (title) return { lineIndex: index, title };
+    if (title) return { lineIndex: index, title, strength: "fallback" };
   }
   return null;
 }
@@ -750,21 +752,37 @@ function recoverRepeatedCardTitles(
 
   for (const [itemIndex, item] of items.entries()) {
     if (!looksLikeCardDescription(item)) continue;
-    const recovery =
+    const strongRecovery =
       headingCardRecoveryAtItemPosition(lines, headingLevels, item) ??
-      cardRecoveryAtItemPosition(lines, item) ??
+      cardRecoveryAtItemPosition(lines, item);
+    const recovery =
+      strongRecovery ??
       findFallbackCardRecovery(lines, item, searchFrom);
     if (!recovery) continue;
-    searchFrom = recovery.lineIndex + 1;
+    if (recovery.strength === "fallback") {
+      searchFrom = recovery.lineIndex + 1;
+    }
     if (normalizeDishName(recovery.title) === item.normalizedName) continue;
     recoveries.set(itemIndex, recovery);
   }
 
-  if (recoveries.size < 2 || recoveries.size * 2 < items.length) return items;
+  const fallbackRecoveryCount = [...recoveries.values()].filter(
+    (recovery) => recovery.strength === "fallback",
+  ).length;
+  const fallbackRecoveryQualifies =
+    fallbackRecoveryCount >= 2 &&
+    fallbackRecoveryCount * 2 >= items.length;
+  const applicableRecoveries = new Map(
+    [...recoveries.entries()].filter(
+      ([, recovery]) =>
+        recovery.strength === "strong" || fallbackRecoveryQualifies,
+    ),
+  );
+  if (applicableRecoveries.size === 0) return items;
 
   const unique = new Map<string, MenuObservedItem>();
   for (const [itemIndex, item] of items.entries()) {
-    const recovery = recoveries.get(itemIndex);
+    const recovery = applicableRecoveries.get(itemIndex);
     const next = recovery
       ? (() => {
           const name = recovery.title;
