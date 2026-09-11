@@ -29,7 +29,9 @@
       },
       "actions": [],
       "assertionCount": 8,
-      "forbiddenDishNames": []
+      "forbiddenDishNames": [
+        "Search"
+      ]
     },
     {
       "version": 1,
@@ -57,7 +59,12 @@
       },
       "actions": [],
       "assertionCount": 8,
-      "forbiddenDishNames": []
+      "forbiddenDishNames": [
+        "Grisens Bayer 5,0% 0,25/0,4",
+        "marinated in Erling Skakke XO Cognac.",
+        "tartar sauce.",
+        "H.Br. Humlesus Citra Hop 4,5% 0,4"
+      ]
     },
     {
       "version": 1,
@@ -85,7 +92,9 @@
       },
       "actions": [],
       "assertionCount": 8,
-      "forbiddenDishNames": []
+      "forbiddenDishNames": [
+        "Onsdag"
+      ]
     },
     {
       "version": 1,
@@ -113,7 +122,9 @@
       },
       "actions": [],
       "assertionCount": 8,
-      "forbiddenDishNames": []
+      "forbiddenDishNames": [
+        "Ost og desserter / Cheese and desserts"
+      ]
     },
     {
       "version": 1,
@@ -141,7 +152,9 @@
       },
       "actions": [],
       "assertionCount": 8,
-      "forbiddenDishNames": []
+      "forbiddenDishNames": [
+        "Omeletter"
+      ]
     },
     {
       "version": 1,
@@ -174,34 +187,6 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "louise-restaurant-oslo",
-        "name": "Louise",
-        "websiteUrl": "https://www.restaurantlouise.no/no",
-        "address": "Stranden 3, 0250 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.restaurantlouise.no/no/meny_pdf",
-        "sourceType": "pdf",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-11",
-          "note": "Current first-party site exposes its menu through the /no/meny_pdf endpoint. Intake must prove that endpoint resolves to a current parseable priced food menu; otherwise Louise remains review."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
         "slug": "lofoten-fiskerestaurant-oslo",
         "name": "Lofoten Fiskerestaurant",
         "websiteUrl": "https://www.lofoten-fiskerestaurant.no/",
@@ -225,7 +210,11 @@
       },
       "actions": [],
       "assertionCount": 8,
-      "forbiddenDishNames": []
+      "forbiddenDishNames": [
+        "Small size (starter)",
+        "STARTERS",
+        "2 pcs / 4 pcs / 6 pcs"
+      ]
     },
     {
       "version": 1,
@@ -253,7 +242,9 @@
       },
       "actions": [],
       "assertionCount": 8,
-      "forbiddenDishNames": []
+      "forbiddenDishNames": [
+        "havsmaks 3-retter / havsmaks 3-course menu"
+      ]
     },
     {
       "version": 1,
@@ -309,7 +300,13 @@
       },
       "actions": [],
       "assertionCount": 8,
-      "forbiddenDishNames": []
+      "forbiddenDishNames": [
+        "Minimum 2 persons to order seafood platter",
+        "12 stk.:",
+        "Todays three-course dinner",
+        "Today’s dessert",
+        "Dagens dessert"
+      ]
     }
   ]
 }
