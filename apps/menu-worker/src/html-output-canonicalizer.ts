@@ -56,9 +56,11 @@ const WEEKDAY_ONLY_ITEM = new RegExp(
   "iu",
 );
 const GENERIC_SECTION_LABEL_ITEM =
-  /^(?:starters?|forretter?|omeletter|main\s+courses?|mains?|hovedretter?|desserter?\s*\/?\s*desserts?|ost\s+og\s+desserter\s*\/\s*cheese\s+and\s+desserts)$/iu;
+  /^(?:starters?|forretter?|omeletter|main\s+courses?|mains?|hovedretter?|hovedretter?\s*\/\s*main\s+courses?|desserter?\s*\/?\s*desserts?|ost\s+og\s+desserter\s*\/\s*cheese\s+and\s+desserts)$/iu;
 const QUANTITY_SERIES_LABEL_ITEM =
   /^\d+\s*(?:stk\.?|pcs?|pieces?)\s*:?(?:\s*\/\s*\d+\s*(?:stk\.?|pcs?|pieces?)\s*:?)+$/iu;
+const INCOMPLETE_ENGLISH_DESCRIPTION_ITEM =
+  /^(?:gratinated|served|fished|breaded)\s+(?:with|in|straight|from)\b/iu;
 const SINGLE_QUANTITY_DISPLAY_ITEM = /^\d+\s*(?:stk\.?|pcs?|pieces?)\s*:$/iu;
 const SIZE_CONTEXT_LABEL_ITEM =
   /^(?:small|large|big|liten|stor)(?:\s+size)?\s*\((?:starter|main(?:\s+course)?|forrett|hovedrett)\)$/iu;
@@ -359,6 +361,7 @@ function isOutputNoiseLabel(item: MenuObservedItem): boolean {
     WEEKDAY_ONLY_ITEM.test(name) ||
     GENERIC_SECTION_LABEL_ITEM.test(name) ||
     QUANTITY_SERIES_LABEL_ITEM.test(name) ||
+    INCOMPLETE_ENGLISH_DESCRIPTION_ITEM.test(name) ||
     SINGLE_QUANTITY_DISPLAY_ITEM.test(name) ||
     SIZE_CONTEXT_LABEL_ITEM.test(name) ||
     MINIMUM_PERSON_INSTRUCTION.test(name) ||
