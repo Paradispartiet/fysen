@@ -1,6 +1,7 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
+import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v6";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v7";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -27,6 +28,58 @@ const COMPONENT_QUANTITY_LABEL_ITEM =
   /^\d+\s+(?:types?|pieces?|kinds?)\s+of\b/iu;
 const TEMPORARY_CLOSURE_NOTICE_ITEM =
   /\b(?:sommerlukket|feriestengt|midlertidig\s+stengt|temporarily\s+closed|closed)\b.*\b\d{1,2}[./-]\d{1,2}/iu;
+const PREPARATION_LED_DISH_TITLE =
+  /^(?:bakt|grillet|stekt|fritert|braisert|røkt|dampet|baked|grilled|fried|braised|smoked|steamed)\s+\S+(?:\s+\S+){0,5}$/iu;
+
+function isPreparationLedDishTitle(value: string): boolean {
+  const name = value.trim();
+  if (!PREPARATION_LED_DISH_TITLE.test(name)) return false;
+  const letters = name.replace(/[^\p{L}]+/gu, "");
+  if (!letters) return false;
+  const allUpper = letters === letters.toLocaleUpperCase("nb-NO");
+  const words = name.split(/\s+/u).filter(Boolean);
+  const firstLetter = name.match(/\p{L}/u)?.[0] ?? "";
+  const startsUpper =
+    Boolean(firstLetter) &&
+    firstLetter === firstLetter.toLocaleUpperCase("nb-NO");
+  return allUpper || (startsUpper && words.length <= 4);
+}
+
+export function isStrongCanonicalDishTitle(value: string): boolean {
+  const name = value.trim();
+  const letters = name.replace(/[^\p{L}]+/gu, "");
+  if (!letters) return false;
+  const allUpper =
+    letters.length >= 4 && letters === letters.toLocaleUpperCase("nb-NO");
+  const firstLetter = name.match(/\p{L}/u)?.[0] ?? "";
+  const startsUpper =
+    Boolean(firstLetter) &&
+    firstLetter === firstLetter.toLocaleUpperCase("nb-NO");
+  const words = name.split(/\s+/u).filter(Boolean);
+  return (
+    allUpper ||
+    isPreparationLedDishTitle(name) ||
+    (startsUpper && words.length <= 4 && !looksLikeHtmlDescription(name))
+  );
+}
+
+function isLowercaseMultiword(value: string): boolean {
+  const name = value.trim();
+  const firstLetter = name.match(/\p{L}/u)?.[0] ?? "";
+  if (!firstLetter || firstLetter !== firstLetter.toLocaleLowerCase("nb-NO"))
+    return false;
+  return name.split(/\s+/u).filter(Boolean).length >= 2;
+}
+
+function looksLikeLowercaseSamePriceProse(value: string): boolean {
+  const name = value.trim();
+  if (!isLowercaseMultiword(name)) return false;
+  const words = name.split(/\s+/u).filter(Boolean);
+  return (
+    words.length >= 5 &&
+    (/[,;]/u.test(name) || /\b(?:and|with|og|med)\b/iu.test(name))
+  );
+}
 
 function samePrice(
   left: Pick<MenuObservedItem, "priceMinor">,
@@ -135,32 +188,94 @@ function excerptParts(item: MenuObservedItem): readonly string[] {
     .filter(Boolean);
 }
 
-function isLowerConfidenceSamePriceExcerptArtifact(
+function isStrictExcerptSuffix(
+  suffix: readonly string[],
+  full: readonly string[],
+): boolean {
+  if (suffix.length === 0 || suffix.length >= full.length) return false;
+  const offset = full.length - suffix.length;
+  return suffix.every((part, index) => full[offset + index] === part);
+}
+
+export function isUnambiguousSamePriceExcerptFragment(
+  fragment: MenuObservedItem,
+  candidate: MenuObservedItem,
+): boolean {
+  if (
+    candidate === fragment ||
+    !samePrice(candidate, fragment) ||
+    candidate.normalizedName === fragment.normalizedName
+  )
+    return false;
+
+  // Never demote an already strong canonical title merely because a trailing
+  // recovery candidate contains it in the same-price card.
+  if (isStrongCanonicalDishTitle(fragment.name)) return false;
+
+  // A structurally nearby line is not stronger evidence when the line itself
+  // is semantically description-like. This protects real dish titles such as
+  // a named bánh mì from being replaced by its ingredient sentence.
+  if (
+    looksLikeHtmlDescription(candidate.name) &&
+    !isPreparationLedDishTitle(candidate.name)
+  )
+    return false;
+
+  const fragmentParts = excerptParts(fragment);
+  const candidateParts = excerptParts(candidate);
+  const fragmentStartsTooEarly =
+    fragmentParts[0] === fragment.normalizedName &&
+    candidateParts[0] === candidate.normalizedName &&
+    isStrictExcerptSuffix(candidateParts, fragmentParts) &&
+    candidate.position >= fragment.position;
+
+  // If one recovery path starts exactly one or more lines too early while a
+  // second path independently recovers the complete same-price suffix, prefer
+  // the narrower title unless the broader head is itself a strong dish title.
+  if (fragmentStartsTooEarly) return true;
+
+  // Longer lower-case prose is description evidence when it follows a
+  // stronger same-price title in source order, even if the two recovery paths
+  // do not carry identical excerpts.
+  if (
+    looksLikeLowercaseSamePriceProse(fragment.name) &&
+    candidate.position < fragment.position
+  )
+    return true;
+
+  if (
+    candidateParts.length < 2 ||
+    candidateParts[0] !== candidate.normalizedName ||
+    !candidateParts.slice(1).includes(fragment.normalizedName)
+  )
+    return false;
+
+  // Lower-case multiword text explicitly embedded after a stronger same-price
+  // candidate is component/description evidence. Requiring excerpt containment
+  // prevents price coincidence alone from filtering legitimate lower-case dish
+  // names.
+  if (isLowercaseMultiword(fragment.name)) return true;
+
+  // Reciprocal excerpts are ambiguous unless source order identifies the
+  // leading title. In a normal card the canonical dish title precedes its
+  // same-price description/sauce fragment. Prefer that earlier non-description
+  // candidate; otherwise preserve both fail-closed.
+  const reciprocal =
+    fragmentParts.length >= 2 &&
+    fragmentParts[0] === fragment.normalizedName &&
+    fragmentParts.slice(1).includes(candidate.normalizedName);
+
+  if (!reciprocal) return true;
+  return candidate.position < fragment.position;
+}
+
+function isSamePriceExcerptFragment(
   item: MenuObservedItem,
   items: readonly MenuObservedItem[],
 ): boolean {
-  return items.some((candidate) => {
-    if (
-      candidate === item ||
-      !samePrice(candidate, item) ||
-      candidate.normalizedName === item.normalizedName ||
-      candidate.confidence < item.confidence + 0.1
-    )
-      return false;
-
-    const itemParts = excerptParts(item);
-    const candidateParts = excerptParts(candidate);
-    if (itemParts.length < 2 && candidateParts.length < 2) return false;
-
-    const itemMentionsCandidate =
-      itemParts[0] === item.normalizedName &&
-      itemParts.slice(1).includes(candidate.normalizedName);
-    const candidateMentionsItem =
-      candidateParts[0] === candidate.normalizedName &&
-      candidateParts.slice(1).includes(item.normalizedName);
-
-    return itemMentionsCandidate || candidateMentionsItem;
-  });
+  return items.some((candidate) =>
+    isUnambiguousSamePriceExcerptFragment(item, candidate),
+  );
 }
 
 function isHighPricedComponentQuantity(item: MenuObservedItem): boolean {
@@ -202,6 +317,6 @@ export function canonicalizeHtmlOutputItems(
       !isNumericTitleSuffixMisreadAsPrice(item, labelFilteredItems) &&
       !isAddonScopedDuplicate(item, labelFilteredItems) &&
       !isHighPricedComponentQuantity(item) &&
-      !isLowerConfidenceSamePriceExcerptArtifact(item, labelFilteredItems),
+      !isSamePriceExcerptFragment(item, labelFilteredItems),
   );
 }
