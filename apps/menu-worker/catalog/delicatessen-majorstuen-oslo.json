@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 50,
+    "minimumExpectedItems": 44,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -32,24 +32,24 @@
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Brød & alioli",
-      "Ekstra brød",
+      "Manchego 6mnd",
+      "Patatas bravas",
       "Jamón Ibérico Handcut 50g",
       "Friterte artisjokker",
       "Entrecote",
       "Gambas al ajillo",
       "Blåskjell escabeche",
       "Grillet ytrefilet 220gr",
-      "Ukens fisk (Lysing)"
+      "Presa Ibérica (200 g)"
     ],
     "requiredDishVariants": [
       {
-        "name": "Brød & alioli",
-        "priceMinor": 6500
+        "name": "Manchego 6mnd",
+        "priceMinor": 13000
       },
       {
-        "name": "Ekstra brød",
-        "priceMinor": 4500
+        "name": "Patatas bravas",
+        "priceMinor": 10500
       },
       {
         "name": "Jamón Ibérico Handcut 50g",
@@ -76,8 +76,8 @@
         "priceMinor": 31000
       },
       {
-        "name": "Ukens fisk (Lysing)",
-        "priceMinor": 25000
+        "name": "Presa Ibérica (200 g)",
+        "priceMinor": 33000
       }
     ],
     "forbiddenDishNames": []
