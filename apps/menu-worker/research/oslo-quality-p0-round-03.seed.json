@@ -29,35 +29,16 @@
       },
       "actions": [],
       "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "fyr-bistronomi-bar-oslo",
-        "name": "FYR Bistronomi & Bar",
-        "websiteUrl": "https://www.fyrbistronomi.no/",
-        "address": "Underhaugsveien 28, 0354 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.fyrbistronomi.no/sommermeny",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-11",
-          "note": "Current first-party seasonal page publishes named and individually priced dishes; intake must prove the live page remains the current canonical menu surface."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
+      "forbiddenDishNames": [
+        "kr 195",
+        "toast",
+        "egg cream",
+        "dill mayonnaise",
+        "mushroom mayonnaise",
+        "mushroom velouté",
+        "potato puré",
+        "pommes Anna"
+      ]
     },
     {
       "version": 1,
@@ -85,35 +66,11 @@
       },
       "actions": [],
       "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "rorbua-oslo",
-        "name": "Rorbua",
-        "websiteUrl": "https://rorbua.as/",
-        "address": "Stranden 71, 0250 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://rorbua.as/page/",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-11",
-          "note": "Current first-party HTML publishes named and individually priced Norwegian dishes. The live HTML is authoritative for this intake rather than older PDF pricing."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
+      "forbiddenDishNames": [
+        "Delefat for 2 eller 4 personar 295/",
+        "Kaffistova si fiskesuppe 225/",
+        "Gewürstraminer Vendage Tardive 2015, Hugel"
+      ]
     },
     {
       "version": 1,
@@ -141,7 +98,11 @@
       },
       "actions": [],
       "assertionCount": 8,
-      "forbiddenDishNames": []
+      "forbiddenDishNames": [
+        "Gjelder fra 19. august",
+        "Large",
+        "Small"
+      ]
     },
     {
       "version": 1,
@@ -169,7 +130,13 @@
       },
       "actions": [],
       "assertionCount": 8,
-      "forbiddenDishNames": []
+      "forbiddenDishNames": [
+        "røkt persillemajones",
+        "30 gr.",
+        "syltet delikatesseløk og hasselbackpotet",
+        "Holmenkollveien",
+        "Copyright © Frognerseteren"
+      ]
     },
     {
       "version": 1,
@@ -197,7 +164,13 @@
       },
       "actions": [],
       "assertionCount": 8,
-      "forbiddenDishNames": []
+      "forbiddenDishNames": [
+        "3 stk 195 kr / 6 stk",
+        "100 gr",
+        "Større cuts laget for deling, perfekt for to",
+        "For hele bordet",
+        "Sideretter"
+      ]
     }
   ]
 }

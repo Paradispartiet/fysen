@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v5");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v9");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -217,6 +217,57 @@ describe("structural HTML output canonicalization", () => {
     ];
     expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
       "Krabbesalat",
+    ]);
+  });
+
+  it("drops bilingual course-package labels and inherited extreme duplicate prices", () => {
+    const items = [
+      item("3-retters meny // 3 course menu", 89500),
+      item("3-retters meny // 3 course menu kr", 89500),
+      item("4-retters meny // 4 course menu", 99500),
+      item("5-retters meny // 5 course menu kr", 109500),
+      item("Tilslørte bondepiker", 14500),
+      item("Tilslørte bondepiker", 72500),
+      item("BEEF TARTARE", 27500),
+    ];
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => [entry.name, entry.priceMinor])).toEqual([
+      ["Tilslørte bondepiker", 14500],
+      ["BEEF TARTARE", 27500],
+    ]);
+  });
+
+  it("drops generic display metadata and lowercase same-price component fragments", () => {
+    const items = [
+      item("Grillet kveite", 49500),
+      item("røkt persillemajones", 49500),
+      item("Festningsburger", 26900),
+      item("BEEF TARTARE", 27500),
+      item("CHEESECAKE", 18500),
+      item("PETITS FOURS", 8500),
+      item("toast", 26900),
+      item("KALDE FORRETTER", 26900),
+      item("Sideretter", 9500),
+      item("For hele bordet", 9500),
+      item("30 gr.", 26900),
+      item("Large", 19500),
+      item("Gjelder fra 19. august", 19500),
+      item("Copyright © Frognerseteren", 202500),
+      item("Holmenkollveien", 202500),
+      item("Delefat for 2 eller 4 personar 295/", 29500),
+      item("3 stk 195 kr / 6 stk", 19500),
+      item("Gewürztraminer Vendage Tardive 2015, Hugel", 14900),
+      item("Gewürstraminer Vendage Tardive 2015, Hugel", 14900),
+      item("gr", 65000),
+      item("syltet delikatesseløk og hasselbackpotet", 45500),
+      item("trufle and porcini (wheat, milk, egg, sulfite)", 21000),
+      item("forest berries and milk icecream (milk, egg)", 18500),
+    ];
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Grillet kveite",
+      "Festningsburger",
+      "BEEF TARTARE",
+      "CHEESECAKE",
+      "PETITS FOURS",
     ]);
   });
 
