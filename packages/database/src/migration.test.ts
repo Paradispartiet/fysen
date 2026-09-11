@@ -24,6 +24,7 @@ describe("database migrations", () => {
       "0017_aha_min_mat.sql",
       "0018_menu_source_response_limit.sql",
       "0019_spring_rolls_dish_concept.sql",
+      "0020_menu_source_blocked_origins.sql",
     ]);
 
     const schemaSql = await readFile(new URL("../migrations/0001_menu_index.sql", import.meta.url), "utf8");
@@ -162,5 +163,14 @@ describe("database migrations", () => {
     expect(springRollsConceptSql).toContain("'Spring Rolls'");
     expect(springRollsConceptSql).toContain("'spring rolls'");
     expect(springRollsConceptSql).toContain("'both'");
+
+    const blockedOriginsSql = await readFile(
+      new URL("../migrations/0020_menu_source_blocked_origins.sql", import.meta.url),
+      "utf8",
+    );
+    expect(blockedOriginsSql).toContain("block_browser_request boolean NOT NULL DEFAULT false");
+    expect(blockedOriginsSql).toContain("DROP CONSTRAINT IF EXISTS menu_source_support_origin_has_purpose");
+    expect(blockedOriginsSql).toContain("AND NOT allow_redirect");
+    expect(blockedOriginsSql).toContain("AND NOT allow_browser_data");
   });
 });
