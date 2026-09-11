@@ -1,0 +1,203 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-quality-p0-round-03",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "festningen-restaurant-oslo",
+        "name": "Festningen Restaurant",
+        "websiteUrl": "https://www.festningenrestaurant.no/",
+        "address": "Myntgata 9, 0151 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.festningenrestaurant.no/middag",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party dinner page publishes named individually priced à la carte dishes alongside chef-menu packages."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "fyr-bistronomi-bar-oslo",
+        "name": "FYR Bistronomi & Bar",
+        "websiteUrl": "https://www.fyrbistronomi.no/",
+        "address": "Underhaugsveien 28, 0354 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.fyrbistronomi.no/sommermeny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party seasonal page publishes named and individually priced dishes; intake must prove the live page remains the current canonical menu surface."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "kaffistova-oslo",
+        "name": "Kaffistova",
+        "websiteUrl": "https://www.bondeheimen.no/kaffistova/heim",
+        "address": "Rosenkrantz' gate 8, 0159 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.bondeheimen.no/menyar/a-la-carte",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party à la carte publishes named and individually priced Norwegian dishes. The restaurant shares Bøndenes Hus/Hotell Bondeheimen; the seed uses the owner's registered Rosenkrantz' gate 8 building address for canonical geocoding while the public restaurant entrance is also described as Kristian IVs gate 2."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "rorbua-oslo",
+        "name": "Rorbua",
+        "websiteUrl": "https://rorbua.as/",
+        "address": "Stranden 71, 0250 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://rorbua.as/page/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party HTML publishes named and individually priced Norwegian dishes. The live HTML is authoritative for this intake rather than older PDF pricing."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "gamle-raadhus-restaurant-oslo",
+        "name": "Gamle Raadhus Restaurant",
+        "websiteUrl": "https://www.gamleraadhus.no/",
+        "address": "Nedre Slottsgate 1, 0157 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.gamleraadhus.no/kveldsmeny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party dinner menu effective 19 August 2026 publishes named and individually priced dishes."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "frognerseteren-finstua-oslo",
+        "name": "Frognerseteren Finstua",
+        "websiteUrl": "https://www.frognerseteren.no/",
+        "address": "Holmenkollveien 200, 0791 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.frognerseteren.no/restaurant-finstua-meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party Finstua page publishes a broad named and priced lunch/dinner menu."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "bristol-grill-oslo",
+        "name": "Bristol Grill",
+        "websiteUrl": "https://hotelbristol.no/",
+        "address": "Kristian IVs gate 7, 0164 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://hotelbristol.no/spise-pa-bristol/bristol-grill/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party Bristol Grill page publishes a substantial named and priced à la carte plus meat list. Kitchen hours are not promoted from this research seed."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ]
+}
