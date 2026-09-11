@@ -35,6 +35,7 @@ import {
 import {
   shouldForceReextract,
   watchMenuSourceOnce,
+  type MenuWatchOptions,
   type MenuWatchSummary,
 } from "./watcher.js";
 
@@ -254,13 +255,13 @@ async function onboardOne(
       await setMenuSourceEnabled(pool, source.id, false);
     }
     const menuHttpClient = new HttpMenuClient();
-    const watchMenu = () =>
+    const watchMenu = (options: MenuWatchOptions = {}) =>
       watchMenuSourceOnce(
         repository,
         source.id,
         menuHttpClient,
         manifest.menuSource.sourceSupport,
-        { allowDisabled: publishedSourceMigration },
+        { ...options, allowDisabled: publishedSourceMigration },
       );
 
     if (!candidate.active && !source.enabled) {
@@ -340,7 +341,7 @@ async function onboardOne(
         refreshCoverageTemporarilyDeactivated = true;
         latestRefreshSnapshotIsSafe = true;
 
-        firstWatch = await watchMenu();
+        firstWatch = await watchMenu({ acceptConfirmedSuspiciousDrop: true });
         if (!accepted(firstWatch)) {
           throw new Error(`First extractor refresh watch was ${firstWatch.outcome}`);
         }
