@@ -17,7 +17,7 @@ const SERVICE_CONTEXT_HEADING =
   /^(?:lunsjmeny|lunch\s+menu|kveldsmeny|dinner\s+menu)\b/iu;
 const PDF_ABV_ITEM = /\b\d{1,2}(?:[.,]\d+)?\s*%/u;
 const PDF_BEVERAGE_STYLE_ITEM =
-  /\b(?:øl|ale|ipa|pils(?:ner)?|weissbier|hveteøl|radler|beer|cider|stout|lager)\b/iu;
+  /\b(?:øl|ale|ipa|pils(?:ner)?|weissbier|hveteøl|radler|beer|cider|stout|lager|bayer)\b/iu;
 const PDF_BEVERAGE_VOLUME_ITEM =
   /\b\d(?:[.,]\d{1,2})(?:\s*(?:l|cl|ml))?(?:\s*\/\s*\d(?:[.,]\d{1,2})(?:\s*(?:l|cl|ml))?)?\b/iu;
 const PDF_ADDON_INSTRUCTION_ITEM =
@@ -226,7 +226,6 @@ export function disambiguateConflictingPdfSourceKeys(
 function looksLikePdfBeverageItem(name: string): boolean {
   const normalized = normalizeVisibleLine(name);
   return (
-    PDF_ABV_ITEM.test(normalized) &&
     PDF_BEVERAGE_STYLE_ITEM.test(normalized) &&
     PDF_BEVERAGE_VOLUME_ITEM.test(normalized)
   );
