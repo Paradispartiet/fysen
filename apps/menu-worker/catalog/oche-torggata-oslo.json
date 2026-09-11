@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 21,
+    "minimumExpectedItems": 17,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -25,8 +25,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-08-20",
-      "note": "Batch 01 locks identity and menu evidence first; no complete canonical kitchen-hours source has yet been verified, so open/closed must remain unknown."
+      "checkedAt": "2026-09-11",
+      "note": "Post-dedupe health reproof on 2026-09-11 revalidates the current menu source; kitchen-hours completeness remains unverified."
     }
   },
   "actions": [],
@@ -38,8 +38,8 @@
       "Nduja",
       "Mexican Snack",
       "Nachos! con salsa y guac",
-      "Oche Italian Sandwich",
-      "BROWNIE & ICE CREAM"
+      "BBQ Wings",
+      "Vegetarian Samosa"
     ],
     "requiredDishVariants": [
       {
@@ -67,12 +67,12 @@
         "priceMinor": 11900
       },
       {
-        "name": "Oche Italian Sandwich",
-        "priceMinor": 19900
+        "name": "BBQ Wings",
+        "priceMinor": 16900
       },
       {
-        "name": "BROWNIE & ICE CREAM",
-        "priceMinor": 9900
+        "name": "Vegetarian Samosa",
+        "priceMinor": 19900
       }
     ],
     "forbiddenDishNames": []
