@@ -82,3 +82,17 @@ Workflow-green is not sufficient for promotion. Full observed-name inspection fo
 - **Bristol Grill:** output includes quantity/price metadata and section/display labels such as `3 stk 195 kr / 6 stk`, `100 gr`, `For hele bordet` and `Sideretter`. Remains fail-closed.
 
 The six semantic-review candidates are not rejected. They should be reconsidered after generic parser/output hardening and exact-head reproof. No restaurant-specific exception, assertion weakening or artificial item-floor reduction is used.
+
+
+## Fresh-main semantic reproof and promotion follow-up
+
+PR #674 replayed the round-3 semantic hardening onto fresh `main` and removed the stale KornDoKKi/#131 recovery from this track. Final exact-head proof on `759c33ea473b2b513682f804a49ae88c68c35a3c` was green in CI, restaurant validation and batch intake.
+
+Full artifact QA produced the following final round-3 disposition:
+
+- **promotion-ready:** Festningen Restaurant (7 items), Kaffistova (17), Frognerseteren Finstua (27) and Bristol Grill (21);
+- **already canonical:** Rorbua;
+- **semantic-review:** Gamle Raadhus Restaurant, because the live artifact still promoted description/component fragments such as `Sitronette`, `Kald potet- og purreløkkrem` and `Kantarell` as standalone dishes;
+- **review:** FYR Bistronomi & Bar, because generic cleanup leaves only two unique priced dishes and the three-dish floor remains unchanged.
+
+The four promotion-ready manifests are promoted from the exact batch-intake artifact with digest `sha256:c42b97df34fff1e280865cbfee66d30773480e8ebbbc9d7f3525b221a18d853e`. No restaurant-specific extractor exception or assertion weakening is introduced.

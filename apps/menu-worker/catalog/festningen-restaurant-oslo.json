@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "festningen-restaurant-oslo",
+    "name": "Festningen Restaurant",
+    "websiteUrl": "https://www.festningenrestaurant.no/",
+    "address": "Myntgata 9, 0151 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90837759146266,
+    "longitude": 10.735619259812102
+  },
+  "menuSource": {
+    "url": "https://www.festningenrestaurant.no/middag",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 7,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "Current first-party dinner page publishes named individually priced à la carte dishes alongside chef-menu packages."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "SPEKEMAT",
+      "CURED MEAT",
+      "BEEF TARTARE",
+      "CHEESECAKE",
+      "BROWNED BUTTER ICE CREAM AND HAZELNUT PRALINE",
+      "PETITS FOURS",
+      "SELECTION OF CHEESE"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "SPEKEMAT",
+        "priceMinor": 15000
+      },
+      {
+        "name": "CURED MEAT",
+        "priceMinor": 15000
+      },
+      {
+        "name": "BEEF TARTARE",
+        "priceMinor": 27500
+      },
+      {
+        "name": "CHEESECAKE",
+        "priceMinor": 18500
+      },
+      {
+        "name": "BROWNED BUTTER ICE CREAM AND HAZELNUT PRALINE",
+        "priceMinor": 19500
+      },
+      {
+        "name": "PETITS FOURS",
+        "priceMinor": 8500
+      },
+      {
+        "name": "SELECTION OF CHEESE",
+        "priceMinor": 24500
+      }
+    ],
+    "forbiddenDishNames": [
+      "kr 195",
+      "toast",
+      "egg cream",
+      "dill mayonnaise",
+      "mushroom mayonnaise",
+      "mushroom velouté",
+      "potato puré",
+      "pommes Anna"
+    ]
+  }
+}
