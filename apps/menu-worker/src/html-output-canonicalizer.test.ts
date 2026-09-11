@@ -143,4 +143,19 @@ describe("structural HTML output canonicalization", () => {
     ]);
   });
 
+
+  it("drops only high-priced component-quantity labels while preserving a plausibly priced dish", () => {
+    const items = [
+      item("2 Types of oysters", 299500),
+      item("2 Types of oysters", 49500, "Shellfish Bar"),
+      item("I Deserved It Fish & Shellfish Plateau", 299500),
+    ];
+    expect(
+      canonicalizeHtmlOutputItems(items).map((entry) => [entry.name, entry.priceMinor]),
+    ).toEqual([
+      ["2 Types of oysters", 49500],
+      ["I Deserved It Fish & Shellfish Plateau", 299500],
+    ]);
+  });
+
 });

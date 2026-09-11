@@ -23,6 +23,8 @@ const WINE_PAIRING_LABEL_ITEM =
   /^(?:wine\s+pairing(?:\s+nok)?|vinpakke(?:\s+nok)?)$/iu;
 const COURSE_PACKAGE_LABEL_ITEM =
   /^(?:\d+\s*[- ]?course(?:\s+menu)?|\d+\s*[- ]?retters?\s+meny)\s*\/?\/?$/iu;
+const COMPONENT_QUANTITY_LABEL_ITEM =
+  /^\d+\s+(?:types?|pieces?|kinds?)\s+of\b/iu;
 
 function samePrice(
   left: Pick<MenuObservedItem, "priceMinor">,
@@ -124,6 +126,14 @@ function isAddonScopedDuplicate(
   );
 }
 
+function isHighPricedComponentQuantity(item: MenuObservedItem): boolean {
+  return Boolean(
+    item.priceMinor !== null &&
+      item.priceMinor >= 100_000 &&
+      COMPONENT_QUANTITY_LABEL_ITEM.test(item.name.trim()),
+  );
+}
+
 function isOutputNoiseLabel(item: MenuObservedItem): boolean {
   const name = item.name.trim();
   return (
@@ -152,6 +162,7 @@ export function canonicalizeHtmlOutputItems(
       !mirroredNames.has(item.normalizedName) &&
       !isNumericPrefixSuffixFragment(item, labelFilteredItems) &&
       !isNumericTitleSuffixMisreadAsPrice(item, labelFilteredItems) &&
-      !isAddonScopedDuplicate(item, labelFilteredItems),
+      !isAddonScopedDuplicate(item, labelFilteredItems) &&
+      !isHighPricedComponentQuantity(item),
   );
 }
