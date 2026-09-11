@@ -62,6 +62,7 @@ import {
 import {
   canonicalizeHtmlOutputItems,
   HTML_OUTPUT_CANONICALIZER_VERSION,
+  isLikelySamePriceCardFragment,
 } from "./html-output-canonicalizer.js";
 import {
   filterHtmlBeverageSectionItemsWithScopedProvenance,
@@ -246,11 +247,13 @@ function reconcileSelectedItemsWithTrailingCards(
   if (items.length === 0 || trailing.length === 0) return items;
 
   const reconciled = items.map((item) => {
-    if (item.priceMinor === null) return item;
+    if (item.priceMinor === null || !isLikelySamePriceCardFragment(item))
+      return item;
     const matches = trailing.filter((candidate) => {
       if (
         candidate.priceMinor !== item.priceMinor ||
-        candidate.normalizedName === item.normalizedName
+        candidate.normalizedName === item.normalizedName ||
+        isLikelySamePriceCardFragment(candidate)
       )
         return false;
       const parts = (candidate.sourceExcerpt ?? "")
