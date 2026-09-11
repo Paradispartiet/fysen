@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v5");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v6");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -174,6 +174,28 @@ describe("structural HTML output canonicalization", () => {
     expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
       "Entrecote",
       "Svinenakke",
+    ]);
+  });
+
+  it("does not let a description-like one-way candidate delete a named dish title", () => {
+    const items = [
+      item(
+        "Vietnamesisk Baguette (Bánh mì)",
+        16900,
+        null,
+        "Vietnamesisk Baguette (Bánh mì) — 169",
+      ),
+      item(
+        "2 stk. Svinekjøtt med scampi, salat og agurk.",
+        16900,
+        null,
+        "2 stk. Svinekjøtt med scampi, salat og agurk. — Vietnamesisk Baguette (Bánh mì) — 169",
+      ),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Vietnamesisk Baguette (Bánh mì)",
+      "2 stk. Svinekjøtt med scampi, salat og agurk.",
     ]);
   });
 
