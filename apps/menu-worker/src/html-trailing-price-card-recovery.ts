@@ -33,8 +33,6 @@ const EXPLICIT_A_LA_CARTE_SCOPE =
 const NEXT_MENU_SCOPE =
   /^(?:breakfast|frokost|brunch|lunch|lunsj|tasting\s+menu|set\s+menu|drinks?|drikke(?:meny)?|bar\s+menu)$/iu;
 const PLAIN_FOOD_SECTION_BOUNDARY =
-  /^(?:forretter?|starters?|appetizers?|småretter|small\s+(?:plates?|dishes?)|hovedretter?|mains?|main\s+courses?|dessert(?:er|s)?)$/iu;
-const PLAIN_FOOD_SECTION_BOUNDARY =
   /^(?:forretter?|starters?|appetizers?|småretter|small\s+plates?|hovedretter?|mains?|main\s+courses?|desserter?|desserts?|tilbehør|sides?|salater?|salads?|supper?|soups?)$/iu;
 const EXPLICIT_A_LA_CARTE_SECTION = "A LA CARTA";
 const MAX_PRECEDING_TITLE_DISTANCE = 12;
