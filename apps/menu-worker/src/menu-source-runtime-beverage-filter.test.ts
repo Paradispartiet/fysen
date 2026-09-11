@@ -71,6 +71,7 @@ describe("generic HTML canonical item filtering", () => {
     "Guinness",
     "Corona",
     "Munkholm",
+    "Kirin free 0.33L",
     "Aperol",
     "Mineralvann",
     "Capuccino",
