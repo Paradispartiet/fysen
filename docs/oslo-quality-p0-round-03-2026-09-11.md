@@ -82,3 +82,26 @@ Workflow-green is not sufficient for promotion. Full observed-name inspection fo
 - **Bristol Grill:** output includes quantity/price metadata and section/display labels such as `3 stk 195 kr / 6 stk`, `100 gr`, `For hele bordet` and `Sideretter`. Remains fail-closed.
 
 The six semantic-review candidates are not rejected. They should be reconsidered after generic parser/output hardening and exact-head reproof. No restaurant-specific exception, assertion weakening or artificial item-floor reduction is used.
+## Fresh-main semantic reproof after parser hardening
+
+PR #674 was replayed onto fresh canonical `main` `aeb195065dc8430db88fa4f9e427a310318b4624` before final proof. The fresh exact-head was `b5767c1370a11af80af2c78d6c4b92c6c422a143`.
+
+Authoritative fresh-head gates:
+
+- CI #2396: success;
+- Validate Fysen restaurant changes #908: success;
+- Restaurant batch intake #546: success;
+- intake artifact: `restaurant-batch-intake-b5767c1370a11af80af2c78d6c4b92c6c422a143`;
+- artifact digest: `sha256:54605312b7cc4a088e63ca877d030f29102444a26ba89e156a69d511314fc4a6`.
+
+Full output QA then classified the remaining candidates as follows:
+
+- **Kaffistova — promotion-ready:** 17/17 observed items are coherent dish output; the previously observed malformed multi-price and wine leakage are absent.
+- **Frognerseteren Finstua — promotion-ready:** 27/27 observed items are coherent menu items across lunch and dinner; the previously observed description/address/copyright leakage is absent.
+- **Bristol Grill — promotion-ready:** 21/21 observed items are real priced menu items. The retained `150g Himeji A5 Wagyu Ribeye` entry is a genuine priced meat cut on the first-party meat list, not quantity metadata.
+- **Festningen Restaurant — semantic-review:** the parser is materially cleaner but still emits the same physical item bilingually as separate canonical dishes (`SPEKEMAT` / `CURED MEAT`). This is not promoted merely because strict validation is green.
+- **Gamle Raadhus Restaurant — semantic-review:** output still promotes garnish/description fragments such as `Sitronette`, `Kald potet- og purreløkkrem` and `Kantarell` as dishes. The first-party page shows these as components beneath other dishes, so promotion remains fail-closed.
+- **FYR Bistronomi & Bar — review:** remains below the unchanged three-dish floor after generic cleanup.
+
+The permanent round-3 reproof seed is therefore narrowed to **Kaffistova, Frognerseteren Finstua and Bristol Grill**. Festningen, Gamle Raadhus and FYR remain review items for later generic parser work. No restaurant-specific extractor exception or weaker floor is introduced.
+
