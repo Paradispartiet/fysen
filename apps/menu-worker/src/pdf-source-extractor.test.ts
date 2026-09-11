@@ -28,7 +28,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v15");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v16");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -98,6 +98,21 @@ describe("PDF source scope", () => {
       "Grisens burger",
       "Beer battered fish",
     ]);
+  });
+
+  it("drops parenthetical allergen-only PDF rows without hiding real dishes", () => {
+    const lines = [
+      "PIZZA AL FORNO DA LEGNA",
+      "DI MARE 220",
+      "(Fisk, skalldyr) 220",
+      "SKUR 33 185",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.some((item) => item.name === "(Fisk, skalldyr)")).toBe(false);
+    expect(scoped.some((item) => item.name === "DI MARE")).toBe(true);
+    expect(scoped.some((item) => item.name === "SKUR 33")).toBe(true);
   });
 
   it("fails closed when conflicting same-name prices cannot be bound to distinct menu sections", () => {
