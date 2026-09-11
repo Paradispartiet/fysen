@@ -177,6 +177,36 @@ describe("structural HTML output canonicalization", () => {
     ]);
   });
 
+  it("preserves canonical same-price dishes when neighboring card excerpts merely mention them", () => {
+    const items = [
+      item("Diavola", 25900),
+      item("Chef Special", 25900, null, "Chef Special — Diavola — 259"),
+      item("NO 7 Spicy Cumin Lamb", 20900),
+      item(
+        "Homemade Noodles",
+        20900,
+        null,
+        "Homemade Noodles — NO 7 Spicy Cumin Lamb — 209",
+      ),
+      item("DAMPET HAVABBOR 特 色 蒸 海 鱼", 39800),
+      item(
+        "Signatur Klassisk",
+        39800,
+        null,
+        "Signatur Klassisk — DAMPET HAVABBOR 特 色 蒸 海 鱼 — 398",
+      ),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Diavola",
+      "Chef Special",
+      "NO 7 Spicy Cumin Lamb",
+      "Homemade Noodles",
+      "DAMPET HAVABBOR 特 色 蒸 海 鱼",
+      "Signatur Klassisk",
+    ]);
+  });
+
   it("drops temporary closure notices that were misread as priced first cards", () => {
     const items = [
       item(
