@@ -548,7 +548,7 @@ export async function extractMenuSource(
           ? priceWrappedItems
           : recoveredItems;
     const structurallyReconciledPreferredItems =
-      extracted.method === "html_heuristic" && !strongTitlePricePreferred
+      extracted.method === "html_heuristic"
         ? reconcileSelectedItemsWithTrailingCards(
             preferredItems,
             trailingPriceCardItems,
