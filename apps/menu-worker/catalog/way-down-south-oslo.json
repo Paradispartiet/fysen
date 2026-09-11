@@ -15,7 +15,13 @@
     "sourceType": "html",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 8
+    "minimumExpectedItems": 8,
+    "fetchMode": "browser",
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
   },
   "hoursSource": {
     "url": "https://www.waydownsouth.no/",
@@ -33,8 +39,8 @@
   ],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Chicken Ceasar Burger",
-      "Beef Cheek Burger - 130g",
+      "Chicken Caesar Burger",
+      "Beef Cheek Burger, 130 g",
       "Pecorino & Truffle Mac 'N' Cheese"
     ]
   }

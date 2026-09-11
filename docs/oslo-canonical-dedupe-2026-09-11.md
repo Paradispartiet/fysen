@@ -45,7 +45,7 @@ Policy:
 
 ## Contract migrations
 
-- `sushi-dinner-oslo` keeps its established slug and absorbs the broader 170-item menu source/assertion contract from `dinner-sushi-oslo`.
+- `sushi-dinner-oslo` keeps its established slug and its previously proven 95-item canonical source; the broader duplicate source was reverted after post-merge production materialization returned `extraction_error` on the staged migration.
 - `meraki-via-village-vika-oslo` keeps its established slug and its previously proven 13-item menu contract; the broader duplicate source was rejected after exact-head live validation returned 0/16.
 - `oslo-raw-frogner-oslo` keeps its established slug and absorbs the complete postal address and later verification metadata from `oslo-raw-frogner`.
 - `kinabolle-ensjo-oslo` and `kverneriet-solli-oslo` deliberately keep their first-party menu sources rather than replacing them with later secondary SeMeny duplicates.
@@ -55,3 +55,9 @@ Policy:
 The permanent materializer calls `reconcileRestaurantCatalogCoverage()` after successful onboarding. Removed Oslo slugs are therefore deactivated and their enabled menu, hours and action sources are disabled transactionally. No direct production SQL mutation is required.
 
 The intake workflow now rejects a new non-reproof candidate when it collides with a canonical menu source or with the same normalized address plus a strongly matching restaurant name. Different restaurants sharing a food-hall address are not rejected on address alone.
+
+## Post-merge materialization repair
+
+- The first dedupe materialization exposed two blocking source-health issues before coverage reconciliation could run.
+- `sushi-dinner-oslo` is restored to the previously proven canonical source.
+- `way-down-south-oslo` still publishes the same burgers on its first-party menu. Rendered validation exposed their current canonical labels as `Chicken Caesar Burger` and `Beef Cheek Burger, 130 g`; the stale spelling/format assertions are updated, and browser fetch is retained because it observes 21 current items versus 20 through the HTTP production pass.
