@@ -18,6 +18,8 @@ const SERVICE_CONTEXT_HEADING =
 const PDF_ABV_VOLUME_ITEM =
   /\b\d{1,2}(?:[.,]\d+)?\s*%\s+\d(?:[.,]\d+)(?:\s*\/\s*\d(?:[.,]\d+)?)?\b/u;
 const PDF_LOWERCASE_SENTENCE_FRAGMENT = /^[a-zæøå].{2,220}[.]$/u;
+const PDF_PARENTHETICAL_ALLERGEN_ITEM =
+  /^\(\s*(?:(?:fisk|fish|skalldyr|shellfish|bløtdyr|molluscs?|melk|milk|laktose|lactose|egg|eggs?|hvete|wheat|hvetegluten|gluten|soya?|soy|selleri|celery|sennep|mustard|sesam|sesame|sulfitt|sulphites?|nøtter?|nuts?|peanøtter?|peanuts?|lupin|citrus|sitrus)\s*[,/+&]?\s*)+\)$/iu;
 const TRAILING_SHARING_TAGLINE =
   /\s+(?:perfekt\s+å\s+dele|perfect\s+for\s+sharing)!?$/iu;
 const RECOVERY_ALLERGEN_CODES = new Set([
@@ -222,7 +224,10 @@ function looksLikePdfBeverageItem(name: string): boolean {
 
 function looksLikePdfDescriptionFragment(name: string): boolean {
   const normalized = normalizeVisibleLine(name);
-  return PDF_LOWERCASE_SENTENCE_FRAGMENT.test(normalized);
+  return (
+    PDF_LOWERCASE_SENTENCE_FRAGMENT.test(normalized) ||
+    PDF_PARENTHETICAL_ALLERGEN_ITEM.test(normalized)
+  );
 }
 
 function looksLikePricingMetadata(name: string): boolean {
