@@ -35,7 +35,7 @@ const NEXT_MENU_SCOPE =
 const PLAIN_FOOD_SECTION_BOUNDARY =
   /^(?:forretter?|starters?|appetizers?|småretter|small\s+plates?|hovedretter?|mains?|main\s+courses?|desserter?|desserts?|tilbehør|sides?|salater?|salads?|supper?|soups?)$/iu;
 const DYNAMIC_PRICE_BOUNDARY =
-  /^(?:dagens\s+pris|market\s+price|mkt\.?\s*price)$/iu;
+  /^(?:dagens\s+pris|market\s+price|mkt\.?\s*price)(?:\s*,?\s*-)?$/iu;
 const MULTI_PRICE_BOUNDARY =
   /^(?=.*\b[1-9]\d{1,3}\b)(?=.*\/.*\b[1-9]\d{1,3}\b).+$/u;
 const SHORT_PREPARATION_TITLE =
