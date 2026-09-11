@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v4");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v5");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -174,6 +174,42 @@ describe("structural HTML output canonicalization", () => {
     expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
       "Entrecote",
       "Svinenakke",
+    ]);
+  });
+
+  it("preserves reciprocal same-price title/description evidence instead of deleting the real dish", () => {
+    const items = [
+      item(
+        "Diavola",
+        25900,
+        null,
+        "Diavola — Rykende fersk italiensk pizza fra steinovnen — 259",
+      ),
+      item(
+        "Rykende fersk italiensk pizza fra steinovnen",
+        25900,
+        null,
+        "Rykende fersk italiensk pizza fra steinovnen — Diavola — 259",
+      ),
+      item(
+        "Hommus",
+        9800,
+        null,
+        "Hommus — Moste kikerter med sesam, hvitløk og olivenolje — 98",
+      ),
+      item(
+        "Moste kikerter med sesam, hvitløk og olivenolje",
+        9800,
+        null,
+        "Moste kikerter med sesam, hvitløk og olivenolje — Hommus — 98",
+      ),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Diavola",
+      "Rykende fersk italiensk pizza fra steinovnen",
+      "Hommus",
+      "Moste kikerter med sesam, hvitløk og olivenolje",
     ]);
   });
 
