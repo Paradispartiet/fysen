@@ -1,7 +1,7 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v6";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v7";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -160,17 +160,18 @@ export function isUnambiguousSamePriceExcerptFragment(
   )
     return false;
 
-  // Reciprocal excerpts are structurally ambiguous: both parser candidates
-  // claim the other name inside the same-price card. The v4 behavior treated
-  // that ambiguity as proof and could delete the real dish (and sometimes
-  // both sides of the pair). Fail closed by preserving reciprocal pairs.
+  // Reciprocal excerpts are ambiguous unless source order identifies the
+  // leading title. In a normal card the canonical dish title precedes its
+  // same-price description/sauce fragment. Prefer that earlier non-description
+  // candidate; otherwise preserve both fail-closed.
   const fragmentParts = excerptParts(fragment);
   const reciprocal =
     fragmentParts.length >= 2 &&
     fragmentParts[0] === fragment.normalizedName &&
     fragmentParts.slice(1).includes(candidate.normalizedName);
 
-  return !reciprocal;
+  if (!reciprocal) return true;
+  return candidate.position < fragment.position;
 }
 
 function isSamePriceExcerptFragment(
