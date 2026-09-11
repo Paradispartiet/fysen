@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v12";
+  "trailing-price-card-v13";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -38,6 +38,8 @@ const DYNAMIC_PRICE_BOUNDARY =
   /^(?:dagens\s+pris|market\s+price|mkt\.?\s*price)(?:\s*,?\s*-)?$/iu;
 const MULTI_PRICE_BOUNDARY =
   /^(?=.*\b[1-9]\d{1,3}\b)(?=.*\/.*\b[1-9]\d{1,3}\b).+$/u;
+const PRICE_PER_QUANTITY_METADATA =
+  /^(?:(?:nok|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)?\s*\/\s*\d+\s*(?:biter|pieces?|pcs?|stk)\b/iu;
 const SHORT_PREPARATION_TITLE =
   /^(?:bakt|grillet|stekt|fritert|braisert|røkt|baked|grilled|fried|braised|smoked)\s+\p{L}+(?:\s+\p{L}+){0,2}$/iu;
 const COMPONENT_QUANTITY_LABEL =
@@ -128,7 +130,8 @@ function looksLikeDishTitle(value: string): boolean {
     parseTrailingPrice(title) ||
     isUnpricedPriceBoundary(title) ||
     SECTION_OR_UI_LABEL.test(title) ||
-    UI_ACTION_LEAD.test(title)
+    UI_ACTION_LEAD.test(title) ||
+    PRICE_PER_QUANTITY_METADATA.test(title)
   )
     return false;
   if (looksLikeDescription(title) || /^(?:©|™|https?:\/\/|www\.)/iu.test(title))
