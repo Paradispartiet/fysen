@@ -502,11 +502,18 @@ export async function extractMenuSource(
             priceWrappedItems.length >= recoveredItems.length * 2
           ? priceWrappedItems
           : recoveredItems;
+    const structurallySupplementedPreferredItems =
+      extracted.method === "html_heuristic" && strongTitlePricePreferred
+        ? mergeMissingRecoveredItems(preferredItems, trailingPriceCardItems)
+        : preferredItems;
     const recoveredSupplementedItems =
       extracted.method === "html_heuristic" &&
       !isolatedSemanticRecoveryPreferred
-        ? mergeMissingRecoveredItems(preferredItems, recoveredItems)
-        : preferredItems;
+        ? mergeMissingRecoveredItems(
+            structurallySupplementedPreferredItems,
+            recoveredItems,
+          )
+        : structurallySupplementedPreferredItems;
     const headingSupplementedItems =
       extracted.method === "html_heuristic" &&
       !strongTitlePricePreferred

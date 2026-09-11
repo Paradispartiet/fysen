@@ -166,4 +166,78 @@ describe("HTML runtime recovery selection", () => {
       ["Chilli cowboy", 24000],
     ]);
   });
+
+  it("keeps structured Statholderens-style dish titles and removes same-price sauce fragments", async () => {
+    const result = await extract(`
+      <html><body>
+        <h2>Forretter</h2>
+        <p>Krabbesalat</p>
+        <p>Sitronemulsjon, toast,</p>
+        <p>røkt eplebuljong</p>
+        <p>Skalldyr, egg, hvete, sulfitt, sennep, melk</p>
+        <p>285,-</p>
+        <p>Blomkål</p>
+        <p>Brunet smøremulsjon, portobellosopp,</p>
+        <p>Yuzu</p>
+        <p>Sennep, egg, sulfitt, melk, hvete, selleri</p>
+        <p>245,-</p>
+        <p>Carpaccio</p>
+        <p>Parmesanemulsjon, kapers, sjalottløk,</p>
+        <p>ruccola, pinjekjerner.</p>
+        <p>Egg, sennep, sulfitt, pinjekjerner, melk</p>
+        <p>285,-</p>
+        <h2>Hovedretter</h2>
+        <p>Bakt Røye</p>
+        <p>Agurk, reddik, potetchips,</p>
+        <p>Pepperrot- sennep beurre blanc</p>
+        <p>Fisk, melk, sulfitt, sennep</p>
+        <p>535,-</p>
+        <p>Dagens fisk</p>
+        <p>Boc choy, fennikel crudite, blåskjellsaus, tomat</p>
+        <p>fisk, melk, skalldyr,selleri, sulfitt, hvete, sennep, egg</p>
+        <p>Dagens pris,-</p>
+        <p>Entrecote</p>
+        <p>Grilla selleri, sellerirot, syltet rødløk, portobello, grønkål,</p>
+        <p>estragonsaus</p>
+        <p>hvete, melk, sulfitt, sennep, selleri</p>
+        <p>545,-</p>
+        <p>Svinenakke</p>
+        <p>Mais, nepe, tomat, sukkererter,</p>
+        <p>Sjalottløk- timian saus</p>
+        <p>Sulfitt, selleri, sennep, melk, hvete, bygg</p>
+        <p>475,-</p>
+        <h2>Desserter</h2>
+        <p>Dagens oster</p>
+        <p>Fruktkompott, pecan, knekkebrød,</p>
+        <p>Tranebær, gastrix</p>
+        <p>Melk, hvete, sulfitt, pekannøtter</p>
+        <p>255,-</p>
+        <p>Melkesjokolade bonnet</p>
+        <p>Mandel- rips kake, vanilje,</p>
+        <p>Rips- shiso sorbet</p>
+        <p>Melk, egg, mandel, hvete</p>
+        <p>250,-</p>
+        <p>Vaniljeparfait</p>
+        <p>Bringebær, karamellsaus</p>
+        <p>Melk, hvete, egg</p>
+        <p>250,-</p>
+        <p>Liten frisk</p>
+        <p>190,-</p>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Krabbesalat", 28500],
+      ["Blomkål", 24500],
+      ["Carpaccio", 28500],
+      ["Bakt Røye", 53500],
+      ["Entrecote", 54500],
+      ["Svinenakke", 47500],
+      ["Dagens oster", 25500],
+      ["Melkesjokolade bonnet", 25000],
+      ["Vaniljeparfait", 25000],
+      ["Liten frisk", 19000],
+    ]);
+  });
+
 });

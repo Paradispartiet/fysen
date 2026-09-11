@@ -37,7 +37,7 @@ const PLAIN_FOOD_SECTION_BOUNDARY =
 const DYNAMIC_PRICE_BOUNDARY =
   /^(?:dagens\s+pris|market\s+price|mkt\.?\s*price)$/iu;
 const MULTI_PRICE_BOUNDARY =
-  /^(?:(?:kr\.?|nok)\s*)?[1-9]\d{1,3}\s*(?:(?:piece|pieces|pcs?|stk)\s*)?\/\s*(?:(?:kr\.?|nok)\s*)?[1-9]\d{1,3}\b/iu;
+  /^(?=.*\b[1-9]\d{1,3}\b)(?=.*\/.*\b[1-9]\d{1,3}\b).+$/u;
 const SHORT_PREPARATION_TITLE =
   /^(?:bakt|grillet|stekt|fritert|braisert|røkt|baked|grilled|fried|braised|smoked)\s+\p{L}+(?:\s+\p{L}+){0,2}$/iu;
 const COMPONENT_QUANTITY_LABEL =
@@ -126,6 +126,7 @@ function looksLikeDishTitle(value: string): boolean {
   if (title.startsWith(HEADING_MARKER)) return false;
   if (
     parseTrailingPrice(title) ||
+    isUnpricedPriceBoundary(title) ||
     SECTION_OR_UI_LABEL.test(title) ||
     UI_ACTION_LEAD.test(title)
   )
