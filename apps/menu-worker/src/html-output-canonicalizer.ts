@@ -49,15 +49,70 @@ const ALLERGEN_DESCRIPTION_PAREN =
   /\([^)]*\b(?:milk|egg|wheat|gluten|sulfite|sulphite|melk|egg|hvete|skalldyr|shellfish|nuts?|nøtter?)\b[^)]*\)$/iu;
 const TRAILING_CURRENCY_WORD = /\s+(?:kr\.?|nok)$/iu;
 const UI_ONLY_ITEM = /^(?:search|søk)$/iu;
-const WEEKDAY_ONLY_ITEM =
-  /^(?:mandag|tirsdag|onsdag|torsdag|fredag|lørdag|søndag|monday|tuesday|wednesday|thursday|friday|saturday|sunday)$/iu;
+const WEEKDAY_TOKEN =
+  "(?:mandag|tirsdag|onsdag|torsdag|fredag|lørdag|søndag|monday|tuesday|wednesday|thursday|friday|saturday|sunday)";
+const WEEKDAY_ONLY_ITEM = new RegExp(
+  `^${WEEKDAY_TOKEN}(?:\\s*(?:/|[-–—]|og|and)\\s*${WEEKDAY_TOKEN}){0,2}import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
+
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v12";
+
+const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
+const ADDON_SECTION_HINT =
+  /^(?:add|with|legg\s+til|med)\b.*(?:\+\s*(?:kr\.?\s*)?\d+|\b\d+\s*(?:,-|kr\.?|nok)(?:\s|$))/iu;
+const BADGE_ONLY_ITEM = /^(?:veg(?:etarian)?(?:\s+spicy)?|spicy)$/iu;
+const BRANDED_MENU_SECTION_ITEM =
+  /^(?:[A-ZÆØÅ]{2,24}\s+)(?:RAW|MAKI|TACO|SMÅRETTER|SALATER|VEGANSK|SHARING)$/u;
+const PER_PERSON_PRICE_DISPLAY_ONLY_ITEM =
+  /^(?:(?:nok|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*,?[–—-]\s+per\s+(?:person|pers\.?)$/iu;
+const DAILY_MENU_LABEL_ITEM =
+  /^dagens\s+(?:veganske|vegetariske)\s+meny$/iu;
+const COMMON_FOOD_SECTION_ITEM = /^(?:dumplings?|proteins?)$/iu;
+const UPGRADE_SECTION_ITEM =
+  /^(?:upgrades?\s*(?:&|and)\s*extras?|give\s+me\s+an\s+upgrade|select\s+your\s+topping!?)$/iu;
+const SHORT_ALLERGEN_CODE_ITEM = /^[A-ZÆØÅ]{1,2}$/u;
+const MULTI_PRICE_DISPLAY_ITEM =
+  /^(?:(?:kr\.?|nok)\s*)?[1-9]\d{1,3}\s*(?:(?:piece|pieces|pcs?|stk)\s*)?\/\s*(?:(?:kr\.?|nok)\s*)?[1-9]\d{1,3}\b/iu;
+const SUPPLEMENT_LABEL_ITEM = /^(?:supplement|tillegg)\s*:?$/iu;
+const WINE_PAIRING_LABEL_ITEM =
+  /^(?:wine\s+pairing(?:\s+nok)?|vinpakke(?:\s+nok)?)$/iu;
+const COURSE_PACKAGE_LABEL_ITEM =
+  /^(?:\d+\s*[- ]?(?:course(?:\s+menu)?|retters?\s+meny))(?:\s*\/\/\s*\d+\s*[- ]?(?:course(?:\s+menu)?|retters?\s+meny))?(?:\s+kr)?$/iu;
+const COMPONENT_QUANTITY_LABEL_ITEM =
+  /^\d+\s+(?:types?|pieces?|kinds?)\s+of\b/iu;
+const TEMPORARY_CLOSURE_NOTICE_ITEM =
+  /\b(?:sommerlukket|feriestengt|midlertidig\s+stengt|temporarily\s+closed|closed)\b.*\b\d{1,2}[./-]\d{1,2}/iu;
+
+const PRICE_ONLY_ITEM = /^(?:kr\.?|nok)\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?$/iu;
+const SIZE_ONLY_ITEM = /^(?:small|large|liten|stor)$/iu;
+const QUANTITY_ONLY_ITEM = /^\d+(?:[.,]\d+)?\s*(?:gr\.?|g|kg|stk|pcs?)$/iu;
+const DATE_NOTICE_ITEM = /^(?:gjelder|gyldig|valid)\b.*\b\d{1,2}\.?\s+[\p{L}]+/iu;
+const COPYRIGHT_METADATA_ITEM = /^copyright\s*©?/iu;
+const ADDRESS_METADATA_ITEM =
+  /^(?:[A-ZÆØÅ][\p{L}.-]+(?:veien|gata|gaten|gate|allé|alle|plass|torget))$/u;
+const COMMON_DISPLAY_LABEL_ITEM =
+  /^(?:kalde?\s+forretter|sideretter|for\s+hele\s+bordet)$/iu;
+const SHARE_DISPLAY_ITEM =
+  /^(?:større\s+cuts?\s+laget\s+for\s+deling.*)$/iu;
+const TRAILING_INCOMPLETE_MULTI_PRICE_ITEM = /\b[1-9]\d{1,3}\s*\/\s*$/u;
+const QUANTITY_PRICE_SPLIT_ITEM =
+  /^\d+\s*(?:stk|pcs?|pieces?)\s+[1-9]\d{1,3}\s*(?:kr\.?|nok)?\s*\/\s*\d+\s*(?:stk|pcs?|pieces?)?$/iu;
+const WINE_VINTAGE_ITEM =
+  /\b(?:gew(?:ü|u)r(?:z|s)traminer|riesling|chardonnay|pinot\s+noir|cabernet|merlot|sauvignon)\b.*\b(?:19|20)\d{2}\b/iu;
+const BARE_UNIT_ITEM = /^(?:gr\.?|gram|grams?|stk|pcs?)$/iu;
+const ALLERGEN_DESCRIPTION_PAREN =
+  /\([^)]*\b(?:milk|egg|wheat|gluten|sulfite|sulphite|melk|egg|hvete|skalldyr|shellfish|nuts?|nøtter?)\b[^)]*\)$/iu;
+const TRAILING_CURRENCY_WORD = /\s+(?:kr\.?|nok)$/iu;
+const UI_ONLY_ITEM = /^(?:search|søk)$/iu;
+,
+  "iu",
+);
 const GENERIC_SECTION_LABEL_ITEM =
-  /^(?:starters?|forretter?|omeletter|ost\s+og\s+desserter\s*\/\s*cheese\s+and\s+desserts)$/iu;
+  /^(?:starters?|forretter?|omeletter|main\s+courses?|mains?|hovedretter?|desserter?\s*\/?\s*desserts?|ost\s+og\s+desserter\s*\/\s*cheese\s+and\s+desserts)$/iu;
 const QUANTITY_SERIES_LABEL_ITEM =
   /^\d+\s*(?:stk\.?|pcs?|pieces?)\s*:?(?:\s*\/\s*\d+\s*(?:stk\.?|pcs?|pieces?)\s*:?)+$/iu;
 const SINGLE_QUANTITY_DISPLAY_ITEM = /^\d+\s*(?:stk\.?|pcs?|pieces?)\s*:$/iu;
 const SIZE_CONTEXT_LABEL_ITEM =
-  /^(?:small|large|liten|stor)(?:\s+size)?\s*\((?:starter|main|forrett|hovedrett)\)$/iu;
+  /^(?:small|large|big|liten|stor)(?:\s+size)?\s*\((?:starter|main(?:\s+course)?|forrett|hovedrett)\)$/iu;
 const MINIMUM_PERSON_INSTRUCTION =
   /^minimum\s+\d+\s+(?:persons?|people|personer)\b/iu;
 const EXTENDED_COURSE_PACKAGE_LABEL_ITEM =
