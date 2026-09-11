@@ -36,3 +36,31 @@ Exact-head intake on `7f3e117ed3b256bb63bf63bae0d26e5d45b8dba0` resolved and ded
 - No candidate is promotion-ready merely because the first generator pass succeeded. The seed must be re-run on the hardened exact head and its artifact inspected again.
 
 Artifact: `restaurant-batch-intake-7f3e117ed3b256bb63bf63bae0d26e5d45b8dba0`, digest `sha256:b77714b2483cf158b00b840d7db2c43e52e841cf3bd02179f37770d6f83814d7`.
+
+## Final fresh-head reproof — intake #579
+
+Exact-head reproof on `18361fc610437fc02d16528a300726d217a26aa8` generated **10/10** candidates with **0 source-generation failures**. This proves that the generic source-key repairs resolved the Engebret and Skur 33 generation blockers without weakening collision handling.
+
+Artifact: `restaurant-batch-intake-18361fc610437fc02d16528a300726d217a26aa8`  
+Artifact ID: `10277774204`  
+Digest: `sha256:9458a4d60f20d50a6533f51673d288d36f129112d33ac1f1c91f4b5fe8396dc8`.
+
+Full semantic artifact QA produced the final round-4 classification:
+
+- **Lorry Restaurant — promotion-ready.** 35 observed items; strict assertions green; prior weekday-label leakage is absent.
+- **Engebret Café — promotion-ready.** 16 observed items; strict assertions green. The former Kalix 350/265 source-key conflict is resolved generically by preferring the uniquely direct-priced observation while preserving genuinely distinct direct prices fail-closed.
+- **Dovrehallen — promotion-ready.** 46 observed items; strict assertions green and dish output remains coherent.
+- **The Salmon — promotion-ready.** 53 observed items; strict assertions green and dish output remains coherent.
+- **Lofoten Fiskerestaurant — promotion-ready.** 19 observed items; strict assertions green. Section/size labels and the descriptive `Gratinated with herbal butter` fragment are no longer promoted as dishes.
+- **Havsmak — promotion-ready.** 16 observed items; strict assertions green and package-label leakage remains excluded.
+- **Restaurant Schrøder — semantic-review.** The source is healthy, but dish titles still absorb long description/allergen/wine-suggestion text; the concrete malformed titles are intentionally forbidden and strict validation fails closed.
+- **Den Glade Gris — semantic-review.** The PDF is healthy and generates broadly, but beverage/layout leakage remains (including beer rows and text fragments). No broader PDF suppression is introduced merely to force this candidate through.
+- **Skur 33 — semantic-review.** The former source-key generation blocker is solved, but the generated dish set still contains component/allergen/layout fragments such as quantity/component rows. Passing transport/generation is not sufficient for promotion.
+- **Solsiden Restaurant — semantic-review.** Generic section and quantity cleanup improved the output, but artifact QA still shows a cross-card price association risk around the terrace “fish of the day” / following dessert sequence. It remains fail-closed rather than accepting a semantically suspect price binding.
+- **Louise — source-review.** First-party menu endpoint remained unusable in the earlier live pass; no secondary menu authority is substituted.
+- **Lofotstua — source-review.** No stable public first-party named/priced dish menu was proven.
+
+The permanent round-4 seed is therefore narrowed to the **six promotion-ready candidates**: Lorry, Engebret Café, Dovrehallen, The Salmon, Lofoten Fiskerestaurant and Havsmak.
+
+No restaurant-specific parser exception, weaker minimum, secondary menu authority or manual assertion bypass is introduced.
+
