@@ -274,6 +274,57 @@ function cleanOutputItemName(item: MenuObservedItem): MenuObservedItem {
   };
 }
 
+function hasDirectPricedNameProvenance(item: MenuObservedItem): boolean {
+  if (item.priceMinor === null || item.priceMinor % 100 !== 0 || !item.sourceExcerpt)
+    return false;
+  const kroner = String(item.priceMinor / 100);
+  return item.sourceExcerpt
+    .split(SOURCE_EXCERPT_SEPARATOR)
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .some((part) => {
+      const normalizedPart = normalizeDishName(part);
+      if (!normalizedPart.startsWith(item.normalizedName)) return false;
+      const suffixTokens = normalizedPart
+        .slice(item.normalizedName.length)
+        .trim()
+        .split(/\s+/u)
+        .filter(Boolean)
+        .slice(0, 4);
+      return suffixTokens.includes(kroner);
+    });
+}
+
+function preferUniquelyDirectPricedConflicts(
+  items: readonly MenuObservedItem[],
+): readonly MenuObservedItem[] {
+  const groups = new Map<string, MenuObservedItem[]>();
+  for (const item of items) {
+    const group = groups.get(item.sourceKey) ?? [];
+    group.push(item);
+    groups.set(item.sourceKey, group);
+  }
+
+  const preferredByKey = new Map<string, MenuObservedItem>();
+  for (const [sourceKey, group] of groups) {
+    if (group.length < 2) continue;
+    const prices = new Set(
+      group.map(
+        (item) =>
+          `${item.priceKind ?? "exact"}:${item.priceMinor ?? "null"}:${item.priceMaxMinor ?? "null"}`,
+      ),
+    );
+    if (prices.size < 2) continue;
+    const direct = group.filter(hasDirectPricedNameProvenance);
+    if (direct.length === 1 && direct[0]) preferredByKey.set(sourceKey, direct[0]);
+  }
+  if (preferredByKey.size === 0) return items;
+
+  return items.filter((item) => {
+    const preferred = preferredByKey.get(item.sourceKey);
+    return preferred === undefined || item === preferred;
+  });
+}
 function isOutputNoiseLabel(item: MenuObservedItem): boolean {
   const name = item.name.trim();
   return (
@@ -318,7 +369,11 @@ export function canonicalizeHtmlOutputItems(
   items: readonly MenuObservedItem[],
 ): readonly MenuObservedItem[] {
   const cleanedItems = items.map(cleanOutputItemName);
-  const labelFilteredItems = cleanedItems.filter((item) => !isOutputNoiseLabel(item));
+  const provenanceResolvedItems =
+    preferUniquelyDirectPricedConflicts(cleanedItems);
+  const labelFilteredItems = provenanceResolvedItems.filter(
+    (item) => !isOutputNoiseLabel(item),
+  );
   if (labelFilteredItems.length < 2) return labelFilteredItems;
   const mirroredNames = mirroredPromotionalNames(labelFilteredItems);
   return labelFilteredItems.filter(
