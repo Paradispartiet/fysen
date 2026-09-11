@@ -15,7 +15,13 @@
     "sourceType": "html",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 8
+    "minimumExpectedItems": 8,
+    "fetchMode": "browser",
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
   },
   "hoursSource": {
     "url": "https://www.waydownsouth.no/",
