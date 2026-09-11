@@ -158,4 +158,36 @@ describe("structural HTML output canonicalization", () => {
     ]);
   });
 
+
+  it("drops a same-price description fragment when a stronger card excerpt contains it verbatim", () => {
+    const items = [
+      item(
+        "Entrecote",
+        54500,
+        null,
+        "Entrecote — Grilla selleri, sellerirot, syltet rødløk — estragonsaus — 545",
+      ),
+      item("estragonsaus", 54500),
+      item("Svinenakke", 47500, null, "Svinenakke — Mais, nepe, tomat — Sjalottløk- timian saus — 475"),
+      item("Sjalottløk- timian saus", 47500),
+    ];
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Entrecote",
+      "Svinenakke",
+    ]);
+  });
+
+  it("drops temporary closure notices that were misread as priced first cards", () => {
+    const items = [
+      item(
+        "Statholderens Mat og Vinkjeller holder sommerlukket fra 12.07-04.08.2026",
+        28500,
+      ),
+      item("Krabbesalat", 28500),
+    ];
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Krabbesalat",
+    ]);
+  });
+
 });

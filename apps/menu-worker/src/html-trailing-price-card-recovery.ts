@@ -305,6 +305,7 @@ interface StructuredLeadingTitle {
   readonly candidateCount: number;
   readonly nearestTitle: string;
   readonly hardBoundary: boolean;
+  readonly hasCommaLineAfterTitle: boolean;
 }
 
 function isHeadingTitleLine(
@@ -331,10 +332,7 @@ function isStrongLocalStructuredLeadingTitle(
   if (structured.hardBoundary) return true;
   if (SHORT_PREPARATION_TITLE.test(structured.title)) return true;
   const titleWords = structured.title.split(/\s+/u).filter(Boolean);
-  if (
-    titleWords.length <= 4 &&
-    /[,;]/u.test(structured.nearestTitle)
-  ) {
+  if (titleWords.length <= 4 && structured.hasCommaLineAfterTitle) {
     return true;
   }
   if (COMPONENT_QUANTITY_LABEL.test(structured.nearestTitle)) return true;
@@ -403,11 +401,15 @@ function precedingStructuredLeadingTitle(
   const first = candidates[0];
   const nearest = candidates[candidates.length - 1];
   if (!first || !nearest) return null;
+  const hasCommaLineAfterTitle = lines
+    .slice(first.position + 1, pricePosition)
+    .some((line) => /[,;]/u.test(normalizeVisibleLine(line)));
   return {
     ...first,
     candidateCount: candidates.length,
     nearestTitle: nearest.title,
     hardBoundary,
+    hasCommaLineAfterTitle,
   };
 }
 

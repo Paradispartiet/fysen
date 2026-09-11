@@ -30,10 +30,16 @@
       "actions": [],
       "assertionCount": 8,
       "forbiddenDishNames": [
+        "2-course",
         "fresh truffle and truffle and shallot dressing",
         "daikon salad with citrus ponzu sauce",
         "selection of seasonal vegetables from local producers",
-        "lemon and ginger butter, wine and cream"
+        "lemon and ginger butter, wine and cream",
+        "98 piece / 495 1⁄2 dozen",
+        "2 Types of oysters",
+        "Supplement:",
+        "Wine pairing NOK",
+        "Wine Pairing"
       ]
     },
     {
@@ -63,7 +69,15 @@
       "actions": [],
       "assertionCount": 8,
       "forbiddenDishNames": [
-        "Agurk, reddik, potetchips,"
+        "Agurk, reddik, potetchips,",
+        "Dagens fisk",
+        "Pepperrot- sennep beurre blanc",
+        "estragonsaus",
+        "Sjalottløk- timian saus",
+        "Tranebær, gastrix",
+        "Rips- shiso sorbet",
+        "Bringebær, karamellsaus",
+        "Statholderens Mat og Vinkjeller holder sommerlukket fra 12.07-04.08.2026"
       ]
     }
   ]

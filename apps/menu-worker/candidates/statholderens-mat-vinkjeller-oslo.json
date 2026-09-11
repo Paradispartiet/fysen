@@ -40,6 +40,8 @@
       "Entrecote",
       "Svinenakke",
       "Dagens oster",
+      "Melkesjokolade bonnet",
+      "Vaniljeparfait",
       "Liten frisk"
     ],
     "requiredDishVariants": [
@@ -72,13 +74,28 @@
         "priceMinor": 25500
       },
       {
+        "name": "Melkesjokolade bonnet",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Vaniljeparfait",
+        "priceMinor": 25000
+      },
+      {
         "name": "Liten frisk",
         "priceMinor": 19000
       }
     ],
     "forbiddenDishNames": [
       "Agurk, reddik, potetchips,",
-      "Dagens fisk"
+      "Dagens fisk",
+      "Pepperrot- sennep beurre blanc",
+      "estragonsaus",
+      "Sjalottløk- timian saus",
+      "Tranebær, gastrix",
+      "Rips- shiso sorbet",
+      "Bringebær, karamellsaus",
+      "Statholderens Mat og Vinkjeller holder sommerlukket fra 12.07-04.08.2026"
     ]
   }
 }

@@ -25,6 +25,8 @@ const COURSE_PACKAGE_LABEL_ITEM =
   /^(?:\d+\s*[- ]?course(?:\s+menu)?|\d+\s*[- ]?retters?\s+meny)\s*\/?\/?$/iu;
 const COMPONENT_QUANTITY_LABEL_ITEM =
   /^\d+\s+(?:types?|pieces?|kinds?)\s+of\b/iu;
+const TEMPORARY_CLOSURE_NOTICE_ITEM =
+  /\b(?:sommerlukket|feriestengt|midlertidig\s+stengt|temporarily\s+closed|closed)\b.*\b\d{1,2}[./-]\d{1,2}/iu;
 
 function samePrice(
   left: Pick<MenuObservedItem, "priceMinor">,
@@ -126,6 +128,31 @@ function isAddonScopedDuplicate(
   );
 }
 
+function excerptParts(item: MenuObservedItem): readonly string[] {
+  return (item.sourceExcerpt ?? "")
+    .split(SOURCE_EXCERPT_SEPARATOR)
+    .map((part) => normalizeDishName(part.trim()))
+    .filter(Boolean);
+}
+
+function isSamePriceExcerptFragment(
+  item: MenuObservedItem,
+  items: readonly MenuObservedItem[],
+): boolean {
+  return items.some((candidate) => {
+    if (
+      candidate === item ||
+      !samePrice(candidate, item) ||
+      candidate.normalizedName === item.normalizedName
+    )
+      return false;
+    const parts = excerptParts(candidate);
+    if (parts.length < 2) return false;
+    if (parts[0] !== candidate.normalizedName) return false;
+    return parts.slice(1).includes(item.normalizedName);
+  });
+}
+
 function isHighPricedComponentQuantity(item: MenuObservedItem): boolean {
   return Boolean(
     item.priceMinor !== null &&
@@ -146,6 +173,7 @@ function isOutputNoiseLabel(item: MenuObservedItem): boolean {
     SUPPLEMENT_LABEL_ITEM.test(name) ||
     WINE_PAIRING_LABEL_ITEM.test(name) ||
     COURSE_PACKAGE_LABEL_ITEM.test(name) ||
+    TEMPORARY_CLOSURE_NOTICE_ITEM.test(name) ||
     PER_PERSON_PRICE_DISPLAY_ONLY_ITEM.test(name) ||
     DAILY_MENU_LABEL_ITEM.test(name)
   );
@@ -163,6 +191,7 @@ export function canonicalizeHtmlOutputItems(
       !isNumericPrefixSuffixFragment(item, labelFilteredItems) &&
       !isNumericTitleSuffixMisreadAsPrice(item, labelFilteredItems) &&
       !isAddonScopedDuplicate(item, labelFilteredItems) &&
-      !isHighPricedComponentQuantity(item),
+      !isHighPricedComponentQuantity(item) &&
+      !isSamePriceExcerptFragment(item, labelFilteredItems),
   );
 }
