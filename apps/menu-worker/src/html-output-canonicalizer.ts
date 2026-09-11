@@ -54,7 +54,7 @@ const WEEKDAY_ONLY_ITEM =
 const GENERIC_SECTION_LABEL_ITEM =
   /^(?:starters?|forretter?|omeletter|ost\s+og\s+desserter\s*\/\s*cheese\s+and\s+desserts)$/iu;
 const QUANTITY_SERIES_LABEL_ITEM =
-  /^\d+\s*(?:stk\.?|pcs?|pieces?)\s*:?(?:\s*\/\s*\d+\s*(?:stk\.?|pcs?|pieces?)\s*:?) +$/iu;
+  /^\d+\s*(?:stk\.?|pcs?|pieces?)\s*:?(?:\s*\/\s*\d+\s*(?:stk\.?|pcs?|pieces?)\s*:?)+$/iu;
 const SINGLE_QUANTITY_DISPLAY_ITEM = /^\d+\s*(?:stk\.?|pcs?|pieces?)\s*:$/iu;
 const SIZE_CONTEXT_LABEL_ITEM =
   /^(?:small|large|liten|stor)(?:\s+size)?\s*\((?:starter|main|forrett|hovedrett)\)$/iu;
