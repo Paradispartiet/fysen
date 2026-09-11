@@ -60,4 +60,4 @@ The intake workflow now rejects a new non-reproof candidate when it collides wit
 
 - The first dedupe materialization exposed two blocking source-health issues before coverage reconciliation could run.
 - `sushi-dinner-oslo` is restored to the previously proven canonical source.
-- `way-down-south-oslo` still publishes the asserted burgers on its first-party menu, but the HTTP fetch path omitted them from extraction; the source is therefore switched to rendered browser fetch on the same first-party URL rather than weakening assertions.
+- `way-down-south-oslo` still publishes the same burgers on its first-party menu. Rendered validation exposed their current canonical labels as `Chicken Caesar Burger` and `Beef Cheek Burger, 130 g`; the stale spelling/format assertions are updated, and browser fetch is retained because it observes 21 current items versus 20 through the HTTP production pass.
