@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v15";
+  "trailing-price-card-v16";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -34,6 +34,8 @@ const NEXT_MENU_SCOPE =
   /^(?:breakfast|frokost|brunch|lunch|lunsj|tasting\s+menu|set\s+menu|drinks?|drikke(?:meny)?|bar\s+menu)$/iu;
 const PLAIN_FOOD_SECTION_BOUNDARY =
   /^(?:forretter?|starters?|appetizers?|småretter|small\s+plates?|hovedretter?|mains?|main\s+courses?|desserter?|desserts?|tilbehør|sides?|salater?|salads?|supper?|soups?)$/iu;
+const DYNAMIC_PRICE_BOUNDARY =
+  /^(?:dagens\s+pris|market\s+price|mkt\.?\s*price)(?:\s*,?\s*-)?$/iu;
 const CARD_ALLERGEN_TERM =
   /^(?:fisk|fish|melk|milk|sulfitt|sulfite|sulfites|sulphite|sulphites|sennep|mustard|egg|eggs|hvete|wheat|selleri|celery|skalldyr|shellfish|crustaceans?|soya?|soy|sesam|sesame|nøtter?|nuts?|mandel|almond|bygg|barley|gluten|peanøtter?|peanuts?|cashew(?:nøtter?)?|pekannøtter?|pecans?)$/iu;
 const EXPLICIT_A_LA_CARTE_SECTION = "A LA CARTA";
@@ -296,6 +298,7 @@ function precedingNumberedTitle(
 interface StructuredLeadingTitle {
   readonly position: number;
   readonly title: string;
+  readonly nearestPosition: number;
 }
 
 function isHeadingTitleLine(
@@ -336,6 +339,10 @@ function precedingStructuredLeadingTitle(
       blockStart = index + 1;
       break;
     }
+    if (DYNAMIC_PRICE_BOUNDARY.test(normalizeVisibleLine(line))) {
+      blockStart = index + 1;
+      break;
+    }
     if (PLAIN_FOOD_SECTION_BOUNDARY.test(normalizeVisibleLine(line))) {
       blockStart = index + 1;
       break;
@@ -356,7 +363,7 @@ function precedingStructuredLeadingTitle(
     }
   }
 
-  const candidates: StructuredLeadingTitle[] = [];
+  const candidates: Array<{ readonly position: number; readonly title: string }> = [];
   for (let index = blockStart; index < pricePosition; index += 1) {
     const line = lines[index] ?? "";
     if (!line || line.startsWith(HEADING_MARKER) || isHeadingTitleLine(lines, index))
@@ -366,10 +373,16 @@ function precedingStructuredLeadingTitle(
   }
 
   // A single candidate is already handled safely by the established nearest-
-  // title path. This recovery is only for repeated card layouts where both the
-  // leading dish name and a short trailing component (often a sauce/garnish)
-  // look title-like.
-  return candidates.length >= 2 ? (candidates[0] ?? null) : null;
+  // title path. Local leading-title recovery is considered only when a card
+  // contains at least two title-like lines.
+  if (candidates.length < 2) return null;
+  const first = candidates[0];
+  const nearest = candidates[candidates.length - 1];
+  if (!first || !nearest) return null;
+  return {
+    ...first,
+    nearestPosition: nearest.position,
+  };
 }
 
 function canonicalizeStrongNumberedMenu(
@@ -486,7 +499,7 @@ export function recoverTrailingPriceCardHtmlItems(
       structuredCandidate !== null &&
       hasAllergenMetadataBeforePrice(
         lines,
-        structuredCandidate.position,
+        structuredCandidate.nearestPosition,
         pricePosition,
       );
     const structuredLeadingTitle =
