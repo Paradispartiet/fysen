@@ -366,7 +366,7 @@ function precedingStructuredLeadingTitle(
     }
   }
 
-  const candidates: StructuredLeadingTitle[] = [];
+  const candidates: Array<Pick<StructuredLeadingTitle, "position" | "title">> = [];
   for (let index = blockStart; index < pricePosition; index += 1) {
     const line = lines[index] ?? "";
     if (!line || line.startsWith(HEADING_MARKER) || isHeadingTitleLine(lines, index))
