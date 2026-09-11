@@ -27,6 +27,11 @@
       "status": "unverified",
       "checkedAt": "2026-08-20",
       "note": "No complete machine-readable first-party source was established in the Batch 01 research pass. The matched priced Foodora service menu is tested as secondary evidence only; open/closed remains unknown."
+    },
+    "menu": {
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "Exact-head source-drift reproof requested after catalog-health #131; current source, minimumExpectedItems and dish assertions remain unchanged until live validation proves any canonical update."
     }
   },
   "actions": [],
