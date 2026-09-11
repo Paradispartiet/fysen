@@ -1,6 +1,6 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v5";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v6";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -27,6 +27,12 @@ const COMPONENT_QUANTITY_LABEL_ITEM =
   /^\d+\s+(?:types?|pieces?|kinds?)\s+of\b/iu;
 const TEMPORARY_CLOSURE_NOTICE_ITEM =
   /\b(?:sommerlukket|feriestengt|midlertidig\s+stengt|temporarily\s+closed|closed)\b.*\b\d{1,2}[./-]\d{1,2}/iu;
+const ITEM_COUNT_LABEL_ITEM = /^\(\d+\s+(?:varer|items?)\)$/iu;
+const STANDALONE_FROM_LABEL_ITEM = /^(?:fra|from)$/iu;
+const NON_ALCOHOL_SECTION_ITEM =
+  /^(?:non[- ]?alcohol(?:ic)?|alkoholfri(?:tt|e)?)$/iu;
+const PRICE_PER_QUANTITY_LABEL_ITEM =
+  /^(?:(?:nok|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)?\s*\/\s*\d+\s*(?:biter|pieces?|pcs?|stk)\b/iu;
 
 function samePrice(
   left: Pick<MenuObservedItem, "priceMinor">,
@@ -191,6 +197,10 @@ function isOutputNoiseLabel(item: MenuObservedItem): boolean {
     WINE_PAIRING_LABEL_ITEM.test(name) ||
     COURSE_PACKAGE_LABEL_ITEM.test(name) ||
     TEMPORARY_CLOSURE_NOTICE_ITEM.test(name) ||
+    ITEM_COUNT_LABEL_ITEM.test(name) ||
+    STANDALONE_FROM_LABEL_ITEM.test(name) ||
+    NON_ALCOHOL_SECTION_ITEM.test(name) ||
+    PRICE_PER_QUANTITY_LABEL_ITEM.test(name) ||
     PER_PERSON_PRICE_DISPLAY_ONLY_ITEM.test(name) ||
     DAILY_MENU_LABEL_ITEM.test(name)
   );
