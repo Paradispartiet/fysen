@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 25,
+    "minimumExpectedItems": 24,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -27,12 +27,17 @@
       "status": "unverified",
       "checkedAt": "2026-08-24",
       "note": "Batch 03 locks Nodee Sky's current first-party priced menu. Kitchen-scoped hours remain separately verified."
+    },
+    "menu": {
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "Catalog-health #131 observed a new first-party source fingerprint with 24 current items; BLUEFIN AKAMI TUNA was absent while BLUEFIN TORO remained. The floor is aligned 25→24 and the single stale tuna assertion is replaced; the first-party source and the other seven assertions remain unchanged."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "BLUEFIN AKAMI TUNA",
+      "BLUEFIN TORO",
       "WAGYU",
       "KYLLINGSPYD",
       "GULHALEKONGEFISK HAMACHI KAMA TORO",
@@ -43,8 +48,8 @@
     ],
     "requiredDishVariants": [
       {
-        "name": "BLUEFIN AKAMI TUNA",
-        "priceMinor": 17400
+        "name": "BLUEFIN TORO",
+        "priceMinor": 26400
       },
       {
         "name": "WAGYU",

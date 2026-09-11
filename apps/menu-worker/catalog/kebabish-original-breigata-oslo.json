@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 43,
+    "minimumExpectedItems": 40,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -27,6 +27,11 @@
       "status": "unverified",
       "checkedAt": "2026-08-20",
       "note": "No complete machine-readable first-party source was established in the Batch 01 research pass. The matched priced Foodora service menu is tested as secondary evidence only; open/closed remains unknown."
+    },
+    "menu": {
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "Catalog-health #131 observed the current matched Foodora service source at 40 items instead of 43 while all eight required dish/price assertions still passed. Only the item floor is aligned 43→40; the source and all dish assertions remain unchanged."
     }
   },
   "actions": [],
