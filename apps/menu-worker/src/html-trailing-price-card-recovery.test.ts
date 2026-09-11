@@ -19,7 +19,7 @@ describe("trailing-price HTML card recovery", () => {
     `);
 
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
-      "trailing-price-card-v12",
+      "trailing-price-card-v13",
     );
     expect(
       items.map((item) => [item.name, item.priceMinor, item.priceKind]),
@@ -390,5 +390,30 @@ describe("trailing-price HTML card recovery", () => {
       items.some((item) => item.name === "98 piece / 495 1⁄2 dozen"),
     ).toBe(false);
   });
+
+  it("does not let comma-only local evidence override the nearest legacy dish title", () => {
+    const items = recoverTrailingPriceCardHtmlItems(`
+      <html><body>
+        <div>Legacy Dish</div>
+        <div>tomato, herbs and cream</div>
+        <div>Current Nearest Title</div>
+        <div>249,-</div>
+        <div>Second Dish 199,-</div>
+        <div>Third Dish 189,-</div>
+        <div>Fourth Dish 179,-</div>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toContainEqual([
+      "Current Nearest Title",
+      24900,
+    ]);
+    expect(
+      items.some(
+        (item) => item.name === "Legacy Dish" && item.priceMinor === 24900,
+      ),
+    ).toBe(false);
+  });
+
 
 });
