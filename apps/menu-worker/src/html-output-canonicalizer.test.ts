@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v4");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v5");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -174,6 +174,36 @@ describe("structural HTML output canonicalization", () => {
     expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
       "Entrecote",
       "Svinenakke",
+    ]);
+  });
+
+  it("preserves canonical same-price dishes when neighboring card excerpts merely mention them", () => {
+    const items = [
+      item("Diavola", 25900),
+      item("Chef Special", 25900, null, "Chef Special — Diavola — 259"),
+      item("NO 7 Spicy Cumin Lamb", 20900),
+      item(
+        "Homemade Noodles",
+        20900,
+        null,
+        "Homemade Noodles — NO 7 Spicy Cumin Lamb — 209",
+      ),
+      item("DAMPET HAVABBOR 特 色 蒸 海 鱼", 39800),
+      item(
+        "Signatur Klassisk",
+        39800,
+        null,
+        "Signatur Klassisk — DAMPET HAVABBOR 特 色 蒸 海 鱼 — 398",
+      ),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Diavola",
+      "Chef Special",
+      "NO 7 Spicy Cumin Lamb",
+      "Homemade Noodles",
+      "DAMPET HAVABBOR 特 色 蒸 海 鱼",
+      "Signatur Klassisk",
     ]);
   });
 

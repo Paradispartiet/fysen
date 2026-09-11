@@ -167,6 +167,21 @@ describe("HTML runtime recovery selection", () => {
     ]);
   });
 
+  it("does not replace a canonical-looking title with same-price neighboring card text", async () => {
+    const result = await extract(`
+      <html><body>
+        <h2>Hovedretter</h2>
+        <p>NO 7 Spicy Cumin Lamb</p>
+        <p>Homemade Noodles</p>
+        <p>209,-</p>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => item.name)).toContain(
+      "NO 7 Spicy Cumin Lamb",
+    );
+  });
+
   it("keeps structured Statholderens-style dish titles and removes same-price sauce fragments", async () => {
     const result = await extract(`
       <html><body>

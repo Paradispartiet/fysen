@@ -1,6 +1,6 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v4";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v5";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -128,6 +128,21 @@ function isAddonScopedDuplicate(
   );
 }
 
+export function isLikelySamePriceCardFragment(
+  item: Pick<MenuObservedItem, "name">,
+): boolean {
+  const name = item.name.trim();
+  const words = name.split(/\s+/u).filter(Boolean);
+  return (
+    /^[a-zæøå]/u.test(name) ||
+    (words.length <= 6 &&
+      (/[;,]/u.test(name) ||
+        /\b(?:saus|sauce|dressing|beurre\s+blanc|gastrix|sorbet|emulsjon|emulsion)\b/iu.test(
+          name,
+        )))
+  );
+}
+
 function excerptParts(item: MenuObservedItem): readonly string[] {
   return (item.sourceExcerpt ?? "")
     .split(SOURCE_EXCERPT_SEPARATOR)
@@ -139,11 +154,13 @@ function isSamePriceExcerptFragment(
   item: MenuObservedItem,
   items: readonly MenuObservedItem[],
 ): boolean {
+  if (!isLikelySamePriceCardFragment(item)) return false;
   return items.some((candidate) => {
     if (
       candidate === item ||
       !samePrice(candidate, item) ||
-      candidate.normalizedName === item.normalizedName
+      candidate.normalizedName === item.normalizedName ||
+      isLikelySamePriceCardFragment(candidate)
     )
       return false;
     const parts = excerptParts(candidate);
