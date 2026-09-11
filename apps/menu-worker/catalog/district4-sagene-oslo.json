@@ -40,7 +40,7 @@
     "menu": {
       "status": "verified",
       "checkedAt": "2026-09-08",
-      "note": "District 4 links directly to its first-party WinOrder ordering surface. The menu validator allows only api.winorder.no as a data origin, explicitly blocks the nonessential tracking.winorder.no telemetry origin, and waits for Calamari before extraction. Canonical dish locks use the exact first-party WinOrder labels and direct-order prices; the prior Foodora labels map to the same dishes but carry third-party delivery pricing."
+      "note": "District 4 links directly to its first-party WinOrder ordering surface. The menu validator allows only api.winorder.no as a data origin, explicitly blocks the nonessential tracking.winorder.no telemetry origin, and waits for Calamari before extraction. Canonical dish locks use the exact first-party WinOrder labels and direct-order prices; the prior Foodora labels map to the same dishes but carry third-party delivery pricing. Reproof requested 2026-09-11 after catalog-health source-drift residual; no source, minimum or assertion contract is weakened pending exact-head live validation."
     }
   },
   "actions": [
