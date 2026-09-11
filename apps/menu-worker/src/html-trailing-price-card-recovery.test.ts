@@ -189,7 +189,8 @@ describe("trailing-price HTML card recovery", () => {
   it("prefers the leading dish name in repeated title-description-component-price cards", () => {
     const items = recoverTrailingPriceCardHtmlItems(`
       <html><body>
-        <h2>Forretter</h2>
+        <div>Statholdergaarden fra 26-August-22-September 2026</div>
+        <div>Forretter</div>
         <div>Kamskjell</div>
         <div>Fennikel, agurk, blomkål, stikkelsbær og persille</div>
         <div>Vin Jaunesaus</div>
@@ -200,7 +201,7 @@ describe("trailing-price HTML card recovery", () => {
         <div>Sjøkreps-pepperrotsaus</div>
         <div>Kr. 650,-</div>
 
-        <h2>Hovedretter</h2>
+        <div>Hovedretter</div>
         <div>Skate</div>
         <div>Spinat, shimegi, ingefær, dumpling og koriander</div>
         <div>Kylling-sitrongressbuljong</div>
