@@ -127,11 +127,13 @@ export type MenuSourceFetchMode = "http" | "browser";
 export interface MenuSourceSupportInput {
   readonly redirectOrigins: readonly string[];
   readonly browserDataOrigins: readonly string[];
+  readonly browserBlockedOrigins?: readonly string[];
 }
 
 const EMPTY_MENU_SOURCE_SUPPORT: MenuSourceSupportInput = {
   redirectOrigins: [],
   browserDataOrigins: [],
+  browserBlockedOrigins: [],
 };
 
 export interface MenuSourceRuntimeInput {
