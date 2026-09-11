@@ -1,6 +1,6 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v4";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v5";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -135,22 +135,45 @@ function excerptParts(item: MenuObservedItem): readonly string[] {
     .filter(Boolean);
 }
 
+export function isUnambiguousSamePriceExcerptFragment(
+  fragment: MenuObservedItem,
+  candidate: MenuObservedItem,
+): boolean {
+  if (
+    candidate === fragment ||
+    !samePrice(candidate, fragment) ||
+    candidate.normalizedName === fragment.normalizedName
+  )
+    return false;
+
+  const candidateParts = excerptParts(candidate);
+  if (
+    candidateParts.length < 2 ||
+    candidateParts[0] !== candidate.normalizedName ||
+    !candidateParts.slice(1).includes(fragment.normalizedName)
+  )
+    return false;
+
+  // Reciprocal excerpts are structurally ambiguous: both parser candidates
+  // claim the other name inside the same-price card. The v4 behavior treated
+  // that ambiguity as proof and could delete the real dish (and sometimes
+  // both sides of the pair). Fail closed by preserving reciprocal pairs.
+  const fragmentParts = excerptParts(fragment);
+  const reciprocal =
+    fragmentParts.length >= 2 &&
+    fragmentParts[0] === fragment.normalizedName &&
+    fragmentParts.slice(1).includes(candidate.normalizedName);
+
+  return !reciprocal;
+}
+
 function isSamePriceExcerptFragment(
   item: MenuObservedItem,
   items: readonly MenuObservedItem[],
 ): boolean {
-  return items.some((candidate) => {
-    if (
-      candidate === item ||
-      !samePrice(candidate, item) ||
-      candidate.normalizedName === item.normalizedName
-    )
-      return false;
-    const parts = excerptParts(candidate);
-    if (parts.length < 2) return false;
-    if (parts[0] !== candidate.normalizedName) return false;
-    return parts.slice(1).includes(item.normalizedName);
-  });
+  return items.some((candidate) =>
+    isUnambiguousSamePriceExcerptFragment(item, candidate),
+  );
 }
 
 function isHighPricedComponentQuantity(item: MenuObservedItem): boolean {
