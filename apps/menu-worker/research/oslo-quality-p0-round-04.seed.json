@@ -30,7 +30,10 @@
       "actions": [],
       "assertionCount": 8,
       "forbiddenDishNames": [
-        "Search"
+        "Search",
+        "Hvaltartar Håndskåret hvaltartar med rå og røkt hval, neper, potet, rømme og løpstikke.ALL: laktose, sulfitt (Champagne, Riesling, Burgund.)",
+        "Hellefisk Pannestekt hellefisk (villkveite) med rømmesjy, agurksalat,potetstappe med muskat ALL: fisk, laktose, sulfitt. (Mâcon. St Aubin.)",
+        "Stikkelsbærgrøt Grønne stikkelsbær fra Hovelsrud, cognac og fløte. ALL: Sulfitt, laktose"
       ]
     },
     {
@@ -63,7 +66,13 @@
         "Grisens Bayer 5,0% 0,25/0,4",
         "marinated in Erling Skakke XO Cognac.",
         "tartar sauce.",
-        "H.Br. Humlesus Citra Hop 4,5% 0,4"
+        "H.Br. Humlesus Citra Hop 4,5% 0,4",
+        "Små Vesen Vette 4,7% Hveteøl 0,25/0,4",
+        "Add bacon to any dish for",
+        "Bådin Kjerringøy 4,7% Pale Ale 0,33",
+        "Inderøy Kvitweiss 4,7% Weissbier 0,5",
+        "Sagene Kjørepils 0,33",
+        "Klokk & Co Fripa Radler 0,33"
       ]
     },
     {
@@ -93,7 +102,8 @@
       "actions": [],
       "assertionCount": 8,
       "forbiddenDishNames": [
-        "Onsdag"
+        "Onsdag",
+        "Mandag/Tirsdag"
       ]
     },
     {
@@ -213,7 +223,9 @@
       "forbiddenDishNames": [
         "Small size (starter)",
         "STARTERS",
-        "2 pcs / 4 pcs / 6 pcs"
+        "2 pcs / 4 pcs / 6 pcs",
+        "Big size (main course)",
+        "MAIN COURSE"
       ]
     },
     {
@@ -305,7 +317,9 @@
         "12 stk.:",
         "Todays three-course dinner",
         "Today’s dessert",
-        "Dagens dessert"
+        "Dagens dessert",
+        "Desserter Desserts",
+        "12 st.:"
       ]
     }
   ]
