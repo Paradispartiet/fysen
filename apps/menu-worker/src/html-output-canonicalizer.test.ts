@@ -278,6 +278,42 @@ describe("structural HTML output canonicalization", () => {
     ]);
   });
 
+  it("prefers the uniquely direct-priced observation when a duplicate name inherited the next dish price", () => {
+    const kalix = item(
+      "Kalix løyrom med sitt klassiske tilbehør",
+      35000,
+      null,
+      "Kalix løyrom med sitt klassiske tilbehør kr 350.-",
+    );
+    const inherited = item(
+      "Kalix løyrom med sitt klassiske tilbehør",
+      26500,
+      null,
+      "Kalix løyrom med sitt klassiske tilbehør — allergener: fisk, melk, hvete — Diana Camembert fra Bryne kr 265.-",
+    );
+    const diana = item(
+      "Diana Camembert fra Bryne",
+      26500,
+      null,
+      "Diana Camembert fra Bryne kr 265.-",
+    );
+
+    expect(
+      canonicalizeHtmlOutputItems([kalix, inherited, diana]).map((entry) => [
+        entry.name,
+        entry.priceMinor,
+      ]),
+    ).toEqual([
+      ["Kalix løyrom med sitt klassiske tilbehør", 35000],
+      ["Diana Camembert fra Bryne", 26500],
+    ]);
+  });
+
+  it("keeps fail-closed ambiguity when an unsectioned dish has two direct prices", () => {
+    const lunch = item("House Curry", 22900, null, "House Curry 229,-");
+    const dinner = item("House Curry", 26900, null, "House Curry 269,-");
+    expect(canonicalizeHtmlOutputItems([lunch, dinner])).toHaveLength(2);
+  });
   it("drops generic display metadata and lowercase same-price component fragments", () => {
     const items = [
       item("Grillet kveite", 49500),
