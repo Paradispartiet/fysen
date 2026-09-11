@@ -15,7 +15,6 @@ const VARIANT_SECTION_KEYWORD =
   /\b(?:sashimi|nigiri|maki|uramaki|futomaki|temaki|sushi|tacos?|pizza(?:er|s)?|pasta|dessert(?:er|s)?|starters?|forretter?|mains?|hovedretter?|grill|bowls?|antipasti|primi|secondi|contorni|dolci)\b/iu;
 const SERVICE_CONTEXT_HEADING =
   /^(?:lunsjmeny|lunch\s+menu|kveldsmeny|dinner\s+menu)\b/iu;
-const PDF_ABV_ITEM = /\b\d{1,2}(?:[.,]\d+)?\s*%/u;
 const PDF_BEVERAGE_STYLE_ITEM =
   /\b(?:øl|ale|ipa|pils(?:ner)?|weissbier|hveteøl|radler|beer|cider|stout|lager|bayer)\b/iu;
 const PDF_BEVERAGE_VOLUME_ITEM =
