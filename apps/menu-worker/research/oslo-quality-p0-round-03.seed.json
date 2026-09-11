@@ -6,43 +6,6 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "festningen-restaurant-oslo",
-        "name": "Festningen Restaurant",
-        "websiteUrl": "https://www.festningenrestaurant.no/",
-        "address": "Myntgata 9, 0151 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.festningenrestaurant.no/middag",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-11",
-          "note": "Current first-party dinner page publishes named individually priced à la carte dishes alongside chef-menu packages."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": [
-        "kr 195",
-        "toast",
-        "egg cream",
-        "dill mayonnaise",
-        "mushroom mayonnaise",
-        "mushroom velouté",
-        "potato puré",
-        "pommes Anna"
-      ]
-    },
-    {
-      "version": 1,
-      "restaurant": {
         "slug": "kaffistova-oslo",
         "name": "Kaffistova",
         "websiteUrl": "https://www.bondeheimen.no/kaffistova/heim",
