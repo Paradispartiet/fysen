@@ -1,7 +1,7 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v8";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v9";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -39,6 +39,27 @@ function isPreparationLedDishTitle(value: string): boolean {
   const allUpper = letters === letters.toLocaleUpperCase("nb-NO");
   const words = name.split(/\s+/u).filter(Boolean);
   return allUpper || words.length <= 4;
+}
+
+export function isStrongCanonicalDishTitle(value: string): boolean {
+  const name = value.trim();
+  const letters = name.replace(/[^\p{L}]+/gu, "");
+  if (!letters) return false;
+  const allUpper =
+    letters.length >= 4 && letters === letters.toLocaleUpperCase("nb-NO");
+  return allUpper || isPreparationLedDishTitle(name);
+}
+
+function looksLikeLowercaseSamePriceDescription(value: string): boolean {
+  const name = value.trim();
+  const firstLetter = name.match(/\p{L}/u)?.[0] ?? "";
+  if (!firstLetter || firstLetter !== firstLetter.toLocaleLowerCase("nb-NO"))
+    return false;
+  const words = name.split(/\s+/u).filter(Boolean);
+  return (
+    words.length >= 5 &&
+    (/[,;]/u.test(name) || /\b(?:and|with|og|med)\b/iu.test(name))
+  );
 }
 
 function samePrice(
@@ -159,6 +180,10 @@ export function isUnambiguousSamePriceExcerptFragment(
   )
     return false;
 
+  // Never demote an already strong canonical title merely because a trailing
+  // recovery candidate contains it in the same-price card.
+  if (isStrongCanonicalDishTitle(fragment.name)) return false;
+
   // A structurally nearby line is not stronger evidence when the line itself
   // is semantically description-like. This protects real dish titles such as
   // a named bánh mì from being replaced by its ingredient sentence.
@@ -167,6 +192,15 @@ export function isUnambiguousSamePriceExcerptFragment(
     !isPreparationLedDishTitle(candidate.name)
   )
     return false;
+
+  // A lower-case prose fragment following a stronger same-price title is
+  // description evidence even when it is shorter than the global description
+  // detector threshold (for example a sauce/butter line).
+  if (
+    looksLikeLowercaseSamePriceDescription(fragment.name) &&
+    candidate.position < fragment.position
+  )
+    return true;
 
   const candidateParts = excerptParts(candidate);
   if (
