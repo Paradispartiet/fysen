@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "rorbua-oslo",
+    "name": "Rorbua",
+    "websiteUrl": "https://rorbua.as/",
+    "address": "Stranden 71, 0250 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90879754243262,
+    "longitude": 10.724356894864245
+  },
+  "menuSource": {
+    "url": "https://rorbua.as/page/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 19,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "Current first-party HTML publishes named and individually priced Norwegian dishes. The live HTML is authoritative for this intake rather than older PDF pricing."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Gravet Rein",
+      "Pinnekjøtt fra Gol",
+      "Juletallerken",
+      "Rorbubiffen",
+      "Lutefisk",
+      "Feskesuppa",
+      "Salad med laks",
+      "Rispudding"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Gravet Rein",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Pinnekjøtt fra Gol",
+        "priceMinor": 69500
+      },
+      {
+        "name": "Juletallerken",
+        "priceMinor": 59500
+      },
+      {
+        "name": "Rorbubiffen",
+        "priceMinor": 49800
+      },
+      {
+        "name": "Lutefisk",
+        "priceMinor": 67500
+      },
+      {
+        "name": "Feskesuppa",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Salad med laks",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Rispudding",
+        "priceMinor": 16900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
