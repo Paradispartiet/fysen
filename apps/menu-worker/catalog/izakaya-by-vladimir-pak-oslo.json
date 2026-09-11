@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "izakaya-by-vladimir-pak-oslo",
+    "name": "Izakaya by Vladimir Pak",
+    "websiteUrl": "https://izakayabyvladimirpak.omakasegroup.no/",
+    "address": "Kirkegata 1-3, 0153 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90904602826771,
+    "longitude": 10.74234253016566
+  },
+  "menuSource": {
+    "url": "https://izakayabyvladimirpak.omakasegroup.no/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 40,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "Official first-party page publishes current priced lunch and dinner dishes. Visible venue hours are not promoted to canonical kitchen hours in this intake."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "spicy miso ramen (gh so se e)",
+      "Yuzu Edamame (so)",
+      "Black Sesame Ice Cream With White Chocolate Crumble (se e m veg)",
+      "Miso Fish Soup(F SO)",
+      "Mushroom Katsu(GH E MU VEG)",
+      "Izakaya Nigiri Set (10 pcs)(F S B SO)",
+      "Grilled Wagyu Beef Kushiyaki (2 skewers)(SO)",
+      "Signature Black Caviar Maki: Tuna Tartare Maki (4 pcs) × Wagyu Foie Gras Maki (4 pcs)(F SO SE)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "spicy miso ramen (gh so se e)",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Yuzu Edamame (so)",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Black Sesame Ice Cream With White Chocolate Crumble (se e m veg)",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Miso Fish Soup(F SO)",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Mushroom Katsu(GH E MU VEG)",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Izakaya Nigiri Set (10 pcs)(F S B SO)",
+        "priceMinor": 50000
+      },
+      {
+        "name": "Grilled Wagyu Beef Kushiyaki (2 skewers)(SO)",
+        "priceMinor": 35000
+      },
+      {
+        "name": "Signature Black Caviar Maki: Tuna Tartare Maki (4 pcs) × Wagyu Foie Gras Maki (4 pcs)(F SO SE)",
+        "priceMinor": 45000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
