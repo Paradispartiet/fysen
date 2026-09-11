@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "statholderens-mat-vinkjeller-oslo",
+    "name": "Statholderens Mat og Vinkjeller",
+    "websiteUrl": "https://statholdergaarden.no/",
+    "address": "Rådhusgate 11, 0151 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.909372909195,
+    "longitude": 10.74343267394393
+  },
+  "menuSource": {
+    "url": "https://statholdergaarden.no/smv/meny/alacarte",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "Exact-head semantic parser proof; numeric menu output must recover Bakt Røye and Entrecote without assigning Entrecote's price to Dagens fisk."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Krabbesalat",
+      "Blomkål",
+      "Carpaccio",
+      "Bakt Røye",
+      "Entrecote",
+      "Svinenakke",
+      "Dagens oster",
+      "Melkesjokolade bonnet",
+      "Vaniljeparfait",
+      "Liten frisk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Krabbesalat",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Blomkål",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Carpaccio",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Bakt Røye",
+        "priceMinor": 53500
+      },
+      {
+        "name": "Entrecote",
+        "priceMinor": 54500
+      },
+      {
+        "name": "Svinenakke",
+        "priceMinor": 47500
+      },
+      {
+        "name": "Dagens oster",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Melkesjokolade bonnet",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Vaniljeparfait",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Liten frisk",
+        "priceMinor": 19000
+      }
+    ],
+    "forbiddenDishNames": [
+      "Agurk, reddik, potetchips,",
+      "Dagens fisk",
+      "Pepperrot- sennep beurre blanc",
+      "estragonsaus",
+      "Sjalottløk- timian saus",
+      "Tranebær, gastrix",
+      "Rips- shiso sorbet",
+      "Bringebær, karamellsaus",
+      "Statholderens Mat og Vinkjeller holder sommerlukket fra 12.07-04.08.2026"
+    ]
+  }
+}

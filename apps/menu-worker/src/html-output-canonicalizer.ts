@@ -1,6 +1,6 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v3";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v4";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -16,6 +16,17 @@ const COMMON_FOOD_SECTION_ITEM = /^(?:dumplings?|proteins?)$/iu;
 const UPGRADE_SECTION_ITEM =
   /^(?:upgrades?\s*(?:&|and)\s*extras?|give\s+me\s+an\s+upgrade|select\s+your\s+topping!?)$/iu;
 const SHORT_ALLERGEN_CODE_ITEM = /^[A-ZÆØÅ]{1,2}$/u;
+const MULTI_PRICE_DISPLAY_ITEM =
+  /^(?:(?:kr\.?|nok)\s*)?[1-9]\d{1,3}\s*(?:(?:piece|pieces|pcs?|stk)\s*)?\/\s*(?:(?:kr\.?|nok)\s*)?[1-9]\d{1,3}\b/iu;
+const SUPPLEMENT_LABEL_ITEM = /^(?:supplement|tillegg)\s*:?$/iu;
+const WINE_PAIRING_LABEL_ITEM =
+  /^(?:wine\s+pairing(?:\s+nok)?|vinpakke(?:\s+nok)?)$/iu;
+const COURSE_PACKAGE_LABEL_ITEM =
+  /^(?:\d+\s*[- ]?course(?:\s+menu)?|\d+\s*[- ]?retters?\s+meny)\s*\/?\/?$/iu;
+const COMPONENT_QUANTITY_LABEL_ITEM =
+  /^\d+\s+(?:types?|pieces?|kinds?)\s+of\b/iu;
+const TEMPORARY_CLOSURE_NOTICE_ITEM =
+  /\b(?:sommerlukket|feriestengt|midlertidig\s+stengt|temporarily\s+closed|closed)\b.*\b\d{1,2}[./-]\d{1,2}/iu;
 
 function samePrice(
   left: Pick<MenuObservedItem, "priceMinor">,
@@ -117,6 +128,39 @@ function isAddonScopedDuplicate(
   );
 }
 
+function excerptParts(item: MenuObservedItem): readonly string[] {
+  return (item.sourceExcerpt ?? "")
+    .split(SOURCE_EXCERPT_SEPARATOR)
+    .map((part) => normalizeDishName(part.trim()))
+    .filter(Boolean);
+}
+
+function isSamePriceExcerptFragment(
+  item: MenuObservedItem,
+  items: readonly MenuObservedItem[],
+): boolean {
+  return items.some((candidate) => {
+    if (
+      candidate === item ||
+      !samePrice(candidate, item) ||
+      candidate.normalizedName === item.normalizedName
+    )
+      return false;
+    const parts = excerptParts(candidate);
+    if (parts.length < 2) return false;
+    if (parts[0] !== candidate.normalizedName) return false;
+    return parts.slice(1).includes(item.normalizedName);
+  });
+}
+
+function isHighPricedComponentQuantity(item: MenuObservedItem): boolean {
+  return Boolean(
+    item.priceMinor !== null &&
+      item.priceMinor >= 100_000 &&
+      COMPONENT_QUANTITY_LABEL_ITEM.test(item.name.trim()),
+  );
+}
+
 function isOutputNoiseLabel(item: MenuObservedItem): boolean {
   const name = item.name.trim();
   return (
@@ -125,6 +169,11 @@ function isOutputNoiseLabel(item: MenuObservedItem): boolean {
     COMMON_FOOD_SECTION_ITEM.test(name) ||
     UPGRADE_SECTION_ITEM.test(name) ||
     SHORT_ALLERGEN_CODE_ITEM.test(name) ||
+    MULTI_PRICE_DISPLAY_ITEM.test(name) ||
+    SUPPLEMENT_LABEL_ITEM.test(name) ||
+    WINE_PAIRING_LABEL_ITEM.test(name) ||
+    COURSE_PACKAGE_LABEL_ITEM.test(name) ||
+    TEMPORARY_CLOSURE_NOTICE_ITEM.test(name) ||
     PER_PERSON_PRICE_DISPLAY_ONLY_ITEM.test(name) ||
     DAILY_MENU_LABEL_ITEM.test(name)
   );
@@ -141,6 +190,8 @@ export function canonicalizeHtmlOutputItems(
       !mirroredNames.has(item.normalizedName) &&
       !isNumericPrefixSuffixFragment(item, labelFilteredItems) &&
       !isNumericTitleSuffixMisreadAsPrice(item, labelFilteredItems) &&
-      !isAddonScopedDuplicate(item, labelFilteredItems),
+      !isAddonScopedDuplicate(item, labelFilteredItems) &&
+      !isHighPricedComponentQuantity(item) &&
+      !isSamePriceExcerptFragment(item, labelFilteredItems),
   );
 }

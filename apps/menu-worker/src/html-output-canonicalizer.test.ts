@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v3");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v4");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -123,6 +123,70 @@ describe("structural HTML output canonicalization", () => {
     expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
       "Chicken 65",
       "Rice",
+    ]);
+  });
+
+
+  it("drops menu-package, pairing, supplement and multi-price display labels", () => {
+    const items = [
+      item("2-course", 49500),
+      item("Supplement:", 35500),
+      item("Wine pairing NOK", 85000),
+      item("Wine Pairing", 149500),
+      item("98 piece / 495 1⁄2 dozen", 39500),
+      item("Mussels", 39500),
+      item("Catch of the Day", 52500),
+    ];
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Mussels",
+      "Catch of the Day",
+    ]);
+  });
+
+
+  it("drops only high-priced component-quantity labels while preserving a plausibly priced dish", () => {
+    const items = [
+      item("2 Types of oysters", 299500),
+      item("2 Types of oysters", 49500, "Shellfish Bar"),
+      item("I Deserved It Fish & Shellfish Plateau", 299500),
+    ];
+    expect(
+      canonicalizeHtmlOutputItems(items).map((entry) => [entry.name, entry.priceMinor]),
+    ).toEqual([
+      ["2 Types of oysters", 49500],
+      ["I Deserved It Fish & Shellfish Plateau", 299500],
+    ]);
+  });
+
+
+  it("drops a same-price description fragment when a stronger card excerpt contains it verbatim", () => {
+    const items = [
+      item(
+        "Entrecote",
+        54500,
+        null,
+        "Entrecote — Grilla selleri, sellerirot, syltet rødløk — estragonsaus — 545",
+      ),
+      item("estragonsaus", 54500),
+      item("Svinenakke", 47500, null, "Svinenakke — Mais, nepe, tomat — Sjalottløk- timian saus — 475"),
+      item("Sjalottløk- timian saus", 47500),
+    ];
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Entrecote",
+      "Svinenakke",
+    ]);
+  });
+
+  it("drops temporary closure notices that were misread as priced first cards", () => {
+    const items = [
+      item(
+        "Statholderens Mat og Vinkjeller holder sommerlukket fra 12.07-04.08.2026",
+        28500,
+      ),
+      item("Krabbesalat", 28500),
+    ];
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Krabbesalat",
     ]);
   });
 

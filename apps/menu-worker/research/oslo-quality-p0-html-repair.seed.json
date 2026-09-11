@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-quality-p0-html-repair",
+  "concurrency": 2,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "sjomagasinet-oslo",
+        "name": "Sjømagasinet",
+        "websiteUrl": "https://www.sjomagasinet.no/",
+        "address": "Tjuvholmen Allé 14, 0252 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.sjomagasinet.no/english",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Parser-repair proof for current first-party dish-level menu. Promotion remains blocked until semantic artifact QA is clean."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "2-course",
+        "fresh truffle and truffle and shallot dressing",
+        "daikon salad with citrus ponzu sauce",
+        "selection of seasonal vegetables from local producers",
+        "lemon and ginger butter, wine and cream",
+        "98 piece / 495 1⁄2 dozen",
+        "2 Types of oysters",
+        "Supplement:",
+        "Wine pairing NOK",
+        "Wine Pairing"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "statholderens-mat-vinkjeller-oslo",
+        "name": "Statholderens Mat og Vinkjeller",
+        "websiteUrl": "https://statholdergaarden.no/",
+        "address": "Rådhusgate 11, 0151 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://statholdergaarden.no/smv/meny/alacarte",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Parser-repair proof for current first-party à la carte. Must recover Bakt Røye/Entrecote semantics before promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Agurk, reddik, potetchips,",
+        "Dagens fisk",
+        "Pepperrot- sennep beurre blanc",
+        "estragonsaus",
+        "Sjalottløk- timian saus",
+        "Tranebær, gastrix",
+        "Rips- shiso sorbet",
+        "Bringebær, karamellsaus",
+        "Statholderens Mat og Vinkjeller holder sommerlukket fra 12.07-04.08.2026"
+      ]
+    }
+  ]
+}

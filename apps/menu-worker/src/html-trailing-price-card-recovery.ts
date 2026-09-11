@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v11";
+  "trailing-price-card-v12";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -34,6 +34,14 @@ const NEXT_MENU_SCOPE =
   /^(?:breakfast|frokost|brunch|lunch|lunsj|tasting\s+menu|set\s+menu|drinks?|drikke(?:meny)?|bar\s+menu)$/iu;
 const PLAIN_FOOD_SECTION_BOUNDARY =
   /^(?:forretter?|starters?|appetizers?|småretter|small\s+plates?|hovedretter?|mains?|main\s+courses?|desserter?|desserts?|tilbehør|sides?|salater?|salads?|supper?|soups?)$/iu;
+const DYNAMIC_PRICE_BOUNDARY =
+  /^(?:dagens\s+pris|market\s+price|mkt\.?\s*price)(?:\s*,?\s*-)?$/iu;
+const MULTI_PRICE_BOUNDARY =
+  /^(?=.*\b[1-9]\d{1,3}\b)(?=.*\/.*\b[1-9]\d{1,3}\b).+$/u;
+const SHORT_PREPARATION_TITLE =
+  /^(?:bakt|grillet|stekt|fritert|braisert|røkt|baked|grilled|fried|braised|smoked)\s+\p{L}+(?:\s+\p{L}+){0,2}$/iu;
+const COMPONENT_QUANTITY_LABEL =
+  /^\d+\s+(?:types?\s+of|pieces?\s+of|pcs?\s+of)\b/iu;
 const EXPLICIT_A_LA_CARTE_SECTION = "A LA CARTA";
 const MAX_PRECEDING_TITLE_DISTANCE = 12;
 
@@ -118,6 +126,7 @@ function looksLikeDishTitle(value: string): boolean {
   if (title.startsWith(HEADING_MARKER)) return false;
   if (
     parseTrailingPrice(title) ||
+    isUnpricedPriceBoundary(title) ||
     SECTION_OR_UI_LABEL.test(title) ||
     UI_ACTION_LEAD.test(title)
   )
@@ -294,6 +303,10 @@ function precedingNumberedTitle(
 interface StructuredLeadingTitle {
   readonly position: number;
   readonly title: string;
+  readonly candidateCount: number;
+  readonly nearestTitle: string;
+  readonly hardBoundary: boolean;
+  readonly hasCommaLineAfterTitle: boolean;
 }
 
 function isHeadingTitleLine(
@@ -304,16 +317,48 @@ function isHeadingTitleLine(
   return (lines[position - 1] ?? "").startsWith(HEADING_MARKER);
 }
 
+function isUnpricedPriceBoundary(value: string): boolean {
+  const line = normalizeVisibleLine(value);
+  return DYNAMIC_PRICE_BOUNDARY.test(line) || MULTI_PRICE_BOUNDARY.test(line);
+}
+
+function firstLetterMatches(value: string, pattern: RegExp): boolean {
+  const letter = normalizeVisibleLine(value).match(/\p{L}/u)?.[0] ?? "";
+  return Boolean(letter && pattern.test(letter));
+}
+
+function isStrongLocalStructuredLeadingTitle(
+  structured: StructuredLeadingTitle,
+): boolean {
+  if (structured.hardBoundary) return true;
+  if (SHORT_PREPARATION_TITLE.test(structured.title)) return true;
+  const titleWords = structured.title.split(/\s+/u).filter(Boolean);
+  if (titleWords.length <= 4 && structured.hasCommaLineAfterTitle) {
+    return true;
+  }
+  if (COMPONENT_QUANTITY_LABEL.test(structured.nearestTitle)) return true;
+  return (
+    firstLetterMatches(structured.title, /\p{Lu}/u) &&
+    firstLetterMatches(structured.nearestTitle, /\p{Ll}/u)
+  );
+}
+
 function precedingStructuredLeadingTitle(
   lines: readonly string[],
   pricePosition: number,
 ): StructuredLeadingTitle | null {
   let blockStart = Math.max(0, pricePosition - MAX_PRECEDING_TITLE_DISTANCE);
+  let hardBoundary = false;
 
   for (let index = pricePosition - 1; index >= blockStart; index -= 1) {
     const line = lines[index] ?? "";
     if (parseTrailingPrice(line)) {
       blockStart = index + 1;
+      break;
+    }
+    if (isUnpricedPriceBoundary(line)) {
+      blockStart = index + 1;
+      hardBoundary = true;
       break;
     }
     if (PLAIN_FOOD_SECTION_BOUNDARY.test(normalizeVisibleLine(line))) {
@@ -336,12 +381,16 @@ function precedingStructuredLeadingTitle(
     }
   }
 
-  const candidates: StructuredLeadingTitle[] = [];
+  const candidates: Array<Pick<StructuredLeadingTitle, "position" | "title">> = [];
   for (let index = blockStart; index < pricePosition; index += 1) {
     const line = lines[index] ?? "";
     if (!line || line.startsWith(HEADING_MARKER) || isHeadingTitleLine(lines, index))
       continue;
-    if (!looksLikeDishTitle(line)) continue;
+    if (
+      !looksLikeDishTitle(line) &&
+      !SHORT_PREPARATION_TITLE.test(normalizeVisibleLine(line))
+    )
+      continue;
     candidates.push({ position: index, title: normalizeVisibleLine(line) });
   }
 
@@ -349,7 +398,20 @@ function precedingStructuredLeadingTitle(
   // title path. This recovery is only for repeated card layouts where both the
   // leading dish name and a short trailing component (often a sauce/garnish)
   // look title-like.
-  return candidates.length >= 2 ? (candidates[0] ?? null) : null;
+  if (candidates.length < (hardBoundary ? 1 : 2)) return null;
+  const first = candidates[0];
+  const nearest = candidates[candidates.length - 1];
+  if (!first || !nearest) return null;
+  const hasCommaLineAfterTitle = lines
+    .slice(first.position + 1, pricePosition)
+    .some((line) => /[,;]/u.test(normalizeVisibleLine(line)));
+  return {
+    ...first,
+    candidateCount: candidates.length,
+    nearestTitle: nearest.title,
+    hardBoundary,
+    hasCommaLineAfterTitle,
+  };
 }
 
 function canonicalizeStrongNumberedMenu(
@@ -460,9 +522,14 @@ export function recoverTrailingPriceCardHtmlItems(
     let titlePosition: number | null = null;
     let title: string | null = null;
     const numberedTitle = precedingNumberedTitle(lines, pricePosition);
-    const structuredLeadingTitle = useStructuredLeadingLayout
-      ? (structuredLeadingByPricePosition.get(pricePosition) ?? null)
-      : null;
+    const structuredCandidate =
+      structuredLeadingByPricePosition.get(pricePosition) ?? null;
+    const structuredLeadingTitle =
+      structuredCandidate &&
+      (useStructuredLeadingLayout ||
+        isStrongLocalStructuredLeadingTitle(structuredCandidate))
+        ? structuredCandidate
+        : null;
     if (numberedTitle) {
       titlePosition = numberedTitle.position;
       title = numberedTitle.title;
@@ -480,7 +547,8 @@ export function recoverTrailingPriceCardHtmlItems(
       ) {
         const candidate = lines[index] ?? "";
         if (candidate.startsWith(HEADING_MARKER)) continue;
-        if (parseTrailingPrice(candidate)) break;
+        if (parseTrailingPrice(candidate) || isUnpricedPriceBoundary(candidate))
+          break;
         if (!looksLikeDishTitle(candidate)) continue;
         titlePosition = index;
         title = normalizeVisibleLine(candidate);
