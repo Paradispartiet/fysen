@@ -240,4 +240,60 @@ describe("HTML runtime recovery selection", () => {
     ]);
   });
 
+
+  it("does not replace a correct next-card title with the previous card description", async () => {
+    const result = await extract(`
+      <html><body>
+        <h2>Forretter</h2>
+        <p>Wonton Suppe (Súp hoành thánh)</p>
+        <p>139 NOK</p>
+        <p>Serveres med wonton, kraft av kylling og svin.</p>
+        <p>Friterte Vårruller (Chả giò)</p>
+        <p>139 NOK</p>
+        <p>2 stk. kyllingkjøttdeig med grønnsaker og butterdeig.</p>
+        <p>Fersk Sommerruller (Gỏi cuốn)</p>
+        <p>139 NOK</p>
+        <p>2 stk. Svinekjøtt med scampi, salat og agurk.</p>
+        <p>Vietnamesisk Baguette (Bánh mì)</p>
+        <p>fra 169 NOK</p>
+        <p>Serveres med stekt skinkeskiver, svinekjøtt, agurk og syltet gulrot.</p>
+        <p>Hues Suppe (Bún bò huế)</p>
+        <p>fra 259 NOK</p>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => [item.name, item.priceMinor])).toContainEqual([
+      "Vietnamesisk Baguette (Bánh mì)",
+      16900,
+    ]);
+    expect(
+      result.items.some(
+        (item) =>
+          item.name === "2 stk. Svinekjøtt med scampi, salat og agurk." &&
+          item.priceMinor === 16900,
+      ),
+    ).toBe(false);
+  });
+
+  it("keeps explicit meze titles instead of preceding descriptions with the same price", async () => {
+    const result = await extract(`
+      <html><body>
+        <h2>Småretter</h2>
+        <p>Tabouleh</p><p>kr 98</p><p>Bulgur, persille, tomater og sitron</p>
+        <p>Labneh</p><p>kr 98</p><p>Libanesisk yoghurt med mynte og olivenolje</p>
+        <p>Hommus</p><p>kr 98</p><p>Moste kikerter med sesam, hvitløk og olivenolje</p>
+        <p>Falafel</p><p>kr 98</p><p>Knuste kikerter blandet med arabiske krydder</p>
+        <p>Kibbeh</p><p>kr 139</p><p>Friterte kjøttboller med middelhavskrydder</p>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => item.name)).toEqual(
+      expect.arrayContaining(["Hommus", "Falafel", "Kibbeh"]),
+    );
+    expect(result.items.map((item) => item.name)).not.toContain(
+      "Moste kikerter med sesam, hvitløk og olivenolje",
+    );
+  });
+
+
 });
