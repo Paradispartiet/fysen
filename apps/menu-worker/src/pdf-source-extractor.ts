@@ -5,14 +5,19 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v14";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v15";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
 const LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]\s*/u;
 const SECTION_PRICE_SIGNAL = /(?:^|\s)(?:kr\.?|nok)?\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)?$/iu;
 const VARIANT_SECTION_KEYWORD =
-  /\b(?:sashimi|nigiri|maki|uramaki|futomaki|temaki|sushi|tacos?|pizza(?:er|s)?|pasta|dessert(?:er|s)?|starters?|forretter?|mains?|hovedretter?|grill|bowls?)\b/iu;
+  /\b(?:sashimi|nigiri|maki|uramaki|futomaki|temaki|sushi|tacos?|pizza(?:er|s)?|pasta|dessert(?:er|s)?|starters?|forretter?|mains?|hovedretter?|grill|bowls?|antipasti|primi|secondi|contorni|dolci)\b/iu;
+const SERVICE_CONTEXT_HEADING =
+  /^(?:lunsjmeny|lunch\s+menu|kveldsmeny|dinner\s+menu)\b/iu;
+const PDF_ABV_VOLUME_ITEM =
+  /\b\d{1,2}(?:[.,]\d+)?\s*%\s+\d(?:[.,]\d+)(?:\s*\/\s*\d(?:[.,]\d+)?)?\b/u;
+const PDF_LOWERCASE_SENTENCE_FRAGMENT = /^[a-zæøå].{2,220}[.]$/u;
 const TRAILING_SHARING_TAGLINE =
   /\s+(?:perfekt\s+å\s+dele|perfect\s+for\s+sharing)!?$/iu;
 const RECOVERY_ALLERGEN_CODES = new Set([
@@ -140,6 +145,18 @@ function nearestVariantSectionHeading(
   return null;
 }
 
+function nearestServiceContextHeading(
+  lines: readonly string[],
+  dishLineIndex: number,
+): string | null {
+  for (let index = dishLineIndex - 1; index >= Math.max(0, dishLineIndex - 160); index -= 1) {
+    const line = normalizeVisibleLine(lines[index] ?? "");
+    if (!line) continue;
+    if (SERVICE_CONTEXT_HEADING.test(line)) return line;
+  }
+  return null;
+}
+
 export function disambiguateConflictingPdfSourceKeys(
   visibleText: string,
   items: readonly MenuObservedItem[],
@@ -171,7 +188,8 @@ export function disambiguateConflictingPdfSourceKeys(
     const lineIndex = findNextDishLine(lines, item.name, searchFrom);
     if (lineIndex !== null) searchFrom = lineIndex + 1;
     if (lineIndex === null || !conflictingKeys.has(item.sourceKey)) continue;
-    const section = nearestVariantSectionHeading(lines, lineIndex);
+    const serviceContext = nearestServiceContextHeading(lines, lineIndex);
+    const section = serviceContext ?? nearestVariantSectionHeading(lines, lineIndex);
     if (section) sectionByItem.set(item, section);
   }
 
@@ -196,6 +214,15 @@ export function disambiguateConflictingPdfSourceKeys(
       sourceKey: createMenuItemSourceKey(item.name, sectionName),
     };
   });
+}
+
+function looksLikePdfBeverageItem(name: string): boolean {
+  return PDF_ABV_VOLUME_ITEM.test(normalizeVisibleLine(name));
+}
+
+function looksLikePdfDescriptionFragment(name: string): boolean {
+  const normalized = normalizeVisibleLine(name);
+  return PDF_LOWERCASE_SENTENCE_FRAGMENT.test(normalized);
 }
 
 function looksLikePricingMetadata(name: string): boolean {
@@ -285,7 +312,11 @@ export function scopePdfMenuItems(
   let searchFrom = 0;
 
   for (const item of items) {
-    if (looksLikePricingMetadata(item.name)) continue;
+    if (
+      looksLikePricingMetadata(item.name) ||
+      looksLikePdfBeverageItem(item.name) ||
+      looksLikePdfDescriptionFragment(item.name)
+    ) continue;
     const lineIndex = findNextDishLine(lines, item.name, searchFrom);
     if (lineIndex !== null) searchFrom = lineIndex + 1;
     if (lineIndex !== null && blocked[lineIndex]) continue;
