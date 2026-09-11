@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bristol-grill-oslo",
+    "name": "Bristol Grill",
+    "websiteUrl": "https://hotelbristol.no/",
+    "address": "Kristian IVs gate 7, 0164 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91510618069666,
+    "longitude": 10.739798324761239
+  },
+  "menuSource": {
+    "url": "https://hotelbristol.no/spise-pa-bristol/bristol-grill/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 21,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "Current first-party Bristol Grill page publishes a substantial named and priced à la carte plus meat list. Kitchen hours are not promoted from this research seed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Potetbrød med urtesmør",
+      "Grillet Piggvar kotelett",
+      "Sjokolade tarte med whisky karamell og vanilje is",
+      "Dagens fangst fra havet",
+      "Pommes frites med truffle emulsion",
+      "Glaserte gulrøtter med byggryn",
+      "Bristols Béarnaisesaus",
+      "Bordelaise-saus"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Potetbrød med urtesmør",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Grillet Piggvar kotelett",
+        "priceMinor": 49500
+      },
+      {
+        "name": "Sjokolade tarte med whisky karamell og vanilje is",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Dagens fangst fra havet",
+        "priceMinor": 90000
+      },
+      {
+        "name": "Pommes frites med truffle emulsion",
+        "priceMinor": 8000
+      },
+      {
+        "name": "Glaserte gulrøtter med byggryn",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Bristols Béarnaisesaus",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Bordelaise-saus",
+        "priceMinor": 6900
+      }
+    ],
+    "forbiddenDishNames": [
+      "3 stk 195 kr / 6 stk",
+      "100 gr",
+      "Større cuts laget for deling, perfekt for to",
+      "For hele bordet",
+      "Sideretter"
+    ]
+  }
+}
