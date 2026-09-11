@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v10");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v11");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -250,6 +250,31 @@ describe("structural HTML output canonicalization", () => {
       "VEGETABLE SAMOSA (GLUTEN)",
       "GULAB JAMUN (GLUTEN)",
       "NO 5 Sweet potato noodles (Vegan/gluten free)",
+    ]);
+  });
+
+  it("cleans round-4 currency artifacts and drops generic UI, section, quantity and package labels", () => {
+    const items = [
+      item("Search", 69500),
+      item("Onsdag", 28800),
+      item("STARTERS", 24500),
+      item("Omeletter", 15500),
+      item("Ost og desserter / Cheese and desserts", 23500),
+      item("Small size (starter)", 25000),
+      item("2 pcs / 4 pcs / 6 pcs", 13000),
+      item("12 stk.:", 57500),
+      item("Minimum 2 persons to order seafood platter", 139500),
+      item("havsmaks 3-retter / havsmaks 3-course menu", 79500),
+      item("Todays three-course dinner", 79500),
+      item("Today’s dessert", 21500),
+      item("Dagens dessert", 21500),
+      item("Sjøkrepssuppe kr", 31500),
+      item("Catch of the Day", 39500),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Sjøkrepssuppe",
+      "Catch of the Day",
     ]);
   });
 
