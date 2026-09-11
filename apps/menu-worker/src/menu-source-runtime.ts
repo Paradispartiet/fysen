@@ -255,19 +255,20 @@ function reconcileSelectedItemsWithTrailingCards(
         isLikelySamePriceCardFragment(candidate)
       )
         return false;
-      const parts = (candidate.sourceExcerpt ?? "")
+      const rawParts = (candidate.sourceExcerpt ?? "")
         .split(SOURCE_EXCERPT_SEPARATOR)
-        .map((part) => normalizeDishName(part.trim()))
+        .map((part) => part.trim())
         .filter(Boolean);
+      const parts = rawParts.map(normalizeDishName);
       if (parts.length < 2) return false;
       if (parts[0] !== candidate.normalizedName) return false;
       const itemPartIndex = parts.slice(1).indexOf(item.normalizedName) + 1;
       if (itemPartIndex <= 0) return false;
       const itemWords = item.name.trim().split(/\s+/u).filter(Boolean);
-      const interveningParts = parts.slice(1, itemPartIndex);
+      const interveningRawParts = rawParts.slice(1, itemPartIndex);
       const contextualComponent =
         (itemWords.length === 1 &&
-          interveningParts.some((part) => /[,;]/u.test(part))) ||
+          interveningRawParts.some((part) => /[,;]/u.test(part))) ||
         (itemWords.length <= 5 &&
           /\b(?:and|og|with|med|&|\/|\+)\b/iu.test(item.name));
       if (
