@@ -62,6 +62,7 @@ import {
 import {
   canonicalizeHtmlOutputItems,
   HTML_OUTPUT_CANONICALIZER_VERSION,
+  isStrongCanonicalDishTitle,
   isUnambiguousSamePriceExcerptFragment,
 } from "./html-output-canonicalizer.js";
 import {
@@ -247,7 +248,8 @@ function reconcileSelectedItemsWithTrailingCards(
   if (items.length === 0 || trailing.length === 0) return items;
 
   const reconciled = items.map((item) => {
-    if (item.priceMinor === null) return item;
+    if (item.priceMinor === null || isStrongCanonicalDishTitle(item.name))
+      return item;
     const matches = trailing.filter((candidate) =>
       isUnambiguousSamePriceExcerptFragment(item, candidate),
     );
