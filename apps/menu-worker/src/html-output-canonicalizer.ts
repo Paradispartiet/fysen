@@ -1,6 +1,6 @@
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v4";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v5";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -143,7 +143,9 @@ function isSamePriceExcerptFragment(
     if (
       candidate === item ||
       !samePrice(candidate, item) ||
-      candidate.normalizedName === item.normalizedName
+      candidate.normalizedName === item.normalizedName ||
+      candidate.confidence < 0.99 ||
+      candidate.confidence <= item.confidence
     )
       return false;
     const parts = excerptParts(candidate);
