@@ -230,4 +230,73 @@ describe("trailing-price HTML card recovery", () => {
     expect(items[4]?.description).toContain("Maltbrød");
   });
 
+
+  it("resets structured leading-title recovery at plain food section labels", () => {
+    const items = recoverTrailingPriceCardHtmlItems(`
+      <html><body>
+        <div>Statholdergaarden fra 26-August-22-September 2026</div>
+        <div>Forretter</div>
+        <div>Hellefisk</div>
+        <div>Småløk, ingefær, boc choi og koriander</div>
+        <div>Sitrussaus</div>
+        <div>Kr. 495,-</div>
+        <div>Kamskjell</div>
+        <div>Brokkoli, squash og purre</div>
+        <div>Pepperrotsaus</div>
+        <div>Kr. 650,-</div>
+        <div>Kantarell</div>
+        <div>Gresskar, solbær og eple</div>
+        <div>Steinsoppespuma</div>
+        <div>Kr. 495,-</div>
+
+        <div>Hovedretter</div>
+        <div>Ishavsrøye</div>
+        <div>Erter, spisskål, fennikel og brioche</div>
+        <div>Smørsaus</div>
+        <div>Kr. 755,-</div>
+        <div>Breiflabb</div>
+        <div>Plomme, grønnkål, reddik, mais og popcorn</div>
+        <div>Plommesaus</div>
+        <div>Kr. 755,-</div>
+        <div>Due</div>
+        <div>Rødbete, selleri og kyllingskinn</div>
+        <div>Morellsaus</div>
+        <div>Kr. 795,-</div>
+        <div>Lam</div>
+        <div>Jordskokk, rosenkål, knutekål, hasselnøtter og chevre</div>
+        <div>Lammesaus</div>
+        <div>Kr. 755,-</div>
+
+        <div>Desserter</div>
+        <div>Norske oster</div>
+        <div>Rosiner, aprikos, pekannøtter og basilikumhonning</div>
+        <div>Maltbrød</div>
+        <div>Kr. 395,-</div>
+        <div>Blåbær &amp; tonka</div>
+        <div>Pannacotta, hvit sjokolade og sabayon</div>
+        <div>Kr. 395,-</div>
+        <div>Eple</div>
+        <div>Sjokolade, karamell og hasselnøtt</div>
+        <div>Kr. 395,-</div>
+        <div>Liten frisk avslutning</div>
+        <div>Sorbet</div>
+        <div>Kr. 335,-</div>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Hellefisk", 49500],
+      ["Kamskjell", 65000],
+      ["Kantarell", 49500],
+      ["Ishavsrøye", 75500],
+      ["Breiflabb", 75500],
+      ["Due", 79500],
+      ["Lam", 75500],
+      ["Norske oster", 39500],
+      ["Blåbær & tonka", 39500],
+      ["Eple", 39500],
+      ["Liten frisk avslutning", 33500],
+    ]);
+  });
+
 });

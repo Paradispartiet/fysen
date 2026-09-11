@@ -33,6 +33,8 @@ const EXPLICIT_A_LA_CARTE_SCOPE =
 const NEXT_MENU_SCOPE =
   /^(?:breakfast|frokost|brunch|lunch|lunsj|tasting\s+menu|set\s+menu|drinks?|drikke(?:meny)?|bar\s+menu)$/iu;
 const PLAIN_FOOD_SECTION_BOUNDARY =
+  /^(?:forretter?|starters?|appetizers?|småretter|small\s+(?:plates?|dishes?)|hovedretter?|mains?|main\s+courses?|dessert(?:er|s)?)$/iu;
+const PLAIN_FOOD_SECTION_BOUNDARY =
   /^(?:forretter?|starters?|appetizers?|småretter|small\s+plates?|hovedretter?|mains?|main\s+courses?|desserter?|desserts?|tilbehør|sides?|salater?|salads?|supper?|soups?)$/iu;
 const EXPLICIT_A_LA_CARTE_SECTION = "A LA CARTA";
 const MAX_PRECEDING_TITLE_DISTANCE = 12;
@@ -324,6 +326,14 @@ function precedingStructuredLeadingTitle(
       // The marker's following line is the section heading itself. Start after
       // both so headings such as "Forretter" cannot become dish titles.
       blockStart = Math.min(pricePosition, index + 2);
+      break;
+    }
+    if (PLAIN_FOOD_SECTION_BOUNDARY.test(line)) {
+      // Some first-party menus render food section labels as plain text rather
+      // than semantic headings. Treat them as hard card boundaries so the
+      // first priced dish in each section cannot inherit a title from the
+      // preceding section or page intro.
+      blockStart = index + 1;
       break;
     }
   }
