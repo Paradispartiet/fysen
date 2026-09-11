@@ -124,11 +124,65 @@ jobs:
             throw new Error("Research seed must be version 1 with at least one restaurant");
           }
 
+          function normalizeIdentityText(value) {
+            return String(value ?? "")
+              .normalize("NFKD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .toLowerCase()
+              .replace(/['’]/g, "")
+              .replace(/[^a-z0-9]+/g, " ")
+              .trim();
+          }
+
+          function restaurantNameTokens(value) {
+            const ignored = new Set(["restaurant", "resturant", "oslo"]);
+            return [...new Set(
+              normalizeIdentityText(value)
+                .split(" ")
+                .filter((token) => token && !ignored.has(token))
+            )].sort();
+          }
+
+          function namesLikelySame(left, right) {
+            if (left.length === 0 || right.length === 0) return false;
+            if (left.join("|") === right.join("|")) return true;
+            const [shorter, longer] = left.length <= right.length ? [left, right] : [right, left];
+            if (shorter.length < 2) return false;
+            return shorter.every((token) => longer.includes(token))
+              && shorter.length / longer.length >= 0.5;
+          }
+
+          function canonicalMenuSourceKey(value) {
+            if (!value) return null;
+            try {
+              const url = new URL(value);
+              const hostname = url.hostname
+                .toLowerCase()
+                .replace(/^www\./, "")
+                .replace(/^meny\./, "");
+              const pathname = url.pathname
+                .replace(/^\/public\//, "/")
+                .replace(/\/+$/, "");
+              return `${hostname}${pathname}`;
+            } catch {
+              return normalizeIdentityText(value);
+            }
+          }
+
           const catalogDirectory = "apps/menu-worker/catalog";
           const catalogSlugs = new Set();
+          const catalogIdentities = [];
           for (const fileName of (await readdir(catalogDirectory)).filter((name) => name.endsWith(".json"))) {
             const manifest = JSON.parse(await readFile(join(catalogDirectory, fileName), "utf8"));
-            if (manifest?.restaurant?.slug) catalogSlugs.add(manifest.restaurant.slug);
+            const slug = manifest?.restaurant?.slug;
+            if (!slug) continue;
+            catalogSlugs.add(slug);
+            catalogIdentities.push({
+              slug,
+              addressKey: normalizeIdentityText(manifest?.restaurant?.address),
+              nameTokens: restaurantNameTokens(manifest?.restaurant?.name),
+              menuSourceKey: canonicalMenuSourceKey(manifest?.menuSource?.url)
+            });
           }
 
           const seedSlugs = seed.restaurants.map((entry) => entry?.restaurant?.slug);
@@ -137,8 +191,42 @@ jobs:
           }
           const collisions = seedSlugs.filter((slug) => catalogSlugs.has(slug));
           const nonCanonical = seedSlugs.filter((slug) => !catalogSlugs.has(slug));
+          const identityCollisions = [];
+          for (const entry of seed.restaurants) {
+            const slug = entry?.restaurant?.slug;
+            const addressKey = normalizeIdentityText(entry?.restaurant?.address);
+            const nameTokens = restaurantNameTokens(entry?.restaurant?.name);
+            const menuSourceKey = canonicalMenuSourceKey(entry?.menuSource?.url);
+            for (const canonical of catalogIdentities) {
+              if (!slug || canonical.slug === slug) continue;
+              const sameSource = Boolean(
+                menuSourceKey
+                && canonical.menuSourceKey
+                && menuSourceKey === canonical.menuSourceKey
+              );
+              const samePhysicalIdentity = Boolean(
+                addressKey
+                && canonical.addressKey === addressKey
+                && namesLikelySame(nameTokens, canonical.nameTokens)
+              );
+              if (sameSource || samePhysicalIdentity) {
+                identityCollisions.push({
+                  slug,
+                  canonicalSlug: canonical.slug,
+                  reason: sameSource ? "menu_source" : "name_address"
+                });
+              }
+            }
+          }
           if (!reproof && collisions.length > 0) {
             throw new Error(`Research seed collides with canonical catalog: ${collisions.join(", ")}`);
+          }
+          if (!reproof && identityCollisions.length > 0) {
+            throw new Error(
+              `Research seed duplicates canonical physical identity: ${identityCollisions
+                .map((collision) => `${collision.slug}->${collision.canonicalSlug}[${collision.reason}]`)
+                .join(", ")}`
+            );
           }
 
           let selectedEntries = seed.restaurants;
@@ -349,6 +437,7 @@ jobs:
             catalogBaselineCount: catalogSlugs.size,
             reproof,
             catalogCollisions: collisions,
+            identityCollisions,
             skippedNonCanonicalSlugs: reproof ? nonCanonical : [],
             evidence
           }, null, 2)}\n`);
