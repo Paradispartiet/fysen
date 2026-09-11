@@ -32,6 +32,8 @@ const EXPLICIT_A_LA_CARTE_SCOPE =
   /^(?:a\s+la\s+carta|a\s+la\s+carte|à\s+la\s+carte)$/iu;
 const NEXT_MENU_SCOPE =
   /^(?:breakfast|frokost|brunch|lunch|lunsj|tasting\s+menu|set\s+menu|drinks?|drikke(?:meny)?|bar\s+menu)$/iu;
+const PLAIN_FOOD_SECTION_BOUNDARY =
+  /^(?:forretter?|starters?|appetizers?|småretter|small\s+plates?|hovedretter?|mains?|main\s+courses?|desserter?|desserts?|tilbehør|sides?|salater?|salads?|supper?|soups?)$/iu;
 const EXPLICIT_A_LA_CARTE_SECTION = "A LA CARTA";
 const MAX_PRECEDING_TITLE_DISTANCE = 12;
 
@@ -311,6 +313,10 @@ function precedingStructuredLeadingTitle(
   for (let index = pricePosition - 1; index >= blockStart; index -= 1) {
     const line = lines[index] ?? "";
     if (parseTrailingPrice(line)) {
+      blockStart = index + 1;
+      break;
+    }
+    if (PLAIN_FOOD_SECTION_BOUNDARY.test(normalizeVisibleLine(line))) {
       blockStart = index + 1;
       break;
     }

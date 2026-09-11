@@ -37,12 +37,12 @@ describe("trailing-price HTML card recovery", () => {
     const items = recoverTrailingPriceCardHtmlItems(`
       <html><body>
         <div data-testid="menu-category-section">
-          <div data-testid="menu-category-section-title"><h2>Forretter</h2></div>
+          <div data-testid="menu-category-section-title"><div>Forretter</div></div>
           <div data-testid="menu-product"><span data-testid="menu-product-name">Falafel</span><span data-testid="menu-product-price">99 NOK</span></div>
           <div data-testid="menu-product"><span data-testid="menu-product-name">Hummus</span><span data-testid="menu-product-price">109 NOK</span></div>
         </div>
         <div data-testid="menu-category-section">
-          <div data-testid="menu-category-section-title"><h2>Hovedretter</h2></div>
+          <div data-testid="menu-category-section-title"><div>Hovedretter</div></div>
           <div data-testid="menu-product"><span data-testid="menu-product-name">Lamb Rice</span><span data-testid="menu-product-price">from 299 NOK</span></div>
           <div data-testid="menu-product"><span data-testid="menu-product-name">Chicken Rice</span><span data-testid="menu-product-price">279 NOK</span></div>
         </div>
@@ -211,7 +211,7 @@ describe("trailing-price HTML card recovery", () => {
         <div>Tomat-løpstikkeemulsjon</div>
         <div>Kr. 755,-</div>
 
-        <h2>Desserter</h2>
+        <div>Desserter</div>
         <div>Norske oster</div>
         <div>Rosiner, aprikos, pekannøtter og basilikumhonning</div>
         <div>Maltbrød</div>
