@@ -121,7 +121,7 @@
         "slug": "kaffistova-oslo",
         "name": "Kaffistova",
         "websiteUrl": "https://www.bondeheimen.no/kaffistova/heim",
-        "address": "Kristian IVs gate 2, 0164 Oslo",
+        "address": "Rosenkrantz' gate 8, 0159 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
@@ -136,7 +136,7 @@
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-09-11",
-          "note": "Current first-party à la carte publishes named and individually priced Norwegian dishes; kitchen hours are not promoted from this research seed."
+          "note": "Current first-party à la carte publishes named and individually priced Norwegian dishes. The restaurant shares Bøndenes Hus/Hotell Bondeheimen; the seed uses the owner's registered Rosenkrantz' gate 8 building address for canonical geocoding while the public restaurant entrance is also described as Kristian IVs gate 2."
         }
       },
       "actions": [],
