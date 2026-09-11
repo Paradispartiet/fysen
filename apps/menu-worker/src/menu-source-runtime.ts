@@ -62,6 +62,7 @@ import {
 import {
   canonicalizeHtmlOutputItems,
   HTML_OUTPUT_CANONICALIZER_VERSION,
+  isUnambiguousSamePriceExcerptFragment,
 } from "./html-output-canonicalizer.js";
 import {
   filterHtmlBeverageSectionItemsWithScopedProvenance,
@@ -247,20 +248,9 @@ function reconcileSelectedItemsWithTrailingCards(
 
   const reconciled = items.map((item) => {
     if (item.priceMinor === null) return item;
-    const matches = trailing.filter((candidate) => {
-      if (
-        candidate.priceMinor !== item.priceMinor ||
-        candidate.normalizedName === item.normalizedName
-      )
-        return false;
-      const parts = (candidate.sourceExcerpt ?? "")
-        .split(SOURCE_EXCERPT_SEPARATOR)
-        .map((part) => normalizeDishName(part.trim()))
-        .filter(Boolean);
-      if (parts.length < 2) return false;
-      if (parts[0] !== candidate.normalizedName) return false;
-      return parts.slice(1).includes(item.normalizedName);
-    });
+    const matches = trailing.filter((candidate) =>
+      isUnambiguousSamePriceExcerptFragment(item, candidate),
+    );
     return matches.length === 1 ? (matches[0] ?? item) : item;
   });
 
