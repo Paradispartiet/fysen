@@ -16,15 +16,18 @@
       "menuSource": {
         "url": "https://www.madonnaoslo.no/no/meny",
         "sourceType": "html",
-        "fetchMode": "http",
+        "fetchMode": "browser",
         "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
+        "checkIntervalMinutes": 720,
+        "readinessTexts": [
+          "Entrecôte"
+        ]
       },
       "verification": {
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-09-11",
-          "note": "Current first-party HTML publishes named and individually priced dinner dishes. Kitchen hours are not promoted from this research seed."
+          "note": "Current first-party page visibly publishes many named and individually priced dinner dishes. The HTTP intake path recovered only one priced dish, so exact-head reproof uses the supported rendered-browser path on the same first-party URL; the three-dish minimum is unchanged."
         }
       },
       "actions": [],
@@ -81,34 +84,6 @@
           "status": "unverified",
           "checkedAt": "2026-09-11",
           "note": "Current first-party seasonal page publishes named and individually priced dishes; intake must prove the live page remains the current canonical menu surface."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "le-benjamin-oslo",
-        "name": "Le Benjamin",
-        "websiteUrl": "https://lebenjamin.no/",
-        "address": "Søndre gate 6, 0550 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://lebenjamin.no/wp-content/uploads/2026/09/Meny-9.-september-2026.pdf",
-        "sourceType": "pdf",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-11",
-          "note": "First-party PDF dated 9 September 2026 publishes named and individually priced dishes. Live intake must prove PDF extraction and semantic title/price associations."
         }
       },
       "actions": [],
