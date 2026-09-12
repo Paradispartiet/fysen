@@ -34,7 +34,7 @@
     "requiredDishNames": [
       "Manchego 6mnd",
       "Patatas bravas",
-      "Jamón Ibérico Handcut 50g",
+      "Lomo Ibérico de Bellota",
       "Friterte artisjokker",
       "Entrecote",
       "Gambas al ajillo",
@@ -52,8 +52,8 @@
         "priceMinor": 10500
       },
       {
-        "name": "Jamón Ibérico Handcut 50g",
-        "priceMinor": 34500
+        "name": "Lomo Ibérico de Bellota",
+        "priceMinor": 19000
       },
       {
         "name": "Friterte artisjokker",
