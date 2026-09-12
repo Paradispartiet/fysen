@@ -64,3 +64,11 @@ The permanent round-4 seed is therefore narrowed to the **six promotion-ready ca
 
 No restaurant-specific parser exception, weaker minimum, secondary menu authority or manual assertion bypass is introduced.
 
+## Rice Bowl catalog-health #143 repair
+
+Canonical `main` `220570c2534c322a4dd51c3c965f5e4a20b08221` failed catalog-health #143 on exactly one manifest: `rice-bowl-kirkegata-oslo`. The historical first-party `https://www.ricebowl.no/meny` surface still returned HTTP 200 but the current server response yielded 0/36 extracted dishes.
+
+The restaurant's first-party takeaway surface `https://www.ricebowl.no/bestill-takeaway` publishes the same canonical priced menu directly over HTTP. Exact-head live validation on `a0f6f4e2aebe2a10857abfdf02c00ad2ad0428bb` accepted **36/36** items with no missing required dishes and no forbidden dish leakage. The manifest therefore moves only the menu source URL to the direct first-party takeaway surface; the HTTP transport, 36-item floor, required names/variants and forbidden-noise assertions remain strict.
+
+A browser-rendering experiment was explicitly discarded rather than raising the 120-request safety budget. No browser network-policy relaxation is part of the final repair.
+
