@@ -10,6 +10,8 @@ const SAFE_PUBLISHED_REFRESH_FALLBACK_WARNING =
 const RECOVERABLE_REFRESH_WATCH_FAILURE_PREFIXES = [
   "First extractor refresh watch was ",
   "Second extractor refresh watch was ",
+  "First extractor refresh watch threw: ",
+  "Second extractor refresh watch threw: ",
 ] as const;
 
 /**

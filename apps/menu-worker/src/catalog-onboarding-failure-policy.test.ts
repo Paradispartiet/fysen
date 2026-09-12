@@ -50,6 +50,39 @@ describe("catalog onboarding failure policy", () => {
     ).toBe(false);
   });
 
+  it("does not block a thrown refresh transport failure after a manifest-valid fallback is restored", () => {
+    expect(
+      isBlockingCatalogOnboardingFailure(
+        signal({
+          warnings: [restoreWarning],
+          error:
+            "First extractor refresh watch threw: Network request failed: fetch failed",
+        }),
+      ),
+    ).toBe(false);
+
+    expect(
+      isBlockingCatalogOnboardingFailure(
+        signal({
+          warnings: [restoreWarning],
+          error:
+            "Second extractor refresh watch threw: Network request failed: fetch failed",
+        }),
+      ),
+    ).toBe(false);
+  });
+
+  it("keeps an unscoped network or metadata failure blocking even if coverage was restored", () => {
+    expect(
+      isBlockingCatalogOnboardingFailure(
+        signal({
+          warnings: [restoreWarning],
+          error: "Network request failed: fetch failed",
+        }),
+      ),
+    ).toBe(true);
+  });
+
   it("keeps refresh failures blocking when published coverage was not safely restored", () => {
     expect(
       isBlockingCatalogOnboardingFailure(
