@@ -19,7 +19,6 @@ const blockedResourceTypes = new Set([
   "image",
   "media",
   "font",
-  "stylesheet",
   "texttrack",
   "eventsource",
   "websocket",
@@ -206,7 +205,6 @@ async function installNetworkPolicy(
   violation: { value: MenuFetchError | null },
 ): Promise<void> {
   const validatedUrls = new Map<string, Promise<void>>();
-  const allowedRequestCounts = new Map<string, number>();
   let budget: BrowserRequestBudget = { routeEvents: 0, networkRequests: 0 };
 
   await context.route("**/*", async (route: Route) => {
@@ -222,30 +220,10 @@ async function installNetworkPolicy(
           ? { browserBlockedOrigins: support.browserBlockedOrigins }
           : {}),
       });
-      if (decision.action === "allow") {
-        const requestOrigin = new URL(request.url()).origin;
-        const requestKey = `${request.resourceType()} ${requestOrigin}`;
-        allowedRequestCounts.set(
-          requestKey,
-          (allowedRequestCounts.get(requestKey) ?? 0) + 1,
-        );
-      }
-
       const accounted = accountBrowserRequest(budget, decision);
       budget = accounted.budget;
       if (accounted.violation) {
-        const topAllowedRequests = [...allowedRequestCounts.entries()]
-          .sort((left, right) => right[1] - left[1])
-          .slice(0, 8)
-          .map(([key, count]) => `${key}=${count}`)
-          .join(", ");
-        const diagnostic = topAllowedRequests
-          ? `; top allowed requests: ${topAllowedRequests}`
-          : "";
-        violation.value ??= new MenuFetchError(
-          accounted.violation.code,
-          `${accounted.violation.message}${diagnostic}`,
-        );
+        violation.value ??= new MenuFetchError(accounted.violation.code, accounted.violation.message);
         await route.abort("blockedbyclient");
         return;
       }
