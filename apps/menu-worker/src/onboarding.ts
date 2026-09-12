@@ -337,11 +337,21 @@ async function onboardOne(
         : false;
 
       if (requiresExtractorRefresh) {
+        const previousQuality = evaluateManifestMenuQuality(
+          manifest,
+          previousSnapshot?.items ?? [],
+        );
         await setRestaurantCoverageActive(pool, candidate.id, false);
         refreshCoverageTemporarilyDeactivated = true;
-        latestRefreshSnapshotIsSafe = true;
+        latestRefreshSnapshotIsSafe = previousQuality.accepted;
 
-        firstWatch = await watchMenu({ acceptConfirmedSuspiciousDrop: true });
+        try {
+          firstWatch = await watchMenu({ acceptConfirmedSuspiciousDrop: true });
+        } catch (error) {
+          throw new Error(
+            `First extractor refresh watch threw: ${error instanceof Error ? error.message : String(error)}`,
+          );
+        }
         if (!accepted(firstWatch)) {
           throw new Error(`First extractor refresh watch was ${firstWatch.outcome}`);
         }
@@ -353,7 +363,13 @@ async function onboardOne(
         }
         latestRefreshSnapshotIsSafe = true;
 
-        secondWatch = await watchMenu();
+        try {
+          secondWatch = await watchMenu();
+        } catch (error) {
+          throw new Error(
+            `Second extractor refresh watch threw: ${error instanceof Error ? error.message : String(error)}`,
+          );
+        }
         if (!accepted(secondWatch)) {
           throw new Error(`Second extractor refresh watch was ${secondWatch.outcome}`);
         }
