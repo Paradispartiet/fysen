@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v12");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v13");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -284,6 +284,24 @@ describe("structural HTML output canonicalization", () => {
     expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
       "Sjøkrepssuppe",
       "Catch of the Day",
+    ]);
+  });
+
+  it("preserves an explicitly priced daily dessert while still dropping weak placeholders", () => {
+    const items = [
+      item(
+        "Today's Dessert",
+        16500,
+        null,
+        "Today's Dessert — (milk, egg, nuts) — 165,-",
+      ),
+      item("Dagens dessert", 21500),
+      item("Selection of Ice Cream and Sorbet", 15500),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Today's Dessert",
+      "Selection of Ice Cream and Sorbet",
     ]);
   });
 
