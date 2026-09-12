@@ -11,20 +11,12 @@
     "longitude": 10.7447792
   },
   "menuSource": {
-    "url": "https://www.ricebowl.no/meny",
+    "url": "https://www.ricebowl.no/bestill-takeaway",
     "sourceType": "html",
-    "fetchMode": "browser",
+    "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 36,
-    "sourceSupport": {
-      "redirectOrigins": [],
-      "browserDataOrigins": [
-        "https://siteassets.parastorage.com",
-        "https://static.parastorage.com"
-      ],
-      "browserBlockedOrigins": []
-    }
+    "minimumExpectedItems": 36
   },
   "hoursSource": {
     "url": "https://www.ricebowl.no/",
