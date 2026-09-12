@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-quality-p0-round-05",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "fiskeriet-bjorvika-oslo",
+        "name": "Fiskeriet Bjørvika",
+        "websiteUrl": "https://www.fiskeriet.net/",
+        "address": "Operagata 69B, 0194 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.fiskeriet.net/bjorvika-menu",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-12",
+          "note": "Current first-party Bjørvika page publishes a substantial named and individually priced seafood menu and identifies the distinct Operagata location; kitchen hours are not promoted from this research seed."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "3 pcs / 6 pcs / 12 pcs",
+        "For 2 people",
+        "not served on Mondays"
+      ]
+    }
+  ]
+}
