@@ -16,7 +16,14 @@
     "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 36
+    "minimumExpectedItems": 36,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [
+        "https://siteassets.parastorage.com"
+      ],
+      "browserBlockedOrigins": []
+    }
   },
   "hoursSource": {
     "url": "https://www.ricebowl.no/",
