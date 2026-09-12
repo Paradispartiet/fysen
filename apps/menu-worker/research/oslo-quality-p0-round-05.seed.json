@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-quality-p0-round-05",
+  "concurrency": 2,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "fiskeriet-bjorvika-oslo",
+        "name": "Fiskeriet Bjørvika",
+        "websiteUrl": "https://www.fiskeriet.net/",
+        "address": "Operagata 69B, 0194 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.fiskeriet.net/bjorvika-menu",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-12",
+          "note": "Current first-party Bjørvika page publishes a substantial named and individually priced seafood menu and identifies the distinct Operagata location; kitchen hours are not promoted from this research seed."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "3 pcs / 6 pcs / 12 pcs",
+        "For 2 people",
+        "not served on Mondays"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "theatercafeen-oslo",
+        "name": "Theatercaféen",
+        "websiteUrl": "https://www.theatercafeen.no/",
+        "address": "Stortingsgata 24, 0117 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.theatercafeen.no/wp-content/uploads/sites/5/2026/08/Middagsmeny42.pdf",
+        "sourceType": "pdf",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-12",
+          "note": "Current first-party site links this August 2026 dinner PDF with named and individually priced dishes; intake must keep drinks, bilingual descriptions and layout fragments outside canonical dish output."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "HOUSE COCKTAILS",
+        "BEST SERVED MEDIUM",
+        "PERFECT WITH VODKA",
+        "ADD BUFFALO MOZZARELLA"
+      ]
+    }
+  ]
+}
