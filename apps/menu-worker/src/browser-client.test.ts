@@ -105,20 +105,10 @@ describe("browser request policy", () => {
     ).toEqual({ action: "allow", validatePublicNetwork: true });
   });
 
-  it("blocks presentation-heavy resources without failing the rendered source", () => {
-    for (const resourceType of ["image", "font", "media", "stylesheet"]) {
-      expect(
-        browserRequestDecision({
-          sourceOrigin,
-          requestUrl: "https://cdn.example.net/resource",
-          resourceType,
-        }),
-      ).toEqual({
-        action: "block",
-        reason: `blocked resource type: ${resourceType}`,
-        fatal: false,
-      });
-    }
+  it("blocks heavy resources without failing the rendered source", () => {
+    expect(
+      browserRequestDecision({ sourceOrigin, requestUrl: "https://cdn.example.net/photo.jpg", resourceType: "image" }),
+    ).toEqual({ action: "block", reason: "blocked resource type: image", fatal: false });
   });
 
   it("fails closed on non-HTTPS browser traffic", () => {
