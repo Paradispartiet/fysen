@@ -38,8 +38,7 @@
       "Sjømagasinet's Fish Soup",
       "Selection of Ice Cream and Sorbet",
       "Lobster Salad",
-      "Dry-aged Entrecote 250 gram from Josheim",
-      "Today's Dessert"
+      "Dry-aged Entrecote 250 gram from Josheim"
     ],
     "requiredDishVariants": [
       {
@@ -65,10 +64,6 @@
       {
         "name": "Dry-aged Entrecote 250 gram from Josheim",
         "priceMinor": 68500
-      },
-      {
-        "name": "Today's Dessert",
-        "priceMinor": 16500
       }
     ],
     "forbiddenDishNames": [
