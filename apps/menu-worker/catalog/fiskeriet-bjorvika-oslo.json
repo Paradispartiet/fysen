@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "fiskeriet-bjorvika-oslo",
+    "name": "Fiskeriet Bjørvika",
+    "websiteUrl": "https://www.fiskeriet.net/",
+    "address": "Operagata 69B, 0194 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90634767982767,
+    "longitude": 10.757452655684792
+  },
+  "menuSource": {
+    "url": "https://www.fiskeriet.net/bjorvika-menu",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 12,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-12",
+      "note": "Current first-party Bjørvika page publishes a substantial named and individually priced seafood menu and identifies the distinct Operagata location; kitchen hours are not promoted from this research seed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fine No.3 - classic",
+      "BB Boudeuse No.5 - small",
+      "Utah Beach No.2 - big",
+      "Oscietra - firm",
+      "IGP - butter",
+      "Langoustine - Gratinated in herb butter",
+      "Creamy Fish soup - fish of the day",
+      "Fresh Shrimps * - Salad"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fine No.3 - classic",
+        "priceMinor": 58500
+      },
+      {
+        "name": "BB Boudeuse No.5 - small",
+        "priceMinor": 61500
+      },
+      {
+        "name": "Utah Beach No.2 - big",
+        "priceMinor": 80500
+      },
+      {
+        "name": "Oscietra - firm",
+        "priceMinor": 122900
+      },
+      {
+        "name": "IGP - butter",
+        "priceMinor": 122900
+      },
+      {
+        "name": "Langoustine - Gratinated in herb butter",
+        "priceMinor": 44900
+      },
+      {
+        "name": "Creamy Fish soup - fish of the day",
+        "priceMinor": 29800
+      },
+      {
+        "name": "Fresh Shrimps * - Salad",
+        "priceMinor": 29800
+      }
+    ],
+    "forbiddenDishNames": [
+      "3 pcs / 6 pcs / 12 pcs",
+      "For 2 people",
+      "not served on Mondays"
+    ]
+  }
+}
