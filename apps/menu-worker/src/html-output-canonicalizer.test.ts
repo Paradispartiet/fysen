@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v10");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v12");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -253,6 +253,76 @@ describe("structural HTML output canonicalization", () => {
     ]);
   });
 
+  it("cleans round-4 currency artifacts and drops generic UI, section, quantity and package labels", () => {
+    const items = [
+      item("Search", 69500),
+      item("Onsdag", 28800),
+      item("Mandag/Tirsdag", 27800),
+      item("Tuesday-Wednesday", 27800),
+      item("STARTERS", 24500),
+      item("MAIN COURSE", 45500),
+      item("Omeletter", 15500),
+      item("Desserter Desserts", 21500),
+      item("Ost og desserter / Cheese and desserts", 23500),
+      item("Small size (starter)", 25000),
+      item("Big size (main course)", 49500),
+      item("Hovedretter / Main courses", 51500),
+      item("1 st.:", 8500),
+      item("6 st.:", 43500),
+      item("Gratinated with herbal butter", 59500),
+      item("2 pcs / 4 pcs / 6 pcs", 13000),
+      item("12 stk.:", 57500),
+      item("Minimum 2 persons to order seafood platter", 139500),
+      item("havsmaks 3-retter / havsmaks 3-course menu", 79500),
+      item("Todays three-course dinner", 79500),
+      item("Today’s dessert", 21500),
+      item("Dagens dessert", 21500),
+      item("Sjøkrepssuppe kr", 31500),
+      item("Catch of the Day", 39500),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Sjøkrepssuppe",
+      "Catch of the Day",
+    ]);
+  });
+
+  it("prefers the uniquely direct-priced observation when a duplicate name inherited the next dish price", () => {
+    const kalix = item(
+      "Kalix løyrom med sitt klassiske tilbehør",
+      35000,
+      null,
+      "Kalix løyrom med sitt klassiske tilbehør kr 350.-",
+    );
+    const inherited = item(
+      "Kalix løyrom med sitt klassiske tilbehør",
+      26500,
+      null,
+      "Kalix løyrom med sitt klassiske tilbehør — allergener: fisk, melk, hvete — Diana Camembert fra Bryne kr 265.-",
+    );
+    const diana = item(
+      "Diana Camembert fra Bryne",
+      26500,
+      null,
+      "Diana Camembert fra Bryne kr 265.-",
+    );
+
+    expect(
+      canonicalizeHtmlOutputItems([kalix, inherited, diana]).map((entry) => [
+        entry.name,
+        entry.priceMinor,
+      ]),
+    ).toEqual([
+      ["Kalix løyrom med sitt klassiske tilbehør", 35000],
+      ["Diana Camembert fra Bryne", 26500],
+    ]);
+  });
+
+  it("keeps fail-closed ambiguity when an unsectioned dish has two direct prices", () => {
+    const lunch = item("House Curry", 22900, null, "House Curry 229,-");
+    const dinner = item("House Curry", 26900, null, "House Curry 269,-");
+    expect(canonicalizeHtmlOutputItems([lunch, dinner])).toHaveLength(2);
+  });
   it("drops generic display metadata and lowercase same-price component fragments", () => {
     const items = [
       item("Grillet kveite", 49500),

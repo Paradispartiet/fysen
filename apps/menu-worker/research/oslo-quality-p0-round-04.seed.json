@@ -1,0 +1,190 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-quality-p0-round-04",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "lorry-restaurant-oslo",
+        "name": "Lorry Restaurant",
+        "websiteUrl": "https://lorry.no/",
+        "address": "Parkveien 12, 0350 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://lorry.no/meny/middag",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party dinner menu publishes a broad set of named and individually priced dishes."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Onsdag",
+        "Mandag/Tirsdag"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "engebret-cafe-oslo",
+        "name": "Engebret Café",
+        "websiteUrl": "https://www.engebret-cafe.no/",
+        "address": "Bankplassen 1, 0151 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.engebret-cafe.no/menymenu",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party à la carte page publishes named and individually priced dishes and current kitchen hours."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Ost og desserter / Cheese and desserts"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dovrehallen-oslo",
+        "name": "Dovrehallen",
+        "websiteUrl": "https://www.dovrehallen.no/",
+        "address": "Storgata 22, 0184 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.dovrehallen.no/var-meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party menu publishes a large priced traditional menu. Seasonal Christmas entries coexist with the ordinary menu and must be handled semantically by the runtime."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Omeletter"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "the-salmon-oslo",
+        "name": "The Salmon",
+        "websiteUrl": "https://www.thesalmon.com/",
+        "address": "Strandpromenaden 11, 0252 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.thesalmon.com/menu/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party Summer 2026 menu publishes multiple individually priced salmon, oyster and sushi dishes."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "lofoten-fiskerestaurant-oslo",
+        "name": "Lofoten Fiskerestaurant",
+        "websiteUrl": "https://www.lofoten-fiskerestaurant.no/",
+        "address": "Stranden 75, 0250 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.lofoten-fiskerestaurant.no/menu-eng",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party menu publishes priced lunch, dinner and shellfish dishes; source page also publishes 2026 opening-hour exceptions."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Small size (starter)",
+        "STARTERS",
+        "2 pcs / 4 pcs / 6 pcs",
+        "Big size (main course)",
+        "MAIN COURSE"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "havsmak-oslo",
+        "name": "Havsmak",
+        "websiteUrl": "https://www.havsmak.no/",
+        "address": "Kirsten Flagstads plass 1, 0150 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.havsmak.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party menu publishes seasonal named dishes, course menus and individually priced snacks; intake must preserve dish-first output rather than menu-package labels."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "havsmaks 3-retter / havsmaks 3-course menu"
+      ]
+    }
+  ]
+}

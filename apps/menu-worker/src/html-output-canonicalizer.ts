@@ -1,6 +1,6 @@
-import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
+import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v10";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v12";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -47,6 +47,29 @@ const WINE_VINTAGE_ITEM =
 const BARE_UNIT_ITEM = /^(?:gr\.?|gram|grams?|stk|pcs?)$/iu;
 const ALLERGEN_DESCRIPTION_PAREN =
   /\([^)]*\b(?:milk|egg|wheat|gluten|sulfite|sulphite|melk|egg|hvete|skalldyr|shellfish|nuts?|nøtter?)\b[^)]*\)$/iu;
+const TRAILING_CURRENCY_WORD = /\s+(?:kr\.?|nok)$/iu;
+const UI_ONLY_ITEM = /^(?:search|søk)$/iu;
+const WEEKDAY_TOKEN =
+  "(?:mandag|tirsdag|onsdag|torsdag|fredag|lørdag|søndag|monday|tuesday|wednesday|thursday|friday|saturday|sunday)";
+const WEEKDAY_ONLY_ITEM = new RegExp(
+  `^${WEEKDAY_TOKEN}(?:\\s*(?:/|[-–—]|og|and)\\s*${WEEKDAY_TOKEN}){0,2}$`,
+  "iu",
+);
+const GENERIC_SECTION_LABEL_ITEM =
+  /^(?:starters?|forretter?|omeletter|main\s+courses?|mains?|hovedretter?|hovedretter?\s*\/\s*main\s+courses?|desserter?\s*\/?\s*desserts?|ost\s+og\s+desserter\s*\/\s*cheese\s+and\s+desserts)$/iu;
+const QUANTITY_SERIES_LABEL_ITEM =
+  /^\d+\s*(?:stk\.?|pcs?|pieces?)\s*:?(?:\s*\/\s*\d+\s*(?:stk\.?|pcs?|pieces?)\s*:?)+$/iu;
+const INCOMPLETE_ENGLISH_DESCRIPTION_ITEM =
+  /^(?:gratinated|served|fished|breaded)\s+(?:with|in|straight|from)\b/iu;
+const SINGLE_QUANTITY_DISPLAY_ITEM = /^\d+\s*(?:stk\.?|st\.?|pcs?|pieces?)\s*:$/iu;
+const SIZE_CONTEXT_LABEL_ITEM =
+  /^(?:small|large|big|liten|stor)(?:\s+size)?\s*\((?:starter|main(?:\s+course)?|forrett|hovedrett)\)$/iu;
+const MINIMUM_PERSON_INSTRUCTION =
+  /^minimum\s+\d+\s+(?:persons?|people|personer)\b/iu;
+const EXTENDED_COURSE_PACKAGE_LABEL_ITEM =
+  /(?:\b\d+\s*[- ]?(?:retter|retters|course)\b|\b(?:three|four|five|six)[- ]course\b)/iu;
+const DAILY_DESSERT_PLACEHOLDER =
+  /^(?:dagens|today(?:['’])?s)\s+dessert$/iu;
 
 
 function samePrice(
@@ -246,6 +269,68 @@ function isLowercaseAllergenDescriptionItem(name: string): boolean {
   return /^[a-zæøå]/u.test(name) && ALLERGEN_DESCRIPTION_PAREN.test(name);
 }
 
+function cleanOutputItemName(item: MenuObservedItem): MenuObservedItem {
+  const name = item.name.trim().replace(TRAILING_CURRENCY_WORD, "").trim();
+  if (!name || name === item.name.trim()) return item;
+  return {
+    ...item,
+    name,
+    normalizedName: normalizeDishName(name),
+    sourceKey: createMenuItemSourceKey(name, item.sectionName),
+  };
+}
+
+function hasDirectPricedNameProvenance(item: MenuObservedItem): boolean {
+  if (item.priceMinor === null || item.priceMinor % 100 !== 0 || !item.sourceExcerpt)
+    return false;
+  const kroner = String(item.priceMinor / 100);
+  return item.sourceExcerpt
+    .split(SOURCE_EXCERPT_SEPARATOR)
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .some((part) => {
+      const normalizedPart = normalizeDishName(part);
+      if (!normalizedPart.startsWith(item.normalizedName)) return false;
+      const suffixTokens = normalizedPart
+        .slice(item.normalizedName.length)
+        .trim()
+        .split(/\s+/u)
+        .filter(Boolean)
+        .slice(0, 4);
+      return suffixTokens.includes(kroner);
+    });
+}
+
+function preferUniquelyDirectPricedConflicts(
+  items: readonly MenuObservedItem[],
+): readonly MenuObservedItem[] {
+  const groups = new Map<string, MenuObservedItem[]>();
+  for (const item of items) {
+    const group = groups.get(item.sourceKey) ?? [];
+    group.push(item);
+    groups.set(item.sourceKey, group);
+  }
+
+  const preferredByKey = new Map<string, MenuObservedItem>();
+  for (const [sourceKey, group] of groups) {
+    if (group.length < 2) continue;
+    const prices = new Set(
+      group.map(
+        (item) =>
+          `${item.priceKind ?? "exact"}:${item.priceMinor ?? "null"}:${item.priceMaxMinor ?? "null"}`,
+      ),
+    );
+    if (prices.size < 2) continue;
+    const direct = group.filter(hasDirectPricedNameProvenance);
+    if (direct.length === 1 && direct[0]) preferredByKey.set(sourceKey, direct[0]);
+  }
+  if (preferredByKey.size === 0) return items;
+
+  return items.filter((item) => {
+    const preferred = preferredByKey.get(item.sourceKey);
+    return preferred === undefined || item === preferred;
+  });
+}
 function isOutputNoiseLabel(item: MenuObservedItem): boolean {
   const name = item.name.trim();
   return (
@@ -272,6 +357,16 @@ function isOutputNoiseLabel(item: MenuObservedItem): boolean {
     WINE_VINTAGE_ITEM.test(name) ||
     BARE_UNIT_ITEM.test(name) ||
     isLowercaseAllergenDescriptionItem(name) ||
+    UI_ONLY_ITEM.test(name) ||
+    WEEKDAY_ONLY_ITEM.test(name) ||
+    GENERIC_SECTION_LABEL_ITEM.test(name) ||
+    QUANTITY_SERIES_LABEL_ITEM.test(name) ||
+    INCOMPLETE_ENGLISH_DESCRIPTION_ITEM.test(name) ||
+    SINGLE_QUANTITY_DISPLAY_ITEM.test(name) ||
+    SIZE_CONTEXT_LABEL_ITEM.test(name) ||
+    MINIMUM_PERSON_INSTRUCTION.test(name) ||
+    EXTENDED_COURSE_PACKAGE_LABEL_ITEM.test(name) ||
+    DAILY_DESSERT_PLACEHOLDER.test(name) ||
     PER_PERSON_PRICE_DISPLAY_ONLY_ITEM.test(name) ||
     DAILY_MENU_LABEL_ITEM.test(name)
   );
@@ -280,7 +375,12 @@ function isOutputNoiseLabel(item: MenuObservedItem): boolean {
 export function canonicalizeHtmlOutputItems(
   items: readonly MenuObservedItem[],
 ): readonly MenuObservedItem[] {
-  const labelFilteredItems = items.filter((item) => !isOutputNoiseLabel(item));
+  const cleanedItems = items.map(cleanOutputItemName);
+  const provenanceResolvedItems =
+    preferUniquelyDirectPricedConflicts(cleanedItems);
+  const labelFilteredItems = provenanceResolvedItems.filter(
+    (item) => !isOutputNoiseLabel(item),
+  );
   if (labelFilteredItems.length < 2) return labelFilteredItems;
   const mirroredNames = mirroredPromotionalNames(labelFilteredItems);
   return labelFilteredItems.filter(
