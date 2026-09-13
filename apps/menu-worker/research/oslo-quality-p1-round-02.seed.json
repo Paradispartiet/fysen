@@ -1,43 +1,8 @@
 {
   "version": 1,
   "outputDirectory": "candidates/oslo-quality-p1-round-02",
-  "concurrency": 2,
+  "concurrency": 1,
   "restaurants": [
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "the-top-restaurant-oslo",
-        "name": "The Top Restaurant",
-        "websiteUrl": "https://www.thetoposlo.no/en/the-top-restaurant",
-        "address": "Sonja Henies plass 3, 0185 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.thetoposlo.no/en/the-top-restaurant-meny",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-13",
-          "note": "The current first-party restaurant page publishes a substantial named and individually priced à la carte menu; kitchen hours remain separately verified."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": [
-        "Chef's 3 course",
-        "WINE PACKAGE",
-        "Vinpakke Deluxe",
-        "WINE PAIRING FOR CHEESES",
-        "Allergener",
-        "Allergens"
-      ]
-    },
     {
       "version": 1,
       "restaurant": {
