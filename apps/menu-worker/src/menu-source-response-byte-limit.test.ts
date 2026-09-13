@@ -43,7 +43,7 @@ function clientForBody(body: string): HttpMenuClient {
 }
 
 describe("bounded per-source HTTP response bytes", () => {
-  it("accepts a bounded HTTP override and rejects browser, PDF and values above 4 MiB", () => {
+  it("accepts a bounded HTTP override and rejects browser, PDF and values above 6 MiB", () => {
     expect(
       restaurantOnboardingManifestSchema.parse({
         ...baseManifest,
@@ -65,10 +65,17 @@ describe("bounded per-source HTTP response bytes", () => {
       }),
     ).toThrow("PDF response limits use the dedicated PDF policy");
 
+    expect(
+      restaurantOnboardingManifestSchema.parse({
+        ...baseManifest,
+        menuSource: { ...baseManifest.menuSource, maxResponseBytes: 6 * 1024 * 1024 },
+      }).menuSource.maxResponseBytes,
+    ).toBe(6 * 1024 * 1024);
+
     expect(() =>
       restaurantOnboardingManifestSchema.parse({
         ...baseManifest,
-        menuSource: { ...baseManifest.menuSource, maxResponseBytes: 4 * 1024 * 1024 + 1 },
+        menuSource: { ...baseManifest.menuSource, maxResponseBytes: 6 * 1024 * 1024 + 1 },
       }),
     ).toThrow();
   });
@@ -96,7 +103,7 @@ describe("bounded per-source HTTP response bytes", () => {
     if (fetched.kind === "content") expect(fetched.bodyBytes.byteLength).toBeGreaterThan(2 * 1024 * 1024);
   });
 
-  it("fails closed for direct runtime callers above the 4 MiB manifest ceiling", async () => {
+  it("fails closed for direct runtime callers above the 6 MiB manifest ceiling", async () => {
     await expect(
       fetchMenuSource(
         {
@@ -106,7 +113,7 @@ describe("bounded per-source HTTP response bytes", () => {
           userAgent: "FysenMenuBot/0.1",
           etag: null,
           lastModified: null,
-          maxResponseBytes: 4 * 1024 * 1024 + 1,
+          maxResponseBytes: 6 * 1024 * 1024 + 1,
         },
         clientForBody("<html></html>"),
       ),
