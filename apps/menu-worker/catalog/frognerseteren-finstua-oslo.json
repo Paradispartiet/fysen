@@ -16,6 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
+    "maxResponseBytes": 4194304,
     "minimumExpectedItems": 27,
     "sourceSupport": {
       "redirectOrigins": [],
