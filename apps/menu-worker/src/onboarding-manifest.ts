@@ -4,7 +4,7 @@ import { z } from "zod";
 
 const httpsUrl = z.string().url().refine((value) => value.startsWith("https://"), "URL must use HTTPS");
 const MIN_HTTP_SOURCE_RESPONSE_BYTES = 64 * 1024;
-const MAX_HTTP_SOURCE_RESPONSE_BYTES = 4 * 1024 * 1024;
+const MAX_HTTP_SOURCE_RESPONSE_BYTES = 6 * 1024 * 1024;
 const httpsOrigin = z.string().url().transform((value, context) => {
   const parsed = new URL(value);
   if (
