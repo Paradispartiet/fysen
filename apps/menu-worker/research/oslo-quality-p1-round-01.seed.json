@@ -6,34 +6,6 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "brasserie-france-oslo",
-        "name": "Brasserie France",
-        "websiteUrl": "https://www.brasseriefrance.no/",
-        "address": "Øvre Slottsgate 16, 0157 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.brasseriefrance.no/a-la-carte",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-13",
-          "note": "Current first-party HTML publishes a substantial named and individually priced French à la carte menu; kitchen hours are not promoted from this research seed."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
         "slug": "norda-oslo",
         "name": "Norda",
         "websiteUrl": "https://oslo.nordarestaurant.com/",
@@ -57,63 +29,10 @@
       },
       "actions": [],
       "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "ekspedisjonshallen-oslo",
-        "name": "Ekspedisjonshallen",
-        "websiteUrl": "https://www.sommerrohouse.com/",
-        "address": "Sommerrogata 1, 0255 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.sommerrohouse.com/wp-content/uploads/2021/03/EH_Dinner_NO_26-Host_v01.pdf",
-        "sourceType": "pdf",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-13",
-          "note": "Sommerro's current food-and-drink page links this 2026 dinner PDF for the distinct Ekspedisjonshallen concept; the PDF publishes a broad named and individually priced dinner menu."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "bar-boman-oslo",
-        "name": "Bar Boman",
-        "websiteUrl": "https://www.barboman.no/",
-        "address": "Stortingsgata 24, 0161 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.barboman.no/wp-content/uploads/sites/12/2026/07/BB-meny-sommer-2026-1.pdf",
-        "sourceType": "pdf",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-13",
-          "note": "The current first-party Bar Boman page links this textual 2026 menu PDF; despite the lobby-bar identity it contains substantial individually priced all-day and evening food sections."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
+      "forbiddenDishNames": [
+        "Chef’s 3 course menu 935,- / Wine pairing",
+        "Chef’s 5 course menu 1185,- / Wine pairing"
+      ]
     },
     {
       "version": 1,
@@ -141,35 +60,16 @@
       },
       "actions": [],
       "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "palmen-restaurant-oslo",
-        "name": "Palmen Restaurant",
-        "websiteUrl": "https://www.scandichotels.com/en/hotels/grand-hotel-oslo-by-scandic/palmen",
-        "address": "Karl Johans gate 31, 0159 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://menu.scandichotels.com/RestaurantMenuService/GetMenufile?fileId=93764&hotelId=340&restId=rest2",
-        "sourceType": "pdf",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-13",
-          "note": "The current official Scandic Palmen page links this textual dinner PDF with substantial named and individually priced dishes; kitchen hours remain separately verified."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
+      "forbiddenDishNames": [
+        "1 for",
+        "6 for",
+        "12 for",
+        "Spicy Peach Margarita",
+        "Passion-Lemongrass French 75",
+        "Ghee Butter-Chocolate Old Fashioned",
+        "Negroni",
+        "Amerikalinjen Cocktail"
+      ]
     }
   ]
 }
