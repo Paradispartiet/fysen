@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "katla-oslo",
+    "name": "Katla",
+    "websiteUrl": "https://www.katlaoslo.no/",
+    "address": "Universitetsgata 12, 0164 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.916504851005804,
+    "longitude": 10.738621210337177
+  },
+  "menuSource": {
+    "url": "https://www.katlaoslo.no/meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 17,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-13",
+      "note": "The current first-party menu page publishes a broad named and individually priced à la carte menu; kitchen hours remain separately verified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "TAKOYAKI 4STK",
+      "JAPANSK MELKE BRØD",
+      "HAMACHI & AGUACHILE ROJO",
+      "KYLLING KARAAGE",
+      "PEANØTT MOLE, GRILLET PAK CHOI & SQUASH",
+      "ANDEBRYST, APPELSIN SAUS & SALAT MED GRILLET PÆRE",
+      "PERLEPOTET",
+      "MISO OSTEKAKE, KREM OG SYLTEDE MORELLER"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "TAKOYAKI 4STK",
+        "priceMinor": 14000
+      },
+      {
+        "name": "JAPANSK MELKE BRØD",
+        "priceMinor": 7500
+      },
+      {
+        "name": "HAMACHI & AGUACHILE ROJO",
+        "priceMinor": 24500
+      },
+      {
+        "name": "KYLLING KARAAGE",
+        "priceMinor": 19500
+      },
+      {
+        "name": "PEANØTT MOLE, GRILLET PAK CHOI & SQUASH",
+        "priceMinor": 24500
+      },
+      {
+        "name": "ANDEBRYST, APPELSIN SAUS & SALAT MED GRILLET PÆRE",
+        "priceMinor": 46500
+      },
+      {
+        "name": "PERLEPOTET",
+        "priceMinor": 7500
+      },
+      {
+        "name": "MISO OSTEKAKE, KREM OG SYLTEDE MORELLER",
+        "priceMinor": 20500
+      }
+    ],
+    "forbiddenDishNames": [
+      "SETMENY",
+      "950,- PR PERSON",
+      "VINKART",
+      "VINMENY",
+      "900,-",
+      "1200,-"
+    ]
+  }
+}
