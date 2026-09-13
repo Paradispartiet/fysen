@@ -82,3 +82,22 @@ The established-slug policy therefore resolves these pairs without a menu-contra
 12. `cafekontoret-gronland-oslo` ← removed `cafekontoret-oslo`
 
 Catalog coverage reconciliation remains the production quiescence mechanism for the removed slugs. Later batches did not add stronger assertions to any of these pairs, and catalog-health #153 proved both sides of every pair green on the same pre-reconciliation baseline.
+
+## Residual exact-identity reconciliation — round 3
+
+Round 3 applies the same established-slug rule to the next 12 exact physical-identity duplicates. Every retained and removed pair again has identical source type, fetch mode, minimum item threshold, actions and quality assertions:
+
+1. `chaiwala-gronland-oslo` ← removed `chaiwala-oslo`
+2. `chaskka-solli-oslo` ← removed `chaskka-oslo`
+3. `chili-og-wok-sentrum-oslo` ← removed `chili-og-wok-oslo`
+4. `corrals-tacos-gronland-oslo` ← removed `corrals-tacos-oslo`
+5. `crispy-clubs-storgata-oslo` ← removed `crispy-clubs-oslo`
+6. `dr-gyros-bislett-oslo` ← removed `dr-gyros-smaken-av-hellas-oslo`
+7. `drop-in-bjorvika-oslo` ← removed `drop-in-oslo`
+8. `falafel-station-brugata-oslo` ← removed `falafel-station-oslo`
+9. `fiorentino-gronland-oslo` ← removed `fiorentino-oslo`
+10. `flavour-heimdalsgata-oslo` ← removed `flavour-oslo`
+11. `foodie-restaurant-tordenskiolds-gate-oslo` ← removed `foodie-restaurant-oslo`
+12. `freddy-fuego-burrito-bar-hausmanns-gate-oslo` ← removed `freddy-fuego-burrito-bar-oslo`
+
+Catalog-health #154 proved the 806-manifest round-2 baseline at 806/806 accepted before this reconciliation. Coverage reconciliation remains responsible for quiescing the removed production identities after merge.
