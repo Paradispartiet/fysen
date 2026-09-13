@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "atlas-brasserie-oslo",
+    "name": "Atlas Brasserie",
+    "websiteUrl": "https://amerikalinjen.com/eat-and-drink/the-atlas-restaurant/",
+    "address": "Jernbanetorget 2, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91076457251223,
+    "longitude": 10.749568439161244
+  },
+  "menuSource": {
+    "url": "https://amerikalinjen.com/wp-content/uploads/2026/09/WEB_AUGUST_DINNER_ENG_2026.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 12,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-13",
+      "note": "Amerikalinjen's current Atlas page links this fresh textual dinner PDF with substantial named and individually priced dishes; kitchen hours remain separately verified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chocolate Mousse",
+      "Peach Cobbler",
+      "Biscoff Cheesecake",
+      "Celeriac Steak",
+      "Cod Loin",
+      "Steak Frites",
+      "Vegetarian Burger",
+      "Autumn Salad"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chocolate Mousse",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Peach Cobbler",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Biscoff Cheesecake",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Celeriac Steak",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Cod Loin",
+        "priceMinor": 42500
+      },
+      {
+        "name": "Steak Frites",
+        "priceMinor": 49000
+      },
+      {
+        "name": "Vegetarian Burger",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Autumn Salad",
+        "priceMinor": 20500
+      }
+    ],
+    "forbiddenDishNames": [
+      "1 for",
+      "6 for",
+      "12 for",
+      "Spicy Peach Margarita",
+      "Passion-Lemongrass French 75",
+      "Ghee Butter-Chocolate Old Fashioned",
+      "Negroni",
+      "Amerikalinjen Cocktail"
+    ]
+  }
+}
