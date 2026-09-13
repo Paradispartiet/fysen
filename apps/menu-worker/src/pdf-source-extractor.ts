@@ -5,12 +5,13 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v16";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v17";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
 const LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]\s*/u;
-const SECTION_PRICE_SIGNAL = /(?:^|\s)(?:kr\.?|nok)?\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)?$/iu;
+const SECTION_PRICE_SIGNAL =
+  /(?:^|\s)(?:kr\.?|nok)?\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)?$/iu;
 const VARIANT_SECTION_KEYWORD =
   /\b(?:sashimi|nigiri|maki|uramaki|futomaki|temaki|sushi|tacos?|pizza(?:er|s)?|pasta|dessert(?:er|s)?|starters?|forretter?|mains?|hovedretter?|grill|bowls?|antipasti|primi|secondi|contorni|dolci)\b/iu;
 const SERVICE_CONTEXT_HEADING =
@@ -24,6 +25,8 @@ const PDF_ADDON_INSTRUCTION_ITEM =
 const PDF_LOWERCASE_SENTENCE_FRAGMENT = /^[a-zæøå].{2,220}[.]$/u;
 const PDF_PARENTHETICAL_ALLERGEN_ITEM =
   /^\(\s*(?:(?:fisk|fish|skalldyr|shellfish|bløtdyr|molluscs?|melk|milk|laktose|lactose|egg|eggs?|hvete|wheat|hvetegluten|gluten|soya?|soy|selleri|celery|sennep|mustard|sesam|sesame|sulfitt|sulphites?|nøtter?|nuts?|peanøtter?|peanuts?|lupin|citrus|sitrus)\s*[,/+&]?\s*)+\)$/iu;
+const PDF_QUANTITY_PRICE_LABEL = /^\d{1,3}\s+(?:for|stk\.?|pieces?|pcs?\.?)$/iu;
+const PDF_BEVERAGE_PAIRING_METADATA = /\b(?:wine\s+pairing|vinpakke)\b/iu;
 const TRAILING_SHARING_TAGLINE =
   /\s+(?:perfekt\s+å\s+dele|perfect\s+for\s+sharing)!?$/iu;
 const RECOVERY_ALLERGEN_CODES = new Set([
@@ -65,6 +68,10 @@ function normalizeScopeLine(value: string): string {
     .toLocaleLowerCase("nb-NO")
     .replace(/[^\p{L}\p{N}]+/gu, " ")
     .replace(/\s+/g, " ")
+    .replace(/\b(?:\p{L}\s+){2,}\p{L}\b/gu, (match) =>
+      match.replace(/\s+/g, ""),
+    )
+    .replace(/\b(?:\d\s+){1,3}\d\b/gu, (match) => match.replace(/\s+/g, ""))
     .trim();
 }
 
@@ -74,14 +81,14 @@ function normalizeVisibleLine(value: string): string {
 
 function isBeverageSectionHeading(value: string): boolean {
   const line = normalizeScopeLine(value);
-  return /^(?:bia va ruou(?: beer spirits)?|beer(?: and)? spirits|giai khat(?: non alcohol(?:ic)?)?|non alcoholic(?: drinks?)?|ruou pha(?: cocktails?)?|cocktails?|khong con(?: mocktails?)?|mocktails?|do uong(?: drinks?)?|drikke(?:meny)?|drinks?|beverages?|barnedrinker|barne drikker|kids drinks?|children s drinks?|vinkart|vin(?:kart|liste|meny)?|wine(?: list| menu)?|beer|ol|spirits?|brennevin|liquor)$/u.test(
+  return /^(?:bia va ruou(?: beer spirits)?|beer(?: and)? spirits|giai khat(?: non alcohol(?:ic)?)?|non alcoholic(?: drinks?)?|ruou pha(?: cocktails?)?|(?:[\p{L}\p{N}]+ )?cocktails?|khong con(?: mocktails?)?|mocktails?|pre ?drinks?(?: \d{2,4})?|do uong(?: drinks?)?|drikke(?:meny)?|drinks?|beverages?|barnedrinker|barne drikker|kids drinks?|children s drinks?|vinkart|vin(?:kart|liste|meny)?|wine(?: list| menu)?|beer|ol|spirits?|brennevin|liquor)$/u.test(
     line,
   );
 }
 
 function isFoodSectionHeading(value: string): boolean {
   const line = normalizeScopeLine(value);
-  return /^(?:do ngot(?: dessert)?|desserts?|dolci|mat|food|forretter|starters?|smaretter|small plates?|snacks?|hovedretter|main courses?|mains?)$/u.test(
+  return /^(?:do ngot(?: dessert)?|desserts?|dolci|mat|food|forretter|starters?|smaretter|small plates?|snacks?|hovedretter|main courses?|mains?|sides?|burgers?|set menus?)$/u.test(
     line,
   );
 }
@@ -113,13 +120,21 @@ function lineStartsWithDishName(line: string, dishName: string): boolean {
     normalizeVisibleLine(line).replace(LEADING_MENU_NUMBER, ""),
   );
   const normalizedName = normalizeDishName(dishName);
-  if (!normalizedName || !normalizedLine.startsWith(normalizedName)) return false;
+  if (!normalizedName || !normalizedLine.startsWith(normalizedName))
+    return false;
   if (normalizedLine.length === normalizedName.length) return true;
-  const next = normalizedLine.slice(normalizedName.length, normalizedName.length + 1);
+  const next = normalizedLine.slice(
+    normalizedName.length,
+    normalizedName.length + 1,
+  );
   return next === " " || /\d/u.test(next);
 }
 
-function findNextDishLine(lines: readonly string[], dishName: string, startIndex: number): number | null {
+function findNextDishLine(
+  lines: readonly string[],
+  dishName: string,
+  startIndex: number,
+): number | null {
   for (let index = Math.max(0, startIndex); index < lines.length; index += 1) {
     if (lineStartsWithDishName(lines[index] ?? "", dishName)) return index;
   }
@@ -143,7 +158,11 @@ function nearestVariantSectionHeading(
   lines: readonly string[],
   dishLineIndex: number,
 ): string | null {
-  for (let index = dishLineIndex - 1; index >= Math.max(0, dishLineIndex - 16); index -= 1) {
+  for (
+    let index = dishLineIndex - 1;
+    index >= Math.max(0, dishLineIndex - 16);
+    index -= 1
+  ) {
     const line = normalizeVisibleLine(lines[index] ?? "");
     if (!line) continue;
     if (looksLikeVariantSectionHeading(line)) return line;
@@ -155,7 +174,11 @@ function nearestServiceContextHeading(
   lines: readonly string[],
   dishLineIndex: number,
 ): string | null {
-  for (let index = dishLineIndex - 1; index >= Math.max(0, dishLineIndex - 160); index -= 1) {
+  for (
+    let index = dishLineIndex - 1;
+    index >= Math.max(0, dishLineIndex - 160);
+    index -= 1
+  ) {
     const line = normalizeVisibleLine(lines[index] ?? "");
     if (!line) continue;
     if (SERVICE_CONTEXT_HEADING.test(line)) return line;
@@ -195,7 +218,8 @@ export function disambiguateConflictingPdfSourceKeys(
     if (lineIndex !== null) searchFrom = lineIndex + 1;
     if (lineIndex === null || !conflictingKeys.has(item.sourceKey)) continue;
     const serviceContext = nearestServiceContextHeading(lines, lineIndex);
-    const section = serviceContext ?? nearestVariantSectionHeading(lines, lineIndex);
+    const section =
+      serviceContext ?? nearestVariantSectionHeading(lines, lineIndex);
     if (section) sectionByItem.set(item, section);
   }
 
@@ -241,13 +265,19 @@ function looksLikePdfDescriptionFragment(name: string): boolean {
 
 function looksLikePricingMetadata(name: string): boolean {
   const normalized = normalizeScopeLine(name);
-  return /^(?:minimum|min)\s+\d+\s+(?:personer|persons?|people)\b.*\b(?:pris|price)\s+(?:per|pr)\s+(?:person|personer)\b/u.test(
-    normalized,
+  return (
+    /^(?:minimum|min)\s+\d+\s+(?:personer|persons?|people)\b.*\b(?:pris|price)\s+(?:per|pr)\s+(?:person|personer)\b/u.test(
+      normalized,
+    ) ||
+    PDF_QUANTITY_PRICE_LABEL.test(normalizeVisibleLine(name)) ||
+    PDF_BEVERAGE_PAIRING_METADATA.test(name)
   );
 }
 
 function cleanPdfOutputItemName(item: MenuObservedItem): MenuObservedItem {
-  const name = normalizeVisibleLine(item.name).replace(TRAILING_SHARING_TAGLINE, "").trim();
+  const name = normalizeVisibleLine(item.name)
+    .replace(TRAILING_SHARING_TAGLINE, "")
+    .trim();
   if (!name || name === item.name) return item;
   return {
     ...item,
@@ -277,7 +307,9 @@ export function recoverExplicitLowPerItemPdfRows(
 ): readonly MenuObservedItem[] {
   const recovered = [...items];
   const known = new Set(
-    items.map((item) => `${item.normalizedName}\u0000${item.priceMinor ?? "null"}`),
+    items.map(
+      (item) => `${item.normalizedName}\u0000${item.priceMinor ?? "null"}`,
+    ),
   );
   const lines = visibleText.split("\n").map(normalizeVisibleLine);
 
@@ -330,7 +362,8 @@ export function scopePdfMenuItems(
       looksLikePricingMetadata(item.name) ||
       looksLikePdfBeverageItem(item.name) ||
       looksLikePdfDescriptionFragment(item.name)
-    ) continue;
+    )
+      continue;
     const lineIndex = findNextDishLine(lines, item.name, searchFrom);
     if (lineIndex !== null) searchFrom = lineIndex + 1;
     if (lineIndex !== null && blocked[lineIndex]) continue;
@@ -340,7 +373,9 @@ export function scopePdfMenuItems(
   return scoped.map((item, position) => ({ ...item, position }));
 }
 
-export async function extractScopedPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMenu> {
+export async function extractScopedPdfMenu(
+  bytes: Uint8Array,
+): Promise<ExtractedPdfMenu> {
   const extracted = await extractPdfMenu(bytes);
   const recoveredItems = recoverExplicitLowPerItemPdfRows(
     extracted.visibleText,
