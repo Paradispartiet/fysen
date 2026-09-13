@@ -1,7 +1,7 @@
 {
   "version": 1,
   "outputDirectory": "candidates/oslo-quality-p1-round-02",
-  "concurrency": 3,
+  "concurrency": 2,
   "restaurants": [
     {
       "version": 1,
@@ -71,41 +71,6 @@
         "VINMENY",
         "900,-",
         "1200,-"
-      ]
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "nektar-vinbar-oslo",
-        "name": "Nektar",
-        "websiteUrl": "https://www.nektarvinbar.no/",
-        "address": "Fredensborgveien 42, 0177 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.nektarvinbar.no/meny",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-13",
-          "note": "The current first-party menu page publishes a substantial seasonal food menu with named and individually priced dishes; kitchen hours remain separately verified."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": [
-        "Vinliste",
-        "Allergener",
-        "Allergies",
-        "Instagram",
-        "Facebook",
-        "Happy Ending"
       ]
     }
   ]
