@@ -28,7 +28,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v16");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v17");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -52,9 +52,16 @@ describe("PDF source scope", () => {
     expect(salmon).toHaveLength(2);
     expect(new Set(salmon.map((item) => item.sourceKey)).size).toBe(1);
 
-    const disambiguated = disambiguateConflictingPdfSourceKeys(visibleText, parsed);
-    const scopedSalmon = disambiguated.filter((item) => item.normalizedName === "laks");
-    expect(scopedSalmon.map((item) => [item.sectionName, item.priceMinor])).toEqual([
+    const disambiguated = disambiguateConflictingPdfSourceKeys(
+      visibleText,
+      parsed,
+    );
+    const scopedSalmon = disambiguated.filter(
+      (item) => item.normalizedName === "laks",
+    );
+    expect(
+      scopedSalmon.map((item) => [item.sectionName, item.priceMinor]),
+    ).toEqual([
       ["KLASSISK Sashimi", 13900],
       ["Klassisk Nigiri", 15900],
     ]);
@@ -74,9 +81,16 @@ describe("PDF source scope", () => {
     const crab = parsed.filter((item) => item.normalizedName === "krabbe");
     expect(new Set(crab.map((item) => item.sourceKey)).size).toBe(1);
 
-    const disambiguated = disambiguateConflictingPdfSourceKeys(lines.join("\n"), parsed);
-    const scopedCrab = disambiguated.filter((item) => item.normalizedName === "krabbe");
-    expect(scopedCrab.map((item) => [item.sectionName, item.priceMinor])).toEqual([
+    const disambiguated = disambiguateConflictingPdfSourceKeys(
+      lines.join("\n"),
+      parsed,
+    );
+    const scopedCrab = disambiguated.filter(
+      (item) => item.normalizedName === "krabbe",
+    );
+    expect(
+      scopedCrab.map((item) => [item.sectionName, item.priceMinor]),
+    ).toEqual([
       ["LUNSJMENY, 11:30 – 22:00", 19500],
       ["KVELDSMENY 17:00-22:00", 21000],
     ]);
@@ -121,7 +135,10 @@ describe("PDF source scope", () => {
   it("fails closed when conflicting same-name prices cannot be bound to distinct menu sections", () => {
     const lines = ["LAKS 139", "LAKS 159"];
     const parsed = extractMenuItemsFromPdfLines(lines);
-    const disambiguated = disambiguateConflictingPdfSourceKeys(lines.join("\n"), parsed);
+    const disambiguated = disambiguateConflictingPdfSourceKeys(
+      lines.join("\n"),
+      parsed,
+    );
 
     expect(disambiguated.map((item) => item.sourceKey)).toEqual(
       parsed.map((item) => item.sourceKey),
@@ -183,7 +200,51 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
 
-    expect(scoped.map((item) => item.name)).toEqual(["Cà ri gà / Chicken curry"]);
+    expect(scoped.map((item) => item.name)).toEqual([
+      "Cà ri gà / Chicken curry",
+    ]);
+  });
+
+  it("excludes branded cocktail sections, quantity-price fragments and resumes at sides", () => {
+    const lines = [
+      "Oysters",
+      "1 for 50,-",
+      "12 for 600,-",
+      "Atlas Cocktails",
+      "Spicy Peach Margarita 189,-",
+      "Negroni 189,-",
+      "Sides",
+      "Romano Salad 75,-",
+      "Truffle Mac & Cheese 149,-",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual([
+      "Romano Salad",
+      "Truffle Mac & Cheese",
+    ]);
+  });
+
+  it("recognizes letter-spaced predrinks and rejects compound wine-pairing price rows", () => {
+    const lines = [
+      "M A I N S",
+      "Norda steak & fries 535,-",
+      "P R E D R I N K S 1 8 9 ,-",
+      "Dry Martini 189,-",
+      "SET M E N U S",
+      "Chef’s 3 course menu 935,- / Wine pairing 595,-",
+      "Chef’s 5 course menu 1185,- / Wine pairing 825,-",
+      "ST A R TE R S",
+      "Marinated kingfish 295,-",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual([
+      "Norda steak & fries",
+      "Marinated kingfish",
+    ]);
   });
 
   it("does not remove an ordinary priced dish merely because its name contains drink-like words", () => {
@@ -196,7 +257,10 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
 
-    expect(scoped.map((item) => item.name)).toEqual(["Beer battered fish", "Coffee caramel cake"]);
+    expect(scoped.map((item) => item.name)).toEqual([
+      "Beer battered fish",
+      "Coffee caramel cake",
+    ]);
   });
 
   it("strips trailing sharing taglines while preserving semantic sharing words inside a dish name", () => {
