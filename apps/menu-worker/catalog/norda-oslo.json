@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "norda-oslo",
+    "name": "Norda",
+    "websiteUrl": "https://oslo.nordarestaurant.com/",
+    "address": "Biskop Gunnerus gate 3, 0155 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91245685133331,
+    "longitude": 10.749961553126727
+  },
+  "menuSource": {
+    "url": "https://static.thatsup.website/256/99380/Norda-a-la-carte.pdf?v=1788960628",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 17,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-13",
+      "note": "The current first-party Norda menu page links this textual à la carte PDF with named and individually priced dishes; kitchen hours remain separately verified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Norda steak & fries",
+      "Kveite fra Rogaland / Norwegian halibut",
+      "Tartar av storfe / Beef tartare",
+      "Norwegian snowcrab with brown butter",
+      "Norda’s burger",
+      "Norda’s crème brûlée",
+      "Pommes royale",
+      "Côte de bœuf for 2 p."
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Norda steak & fries",
+        "priceMinor": 53500
+      },
+      {
+        "name": "Kveite fra Rogaland / Norwegian halibut",
+        "priceMinor": 52500
+      },
+      {
+        "name": "Tartar av storfe / Beef tartare",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Norwegian snowcrab with brown butter",
+        "priceMinor": 31500
+      },
+      {
+        "name": "Norda’s burger",
+        "priceMinor": 36900
+      },
+      {
+        "name": "Norda’s crème brûlée",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Pommes royale",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Côte de bœuf for 2 p.",
+        "priceMinor": 249500
+      }
+    ],
+    "forbiddenDishNames": [
+      "Chef’s 3 course menu 935,- / Wine pairing",
+      "Chef’s 5 course menu 1185,- / Wine pairing"
+    ]
+  }
+}
