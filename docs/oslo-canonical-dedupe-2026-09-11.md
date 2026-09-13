@@ -61,3 +61,24 @@ The intake workflow now rejects a new non-reproof candidate when it collides wit
 - The first dedupe materialization exposed two blocking source-health issues before coverage reconciliation could run.
 - `sushi-dinner-oslo` is restored to the previously proven canonical source.
 - `way-down-south-oslo` still publishes the same burgers on its first-party menu. Rendered validation exposed their current canonical labels as `Chicken Caesar Burger` and `Beef Cheek Burger, 130 g`; the stale spelling/format assertions are updated, and browser fetch is retained because it observes 21 current items versus 20 through the HTTP production pass.
+
+## Residual exact-identity reconciliation — round 2
+
+A complete 818-manifest identity pass found additional historical duplicates that predated the permanent intake collision guard. Round 2 removes 12 exact physical-identity duplicates. Every pair has the same restaurant name and coordinates, and the retained and removed manifests have identical source type, fetch mode, minimum item threshold, actions and quality assertions.
+
+The established-slug policy therefore resolves these pairs without a menu-contract migration:
+
+1. `8-fish-bokkerveien-oslo` ← removed `8-fish-oslo`
+2. `american-burgers-hegdehaugsveien-oslo` ← removed `american-burgers-oslo`
+3. `apsorn-thai-torshov-oslo` ← removed `apsorn-thai-restaurant-oslo`
+4. `buns-sorenga-oslo` ← removed `buns-sorengkaia-oslo`
+5. `baggis-burgers-vollebekk-oslo` ← removed `baggis-burgers-oslo`
+6. `bamiyan-valley-gronland-oslo` ← removed `bamiyan-valley-oslo`
+7. `birken-lunch-grunerlokka-oslo` ← removed `birken-lunch-oslo`
+8. `boboko-via-village-oslo` ← removed `boboko-oslo`
+9. `boom-sushi-trondheimsveien-oslo` ← removed `boom-sushi-oslo`
+10. `braud-toastbar-grunerlokka-oslo` ← removed `braud-toastbar-oslo`
+11. `cafe-laundromat-bislett-oslo` ← removed `cafe-laundromat-oslo`
+12. `cafekontoret-gronland-oslo` ← removed `cafekontoret-oslo`
+
+Catalog coverage reconciliation remains the production quiescence mechanism for the removed slugs. Later batches did not add stronger assertions to any of these pairs, and catalog-health #153 proved both sides of every pair green on the same pre-reconciliation baseline.
