@@ -22,7 +22,7 @@
     "url": "https://www.cueoslo.no/meny",
     "timeZone": "Europe/Oslo",
     "checkIntervalMinutes": 360,
-    "minimumExpectedIntervals": 7,
+    "minimumExpectedIntervals": 5,
     "scopeHints": ["Pizzeria"]
   },
   "actions": [
