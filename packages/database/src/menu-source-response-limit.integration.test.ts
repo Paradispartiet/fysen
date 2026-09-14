@@ -39,10 +39,10 @@ integrationDescribe("menu source response limit persistence", () => {
       userAgent: "FysenMenuBot/0.1",
       checkIntervalMinutes: 720,
       minimumExpectedItems: 3,
-      maxResponseBytes: 3 * 1024 * 1024,
+      maxResponseBytes: 6 * 1024 * 1024,
     });
-    expect(source.maxResponseBytes).toBe(3 * 1024 * 1024);
-    expect((await repository.getMenuSourceById(source.id))?.maxResponseBytes).toBe(3 * 1024 * 1024);
+    expect(source.maxResponseBytes).toBe(6 * 1024 * 1024);
+    expect((await repository.getMenuSourceById(source.id))?.maxResponseBytes).toBe(6 * 1024 * 1024);
 
     const updated = await repository.upsertMenuSource({
       restaurantId,

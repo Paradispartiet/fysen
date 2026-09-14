@@ -25,6 +25,7 @@ describe("database migrations", () => {
       "0018_menu_source_response_limit.sql",
       "0019_spring_rolls_dish_concept.sql",
       "0020_menu_source_blocked_origins.sql",
+      "0021_menu_source_response_limit_6mib.sql",
     ]);
 
     const schemaSql = await readFile(new URL("../migrations/0001_menu_index.sql", import.meta.url), "utf8");
@@ -172,5 +173,15 @@ describe("database migrations", () => {
     expect(blockedOriginsSql).toContain("DROP CONSTRAINT IF EXISTS menu_source_support_origin_has_purpose");
     expect(blockedOriginsSql).toContain("AND NOT allow_redirect");
     expect(blockedOriginsSql).toContain("AND NOT allow_browser_data");
+
+    const menuSourceResponseLimit6MibSql = await readFile(
+      new URL("../migrations/0021_menu_source_response_limit_6mib.sql", import.meta.url),
+      "utf8",
+    );
+    expect(menuSourceResponseLimit6MibSql).toContain(
+      "DROP CONSTRAINT IF EXISTS menu_sources_max_response_bytes_check",
+    );
+    expect(menuSourceResponseLimit6MibSql).toContain("max_response_bytes >= 65536");
+    expect(menuSourceResponseLimit6MibSql).toContain("max_response_bytes <= 6291456");
   });
 });
