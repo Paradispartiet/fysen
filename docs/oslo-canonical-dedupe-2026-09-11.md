@@ -139,3 +139,26 @@ Round 5 removes the next 12 exact physical-identity duplicates while preserving 
 12. `yemen-zaad-restaurant-gronland-oslo` ← removed `yemen-zaad-restaurant-oslo`
 
 Catalog-health #162 proved the 782-manifest round-4 baseline at 782/782 accepted before this reconciliation. Catalog coverage reconciliation remains responsible for quiescing the removed production identities after merge.
+
+## Residual exact-identity reconciliation — round 6
+
+Round 6 closes the remaining 13 `safe_exact_contract` pairs from the complete 770-manifest identity pass. Every pair has the same restaurant name and exact coordinates, and identical menu-source, hours-source, action and quality contracts. Git history also proves that the retained place-specific slug predates the later generic duplicate in every pair. Verification timestamps/notes may differ, but they do not change the source or quality contract, so no contract migration is required:
+
+1. `mymy-sushi-prinsens-gate-oslo` ← removed `mymy-sushi-oslo`
+2. `oslo-kebab-pizzahus-toyengata-oslo` ← removed `oslo-kebab-pizzahus-oslo`
+3. `oslo-raw-adamstuen-oslo` ← removed `oslo-raw-cafe-and-bakery-adamstuen-oslo`
+4. `pane-vino-trondheimsveien-oslo` ← removed `pane-vino-oslo`
+5. `pappabuene-radhusbrygge-oslo` ← removed `pappabuene-oslo`
+6. `pele-pele-gronland-oslo` ← removed `pele-pele-oslo`
+7. `peoples-arbeidersamfunnets-plass-oslo` ← removed `peoples-oslo`
+8. `sami-sushi-wok-bjerregaards-gate-oslo` ← removed `sami-sushi-wok-oslo`
+9. `vesuvio-pizza-bjerregaards-gate-oslo` ← removed `vesuvio-pizza-oslo`
+10. `winther-restaurant-aker-brygge-oslo` ← removed `winther-restaurant-oslo`
+11. `yoyo-dumplings-noodles-bislett-oslo` ← removed `yoyo-dumplings-noodles-oslo`
+12. `yum-cha-majorstuen-oslo` ← removed `yum-cha-oslo`
+13. `zz-pizza-gamlebyen-oslo` ← removed `zz-pizza-oslo`
+
+Catalog-health #163 proved the 770-manifest round-5 baseline at 770/770 accepted before this reconciliation. The expected canonical catalog after merge is 757 manifests. Catalog coverage reconciliation remains responsible for quiescing the removed production identities after merge.
+
+The separate manual-contract-review queue is intentionally untouched by this round.
+
