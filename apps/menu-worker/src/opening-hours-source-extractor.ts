@@ -7,7 +7,7 @@ import {
 import { extractKitchenOpeningHoursWithIdenticalSectionRecovery } from "./opening-hours-duplicate-section-recovery.js";
 import { normalizeOpeningHoursMarkerLines } from "./opening-hours-marker-normalizer.js";
 
-export const OPENING_HOURS_SOURCE_EXTRACTOR_VERSION = "hours-visible-v16";
+export const OPENING_HOURS_SOURCE_EXTRACTOR_VERSION = "hours-visible-v17";
 
 const relativeKitchenClosePattern = /(?:kjøkken(?:et)?\s+stenger|kitchen\s+closes)\s+(\d{1,3})\s*(min\.?|minutter?|minutes?|time(?:r)?|hours?)\s+(?:før\s+(?:stengetid|restauranten\s+stenger)|before\s+(?:(?:closing|close)(?:\s+time)?|the\s+restaurant\s+closes))/giu;
 const relativeKitchenCloseLinePattern = /(?:kjøkken(?:et)?\s+stenger|kitchen\s+closes)\s+\d{1,3}\s*(?:min\.?|minutter?|minutes?|time(?:r)?|hours?)\s+(?:før\s+(?:stengetid|restauranten\s+stenger)|before\s+(?:(?:closing|close)(?:\s+time)?|the\s+restaurant\s+closes))/iu;
@@ -214,21 +214,8 @@ function applyAbsoluteKitchenClose(
   const closes = clockToMinutes(item.closesAt) + (item.closesNextDay ? 1440 : 0);
   const rawCutoff = clockToMinutes(kitchenClosesAt);
 
-  if (!item.closesNextDay && rawCutoff <= opens) {
-    throw new OpeningHoursExtractionError(
-      "INVALID_GLOBAL_KITCHEN_CUTOFF",
-      `Global kitchen close ${kitchenClosesAt} is not after opening time ${item.opensAt}`,
-    );
-  }
-
   let cutoff = rawCutoff;
-  if (item.closesNextDay && cutoff <= opens) cutoff += 1440;
-  if (item.closesNextDay && cutoff > closes && rawCutoff <= opens) {
-    throw new OpeningHoursExtractionError(
-      "INVALID_GLOBAL_KITCHEN_CUTOFF",
-      `Global kitchen close ${kitchenClosesAt} does not fall inside overnight interval ${item.opensAt}-${item.closesAt}`,
-    );
-  }
+  if (cutoff <= opens) cutoff += 1440;
 
   if (cutoff >= closes) return item;
   return {
