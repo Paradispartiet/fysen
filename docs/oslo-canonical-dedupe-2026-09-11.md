@@ -101,3 +101,22 @@ Round 3 applies the same established-slug rule to the next 12 exact physical-ide
 12. `freddy-fuego-burrito-bar-hausmanns-gate-oslo` ← removed `freddy-fuego-burrito-bar-oslo`
 
 Catalog-health #154 proved the 806-manifest round-2 baseline at 806/806 accepted before this reconciliation. Coverage reconciliation remains responsible for quiescing the removed production identities after merge.
+
+## Residual exact-identity reconciliation — round 4
+
+Round 4 removes the next 12 exact physical-identity duplicates while preserving the established, place-specific canonical slugs. Each retained and removed pair has an identical full menu-source, action and quality contract, so no contract migration is required:
+
+1. `french-tacos-burgers-torshov-oslo` ← removed `french-tacos-burgers-avenue-torshov-oslo`
+2. `gohan-matcha-youngstorget-oslo` ← removed `gohan-matcha-oslo`
+3. `helt-ratt-stockfleths-gate-oslo` ← removed `helt-ratt-oslo`
+4. `hokkigai-sushi-st-hanshaugen-oslo` ← removed `hokkigai-sushi-oslo`
+5. `kafe-asylet-gronland-oslo` ← removed `kafe-asylet-oslo`
+6. `kemi-restaurant-brugata-oslo` ← removed `kemi-restaurant-oslo`
+7. `king-falafel-brugata-oslo` ← removed `king-falafel-oslo`
+8. `loasis-pizza-kebab-grunerlokka-oslo` ← removed `l-oasis-pizza-kebab-oslo`
+9. `linns-sushi-frogner-oslo` ← removed `linns-sushi-oslo`
+10. `mandi-house-toyen-oslo` ← removed `mandi-house-restaurant-oslo`
+11. `meiwei-spiseri-tullins-gate-oslo` ← removed `meiwei-spiseri-oslo`
+12. `mini-thai-sushi-majorstuen-oslo` ← removed `mini-thai-sushi-oslo`
+
+Catalog-health #155 proved the 794-manifest round-3 baseline at 794/794 accepted before this reconciliation. Coverage reconciliation remains responsible for quiescing the removed production identities after merge.
