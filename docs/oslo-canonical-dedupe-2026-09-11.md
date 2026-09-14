@@ -162,3 +162,7 @@ Catalog-health #163 proved the 770-manifest round-5 baseline at 770/770 accepted
 
 The separate manual-contract-review queue is intentionally untouched by this round.
 
+
+## Residual exact-identity reconciliation — round 7
+
+Round 7 removes the 21 remaining alias-only physical-identity duplicates from the manual review queue. Catalog-health #164 attempt 2 proved the 757-manifest round-6 catalog fully healthy on exact `e9681d8bc1bbf3f4e01115dd188b4f43a73d2c89`. Git history keeps the older established identity in every pair; hours, actions and quality contracts remain unchanged, and only menu URL aliases / verification metadata differ. No source or quality migration is required. Expected canonical catalog after merge: **736 manifests**. Coverage reconciliation remains responsible for quiescing removed production identities.
