@@ -17,7 +17,7 @@ describe("canonical opening-hours source extractor", () => {
       </body></html>
     `);
 
-    expect(OPENING_HOURS_SOURCE_EXTRACTOR_VERSION).toBe("hours-visible-v15");
+    expect(OPENING_HOURS_SOURCE_EXTRACTOR_VERSION).toBe("hours-visible-v16");
     expect(extracted.intervals).toEqual([
       { isoWeekday: 1, opensAt: "11:30", closesAt: "20:30", closesNextDay: false },
       { isoWeekday: 2, opensAt: "11:30", closesAt: "20:30", closesNextDay: false },
@@ -28,6 +28,29 @@ describe("canonical opening-hours source extractor", () => {
       { isoWeekday: 7, opensAt: "14:00", closesAt: "20:30", closesNextDay: false },
     ]);
     expect(extracted.sourceExcerpt).toContain("Kjøkkenet stenger 30 min før stengetid");
+  });
+
+  it("treats hour-based relative kitchen cutoffs as durations instead of absolute clocks", () => {
+    const extracted = extractCanonicalOpeningHours(`
+      <html><body>
+        <h2>Åpningstider</h2>
+        <p>Mandag-Torsdag: 11:00-23:00</p>
+        <p>Fredag-Lørdag: 11:00-00:00</p>
+        <p>Søndag: 12:00-22:30</p>
+        <p>Kjøkkenet stenger 1 time før restauranten stenger.</p>
+      </body></html>
+    `);
+
+    expect(extracted.intervals).toEqual([
+      { isoWeekday: 1, opensAt: "11:00", closesAt: "22:00", closesNextDay: false },
+      { isoWeekday: 2, opensAt: "11:00", closesAt: "22:00", closesNextDay: false },
+      { isoWeekday: 3, opensAt: "11:00", closesAt: "22:00", closesNextDay: false },
+      { isoWeekday: 4, opensAt: "11:00", closesAt: "22:00", closesNextDay: false },
+      { isoWeekday: 5, opensAt: "11:00", closesAt: "23:00", closesNextDay: false },
+      { isoWeekday: 6, opensAt: "11:00", closesAt: "23:00", closesNextDay: false },
+      { isoWeekday: 7, opensAt: "12:00", closesAt: "21:30", closesNextDay: false },
+    ]);
+    expect(extracted.sourceExcerpt).toContain("Kjøkkenet stenger 1 time før restauranten stenger");
   });
 
   it("normalizes decorative and split opening-hours markers before applying explicit scope hints", () => {
