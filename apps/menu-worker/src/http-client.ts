@@ -121,6 +121,7 @@ export class HttpMenuClient {
   private readonly timeoutMs: number;
   private readonly maxResponseBytes: number;
   private readonly minHostDelayMs: number;
+  private readonly robotsRulesCache = new Map<string, Promise<RobotsRules | null>>();
 
   constructor(options: HttpMenuClientOptions = {}) {
     this.fetchImpl = options.fetchImpl ?? fetch;
@@ -231,6 +232,36 @@ export class HttpMenuClient {
     allowedRedirectOrigins: readonly string[],
   ): Promise<boolean> {
     const robotsUrl = new URL("/robots.txt", target);
+    const cacheKey = JSON.stringify([
+      robotsUrl.origin,
+      userAgent,
+      [...allowedRedirectOrigins].sort(),
+    ]);
+    let pending = this.robotsRulesCache.get(cacheKey);
+    if (!pending) {
+      const created = this.loadRobotsRules(
+        robotsUrl,
+        userAgent,
+        allowedRedirectOrigins,
+      );
+      this.robotsRulesCache.set(cacheKey, created);
+      void created.catch(() => {
+        if (this.robotsRulesCache.get(cacheKey) === created) {
+          this.robotsRulesCache.delete(cacheKey);
+        }
+      });
+      pending = created;
+    }
+
+    const rules = await pending;
+    return rules === null || rules.isAllowed(target.href, userAgent) !== false;
+  }
+
+  private async loadRobotsRules(
+    robotsUrl: URL,
+    userAgent: string,
+    allowedRedirectOrigins: readonly string[],
+  ): Promise<RobotsRules | null> {
     const fetched = await this.safeFetch(
       robotsUrl,
       {
@@ -249,11 +280,10 @@ export class HttpMenuClient {
         response,
         MAX_ROBOTS_RESPONSE_BYTES,
       );
-      const parser = robotsParser(
+      return robotsParser(
         fetched.finalUrl.href,
         Buffer.from(bodyBytes).toString("utf8"),
       );
-      return parser.isAllowed(target.href, userAgent) !== false;
     }
 
     if (
@@ -261,7 +291,7 @@ export class HttpMenuClient {
       response.status < 500 &&
       response.status !== 429
     ) {
-      return true;
+      return null;
     }
 
     throw new MenuFetchError(

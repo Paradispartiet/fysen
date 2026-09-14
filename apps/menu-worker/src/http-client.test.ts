@@ -211,6 +211,49 @@ describe("HttpMenuClient", () => {
     expect(calls).toBe(1);
   });
 
+  it("caches robots rules per batch while re-evaluating each target path", async () => {
+    let robotsCalls = 0;
+    let menuCalls = 0;
+    const fetchImpl = asFetch(async (input) => {
+      if (input.pathname === "/robots.txt") {
+        robotsCalls += 1;
+        return new Response(
+          "User-agent: FysenMenuBot\nDisallow: /private\nAllow: /\n",
+          { status: 200 },
+        );
+      }
+      menuCalls += 1;
+      return new Response("<html><body>menu</body></html>", {
+        status: 200,
+        headers: { "Content-Type": "text/html" },
+      });
+    });
+
+    const client = new HttpMenuClient({
+      fetchImpl,
+      resolver: publicResolver,
+      minHostDelayMs: 1,
+      timeoutMs: 1000,
+    });
+    const source = (path: string) => ({
+      url: `https://restaurant.test/${path}`,
+      userAgent: "FysenMenuBot",
+      etag: null,
+      lastModified: null,
+    });
+
+    await expect(client.fetchSource(source("menu"))).resolves.toMatchObject({
+      kind: "content",
+      status: 200,
+    });
+    await expect(
+      client.fetchSource(source("private/menu")),
+    ).rejects.toMatchObject<MenuFetchError>({ code: "ROBOTS_DISALLOWED" });
+
+    expect(robotsCalls).toBe(1);
+    expect(menuCalls).toBe(1);
+  });
+
   it("retries one transient robots.txt 502 before evaluating the rules", async () => {
     let robotsCalls = 0;
     let menuCalls = 0;
