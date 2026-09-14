@@ -104,39 +104,78 @@ function manifestBrowserReadinessTexts(
   ];
 }
 
+export function shouldRetryEmptyHtmlHeuristic(input: {
+  readonly fetchMode: RestaurantOnboardingManifest["menuSource"]["fetchMode"];
+  readonly sourceType: RestaurantOnboardingManifest["menuSource"]["sourceType"];
+  readonly httpStatus: number;
+  readonly extractionMethod: string;
+  readonly itemCount: number;
+}): boolean {
+  return (
+    input.fetchMode === "http" &&
+    input.sourceType === "html" &&
+    input.httpStatus === 200 &&
+    input.extractionMethod === "html_heuristic" &&
+    input.itemCount === 0
+  );
+}
+
 async function validateMenu(
   manifest: RestaurantOnboardingManifest,
   client: HttpMenuClient,
 ): Promise<ManifestMenuValidationResult> {
   try {
     const fetchMode = resolveManifestMenuFetchMode(manifest.menuSource);
-    const fetched =
-      fetchMode === "browser"
-        ? await new BrowserMenuClient(client).fetchSource({
-            url: manifest.menuSource.url,
-            userAgent: manifest.menuSource.userAgent,
-            sourceSupport: manifest.menuSource.sourceSupport,
-            readinessTexts: manifestBrowserReadinessTexts(manifest),
-          })
-        : await fetchMenuSource(
-            {
+    const fetchAndExtract = async () => {
+      const fetched =
+        fetchMode === "browser"
+          ? await new BrowserMenuClient(client).fetchSource({
               url: manifest.menuSource.url,
-              sourceType: manifest.menuSource.sourceType,
-              fetchMode,
               userAgent: manifest.menuSource.userAgent,
-              etag: null,
-              lastModified: null,
-              maxResponseBytes: manifest.menuSource.maxResponseBytes ?? null,
               sourceSupport: manifest.menuSource.sourceSupport,
-            },
-            client,
-          );
-    if (fetched.kind === "not_modified") {
-      throw new Error(`Manifest validation unexpectedly returned HTTP 304 for ${manifest.menuSource.url}`);
+              readinessTexts: manifestBrowserReadinessTexts(manifest),
+            })
+          : await fetchMenuSource(
+              {
+                url: manifest.menuSource.url,
+                sourceType: manifest.menuSource.sourceType,
+                fetchMode,
+                userAgent: manifest.menuSource.userAgent,
+                etag: null,
+                lastModified: null,
+                maxResponseBytes: manifest.menuSource.maxResponseBytes ?? null,
+                sourceSupport: manifest.menuSource.sourceSupport,
+              },
+              client,
+            );
+      if (fetched.kind === "not_modified") {
+        throw new Error(
+          `Manifest validation unexpectedly returned HTTP 304 for ${manifest.menuSource.url}`,
+        );
+      }
+
+      const extracted = await extractMenuSource(
+        manifest.menuSource.sourceType,
+        fetched,
+      );
+      const canonicalItems = canonicalizeUniqueMenuSourceKeys(extracted.items);
+      return { fetched, extracted, canonicalItems };
+    };
+
+    let attempt = await fetchAndExtract();
+    if (
+      shouldRetryEmptyHtmlHeuristic({
+        fetchMode,
+        sourceType: manifest.menuSource.sourceType,
+        httpStatus: attempt.fetched.status,
+        extractionMethod: attempt.extracted.method,
+        itemCount: attempt.canonicalItems.length,
+      })
+    ) {
+      attempt = await fetchAndExtract();
     }
 
-    const extracted = await extractMenuSource(manifest.menuSource.sourceType, fetched);
-    const canonicalItems = canonicalizeUniqueMenuSourceKeys(extracted.items);
+    const { fetched, extracted, canonicalItems } = attempt;
     const fingerprint = createMenuFingerprint(canonicalItems);
     const quality = evaluateManifestMenuQuality(manifest, canonicalItems);
     return {
@@ -263,8 +302,8 @@ async function validateActions(
 
 export async function validateRestaurantManifest(
   manifest: RestaurantOnboardingManifest,
+  client = new HttpMenuClient(),
 ): Promise<RestaurantManifestValidationResult> {
-  const client = new HttpMenuClient();
   const menu = await validateMenu(manifest, client);
   const hours = await validateHours(manifest, client);
   const actions = await validateActions(manifest, client);
@@ -307,8 +346,9 @@ export async function validateRestaurantManifestDirectory(
 ): Promise<RestaurantManifestCatalogValidationSummary> {
   const entries = await listRestaurantOnboardingManifests(directory);
   const results: RestaurantManifestValidationResult[] = [];
+  const client = new HttpMenuClient();
   for (const entry of entries) {
-    results.push(await validateRestaurantManifest(entry.manifest));
+    results.push(await validateRestaurantManifest(entry.manifest, client));
   }
   return {
     manifestCount: entries.length,
