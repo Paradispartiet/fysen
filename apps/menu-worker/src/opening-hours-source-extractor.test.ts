@@ -17,7 +17,7 @@ describe("canonical opening-hours source extractor", () => {
       </body></html>
     `);
 
-    expect(OPENING_HOURS_SOURCE_EXTRACTOR_VERSION).toBe("hours-visible-v15");
+    expect(OPENING_HOURS_SOURCE_EXTRACTOR_VERSION).toBe("hours-visible-v16");
     expect(extracted.intervals).toEqual([
       { isoWeekday: 1, opensAt: "11:30", closesAt: "20:30", closesNextDay: false },
       { isoWeekday: 2, opensAt: "11:30", closesAt: "20:30", closesNextDay: false },
@@ -126,6 +126,30 @@ describe("canonical opening-hours source extractor", () => {
     expect(extracted.intervals).toHaveLength(7);
     expect(extracted.intervals.slice(0, 4).every((item) => item.closesAt === "19:00")).toBe(true);
     expect(extracted.intervals.slice(4).every((item) => item.closesAt === "20:00")).toBe(true);
+  });
+
+  it("treats hour-based restaurant-close wording as a relative cutoff instead of 01:00", () => {
+    const extracted = extractCanonicalOpeningHours(`
+      <html><body>
+        <p>Mandag-torsdag: 11:00-23:00</p>
+        <p>Fredag: 11:00-00:00</p>
+        <p>Lørdag: 11:00-00:00</p>
+        <p>Søndag: 12:00-22:30</p>
+        <p>Nyttårsaften: kl. 12:00-01:00</p>
+        <p>Kjøkkenet stenger 1 time før restauranten stenger.</p>
+      </body></html>
+    `);
+
+    expect(extracted.intervals).toEqual([
+      { isoWeekday: 1, opensAt: "11:00", closesAt: "22:00", closesNextDay: false },
+      { isoWeekday: 2, opensAt: "11:00", closesAt: "22:00", closesNextDay: false },
+      { isoWeekday: 3, opensAt: "11:00", closesAt: "22:00", closesNextDay: false },
+      { isoWeekday: 4, opensAt: "11:00", closesAt: "22:00", closesNextDay: false },
+      { isoWeekday: 5, opensAt: "11:00", closesAt: "23:00", closesNextDay: false },
+      { isoWeekday: 6, opensAt: "11:00", closesAt: "23:00", closesNextDay: false },
+      { isoWeekday: 7, opensAt: "12:00", closesAt: "21:30", closesNextDay: false },
+    ]);
+    expect(extracted.sourceExcerpt).toContain("Kjøkkenet stenger 1 time før restauranten stenger.");
   });
 
   it("supports the equivalent English relative-close wording", () => {
