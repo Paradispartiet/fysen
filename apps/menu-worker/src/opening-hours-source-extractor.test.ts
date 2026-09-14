@@ -17,7 +17,7 @@ describe("canonical opening-hours source extractor", () => {
       </body></html>
     `);
 
-    expect(OPENING_HOURS_SOURCE_EXTRACTOR_VERSION).toBe("hours-visible-v16");
+    expect(OPENING_HOURS_SOURCE_EXTRACTOR_VERSION).toBe("hours-visible-v17");
     expect(extracted.intervals).toEqual([
       { isoWeekday: 1, opensAt: "11:30", closesAt: "20:30", closesNextDay: false },
       { isoWeekday: 2, opensAt: "11:30", closesAt: "20:30", closesNextDay: false },
@@ -102,6 +102,21 @@ describe("canonical opening-hours source extractor", () => {
 
     expect(extracted.intervals.slice(0, 5).every((item) => item.closesAt === "20:00")).toBe(true);
     expect(extracted.intervals.slice(5).every((item) => item.closesAt === "21:00")).toBe(true);
+  });
+
+  it("treats an after-midnight global kitchen close as next-day without extending earlier venue closes", () => {
+    const extracted = extractCanonicalOpeningHours(`
+      <html><body>
+        <p>Mandag-Torsdag: 11:00-23:00</p>
+        <p>Fredag-Lørdag: 11:00-02:00</p>
+        <p>Søndag: 12:00-23:00</p>
+        <p>Kjøkkenet stenger 01:00</p>
+      </body></html>
+    `);
+
+    expect(extracted.intervals.slice(0, 4).every((item) => item.closesAt === "23:00" && !item.closesNextDay)).toBe(true);
+    expect(extracted.intervals.slice(4, 6).every((item) => item.closesAt === "01:00" && item.closesNextDay)).toBe(true);
+    expect(extracted.intervals[6]).toMatchObject({ opensAt: "12:00", closesAt: "23:00", closesNextDay: false });
   });
 
   it("fails closed on conflicting global absolute kitchen-close times", () => {
