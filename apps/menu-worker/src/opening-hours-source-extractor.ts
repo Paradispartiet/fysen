@@ -7,12 +7,13 @@ import {
 import { extractKitchenOpeningHoursWithIdenticalSectionRecovery } from "./opening-hours-duplicate-section-recovery.js";
 import { normalizeOpeningHoursMarkerLines } from "./opening-hours-marker-normalizer.js";
 
-export const OPENING_HOURS_SOURCE_EXTRACTOR_VERSION = "hours-visible-v15";
+export const OPENING_HOURS_SOURCE_EXTRACTOR_VERSION = "hours-visible-v16";
 
-const relativeKitchenClosePattern = /(?:kjøkken(?:et)?\s+stenger|kitchen\s+closes)\s+(\d{1,3})\s*(?:min\.?|minutter?|minutes?)\s+(?:før\s+stengetid|before\s+(?:closing|close)(?:\s+time)?)/giu;
-const relativeKitchenCloseLinePattern = /(?:kjøkken(?:et)?\s+stenger|kitchen\s+closes)\s+\d{1,3}\s*(?:min\.?|minutter?|minutes?)\s+(?:før\s+stengetid|before\s+(?:closing|close)(?:\s+time)?)/iu;
-const absoluteKitchenClosePattern = /(?:kjøkken(?:et)?\s+(?:til|stenger)|kitchen\s+closes(?:\s+at)?)\s*(?:(?:kl\.?|klokka)\s*)?(?:2[0-3]|[01]?\d)(?:[.:][0-5]\d)?/iu;
-const absoluteKitchenCloseCapturePattern = /(?:kjøkken(?:et)?\s+(?:til|stenger)|kitchen\s+closes(?:\s+at)?)\s*(?:(?:kl\.?|klokka)\s*)?((?:2[0-3]|[01]?\d)(?:[.:][0-5]\d)?)/giu;
+const relativeKitchenClosePattern = /(?:kjøkken(?:et)?\s+stenger|kitchen\s+closes)\s+(\d{1,3})\s*(min\.?|minutter?|minutes?|time|timer|hours?)\s+(?:før\s+(?:stengetid|restauranten\s+stenger)|before\s+(?:(?:the\s+)?restaurant\s+closes?|(?:closing|close)(?:\s+time)?))/giu;
+const relativeKitchenCloseLinePattern = /(?:kjøkken(?:et)?\s+stenger|kitchen\s+closes)\s+\d{1,3}\s*(?:min\.?|minutter?|minutes?|time|timer|hours?)\s+(?:før\s+(?:stengetid|restauranten\s+stenger)|before\s+(?:(?:the\s+)?restaurant\s+closes?|(?:closing|close)(?:\s+time)?))/iu;
+const durationUnitAfterClockPattern = String.raw`(?:min\.?|minutter?|minutes?|time|timer|hours?)\b`;
+const absoluteKitchenClosePattern = new RegExp(String.raw`(?:kjøkken(?:et)?\s+(?:til|stenger)|kitchen\s+closes(?:\s+at)?)\s*(?:(?:kl\.?|klokka)\s*)?(?:2[0-3]|[01]?\d)(?:[.:][0-5]\d)?(?!\s*${durationUnitAfterClockPattern})`, "iu");
+const absoluteKitchenCloseCapturePattern = new RegExp(String.raw`(?:kjøkken(?:et)?\s+(?:til|stenger)|kitchen\s+closes(?:\s+at)?)\s*(?:(?:kl\.?|klokka)\s*)?((?:2[0-3]|[01]?\d)(?:[.:][0-5]\d)?)(?!\s*${durationUnitAfterClockPattern})`, "giu");
 const explicitKitchenScheduleLinePattern = /^(?:kitchen\s+(?:open|hours|opening\s+hours)|kjøkken(?:et)?\s+(?:åpent|apent|åpningstider)|kjøkkentider)\b/iu;
 const weekdayMentionPattern = /\b(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Mandag|Tirsdag|Onsdag|Torsdag|Fredag|Lørdag|Lordag|Søndag|Sondag|Man|Tir|Ons|Tor|Fre|Lør|Lor|Søn|Son|Mon|Tue|Tues|Wed|Weds|Thu|Thur|Thurs|Fri|Sat|Sun)\b/iu;
 const canonicalWeekdayPattern = /\b(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|mandag|tirsdag|onsdag|torsdag|fredag|lørdag|lordag|søndag|sondag|man|tir|ons|tor|fre|lør|lor|søn|son)\b/giu;
@@ -244,7 +245,9 @@ function relativeCutoffMinutes(lines: readonly string[]): number | null {
     for (const match of line.matchAll(relativeKitchenClosePattern)) {
       const raw = match[1];
       if (!raw) continue;
-      const minutes = Number(raw);
+      const unit = match[2]?.toLocaleLowerCase("nb-NO") ?? "";
+      const multiplier = /^(?:time|timer|hours?)$/u.test(unit) ? 60 : 1;
+      const minutes = Number(raw) * multiplier;
       if (!Number.isInteger(minutes) || minutes <= 0 || minutes > 180) {
         throw new OpeningHoursExtractionError(
           "INVALID_RELATIVE_KITCHEN_CUTOFF",
