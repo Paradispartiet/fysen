@@ -163,6 +163,7 @@ async function validateMenu(
     };
 
     let attempt = await fetchAndExtract();
+    // Retry only a transport-shaped empty shell; quality failures remain fail-closed.
     if (
       shouldRetryEmptyHtmlHeuristic({
         fetchMode,
