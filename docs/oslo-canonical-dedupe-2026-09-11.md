@@ -120,3 +120,22 @@ Round 4 removes the next 12 exact physical-identity duplicates while preserving 
 12. `mini-thai-sushi-majorstuen-oslo` ← removed `mini-thai-sushi-oslo`
 
 Catalog-health #155 proved the 794-manifest round-3 baseline at 794/794 accepted before this reconciliation. Coverage reconciliation remains responsible for quiescing the removed production identities after merge.
+
+## Residual exact-identity reconciliation — round 5
+
+Round 5 removes the next 12 exact physical-identity duplicates while preserving the established, place-specific canonical slugs. Each retained and removed pair has the same restaurant name and coordinates, and identical menu-source, hours-source, action and quality contracts, so no contract migration is required:
+
+1. `mr-potet-bryn-oslo` ← removed `mr-potet-oslo`
+2. `mucho-mas-grunerlokka-oslo` ← removed `mucho-mas-oslo`
+3. `nabo-kitchen-bar-majorstuen-oslo` ← removed `nabo-kitchen-bar-oslo`
+4. `ng-bar-restaurant-grunerlokka-oslo` ← removed `ng-bar-restaurant-oslo`
+5. `palazzo-pizzeria-grunerlokka-oslo` ← removed `palazzo-pizzeria-oslo`
+6. `render-burger-grunerlokka-oslo` ← removed `render-burger-oslo`
+7. `restaurant-kraft-kvaernerbyen-oslo` ← removed `restaurant-kraft-oslo`
+8. `santa-rosa-majorstuen-oslo` ← removed `santa-rosa-oslo`
+9. `sushi-express-parkveien-oslo` ← removed `sushi-express-oslo`
+10. `sushi-special-bergensgata-oslo` ← removed `sushi-special-oslo`
+11. `umami-sushi-rodelokka-oslo` ← removed `umami-sushi-oslo`
+12. `yemen-zaad-restaurant-gronland-oslo` ← removed `yemen-zaad-restaurant-oslo`
+
+Catalog-health #162 proved the 782-manifest round-4 baseline at 782/782 accepted before this reconciliation. Catalog coverage reconciliation remains responsible for quiescing the removed production identities after merge.
