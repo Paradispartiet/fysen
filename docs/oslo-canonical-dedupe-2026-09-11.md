@@ -166,3 +166,15 @@ The separate manual-contract-review queue is intentionally untouched by this rou
 ## Residual exact-identity reconciliation — round 7
 
 Round 7 removes the 21 remaining alias-only physical-identity duplicates from the manual review queue. Catalog-health #164 attempt 2 proved the 757-manifest round-6 catalog fully healthy on exact `e9681d8bc1bbf3f4e01115dd188b4f43a73d2c89`. Git history keeps the older established identity in every pair; hours, actions and quality contracts remain unchanged, and only menu URL aliases / verification metadata differ. No source or quality migration is required. Expected canonical catalog after merge: **736 manifests**. Coverage reconciliation remains responsible for quiescing removed production identities.
+
+## Classification-discovered exact-identity repair — Peppes Stortingsgata
+
+The first bounded `core / coverage / redundant` classification pass found one exact physical-identity duplicate that was not part of the earlier residual queue:
+
+- retained: `peppes-pizza-stortingsgata-oslo`;
+- removed: `peppes-pizza-stortingsgaten-oslo`;
+- both: Stortingsgata 4, 0158 Oslo at `59.91292328073435, 10.738467865838835`.
+
+The retained Wolt-backed identity predates the later Batch-36 SeMeny alias. No menu contract is migrated: the later 65-item service-menu contract includes beverage assertions, while the retained established contract is food-only and already canonical. Coverage reconciliation remains responsible for quiescing the removed production identity after merge.
+
+This is a classification-discovered repair, not a reopened residual-dedupe round. Expected catalog after merge: **735 manifests**.
