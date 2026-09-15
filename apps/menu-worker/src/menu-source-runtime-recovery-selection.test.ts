@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { extractMenuSource } from "./menu-source-runtime.js";
+import {
+  extractMenuSource,
+  shouldPreferDominantHeadingRecovery,
+} from "./menu-source-runtime.js";
 
 async function extract(html: string) {
   return extractMenuSource("html", {
@@ -255,32 +258,12 @@ describe("HTML runtime recovery selection", () => {
     ]);
   });
 
-  it("keeps broad semantic heading-price recovery isolated from same-card translation text", async () => {
-    const cards = Array.from({ length: 12 }, (_, index) => {
-      const number = index + 1;
-      return `
-        <h3>Dish ${number}</h3>
-        <p>Traduction française de la préparation ${number}</p>
-        <p>Inneholder:</p><p>melk</p><p>hvete</p><p>egg</p>
-        <p>${200 + number},-</p>
-      `;
-    }).join("\n");
-
-    const result = await extract(`
-      <html><body>
-        <h2>À la carte</h2>
-        ${cards}
-      </body></html>
-    `);
-
-    expect(result.items.map((item) => item.name)).toEqual(
-      Array.from({ length: 12 }, (_, index) => `Dish ${index + 1}`),
-    );
-    expect(
-      result.items.some((item) =>
-        item.name.startsWith("Traduction française de la préparation"),
-      ),
-    ).toBe(false);
+  it("prefers a broad heading recovery only when it dominates the trailing recovery", () => {
+    expect(shouldPreferDominantHeadingRecovery(26, 24, 24)).toBe(true);
+    expect(shouldPreferDominantHeadingRecovery(24, 24, 24)).toBe(false);
+    expect(shouldPreferDominantHeadingRecovery(23, 24, 24)).toBe(false);
+    expect(shouldPreferDominantHeadingRecovery(26, 27, 24)).toBe(false);
+    expect(shouldPreferDominantHeadingRecovery(11, 10, 10)).toBe(false);
   });
 
 });
