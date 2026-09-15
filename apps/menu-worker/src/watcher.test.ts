@@ -18,6 +18,7 @@ import {
   HTML_ITEM_NAME_NORMALIZER_VERSION,
   HTML_NON_DISH_FILTER_VERSION,
   HTML_PRICE_NOTATION_NORMALIZER_VERSION,
+  HTML_RECOVERY_SELECTION_VERSION,
   assertExtractionMethodForSourceType,
   extractorVersionForSourceType,
   shouldForceReextract,
@@ -53,6 +54,7 @@ describe("menu source runtime extractor refresh policy", () => {
       HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION,
       HTML_TEXT_SECTION_SCOPE_VERSION,
       HTML_OUTPUT_CANONICALIZER_VERSION,
+      HTML_RECOVERY_SELECTION_VERSION,
     ].join("+");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
