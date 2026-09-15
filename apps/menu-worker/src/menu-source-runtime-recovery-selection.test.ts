@@ -255,4 +255,32 @@ describe("HTML runtime recovery selection", () => {
     ]);
   });
 
+  it("keeps broad semantic heading-price recovery isolated from same-card translation text", async () => {
+    const cards = Array.from({ length: 12 }, (_, index) => {
+      const number = index + 1;
+      return `
+        <h3>Dish ${number}</h3>
+        <p>Traduction française de la préparation ${number}</p>
+        <p>Inneholder:</p><p>melk</p><p>hvete</p><p>egg</p>
+        <p>${200 + number},-</p>
+      `;
+    }).join("\n");
+
+    const result = await extract(`
+      <html><body>
+        <h2>À la carte</h2>
+        ${cards}
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => item.name)).toEqual(
+      Array.from({ length: 12 }, (_, index) => `Dish ${index + 1}`),
+    );
+    expect(
+      result.items.some((item) =>
+        item.name.startsWith("Traduction française de la préparation"),
+      ),
+    ).toBe(false);
+  });
+
 });
