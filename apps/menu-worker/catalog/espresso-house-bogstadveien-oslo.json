@@ -2,7 +2,7 @@
   "version": 1,
   "restaurant": {
     "slug": "espresso-house-bogstadveien-oslo",
-    "name": "Espresso House Bogstadveien",
+    "name": "Espresso House Valkyriegata",
     "websiteUrl": null,
     "address": "Valkyriegata 9, 0366 Oslo",
     "city": "Oslo",
@@ -43,38 +43,14 @@
       "Mozell Light"
     ],
     "requiredDishVariants": [
-      {
-        "name": "Ost og Kalkunskinke Toast",
-        "priceMinor": 6900
-      },
-      {
-        "name": "Surdeigsrundstykke Ost & Kalkunskinke",
-        "priceMinor": 6900
-      },
-      {
-        "name": "Kanelbolle",
-        "priceMinor": 4900
-      },
-      {
-        "name": "Brownie bite Melkesjokolade",
-        "priceMinor": 2600
-      },
-      {
-        "name": "Islatte Vanilje",
-        "priceMinor": 7600
-      },
-      {
-        "name": "Vegansk Frapino Sjokolade",
-        "priceMinor": 9900
-      },
-      {
-        "name": "Solrik Jordbær & Appelsin",
-        "priceMinor": 3900
-      },
-      {
-        "name": "Mozell Light",
-        "priceMinor": 4900
-      }
+      {"name": "Ost og Kalkunskinke Toast", "priceMinor": 6900},
+      {"name": "Surdeigsrundstykke Ost & Kalkunskinke", "priceMinor": 6900},
+      {"name": "Kanelbolle", "priceMinor": 4900},
+      {"name": "Brownie bite Melkesjokolade", "priceMinor": 2600},
+      {"name": "Islatte Vanilje", "priceMinor": 7600},
+      {"name": "Vegansk Frapino Sjokolade", "priceMinor": 9900},
+      {"name": "Solrik Jordbær & Appelsin", "priceMinor": 3900},
+      {"name": "Mozell Light", "priceMinor": 4900}
     ],
     "forbiddenDishNames": []
   }
