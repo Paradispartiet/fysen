@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "brasserie-france-oslo",
+    "name": "Brasserie France",
+    "websiteUrl": "https://www.brasseriefrance.no/",
+    "address": "Øvre Slottsgate 16, 0157 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91308417320812,
+    "longitude": 10.742607839326546
+  },
+  "menuSource": {
+    "url": "https://www.brasseriefrance.no/a-la-carte",
+    "sourceType": "html",
+    "fetchMode": "browser",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 26,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-15",
+      "note": "Fresh exact-head rendered reproof of the current first-party à-la-carte page after HTTP extraction again produced zero canonical items. The page visibly publishes a broad named and individually priced menu; the existing browser transport must prove the same first-party source without source substitution or parser weakening."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Gratinert løksuppe ”Tradition”",
+      "Salat med grillet chèvre, aspargesbønner, tomat og hvitløk (petite)",
+      "L'Assiette du Mareyeur",
+      "1⁄2 kg dampede blåskjell som hovedrett kremet safransuppe, pommes frites, aioli",
+      "Ovnsbakt filet av ishavsrøye, fennikelragu, høstgrønnsaker, hollandaise",
+      "Flambert pepperstek av oksefilet tomat, aspargesbønner, bacon, kremet peppersaus og fløtegratinerte poteter",
+      "Brasseriets vellagrede oster",
+      "Mignardises - fransk småbakst"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Gratinert løksuppe ”Tradition”",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Salat med grillet chèvre, aspargesbønner, tomat og hvitløk (petite)",
+        "priceMinor": 26000
+      },
+      {
+        "name": "L'Assiette du Mareyeur",
+        "priceMinor": 49500
+      },
+      {
+        "name": "1⁄2 kg dampede blåskjell som hovedrett kremet safransuppe, pommes frites, aioli",
+        "priceMinor": 36500
+      },
+      {
+        "name": "Ovnsbakt filet av ishavsrøye, fennikelragu, høstgrønnsaker, hollandaise",
+        "priceMinor": 49500
+      },
+      {
+        "name": "Flambert pepperstek av oksefilet tomat, aspargesbønner, bacon, kremet peppersaus og fløtegratinerte poteter",
+        "priceMinor": 59000
+      },
+      {
+        "name": "Brasseriets vellagrede oster",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Mignardises - fransk småbakst",
+        "priceMinor": 15000
+      }
+    ],
+    "forbiddenDishNames": [
+      "A LA CARTE",
+      "ENTRÉES ET PLATS POUR UNE PETITE FAIM",
+      "PLAT VÉGÉTARIEN",
+      "FROMAGES ET DESSERTS",
+      "BRASSERIE FRANCE"
+    ]
+  }
+}
