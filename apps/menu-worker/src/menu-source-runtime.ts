@@ -547,16 +547,20 @@ export async function extractMenuSource(
     );
     const preferredItems = strongTitlePricePreferred
     ? strongTitlePriceItems
-    : trailingPriceCardQualifies
+    : isolatedTrailingRecoveryPreferred
       ? trailingPriceCardItems
-      : headingPriceItems.length >= 4 &&
-          (recoveredItems.length === 0 ||
-            headingPriceItems.length >= headingPriceCoverageThreshold)
+      : broadHeadingPriceRecoveryPreferred
         ? headingPriceItems
-        : priceWrappedItems.length >= 3 &&
-            priceWrappedItems.length >= recoveredItems.length * 2
-          ? priceWrappedItems
-          : recoveredItems;
+        : trailingPriceCardQualifies
+          ? trailingPriceCardItems
+          : headingPriceItems.length >= 4 &&
+              (recoveredItems.length === 0 ||
+                headingPriceItems.length >= headingPriceCoverageThreshold)
+            ? headingPriceItems
+            : priceWrappedItems.length >= 3 &&
+                priceWrappedItems.length >= recoveredItems.length * 2
+              ? priceWrappedItems
+              : recoveredItems;
     const structurallyReconciledPreferredItems =
       extracted.method === "html_heuristic" && !strongTitlePricePreferred
         ? reconcileSelectedItemsWithTrailingCards(
