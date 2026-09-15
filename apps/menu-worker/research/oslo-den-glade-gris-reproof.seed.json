@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-den-glade-gris-reproof",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "den-glade-gris-oslo",
+        "name": "Den Glade Gris",
+        "websiteUrl": "https://www.dengladegris.no/",
+        "address": "St. Olavs gate 33, 0166 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://cdn.prod.website-files.com/5aabb3484dc7fe62cb3f222a/6a1e98ce9f4ba81ca0222243_DGG_spiralhefte_mai2026.1_ENKELTSIDER.pdf",
+        "sourceType": "pdf",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-15",
+          "note": "Fresh exact-head reproof of the first-party May 2026 food-menu PDF after the generic PDF source extractor advanced from pdf-text-v16 to pdf-text-v17. Current site identity and kitchen hours remain separately published."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Grisens Bayer 5,0% 0,25/0,4",
+        "marinated in Erling Skakke XO Cognac.",
+        "tartar sauce.",
+        "H.Br. Humlesus Citra Hop 4,5% 0,4",
+        "Små Vesen Vette 4,7% Hveteøl 0,25/0,4",
+        "Add bacon to any dish for",
+        "Bådin Kjerringøy 4,7% Pale Ale 0,33",
+        "Inderøy Kvitweiss 4,7% Weissbier 0,5",
+        "Sagene Kjørepils 0,33",
+        "Klokk & Co Fripa Radler 0,33"
+      ]
+    }
+  ]
+}
