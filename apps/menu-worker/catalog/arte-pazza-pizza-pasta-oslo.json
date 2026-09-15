@@ -3,20 +3,20 @@
   "restaurant": {
     "slug": "arte-pazza-pizza-pasta-oslo",
     "name": "Arte Pazza Pizza Pasta",
-    "websiteUrl": null,
-    "address": "Parkveien 10, 0350 Oslo",
+    "websiteUrl": "https://www.artepazza.no/",
+    "address": "Ullevålsveien 61, 0171 Oslo",
     "city": "Oslo",
     "countryCode": "NO",
-    "latitude": 59.920984127937,
-    "longitude": 10.729246966682158
+    "latitude": 59.926388,
+    "longitude": 10.738349
   },
   "menuSource": {
-    "url": "https://semeny.no/sted/artepazzapizzapasta",
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/arte-pazza-filetto-ristorante",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 50,
+    "minimumExpectedItems": 36,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,41 +26,33 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-02",
-      "note": "Batch 34 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+      "checkedAt": "2026-09-15",
+      "note": "Physical identity and menu contract consolidated to the current Arte Pazza restaurant at Ullevålsveien 61; complete canonical kitchen hours are not assumed."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Antipasto all'italiana",
+      "Carpaccio Classico",
       "🌱 Insalata del Giorno/ dagens salat liten",
-      "Tortelli (gresskar) alla Mantovana",
-      "Trentina",
-      "Glutenfri pizza",
+      "Tagliatelle di Scampi",
       "Nduja",
-      "San Pellegrino Limonata",
-      "Bestikk"
+      "* Arte Pazza",
+      "Pizza Sud-Nord",
+      "* Margherita 🌱",
+      "Hvitløksbrød"
     ],
     "requiredDishVariants": [
       {
-        "name": "Antipasto all'italiana",
-        "priceMinor": 25000
+        "name": "Carpaccio Classico",
+        "priceMinor": 20000
       },
       {
         "name": "🌱 Insalata del Giorno/ dagens salat liten",
         "priceMinor": 6500
       },
       {
-        "name": "Tortelli (gresskar) alla Mantovana",
-        "priceMinor": 24000
-      },
-      {
-        "name": "Trentina",
-        "priceMinor": 25000
-      },
-      {
-        "name": "Glutenfri pizza",
+        "name": "Tagliatelle di Scampi",
         "priceMinor": 24500
       },
       {
@@ -68,12 +60,20 @@
         "priceMinor": 26500
       },
       {
-        "name": "San Pellegrino Limonata",
-        "priceMinor": 4800
+        "name": "* Arte Pazza",
+        "priceMinor": 25000
       },
       {
-        "name": "Bestikk",
-        "priceMinor": 1000
+        "name": "Pizza Sud-Nord",
+        "priceMinor": 24000
+      },
+      {
+        "name": "* Margherita 🌱",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Hvitløksbrød",
+        "priceMinor": 7500
       }
     ],
     "forbiddenDishNames": []
