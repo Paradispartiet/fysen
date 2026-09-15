@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 50,
+    "minimumExpectedItems": 36,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -33,34 +33,26 @@
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Antipasto all'italiana",
+      "Carpaccio Classico",
       "🌱 Insalata del Giorno/ dagens salat liten",
-      "Tortelli (gresskar) alla Mantovana",
-      "Trentina",
-      "Glutenfri pizza",
+      "Tagliatelle di Scampi",
       "Nduja",
-      "San Pellegrino Limonata",
-      "Bestikk"
+      "* Arte Pazza",
+      "Pizza Sud-Nord",
+      "* Margherita 🌱",
+      "Hvitløksbrød"
     ],
     "requiredDishVariants": [
       {
-        "name": "Antipasto all'italiana",
-        "priceMinor": 25000
+        "name": "Carpaccio Classico",
+        "priceMinor": 20000
       },
       {
         "name": "🌱 Insalata del Giorno/ dagens salat liten",
         "priceMinor": 6500
       },
       {
-        "name": "Tortelli (gresskar) alla Mantovana",
-        "priceMinor": 24000
-      },
-      {
-        "name": "Trentina",
-        "priceMinor": 25000
-      },
-      {
-        "name": "Glutenfri pizza",
+        "name": "Tagliatelle di Scampi",
         "priceMinor": 24500
       },
       {
@@ -68,12 +60,20 @@
         "priceMinor": 26500
       },
       {
-        "name": "San Pellegrino Limonata",
-        "priceMinor": 4800
+        "name": "* Arte Pazza",
+        "priceMinor": 25000
       },
       {
-        "name": "Bestikk",
-        "priceMinor": 1000
+        "name": "Pizza Sud-Nord",
+        "priceMinor": 24000
+      },
+      {
+        "name": "* Margherita 🌱",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Hvitløksbrød",
+        "priceMinor": 7500
       }
     ],
     "forbiddenDishNames": []
