@@ -53,7 +53,7 @@ describe("embedded structured menu JSON recovery", () => {
     const items = recoverEmbeddedStructuredMenuJson(htmlWithPayload(payload));
 
     expect(HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION).toBe(
-      "embedded-menu-json-v2",
+      "embedded-menu-json-v3",
     );
     expect(
       items.map((item) => [item.sectionName, item.name, item.priceMinor]),
@@ -64,6 +64,89 @@ describe("embedded structured menu JSON recovery", () => {
       ["Hovedretter", "Qazon Kebab", 44900],
     ]);
     expect(items.every((item) => item.extractionMethod === "api")).toBe(true);
+  });
+
+  it("recovers flat localized menu rows with exact major-unit prices from Next.js JSON state", () => {
+    const payload = {
+      props: {
+        pageProps: {
+          page: {
+            content: [
+              {
+                _type: "menu",
+                name_no: "Mat",
+                content: [
+                  {
+                    _type: "menuType",
+                    name_no: "Ansjostoast",
+                    name_en: "Anchovy toast",
+                    description_no: "Surdeig, ansjos og urter",
+                    price: "179",
+                  },
+                  {
+                    _type: "menuType",
+                    name_no: "Røkt makrellrillettes",
+                    name_en: "Smoked mackerel rillettes",
+                    price: "195,-",
+                  },
+                  {
+                    _type: "menuType",
+                    name_no: "Steinsopp",
+                    name_en: "Porcini",
+                    price: "kr 225",
+                  },
+                  {
+                    _type: "menuType",
+                    name_no: "Kylling",
+                    name_en: "Chicken",
+                    price: 265,
+                  },
+                  {
+                    _type: "menuType",
+                    name_en: "Cheese",
+                    description_en: "Seasonal cheese",
+                    price: "165",
+                  },
+                  {
+                    _type: "social",
+                    name_no: "Instagram",
+                    price: "199",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      },
+    };
+
+    const items = recoverEmbeddedStructuredMenuJson(htmlWithPayload(payload));
+
+    expect(
+      items.map((item) => [item.sectionName, item.name, item.priceMinor]),
+    ).toEqual([
+      ["Mat", "Ansjostoast", 17900],
+      ["Mat", "Røkt makrellrillettes", 19500],
+      ["Mat", "Steinsopp", 22500],
+      ["Mat", "Kylling", 26500],
+      ["Mat", "Cheese", 16500],
+    ]);
+    expect(items.every((item) => item.extractionMethod === "api")).toBe(true);
+  });
+
+  it("fails closed for unrelated flat JSON arrays with price-like fields", () => {
+    const payload = {
+      products: [
+        { _type: "article", name: "Article A", price: "199" },
+        { _type: "article", name: "Article B", price: "209" },
+        { _type: "article", name: "Article C", price: "219" },
+        { _type: "article", name: "Article D", price: "229" },
+      ],
+    };
+
+    expect(recoverEmbeddedStructuredMenuJson(htmlWithPayload(payload))).toEqual(
+      [],
+    );
   });
 
   it("fails closed when category bindings do not cover enough items", () => {
