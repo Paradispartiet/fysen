@@ -78,73 +78,6 @@ export interface RestaurantBatchIntakeSummary {
   readonly results: readonly RestaurantBatchIntakeResult[];
 }
 
-
-function compactDiagnosticText(value: string, limit = 700): string {
-  return value.normalize("NFKC").replace(/\s+/gu, " ").trim().slice(0, limit);
-}
-
-function lowItemExtractionDiagnostic(
-  body: string,
-  items: readonly MenuObservedItem[],
-): string {
-  const scriptMatches = [...body.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/giu)];
-  const scripts = scriptMatches
-    .map((match, index) => {
-      const attributes = compactDiagnosticText(match[1] ?? "", 240);
-      const text = match[2] ?? "";
-      const keywordCount =
-        text.match(/(?:menu|price|dish|item|allerg|course|food)/giu)?.length ?? 0;
-      const numericTokenCount =
-        text.match(/(?:^|[^\d])\d{2,4}(?=[^\d]|$)/gu)?.length ?? 0;
-      return {
-        index,
-        attributes,
-        length: text.length,
-        keywordCount,
-        numericTokenCount,
-        sample: compactDiagnosticText(text, 900),
-      };
-    })
-    .sort(
-      (left, right) =>
-        right.keywordCount - left.keywordCount ||
-        right.numericTokenCount - left.numericTokenCount ||
-        right.length - left.length,
-    )
-    .slice(0, 4);
-
-  const visiblePriceLikeLines = body
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/giu, "\n")
-    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/giu, "\n")
-    .replace(/<[^>]+>/gu, "\n")
-    .split(/\n+/u)
-    .map((line) => compactDiagnosticText(line, 500))
-    .filter(
-      (line) =>
-        line.length >= 3 &&
-        /\p{L}/u.test(line) &&
-        /(?:^|\s)(?:kr\.?\s*)?\d{2,4}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?(?:\s|$)/iu.test(
-          line,
-        ),
-    )
-    .slice(0, 20);
-
-  return JSON.stringify({
-    bodyLength: body.length,
-    nextFlight: body.includes("self.__next_f.push"),
-    nextData: body.includes("__NEXT_DATA__"),
-    scriptCount: scriptMatches.length,
-    visiblePriceLikeLines,
-    extractedItems: items.slice(0, 8).map((item) => ({
-      name: item.name,
-      priceMinor: item.priceMinor,
-      sectionName: item.sectionName,
-      sourceExcerpt: item.sourceExcerpt,
-    })),
-    topScripts: scripts,
-  }).slice(0, 8000);
-}
-
 function evenlySpacedItems(
   items: readonly MenuObservedItem[],
   requestedCount: number,
@@ -259,7 +192,6 @@ export async function generateRestaurantCandidateBatch(
       let observedItemCount: number | null = null;
       let extractionMethod: string | null = null;
       let extractorVersion: string | null = null;
-      let extractionDiagnostic: string | null = null;
       try {
         const client = new HttpMenuClient();
         const fetched = await fetchMenuSource(
@@ -281,16 +213,6 @@ export async function generateRestaurantCandidateBatch(
         );
         extractionMethod = extracted.method;
         extractorVersion = extracted.extractorVersion;
-        if (
-          extracted.items.filter((item) => item.priceMinor !== null).length < 3 &&
-          (entry.menuSource.sourceType === "html" ||
-            entry.menuSource.sourceType === "json_ld")
-        ) {
-          extractionDiagnostic = lowItemExtractionDiagnostic(
-            fetched.body,
-            extracted.items,
-          );
-        }
         const manifest = buildGeneratedRestaurantManifest(entry, extracted.items);
         observedItemCount = manifest.menuSource.minimumExpectedItems;
         const outputPath = resolve(
@@ -319,7 +241,7 @@ export async function generateRestaurantCandidateBatch(
           assertionCount: null,
           extractionMethod,
           extractorVersion,
-          error: `${error instanceof Error ? error.message : String(error)}${extractionDiagnostic ? ` | diagnostic=${extractionDiagnostic}` : ""}`,
+          error: error instanceof Error ? error.message : String(error),
         } satisfies RestaurantBatchIntakeResult;
       }
     },
