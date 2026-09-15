@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { extractMenuSource } from "./menu-source-runtime.js";
+import {
+  extractMenuSource,
+  shouldPreferDominantHeadingRecovery,
+} from "./menu-source-runtime.js";
 
 async function extract(html: string) {
   return extractMenuSource("html", {
@@ -253,6 +256,14 @@ describe("HTML runtime recovery selection", () => {
       ["Vaniljeparfait", 25000],
       ["Liten frisk", 19000],
     ]);
+  });
+
+  it("prefers a broad heading recovery only when it dominates the trailing recovery", () => {
+    expect(shouldPreferDominantHeadingRecovery(26, 24, 24)).toBe(true);
+    expect(shouldPreferDominantHeadingRecovery(24, 24, 24)).toBe(false);
+    expect(shouldPreferDominantHeadingRecovery(23, 24, 24)).toBe(false);
+    expect(shouldPreferDominantHeadingRecovery(26, 27, 24)).toBe(false);
+    expect(shouldPreferDominantHeadingRecovery(11, 10, 10)).toBe(false);
   });
 
 });

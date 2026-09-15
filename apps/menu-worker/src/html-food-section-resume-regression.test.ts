@@ -62,7 +62,7 @@ describe("food section state recovery after beverage sections", () => {
       139
     `;
 
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v12");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v13");
     expect(
       filterPlainTextBeverageSectionItems(items, visibleText).map(
         (entry) => entry.name,

@@ -119,7 +119,20 @@ export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v3";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v8";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v9";
-const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}`;
+export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v1";
+
+export function shouldPreferDominantHeadingRecovery(
+  headingCount: number,
+  trailingCount: number,
+  recoveredCount: number,
+): boolean {
+  return (
+    headingCount >= 12 &&
+    headingCount >= recoveredCount &&
+    headingCount > trailingCount
+  );
+}
+const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}+${HTML_RECOVERY_SELECTION_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf" | "api";
 export type MenuSourceFetchMode = "http" | "browser";
@@ -528,8 +541,13 @@ export async function extractMenuSource(
       isStrongNumberedTrailingPriceCardRecovery(trailingPriceCardItems);
     const isolatedTrailingRecoveryPreferred =
       semanticCategoryCardsPreferred || strongNumberedCardsPreferred;
+    const broadHeadingPriceRecoveryPreferred =
+      headingPriceItems.length >= 12 &&
+      headingPriceItems.length >= recoveredItems.length;
     const isolatedSemanticRecoveryPreferred =
-      isolatedTrailingRecoveryPreferred || strongTitlePricePreferred;
+      isolatedTrailingRecoveryPreferred ||
+      strongTitlePricePreferred ||
+      broadHeadingPriceRecoveryPreferred;
     const trailingPriceCardQualifies =
       isolatedTrailingRecoveryPreferred ||
       (trailingPriceCardItems.length >= 4 &&
@@ -539,18 +557,30 @@ export async function extractMenuSource(
     const headingPriceCoverageThreshold = Math.ceil(
       recoveredItems.length * 0.75,
     );
+    const headingDominatesTrailingRecovery =
+      shouldPreferDominantHeadingRecovery(
+        headingPriceItems.length,
+        trailingPriceCardItems.length,
+        recoveredItems.length,
+      );
     const preferredItems = strongTitlePricePreferred
     ? strongTitlePriceItems
-    : trailingPriceCardQualifies
-      ? trailingPriceCardItems
-      : headingPriceItems.length >= 4 &&
-          (recoveredItems.length === 0 ||
-            headingPriceItems.length >= headingPriceCoverageThreshold)
-        ? headingPriceItems
-        : priceWrappedItems.length >= 3 &&
-            priceWrappedItems.length >= recoveredItems.length * 2
-          ? priceWrappedItems
-          : recoveredItems;
+    : headingDominatesTrailingRecovery
+      ? headingPriceItems
+      : isolatedTrailingRecoveryPreferred
+        ? trailingPriceCardItems
+        : broadHeadingPriceRecoveryPreferred
+          ? headingPriceItems
+          : trailingPriceCardQualifies
+            ? trailingPriceCardItems
+          : headingPriceItems.length >= 4 &&
+              (recoveredItems.length === 0 ||
+                headingPriceItems.length >= headingPriceCoverageThreshold)
+            ? headingPriceItems
+            : priceWrappedItems.length >= 3 &&
+                priceWrappedItems.length >= recoveredItems.length * 2
+              ? priceWrappedItems
+              : recoveredItems;
     const structurallyReconciledPreferredItems =
       extracted.method === "html_heuristic" && !strongTitlePricePreferred
         ? reconcileSelectedItemsWithTrailingCards(

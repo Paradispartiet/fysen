@@ -54,7 +54,7 @@ describe("plain-text HTML section scoping", () => {
       119 NOK
     `;
 
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v12");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v13");
     expect(
       filterPlainTextBeverageSectionItems(items, visibleText).map(
         (entry) => entry.name,
@@ -169,6 +169,50 @@ describe("plain-text HTML section scoping", () => {
       "Chapli Kebab",
       "Saag Paneer",
       "Mix Grill",
+    ]);
+  });
+
+
+  it("resumes food scope at common French restaurant section headings after beverage navigation", () => {
+    const items = [
+      item("House Bordeaux", 1, 16500),
+      item("Gratinert løksuppe Tradition", 2, 19500),
+      item("Spinatgalette med rødbettartar og chèvre", 3, 45500),
+      item("Entrecôte med pommes frites", 4, 49500),
+      item("Crème Brûlée Maison", 5, 24500),
+      item("Dampede blåskjell fra Trøndelag", 6, 26000),
+    ];
+    const visibleText = `
+      WINE LIST
+      House Bordeaux
+      165
+      ENTRÉES ET PLATS POUR UNE PETITE FAIM
+      Gratinert løksuppe Tradition
+      195
+      PLAT VÉGÉTARIEN
+      Spinatgalette med rødbettartar og chèvre
+      455
+      PLATS PRINCIPAUX
+      Entrecôte med pommes frites
+      495
+      FROMAGES ET DESSERTS
+      Crème Brûlée Maison
+      245
+      COQUILLAGES ET CRUSTACÉS
+      Dampede blåskjell fra Trøndelag
+      260
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual([
+      "Gratinert løksuppe Tradition",
+      "Spinatgalette med rødbettartar og chèvre",
+      "Entrecôte med pommes frites",
+      "Crème Brûlée Maison",
+      "Dampede blåskjell fra Trøndelag",
     ]);
   });
 

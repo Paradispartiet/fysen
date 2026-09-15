@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-brasserie-france-reproof",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "brasserie-france-oslo",
+        "name": "Brasserie France",
+        "websiteUrl": "https://www.brasseriefrance.no/",
+        "address": "Øvre Slottsgate 16, 0157 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.brasseriefrance.no/a-la-carte",
+        "sourceType": "html",
+        "fetchMode": "browser",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-15",
+          "note": "Fresh exact-head rendered reproof of the current first-party à-la-carte page after HTTP extraction again produced zero canonical items. The page visibly publishes a broad named and individually priced menu; the existing browser transport must prove the same first-party source without source substitution or parser weakening."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "A LA CARTE",
+        "ENTRÉES ET PLATS POUR UNE PETITE FAIM",
+        "PLAT VÉGÉTARIEN",
+        "FROMAGES ET DESSERTS",
+        "BRASSERIE FRANCE"
+      ]
+    }
+  ]
+}

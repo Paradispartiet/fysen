@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v6";
+export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v7";
 
 const HEADING_MARKER = "__FYSEN_ADJACENT_HEADING_LEVEL_";
 const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
@@ -176,7 +176,7 @@ export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly Men
 
     let price: ParsedPrice | null = null;
     let pricePosition: number | null = null;
-    const scanEnd = Math.min(lines.length, position + 5);
+    const scanEnd = Math.min(lines.length, position + 16);
     for (let index = position + 1; index < scanEnd; index += 1) {
       const candidate = lines[index] ?? "";
       const nestedHeading = candidate.match(/^__FYSEN_ADJACENT_HEADING_LEVEL_([1-6])__\s*(.*)$/u);

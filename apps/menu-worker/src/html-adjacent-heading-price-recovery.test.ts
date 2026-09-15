@@ -18,7 +18,7 @@ describe("adjacent heading-price HTML recovery", () => {
       </body></html>
     `);
 
-    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v6");
+    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v7");
     expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
       ["Doro Wet", 29000, "exact"],
       ["Key Wet", 28000, "exact"],
@@ -27,6 +27,44 @@ describe("adjacent heading-price HTML recovery", () => {
       ["Salad w/tuna", 16500, "exact"],
     ]);
     expect(items.some((item) => item.name.startsWith("Phone:"))).toBe(false);
+  });
+
+  it("recovers heading-price cards through bounded multilingual description and allergen lines without crossing the next heading", () => {
+    const items = recoverAdjacentHeadingPriceHtmlItems(`
+      <html><body>
+        <h2>Entrées</h2>
+        <h3>Gratinert løksuppe Tradition</h3>
+        <p>Soupe à l’oignon gratinée Tradition</p>
+        <p>Inneholder:</p><p>melk</p><p>hvete</p><p>selleri</p><p>sulfitt</p>
+        <p>195,-</p>
+        <h3>Pâté en croûte</h3>
+        <p>Paté en croûte avec artichaut</p>
+        <p>Inneholder:</p><p>melk</p><p>hvete</p><p>egg</p><p>sennep</p>
+        <p>260,-</p>
+        <h3>Card without price</h3>
+        <p>Description only</p>
+        <h3>Escargots de Bourgogne</h3>
+        <p>Champignons farcis aux escargots</p>
+        <p>Inneholder:</p><p>melk</p><p>hvete</p><p>bløtdyr</p><p>sennep</p>
+        <p>365,-</p>
+        <h3>Crème Brûlée Maison</h3>
+        <p>Inneholder:</p><p>melk</p><p>egg</p><p>mandel</p>
+        <p>245,-</p>
+        <h3>Mignardises</h3>
+        <p>Fransk småbakst</p>
+        <p>Inneholder:</p><p>melk</p><p>hvete</p><p>egg</p><p>mandel</p>
+        <p>150,-</p>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Gratinert løksuppe Tradition", 19500],
+      ["Pâté en croûte", 26000],
+      ["Escargots de Bourgogne", 36500],
+      ["Crème Brûlée Maison", 24500],
+      ["Mignardises", 15000],
+    ]);
+    expect(items.some((item) => item.name === "Card without price")).toBe(false);
   });
 
   it("preserves from-price semantics instead of inventing an exact price", () => {
