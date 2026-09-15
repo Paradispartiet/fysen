@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-the-top-reproof",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "the-top-restaurant-oslo",
+        "name": "The Top Restaurant",
+        "websiteUrl": "https://www.thetoposlo.no/en/the-top-restaurant",
+        "address": "Sonja Henies plass 3, 0185 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.thetoposlo.no/en/the-top-restaurant-meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-15",
+          "note": "Fresh exact-head reproof of the current first-party restaurant menu after generic heading-price-v7 and recovery-selection-v1 hardening. The source visibly publishes named individually priced à-la-carte dishes; package, wine-pairing, allergen and description rows must remain outside canonical dish output."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Chef's 3 course",
+        "WINE PACKAGE",
+        "Vinpakke Deluxe",
+        "WINE PAIRING FOR CHEESES",
+        "Allergener",
+        "Allergens"
+      ]
+    }
+  ]
+}
