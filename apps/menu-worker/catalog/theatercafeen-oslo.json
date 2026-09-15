@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "theatercafeen-oslo",
+    "name": "Theatercaféen",
+    "websiteUrl": "https://www.theatercafeen.no/",
+    "address": "Stortingsgata 24, 0161 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.914043329279885,
+    "longitude": 10.733893961161735
+  },
+  "menuSource": {
+    "url": "https://www.theatercafeen.no/wp-content/uploads/sites/5/2026/08/Middagsmeny42.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 29,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-15",
+      "note": "Fresh exact-head reproof of the August 2026 first-party dinner PDF after generic PDF parser hardening. The official site uses the hotel's N-0117 contact postcode, while Kartverket resolves the physical Stortingsgata 24 entrance to street postcode 0161; intake must keep cocktails, wine, bilingual descriptions and layout fragments outside canonical dish output."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "CHOCOLAT",
+      "ICE CREAM & SORBET",
+      "GRILLED FOCACCIA",
+      "TUNA CRUDO",
+      "PIGGVAR - TURBOT",
+      "THE ”GREEN GARDEN SALAD”",
+      "KINGFISH FRA FREDRIKSTAD - KINGFISH FROM FREDRIKSTAD",
+      "RICOTTA RAVIOLI"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "CHOCOLAT",
+        "priceMinor": 19500
+      },
+      {
+        "name": "ICE CREAM & SORBET",
+        "priceMinor": 16000
+      },
+      {
+        "name": "GRILLED FOCACCIA",
+        "priceMinor": 10500
+      },
+      {
+        "name": "TUNA CRUDO",
+        "priceMinor": 19500
+      },
+      {
+        "name": "PIGGVAR - TURBOT",
+        "priceMinor": 59500
+      },
+      {
+        "name": "THE ”GREEN GARDEN SALAD”",
+        "priceMinor": 26500
+      },
+      {
+        "name": "KINGFISH FRA FREDRIKSTAD - KINGFISH FROM FREDRIKSTAD",
+        "priceMinor": 28500
+      },
+      {
+        "name": "RICOTTA RAVIOLI",
+        "priceMinor": 24500
+      }
+    ],
+    "forbiddenDishNames": [
+      "HOUSE COCKTAILS",
+      "BEST SERVED MEDIUM",
+      "PERFECT WITH VODKA",
+      "ADD BUFFALO MOZZARELLA",
+      "Firefox",
+      "Paloma Naranja",
+      "Crémant de Bourgogne"
+    ]
+  }
+}
