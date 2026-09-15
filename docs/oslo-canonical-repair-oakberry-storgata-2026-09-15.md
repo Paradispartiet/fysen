@@ -17,6 +17,11 @@ The generic Oslo manifest and the Storgata manifest resolve to the same physical
 
 The retained Storgata slug is the earlier location-specific canonical identity. OAKBERRY's current store list and Brønnøysund both distinguish Storgata 10A from the separate Vika location at Haakon VIIs gate 10.
 
+Current identity evidence:
+- OAKBERRY store list: https://www.oakberry.se/butikker/
+- Brønnøysund, OAKBERRY STORGATA: https://virksomhet.brreg.no/nb/oppslag/underenheter/935097428
+- Brønnøysund, OAKBERRY VIKA: https://virksomhet.brreg.no/nb/oppslag/underenheter/936331068
+
 Expected canonical catalog after merge: 727 manifests.
 
 No retained manifest, parser, source contract, validator or runtime behavior is changed.
