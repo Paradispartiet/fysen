@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-louise-reproof",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "louise-restaurant-oslo",
+        "name": "Louise",
+        "websiteUrl": "https://www.restaurantlouise.no/no",
+        "address": "Stranden 3, 0250 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.restaurantlouise.no/no/meny_pdf",
+        "sourceType": "pdf",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-15",
+          "note": "Fresh exact-head transport reproof of the same first-party /no/meny_pdf endpoint that returned deterministic HTTP 500 in Oslo quality P0 round 4 on 2026-09-11. Promotion requires the endpoint to resolve now to a current parseable priced food menu and pass strict validation without source substitution."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ]
+}
