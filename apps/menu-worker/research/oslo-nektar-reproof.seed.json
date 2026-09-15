@@ -24,7 +24,7 @@
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-09-15",
-          "note": "Fresh exact-head diagnostic of the current first-party priced menu. The public page exposes a broad seasonal menu, but the prior canonical Next.js/HTML extraction yielded only one priced dish; this seed must remain fail-closed until the generic extractor reproduces the substantive menu."
+          "note": "Fresh exact-head proof of the current first-party priced menu after generic embedded-menu-json-v3 recovery. The public Next.js state exposes localized menu rows with explicit prices; this seed remains fail-closed unless the generic extractor reproduces a substantive semantically clean menu."
         }
       },
       "actions": [],
