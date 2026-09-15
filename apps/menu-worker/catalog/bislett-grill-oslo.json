@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 51,
+    "minimumExpectedItems": 47,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -36,11 +36,11 @@
       "Kebabtallerken",
       "Döner i pita",
       "DOUBLE DECKER Cheeseburger-tallerken",
-      "Ham time",
-      "Chicken n'Beef",
+      "3. Ham time",
+      "17. Chicken n'Beef",
       "Salsasaus i beger",
       "200g Freia Firkløver",
-      "Villa 1,5L"
+      "200g Smash"
     ],
     "requiredDishVariants": [
       {
@@ -56,11 +56,11 @@
         "priceMinor": 30900
       },
       {
-        "name": "Ham time",
+        "name": "3. Ham time",
         "priceMinor": 20200
       },
       {
-        "name": "Chicken n'Beef",
+        "name": "17. Chicken n'Beef",
         "priceMinor": 20600
       },
       {
@@ -72,8 +72,8 @@
         "priceMinor": 8000
       },
       {
-        "name": "Villa 1,5L",
-        "priceMinor": 6900
+        "name": "200g Smash",
+        "priceMinor": 8400
       }
     ],
     "forbiddenDishNames": []
