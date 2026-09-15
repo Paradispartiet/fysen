@@ -4,19 +4,19 @@
     "slug": "bislett-grill-oslo",
     "name": "Bislett Grill - Leveres av Restauranten",
     "websiteUrl": null,
-    "address": "Hegdehaugsveien 2, 0167 Oslo",
+    "address": "Pilestredet 63, 0350 Oslo",
     "city": "Oslo",
     "countryCode": "NO",
-    "latitude": 59.920415253838684,
-    "longitude": 10.73358238841204
+    "latitude": 59.92403,
+    "longitude": 10.73107
   },
   "menuSource": {
-    "url": "https://semeny.no/public/sted/bislettgrillleveresavrestauranten",
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/bislett-grill",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 51,
+    "minimumExpectedItems": 47,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-10",
-      "note": "Batch 50 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+      "checkedAt": "2026-09-15",
+      "note": "Address and menu contract consolidated against the current Wolt service menu at Pilestredet 63; complete canonical kitchen hours are not assumed."
     }
   },
   "actions": [],
@@ -36,11 +36,11 @@
       "Kebabtallerken",
       "Döner i pita",
       "DOUBLE DECKER Cheeseburger-tallerken",
-      "Ham time",
-      "Chicken n'Beef",
+      "3. Ham time",
+      "17. Chicken n'Beef",
       "Salsasaus i beger",
       "200g Freia Firkløver",
-      "Villa 1,5L"
+      "200g Smash"
     ],
     "requiredDishVariants": [
       {
@@ -56,11 +56,11 @@
         "priceMinor": 30900
       },
       {
-        "name": "Ham time",
+        "name": "3. Ham time",
         "priceMinor": 20200
       },
       {
-        "name": "Chicken n'Beef",
+        "name": "17. Chicken n'Beef",
         "priceMinor": 20600
       },
       {
@@ -72,8 +72,8 @@
         "priceMinor": 8000
       },
       {
-        "name": "Villa 1,5L",
-        "priceMinor": 6900
+        "name": "200g Smash",
+        "priceMinor": 8400
       }
     ],
     "forbiddenDishNames": []
