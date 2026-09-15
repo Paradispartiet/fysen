@@ -621,6 +621,43 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? canonicalizeHtmlOutputItems(beverageScopedItems)
         : beverageScopedItems;
+    if (extracted.method === "html_heuristic" && items.length < 3) {
+      process.stderr.write(
+        `${JSON.stringify({
+          diagnostic: "html-low-output-families",
+          counts: {
+            extracted: extracted.items.length,
+            recovered: recoveredItems.length,
+            trailing: trailingPriceCardItems.length,
+            priceWrapped: priceWrappedItems.length,
+            inlineMarked: inlineMarkedPriceItems.length,
+            strongTitle: strongTitlePriceItems.length,
+            headingPrice: headingPriceItems.length,
+            explicitFrom: explicitFromPriceItems.length,
+            sectionFirst: sectionFirstCardItems.length,
+            preferred: preferredItems.length,
+            canonical: canonicalItems.length,
+            beverageScoped: beverageScopedItems.length,
+            final: items.length,
+          },
+          samples: {
+            extracted: extracted.items.slice(0, 8).map((item) => item.name),
+            recovered: recoveredItems.slice(0, 8).map((item) => item.name),
+            trailing: trailingPriceCardItems.slice(0, 8).map((item) => item.name),
+            strongTitle: strongTitlePriceItems.slice(0, 8).map((item) => item.name),
+            headingPrice: headingPriceItems.slice(0, 12).map((item) => ({
+              name: item.name,
+              priceMinor: item.priceMinor,
+              excerpt: item.sourceExcerpt,
+            })),
+            final: items.slice(0, 8).map((item) => ({
+              name: item.name,
+              priceMinor: item.priceMinor,
+            })),
+          },
+        })}\n`,
+      );
+    }
     return {
       items,
       method: extracted.method,
