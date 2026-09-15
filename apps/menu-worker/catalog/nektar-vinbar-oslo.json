@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "nektar-vinbar-oslo",
+    "name": "Nektar",
+    "websiteUrl": "https://www.nektarvinbar.no/",
+    "address": "Fredensborgveien 42, 0177 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9203898106189,
+    "longitude": 10.74910912438163
+  },
+  "menuSource": {
+    "url": "https://www.nektarvinbar.no/meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 12,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-15",
+      "note": "Fresh exact-head proof of the current first-party priced menu after generic embedded-menu-json-v3 recovery. The public Next.js state exposes localized menu rows with explicit prices; this seed remains fail-closed unless the generic extractor reproduces a substantive semantically clean menu."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Ansjostoast",
+      "Hallomø fra Skarrbo gård",
+      "Bakt blomkål med blomkål hummus og grønnkål",
+      "Brokkolini, paprika-labneh, mandel",
+      "Grillet squash fra Finnerud gård med miso og sesam",
+      "Steinbit med karri-beurre blanc",
+      "Kylling fra Hovelsrud med sopp, sesongens blad-grønnsaker",
+      "Karamelkrem med plommer fra Hovelsrud gård"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Ansjostoast",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Hallomø fra Skarrbo gård",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Bakt blomkål med blomkål hummus og grønnkål",
+        "priceMinor": 20500
+      },
+      {
+        "name": "Brokkolini, paprika-labneh, mandel",
+        "priceMinor": 20500
+      },
+      {
+        "name": "Grillet squash fra Finnerud gård med miso og sesam",
+        "priceMinor": 20500
+      },
+      {
+        "name": "Steinbit med karri-beurre blanc",
+        "priceMinor": 35000
+      },
+      {
+        "name": "Kylling fra Hovelsrud med sopp, sesongens blad-grønnsaker",
+        "priceMinor": 30500
+      },
+      {
+        "name": "Karamelkrem med plommer fra Hovelsrud gård",
+        "priceMinor": 17500
+      }
+    ],
+    "forbiddenDishNames": [
+      "Vinliste",
+      "Allergener",
+      "Allergies",
+      "Instagram",
+      "Facebook",
+      "Happy Ending"
+    ]
+  }
+}
