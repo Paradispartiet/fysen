@@ -134,11 +134,22 @@ jobs:
               .trim();
           }
 
+          function normalizeRestaurantNameToken(token) {
+            // Restaurant names often embed their street identity. Treat the
+            // Norwegian definite/indefinite street forms as the same token;
+            // physical-identity matching still separately requires the exact
+            // normalized address.
+            if (token.endsWith("gaten")) return `${token.slice(0, -5)}gate`;
+            if (token.endsWith("gata")) return `${token.slice(0, -4)}gate`;
+            return token;
+          }
+
           function restaurantNameTokens(value) {
             const ignored = new Set(["restaurant", "resturant", "oslo"]);
             return [...new Set(
               normalizeIdentityText(value)
                 .split(" ")
+                .map(normalizeRestaurantNameToken)
                 .filter((token) => token && !ignored.has(token))
             )].sort();
           }
