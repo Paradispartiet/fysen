@@ -11,12 +11,12 @@
     "longitude": 10.789609
   },
   "menuSource": {
-    "url": "https://www.kinabolle.no/menus-1",
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/kinabolle-ensjo",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 11,
+    "minimumExpectedItems": 13,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -32,47 +32,47 @@
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Pork dumplings",
-      "Spinach dumplings (Vegan)",
-      "NO 1 Sweet spicy chicken",
-      "NO 2 Pork chilli",
-      "NO 4 Spicy numbing Tofu (Vegan)",
-      "NO 5 Sweet potato noodles (Vegan/gluten free)",
-      "NO 7 Spicy Cumin Lamb",
-      "NO 8 Spicy cumin tofu (Vegan)"
+      "5 Pork Dumplings",
+      "5 Spinach Dumplings",
+      "5 Mix Dumplings",
+      "No 1. Sweet Spicy Chicken",
+      "No 2. Pork Chilli",
+      "No 3. Spicy Numbing Chicken",
+      "No 6. Sweet Potato Glass Noodles with Chicken & Tofu (Glutenfree)",
+      "No 1 Kids Chicken & Rice"
     ],
     "requiredDishVariants": [
       {
-        "name": "Pork dumplings",
-        "priceMinor": 13500
+        "name": "5 Pork Dumplings",
+        "priceMinor": 14500
       },
       {
-        "name": "Spinach dumplings (Vegan)",
-        "priceMinor": 13500
+        "name": "5 Spinach Dumplings",
+        "priceMinor": 14500
       },
       {
-        "name": "NO 1 Sweet spicy chicken",
-        "priceMinor": 19900
+        "name": "5 Mix Dumplings",
+        "priceMinor": 14500
       },
       {
-        "name": "NO 2 Pork chilli",
-        "priceMinor": 19900
+        "name": "No 1. Sweet Spicy Chicken",
+        "priceMinor": 21900
       },
       {
-        "name": "NO 4 Spicy numbing Tofu (Vegan)",
-        "priceMinor": 18900
+        "name": "No 2. Pork Chilli",
+        "priceMinor": 21900
       },
       {
-        "name": "NO 5 Sweet potato noodles (Vegan/gluten free)",
-        "priceMinor": 18900
+        "name": "No 3. Spicy Numbing Chicken",
+        "priceMinor": 21900
       },
       {
-        "name": "NO 7 Spicy Cumin Lamb",
-        "priceMinor": 20900
+        "name": "No 6. Sweet Potato Glass Noodles with Chicken & Tofu (Glutenfree)",
+        "priceMinor": 21900
       },
       {
-        "name": "NO 8 Spicy cumin tofu (Vegan)",
-        "priceMinor": 20500
+        "name": "No 1 Kids Chicken & Rice",
+        "priceMinor": 10000
       }
     ],
     "forbiddenDishNames": []
