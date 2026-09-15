@@ -3,15 +3,15 @@
   "restaurant": {
     "slug": "arte-pazza-pizza-pasta-oslo",
     "name": "Arte Pazza Pizza Pasta",
-    "websiteUrl": null,
-    "address": "Parkveien 10, 0350 Oslo",
+    "websiteUrl": "https://www.artepazza.no/",
+    "address": "Ullevålsveien 61, 0171 Oslo",
     "city": "Oslo",
     "countryCode": "NO",
-    "latitude": 59.920984127937,
-    "longitude": 10.729246966682158
+    "latitude": 59.926388,
+    "longitude": 10.738349
   },
   "menuSource": {
-    "url": "https://semeny.no/sted/artepazzapizzapasta",
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/arte-pazza-filetto-ristorante",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-02",
-      "note": "Batch 34 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+      "checkedAt": "2026-09-15",
+      "note": "Physical identity and menu contract consolidated to the current Arte Pazza restaurant at Ullevålsveien 61; complete canonical kitchen hours are not assumed."
     }
   },
   "actions": [],
