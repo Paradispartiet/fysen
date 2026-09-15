@@ -16,7 +16,7 @@
       "menuSource": {
         "url": "https://www.brasseriefrance.no/a-la-carte",
         "sourceType": "html",
-        "fetchMode": "http",
+        "fetchMode": "browser",
         "userAgent": "FysenMenuBot/0.1",
         "checkIntervalMinutes": 720
       },
@@ -24,7 +24,7 @@
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-09-15",
-          "note": "Fresh exact-head reproof of the current first-party à-la-carte page. The page visibly publishes a broad named and individually priced menu, while the prior P1 review produced zero canonical HTML items; current generic HTML and embedded-menu recovery must prove the source fail-closed."
+          "note": "Fresh exact-head rendered reproof of the current first-party à-la-carte page after HTTP extraction again produced zero canonical items. The page visibly publishes a broad named and individually priced menu; the existing browser transport must prove the same first-party source without source substitution or parser weakening."
         }
       },
       "actions": [],
