@@ -33,7 +33,7 @@
   "qualityAssertions": {
     "requiredDishNames": [
       "Wonton Suppe (Súp hoành thánh)",
-      "Vietnamesisk Baguette (Bánh mì)",
+      "Fersk Sommerruller (Gỏi cuốn)",
       "Wonton Suppe (Mì hoành thánh)",
       "Stekt Ris (Cơm chiên dương châu)",
       "Biff & Brokkoli (Bò xào bông cải)",
@@ -47,9 +47,8 @@
         "priceMinor": 13900
       },
       {
-        "name": "Vietnamesisk Baguette (Bánh mì)",
-        "priceMinor": 16900,
-        "priceKind": "from"
+        "name": "Fersk Sommerruller (Gỏi cuốn)",
+        "priceMinor": 13900
       },
       {
         "name": "Wonton Suppe (Mì hoành thánh)",
