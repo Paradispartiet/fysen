@@ -545,14 +545,19 @@ export async function extractMenuSource(
     const headingPriceCoverageThreshold = Math.ceil(
       recoveredItems.length * 0.75,
     );
+    const headingDominatesTrailingRecovery =
+      broadHeadingPriceRecoveryPreferred &&
+      headingPriceItems.length > trailingPriceCardItems.length;
     const preferredItems = strongTitlePricePreferred
     ? strongTitlePriceItems
-    : isolatedTrailingRecoveryPreferred
-      ? trailingPriceCardItems
-      : broadHeadingPriceRecoveryPreferred
-        ? headingPriceItems
-        : trailingPriceCardQualifies
-          ? trailingPriceCardItems
+    : headingDominatesTrailingRecovery
+      ? headingPriceItems
+      : isolatedTrailingRecoveryPreferred
+        ? trailingPriceCardItems
+        : broadHeadingPriceRecoveryPreferred
+          ? headingPriceItems
+          : trailingPriceCardQualifies
+            ? trailingPriceCardItems
           : headingPriceItems.length >= 4 &&
               (recoveredItems.length === 0 ||
                 headingPriceItems.length >= headingPriceCoverageThreshold)
@@ -631,39 +636,6 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? canonicalizeHtmlOutputItems(beverageScopedItems)
         : beverageScopedItems;
-    if (extracted.method === "html_heuristic" && headingPriceItems.length >= 12) {
-      console.log(
-        JSON.stringify({
-          diagnostic: "html-broad-heading-selection",
-          extracted: extracted.items.length,
-          recovered: recoveredItems.length,
-          trailing: trailingPriceCardItems.length,
-          heading: headingPriceItems.length,
-          strongTitle: strongTitlePriceItems.length,
-          semanticCategoryCardsPreferred,
-          strongNumberedCardsPreferred,
-          isolatedTrailingRecoveryPreferred,
-          broadHeadingPriceRecoveryPreferred,
-          trailingPriceCardQualifies,
-          preferred:
-            preferredItems === headingPriceItems
-              ? "heading"
-              : preferredItems === trailingPriceCardItems
-                ? "trailing"
-                : preferredItems === strongTitlePriceItems
-                  ? "strong-title"
-                  : preferredItems === priceWrappedItems
-                    ? "price-wrapped"
-                    : "recovered",
-          structurallyReconciled: structurallyReconciledPreferredItems.length,
-          recoveredSupplemented: recoveredSupplementedItems.length,
-          headingSupplemented: headingSupplementedItems.length,
-          canonical: canonicalItems.length,
-          beverageScoped: beverageScopedItems.length,
-          final: items.length,
-        }),
-      );
-    }
     return {
       items,
       method: extracted.method,
