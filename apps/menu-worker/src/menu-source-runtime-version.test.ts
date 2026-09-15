@@ -19,6 +19,7 @@ import {
   HTML_ITEM_NAME_NORMALIZER_VERSION,
   HTML_NON_DISH_FILTER_VERSION,
   HTML_PRICE_NOTATION_NORMALIZER_VERSION,
+  HTML_RECOVERY_SELECTION_VERSION,
   extractorVersionForSourceType,
   shouldForceReextract,
 } from "./menu-source-runtime.js";
@@ -44,6 +45,7 @@ describe("HTML runtime extractor version", () => {
       HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION,
       HTML_TEXT_SECTION_SCOPE_VERSION,
       HTML_OUTPUT_CANONICALIZER_VERSION,
+      HTML_RECOVERY_SELECTION_VERSION,
     ].join("+");
 
     expect(HTML_HEADING_NORMALIZER_VERSION).toBe("heading-v3");
@@ -68,6 +70,7 @@ describe("HTML runtime extractor version", () => {
     );
     expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v13");
     expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v12");
+    expect(HTML_RECOVERY_SELECTION_VERSION).toBe("recovery-selection-v1");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("api")).toBe(PUBLIC_MENU_API_EXTRACTOR_VERSION);
