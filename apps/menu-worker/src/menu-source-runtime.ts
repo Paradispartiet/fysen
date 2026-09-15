@@ -651,6 +651,42 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? canonicalizeHtmlOutputItems(beverageScopedItems)
         : beverageScopedItems;
+    if (extracted.method === "html_heuristic" && headingPriceItems.length >= 8) {
+      console.log(
+        JSON.stringify({
+          diagnostic: "html-heading-family-selection",
+          recovered: recoveredItems.length,
+          trailing: trailingPriceCardItems.length,
+          strongTitle: strongTitlePriceItems.length,
+          heading: headingPriceItems.length,
+          priceWrapped: priceWrappedItems.length,
+          semanticCategoryCardsPreferred,
+          strongNumberedCardsPreferred,
+          broadHeadingPriceRecoveryPreferred,
+          headingDominatesTrailingRecovery,
+          trailingPriceCardQualifies,
+          preferred:
+            preferredItems === headingPriceItems
+              ? "heading"
+              : preferredItems === trailingPriceCardItems
+                ? "trailing"
+                : preferredItems === strongTitlePriceItems
+                  ? "strong-title"
+                  : preferredItems === priceWrappedItems
+                    ? "price-wrapped"
+                    : "recovered",
+          preferredNames: preferredItems.map((item) => item.name),
+          headingNames: headingPriceItems.map((item) => item.name),
+          trailingNames: trailingPriceCardItems.map((item) => item.name),
+          reconciled: structurallyReconciledPreferredItems.length,
+          recoveredSupplemented: recoveredSupplementedItems.length,
+          headingSupplemented: headingSupplementedItems.length,
+          canonical: canonicalItems.length,
+          beverageScoped: beverageScopedItems.length,
+          final: items.length,
+        }),
+      );
+    }
     return {
       items,
       method: extracted.method,

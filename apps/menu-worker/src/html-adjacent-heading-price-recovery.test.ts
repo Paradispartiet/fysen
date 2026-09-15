@@ -18,7 +18,7 @@ describe("adjacent heading-price HTML recovery", () => {
       </body></html>
     `);
 
-    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v7");
+    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v8");
     expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
       ["Doro Wet", 29000, "exact"],
       ["Key Wet", 28000, "exact"],
@@ -65,6 +65,56 @@ describe("adjacent heading-price HTML recovery", () => {
       ["Mignardises", 15000],
     ]);
     expect(items.some((item) => item.name === "Card without price")).toBe(false);
+  });
+
+
+  it("prefers higher-rank dish headings over nested descriptions and excludes wine-pairing sections", () => {
+    const items = recoverAdjacentHeadingPriceHtmlItems(`
+      <html><body>
+        <h1>À la carte</h1>
+        <h1>Starter</h1>
+        <h1>Skagerak Oysters</h1>
+        <div>Skagerak Oysters</div>
+        <div>10</div>
+        <h2>Apple, horseradish and dill oil</h2>
+        <p>295</p><p>,-</p>
+
+        <h1>Glazed Beets</h1>
+        <div>9,13</div>
+        <h2>Buttermilk sauce and chives</h2>
+        <p>195</p><p>,-</p>
+
+        <h1>Main</h1>
+        <h1>Pearl Barley Risotto</h1>
+        <div>7,9,13</div>
+        <h2>Porcini mushrooms and aged cheese</h2>
+        <p>325</p><p>,-</p>
+
+        <h1>Dry-Aged Entrecote</h1>
+        <div>1,9,13</div>
+        <h2>Juniper berries and hollandaise</h2>
+        <p>545</p><p>,-</p>
+
+        <h1>WINE PAIRING FOR CHEESES</h1>
+        <p>495</p><p>,-</p>
+
+        <h1>DESSERT</h1>
+        <h1>Pine Ice Cream</h1>
+        <div>3,9</div>
+        <h2>Caramel pudding and redcurrant</h2>
+        <p>195</p><p>,-</p>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Skagerak Oysters", 29500],
+      ["Glazed Beets", 19500],
+      ["Pearl Barley Risotto", 32500],
+      ["Dry-Aged Entrecote", 54500],
+      ["Pine Ice Cream", 19500],
+    ]);
+    expect(items.some((item) => item.name === "WINE PAIRING FOR CHEESES")).toBe(false);
+    expect(items.some((item) => item.name === "Apple, horseradish and dill oil")).toBe(false);
   });
 
   it("preserves from-price semantics instead of inventing an exact price", () => {
