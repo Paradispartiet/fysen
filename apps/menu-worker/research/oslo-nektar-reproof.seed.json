@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-nektar-reproof",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "nektar-vinbar-oslo",
+        "name": "Nektar",
+        "websiteUrl": "https://www.nektarvinbar.no/",
+        "address": "Fredensborgveien 42, 0177 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.nektarvinbar.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-15",
+          "note": "Fresh exact-head diagnostic of the current first-party priced menu. The public page exposes a broad seasonal menu, but the prior canonical Next.js/HTML extraction yielded only one priced dish; this seed must remain fail-closed until the generic extractor reproduces the substantive menu."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Vinliste",
+        "Allergener",
+        "Allergies",
+        "Instagram",
+        "Facebook",
+        "Happy Ending"
+      ]
+    }
+  ]
+}
