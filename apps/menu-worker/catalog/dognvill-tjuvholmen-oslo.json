@@ -19,7 +19,10 @@
     "minimumExpectedItems": 35,
     "sourceSupport": {
       "redirectOrigins": [],
-      "browserDataOrigins": []
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": [
+        "https://widget-api.formitable.com"
+      ]
     }
   },
   "verification": {
