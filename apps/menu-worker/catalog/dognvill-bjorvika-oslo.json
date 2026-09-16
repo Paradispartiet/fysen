@@ -21,7 +21,8 @@
       "redirectOrigins": [],
       "browserDataOrigins": [],
       "browserBlockedOrigins": [
-        "https://widget-api.formitable.com"
+        "https://widget-api.formitable.com",
+        "https://cdn-cookieyes.com"
       ]
     }
   },
