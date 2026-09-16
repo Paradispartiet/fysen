@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-batch01-reproof-20260916",
+  "concurrency": 3,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "castello-sorenga-oslo",
+        "name": "Castello Restaurant Oslo",
+        "websiteUrl": "https://www.castellorestaurant.no/",
+        "address": "Sørengkaia 99, 0194 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.castellorestaurant.no/oslo/hovedmeny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720,
+        "sourceSupport": {
+          "redirectOrigins": [],
+          "browserDataOrigins": []
+        }
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-16",
+          "note": "Fresh reproof of the Batch 01 output-quality hold. The current first-party Oslo menu exposes substantial named and individually priced lunch, tapas, pinsa, main-course and dessert content; promotion remains gated on exact semantic output review."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "tatakii-middelthuns-gate-oslo",
+        "name": "Tatakii Asian",
+        "websiteUrl": "https://www.tatakiiasian.no/",
+        "address": "Middelthuns gate 25, 0368 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.tatakiiasian.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720,
+        "sourceSupport": {
+          "redirectOrigins": [],
+          "browserDataOrigins": []
+        }
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-16",
+          "note": "Fresh reproof after the original Batch 01 parser returned labels rather than real dishes. The current first-party page now exposes named individually priced starters, sushi, grill, wok and desserts alongside set-menu packages."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "red-sun-storo-oslo",
+        "name": "Red Sun Storo",
+        "websiteUrl": "https://www.redsun.no/",
+        "address": "Vitaminveien 28, 0483 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.redsun.no/menu",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720,
+        "sourceSupport": {
+          "redirectOrigins": [],
+          "browserDataOrigins": []
+        }
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-16",
+          "note": "Fresh reproof of the Batch 01 output-quality hold. The current first-party Storo menu exposes a large named and individually priced sushi, wok, side and dessert menu; exact semantic review must still reject allergen and supplement leakage."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "feniqia-oslo",
+        "name": "Feniqia Oslo",
+        "websiteUrl": "https://www.feniqia.no/oslo",
+        "address": "Rostockgata 66, 0194 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.feniqia.no/s/Feniqia-Menu-Oslo-2026.pdf",
+        "sourceType": "pdf",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720,
+        "sourceSupport": {
+          "redirectOrigins": [
+            "https://static1.squarespace.com"
+          ],
+          "browserDataOrigins": []
+        }
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-16",
+          "note": "Fresh current-source reproof. Feniqia's first-party menu page links a dedicated Oslo 2026 PDF; the redirect is explicitly scoped to Squarespace's static delivery origin and remains first-party-published evidence."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ]
+}
