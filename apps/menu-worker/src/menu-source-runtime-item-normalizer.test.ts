@@ -79,6 +79,12 @@ describe("generic HTML item-name normalization", () => {
     "Brunch",
     "Brunch (Lørdag&Søndag) - Alle retter kan fint deles på bordet",
     "*Påfyll av tilbehør (29,- per type)",
+    "Additional product",
+    "Additional products",
+    "Add french fries: NOK 65",
+    "Add french fries to any dish",
+    "3 pcs NOK 160 / 6 pcs",
+    "160 NOK / 6 pieces 280 NOK",
     "stk. Svinekjøtt med scampi, salat og agurk.",
     "stk vårruller med kylling.",
     "biter. 4 avokado nigiri og 8 kappa maki.",
@@ -102,6 +108,8 @@ describe("generic HTML item-name normalization", () => {
     "Jack Daniels, Cointreau, Yuzu, sukkerlake, sitronbrus",
     "Classic Mojito",
     "Ca Phe Sua Da",
+    "Silverhand Silver Reign Brut English sparkling wine",
+    "Estate Brut sparkling wine",
   ])("rejects beverage names and cocktail-description leakage: %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(false);
   });
@@ -122,6 +130,8 @@ describe("generic HTML item-name normalization", () => {
     "Dagens fisk",
     "Dagens Dessert",
     "Yin & Yang Bao",
+    "Oysters with sparkling wine sauce",
+    "Cod with brut beurre blanc",
   ])("preserves real dish names while filtering metadata and drinks: %s", (name) => {
     expect(isCanonicalHtmlMenuItem(item(name))).toBe(true);
   });

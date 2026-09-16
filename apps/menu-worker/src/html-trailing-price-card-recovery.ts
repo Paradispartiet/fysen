@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v13";
+  "trailing-price-card-v14";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -17,11 +17,12 @@ const PURE_PRICE_LINE =
 const TRAILING_MARKED_PRICE =
   /(?:(fra|from)\s+)?([1-9]\d{1,3})(?:[.,](\d{1,2}))?\s*(?:,-|kr\.?|NOK)\s*$/iu;
 const ADDITIONAL_MARKED_PRICE =
-  /[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|NOK)/iu;
+  /(?:(?:NOK|kr\.?)\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?|[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|NOK))/iu;
 const SECTION_OR_UI_LABEL =
   /^(?:top\s+of\s+page|bottom\s+of\s+page|home|hjem|menu|meny|more|om\s+oss|about(?:\s+us)?|contact(?:\s+us)?|kontakt(?:\s+oss)?|opening(?:\s+hours)?|åpning(?:s)?\s*tider|address|adresse|booking|reservation(?:s)?|reservasjoner?|gift\s*card|gavekort|delivery\s*fee|leveringsgebyr|allergens?|allergener?|drinks?|drikke(?:meny)?|beverages?)$/iu;
 const UI_ACTION_LEAD =
-  /^(?:choose|select|velg|bestill|order|book|reserve|click|trykk|tap)\b/iu;
+  /^(?:choose|select|velg|bestill|order|book|reserve|click|trykk|tap|add(?:-on)?|additional)\b/iu;
+const INLINE_ADDON_PRICE_LEAD = /^(?:add(?:-on)?|additional)\b/iu;
 const DESCRIPTION_LEAD =
   /^(?:serveres?|servert|served|with|med|marinert|marinated|grillet|grilled|bakt|baked|braisert|braised|toppet|topped|inneholder|contains?|inkludert|including|alle\s+retter)\b/iu;
 const ALLERGEN_METADATA = /^\(?\s*(?:allergener?|allergens?)\s*:/iu;
@@ -292,7 +293,15 @@ function precedingNumberedTitle(
   ) {
     const candidate = lines[index] ?? "";
     if (candidate.startsWith(HEADING_MARKER)) continue;
-    if (parseTrailingPrice(candidate)) break;
+    const priorPrice = parseTrailingPrice(candidate);
+    if (priorPrice) {
+      if (
+        priorPrice.residual &&
+        INLINE_ADDON_PRICE_LEAD.test(priorPrice.residual)
+      )
+        continue;
+      break;
+    }
     if (!parseNumberedMenuTitle(candidate) || !looksLikeDishTitle(candidate))
       continue;
     return { position: index, title: normalizeVisibleLine(candidate) };
@@ -354,7 +363,13 @@ function precedingStructuredLeadingTitle(
 
   for (let index = pricePosition - 1; index >= blockStart; index -= 1) {
     const line = lines[index] ?? "";
-    if (parseTrailingPrice(line)) {
+    const priorPrice = parseTrailingPrice(line);
+    if (priorPrice) {
+      if (
+        priorPrice.residual &&
+        INLINE_ADDON_PRICE_LEAD.test(priorPrice.residual)
+      )
+        continue;
       blockStart = index + 1;
       break;
     }
@@ -396,11 +411,17 @@ function precedingStructuredLeadingTitle(
     candidates.push({ position: index, title: normalizeVisibleLine(line) });
   }
 
-  // A single candidate is already handled safely by the established nearest-
-  // title path. This recovery is only for repeated card layouts where both the
-  // leading dish name and a short trailing component (often a sauce/garnish)
-  // look title-like.
-  if (candidates.length < (hardBoundary ? 1 : 2)) return null;
+  // A single ordinary title is already handled safely by the established
+  // nearest-title path. Short preparation titles (for example "Fried plaice"
+  // or "Braised brisket") are intentionally classified as description-like by
+  // the generic title filter, so allow that one-candidate structured card.
+  if (candidates.length === 0) return null;
+  if (
+    candidates.length === 1 &&
+    !hardBoundary &&
+    !SHORT_PREPARATION_TITLE.test(candidates[0]?.title ?? "")
+  )
+    return null;
   const first = candidates[0];
   const nearest = candidates[candidates.length - 1];
   if (!first || !nearest) return null;
@@ -522,6 +543,11 @@ export function recoverTrailingPriceCardHtmlItems(
   for (let pricePosition = 0; pricePosition < lines.length; pricePosition += 1) {
     const endpoint = parseTrailingPrice(lines[pricePosition] ?? "");
     if (!endpoint) continue;
+    if (
+      endpoint.residual &&
+      INLINE_ADDON_PRICE_LEAD.test(endpoint.residual)
+    )
+      continue;
     parsedPriceCount += 1;
     if (endpoint.residual) continue;
     const structured = precedingStructuredLeadingTitle(lines, pricePosition);
@@ -542,6 +568,11 @@ export function recoverTrailingPriceCardHtmlItems(
   ) {
     const endpoint = parseTrailingPrice(lines[pricePosition] ?? "");
     if (!endpoint) continue;
+    if (
+      endpoint.residual &&
+      INLINE_ADDON_PRICE_LEAD.test(endpoint.residual)
+    )
+      continue;
 
     let titlePosition: number | null = null;
     let title: string | null = null;
@@ -571,8 +602,16 @@ export function recoverTrailingPriceCardHtmlItems(
       ) {
         const candidate = lines[index] ?? "";
         if (candidate.startsWith(HEADING_MARKER)) continue;
-        if (parseTrailingPrice(candidate) || isUnpricedPriceBoundary(candidate))
+        const priorPrice = parseTrailingPrice(candidate);
+        if (priorPrice) {
+          if (
+            priorPrice.residual &&
+            INLINE_ADDON_PRICE_LEAD.test(priorPrice.residual)
+          )
+            continue;
           break;
+        }
+        if (isUnpricedPriceBoundary(candidate)) break;
         if (!looksLikeDishTitle(candidate)) continue;
         titlePosition = index;
         title = normalizeVisibleLine(candidate);

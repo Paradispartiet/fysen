@@ -61,7 +61,7 @@ describe("HTML description-title recovery", () => {
       visibleText,
     );
 
-    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v15");
+    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v16");
     expect(result.map((entry) => entry.name)).toEqual([
       "Hummus (kikert-og sesampuré)",
       "Hvitløkmarinerte kyllingvinger",
@@ -305,6 +305,48 @@ describe("HTML description-title recovery", () => {
     expect(result).toHaveLength(1);
     expect(result[0]?.name).toBe("Mezah med en grill rett");
     expect(result[0]?.description).toBeNull();
+  });
+
+  it("preserves a structured short preparation title when later add-on text appears in the same source excerpt", () => {
+    const brisket = {
+      ...item("Braised brisket from Nyyyt", 147, 34500),
+      description:
+        "with cabbage salad, cucumber and light cheddar sauce Add french fries: NOK 65 (Contains: Wheat, milk, mustard, sulphites)",
+      sourceExcerpt:
+        "Braised brisket from Nyyyt — with cabbage salad, cucumber and light cheddar sauce — Add french fries: NOK 65 — (Contains: Wheat, milk, mustard, sulphites) — 345 NOK",
+    };
+
+    const result = recoverDescriptionNamedHtmlItems(
+      [brisket],
+      [
+        "Roast beef",
+        "295 NOK",
+        "Add french fries: NOK 65",
+        "Braised brisket from Nyyyt",
+        "with cabbage salad, cucumber and light cheddar sauce",
+        "Add french fries: NOK 65",
+        "(Contains: Wheat, milk, mustard, sulphites)",
+        "345 NOK",
+      ].join("\n"),
+    );
+
+    expect(result).toHaveLength(1);
+    expect(result[0]?.name).toBe("Braised brisket from Nyyyt");
+    expect(result[0]?.priceMinor).toBe(34500);
+    expect(result[0]?.confidence).toBe(0.9);
+  });
+
+  it("does not recover add-on instructions as dish titles", () => {
+    const observed = {
+      ...item("Braised brisket from Nyyyt", 99, 34500),
+      sourceExcerpt:
+        "Braised brisket from Nyyyt — Add french fries: NOK 65 — 345 NOK",
+    };
+    const result = recoverDescriptionNamedHtmlItems(
+      [observed],
+      "Add french fries: NOK 65\nBraised brisket from Nyyyt\n345 NOK",
+    );
+    expect(result[0]?.name).toBe("Braised brisket from Nyyyt");
   });
 
   it("preserves a directly priced dish title even when its leading verb resembles description prose", () => {
