@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-skaal-matbar-reproof",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "skaal-matbar-oslo",
+        "name": "Skaal Matbar",
+        "websiteUrl": "https://www.skaalmatbar.no/",
+        "address": "Olaf Ryes plass 12, 0552 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.skaalmatbar.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-16",
+          "note": "Fresh P1 reproof from Skaal Matbar's current first-party page. The page publishes substantial individually priced evening, lunch and brunch dishes in textual HTML. Intake must preserve real dish variants while excluding section headings, allergen metadata and price fragments; promotion remains fail-closed."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Kveldsmeny",
+        "Lunchmeny Tirsdag-Fredag",
+        "Brunch (Lørdag&Søndag) - Alle retter kan fint deles på bordet",
+        "Allergier",
+        "Tirsdag – Søndag",
+        "Double burger",
+        "BL, F, SU",
+        "HV, L, E, SE"
+      ]
+    }
+  ]
+}
