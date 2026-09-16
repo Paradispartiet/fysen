@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v15";
+  "trailing-price-card-v16";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -464,16 +464,10 @@ function canonicalizeStrongNumberedMenu(
     }
   }
 
-  const indexEvidence = [...distinctIndices.values()];
+  const indexEvidence = [...distinctIndices.values()].sort(
+    (a, b) => a.menuIndex - b.menuIndex,
+  );
   if (indexEvidence.length < 8) return null;
-
-  for (let index = 1; index < indexEvidence.length; index += 1) {
-    if (
-      (indexEvidence[index]?.menuIndex ?? 0) <=
-      (indexEvidence[index - 1]?.menuIndex ?? 0)
-    )
-      return null;
-  }
 
   const firstIndex = indexEvidence[0]?.menuIndex ?? 0;
   const lastIndex = indexEvidence[indexEvidence.length - 1]?.menuIndex ?? 0;
