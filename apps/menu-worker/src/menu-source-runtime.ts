@@ -88,7 +88,6 @@ const TRAILING_PARENTHETICAL = /\s+\([^()]{1,60}\)$/u;
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]?\s+/u;
 const LEADING_MENU_INDEX_BEFORE_QUANTITY = /^\d{1,3}[.)]\s+(?=\d+\s+\p{L})/u;
-const EXPLICIT_MENU_INDEX = /^\d{1,3}\s*[.)]\s*/u;
 const NON_DISH_HTML_ITEM =
   /^(?:legg i handlekurv|add to cart|håndlagde produkter\b|handmade products\b|levering$|delivery$|a\s+teapot$|all\s+rights\s+reserved\b)/iu;
 const PHONE_METADATA_ITEM =
@@ -127,7 +126,7 @@ export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v3";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v11";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v10";
-export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v4";
+export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v3";
 
 export function shouldPreferDominantHeadingRecovery(
   headingCount: number,
@@ -262,45 +261,6 @@ function mergeMissingRecoveredItems(
   }
 
   return output.sort((a, b) => a.position - b.position);
-}
-
-function reconcileSelectedExplicitMenuIndices(
-  items: readonly MenuObservedItem[],
-  recovered: readonly MenuObservedItem[],
-): readonly MenuObservedItem[] {
-  if (items.length === 0 || recovered.length === 0) return items;
-
-  const strippedNameCounts = new Map<string, number>();
-  for (const item of items) {
-    const strippedName = item.name.replace(EXPLICIT_MENU_INDEX, "").trim();
-    if (!strippedName || strippedName === item.name) continue;
-    const normalized = normalizeDishName(strippedName);
-    strippedNameCounts.set(normalized, (strippedNameCounts.get(normalized) ?? 0) + 1);
-  }
-
-  return items.map((item) => {
-    const strippedName = item.name.replace(EXPLICIT_MENU_INDEX, "").trim();
-    if (!strippedName || strippedName === item.name) return item;
-    const normalized = normalizeDishName(strippedName);
-    if ((strippedNameCounts.get(normalized) ?? 0) !== 1) return item;
-
-    const matches = recovered.filter(
-      (candidate) =>
-        candidate.normalizedName === normalized &&
-        candidate.priceMinor === item.priceMinor &&
-        (candidate.priceKind ?? "exact") === (item.priceKind ?? "exact") &&
-        (candidate.priceMaxMinor ?? null) === (item.priceMaxMinor ?? null),
-    );
-    if (matches.length !== 1 || !matches[0]) return item;
-
-    const canonicalName = matches[0].name;
-    return {
-      ...item,
-      name: canonicalName,
-      normalizedName: normalizeDishName(canonicalName),
-      sourceKey: createMenuItemSourceKey(canonicalName, item.sectionName),
-    };
-  });
 }
 
 function reconcileSelectedItemsWithTrailingCards(
@@ -636,22 +596,13 @@ export async function extractMenuSource(
                 priceWrappedItems.length >= recoveredItems.length * 2
               ? priceWrappedItems
               : recoveredItems;
-    const indexReconciledPreferredItems =
-      extracted.method === "html_heuristic" &&
-      (preferredItems === headingPriceItems ||
-        preferredItems === strongTitlePriceItems)
-        ? reconcileSelectedExplicitMenuIndices(
-            preferredItems,
-            recoveredItems,
-          )
-        : preferredItems;
     const structurallyReconciledPreferredItems =
       extracted.method === "html_heuristic" && !strongTitlePricePreferred
         ? reconcileSelectedItemsWithTrailingCards(
-            indexReconciledPreferredItems,
+            preferredItems,
             trailingPriceCardItems,
           )
-        : indexReconciledPreferredItems;
+        : preferredItems;
     const recoveredSupplementedItems =
       extracted.method === "html_heuristic" &&
       !isolatedSemanticRecoveryPreferred &&
