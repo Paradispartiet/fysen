@@ -31,7 +31,7 @@ describe("JSON-LD menu scope", () => {
   });
 
   it("preserves nearest MenuSection ancestry on structured items", () => {
-    const html = \`
+    const html = `
       <html><body>
         <script type="application/ld+json">
           {
@@ -65,7 +65,7 @@ describe("JSON-LD menu scope", () => {
           }
         </script>
       </body></html>
-    \`;
+    `;
 
     const result = extractHtmlMenu(html);
     expect(result.method).toBe("json_ld");
