@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v12";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v13";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -524,6 +524,42 @@ function wrappedName(
   };
 }
 
+function commaContinuedDishName(
+  prefix: string,
+  lines: readonly PdfLine[],
+  prefixLineIndex: number,
+): { readonly name: string; readonly continuationLineIndex: number } | null {
+  const canonicalPrefix = canonicalPdfDishName(prefix);
+  if (!/,$/u.test(canonicalPrefix)) return null;
+
+  const continuationIndex = prefixLineIndex + 1;
+  const continuationLine = lines[continuationIndex];
+  const prefixLine = lines[prefixLineIndex];
+  if (
+    !continuationLine ||
+    !prefixLine ||
+    continuationLine.page !== prefixLine.page
+  )
+    return null;
+
+  const continuation = normalizeLine(continuationLine.text);
+  if (
+    !/^[a-zæøå]/u.test(continuation) ||
+    standalonePrice.test(continuation) ||
+    parseInlineDish(continuation) ||
+    looksLikeParentheticalAllergenMetadata(continuation) ||
+    sectionHeading(continuation)
+  )
+    return null;
+
+  const canonicalContinuation = canonicalPdfDishName(continuation);
+  if (!looksLikeDishName(canonicalContinuation)) return null;
+
+  return {
+    name: normalizeLine(`${canonicalPrefix} ${canonicalContinuation}`),
+    continuationLineIndex: continuationIndex,
+  };
+}
 function previousStandaloneDishNameLineIndex(
   lines: readonly PdfLine[],
   priceLineIndex: number,
@@ -603,7 +639,9 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
         const previous = lines[previousIndex]?.text ?? "";
         const rawName = canonicalPdfDishName(previous);
         if (looksLikeDishName(rawName)) {
-          const continuation = wrappedName(rawName, lines, previousIndex);
+          const continuation =
+            wrappedName(rawName, lines, previousIndex) ??
+            commaContinuedDishName(rawName, lines, previousIndex);
           if (isWrappedDishQualifier(rawName) && !continuation) continue;
           if (continuation)
             consumedWrappedNameLines.add(continuation.continuationLineIndex);
