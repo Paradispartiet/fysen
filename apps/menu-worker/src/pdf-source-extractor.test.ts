@@ -28,7 +28,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v21");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v22");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -264,9 +264,9 @@ describe("PDF source scope", () => {
     ]);
   });
 
-  it("blocks interleaved wine-pairing rows and resumes at bilingual course headings", () => {
+  it("blocks interleaved wine recommendation/pairing rows and resumes at bilingual course headings", () => {
     const lines = [
-      "WINE PAIRING",
+      "Vinanbefaling / Wine recomendation",
       "Riesling Charm Georg Breuer Rheingau Germany 178 NOK",
       "Forrett / Starter",
       "Beef tenderloin 445 NOK",
@@ -274,7 +274,7 @@ describe("PDF source scope", () => {
       "Pinot Grigio Elena Walch Alto Adige Italy 178 NOK",
       "Mellomrett / Middle course",
       "Pan fried cod 395 NOK",
-      "WINE PAIRING",
+      "Wine recommendation",
       "Barbera d’Alba Paolo Scavino Italy 178 NOK",
       "Hovedrett / Main course",
       "Roasted lamb 495 NOK",
