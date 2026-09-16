@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 50,
+    "minimumExpectedItems": 49,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,7 @@
       "Bari (medium)",
       "Husets Spesial (stor)",
       "Salami (stor)",
-      "Pepperoni (stor)",
-      "Urge"
+      "Pepperoni (stor)"
     ],
     "requiredDishVariants": [
       {
@@ -70,10 +69,6 @@
       {
         "name": "Pepperoni (stor)",
         "priceMinor": 29900
-      },
-      {
-        "name": "Urge",
-        "priceMinor": 6900
       }
     ],
     "forbiddenDishNames": []

@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 27,
+    "minimumExpectedItems": 26,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,7 @@
       "Torggata Cheesesteak Meal",
       "Kylling Madness Meal",
       "Kylling Shawarma box",
-      "Classic Fries",
-      "Bestikk"
+      "Classic Fries"
     ],
     "requiredDishVariants": [
       {
@@ -70,10 +69,6 @@
       {
         "name": "Classic Fries",
         "priceMinor": 6800
-      },
-      {
-        "name": "Bestikk",
-        "priceMinor": 100
       }
     ],
     "forbiddenDishNames": []
