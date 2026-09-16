@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v23";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v24";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -66,6 +66,24 @@ const RECOVERY_ALLERGEN_CODES = new Set([
   "va",
   "wa",
 ]);
+
+function looksLikeSplitPdfAllergenCodeFragment(value: string): boolean {
+  const line = normalizeVisibleLine(value);
+  if (!/[()]/u.test(line)) return false;
+  const tokens = line
+    .replace(/[(),/+&;:]+/gu, " ")
+    .trim()
+    .split(/\s+/u)
+    .filter(Boolean);
+  return (
+    tokens.length > 0 &&
+    tokens.every(
+      (token) =>
+        /^[A-ZÆØÅ]{1,3}$/u.test(token) &&
+        RECOVERY_ALLERGEN_CODES.has(token.toLocaleLowerCase("nb-NO")),
+    )
+  );
+}
 
 function normalizeScopeLine(value: string): string {
   return value
@@ -267,6 +285,7 @@ function looksLikePdfDescriptionFragment(name: string): boolean {
   return (
     PDF_LOWERCASE_SENTENCE_FRAGMENT.test(normalized) ||
     PDF_PARENTHETICAL_ALLERGEN_ITEM.test(normalized) ||
+    looksLikeSplitPdfAllergenCodeFragment(normalized) ||
     PDF_ADDON_INSTRUCTION_ITEM.test(normalized)
   );
 }
@@ -359,6 +378,14 @@ export function recoverExplicitLowPerItemPdfRows(
   return recovered;
 }
 
+export function filterPdfConflictMetadataItems(
+  items: readonly MenuObservedItem[],
+): readonly MenuObservedItem[] {
+  return items.filter(
+    (item) => !looksLikeSplitPdfAllergenCodeFragment(item.name),
+  );
+}
+
 export function scopePdfMenuItems(
   visibleText: string,
   items: readonly MenuObservedItem[],
@@ -392,9 +419,10 @@ export async function extractScopedPdfMenu(
     extracted.visibleText,
     extracted.items,
   );
+  const conflictEligibleItems = filterPdfConflictMetadataItems(recoveredItems);
   const disambiguatedItems = disambiguateConflictingPdfSourceKeys(
     extracted.visibleText,
-    recoveredItems,
+    conflictEligibleItems,
   );
   return {
     ...extracted,

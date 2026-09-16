@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-vintage-kitchen-reproof",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "vintage-kitchen-oslo",
+        "name": "Vintage Kitchen",
+        "websiteUrl": "https://www.vintagekitchen.no/",
+        "address": "Lakkegata 55, 0187 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.vintagekitchen.no/_files/ugd/95ecd4_e62fdde85e36483b9fc89a7e9c358f20.pdf",
+        "sourceType": "pdf",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-16",
+          "note": "Fresh P1 reproof from Vintage Kitchen's current first-party menu PDF. The PDF publishes substantial individually priced lunch, wine-bar and dinner dishes alongside bilingual translations, set-menu pricing, wine pages, allergen keys and multi-price/quantity variants. Intake must stay fail-closed on package, wine, allergen and price-fragment leakage."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "5-RETTERS MENY / 5-COURSE SET MENU",
+        "Vinmeny",
+        "Charles Heidsieck Brut Réserve",
+        "40% chardonnay, 40% pinot noir, 20% meunier",
+        "ALLERGENER / ALLERGENS",
+        "DANSKE SMØRREBRØD",
+        "HOVEDRETTER / MAIN COURSES",
+        "46 / stk",
+        "1650 per kg"
+      ]
+    }
+  ]
+}
