@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v12";
+  "trailing-price-card-v13";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -307,6 +307,7 @@ interface StructuredLeadingTitle {
   readonly nearestTitle: string;
   readonly hardBoundary: boolean;
   readonly hasCommaLineAfterTitle: boolean;
+  readonly hasAllergenBoundaryBeforeNearest: boolean;
 }
 
 function isHeadingTitleLine(
@@ -330,7 +331,8 @@ function firstLetterMatches(value: string, pattern: RegExp): boolean {
 function isStrongLocalStructuredLeadingTitle(
   structured: StructuredLeadingTitle,
 ): boolean {
-  if (structured.hardBoundary) return true;
+  if (structured.hardBoundary || structured.hasAllergenBoundaryBeforeNearest)
+    return true;
   if (SHORT_PREPARATION_TITLE.test(structured.title)) return true;
   const titleWords = structured.title.split(/\s+/u).filter(Boolean);
   if (titleWords.length <= 4 && structured.hasCommaLineAfterTitle) {
@@ -402,15 +404,22 @@ function precedingStructuredLeadingTitle(
   const first = candidates[0];
   const nearest = candidates[candidates.length - 1];
   if (!first || !nearest) return null;
+  const hasAllergenBoundaryBeforeNearest =
+    nearest.position > first.position &&
+    lines
+      .slice(first.position + 1, nearest.position)
+      .some((line) => ALLERGEN_METADATA.test(normalizeVisibleLine(line)));
+  const selected = hasAllergenBoundaryBeforeNearest ? nearest : first;
   const hasCommaLineAfterTitle = lines
-    .slice(first.position + 1, pricePosition)
+    .slice(selected.position + 1, pricePosition)
     .some((line) => /[,;]/u.test(normalizeVisibleLine(line)));
   return {
-    ...first,
+    ...selected,
     candidateCount: candidates.length,
     nearestTitle: nearest.title,
     hardBoundary,
     hasCommaLineAfterTitle,
+    hasAllergenBoundaryBeforeNearest,
   };
 }
 
@@ -479,6 +488,19 @@ export function isStrongNumberedTrailingPriceCardRecovery(
       return LEADING_MENU_INDEX.test(excerpt);
     })
   );
+}
+
+export function isStrongDirectTrailingPriceCardRecovery(
+  items: readonly MenuObservedItem[],
+): boolean {
+  if (items.length < 8) return false;
+  const direct = items.filter(
+    (item) =>
+      item.confidence >= 0.95 &&
+      item.description === null &&
+      Boolean(item.sourceExcerpt?.trim()),
+  ).length;
+  return direct * 4 >= items.length * 3;
 }
 
 export function recoverTrailingPriceCardHtmlItems(
