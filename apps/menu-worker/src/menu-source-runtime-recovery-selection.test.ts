@@ -258,12 +258,32 @@ describe("HTML runtime recovery selection", () => {
     ]);
   });
 
-  it("prefers a broad heading recovery only when it dominates the trailing recovery", () => {
+  it("prefers an established broad heading family when it ties or dominates trailing recovery", () => {
     expect(shouldPreferDominantHeadingRecovery(26, 24, 24)).toBe(true);
-    expect(shouldPreferDominantHeadingRecovery(24, 24, 24)).toBe(false);
+    expect(shouldPreferDominantHeadingRecovery(24, 24, 24)).toBe(true);
+    expect(shouldPreferDominantHeadingRecovery(13, 13, 4)).toBe(true);
     expect(shouldPreferDominantHeadingRecovery(23, 24, 24)).toBe(false);
     expect(shouldPreferDominantHeadingRecovery(26, 27, 24)).toBe(false);
     expect(shouldPreferDominantHeadingRecovery(11, 10, 10)).toBe(false);
+  });
+
+  it("filters generic fixed-course package labels from canonical heading output", async () => {
+    const result = await extract(`
+      <html><body>
+        <h1>Chef's 3 course</h1><p>995 NOK</p>
+        <h1>Charred Leek</h1><p>195 NOK</p>
+        <h1>Roasted Cod</h1><p>395 NOK</p>
+        <h1>Braised Lamb</h1><p>445 NOK</p>
+        <h1>Apple Tart</h1><p>185 NOK</p>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => item.name)).toEqual([
+      "Charred Leek",
+      "Roasted Cod",
+      "Braised Lamb",
+      "Apple Tart",
+    ]);
   });
 
 });
