@@ -102,7 +102,9 @@ const NON_DISH_FRAGMENT_ITEM = /^(?:stk\.?|biter\.)\s+/iu;
 const NON_DISH_SET_MENU_ITEM =
   /^(?:(?:chef(?:['’]?s)?|chefs)\s+)?(?:\d+|two|three|four|five|six|seven|eight|nine|ten)\s*[- ]?\s*course(?:s)?(?:\s+(?:menu|set\s+menu))?$/iu;
 const NON_DISH_ADDON_ITEM =
-  /^\*?\s*(?:påfyll\s+av\s+tilbehør|refill\s+of\s+sides?|add[- ]?ons?)\b/iu;
+  /^\*?\s*(?:påfyll\s+av\s+tilbehør|refill\s+of\s+sides?|add[- ]?ons?\b|additional\s+products?\b|add\s+.+$)/iu;
+const NON_DISH_QUANTITY_PRICE_FRAGMENT =
+  /^(?:\d+\s*(?:pcs?|pieces?|stk\.?)\s+)?(?:nok|kr\.?)?\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*\/\s*\d+\s*(?:pcs?|pieces?|stk\.?)(?:\s+(?:nok|kr\.?)?\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?)?$/iu;
 const PRICE_DISPLAY_ONLY_ITEM =
   /^(?:(?:fra|from)\s+)?(?:(?:(?:nok|kr\.?)\s*)?[1-9]\d{0,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)\s*){1,4}$/iu;
 const KITCHEN_RETAIL_ITEM = /^(?:pizzakutter|pizza\s+cutter)$/iu;
@@ -112,6 +114,8 @@ const BEVERAGE_MENU_ITEM =
   /^(?:(?:coca[- ]?cola|cola(?:\s+zero)?|fanta|sprite|farris(?:\s+\p{L}+)?|eplemost|mineralvann|(?:\p{L}+\s+)?juice|(?:\p{L}+\s+)?lassi)(?:\s+.*)?|(?:guinness|corona|munkholm|aperol)(?:\s+.*)?|(?:gin\s+(?:&\s*)?tonic|dry\s+martini)|(?:arabisk|arabic|tyrkisk|turkish)\s+(?:coffee|kaffe)(?:\s+.*)?|telemark\s+(?:still|sparkling)\s+naturell(?:\s+.*)?|hard\s+seltz(?:\s+.*)?|.*\b(?:pilsner|pærecider|cider|ingefærøl)\b.*|.*\bøl\b.*(?:\bflaske\b|\bglass\b|\d+[,.]\d+)|(?:rosévin|hvitvin|rødvin)(?:\s+(?:glass|flaske))?|.*\b(?:coffee|kaffe|espresso|americano|cappuccino|capuccino|cuppucino|latte|tea|te)\b|.*\b(?:cola|ginger\s+beer)\b)$/iu;
 const BEVERAGE_PACKAGE_ITEM =
   /^(?:with\s+)?(?:wine|drink|beverage)\s+package$/iu;
+const SPARKLING_WINE_PRODUCT_ITEM =
+  /^(?=.*\b(?:brut|sparkling\s+wine)\b)(?!.*\b(?:sauce|saus|beurre|glaze|glazed|poached|braised|grilled|baked|with|med)\b).+$/iu;
 const BEVERAGE_STYLE_ITEM =
   /(?:\b(?:milk\s+tea|boba\s+milk|smoothie|lemonade|red\s+bull|energy\s+drink|mocktail)\b|^pepsi(?:\s+max)?$|^(?:aranciata|chinotto|gazzosa|limonata)$|^(?:ice|iced)\s+tea(?:\s+(?:lemon|peach|green|mango|lychee|raspberry|passion\s*fruit))?$|^(?:taro|chocolate)\s+milk$|^iced\s+cocoa(?:\s+\p{L}+){0,3}\s+milk$|^(?:matcha|chai|vanilla|caramel)(?:\s+\p{L}+){0,3}\s+latte(?:\s+cheese)?$|^(?:saigon\s+special|salt|egg)\s+cafe(?:\s*-\s*cafe\s+sua\s+da)?$|^ca\s+phe(?:\s+sua)?\s+da$|^solo(?:\s+\d+(?:[.,]\d+)?\s*(?:ml|cl|l))?$)/iu;
 const BOTTLED_BEVERAGE_VOLUME =
@@ -120,8 +124,8 @@ const COCKTAIL_DESCRIPTION_ITEM =
   /^(?:(?:mimosa|(?:black|white)\s+russian(?:\s+kahlua)?|classic\s+mojito|vodka\s+cranberry)$|(?=.*,)(?=.*\b(?:gin|vodka|rom|rum|tequila|whisk(?:e)?y|bourbon|aperol|prosecco|kahlua|makers\s+mark|jack\s+daniels|cointreau)\b)(?=.*\b(?:tonic|cola|cranberry|prosecco|lime|sitron|lemon|appelsin|orange|eggehvite|egg\s*whites?|ginger\s+ale|ingefærøl|lemon\s+soda|sitronbrus)\b).+)$/iu;
 export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v3";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
-export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v10";
-export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v9";
+export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v11";
+export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v10";
 export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v3";
 
 export function shouldPreferDominantHeadingRecovery(
@@ -228,12 +232,14 @@ export function isCanonicalHtmlMenuItem(item: MenuObservedItem): boolean {
     !NON_DISH_FRAGMENT_ITEM.test(filterName) &&
     !NON_DISH_SET_MENU_ITEM.test(filterName) &&
     !NON_DISH_ADDON_ITEM.test(filterName) &&
+    !NON_DISH_QUANTITY_PRICE_FRAGMENT.test(filterName) &&
     !PRICE_DISPLAY_ONLY_ITEM.test(filterName) &&
     !KITCHEN_RETAIL_ITEM.test(filterName) &&
     !RETAIL_APPAREL_ITEM.test(filterName) &&
     !HISTORICAL_SINCE_ITEM.test(filterName) &&
     !BEVERAGE_MENU_ITEM.test(filterName) &&
     !BEVERAGE_PACKAGE_ITEM.test(filterName) &&
+    !SPARKLING_WINE_PRODUCT_ITEM.test(filterName) &&
     !BEVERAGE_STYLE_ITEM.test(filterName) &&
     !BOTTLED_BEVERAGE_VOLUME.test(filterName) &&
     !COCKTAIL_DESCRIPTION_ITEM.test(filterName)
