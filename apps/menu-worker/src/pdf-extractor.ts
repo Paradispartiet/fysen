@@ -303,7 +303,7 @@ function reconstructLines(items: readonly unknown[], page: number): readonly Pdf
   const sequentialItemCount = buildItems(sequential).length;
   const visualItemCount = buildItems(visualLines).length;
 
-  return visualItemCount > sequentialItemCount ? visualLines : sequential;
+  return visualItemCount >= sequentialItemCount ? visualLines : sequential;
 }
 
 function sectionHeading(line: string): string | null {
