@@ -29,7 +29,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v29");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v28");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -300,6 +300,25 @@ describe("PDF source scope", () => {
 
     expect(scoped.map((item) => item.name)).toEqual([
       "Cà ri gà / Chicken curry",
+    ]);
+  });
+
+  it("does not reopen beverage scope when a spirit name completes a food-pairing phrase", () => {
+    const lines = [
+      "S N A C K S",
+      "GRILLED FOCACCIA 105,-",
+      "P E R F E C T W I T H",
+      "V O D K A !",
+      "PIGGVAR - TURBOT 595,-",
+      "RICOTTA RAVIOLI 245,-",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual([
+      "GRILLED FOCACCIA",
+      "PIGGVAR - TURBOT",
+      "RICOTTA RAVIOLI",
     ]);
   });
 
