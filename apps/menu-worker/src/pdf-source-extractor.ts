@@ -5,10 +5,12 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v19";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v20";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
+const LOW_EXPLICIT_PRICE =
+  /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:,-|kr\.?|nok))$/iu;
 const LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]\s*/u;
 const SECTION_PRICE_SIGNAL =
   /(?:^|\s)(?:kr\.?|nok)?\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)?$/iu;
@@ -318,7 +320,8 @@ export function recoverExplicitLowPerItemPdfRows(
   for (let index = 0; index + 1 < lines.length; index += 1) {
     const rawName = lines[index] ?? "";
     const rawPrice = lines[index + 1] ?? "";
-    const match = rawPrice.match(LOW_PER_ITEM_PRICE);
+    const match =
+      rawPrice.match(LOW_PER_ITEM_PRICE) ?? rawPrice.match(LOW_EXPLICIT_PRICE);
     const kronerText = match?.[1] ?? match?.[2];
     if (!kronerText) continue;
 
