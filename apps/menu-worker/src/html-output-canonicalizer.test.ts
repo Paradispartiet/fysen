@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v12");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v13");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -355,6 +355,23 @@ describe("structural HTML output canonicalization", () => {
       "BEEF TARTARE",
       "CHEESECAKE",
       "PETITS FOURS",
+    ]);
+  });
+
+
+  it("drops bare year values misread as prices without hiding explicitly priced high-value items", () => {
+    const items = [
+      item("BOOK", 202600, null, "BOOK — 2026"),
+      item("JESSHEIM", 202600, null, "JESSHEIM — 2026"),
+      item("Chef Table", 202600, null, "Chef Table — 2026 kr"),
+      item("Vintage Menu", 199900, null, "Vintage Menu — NOK 1999"),
+      item("Pasta Carbonara", 24900),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => [entry.name, entry.priceMinor])).toEqual([
+      ["Chef Table", 202600],
+      ["Vintage Menu", 199900],
+      ["Pasta Carbonara", 24900],
     ]);
   });
 
