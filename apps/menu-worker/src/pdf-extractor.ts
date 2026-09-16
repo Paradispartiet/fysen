@@ -302,9 +302,7 @@ function reconstructLines(items: readonly unknown[], page: number): readonly Pdf
   const sequentialItemCount = buildItems(sequential).length;
   const visualItemCount = buildItems(visualLines).length;
   console.error("[TEMP pdf-reading-order]", JSON.stringify({ page, useVisual, sequentialItemCount, visualItemCount }));
-  if (!useVisual) return sequential;
-
-  return visualItemCount >= sequentialItemCount ? visualLines : sequential;
+  return visualLines;
 }
 
 function sectionHeading(line: string): string | null {
