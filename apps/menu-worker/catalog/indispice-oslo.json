@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 46,
+    "minimumExpectedItems": 45,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,7 @@
       "Prawn Hyderabadi",
       "Panir Makhni",
       "Channa Masala Vegan",
-      "Salat",
-      "Bestikk"
+      "Salat"
     ],
     "requiredDishVariants": [
       {
@@ -70,10 +69,6 @@
       {
         "name": "Salat",
         "priceMinor": 6000
-      },
-      {
-        "name": "Bestikk",
-        "priceMinor": 200
       }
     ],
     "forbiddenDishNames": []
