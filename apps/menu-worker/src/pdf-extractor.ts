@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v15";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v13";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -180,7 +180,6 @@ function robustSpread(values: readonly number[]): number {
   return percentile(values, 0.9) - percentile(values, 0.1);
 }
 
-
 function positionedTextItems(items: readonly unknown[]): readonly PositionedTextItem[] | null {
   const textItems = items.filter(isTextItem).filter((item) => normalizeLine(item.str));
   const positioned: PositionedTextItem[] = [];
@@ -297,21 +296,8 @@ function reconstructLines(items: readonly unknown[], page: number): readonly Pdf
   const positioned = positionedTextItems(items);
   if (!positioned) return sequential;
   const visual = visualPdfLines(positioned);
-  const useVisual = shouldUseVisualReadingOrder(visual);
-  const visualLines = visual.map((line) => ({ text: line.text, page }));
-  const sequentialItems = buildItems(sequential);
-  const visualItems = buildItems(visualLines);
-  console.error(
-    "[TEMP pdf-reading-order-candidates]",
-    JSON.stringify({
-      page,
-      useVisual,
-      sequential: sequentialItems.map((item) => item.name),
-      visual: visualItems.map((item) => item.name),
-    }),
-  );
-  if (!useVisual) return sequential;
-  return visualItems.length >= sequentialItems.length ? visualLines : sequential;
+  if (!shouldUseVisualReadingOrder(visual)) return sequential;
+  return visual.map((line) => ({ text: line.text, page }));
 }
 
 function sectionHeading(line: string): string | null {
