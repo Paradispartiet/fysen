@@ -538,6 +538,19 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverFirstCardAfterPlainFoodSections(extracted.visibleText)
         : [];
+    console.error(
+      "[TEMP recovery-family-counts]",
+      JSON.stringify({
+        recovered: recoveredItems.length,
+        trailing: trailingPriceCardItems.length,
+        priceWrapped: priceWrappedItems.length,
+        inlineMarked: inlineMarkedPriceItems.length,
+        strongTitle: strongTitlePriceItems.length,
+        headingPrice: headingPriceItems.length,
+        explicitFrom: explicitFromPriceItems.length,
+        sectionFirst: sectionFirstCardItems.length,
+      }),
+    );
     const strongTitlePricePreferred =
     strongTitlePriceItems.length >= 6 &&
     strongTitlePriceItems.length >= recoveredItems.length &&
