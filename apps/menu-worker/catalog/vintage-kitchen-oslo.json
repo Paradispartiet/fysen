@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "vintage-kitchen-oslo",
+    "name": "Vintage Kitchen",
+    "websiteUrl": "https://www.vintagekitchen.no/",
+    "address": "Lakkegata 55, 0187 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.916933660743375,
+    "longitude": 10.76246821166955
+  },
+  "menuSource": {
+    "url": "https://www.vintagekitchen.no/_files/ugd/95ecd4_e62fdde85e36483b9fc89a7e9c358f20.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 27,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-16",
+      "note": "Fresh P1 reproof from Vintage Kitchen's current first-party menu PDF. The PDF publishes substantial individually priced lunch, wine-bar and dinner dishes alongside bilingual translations, set-menu pricing, wine pages, allergen keys and multi-price/quantity variants. Intake must stay fail-closed on package, wine, allergen and price-fragment leakage."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Smoked eel, soft boiled egg",
+      "Mixed chicken salad, bacon, apple, mushroom",
+      "Tartar of ox, fried egg, horseradish",
+      "Bacon almonds",
+      "Goat cheese salad with a variation of beets",
+      "Sweetbreads with pickled lingonberries,",
+      "French cheese",
+      "Créme Brûlée, cloudberries cooked in oranges"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Smoked eel, soft boiled egg",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Mixed chicken salad, bacon, apple, mushroom",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Tartar of ox, fried egg, horseradish",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Bacon almonds",
+        "priceMinor": 6800
+      },
+      {
+        "name": "Goat cheese salad with a variation of beets",
+        "priceMinor": 38500
+      },
+      {
+        "name": "Sweetbreads with pickled lingonberries,",
+        "priceMinor": 28500
+      },
+      {
+        "name": "French cheese",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Créme Brûlée, cloudberries cooked in oranges",
+        "priceMinor": 18900
+      }
+    ],
+    "forbiddenDishNames": [
+      "5-RETTERS MENY / 5-COURSE SET MENU",
+      "Vinmeny",
+      "Charles Heidsieck Brut Réserve",
+      "40% chardonnay, 40% pinot noir, 20% meunier",
+      "ALLERGENER / ALLERGENS",
+      "DANSKE SMØRREBRØD",
+      "HOVEDRETTER / MAIN COURSES",
+      "(H, R, BY,",
+      "LUNSJ",
+      "velg mellom naturell med sitron",
+      "ramsløkshummus og salat",
+      "S - Sennep/Mustard, SE - Sesamfrø/Sesame seeds, F - Fisk/Fish, B - Bløtdyr/Molluscs",
+      "home made pommes frites, vegetables, bearnaise sauce",
+      "3 stk /",
+      "46 / stk",
+      "1650 per kg"
+    ]
+  }
+}
