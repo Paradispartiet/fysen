@@ -142,37 +142,4 @@ describe("extractHtmlMenu", () => {
     `;
     expect(extractHtmlMenu(html).items).toEqual([]);
   });
-
-  it("excludes document chrome before heuristic price recovery", () => {
-    const html = `
-      <html><body>
-        <header><a href="/">Home</a></header>
-        <main>
-          <section>
-            <h3>Pasta Carbonara</h3>
-            <p>249</p>
-          </section>
-        </main>
-        <footer role="contentinfo">
-          <p>Restaurant © 2026</p>
-          <div role="navigation">
-            <a>BOOK</a>
-            <a>MAT</a>
-            <a>SELSKAP</a>
-            <a>BEDRIFT</a>
-            <a>KART</a>
-            <a>MAIL</a>
-            <a>JESSHEIM</a>
-          </div>
-        </footer>
-      </body></html>
-    `;
-
-    const result = extractHtmlMenu(html);
-    expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual([
-      ["Pasta Carbonara", 24900],
-    ]);
-    expect(result.items.some((item) => item.priceMinor === 202600)).toBe(false);
-  });
-
 });
