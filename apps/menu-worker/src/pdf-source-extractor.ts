@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v24";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v25";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -67,6 +67,17 @@ const RECOVERY_ALLERGEN_CODES = new Set([
   "wa",
 ]);
 
+const SPLIT_PDF_ALLERGEN_CODES = new Set([
+  ...RECOVERY_ALLERGEN_CODES,
+  "by",
+  "c",
+  "hn",
+  "lu",
+  "s",
+  "sp",
+  "vn",
+]);
+
 function looksLikeSplitPdfAllergenCodeFragment(value: string): boolean {
   const line = normalizeVisibleLine(value);
   if (!/[()]/u.test(line)) return false;
@@ -80,7 +91,7 @@ function looksLikeSplitPdfAllergenCodeFragment(value: string): boolean {
     tokens.every(
       (token) =>
         /^[A-ZÆØÅ]{1,3}$/u.test(token) &&
-        RECOVERY_ALLERGEN_CODES.has(token.toLocaleLowerCase("nb-NO")),
+        SPLIT_PDF_ALLERGEN_CODES.has(token.toLocaleLowerCase("nb-NO")),
     )
   );
 }

@@ -29,7 +29,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v24");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v25");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -161,6 +161,23 @@ describe("PDF source scope", () => {
     ]);
   });
 
+  it("recognizes documented Norwegian allergen abbreviations in split parenthetical fragments", () => {
+    const lines = [
+      "(H, R, BY, 190",
+      "(HN, VN, SP, C, LU, S, 210",
+      "Braised duck 325",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    expect(parsed.map((item) => item.name)).toEqual([
+      "(H, R, BY,",
+      "(HN, VN, SP, C, LU, S,",
+      "Braised duck",
+    ]);
+
+    const eligible = filterPdfConflictMetadataItems(parsed);
+    expect(eligible.map((item) => item.name)).toEqual(["Braised duck"]);
+  });
+
   it("does not move ordinary description filtering ahead of source-key conflict resolution", () => {
     const lines = [
       "Add bacon to any dish for 35",
@@ -200,6 +217,17 @@ describe("PDF source scope", () => {
     expect(disambiguated.map((item) => item.sourceKey)).toEqual(
       parsed.map((item) => item.sourceKey),
     );
+  });
+
+  it("does not apply split-fragment-only allergen codes to low-price dish-name recovery", () => {
+    const visibleText = [
+      "DESSERT",
+      "Special BY",
+      "35,-",
+    ].join("\n");
+
+    const recovered = recoverExplicitLowPerItemPdfRows(visibleText, []);
+    expect(recovered.map((item) => item.name)).toEqual(["Special BY"]);
   });
 
   it("recovers an explicit low per-item price from the next PDF text line", () => {
