@@ -38,7 +38,7 @@
       "Tartar of ox, fried egg, horseradish",
       "Bacon almonds",
       "Goat cheese salad with a variation of beets",
-      "Sweetbreads with pickled lingonberries,",
+      "Sweetbreads with pickled lingonberries, dried reindeer heart and gribiche sauce",
       "French cheese",
       "Créme Brûlée, cloudberries cooked in oranges"
     ],
@@ -64,7 +64,7 @@
         "priceMinor": 38500
       },
       {
-        "name": "Sweetbreads with pickled lingonberries,",
+        "name": "Sweetbreads with pickled lingonberries, dried reindeer heart and gribiche sauce",
         "priceMinor": 28500
       },
       {
@@ -88,6 +88,7 @@
       "LUNSJ",
       "velg mellom naturell med sitron",
       "ramsløkshummus og salat",
+      "Sweetbreads with pickled lingonberries,",
       "S - Sennep/Mustard, SE - Sesamfrø/Sesame seeds, F - Fisk/Fish, B - Bløtdyr/Molluscs",
       "home made pommes frites, vegetables, bearnaise sauce",
       "3 stk /",
