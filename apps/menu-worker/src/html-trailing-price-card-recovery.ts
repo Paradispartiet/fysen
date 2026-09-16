@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v14";
+  "trailing-price-card-v15";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -23,6 +23,8 @@ const SECTION_OR_UI_LABEL =
 const UI_ACTION_LEAD =
   /^(?:choose|select|velg|bestill|order|book|reserve|click|trykk|tap|add(?:-on)?|additional)\b/iu;
 const INLINE_ADDON_PRICE_LEAD = /^(?:add(?:-on)?|additional)\b/iu;
+const PER_PERSON_PRICE_LEAD =
+  /^(?:pr\.?|per)\s+(?:person|pers\.?)\s+(?:kr\.?|nok)\.?$/iu;
 const DESCRIPTION_LEAD =
   /^(?:serveres?|servert|served|with|med|marinert|marinated|grillet|grilled|bakt|baked|braisert|braised|toppet|topped|inneholder|contains?|inkludert|including|alle\s+retter)\b/iu;
 const ALLERGEN_METADATA = /^\(?\s*(?:allergener?|allergens?)\s*:/iu;
@@ -95,12 +97,13 @@ function parseTrailingPrice(value: string): ParsedTrailingPrice | null {
   if (!trailing?.[2] || trailing.index === undefined) return null;
   const residual = line.slice(0, trailing.index).trim();
   if (!residual || ADDITIONAL_MARKED_PRICE.test(residual)) return null;
+  const semanticResidual = PER_PERSON_PRICE_LEAD.test(residual) ? "" : residual;
   const priceMinor = parsedAmount(trailing[2], trailing[3]);
   if (priceMinor === null) return null;
   return {
     priceMinor,
     priceKind: trailing[1] ? "from" : "exact",
-    residual,
+    residual: semanticResidual,
   };
 }
 
