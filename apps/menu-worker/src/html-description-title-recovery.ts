@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v15";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v16";
 
 const PRICE_LINE =
   /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
@@ -13,6 +13,10 @@ const INLINE_PRICE_AT_END =
 const DESCRIPTION_LEAD =
   /^(?:serveres?|servert|served|with|kan\s+fås|can\s+be|blandet|mixed|godt\s+krydret|well\s+seasoned|marinert|marinated|grillet|grilled|bakt|baked|braisert|braised|tilberedt|prepared|toppet|topped|inneholder|contains?|inkludert|including|(?:hel|gylden)?fritert|sprøstekt|woket|dampet|mini[- ]mezah|ekstra|extra|pr\.?\s*person|per\s+person)\b/iu;
 const PRICE_METADATA_LEAD = /^(?:pr\.?\s*person|per\s+person)\b/iu;
+const RECOVERY_UI_ACTION_LEAD =
+  /^(?:add(?:-on)?|additional|choose|select|velg|bestill|order|book|reserve|click|trykk|tap)\b/iu;
+const SHORT_PREPARATION_TITLE =
+  /^(?:bakt|grillet|stekt|fritert|braisert|røkt|baked|grilled|fried|braised|smoked)\s+\p{L}+(?:\s+\p{L}+){0,2}$/iu;
 const SPLIT_PARENTHETICAL_CONTINUATION = /^(?:med|with)\b.*\)$/iu;
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const SECTION_LABEL =
@@ -177,6 +181,7 @@ function looksLikeRecoveredTitle(value: string): boolean {
     PRICE_LINE.test(line) ||
     isSectionLabel(line) ||
     looksLikeHtmlDescription(line) ||
+    RECOVERY_UI_ACTION_LEAD.test(line) ||
     ALLERGEN_PREFIX.test(line) ||
     looksLikeAllergenMetadata(line)
   ) {
@@ -235,6 +240,22 @@ function looksLikeDirectlyPricedObservedTitle(value: string): boolean {
   return !/^(?:serveres?|served|with|med|contains?|inneholder|allergener?|allergens?)\b/iu.test(
     line,
   );
+}
+
+function sourceExcerptAnchorsPreparationTitle(
+  item: MenuObservedItem,
+): boolean {
+  const current = normalizeVisibleLine(item.name);
+  if (!SHORT_PREPARATION_TITLE.test(current)) return false;
+  const sourceExcerpt = item.sourceExcerpt?.trim() ?? "";
+  if (!sourceExcerpt) return false;
+  const segments = sourceExcerpt
+    .split(SOURCE_EXCERPT_SEPARATOR)
+    .map(normalizeVisibleLine)
+    .filter(Boolean);
+  if (segments[0]?.toLocaleLowerCase("nb-NO") !== current.toLocaleLowerCase("nb-NO"))
+    return false;
+  return segments.slice(1).some((segment) => PRICE_LINE.test(segment));
 }
 
 function sourceExcerptInlinePricesObservedName(
@@ -562,8 +583,12 @@ export function recoverDescriptionNamedHtmlItems(
   const lines = visibleText.split("\n").map(normalizeVisibleLine);
   const recovered = items.map((item) => {
     const position = item.position;
-    const forwardRecovery = recoverForwardTitleFromSourceExcerpt(item);
+    const anchoredPreparationTitle = sourceExcerptAnchorsPreparationTitle(item);
+    const forwardRecovery = anchoredPreparationTitle
+      ? null
+      : recoverForwardTitleFromSourceExcerpt(item);
     const directlyPricedObservedName =
+      anchoredPreparationTitle ||
       sourceExcerptInlinePricesObservedName(item) ||
       (looksLikeDirectlyPricedObservedTitle(item.name) &&
         sourceExcerptDirectlyPricesObservedName(item));
