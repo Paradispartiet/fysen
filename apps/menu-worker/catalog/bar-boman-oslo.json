@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bar-boman-oslo",
+    "name": "Bar Boman",
+    "websiteUrl": "https://www.barboman.no/",
+    "address": "Stortingsgaten 24, 0161 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.914043329279885,
+    "longitude": 10.733893961161735
+  },
+  "menuSource": {
+    "url": "https://www.barboman.no/wp-content/uploads/sites/12/2026/07/BB-meny-sommer-2026-1.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 19,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-16",
+      "note": "Fresh reproof after the prior P1 review held Bar Boman because the then-current PDF exposed only one unique canonical priced dish. The current first-party July 2026 PDF materially changed and now visibly publishes broad individually priced ALL DAY and EVENING food sections alongside extensive spirits, cocktails, wine and beer sections. Bar Boman and the registered restaurant business publish the complex as Stortingsgaten 24/26, 0161 Oslo; the canonical Oslo resolver requires one concrete address point, so house number 24 is used while retaining the published 24/26 identity in this note. Intake must recover the food while keeping beverage rows and beverage headings outside canonical dish output."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "GRILLED FOCACCIA",
+      "TOAST SKAGEN",
+      "PLANT-BASED BURGER",
+      "SPANISH OLIVES",
+      "CRISPS",
+      "SALTED CUCUMBER",
+      "CRUDITÉS & DIP",
+      "ANTONIUS OSCIETRA CAVIAR"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "GRILLED FOCACCIA",
+        "priceMinor": 10500
+      },
+      {
+        "name": "TOAST SKAGEN",
+        "priceMinor": 33500
+      },
+      {
+        "name": "PLANT-BASED BURGER",
+        "priceMinor": 33900
+      },
+      {
+        "name": "SPANISH OLIVES",
+        "priceMinor": 8500
+      },
+      {
+        "name": "CRISPS",
+        "priceMinor": 6000
+      },
+      {
+        "name": "SALTED CUCUMBER",
+        "priceMinor": 9500
+      },
+      {
+        "name": "CRUDITÉS & DIP",
+        "priceMinor": 14500
+      },
+      {
+        "name": "ANTONIUS OSCIETRA CAVIAR",
+        "priceMinor": 159900
+      }
+    ],
+    "forbiddenDishNames": [
+      "SPECIALS",
+      "FIREFOX",
+      "Cragganmore 12y",
+      "Jack Daniel’s",
+      "Koskenkorva",
+      "Bombay Sapphire",
+      "Plantation Original Dark",
+      "Jose Cuervo Tradicional Reposado",
+      "Simers Taffel",
+      "Amaretto",
+      "Boulard XO",
+      "Château de Pellehaut",
+      "Grappa Barbaresco",
+      "Pol Roger Brut Réserve Non Vintage",
+      "Hansa Draft 0,4L",
+      "Coffee",
+      "WINE BY THE GLASS",
+      "SINGLE MALT WHISKY"
+    ]
+  }
+}
