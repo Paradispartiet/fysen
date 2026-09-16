@@ -74,6 +74,22 @@ describe("PDF menu extractor", () => {
     });
   });
 
+  it("reconstructs a wrapped dish name when the first line ends with a conjunction", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "ALL DAY",
+      "MACAROONS &",
+      "CHOCOLATE TRUFFLES 145,-",
+    ]);
+
+    expect(items).toHaveLength(1);
+    expect(items[0]).toMatchObject({
+      name: "MACAROONS & CHOCOLATE TRUFFLES",
+      priceMinor: 14500,
+      priceKind: "exact",
+      priceMaxMinor: null,
+    });
+  });
+
   it("reconstructs strictly qualified wrapped dish names without publishing fragments", () => {
     const items = extractMenuItemsFromPdfLines([
       "MAKI",
