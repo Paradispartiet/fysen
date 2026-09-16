@@ -51,6 +51,7 @@ import {
 } from "./html-section-first-card-recovery.js";
 import {
   HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION,
+  isStrongDirectTrailingPriceCardRecovery,
   isStrongNumberedTrailingPriceCardRecovery,
   recoverInlineMarkedPriceTextItems,
   recoverTrailingPriceCardHtmlItems,
@@ -121,7 +122,7 @@ export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v3";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v10";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v9";
-export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v2";
+export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v3";
 
 export function shouldPreferDominantHeadingRecovery(
   headingCount: number,
@@ -542,8 +543,13 @@ export async function extractMenuSource(
       );
     const strongNumberedCardsPreferred =
       isStrongNumberedTrailingPriceCardRecovery(trailingPriceCardItems);
+    const strongDirectTrailingRecoveryPreferred =
+      isStrongDirectTrailingPriceCardRecovery(trailingPriceCardItems) &&
+      trailingPriceCardItems.length >= recoveredItems.length;
     const isolatedTrailingRecoveryPreferred =
-      semanticCategoryCardsPreferred || strongNumberedCardsPreferred;
+      semanticCategoryCardsPreferred ||
+      strongNumberedCardsPreferred ||
+      strongDirectTrailingRecoveryPreferred;
     const broadHeadingPriceRecoveryPreferred =
       headingPriceItems.length >= 12 &&
       headingPriceItems.length >= recoveredItems.length;

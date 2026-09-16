@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-tomodomo-reproof",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "tomodomo-oslo",
+        "name": "Tomodomo",
+        "websiteUrl": "https://tomodomo.no/",
+        "address": "Pilestredet 24, 0165 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://tomodomo.no/locations/trekanten-oslo",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-16",
+          "note": "Fresh P1 reproof from Tomodomo's current first-party Oslo location page. The page publishes a textual, individually priced menu of starters, udon/noodle dishes and sweets at Pilestredet 24. Intake must exclude section/navigation/allergen metadata and keep only canonical priced dishes."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Menu",
+        "Opening hours",
+        "Our food",
+        "Starters",
+        "Noodles",
+        "Sweets",
+        "Allergens",
+        "A table for 6?"
+      ]
+    }
+  ]
+}
