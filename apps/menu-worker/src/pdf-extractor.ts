@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v11";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v12";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -25,6 +25,22 @@ interface TextItemLike {
 interface PdfLine {
   readonly text: string;
   readonly page: number;
+}
+
+interface PositionedTextItem {
+  readonly text: string;
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly originalIndex: number;
+}
+
+interface VisualPdfLine {
+  readonly text: string;
+  readonly xStart: number;
+  readonly xEnd: number;
+  readonly y: number;
+  readonly originalIndex: number;
 }
 
 interface ParsedPrice {
@@ -95,7 +111,10 @@ function isTextItem(value: unknown): value is TextItemLike {
   );
 }
 
-function reconstructLines(items: readonly unknown[], page: number): readonly PdfLine[] {
+function reconstructSequentialLines(
+  items: readonly unknown[],
+  page: number,
+): readonly PdfLine[] {
   const lines: PdfLine[] = [];
   let buffer = "";
   let lastY: number | null = null;
@@ -134,6 +153,140 @@ function reconstructLines(items: readonly unknown[], page: number): readonly Pdf
   }
   flush();
   return lines;
+}
+
+function percentile(values: readonly number[], ratio: number): number {
+  const sorted = [...values].sort((a, b) => a - b);
+  const index = Math.max(
+    0,
+    Math.min(sorted.length - 1, Math.floor((sorted.length - 1) * ratio)),
+  );
+  return sorted[index] ?? 0;
+}
+
+function robustSpread(values: readonly number[]): number {
+  if (values.length < 2) return 0;
+  return percentile(values, 0.9) - percentile(values, 0.1);
+}
+
+function positionedTextItems(items: readonly unknown[]): readonly PositionedTextItem[] | null {
+  const textItems = items.filter(isTextItem).filter((item) => normalizeLine(item.str));
+  const positioned: PositionedTextItem[] = [];
+
+  for (const [originalIndex, item] of textItems.entries()) {
+    const transform = item.transform;
+    if (!transform || transform.length < 6) return null;
+    const x = Number(transform[4]);
+    const y = Number(transform[5]);
+    const width = Number(item.width ?? 0);
+    if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(width))
+      return null;
+    positioned.push({
+      text: normalizeLine(item.str),
+      x,
+      y,
+      width: Math.max(width, 0),
+      originalIndex,
+    });
+  }
+
+  return positioned.length >= 4 ? positioned : null;
+}
+
+function visualPdfLines(items: readonly PositionedTextItem[]): readonly VisualPdfLine[] {
+  const sorted = [...items].sort((left, right) => {
+    const yDelta = right.y - left.y;
+    if (Math.abs(yDelta) > 2) return yDelta;
+    if (left.x !== right.x) return left.x - right.x;
+    return left.originalIndex - right.originalIndex;
+  });
+  const lines: VisualPdfLine[] = [];
+  let current: PositionedTextItem[] = [];
+
+  const flush = (): void => {
+    if (current.length === 0) return;
+    const row = [...current].sort(
+      (left, right) => left.x - right.x || left.originalIndex - right.originalIndex,
+    );
+    let segment: PositionedTextItem[] = [];
+
+    const flushSegment = (): void => {
+      if (segment.length === 0) return;
+      let text = "";
+      let lastRight: number | null = null;
+      for (const item of segment) {
+        if (
+          text &&
+          lastRight !== null &&
+          item.x - lastRight > 2 &&
+          !text.endsWith(" ")
+        ) {
+          text += " ";
+        }
+        text += item.text;
+        lastRight = item.x + item.width;
+      }
+      const normalized = normalizeLine(text);
+      if (normalized) {
+        lines.push({
+          text: normalized,
+          xStart: Math.min(...segment.map((item) => item.x)),
+          xEnd: Math.max(...segment.map((item) => item.x + item.width)),
+          y: segment.reduce((sum, item) => sum + item.y, 0) / segment.length,
+          originalIndex: Math.min(...segment.map((item) => item.originalIndex)),
+        });
+      }
+      segment = [];
+    };
+
+    for (const item of row) {
+      const previous = segment[segment.length - 1];
+      if (previous && item.x - (previous.x + previous.width) > 140)
+        flushSegment();
+      segment.push(item);
+    }
+    flushSegment();
+    current = [];
+  };
+
+  for (const item of sorted) {
+    const anchor = current[0];
+    if (anchor && Math.abs(item.y - anchor.y) > 2) flush();
+    current.push(item);
+  }
+  flush();
+  return lines;
+}
+
+function shouldUseVisualReadingOrder(lines: readonly VisualPdfLine[]): boolean {
+  if (lines.length < 4) return false;
+  const xStarts = lines.map((line) => line.xStart);
+  const centers = lines.map((line) => (line.xStart + line.xEnd) / 2);
+  const singleColumn =
+    robustSpread(xStarts) <= 90 || robustSpread(centers) <= 110;
+  if (!singleColumn) return false;
+
+  const originalOrder = [...lines].sort(
+    (left, right) => left.originalIndex - right.originalIndex,
+  );
+  let upwardTransitions = 0;
+  for (let index = 1; index < originalOrder.length; index += 1) {
+    const previous = originalOrder[index - 1];
+    const current = originalOrder[index];
+    if (previous && current && current.y > previous.y + 4)
+      upwardTransitions += 1;
+  }
+  const transitions = Math.max(1, originalOrder.length - 1);
+  return upwardTransitions >= 2 && upwardTransitions / transitions >= 0.2;
+}
+
+function reconstructLines(items: readonly unknown[], page: number): readonly PdfLine[] {
+  const sequential = reconstructSequentialLines(items, page);
+  const positioned = positionedTextItems(items);
+  if (!positioned) return sequential;
+  const visual = visualPdfLines(positioned);
+  if (!shouldUseVisualReadingOrder(visual)) return sequential;
+  return visual.map((line) => ({ text: line.text, page }));
 }
 
 function sectionHeading(line: string): string | null {
@@ -349,7 +502,13 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
     const splitInline = splitNumberedInlineDishes(line);
     const inline = splitInline ? null : parseInlineDish(line);
     const standaloneName = canonicalPdfDishName(line);
-    const isStandalonePricedDishName = looksLikeDishName(standaloneName) && standalonePrice.test(nextLine);
+    const nextLineIsSamePage =
+      lines[index]?.page !== undefined &&
+      lines[index + 1]?.page === lines[index]?.page;
+    const isStandalonePricedDishName =
+      looksLikeDishName(standaloneName) &&
+      nextLineIsSamePage &&
+      standalonePrice.test(nextLine);
     const section = isStandalonePricedDishName || inline || splitInline ? null : sectionHeading(line);
     if (section) {
       currentSection = section;
@@ -378,7 +537,11 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
       const price = parsedPrice(standalone[1], standalone[2]);
       if (price && index > 0) {
         const previousIndex = index - 1;
-        const previous = lines[previousIndex]?.text ?? "";
+        const previousLine = lines[previousIndex];
+        const currentLine = lines[index];
+        if (!previousLine || !currentLine || previousLine.page !== currentLine.page)
+          continue;
+        const previous = previousLine.text;
         const rawName = canonicalPdfDishName(previous);
         if (looksLikeDishName(rawName)) {
           const continuation = wrappedName(rawName, lines, index);
