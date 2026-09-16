@@ -19,7 +19,7 @@ describe("trailing-price HTML card recovery", () => {
     `);
 
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
-      "trailing-price-card-v12",
+      "trailing-price-card-v13",
     );
     expect(
       items.map((item) => [item.name, item.priceMinor, item.priceKind]),
@@ -184,6 +184,34 @@ describe("trailing-price HTML card recovery", () => {
     `);
 
     expect(items).toEqual([]);
+  });
+
+  it("uses the nearest title after an allergen boundary instead of the previous card description", () => {
+    const items = recoverTrailingPriceCardHtmlItems(`
+      <html><body>
+        <div>Dish One</div><div>kr 150</div>
+        <div>Previous Garnish</div><div>Allergens: 1, 2, 3</div><div>Dish Two</div><div>kr 130</div>
+        <div>Dish Three</div><div>kr 120</div>
+        <div>Previous Sauce</div><div>Allergener: melk, egg</div><div>Dish Four</div><div>kr 140</div>
+        <div>Dish Five</div><div>kr 160</div>
+        <div>Dish Six</div><div>kr 170</div>
+        <div>Dish Seven</div><div>kr 180</div>
+        <div>Dish Eight</div><div>kr 190</div>
+      </body></html>
+    `);
+
+    expect(items.map((item) => item.name)).toEqual([
+      "Dish One",
+      "Dish Two",
+      "Dish Three",
+      "Dish Four",
+      "Dish Five",
+      "Dish Six",
+      "Dish Seven",
+      "Dish Eight",
+    ]);
+    expect(items.some((item) => item.name === "Previous Garnish")).toBe(false);
+    expect(items.some((item) => item.name === "Previous Sauce")).toBe(false);
   });
 
   it("prefers the leading dish name in repeated title-description-component-price cards", () => {
