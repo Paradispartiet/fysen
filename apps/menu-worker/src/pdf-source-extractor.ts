@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v17";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v18";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -88,7 +88,7 @@ function isBeverageSectionHeading(value: string): boolean {
 
 function isFoodSectionHeading(value: string): boolean {
   const line = normalizeScopeLine(value);
-  return /^(?:do ngot(?: dessert)?|desserts?|dolci|mat|food|forretter|starters?|smaretter|small plates?|snacks?|hovedretter|main courses?|mains?|sides?|burgers?|set menus?)$/u.test(
+  return /^(?:do ngot(?: dessert)?|desserts?|dolci|mat|food|all day|evening|forretter|starters?|smaretter|small plates?|snacks?|hovedretter|main courses?|mains?|sides?|burgers?|set menus?)$/u.test(
     line,
   );
 }
