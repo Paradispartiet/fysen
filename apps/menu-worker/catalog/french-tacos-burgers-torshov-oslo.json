@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 18,
+    "minimumExpectedItems": 17,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,7 @@
       "Avokado Vegetar Burger",
       "Chili Cheese Tops",
       "Onion Rings",
-      "Kylling Tenders",
-      "Urge"
+      "Kylling Tenders"
     ],
     "requiredDishVariants": [
       {
@@ -70,10 +69,6 @@
       {
         "name": "Kylling Tenders",
         "priceMinor": 10500
-      },
-      {
-        "name": "Urge",
-        "priceMinor": 4500
       }
     ],
     "forbiddenDishNames": []

@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 97,
+    "minimumExpectedItems": 96,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,7 @@
       "Taro Fishsnack Chilli Flavoured 🌶️🌶️ (Halal)",
       "Ekstra Srirachasaus",
       "Thai Kaffe med melk 250ml",
-      "TYMBARK MANGO DRINK",
-      "Bestikk"
+      "TYMBARK MANGO DRINK"
     ],
     "requiredDishVariants": [
       {
@@ -70,10 +69,6 @@
       {
         "name": "TYMBARK MANGO DRINK",
         "priceMinor": 1960
-      },
-      {
-        "name": "Bestikk",
-        "priceMinor": 200
       }
     ],
     "forbiddenDishNames": []

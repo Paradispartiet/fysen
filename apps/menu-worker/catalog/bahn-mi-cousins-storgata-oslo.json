@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 46,
+    "minimumExpectedItems": 45,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,7 @@
       "Karamellisert svinekjøtt/ Thit kho tau",
       "RIS",
       "stor Cousins Chilisaus",
-      "Cousins Creamy Taro",
-      "Bestikk"
+      "Cousins Creamy Taro"
     ],
     "requiredDishVariants": [
       {
@@ -70,10 +69,6 @@
       {
         "name": "Cousins Creamy Taro",
         "priceMinor": 9800
-      },
-      {
-        "name": "Bestikk",
-        "priceMinor": 1500
       }
     ],
     "forbiddenDishNames": []

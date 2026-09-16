@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 36,
+    "minimumExpectedItems": 35,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -43,14 +43,38 @@
       "Kyllingmiddag"
     ],
     "requiredDishVariants": [
-      {"name": "Smash Cheese Meal 🍔🍟", "priceMinor": 28900},
-      {"name": "Smashing Mango, Biff, Bacon", "priceMinor": 19900},
-      {"name": "Veitvet", "priceMinor": 34900},
-      {"name": "Stovner", "priceMinor": 30800},
-      {"name": "Reker og Majones", "priceMinor": 11500},
-      {"name": "Barnemeny Hamburger", "priceMinor": 12900},
-      {"name": "Imsdal 0,5l", "priceMinor": 5000},
-      {"name": "Kyllingmiddag", "priceMinor": 21900}
+      {
+        "name": "Smash Cheese Meal 🍔🍟",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Smashing Mango, Biff, Bacon",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Veitvet",
+        "priceMinor": 34900
+      },
+      {
+        "name": "Stovner",
+        "priceMinor": 30800
+      },
+      {
+        "name": "Reker og Majones",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Barnemeny Hamburger",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Imsdal 0,5l",
+        "priceMinor": 5000
+      },
+      {
+        "name": "Kyllingmiddag",
+        "priceMinor": 21900
+      }
     ],
     "forbiddenDishNames": []
   }

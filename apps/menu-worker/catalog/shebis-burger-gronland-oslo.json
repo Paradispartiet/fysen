@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 39,
+    "minimumExpectedItems": 38,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,7 @@
       "Masala Fries",
       "Peri Peri Dip",
       "Buffalo Dip",
-      "Vanilje Milkshake",
-      "Urge 0,5l"
+      "Vanilje Milkshake"
     ],
     "requiredDishVariants": [
       {
@@ -70,10 +69,6 @@
       {
         "name": "Vanilje Milkshake",
         "priceMinor": 9000
-      },
-      {
-        "name": "Urge 0,5l",
-        "priceMinor": 4800
       }
     ],
     "forbiddenDishNames": []

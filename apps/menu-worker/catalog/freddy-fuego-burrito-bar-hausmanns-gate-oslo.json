@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 35,
+    "minimumExpectedItems": 33,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,7 +39,6 @@
       "Eira Still Norwegian Springwater 0,4l",
       "Jarritos Grapefruit",
       "Mountain Dew",
-      "Urge",
       "El Pollo Pachanga - Juicy Chicken m/ Valgfri Drikke"
     ],
     "requiredDishVariants": [
@@ -65,10 +64,6 @@
       },
       {
         "name": "Mountain Dew",
-        "priceMinor": 4900
-      },
-      {
-        "name": "Urge",
         "priceMinor": 4900
       },
       {

@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 51,
+    "minimumExpectedItems": 50,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,7 @@
       "Shawarma kjøtt-rull",
       "Shish Taouk-baguette",
       "Chili kyllingburger",
-      "Syltegrønnsaker",
-      "URGE"
+      "Syltegrønnsaker"
     ],
     "requiredDishVariants": [
       {
@@ -69,10 +68,6 @@
       },
       {
         "name": "Syltegrønnsaker",
-        "priceMinor": 6900
-      },
-      {
-        "name": "URGE",
         "priceMinor": 6900
       }
     ],

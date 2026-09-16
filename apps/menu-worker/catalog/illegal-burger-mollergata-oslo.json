@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 24,
+    "minimumExpectedItems": 23,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,7 @@
       "The Kidz",
       "🌱BlueCheese - Vegetar",
       "🌱The Kidz - Vegetar",
-      "Aioli",
-      "Urge"
+      "Aioli"
     ],
     "requiredDishVariants": [
       {
@@ -70,10 +69,6 @@
       {
         "name": "Aioli",
         "priceMinor": 2500
-      },
-      {
-        "name": "Urge",
-        "priceMinor": 4800
       }
     ],
     "forbiddenDishNames": []

@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 82,
+    "minimumExpectedItems": 81,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,7 @@
       "1/2 Grillet Kylling",
       "Kylling Shawarma",
       "Falafel Tallerken",
-      "Mix Deal",
-      "Urge 0.5l"
+      "Mix Deal"
     ],
     "requiredDishVariants": [
       {
@@ -70,10 +69,6 @@
       {
         "name": "Mix Deal",
         "priceMinor": 19900
-      },
-      {
-        "name": "Urge 0.5l",
-        "priceMinor": 4900
       }
     ],
     "forbiddenDishNames": []

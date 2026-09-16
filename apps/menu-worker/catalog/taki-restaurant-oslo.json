@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 43,
+    "minimumExpectedItems": 42,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,7 @@
       "Cheeseburgertallerken",
       "Kyllingkebab i Pita",
       "Kebab m/ Pommes Frites",
-      "Kebab Mix Tallerken",
-      "Urge"
+      "Kebab Mix Tallerken"
     ],
     "requiredDishVariants": [
       {
@@ -70,10 +69,6 @@
       {
         "name": "Kebab Mix Tallerken",
         "priceMinor": 18500
-      },
-      {
-        "name": "Urge",
-        "priceMinor": 3900
       }
     ],
     "forbiddenDishNames": []

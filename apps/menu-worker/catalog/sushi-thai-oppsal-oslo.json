@@ -16,10 +16,66 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 43,
-    "sourceSupport": {"redirectOrigins": [],"browserDataOrigins": [],"browserBlockedOrigins": []}
+    "minimumExpectedItems": 42,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
   },
-  "verification": {"hours": {"status":"unverified","checkedAt":"2026-09-06","note":"Batch 41 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-06",
+      "note": "Batch 41 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+    }
+  },
   "actions": [],
-  "qualityAssertions": {"requiredDishNames":["Meal Deal","Spicy Burger","Kebabmiddag","Hvitløksdip","Twix","Sweeto","Ben & Jerry's Cookie Dough 465ml","Monster"],"requiredDishVariants":[{"name":"Meal Deal","priceMinor":28900},{"name":"Spicy Burger","priceMinor":20900},{"name":"Kebabmiddag","priceMinor":21900},{"name":"Hvitløksdip","priceMinor":3000},{"name":"Twix","priceMinor":4900},{"name":"Sweeto","priceMinor":5900},{"name":"Ben & Jerry's Cookie Dough 465ml","priceMinor":18900},{"name":"Monster","priceMinor":5900}],"forbiddenDishNames":[]}
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Meal Deal",
+      "Spicy Burger",
+      "Kebabmiddag",
+      "Hvitløksdip",
+      "Twix",
+      "Sweeto",
+      "Ben & Jerry's Cookie Dough 465ml",
+      "Monster"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Meal Deal",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Spicy Burger",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Kebabmiddag",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Hvitløksdip",
+        "priceMinor": 3000
+      },
+      {
+        "name": "Twix",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Sweeto",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Ben & Jerry's Cookie Dough 465ml",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Monster",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
 }

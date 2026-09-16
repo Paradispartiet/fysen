@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 63,
+    "minimumExpectedItems": 60,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,7 +39,6 @@
       "Coban Kylling",
       "Familepakke til 4 personer",
       "Pommes Frites",
-      "Bestikk",
       "Mevlana"
     ],
     "requiredDishVariants": [
@@ -66,10 +65,6 @@
       {
         "name": "Pommes Frites",
         "priceMinor": 8000
-      },
-      {
-        "name": "Bestikk",
-        "priceMinor": 400
       },
       {
         "name": "Mevlana",

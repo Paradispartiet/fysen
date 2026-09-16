@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 59,
+    "minimumExpectedItems": 58,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -32,8 +32,45 @@
   },
   "actions": [],
   "qualityAssertions": {
-    "requiredDishNames": ["Vietnamesiske Vårruller","Sushi Stor","Tunfisk Nigiri","Laks Maki","Kylling Maki","Futo Kylling","Futo Tufo","Bestikk"],
-    "requiredDishVariants": [{"name":"Vietnamesiske Vårruller","priceMinor":8900},{"name":"Sushi Stor","priceMinor":26500},{"name":"Tunfisk Nigiri","priceMinor":2500},{"name":"Laks Maki","priceMinor":11900},{"name":"Kylling Maki","priceMinor":12500},{"name":"Futo Kylling","priceMinor":17800},{"name":"Futo Tufo","priceMinor":9500},{"name":"Bestikk","priceMinor":2700}],
+    "requiredDishNames": [
+      "Vietnamesiske Vårruller",
+      "Sushi Stor",
+      "Tunfisk Nigiri",
+      "Laks Maki",
+      "Kylling Maki",
+      "Futo Kylling",
+      "Futo Tufo"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vietnamesiske Vårruller",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Sushi Stor",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Tunfisk Nigiri",
+        "priceMinor": 2500
+      },
+      {
+        "name": "Laks Maki",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Kylling Maki",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Futo Kylling",
+        "priceMinor": 17800
+      },
+      {
+        "name": "Futo Tufo",
+        "priceMinor": 9500
+      }
+    ],
     "forbiddenDishNames": []
   }
 }

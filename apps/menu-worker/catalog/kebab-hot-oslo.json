@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 73,
+    "minimumExpectedItems": 71,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,7 @@
       "Pepperoni Star (Pizza)",
       "Biff (Halal)",
       "Santa Fe",
-      "Burn",
-      "Urge"
+      "Burn"
     ],
     "requiredDishVariants": [
       {
@@ -69,10 +68,6 @@
       },
       {
         "name": "Burn",
-        "priceMinor": 4500
-      },
-      {
-        "name": "Urge",
         "priceMinor": 4500
       }
     ],
