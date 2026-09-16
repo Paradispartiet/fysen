@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 19,
+    "minimumExpectedItems": 20,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -37,7 +37,7 @@
       "TOAST SKAGEN",
       "PLANT-BASED BURGER",
       "SPANISH OLIVES",
-      "CRISPS",
+      "BISCOTTO",
       "SALTED CUCUMBER",
       "CRUDITÉS & DIP",
       "ANTONIUS OSCIETRA CAVIAR"
@@ -60,8 +60,8 @@
         "priceMinor": 8500
       },
       {
-        "name": "CRISPS",
-        "priceMinor": 6000
+        "name": "BISCOTTO",
+        "priceMinor": 3500
       },
       {
         "name": "SALTED CUCUMBER",
