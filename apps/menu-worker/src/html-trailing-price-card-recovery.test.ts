@@ -19,7 +19,7 @@ describe("trailing-price HTML card recovery", () => {
     `);
 
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
-      "trailing-price-card-v14",
+      "trailing-price-card-v15",
     );
     expect(
       items.map((item) => [item.name, item.priceMinor, item.priceKind]),
@@ -186,6 +186,50 @@ describe("trailing-price HTML card recovery", () => {
       ["Phad Mhi", 25900],
     ]);
     expect(isStrongNumberedTrailingPriceCardRecovery(items)).toBe(true);
+  });
+
+  it("canonicalizes duplicate menu indices while preserving ambiguous duplicate names", () => {
+    const items = recoverTrailingPriceCardHtmlItems(`
+      <html><body>
+        <p>2 Crispy Thigh / leg</p><p>45 kr</p>
+        <p>3. 5 Hot Wings</p><p>70 kr</p>
+        <p>4. 10 Hot Wings</p><p>120 kr</p>
+        <p>5. 20 Hot Wings</p><p>199 kr</p>
+        <p>9. SMALL BOX</p><p>115 kr</p>
+        <p>10. SAVING BOX</p><p>145 kr</p>
+        <p>11. CHICKEN DUO BOX</p><p>255 kr</p>
+        <p>12. BUCKET MIX</p><p>365 kr</p>
+        <p>35. TENDERSDELUX MIDDAG 150g</p><p>169 kr</p>
+        <p>35. TENDERSDELUX MIDDAG 200g</p><p>209 kr</p>
+        <p>41. KOTTU LAM</p><p>169 kr</p>
+        <p>41. KOTTU KYLLING</p><p>169 kr</p>
+        <p>45. CHICKEN TIKKA</p><p>219 kr</p>
+        <p>57. CHOP SUEY</p><p>169 kr</p>
+        <p>58. STEKT</p><p>169 kr</p>
+        <p>59. STEKT</p><p>169 kr</p>
+        <p>60. STEKT</p><p>169 kr</p>
+        <p>61. PHAD THAI</p><p>169 kr</p>
+        <p>65. KEBAB PIZZA</p><p>299 kr</p>
+        <p>66. LA PEPE</p><p>299 kr</p>
+        <p>67. MILANO</p><p>299 kr</p>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual(
+      expect.arrayContaining([
+        ["5 Hot Wings", 7000],
+        ["KOTTU LAM", 16900],
+        ["KOTTU KYLLING", 16900],
+        ["CHICKEN TIKKA", 21900],
+        ["TENDERSDELUX MIDDAG 150g", 16900],
+        ["TENDERSDELUX MIDDAG 200g", 20900],
+        ["PHAD THAI", 16900],
+        ["KEBAB PIZZA", 29900],
+        ["58. STEKT", 16900],
+        ["59. STEKT", 16900],
+        ["60. STEKT", 16900],
+      ]),
+    );
   });
 
   it("uses an inline dish title and honors an explicit a-la-carte scope", () => {
