@@ -24,7 +24,7 @@
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-09-16",
-          "note": "Fresh exact-head v21 reproof after semantic review of the promoted 19-item artifact found one legitimate current food row omitted: BISCOTTO 35,-. The first-party July 2026 PDF publishes broad individually priced ALL DAY and EVENING food sections alongside extensive spirits, cocktails, wine and beer sections. Bar Boman and the registered restaurant business publish the complex as Stortingsgaten 24/26, 0161 Oslo; the canonical Oslo resolver requires one concrete address point, so house number 24 is used while retaining the published 24/26 identity in this note. Intake must recover the complete food set, including explicit low inline prices, while keeping beverage rows and beverage headings outside canonical dish output."
+          "note": "Fresh reproof after the prior P1 review held Bar Boman because the then-current PDF exposed only one unique canonical priced dish. The current first-party July 2026 PDF materially changed and now visibly publishes broad individually priced ALL DAY and EVENING food sections alongside extensive spirits, cocktails, wine and beer sections. Bar Boman and the registered restaurant business publish the complex as Stortingsgaten 24/26, 0161 Oslo; the canonical Oslo resolver requires one concrete address point, so house number 24 is used while retaining the published 24/26 identity in this note. Intake must recover the food while keeping beverage rows and beverage headings outside canonical dish output."
         }
       },
       "actions": [],
