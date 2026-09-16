@@ -19,7 +19,7 @@ describe("trailing-price HTML card recovery", () => {
     `);
 
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
-      "trailing-price-card-v13",
+      "trailing-price-card-v14",
     );
     expect(
       items.map((item) => [item.name, item.priceMinor, item.priceKind]),
@@ -84,6 +84,56 @@ describe("trailing-price HTML card recovery", () => {
       "Dish Five",
     ]);
     expect(items.some((item) => item.name === "Ambiguous Dish")).toBe(false);
+  });
+
+  it("ignores inline add-on prices so the enclosing dish keeps its own later price", () => {
+    const items = recoverTrailingPriceCardHtmlItems(`
+      <html><body>
+        <h2>Sandwiches</h2>
+        <div>Fried plaice</div>
+        <div>with fresh shrimp and remoulade</div>
+        <div>Add Kalix roe 75 NOK</div>
+        <div>(Contains: Wheat, eggs, fish)</div>
+        <div>295 NOK</div>
+
+        <div>Braised brisket</div>
+        <div>with cabbage salad and cheddar sauce</div>
+        <div>Add french fries: NOK 65</div>
+        <div>(Contains: Wheat, milk)</div>
+        <div>345 NOK</div>
+
+        <div>Dish Three</div><div>195 NOK</div>
+        <div>Dish Four</div><div>205 NOK</div>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toContainEqual([
+      "Fried plaice",
+      29500,
+    ]);
+    expect(items.map((item) => [item.name, item.priceMinor])).toContainEqual([
+      "Braised brisket",
+      34500,
+    ]);
+    expect(items.some((item) => /^Add\b/u.test(item.name))).toBe(false);
+  });
+
+  it("fails closed on quantity multi-price lines with currency before the first amount", () => {
+    const items = recoverTrailingPriceCardHtmlItems(`
+      <html><body>
+        <div>Dish One</div><div>199 NOK</div>
+        <div>Natural oysters with lemon</div>
+        <div>Fine de Claire</div>
+        <div>(Contains: Molluscs, sulphites)</div>
+        <div>3 pcs NOK 160 / 6 pcs NOK 295</div>
+        <div>Dish Two</div><div>209 NOK</div>
+        <div>Dish Three</div><div>219 NOK</div>
+        <div>Dish Four</div><div>229 NOK</div>
+      </body></html>
+    `);
+
+    expect(items.some((item) => item.name.includes("3 pcs"))).toBe(false);
+    expect(items.some((item) => item.name === "Natural oysters with lemon")).toBe(false);
   });
 
   it("does not turn navigation, commerce prompts or descriptive prose into dishes", () => {
