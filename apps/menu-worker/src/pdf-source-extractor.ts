@@ -381,7 +381,9 @@ export function recoverExplicitLowPerItemPdfRows(
 export function filterPdfConflictMetadataItems(
   items: readonly MenuObservedItem[],
 ): readonly MenuObservedItem[] {
-  return items.filter((item) => !looksLikePdfDescriptionFragment(item.name));
+  return items.filter(
+    (item) => !looksLikeSplitPdfAllergenCodeFragment(item.name),
+  );
 }
 
 export function scopePdfMenuItems(
