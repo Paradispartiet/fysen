@@ -40,17 +40,13 @@ const RECOVERY_ALLERGEN_CODES = new Set([
   "al",
   "b",
   "bl",
-  "by",
-  "c",
   "ca",
   "e",
   "f",
   "g",
   "h",
   "ha",
-  "hn",
   "hne",
-  "lu",
   "m",
   "ma",
   "mk",
@@ -59,19 +55,27 @@ const RECOVERY_ALLERGEN_CODES = new Set([
   "pe",
   "pi",
   "r",
-  "s",
   "se",
   "sem",
   "sk",
   "sl",
   "sn",
   "so",
-  "sp",
   "su",
   "sy",
   "va",
-  "vn",
   "wa",
+]);
+
+const SPLIT_PDF_ALLERGEN_CODES = new Set([
+  ...RECOVERY_ALLERGEN_CODES,
+  "by",
+  "c",
+  "hn",
+  "lu",
+  "s",
+  "sp",
+  "vn",
 ]);
 
 function looksLikeSplitPdfAllergenCodeFragment(value: string): boolean {
@@ -87,7 +91,7 @@ function looksLikeSplitPdfAllergenCodeFragment(value: string): boolean {
     tokens.every(
       (token) =>
         /^[A-ZÆØÅ]{1,3}$/u.test(token) &&
-        RECOVERY_ALLERGEN_CODES.has(token.toLocaleLowerCase("nb-NO")),
+        SPLIT_PDF_ALLERGEN_CODES.has(token.toLocaleLowerCase("nb-NO")),
     )
   );
 }
