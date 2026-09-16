@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-dognvill-reproof",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dognvill-bjorvika-oslo",
+        "name": "Døgnvill Bjørvika",
+        "websiteUrl": "https://www.dognvillburger.no/restaurant/bjorvika",
+        "address": "Operagata 6, 0150 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO",
+        "latitude": 59.908239,
+        "longitude": 10.7536
+      },
+      "menuSource": {
+        "url": "https://www.dognvillburger.no/en/meny/bjorvika",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-16",
+          "note": "Exact-head Døgnvill parser-selection reproof against the current first-party English menu."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dognvill-tjuvholmen-oslo",
+        "name": "Døgnvill Tjuvholmen",
+        "websiteUrl": "https://www.dognvillburger.no/restaurant/tjuvholmen",
+        "address": "Lille Stranden 10, 0252 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO",
+        "latitude": 59.908422,
+        "longitude": 10.723568
+      },
+      "menuSource": {
+        "url": "https://www.dognvillburger.no/en/meny/tjuvholmen",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-16",
+          "note": "Exact-head Døgnvill parser-selection reproof against the current first-party English menu."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dognvill-vulkan-oslo",
+        "name": "Døgnvill Vulkan",
+        "websiteUrl": "https://www.dognvillburger.no/restaurant/vulkan",
+        "address": "Vulkan 12, 0178 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO",
+        "latitude": 59.921653,
+        "longitude": 10.751795
+      },
+      "menuSource": {
+        "url": "https://www.dognvillburger.no/en/meny/vulkan",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-16",
+          "note": "Exact-head Døgnvill parser-selection reproof against the current first-party English menu."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ]
+}
