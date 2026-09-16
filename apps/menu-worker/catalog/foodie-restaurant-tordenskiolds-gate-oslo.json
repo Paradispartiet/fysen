@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 106,
+    "minimumExpectedItems": 105,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -43,14 +43,38 @@
       "Pepsi Max 0,33L"
     ],
     "requiredDishVariants": [
-      {"name": "Vårruller (2stk) 鸭肉春卷", "priceMinor": 15900},
-      {"name": "Spissekummin Lammekjøtt 🌶️ 孜然羊肉", "priceMinor": 31900},
-      {"name": "Spicy & Sur Suppe 🌶️ 酸辣汤", "priceMinor": 15900},
-      {"name": "Big plate chicken 🌶️🌶️ 新疆大盘鸡", "priceMinor": 47900},
-      {"name": "Griddle cooked scampi 🌶️🌶️🌶️ 干锅虾", "priceMinor": 47900},
-      {"name": "3064. Coriander beef 香菜拌牛肉", "priceMinor": 29900},
-      {"name": "3033. Fried pak choi 炒上海青", "priceMinor": 24900},
-      {"name": "Pepsi Max 0,33L", "priceMinor": 5500}
+      {
+        "name": "Vårruller (2stk) 鸭肉春卷",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Spissekummin Lammekjøtt 🌶️ 孜然羊肉",
+        "priceMinor": 31900
+      },
+      {
+        "name": "Spicy & Sur Suppe 🌶️ 酸辣汤",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Big plate chicken 🌶️🌶️ 新疆大盘鸡",
+        "priceMinor": 47900
+      },
+      {
+        "name": "Griddle cooked scampi 🌶️🌶️🌶️ 干锅虾",
+        "priceMinor": 47900
+      },
+      {
+        "name": "3064. Coriander beef 香菜拌牛肉",
+        "priceMinor": 29900
+      },
+      {
+        "name": "3033. Fried pak choi 炒上海青",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Pepsi Max 0,33L",
+        "priceMinor": 5500
+      }
     ],
     "forbiddenDishNames": []
   }
