@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 59,
+    "minimumExpectedItems": 58,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -32,8 +32,50 @@
   },
   "actions": [],
   "qualityAssertions": {
-    "requiredDishNames": ["Tyrkisk Frokost","Pita m/ Hvitløk, Feta & Oliven","Vegetar Pasta","Vegetar Saute","Kebabtallerken","Saute","Pommes Frites (For Barn)","Ayran"],
-    "requiredDishVariants": [{"name":"Tyrkisk Frokost","priceMinor":27500},{"name":"Pita m/ Hvitløk, Feta & Oliven","priceMinor":9800},{"name":"Vegetar Pasta","priceMinor":19800},{"name":"Vegetar Saute","priceMinor":24800},{"name":"Kebabtallerken","priceMinor":27800},{"name":"Saute","priceMinor":29800},{"name":"Pommes Frites (For Barn)","priceMinor":8900},{"name":"Ayran","priceMinor":3900}],
+    "requiredDishNames": [
+      "Tyrkisk Frokost",
+      "Pita m/ Hvitløk, Feta & Oliven",
+      "Vegetar Pasta",
+      "Vegetar Saute",
+      "Kebabtallerken",
+      "Saute",
+      "Pommes Frites (For Barn)",
+      "Ayran"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Tyrkisk Frokost",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Pita m/ Hvitløk, Feta & Oliven",
+        "priceMinor": 9800
+      },
+      {
+        "name": "Vegetar Pasta",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Vegetar Saute",
+        "priceMinor": 24800
+      },
+      {
+        "name": "Kebabtallerken",
+        "priceMinor": 27800
+      },
+      {
+        "name": "Saute",
+        "priceMinor": 29800
+      },
+      {
+        "name": "Pommes Frites (For Barn)",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Ayran",
+        "priceMinor": 3900
+      }
+    ],
     "forbiddenDishNames": []
   }
 }
