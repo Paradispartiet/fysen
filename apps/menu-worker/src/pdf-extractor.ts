@@ -299,10 +299,19 @@ function reconstructLines(items: readonly unknown[], page: number): readonly Pdf
   const visual = visualPdfLines(positioned);
   const useVisual = shouldUseVisualReadingOrder(visual);
   const visualLines = visual.map((line) => ({ text: line.text, page }));
-  const sequentialItemCount = buildItems(sequential).length;
-  const visualItemCount = buildItems(visualLines).length;
-  console.error("[TEMP pdf-reading-order]", JSON.stringify({ page, useVisual, sequentialItemCount, visualItemCount }));
-  return visualLines;
+  const sequentialItems = buildItems(sequential);
+  const visualItems = buildItems(visualLines);
+  console.error(
+    "[TEMP pdf-reading-order-candidates]",
+    JSON.stringify({
+      page,
+      useVisual,
+      sequential: sequentialItems.map((item) => item.name),
+      visual: visualItems.map((item) => item.name),
+    }),
+  );
+  if (!useVisual) return sequential;
+  return visualItems.length >= sequentialItems.length ? visualLines : sequential;
 }
 
 function sectionHeading(line: string): string | null {
