@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v14";
+  "trailing-price-card-v16";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -450,53 +450,57 @@ function canonicalizeStrongNumberedMenu(
   const ordered = [...candidates].sort(
     (a, b) => a.item.position - b.item.position,
   );
-  const byIndex = new Map<number, NumberedTrailingPriceCandidate>();
+  const numbered = ordered
+    .map((candidate) => parseNumberedCandidate(candidate))
+    .filter(
+      (candidate): candidate is NumberedTrailingPriceCandidate =>
+        candidate !== null,
+    );
+  const distinctIndices = new Map<number, NumberedTrailingPriceCandidate>();
 
-  for (const candidate of ordered) {
-    const numbered = parseNumberedCandidate(candidate);
-    if (!numbered) continue;
-    const existing = byIndex.get(numbered.menuIndex);
-    if (existing) {
-      const sameName =
-        normalizeDishName(existing.name) === normalizeDishName(numbered.name);
-      const samePrice =
-        existing.candidate.item.priceMinor ===
-        numbered.candidate.item.priceMinor;
-      const samePriceKind =
-        existing.candidate.item.priceKind === numbered.candidate.item.priceKind;
-      if (!sameName || !samePrice || !samePriceKind) return null;
-      continue;
+  for (const candidate of numbered) {
+    if (!distinctIndices.has(candidate.menuIndex)) {
+      distinctIndices.set(candidate.menuIndex, candidate);
     }
-    byIndex.set(numbered.menuIndex, numbered);
   }
 
-  const numbered = [...byIndex.values()].sort(
-    (a, b) => a.candidate.item.position - b.candidate.item.position,
+  const indexEvidence = [...distinctIndices.values()].sort(
+    (a, b) => a.menuIndex - b.menuIndex,
   );
-  if (numbered.length < 8) return null;
+  if (indexEvidence.length < 8) return null;
 
-  for (let index = 1; index < numbered.length; index += 1) {
-    if (
-      (numbered[index]?.menuIndex ?? 0) <= (numbered[index - 1]?.menuIndex ?? 0)
-    )
-      return null;
-  }
-
-  const firstIndex = numbered[0]?.menuIndex ?? 0;
-  const lastIndex = numbered[numbered.length - 1]?.menuIndex ?? 0;
+  const firstIndex = indexEvidence[0]?.menuIndex ?? 0;
+  const lastIndex = indexEvidence[indexEvidence.length - 1]?.menuIndex ?? 0;
   const indexSpan = lastIndex - firstIndex + 1;
-  if (firstIndex > 5 || indexSpan < 8 || numbered.length / indexSpan < 0.7)
+  if (
+    firstIndex > 5 ||
+    indexSpan < 8 ||
+    indexEvidence.length / indexSpan < 0.7
+  )
     return null;
 
-  return numbered.map(({ candidate, name }) => ({
-    ...candidate,
-    item: {
-      ...candidate.item,
-      name,
-      normalizedName: normalizeDishName(name),
-      sourceKey: createMenuItemSourceKey(name),
-    },
-  }));
+  const canonicalNameCounts = new Map<string, number>();
+  for (const candidate of numbered) {
+    const normalizedName = normalizeDishName(candidate.name);
+    canonicalNameCounts.set(
+      normalizedName,
+      (canonicalNameCounts.get(normalizedName) ?? 0) + 1,
+    );
+  }
+
+  return numbered.map(({ candidate, name }) => {
+    const normalizedName = normalizeDishName(name);
+    if ((canonicalNameCounts.get(normalizedName) ?? 0) !== 1) return candidate;
+    return {
+      ...candidate,
+      item: {
+        ...candidate.item,
+        name,
+        normalizedName,
+        sourceKey: createMenuItemSourceKey(name),
+      },
+    };
+  });
 }
 
 export function isStrongNumberedTrailingPriceCardRecovery(
