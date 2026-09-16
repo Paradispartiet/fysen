@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-palmen-reproof",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "palmen-restaurant-oslo",
+        "name": "Palmen Restaurant",
+        "websiteUrl": "https://www.scandichotels.com/no/hotell/grand-hotel-oslo-by-scandic/palmen",
+        "address": "Karl Johans gate 31, 0159 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://menu.scandichotels.com/RestaurantMenuService/GetMenufile?fileId=93764&hotelId=340&restId=rest2",
+        "sourceType": "pdf",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-16",
+          "note": "Fresh exact-head reproof of the current first-party Palmen dinner PDF linked from Scandic after generic pdf-text-v22 wine recommendation/pairing scoping. The textual PDF publishes substantial named and individually priced dinner dishes alongside interleaved wine-pairing rows; intake remains fail-closed unless generic beverage scope excludes those rows and resumes at bilingual food-course headings without source substitution."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "3 retters middagsmeny",
+        "Sauvignon Blanc Porcupine Boekhoutskloof South Africa",
+        "Riesling Charm Georg Breuer Rheingau Germany",
+        "Barbera d’Alba Paolo Scavino Italy",
+        "Chablis Domaine Brocard Burgundy France",
+        "Pinot Grigio Elena Walch Alto Adige Italy",
+        "Tokaij Late Harvest The Royal Tokaji Wine Company Hungary"
+      ]
+    }
+  ]
+}
