@@ -28,7 +28,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v17");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v20");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -159,6 +159,19 @@ describe("PDF source scope", () => {
     ]);
   });
 
+  it("recovers an explicit low PDF price with a visible currency-style suffix", () => {
+    const visibleText = [
+      "ALL DAY",
+      "BISCOTTO",
+      "35,-",
+    ].join("\n");
+
+    const recovered = recoverExplicitLowPerItemPdfRows(visibleText, []);
+    expect(recovered.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["BISCOTTO", 3500],
+    ]);
+  });
+
   it("does not recover low bare-number or non-per-item price lines", () => {
     const visibleText = [
       "DESSERT",
@@ -202,6 +215,52 @@ describe("PDF source scope", () => {
 
     expect(scoped.map((item) => item.name)).toEqual([
       "Cà ri gà / Chicken curry",
+    ]);
+  });
+
+  it("resumes food scope at service headings and blocks common spirit section families", () => {
+    const lines = [
+      "SPECIALS",
+      "225,-",
+      "COCKTAILS",
+      "House Martini 195",
+      "ALL DAY",
+      "Avocado Toast 279",
+      "Chicken Caesar Salad 325",
+      "SINGLE MALT WHISKY",
+      "Highland 12y 215",
+      "VODKA",
+      "House Vodka 135",
+      "GIN",
+      "London Dry 145",
+      "RUM",
+      "Dark Rum 155",
+      "TEQUILA & MEZCAL",
+      "Reposado 165",
+      "AQUAVIT",
+      "Linie 145",
+      "LIQUEURS",
+      "Amaretto 109",
+      "CALVADOS",
+      "Apple Brandy 129",
+      "ARMAGNAC",
+      "House Armagnac 155",
+      "GRAPPA",
+      "Aged Grappa 169",
+      "EVENING",
+      "Salted Cucumber 95",
+      "Spanish Anchovies 125",
+      "WINE BY THE GLASS",
+      "House White 175",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual([
+      "Avocado Toast",
+      "Chicken Caesar Salad",
+      "Salted Cucumber",
+      "Spanish Anchovies",
     ]);
   });
 
