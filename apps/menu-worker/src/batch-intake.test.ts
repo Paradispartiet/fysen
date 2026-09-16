@@ -75,6 +75,25 @@ describe("restaurant batch intake", () => {
     expect(manifest.qualityAssertions.forbiddenDishNames).toEqual(["Drinks"]);
   });
 
+  it("excludes structured service labels and Urge from new intake contracts", () => {
+    const manifest = buildGeneratedRestaurantManifest(entry, [
+      item("Dish 1", 0),
+      item("Dish 2", 1),
+      item("Dish 3", 2),
+      item("Dish 4", 3),
+      { ...item("Bestikk", 4), extractionMethod: "json_ld" },
+      { ...item("Urge 0,5l", 5), extractionMethod: "json_ld" },
+    ]);
+
+    expect(manifest.menuSource.minimumExpectedItems).toBe(4);
+    expect(manifest.qualityAssertions.requiredDishNames).toEqual([
+      "Dish 1",
+      "Dish 2",
+      "Dish 3",
+      "Dish 4",
+    ]);
+  });
+
   it("does not inflate the integrity floor for repeated equivalent source keys", () => {
     const first = item("Dish 1", 0);
     const repeated = { ...first, position: 1 };
