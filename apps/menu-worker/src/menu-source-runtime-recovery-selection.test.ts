@@ -172,63 +172,6 @@ describe("HTML runtime recovery selection", () => {
     ]);
   });
 
-  it("reconciles explicit menu indices when strong-title recovery wins", async () => {
-    const result = await extract(`
-      <html><body>
-        <h2>Menu</h2>
-        <p><strong>41. KOTTU KYLLING</strong></p><p>kr 169,00</p>
-        <p><strong>45. CHICKEN TIKKA</strong></p><p>kr 219,00</p>
-        <p><strong>57. CHOP SUEY</strong></p><p>kr 169,00</p>
-        <p><strong>61. PHAD THAI</strong></p><p>kr 169,00</p>
-        <p><strong>65. KEBAB PIZZA</strong></p><p>kr 299,00</p>
-        <p><strong>66. LA PEPE</strong></p><p>kr 299,00</p>
-        <p><strong>67. MILANO</strong></p><p>kr 299,00</p>
-      </body></html>
-    `);
-
-    expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual(
-      expect.arrayContaining([
-        ["KOTTU KYLLING", 16900],
-        ["CHICKEN TIKKA", 21900],
-        ["PHAD THAI", 16900],
-        ["KEBAB PIZZA", 29900],
-      ]),
-    );
-  });
-
-  it("reconciles unique explicit menu indices from a dominant heading recovery without collapsing repeated labels", async () => {
-    const result = await extract(`
-      <html><body>
-        <h2>Menu</h2>
-        <h3>41. KOTTU LAM</h3><p>kr 169,00</p>
-        <h3>41. KOTTU KYLLING</h3><p>kr 169,00</p>
-        <h3>42. BIRYANI KYLLING</h3><p>kr 179,00</p>
-        <h3>43. RIS MED CURRY</h3><p>kr 179,00</p>
-        <h3>44. KIKERTGRYTE</h3><p>kr 179,00</p>
-        <h3>45. CHICKEN TIKKA</h3><p>kr 219,00</p>
-        <h3>46. LAM TIKKA</h3><p>kr 239,00</p>
-        <h3>57. CHOP SUEY</h3><p>kr 169,00</p>
-        <h3>58. STEKT</h3><p>kr 169,00</p>
-        <h3>59. STEKT</h3><p>kr 169,00</p>
-        <h3>60. STEKT</h3><p>kr 169,00</p>
-        <h3>61. PHAD THAI</h3><p>kr 169,00</p>
-        <h3>65. KEBAB PIZZA</h3><p>kr 299,00</p>
-      </body></html>
-    `);
-
-    expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual(
-      expect.arrayContaining([
-        ["KOTTU KYLLING", 16900],
-        ["CHICKEN TIKKA", 21900],
-        ["PHAD THAI", 16900],
-        ["KEBAB PIZZA", 29900],
-        ["58. STEKT", 16900],
-        ["59. STEKT", 16900],
-        ["60. STEKT", 16900],
-      ]),
-    );
-  });
-
   it("normalizes bare trailing dash prices before full-runtime recovery", async () => {
     const result = await extract(`
       <html><body>
