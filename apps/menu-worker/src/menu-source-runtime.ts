@@ -114,6 +114,8 @@ const BEVERAGE_MENU_ITEM =
   /^(?:(?:urge(?:\s+(?:zero|uten\s+sukker|zero\s+sugar))?|coca[- ]?cola|cola(?:\s+zero)?|fanta|sprite|farris(?:\s+\p{L}+)?|eplemost|mineralvann|(?:\p{L}+\s+)?juice|(?:\p{L}+\s+)?lassi)(?:\s+.*)?|(?:guinness|corona|munkholm|aperol)(?:\s+.*)?|(?:gin\s+(?:&\s*)?tonic|dry\s+martini)|(?:arabisk|arabic|tyrkisk|turkish)\s+(?:coffee|kaffe)(?:\s+.*)?|telemark\s+(?:still|sparkling)\s+naturell(?:\s+.*)?|hard\s+seltz(?:\s+.*)?|.*\b(?:pilsner|pærecider|cider|ingefærøl)\b.*|.*\bøl\b.*(?:\bflaske\b|\bglass\b|\d+[,.]\d+)|(?:rosévin|hvitvin|rødvin)(?:\s+(?:glass|flaske))?|.*\b(?:coffee|kaffe|espresso|americano|cappuccino|capuccino|cuppucino|latte|tea|te)\b|.*\b(?:cola|ginger\s+beer)\b)$/iu;
 const BEVERAGE_PACKAGE_ITEM =
   /^(?:with\s+)?(?:wine|drink|beverage)\s+package$/iu;
+const STRUCTURED_MENU_CONTRACT_COMPATIBILITY_ITEM =
+  /^(?:bestikk|cutlery|urge(?:\s+(?:zero|uten\s+sukker|zero\s+sugar))?(?:\s+.*)?)$/iu;
 const SPARKLING_WINE_PRODUCT_ITEM =
   /^(?=.*\b(?:brut|sparkling\s+wine)\b)(?!.*\b(?:sauce|saus|beurre|glaze|glazed|poached|braised|grilled|baked|with|med)\b).+$/iu;
 const BEVERAGE_STYLE_ITEM =
@@ -126,6 +128,7 @@ export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v3";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v12";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v11";
+export const HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION = "structured-compat-v1";
 export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v4";
 
 export function shouldPreferDominantHeadingRecovery(
@@ -139,7 +142,7 @@ export function shouldPreferDominantHeadingRecovery(
     headingCount >= trailingCount
   );
 }
-const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}+${HTML_RECOVERY_SELECTION_VERSION}`;
+const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}+${HTML_RECOVERY_SELECTION_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf" | "api";
 export type MenuSourceFetchMode = "http" | "browser";
@@ -243,6 +246,16 @@ export function isCanonicalHtmlMenuItem(item: MenuObservedItem): boolean {
     !BEVERAGE_STYLE_ITEM.test(filterName) &&
     !BOTTLED_BEVERAGE_VOLUME.test(filterName) &&
     !COCKTAIL_DESCRIPTION_ITEM.test(filterName)
+  );
+}
+
+export function isCanonicalStructuredMenuItem(
+  item: MenuObservedItem,
+): boolean {
+  const filterName = item.name.trim().replace(/\p{Cf}/gu, "").trim();
+  return (
+    STRUCTURED_MENU_CONTRACT_COMPATIBILITY_ITEM.test(filterName) ||
+    isCanonicalHtmlMenuItem(item)
   );
 }
 
@@ -656,7 +669,11 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? priceEnrichedItems.map(normalizeHtmlItemName)
         : priceEnrichedItems;
-    const canonicalItems = normalizedItems.filter(isCanonicalHtmlMenuItem);
+    const canonicalItems = normalizedItems.filter(
+      extracted.method === "json_ld"
+        ? isCanonicalStructuredMenuItem
+        : isCanonicalHtmlMenuItem,
+    );
     const beverageScopedItems =
       extracted.method === "html_heuristic"
         ? filterHtmlBeverageSectionItemsWithScopedProvenance(
