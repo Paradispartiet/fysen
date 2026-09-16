@@ -1,6 +1,6 @@
 import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v12";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v13";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -141,6 +141,17 @@ function isNumericPrefixSuffixFragment(
       candidate.normalizedName.endsWith(` ${item.normalizedName}`)
     );
   });
+}
+
+function isBareYearPriceMisread(item: MenuObservedItem): boolean {
+  if (item.priceMinor === null || item.priceMinor % 100 !== 0) return false;
+  const kroner = String(item.priceMinor / 100);
+  if (!/^(?:19|20)\d{2}$/u.test(kroner)) return false;
+  const evidence = (item.sourceExcerpt ?? "")
+    .split(SOURCE_EXCERPT_SEPARATOR)
+    .map((part) => part.trim())
+    .filter(Boolean);
+  return evidence.at(-1) === kroner;
 }
 
 function isNumericTitleSuffixMisreadAsPrice(
@@ -388,6 +399,7 @@ export function canonicalizeHtmlOutputItems(
       !mirroredNames.has(item.normalizedName) &&
       !isNumericPrefixSuffixFragment(item, labelFilteredItems) &&
       !isNumericTitleSuffixMisreadAsPrice(item, labelFilteredItems) &&
+      !isBareYearPriceMisread(item) &&
       !isAddonScopedDuplicate(item, labelFilteredItems) &&
       !isHighPricedComponentQuantity(item) &&
       !isSamePriceExcerptFragment(item, labelFilteredItems) &&
