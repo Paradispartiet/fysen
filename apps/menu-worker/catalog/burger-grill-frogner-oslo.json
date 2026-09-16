@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 23,
+    "minimumExpectedItems": 22,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -38,7 +38,6 @@
       "Burger",
       "Bbq Burger Tallerken",
       "Kyllingburger Tallerken",
-      "Urge",
       "Trøffelmajo",
       "Hvitløks dressing"
     ],
@@ -62,10 +61,6 @@
       {
         "name": "Kyllingburger Tallerken",
         "priceMinor": 19900
-      },
-      {
-        "name": "Urge",
-        "priceMinor": 3900
       },
       {
         "name": "Trøffelmajo",
