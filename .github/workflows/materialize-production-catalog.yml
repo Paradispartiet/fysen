@@ -36,7 +36,7 @@ jobs:
       DATABASE_SSL: "verify-full"
       NODE_ENV: production
       FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
-      FYSEN_CATALOG_MATERIALIZATION_CONCURRENCY: "4"
+      FYSEN_CATALOG_MATERIALIZATION_CONCURRENCY: "8"
     steps:
       - name: Require production database secret
         shell: bash
