@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "skaal-matbar-oslo",
+    "name": "Skaal Matbar",
+    "websiteUrl": "https://www.skaalmatbar.no/",
+    "address": "Olaf Ryes plass 12, 0552 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92348751562918,
+    "longitude": 10.758629283887176
+  },
+  "menuSource": {
+    "url": "https://www.skaalmatbar.no/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-16",
+      "note": "Fresh P1 reproof from Skaal Matbar's current first-party page. The page publishes substantial individually priced evening, lunch and brunch dishes in textual HTML. Intake must preserve real dish variants while excluding section headings, allergen metadata and price fragments; promotion remains fail-closed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bolinhos",
+      "Toast - Svineknoke, Cheddar/Jalapeno",
+      "Crispy Aubergine",
+      "\"SKAAL Lasagne\"",
+      "Brillat Savarin",
+      "Thaisalat m/Reker",
+      "Smash Burger",
+      "Brownie"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bolinhos",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Toast - Svineknoke, Cheddar/Jalapeno",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Crispy Aubergine",
+        "priceMinor": 19500
+      },
+      {
+        "name": "\"SKAAL Lasagne\"",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Brillat Savarin",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Thaisalat m/Reker",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Smash Burger",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Brownie",
+        "priceMinor": 15500
+      }
+    ],
+    "forbiddenDishNames": [
+      "Kveldsmeny",
+      "Lunchmeny Tirsdag-Fredag",
+      "Brunch (Lørdag&Søndag) - Alle retter kan fint deles på bordet",
+      "Allergier",
+      "Tirsdag – Søndag",
+      "Double burger",
+      "BL, F, SU",
+      "HV, L, E, SE"
+    ]
+  }
+}
