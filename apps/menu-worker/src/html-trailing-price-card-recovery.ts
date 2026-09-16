@@ -411,11 +411,17 @@ function precedingStructuredLeadingTitle(
     candidates.push({ position: index, title: normalizeVisibleLine(line) });
   }
 
-  // A single candidate is already handled safely by the established nearest-
-  // title path. This recovery is only for repeated card layouts where both the
-  // leading dish name and a short trailing component (often a sauce/garnish)
-  // look title-like.
-  if (candidates.length < (hardBoundary ? 1 : 2)) return null;
+  // A single ordinary title is already handled safely by the established
+  // nearest-title path. Short preparation titles (for example "Fried plaice"
+  // or "Braised brisket") are intentionally classified as description-like by
+  // the generic title filter, so allow that one-candidate structured card.
+  if (candidates.length === 0) return null;
+  if (
+    candidates.length === 1 &&
+    !hardBoundary &&
+    !SHORT_PREPARATION_TITLE.test(candidates[0]?.title ?? "")
+  )
+    return null;
   const first = candidates[0];
   const nearest = candidates[candidates.length - 1];
   if (!first || !nearest) return null;
