@@ -8,7 +8,11 @@ import {
   restaurantOnboardingManifestSchema,
   type RestaurantOnboardingManifest,
 } from "./onboarding-manifest.js";
-import { extractMenuSource, fetchMenuSource } from "./menu-source-runtime.js";
+import {
+  extractMenuSource,
+  fetchMenuSource,
+  isCanonicalHtmlMenuItem,
+} from "./menu-source-runtime.js";
 
 const manifestShape = restaurantOnboardingManifestSchema.shape;
 const batchMenuSourceSchema = manifestShape.menuSource.omit({
@@ -111,7 +115,9 @@ export function buildGeneratedRestaurantManifest(
   entry: RestaurantBatchIntakeEntry,
   items: readonly MenuObservedItem[],
 ): RestaurantOnboardingManifest {
-  const canonicalItems = canonicalizeUniqueMenuSourceKeys(items);
+  const canonicalItems = canonicalizeUniqueMenuSourceKeys(
+    items.filter(isCanonicalHtmlMenuItem),
+  );
   if (canonicalItems.length === 0)
     throw new Error("Live source exposed no canonical menu items");
   const assertions = evenlySpacedItems(canonicalItems, entry.assertionCount);

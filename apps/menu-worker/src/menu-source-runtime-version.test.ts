@@ -20,6 +20,7 @@ import {
   HTML_NON_DISH_FILTER_VERSION,
   HTML_PRICE_NOTATION_NORMALIZER_VERSION,
   HTML_RECOVERY_SELECTION_VERSION,
+  HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION,
   extractorVersionForSourceType,
   shouldForceReextract,
 } from "./menu-source-runtime.js";
@@ -35,6 +36,7 @@ describe("HTML runtime extractor version", () => {
       HTML_ITEM_NAME_NORMALIZER_VERSION,
       HTML_NON_DISH_FILTER_VERSION,
       HTML_BEVERAGE_FILTER_VERSION,
+      HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION,
       HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION,
       HTML_PRICE_WRAPPED_RECOVERY_VERSION,
       HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION,
@@ -52,6 +54,9 @@ describe("HTML runtime extractor version", () => {
     expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v8");
     expect(HTML_NON_DISH_FILTER_VERSION).toBe("non-dish-v12");
     expect(HTML_BEVERAGE_FILTER_VERSION).toBe("beverage-v12");
+    expect(HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION).toBe(
+      "structured-compat-v1",
+    );
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
       "trailing-price-card-v16",
     );
