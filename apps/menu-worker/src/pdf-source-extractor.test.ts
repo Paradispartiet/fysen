@@ -29,7 +29,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v24");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v25");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -159,6 +159,23 @@ describe("PDF source scope", () => {
       "Braised duck",
       "Apple tart",
     ]);
+  });
+
+  it("recognizes documented Norwegian allergen abbreviations in split parenthetical fragments", () => {
+    const lines = [
+      "(H, R, BY, 190",
+      "(HN, VN, SP, C, LU, S, 210",
+      "Braised duck 325",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    expect(parsed.map((item) => item.name)).toEqual([
+      "(H, R, BY,",
+      "(HN, VN, SP, C, LU, S,",
+      "Braised duck",
+    ]);
+
+    const eligible = filterPdfConflictMetadataItems(parsed);
+    expect(eligible.map((item) => item.name)).toEqual(["Braised duck"]);
   });
 
   it("does not move ordinary description filtering ahead of source-key conflict resolution", () => {
