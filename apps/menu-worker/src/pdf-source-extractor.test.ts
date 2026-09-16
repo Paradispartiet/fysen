@@ -28,7 +28,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v19");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v20");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -156,6 +156,19 @@ describe("PDF source scope", () => {
     const recovered = recoverExplicitLowPerItemPdfRows(visibleText, []);
     expect(recovered.map((item) => [item.name, item.priceMinor])).toEqual([
       ["Noe søtt til kaffe? Macaron", 3500],
+    ]);
+  });
+
+  it("recovers an explicit low PDF price with a visible currency-style suffix", () => {
+    const visibleText = [
+      "ALL DAY",
+      "BISCOTTO",
+      "35,-",
+    ].join("\n");
+
+    const recovered = recoverExplicitLowPerItemPdfRows(visibleText, []);
+    expect(recovered.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["BISCOTTO", 3500],
     ]);
   });
 
