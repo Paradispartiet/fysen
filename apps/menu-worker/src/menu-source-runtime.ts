@@ -578,6 +578,37 @@ export async function extractMenuSource(
         trailingPriceCardItems.length,
         recoveredItems.length,
       );
+    if (trailingPriceCardItems.length >= 15) {
+      console.error(
+        JSON.stringify({
+          diagnostic: "html-recovery-family-selection-v2",
+          recovered: recoveredItems.length,
+          trailing: trailingPriceCardItems.length,
+          strongTitle: strongTitlePriceItems.length,
+          heading: headingPriceItems.length,
+          priceWrapped: priceWrappedItems.length,
+          inlineMarked: inlineMarkedPriceItems.length,
+          sectionFirst: sectionFirstCardItems.length,
+          semanticCategoryCardsPreferred,
+          strongNumberedCardsPreferred,
+          strongDirectTrailingRecoveryPreferred,
+          broadHeadingPriceRecoveryPreferred,
+          headingDominatesTrailingRecovery,
+          trailingPriceCardQualifies,
+          recoveredNames: recoveredItems.map((item) => item.name),
+          trailingDetail: trailingPriceCardItems.map((item) => ({
+            name: item.name,
+            priceMinor: item.priceMinor,
+            position: item.position,
+            description: item.description,
+            sourceExcerpt: item.sourceExcerpt,
+          })),
+          priceWrappedNames: priceWrappedItems.map((item) => item.name),
+          sectionFirstNames: sectionFirstCardItems.map((item) => item.name),
+        }),
+      );
+    }
+
     const preferredItems = strongTitlePricePreferred
     ? strongTitlePriceItems
     : headingDominatesTrailingRecovery
@@ -666,6 +697,16 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? canonicalizeHtmlOutputItems(beverageScopedItems)
         : beverageScopedItems;
+    if (trailingPriceCardItems.length >= 15) {
+      console.error(
+        JSON.stringify({
+          diagnostic: "html-recovery-final-output-v2",
+          preferred: preferredItems.map((item) => item.name),
+          canonical: canonicalItems.map((item) => item.name),
+          final: items.map((item) => item.name),
+        }),
+      );
+    }
     return {
       items,
       method: extracted.method,
