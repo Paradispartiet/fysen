@@ -297,11 +297,12 @@ function reconstructLines(items: readonly unknown[], page: number): readonly Pdf
   const positioned = positionedTextItems(items);
   if (!positioned) return sequential;
   const visual = visualPdfLines(positioned);
-  if (!shouldUseVisualReadingOrder(visual)) return sequential;
-
+  const useVisual = shouldUseVisualReadingOrder(visual);
   const visualLines = visual.map((line) => ({ text: line.text, page }));
   const sequentialItemCount = buildItems(sequential).length;
   const visualItemCount = buildItems(visualLines).length;
+  console.error("[TEMP pdf-reading-order]", JSON.stringify({ page, useVisual, sequentialItemCount, visualItemCount }));
+  if (!useVisual) return sequential;
 
   return visualItemCount >= sequentialItemCount ? visualLines : sequential;
 }
