@@ -24,7 +24,7 @@ describe("HTML same-price wrapped menu recovery", () => {
 
     const items = recoverPriceWrappedHtmlItems(visibleText);
 
-    expect(HTML_PRICE_WRAPPED_RECOVERY_VERSION).toBe("price-wrapped-v1");
+    expect(HTML_PRICE_WRAPPED_RECOVERY_VERSION).toBe("price-wrapped-v2");
     expect(items.map((item) => item.name)).toEqual([
       "GRATINERTE REKER",
       "PANNESTEKT SCAMPI",
@@ -32,6 +32,44 @@ describe("HTML same-price wrapped menu recovery", () => {
     ]);
     expect(items.map((item) => item.priceMinor)).toEqual([18500, 18900, 16900]);
     expect(items[0]?.description).toContain("hvitløk");
+  });
+
+  it("recovers repeated title followed by marked price and description rows", () => {
+    const visibleText = [
+      "STARTERS",
+      "EDAMAME",
+      "99,-Salt / Spicy",
+      "VÅRRULLER",
+      "169,- /Fylt med scampi, kylling og grønnsaker",
+      "POPRICE SCAMPI ROLL",
+      "159,- / 3 stk. Sprø scampi med chilimajones",
+      "CRISPY DUCK",
+      "239,-Sprøstekt and med hoisinsaus",
+      "DESSERT",
+    ].join("\n");
+
+    const items = recoverPriceWrappedHtmlItems(visibleText);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["EDAMAME", 9900],
+      ["VÅRRULLER", 16900],
+      ["POPRICE SCAMPI ROLL", 15900],
+      ["CRISPY DUCK", 23900],
+    ]);
+    expect(items[1]?.description).toContain("scampi");
+  });
+
+  it("requires at least four title plus priced-description rows before activating", () => {
+    const visibleText = [
+      "EDAMAME",
+      "99,-Salt / Spicy",
+      "VÅRRULLER",
+      "169,- /Fylt med scampi",
+      "CRISPY DUCK",
+      "239,-Sprøstekt and",
+    ].join("\n");
+
+    expect(recoverPriceWrappedHtmlItems(visibleText)).toEqual([]);
   });
 
   it("does not accept mismatched price boundaries", () => {
