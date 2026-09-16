@@ -295,6 +295,42 @@ describe("HTML runtime recovery selection", () => {
     expect(shouldPreferDominantHeadingRecovery(11, 10, 10)).toBe(false);
   });
 
+  it("does not reintroduce footer navigation through raw HTML recovery", async () => {
+    const result = await extract(`
+      <html><body>
+        <main>
+          <div>Pasta Carbonara</div><div>249</div>
+          <div>Pizza Margherita</div><div>229</div>
+          <div>Lasagne al Forno</div><div>269</div>
+          <div>Gambas al Ajillo</div><div>199</div>
+          <div>Patatas Bravas</div><div>149</div>
+          <div>Fish & Chips</div><div>279</div>
+          <div>Cheesy Burger</div><div>249</div>
+          <div>Sitronmousse</div><div>169</div>
+        </main>
+        <footer role="contentinfo">
+          <p>Restaurant © 2026</p>
+          <div role="navigation">
+            <a>BOOK</a><a>MAT</a><a>SELSKAP</a><a>BEDRIFT</a>
+            <a>KART</a><a>MAIL</a><a>JESSHEIM</a>
+          </div>
+        </footer>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => item.name)).toEqual([
+      "Pasta Carbonara",
+      "Pizza Margherita",
+      "Lasagne al Forno",
+      "Gambas al Ajillo",
+      "Patatas Bravas",
+      "Fish & Chips",
+      "Cheesy Burger",
+      "Sitronmousse",
+    ]);
+    expect(result.items.some((item) => item.priceMinor === 202600)).toBe(false);
+  });
+
   it("filters generic fixed-course package labels from canonical heading output", async () => {
     const result = await extract(`
       <html><body>
