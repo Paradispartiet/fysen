@@ -494,6 +494,8 @@ export function isStrongDirectTrailingPriceCardRecovery(
   items: readonly MenuObservedItem[],
 ): boolean {
   if (items.length < 8) return false;
+  if (new Set(items.map((item) => item.normalizedName)).size !== items.length)
+    return false;
   const direct = items.filter(
     (item) =>
       item.confidence >= 0.95 &&
