@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v27";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v28";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -129,13 +129,32 @@ function isFoodSectionHeading(value: string): boolean {
   );
 }
 
+function looksLikeBeveragePairingLeadIn(
+  lines: readonly string[],
+  lineIndex: number,
+): boolean {
+  const context = lines
+    .slice(Math.max(0, lineIndex - 2), lineIndex)
+    .join(" ")
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
+    .toLocaleLowerCase("nb-NO")
+    .replace(/[^\p{L}]+/gu, "");
+  return /(?:perfectwith|pairwith|pairswith|pairedwith|pairswellwith|servewith|servedwith|recommendedwith|goeswellwith)$/u.test(
+    context,
+  );
+}
+
 function beverageBlockedLines(visibleText: string): readonly boolean[] {
   const lines = visibleText.split("\n");
   const blocked: boolean[] = [];
   let beverageSection = false;
 
   for (const [index, line] of lines.entries()) {
-    if (isBeverageSectionHeading(line)) {
+    if (
+      isBeverageSectionHeading(line) &&
+      !looksLikeBeveragePairingLeadIn(lines, index)
+    ) {
       beverageSection = true;
       blocked[index] = true;
       continue;
