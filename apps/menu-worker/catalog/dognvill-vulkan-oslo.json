@@ -42,14 +42,38 @@
       "SUPER PREMIUM ICE CREAM"
     ],
     "requiredDishVariants": [
-      { "name": "THE CLASSIC", "priceMinor": 19900 },
-      { "name": "SAUCY JOE", "priceMinor": 25900 },
-      { "name": "RETT OST", "priceMinor": 25900 },
-      { "name": "HOMEMADE PICKLES", "priceMinor": 6900 },
-      { "name": "SWEET POTATO-FRIES", "priceMinor": 9900 },
-      { "name": "CHICKEN WINGS FROM HOVELSRUD FARM", "priceMinor": 15900 },
-      { "name": "HERB YOUR ENTHUSIASM", "priceMinor": 21900 },
-      { "name": "SUPER PREMIUM ICE CREAM", "priceMinor": 4500 }
+      {
+        "name": "THE CLASSIC",
+        "priceMinor": 19900
+      },
+      {
+        "name": "SAUCY JOE",
+        "priceMinor": 25900
+      },
+      {
+        "name": "RETT OST",
+        "priceMinor": 25900
+      },
+      {
+        "name": "HOMEMADE PICKLES",
+        "priceMinor": 6900
+      },
+      {
+        "name": "SWEET POTATO-FRIES",
+        "priceMinor": 9900
+      },
+      {
+        "name": "CHICKEN WINGS FROM HOVELSRUD FARM",
+        "priceMinor": 15900
+      },
+      {
+        "name": "HERB YOUR ENTHUSIASM",
+        "priceMinor": 21900
+      },
+      {
+        "name": "SUPER PREMIUM ICE CREAM",
+        "priceMinor": 4500
+      }
     ],
     "forbiddenDishNames": []
   }
