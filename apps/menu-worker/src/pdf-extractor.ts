@@ -540,13 +540,13 @@ function previousStandaloneDishNameLineIndex(
     if (!candidateLine || candidateLine.page !== priceLine.page) break;
     const text = normalizeLine(candidateLine.text);
     if (!text) continue;
-    if (standalonePrice.test(text) || parseInlineDish(text) || sectionHeading(text))
-      return null;
+    if (standalonePrice.test(text) || parseInlineDish(text)) return null;
     if (looksLikeParentheticalAllergenMetadata(text)) continue;
 
     const rawName = canonicalPdfDishName(text);
     if (/^[a-zæøå]/u.test(rawName)) continue;
-    if (looksLikeDishName(rawName)) return index;
+    if (!looksLikeDishName(rawName)) return null;
+    return index;
   }
   return null;
 }
