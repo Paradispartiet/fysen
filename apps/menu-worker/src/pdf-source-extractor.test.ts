@@ -29,12 +29,25 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v28");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v29");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
     ]);
     expect(scoped.map((item) => item.position)).toEqual([0, 1]);
+  });
+
+  it("drops bottle and vintage-price labels that are not dish names", () => {
+    const lines = [
+      "SPECIALS",
+      "fl 1065,-",
+      "1997 fl 5690,-",
+      "Roasted lamb 495,-",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual(["Roasted lamb"]);
   });
 
   it("disambiguates a same-name PDF dish with conflicting prices only when distinct nearby menu sections exist", () => {
