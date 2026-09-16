@@ -153,9 +153,9 @@ describe("extractHtmlMenu", () => {
             <p>249</p>
           </section>
         </main>
-        <footer>
+        <footer role="contentinfo">
           <p>Restaurant © 2026</p>
-          <nav>
+          <div role="navigation">
             <a>BOOK</a>
             <a>MAT</a>
             <a>SELSKAP</a>
@@ -163,7 +163,7 @@ describe("extractHtmlMenu", () => {
             <a>KART</a>
             <a>MAIL</a>
             <a>JESSHEIM</a>
-          </nav>
+          </div>
         </footer>
       </body></html>
     `;
