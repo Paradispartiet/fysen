@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "veitvet-sportsbar-pizza-oslo",
+    "name": "Veitvet Sportsbar & Pizza",
+    "websiteUrl": "https://veitvetsenteret.no/butikker/veitvet-sportsbar-og-pizza/",
+    "address": "Veitvetveien, 0596 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94332761093589,
+    "longitude": 10.85053346192578
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/492veitvetsportsbarpizza",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 40,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-16",
+      "note": "Fresh reproof of the still-green Batch 10 deferred candidate. Current public SE MENY output exposes a substantial priced food menu; the venue remains listed by Veitvet Senter. Service-menu evidence remains secondary and intake stays fail-closed."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Football Lover",
+      "Bearnaise Biff",
+      "Kebabpizza",
+      "Kyllingkebab i Pita",
+      "Kyllingkebab-tallerken",
+      "Falafelmiddag",
+      "Kebab Dressing"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Football Lover",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Bearnaise Biff",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Kebabpizza",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Kyllingkebab i Pita",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Kyllingkebab-tallerken",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Falafelmiddag",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Kebab Dressing",
+        "priceMinor": 2500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

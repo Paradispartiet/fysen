@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "falafel-n-juice-lokka-oslo",
+    "name": "FALAFEL n' JUICE Løkka",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 33D, 0555 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.925703658304954,
+    "longitude": 10.758800263756706
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/falafelnjuicelokka",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 7,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-16",
+      "note": "Fresh reproof of the Batch 15 deferred candidate. The prior hold was only the malformed leading underscore in the source identity; this seed pins the clean venue name while preserving the live priced source and normal beverage filtering."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Falafel i Rull",
+      "Falafelmiddag",
+      "Golden Falafel",
+      "Falafel 'n' Salat",
+      "Hummus 'n' Salat",
+      "Falafel Deluxe",
+      "Golden Chips"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Falafel i Rull",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Falafelmiddag",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Golden Falafel",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Falafel 'n' Salat",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Hummus 'n' Salat",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Falafel Deluxe",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Golden Chips",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
