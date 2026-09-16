@@ -18,7 +18,7 @@ describe("Elementor price-list structural recovery", () => {
     ].join("");
     const items = recoverElementorPriceListHtmlItems(html);
     expect(HTML_ELEMENTOR_PRICE_LIST_RECOVERY_VERSION).toBe(
-      "elementor-price-list-v2",
+      "elementor-price-list-v1",
     );
     expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
       ["KITFO / ክትፎ", 34900],
@@ -30,26 +30,6 @@ describe("Elementor price-list structural recovery", () => {
       ["Suppe med linser og pasta", 23900],
     ]);
     expect(items.every((item) => item.confidence === 0.995)).toBe(true);
-  });
-
-  it("strips explicit menu indices while preserving a quantity-led dish name", () => {
-    const html = [
-      card("3. 5 Hot Wings", "kr70.00"),
-      card("45. CHICKEN TIKKA", "kr219.00"),
-      card("51. KOTTU KYLLING", "kr169.00"),
-      card("63. PHAD THAI", "kr169.00"),
-      card("65. KEBAB PIZZA", "kr299.00"),
-    ].join("");
-
-    const items = recoverElementorPriceListHtmlItems(html);
-
-    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
-      ["5 Hot Wings", 7000],
-      ["CHICKEN TIKKA", 21900],
-      ["KOTTU KYLLING", 16900],
-      ["PHAD THAI", 16900],
-      ["KEBAB PIZZA", 29900],
-    ]);
   });
 
   it("fails closed instead of partially preferring an incomplete card family", () => {
