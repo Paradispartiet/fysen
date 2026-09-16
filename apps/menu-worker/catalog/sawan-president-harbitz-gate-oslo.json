@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 44,
+    "minimumExpectedItems": 30,
     "maxResponseBytes": 6291456,
     "sourceSupport": {
       "redirectOrigins": [],
@@ -26,50 +26,58 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-13",
-      "note": "The current first-party /meny/ source is robots-allowed and has grown beyond 4 MiB because Squarespace embeds large script contexts. The stable trailing-slash route remains below the maximum supported bounded 6 MiB HTTP policy and exposes the complete 44-item menu. Kitchen-scoped hours remain separately unverified."
+      "checkedAt": "2026-09-16",
+      "note": "Exact-head catalog-health #213 and the current first-party /meny/ source agree on 30 priced menu items. The source has materially changed since the earlier 44-item proof: several former dishes are gone, while renamed/current dishes and prices remain directly published. Kitchen-scoped hours remain separately unverified."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Åtte smaker fra kjøkkenet",
-      "Kalix Löjrom with lotus chips",
-      "Snøkrabbe",
+      "Dagens åtte smaker fra kjøkkenet",
+      "Dagens ni signaturretter fra kjøkkensjefen",
+      "Sawan’s eksklusive lobster bun",
+      "Sawans eksklusive wagyu flambé",
       "Kveite sashimi",
-      "Spicy tuna maki",
-      "Bluefin tuna taco (2 stk.)",
+      "Bluefin tuna sashimi",
+      "New style maki",
+      "Bluefin tuna taco",
       "Contemporary lamb rack (2 stk.)",
       "Chicken satay",
       "The Chef’s Chicken Salad",
-      "Vegan crispy østerssopp (for 2 pers)",
       "Sawans veganske wok",
-      "Sawans eksklusive wagyu flambé",
       "Sawans wok"
     ],
     "requiredDishVariants": [
       {
-        "name": "Åtte smaker fra kjøkkenet",
+        "name": "Dagens åtte smaker fra kjøkkenet",
         "priceMinor": 99500
       },
       {
-        "name": "Kalix Löjrom with lotus chips",
-        "priceMinor": 60000
+        "name": "Dagens ni signaturretter fra kjøkkensjefen",
+        "priceMinor": 109500
       },
       {
-        "name": "Snøkrabbe",
-        "priceMinor": 28000
+        "name": "Sawan’s eksklusive lobster bun",
+        "priceMinor": 36000
+      },
+      {
+        "name": "Sawans eksklusive wagyu flambé",
+        "priceMinor": 120000
       },
       {
         "name": "Kveite sashimi",
         "priceMinor": 28000
       },
       {
-        "name": "Spicy tuna maki",
-        "priceMinor": 27500
+        "name": "Bluefin tuna sashimi",
+        "priceMinor": 32000
       },
       {
-        "name": "Bluefin tuna taco (2 stk.)",
+        "name": "New style maki",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Bluefin tuna taco",
         "priceMinor": 24000
       },
       {
@@ -85,16 +93,8 @@
         "priceMinor": 23000
       },
       {
-        "name": "Vegan crispy østerssopp (for 2 pers)",
-        "priceMinor": 72000
-      },
-      {
         "name": "Sawans veganske wok",
         "priceMinor": 41500
-      },
-      {
-        "name": "Sawans eksklusive wagyu flambé",
-        "priceMinor": 120000
       },
       {
         "name": "Sawans wok",
