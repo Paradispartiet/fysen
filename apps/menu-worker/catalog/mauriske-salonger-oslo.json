@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mauriske-salonger-oslo",
+    "name": "Mauriske Salonger",
+    "websiteUrl": "https://hotelbristol.no/en/dining-at-bristol/mauriske-salonger/",
+    "address": "Kristian IVs gate 7, 0164 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91510618069666,
+    "longitude": 10.739798324761239
+  },
+  "menuSource": {
+    "url": "https://hotelbristol.no/en/dining-at-bristol/mauriske-salonger/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 29,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-16",
+      "note": "Fresh P1 reproof from Hotel Bristol's current first-party Mauriske Salonger page. The page publishes substantial individually priced snacks, sandwiches, salads, cheese and cakes alongside an Afternoon Tea package and beverage/add-on rows. Intake must keep only canonical individually priced food dishes and remain fail-closed on package, beverage and add-on leakage."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Green olives with pits",
+      "Hand peeled Greenland shrimps",
+      "Fried plaice",
+      "Classic beef tartare",
+      "Paris «Oslo» Pâte à choux with hazelnuts and licorice caramel",
+      "Plum tart with mascarpone cream",
+      "Fig and rose cake",
+      "Caramelized apples with vanilla ice cream and crumble"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Green olives with pits",
+        "priceMinor": 7000
+      },
+      {
+        "name": "Hand peeled Greenland shrimps",
+        "priceMinor": 31500
+      },
+      {
+        "name": "Fried plaice",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Classic beef tartare",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Paris «Oslo» Pâte à choux with hazelnuts and licorice caramel",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Plum tart with mascarpone cream",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Fig and rose cake",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Caramelized apples with vanilla ice cream and crumble",
+        "priceMinor": 13500
+      }
+    ],
+    "forbiddenDishNames": [
+      "Afternoon Tea Monday 11 am-7 pm, Tuesday-Saturday 11 am-6 pm, Sunday 12 pm-7 pm",
+      "Price",
+      "Champagne Bonvalet Epopee Brut",
+      "Silverhand Silver Reign Brut English sparkling wine",
+      "Additional product",
+      "Add french fries to any dish",
+      "Add Kalix vendance roe",
+      "Add-on smoked trout roe",
+      "3 pcs NOK 160 / 6 pcs",
+      "Sandwich with meat",
+      "Tea",
+      "Snacks and appetizers",
+      "Sandwiches - Seafood & Vegetarian",
+      "Cakes/sweets"
+    ]
+  }
+}
