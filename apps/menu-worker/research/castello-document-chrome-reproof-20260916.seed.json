@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/castello-document-chrome-reproof-20260916",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "castello-sorenga-oslo",
+        "name": "Castello Restaurant Oslo",
+        "websiteUrl": "https://www.castellorestaurant.no/",
+        "address": "Sørengkaia 99, 0194 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.castellorestaurant.no/oslo/hovedmeny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720,
+        "sourceSupport": {
+          "redirectOrigins": [],
+          "browserDataOrigins": []
+        }
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-16",
+          "note": "Exact-head parser reproof for the generic document-chrome leakage exposed by Castello. Promotion remains separate and requires semantic review of the regenerated artifact."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ]
+}
