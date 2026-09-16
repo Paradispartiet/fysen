@@ -97,7 +97,7 @@ const NON_DISH_MENU_SECTION =
 const ALLERGEN_ONLY_ITEM =
   /^(?:\(\s*)?(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|selleri|celery|citrus|sitrus|sulfitt|sulphites?)(?:\s*[,/+&]\s*(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|selleri|celery|citrus|sitrus|sulfitt|sulphites?))*\s*\)?$/iu;
 const NON_DISH_METADATA_ITEM =
-  /^(?:hjemmeside|homepage|top\s+of\s+page|mine\s+favoritter|my\s+favou?rites|favoritter|favou?rites|pers\.?|medium|gluten[- ]?free|glutenfri|spør\s+oss(?:\s+.*)?|spør\s+om\s+dagens\b.*)$/iu;
+  /^(?:hjemmeside|homepage|bestikk|cutlery|top\s+of\s+page|mine\s+favoritter|my\s+favou?rites|favoritter|favou?rites|pers\.?|medium|gluten[- ]?free|glutenfri|spør\s+oss(?:\s+.*)?|spør\s+om\s+dagens\b.*)$/iu;
 const NON_DISH_FRAGMENT_ITEM = /^(?:stk\.?|biter\.)\s+/iu;
 const NON_DISH_SET_MENU_ITEM =
   /^(?:(?:chef(?:['’]?s)?|chefs)\s+)?(?:\d+|two|three|four|five|six|seven|eight|nine|ten)\s*[- ]?\s*course(?:s)?(?:\s+(?:menu|set\s+menu))?$/iu;
@@ -111,7 +111,7 @@ const KITCHEN_RETAIL_ITEM = /^(?:pizzakutter|pizza\s+cutter)$/iu;
 const RETAIL_APPAREL_ITEM = /\b(?:tee|t-?shirt|hoodie|sweatshirt|caps?)$/iu;
 const HISTORICAL_SINCE_ITEM = /·\s*siden$/iu;
 const BEVERAGE_MENU_ITEM =
-  /^(?:(?:urge(?:\\s+(?:zero|uten\\s+sukker|zero\\s+sugar))?|coca[- ]?cola|cola(?:\s+zero)?|fanta|sprite|farris(?:\s+\p{L}+)?|eplemost|mineralvann|(?:\p{L}+\s+)?juice|(?:\p{L}+\s+)?lassi)(?:\s+.*)?|(?:guinness|corona|munkholm|aperol)(?:\s+.*)?|(?:gin\s+(?:&\s*)?tonic|dry\s+martini)|(?:arabisk|arabic|tyrkisk|turkish)\s+(?:coffee|kaffe)(?:\s+.*)?|telemark\s+(?:still|sparkling)\s+naturell(?:\s+.*)?|hard\s+seltz(?:\s+.*)?|.*\b(?:pilsner|pærecider|cider|ingefærøl)\b.*|.*\bøl\b.*(?:\bflaske\b|\bglass\b|\d+[,.]\d+)|(?:rosévin|hvitvin|rødvin)(?:\s+(?:glass|flaske))?|.*\b(?:coffee|kaffe|espresso|americano|cappuccino|capuccino|cuppucino|latte|tea|te)\b|.*\b(?:cola|ginger\s+beer)\b)$/iu;
+  /^(?:(?:urge(?:\s+(?:zero|uten\s+sukker|zero\s+sugar))?|coca[- ]?cola|cola(?:\s+zero)?|fanta|sprite|farris(?:\s+\p{L}+)?|eplemost|mineralvann|(?:\p{L}+\s+)?juice|(?:\p{L}+\s+)?lassi)(?:\s+.*)?|(?:guinness|corona|munkholm|aperol)(?:\s+.*)?|(?:gin\s+(?:&\s*)?tonic|dry\s+martini)|(?:arabisk|arabic|tyrkisk|turkish)\s+(?:coffee|kaffe)(?:\s+.*)?|telemark\s+(?:still|sparkling)\s+naturell(?:\s+.*)?|hard\s+seltz(?:\s+.*)?|.*\b(?:pilsner|pærecider|cider|ingefærøl)\b.*|.*\bøl\b.*(?:\bflaske\b|\bglass\b|\d+[,.]\d+)|(?:rosévin|hvitvin|rødvin)(?:\s+(?:glass|flaske))?|.*\b(?:coffee|kaffe|espresso|americano|cappuccino|capuccino|cuppucino|latte|tea|te)\b|.*\b(?:cola|ginger\s+beer)\b)$/iu;
 const BEVERAGE_PACKAGE_ITEM =
   /^(?:with\s+)?(?:wine|drink|beverage)\s+package$/iu;
 const SPARKLING_WINE_PRODUCT_ITEM =
