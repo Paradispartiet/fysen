@@ -219,6 +219,17 @@ describe("PDF source scope", () => {
     );
   });
 
+  it("does not apply split-fragment-only allergen codes to low-price dish-name recovery", () => {
+    const visibleText = [
+      "DESSERT",
+      "Special BY",
+      "35,-",
+    ].join("\n");
+
+    const recovered = recoverExplicitLowPerItemPdfRows(visibleText, []);
+    expect(recovered.map((item) => item.name)).toEqual(["Special BY"]);
+  });
+
   it("recovers an explicit low per-item price from the next PDF text line", () => {
     const visibleText = [
       "DESSERT // Dessert",
