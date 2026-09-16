@@ -98,6 +98,8 @@ const ALLERGEN_ONLY_ITEM =
 const NON_DISH_METADATA_ITEM =
   /^(?:hjemmeside|homepage|top\s+of\s+page|mine\s+favoritter|my\s+favou?rites|favoritter|favou?rites|pers\.?|medium|gluten[- ]?free|glutenfri|spør\s+oss(?:\s+.*)?|spør\s+om\s+dagens\b.*)$/iu;
 const NON_DISH_FRAGMENT_ITEM = /^(?:stk\.?|biter\.)\s+/iu;
+const NON_DISH_SET_MENU_ITEM =
+  /^(?:(?:chef(?:['’]?s)?|chefs)\s+)?(?:\d+|two|three|four|five|six|seven|eight|nine|ten)\s*[- ]?\s*course(?:s)?(?:\s+(?:menu|set\s+menu))?$/iu;
 const NON_DISH_ADDON_ITEM =
   /^\*?\s*(?:påfyll\s+av\s+tilbehør|refill\s+of\s+sides?|add[- ]?ons?)\b/iu;
 const PRICE_DISPLAY_ONLY_ITEM =
@@ -117,9 +119,9 @@ const COCKTAIL_DESCRIPTION_ITEM =
   /^(?:(?:mimosa|(?:black|white)\s+russian(?:\s+kahlua)?|classic\s+mojito|vodka\s+cranberry)$|(?=.*,)(?=.*\b(?:gin|vodka|rom|rum|tequila|whisk(?:e)?y|bourbon|aperol|prosecco|kahlua|makers\s+mark|jack\s+daniels|cointreau)\b)(?=.*\b(?:tonic|cola|cranberry|prosecco|lime|sitron|lemon|appelsin|orange|eggehvite|egg\s*whites?|ginger\s+ale|ingefærøl|lemon\s+soda|sitronbrus)\b).+)$/iu;
 export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v3";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
-export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v8";
+export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v9";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v9";
-export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v1";
+export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v2";
 
 export function shouldPreferDominantHeadingRecovery(
   headingCount: number,
@@ -129,7 +131,7 @@ export function shouldPreferDominantHeadingRecovery(
   return (
     headingCount >= 12 &&
     headingCount >= recoveredCount &&
-    headingCount > trailingCount
+    headingCount >= trailingCount
   );
 }
 const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}+${HTML_RECOVERY_SELECTION_VERSION}`;
@@ -223,6 +225,7 @@ export function isCanonicalHtmlMenuItem(item: MenuObservedItem): boolean {
     !ALLERGEN_ONLY_ITEM.test(filterName) &&
     !NON_DISH_METADATA_ITEM.test(filterName) &&
     !NON_DISH_FRAGMENT_ITEM.test(filterName) &&
+    !NON_DISH_SET_MENU_ITEM.test(filterName) &&
     !NON_DISH_ADDON_ITEM.test(filterName) &&
     !PRICE_DISPLAY_ONLY_ITEM.test(filterName) &&
     !KITCHEN_RETAIL_ITEM.test(filterName) &&
@@ -651,42 +654,6 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? canonicalizeHtmlOutputItems(beverageScopedItems)
         : beverageScopedItems;
-    if (extracted.method === "html_heuristic" && headingPriceItems.length >= 8) {
-      console.log(
-        JSON.stringify({
-          diagnostic: "html-heading-family-selection",
-          recovered: recoveredItems.length,
-          trailing: trailingPriceCardItems.length,
-          strongTitle: strongTitlePriceItems.length,
-          heading: headingPriceItems.length,
-          priceWrapped: priceWrappedItems.length,
-          semanticCategoryCardsPreferred,
-          strongNumberedCardsPreferred,
-          broadHeadingPriceRecoveryPreferred,
-          headingDominatesTrailingRecovery,
-          trailingPriceCardQualifies,
-          preferred:
-            preferredItems === headingPriceItems
-              ? "heading"
-              : preferredItems === trailingPriceCardItems
-                ? "trailing"
-                : preferredItems === strongTitlePriceItems
-                  ? "strong-title"
-                  : preferredItems === priceWrappedItems
-                    ? "price-wrapped"
-                    : "recovered",
-          preferredNames: preferredItems.map((item) => item.name),
-          headingNames: headingPriceItems.map((item) => item.name),
-          trailingNames: trailingPriceCardItems.map((item) => item.name),
-          reconciled: structurallyReconciledPreferredItems.length,
-          recoveredSupplemented: recoveredSupplementedItems.length,
-          headingSupplemented: headingSupplementedItems.length,
-          canonical: canonicalItems.length,
-          beverageScoped: beverageScopedItems.length,
-          final: items.length,
-        }),
-      );
-    }
     return {
       items,
       method: extracted.method,
