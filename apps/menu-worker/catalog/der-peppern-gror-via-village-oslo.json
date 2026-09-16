@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 9,
+    "minimumExpectedItems": 8,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
