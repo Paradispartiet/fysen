@@ -360,6 +360,10 @@ export function scopePdfMenuItems(
   const lines = visibleText.split("\n");
   const blocked = beverageBlockedLines(visibleText);
   const scoped: MenuObservedItem[] = [];
+  const sourceKeyCounts = new Map<string, number>();
+  for (const item of items) {
+    sourceKeyCounts.set(item.sourceKey, (sourceKeyCounts.get(item.sourceKey) ?? 0) + 1);
+  }
   let searchFrom = 0;
 
   for (const item of items) {
@@ -370,6 +374,18 @@ export function scopePdfMenuItems(
     )
       continue;
     const lineIndex = findNextDishLine(lines, item.name, searchFrom);
+    if (lineIndex !== null && (sourceKeyCounts.get(item.sourceKey) ?? 0) > 1) {
+      console.error(
+        JSON.stringify({
+          diagnostic: "pdf-duplicate-source-key-context",
+          sourceKey: item.sourceKey,
+          name: item.name,
+          lineIndex,
+          blocked: blocked[lineIndex] ?? null,
+          context: lines.slice(Math.max(0, lineIndex - 8), lineIndex + 9),
+        }),
+      );
+    }
     if (lineIndex !== null) searchFrom = lineIndex + 1;
     if (lineIndex !== null && blocked[lineIndex]) continue;
     scoped.push(cleanPdfOutputItemName(item));
