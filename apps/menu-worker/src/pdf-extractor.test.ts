@@ -91,7 +91,7 @@ describe("PDF menu extractor", () => {
       "3 OR 6 OYSTERS 190,- / 380,-",
     ]);
 
-    expect(PDF_EXTRACTOR_VERSION).toBe("pdf-text-v12");
+    expect(PDF_EXTRACTOR_VERSION).toBe("pdf-text-v13");
     expect(items).toHaveLength(1);
     expect(items[0]).toMatchObject({
       name: "3 OR 6 OYSTERS",
@@ -262,6 +262,22 @@ describe("PDF menu extractor", () => {
     expect(items.some((item) => /^(?:E,|Set menu|500gr|Med forebehold)/iu.test(item.name))).toBe(false);
   });
 
+  it("joins a comma-ended PDF dish name with one lowercase continuation line", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "SMÅRETTER / SMALLER COURSES",
+      "Sweetbreads with pickled lingonberries,",
+      "dried reindeer heart and gribiche sauce",
+      "(H, E, M)",
+      "285",
+    ]);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      [
+        "Sweetbreads with pickled lingonberries, dried reindeer heart and gribiche sauce",
+        28500,
+      ],
+    ]);
+  });
   it("skips parenthetical allergen notes between a dish name and standalone price", () => {
     const items = extractMenuItemsFromPdfLines([
       "DANSKE SMØRREBRØD",
