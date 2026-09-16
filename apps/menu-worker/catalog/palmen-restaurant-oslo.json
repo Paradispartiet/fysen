@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "palmen-restaurant-oslo",
+    "name": "Palmen Restaurant",
+    "websiteUrl": "https://www.scandichotels.com/no/hotell/grand-hotel-oslo-by-scandic/palmen",
+    "address": "Karl Johans gate 31, 0159 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.913745246491665,
+    "longitude": 10.739476691613683
+  },
+  "menuSource": {
+    "url": "https://menu.scandichotels.com/RestaurantMenuService/GetMenufile?fileId=93764&hotelId=340&restId=rest2",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 15,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-16",
+      "note": "Fresh exact-head reproof of the current first-party Palmen dinner PDF linked from Scandic after generic pdf-text-v23 bilingual beverage/wine recommendation scoping. The textual PDF publishes substantial named and individually priced dinner dishes alongside interleaved wine-pairing rows; intake remains fail-closed unless generic beverage scope excludes those rows and resumes at bilingual food-course headings without source substitution."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Grand Burger",
+      "Greater Omaha Striploin",
+      "Østers",
+      "Biff Tataki",
+      "Burrata",
+      "Snertingdal Blå Viking",
+      "Jordbær og fløte",
+      "Sjokoladeterte"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Grand Burger",
+        "priceMinor": 34900
+      },
+      {
+        "name": "Greater Omaha Striploin",
+        "priceMinor": 62900
+      },
+      {
+        "name": "Østers",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Biff Tataki",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Burrata",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Snertingdal Blå Viking",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Jordbær og fløte",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Sjokoladeterte",
+        "priceMinor": 18900
+      }
+    ],
+    "forbiddenDishNames": [
+      "3 retters middagsmeny",
+      "Sauvignon Blanc Porcupine Boekhoutskloof South Africa",
+      "Riesling Charm Georg Breuer Rheingau Germany",
+      "Barbera d’Alba Paolo Scavino Italy",
+      "Chablis Domaine Brocard Burgundy France",
+      "Pinot Grigio Elena Walch Alto Adige Italy",
+      "Tokaij Late Harvest The Royal Tokaji Wine Company Hungary"
+    ]
+  }
+}
