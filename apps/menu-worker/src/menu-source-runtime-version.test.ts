@@ -60,6 +60,7 @@ describe("HTML runtime extractor version", () => {
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
       "trailing-price-card-v16",
     );
+    expect(HTML_PRICE_WRAPPED_RECOVERY_VERSION).toBe("price-wrapped-v2");
     expect(HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION).toBe(
       "strong-title-price-v1",
     );
