@@ -58,13 +58,36 @@ describe("PDF menu extractor", () => {
     expect(items[0]?.sourceExcerpt).toContain("285 / 309 NOK");
   });
 
+  it("accepts an explicit low inline price marker but rejects the same bare low number", () => {
+    const marked = extractMenuItemsFromPdfLines([
+      "ALL DAY",
+      "BISCOTTO 35,-",
+      "AVOCADO TOAST 279,-",
+      "TOAST SKAGEN 335,-",
+      "STEAK TARTARE 345,-",
+    ]);
+    expect(marked.map((item) => [item.name, item.priceMinor])).toContainEqual([
+      "BISCOTTO",
+      3500,
+    ]);
+
+    const bare = extractMenuItemsFromPdfLines([
+      "ALL DAY",
+      "BISCOTTO 35",
+      "AVOCADO TOAST 279",
+      "TOAST SKAGEN 335",
+      "STEAK TARTARE 345",
+    ]);
+    expect(bare.some((item) => item.name === "BISCOTTO")).toBe(false);
+  });
+
   it("parses punctuated multiple prices without leaving the first price in the dish name", () => {
     const items = extractMenuItemsFromPdfLines([
       "EVENING",
       "3 OR 6 OYSTERS 190,- / 380,-",
     ]);
 
-    expect(PDF_EXTRACTOR_VERSION).toBe("pdf-text-v10");
+    expect(PDF_EXTRACTOR_VERSION).toBe("pdf-text-v11");
     expect(items).toHaveLength(1);
     expect(items[0]).toMatchObject({
       name: "3 OR 6 OYSTERS",
