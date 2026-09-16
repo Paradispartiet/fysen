@@ -13,17 +13,13 @@
   "menuSource": {
     "url": "https://www.dognvillburger.no/en/meny/bjorvika",
     "sourceType": "html",
-    "fetchMode": "browser",
+    "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 35,
     "sourceSupport": {
       "redirectOrigins": [],
-      "browserDataOrigins": [],
-      "browserBlockedOrigins": [
-        "https://widget-api.formitable.com",
-        "https://cdn-cookieyes.com"
-      ]
+      "browserDataOrigins": []
     }
   },
   "verification": {
