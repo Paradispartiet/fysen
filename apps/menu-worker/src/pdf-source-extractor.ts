@@ -404,21 +404,32 @@ export function scopePdfMenuItems(
   const lines = visibleText.split("\n");
   const blocked = beverageBlockedLines(visibleText);
   const scoped: MenuObservedItem[] = [];
+  const debugDrops: Array<{ name: string; reason: string; lineIndex: number | null }> = [];
   let searchFrom = 0;
 
   for (const item of items) {
-    if (
-      looksLikePricingMetadata(item.name) ||
-      looksLikePdfBeverageItem(item.name) ||
-      looksLikePdfDescriptionFragment(item.name)
-    )
+    if (looksLikePricingMetadata(item.name)) {
+      debugDrops.push({ name: item.name, reason: "pricing-metadata", lineIndex: null });
       continue;
+    }
+    if (looksLikePdfBeverageItem(item.name)) {
+      debugDrops.push({ name: item.name, reason: "beverage-name", lineIndex: null });
+      continue;
+    }
+    if (looksLikePdfDescriptionFragment(item.name)) {
+      debugDrops.push({ name: item.name, reason: "description-fragment", lineIndex: null });
+      continue;
+    }
     const lineIndex = findNextDishLine(lines, item.name, searchFrom);
     if (lineIndex !== null) searchFrom = lineIndex + 1;
-    if (lineIndex !== null && blocked[lineIndex]) continue;
+    if (lineIndex !== null && blocked[lineIndex]) {
+      debugDrops.push({ name: item.name, reason: "beverage-section", lineIndex });
+      continue;
+    }
     scoped.push(cleanPdfOutputItemName(item));
   }
 
+  console.error("[TEMP pdf-scope-drops]", JSON.stringify(debugDrops));
   return scoped.map((item, position) => ({ ...item, position }));
 }
 
