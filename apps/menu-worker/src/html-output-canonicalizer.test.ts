@@ -362,7 +362,7 @@ describe("structural HTML output canonicalization", () => {
   it("drops bare year values misread as prices without hiding explicitly priced high-value items", () => {
     const items = [
       item("BOOK", 202600, null, "BOOK — Restaurant © 2026"),
-      item("JESSHEIM", 202600, null, "JESSHEIM — 2026"),
+      item("JESSHEIM", 202600, null, "JESSHEIM — navigation — 2026 — footer"),
       item("Chef Table", 202600, null, "Chef Table — 2026 kr"),
       item("Vintage Menu", 199900, null, "Vintage Menu — NOK 1999"),
       item("Pasta Carbonara", 24900),
