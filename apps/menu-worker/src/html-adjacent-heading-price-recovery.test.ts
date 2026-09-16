@@ -18,7 +18,7 @@ describe("adjacent heading-price HTML recovery", () => {
       </body></html>
     `);
 
-    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v8");
+    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v9");
     expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
       ["Doro Wet", 29000, "exact"],
       ["Key Wet", 28000, "exact"],
@@ -27,6 +27,28 @@ describe("adjacent heading-price HTML recovery", () => {
       ["Salad w/tuna", 16500, "exact"],
     ]);
     expect(items.some((item) => item.name.startsWith("Phone:"))).toBe(false);
+  });
+
+  it("accepts a per-person currency prefix on a nested price heading", () => {
+    const items = recoverAdjacentHeadingPriceHtmlItems(`
+      <html><body>
+        <h2>Mezah-retter</h2>
+        <h4>Mezah uten kjøtt (vegetar)</h4><h5>Kr. 350,-</h5>
+        <h4>Mezah med kjøtt</h4><h5>Kr. 399,-</h5>
+        <h4>Ekstra mezah-tallerken</h4><h5>Kr. 79,-</h5>
+        <h4>Ekstra pitabrød</h4><h5>Kr. 49,-</h5>
+        <h4>Mezah med en grill rett</h4>
+        <p>Mini-mezah. Jo flere som bestiller, jo større blir variasjonene.</p>
+        <p>Serveres med hvitløksbrød og pitabrød.</p>
+        <p>Grillede spyd med Gaza Kebab og marinert grillet kyllingbryst.</p>
+        <h5>Pr. person Kr. 459,-</h5>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toContainEqual([
+      "Mezah med en grill rett",
+      45900,
+    ]);
   });
 
   it("recovers heading-price cards through bounded multilingual description and allergen lines without crossing the next heading", () => {
