@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 96,
+    "minimumExpectedItems": 95,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,7 @@
       "Maki Mix",
       "Tuna Kimchi Roll",
       "Red & White Sashimi",
-      "Søt Chili Saus",
-      "Bestikk"
+      "Søt Chili Saus"
     ],
     "requiredDishVariants": [
       {
@@ -70,10 +69,6 @@
       {
         "name": "Søt Chili Saus",
         "priceMinor": 2000
-      },
-      {
-        "name": "Bestikk",
-        "priceMinor": 500
       }
     ],
     "forbiddenDishNames": []
