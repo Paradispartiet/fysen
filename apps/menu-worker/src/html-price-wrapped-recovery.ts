@@ -4,10 +4,12 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_PRICE_WRAPPED_RECOVERY_VERSION = "price-wrapped-v1";
+export const HTML_PRICE_WRAPPED_RECOVERY_VERSION = "price-wrapped-v2";
 
 const STANDALONE_PRICE = /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
 const PRICE_VALUE = /^(?:kr\.?\s*)?([1-9]\d{1,3})(?:[.,](\d{1,2}))?(?:\s*(?:,-|kr\.?|nok))?$/iu;
+const PRICE_PREFIX_WITH_DESCRIPTION =
+  /^(?:kr\.?\s*)?([1-9]\d{1,3})(?:[.,](\d{1,2}))?\s*(?:,-|kr\.?|nok)\s*(?:[/–—-]\s*)?(.+)$/iu;
 const SECTION_OR_UI_LABEL = /^(?:meny|menu|forretter?|starters?|småretter|hovedretter?|mains?|grillretter?|desserter?|desserts?|drikke(?:meny)?|drinks?|booking|bestill|bord|åpningstider|opening hours|kontakt|contact|allergener?|allergens?)$/iu;
 const DESCRIPTION_LEAD = /^(?:serveres?|servert|served|with|med|toppet|topped|inneholder|contains?|inkludert|including)\b/iu;
 
@@ -22,6 +24,19 @@ function priceMinor(value: string): number | null {
   const decimals = (match[2] ?? "").padEnd(2, "0").slice(0, 2);
   const amount = whole * 100 + Number(decimals || "0");
   return amount >= 4_000 && amount <= 1_000_000 ? amount : null;
+}
+
+function prefixedPrice(value: string): { readonly priceMinor: number; readonly description: string } | null {
+  const line = normalizeVisibleLine(value);
+  const match = line.match(PRICE_PREFIX_WITH_DESCRIPTION);
+  if (!match?.[1] || !match[3]) return null;
+  const whole = Number(match[1]);
+  const decimals = (match[2] ?? "").padEnd(2, "0").slice(0, 2);
+  const amount = whole * 100 + Number(decimals || "0");
+  const description = normalizeVisibleLine(match[3]);
+  if (amount < 4_000 || amount > 1_000_000 || !description || !/\p{L}/u.test(description))
+    return null;
+  return { priceMinor: amount, description };
 }
 
 function looksLikeDishTitle(value: string): boolean {
@@ -79,6 +94,33 @@ export function recoverPriceWrappedHtmlItems(visibleText: string): readonly Menu
     });
   }
 
-  if (unique.size < 3) return [];
+  const wrappedCount = unique.size;
+  const adjacent = new Map<string, MenuObservedItem>();
+
+  for (let position = 0; position + 1 < lines.length; position += 1) {
+    const title = lines[position] ?? "";
+    const priced = prefixedPrice(lines[position + 1] ?? "");
+    if (!priced || !looksLikeDishTitle(title)) continue;
+
+    const sourceKey = createMenuItemSourceKey(title);
+    adjacent.set(sourceKey, {
+      sourceKey,
+      name: title,
+      normalizedName: normalizeDishName(title),
+      description: priced.description,
+      sectionName: null,
+      priceMinor: priced.priceMinor,
+      currency: "NOK",
+      position,
+      extractionMethod: "html_heuristic",
+      confidence: 0.94,
+      sourceExcerpt: `${title} — ${lines[position + 1] ?? ""}`.slice(0, 1000),
+    });
+  }
+
+  if (adjacent.size >= 4) {
+    for (const [sourceKey, item] of adjacent) unique.set(sourceKey, item);
+  }
+  if (wrappedCount < 3 && adjacent.size < 4) return [];
   return [...unique.values()].sort((a, b) => a.position - b.position);
 }
