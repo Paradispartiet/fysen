@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v13";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v14";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -180,6 +180,11 @@ function robustSpread(values: readonly number[]): number {
   return percentile(values, 0.9) - percentile(values, 0.1);
 }
 
+function fullSpread(values: readonly number[]): number {
+  if (values.length < 2) return 0;
+  return Math.max(...values) - Math.min(...values);
+}
+
 function positionedTextItems(items: readonly unknown[]): readonly PositionedTextItem[] | null {
   const textItems = items.filter(isTextItem).filter((item) => normalizeLine(item.str));
   const positioned: PositionedTextItem[] = [];
@@ -275,7 +280,9 @@ function shouldUseVisualReadingOrder(lines: readonly VisualPdfLine[]): boolean {
   const centers = lines.map((line) => (line.xStart + line.xEnd) / 2);
   const singleColumn =
     robustSpread(xStarts) <= 90 || robustSpread(centers) <= 110;
-  if (!singleColumn) return false;
+  const broadMultiColumnLayout =
+    fullSpread(xStarts) > 260 && fullSpread(centers) > 320;
+  if (!singleColumn || broadMultiColumnLayout) return false;
 
   const originalOrder = [...lines].sort(
     (left, right) => left.originalIndex - right.originalIndex,
