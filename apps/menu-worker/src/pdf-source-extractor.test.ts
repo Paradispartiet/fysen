@@ -28,7 +28,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v17");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v18");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -202,6 +202,32 @@ describe("PDF source scope", () => {
 
     expect(scoped.map((item) => item.name)).toEqual([
       "Cà ri gà / Chicken curry",
+    ]);
+  });
+
+  it("resumes food scope at all-day and evening service headings between beverage sections", () => {
+    const lines = [
+      "COCKTAILS",
+      "House Martini 195",
+      "ALL DAY",
+      "Avocado Toast 279",
+      "Chicken Caesar Salad 325",
+      "SINGLE MALT WHISKY",
+      "Highland 12y 215",
+      "EVENING",
+      "Salted Cucumber 95",
+      "Spanish Anchovies 125",
+      "WINE BY THE GLASS",
+      "House White 175",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual([
+      "Avocado Toast",
+      "Chicken Caesar Salad",
+      "Salted Cucumber",
+      "Spanish Anchovies",
     ]);
   });
 
