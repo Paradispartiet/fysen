@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v21";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v22";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -84,7 +84,7 @@ function normalizeVisibleLine(value: string): string {
 
 function isBeverageSectionHeading(value: string): boolean {
   const line = normalizeScopeLine(value);
-  return /^(?:bia va ruou(?: beer spirits)?|beer(?: and)? spirits|giai khat(?: non alcohol(?:ic)?)?|non alcoholic(?: drinks?)?|ruou pha(?: cocktails?)?|(?:[\p{L}\p{N}]+ )?cocktails?|khong con(?: mocktails?)?|mocktails?|pre ?drinks?(?: \d{2,4})?|do uong(?: drinks?)?|drikke(?:meny)?|drinks?|beverages?|soft drinks?|barnedrinker|barne drikker|kids drinks?|children s drinks?|vinkart|vin(?:kart|liste|meny)?|(?:vinpakke(?: wine pairing)?|wine pairing(?: vinpakke)?)|wine(?: list| menu| by the glass)?|rose wine|white wine|red wine|bubbles|champagne|sparkling wine|beer|ol|(?:single malt )?whisk(?:e)?y(?: bourbon)?|bourbon|brandy(?: cognac)?|cognac|bitters?|(?:various )?spirits?|brennevin|liquor|vodka|gin|rum|tequila(?: mezcal)?|mezcal|aquavit|akevitt|liqueurs?|calvados|armagnac|grappa|port(?: wine)?|sherry|vermouth|sake|coffee|kaffe|tea|te)$/u.test(
+  return /^(?:bia va ruou(?: beer spirits)?|beer(?: and)? spirits|giai khat(?: non alcohol(?:ic)?)?|non alcoholic(?: drinks?)?|ruou pha(?: cocktails?)?|(?:[\p{L}\p{N}]+ )?cocktails?|khong con(?: mocktails?)?|mocktails?|pre ?drinks?(?: \d{2,4})?|do uong(?: drinks?)?|drikke(?:meny)?|drinks?|beverages?|soft drinks?|barnedrinker|barne drikker|kids drinks?|children s drinks?|vinkart|vin(?:kart|liste|meny)?|(?:vinpakke(?: wine pairing)?|wine pairing(?: vinpakke)?|vinanbefaling(?: wine recomm?endation)?|wine recomm?endation(?: vinanbefaling)?)|wine(?: list| menu| by the glass)?|rose wine|white wine|red wine|bubbles|champagne|sparkling wine|beer|ol|(?:single malt )?whisk(?:e)?y(?: bourbon)?|bourbon|brandy(?: cognac)?|cognac|bitters?|(?:various )?spirits?|brennevin|liquor|vodka|gin|rum|tequila(?: mezcal)?|mezcal|aquavit|akevitt|liqueurs?|calvados|armagnac|grappa|port(?: wine)?|sherry|vermouth|sake|coffee|kaffe|tea|te)$/u.test(
     line,
   );
 }
@@ -360,10 +360,6 @@ export function scopePdfMenuItems(
   const lines = visibleText.split("\n");
   const blocked = beverageBlockedLines(visibleText);
   const scoped: MenuObservedItem[] = [];
-  const sourceKeyCounts = new Map<string, number>();
-  for (const item of items) {
-    sourceKeyCounts.set(item.sourceKey, (sourceKeyCounts.get(item.sourceKey) ?? 0) + 1);
-  }
   let searchFrom = 0;
 
   for (const item of items) {
@@ -374,18 +370,6 @@ export function scopePdfMenuItems(
     )
       continue;
     const lineIndex = findNextDishLine(lines, item.name, searchFrom);
-    if (lineIndex !== null && (sourceKeyCounts.get(item.sourceKey) ?? 0) > 1) {
-      console.error(
-        JSON.stringify({
-          diagnostic: "pdf-duplicate-source-key-context",
-          sourceKey: item.sourceKey,
-          name: item.name,
-          lineIndex,
-          blocked: blocked[lineIndex] ?? null,
-          context: lines.slice(Math.max(0, lineIndex - 8), lineIndex + 9),
-        }),
-      );
-    }
     if (lineIndex !== null) searchFrom = lineIndex + 1;
     if (lineIndex !== null && blocked[lineIndex]) continue;
     scoped.push(cleanPdfOutputItemName(item));
