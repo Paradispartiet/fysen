@@ -679,6 +679,23 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? canonicalizeHtmlOutputItems(beverageScopedItems)
         : beverageScopedItems;
+    console.error(
+      "[TEMP html-final-stage-counts]",
+      JSON.stringify({
+        strongTitlePricePreferred,
+        semanticCategoryCardsPreferred,
+        strongNumberedCardsPreferred,
+        strongDirectTrailingRecoveryPreferred,
+        isolatedTrailingRecoveryPreferred,
+        broadHeadingPriceRecoveryPreferred,
+        headingDominatesTrailingRecovery,
+        preferred: preferredItems.length,
+        normalized: normalizedItems.length,
+        canonical: canonicalItems.length,
+        beverageScoped: beverageScopedItems.length,
+        final: items.length,
+      }),
+    );
     return {
       items,
       method: extracted.method,
