@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 58,
+    "minimumExpectedItems": 57,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,7 @@
       "CHICKEN STEW with mashed potatoes",
       "BBQ PULLED BEEF BURGER",
       "Homemade Jalapeno Sauce",
-      "Brooklyn Special Effect / alcohol free beer",
-      "Bestikk"
+      "Brooklyn Special Effect / alcohol free beer"
     ],
     "requiredDishVariants": [
       {
@@ -70,10 +69,6 @@
       {
         "name": "Brooklyn Special Effect / alcohol free beer",
         "priceMinor": 7900
-      },
-      {
-        "name": "Bestikk",
-        "priceMinor": 600
       }
     ],
     "forbiddenDishNames": []
