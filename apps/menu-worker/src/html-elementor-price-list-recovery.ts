@@ -6,7 +6,7 @@ import {
 import { load } from "cheerio";
 
 export const HTML_ELEMENTOR_PRICE_LIST_RECOVERY_VERSION =
-  "elementor-price-list-v2";
+  "elementor-price-list-v1";
 
 const CARD_SELECTOR = ".elementor-price-list-item";
 const TITLE_SELECTOR = ".elementor-price-list-title";
@@ -16,14 +16,9 @@ const PRICE =
   /^(?:(?:NOK|kr\.?)\s*)?([1-9]\d{1,3})(?:[.,](\d{1,2}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
 const UI_TITLE =
   /^(?:menu|meny|drinks?|drikke|events?|kontakt|contact|booking|reservations?)$/iu;
-const EXPLICIT_MENU_INDEX = /^\d{1,3}\s*[.)]\s*/u;
 
 function normalizeText(value: string): string {
   return value.normalize("NFKC").replace(/\s+/g, " ").trim();
-}
-
-function canonicalTitle(value: string): string {
-  return normalizeText(value).replace(EXPLICIT_MENU_INDEX, "").trim();
 }
 
 function parsePriceMinor(value: string): number | null {
@@ -69,7 +64,7 @@ export function recoverElementorPriceListHtmlItems(
       return;
     }
 
-    const name = canonicalTitle(titles.first().text());
+    const name = normalizeText(titles.first().text());
     const priceText = normalizeText(prices.first().text());
     const priceMinor = parsePriceMinor(priceText);
     const normalizedName = normalizeDishName(name);
