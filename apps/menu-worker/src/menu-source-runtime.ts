@@ -111,11 +111,14 @@ const KITCHEN_RETAIL_ITEM = /^(?:pizzakutter|pizza\s+cutter)$/iu;
 const RETAIL_APPAREL_ITEM = /\b(?:tee|t-?shirt|hoodie|sweatshirt|caps?)$/iu;
 const HISTORICAL_SINCE_ITEM = /·\s*siden$/iu;
 const BEVERAGE_MENU_ITEM =
-  /^(?:(?:urge(?:\s+(?:zero|uten\s+sukker|zero\s+sugar))?|coca[- ]?cola|cola(?:\s+zero)?|fanta|sprite|farris(?:\s+\p{L}+)?|eplemost|mineralvann|(?:\p{L}+\s+)?juice|(?:\p{L}+\s+)?lassi)(?:\s+.*)?|(?:guinness|corona|munkholm|aperol)(?:\s+.*)?|(?:gin\s+(?:&\s*)?tonic|dry\s+martini)|(?:arabisk|arabic|tyrkisk|turkish)\s+(?:coffee|kaffe)(?:\s+.*)?|telemark\s+(?:still|sparkling)\s+naturell(?:\s+.*)?|hard\s+seltz(?:\s+.*)?|.*\b(?:pilsner|pærecider|cider|ingefærøl)\b.*|.*\bøl\b.*(?:\bflaske\b|\bglass\b|\d+[,.]\d+)|(?:rosévin|hvitvin|rødvin)(?:\s+(?:glass|flaske))?|.*\b(?:coffee|kaffe|espresso|americano|cappuccino|capuccino|cuppucino|latte|tea|te)\b|.*\b(?:cola|ginger\s+beer)\b)$/iu;
+  /^(?:(?:urge(?:\s+(?:zero|uten\s+sukker|zero\s+sugar))?|pepsi(?:\s+max)?|imsdal|coca[- ]?cola|cola(?:\s+zero)?|fanta|sprite|farris(?:\s+\p{L}+)?|eplemost|mineralvann|(?:\p{L}+\s+)?juice|(?:\p{L}+\s+)?lassi)(?:\s+.*)?|(?:guinness|corona|munkholm|aperol)(?:\s+.*)?|(?:gin\s+(?:&\s*)?tonic|dry\s+martini)|(?:arabisk|arabic|tyrkisk|turkish)\s+(?:coffee|kaffe)(?:\s+.*)?|telemark\s+(?:still|sparkling)\s+naturell(?:\s+.*)?|hard\s+seltz(?:\s+.*)?|.*\b(?:pilsner|pærecider|cider|ingefærøl)\b.*|.*\bøl\b.*(?:\bflaske\b|\bglass\b|\d+[,.]\d+)|(?:rosévin|hvitvin|rødvin)(?:\s+(?:glass|flaske))?|.*\b(?:coffee|kaffe|espresso|americano|cappuccino|capuccino|cuppucino|latte|tea|te)\b|.*\b(?:cola|ginger\s+beer)\b)$/iu;
 const BEVERAGE_PACKAGE_ITEM =
   /^(?:with\s+)?(?:wine|drink|beverage)\s+package$/iu;
 const STRUCTURED_MENU_CONTRACT_COMPATIBILITY_ITEM =
-  /^(?:bestikk|cutlery|urge(?:\s+(?:zero|uten\s+sukker|zero\s+sugar))?(?:\s+.*)?)$/iu;
+  /^(?:bestikk|cutlery|urge(?:\s+(?:zero|uten\s+sukker|zero\s+sugar))?(?:\s+.*)?|pepsi(?:\s+max)?(?:\s+.*)?|imsdal(?:\s+.*)?)$/iu;
+const BATCH_INTAKE_BEVERAGE_SECTION =
+  /^(?:juice|juices|drikke|drinks?|beverages?|mineralvann|brus|soft\s+drinks?|sodas?|kaffe|coffee|te|tea|vin|wine|øl|beer|cocktails?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?)$/iu;
+
 const SPARKLING_WINE_PRODUCT_ITEM =
   /^(?=.*\b(?:brut|sparkling\s+wine)\b)(?!.*\b(?:sauce|saus|beurre|glaze|glazed|poached|braised|grilled|baked|with|med)\b).+$/iu;
 const BEVERAGE_STYLE_ITEM =
@@ -127,7 +130,7 @@ const COCKTAIL_DESCRIPTION_ITEM =
 export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v3";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v12";
-export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v11";
+export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v12";
 export const HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION = "structured-compat-v1";
 export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v4";
 
@@ -256,6 +259,16 @@ export function isCanonicalStructuredMenuItem(
   return (
     STRUCTURED_MENU_CONTRACT_COMPATIBILITY_ITEM.test(filterName) ||
     isCanonicalHtmlMenuItem(item)
+  );
+}
+
+export function isCanonicalBatchIntakeMenuItem(
+  item: MenuObservedItem,
+): boolean {
+  const sectionName = item.sectionName?.trim().replace(/\p{Cf}/gu, "").trim() ?? "";
+  return (
+    isCanonicalHtmlMenuItem(item) &&
+    !BATCH_INTAKE_BEVERAGE_SECTION.test(sectionName)
   );
 }
 

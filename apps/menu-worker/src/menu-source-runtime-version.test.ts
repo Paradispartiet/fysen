@@ -53,7 +53,7 @@ describe("HTML runtime extractor version", () => {
     expect(HTML_HEADING_NORMALIZER_VERSION).toBe("heading-v3");
     expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v8");
     expect(HTML_NON_DISH_FILTER_VERSION).toBe("non-dish-v12");
-    expect(HTML_BEVERAGE_FILTER_VERSION).toBe("beverage-v11");
+    expect(HTML_BEVERAGE_FILTER_VERSION).toBe("beverage-v12");
     expect(HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION).toBe(
       "structured-compat-v1",
     );

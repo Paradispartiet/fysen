@@ -38,6 +38,8 @@ describe("generic HTML canonical item filtering", () => {
     "Homemade Lemonade with Mint",
     "Pepsi",
     "Pepsi Max",
+    "Pepsi Max 0,5l",
+    "Imsdal 0,5l",
     "Urge",
     "Urge Zero",
     "Bestikk",

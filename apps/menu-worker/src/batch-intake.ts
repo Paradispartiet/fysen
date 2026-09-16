@@ -11,7 +11,7 @@ import {
 import {
   extractMenuSource,
   fetchMenuSource,
-  isCanonicalHtmlMenuItem,
+  isCanonicalBatchIntakeMenuItem,
 } from "./menu-source-runtime.js";
 
 const manifestShape = restaurantOnboardingManifestSchema.shape;
@@ -116,7 +116,7 @@ export function buildGeneratedRestaurantManifest(
   items: readonly MenuObservedItem[],
 ): RestaurantOnboardingManifest {
   const canonicalItems = canonicalizeUniqueMenuSourceKeys(
-    items.filter(isCanonicalHtmlMenuItem),
+    items.filter(isCanonicalBatchIntakeMenuItem),
   );
   if (canonicalItems.length === 0)
     throw new Error("Live source exposed no canonical menu items");

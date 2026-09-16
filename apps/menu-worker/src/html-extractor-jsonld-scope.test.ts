@@ -20,7 +20,7 @@ describe("JSON-LD menu scope", () => {
     `;
 
     const result = extractHtmlMenu(html);
-    expect(HTML_EXTRACTOR_VERSION).toBe("html-v8");
+    expect(HTML_EXTRACTOR_VERSION).toBe("html-v9");
     expect(result.method).toBe("json_ld");
     expect(result.items.map((item) => item.name)).toEqual([
       "MARGHERITA",
@@ -28,6 +28,54 @@ describe("JSON-LD menu scope", () => {
       "Spaghetti Carbonara",
     ]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([17000, 16900, 26500]);
+  });
+
+  it("preserves nearest MenuSection ancestry on structured items", () => {
+    const html = `
+      <html><body>
+        <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@type": "Menu",
+            "hasMenuSection": [
+              {
+                "@type": "MenuSection",
+                "name": "Falafel & Mer",
+                "hasMenuItem": [
+                  {"@type":"MenuItem","name":"Falafel i Rull","offers":{"@type":"Offer","price":"99","priceCurrency":"NOK"}}
+                ]
+              },
+              {
+                "@type": "MenuSection",
+                "name": "Juice",
+                "hasMenuItem": [
+                  {"@type":"MenuItem","name":"Appelsin","offers":{"@type":"Offer","price":"59","priceCurrency":"NOK"}},
+                  {"@type":"MenuItem","name":"Eple, Gulrot og Ingefær","offers":{"@type":"Offer","price":"59","priceCurrency":"NOK"}}
+                ]
+              },
+              {
+                "@type": "MenuSection",
+                "name": "Drikke",
+                "hasMenuItem": [
+                  {"@type":"MenuItem","name":"Pepsi Max 0,5l","offers":{"@type":"Offer","price":"39","priceCurrency":"NOK"}},
+                  {"@type":"MenuItem","name":"Imsdal 0,5l","offers":{"@type":"Offer","price":"39","priceCurrency":"NOK"}}
+                ]
+              }
+            ]
+          }
+        </script>
+      </body></html>
+    `;
+
+    const result = extractHtmlMenu(html);
+    expect(result.method).toBe("json_ld");
+    expect(result.items.map((item) => [item.name, item.sectionName])).toEqual([
+      ["Falafel i Rull", "Falafel & Mer"],
+      ["Appelsin", "Juice"],
+      ["Eple, Gulrot og Ingefær", "Juice"],
+      ["Pepsi Max 0,5l", "Drikke"],
+      ["Imsdal 0,5l", "Drikke"],
+    ]);
   });
 
   it("preserves ordinary structured food items", () => {
