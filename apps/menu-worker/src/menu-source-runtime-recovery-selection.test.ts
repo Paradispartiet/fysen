@@ -172,6 +172,30 @@ describe("HTML runtime recovery selection", () => {
     ]);
   });
 
+  it("reconciles explicit menu indices when strong-title recovery wins", async () => {
+    const result = await extract(`
+      <html><body>
+        <h2>Menu</h2>
+        <p><strong>41. KOTTU KYLLING</strong></p><p>kr 169,00</p>
+        <p><strong>45. CHICKEN TIKKA</strong></p><p>kr 219,00</p>
+        <p><strong>57. CHOP SUEY</strong></p><p>kr 169,00</p>
+        <p><strong>61. PHAD THAI</strong></p><p>kr 169,00</p>
+        <p><strong>65. KEBAB PIZZA</strong></p><p>kr 299,00</p>
+        <p><strong>66. LA PEPE</strong></p><p>kr 299,00</p>
+        <p><strong>67. MILANO</strong></p><p>kr 299,00</p>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual(
+      expect.arrayContaining([
+        ["KOTTU KYLLING", 16900],
+        ["CHICKEN TIKKA", 21900],
+        ["PHAD THAI", 16900],
+        ["KEBAB PIZZA", 29900],
+      ]),
+    );
+  });
+
   it("reconciles unique explicit menu indices from a dominant heading recovery without collapsing repeated labels", async () => {
     const result = await extract(`
       <html><body>
