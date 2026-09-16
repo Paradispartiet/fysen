@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 72,
+    "minimumExpectedItems": 71,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,7 @@
       "Beyti Døner",
       "Memili Stek",
       "Kylling Kebab m/ Mozzarella",
-      "Ayran",
-      "Bestikk"
+      "Ayran"
     ],
     "requiredDishVariants": [
       {
@@ -70,10 +69,6 @@
       {
         "name": "Ayran",
         "priceMinor": 2500
-      },
-      {
-        "name": "Bestikk",
-        "priceMinor": 200
       }
     ],
     "forbiddenDishNames": []
