@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 108,
+    "minimumExpectedItems": 106,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,7 @@
       "Philadephia Fritert Laks Maki",
       "Rød Karri",
       "Innbakt Scampi",
-      "Rødskjell",
-      "Urge 0,5l"
+      "Rødskjell"
     ],
     "requiredDishVariants": [
       {
@@ -70,10 +69,6 @@
       {
         "name": "Rødskjell",
         "priceMinor": 2300
-      },
-      {
-        "name": "Urge 0,5l",
-        "priceMinor": 4500
       }
     ],
     "forbiddenDishNames": []
