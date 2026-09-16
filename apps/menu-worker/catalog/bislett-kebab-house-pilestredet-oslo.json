@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 85,
+    "minimumExpectedItems": 84,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,7 +39,6 @@
       "BKH Vegetar Burger",
       "Chillicheeseburger Tallerken",
       "Kyllingballs med Ost og Chili (10 stk.)",
-      "Urge 0,5l",
       "Smash Fries"
     ],
     "requiredDishVariants": [
@@ -66,10 +65,6 @@
       {
         "name": "Kyllingballs med Ost og Chili (10 stk.)",
         "priceMinor": 13300
-      },
-      {
-        "name": "Urge 0,5l",
-        "priceMinor": 5500
       },
       {
         "name": "Smash Fries",
