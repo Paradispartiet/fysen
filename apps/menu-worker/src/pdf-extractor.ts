@@ -98,6 +98,17 @@ const allergenCodeTokens = new Set([
   "wa",
 ]);
 
+const pdfAllergenMetadataCodes = new Set([
+  ...allergenCodeTokens,
+  "by",
+  "c",
+  "hn",
+  "lu",
+  "s",
+  "sp",
+  "vn",
+]);
+
 function normalizeLine(value: string): string {
   return value.normalize("NFKC").replace(/\s+/g, " ").trim();
 }
@@ -372,17 +383,41 @@ function canonicalPdfDishName(value: string): string {
     .trim();
 }
 
+function looksLikeParentheticalAllergenMetadata(value: string): boolean {
+  const normalized = normalizeLine(value);
+  const match = normalized.match(/^\(([^)]{1,120})\)(?:\s*-\s*.*)?$/u);
+  if (!match?.[1]) return false;
+  const tokens = match[1]
+    .replace(/[.,;/+&]+/gu, " ")
+    .split(/\s+/u)
+    .map((token) => token.toLocaleLowerCase("nb-NO"))
+    .filter(Boolean);
+  return (
+    tokens.length > 0 &&
+    tokens.length <= 12 &&
+    tokens.every((token) => pdfAllergenMetadataCodes.has(token))
+  );
+}
+
 function looksLikeAllergenCodeOnly(value: string): boolean {
+  if (looksLikeParentheticalAllergenMetadata(value)) return true;
   const tokens = normalizeLine(value)
     .replace(/[.,;:]+$/u, "")
     .split(/[\s,/+]+/u)
     .map((token) => token.toLocaleLowerCase("nb-NO"))
     .filter(Boolean);
-  return tokens.length > 0 && tokens.length <= 12 && tokens.every((token) => allergenCodeTokens.has(token));
+  return (
+    tokens.length > 0 &&
+    tokens.length <= 12 &&
+    tokens.every((token) => allergenCodeTokens.has(token))
+  );
 }
 
 function looksLikeQuantityPricingMetadata(value: string): boolean {
-  const quantities = normalizeLine(value).match(PDF_QUANTITY) ?? [];
+  const normalized = normalizeLine(value);
+  if (/^\d{1,3}\s*(?:stk\.?|pieces?|pcs?\.?)\s*\/?$/iu.test(normalized))
+    return true;
+  const quantities = normalized.match(PDF_QUANTITY) ?? [];
   return quantities.length >= 2;
 }
 
@@ -489,6 +524,33 @@ function wrappedName(
   };
 }
 
+function previousStandaloneDishNameLineIndex(
+  lines: readonly PdfLine[],
+  priceLineIndex: number,
+): number | null {
+  const priceLine = lines[priceLineIndex];
+  if (!priceLine) return null;
+
+  for (
+    let index = priceLineIndex - 1;
+    index >= Math.max(0, priceLineIndex - 6);
+    index -= 1
+  ) {
+    const candidateLine = lines[index];
+    if (!candidateLine || candidateLine.page !== priceLine.page) break;
+    const text = normalizeLine(candidateLine.text);
+    if (!text) continue;
+    if (standalonePrice.test(text) || parseInlineDish(text) || sectionHeading(text))
+      return null;
+    if (looksLikeParentheticalAllergenMetadata(text)) continue;
+
+    const rawName = canonicalPdfDishName(text);
+    if (/^[a-zæøå]/u.test(rawName)) continue;
+    if (looksLikeDishName(rawName)) return index;
+  }
+  return null;
+}
+
 function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] {
   const candidates: ItemCandidate[] = [];
   const consumedWrappedNameLines = new Set<number>();
@@ -536,17 +598,15 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
     if (standalone?.[1]) {
       const price = parsedPrice(standalone[1], standalone[2]);
       if (price && index > 0) {
-        const previousIndex = index - 1;
-        const previousLine = lines[previousIndex];
-        const currentLine = lines[index];
-        if (!previousLine || !currentLine || previousLine.page !== currentLine.page)
-          continue;
-        const previous = previousLine.text;
+        const previousIndex = previousStandaloneDishNameLineIndex(lines, index);
+        if (previousIndex === null) continue;
+        const previous = lines[previousIndex]?.text ?? "";
         const rawName = canonicalPdfDishName(previous);
         if (looksLikeDishName(rawName)) {
-          const continuation = wrappedName(rawName, lines, index);
+          const continuation = wrappedName(rawName, lines, previousIndex);
           if (isWrappedDishQualifier(rawName) && !continuation) continue;
-          if (continuation) consumedWrappedNameLines.add(continuation.continuationLineIndex);
+          if (continuation)
+            consumedWrappedNameLines.add(continuation.continuationLineIndex);
           candidates.push({
             nameLineIndex: previousIndex,
             nameContinuationLineIndex: continuation?.continuationLineIndex ?? null,
