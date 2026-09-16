@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v10";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v11";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -277,8 +277,8 @@ const trailingPrice = new RegExp(
 function parseInlineDish(line: string): ParsedInlineDish | null {
   const match = trailingPrice.exec(line);
   if (!match?.[1] || match.index <= 0) return null;
-  const explicitCurrency = /(?:kr\.?|nok)/iu.test(match[0]);
-  const price = parsedPrice(match[1], match[2], explicitCurrency ? 30 : 40);
+  const explicitPriceMarker = /(?:kr\.?|nok|,-)/iu.test(match[0]);
+  const price = parsedPrice(match[1], match[2], explicitPriceMarker ? 30 : 40);
   if (!price) return null;
   const rawName = canonicalPdfDishName(line.slice(0, match.index));
   if (!looksLikeDishName(rawName)) return null;
