@@ -104,7 +104,7 @@ const NON_DISH_SET_MENU_ITEM =
 const NON_DISH_ADDON_ITEM =
   /^\*?\s*(?:påfyll\s+av\s+tilbehør|refill\s+of\s+sides?|add[- ]?ons?\b|additional\s+products?\b|add\s+.+$)/iu;
 const NON_DISH_QUANTITY_PRICE_FRAGMENT =
-  /^(?:\d+\s*(?:pcs?|pieces?|stk\.?)\s+)?(?:nok|kr\.?)?\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*\/\s*\d+\s*(?:pcs?|pieces?|stk\.?)(?:\s+(?:nok|kr\.?)?\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?)?$/iu;
+  /^(?=.*\/)(?=.*\b(?:pcs?|pieces?|stk\.?)\b)(?=.*(?:\b(?:nok|kr\.?)\b|,-)).+$/iu;
 const PRICE_DISPLAY_ONLY_ITEM =
   /^(?:(?:fra|from)\s+)?(?:(?:(?:nok|kr\.?)\s*)?[1-9]\d{0,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)\s*){1,4}$/iu;
 const KITCHEN_RETAIL_ITEM = /^(?:pizzakutter|pizza\s+cutter)$/iu;
