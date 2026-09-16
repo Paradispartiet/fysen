@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v13");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v14");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -59,6 +59,19 @@ describe("structural HTML output canonicalization", () => {
       item("Sharing", 19900),
     ];
     expect(canonicalizeHtmlOutputItems(items)).toHaveLength(items.length);
+  });
+
+  it("drops generic takeaway navigation labels without hiding menu dishes", () => {
+    const items = [
+      item("ONLINE TAKEAWAY", 69000),
+      item("Takeaway", 69000),
+      item("Special Deluxe Menu", 69000),
+      item("Crispy Duck", 23900),
+    ];
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Special Deluxe Menu",
+      "Crispy Duck",
+    ]);
   });
 
   it("drops a same-price numeric-prefix suffix fragment but preserves the full dish", () => {
