@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lets-wok-asiatisk-kjokken-oslo",
+    "name": "Let's Wok - Asiatisk kjøkken",
+    "websiteUrl": null,
+    "address": "Arvesetveien 2-4, 0668 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92917721,
+    "longitude": 10.84561907
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/712letswokasiatiskkjokken",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 16,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-16",
+      "note": "Fresh exact-head retry of the Batch 47 holdout. Wolt publishes Let's Wok at Arvesetveien 2-4, 0668 Oslo and its venue map resolves to 59.92917721, 10.84561907; those source-backed coordinates are pinned because Kartverket exposes no matching formal point for the published 2-4 range. SE MENY remains secondary priced service-menu evidence only; intake stays fail-closed on semantic dedupe, extraction and menu quality."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vårruller m/ Kylling",
+      "Vegetar Vårruller 🌱",
+      "Tempura Salat",
+      "Stekt Ris m/ Scampi",
+      "Paneng Curry",
+      "Chopsuey m/ Grønnsaker",
+      "Pad Thai m/ Grønnsaker",
+      "Stekt Ris m/ Kylling - Barn"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vårruller m/ Kylling",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Vegetar Vårruller 🌱",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Tempura Salat",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Stekt Ris m/ Scampi",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Paneng Curry",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Chopsuey m/ Grønnsaker",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Pad Thai m/ Grønnsaker",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Stekt Ris m/ Kylling - Barn",
+        "priceMinor": 15900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
