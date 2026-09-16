@@ -189,31 +189,44 @@ describe("trailing-price HTML card recovery", () => {
   });
 
   it("canonicalizes duplicate menu indices while preserving ambiguous duplicate names", () => {
-    const items = recoverTrailingPriceCardHtmlItems(`
-      <html><body>
-        <p>2 Crispy Thigh / leg</p><p>45 kr</p>
-        <p>3. 5 Hot Wings</p><p>70 kr</p>
-        <p>4. 10 Hot Wings</p><p>120 kr</p>
-        <p>5. 20 Hot Wings</p><p>199 kr</p>
-        <p>9. SMALL BOX</p><p>115 kr</p>
-        <p>10. SAVING BOX</p><p>145 kr</p>
-        <p>11. CHICKEN DUO BOX</p><p>255 kr</p>
-        <p>12. BUCKET MIX</p><p>365 kr</p>
-        <p>35. TENDERSDELUX MIDDAG 150g</p><p>169 kr</p>
-        <p>35. TENDERSDELUX MIDDAG 200g</p><p>209 kr</p>
-        <p>41. KOTTU LAM</p><p>169 kr</p>
-        <p>41. KOTTU KYLLING</p><p>169 kr</p>
-        <p>45. CHICKEN TIKKA</p><p>219 kr</p>
-        <p>57. CHOP SUEY</p><p>169 kr</p>
-        <p>58. STEKT</p><p>169 kr</p>
-        <p>59. STEKT</p><p>169 kr</p>
-        <p>60. STEKT</p><p>169 kr</p>
-        <p>61. PHAD THAI</p><p>169 kr</p>
-        <p>65. KEBAB PIZZA</p><p>299 kr</p>
-        <p>66. LA PEPE</p><p>299 kr</p>
-        <p>67. MILANO</p><p>299 kr</p>
-      </body></html>
-    `);
+    const rows: Array<readonly [string, number]> = [];
+    for (let menuIndex = 2; menuIndex <= 67; menuIndex += 1) {
+      if (menuIndex === 3) {
+        rows.push(["3. 5 Hot Wings", 70]);
+      } else if (menuIndex === 4) {
+        rows.push(["4. 10 Hot Wings", 120]);
+      } else if (menuIndex === 5) {
+        rows.push(["5. 20 Hot Wings", 199]);
+      } else if (menuIndex === 35) {
+        rows.push(
+          ["35. TENDERSDELUX MIDDAG 150g", 169],
+          ["35. TENDERSDELUX MIDDAG 200g", 209],
+        );
+      } else if (menuIndex === 41) {
+        rows.push(["41. KOTTU LAM", 169], ["41. KOTTU KYLLING", 169]);
+      } else if (menuIndex === 45) {
+        rows.push(["45. CHICKEN TIKKA", 219]);
+      } else if (menuIndex === 57) {
+        rows.push(["57. CHOP SUEY", 169]);
+      } else if ([58, 59, 60].includes(menuIndex)) {
+        rows.push([`${menuIndex}. STEKT`, 169]);
+      } else if (menuIndex === 61) {
+        rows.push(["61. PHAD THAI", 169]);
+      } else if (menuIndex === 65) {
+        rows.push(["65. KEBAB PIZZA", 299]);
+      } else if (menuIndex === 66) {
+        rows.push(["66. LA PEPE", 299]);
+      } else if (menuIndex === 67) {
+        rows.push(["67. MILANO", 299]);
+      } else {
+        rows.push([`${menuIndex}. FIXTURE DISH ${menuIndex}`, 100 + menuIndex]);
+      }
+    }
+
+    const html = `<html><body>${rows
+      .map(([name, price]) => `<p>${name}</p><p>${price} kr</p>`)
+      .join("")}</body></html>`;
+    const items = recoverTrailingPriceCardHtmlItems(html);
 
     expect(items.map((item) => [item.name, item.priceMinor])).toEqual(
       expect.arrayContaining([
