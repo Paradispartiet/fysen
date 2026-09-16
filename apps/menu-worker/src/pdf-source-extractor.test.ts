@@ -161,6 +161,20 @@ describe("PDF source scope", () => {
     ]);
   });
 
+  it("does not move ordinary description filtering ahead of source-key conflict resolution", () => {
+    const lines = [
+      "Add bacon to any dish for 35",
+      "marinated in Erling Skakke XO Cognac. 265",
+      "Braised duck 325",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const eligible = filterPdfConflictMetadataItems(parsed);
+
+    expect(eligible.map((item) => item.name)).toEqual(
+      parsed.map((item) => item.name),
+    );
+  });
+
   it("keeps ordinary unresolved dish conflicts fail-closed after metadata prefiltering", () => {
     const lines = ["LAKS 139", "LAKS 159"];
     const parsed = extractMenuItemsFromPdfLines(lines);
