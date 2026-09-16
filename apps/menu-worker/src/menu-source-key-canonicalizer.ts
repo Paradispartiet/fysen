@@ -95,6 +95,34 @@ export function canonicalizeUniqueMenuSourceKeys(
       continue;
     }
     if (!sameCanonicalObservation(existing, item)) {
+      console.error(
+        JSON.stringify({
+          diagnostic: "menu-source-key-conflict",
+          sourceKey: item.sourceKey,
+          first: {
+            name: existing.name,
+            sectionName: existing.sectionName,
+            priceMinor: existing.priceMinor,
+            priceKind: existing.priceKind ?? "exact",
+            priceMaxMinor: existing.priceMaxMinor ?? null,
+            description: existing.description,
+            sourceExcerpt: existing.sourceExcerpt,
+            position: existing.position,
+            confidence: existing.confidence,
+          },
+          second: {
+            name: item.name,
+            sectionName: item.sectionName,
+            priceMinor: item.priceMinor,
+            priceKind: item.priceKind ?? "exact",
+            priceMaxMinor: item.priceMaxMinor ?? null,
+            description: item.description,
+            sourceExcerpt: item.sourceExcerpt,
+            position: item.position,
+            confidence: item.confidence,
+          },
+        }),
+      );
       throw new ConflictingMenuSourceKeyError(item.sourceKey, existing, item);
     }
     unique.set(item.sourceKey, preferObservation(existing, item));
