@@ -370,6 +370,17 @@ export function scopePdfMenuItems(
     )
       continue;
     const lineIndex = findNextDishLine(lines, item.name, searchFrom);
+    if (lineIndex !== null && items.length >= 30) {
+      console.error(
+        JSON.stringify({
+          diagnostic: "pdf-scope-context",
+          name: item.name,
+          lineIndex,
+          blocked: blocked[lineIndex] ?? null,
+          context: lines.slice(Math.max(0, lineIndex - 5), lineIndex + 4),
+        }),
+      );
+    }
     if (lineIndex !== null) searchFrom = lineIndex + 1;
     if (lineIndex !== null && blocked[lineIndex]) continue;
     scoped.push(cleanPdfOutputItemName(item));
