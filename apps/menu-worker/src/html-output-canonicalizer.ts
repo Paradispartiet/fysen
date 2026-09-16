@@ -147,13 +147,14 @@ function isBareYearPriceMisread(item: MenuObservedItem): boolean {
   if (item.priceMinor === null || item.priceMinor % 100 !== 0) return false;
   const kroner = String(item.priceMinor / 100);
   if (!/^(?:19|20)\d{2}$/u.test(kroner)) return false;
-  const evidence = (item.sourceExcerpt ?? "")
-    .split(SOURCE_EXCERPT_SEPARATOR)
-    .map((part) => part.trim())
-    .filter(Boolean);
-  const priceEvidence = evidence.at(-1) ?? "";
-  if (/\b(?:kr\.?|nok)\b/iu.test(priceEvidence)) return false;
-  return new RegExp(`(?:^|\\D)${kroner}(?:\\D|$)`, "u").test(priceEvidence);
+  const excerpt = item.sourceExcerpt ?? "";
+  if (!new RegExp(`(?:^|\\D)${kroner}(?:\\D|$)`, "u").test(excerpt))
+    return false;
+  const explicitPrice = new RegExp(
+    `(?:\\b(?:kr\\.?|nok)\\s*${kroner}\\b|\\b${kroner}\\s*(?:,-|kr\\.?|nok)\\b)`,
+    "iu",
+  );
+  return !explicitPrice.test(excerpt);
 }
 
 function isNumericTitleSuffixMisreadAsPrice(
