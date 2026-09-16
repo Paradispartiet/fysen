@@ -28,7 +28,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v22");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v23");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -286,6 +286,52 @@ describe("PDF source scope", () => {
       "Beef tenderloin",
       "Pan fried cod",
       "Roasted lamb",
+    ]);
+  });
+
+  it("blocks bilingual beverage sections and resumes at a bilingual dinner-menu heading", () => {
+    const lines = [
+      "Musserende / Sparkling Glass Bottle",
+      "House Brut 155",
+      "Hvitvin / White Wine Glass Bottle",
+      "House White 165",
+      "Rødvin / Red Wine Glass Bottle",
+      "House Red 175",
+      "Øl / Beer",
+      "House Lager 129",
+      "Alkoholfrie alternativ / Non-Alcoholic alternative Glass Bottle",
+      "House Zero 89",
+      "Varm drikke / Hot beverage",
+      "House Coffee 65",
+      "Middagsmeny / Dinner menu",
+      "Beef tartare 295",
+      "Roasted cod 395",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual([
+      "Beef tartare",
+      "Roasted cod",
+    ]);
+  });
+
+  it("drops generic fixed-course menu prices while preserving priced dishes", () => {
+    const lines = [
+      "Middagsmeny / Dinner menu",
+      "3 retters middagsmeny 845",
+      "3 course dinner menu 845",
+      "Crudo av kveite 259",
+      "5 retters middag 1190",
+      "5 course dinner 1190",
+      "Sjokoladeterte 189",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual([
+      "Crudo av kveite",
+      "Sjokoladeterte",
     ]);
   });
 
