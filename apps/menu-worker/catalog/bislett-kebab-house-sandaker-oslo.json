@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 93,
+    "minimumExpectedItems": 92,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,7 +39,6 @@
       "Hamburger",
       "Biff Classic",
       "Kyllingballs med Ost og Chili (6 stk.)",
-      "Urge 0,5l",
       "Smash Fries"
     ],
     "requiredDishVariants": [
@@ -66,10 +65,6 @@
       {
         "name": "Kyllingballs med Ost og Chili (6 stk.)",
         "priceMinor": 9600
-      },
-      {
-        "name": "Urge 0,5l",
-        "priceMinor": 5500
       },
       {
         "name": "Smash Fries",
