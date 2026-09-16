@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "tomodomo-oslo",
+    "name": "Tomodomo",
+    "websiteUrl": "https://tomodomo.no/",
+    "address": "Pilestredet 24, 0165 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91747955501807,
+    "longitude": 10.739421701303476
+  },
+  "menuSource": {
+    "url": "https://tomodomo.no/locations/trekanten-oslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 14,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-16",
+      "note": "Fresh P1 reproof from Tomodomo's current first-party Oslo location page. The page publishes a textual, individually priced menu of starters, udon/noodle dishes and sweets at Pilestredet 24. Intake must exclude section/navigation/allergen metadata and keep only canonical priced dishes."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Norwegian Hamachi Tataki",
+      "Tsukemono",
+      "Edamame",
+      "Togarashi Nuts",
+      "Goma Dare Udon",
+      "Kare Udon (Vegan)",
+      "Jiggly Cat",
+      "Sorbet Of the Day"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Norwegian Hamachi Tataki",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Tsukemono",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Edamame",
+        "priceMinor": 9000
+      },
+      {
+        "name": "Togarashi Nuts",
+        "priceMinor": 7000
+      },
+      {
+        "name": "Goma Dare Udon",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Kare Udon (Vegan)",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Jiggly Cat",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Sorbet Of the Day",
+        "priceMinor": 4500
+      }
+    ],
+    "forbiddenDishNames": [
+      "Menu",
+      "Opening hours",
+      "Our food",
+      "Starters",
+      "Noodles",
+      "Sweets",
+      "Allergens",
+      "A table for 6?"
+    ]
+  }
+}
