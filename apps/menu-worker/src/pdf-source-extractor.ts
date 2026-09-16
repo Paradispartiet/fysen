@@ -10,7 +10,7 @@ export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v20";
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
 const LOW_EXPLICIT_PRICE =
-  /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:,-|kr\.?|nok))$/iu;
+  /^(3\d)\s*(?:,-|kr\.?|nok)$/iu;
 const LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]\s*/u;
 const SECTION_PRICE_SIGNAL =
   /(?:^|\s)(?:kr\.?|nok)?\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)?$/iu;
