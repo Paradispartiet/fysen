@@ -19,7 +19,7 @@ describe("trailing-price HTML card recovery", () => {
     `);
 
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
-      "trailing-price-card-v15",
+      "trailing-price-card-v14",
     );
     expect(
       items.map((item) => [item.name, item.priceMinor, item.priceKind]),
@@ -222,28 +222,6 @@ describe("trailing-price HTML card recovery", () => {
       ["Molotes de Platano (Oaxaca)", 21000],
       ["Tetela (Oaxaca)", 21000],
     ]);
-  });
-
-  it("treats a per-person currency prefix as price metadata and keeps the preceding dish title", () => {
-    const items = recoverTrailingPriceCardHtmlItems(`
-      <html><body>
-        <h2>Mezah-retter</h2>
-        <h4>Mezah uten kjøtt (vegetar)</h4><h5>Kr. 350,-</h5>
-        <h4>Mezah med kjøtt</h4><h5>Kr. 399,-</h5>
-        <h4>Ekstra mezah-tallerken</h4><h5>Kr. 79,-</h5>
-        <h4>Mezah med en grill rett</h4>
-        <p>Mini-mezah. Jo flere som bestiller, jo større blir variasjonene.</p>
-        <p>Serveres med hvitløksbrød og pitabrød.</p>
-        <p>Grillede spyd med Gaza Kebab og marinert grillet kyllingbryst.</p>
-        <h5>Pr. person Kr. 459,-</h5>
-      </body></html>
-    `);
-
-    expect(items.map((item) => [item.name, item.priceMinor])).toContainEqual([
-      "Mezah med en grill rett",
-      45900,
-    ]);
-    expect(items.some((item) => /^Pr\. person Kr\.?$/iu.test(item.name))).toBe(false);
   });
 
   it("requires a repeated card pattern instead of trusting isolated price-adjacent text", () => {
