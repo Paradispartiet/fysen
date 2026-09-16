@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v18";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v19";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -15,7 +15,7 @@ const SECTION_PRICE_SIGNAL =
 const VARIANT_SECTION_KEYWORD =
   /\b(?:sashimi|nigiri|maki|uramaki|futomaki|temaki|sushi|tacos?|pizza(?:er|s)?|pasta|dessert(?:er|s)?|starters?|forretter?|mains?|hovedretter?|grill|bowls?|antipasti|primi|secondi|contorni|dolci)\b/iu;
 const SERVICE_CONTEXT_HEADING =
-  /^(?:lunsjmeny|lunch\s+menu|kveldsmeny|dinner\s+menu)\b/iu;
+  /^(?:lunsjmeny|lunch\s+menu|kveldsmeny|dinner\s+menu|all\s+day|evening)\b/iu;
 const PDF_BEVERAGE_STYLE_ITEM =
   /\b(?:øl|ale|ipa|pils(?:ner)?|weissbier|hveteøl|radler|beer|cider|stout|lager|bayer)\b/iu;
 const PDF_BEVERAGE_VOLUME_ITEM =
@@ -27,6 +27,7 @@ const PDF_PARENTHETICAL_ALLERGEN_ITEM =
   /^\(\s*(?:(?:fisk|fish|skalldyr|shellfish|bløtdyr|molluscs?|melk|milk|laktose|lactose|egg|eggs?|hvete|wheat|hvetegluten|gluten|soya?|soy|selleri|celery|sennep|mustard|sesam|sesame|sulfitt|sulphites?|nøtter?|nuts?|peanøtter?|peanuts?|lupin|citrus|sitrus)\s*[,/+&]?\s*)+\)$/iu;
 const PDF_QUANTITY_PRICE_LABEL = /^\d{1,3}\s+(?:for|stk\.?|pieces?|pcs?\.?)$/iu;
 const PDF_BEVERAGE_PAIRING_METADATA = /\b(?:wine\s+pairing|vinpakke)\b/iu;
+const PDF_GENERIC_SECTION_PRICE_LABEL = /^(?:specials?)$/iu;
 const TRAILING_SHARING_TAGLINE =
   /\s+(?:perfekt\s+å\s+dele|perfect\s+for\s+sharing)!?$/iu;
 const RECOVERY_ALLERGEN_CODES = new Set([
@@ -81,7 +82,7 @@ function normalizeVisibleLine(value: string): string {
 
 function isBeverageSectionHeading(value: string): boolean {
   const line = normalizeScopeLine(value);
-  return /^(?:bia va ruou(?: beer spirits)?|beer(?: and)? spirits|giai khat(?: non alcohol(?:ic)?)?|non alcoholic(?: drinks?)?|ruou pha(?: cocktails?)?|(?:[\p{L}\p{N}]+ )?cocktails?|khong con(?: mocktails?)?|mocktails?|pre ?drinks?(?: \d{2,4})?|do uong(?: drinks?)?|drikke(?:meny)?|drinks?|beverages?|barnedrinker|barne drikker|kids drinks?|children s drinks?|vinkart|vin(?:kart|liste|meny)?|wine(?: list| menu)?|beer|ol|spirits?|brennevin|liquor)$/u.test(
+  return /^(?:bia va ruou(?: beer spirits)?|beer(?: and)? spirits|giai khat(?: non alcohol(?:ic)?)?|non alcoholic(?: drinks?)?|ruou pha(?: cocktails?)?|(?:[\p{L}\p{N}]+ )?cocktails?|khong con(?: mocktails?)?|mocktails?|pre ?drinks?(?: \d{2,4})?|do uong(?: drinks?)?|drikke(?:meny)?|drinks?|beverages?|soft drinks?|barnedrinker|barne drikker|kids drinks?|children s drinks?|vinkart|vin(?:kart|liste|meny)?|wine(?: list| menu| by the glass)?|rose wine|white wine|red wine|bubbles|champagne|sparkling wine|beer|ol|(?:single malt )?whisk(?:e)?y(?: bourbon)?|bourbon|brandy(?: cognac)?|cognac|bitters?|(?:various )?spirits?|brennevin|liquor|vodka|gin|rum|tequila(?: mezcal)?|mezcal|aquavit|akevitt|liqueurs?|calvados|armagnac|grappa|port(?: wine)?|sherry|vermouth|sake|coffee|kaffe|tea|te)$/u.test(
     line,
   );
 }
@@ -270,7 +271,8 @@ function looksLikePricingMetadata(name: string): boolean {
       normalized,
     ) ||
     PDF_QUANTITY_PRICE_LABEL.test(normalizeVisibleLine(name)) ||
-    PDF_BEVERAGE_PAIRING_METADATA.test(name)
+    PDF_BEVERAGE_PAIRING_METADATA.test(name) ||
+    PDF_GENERIC_SECTION_PRICE_LABEL.test(normalizeVisibleLine(name))
   );
 }
 
