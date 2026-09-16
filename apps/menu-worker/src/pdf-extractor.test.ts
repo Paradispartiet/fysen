@@ -268,6 +268,29 @@ describe("PDF menu extractor", () => {
     expect(items.some((item) => /^(?:E,|Set menu|500gr|Med forebehold)/iu.test(item.name))).toBe(false);
   });
 
+  it("skips parenthetical allergen notes between a dish name and standalone price", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "DANSKE SMØRREBRØD",
+      "Smoked eel, soft boiled egg",
+      "(H, R, BY, E. F, M) - kan lages glutenfri",
+      "230",
+    ]);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Smoked eel, soft boiled egg", 23000],
+    ]);
+  });
+
+  it("does not publish a quantity-only label as a dish name", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "DESSERT",
+      "Petit four",
+      "3 stk / 112",
+    ]);
+
+    expect(items.some((item) => item.name === "3 stk /")).toBe(false);
+  });
+
   it("uses PDF.js text extraction without OCR", async () => {
     const bytes = new Uint8Array(Buffer.from(syntheticPdfBase64, "base64"));
     const extracted = await extractPdfMenu(bytes);
