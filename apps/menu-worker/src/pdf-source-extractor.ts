@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v25";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v26";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
