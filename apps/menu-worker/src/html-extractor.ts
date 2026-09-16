@@ -5,7 +5,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EXTRACTOR_VERSION = "html-v10";
+export const HTML_EXTRACTOR_VERSION = "html-v9";
 
 export interface ExtractedHtmlMenu {
   readonly items: readonly MenuObservedItem[];
@@ -16,14 +16,10 @@ export interface ExtractedHtmlMenu {
 export function stripExplicitlyHiddenHtmlContent(html: string): string {
   const $ = load(html);
   $(".w-condition-invisible").remove();
-  $(NON_MENU_DOCUMENT_CHROME).remove();
   return $.html();
 }
 
 type JsonRecord = Record<string, unknown>;
-
-const NON_MENU_DOCUMENT_CHROME =
-  "header, nav, footer, [role='navigation'], [role='contentinfo']";
 
 const SHORT_ALLERGEN_SUFFIX = /\s+\((?:[\p{L}\d]{1,5}\s*(?:[,/+ ]\s*)?){1,20}\)$/u;
 
@@ -144,7 +140,6 @@ function extractJsonLdItems(html: string): readonly MenuObservedItem[] {
 export function extractHtmlVisibleText(html: string): string {
   const $ = load(html);
   $("script, style, noscript, svg, template").remove();
-  $(NON_MENU_DOCUMENT_CHROME).remove();
   $("br").replaceWith("\n");
   $("td, th").each((_, element) => {
     $(element).append(" ");
