@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v22";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v23";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -28,7 +28,11 @@ const PDF_LOWERCASE_SENTENCE_FRAGMENT = /^[a-zæøå].{2,220}[.]$/u;
 const PDF_PARENTHETICAL_ALLERGEN_ITEM =
   /^\(\s*(?:(?:fisk|fish|skalldyr|shellfish|bløtdyr|molluscs?|melk|milk|laktose|lactose|egg|eggs?|hvete|wheat|hvetegluten|gluten|soya?|soy|selleri|celery|sennep|mustard|sesam|sesame|sulfitt|sulphites?|nøtter?|nuts?|peanøtter?|peanuts?|lupin|citrus|sitrus)\s*[,/+&]?\s*)+\)$/iu;
 const PDF_QUANTITY_PRICE_LABEL = /^\d{1,3}\s+(?:for|stk\.?|pieces?|pcs?\.?)$/iu;
-const PDF_BEVERAGE_PAIRING_METADATA = /\b(?:wine\s+pairing|vinpakke)\b/iu;
+const PDF_BEVERAGE_PAIRING_METADATA = /\b(?:wine\s+pairing|vinpakke|vinanbefaling|wine\s+recomm?endation)\b/iu;
+const PDF_WINE_STYLE_ITEM =
+  /\b(?:sauvignon\s+blanc|cabernet\s+sauvignon|pinot\s+(?:noir|grigio|gris)|chardonnay|riesling|barbera|zinfandel|chablis|sancerre|sauternes|moscatel|tokaji|madeira|meursault|montrachet|chambertin|saint[- ]emilion|cr[eé]mant|prosecco)\b/iu;
+const PDF_FIXED_COURSE_MENU_ITEM =
+  /^(?:\d{1,2}|two|three|four|five|six|seven|eight|nine|ten)\s*(?:retters?|course(?:s)?)\s*(?:middag(?:smeny)?|dinner(?:\s+menu)?|menu)?$/iu;
 const PDF_GENERIC_SECTION_PRICE_LABEL = /^(?:specials?)$/iu;
 const TRAILING_SHARING_TAGLINE =
   /\s+(?:perfekt\s+å\s+dele|perfect\s+for\s+sharing)!?$/iu;
@@ -84,14 +88,14 @@ function normalizeVisibleLine(value: string): string {
 
 function isBeverageSectionHeading(value: string): boolean {
   const line = normalizeScopeLine(value);
-  return /^(?:bia va ruou(?: beer spirits)?|beer(?: and)? spirits|giai khat(?: non alcohol(?:ic)?)?|non alcoholic(?: drinks?)?|ruou pha(?: cocktails?)?|(?:[\p{L}\p{N}]+ )?cocktails?|khong con(?: mocktails?)?|mocktails?|pre ?drinks?(?: \d{2,4})?|do uong(?: drinks?)?|drikke(?:meny)?|drinks?|beverages?|soft drinks?|barnedrinker|barne drikker|kids drinks?|children s drinks?|vinkart|vin(?:kart|liste|meny)?|(?:vinpakke(?: wine pairing)?|wine pairing(?: vinpakke)?|vinanbefaling(?: wine recomm?endation)?|wine recomm?endation(?: vinanbefaling)?)|wine(?: list| menu| by the glass)?|rose wine|white wine|red wine|bubbles|champagne|sparkling wine|beer|ol|(?:single malt )?whisk(?:e)?y(?: bourbon)?|bourbon|brandy(?: cognac)?|cognac|bitters?|(?:various )?spirits?|brennevin|liquor|vodka|gin|rum|tequila(?: mezcal)?|mezcal|aquavit|akevitt|liqueurs?|calvados|armagnac|grappa|port(?: wine)?|sherry|vermouth|sake|coffee|kaffe|tea|te)$/u.test(
+  return /^(?:bia va ruou(?: beer spirits)?|beer(?: and)? spirits|giai khat(?: non alcohol(?:ic)?)?|non alcoholic(?: drinks?)?|alkoholfrie? alternativ(?: non alcoholic alternative)?(?: glass bottle)?|ruou pha(?: cocktails?)?|(?:[\p{L}\p{N}]+ )?cocktails?|khong con(?: mocktails?)?|mocktails?|pre ?drinks?(?: \d{2,4})?|do uong(?: drinks?)?|drikke(?:meny)?|drinks?|beverages?|soft drinks?|barnedrinker|barne drikker|kids drinks?|children s drinks?|vinkart|vin(?:kart|liste|meny)?|musserende(?: sparkling)?(?: glass bottle)?|sparkling(?: wine)?s?(?: glass bottle)?|hvitvin(?: white wines?)?(?: glass bottle)?|white wines?(?: glass bottle)?|rodvin(?: red wines?)?(?: glass bottle)?|red wines?(?: glass bottle)?|rosevin(?: rose wines?)?(?: glass bottle)?|rose wines?(?: glass bottle)?|wine(?: list| menu| by the glass)?|bubbles|champagne|ol(?: beer)?|beer(?:s)?|(?:single malt )?whisk(?:e)?y(?: bourbon)?|bourbon|brandy(?: cognac)?|cognac|bitters?|(?:various )?spirits?|brennevin|liquor|vodka|gin|rum|tequila(?: mezcal)?|mezcal|aquavit|akevitt|liqueurs?|calvados|armagnac|grappa|port(?: wine)?|sherry|vermouth|sake|coffee|kaffe|tea|te|varm drikke(?: hot beverages?)?)$/u.test(
     line,
   );
 }
 
 function isFoodSectionHeading(value: string): boolean {
   const line = normalizeScopeLine(value);
-  return /^(?:do ngot(?: dessert)?|desserts?|dolci|mat|food|all day|evening|forrett(?: starter)?|forretter|starters?|mellomrett(?: middle course)?|middle course(?: mellomrett)?|smaretter|small plates?|snacks?|hovedrett(?: main course)?|hovedretter|main courses?|mains?|sides?|burgers?|set menus?)$/u.test(
+  return /^(?:do ngot(?: dessert)?|desserts?(?: dessert)?|dolci|mat|food|all day|evening|middagsmeny(?: dinner menu)?|dinner menu(?: middagsmeny)?|forrett(?: starter)?|forretter(?: starters?)?|starters?|mellomrett(?: middle course)?|middle course(?: mellomrett)?|smaretter|small plates?|snacks?|hovedrett(?: main course)?|hovedretter(?: main courses?)?|main courses?|mains?|sides?|burgers?|set menus?)$/u.test(
     line,
   );
 }
@@ -252,8 +256,9 @@ export function disambiguateConflictingPdfSourceKeys(
 function looksLikePdfBeverageItem(name: string): boolean {
   const normalized = normalizeVisibleLine(name);
   return (
-    PDF_BEVERAGE_STYLE_ITEM.test(normalized) &&
-    PDF_BEVERAGE_VOLUME_ITEM.test(normalized)
+    PDF_WINE_STYLE_ITEM.test(normalized) ||
+    (PDF_BEVERAGE_STYLE_ITEM.test(normalized) &&
+      PDF_BEVERAGE_VOLUME_ITEM.test(normalized))
   );
 }
 
@@ -274,6 +279,7 @@ function looksLikePricingMetadata(name: string): boolean {
     ) ||
     PDF_QUANTITY_PRICE_LABEL.test(normalizeVisibleLine(name)) ||
     PDF_BEVERAGE_PAIRING_METADATA.test(name) ||
+    PDF_FIXED_COURSE_MENU_ITEM.test(normalizeVisibleLine(name)) ||
     PDF_GENERIC_SECTION_PRICE_LABEL.test(normalizeVisibleLine(name))
   );
 }
@@ -370,17 +376,6 @@ export function scopePdfMenuItems(
     )
       continue;
     const lineIndex = findNextDishLine(lines, item.name, searchFrom);
-    if (lineIndex !== null && items.length >= 30) {
-      console.error(
-        JSON.stringify({
-          diagnostic: "pdf-scope-context",
-          name: item.name,
-          lineIndex,
-          blocked: blocked[lineIndex] ?? null,
-          context: lines.slice(Math.max(0, lineIndex - 5), lineIndex + 4),
-        }),
-      );
-    }
     if (lineIndex !== null) searchFrom = lineIndex + 1;
     if (lineIndex !== null && blocked[lineIndex]) continue;
     scoped.push(cleanPdfOutputItemName(item));
