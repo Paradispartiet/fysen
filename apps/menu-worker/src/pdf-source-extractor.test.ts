@@ -28,7 +28,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v18");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v19");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -205,8 +205,10 @@ describe("PDF source scope", () => {
     ]);
   });
 
-  it("resumes food scope at all-day and evening service headings between beverage sections", () => {
+  it("resumes food scope at service headings and blocks common spirit section families", () => {
     const lines = [
+      "SPECIALS",
+      "225,-",
       "COCKTAILS",
       "House Martini 195",
       "ALL DAY",
@@ -214,6 +216,24 @@ describe("PDF source scope", () => {
       "Chicken Caesar Salad 325",
       "SINGLE MALT WHISKY",
       "Highland 12y 215",
+      "VODKA",
+      "House Vodka 135",
+      "GIN",
+      "London Dry 145",
+      "RUM",
+      "Dark Rum 155",
+      "TEQUILA & MEZCAL",
+      "Reposado 165",
+      "AQUAVIT",
+      "Linie 145",
+      "LIQUEURS",
+      "Amaretto 109",
+      "CALVADOS",
+      "Apple Brandy 129",
+      "ARMAGNAC",
+      "House Armagnac 155",
+      "GRAPPA",
+      "Aged Grappa 169",
       "EVENING",
       "Salted Cucumber 95",
       "Spanish Anchovies 125",
