@@ -91,7 +91,7 @@ describe("PDF menu extractor", () => {
       "3 OR 6 OYSTERS 190,- / 380,-",
     ]);
 
-    expect(PDF_EXTRACTOR_VERSION).toBe("pdf-text-v13");
+    expect(PDF_EXTRACTOR_VERSION).toBe("pdf-text-v14");
     expect(items).toHaveLength(1);
     expect(items[0]).toMatchObject({
       name: "3 OR 6 OYSTERS",
@@ -99,6 +99,28 @@ describe("PDF menu extractor", () => {
       priceKind: "multiple",
       priceMaxMinor: 38000,
     });
+  });
+
+  it("binds a standalone price after descriptive copy to the preceding dish title", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "KALDE MEZE",
+      "LABNE BIL TOUM",
+      "Libanesisk kremost med hvitløk, mynte og olivenolje.",
+      "129,-",
+      "TABBOLISALAT",
+      "Hakket persille, tomater, løk, bulgur, sitron og olivenolje.",
+      "139,-",
+    ]);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["LABNE BIL TOUM", 12900],
+      ["TABBOLISALAT", 13900],
+    ]);
+    expect(items[0]).toMatchObject({
+      sectionName: "KALDE MEZE",
+      description: "Libanesisk kremost med hvitløk, mynte og olivenolje.",
+    });
+    expect(items[1]?.description).toContain("Hakket persille");
   });
 
   it("does not bind a standalone price across a PDF page boundary", () => {
