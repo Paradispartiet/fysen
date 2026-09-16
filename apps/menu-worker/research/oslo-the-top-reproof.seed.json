@@ -24,7 +24,7 @@
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-09-15",
-          "note": "Fresh exact-head reproof of the current first-party restaurant menu after generic heading-price-v7 and recovery-selection-v1 hardening. The source visibly publishes named individually priced à-la-carte dishes; package, wine-pairing, allergen and description rows must remain outside canonical dish output."
+          "note": "Fresh exact-head reproof of the current first-party restaurant menu after generic heading-price-v8 and recovery-selection-v2 hardening. The source visibly publishes named individually priced à-la-carte dishes; package, wine-pairing, allergen and description rows must remain outside canonical dish output."
         }
       },
       "actions": [],
