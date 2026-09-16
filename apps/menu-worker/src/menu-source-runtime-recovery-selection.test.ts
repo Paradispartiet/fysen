@@ -172,6 +172,39 @@ describe("HTML runtime recovery selection", () => {
     ]);
   });
 
+  it("reconciles unique explicit menu indices from a dominant heading recovery without collapsing repeated labels", async () => {
+    const result = await extract(`
+      <html><body>
+        <h2>Menu</h2>
+        <h3>41. KOTTU LAM</h3><p>kr 169,00</p>
+        <h3>41. KOTTU KYLLING</h3><p>kr 169,00</p>
+        <h3>42. BIRYANI KYLLING</h3><p>kr 179,00</p>
+        <h3>43. RIS MED CURRY</h3><p>kr 179,00</p>
+        <h3>44. KIKERTGRYTE</h3><p>kr 179,00</p>
+        <h3>45. CHICKEN TIKKA</h3><p>kr 219,00</p>
+        <h3>46. LAM TIKKA</h3><p>kr 239,00</p>
+        <h3>57. CHOP SUEY</h3><p>kr 169,00</p>
+        <h3>58. STEKT</h3><p>kr 169,00</p>
+        <h3>59. STEKT</h3><p>kr 169,00</p>
+        <h3>60. STEKT</h3><p>kr 169,00</p>
+        <h3>61. PHAD THAI</h3><p>kr 169,00</p>
+        <h3>65. KEBAB PIZZA</h3><p>kr 299,00</p>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual(
+      expect.arrayContaining([
+        ["KOTTU KYLLING", 16900],
+        ["CHICKEN TIKKA", 21900],
+        ["PHAD THAI", 16900],
+        ["KEBAB PIZZA", 29900],
+        ["58. STEKT", 16900],
+        ["59. STEKT", 16900],
+        ["60. STEKT", 16900],
+      ]),
+    );
+  });
+
   it("normalizes bare trailing dash prices before full-runtime recovery", async () => {
     const result = await extract(`
       <html><body>
