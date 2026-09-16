@@ -92,7 +92,7 @@ const NON_DISH_HTML_ITEM =
 const PHONE_METADATA_ITEM =
   /^(?:tel(?:efon)?|tlf|phone)\s*:?\s*\+?\d[\d ()+.-]{4,}$/iu;
 const NON_DISH_MENU_SECTION =
-  /^(?:meny|à la carte|forretter|småretter|grillretter|hovedretter|dessert(?:er)?|drikkemeny|drikke(?:r)?|drikkevarer|cocktails?|vin|øl|bestill|bord|åpningstider|kontakt|snacks?|maki|grill|antipasti|vegan|klassiske\s+forretter\s+og\s+supper)$/iu;
+  /^(?:meny|à la carte|(?:kvelds?|lunsj|lunch)\s*meny(?:\s+.*)?|brunch(?:\s*\([^)]*\))?(?:\s*[-–—:]\s*.*)?|forretter|småretter|grillretter|hovedretter|dessert(?:er)?|drikkemeny|drikke(?:r)?|drikkevarer|cocktails?|vin|øl|bestill|bord|åpningstider|kontakt|snacks?|maki|grill|antipasti|vegan|klassiske\s+forretter\s+og\s+supper)$/iu;
 const ALLERGEN_ONLY_ITEM =
   /^(?:\(\s*)?(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|selleri|celery|citrus|sitrus|sulfitt|sulphites?)(?:\s*[,/+&]\s*(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|selleri|celery|citrus|sitrus|sulfitt|sulphites?))*\s*\)?$/iu;
 const NON_DISH_METADATA_ITEM =
@@ -119,7 +119,7 @@ const COCKTAIL_DESCRIPTION_ITEM =
   /^(?:(?:mimosa|(?:black|white)\s+russian(?:\s+kahlua)?|classic\s+mojito|vodka\s+cranberry)$|(?=.*,)(?=.*\b(?:gin|vodka|rom|rum|tequila|whisk(?:e)?y|bourbon|aperol|prosecco|kahlua|makers\s+mark|jack\s+daniels|cointreau)\b)(?=.*\b(?:tonic|cola|cranberry|prosecco|lime|sitron|lemon|appelsin|orange|eggehvite|egg\s*whites?|ginger\s+ale|ingefærøl|lemon\s+soda|sitronbrus)\b).+)$/iu;
 export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v3";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
-export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v9";
+export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v10";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v9";
 export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v2";
 
