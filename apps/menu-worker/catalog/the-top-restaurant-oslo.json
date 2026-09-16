@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "the-top-restaurant-oslo",
+    "name": "The Top Restaurant",
+    "websiteUrl": "https://www.thetoposlo.no/en/the-top-restaurant",
+    "address": "Sonja Henies plass 3, 0185 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91266110392656,
+    "longitude": 10.756214299447366
+  },
+  "menuSource": {
+    "url": "https://www.thetoposlo.no/en/the-top-restaurant-meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 12,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-15",
+      "note": "Fresh exact-head reproof of the current first-party restaurant menu after generic heading-price-v8 and recovery-selection-v2 hardening. The source visibly publishes named individually priced à-la-carte dishes; package, wine-pairing, allergen and description rows must remain outside canonical dish output."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Oysters from Skagerak",
+      "Juniper-Smoked Lobster Tail",
+      "Beef Tartare",
+      "The Top Fish Soup",
+      "Grilled Turbot from Kvinesdal",
+      "Norwegian Dry-Aged Entrecote",
+      "Norwegian Dry Aged Côte De Boeuf (for two)",
+      "Homemade Waffles"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Oysters from Skagerak",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Juniper-Smoked Lobster Tail",
+        "priceMinor": 48500
+      },
+      {
+        "name": "Beef Tartare",
+        "priceMinor": 29500
+      },
+      {
+        "name": "The Top Fish Soup",
+        "priceMinor": 34500
+      },
+      {
+        "name": "Grilled Turbot from Kvinesdal",
+        "priceMinor": 46500
+      },
+      {
+        "name": "Norwegian Dry-Aged Entrecote",
+        "priceMinor": 54500
+      },
+      {
+        "name": "Norwegian Dry Aged Côte De Boeuf (for two)",
+        "priceMinor": 149500
+      },
+      {
+        "name": "Homemade Waffles",
+        "priceMinor": 19500
+      }
+    ],
+    "forbiddenDishNames": [
+      "Chef's 3 course",
+      "WINE PACKAGE",
+      "Vinpakke Deluxe",
+      "WINE PAIRING FOR CHEESES",
+      "Allergener",
+      "Allergens"
+    ]
+  }
+}
