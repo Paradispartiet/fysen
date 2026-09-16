@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v9";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v10";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -138,7 +138,12 @@ function reconstructLines(items: readonly unknown[], page: number): readonly Pdf
 
 function sectionHeading(line: string): string | null {
   const normalized = normalizeLine(line);
-  if (!normalized || /\d{1,4}\s*(?:,-|kr\.?|nok)?\s*$/iu.test(normalized)) return null;
+  if (
+    !normalized ||
+    /[&/]$/u.test(normalized) ||
+    /\d{1,4}\s*(?:,-|kr\.?|nok)?\s*$/iu.test(normalized)
+  )
+    return null;
 
   const bilingual = normalized.split(/\s*\/\/\s*/u);
   if (bilingual.length === 2) {
@@ -261,11 +266,11 @@ const priceSuffix = "(?:\\s*(?:,-|kr\\.?|nok))?";
 const perItemPriceSuffix =
   "(?:\\s*\\((?:pr\\.?\\s*stk\\.?|per\\s+(?:piece|item|stk\\.?)|each)\\))?";
 const standalonePrice = new RegExp(
-  `^${pricePrefix}([1-9]\\d{1,3})(?:\\s*\\/\\s*([1-9]\\d{1,3}))?${priceSuffix}$`,
+  `^${pricePrefix}([1-9]\\d{1,3})${priceSuffix}(?:\\s*\\/\\s*${pricePrefix}([1-9]\\d{1,3})${priceSuffix})?$`,
   "iu",
 );
 const trailingPrice = new RegExp(
-  `\\s+${pricePrefix}([1-9]\\d{1,3})(?:\\s*\\/\\s*([1-9]\\d{1,3}))?${priceSuffix}${perItemPriceSuffix}$`,
+  `\\s+${pricePrefix}([1-9]\\d{1,3})${priceSuffix}(?:\\s*\\/\\s*${pricePrefix}([1-9]\\d{1,3})${priceSuffix})?${perItemPriceSuffix}$`,
   "iu",
 );
 
@@ -278,6 +283,24 @@ function parseInlineDish(line: string): ParsedInlineDish | null {
   const rawName = canonicalPdfDishName(line.slice(0, match.index));
   if (!looksLikeDishName(rawName)) return null;
   return { rawName, ...price };
+}
+
+function precedingConjunctionDishName(
+  lines: readonly PdfLine[],
+  lineIndex: number,
+  inlineName: string,
+): string | null {
+  if (lineIndex <= 0) return null;
+  const previousLine = lines[lineIndex - 1];
+  const currentLine = lines[lineIndex];
+  if (!previousLine || !currentLine || previousLine.page !== currentLine.page)
+    return null;
+  const previous = normalizeLine(previousLine.text);
+  if (!/&$/u.test(previous)) return null;
+  const prefix = canonicalPdfDishName(previous);
+  if (!looksLikeDishName(prefix)) return null;
+  const combined = normalizeLine(`${prefix} ${inlineName}`);
+  return looksLikeDishName(combined) ? combined : null;
 }
 
 function splitNumberedInlineDishes(line: string): readonly ParsedInlineDish[] | null {
@@ -376,16 +399,24 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
     }
 
     if (inline) {
-      const continuation = wrappedName(inline.rawName, lines, index);
+      const conjunctionName = precedingConjunctionDishName(
+        lines,
+        index,
+        inline.rawName,
+      );
+      const continuation = conjunctionName
+        ? null
+        : wrappedName(inline.rawName, lines, index);
       if (isWrappedDishQualifier(inline.rawName) && !continuation) continue;
-      if (continuation) consumedWrappedNameLines.add(continuation.continuationLineIndex);
+      if (continuation)
+        consumedWrappedNameLines.add(continuation.continuationLineIndex);
       candidates.push({
-        nameLineIndex: index,
+        nameLineIndex: conjunctionName ? index - 1 : index,
         nameContinuationLineIndex: continuation?.continuationLineIndex ?? null,
         priceLineIndex: index,
         page: lines[index]?.page ?? 1,
         sectionName: currentSection,
-        rawName: continuation?.name ?? inline.rawName,
+        rawName: conjunctionName ?? continuation?.name ?? inline.rawName,
         priceKind: inline.priceKind,
         priceKroner: inline.priceKroner,
         priceMaxKroner: inline.priceMaxKroner,
