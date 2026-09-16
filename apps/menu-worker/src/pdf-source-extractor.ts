@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v22";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v23";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -30,6 +30,14 @@ const PDF_PARENTHETICAL_ALLERGEN_ITEM =
 const PDF_QUANTITY_PRICE_LABEL = /^\d{1,3}\s+(?:for|stk\.?|pieces?|pcs?\.?)$/iu;
 const PDF_BEVERAGE_PAIRING_METADATA = /\b(?:wine\s+pairing|vinpakke)\b/iu;
 const PDF_GENERIC_SECTION_PRICE_LABEL = /^(?:specials?)$/iu;
+const PDF_FIXED_COURSE_PACKAGE_ITEM =
+  /^\d+\s+(?:retters?\s+(?:middag(?:smeny)?|meny)|course\s+(?:dinner(?:\s+menu)?|menu))$/iu;
+const PDF_WINE_STYLE_ITEM =
+  /\b(?:sauvignon\s+blanc|riesling|chablis|pinot\s+grigio|chardonnay|pinot\s+noir|zinfandel|barbera|cabernet\s+sauvignon|sancerre|sauternes|moscatel|tokaji|tokaij|madeira|cr[eé]mant|prosecco|champagne|gevrey\s+chambertin|meursault|chassagne\s+montrachet|ch[aâ]teau)\b/iu;
+const PDF_WINE_GEOGRAPHY_ITEM =
+  /\b(?:france|italy|germany|usa|south\s+africa|hungary|portugal|new\s+zealand|austria|spain|australia|chile|argentina|burgundy|bordeaux|loire|piedmont|piemonte|napa\s+valley|california|lodi|pfalz|provence|rheingau|alto\s+adige|veneto)\b/iu;
+const PDF_DESSERT_WINE_STYLE_ITEM =
+  /\b(?:sauternes|moscatel|tokaji|tokaij|madeira)\b/iu;
 const TRAILING_SHARING_TAGLINE =
   /\s+(?:perfekt\s+å\s+dele|perfect\s+for\s+sharing)!?$/iu;
 const RECOVERY_ALLERGEN_CODES = new Set([
@@ -84,14 +92,21 @@ function normalizeVisibleLine(value: string): string {
 
 function isBeverageSectionHeading(value: string): boolean {
   const line = normalizeScopeLine(value);
-  return /^(?:bia va ruou(?: beer spirits)?|beer(?: and)? spirits|giai khat(?: non alcohol(?:ic)?)?|non alcoholic(?: drinks?)?|ruou pha(?: cocktails?)?|(?:[\p{L}\p{N}]+ )?cocktails?|khong con(?: mocktails?)?|mocktails?|pre ?drinks?(?: \d{2,4})?|do uong(?: drinks?)?|drikke(?:meny)?|drinks?|beverages?|soft drinks?|barnedrinker|barne drikker|kids drinks?|children s drinks?|vinkart|vin(?:kart|liste|meny)?|wine(?: list| menu| by the glass)?|wine pairings?|wine recomm?endations?|vinanbefaling(?:er)?(?: wine recomm?endations?)?|vinforslag|vinpakke|rose wine|white wine|red wine|bubbles|champagne|sparkling wine|beer|ol|(?:single malt )?whisk(?:e)?y(?: bourbon)?|bourbon|brandy(?: cognac)?|cognac|bitters?|(?:various )?spirits?|brennevin|liquor|vodka|gin|rum|tequila(?: mezcal)?|mezcal|aquavit|akevitt|liqueurs?|calvados|armagnac|grappa|port(?: wine)?|sherry|vermouth|sake|coffee|kaffe|tea|te)$/u.test(
+  return /^(?:drikke beverage|musserende sparkling(?: glass bottle)?|hvitvin white wine(?: glass bottle)?|rodvin red wine(?: glass bottle)?|rosevin rose wine(?: glass bottle)?|ol beer|alkoholfrie alternativ non alcoholic alternative(?: glass bottle)?|varm drikke hot beverage|bia va ruou(?: beer spirits)?|beer(?: and)? spirits|giai khat(?: non alcohol(?:ic)?)?|non alcoholic(?: drinks?)?|ruou pha(?: cocktails?)?|(?:[\p{L}\p{N}]+ )?cocktails?|khong con(?: mocktails?)?|mocktails?|pre ?drinks?(?: \d{2,4})?|do uong(?: drinks?)?|drikke(?:meny)?|drinks?|beverages?|soft drinks?|barnedrinker|barne drikker|kids drinks?|children s drinks?|vinkart|vin(?:kart|liste|meny)?|wine(?: list| menu| by the glass)?|rose wine(?: glass bottle)?|white wine(?: glass bottle)?|red wine(?: glass bottle)?|bubbles|champagne|sparkling(?: wine)?(?: glass bottle)?|beer|ol|(?:single malt )?whisk(?:e)?y(?: bourbon)?|bourbon|brandy(?: cognac)?|cognac|bitters?|(?:various )?spirits?|brennevin|liquor|vodka|gin|rum|tequila(?: mezcal)?|mezcal|aquavit|akevitt|liqueurs?|calvados|armagnac|grappa|port(?: wine)?|sherry|vermouth|sake|coffee|kaffe|tea|te)$/u.test(
+    line,
+  );
+}
+
+function isBeveragePairingHeading(value: string): boolean {
+  const line = normalizeScopeLine(value);
+  return /^(?:wine pairings?|wine recomm?endations?|vinanbefaling(?:er)?(?: wine recomm?endations?)?|vinforslag|vinpakke)$/u.test(
     line,
   );
 }
 
 function isFoodSectionHeading(value: string): boolean {
   const line = normalizeScopeLine(value);
-  return /^(?:do ngot(?: dessert)?|dessert(?:er)?(?: dessert(?:s)?)?|desserts?|dolci|mat|food|all day|evening|forrett(?:er)?(?: starter(?:s)?)?|starters?|mellomrett(?:er)?(?: middle courses?)?|middle courses?|smaretter|small plates?|snacks?|hovedrett(?:er)?(?: main courses?)?|main courses?|mains?|hvilerett(?: palate cleanser)?|palate cleanser|ost(?: cheese)?|cheese|sides?|burgers?|set menus?)$/u.test(
+  return /^(?:middagsmeny(?: dinner menu)?|dinner menu|do ngot(?: dessert)?|dessert(?:er)?(?: dessert(?:s)?)?|desserts?|dolci|mat|food|all day|evening|forrett(?:er)?(?: starter(?:s)?)?|starters?|mellomrett(?:er)?(?: middle courses?)?|middle courses?|smaretter|small plates?|snacks?|hovedrett(?:er)?(?: main courses?)?|main courses?|mains?|hvilerett(?: pal(?:ate|et) cleanser)?|pal(?:ate|et) cleanser|ost(?: cheese)?|cheese|sides?|burgers?|set menus?)$/u.test(
     line,
   );
 }
@@ -116,6 +131,13 @@ function beverageBlockedLines(visibleText: string): readonly boolean[] {
   }
 
   return blocked;
+}
+
+function canonicalBeverageEvidenceName(value: string): string {
+  const cleaned = normalizeVisibleLine(value)
+    .replace(/\s+(?:NV|(?:19|20)\d{2})\s+\d{2,4}\s*(?:,-|-)\s*$/iu, "")
+    .trim();
+  return normalizeDishName(cleaned);
 }
 
 function lineStartsWithDishName(line: string, dishName: string): boolean {
@@ -252,8 +274,11 @@ export function disambiguateConflictingPdfSourceKeys(
 function looksLikePdfBeverageItem(name: string): boolean {
   const normalized = normalizeVisibleLine(name);
   return (
-    PDF_BEVERAGE_STYLE_ITEM.test(normalized) &&
-    PDF_BEVERAGE_VOLUME_ITEM.test(normalized)
+    (PDF_BEVERAGE_STYLE_ITEM.test(normalized) &&
+      PDF_BEVERAGE_VOLUME_ITEM.test(normalized)) ||
+    (PDF_WINE_STYLE_ITEM.test(normalized) &&
+      (PDF_WINE_GEOGRAPHY_ITEM.test(normalized) ||
+        PDF_DESSERT_WINE_STYLE_ITEM.test(normalized)))
   );
 }
 
@@ -274,7 +299,8 @@ function looksLikePricingMetadata(name: string): boolean {
     ) ||
     PDF_QUANTITY_PRICE_LABEL.test(normalizeVisibleLine(name)) ||
     PDF_BEVERAGE_PAIRING_METADATA.test(name) ||
-    PDF_GENERIC_SECTION_PRICE_LABEL.test(normalizeVisibleLine(name))
+    PDF_GENERIC_SECTION_PRICE_LABEL.test(normalizeVisibleLine(name)) ||
+    PDF_FIXED_COURSE_PACKAGE_ITEM.test(normalized)
   );
 }
 
@@ -360,22 +386,71 @@ export function scopePdfMenuItems(
   const lines = visibleText.split("\n");
   const blocked = beverageBlockedLines(visibleText);
   const lineIndexByItem = new Map<MenuObservedItem, number | null>();
+  const itemsByLine = new Map<number, MenuObservedItem[]>();
   let searchFrom = 0;
 
   for (const item of items) {
     const lineIndex = findNextDishLine(lines, item.name, searchFrom);
     lineIndexByItem.set(item, lineIndex);
-    if (lineIndex !== null) searchFrom = lineIndex + 1;
+    if (lineIndex !== null) {
+      searchFrom = lineIndex + 1;
+      const group = itemsByLine.get(lineIndex) ?? [];
+      group.push(item);
+      itemsByLine.set(lineIndex, group);
+    }
   }
 
-  const blockedBeverageNames = new Set(
-    items
-      .filter((item) => {
-        const lineIndex = lineIndexByItem.get(item) ?? null;
-        return lineIndex !== null && blocked[lineIndex];
-      })
-      .map((item) => item.normalizedName),
-  );
+  const beverageEvidenceNames = new Set<string>();
+  for (const item of items) {
+    const lineIndex = lineIndexByItem.get(item) ?? null;
+    if (lineIndex === null || !blocked[lineIndex]) continue;
+    const evidenceName = canonicalBeverageEvidenceName(item.name);
+    if (evidenceName) beverageEvidenceNames.add(evidenceName);
+  }
+
+  const nextNonEmptyLine = (startIndex: number): number | null => {
+    for (let index = startIndex; index < lines.length; index += 1) {
+      if (normalizeVisibleLine(lines[index] ?? "")) return index;
+    }
+    return null;
+  };
+
+  for (let headingIndex = 0; headingIndex < lines.length; headingIndex += 1) {
+    if (!isBeveragePairingHeading(lines[headingIndex] ?? "")) continue;
+    let cursor = nextNonEmptyLine(headingIndex + 1);
+    let firstRecommendation = true;
+    let scanned = 0;
+
+    while (cursor !== null && scanned < 8) {
+      scanned += 1;
+      if (isFoodSectionHeading(lines[cursor] ?? "")) break;
+      const currentItems = itemsByLine.get(cursor) ?? [];
+      if (currentItems.length === 0) {
+        if (!firstRecommendation) break;
+        cursor = nextNonEmptyLine(cursor + 1);
+        continue;
+      }
+
+      const nextIndex = nextNonEmptyLine(cursor + 1);
+      const nextHasItem =
+        nextIndex !== null && (itemsByLine.get(nextIndex)?.length ?? 0) > 0;
+      const nextIsFoodHeading =
+        nextIndex !== null && isFoodSectionHeading(lines[nextIndex] ?? "");
+
+      if (firstRecommendation || nextHasItem || nextIsFoodHeading) {
+        for (const item of currentItems) {
+          const evidenceName = canonicalBeverageEvidenceName(item.name);
+          if (evidenceName) beverageEvidenceNames.add(evidenceName);
+        }
+        firstRecommendation = false;
+      } else {
+        break;
+      }
+
+      if (nextIndex === null || nextIsFoodHeading) break;
+      cursor = nextIndex;
+    }
+  }
 
   const scoped: MenuObservedItem[] = [];
   for (const item of items) {
@@ -387,7 +462,8 @@ export function scopePdfMenuItems(
       continue;
     const lineIndex = lineIndexByItem.get(item) ?? null;
     if (lineIndex !== null && blocked[lineIndex]) continue;
-    if (blockedBeverageNames.has(item.normalizedName)) continue;
+    const evidenceName = canonicalBeverageEvidenceName(item.name);
+    if (evidenceName && beverageEvidenceNames.has(evidenceName)) continue;
     scoped.push(cleanPdfOutputItemName(item));
   }
 
