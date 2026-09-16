@@ -3,6 +3,7 @@ import { extractMenuItemsFromPdfLines } from "./pdf-extractor.js";
 import {
   PDF_SOURCE_EXTRACTOR_VERSION,
   disambiguateConflictingPdfSourceKeys,
+  filterPdfConflictMetadataItems,
   recoverExplicitLowPerItemPdfRows,
   scopePdfMenuItems,
 } from "./pdf-source-extractor.js";
@@ -28,7 +29,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v23");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v24");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -130,6 +131,48 @@ describe("PDF source scope", () => {
     expect(scoped.some((item) => item.name === "(Fisk, skalldyr)")).toBe(false);
     expect(scoped.some((item) => item.name === "DI MARE")).toBe(true);
     expect(scoped.some((item) => item.name === "SKUR 33")).toBe(true);
+  });
+
+  it("filters split parenthetical allergen-code fragments before source-key conflict resolution", () => {
+    const lines = [
+      "RESTAURANT MENU",
+      "(M, 189",
+      "(M, 255",
+      "Braised duck 325",
+      "Apple tart 165",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const fragments = parsed.filter((item) => item.name === "(M,");
+    expect(fragments).toHaveLength(2);
+    expect(new Set(fragments.map((item) => item.sourceKey)).size).toBe(1);
+
+    const eligible = filterPdfConflictMetadataItems(parsed);
+    expect(eligible.some((item) => item.name === "(M,")).toBe(false);
+    expect(eligible.map((item) => item.name)).toContain("Braised duck");
+    expect(eligible.map((item) => item.name)).toContain("Apple tart");
+
+    const disambiguated = disambiguateConflictingPdfSourceKeys(
+      lines.join("\n"),
+      eligible,
+    );
+    expect(disambiguated.map((item) => item.name)).toEqual([
+      "Braised duck",
+      "Apple tart",
+    ]);
+  });
+
+  it("keeps ordinary unresolved dish conflicts fail-closed after metadata prefiltering", () => {
+    const lines = ["LAKS 139", "LAKS 159"];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const eligible = filterPdfConflictMetadataItems(parsed);
+    expect(eligible).toHaveLength(2);
+    const disambiguated = disambiguateConflictingPdfSourceKeys(
+      lines.join("\n"),
+      eligible,
+    );
+    expect(disambiguated.map((item) => item.sourceKey)).toEqual(
+      eligible.map((item) => item.sourceKey),
+    );
   });
 
   it("fails closed when conflicting same-name prices cannot be bound to distinct menu sections", () => {
