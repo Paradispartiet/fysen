@@ -566,6 +566,31 @@ export async function extractMenuSource(
         trailingPriceCardItems.length,
         recoveredItems.length,
       );
+    if (recoveredItems.length >= 8) {
+      console.error(
+        JSON.stringify({
+          diagnostic: "html-recovery-family-selection",
+          recovered: recoveredItems.length,
+          trailing: trailingPriceCardItems.length,
+          strongTitle: strongTitlePriceItems.length,
+          heading: headingPriceItems.length,
+          priceWrapped: priceWrappedItems.length,
+          inlineMarked: inlineMarkedPriceItems.length,
+          sectionFirst: sectionFirstCardItems.length,
+          semanticCategoryCardsPreferred,
+          strongNumberedCardsPreferred,
+          broadHeadingPriceRecoveryPreferred,
+          headingDominatesTrailingRecovery,
+          trailingPriceCardQualifies,
+          recoveredNames: recoveredItems.map((item) => item.name),
+          trailingNames: trailingPriceCardItems.map((item) => item.name),
+          strongTitleNames: strongTitlePriceItems.map((item) => item.name),
+          headingNames: headingPriceItems.map((item) => item.name),
+          priceWrappedNames: priceWrappedItems.map((item) => item.name),
+        }),
+      );
+    }
+
     const preferredItems = strongTitlePricePreferred
     ? strongTitlePriceItems
     : headingDominatesTrailingRecovery
@@ -654,6 +679,16 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? canonicalizeHtmlOutputItems(beverageScopedItems)
         : beverageScopedItems;
+    if (recoveredItems.length >= 8) {
+      console.error(
+        JSON.stringify({
+          diagnostic: "html-recovery-final-output",
+          preferred: preferredItems.map((item) => item.name),
+          canonical: canonicalItems.map((item) => item.name),
+          final: items.map((item) => item.name),
+        }),
+      );
+    }
     return {
       items,
       method: extracted.method,
