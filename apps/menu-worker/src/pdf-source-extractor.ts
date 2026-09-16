@@ -402,6 +402,10 @@ export function scopePdfMenuItems(
   items: readonly MenuObservedItem[],
 ): readonly MenuObservedItem[] {
   const lines = visibleText.split("\n");
+  console.error(
+    "[TEMP pdf-scope-lines]",
+    JSON.stringify(lines.map((line, index) => ({ index, line })).slice(45, 140)),
+  );
   const blocked = beverageBlockedLines(visibleText);
   const scoped: MenuObservedItem[] = [];
   const debugDrops: Array<{ name: string; reason: string; lineIndex: number | null }> = [];
