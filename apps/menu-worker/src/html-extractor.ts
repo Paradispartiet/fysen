@@ -5,7 +5,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EXTRACTOR_VERSION = "html-v9";
+export const HTML_EXTRACTOR_VERSION = "html-v10";
 
 export interface ExtractedHtmlMenu {
   readonly items: readonly MenuObservedItem[];
@@ -139,7 +139,9 @@ function extractJsonLdItems(html: string): readonly MenuObservedItem[] {
 
 export function extractHtmlVisibleText(html: string): string {
   const $ = load(html);
-  $("script, style, noscript, svg, template").remove();
+  $(
+    "script, style, noscript, svg, template, header, nav, footer, [role='navigation'], [role='contentinfo']",
+  ).remove();
   $("br").replaceWith("\n");
   $("td, th").each((_, element) => {
     $(element).append(" ");
