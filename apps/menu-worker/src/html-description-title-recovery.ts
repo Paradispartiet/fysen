@@ -253,9 +253,17 @@ function sourceExcerptAnchorsPreparationTitle(
     .split(SOURCE_EXCERPT_SEPARATOR)
     .map(normalizeVisibleLine)
     .filter(Boolean);
-  if (segments[0]?.toLocaleLowerCase("nb-NO") !== current.toLocaleLowerCase("nb-NO"))
+  if (
+    segments[0]?.toLocaleLowerCase("nb-NO") !==
+    current.toLocaleLowerCase("nb-NO")
+  )
     return false;
-  return segments.slice(1).some((segment) => PRICE_LINE.test(segment));
+  if (segments.length < 3) return false;
+  const finalSegment = segments[segments.length - 1] ?? "";
+  if (!PRICE_LINE.test(finalSegment)) return false;
+  return segments
+    .slice(1, -1)
+    .some((segment) => Boolean(segment) && !PRICE_LINE.test(segment));
 }
 
 function sourceExcerptInlinePricesObservedName(
