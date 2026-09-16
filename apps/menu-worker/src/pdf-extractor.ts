@@ -670,12 +670,22 @@ function descriptionForCandidate(
   return description || null;
 }
 
-export function extractMenuItemsFromPdfLines(lines: readonly string[]): readonly MenuObservedItem[] {
-  const pdfLines = lines
-    .map(normalizeLine)
-    .filter(Boolean)
-    .map((text) => ({ text, page: 1 }));
+export function extractMenuItemsFromPdfPages(
+  pages: readonly (readonly string[])[],
+): readonly MenuObservedItem[] {
+  const pdfLines = pages.flatMap((lines, pageIndex) =>
+    lines
+      .map(normalizeLine)
+      .filter(Boolean)
+      .map((text) => ({ text, page: pageIndex + 1 })),
+  );
   return buildItems(pdfLines);
+}
+
+export function extractMenuItemsFromPdfLines(
+  lines: readonly string[],
+): readonly MenuObservedItem[] {
+  return extractMenuItemsFromPdfPages([lines]);
 }
 
 function buildItems(lines: readonly PdfLine[]): readonly MenuObservedItem[] {
