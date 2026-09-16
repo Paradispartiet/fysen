@@ -26,9 +26,11 @@ function item(name: string): MenuObservedItem {
 }
 
 describe("structured menu contract compatibility", () => {
-  it("keeps SeMeny JSON-LD service and Urge items without weakening heuristic filtering", async () => {
+  it("keeps SeMeny JSON-LD contract items without weakening heuristic food filtering", async () => {
     expect(isCanonicalHtmlMenuItem(item("Bestikk"))).toBe(false);
     expect(isCanonicalHtmlMenuItem(item("Urge 0,5l"))).toBe(false);
+    expect(isCanonicalHtmlMenuItem(item("Pepsi Max 0,5l"))).toBe(false);
+    expect(isCanonicalHtmlMenuItem(item("Imsdal 0,5l"))).toBe(false);
 
     const html = `
       <html><body>
@@ -38,7 +40,9 @@ describe("structured menu contract compatibility", () => {
             "@graph": [
               {"@type":"MenuItem","name":"Pad Thai","offers":{"@type":"Offer","price":"219","priceCurrency":"NOK"}},
               {"@type":"MenuItem","name":"Bestikk","offers":{"@type":"Offer","price":"2","priceCurrency":"NOK"}},
-              {"@type":"MenuItem","name":"Urge 0,5l","offers":{"@type":"Offer","price":"55","priceCurrency":"NOK"}}
+              {"@type":"MenuItem","name":"Urge 0,5l","offers":{"@type":"Offer","price":"55","priceCurrency":"NOK"}},
+              {"@type":"MenuItem","name":"Pepsi Max 0,5l","offers":{"@type":"Offer","price":"49","priceCurrency":"NOK"}},
+              {"@type":"MenuItem","name":"Imsdal 0,5l","offers":{"@type":"Offer","price":"39","priceCurrency":"NOK"}}
             ]
           }
         </script>
@@ -64,6 +68,8 @@ describe("structured menu contract compatibility", () => {
       ["Pad Thai", 21900],
       ["Bestikk", 200],
       ["Urge 0,5l", 5500],
+      ["Pepsi Max 0,5l", 4900],
+      ["Imsdal 0,5l", 3900],
     ]);
   });
 });

@@ -115,7 +115,10 @@ const BEVERAGE_MENU_ITEM =
 const BEVERAGE_PACKAGE_ITEM =
   /^(?:with\s+)?(?:wine|drink|beverage)\s+package$/iu;
 const STRUCTURED_MENU_CONTRACT_COMPATIBILITY_ITEM =
-  /^(?:bestikk|cutlery|urge(?:\s+(?:zero|uten\s+sukker|zero\s+sugar))?(?:\s+.*)?)$/iu;
+  /^(?:bestikk|cutlery|urge(?:\s+(?:zero|uten\s+sukker|zero\s+sugar))?(?:\s+.*)?|pepsi(?:\s+max)?(?:\s+.*)?|imsdal(?:\s+.*)?)$/iu;
+const BATCH_INTAKE_BEVERAGE_SECTION =
+  /^(?:juice|juices|drikke|drinks?|beverages?|mineralvann|brus|soft\s+drinks?|sodas?|kaffe|coffee|te|tea|vin|wine|øl|beer|cocktails?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?)$/iu;
+
 const SPARKLING_WINE_PRODUCT_ITEM =
   /^(?=.*\b(?:brut|sparkling\s+wine)\b)(?!.*\b(?:sauce|saus|beurre|glaze|glazed|poached|braised|grilled|baked|with|med)\b).+$/iu;
 const BEVERAGE_STYLE_ITEM =
@@ -256,6 +259,16 @@ export function isCanonicalStructuredMenuItem(
   return (
     STRUCTURED_MENU_CONTRACT_COMPATIBILITY_ITEM.test(filterName) ||
     isCanonicalHtmlMenuItem(item)
+  );
+}
+
+export function isCanonicalBatchIntakeMenuItem(
+  item: MenuObservedItem,
+): boolean {
+  const sectionName = item.sectionName?.trim().replace(/\p{Cf}/gu, "").trim() ?? "";
+  return (
+    isCanonicalHtmlMenuItem(item) &&
+    !BATCH_INTAKE_BEVERAGE_SECTION.test(sectionName)
   );
 }
 

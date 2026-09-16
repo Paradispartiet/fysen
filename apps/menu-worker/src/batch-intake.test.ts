@@ -75,7 +75,7 @@ describe("restaurant batch intake", () => {
     expect(manifest.qualityAssertions.forbiddenDishNames).toEqual(["Drinks"]);
   });
 
-  it("excludes structured service labels and Urge from new intake contracts", () => {
+  it("food-scopes structured service labels, beverage names and beverage sections", () => {
     const manifest = buildGeneratedRestaurantManifest(entry, [
       item("Dish 1", 0),
       item("Dish 2", 1),
@@ -83,6 +83,26 @@ describe("restaurant batch intake", () => {
       item("Dish 4", 3),
       { ...item("Bestikk", 4), extractionMethod: "json_ld" },
       { ...item("Urge 0,5l", 5), extractionMethod: "json_ld" },
+      {
+        ...item("Appelsin", 6),
+        extractionMethod: "json_ld",
+        sectionName: "Juice",
+      },
+      {
+        ...item("Eple, Gulrot og Ingefær", 7),
+        extractionMethod: "json_ld",
+        sectionName: "Juice",
+      },
+      {
+        ...item("Pepsi Max 0,5l", 8),
+        extractionMethod: "json_ld",
+        sectionName: "Drikke",
+      },
+      {
+        ...item("Imsdal 0,5l", 9),
+        extractionMethod: "json_ld",
+        sectionName: "Drikke",
+      },
     ]);
 
     expect(manifest.menuSource.minimumExpectedItems).toBe(4);

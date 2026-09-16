@@ -41,9 +41,6 @@ interface JsonLdMenuItemNode {
   readonly sectionName: string | null;
 }
 
-const JSON_LD_BEVERAGE_SECTION =
-  /^(?:juice|juices|drikke|drinks?|beverages?|mineralvann|brus|soft\s+drinks?|sodas?|kaffe|coffee|te|tea|vin|wine|øl|beer|cocktails?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?)$/iu;
-
 function collectMenuItemNodes(
   value: unknown,
   output: JsonLdMenuItemNode[],
@@ -110,7 +107,6 @@ function extractJsonLdItems(html: string): readonly MenuObservedItem[] {
   const unique = new Map<string, MenuObservedItem>();
   for (const [position, entry] of nodes.entries()) {
     const { node, sectionName } = entry;
-    if (sectionName && JSON_LD_BEVERAGE_SECTION.test(sectionName)) continue;
     if (typeof node.name !== "string" || !node.name.trim()) continue;
     const name = canonicalJsonLdName(node.name);
     if (!name || looksLikeNonDish(name)) continue;
@@ -128,7 +124,7 @@ function extractJsonLdItems(html: string): readonly MenuObservedItem[] {
       name,
       normalizedName: normalizeDishName(name),
       description,
-      sectionName: null,
+      sectionName,
       priceMinor,
       currency,
       position,

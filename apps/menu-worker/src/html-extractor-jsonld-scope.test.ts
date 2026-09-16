@@ -30,8 +30,8 @@ describe("JSON-LD menu scope", () => {
     expect(result.items.map((item) => item.priceMinor)).toEqual([17000, 16900, 26500]);
   });
 
-  it("excludes items inherited from beverage MenuSection nodes", () => {
-    const html = `
+  it("preserves nearest MenuSection ancestry on structured items", () => {
+    const html = \`
       <html><body>
         <script type="application/ld+json">
           {
@@ -65,11 +65,17 @@ describe("JSON-LD menu scope", () => {
           }
         </script>
       </body></html>
-    `;
+    \`;
 
     const result = extractHtmlMenu(html);
     expect(result.method).toBe("json_ld");
-    expect(result.items.map((item) => item.name)).toEqual(["Falafel i Rull"]);
+    expect(result.items.map((item) => [item.name, item.sectionName])).toEqual([
+      ["Falafel i Rull", "Falafel & Mer"],
+      ["Appelsin", "Juice"],
+      ["Eple, Gulrot og Ingefær", "Juice"],
+      ["Pepsi Max 0,5l", "Drikke"],
+      ["Imsdal 0,5l", "Drikke"],
+    ]);
   });
 
   it("preserves ordinary structured food items", () => {
