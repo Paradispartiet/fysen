@@ -19,7 +19,7 @@ describe("trailing-price HTML card recovery", () => {
     `);
 
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
-      "trailing-price-card-v15",
+      "trailing-price-card-v16",
     );
     expect(
       items.map((item) => [item.name, item.priceMinor, item.priceKind]),
@@ -188,7 +188,7 @@ describe("trailing-price HTML card recovery", () => {
     expect(isStrongNumberedTrailingPriceCardRecovery(items)).toBe(true);
   });
 
-  it("canonicalizes duplicate menu indices while preserving ambiguous duplicate names", () => {
+  it("canonicalizes duplicate and locally out-of-order menu indices while preserving ambiguous duplicate names", () => {
     const rows: Array<readonly [string, number]> = [];
     for (let menuIndex = 2; menuIndex <= 67; menuIndex += 1) {
       if (menuIndex === 3) {
@@ -197,6 +197,13 @@ describe("trailing-price HTML card recovery", () => {
         rows.push(["4. 10 Hot Wings", 120]);
       } else if (menuIndex === 5) {
         rows.push(["5. 20 Hot Wings", 199]);
+      } else if (menuIndex === 29) {
+        continue;
+      } else if (menuIndex === 30) {
+        rows.push(
+          ["30. HOMESTYLE BURGER", 109],
+          ["29. MATHUS HOT CHICKEN", 129],
+        );
       } else if (menuIndex === 35) {
         rows.push(
           ["35. TENDERSDELUX MIDDAG 150g", 169],
