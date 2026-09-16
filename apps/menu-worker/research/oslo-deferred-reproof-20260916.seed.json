@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-deferred-reproof-20260916",
+  "concurrency": 2,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "veitvet-sportsbar-pizza-oslo",
+        "name": "Veitvet Sportsbar & Pizza",
+        "websiteUrl": "https://veitvetsenteret.no/butikker/veitvet-sportsbar-og-pizza/",
+        "address": "Veitvetveien, 0596 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/public/sted/492veitvetsportsbarpizza",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-16",
+          "note": "Fresh reproof of the still-green Batch 10 deferred candidate. Current public SE MENY output exposes a substantial priced food menu; the venue remains listed by Veitvet Senter. Service-menu evidence remains secondary and intake stays fail-closed."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "falafel-n-juice-lokka-oslo",
+        "name": "FALAFEL n' JUICE Løkka",
+        "websiteUrl": null,
+        "address": "Thorvald Meyers gate 33D, 0555 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/falafelnjuicelokka",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-16",
+          "note": "Fresh reproof of the Batch 15 deferred candidate. The prior hold was only the malformed leading underscore in the source identity; this seed pins the clean venue name while preserving the live priced source and normal beverage filtering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8
+    }
+  ]
+}
