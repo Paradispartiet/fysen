@@ -596,6 +596,13 @@ export async function extractMenuSource(
           headingDominatesTrailingRecovery,
           trailingPriceCardQualifies,
           recoveredNames: recoveredItems.map((item) => item.name),
+          rawTrailingDetail: rawTrailingPriceCardItems.map((item) => ({
+            name: item.name,
+            priceMinor: item.priceMinor,
+            position: item.position,
+            description: item.description,
+            sourceExcerpt: item.sourceExcerpt,
+          })),
           trailingDetail: trailingPriceCardItems.map((item) => ({
             name: item.name,
             priceMinor: item.priceMinor,
