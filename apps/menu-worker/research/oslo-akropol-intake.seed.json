@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-akropol-intake",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "akropol-oslo",
+        "name": "AKROPOL",
+        "websiteUrl": null,
+        "address": "Sørkedalsveien 3A, 0369 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/akropol",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-16",
+          "note": "Fresh exact-head intake of the Batch 44 AKROPOL holdout. Current public venue evidence still identifies AKROPOL at Sørkedalsveien 3A; SE MENY remains secondary priced menu evidence. Intake must fail closed on address, source extraction, semantic dedupe and menu quality."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8
+    }
+  ]
+}
