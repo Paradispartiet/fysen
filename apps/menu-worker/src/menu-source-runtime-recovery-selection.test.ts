@@ -289,6 +289,7 @@ describe("HTML runtime recovery selection", () => {
     expect(shouldPreferDominantHeadingRecovery(26, 24, 24)).toBe(true);
     expect(shouldPreferDominantHeadingRecovery(24, 24, 24)).toBe(true);
     expect(shouldPreferDominantHeadingRecovery(13, 13, 4)).toBe(true);
+    expect(shouldPreferDominantHeadingRecovery(13, 63, 3)).toBe(false);
     expect(shouldPreferDominantHeadingRecovery(23, 24, 24)).toBe(false);
     expect(shouldPreferDominantHeadingRecovery(26, 27, 24)).toBe(false);
     expect(shouldPreferDominantHeadingRecovery(11, 10, 10)).toBe(false);

@@ -126,7 +126,7 @@ export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v3";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v11";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v10";
-export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v3";
+export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v4";
 
 export function shouldPreferDominantHeadingRecovery(
   headingCount: number,
@@ -557,8 +557,11 @@ export async function extractMenuSource(
       strongNumberedCardsPreferred ||
       strongDirectTrailingRecoveryPreferred;
     const broadHeadingPriceRecoveryPreferred =
-      headingPriceItems.length >= 12 &&
-      headingPriceItems.length >= recoveredItems.length;
+      shouldPreferDominantHeadingRecovery(
+        headingPriceItems.length,
+        trailingPriceCardItems.length,
+        recoveredItems.length,
+      );
     const isolatedSemanticRecoveryPreferred =
       isolatedTrailingRecoveryPreferred ||
       strongTitlePricePreferred ||
