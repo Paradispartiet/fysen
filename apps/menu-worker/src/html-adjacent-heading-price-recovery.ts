@@ -9,7 +9,8 @@ import {
 export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v9";
 
 const HEADING_MARKER = "__FYSEN_ADJACENT_HEADING_LEVEL_";
-const PRICE_LINE = /^(?:(fra|from)\\s+)?(?:(?:(?:pr\\.?|per)\\s+(?:person|pers\\.?)\\s+)?(?:(?:NOK\\s*)|(?:kr\\.?\\s*)))?([1-9]\\d{0,3})(?:([.,])(\\d{1,3}))?(?:\\s*(?:,-|kr\\.?|NOK))?$/iu;
+const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
+const PER_PERSON_PRICE_PREFIX = /^(?:pr\.?|per)\s+(?:person|pers\.?)\s+(?=(?:NOK|kr\.?)\s*[1-9])/iu;
 const SECTION_OR_UI_LABEL = /^(?:our\s+menu|menu|meny|single\s+meat|single\s+(?:vegetar|vegetarian)(?:\s*&\s*vegan)?|pdf\s+version|drinks?|drikke(?:meny)?|popular\s+dish|opening(?:\s+hours)?|åpningstider|contact|kontakt|address|adresse|booking|reservation(?:s)?|reservasjoner?|allergens?|allergener?)$/iu;
 const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|wine\s+(?:pairing|package)(?:\s+for\s+.+)?|vinpakke(?:\s+.+)?|cocktails?|champagne(?:\s+cocktails?)?|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
 const BOTTLED_WATER_TITLE = /\b(?:still|sparkling)\s+(?:water|naturell)\b/iu;
@@ -29,7 +30,8 @@ function normalizeVisibleLine(value: string): string {
 }
 
 function parsePrice(value: string): ParsedPrice | null {
-  const match = normalizeVisibleLine(value).match(PRICE_LINE);
+  const line = normalizeVisibleLine(value).replace(PER_PERSON_PRICE_PREFIX, "");
+  const match = line.match(PRICE_LINE);
   if (!match?.[2]) return null;
 
   const separator = match[3] ?? null;
