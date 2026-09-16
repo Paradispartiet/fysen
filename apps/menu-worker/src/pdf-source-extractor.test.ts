@@ -28,7 +28,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v21");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v22");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -261,6 +261,31 @@ describe("PDF source scope", () => {
       "Chicken Caesar Salad",
       "Salted Cucumber",
       "Spanish Anchovies",
+    ]);
+  });
+
+  it("suppresses repeated beverage recommendations and resumes at bilingual course headings", () => {
+    const lines = [
+      "WINE BY THE GLASS",
+      "House Riesling 178",
+      "Reserve Red 258",
+      "FORRETT / STARTER",
+      "Halibut Crudo 259",
+      "House Riesling 178",
+      "MELLOMRETT / MIDDLE COURSE",
+      "Potato Trilogy 239",
+      "VINANBEFALING / WINE RECOMENDATION",
+      "Late Harvest Dessert Wine 99",
+      "DESSERT / DESSERT",
+      "Raspberry Mille-Feuille 189",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual([
+      "Halibut Crudo",
+      "Potato Trilogy",
+      "Raspberry Mille-Feuille",
     ]);
   });
 
