@@ -264,7 +264,7 @@ function mergeMissingRecoveredItems(
   return output.sort((a, b) => a.position - b.position);
 }
 
-function reconcileDominantHeadingMenuIndices(
+function reconcileSelectedExplicitMenuIndices(
   items: readonly MenuObservedItem[],
   recovered: readonly MenuObservedItem[],
 ): readonly MenuObservedItem[] {
@@ -638,8 +638,9 @@ export async function extractMenuSource(
               : recoveredItems;
     const indexReconciledPreferredItems =
       extracted.method === "html_heuristic" &&
-      preferredItems === headingPriceItems
-        ? reconcileDominantHeadingMenuIndices(
+      (preferredItems === headingPriceItems ||
+        preferredItems === strongTitlePriceItems)
+        ? reconcileSelectedExplicitMenuIndices(
             preferredItems,
             recoveredItems,
           )
