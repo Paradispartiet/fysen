@@ -29,7 +29,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v30");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v31");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -42,6 +42,7 @@ describe("PDF source scope", () => {
       "SPECIALS",
       "fl 1065,-",
       "1997 fl 5690,-",
+      "fl 835,-/gl 185,-",
       "Roasted lamb 495,-",
     ];
     const parsed = extractMenuItemsFromPdfLines(lines);
