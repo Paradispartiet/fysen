@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-red-sun-allergen-reproof-20260917",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "red-sun-storo-oslo",
+        "name": "Red Sun Storo",
+        "websiteUrl": "https://www.redsun.no/",
+        "address": "Vitaminveien 28, 0483 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.redsun.no/menu",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720,
+        "sourceSupport": {
+          "redirectOrigins": [],
+          "browserDataOrigins": []
+        }
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-17",
+          "note": "Exact-head reproof after the current first-party Storo menu exposed Tree nuts as allergen metadata that was incorrectly price-bound as a dish. Real menu items, including priced extras, must remain intact."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Tree nuts"
+      ]
+    }
+  ]
+}

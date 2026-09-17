@@ -61,6 +61,7 @@ describe("generic HTML item-name normalization", () => {
     "Eggs",
     "Soy",
     "Fish",
+    "Tree nuts",
     "Hjemmeside",
     "top of page",
     "Mine Favoritter",
