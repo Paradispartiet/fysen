@@ -19,7 +19,7 @@ describe("trailing-price HTML card recovery", () => {
     `);
 
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
-      "trailing-price-card-v16",
+      "trailing-price-card-v17",
     );
     expect(
       items.map((item) => [item.name, item.priceMinor, item.priceKind]),
@@ -372,7 +372,6 @@ describe("trailing-price HTML card recovery", () => {
     expect(items[4]?.description).toContain("Maltbrød");
   });
 
-
   it("resets structured leading-title recovery at plain food section labels", () => {
     const items = recoverTrailingPriceCardHtmlItems(`
       <html><body>
@@ -440,7 +439,6 @@ describe("trailing-price HTML card recovery", () => {
       ["Liten frisk avslutning", 33500],
     ]);
   });
-
 
   it("uses strong local structured titles even when they are a minority of the menu", () => {
     const items = recoverTrailingPriceCardHtmlItems(`
@@ -532,5 +530,4 @@ describe("trailing-price HTML card recovery", () => {
       items.some((item) => item.name === "98 piece / 495 1⁄2 dozen"),
     ).toBe(false);
   });
-
 });
