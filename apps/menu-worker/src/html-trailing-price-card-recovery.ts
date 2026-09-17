@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v16";
+  "trailing-price-card-v17";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -18,6 +18,7 @@ const TRAILING_MARKED_PRICE =
   /(?:(fra|from)\s+)?([1-9]\d{1,3})(?:[.,](\d{1,2}))?\s*(?:,-|kr\.?|NOK)\s*$/iu;
 const ADDITIONAL_MARKED_PRICE =
   /(?:(?:NOK|kr\.?)\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?|[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|NOK))/iu;
+const EXPLICIT_PRICE_NOTATION = /(?:\bNOK\b|\bkr\.?|,-\s*$)/iu;
 const SECTION_OR_UI_LABEL =
   /^(?:top\s+of\s+page|bottom\s+of\s+page|home|hjem|menu|meny|more|om\s+oss|about(?:\s+us)?|contact(?:\s+us)?|kontakt(?:\s+oss)?|opening(?:\s+hours)?|åpning(?:s)?\s*tider|address|adresse|booking|reservation(?:s)?|reservasjoner?|gift\s*card|gavekort|delivery\s*fee|leveringsgebyr|allergens?|allergener?|drinks?|drikke(?:meny)?|beverages?)$/iu;
 const UI_ACTION_LEAD =
@@ -25,6 +26,7 @@ const UI_ACTION_LEAD =
 const INLINE_ADDON_PRICE_LEAD = /^(?:add(?:-on)?|additional)\b/iu;
 const DESCRIPTION_LEAD =
   /^(?:serveres?|servert|served|with|med|marinert|marinated|grillet|grilled|bakt|baked|braisert|braised|toppet|topped|inneholder|contains?|inkludert|including|alle\s+retter)\b/iu;
+const DESCRIPTION_CONNECTOR = /\b(?:with|med)\b/iu;
 const ALLERGEN_METADATA = /^\(?\s*(?:allergener?|allergens?)\s*:/iu;
 const PARENTHETICAL_METADATA_ONLY = /^\([^()]{1,120}\)$/u;
 const LEADING_MENU_INDEX = /^(\d{1,3})\s*[.)]?\s+(.+)$/u;
@@ -80,6 +82,17 @@ function parsedAmount(
   const decimals = (decimalsValue ?? "").padEnd(2, "0").slice(0, 2);
   const amount = whole * 100 + Number(decimals || "0");
   return amount >= 4_000 && amount <= 1_000_000 ? amount : null;
+}
+
+function explicitSubfloorPriceBoundary(value: string): boolean {
+  const line = normalizeVisibleLine(value);
+  if (!EXPLICIT_PRICE_NOTATION.test(line)) return false;
+  const pure = line.match(PURE_PRICE_LINE);
+  if (!pure?.[2]) return false;
+  const whole = Number(pure[2]);
+  const decimals = (pure[3] ?? "").padEnd(2, "0").slice(0, 2);
+  const amount = whole * 100 + Number(decimals || "0");
+  return amount > 0 && amount < 4_000;
 }
 
 function parseTrailingPrice(value: string): ParsedTrailingPrice | null {
@@ -327,9 +340,66 @@ function isHeadingTitleLine(
   return (lines[position - 1] ?? "").startsWith(HEADING_MARKER);
 }
 
+function explicitHeadingLevelBeforeTitle(
+  lines: readonly string[],
+  position: number,
+): number | null {
+  if (!isHeadingTitleLine(lines, position)) return null;
+  const marker = lines[position - 1]?.match(
+    /^__FYSEN_TRAILING_PRICE_HEADING_LEVEL_([1-6])__$/u,
+  );
+  return marker?.[1] ? Number(marker[1]) : null;
+}
+
+function hasParentHeadingLevel(
+  lines: readonly string[],
+  position: number,
+  headingLevel: number,
+): boolean {
+  for (let index = position - 2; index >= 0; index -= 1) {
+    const marker = lines[index]?.match(
+      /^__FYSEN_TRAILING_PRICE_HEADING_LEVEL_([1-6])__$/u,
+    );
+    if (!marker?.[1]) continue;
+    if (Number(marker[1]) < headingLevel) return true;
+  }
+  return false;
+}
+
+function precedingDescribedHeadingTitle(
+  lines: readonly string[],
+  pricePosition: number,
+): { readonly position: number; readonly title: string } | null {
+  const start = Math.max(0, pricePosition - MAX_PRECEDING_TITLE_DISTANCE);
+  for (let position = pricePosition - 2; position >= start; position -= 1) {
+    const headingLevel = explicitHeadingLevelBeforeTitle(lines, position);
+    if (headingLevel === null || !hasParentHeadingLevel(lines, position, headingLevel))
+      continue;
+    const title = normalizeVisibleLine(lines[position] ?? "");
+    if (!looksLikeDishTitle(title) || PLAIN_FOOD_SECTION_BOUNDARY.test(title))
+      continue;
+    const description = normalizeVisibleLine(lines[position + 1] ?? "");
+    if (
+      !description ||
+      description.startsWith(HEADING_MARKER) ||
+      parseTrailingPrice(description) ||
+      isUnpricedPriceBoundary(description)
+    )
+      continue;
+    if (!looksLikeDescription(description) && !DESCRIPTION_CONNECTOR.test(description))
+      continue;
+    return { position, title };
+  }
+  return null;
+}
+
 function isUnpricedPriceBoundary(value: string): boolean {
   const line = normalizeVisibleLine(value);
-  return DYNAMIC_PRICE_BOUNDARY.test(line) || MULTI_PRICE_BOUNDARY.test(line);
+  return (
+    DYNAMIC_PRICE_BOUNDARY.test(line) ||
+    MULTI_PRICE_BOUNDARY.test(line) ||
+    explicitSubfloorPriceBoundary(line)
+  );
 }
 
 function firstLetterMatches(value: string, pattern: RegExp): boolean {
@@ -581,6 +651,10 @@ export function recoverTrailingPriceCardHtmlItems(
     let titlePosition: number | null = null;
     let title: string | null = null;
     const numberedTitle = precedingNumberedTitle(lines, pricePosition);
+    const describedHeadingTitle = precedingDescribedHeadingTitle(
+      lines,
+      pricePosition,
+    );
     const structuredCandidate =
       structuredLeadingByPricePosition.get(pricePosition) ?? null;
     const structuredLeadingTitle =
@@ -592,6 +666,9 @@ export function recoverTrailingPriceCardHtmlItems(
     if (numberedTitle) {
       titlePosition = numberedTitle.position;
       title = numberedTitle.title;
+    } else if (describedHeadingTitle) {
+      titlePosition = describedHeadingTitle.position;
+      title = describedHeadingTitle.title;
     } else if (structuredLeadingTitle) {
       titlePosition = structuredLeadingTitle.position;
       title = structuredLeadingTitle.title;
