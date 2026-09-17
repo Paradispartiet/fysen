@@ -67,6 +67,8 @@ const PDF_LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]\s*/u;
 const PDF_NUMBERED_ROW_MARKER = /(?:^|\s)(\d{1,3}\s*[.)]\s+)(?=\p{L})/gu;
 const PDF_QUANTITY = /\b\d+(?:[.,]\d+)?\s*(?:kg|gr|g|ml|cl|l)\b/giu;
 const PDF_NON_DISH_METADATA = /^(?:set\s+menu|tasting\s+menu|course\s+menu)\b/iu;
+const TRAILING_SHARING_TAGLINE =
+  /\s+(?:perfekt\s+å\s+dele|perfect\s+for\s+sharing)!?$/iu;
 const allergenCodeTokens = new Set([
   "al",
   "b",
@@ -560,9 +562,18 @@ function commaContinuedDishName(
     continuationLineIndex: continuationIndex,
   };
 }
+
+function looksLikeSharingTaggedDishTitle(value: string): boolean {
+  const text = normalizeLine(value);
+  if (!TRAILING_SHARING_TAGLINE.test(text)) return false;
+  const title = text.replace(TRAILING_SHARING_TAGLINE, "").trim();
+  return /^[A-ZÆØÅÀÈÉÌÒÙÜ]/u.test(title) && looksLikeDishName(title);
+}
+
 function looksLikeStandaloneDescriptionLine(value: string): boolean {
   const text = normalizeLine(value);
   if (!text || !/\p{L}/u.test(text)) return false;
+  if (looksLikeSharingTaggedDishTitle(text)) return false;
   const words = text.split(/\s+/u).filter(Boolean);
   return (
     /^[a-zæøå]/u.test(text) ||
