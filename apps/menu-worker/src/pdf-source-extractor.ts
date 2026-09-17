@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v31";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v32";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -36,6 +36,8 @@ const PDF_FIXED_COURSE_MENU_ITEM =
 const PDF_GENERIC_SECTION_PRICE_LABEL = /^(?:specials?)$/iu;
 const PDF_BOTTLE_PRICE_LABEL =
   /^(?:(?:19|20)\d{2}\s+)?fl\.?(?:\s+\d{2,4}(?:,-)?\s*\/\s*gl\.?)?$/iu;
+const PDF_PERSON_PRICE_TIER_LABEL =
+  /^(?:\d+\s+(?:pers(?:oner)?|persons?|people)\s+\d{2,4}(?:,-)?\s+){2,}\d+\s+(?:pers(?:oner)?|persons?|people)$/iu;
 const TRAILING_SHARING_TAGLINE =
   /\s+(?:perfekt\s+å\s+dele|perfect\s+for\s+sharing)!?$/iu;
 const RECOVERY_ALLERGEN_CODES = new Set([
@@ -332,7 +334,8 @@ function looksLikePricingMetadata(name: string): boolean {
     PDF_BEVERAGE_PAIRING_METADATA.test(name) ||
     PDF_FIXED_COURSE_MENU_ITEM.test(normalizeVisibleLine(name)) ||
     PDF_GENERIC_SECTION_PRICE_LABEL.test(normalizeVisibleLine(name)) ||
-    PDF_BOTTLE_PRICE_LABEL.test(normalizeVisibleLine(name))
+    PDF_BOTTLE_PRICE_LABEL.test(normalizeVisibleLine(name)) ||
+    PDF_PERSON_PRICE_TIER_LABEL.test(normalizeVisibleLine(name))
   );
 }
 
