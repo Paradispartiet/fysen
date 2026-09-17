@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
+import { canonicalizeUniqueMenuSourceKeys } from "./menu-source-key-canonicalizer.js";
 import { extractPdfMenu } from "./pdf-extractor.js";
 import { extractScopedPdfMenu } from "./pdf-source-extractor.js";
+import { extractMenuSource, fetchMenuSource } from "./menu-source-runtime.js";
 
 const OLIVIA_MENU_URL =
   "https://oliviarestauranter.no/wp-content/uploads/2020/10/Felles-NO-mat-web-sommer26.pdf";
@@ -9,12 +11,28 @@ describe("TEMP Olivia Manzo tonnato live diagnostic", () => {
   it(
     "prints the exact stage where Manzo tonnato disappears",
     async () => {
-      const response = await fetch(OLIVIA_MENU_URL);
-      expect(response.ok).toBe(true);
-      const bytes = new Uint8Array(await response.arrayBuffer());
+      const fetched = await fetchMenuSource({
+        url: OLIVIA_MENU_URL,
+        sourceType: "pdf",
+        fetchMode: "http",
+        userAgent: "FysenMenuBot/0.1",
+        etag: null,
+        lastModified: null,
+        maxResponseBytes: null,
+        sourceSupport: {
+          redirectOrigins: [],
+          browserDataOrigins: [],
+        },
+      });
+      if (fetched.kind !== "content") {
+        throw new Error("TEMP diagnostic unexpectedly received not_modified");
+      }
 
+      const bytes = fetched.bodyBytes;
       const base = await extractPdfMenu(bytes);
       const scoped = await extractScopedPdfMenu(bytes);
+      const runtime = await extractMenuSource("pdf", fetched);
+      const canonical = canonicalizeUniqueMenuSourceKeys(runtime.items);
       const visibleLines = base.visibleText.split("\n");
       const signalLines = visibleLines
         .map((line, index) => ({ index, line }))
@@ -27,27 +45,38 @@ describe("TEMP Olivia Manzo tonnato live diagnostic", () => {
         position: item.position,
         sourceExcerpt: item.sourceExcerpt,
       });
+      const isManzo = (name: string) => /manzo|tonnato/iu.test(name);
 
       const payload = {
+        fetch: {
+          status: fetched.status,
+          contentType: fetched.contentType,
+          bytes: bytes.byteLength,
+          signature: Buffer.from(bytes.subarray(0, 8)).toString("latin1"),
+          rawSha256: fetched.rawSha256,
+        },
         baseCount: base.items.length,
         scopedCount: scoped.items.length,
+        runtimeCount: runtime.items.length,
+        canonicalCount: canonical.length,
+        extractorVersion: runtime.extractorVersion,
         signalLines,
-        baseManzo: base.items
-          .filter((item) => /manzo|tonnato/iu.test(item.name))
-          .map(summarize),
-        scopedManzo: scoped.items
-          .filter((item) => /manzo|tonnato/iu.test(item.name))
-          .map(summarize),
+        baseManzo: base.items.filter((item) => isManzo(item.name)).map(summarize),
+        scopedManzo: scoped.items.filter((item) => isManzo(item.name)).map(summarize),
+        runtimeManzo: runtime.items.filter((item) => isManzo(item.name)).map(summarize),
+        canonicalManzo: canonical.filter((item) => isManzo(item.name)).map(summarize),
         baseAntipastiWindow: base.items.slice(0, 12).map(summarize),
         scopedAntipastiWindow: scoped.items.slice(0, 12).map(summarize),
+        canonicalAntipastiWindow: canonical.slice(0, 12).map(summarize),
       };
 
       console.error(`OLIVIA_MANZO_DIAG ${JSON.stringify(payload, null, 2)}`);
 
       expect(base.items.length).toBeGreaterThan(0);
       expect(scoped.items.length).toBeGreaterThan(0);
+      expect(runtime.items.length).toBeGreaterThan(0);
       throw new Error("TEMP DIAGNOSTIC ONLY — do not merge this head");
     },
-    30_000,
+    60_000,
   );
 });
