@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v15";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v16";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -577,6 +577,7 @@ function previousStandaloneDishNameLineIndex(
 ): number | null {
   const priceLine = lines[priceLineIndex];
   if (!priceLine) return null;
+  let crossedAllergenMetadata = false;
 
   for (
     let index = priceLineIndex - 1;
@@ -588,10 +589,11 @@ function previousStandaloneDishNameLineIndex(
     const text = normalizeLine(candidateLine.text);
     if (!text) continue;
     if (standalonePrice.test(text) || parseInlineDish(text)) return null;
-    if (
-      looksLikeParentheticalAllergenMetadata(text) ||
-      looksLikeStandaloneDescriptionLine(text)
-    )
+    if (looksLikeParentheticalAllergenMetadata(text)) {
+      crossedAllergenMetadata = true;
+      continue;
+    }
+    if (!crossedAllergenMetadata && looksLikeStandaloneDescriptionLine(text))
       continue;
 
     const rawName = canonicalPdfDishName(text);
