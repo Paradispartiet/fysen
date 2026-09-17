@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v14";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v15";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -567,9 +567,7 @@ function looksLikeStandaloneDescriptionLine(value: string): boolean {
   return (
     /^[a-zæøå]/u.test(text) ||
     /[.!?]$/u.test(text) ||
-    (words.length >= 7 && /[,;]/u.test(text)) ||
-    (words.length >= 8 &&
-      /\b(?:med|og|with|and|served|serveres|toppet|fylt|marinert|grillet|bakt)\b/iu.test(text))
+    (words.length >= 7 && /[,;]/u.test(text))
   );
 }
 
@@ -747,7 +745,11 @@ function descriptionForCandidate(
     parts.push(text);
   }
 
-  const contentStart = candidate.priceLineIndex + 1;
+  const contentStart =
+    Math.max(
+      candidate.priceLineIndex,
+      candidate.nameContinuationLineIndex ?? candidate.priceLineIndex,
+    ) + 1;
   for (let index = contentStart; index < Math.min(nextCandidateLine, contentStart + 6); index += 1) {
     const text = lines[index]?.text ?? "";
     if (!text || sectionHeading(text)) break;
