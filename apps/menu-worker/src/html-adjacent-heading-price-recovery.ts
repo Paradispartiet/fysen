@@ -10,6 +10,7 @@ export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v9";
 
 const HEADING_MARKER = "__FYSEN_ADJACENT_HEADING_LEVEL_";
 const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
+const EXPLICIT_PRICE_NOTATION = /(?:\bNOK\b|\bkr\.?|,-\s*$)/iu;
 const PER_PERSON_PRICE_PREFIX = /^(?:pr\.?|per)\s+(?:person|pers\.?)\s+(?=(?:NOK|kr\.?)\s*[1-9])/iu;
 const SECTION_OR_UI_LABEL = /^(?:our\s+menu|menu|meny|single\s+meat|single\s+(?:vegetar|vegetarian)(?:\s*&\s*vegan)?|pdf\s+version|drinks?|drikke(?:meny)?|popular\s+dish|opening(?:\s+hours)?|åpningstider|contact|kontakt|address|adresse|booking|reservation(?:s)?|reservasjoner?|allergens?|allergener?)$/iu;
 const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|wine\s+(?:pairing|package)(?:\s+for\s+.+)?|vinpakke(?:\s+.+)?|cocktails?|champagne(?:\s+cocktails?)?|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
@@ -29,8 +30,17 @@ function normalizeVisibleLine(value: string): string {
   return value.normalize("NFKC").replace(/\s+/g, " ").trim();
 }
 
+function normalizedPriceLine(value: string): string {
+  return normalizeVisibleLine(value).replace(PER_PERSON_PRICE_PREFIX, "");
+}
+
+function hasExplicitPriceSyntax(value: string): boolean {
+  const line = normalizedPriceLine(value);
+  return PRICE_LINE.test(line) && EXPLICIT_PRICE_NOTATION.test(line);
+}
+
 function parsePrice(value: string): ParsedPrice | null {
-  const line = normalizeVisibleLine(value).replace(PER_PERSON_PRICE_PREFIX, "");
+  const line = normalizedPriceLine(value);
   const match = line.match(PRICE_LINE);
   if (!match?.[2]) return null;
 
@@ -191,11 +201,15 @@ export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly Men
           pricePosition = index;
           break;
         }
+        if (hasExplicitPriceSyntax(nestedTitle)) break;
         if (nestedLevel > headingLevel) continue;
         break;
       }
       const parsed = parsePrice(candidate);
-      if (!parsed) continue;
+      if (!parsed) {
+        if (hasExplicitPriceSyntax(candidate)) break;
+        continue;
+      }
       price = parsed;
       pricePosition = index;
       break;
