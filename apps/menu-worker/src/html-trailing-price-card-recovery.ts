@@ -388,6 +388,11 @@ function precedingDescribedHeadingTitle(
       continue;
     if (!looksLikeDescription(description) && !DESCRIPTION_CONNECTOR.test(description))
       continue;
+    const interveningDishTitle = lines
+      .slice(position + 2, pricePosition)
+      .filter((line) => !line.startsWith(HEADING_MARKER))
+      .some((line) => looksLikeDishTitle(line));
+    if (interveningDishTitle) continue;
     return { position, title };
   }
   return null;
