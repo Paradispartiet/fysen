@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v13";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v16";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -560,12 +560,24 @@ function commaContinuedDishName(
     continuationLineIndex: continuationIndex,
   };
 }
+function looksLikeStandaloneDescriptionLine(value: string): boolean {
+  const text = normalizeLine(value);
+  if (!text || !/\p{L}/u.test(text)) return false;
+  const words = text.split(/\s+/u).filter(Boolean);
+  return (
+    /^[a-zæøå]/u.test(text) ||
+    /[.!?]$/u.test(text) ||
+    (words.length >= 7 && /[,;]/u.test(text))
+  );
+}
+
 function previousStandaloneDishNameLineIndex(
   lines: readonly PdfLine[],
   priceLineIndex: number,
 ): number | null {
   const priceLine = lines[priceLineIndex];
   if (!priceLine) return null;
+  let crossedAllergenMetadata = false;
 
   for (
     let index = priceLineIndex - 1;
@@ -577,7 +589,12 @@ function previousStandaloneDishNameLineIndex(
     const text = normalizeLine(candidateLine.text);
     if (!text) continue;
     if (standalonePrice.test(text) || parseInlineDish(text)) return null;
-    if (looksLikeParentheticalAllergenMetadata(text)) continue;
+    if (looksLikeParentheticalAllergenMetadata(text)) {
+      crossedAllergenMetadata = true;
+      continue;
+    }
+    if (!crossedAllergenMetadata && looksLikeStandaloneDescriptionLine(text))
+      continue;
 
     const rawName = canonicalPdfDishName(text);
     if (/^[a-zæøå]/u.test(rawName)) continue;
@@ -585,6 +602,34 @@ function previousStandaloneDishNameLineIndex(
     return index;
   }
   return null;
+}
+
+function hasDescriptionWrappedStandalonePrice(
+  lines: readonly PdfLine[],
+  titleLineIndex: number,
+): boolean {
+  const titleLine = lines[titleLineIndex];
+  if (!titleLine) return false;
+  const title = canonicalPdfDishName(titleLine.text);
+  if (!looksLikeDishName(title)) return false;
+
+  let sawDescription = false;
+  for (
+    let index = titleLineIndex + 1;
+    index <= Math.min(lines.length - 1, titleLineIndex + 5);
+    index += 1
+  ) {
+    const candidate = lines[index];
+    if (!candidate || candidate.page !== titleLine.page) return false;
+    const text = normalizeLine(candidate.text);
+    if (!text) continue;
+    if (standalonePrice.test(text)) return sawDescription;
+    if (parseInlineDish(text)) return false;
+    if (looksLikeParentheticalAllergenMetadata(text)) continue;
+    if (!looksLikeStandaloneDescriptionLine(text)) return false;
+    sawDescription = true;
+  }
+  return false;
 }
 
 function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] {
@@ -605,8 +650,8 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
       lines[index + 1]?.page === lines[index]?.page;
     const isStandalonePricedDishName =
       looksLikeDishName(standaloneName) &&
-      nextLineIsSamePage &&
-      standalonePrice.test(nextLine);
+      ((nextLineIsSamePage && standalonePrice.test(nextLine)) ||
+        hasDescriptionWrappedStandalonePrice(lines, index));
     const section = isStandalonePricedDishName || inline || splitInline ? null : sectionHeading(line);
     if (section) {
       currentSection = section;
@@ -694,7 +739,19 @@ function descriptionForCandidate(
   nextCandidateLine: number,
 ): string | null {
   const parts: string[] = [];
-  const contentStart = Math.max(candidate.priceLineIndex, candidate.nameContinuationLineIndex ?? candidate.priceLineIndex) + 1;
+  const nameEnd = candidate.nameContinuationLineIndex ?? candidate.nameLineIndex;
+  for (let index = nameEnd + 1; index < candidate.priceLineIndex; index += 1) {
+    const text = lines[index]?.text ?? "";
+    if (!text || looksLikeParentheticalAllergenMetadata(text)) continue;
+    if (!looksLikeStandaloneDescriptionLine(text)) continue;
+    parts.push(text);
+  }
+
+  const contentStart =
+    Math.max(
+      candidate.priceLineIndex,
+      candidate.nameContinuationLineIndex ?? candidate.priceLineIndex,
+    ) + 1;
   for (let index = contentStart; index < Math.min(nextCandidateLine, contentStart + 6); index += 1) {
     const text = lines[index]?.text ?? "";
     if (!text || sectionHeading(text)) break;

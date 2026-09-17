@@ -91,7 +91,7 @@ describe("PDF menu extractor", () => {
       "3 OR 6 OYSTERS 190,- / 380,-",
     ]);
 
-    expect(PDF_EXTRACTOR_VERSION).toBe("pdf-text-v13");
+    expect(PDF_EXTRACTOR_VERSION).toBe("pdf-text-v16");
     expect(items).toHaveLength(1);
     expect(items[0]).toMatchObject({
       name: "3 OR 6 OYSTERS",
@@ -99,6 +99,60 @@ describe("PDF menu extractor", () => {
       priceKind: "multiple",
       priceMaxMinor: 38000,
     });
+  });
+
+  it("binds a standalone price after descriptive copy to the preceding dish title", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "KALDE MEZE",
+      "LABNE BIL TOUM",
+      "Libanesisk kremost med hvitløk, mynte og olivenolje.",
+      "129,-",
+      "TABBOLISALAT",
+      "Hakket persille, tomater, løk, bulgur, sitron og olivenolje.",
+      "139,-",
+    ]);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["LABNE BIL TOUM", 12900],
+      ["TABBOLISALAT", 13900],
+    ]);
+    expect(items[0]).toMatchObject({
+      sectionName: "KALDE MEZE",
+      description: "Libanesisk kremost med hvitløk, mynte og olivenolje.",
+    });
+    expect(items[1]?.description).toContain("Hakket persille");
+  });
+
+  it("does not misclassify a long dish title containing with as descriptive copy", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "Chevresalat med variasjon av beter",
+      "Goat cheese salad with a variation of beets",
+      "385,-",
+    ]);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toContainEqual([
+      "Goat cheese salad with a variation of beets",
+      38500,
+    ]);
+    expect(items.some((item) => item.name === "Chevresalat med variasjon av beter")).toBe(false);
+  });
+
+  it("preserves long comma-separated bilingual dish titles before allergen metadata", () => {
+    const items = extractMenuItemsFromPdfLines([
+      "Roastbiff, remulade, syltet agurk, sprøstekt løk, pepperrot",
+      "Roastbeef, remulade, pickled cucumber, crispy onion, horseradish",
+      "(H, R, M, BY)",
+      "216",
+      "Andebryst med estragon- og olivensaus, Pomme Paris",
+      "Duckbreast with tarragon and olive sauce, Pommes Parisienne",
+      "(SU, H)",
+      "485",
+    ]);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Roastbeef, remulade, pickled cucumber, crispy onion, horseradish", 21600],
+      ["Duckbreast with tarragon and olive sauce, Pommes Parisienne", 48500],
+    ]);
   });
 
   it("does not bind a standalone price across a PDF page boundary", () => {

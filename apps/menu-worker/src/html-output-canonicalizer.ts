@@ -1,6 +1,6 @@
 import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v13";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v14";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -48,7 +48,7 @@ const BARE_UNIT_ITEM = /^(?:gr\.?|gram|grams?|stk|pcs?)$/iu;
 const ALLERGEN_DESCRIPTION_PAREN =
   /\([^)]*\b(?:milk|egg|wheat|gluten|sulfite|sulphite|melk|egg|hvete|skalldyr|shellfish|nuts?|nøtter?)\b[^)]*\)$/iu;
 const TRAILING_CURRENCY_WORD = /\s+(?:kr\.?|nok)$/iu;
-const UI_ONLY_ITEM = /^(?:search|søk)$/iu;
+const UI_ONLY_ITEM = /^(?:search|søk|(?:online\s+)?takeaway|reservations?|reservation|booking)$/iu;
 const WEEKDAY_TOKEN =
   "(?:mandag|tirsdag|onsdag|torsdag|fredag|lørdag|søndag|monday|tuesday|wednesday|thursday|friday|saturday|sunday)";
 const WEEKDAY_ONLY_ITEM = new RegExp(

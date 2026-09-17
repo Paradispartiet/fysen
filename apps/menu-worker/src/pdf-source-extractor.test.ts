@@ -29,12 +29,41 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v28");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v32");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
     ]);
     expect(scoped.map((item) => item.position)).toEqual([0, 1]);
+  });
+
+  it("drops bottle and vintage-price labels that are not dish names", () => {
+    const lines = [
+      "SPECIALS",
+      "fl 1065,-",
+      "1997 fl 5690,-",
+      "fl 835,-/gl 185,-",
+      "Roasted lamb 495,-",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual(["Roasted lamb"]);
+  });
+
+  it("drops bilingual food section headings that the low-level PDF parser can price-bind", () => {
+    const lines = [
+      "HOVEDRETTER / MAIN COURSES",
+      "495,-",
+      "Roasted lamb 495,-",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    expect(parsed.map((item) => item.name)).toContain(
+      "HOVEDRETTER / MAIN COURSES",
+    );
+
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+    expect(scoped.map((item) => item.name)).toEqual(["Roasted lamb"]);
   });
 
   it("disambiguates a same-name PDF dish with conflicting prices only when distinct nearby menu sections exist", () => {
@@ -293,6 +322,7 @@ describe("PDF source scope", () => {
     const lines = [
       "SHARING MENU",
       "Minimum 2 personer, pris per person 479",
+      "1 pers 355,- 2 pers 675,- 3 pers 989,-",
       "Cà ri gà / Chicken curry 239",
     ];
     const parsed = extractMenuItemsFromPdfLines(lines);
