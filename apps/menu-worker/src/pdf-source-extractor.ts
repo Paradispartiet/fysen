@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v29";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v30";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -430,6 +430,7 @@ export function scopePdfMenuItems(
   for (const item of items) {
     if (
       looksLikePricingMetadata(item.name) ||
+      isFoodSectionHeading(item.name) ||
       looksLikePdfBeverageItem(item.name) ||
       looksLikePdfDescriptionFragment(item.name)
     )
