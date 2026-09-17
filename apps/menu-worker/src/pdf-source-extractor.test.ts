@@ -29,7 +29,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v29");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v30");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -47,6 +47,21 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
 
+    expect(scoped.map((item) => item.name)).toEqual(["Roasted lamb"]);
+  });
+
+  it("drops bilingual food section headings that the low-level PDF parser can price-bind", () => {
+    const lines = [
+      "HOVEDRETTER / MAIN COURSES",
+      "495,-",
+      "Roasted lamb 495,-",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    expect(parsed.map((item) => item.name)).toContain(
+      "HOVEDRETTER / MAIN COURSES",
+    );
+
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
     expect(scoped.map((item) => item.name)).toEqual(["Roasted lamb"]);
   });
 
