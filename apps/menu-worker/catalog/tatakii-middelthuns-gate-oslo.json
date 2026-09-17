@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "tatakii-middelthuns-gate-oslo",
+    "name": "Tatakii Asian",
+    "websiteUrl": "https://www.tatakiiasian.no/",
+    "address": "Middelthuns gate 25A, 0368 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9282734621654,
+    "longitude": 10.708851889647498
+  },
+  "menuSource": {
+    "url": "https://www.tatakiiasian.no/meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 34,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-16",
+      "note": "Fresh reproof after the original Batch 01 parser returned labels rather than real dishes. The current first-party page now exposes named individually priced starters, sushi, grill, wok and desserts alongside set-menu packages."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Jubileumsmeny",
+      "MONEY BAG",
+      "EBI TEMPURA MAKI",
+      "TEMPURA SALAT",
+      "INDREFILET",
+      "PANG PANG BEEF",
+      "GONG CIO AO JO SI",
+      "CHOCOLATE FONDANT*"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Jubileumsmeny",
+        "priceMinor": 69900
+      },
+      {
+        "name": "MONEY BAG",
+        "priceMinor": 18900
+      },
+      {
+        "name": "EBI TEMPURA MAKI",
+        "priceMinor": 19500
+      },
+      {
+        "name": "TEMPURA SALAT",
+        "priceMinor": 19900
+      },
+      {
+        "name": "INDREFILET",
+        "priceMinor": 39800
+      },
+      {
+        "name": "PANG PANG BEEF",
+        "priceMinor": 28900
+      },
+      {
+        "name": "GONG CIO AO JO SI",
+        "priceMinor": 28900
+      },
+      {
+        "name": "CHOCOLATE FONDANT*",
+        "priceMinor": 15800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
