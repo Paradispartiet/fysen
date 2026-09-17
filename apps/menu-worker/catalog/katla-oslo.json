@@ -33,22 +33,22 @@
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "TAKOYAKI 4STK",
-      "JAPANSK MELKE BRØD",
+      "TAKOYAKI 4 STK",
+      "JAPANSK MELKEBRØD",
       "HAMACHI & AGUACHILE ROJO",
       "KYLLING KARAAGE",
-      "PEANØTT MOLE, GRILLET PAK CHOI & SQUASH",
-      "ANDEBRYST, APPELSIN SAUS & SALAT MED GRILLET PÆRE",
+      "PEANØTTMOLE, GRILLET PAK CHOI & SQUASH",
+      "ANDEBRYST, APPELSINSAUS & SALAT MED GRILLET PÆRE",
       "PERLEPOTET",
       "MISO OSTEKAKE, KREM OG SYLTEDE MORELLER"
     ],
     "requiredDishVariants": [
       {
-        "name": "TAKOYAKI 4STK",
+        "name": "TAKOYAKI 4 STK",
         "priceMinor": 14000
       },
       {
-        "name": "JAPANSK MELKE BRØD",
+        "name": "JAPANSK MELKEBRØD",
         "priceMinor": 7500
       },
       {
@@ -60,11 +60,11 @@
         "priceMinor": 19500
       },
       {
-        "name": "PEANØTT MOLE, GRILLET PAK CHOI & SQUASH",
+        "name": "PEANØTTMOLE, GRILLET PAK CHOI & SQUASH",
         "priceMinor": 24500
       },
       {
-        "name": "ANDEBRYST, APPELSIN SAUS & SALAT MED GRILLET PÆRE",
+        "name": "ANDEBRYST, APPELSINSAUS & SALAT MED GRILLET PÆRE",
         "priceMinor": 46500
       },
       {
