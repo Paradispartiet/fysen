@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v17";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v16";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];

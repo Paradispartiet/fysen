@@ -17,7 +17,7 @@ describe("PDF prefixed NOK prices", () => {
       "60. Biff stekt m/ grønnsaker i soyasaus (sterk) SY SEM NOK 249",
     ]);
 
-    expect(PDF_EXTRACTOR_VERSION).toBe("pdf-text-v17");
+    expect(PDF_EXTRACTOR_VERSION).toBe("pdf-text-v16");
     expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
       ["Rekechips og peanøtter", 7900],
       ["Dampet Edamame bønner", 7900],
