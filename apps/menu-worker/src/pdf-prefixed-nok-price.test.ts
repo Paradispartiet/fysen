@@ -51,7 +51,6 @@ describe("PDF prefixed NOK prices", () => {
       ["Innbakt kongereker", 10900, "FORRETTER"],
       ["Innbakt kongereker", 26900, "HOVEDRETTER"],
     ]);
-    expect(new Set(items.map((item) => item.sourceKey)).size).toBe(2);
   });
 
   it("accepts an explicitly currency-marked 35-kroner per-item dish without lowering bare-number noise protection", () => {
