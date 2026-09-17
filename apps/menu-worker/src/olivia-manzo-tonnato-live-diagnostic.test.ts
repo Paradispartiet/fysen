@@ -28,10 +28,20 @@ describe("TEMP Olivia Manzo tonnato live diagnostic", () => {
         throw new Error("TEMP diagnostic unexpectedly received not_modified");
       }
 
-      const bytes = fetched.bodyBytes;
-      const base = await extractPdfMenu(bytes);
-      const scoped = await extractScopedPdfMenu(bytes);
-      const runtime = await extractMenuSource("pdf", fetched);
+      const sourceBytes = fetched.bodyBytes;
+      const fetchSummary = {
+        status: fetched.status,
+        contentType: fetched.contentType,
+        bytes: sourceBytes.byteLength,
+        signature: Buffer.from(sourceBytes.subarray(0, 8)).toString("latin1"),
+        rawSha256: fetched.rawSha256,
+      };
+      const base = await extractPdfMenu(sourceBytes.slice());
+      const scoped = await extractScopedPdfMenu(sourceBytes.slice());
+      const runtime = await extractMenuSource("pdf", {
+        ...fetched,
+        bodyBytes: sourceBytes.slice(),
+      });
       const canonical = canonicalizeUniqueMenuSourceKeys(runtime.items);
       const visibleLines = base.visibleText.split("\n");
       const signalLines = visibleLines
@@ -48,13 +58,7 @@ describe("TEMP Olivia Manzo tonnato live diagnostic", () => {
       const isManzo = (name: string) => /manzo|tonnato/iu.test(name);
 
       const payload = {
-        fetch: {
-          status: fetched.status,
-          contentType: fetched.contentType,
-          bytes: bytes.byteLength,
-          signature: Buffer.from(bytes.subarray(0, 8)).toString("latin1"),
-          rawSha256: fetched.rawSha256,
-        },
+        fetch: fetchSummary,
         baseCount: base.items.length,
         scopedCount: scoped.items.length,
         runtimeCount: runtime.items.length,
