@@ -29,7 +29,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v31");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v32");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -322,6 +322,7 @@ describe("PDF source scope", () => {
     const lines = [
       "SHARING MENU",
       "Minimum 2 personer, pris per person 479",
+      "1 pers 355,- 2 pers 675,- 3 pers 989,-",
       "Cà ri gà / Chicken curry 239",
     ];
     const parsed = extractMenuItemsFromPdfLines(lines);
