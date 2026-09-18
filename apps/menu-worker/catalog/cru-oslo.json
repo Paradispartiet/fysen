@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "cru-oslo",
+    "name": "Cru",
+    "websiteUrl": "https://www.cru.no/",
+    "address": "Dronning Eufemias gate 6A, 0191 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90895693440493,
+    "longitude": 10.754611207273452
+  },
+  "menuSource": {
+    "url": "https://www.cru.no/s/dinner-meny-cru-with-english-fall26.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 13,
+    "sourceSupport": {
+      "redirectOrigins": [
+        "https://static1.squarespace.com"
+      ],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-18",
+      "note": "Fresh Oslo MICHELIN coverage reproof. Round 2's Cru PDF returned HTTP 404, while the 2026-09-18 reproof of the HTML menu surface exposed only one canonical priced dish. The current first-party A la carte link now points to a fresh fall26 dinner PDF and redirects through Squarespace's static CDN. Reproof the actual current PDF with only the first-party CDN origin declared; keep the three-dish floor and semantic fail-closed policy."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Østers pr stk – Nước mắm chấm",
+      "Marcona Mandler 40g",
+      "Gordal Oliven",
+      "Kalix Løyrom – Røros rømme, saltet Amalfi sitron og miso- og brunet smør vaffel",
+      "Hiramasa fra Fredrikstad– Reddik, syltet chili, syltet ingefær og brunet kokossaus",
+      "Norsk breiflabb – Neper, gulrot, sellerirotpure og agurk- og dashi smørsaus",
+      "Lam fra Rønn gård – Squash i variasjon, fetakrem og lammesjy",
+      "Plomme – Financier, fersken, crème fraiche og plommesteniskrem"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Østers pr stk – Nước mắm chấm",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Marcona Mandler 40g",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Gordal Oliven",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Kalix Løyrom – Røros rømme, saltet Amalfi sitron og miso- og brunet smør vaffel",
+        "priceMinor": 30000
+      },
+      {
+        "name": "Hiramasa fra Fredrikstad– Reddik, syltet chili, syltet ingefær og brunet kokossaus",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Norsk breiflabb – Neper, gulrot, sellerirotpure og agurk- og dashi smørsaus",
+        "priceMinor": 53500
+      },
+      {
+        "name": "Lam fra Rønn gård – Squash i variasjon, fetakrem og lammesjy",
+        "priceMinor": 53500
+      },
+      {
+        "name": "Plomme – Financier, fersken, crème fraiche og plommesteniskrem",
+        "priceMinor": 22500
+      }
+    ],
+    "forbiddenDishNames": [
+      "A la carte",
+      "Viner på glass",
+      "5 retter",
+      "Selskapsmeny"
+    ]
+  }
+}
