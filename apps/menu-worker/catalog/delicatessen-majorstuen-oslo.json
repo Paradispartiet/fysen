@@ -25,8 +25,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-11",
-      "note": "Post-dedupe health reproof on 2026-09-11 revalidates the current menu source; kitchen-hours completeness remains unverified."
+      "checkedAt": "2026-09-18",
+      "note": "Current Favrit public menu API reproof on 2026-09-18 no longer returns Entrecote; the remaining representative dish and price assertions continue to anchor the live source. Kitchen-hours completeness remains unverified."
     }
   },
   "actions": [],
@@ -36,7 +36,6 @@
       "Patatas bravas",
       "Lomo Ibérico de Bellota",
       "Friterte artisjokker",
-      "Entrecote",
       "Gambas al ajillo",
       "Blåskjell escabeche",
       "Grillet ytrefilet 220gr",
@@ -58,10 +57,6 @@
       {
         "name": "Friterte artisjokker",
         "priceMinor": 14500
-      },
-      {
-        "name": "Entrecote",
-        "priceMinor": 52500
       },
       {
         "name": "Gambas al ajillo",
