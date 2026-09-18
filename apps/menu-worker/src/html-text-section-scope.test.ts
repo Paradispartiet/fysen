@@ -248,6 +248,50 @@ describe("plain-text HTML section scoping", () => {
     ]);
   });
 
+  it("rejects a row whose translated-section position belongs to a different directly priced dish", () => {
+    const items = [
+      item(
+        "Kalvesnitzel med erter, potetpure og brunet smør",
+        1,
+        46500,
+      ),
+      item(
+        "Kalvesnitzel med erter, potetpure og brunet smør",
+        2,
+        49500,
+      ),
+      item(
+        "Grillet Entrecôte med syltet løk, pommes frites og saus Béarnaise",
+        2,
+        49500,
+      ),
+      item("Wiener Schnitzel", 3, 46500),
+      item("Today`s maincourse", 4, 49500),
+    ];
+    const visibleText = `
+      Hovedretter / Plats Principaux / Main Courses
+      Kalvesnitzel med erter, potetpure og brunet smør 465,-
+      Grillet Entrecôte med syltet løk, pommes frites og saus Béarnaise 495,-
+      Wiener Schnitzel, peas, potato purée and beurre noisette 465,-
+      Grilled entrecôte, pickled onions, fries and Béarnaise 495,-
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => [entry.name, entry.priceMinor],
+      ),
+    ).toEqual([
+      [
+        "Kalvesnitzel med erter, potetpure og brunet smør",
+        46500,
+      ],
+      [
+        "Grillet Entrecôte med syltet løk, pommes frites og saus Béarnaise",
+        49500,
+      ],
+    ]);
+  });
+
   it("recognizes bilingual tap and bottled beer headings", () => {
     const items = [
       item("Butter Chicken", 1, 28500),
