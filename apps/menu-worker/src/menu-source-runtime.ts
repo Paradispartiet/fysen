@@ -562,21 +562,6 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverFirstCardAfterPlainFoodSections(extracted.visibleText)
         : [];
-    if (extracted.method === "html_heuristic") {
-      const recoveredNames = new Set(recoveredItems.map((item) => item.normalizedName));
-      const missingTrailing = trailingPriceCardItems
-        .filter((item) => !recoveredNames.has(item.normalizedName))
-        .map((item) => ({
-          name: item.name,
-          priceMinor: item.priceMinor,
-          confidence: item.confidence,
-          description: item.description,
-          sourceExcerpt: item.sourceExcerpt,
-        }));
-      console.error(
-        `[html-recovery-diagnostic] missingTrailing=${JSON.stringify(missingTrailing)} counts=${JSON.stringify({ raw: extracted.items.length, recovered: recoveredItems.length, rawTrailing: rawTrailingPriceCardItems.length, trailing: trailingPriceCardItems.length, heading: headingPriceItems.length })}`,
-      );
-    }
     const strongTitlePricePreferred =
     strongTitlePriceItems.length >= 6 &&
     strongTitlePriceItems.length >= recoveredItems.length &&
