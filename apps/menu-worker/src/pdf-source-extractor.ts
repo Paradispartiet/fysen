@@ -315,6 +315,10 @@ export function disambiguateConflictingPdfSourceKeys(
   });
 }
 
+function looksLikeLabeledPdfAllergenMetadata(value: string): boolean {
+  return /^(?:allergener?|allergens?)\s*:/iu.test(normalizeVisibleLine(value));
+}
+
 function looksLikePdfBeverageItem(name: string): boolean {
   const normalized = normalizeVisibleLine(name);
   return (
@@ -328,7 +332,7 @@ function looksLikePdfDescriptionFragment(name: string): boolean {
   const normalized = normalizeVisibleLine(name);
   return (
     PDF_LOWERCASE_SENTENCE_FRAGMENT.test(normalized) ||
-    /^(?:allergener?|allergens?)\s*:/iu.test(normalized) ||
+    looksLikeLabeledPdfAllergenMetadata(normalized) ||
     PDF_PARENTHETICAL_ALLERGEN_ITEM.test(normalized) ||
     looksLikeSplitPdfAllergenCodeFragment(normalized) ||
     PDF_ADDON_INSTRUCTION_ITEM.test(normalized)
@@ -416,6 +420,7 @@ export function recoverExplicitLowPerItemPdfRows(
   for (let index = 0; index + 1 < lines.length; index += 1) {
     const rawName = lines[index] ?? "";
     const rawPrice = lines[index + 1] ?? "";
+    if (looksLikeLabeledPdfAllergenMetadata(rawName)) continue;
     const match =
       rawPrice.match(LOW_PER_ITEM_PRICE) ?? rawPrice.match(LOW_EXPLICIT_PRICE);
     const kronerText = match?.[1] ?? match?.[2];
@@ -453,7 +458,9 @@ export function filterPdfConflictMetadataItems(
   items: readonly MenuObservedItem[],
 ): readonly MenuObservedItem[] {
   return items.filter(
-    (item) => !looksLikeSplitPdfAllergenCodeFragment(item.name),
+    (item) =>
+      !looksLikeSplitPdfAllergenCodeFragment(item.name) &&
+      !looksLikeLabeledPdfAllergenMetadata(item.name),
   );
 }
 
