@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-16",
-      "note": "Fresh P1 reproof from Hotel Bristol's current first-party Mauriske Salonger page. The page publishes substantial individually priced snacks, sandwiches, salads, cheese and cakes alongside an Afternoon Tea package and beverage/add-on rows. Intake must keep only canonical individually priced food dishes and remain fail-closed on package, beverage and add-on leakage."
+      "checkedAt": "2026-09-18",
+      "note": "Source-drift reproof initiated after catalog-health #232 detected a changed first-party fingerprint and stale Greenland-shrimp assertion. Canonical assertions will be rebaselined only from the exact-head live artifact; hours remain unverified."
     }
   },
   "actions": [],
