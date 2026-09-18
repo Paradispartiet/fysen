@@ -104,8 +104,7 @@ describe("HTML description-title recovery", () => {
   it("recovers a uniquely anchored short with-description despite position drift without hiding legitimate with-titles", () => {
     const visibleText = [
       "SALMON AND KIMCHI ROLL",
-      "Salmon with kimchi",
-      "NOK 139",
+      "Salmon with kimchi139 NOK",
       "SPRING ROLL WITH CHICKEN",
       "NOK 130",
     ].join("\n");
@@ -113,7 +112,7 @@ describe("HTML description-title recovery", () => {
     const result = recoverDescriptionNamedHtmlItems(
       [
         item("Salmon with kimchi", 0, 13900),
-        item("SPRING ROLL WITH CHICKEN", 3, 13000),
+        item("SPRING ROLL WITH CHICKEN", 2, 13000),
       ],
       visibleText,
     );

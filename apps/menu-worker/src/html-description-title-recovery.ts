@@ -213,49 +213,47 @@ function recoverImmediateConnectorDescriptionTitle(
   );
   if (currentTokens.size < 2) return null;
 
+  const lineMatch = (
+    value: string,
+  ): { readonly matches: boolean; readonly inlinePrice: boolean } => {
+    const line = normalizeVisibleLine(value);
+    const foldedLine = line.toLocaleLowerCase("nb-NO");
+    if (foldedLine === foldedCurrent)
+      return { matches: true, inlinePrice: false };
+    if (!foldedLine.startsWith(foldedCurrent))
+      return { matches: false, inlinePrice: false };
+
+    const suffix = line.slice(current.length).trim();
+    return {
+      matches: Boolean(suffix && PRICE_LINE.test(suffix)),
+      inlinePrice: Boolean(suffix && PRICE_LINE.test(suffix)),
+    };
+  };
+
   const candidatePositions: number[] = [];
   if (
     Number.isInteger(position) &&
     position >= 0 &&
     position < lines.length &&
-    normalizeVisibleLine(lines[position] ?? "").toLocaleLowerCase("nb-NO") ===
-      foldedCurrent
+    lineMatch(lines[position] ?? "").matches
   ) {
     candidatePositions.push(position);
   }
   for (let index = 0; index < lines.length; index += 1) {
     if (candidatePositions.includes(index)) continue;
-    if (
-      normalizeVisibleLine(lines[index] ?? "").toLocaleLowerCase("nb-NO") ===
-      foldedCurrent
-    ) {
-      candidatePositions.push(index);
-    }
+    if (lineMatch(lines[index] ?? "").matches) candidatePositions.push(index);
   }
-
-  console.error(
-    "[description-title-context]",
-    JSON.stringify({
-      current,
-      itemPosition: position,
-      candidatePositions,
-      positionNeighborhood:
-        Number.isInteger(position) && position >= 0 && position < lines.length
-          ? lines.slice(Math.max(0, position - 3), Math.min(lines.length, position + 4))
-          : [],
-      neighborhoods: candidatePositions.map((index) => ({
-        index,
-        lines: lines.slice(Math.max(0, index - 2), Math.min(lines.length, index + 3)),
-      })),
-    }),
-  );
 
   const titles = new Set<string>();
   for (const index of candidatePositions) {
-    if (index < 1 || index >= lines.length - 1) continue;
+    if (index < 1) continue;
     const preceding = normalizeVisibleLine(lines[index - 1] ?? "");
+    const currentLine = lineMatch(lines[index] ?? "");
     const following = normalizeVisibleLine(lines[index + 1] ?? "");
-    if (!looksLikeRecoveredTitle(preceding) || !PRICE_LINE.test(following))
+    if (
+      !looksLikeRecoveredTitle(preceding) ||
+      (!currentLine.inlinePrice && !PRICE_LINE.test(following))
+    )
       continue;
 
     const precedingTokens = new Set(
