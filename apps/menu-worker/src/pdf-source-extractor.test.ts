@@ -29,7 +29,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v34");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v35");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -577,7 +577,7 @@ describe("PDF source scope", () => {
       "TODAYS SELECTION OF CHEESE",
       "Allergener: MELK, HVETE",
       "295",
-      "L\`Etivaz Tunnel de la Collogne 45g per bit, kumelk, fra Swiss Alps.",
+      "L`Etivaz Tunnel de la Collogne 45g per bit, kumelk, fra Swiss Alps.",
       "Allergener: MELK, HVETE",
       "85",
     ];
@@ -588,7 +588,7 @@ describe("PDF source scope", () => {
 
     expect(scoped.map((item) => [item.name, item.priceMinor])).toEqual([
       ["TODAYS SELECTION OF CHEESE", 29500],
-      ["L\`Etivaz Tunnel de la Collogne 45g per bit, kumelk, fra Swiss Alps.", 8500],
+      ["L`Etivaz Tunnel de la Collogne 45g per bit, kumelk, fra Swiss Alps.", 8500],
     ]);
     expect(scoped.some((item) => /^Allergener:/iu.test(item.name))).toBe(false);
   });
