@@ -563,8 +563,12 @@ export async function extractMenuSource(
         ? recoverFirstCardAfterPlainFoodSections(extracted.visibleText)
         : [];
     if (extracted.method === "html_heuristic") {
+      const shrimp = (items: readonly MenuObservedItem[]) =>
+        items
+          .filter((item) => /shrimp/i.test(item.name))
+          .map((item) => [item.name, item.priceMinor]);
       console.error(
-        `[html-recovery-counts] recovered=${recoveredItems.length} trailing=${trailingPriceCardItems.length} wrapped=${priceWrappedItems.length} inline=${inlineMarkedPriceItems.length} strong=${strongTitlePriceItems.length} heading=${headingPriceItems.length} from=${explicitFromPriceItems.length} section=${sectionFirstCardItems.length}`,
+        `[html-recovery-diagnostic] raw=${JSON.stringify(shrimp(extracted.items))} recovered=${JSON.stringify(shrimp(recoveredItems))} rawTrailing=${JSON.stringify(shrimp(rawTrailingPriceCardItems))} trailing=${JSON.stringify(shrimp(trailingPriceCardItems))} heading=${JSON.stringify(shrimp(headingPriceItems))} counts=${JSON.stringify({ raw: extracted.items.length, recovered: recoveredItems.length, rawTrailing: rawTrailingPriceCardItems.length, trailing: trailingPriceCardItems.length, heading: headingPriceItems.length })}`,
       );
     }
     const strongTitlePricePreferred =
