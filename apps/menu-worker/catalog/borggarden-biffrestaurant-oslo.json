@@ -3,7 +3,7 @@
   "restaurant": {
     "slug": "borggarden-biffrestaurant-oslo",
     "name": "Borggården Biffrestaurant",
-    "websiteUrl": "https://www.borggarden.no/",
+    "websiteUrl": "https://borggarden.no/",
     "address": "Fridtjof Nansens plass 5, 0160 Oslo",
     "city": "Oslo",
     "countryCode": "NO",
@@ -11,15 +11,20 @@
     "longitude": 10.734441
   },
   "menuSource": {
-    "url": "https://www.borggarden.no/",
+    "url": "https://borggarden.no/meny",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 24
+    "minimumExpectedItems": 24,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
   },
   "hoursSource": {
-    "url": "https://www.borggarden.no/",
+    "url": "https://borggarden.no/",
     "timeZone": "Europe/Oslo",
     "checkIntervalMinutes": 360,
     "minimumExpectedIntervals": 7
@@ -27,15 +32,15 @@
   "verification": {
     "hours": {
       "status": "provisional",
-      "checkedAt": "2026-08-19",
-      "note": "The first-party page publishes weekdays and seven corresponding time ranges in separate parallel columns. Keep the restaurant searchable from verified menu evidence, but do not derive open/closed until the hours runtime can prove the weekday-to-time pairing canonically."
+      "checkedAt": "2026-09-18",
+      "note": "Borggården moved from the legacy www homepage menu to the new apex site. The canonical menu source is now the first-party /meny route. Exact-head live reproof found 26 canonical menu items and refreshed stale dish assertions; hours remain provisional and are not used as open/closed proof."
     }
   },
   "actions": [
     {
       "type": "booking",
-      "url": "https://www.borggarden.no/",
-      "sourceUrl": "https://www.borggarden.no/",
+      "url": "https://borggarden.no/",
+      "sourceUrl": "https://borggarden.no/",
       "provider": "Borggården Biffrestaurant"
     }
   ],
@@ -50,29 +55,69 @@
       "CÆSARSALAT",
       "TAPASTALLERKEN",
       "FYLT KYLLINGFILET",
-      "BORGGÅRDENS PIZZA",
       "HJORTEPLOMME",
       "STEINBIT",
       "HJEMMELAGET SJOKOLADEFONDANT",
-      "CREME BRULEE",
+      "Crème brûlée",
       "OSTETALLERKEN"
     ],
     "requiredDishVariants": [
-      { "name": "GRATINERTE REKER", "priceMinor": 18500 },
-      { "name": "PANNESTEKT SCAMPI", "priceMinor": 18900 },
-      { "name": "BLOMKÅLSUPPE", "priceMinor": 16900 },
-      { "name": "LIMOUSIN CARPACCIO", "priceMinor": 19500 },
-      { "name": "BLÅSKJELL", "priceMinor": 27900 },
-      { "name": "BORGGÅRDEN SALAT", "priceMinor": 26500 },
-      { "name": "CÆSARSALAT", "priceMinor": 25500 },
-      { "name": "TAPASTALLERKEN", "priceMinor": 29900 },
-      { "name": "FYLT KYLLINGFILET", "priceMinor": 38900 },
-      { "name": "BORGGÅRDENS PIZZA", "priceMinor": 29500 },
-      { "name": "HJORTEPLOMME", "priceMinor": 45500 },
-      { "name": "STEINBIT", "priceMinor": 37900 },
-      { "name": "HJEMMELAGET SJOKOLADEFONDANT", "priceMinor": 16500 },
-      { "name": "CREME BRULEE", "priceMinor": 15500 },
-      { "name": "OSTETALLERKEN", "priceMinor": 19500 }
+      {
+        "name": "GRATINERTE REKER",
+        "priceMinor": 18500
+      },
+      {
+        "name": "PANNESTEKT SCAMPI",
+        "priceMinor": 18900
+      },
+      {
+        "name": "BLOMKÅLSUPPE",
+        "priceMinor": 16900
+      },
+      {
+        "name": "LIMOUSIN CARPACCIO",
+        "priceMinor": 19500
+      },
+      {
+        "name": "BLÅSKJELL",
+        "priceMinor": 28900
+      },
+      {
+        "name": "BORGGÅRDEN SALAT",
+        "priceMinor": 26500
+      },
+      {
+        "name": "CÆSARSALAT",
+        "priceMinor": 26500
+      },
+      {
+        "name": "TAPASTALLERKEN",
+        "priceMinor": 29900
+      },
+      {
+        "name": "FYLT KYLLINGFILET",
+        "priceMinor": 38900
+      },
+      {
+        "name": "HJORTEPLOMME",
+        "priceMinor": 46900
+      },
+      {
+        "name": "STEINBIT",
+        "priceMinor": 37900
+      },
+      {
+        "name": "HJEMMELAGET SJOKOLADEFONDANT",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Crème brûlée",
+        "priceMinor": 15500
+      },
+      {
+        "name": "OSTETALLERKEN",
+        "priceMinor": 19500
+      }
     ],
     "forbiddenDishNames": [
       "MENY",
