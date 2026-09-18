@@ -358,8 +358,9 @@ function stripTrailingParentheticalPdfAllergenCodes(value: string): string {
     .map((token) => token.trim().toLocaleLowerCase("nb-NO"))
     .filter(Boolean);
   if (
-    tokens.length < 2 ||
+    tokens.length === 0 ||
     tokens.length > 12 ||
+    (tokens.length === 1 && (tokens[0]?.length ?? 0) === 1) ||
     !tokens.every(
       (token) =>
         /^[a-zæøå]{1,3}$/u.test(token) &&
