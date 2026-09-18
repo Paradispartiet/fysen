@@ -76,7 +76,7 @@ describe("HTML runtime extractor version", () => {
     );
     expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v13");
     expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v15");
-    expect(HTML_RECOVERY_SELECTION_VERSION).toBe("recovery-selection-v4");
+    expect(HTML_RECOVERY_SELECTION_VERSION).toBe("recovery-selection-v5");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("api")).toBe(PUBLIC_MENU_API_EXTRACTOR_VERSION);

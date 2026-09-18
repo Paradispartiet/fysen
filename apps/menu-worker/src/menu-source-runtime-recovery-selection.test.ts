@@ -212,6 +212,28 @@ describe("HTML runtime recovery selection", () => {
     );
   });
 
+  it("does not replace a canonical heading dish title with a same-price with-description trailing card", async () => {
+    const result = await extract(`
+      <html><body>
+        <h2>Sushi</h2>
+        <h3>SALMON AND KIMCHI ROLL</h3><p>Salmon with kimchi</p><p>NOK 139</p>
+        <h3>SCALLOP</h3><p>Scallop with ponzu</p><p>NOK 139</p>
+        <h3>CHICKEN TERIYAKI</h3><p>Chicken with teriyaki</p><p>NOK 259</p>
+        <h3>EBI TEMPURA MAKI</h3><p>Shrimp tempura roll</p><p>NOK 195</p>
+        <h3>TUNA TATAKI</h3><p>Tuna with ponzu</p><p>NOK 189</p>
+        <h3>BEEF TATAKI</h3><p>Beef with truffle ponzu</p><p>NOK 199</p>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => [item.name, item.priceMinor])).toContainEqual([
+      "SALMON AND KIMCHI ROLL",
+      13900,
+    ]);
+    expect(result.items.some((item) => item.name === "Salmon with kimchi")).toBe(
+      false,
+    );
+  });
+
   it("keeps structured Statholderens-style dish titles and removes same-price sauce fragments", async () => {
     const result = await extract(`
       <html><body>
