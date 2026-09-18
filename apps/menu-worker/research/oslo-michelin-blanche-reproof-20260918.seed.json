@@ -9,7 +9,7 @@
         "slug": "brasserie-blanche-oslo",
         "name": "Brasserie Blanche",
         "websiteUrl": "https://blanche.no/",
-        "address": "Josefinesgate 23, 0351 Oslo",
+        "address": "Josefines gate 23, 0351 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
@@ -24,7 +24,7 @@
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-09-18",
-          "note": "Fresh Oslo MICHELIN coverage reproof. Round 2 held Brasserie Blanche in review because source acquisition failed. The current first-party homepage now publishes a substantial current à-la-carte directly in HTML with individually priced starters, mains and desserts. Reproof source acquisition and semantic extraction without parser exceptions or floor weakening."
+          "note": "Fresh Oslo MICHELIN coverage reproof. Round 2 held Brasserie Blanche in review because source acquisition failed. The current first-party homepage now publishes a substantial current à-la-carte directly in HTML with individually priced starters, mains and desserts. Address spelling is normalized to the registered Josefines gate 23 form for Kartverket resolution; reproof source acquisition and semantic extraction without parser exceptions or floor weakening."
         }
       },
       "actions": [],
