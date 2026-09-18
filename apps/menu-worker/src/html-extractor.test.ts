@@ -56,6 +56,27 @@ describe("extractHtmlMenu", () => {
     expect(result.items[0]?.confidence).toBe(0.72);
   });
 
+  it("skips inline add-on prices when linking a later standalone dish price", () => {
+    const html = `
+      <html><body>
+        <section>
+          <div>Hand peeled Greenland shrimps</div>
+          <div>on sourdough bread with egg, lemon, mayonnaise</div>
+          <div>Add-on smoked trout roe 45 nok</div>
+          <div>(Contains: Wheat, eggs, milk, mustard, crustaceans, sulphites)</div>
+          <div>315 NOK</div>
+        </section>
+      </body></html>
+    `;
+
+    const result = extractHtmlMenu(html);
+    expect(result.method).toBe("html_heuristic");
+    expect(result.items.map((item) => [item.name, item.priceMinor])).toContainEqual([
+      "Hand peeled Greenland shrimps",
+      31500,
+    ]);
+  });
+
   it("supports Norwegian kr prefixes, decimal commas, and numbered menu labels without lowering the price floor", () => {
     const html = `
       <html><body>

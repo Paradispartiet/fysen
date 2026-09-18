@@ -5,7 +5,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EXTRACTOR_VERSION = "html-v9";
+export const HTML_EXTRACTOR_VERSION = "html-v10";
 
 export interface ExtractedHtmlMenu {
   readonly items: readonly MenuObservedItem[];
@@ -22,6 +22,7 @@ export function stripExplicitlyHiddenHtmlContent(html: string): string {
 type JsonRecord = Record<string, unknown>;
 
 const SHORT_ALLERGEN_SUFFIX = /\s+\((?:[\p{L}\d]{1,5}\s*(?:[,/+ ]\s*)?){1,20}\)$/u;
+const INLINE_ADDON_PRICE_LEAD = /^(?:add(?:-on)?|additional)\b/iu;
 
 function isRecord(value: unknown): value is JsonRecord {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -407,7 +408,13 @@ function extractHeuristicItems(visibleText: string): readonly MenuObservedItem[]
       if (candidateIndex < 0) break;
       const candidate = lines[candidateIndex]?.trim();
       if (!candidate) continue;
-      if (standalonePriceLine.test(candidate) || inlinePriceLine.test(candidate)) break;
+      if (standalonePriceLine.test(candidate)) break;
+      const inlinePriceMatch = candidate.match(inlinePriceLine);
+      if (inlinePriceMatch) {
+        const inlineName = inlinePriceMatch[1]?.trim() ?? "";
+        if (INLINE_ADDON_PRICE_LEAD.test(inlineName)) continue;
+        break;
+      }
       if (
         looksLikeNonDish(candidate) ||
         looksLikeStandaloneDescription(candidate) ||
