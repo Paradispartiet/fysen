@@ -61,7 +61,7 @@ describe("HTML description-title recovery", () => {
       visibleText,
     );
 
-    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v16");
+    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v17");
     expect(result.map((entry) => entry.name)).toEqual([
       "Hummus (kikert-og sesampuré)",
       "Hvitløkmarinerte kyllingvinger",
@@ -99,6 +99,30 @@ describe("HTML description-title recovery", () => {
       ["Rainbow", 16900],
       ["Mezah med en grill rett", 45900],
     ]);
+  });
+
+  it("recovers an immediate short with-description under a preceding dish title without hiding legitimate with-titles", () => {
+    const visibleText = [
+      "SALMON AND KIMCHI ROLL",
+      "Salmon with kimchi",
+      "NOK 139",
+      "SPRING ROLL WITH CHICKEN",
+      "NOK 130",
+    ].join("\n");
+
+    const result = recoverDescriptionNamedHtmlItems(
+      [
+        item("Salmon with kimchi", 1, 13900),
+        item("SPRING ROLL WITH CHICKEN", 3, 13000),
+      ],
+      visibleText,
+    );
+
+    expect(result.map((entry) => [entry.name, entry.priceMinor])).toEqual([
+      ["SALMON AND KIMCHI ROLL", 13900],
+      ["SPRING ROLL WITH CHICKEN", 13000],
+    ]);
+    expect(result[0]?.description).toBe("Salmon with kimchi");
   });
 
   it("treats a multiword colon introduction as description", () => {

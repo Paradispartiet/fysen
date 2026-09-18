@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v16";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v17";
 
 const PRICE_LINE =
   /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
@@ -190,6 +190,33 @@ function looksLikeRecoveredTitle(value: string): boolean {
   if (/^(?:©|™|https?:\/\/|www\.)/iu.test(line)) return false;
   const words = line.split(/\s+/).filter(Boolean);
   return words.length <= 10;
+}
+
+function recoverImmediateConnectorDescriptionTitle(
+  lines: readonly string[],
+  position: number,
+  observedName: string,
+): string | null {
+  if (!Number.isInteger(position) || position < 1 || position >= lines.length - 1)
+    return null;
+
+  const current = normalizeVisibleLine(observedName);
+  const words = current.split(/\s+/u).filter(Boolean);
+  if (words.length > 5 || !/\b(?:with|med)\b/iu.test(current)) return null;
+
+  const positioned = normalizeVisibleLine(lines[position] ?? "");
+  if (
+    positioned.toLocaleLowerCase("nb-NO") !==
+    current.toLocaleLowerCase("nb-NO")
+  )
+    return null;
+
+  const preceding = normalizeVisibleLine(lines[position - 1] ?? "");
+  const following = normalizeVisibleLine(lines[position + 1] ?? "");
+  if (!looksLikeRecoveredTitle(preceding) || !PRICE_LINE.test(following))
+    return null;
+
+  return preceding;
 }
 
 function parenthesisBalance(value: string): number {
@@ -595,17 +622,26 @@ export function recoverDescriptionNamedHtmlItems(
     const forwardRecovery = anchoredPreparationTitle
       ? null
       : recoverForwardTitleFromSourceExcerpt(item);
+    const contextualDescriptionTitle =
+      !forwardRecovery && !anchoredPreparationTitle
+        ? recoverImmediateConnectorDescriptionTitle(lines, position, item.name)
+        : null;
     const directlyPricedObservedName =
-      anchoredPreparationTitle ||
-      sourceExcerptInlinePricesObservedName(item) ||
-      (looksLikeDirectlyPricedObservedTitle(item.name) &&
-        sourceExcerptDirectlyPricesObservedName(item));
-    const descriptionRecovery =
-      !forwardRecovery &&
-      !directlyPricedObservedName &&
-      looksLikeHtmlDescription(item.name) &&
-      Number.isInteger(position) &&
-      position >= 1
+      !contextualDescriptionTitle &&
+      (anchoredPreparationTitle ||
+        sourceExcerptInlinePricesObservedName(item) ||
+        (looksLikeDirectlyPricedObservedTitle(item.name) &&
+          sourceExcerptDirectlyPricesObservedName(item)));
+    const descriptionRecovery = contextualDescriptionTitle
+      ? {
+          title: contextualDescriptionTitle,
+          observedNameIsTitleContinuation: false,
+        }
+      : !forwardRecovery &&
+          !directlyPricedObservedName &&
+          looksLikeHtmlDescription(item.name) &&
+          Number.isInteger(position) &&
+          position >= 1
         ? recoverTitle(lines, position, item.name)
         : null;
     const descriptionTitle = descriptionRecovery?.title ?? null;
