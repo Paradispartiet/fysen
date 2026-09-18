@@ -162,6 +162,23 @@ describe("PDF source scope", () => {
     expect(scoped.some((item) => item.name === "SKUR 33")).toBe(true);
   });
 
+  it("strips trailing parenthetical allergen-code metadata from priced PDF dish lines", () => {
+    const lines = [
+      "SNACKS",
+      "Østers pr stk – Nước mắm chấm (bl,f,su) 65",
+      "French Toast – Pata Negra, ostekrem, balsamico (h,e,m) 195",
+      "Pasta (vegan) 245",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual([
+      "Østers pr stk – Nước mắm chấm",
+      "French Toast – Pata Negra, ostekrem, balsamico",
+      "Pasta (vegan)",
+    ]);
+  });
+
   it("filters split parenthetical allergen-code fragments before source-key conflict resolution", () => {
     const lines = [
       "RESTAURANT MENU",
