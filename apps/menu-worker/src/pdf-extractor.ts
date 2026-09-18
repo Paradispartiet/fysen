@@ -401,6 +401,17 @@ function looksLikeParentheticalAllergenMetadata(value: string): boolean {
   );
 }
 
+function looksLikeLabeledAllergenMetadata(value: string): boolean {
+  return /^(?:allergener?|allergens?)\s*:/iu.test(normalizeLine(value));
+}
+
+function looksLikeAllergenMetadata(value: string): boolean {
+  return (
+    looksLikeParentheticalAllergenMetadata(value) ||
+    looksLikeLabeledAllergenMetadata(value)
+  );
+}
+
 function looksLikeAllergenCodeOnly(value: string): boolean {
   if (looksLikeParentheticalAllergenMetadata(value)) return true;
   const tokens = normalizeLine(value)
@@ -600,7 +611,7 @@ function previousStandaloneDishNameLineIndex(
     const text = normalizeLine(candidateLine.text);
     if (!text) continue;
     if (standalonePrice.test(text) || parseInlineDish(text)) return null;
-    if (looksLikeParentheticalAllergenMetadata(text)) {
+    if (looksLikeAllergenMetadata(text)) {
       crossedAllergenMetadata = true;
       continue;
     }
@@ -636,7 +647,7 @@ function hasDescriptionWrappedStandalonePrice(
     if (!text) continue;
     if (standalonePrice.test(text)) return sawDescription;
     if (parseInlineDish(text)) return false;
-    if (looksLikeParentheticalAllergenMetadata(text)) continue;
+    if (looksLikeAllergenMetadata(text)) continue;
     if (!looksLikeStandaloneDescriptionLine(text)) return false;
     sawDescription = true;
   }
