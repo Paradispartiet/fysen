@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v17";
+  "trailing-price-card-v18";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -26,7 +26,6 @@ const UI_ACTION_LEAD =
 const INLINE_ADDON_PRICE_LEAD = /^(?:add(?:-on)?|additional)\b/iu;
 const DESCRIPTION_LEAD =
   /^(?:serveres?|servert|served|with|med|marinert|marinated|grillet|grilled|bakt|baked|braisert|braised|toppet|topped|inneholder|contains?|inkludert|including|alle\s+retter)\b/iu;
-const DESCRIPTION_CONNECTOR = /\b(?:with|med)\b/iu;
 const ALLERGEN_METADATA = /^\(?\s*(?:allergener?|allergens?)\s*:/iu;
 const PARENTHETICAL_METADATA_ONLY = /^\([^()]{1,120}\)$/u;
 const LEADING_MENU_INDEX = /^(\d{1,3})\s*[.)]?\s+(.+)$/u;
@@ -340,64 +339,6 @@ function isHeadingTitleLine(
   return (lines[position - 1] ?? "").startsWith(HEADING_MARKER);
 }
 
-function explicitHeadingLevelBeforeTitle(
-  lines: readonly string[],
-  position: number,
-): number | null {
-  if (!isHeadingTitleLine(lines, position)) return null;
-  const marker = lines[position - 1]?.match(
-    /^__FYSEN_TRAILING_PRICE_HEADING_LEVEL_([1-6])__$/u,
-  );
-  return marker?.[1] ? Number(marker[1]) : null;
-}
-
-function hasParentHeadingLevel(
-  lines: readonly string[],
-  position: number,
-  headingLevel: number,
-): boolean {
-  for (let index = position - 2; index >= 0; index -= 1) {
-    const marker = lines[index]?.match(
-      /^__FYSEN_TRAILING_PRICE_HEADING_LEVEL_([1-6])__$/u,
-    );
-    if (!marker?.[1]) continue;
-    if (Number(marker[1]) < headingLevel) return true;
-  }
-  return false;
-}
-
-function precedingDescribedHeadingTitle(
-  lines: readonly string[],
-  pricePosition: number,
-): { readonly position: number; readonly title: string } | null {
-  const start = Math.max(0, pricePosition - MAX_PRECEDING_TITLE_DISTANCE);
-  for (let position = pricePosition - 2; position >= start; position -= 1) {
-    const headingLevel = explicitHeadingLevelBeforeTitle(lines, position);
-    if (headingLevel === null || !hasParentHeadingLevel(lines, position, headingLevel))
-      continue;
-    const title = normalizeVisibleLine(lines[position] ?? "");
-    if (!looksLikeDishTitle(title) || PLAIN_FOOD_SECTION_BOUNDARY.test(title))
-      continue;
-    const description = normalizeVisibleLine(lines[position + 1] ?? "");
-    if (
-      !description ||
-      description.startsWith(HEADING_MARKER) ||
-      parseTrailingPrice(description) ||
-      isUnpricedPriceBoundary(description)
-    )
-      continue;
-    if (!looksLikeDescription(description) && !DESCRIPTION_CONNECTOR.test(description))
-      continue;
-    const interveningDishTitle = lines
-      .slice(position + 2, pricePosition)
-      .filter((line) => !line.startsWith(HEADING_MARKER))
-      .some((line) => looksLikeDishTitle(line));
-    if (interveningDishTitle) continue;
-    return { position, title };
-  }
-  return null;
-}
-
 function isUnpricedPriceBoundary(value: string): boolean {
   const line = normalizeVisibleLine(value);
   return (
@@ -656,10 +597,6 @@ export function recoverTrailingPriceCardHtmlItems(
     let titlePosition: number | null = null;
     let title: string | null = null;
     const numberedTitle = precedingNumberedTitle(lines, pricePosition);
-    const describedHeadingTitle = precedingDescribedHeadingTitle(
-      lines,
-      pricePosition,
-    );
     const structuredCandidate =
       structuredLeadingByPricePosition.get(pricePosition) ?? null;
     const structuredLeadingTitle =
@@ -671,9 +608,6 @@ export function recoverTrailingPriceCardHtmlItems(
     if (numberedTitle) {
       titlePosition = numberedTitle.position;
       title = numberedTitle.title;
-    } else if (describedHeadingTitle) {
-      titlePosition = describedHeadingTitle.position;
-      title = describedHeadingTitle.title;
     } else if (structuredLeadingTitle) {
       titlePosition = structuredLeadingTitle.position;
       title = structuredLeadingTitle.title;
