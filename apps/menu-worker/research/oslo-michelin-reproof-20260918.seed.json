@@ -6,38 +6,6 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "brasserie-hansken-oslo",
-        "name": "Brasserie Hansken",
-        "websiteUrl": "https://brasseriehansken.no/",
-        "address": "Christiania Torv 4, 0158 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://brasseriehansken.no/uploads/3ETdFPSU/MENYKVELDSENSOMMER20261.pdf",
-        "sourceType": "pdf",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-18",
-          "note": "Fresh Michelin-gap reproof. The current first-party 2026 evening PDF visibly publishes many named, individually priced dishes. This specifically re-tests the prior round-2 PDF title/price conflict without weakening parser or item-floor rules."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": [
-        "HOVEDRETTER",
-        "DESSERTER",
-        "VELKOMMEN!"
-      ]
-    },
-    {
-      "version": 1,
-      "restaurant": {
         "slug": "madonna-oslo",
         "name": "Madonna",
         "websiteUrl": "https://www.madonnaoslo.no/",
@@ -56,7 +24,7 @@
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-09-18",
-          "note": "Fresh Michelin-gap reproof. Madonna's current first-party dinner page now exposes a substantial textual list of named, individually priced dishes; the 2026-09-11 round-3 failure was generic production extraction, so this is a source/runtime reproof rather than an assertion bypass."
+          "note": "Exact-head Oslo MICHELIN coverage reproof on 2026-09-18: the current first-party dinner page generated 12 canonical items with 8 representative priced assertions under the current HTML parser stack. The prior round-3 generic extraction failure is no longer reproduced. This reduced seed keeps Madonna only for strict live validation before any separate canonical promotion."
         }
       },
       "actions": [],
@@ -66,143 +34,6 @@
         "MIDDAG",
         "DESSERT",
         "DAGENS 4-RETTER / 850,- per person"
-      ]
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "festningen-restaurant-oslo",
-        "name": "Festningen Restaurant",
-        "websiteUrl": "https://www.festningenrestaurant.no/",
-        "address": "Myntgata 9, 0151 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.festningenrestaurant.no/middag",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-18",
-          "note": "Fresh Michelin-gap reproof. The current first-party dinner page exposes à-la-carte sections and individually priced dishes. Festningen remained fail-closed after round-3 semantic artifact QA; this seed re-tests the current source against today's generic parser stack."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": [
-        "CHEF’S MENU",
-        "FORRETTER // STARTERS",
-        "HOVEDRETTER // MAINS",
-        "DESSERT OG OST // DESSERT & CHEESE",
-        "DAGENS RETT"
-      ]
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "fyr-bistronomi-bar-oslo",
-        "name": "FYR Bistronomi & Bar",
-        "websiteUrl": "https://www.fyrbistronomi.no/",
-        "address": "Underhaugsveien 28, 0354 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.fyrbistronomi.no/sommermeny",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-18",
-          "note": "Fresh Michelin-gap reproof. The still-live first-party seasonal menu publishes a broad set of individually priced dishes. FYR previously remained fail-closed after generic cleanup yielded only two unique priced dishes; this seed tests the current source on the newer parser stack and does not weaken the three-dish floor."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": [
-        "SNACKS",
-        "KALDE FORRETTER",
-        "VARME FORRETTER",
-        "HOVEDRETTER",
-        "DESSERT",
-        "SELSKAPSMENY"
-      ]
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "vaaghals-oslo",
-        "name": "Vaaghals",
-        "websiteUrl": "https://www.vaaghals.com/",
-        "address": "Dronning Eufemias gate 8, 0191 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.vaaghals.com/s/Kveldsmeny-fra-16-sept-2026_NO.pdf",
-        "sourceType": "pdf",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720,
-        "sourceSupport": {
-          "redirectOrigins": [
-            "https://static1.squarespace.com"
-          ],
-          "browserDataOrigins": [],
-          "browserBlockedOrigins": []
-        }
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-18",
-          "note": "Fresh Michelin-gap reproof against the first-party evening-menu PDF dated 16 September 2026. Round 2 proved the first-party Squarespace CDN redirect legitimate and allowlisted only https://static1.squarespace.com; this reproof preserves that exact transport proof, keeps the existing three-dish floor, and lets current PDF semantics decide whether the gap can now advance."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "cru-oslo",
-        "name": "Cru",
-        "websiteUrl": "https://www.cru.no/",
-        "address": "Dronning Eufemias gate 6, 0191 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.cru.no/meny",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-18",
-          "note": "Fresh Michelin-gap source reproof. The former round-2 source returned HTTP 404; Cru now has a live first-party Bjørvika menu surface advertising à la carte and a five-course menu. Intake remains fail-closed if the current page does not expose enough canonical named priced dishes."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": [
-        "A la carte",
-        "Viner på glass",
-        "5 retter 850",
-        "Selskapsmeny"
       ]
     }
   ]
