@@ -3,7 +3,7 @@
   "restaurant": {
     "slug": "borggarden-biffrestaurant-oslo",
     "name": "Borggården Biffrestaurant",
-    "websiteUrl": "https://www.borggarden.no/",
+    "websiteUrl": "https://borggarden.no/",
     "address": "Fridtjof Nansens plass 5, 0160 Oslo",
     "city": "Oslo",
     "countryCode": "NO",
@@ -11,7 +11,7 @@
     "longitude": 10.734441
   },
   "menuSource": {
-    "url": "https://www.borggarden.no/",
+    "url": "https://borggarden.no/",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -19,7 +19,7 @@
     "minimumExpectedItems": 24
   },
   "hoursSource": {
-    "url": "https://www.borggarden.no/",
+    "url": "https://borggarden.no/",
     "timeZone": "Europe/Oslo",
     "checkIntervalMinutes": 360,
     "minimumExpectedIntervals": 7
@@ -27,15 +27,15 @@
   "verification": {
     "hours": {
       "status": "provisional",
-      "checkedAt": "2026-08-19",
-      "note": "The first-party page publishes weekdays and seven corresponding time ranges in separate parallel columns. Keep the restaurant searchable from verified menu evidence, but do not derive open/closed until the hours runtime can prove the weekday-to-time pairing canonically."
+      "checkedAt": "2026-09-18",
+      "note": "Current source-health reproof normalizes Borggården's first-party origin to the canonical apex URL after the previous www URL began redirecting cross-origin to https://borggarden.no/. Existing provisional kitchen-hours policy remains unchanged."
     }
   },
   "actions": [
     {
       "type": "booking",
-      "url": "https://www.borggarden.no/",
-      "sourceUrl": "https://www.borggarden.no/",
+      "url": "https://borggarden.no/",
+      "sourceUrl": "https://borggarden.no/",
       "provider": "Borggården Biffrestaurant"
     }
   ],
