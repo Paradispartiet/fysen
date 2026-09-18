@@ -360,6 +360,21 @@ function hasParallelSectionHeading(sectionName: string | null): boolean {
 function collapseRepeatedPriceSequenceBlocks(
   items: readonly MenuObservedItem[],
 ): readonly MenuObservedItem[] {
+  if (items.some((item) => item.normalizedName === "kalvesnitzel med erter")) {
+    console.error(
+      "FYSEN_BILINGUAL_BLOCK_DIAGNOSTIC",
+      JSON.stringify(
+        items.map((item) => ({
+          name: item.name,
+          priceMinor: item.priceMinor,
+          sectionName: item.sectionName,
+          position: item.position,
+          confidence: item.confidence,
+          sourceExcerpt: item.sourceExcerpt,
+        })),
+      ),
+    );
+  }
   if (items.length < 4) return items;
 
   const output: MenuObservedItem[] = [];
