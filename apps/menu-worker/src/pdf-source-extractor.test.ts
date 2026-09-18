@@ -170,6 +170,7 @@ describe("PDF source scope", () => {
       "Biff tartar – Sprø sjalottløk og beinmarg (h,m,e,su,sen) 275",
       "Norsk breiflabb – Neper og sellerirotpure (f,m,so,sel,su) 535",
       "Ostetralle – 5 oster og tilbehør (m,h,r,b,v) 295",
+      "Marcona Mandler 40g (ma) 65",
       "Pasta (vegan) 245",
       "Vegetarrett (V) 255",
     ];
@@ -182,6 +183,7 @@ describe("PDF source scope", () => {
       "Biff tartar – Sprø sjalottløk og beinmarg",
       "Norsk breiflabb – Neper og sellerirotpure",
       "Ostetralle – 5 oster og tilbehør",
+      "Marcona Mandler 40g",
       "Pasta (vegan)",
       "Vegetarrett (V)",
     ]);
