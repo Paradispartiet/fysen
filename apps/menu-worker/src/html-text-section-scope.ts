@@ -311,6 +311,7 @@ function itemMatchesRepeatedTranslatedEntry(
   if (item.priceMinor !== entry.priceMinor) return false;
   if (!itemNameMatchesRepeatedTranslatedEntry(item, entry)) return false;
 
+  const rawName = entry.normalizedTitle;
   const excerpt = normalizeDishName(item.sourceExcerpt ?? "");
   const excerptMatches =
     Boolean(excerpt) &&
