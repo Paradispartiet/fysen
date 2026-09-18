@@ -1,6 +1,6 @@
 import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v15";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v16";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -56,7 +56,7 @@ const WEEKDAY_ONLY_ITEM = new RegExp(
   "iu",
 );
 const GENERIC_SECTION_LABEL_ITEM =
-  /^(?:starters?|forretter?|omeletter|main\s+courses?|mains?|hovedretter?|hovedretter?\s*\/\s*main\s+courses?|desserter?\s*\/?\s*desserts?|ost\s+og\s+desserter\s*\/\s*cheese\s+and\s+desserts)$/iu;
+  /^(?:starters?|forrett(?:er)?|forrett(?:er)?\s*\/\s*starters?|omeletter|main\s+courses?|mains?|hovedrett(?:er)?|hovedrett(?:er)?\s*\/\s*main\s+courses?|dessert(?:er)?\s*\/?\s*desserts?|ost\s+og\s+desserter\s*\/\s*cheese\s+and\s+desserts)$/iu;
 const QUANTITY_SERIES_LABEL_ITEM =
   /^\d+\s*(?:stk\.?|pcs?|pieces?)\s*:?(?:\s*\/\s*\d+\s*(?:stk\.?|pcs?|pieces?)\s*:?)+$/iu;
 const INCOMPLETE_ENGLISH_DESCRIPTION_ITEM =
