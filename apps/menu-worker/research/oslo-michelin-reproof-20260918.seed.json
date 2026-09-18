@@ -152,13 +152,20 @@
         "sourceType": "pdf",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
+        "checkIntervalMinutes": 720,
+        "sourceSupport": {
+          "redirectOrigins": [
+            "https://static1.squarespace.com"
+          ],
+          "browserDataOrigins": [],
+          "browserBlockedOrigins": []
+        }
       },
       "verification": {
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-09-18",
-          "note": "Fresh Michelin-gap reproof against the first-party evening-menu PDF dated 16 September 2026. Round 2 proved the redirect but extracted only one unique priced dish; this reproof keeps the existing floor and lets current PDF/runtime semantics decide whether the gap can now advance."
+          "note": "Fresh Michelin-gap reproof against the first-party evening-menu PDF dated 16 September 2026. Round 2 proved the first-party Squarespace CDN redirect legitimate and allowlisted only https://static1.squarespace.com; this reproof preserves that exact transport proof, keeps the existing three-dish floor, and lets current PDF semantics decide whether the gap can now advance."
         }
       },
       "actions": [],
