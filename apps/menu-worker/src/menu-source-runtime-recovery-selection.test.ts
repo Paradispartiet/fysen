@@ -376,7 +376,7 @@ describe("HTML runtime recovery selection", () => {
   it("collapses a repeated translated price block while preserving distinct same-price dishes inside the canonical block", async () => {
     const result = await extract(`
       <html><body>
-        <h2>Hovedretter / Main Courses</h2>
+        <h2>Hovedretter / Plats Principaux / Main Courses</h2>
         <div>Kalvesnitzel med erter</div><div>465</div>
         <div>CONFITERT ANDELÅR med SAVOYKÅL</div><div>465</div>
         <div>Pannestekt piggvar med EDAMAME</div><div>545</div>
@@ -385,7 +385,7 @@ describe("HTML runtime recovery selection", () => {
         <div>Confit duck leg</div><div>465</div>
         <div>Pan-seared turbot</div><div>545</div>
 
-        <h2>Desserter / Desserts</h2>
+        <h2>Desserter / Desserts / Desserts</h2>
         <div>Sitronterte</div><div>235</div>
         <div>Sjokoladefondant med bringebær</div><div>245</div>
         <div>Tart with lemon</div><div>235</div>
@@ -399,6 +399,29 @@ describe("HTML runtime recovery selection", () => {
       ["Pannestekt piggvar med EDAMAME", 54500],
       ["Sitronterte", 23500],
       ["Sjokoladefondant med bringebær", 24500],
+    ]);
+  });
+
+  it("does not collapse a repeated price sequence without a parallel-language section heading", async () => {
+    const result = await extract(`
+      <html><body>
+        <h2>Hovedretter</h2>
+        <div>Rett A</div><div>465</div>
+        <div>Rett B</div><div>465</div>
+        <div>Rett C</div><div>545</div>
+        <div>Rett D</div><div>465</div>
+        <div>Rett E</div><div>465</div>
+        <div>Rett F</div><div>545</div>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Rett A", 46500],
+      ["Rett B", 46500],
+      ["Rett C", 54500],
+      ["Rett D", 46500],
+      ["Rett E", 46500],
+      ["Rett F", 54500],
     ]);
   });
 
