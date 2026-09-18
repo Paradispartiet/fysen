@@ -239,6 +239,10 @@ function recoverImmediateConnectorDescriptionTitle(
       current,
       itemPosition: position,
       candidatePositions,
+      positionNeighborhood:
+        Number.isInteger(position) && position >= 0 && position < lines.length
+          ? lines.slice(Math.max(0, position - 3), Math.min(lines.length, position + 4))
+          : [],
       neighborhoods: candidatePositions.map((index) => ({
         index,
         lines: lines.slice(Math.max(0, index - 2), Math.min(lines.length, index + 3)),
