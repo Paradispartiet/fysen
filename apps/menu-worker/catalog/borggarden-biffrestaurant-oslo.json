@@ -3,7 +3,7 @@
   "restaurant": {
     "slug": "borggarden-biffrestaurant-oslo",
     "name": "Borggården Biffrestaurant",
-    "websiteUrl": "https://www.borggarden.no/",
+    "websiteUrl": "https://borggarden.no/",
     "address": "Fridtjof Nansens plass 5, 0160 Oslo",
     "city": "Oslo",
     "countryCode": "NO",
@@ -11,16 +11,14 @@
     "longitude": 10.734441
   },
   "menuSource": {
-    "url": "https://www.borggarden.no/",
+    "url": "https://borggarden.no/meny",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
     "minimumExpectedItems": 24,
     "sourceSupport": {
-      "redirectOrigins": [
-        "https://borggarden.no"
-      ],
+      "redirectOrigins": [],
       "browserDataOrigins": [],
       "browserBlockedOrigins": []
     }
@@ -35,7 +33,7 @@
     "hours": {
       "status": "provisional",
       "checkedAt": "2026-09-18",
-      "note": "Current source-health reproof declares the first-party menu redirect from www.borggarden.no to borggarden.no explicitly, while hours/action fetches use the apex origin directly. Existing provisional kitchen-hours policy remains unchanged."
+      "note": "Borggården moved from the legacy www homepage menu to the new apex site. The canonical menu source is now the first-party /meny route; hours remain provisional and are not used as open/closed proof."
     }
   },
   "actions": [
@@ -65,21 +63,66 @@
       "OSTETALLERKEN"
     ],
     "requiredDishVariants": [
-      { "name": "GRATINERTE REKER", "priceMinor": 18500 },
-      { "name": "PANNESTEKT SCAMPI", "priceMinor": 18900 },
-      { "name": "BLOMKÅLSUPPE", "priceMinor": 16900 },
-      { "name": "LIMOUSIN CARPACCIO", "priceMinor": 19500 },
-      { "name": "BLÅSKJELL", "priceMinor": 27900 },
-      { "name": "BORGGÅRDEN SALAT", "priceMinor": 26500 },
-      { "name": "CÆSARSALAT", "priceMinor": 25500 },
-      { "name": "TAPASTALLERKEN", "priceMinor": 29900 },
-      { "name": "FYLT KYLLINGFILET", "priceMinor": 38900 },
-      { "name": "BORGGÅRDENS PIZZA", "priceMinor": 29500 },
-      { "name": "HJORTEPLOMME", "priceMinor": 45500 },
-      { "name": "STEINBIT", "priceMinor": 37900 },
-      { "name": "HJEMMELAGET SJOKOLADEFONDANT", "priceMinor": 16500 },
-      { "name": "CREME BRULEE", "priceMinor": 15500 },
-      { "name": "OSTETALLERKEN", "priceMinor": 19500 }
+      {
+        "name": "GRATINERTE REKER",
+        "priceMinor": 18500
+      },
+      {
+        "name": "PANNESTEKT SCAMPI",
+        "priceMinor": 18900
+      },
+      {
+        "name": "BLOMKÅLSUPPE",
+        "priceMinor": 16900
+      },
+      {
+        "name": "LIMOUSIN CARPACCIO",
+        "priceMinor": 19500
+      },
+      {
+        "name": "BLÅSKJELL",
+        "priceMinor": 27900
+      },
+      {
+        "name": "BORGGÅRDEN SALAT",
+        "priceMinor": 26500
+      },
+      {
+        "name": "CÆSARSALAT",
+        "priceMinor": 25500
+      },
+      {
+        "name": "TAPASTALLERKEN",
+        "priceMinor": 29900
+      },
+      {
+        "name": "FYLT KYLLINGFILET",
+        "priceMinor": 38900
+      },
+      {
+        "name": "BORGGÅRDENS PIZZA",
+        "priceMinor": 29500
+      },
+      {
+        "name": "HJORTEPLOMME",
+        "priceMinor": 45500
+      },
+      {
+        "name": "STEINBIT",
+        "priceMinor": 37900
+      },
+      {
+        "name": "HJEMMELAGET SJOKOLADEFONDANT",
+        "priceMinor": 16500
+      },
+      {
+        "name": "CREME BRULEE",
+        "priceMinor": 15500
+      },
+      {
+        "name": "OSTETALLERKEN",
+        "priceMinor": 19500
+      }
     ],
     "forbiddenDishNames": [
       "MENY",
