@@ -233,6 +233,19 @@ function recoverImmediateConnectorDescriptionTitle(
     }
   }
 
+  console.error(
+    "[description-title-context]",
+    JSON.stringify({
+      current,
+      itemPosition: position,
+      candidatePositions,
+      neighborhoods: candidatePositions.map((index) => ({
+        index,
+        lines: lines.slice(Math.max(0, index - 2), Math.min(lines.length, index + 3)),
+      })),
+    }),
+  );
+
   const titles = new Set<string>();
   for (const index of candidatePositions) {
     if (index < 1 || index >= lines.length - 1) continue;
