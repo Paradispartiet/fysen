@@ -1,3 +1,4 @@
+import { lookup } from "node:dns/promises";
 import { createDatabasePool } from "../packages/database/dist/index.js";
 
 const apiBaseUrl = (process.env.FYSEN_PUBLIC_API_URL?.trim() || "https://fysen-api.vercel.app").replace(/\/$/, "");
@@ -37,6 +38,59 @@ async function fetchWithProofTimeout(url, init = {}, timeoutMs = 10_000) {
   });
 }
 
+function errorDetails(error) {
+  if (!(error instanceof Error)) return { message: String(error) };
+
+  const details = {
+    name: error.name,
+    message: error.message,
+  };
+
+  if ("code" in error && typeof error.code === "string") {
+    details.code = error.code;
+  }
+
+  const cause = error.cause;
+  if (cause instanceof Error) {
+    details.cause = {
+      name: cause.name,
+      message: cause.message,
+    };
+    if ("code" in cause && typeof cause.code === "string") {
+      details.cause.code = cause.code;
+    }
+    if ("address" in cause && typeof cause.address === "string") {
+      details.cause.address = cause.address;
+    }
+    if ("port" in cause && Number.isInteger(cause.port)) {
+      details.cause.port = cause.port;
+    }
+  }
+
+  return details;
+}
+
+async function diagnoseDns(url) {
+  const hostname = new URL(url).hostname;
+  const startedAt = Date.now();
+  try {
+    const addresses = await lookup(hostname, { all: true });
+    return {
+      hostname,
+      resolved: true,
+      durationMs: Date.now() - startedAt,
+      addresses: addresses.map(({ address, family }) => ({ address, family })),
+    };
+  } catch (error) {
+    return {
+      hostname,
+      resolved: false,
+      durationMs: Date.now() - startedAt,
+      error: errorDetails(error),
+    };
+  }
+}
+
 async function diagnoseHttp(url, init = {}, timeoutMs = 20_000) {
   const startedAt = Date.now();
   try {
@@ -50,7 +104,7 @@ async function diagnoseHttp(url, init = {}, timeoutMs = 20_000) {
     return {
       responded: false,
       durationMs: Date.now() - startedAt,
-      error: error instanceof Error ? error.message : String(error),
+      error: errorDetails(error),
     };
   }
 }
@@ -277,14 +331,16 @@ async function verifyAhaFysenBoundary() {
   try {
     exchangeResponse = await fetchWithProofTimeout(exchangeUrl, exchangeInit);
   } catch (error) {
-    const initialError = error instanceof Error ? error.message : String(error);
+    const initialError = errorDetails(error);
     const healthUrl = `${ahaApiBaseUrl}/v1/health`;
-    const [health20s, exchange20s] = await Promise.all([
+    const [dns, health20s, exchange20s] = await Promise.all([
+      diagnoseDns(ahaApiBaseUrl),
       diagnoseHttp(healthUrl),
       diagnoseHttp(exchangeUrl, exchangeInit),
     ]);
     fail("AHA Fysen exchange exceeded the 10s production proof timeout", {
       initialError,
+      dns,
       health20s,
       exchange20s,
       exchangeUrl,
