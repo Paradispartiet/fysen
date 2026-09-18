@@ -354,12 +354,7 @@ function hasParallelSectionHeading(sectionName: string | null): boolean {
     .split(/\s*\/\s*/u)
     .map((part) => normalizeDishName(part.trim()))
     .filter(Boolean);
-  return (
-    parts.length === 2 &&
-    parts[0] !== undefined &&
-    parts[1] !== undefined &&
-    parts[0] !== parts[1]
-  );
+  return parts.length >= 2 && new Set(parts).size >= 2;
 }
 
 function collapseRepeatedPriceSequenceBlocks(
@@ -401,8 +396,7 @@ function collapseRepeatedPriceSequenceBlocks(
             item.normalizedName !== secondHalf[index]?.normalizedName,
         );
       const structurallyStrong =
-        halfLength >= 3 ||
-        (halfLength >= 2 && hasParallelSectionHeading(sectionName));
+        halfLength >= 2 && hasParallelSectionHeading(sectionName);
 
       output.push(
         ...(exactRepeatedPriceSequence && structurallyStrong ? firstHalf : block),
