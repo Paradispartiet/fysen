@@ -3,7 +3,7 @@
   "restaurant": {
     "slug": "borggarden-biffrestaurant-oslo",
     "name": "Borggården Biffrestaurant",
-    "websiteUrl": "https://borggarden.no/",
+    "websiteUrl": "https://www.borggarden.no/",
     "address": "Fridtjof Nansens plass 5, 0160 Oslo",
     "city": "Oslo",
     "countryCode": "NO",
@@ -11,12 +11,19 @@
     "longitude": 10.734441
   },
   "menuSource": {
-    "url": "https://borggarden.no/",
+    "url": "https://www.borggarden.no/",
     "sourceType": "html",
-    "fetchMode": "browser",
+    "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 24
+    "minimumExpectedItems": 24,
+    "sourceSupport": {
+      "redirectOrigins": [
+        "https://borggarden.no"
+      ],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
   },
   "hoursSource": {
     "url": "https://borggarden.no/",
@@ -28,7 +35,7 @@
     "hours": {
       "status": "provisional",
       "checkedAt": "2026-09-18",
-      "note": "Current source-health reproof normalizes Borggården's first-party origin to the canonical apex URL after the previous www URL began redirecting cross-origin to https://borggarden.no/. Existing provisional kitchen-hours policy remains unchanged."
+      "note": "Current source-health reproof declares the first-party menu redirect from www.borggarden.no to borggarden.no explicitly, while hours/action fetches use the apex origin directly. Existing provisional kitchen-hours policy remains unchanged."
     }
   },
   "actions": [
