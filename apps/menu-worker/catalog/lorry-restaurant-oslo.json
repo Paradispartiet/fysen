@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lorry-restaurant-oslo",
+    "name": "Lorry Restaurant",
+    "websiteUrl": "https://lorry.no/",
+    "address": "Parkveien 12, 0350 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92081781777151,
+    "longitude": 10.728916298851257
+  },
+  "menuSource": {
+    "url": "https://lorry.no/meny/middag",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 26,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-18",
+      "note": "Fresh-main reproof of the round-4 promotion-ready contract after canonical catalog health 740/740, production materialization 740/740 and production reconcile 740/740 on main 82b46504e7922f051ba8a46a2a3c0f1ed0a64136. Preserve the current first-party dinner source and fail closed on weekday labels."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Skagentoast",
+      "GRILLSTEKT FJELLØRRET",
+      "Grillstekt indrefilét av okse",
+      "Chevresalat",
+      "The Beyond Burger",
+      "Fish & Chips",
+      "Lorrys store isdessert",
+      "Black & White"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Skagentoast",
+        "priceMinor": 22000
+      },
+      {
+        "name": "GRILLSTEKT FJELLØRRET",
+        "priceMinor": 42000
+      },
+      {
+        "name": "Grillstekt indrefilét av okse",
+        "priceMinor": 56500
+      },
+      {
+        "name": "Chevresalat",
+        "priceMinor": 31400
+      },
+      {
+        "name": "The Beyond Burger",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Fish & Chips",
+        "priceMinor": 29800
+      },
+      {
+        "name": "Lorrys store isdessert",
+        "priceMinor": 13800
+      },
+      {
+        "name": "Black & White",
+        "priceMinor": 21800
+      }
+    ],
+    "forbiddenDishNames": [
+      "Onsdag",
+      "Mandag/Tirsdag"
+    ]
+  }
+}
