@@ -732,6 +732,27 @@ export async function extractMenuSource(
             fullVisibleText,
           )
         : canonicalItems;
+    if (
+      normalizedItems.some(
+        (item) => item.normalizedName === "kalvesnitzel med erter",
+      )
+    ) {
+      const diagnosticNames = (items: readonly MenuObservedItem[]) =>
+        items.map((item) => ({
+          name: item.name,
+          priceMinor: item.priceMinor,
+          position: item.position,
+          sectionName: item.sectionName,
+        }));
+      console.error(
+        "FYSEN_BILINGUAL_STAGE_DIAGNOSTIC",
+        JSON.stringify({
+          normalized: diagnosticNames(normalizedItems),
+          canonical: diagnosticNames(canonicalItems),
+          beverageScoped: diagnosticNames(beverageScopedItems),
+        }),
+      );
+    }
     const items =
       extracted.method === "html_heuristic"
         ? canonicalizeHtmlOutputItems(beverageScopedItems)
