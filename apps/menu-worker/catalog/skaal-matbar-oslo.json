@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-16",
-      "note": "Fresh P1 reproof from Skaal Matbar's current first-party page. The page publishes substantial individually priced evening, lunch and brunch dishes in textual HTML. Intake must preserve real dish variants while excluding section headings, allergen metadata and price fragments; promotion remains fail-closed."
+      "checkedAt": "2026-09-18",
+      "note": "Fresh production reproof on 2026-09-18 confirmed the current first-party page still yields 20 canonical dishes, but Smash Burger has left the live menu and \"Pulled Brisket\" is now the current 195 NOK dish. Rebaseline only the stale representative assertion; source, 20-item floor and semantic guards remain unchanged."
     }
   },
   "actions": [],
@@ -39,7 +39,7 @@
       "\"SKAAL Lasagne\"",
       "Brillat Savarin",
       "Thaisalat m/Reker",
-      "Smash Burger",
+      "\"Pulled Brisket\"",
       "Brownie"
     ],
     "requiredDishVariants": [
@@ -68,7 +68,7 @@
         "priceMinor": 22500
       },
       {
-        "name": "Smash Burger",
+        "name": "\"Pulled Brisket\"",
         "priceMinor": 19500
       },
       {
