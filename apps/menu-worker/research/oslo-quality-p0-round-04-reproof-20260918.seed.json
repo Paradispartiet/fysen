@@ -1,0 +1,190 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-quality-p0-round-04-reproof-20260918",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "lorry-restaurant-oslo",
+        "name": "Lorry Restaurant",
+        "websiteUrl": "https://lorry.no/",
+        "address": "Parkveien 12, 0350 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://lorry.no/meny/middag",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-18",
+          "note": "Fresh-main reproof of the round-4 promotion-ready contract after canonical catalog health 740/740, production materialization 740/740 and production reconcile 740/740 on main 82b46504e7922f051ba8a46a2a3c0f1ed0a64136. Preserve the current first-party dinner source and fail closed on weekday labels."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Onsdag",
+        "Mandag/Tirsdag"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "engebret-cafe-oslo",
+        "name": "Engebret Café",
+        "websiteUrl": "https://www.engebret-cafe.no/",
+        "address": "Bankplassen 1, 0151 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.engebret-cafe.no/menymenu",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-18",
+          "note": "Fresh-main reproof of the round-4 promotion-ready contract after canonical catalog health 740/740, production materialization 740/740 and production reconcile 740/740 on main 82b46504e7922f051ba8a46a2a3c0f1ed0a64136. Preserve the first-party à la carte source and fail closed on section-heading leakage."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Ost og desserter / Cheese and desserts"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dovrehallen-oslo",
+        "name": "Dovrehallen",
+        "websiteUrl": "https://www.dovrehallen.no/",
+        "address": "Storgata 22, 0184 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.dovrehallen.no/var-meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-18",
+          "note": "Fresh-main reproof of the round-4 promotion-ready contract after canonical catalog health 740/740, production materialization 740/740 and production reconcile 740/740 on main 82b46504e7922f051ba8a46a2a3c0f1ed0a64136. Preserve the current first-party menu and keep section headings out of canonical dish output."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Omeletter"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "the-salmon-oslo",
+        "name": "The Salmon",
+        "websiteUrl": "https://www.thesalmon.com/",
+        "address": "Strandpromenaden 11, 0252 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.thesalmon.com/menu/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-18",
+          "note": "Fresh-main reproof of the round-4 promotion-ready contract after canonical catalog health 740/740, production materialization 740/740 and production reconcile 740/740 on main 82b46504e7922f051ba8a46a2a3c0f1ed0a64136. Re-measure the current first-party menu without parser or floor changes."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "lofoten-fiskerestaurant-oslo",
+        "name": "Lofoten Fiskerestaurant",
+        "websiteUrl": "https://www.lofoten-fiskerestaurant.no/",
+        "address": "Stranden 75, 0250 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.lofoten-fiskerestaurant.no/menu-eng",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-18",
+          "note": "Fresh-main reproof of the round-4 promotion-ready contract after canonical catalog health 740/740, production materialization 740/740 and production reconcile 740/740 on main 82b46504e7922f051ba8a46a2a3c0f1ed0a64136. Preserve first-party source authority and fail closed on size/section labels."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Small size (starter)",
+        "STARTERS",
+        "2 pcs / 4 pcs / 6 pcs",
+        "Big size (main course)",
+        "MAIN COURSE"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "havsmak-oslo",
+        "name": "Havsmak",
+        "websiteUrl": "https://www.havsmak.no/",
+        "address": "Kirsten Flagstads plass 1, 0150 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.havsmak.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-18",
+          "note": "Fresh-main reproof of the round-4 promotion-ready contract after canonical catalog health 740/740, production materialization 740/740 and production reconcile 740/740 on main 82b46504e7922f051ba8a46a2a3c0f1ed0a64136. Preserve dish-first output and keep course-package labels outside canonical dish output."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "havsmaks 3-retter / havsmaks 3-course menu"
+      ]
+    }
+  ]
+}
