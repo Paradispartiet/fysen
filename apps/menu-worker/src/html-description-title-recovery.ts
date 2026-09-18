@@ -197,26 +197,67 @@ function recoverImmediateConnectorDescriptionTitle(
   position: number,
   observedName: string,
 ): string | null {
-  if (!Number.isInteger(position) || position < 1 || position >= lines.length - 1)
-    return null;
-
   const current = normalizeVisibleLine(observedName);
   const words = current.split(/\s+/u).filter(Boolean);
   if (words.length > 5 || !/\b(?:with|med)\b/iu.test(current)) return null;
 
-  const positioned = normalizeVisibleLine(lines[position] ?? "");
+  const foldedCurrent = current.toLocaleLowerCase("nb-NO");
+  const currentTokens = new Set(
+    normalizeDishName(current)
+      .split(/\s+/u)
+      .filter(
+        (token) =>
+          token.length >= 3 &&
+          !/^(?:with|med|and|og)$/u.test(token),
+      ),
+  );
+  if (currentTokens.size < 2) return null;
+
+  const candidatePositions: number[] = [];
   if (
-    positioned.toLocaleLowerCase("nb-NO") !==
-    current.toLocaleLowerCase("nb-NO")
-  )
-    return null;
+    Number.isInteger(position) &&
+    position >= 0 &&
+    position < lines.length &&
+    normalizeVisibleLine(lines[position] ?? "").toLocaleLowerCase("nb-NO") ===
+      foldedCurrent
+  ) {
+    candidatePositions.push(position);
+  }
+  for (let index = 0; index < lines.length; index += 1) {
+    if (candidatePositions.includes(index)) continue;
+    if (
+      normalizeVisibleLine(lines[index] ?? "").toLocaleLowerCase("nb-NO") ===
+      foldedCurrent
+    ) {
+      candidatePositions.push(index);
+    }
+  }
 
-  const preceding = normalizeVisibleLine(lines[position - 1] ?? "");
-  const following = normalizeVisibleLine(lines[position + 1] ?? "");
-  if (!looksLikeRecoveredTitle(preceding) || !PRICE_LINE.test(following))
-    return null;
+  const titles = new Set<string>();
+  for (const index of candidatePositions) {
+    if (index < 1 || index >= lines.length - 1) continue;
+    const preceding = normalizeVisibleLine(lines[index - 1] ?? "");
+    const following = normalizeVisibleLine(lines[index + 1] ?? "");
+    if (!looksLikeRecoveredTitle(preceding) || !PRICE_LINE.test(following))
+      continue;
 
-  return preceding;
+    const precedingTokens = new Set(
+      normalizeDishName(preceding)
+        .split(/\s+/u)
+        .filter(
+          (token) =>
+            token.length >= 3 &&
+            !/^(?:with|med|and|og)$/u.test(token),
+        ),
+    );
+    const overlap = [...currentTokens].filter((token) =>
+      precedingTokens.has(token),
+    ).length;
+    if (overlap < 2) continue;
+    titles.add(preceding);
+  }
+
+  return titles.size === 1 ? ([...titles][0] ?? null) : null;
 }
 
 function parenthesisBalance(value: string): number {
