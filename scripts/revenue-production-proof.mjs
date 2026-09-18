@@ -24,7 +24,7 @@ async function captureProof(name, verify) {
   }
 }
 
-async function fetchWithProofTimeout(url, init = {}) {
+async function fetchWithProofTimeout(url, init = {}, timeoutMs = 10_000) {
   return fetch(url, {
     cache: "no-store",
     headers: {
@@ -32,9 +32,27 @@ async function fetchWithProofTimeout(url, init = {}) {
       "user-agent": "FysenRevenueProductionProof/1.0",
       ...(init.headers ?? {}),
     },
-    signal: AbortSignal.timeout(10_000),
+    signal: AbortSignal.timeout(timeoutMs),
     ...init,
   });
+}
+
+async function diagnoseHttp(url, init = {}, timeoutMs = 20_000) {
+  const startedAt = Date.now();
+  try {
+    const response = await fetchWithProofTimeout(url, init, timeoutMs);
+    return {
+      responded: true,
+      status: response.status,
+      durationMs: Date.now() - startedAt,
+    };
+  } catch (error) {
+    return {
+      responded: false,
+      durationMs: Date.now() - startedAt,
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
 }
 
 async function verifyRevenueSchema(pool) {
@@ -244,7 +262,7 @@ async function verifyPublicRevenueApi() {
 
 async function verifyAhaFysenBoundary() {
   const exchangeUrl = `${ahaApiBaseUrl}/v1/integrations/fysen/exchange`;
-  const exchangeResponse = await fetchWithProofTimeout(exchangeUrl, {
+  const exchangeInit = {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
@@ -253,7 +271,27 @@ async function verifyAhaFysenBoundary() {
       codeVerifier: "c".repeat(64),
       authorizationCode: `${"a".repeat(80)}.${"b".repeat(43)}`,
     }),
-  });
+  };
+
+  let exchangeResponse;
+  try {
+    exchangeResponse = await fetchWithProofTimeout(exchangeUrl, exchangeInit);
+  } catch (error) {
+    const initialError = error instanceof Error ? error.message : String(error);
+    const healthUrl = `${ahaApiBaseUrl}/v1/health`;
+    const [health20s, exchange20s] = await Promise.all([
+      diagnoseHttp(healthUrl),
+      diagnoseHttp(exchangeUrl, exchangeInit),
+    ]);
+    fail("AHA Fysen exchange exceeded the 10s production proof timeout", {
+      initialError,
+      health20s,
+      exchange20s,
+      exchangeUrl,
+      callback: ahaCallbackUrl,
+    });
+  }
+
   if (exchangeResponse.status !== 409) {
     fail("AHA Fysen exchange is not active with the exact production callback allowlisted", {
       expectedStatusForSignedCodeRejection: 409,
