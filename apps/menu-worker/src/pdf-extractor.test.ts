@@ -370,4 +370,39 @@ describe("PDF menu extractor", () => {
       "PDF source did not start with a PDF signature",
     );
   });
+
+  it("binds prices carried by allergen and portion metadata rows to the preceding PDF dish title", () => {
+    const lines = [
+      "STEKT SJØKREPS MED SMØRSAUS OG ESTRAGON",
+      "PAN-FRIED LANGOUSTINES WITH BUTTER SAUCE AND FRESH TERRAGON",
+      "Allergener: SKALLDYR, MELK, SULFITT ______________________________ 625",
+      "ØSTERS FRA DAVID HERVÈ MED SITRON OG CHAMPAGNE EDDIK",
+      "OYSTERS FROM DAVID HERVÈ SERVED WITH LEMON AND CHAMPAGNE VINEGAR",
+      "Allergener: SULFITT, BLØTDYR",
+      "6 PSC / 12 PSC _________________________________________________ 395 / 790",
+      "LØKSUPPE MED TRE TYPER LØK, GRATINERT MED LAGRET GRUYÈRE",
+      "FRENCH ONION SOUP GRATINATED WITH GRUYÈRE CHEESE",
+      "Allergener: MELK, HVETE, SULFITT, SELLERI",
+      "HALV / HEL _____________________________________________________ 165 / 195",
+      "TRØFFEL SALAMI",
+      "TRUFFLE SALAMI FROM TUSCANY",
+      "Allergener: HVETE, EGG",
+      "SERVED PER 50G _________________________________________________ 225",
+    ];
+
+    expect(
+      extractMenuItemsFromPdfLines(lines).map((item) => [
+        item.name,
+        item.priceMinor,
+        item.priceKind ?? "exact",
+        item.priceMaxMinor ?? null,
+      ]),
+    ).toEqual([
+      ["PAN-FRIED LANGOUSTINES WITH BUTTER SAUCE AND FRESH TERRAGON", 62500, "exact", null],
+      ["OYSTERS FROM DAVID HERVÈ SERVED WITH LEMON AND CHAMPAGNE VINEGAR", 39500, "multiple", 79000],
+      ["FRENCH ONION SOUP GRATINATED WITH GRUYÈRE CHEESE", 16500, "multiple", 19500],
+      ["TRUFFLE SALAMI FROM TUSCANY", 22500, "exact", null],
+    ]);
+  });
+
 });

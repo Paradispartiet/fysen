@@ -401,6 +401,17 @@ function looksLikeParentheticalAllergenMetadata(value: string): boolean {
   );
 }
 
+function looksLikeLabeledAllergenMetadata(value: string): boolean {
+  return /^(?:allergener?|allergens?)\s*:/iu.test(normalizeLine(value));
+}
+
+function looksLikeAllergenMetadata(value: string): boolean {
+  return (
+    looksLikeParentheticalAllergenMetadata(value) ||
+    looksLikeLabeledAllergenMetadata(value)
+  );
+}
+
 function looksLikeAllergenCodeOnly(value: string): boolean {
   if (looksLikeParentheticalAllergenMetadata(value)) return true;
   const tokens = normalizeLine(value)
@@ -463,6 +474,20 @@ const trailingPrice = new RegExp(
   `\\s+${pricePrefix}([1-9]\\d{1,3})${priceSuffix}(?:\\s*\\/\\s*${pricePrefix}([1-9]\\d{1,3})${priceSuffix})?${perItemPriceSuffix}$`,
   "iu",
 );
+
+const PRICE_CARRYING_METADATA_PREFIX =
+  /^(?:(?:allergener?|allergens?)\s*:|served\s+per\s+\d+(?:[.,]\d+)?\s*g\b|(?:halv|half)(?:\s+\d+(?:[.,]\d+)?\s*g)?\s*\/\s*(?:hel|whole)(?:\s+\d+(?:[.,]\d+)?\s*g)?\b|\d+\s*(?:pcs?|psc|pieces?|stk\.?)\s*\/\s*\d+\s*(?:pcs?|psc|pieces?|stk\.?)\b)/iu;
+
+function parsePriceCarryingMetadataLine(line: string): ParsedPrice | null {
+  const match = trailingPrice.exec(line);
+  if (!match?.[1] || match.index <= 0) return null;
+  const prefix = normalizeLine(line.slice(0, match.index))
+    .replace(/[_–—-]+$/gu, "")
+    .trim();
+  if (!PRICE_CARRYING_METADATA_PREFIX.test(prefix)) return null;
+  const explicitPriceMarker = /(?:kr\.?|nok|,-)/iu.test(match[0]);
+  return parsedPrice(match[1], match[2], explicitPriceMarker ? 30 : 40);
+}
 
 function parseInlineDish(line: string): ParsedInlineDish | null {
   const match = trailingPrice.exec(line);
@@ -600,7 +625,7 @@ function previousStandaloneDishNameLineIndex(
     const text = normalizeLine(candidateLine.text);
     if (!text) continue;
     if (standalonePrice.test(text) || parseInlineDish(text)) return null;
-    if (looksLikeParentheticalAllergenMetadata(text)) {
+    if (looksLikeAllergenMetadata(text)) {
       crossedAllergenMetadata = true;
       continue;
     }
@@ -636,7 +661,7 @@ function hasDescriptionWrappedStandalonePrice(
     if (!text) continue;
     if (standalonePrice.test(text)) return sawDescription;
     if (parseInlineDish(text)) return false;
-    if (looksLikeParentheticalAllergenMetadata(text)) continue;
+    if (looksLikeAllergenMetadata(text)) continue;
     if (!looksLikeStandaloneDescriptionLine(text)) return false;
     sawDescription = true;
   }
@@ -653,8 +678,9 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
 
     const line = lines[index]?.text ?? "";
     const nextLine = lines[index + 1]?.text ?? "";
-    const splitInline = splitNumberedInlineDishes(line);
-    const inline = splitInline ? null : parseInlineDish(line);
+    const metadataPrice = parsePriceCarryingMetadataLine(line);
+    const splitInline = metadataPrice ? null : splitNumberedInlineDishes(line);
+    const inline = metadataPrice || splitInline ? null : parseInlineDish(line);
     const standaloneName = canonicalPdfDishName(line);
     const nextLineIsSamePage =
       lines[index]?.page !== undefined &&
@@ -663,9 +689,32 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
       looksLikeDishName(standaloneName) &&
       ((nextLineIsSamePage && standalonePrice.test(nextLine)) ||
         hasDescriptionWrappedStandalonePrice(lines, index));
-    const section = isStandalonePricedDishName || inline || splitInline ? null : sectionHeading(line);
+    const section =
+      isStandalonePricedDishName || metadataPrice || inline || splitInline
+        ? null
+        : sectionHeading(line);
     if (section) {
       currentSection = section;
+      continue;
+    }
+
+    if (metadataPrice) {
+      const previousIndex = previousStandaloneDishNameLineIndex(lines, index);
+      if (previousIndex !== null) {
+        const previous = lines[previousIndex]?.text ?? "";
+        const rawName = canonicalPdfDishName(previous);
+        if (looksLikeDishName(rawName)) {
+          candidates.push({
+            nameLineIndex: previousIndex,
+            nameContinuationLineIndex: null,
+            priceLineIndex: index,
+            page: lines[previousIndex]?.page ?? lines[index]?.page ?? 1,
+            sectionName: currentSection,
+            rawName,
+            ...metadataPrice,
+          });
+        }
+      }
       continue;
     }
 
@@ -753,7 +802,7 @@ function descriptionForCandidate(
   const nameEnd = candidate.nameContinuationLineIndex ?? candidate.nameLineIndex;
   for (let index = nameEnd + 1; index < candidate.priceLineIndex; index += 1) {
     const text = lines[index]?.text ?? "";
-    if (!text || looksLikeParentheticalAllergenMetadata(text)) continue;
+    if (!text || looksLikeAllergenMetadata(text)) continue;
     if (!looksLikeStandaloneDescriptionLine(text)) continue;
     parts.push(text);
   }
