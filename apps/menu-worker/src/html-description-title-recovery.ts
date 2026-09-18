@@ -7,7 +7,7 @@ import {
 export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v17";
 
 const PRICE_LINE =
-  /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
+  /^(?:(?:(?:NOK|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
 const INLINE_PRICE_AT_END =
   /\s+(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)?)$/iu;
 const DESCRIPTION_LEAD =
