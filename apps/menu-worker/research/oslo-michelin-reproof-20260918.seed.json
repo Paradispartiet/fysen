@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-michelin-reproof-20260918",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "madonna-oslo",
+        "name": "Madonna",
+        "websiteUrl": "https://www.madonnaoslo.no/",
+        "address": "Operagata 17, 0194 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.madonnaoslo.no/menu",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-18",
+          "note": "Exact-head Oslo MICHELIN coverage reproof on 2026-09-18: the current first-party dinner page generated 12 canonical items with 8 representative priced assertions under the current HTML parser stack. The prior round-3 generic extraction failure is no longer reproduced. This reduced seed keeps Madonna only for strict live validation before any separate canonical promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "MENY",
+        "MIDDAG",
+        "DESSERT",
+        "DAGENS 4-RETTER / 850,- per person"
+      ]
+    }
+  ]
+}
