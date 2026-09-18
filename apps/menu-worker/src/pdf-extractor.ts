@@ -471,9 +471,495 @@ const standalonePrice = new RegExp(
   "iu",
 );
 const trailingPrice = new RegExp(
-  `\\s+${pricePrefix}([1-9]\\d{1,3})${priceSuffix}(?:\\s*\\/\\s*${pricePrefix}([1-9]\\d{1,3})${priceSuffix})?${perItemPriceSuffix}$`,
+  `\\s+${pricePrefix}([1-9]\\d{1,3})${priceSuffix}(?:\\s*\\/\\s*${pricePrefix}([1-9]\\d{1,3})${priceSuffix})?${perItemPriceSuffix}import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
+import {
+  createMenuItemSourceKey,
+  normalizeDishName,
+  type MenuObservedItem,
+  type MenuPriceKind,
+} from "@fysen/menu-core";
+
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v16";
+
+export interface ExtractedPdfMenu {
+  readonly items: readonly MenuObservedItem[];
+  readonly visibleText: string;
+  readonly pageCount: number;
+  readonly method: "pdf_text";
+}
+
+interface TextItemLike {
+  readonly str: string;
+  readonly transform?: readonly number[];
+  readonly width?: number;
+  readonly hasEOL?: boolean;
+}
+
+interface PdfLine {
+  readonly text: string;
+  readonly page: number;
+}
+
+interface PositionedTextItem {
+  readonly text: string;
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly originalIndex: number;
+}
+
+interface VisualPdfLine {
+  readonly text: string;
+  readonly xStart: number;
+  readonly xEnd: number;
+  readonly y: number;
+  readonly originalIndex: number;
+}
+
+interface ParsedPrice {
+  readonly priceKind: MenuPriceKind;
+  readonly priceKroner: number;
+  readonly priceMaxKroner: number | null;
+}
+
+interface ParsedInlineDish extends ParsedPrice {
+  readonly rawName: string;
+}
+
+interface ItemCandidate extends ParsedPrice {
+  readonly nameLineIndex: number;
+  readonly nameContinuationLineIndex: number | null;
+  readonly priceLineIndex: number;
+  readonly page: number;
+  readonly sectionName: string | null;
+  readonly rawName: string;
+}
+
+const PDF_DOT_LEADER_SUFFIX = /\s*(?:\.\s*){2,}$/u;
+const PDF_LEADING_MENU_NUMBER = /^\d{1,3}\s*[.)]\s*/u;
+const PDF_NUMBERED_ROW_MARKER = /(?:^|\s)(\d{1,3}\s*[.)]\s+)(?=\p{L})/gu;
+const PDF_QUANTITY = /\b\d+(?:[.,]\d+)?\s*(?:kg|gr|g|ml|cl|l)\b/giu;
+const PDF_NON_DISH_METADATA = /^(?:set\s+menu|tasting\s+menu|course\s+menu)\b/iu;
+const TRAILING_SHARING_TAGLINE =
+  /\s+(?:perfekt\s+å\s+dele|perfect\s+for\s+sharing)!?$/iu;
+const allergenCodeTokens = new Set([
+  "al",
+  "b",
+  "bl",
+  "ca",
+  "e",
+  "f",
+  "g",
+  "h",
+  "ha",
+  "hne",
+  "m",
+  "ma",
+  "mk",
+  "n",
+  "p",
+  "pe",
+  "pi",
+  "r",
+  "se",
+  "sem",
+  "sk",
+  "sl",
+  "sn",
+  "so",
+  "su",
+  "sy",
+  "va",
+  "wa",
+]);
+
+const pdfAllergenMetadataCodes = new Set([
+  ...allergenCodeTokens,
+  "by",
+  "c",
+  "hn",
+  "lu",
+  "s",
+  "sp",
+  "vn",
+]);
+
+function normalizeLine(value: string): string {
+  return value.normalize("NFKC").replace(/\s+/g, " ").trim();
+}
+
+function isTextItem(value: unknown): value is TextItemLike {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "str" in value &&
+    typeof (value as { str?: unknown }).str === "string"
+  );
+}
+
+function reconstructSequentialLines(
+  items: readonly unknown[],
+  page: number,
+): readonly PdfLine[] {
+  const lines: PdfLine[] = [];
+  let buffer = "";
+  let lastY: number | null = null;
+  let lastRight: number | null = null;
+
+  const flush = (): void => {
+    const text = normalizeLine(buffer);
+    if (text) lines.push({ text, page });
+    buffer = "";
+    lastY = null;
+    lastRight = null;
+  };
+
+  for (const rawItem of items) {
+    if (!isTextItem(rawItem)) continue;
+    const text = normalizeLine(rawItem.str);
+    if (!text) {
+      if (rawItem.hasEOL) flush();
+      continue;
+    }
+
+    const transform = rawItem.transform;
+    const x = transform && transform.length >= 6 ? Number(transform[4]) : null;
+    const y = transform && transform.length >= 6 ? Number(transform[5]) : null;
+    const width = Number(rawItem.width ?? 0);
+    const movedLine = y !== null && lastY !== null && Math.abs(y - lastY) > 2;
+    const movedBack = x !== null && lastRight !== null && x + 4 < lastRight - 24;
+    const largeGap = x !== null && lastRight !== null && x - lastRight > 140;
+
+    if (buffer && (movedLine || movedBack || largeGap)) flush();
+    if (buffer && !buffer.endsWith(" ")) buffer += " ";
+    buffer += text;
+    if (y !== null) lastY = y;
+    if (x !== null) lastRight = x + Math.max(width, 0);
+    if (rawItem.hasEOL) flush();
+  }
+  flush();
+  return lines;
+}
+
+function percentile(values: readonly number[], ratio: number): number {
+  const sorted = [...values].sort((a, b) => a - b);
+  const index = Math.max(
+    0,
+    Math.min(sorted.length - 1, Math.floor((sorted.length - 1) * ratio)),
+  );
+  return sorted[index] ?? 0;
+}
+
+function robustSpread(values: readonly number[]): number {
+  if (values.length < 2) return 0;
+  return percentile(values, 0.9) - percentile(values, 0.1);
+}
+
+function positionedTextItems(items: readonly unknown[]): readonly PositionedTextItem[] | null {
+  const textItems = items.filter(isTextItem).filter((item) => normalizeLine(item.str));
+  const positioned: PositionedTextItem[] = [];
+
+  for (const [originalIndex, item] of textItems.entries()) {
+    const transform = item.transform;
+    if (!transform || transform.length < 6) return null;
+    const x = Number(transform[4]);
+    const y = Number(transform[5]);
+    const width = Number(item.width ?? 0);
+    if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(width))
+      return null;
+    positioned.push({
+      text: normalizeLine(item.str),
+      x,
+      y,
+      width: Math.max(width, 0),
+      originalIndex,
+    });
+  }
+
+  return positioned.length >= 4 ? positioned : null;
+}
+
+function visualPdfLines(items: readonly PositionedTextItem[]): readonly VisualPdfLine[] {
+  const sorted = [...items].sort((left, right) => {
+    const yDelta = right.y - left.y;
+    if (Math.abs(yDelta) > 2) return yDelta;
+    if (left.x !== right.x) return left.x - right.x;
+    return left.originalIndex - right.originalIndex;
+  });
+  const lines: VisualPdfLine[] = [];
+  let current: PositionedTextItem[] = [];
+
+  const flush = (): void => {
+    if (current.length === 0) return;
+    const row = [...current].sort(
+      (left, right) => left.x - right.x || left.originalIndex - right.originalIndex,
+    );
+    let segment: PositionedTextItem[] = [];
+
+    const flushSegment = (): void => {
+      if (segment.length === 0) return;
+      let text = "";
+      let lastRight: number | null = null;
+      for (const item of segment) {
+        if (
+          text &&
+          lastRight !== null &&
+          item.x - lastRight > 2 &&
+          !text.endsWith(" ")
+        ) {
+          text += " ";
+        }
+        text += item.text;
+        lastRight = item.x + item.width;
+      }
+      const normalized = normalizeLine(text);
+      if (normalized) {
+        lines.push({
+          text: normalized,
+          xStart: Math.min(...segment.map((item) => item.x)),
+          xEnd: Math.max(...segment.map((item) => item.x + item.width)),
+          y: segment.reduce((sum, item) => sum + item.y, 0) / segment.length,
+          originalIndex: Math.min(...segment.map((item) => item.originalIndex)),
+        });
+      }
+      segment = [];
+    };
+
+    for (const item of row) {
+      const previous = segment[segment.length - 1];
+      if (previous && item.x - (previous.x + previous.width) > 140)
+        flushSegment();
+      segment.push(item);
+    }
+    flushSegment();
+    current = [];
+  };
+
+  for (const item of sorted) {
+    const anchor = current[0];
+    if (anchor && Math.abs(item.y - anchor.y) > 2) flush();
+    current.push(item);
+  }
+  flush();
+  return lines;
+}
+
+function shouldUseVisualReadingOrder(lines: readonly VisualPdfLine[]): boolean {
+  if (lines.length < 4) return false;
+  const xStarts = lines.map((line) => line.xStart);
+  const centers = lines.map((line) => (line.xStart + line.xEnd) / 2);
+  const singleColumn =
+    robustSpread(xStarts) <= 90 || robustSpread(centers) <= 110;
+  if (!singleColumn) return false;
+
+  const originalOrder = [...lines].sort(
+    (left, right) => left.originalIndex - right.originalIndex,
+  );
+  let upwardTransitions = 0;
+  for (let index = 1; index < originalOrder.length; index += 1) {
+    const previous = originalOrder[index - 1];
+    const current = originalOrder[index];
+    if (previous && current && current.y > previous.y + 4)
+      upwardTransitions += 1;
+  }
+  const transitions = Math.max(1, originalOrder.length - 1);
+  return upwardTransitions >= 2 && upwardTransitions / transitions >= 0.2;
+}
+
+function reconstructLines(items: readonly unknown[], page: number): readonly PdfLine[] {
+  const sequential = reconstructSequentialLines(items, page);
+  const positioned = positionedTextItems(items);
+  if (!positioned) return sequential;
+  const visual = visualPdfLines(positioned);
+  if (!shouldUseVisualReadingOrder(visual)) return sequential;
+  return visual.map((line) => ({ text: line.text, page }));
+}
+
+function sectionHeading(line: string): string | null {
+  const normalized = normalizeLine(line);
+  if (
+    !normalized ||
+    /[&/]$/u.test(normalized) ||
+    /\d{1,4}\s*(?:,-|kr\.?|nok)?\s*$/iu.test(normalized)
+  )
+    return null;
+
+  const bilingual = normalized.split(/\s*\/\/\s*/u);
+  if (bilingual.length === 2) {
+    const left = bilingual[0]?.trim() ?? "";
+    const right = bilingual[1]?.trim() ?? "";
+    if (
+      left.length >= 2 &&
+      left.length <= 80 &&
+      right.length >= 2 &&
+      right.length <= 80 &&
+      /\p{L}/u.test(left) &&
+      /\p{L}/u.test(right)
+    ) {
+      return left.replace(/[ .-]+$/u, "");
+    }
+  }
+
+  const match = normalized.match(/^([A-ZÆØÅÀÈÉÌÒÙÜ][A-ZÆØÅÀÈÉÌÒÙÜ &'’.-]{2,80})(?:\s+[A-ZÆØÅ]?[a-zæøåàèéìòùü].*)?$/u);
+  if (!match?.[1]) return null;
+  const section = match[1].trim().replace(/[ .-]+$/u, "");
+  const letters = section.replace(/[^A-ZÆØÅÀÈÉÌÒÙÜ]/gu, "");
+  if (letters.length < 3) return null;
+  if (/^(OLIVIA|MENY|MENU|ALLERGENER|ALLERGENS|DRIKKE|BEVERAGES)$/u.test(section)) return null;
+  return section;
+}
+
+function validPriceKroner(value: string, minimum = 40): number | null {
+  const parsed = Number(value);
+  return Number.isInteger(parsed) && parsed >= minimum && parsed <= 10_000 ? parsed : null;
+}
+
+function parsedPrice(first: string, second?: string, minimum = 40): ParsedPrice | null {
+  const firstPrice = validPriceKroner(first, minimum);
+  if (firstPrice === null) return null;
+  if (!second) {
+    return { priceKind: "exact", priceKroner: firstPrice, priceMaxKroner: null };
+  }
+  const secondPrice = validPriceKroner(second, minimum);
+  if (secondPrice === null) return null;
+  const low = Math.min(firstPrice, secondPrice);
+  const high = Math.max(firstPrice, secondPrice);
+  if (low === high) {
+    return { priceKind: "exact", priceKroner: low, priceMaxKroner: null };
+  }
+  return { priceKind: "multiple", priceKroner: low, priceMaxKroner: high };
+}
+
+function stripAllergenSuffix(value: string): string {
+  const normalized = normalizeLine(value)
+    .replace(/\s+(?:[a-zæøå]{1,3}\s*,\s*){1,12}[a-zæøå]{1,3}$/iu, "")
+    .replace(/\s+(?:vegetariano|vegano)$/iu, "")
+    .trim();
+  const tokens = normalized.split(/\s+/u);
+  let end = tokens.length;
+  while (end > 0) {
+    const rawToken = tokens[end - 1] ?? "";
+    const token = rawToken.replace(/[(),.;:]+$/gu, "");
+    if (!/^[A-ZÆØÅ]{1,3}$/u.test(token)) break;
+    if (!allergenCodeTokens.has(token.toLocaleLowerCase("nb-NO"))) break;
+    end -= 1;
+  }
+  if (end === 0 || end === tokens.length) return normalized;
+  return tokens.slice(0, end).join(" ").trim();
+}
+
+function stripDotLeaderSuffix(value: string): string {
+  return normalizeLine(value).replace(PDF_DOT_LEADER_SUFFIX, "").trim();
+}
+
+function canonicalPdfDishName(value: string): string {
+  return stripDotLeaderSuffix(stripAllergenSuffix(value))
+    .replace(PDF_LEADING_MENU_NUMBER, "")
+    .trim();
+}
+
+function looksLikeParentheticalAllergenMetadata(value: string): boolean {
+  const normalized = normalizeLine(value);
+  const match = normalized.match(/^\(([^)]{1,120})\)(?:\s*-\s*.*)?$/u);
+  if (!match?.[1]) return false;
+  const tokens = match[1]
+    .replace(/[.,;/+&]+/gu, " ")
+    .split(/\s+/u)
+    .map((token) => token.toLocaleLowerCase("nb-NO"))
+    .filter(Boolean);
+  return (
+    tokens.length > 0 &&
+    tokens.length <= 12 &&
+    tokens.every((token) => pdfAllergenMetadataCodes.has(token))
+  );
+}
+
+function looksLikeLabeledAllergenMetadata(value: string): boolean {
+  return /^(?:allergener?|allergens?)\s*:/iu.test(normalizeLine(value));
+}
+
+function looksLikeAllergenMetadata(value: string): boolean {
+  return (
+    looksLikeParentheticalAllergenMetadata(value) ||
+    looksLikeLabeledAllergenMetadata(value)
+  );
+}
+
+function looksLikeAllergenCodeOnly(value: string): boolean {
+  if (looksLikeParentheticalAllergenMetadata(value)) return true;
+  const tokens = normalizeLine(value)
+    .replace(/[.,;:]+$/u, "")
+    .split(/[\s,/+]+/u)
+    .map((token) => token.toLocaleLowerCase("nb-NO"))
+    .filter(Boolean);
+  return (
+    tokens.length > 0 &&
+    tokens.length <= 12 &&
+    tokens.every((token) => allergenCodeTokens.has(token))
+  );
+}
+
+function looksLikeQuantityPricingMetadata(value: string): boolean {
+  const normalized = normalizeLine(value);
+  if (/^\d{1,3}\s*(?:stk\.?|pieces?|pcs?\.?)\s*\/?$/iu.test(normalized))
+    return true;
+  const quantities = normalized.match(PDF_QUANTITY) ?? [];
+  return quantities.length >= 2;
+}
+
+function looksLikeDishName(value: string): boolean {
+  const text = normalizeLine(value);
+  if (text.length < 2 || text.length > 220 || !/\p{L}/u.test(text)) return false;
+  if (/https?:\/\/|www\.|@/iu.test(text)) return false;
+  if (/©|™|\bcopyright\b|\ball rights reserved\b/iu.test(text)) return false;
+  if (PDF_NON_DISH_METADATA.test(text)) return false;
+  if (looksLikeAllergenCodeOnly(text) || looksLikeQuantityPricingMetadata(text)) return false;
+  if (/^(allerg|contains|inneholder|priser|prices|kjøkken|opening|åpning|mandag|tirsdag|onsdag|torsdag|fredag|lørdag|søndag)\b/iu.test(text)) return false;
+  return true;
+}
+
+const wrappedDishQualifiers = new Set([
+  "spicy",
+  "vegetar",
+  "vegetarian",
+  "vegansk",
+  "vegan",
+  "crispy",
+  "fritert",
+  "fried",
+  "grillet",
+  "grilled",
+]);
+
+function isWrappedDishQualifier(value: string): boolean {
+  return wrappedDishQualifiers.has(normalizeDishName(canonicalPdfDishName(value)));
+}
+
+const pricePrefix = "(?:(?:kr\\.?|nok)\\s*)?";
+const priceSuffix = "(?:\\s*(?:,-|kr\\.?|nok))?";
+const perItemPriceSuffix =
+  "(?:\\s*\\((?:pr\\.?\\s*stk\\.?|per\\s+(?:piece|item|stk\\.?)|each)\\))?";
+const standalonePrice = new RegExp(
+  `^${pricePrefix}([1-9]\\d{1,3})${priceSuffix}(?:\\s*\\/\\s*${pricePrefix}([1-9]\\d{1,3})${priceSuffix})?$`,
   "iu",
 );
+,
+  "iu",
+);
+
+const PRICE_CARRYING_METADATA_PREFIX =
+  /^(?:(?:allergener?|allergens?)\s*:|served\s+per\s+\d+(?:[.,]\d+)?\s*g\b|(?:halv|half)(?:\s+\d+(?:[.,]\d+)?\s*g)?\s*\/\s*(?:hel|whole)(?:\s+\d+(?:[.,]\d+)?\s*g)?\b|\d+\s*(?:pcs?|psc|pieces?|stk\.?)\s*\/\s*\d+\s*(?:pcs?|psc|pieces?|stk\.?)\b)/iu;
+
+function parsePriceCarryingMetadataLine(line: string): ParsedPrice | null {
+  const match = trailingPrice.exec(line);
+  if (!match?.[1] || match.index <= 0) return null;
+  const prefix = normalizeLine(line.slice(0, match.index))
+    .replace(/[_–—-]+$/gu, "")
+    .trim();
+  if (!PRICE_CARRYING_METADATA_PREFIX.test(prefix)) return null;
+  const explicitPriceMarker = /(?:kr\.?|nok|,-)/iu.test(match[0]);
+  return parsedPrice(match[1], match[2], explicitPriceMarker ? 30 : 40);
+}
 
 function parseInlineDish(line: string): ParsedInlineDish | null {
   const match = trailingPrice.exec(line);
@@ -664,8 +1150,9 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
 
     const line = lines[index]?.text ?? "";
     const nextLine = lines[index + 1]?.text ?? "";
-    const splitInline = splitNumberedInlineDishes(line);
-    const inline = splitInline ? null : parseInlineDish(line);
+    const metadataPrice = parsePriceCarryingMetadataLine(line);
+    const splitInline = metadataPrice ? null : splitNumberedInlineDishes(line);
+    const inline = metadataPrice || splitInline ? null : parseInlineDish(line);
     const standaloneName = canonicalPdfDishName(line);
     const nextLineIsSamePage =
       lines[index]?.page !== undefined &&
@@ -674,9 +1161,32 @@ function collectCandidates(lines: readonly PdfLine[]): readonly ItemCandidate[] 
       looksLikeDishName(standaloneName) &&
       ((nextLineIsSamePage && standalonePrice.test(nextLine)) ||
         hasDescriptionWrappedStandalonePrice(lines, index));
-    const section = isStandalonePricedDishName || inline || splitInline ? null : sectionHeading(line);
+    const section =
+      isStandalonePricedDishName || metadataPrice || inline || splitInline
+        ? null
+        : sectionHeading(line);
     if (section) {
       currentSection = section;
+      continue;
+    }
+
+    if (metadataPrice) {
+      const previousIndex = previousStandaloneDishNameLineIndex(lines, index);
+      if (previousIndex !== null) {
+        const previous = lines[previousIndex]?.text ?? "";
+        const rawName = canonicalPdfDishName(previous);
+        if (looksLikeDishName(rawName)) {
+          candidates.push({
+            nameLineIndex: previousIndex,
+            nameContinuationLineIndex: null,
+            priceLineIndex: index,
+            page: lines[previousIndex]?.page ?? lines[index]?.page ?? 1,
+            sectionName: currentSection,
+            rawName,
+            ...metadataPrice,
+          });
+        }
+      }
       continue;
     }
 
@@ -764,7 +1274,7 @@ function descriptionForCandidate(
   const nameEnd = candidate.nameContinuationLineIndex ?? candidate.nameLineIndex;
   for (let index = nameEnd + 1; index < candidate.priceLineIndex; index += 1) {
     const text = lines[index]?.text ?? "";
-    if (!text || looksLikeParentheticalAllergenMetadata(text)) continue;
+    if (!text || looksLikeAllergenMetadata(text)) continue;
     if (!looksLikeStandaloneDescriptionLine(text)) continue;
     parts.push(text);
   }
