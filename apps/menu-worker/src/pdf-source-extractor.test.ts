@@ -29,7 +29,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v33");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v34");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -160,6 +160,33 @@ describe("PDF source scope", () => {
     expect(scoped.some((item) => item.name === "(Fisk, skalldyr)")).toBe(false);
     expect(scoped.some((item) => item.name === "DI MARE")).toBe(true);
     expect(scoped.some((item) => item.name === "SKUR 33")).toBe(true);
+  });
+
+  it("strips trailing parenthetical allergen-code metadata from priced PDF dish lines", () => {
+    const lines = [
+      "SNACKS",
+      "Østers pr stk – Nước mắm chấm (bl,f,su) 65",
+      "French Toast – Pata Negra, ostekrem, balsamico (h,e,m) 195",
+      "Biff tartar – Sprø sjalottløk og beinmarg (h,m,e,su,sen) 275",
+      "Norsk breiflabb – Neper og sellerirotpure (f,m,so,sel,su) 535",
+      "Ostetralle – 5 oster og tilbehør (m,h,r,b,v) 295",
+      "Marcona Mandler 40g (ma) 65",
+      "Pasta (vegan) 245",
+      "Vegetarrett (V) 255",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual([
+      "Østers pr stk – Nước mắm chấm",
+      "French Toast – Pata Negra, ostekrem, balsamico",
+      "Biff tartar – Sprø sjalottløk og beinmarg",
+      "Norsk breiflabb – Neper og sellerirotpure",
+      "Ostetralle – 5 oster og tilbehør",
+      "Marcona Mandler 40g",
+      "Pasta (vegan)",
+      "Vegetarrett (V)",
+    ]);
   });
 
   it("filters split parenthetical allergen-code fragments before source-key conflict resolution", () => {

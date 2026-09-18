@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v33";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v34";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -75,10 +75,20 @@ const SPLIT_PDF_ALLERGEN_CODES = new Set([
   ...RECOVERY_ALLERGEN_CODES,
   "by",
   "c",
+  "has",
   "hn",
+  "k",
   "lu",
+  "mac",
+  "par",
+  "pk",
   "s",
+  "sel",
+  "sen",
+  "ses",
   "sp",
+  "sul",
+  "v",
   "vn",
 ]);
 
@@ -339,10 +349,34 @@ function looksLikePricingMetadata(name: string): boolean {
   );
 }
 
+function stripTrailingParentheticalPdfAllergenCodes(value: string): string {
+  const line = normalizeVisibleLine(value);
+  const match = line.match(/\s+\(([^()]{1,120})\)$/u);
+  if (!match?.[1] || !match[0]) return line;
+  const tokens = match[1]
+    .split(/[\s,/+&;]+/u)
+    .map((token) => token.trim().toLocaleLowerCase("nb-NO"))
+    .filter(Boolean);
+  if (
+    tokens.length === 0 ||
+    tokens.length > 12 ||
+    (tokens.length === 1 && (tokens[0]?.length ?? 0) === 1) ||
+    !tokens.every(
+      (token) =>
+        /^[a-zæøå]{1,3}$/u.test(token) &&
+        SPLIT_PDF_ALLERGEN_CODES.has(token),
+    )
+  )
+    return line;
+  return line.slice(0, -match[0].length).trim();
+}
+
 function cleanPdfOutputItemName(item: MenuObservedItem): MenuObservedItem {
-  const name = normalizeVisibleLine(item.name)
-    .replace(TRAILING_SHARING_TAGLINE, "")
-    .trim();
+  const name = stripTrailingParentheticalPdfAllergenCodes(
+    normalizeVisibleLine(item.name)
+      .replace(TRAILING_SHARING_TAGLINE, "")
+      .trim(),
+  );
   if (!name || name === item.name) return item;
   return {
     ...item,
