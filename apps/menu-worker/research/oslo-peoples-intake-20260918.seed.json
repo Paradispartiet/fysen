@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-peoples-intake-20260918",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "peoples-oslo",
+        "name": "People's",
+        "websiteUrl": null,
+        "address": "Arbeidersamfunnets Plass 1, 0181 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/peoples",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-03",
+          "note": "Batch 36 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+        }
+      },
+      "actions": []
+    }
+  ]
+}
