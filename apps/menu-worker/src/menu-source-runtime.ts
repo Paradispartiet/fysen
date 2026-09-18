@@ -562,6 +562,11 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverFirstCardAfterPlainFoodSections(extracted.visibleText)
         : [];
+    if (extracted.method === "html_heuristic") {
+      console.error(
+        `[html-recovery-counts] recovered=${recoveredItems.length} trailing=${trailingPriceCardItems.length} wrapped=${priceWrappedItems.length} inline=${inlineMarkedPriceItems.length} strong=${strongTitlePriceItems.length} heading=${headingPriceItems.length} from=${explicitFromPriceItems.length} section=${sectionFirstCardItems.length}`,
+      );
+    }
     const strongTitlePricePreferred =
     strongTitlePriceItems.length >= 6 &&
     strongTitlePriceItems.length >= recoveredItems.length &&
