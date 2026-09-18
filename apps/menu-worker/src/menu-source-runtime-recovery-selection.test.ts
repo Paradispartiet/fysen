@@ -372,4 +372,34 @@ describe("HTML runtime recovery selection", () => {
     ]);
   });
 
+
+  it("collapses a repeated translated price block while preserving distinct same-price dishes inside the canonical block", async () => {
+    const result = await extract(`
+      <html><body>
+        <h2>Hovedretter / Main Courses</h2>
+        <div>Kalvesnitzel med erter</div><div>465</div>
+        <div>CONFITERT ANDELÅR med SAVOYKÅL</div><div>465</div>
+        <div>Pannestekt piggvar med EDAMAME</div><div>545</div>
+
+        <div>Wiener Schnitzel</div><div>465</div>
+        <div>Confit duck leg</div><div>465</div>
+        <div>Pan-seared turbot</div><div>545</div>
+
+        <h2>Desserter / Desserts</h2>
+        <div>Sitronterte</div><div>235</div>
+        <div>Sjokoladefondant med bringebær</div><div>245</div>
+        <div>Tart with lemon</div><div>235</div>
+        <div>Chocolate fondant with raspberry</div><div>245</div>
+      </body></html>
+    `);
+
+    expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Kalvesnitzel med erter", 46500],
+      ["CONFITERT ANDELÅR med SAVOYKÅL", 46500],
+      ["Pannestekt piggvar med EDAMAME", 54500],
+      ["Sitronterte", 23500],
+      ["Sjokoladefondant med bringebær", 24500],
+    ]);
+  });
+
 });
