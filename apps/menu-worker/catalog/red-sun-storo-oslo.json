@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "red-sun-storo-oslo",
+    "name": "Red Sun Storo",
+    "websiteUrl": "https://www.redsun.no/",
+    "address": "Vitaminveien 28, 0483 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94693698830463,
+    "longitude": 10.771465980021125
+  },
+  "menuSource": {
+    "url": "https://www.redsun.no/menu",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 19,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-17",
+      "note": "Exact-head semantic reproof for trailing-card sub-floor boundaries and heading-title preservation on the current first-party menu."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "SPECIAL DELUXE MENU (FOR 2 PEOPLE)",
+      "SASHIMI PLATE",
+      "FLAMBEED NIGIRI",
+      "SALMON & STRAWBERRY ROLL",
+      "SALMON AND KIMCHI ROLL",
+      "shrimp chips",
+      "CRÈME BRÛLÈE",
+      "PANNE COTTA"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "SPECIAL DELUXE MENU (FOR 2 PEOPLE)",
+        "priceMinor": 69000
+      },
+      {
+        "name": "SASHIMI PLATE",
+        "priceMinor": 26000
+      },
+      {
+        "name": "FLAMBEED NIGIRI",
+        "priceMinor": 5500
+      },
+      {
+        "name": "SALMON & STRAWBERRY ROLL",
+        "priceMinor": 15500
+      },
+      {
+        "name": "SALMON AND KIMCHI ROLL",
+        "priceMinor": 13900
+      },
+      {
+        "name": "shrimp chips",
+        "priceMinor": 5500
+      },
+      {
+        "name": "CRÈME BRÛLÈE",
+        "priceMinor": 15500
+      },
+      {
+        "name": "PANNE COTTA",
+        "priceMinor": 13500
+      }
+    ],
+    "forbiddenDishNames": [
+      "Tree nuts",
+      "Salmon with kimchi"
+    ]
+  }
+}
