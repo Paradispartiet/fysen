@@ -623,6 +623,45 @@ export async function extractMenuSource(
                 priceWrappedItems.length >= recoveredItems.length * 2
               ? priceWrappedItems
               : recoveredItems;
+    if (
+      recoveredItems.some(
+        (item) => item.normalizedName === "kalvesnitzel med erter",
+      )
+    ) {
+      const diagnosticItems = (items: readonly MenuObservedItem[]) =>
+        items.map((item) => ({
+          name: item.name,
+          priceMinor: item.priceMinor,
+          sectionName: item.sectionName,
+          position: item.position,
+          confidence: item.confidence,
+        }));
+      console.error(
+        "FYSEN_BILINGUAL_RECOVERY_DIAGNOSTIC",
+        JSON.stringify({
+          recovered: diagnosticItems(recoveredItems),
+          trailing: diagnosticItems(trailingPriceCardItems),
+          priceWrapped: diagnosticItems(priceWrappedItems),
+          inlineMarked: diagnosticItems(inlineMarkedPriceItems),
+          strongTitle: diagnosticItems(strongTitlePriceItems),
+          headingPrice: diagnosticItems(headingPriceItems),
+          explicitFrom: diagnosticItems(explicitFromPriceItems),
+          sectionFirstCard: diagnosticItems(sectionFirstCardItems),
+          preferred: diagnosticItems(preferredItems),
+          flags: {
+            strongTitlePricePreferred,
+            semanticCategoryCardsPreferred,
+            strongNumberedCardsPreferred,
+            strongDirectTrailingRecoveryPreferred,
+            isolatedTrailingRecoveryPreferred,
+            broadHeadingPriceRecoveryPreferred,
+            isolatedSemanticRecoveryPreferred,
+            trailingPriceCardQualifies,
+            headingDominatesTrailingRecovery,
+          },
+        }),
+      );
+    }
     const structurallyReconciledPreferredItems =
       extracted.method === "html_heuristic" && !strongTitlePricePreferred
         ? reconcileSelectedItemsWithTrailingCards(
