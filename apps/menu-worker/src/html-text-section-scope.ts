@@ -76,6 +76,11 @@ interface RepeatedTranslatedPriceEntry {
   readonly normalizedTitle: string;
 }
 
+interface RepeatedTranslatedSectionEvidence {
+  readonly pricedEntries: readonly RepeatedTranslatedPriceEntry[];
+  readonly secondBlockEntries: readonly RepeatedTranslatedPriceEntry[];
+}
+
 function normalizeLine(value: string): string {
   return value
     .normalize("NFKC")
@@ -177,10 +182,11 @@ function isRepeatedTranslationSectionBoundary(value: string): boolean {
   );
 }
 
-function repeatedTranslatedSecondBlockEntries(
+function repeatedTranslatedSectionEvidence(
   lines: readonly string[],
-): readonly RepeatedTranslatedPriceEntry[] {
-  const translatedEntries: RepeatedTranslatedPriceEntry[] = [];
+): RepeatedTranslatedSectionEvidence {
+  const sectionPricedEntries: RepeatedTranslatedPriceEntry[] = [];
+  const secondBlockEntries: RepeatedTranslatedPriceEntry[] = [];
 
   for (let headingPosition = 0; headingPosition < lines.length; headingPosition += 1) {
     if (!translatedFoodSectionFamily(lines[headingPosition] ?? "")) continue;
@@ -253,17 +259,49 @@ function repeatedTranslatedSecondBlockEntries(
     }
     if (!best) continue;
 
+    sectionPricedEntries.push(...pricedEntries);
     for (let offset = 0; offset < best.halfLength; offset += 1) {
       const first = pricedEntries[best.start + offset];
       const second =
         pricedEntries[best.start + best.halfLength + offset];
       if (!first || !second) continue;
       if (first.normalizedTitle === second.normalizedTitle) continue;
-      translatedEntries.push(second);
+      secondBlockEntries.push(second);
     }
   }
 
-  return translatedEntries;
+  return {
+    pricedEntries: sectionPricedEntries,
+    secondBlockEntries,
+  };
+}
+
+function itemNameMatchesRepeatedTranslatedEntry(
+  item: MenuObservedItem,
+  entry: RepeatedTranslatedPriceEntry,
+): boolean {
+  const itemName = item.normalizedName;
+  const rawName = entry.normalizedTitle;
+  return (
+    itemName === rawName ||
+    rawName.startsWith(`${itemName} `) ||
+    itemName.startsWith(`${rawName} `)
+  );
+}
+
+function itemHasConflictingRepeatedTranslatedRow(
+  item: MenuObservedItem,
+  entries: readonly RepeatedTranslatedPriceEntry[],
+): boolean {
+  const positionedEntries = entries.filter(
+    (entry) => entry.titlePosition === item.position,
+  );
+  if (positionedEntries.length === 0) return false;
+  return !positionedEntries.some(
+    (entry) =>
+      item.priceMinor === entry.priceMinor &&
+      itemNameMatchesRepeatedTranslatedEntry(item, entry),
+  );
 }
 
 function itemMatchesRepeatedTranslatedEntry(
@@ -271,13 +309,7 @@ function itemMatchesRepeatedTranslatedEntry(
   entry: RepeatedTranslatedPriceEntry,
 ): boolean {
   if (item.priceMinor !== entry.priceMinor) return false;
-  const itemName = item.normalizedName;
-  const rawName = entry.normalizedTitle;
-  const namesCompatible =
-    itemName === rawName ||
-    rawName.startsWith(`${itemName} `) ||
-    itemName.startsWith(`${rawName} `);
-  if (!namesCompatible) return false;
+  if (!itemNameMatchesRepeatedTranslatedEntry(item, entry)) return false;
 
   const excerpt = normalizeDishName(item.sourceExcerpt ?? "");
   const excerptMatches =
@@ -484,12 +516,16 @@ export function filterPlainTextBeverageSectionItems(
     BEVERAGE_SECTION_LABEL.test(normalizedSectionLabel(line)),
   );
   const states = sectionStateByPosition(lines);
-  const repeatedTranslatedEntries =
-    repeatedTranslatedSecondBlockEntries(lines);
+  const repeatedTranslatedEvidence =
+    repeatedTranslatedSectionEvidence(lines);
 
   return cleanedItems.filter((item) => {
     if (
-      repeatedTranslatedEntries.some((entry) =>
+      itemHasConflictingRepeatedTranslatedRow(
+        item,
+        repeatedTranslatedEvidence.pricedEntries,
+      ) ||
+      repeatedTranslatedEvidence.secondBlockEntries.some((entry) =>
         itemMatchesRepeatedTranslatedEntry(item, entry),
       )
     ) {
