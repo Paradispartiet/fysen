@@ -97,34 +97,6 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "the-salmon-oslo",
-        "name": "The Salmon",
-        "websiteUrl": "https://www.thesalmon.com/",
-        "address": "Strandpromenaden 11, 0252 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.thesalmon.com/menu/",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-18",
-          "note": "Fresh-main reproof of the round-4 promotion-ready contract after canonical catalog health 740/740, production materialization 740/740 and production reconcile 740/740 on main 82b46504e7922f051ba8a46a2a3c0f1ed0a64136. Re-measure the current first-party menu without parser or floor changes."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
         "slug": "lofoten-fiskerestaurant-oslo",
         "name": "Lofoten Fiskerestaurant",
         "websiteUrl": "https://www.lofoten-fiskerestaurant.no/",
