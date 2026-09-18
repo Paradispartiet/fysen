@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-red-sun-runtime-reproof-20260917",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "red-sun-storo-oslo",
+        "name": "Red Sun Storo",
+        "websiteUrl": "https://www.redsun.no/",
+        "address": "Vitaminveien 28, 0483 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.redsun.no/menu",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720,
+        "sourceSupport": {
+          "redirectOrigins": [],
+          "browserDataOrigins": []
+        }
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-17",
+          "note": "Exact-head semantic reproof for trailing-card sub-floor boundaries and heading-title preservation on the current first-party menu."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Tree nuts",
+        "Salmon with kimchi"
+      ]
+    }
+  ]
+}

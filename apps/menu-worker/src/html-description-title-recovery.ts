@@ -4,10 +4,10 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v16";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v17";
 
 const PRICE_LINE =
-  /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
+  /^(?:(?:(?:NOK|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
 const INLINE_PRICE_AT_END =
   /\s+(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)?)$/iu;
 const DESCRIPTION_LEAD =
@@ -190,6 +190,89 @@ function looksLikeRecoveredTitle(value: string): boolean {
   if (/^(?:©|™|https?:\/\/|www\.)/iu.test(line)) return false;
   const words = line.split(/\s+/).filter(Boolean);
   return words.length <= 10;
+}
+
+function recoverImmediateConnectorDescriptionTitle(
+  lines: readonly string[],
+  position: number,
+  observedName: string,
+): string | null {
+  const current = normalizeVisibleLine(observedName);
+  const words = current.split(/\s+/u).filter(Boolean);
+  if (words.length > 5 || !/\b(?:with|med)\b/iu.test(current)) return null;
+
+  const foldedCurrent = current.toLocaleLowerCase("nb-NO");
+  const currentTokens = new Set(
+    normalizeDishName(current)
+      .split(/\s+/u)
+      .filter(
+        (token) =>
+          token.length >= 3 &&
+          !/^(?:with|med|and|og)$/u.test(token),
+      ),
+  );
+  if (currentTokens.size < 2) return null;
+
+  const lineMatch = (
+    value: string,
+  ): { readonly matches: boolean; readonly inlinePrice: boolean } => {
+    const line = normalizeVisibleLine(value);
+    const foldedLine = line.toLocaleLowerCase("nb-NO");
+    if (foldedLine === foldedCurrent)
+      return { matches: true, inlinePrice: false };
+    if (!foldedLine.startsWith(foldedCurrent))
+      return { matches: false, inlinePrice: false };
+
+    const suffix = line.slice(current.length).trim();
+    return {
+      matches: Boolean(suffix && PRICE_LINE.test(suffix)),
+      inlinePrice: Boolean(suffix && PRICE_LINE.test(suffix)),
+    };
+  };
+
+  const candidatePositions: number[] = [];
+  if (
+    Number.isInteger(position) &&
+    position >= 0 &&
+    position < lines.length &&
+    lineMatch(lines[position] ?? "").matches
+  ) {
+    candidatePositions.push(position);
+  }
+  for (let index = 0; index < lines.length; index += 1) {
+    if (candidatePositions.includes(index)) continue;
+    if (lineMatch(lines[index] ?? "").matches) candidatePositions.push(index);
+  }
+
+  const titles = new Set<string>();
+  for (const index of candidatePositions) {
+    if (index < 1) continue;
+    const preceding = normalizeVisibleLine(lines[index - 1] ?? "");
+    const currentLine = lineMatch(lines[index] ?? "");
+    const following = normalizeVisibleLine(lines[index + 1] ?? "");
+    if (
+      !looksLikeRecoveredTitle(preceding) ||
+      (!currentLine.inlinePrice && !PRICE_LINE.test(following))
+    )
+      continue;
+
+    const precedingTokens = new Set(
+      normalizeDishName(preceding)
+        .split(/\s+/u)
+        .filter(
+          (token) =>
+            token.length >= 3 &&
+            !/^(?:with|med|and|og)$/u.test(token),
+        ),
+    );
+    const overlap = [...currentTokens].filter((token) =>
+      precedingTokens.has(token),
+    ).length;
+    if (overlap < 2) continue;
+    titles.add(preceding);
+  }
+
+  return titles.size === 1 ? ([...titles][0] ?? null) : null;
 }
 
 function parenthesisBalance(value: string): number {
@@ -595,17 +678,26 @@ export function recoverDescriptionNamedHtmlItems(
     const forwardRecovery = anchoredPreparationTitle
       ? null
       : recoverForwardTitleFromSourceExcerpt(item);
+    const contextualDescriptionTitle =
+      !forwardRecovery && !anchoredPreparationTitle
+        ? recoverImmediateConnectorDescriptionTitle(lines, position, item.name)
+        : null;
     const directlyPricedObservedName =
-      anchoredPreparationTitle ||
-      sourceExcerptInlinePricesObservedName(item) ||
-      (looksLikeDirectlyPricedObservedTitle(item.name) &&
-        sourceExcerptDirectlyPricesObservedName(item));
-    const descriptionRecovery =
-      !forwardRecovery &&
-      !directlyPricedObservedName &&
-      looksLikeHtmlDescription(item.name) &&
-      Number.isInteger(position) &&
-      position >= 1
+      !contextualDescriptionTitle &&
+      (anchoredPreparationTitle ||
+        sourceExcerptInlinePricesObservedName(item) ||
+        (looksLikeDirectlyPricedObservedTitle(item.name) &&
+          sourceExcerptDirectlyPricesObservedName(item)));
+    const descriptionRecovery = contextualDescriptionTitle
+      ? {
+          title: contextualDescriptionTitle,
+          observedNameIsTitleContinuation: false,
+        }
+      : !forwardRecovery &&
+          !directlyPricedObservedName &&
+          looksLikeHtmlDescription(item.name) &&
+          Number.isInteger(position) &&
+          position >= 1
         ? recoverTitle(lines, position, item.name)
         : null;
     const descriptionTitle = descriptionRecovery?.title ?? null;

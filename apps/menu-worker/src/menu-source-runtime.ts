@@ -132,7 +132,7 @@ export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v13";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v12";
 export const HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION = "structured-compat-v1";
-export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v4";
+export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v5";
 
 export function shouldPreferDominantHeadingRecovery(
   headingCount: number,
@@ -316,10 +316,8 @@ function reconcileSelectedItemsWithTrailingCards(
       const itemWords = item.name.trim().split(/\s+/u).filter(Boolean);
       const interveningRawParts = rawParts.slice(1, itemPartIndex);
       const contextualComponent =
-        (itemWords.length === 1 &&
-          interveningRawParts.some((part) => /[,;]/u.test(part))) ||
-        (itemWords.length <= 5 &&
-          /\b(?:and|og|with|med|&|\/|\+)\b/iu.test(item.name));
+        itemWords.length === 1 &&
+        interveningRawParts.some((part) => /[,;]/u.test(part));
       if (
         !isLikelySamePriceCardFragment(item) &&
         !contextualComponent

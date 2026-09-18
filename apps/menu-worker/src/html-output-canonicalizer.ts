@@ -1,6 +1,6 @@
 import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v14";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v15";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -70,7 +70,6 @@ const EXTENDED_COURSE_PACKAGE_LABEL_ITEM =
   /(?:\b\d+\s*[- ]?(?:retter|retters|course)\b|\b(?:three|four|five|six)[- ]course\b)/iu;
 const DAILY_DESSERT_PLACEHOLDER =
   /^(?:dagens|today(?:['’])?s)\s+dessert$/iu;
-
 
 function samePrice(
   left: Pick<MenuObservedItem, "priceMinor">,
@@ -212,7 +211,11 @@ function isSamePriceExcerptFragment(
   item: MenuObservedItem,
   items: readonly MenuObservedItem[],
 ): boolean {
-  if (!isLikelySamePriceCardFragment(item)) return false;
+  const words = item.name.trim().split(/\s+/u).filter(Boolean);
+  const contextualDescription =
+    words.length <= 5 && /\b(?:with|med)\b/iu.test(item.name);
+  if (!isLikelySamePriceCardFragment(item) && !contextualDescription)
+    return false;
   return items.some((candidate) => {
     if (
       candidate === item ||
