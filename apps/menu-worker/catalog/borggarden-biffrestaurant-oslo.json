@@ -33,7 +33,7 @@
     "hours": {
       "status": "provisional",
       "checkedAt": "2026-09-18",
-      "note": "Borggården moved from the legacy www homepage menu to the new apex site. The canonical menu source is now the first-party /meny route; hours remain provisional and are not used as open/closed proof."
+      "note": "Borggården moved from the legacy www homepage menu to the new apex site. The canonical menu source is now the first-party /meny route. Exact-head live reproof found 26 canonical menu items and refreshed stale dish assertions; hours remain provisional and are not used as open/closed proof."
     }
   },
   "actions": [
@@ -55,11 +55,10 @@
       "CÆSARSALAT",
       "TAPASTALLERKEN",
       "FYLT KYLLINGFILET",
-      "BORGGÅRDENS PIZZA",
       "HJORTEPLOMME",
       "STEINBIT",
       "HJEMMELAGET SJOKOLADEFONDANT",
-      "CREME BRULEE",
+      "Crème brûlée",
       "OSTETALLERKEN"
     ],
     "requiredDishVariants": [
@@ -81,7 +80,7 @@
       },
       {
         "name": "BLÅSKJELL",
-        "priceMinor": 27900
+        "priceMinor": 28900
       },
       {
         "name": "BORGGÅRDEN SALAT",
@@ -89,7 +88,7 @@
       },
       {
         "name": "CÆSARSALAT",
-        "priceMinor": 25500
+        "priceMinor": 26500
       },
       {
         "name": "TAPASTALLERKEN",
@@ -100,12 +99,8 @@
         "priceMinor": 38900
       },
       {
-        "name": "BORGGÅRDENS PIZZA",
-        "priceMinor": 29500
-      },
-      {
         "name": "HJORTEPLOMME",
-        "priceMinor": 45500
+        "priceMinor": 46900
       },
       {
         "name": "STEINBIT",
@@ -116,7 +111,7 @@
         "priceMinor": 16500
       },
       {
-        "name": "CREME BRULEE",
+        "name": "Crème brûlée",
         "priceMinor": 15500
       },
       {
