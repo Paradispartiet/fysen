@@ -75,8 +75,8 @@ describe("HTML runtime extractor version", () => {
     expect(HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION).toBe(
       "embedded-menu-json-v3",
     );
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v13");
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v16");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v14");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v17");
     expect(HTML_RECOVERY_SELECTION_VERSION).toBe("recovery-selection-v5");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
