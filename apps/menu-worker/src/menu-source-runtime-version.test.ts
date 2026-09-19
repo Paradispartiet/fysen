@@ -59,7 +59,7 @@ describe("HTML runtime extractor version", () => {
       "structured-compat-v1",
     );
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
-      "trailing-price-card-v18",
+      "trailing-price-card-v19",
     );
     expect(HTML_PRICE_WRAPPED_RECOVERY_VERSION).toBe("price-wrapped-v2");
     expect(HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION).toBe(
