@@ -478,10 +478,18 @@ const trailingPrice = new RegExp(
 const PRICE_CARRYING_METADATA_PREFIX =
   /^(?:(?:allergener?|allergens?)\s*:|served\s+per\s+\d+(?:[.,]\d+)?\s*g\b|(?:halv|half)(?:\s+\d+(?:[.,]\d+)?\s*g)?\s*\/\s*(?:hel|whole)(?:\s+\d+(?:[.,]\d+)?\s*g)?\b|\d+\s*(?:pcs?|psc|pieces?|stk\.?)\s*\/\s*\d+\s*(?:pcs?|psc|pieces?|stk\.?)\b)/iu;
 
+function normalizeSplitPerKilogramPrice(line: string): string {
+  const match = /^(.*\b(?:per|pr\.?)\s+kg\s+)([1-9]\d{0,2})\s+(\d{2,3})$/iu.exec(line);
+  if (!match?.[1] || !match[2] || !match[3]) return line;
+  const combined = `${match[2]}${match[3]}`;
+  return validPriceKroner(combined) === null ? line : `${match[1]}${combined}`;
+}
+
 function parsePriceCarryingMetadataLine(line: string): ParsedPrice | null {
-  const match = trailingPrice.exec(line);
+  const normalizedPriceLine = normalizeSplitPerKilogramPrice(line);
+  const match = trailingPrice.exec(normalizedPriceLine);
   if (!match?.[1] || match.index <= 0) return null;
-  const prefix = normalizeLine(line.slice(0, match.index))
+  const prefix = normalizeLine(normalizedPriceLine.slice(0, match.index))
     .replace(/[_–—-]+$/gu, "")
     .trim();
   if (!PRICE_CARRYING_METADATA_PREFIX.test(prefix)) return null;

@@ -405,4 +405,19 @@ describe("PDF menu extractor", () => {
     ]);
   });
 
+
+  it("reconstructs split per-kilogram price digits instead of accepting the trailing fragment", () => {
+    const lines = [
+      "CÔTE DE BOEUF MED GLASERT LØK OG SAUS BÉARNAISE",
+      "CÔTE DE BOEUF SERVED WITH GLAZED ONIONS AND SAUCE BÉARNAISE",
+      "Allergener: MELK, EGG, SULFITT ______________________________ PER KG 20 50",
+    ];
+
+    expect(
+      extractMenuItemsFromPdfLines(lines).map((item) => [item.name, item.priceMinor]),
+    ).toEqual([
+      ["CÔTE DE BOEUF SERVED WITH GLAZED ONIONS AND SAUCE BÉARNAISE", 205000],
+    ]);
+  });
+
 });
