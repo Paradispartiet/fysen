@@ -562,6 +562,39 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverFirstCardAfterPlainFoodSections(extracted.visibleText)
         : [];
+    if (
+      extracted.method === "html_heuristic" &&
+      fullVisibleText.includes("Biff tataki") &&
+      fullVisibleText.includes("Nocellara-oliven")
+    ) {
+      console.error(
+        "FYR_LIVE_EXTRACTION_DIAGNOSTIC",
+        JSON.stringify({
+          scopedVisibleText: extracted.visibleText,
+          fullVisibleText,
+          counts: {
+            extracted: extracted.items.length,
+            recovered: recoveredItems.length,
+            trailing: trailingPriceCardItems.length,
+            priceWrapped: priceWrappedItems.length,
+            inlineMarked: inlineMarkedPriceItems.length,
+            strongTitlePrice: strongTitlePriceItems.length,
+            headingPrice: headingPriceItems.length,
+            explicitFromPrice: explicitFromPriceItems.length,
+            sectionFirstCard: sectionFirstCardItems.length,
+          },
+          names: {
+            extracted: extracted.items.map((item) => [item.name, item.priceMinor]),
+            recovered: recoveredItems.map((item) => [item.name, item.priceMinor]),
+            trailing: trailingPriceCardItems.map((item) => [item.name, item.priceMinor]),
+            inlineMarked: inlineMarkedPriceItems.map((item) => [item.name, item.priceMinor]),
+            strongTitlePrice: strongTitlePriceItems.map((item) => [item.name, item.priceMinor]),
+            headingPrice: headingPriceItems.map((item) => [item.name, item.priceMinor]),
+            sectionFirstCard: sectionFirstCardItems.map((item) => [item.name, item.priceMinor]),
+          },
+        }),
+      );
+    }
     const strongTitlePricePreferred =
     strongTitlePriceItems.length >= 6 &&
     strongTitlePriceItems.length >= recoveredItems.length &&
