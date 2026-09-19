@@ -348,82 +348,20 @@ function preferUniquelyDirectPricedConflicts(
     return preferred === undefined || item === preferred;
   });
 }
-function hasParallelSectionHeading(sectionName: string | null): boolean {
-  if (!sectionName) return false;
-  const parts = sectionName
-    .split(/\s*\/\s*/u)
-    .map((part) => normalizeDishName(part.trim()))
-    .filter(Boolean);
-  return parts.length >= 2 && new Set(parts).size >= 2;
-}
-
-function collapseRepeatedPriceSequenceBlocks(
+function collapseSamePositionPricePrefixVariants(
   items: readonly MenuObservedItem[],
 ): readonly MenuObservedItem[] {
-  if (items.some((item) => item.normalizedName === "kalvesnitzel med erter")) {
-    console.error(
-      "FYSEN_BILINGUAL_BLOCK_DIAGNOSTIC",
-      JSON.stringify(
-        items.map((item) => ({
-          name: item.name,
-          priceMinor: item.priceMinor,
-          sectionName: item.sectionName,
-          position: item.position,
-          confidence: item.confidence,
-          sourceExcerpt: item.sourceExcerpt,
-        })),
+  return items.filter(
+    (item) =>
+      !items.some(
+        (candidate) =>
+          candidate !== item &&
+          candidate.position === item.position &&
+          samePrice(candidate, item) &&
+          candidate.normalizedName.length > item.normalizedName.length &&
+          candidate.normalizedName.startsWith(`${item.normalizedName} `),
       ),
-    );
-  }
-  if (items.length < 4) return items;
-
-  const output: MenuObservedItem[] = [];
-  let start = 0;
-
-  while (start < items.length) {
-    const firstItem = items[start];
-    if (!firstItem) break;
-    const sectionName = firstItem.sectionName;
-    const sectionKey = normalizeDishName(sectionName ?? "");
-    let end = start + 1;
-
-    while (end < items.length) {
-      const candidate = items[end];
-      if (!candidate) break;
-      if (normalizeDishName(candidate.sectionName ?? "") !== sectionKey) break;
-      end += 1;
-    }
-
-    const block = items.slice(start, end);
-    if (sectionKey && block.length >= 4 && block.length % 2 === 0) {
-      const halfLength = block.length / 2;
-      const firstHalf = block.slice(0, halfLength);
-      const secondHalf = block.slice(halfLength);
-      const exactRepeatedPriceSequence =
-        firstHalf.every(
-          (item, index) =>
-            item.priceMinor !== null &&
-            secondHalf[index]?.priceMinor !== null &&
-            item.priceMinor === secondHalf[index]?.priceMinor,
-        ) &&
-        firstHalf.every(
-          (item, index) =>
-            item.normalizedName !== secondHalf[index]?.normalizedName,
-        );
-      const structurallyStrong =
-        halfLength >= 2 && hasParallelSectionHeading(sectionName);
-
-      output.push(
-        ...(exactRepeatedPriceSequence && structurallyStrong ? firstHalf : block),
-      );
-    } else {
-      output.push(...block);
-    }
-
-    start = end;
-  }
-
-  return output;
+  );
 }
 
 function isOutputNoiseLabel(item: MenuObservedItem): boolean {
@@ -490,5 +428,5 @@ export function canonicalizeHtmlOutputItems(
       !isLowInformationSamePriceFragment(item, labelFilteredItems) &&
       !isExtremeDuplicatePriceOutlier(item, labelFilteredItems),
   );
-  return collapseRepeatedPriceSequenceBlocks(structurallyFilteredItems);
+  return collapseSamePositionPricePrefixVariants(structurallyFilteredItems);
 }
