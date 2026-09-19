@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-michelin-fyr-reproof-20260919",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "fyr-bistronomi-bar-oslo",
+        "name": "FYR Bistronomi & Bar",
+        "websiteUrl": "https://www.fyrbistronomi.no/",
+        "address": "Underhaugsveien 28, 0354 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.fyrbistronomi.no/sommermeny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-19",
+          "note": "Fresh Oslo MICHELIN coverage reproof. The current first-party seasonal menu visibly publishes a broad set of individually priced dishes across snacks, cold starters, hot starters, mains and desserts. The 2026-09-18 exact-head audit exposed only one unique priced dish under production extraction. This isolated seed remeasures the unchanged first-party source on current main without parser exceptions or weakening the three-dish floor."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "SNACKS",
+        "KALDE FORRETTER",
+        "VARME FORRETTER",
+        "HOVEDRETTER",
+        "DESSERT",
+        "SELSKAPSMENY",
+        "ALLERGIER"
+      ]
+    }
+  ]
+}
