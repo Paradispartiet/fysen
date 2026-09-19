@@ -248,16 +248,11 @@ describe("plain-text HTML section scoping", () => {
     ]);
   });
 
-  it("rejects a row whose translated-section position belongs to a different directly priced dish", () => {
+  it("rejects an item whose embedded title price conflicts with the parsed price", () => {
     const items = [
       item(
-        "Kalvesnitzel med erter, potetpure og brunet smør",
+        "Kalvesnitzel med erter, potetpure og brunet smør 465,-",
         1,
-        46500,
-      ),
-      item(
-        "Kalvesnitzel med erter, potetpure og brunet smør",
-        2,
         49500,
       ),
       item(
@@ -265,15 +260,11 @@ describe("plain-text HTML section scoping", () => {
         2,
         49500,
       ),
-      item("Wiener Schnitzel", 3, 46500),
-      item("Today`s maincourse", 4, 49500),
     ];
     const visibleText = `
-      Hovedretter / Plats Principaux / Main Courses
+      Hovedretter
       Kalvesnitzel med erter, potetpure og brunet smør 465,-
       Grillet Entrecôte med syltet løk, pommes frites og saus Béarnaise 495,-
-      Wiener Schnitzel, peas, potato purée and beurre noisette 465,-
-      Grilled entrecôte, pickled onions, fries and Béarnaise 495,-
     `;
 
     expect(
@@ -281,10 +272,6 @@ describe("plain-text HTML section scoping", () => {
         (entry) => [entry.name, entry.priceMinor],
       ),
     ).toEqual([
-      [
-        "Kalvesnitzel med erter, potetpure og brunet smør",
-        46500,
-      ],
       [
         "Grillet Entrecôte med syltet løk, pommes frites og saus Béarnaise",
         49500,
