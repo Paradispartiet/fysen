@@ -23,7 +23,7 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-09-18",
+          "checkedAt": "2026-09-19",
           "note": "Fresh Oslo MICHELIN coverage reproof after a test-first generic PDF repair. The first-party 2026 evening PDF previously failed because labeled allergen metadata between dish titles and separate prices became a conflicting source key. Reproof the unchanged first-party PDF under pdf-text-v35 without restaurant-specific exceptions or floor weakening."
         }
       },
