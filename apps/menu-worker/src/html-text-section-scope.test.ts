@@ -248,7 +248,7 @@ describe("plain-text HTML section scoping", () => {
     ]);
   });
 
-  it("rejects an item whose embedded title price conflicts with the parsed price", () => {
+  it("rejects a conflicting embedded title price only inside a repeated translated block", () => {
     const items = [
       item(
         "Kalvesnitzel med erter, potetpure og brunet smør 465,-",
@@ -262,9 +262,11 @@ describe("plain-text HTML section scoping", () => {
       ),
     ];
     const visibleText = `
-      Hovedretter
+      Hovedretter / Plats Principaux / Main Courses
       Kalvesnitzel med erter, potetpure og brunet smør 465,-
       Grillet Entrecôte med syltet løk, pommes frites og saus Béarnaise 495,-
+      Wiener Schnitzel, peas, potato purée and beurre noisette 465,-
+      Grilled entrecôte, pickled onions, fries and Béarnaise 495,-
     `;
 
     expect(
