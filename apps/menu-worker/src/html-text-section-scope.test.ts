@@ -281,6 +281,64 @@ describe("plain-text HTML section scoping", () => {
     ]);
   });
 
+
+  it("collapses interleaved bilingual dish cards and removes standalone allergen text from the repeated title", () => {
+    const items = [
+      item("SPEKEMAT", 1, 15000),
+      item("CURED MEAT", 2, 15000),
+      item("BEEF TARTARE", 3, 27500),
+      item("TRUFFLE AND MUSHROOM RISOTTO (milk, sulfitte)", 4, 29500),
+      item("CHEESECAKE", 5, 18500),
+      item("PETITS FOURS", 6, 8500),
+    ];
+    const visibleText = `
+      SNACKS
+      ARANCINI
+      ARANCINI
+      trøffel og steinsopp (hvete, melk, egg, sulfitt)
+      ARANCINI
+      trufle and porcini (wheat, milk, egg, sulfite)
+      Kr 210,-
+      SPEKEMAT
+      CURED MEAT
+      Kr 150,-
+      FORRETTER // STARTERS
+      BEEF TARTARE
+      BIFF TARTAR
+      soppmajones, jordskokk og syltet kantareller (bygg, sulfitt, egg)
+      BEEF TARTARE
+      mushroom mayonnaise, Jerusalem artichoke and pickled chantarells (barley, sulfitte, eggs)
+      Kr 275,-
+      TRUFFLE AND MUSHROOM RISOTTO
+      TRØFFEL- OG SKOGSOPPRISOTTO
+      (melk, sulfitt)
+      TRUFFLE AND MUSHROOM RISOTTO
+      (milk, sulfitte)
+      Kr 295,-
+      DESSERT OG OST // DESSERT & CHEESE
+      CHEESECAKE
+      OSTEKAKE
+      skogsbær og melkeis (melk, egg)
+      CHEESECAKE
+      forest berries and milk icecream (milk, egg)
+      Kr 185,-
+      PETITS FOURS
+      85,-
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => [entry.name, entry.priceMinor],
+      ),
+    ).toEqual([
+      ["SPEKEMAT", 15000],
+      ["BEEF TARTARE", 27500],
+      ["TRUFFLE AND MUSHROOM RISOTTO", 29500],
+      ["CHEESECAKE", 18500],
+      ["PETITS FOURS", 8500],
+    ]);
+  });
+
   it("recognizes bilingual tap and bottled beer headings", () => {
     const items = [
       item("Butter Chicken", 1, 28500),
