@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v14";
+export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v15";
 
 const SECTION_COUNT_SUFFIX = /\s*\(\s*\d{1,3}\s*\)\s*$/u;
 const BEVERAGE_SECTION_LABEL =
@@ -65,7 +65,8 @@ const TRANSLATED_STARTER_PART =
   /^(?:forretter?|starters?|appetizers?|entr[ée]es?)$/iu;
 const TRANSLATED_MAIN_PART =
   /^(?:hovedretter?|mains?|main\s+courses?|plats?\s+principaux)$/iu;
-const TRANSLATED_DESSERT_PART = /^(?:desserter?|desserts?)$/iu;
+const TRANSLATED_DESSERT_PART =
+  /^(?:desserter?|desserts?|dessert(?:er)?\s+(?:og|&|and)\s+ost|ost\s+(?:og|&|and)\s+desserter?|desserts?\s+(?:&|and)\s+cheese|cheese\s+(?:&|and)\s+desserts?)$/iu;
 
 type MenuSectionState = "unknown" | "food" | "beverage";
 type TranslatedFoodSectionFamily = "starter" | "main" | "dessert";
@@ -79,6 +80,16 @@ interface RepeatedTranslatedPriceEntry {
 interface RepeatedTranslatedSectionEvidence {
   readonly pricedEntries: readonly RepeatedTranslatedPriceEntry[];
   readonly secondBlockEntries: readonly RepeatedTranslatedPriceEntry[];
+}
+
+interface InterleavedBilingualCardEvidence {
+  readonly startPosition: number;
+  readonly endPosition: number;
+  readonly priceMinor: number;
+  readonly canonicalTitle: string;
+  readonly canonicalNormalizedTitle: string;
+  readonly alternateNormalizedTitles: readonly string[];
+  readonly parentheticalMetadata: readonly string[];
 }
 
 function normalizeLine(value: string): string {
@@ -274,6 +285,223 @@ function repeatedTranslatedSectionEvidence(
     pricedEntries: sectionPricedEntries,
     secondBlockEntries,
   };
+}
+
+
+function directCardPriceMinor(value: string): number | null {
+  const line = normalizeLine(value);
+  if (!DIRECT_SOURCE_PRICE.test(line)) return null;
+  return parseRepeatedTranslationPriceMinor(line)?.priceMinor ?? null;
+}
+
+function isUppercaseDishTitleLine(value: string): boolean {
+  const line = normalizeLine(value);
+  if (!line || !/\p{L}/u.test(line)) return false;
+  if (/^\([^)]{1,180}\)$/u.test(line)) return false;
+  if (DIRECT_SOURCE_PRICE.test(line)) return false;
+  if (
+    isRepeatedTranslationSectionBoundary(line) ||
+    isBilingualMenuSection(line)
+  ) {
+    return false;
+  }
+  const letters = line.replace(/[^\p{L}]/gu, "");
+  return Boolean(letters) && letters === letters.toUpperCase();
+}
+
+function interleavedBilingualCardEvidence(
+  lines: readonly string[],
+  states: readonly MenuSectionState[],
+): readonly InterleavedBilingualCardEvidence[] {
+  const rawCards: {
+    startPosition: number;
+    endPosition: number;
+    priceMinor: number;
+    titleLines: { position: number; title: string; normalizedTitle: string }[];
+    parentheticalMetadata: string[];
+  }[] = [];
+
+  let cardStart = 0;
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index] ?? "";
+    if (
+      isRepeatedTranslationSectionBoundary(line) ||
+      isBilingualMenuSection(line)
+    ) {
+      cardStart = index + 1;
+      continue;
+    }
+
+    const priceMinor = directCardPriceMinor(line);
+    if (priceMinor === null) continue;
+
+    if ((states[index] ?? "unknown") === "food" && cardStart < index) {
+      const titleLines: {
+        position: number;
+        title: string;
+        normalizedTitle: string;
+      }[] = [];
+      const parentheticalMetadata: string[] = [];
+      for (let position = cardStart; position < index; position += 1) {
+        const candidate = normalizeLine(lines[position] ?? "");
+        if (!candidate) continue;
+        if (/^\([^)]{1,180}\)$/u.test(candidate)) {
+          parentheticalMetadata.push(candidate);
+          continue;
+        }
+        if (!isUppercaseDishTitleLine(candidate)) continue;
+        const normalizedTitle = normalizeDishName(candidate);
+        if (!normalizedTitle) continue;
+        titleLines.push({ position, title: candidate, normalizedTitle });
+      }
+      if (titleLines.length > 0) {
+        rawCards.push({
+          startPosition: cardStart,
+          endPosition: index,
+          priceMinor,
+          titleLines,
+          parentheticalMetadata,
+        });
+      }
+    }
+    cardStart = index + 1;
+  }
+
+  const analyzed = rawCards.map((card) => {
+    const counts = new Map<string, number>();
+    const orderedDistinct: string[] = [];
+    for (const title of card.titleLines) {
+      if (!counts.has(title.normalizedTitle))
+        orderedDistinct.push(title.normalizedTitle);
+      counts.set(
+        title.normalizedTitle,
+        (counts.get(title.normalizedTitle) ?? 0) + 1,
+      );
+    }
+    const repeated = orderedDistinct.filter(
+      (title) => (counts.get(title) ?? 0) >= 2,
+    );
+    return { card, counts, orderedDistinct, repeated };
+  });
+
+  const strongCards = analyzed.filter(
+    ({ orderedDistinct, repeated }) =>
+      orderedDistinct.length === 2 && repeated.length === 1,
+  );
+  if (strongCards.length < 2) return [];
+
+  const evidence: InterleavedBilingualCardEvidence[] = [];
+  for (const { card, orderedDistinct, repeated } of analyzed) {
+    let canonicalNormalizedTitle: string | null = null;
+    let alternateNormalizedTitles: string[] = [];
+
+    if (orderedDistinct.length === 2 && repeated.length === 1) {
+      canonicalNormalizedTitle = repeated[0] ?? null;
+      alternateNormalizedTitles = orderedDistinct.filter(
+        (title) => title !== canonicalNormalizedTitle,
+      );
+    } else if (
+      orderedDistinct.length === 2 &&
+      repeated.length === 0 &&
+      card.titleLines.length === 2
+    ) {
+      canonicalNormalizedTitle = orderedDistinct[0] ?? null;
+      alternateNormalizedTitles = orderedDistinct.slice(1);
+    }
+
+    if (!canonicalNormalizedTitle) continue;
+    const canonical = card.titleLines.find(
+      (title) => title.normalizedTitle === canonicalNormalizedTitle,
+    );
+    if (!canonical) continue;
+
+    evidence.push({
+      startPosition: card.startPosition,
+      endPosition: card.endPosition,
+      priceMinor: card.priceMinor,
+      canonicalTitle: canonical.title,
+      canonicalNormalizedTitle,
+      alternateNormalizedTitles,
+      parentheticalMetadata: card.parentheticalMetadata,
+    });
+  }
+
+  return evidence;
+}
+
+function itemMatchesInterleavedCard(
+  item: MenuObservedItem,
+  card: InterleavedBilingualCardEvidence,
+): boolean {
+  if (item.priceMinor !== card.priceMinor) return false;
+  const titles = [
+    card.canonicalNormalizedTitle,
+    ...card.alternateNormalizedTitles,
+  ];
+  const nameMatches = titles.some(
+    (title) =>
+      item.normalizedName === title ||
+      item.normalizedName.startsWith(`${title} `),
+  );
+  if (!nameMatches) return false;
+
+  const positionMatches =
+    item.position >= card.startPosition && item.position <= card.endPosition;
+  const excerpt = normalizeDishName(item.sourceExcerpt ?? "");
+  const excerptMatches =
+    Boolean(excerpt) &&
+    titles.some(
+      (title) =>
+        excerpt === title ||
+        excerpt.startsWith(`${title} `) ||
+        excerpt.includes(title),
+    );
+  return positionMatches || excerptMatches;
+}
+
+function canonicalizeInterleavedBilingualItems(
+  items: readonly MenuObservedItem[],
+  cards: readonly InterleavedBilingualCardEvidence[],
+): readonly MenuObservedItem[] {
+  if (cards.length === 0) return items;
+
+  const result: MenuObservedItem[] = [];
+  for (const item of items) {
+    let current = item;
+    let drop = false;
+
+    for (const card of cards) {
+      if (!itemMatchesInterleavedCard(current, card)) continue;
+
+      if (card.alternateNormalizedTitles.includes(current.normalizedName)) {
+        drop = true;
+        break;
+      }
+
+      if (current.normalizedName !== card.canonicalNormalizedTitle) {
+        const metadataMatch = card.parentheticalMetadata.some(
+          (metadata) =>
+            normalizeDishName(`${card.canonicalTitle} ${metadata}`) ===
+            current.normalizedName,
+        );
+        if (metadataMatch) {
+          current = {
+            ...current,
+            name: card.canonicalTitle,
+            normalizedName: card.canonicalNormalizedTitle,
+            sourceKey: createMenuItemSourceKey(
+              card.canonicalTitle,
+              current.sectionName,
+            ),
+          };
+        }
+      }
+      break;
+    }
+
+    if (!drop) result.push(current);
+  }
+  return result;
 }
 
 function itemNameMatchesRepeatedTranslatedEntry(
@@ -529,15 +757,22 @@ export function filterPlainTextBeverageSectionItems(
   const states = sectionStateByPosition(lines);
   const repeatedTranslatedEvidence =
     repeatedTranslatedSectionEvidence(lines);
-  const cleanedItems = items
-    .filter(
-      (item) =>
-        !hasConflictingExplicitNamePrice(
-          item,
-          repeatedTranslatedEvidence.pricedEntries,
-        ),
-    )
-    .map(cleanOutputArtifactName);
+  const interleavedEvidence = interleavedBilingualCardEvidence(
+    lines,
+    states,
+  );
+  const cleanedItems = canonicalizeInterleavedBilingualItems(
+    items
+      .filter(
+        (item) =>
+          !hasConflictingExplicitNamePrice(
+            item,
+            repeatedTranslatedEvidence.pricedEntries,
+          ),
+      )
+      .map(cleanOutputArtifactName),
+    interleavedEvidence,
+  );
 
   return cleanedItems.filter((item) => {
     if (
