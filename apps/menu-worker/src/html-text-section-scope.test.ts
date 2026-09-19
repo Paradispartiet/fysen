@@ -54,7 +54,7 @@ describe("plain-text HTML section scoping", () => {
       119 NOK
     `;
 
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v14");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v15");
     expect(
       filterPlainTextBeverageSectionItems(items, visibleText).map(
         (entry) => entry.name,
@@ -337,6 +337,26 @@ describe("plain-text HTML section scoping", () => {
       ["CHEESECAKE", 18500],
       ["PETITS FOURS", 8500],
     ]);
+  });
+
+
+  it("does not collapse a two-title one-price card without repeated interleaved bilingual page evidence", () => {
+    const items = [
+      item("SPEKEMAT", 1, 15000),
+      item("CURED MEAT", 2, 15000),
+    ];
+    const visibleText = `
+      SNACKS
+      SPEKEMAT
+      CURED MEAT
+      Kr 150,-
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual(["SPEKEMAT", "CURED MEAT"]);
   });
 
   it("recognizes bilingual tap and bottled beer headings", () => {
