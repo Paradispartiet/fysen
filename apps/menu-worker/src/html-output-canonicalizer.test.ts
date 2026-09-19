@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v17");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v18");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
