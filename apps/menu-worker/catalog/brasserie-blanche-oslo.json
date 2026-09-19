@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "brasserie-blanche-oslo",
+    "name": "Brasserie Blanche",
+    "websiteUrl": "https://blanche.no/",
+    "address": "Josefines gate 23, 0351 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.923093654381496,
+    "longitude": 10.725903810829392
+  },
+  "menuSource": {
+    "url": "https://blanche.no/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 19,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-18",
+      "note": "Fresh Oslo MICHELIN coverage reproof. Round 2 held Brasserie Blanche in review because source acquisition failed. The current first-party homepage now publishes a substantial current à-la-carte directly in HTML with individually priced starters, mains and desserts. Address spelling is normalized to the registered Josefines gate 23 form for Kartverket resolution; reproof source acquisition and semantic extraction without parser exceptions or floor weakening."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Dagens forrett",
+      "Fransk kalvebrissel med hasselnøtter og eplesjy",
+      "Dagens hovedrett",
+      "CONFITERT ANDELÅR med SAVOYKÅL, ERTER, SMÅPOTETER OG HONNINGSJY",
+      "Pannestekt piggvar med EDAMAME, SMÅPOTETER, PURRE OG SKALLDYRSAUS",
+      "Eple Tarte Tatin med vaniljeis",
+      "Sitronterte med marengs og jordbærsorbet",
+      "Petit four"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Dagens forrett",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Fransk kalvebrissel med hasselnøtter og eplesjy",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Dagens hovedrett",
+        "priceMinor": 39500
+      },
+      {
+        "name": "CONFITERT ANDELÅR med SAVOYKÅL, ERTER, SMÅPOTETER OG HONNINGSJY",
+        "priceMinor": 46500
+      },
+      {
+        "name": "Pannestekt piggvar med EDAMAME, SMÅPOTETER, PURRE OG SKALLDYRSAUS",
+        "priceMinor": 54500
+      },
+      {
+        "name": "Eple Tarte Tatin med vaniljeis",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Sitronterte med marengs og jordbærsorbet",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Petit four",
+        "priceMinor": 14500
+      }
+    ],
+    "forbiddenDishNames": [
+      "Forretter / Entrées / Starters",
+      "Hovedretter / Plats Principaux / Main Courses",
+      "Desserter / Desserts / Desserts",
+      "Meny Paysanne",
+      "Meny Blanche",
+      "Meny Gourmet",
+      "Meny Noel",
+      "Vinmeny"
+    ]
+  }
+}
