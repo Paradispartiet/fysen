@@ -65,7 +65,8 @@ const TRANSLATED_STARTER_PART =
   /^(?:forretter?|starters?|appetizers?|entr[ée]es?)$/iu;
 const TRANSLATED_MAIN_PART =
   /^(?:hovedretter?|mains?|main\s+courses?|plats?\s+principaux)$/iu;
-const TRANSLATED_DESSERT_PART =\n  /^(?:desserter?|desserts?|dessert(?:er)?\\s+(?:og|&|and)\\s+ost|ost\\s+(?:og|&|and)\\s+desserter?|desserts?\\s+(?:&|and)\\s+cheese|cheese\\s+(?:&|and)\\s+desserts?)$/iu;
+const TRANSLATED_DESSERT_PART =
+  /^(?:desserter?|desserts?|dessert(?:er)?\s+(?:og|&|and)\s+ost|ost\s+(?:og|&|and)\s+desserter?|desserts?\s+(?:&|and)\s+cheese|cheese\s+(?:&|and)\s+desserts?)$/iu;
 
 type MenuSectionState = "unknown" | "food" | "beverage";
 type TranslatedFoodSectionFamily = "starter" | "main" | "dessert";
