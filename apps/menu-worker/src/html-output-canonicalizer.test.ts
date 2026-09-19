@@ -418,4 +418,21 @@ describe("structural HTML output canonicalization", () => {
     ]);
   });
 
+
+  it("normalizes explicitly labeled allergen metadata without weakening real parenthetical names", () => {
+    const items = [
+      item("Plum tart with mascarpone cream (Contains: Wheat, eggs, milk)", 13500),
+      item("Fig and rose cake (Contains: Almonds, eggs, milk, soya beans)", 13500),
+      item("(Contains: Almonds)", 8000),
+      item("(Allergener: MELK, HVETE)", 9000),
+      item("House cake (seasonal)", 14500),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Plum tart with mascarpone cream",
+      "Fig and rose cake",
+      "House cake (seasonal)",
+    ]);
+  });
+
 });
