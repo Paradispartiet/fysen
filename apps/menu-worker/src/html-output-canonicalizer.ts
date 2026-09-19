@@ -1,6 +1,6 @@
 import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v17";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v18";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -47,6 +47,10 @@ const WINE_VINTAGE_ITEM =
 const BARE_UNIT_ITEM = /^(?:gr\.?|gram|grams?|stk|pcs?)$/iu;
 const ALLERGEN_DESCRIPTION_PAREN =
   /\([^)]*\b(?:milk|egg|wheat|gluten|sulfite|sulphite|melk|egg|hvete|skalldyr|shellfish|nuts?|nøtter?)\b[^)]*\)$/iu;
+const LABELED_ALLERGEN_PAREN_SUFFIX =
+  /\s+\((?:contains|allergens?|inneholder|allergener?)\s*:[^)]*\)\s*$/iu;
+const LABELED_ALLERGEN_PAREN_ITEM =
+  /^\((?:contains|allergens?|inneholder|allergener?)\s*:[^)]*\)$/iu;
 const TRAILING_CURRENCY_WORD = /\s+(?:kr\.?|nok)$/iu;
 const UI_ONLY_ITEM = /^(?:search|søk|(?:online\s+)?takeaway|reservations?|reservation|booking)$/iu;
 const WEEKDAY_TOKEN =
@@ -287,7 +291,11 @@ function isLowercaseAllergenDescriptionItem(name: string): boolean {
 }
 
 function cleanOutputItemName(item: MenuObservedItem): MenuObservedItem {
-  const name = item.name.trim().replace(TRAILING_CURRENCY_WORD, "").trim();
+  const name = item.name
+    .trim()
+    .replace(TRAILING_CURRENCY_WORD, "")
+    .replace(LABELED_ALLERGEN_PAREN_SUFFIX, "")
+    .trim();
   if (!name || name === item.name.trim()) return item;
   return {
     ...item,
@@ -389,6 +397,7 @@ function isOutputNoiseLabel(item: MenuObservedItem): boolean {
     QUANTITY_PRICE_SPLIT_ITEM.test(name) ||
     WINE_VINTAGE_ITEM.test(name) ||
     BARE_UNIT_ITEM.test(name) ||
+    LABELED_ALLERGEN_PAREN_ITEM.test(name) ||
     isLowercaseAllergenDescriptionItem(name) ||
     UI_ONLY_ITEM.test(name) ||
     WEEKDAY_ONLY_ITEM.test(name) ||

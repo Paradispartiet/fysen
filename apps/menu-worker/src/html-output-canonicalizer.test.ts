@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v17");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v18");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -415,6 +415,23 @@ describe("structural HTML output canonicalization", () => {
       ["Chef Table", 202600],
       ["Vintage Menu", 199900],
       ["Pasta Carbonara", 24900],
+    ]);
+  });
+
+
+  it("normalizes explicitly labeled allergen metadata without weakening real parenthetical names", () => {
+    const items = [
+      item("Plum tart with mascarpone cream (Contains: Wheat, eggs, milk)", 13500),
+      item("Fig and rose cake (Contains: Almonds, eggs, milk, soya beans)", 13500),
+      item("(Contains: Almonds)", 8000),
+      item("(Allergener: MELK, HVETE)", 9000),
+      item("House cake (seasonal)", 14500),
+    ];
+
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Plum tart with mascarpone cream",
+      "Fig and rose cake",
+      "House cake (seasonal)",
     ]);
   });
 
