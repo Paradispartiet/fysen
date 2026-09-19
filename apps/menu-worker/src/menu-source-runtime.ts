@@ -562,11 +562,7 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverFirstCardAfterPlainFoodSections(extracted.visibleText)
         : [];
-    if (
-      extracted.method === "html_heuristic" &&
-      fullVisibleText.includes("Biff tataki") &&
-      fullVisibleText.includes("Nocellara-oliven")
-    ) {
+    if (extracted.method === "html_heuristic") {
       console.error(
         "FYR_LIVE_EXTRACTION_DIAGNOSTIC",
         JSON.stringify({
