@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-michelin-festningen-reproof-20260919",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "festningen-restaurant-oslo",
+        "name": "Festningen Restaurant",
+        "websiteUrl": "https://www.festningenrestaurant.no/",
+        "address": "Myntgata 9, 0151 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.festningenrestaurant.no/middag",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-19",
+          "note": "Exact current-source MICHELIN coverage reproof after the generic repeated translated HTML price-block canonicalization repair merged in #822. Festningen previously generated technically but failed semantic artifact QA because parallel Norwegian/English dishes survived as duplicates and allergen text polluted at least one title. This seed remeasures the unchanged first-party dinner page on current main without parser exceptions, source substitution, item-floor weakening, or canonical promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "CHEF’S MENU",
+        "FORRETTER // STARTERS",
+        "HOVEDRETTER // MAINS",
+        "DESSERT OG OST // DESSERT & CHEESE",
+        "DAGENS RETT"
+      ]
+    }
+  ]
+}
