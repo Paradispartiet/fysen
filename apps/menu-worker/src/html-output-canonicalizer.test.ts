@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v16");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v17");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -46,6 +46,33 @@ describe("structural HTML output canonicalization", () => {
       "Spicy Popcorn",
       "Tortilla Chips",
       "Marinated Olives",
+    ]);
+  });
+
+  it("keeps the longer same-position same-price title variant", () => {
+    const short = {
+      ...item("Kalvesnitzel med erter", 46500),
+      position: 49,
+    };
+    const full = {
+      ...item(
+        "Kalvesnitzel med erter, potetpure og brunet smør",
+        46500,
+      ),
+      position: 49,
+    };
+    const other = {
+      ...item("CONFITERT ANDELÅR med SAVOYKÅL", 46500),
+      position: 52,
+    };
+
+    expect(
+      canonicalizeHtmlOutputItems([short, full, other]).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual([
+      "Kalvesnitzel med erter, potetpure og brunet smør",
+      "CONFITERT ANDELÅR med SAVOYKÅL",
     ]);
   });
 

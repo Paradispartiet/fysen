@@ -1,6 +1,6 @@
 import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v16";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v17";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -348,6 +348,22 @@ function preferUniquelyDirectPricedConflicts(
     return preferred === undefined || item === preferred;
   });
 }
+function collapseSamePositionPricePrefixVariants(
+  items: readonly MenuObservedItem[],
+): readonly MenuObservedItem[] {
+  return items.filter(
+    (item) =>
+      !items.some(
+        (candidate) =>
+          candidate !== item &&
+          candidate.position === item.position &&
+          samePrice(candidate, item) &&
+          candidate.normalizedName.length > item.normalizedName.length &&
+          candidate.normalizedName.startsWith(`${item.normalizedName} `),
+      ),
+  );
+}
+
 function isOutputNoiseLabel(item: MenuObservedItem): boolean {
   const name = item.name.trim();
   return (
@@ -400,7 +416,7 @@ export function canonicalizeHtmlOutputItems(
   );
   if (labelFilteredItems.length < 2) return labelFilteredItems;
   const mirroredNames = mirroredPromotionalNames(labelFilteredItems);
-  return labelFilteredItems.filter(
+  const structurallyFilteredItems = labelFilteredItems.filter(
     (item) =>
       !mirroredNames.has(item.normalizedName) &&
       !isNumericPrefixSuffixFragment(item, labelFilteredItems) &&
@@ -412,4 +428,5 @@ export function canonicalizeHtmlOutputItems(
       !isLowInformationSamePriceFragment(item, labelFilteredItems) &&
       !isExtremeDuplicatePriceOutlier(item, labelFilteredItems),
   );
+  return collapseSamePositionPricePrefixVariants(structurallyFilteredItems);
 }

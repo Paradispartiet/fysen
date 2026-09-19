@@ -54,7 +54,7 @@ describe("plain-text HTML section scoping", () => {
       119 NOK
     `;
 
-    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v13");
+    expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v14");
     expect(
       filterPlainTextBeverageSectionItems(items, visibleText).map(
         (entry) => entry.name,
@@ -213,6 +213,71 @@ describe("plain-text HTML section scoping", () => {
       "Entrecôte med pommes frites",
       "Crème Brûlée Maison",
       "Dampede blåskjell fra Trøndelag",
+    ]);
+  });
+
+  it("treats multilingual food headings as food scope after beverage navigation", () => {
+    const items = [
+      item(
+        "Kalvesnitzel med erter, potetpure og brunet smør",
+        4,
+        46500,
+      ),
+      item(
+        "Confit duck leg, Savoy cabbage, peas, baby potatoes, honey jus",
+        8,
+        46500,
+      ),
+    ];
+    const visibleText = `
+      Vin
+      House Bordeaux 165
+      Hovedretter / Plats Principaux / Main Courses
+      Kalvesnitzel med erter, potetpure og brunet smør 465,-
+      CONFITERT ANDELÅR med SAVOYKÅL, ERTER, SMÅPOTETER OG HONNINGSJY 465,-
+      Wiener Schnitzel, peas, potato purée and beurre noisette 465,-
+      Confit duck leg, Savoy cabbage, peas, baby potatoes, honey jus 465,-
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => entry.name,
+      ),
+    ).toEqual([
+      "Kalvesnitzel med erter, potetpure og brunet smør",
+    ]);
+  });
+
+  it("rejects a conflicting embedded title price only inside a repeated translated block", () => {
+    const items = [
+      item(
+        "Kalvesnitzel med erter, potetpure og brunet smør 465,-",
+        1,
+        49500,
+      ),
+      item(
+        "Grillet Entrecôte med syltet løk, pommes frites og saus Béarnaise",
+        2,
+        49500,
+      ),
+    ];
+    const visibleText = `
+      Hovedretter / Plats Principaux / Main Courses
+      Kalvesnitzel med erter, potetpure og brunet smør 465,-
+      Grillet Entrecôte med syltet løk, pommes frites og saus Béarnaise 495,-
+      Wiener Schnitzel, peas, potato purée and beurre noisette 465,-
+      Grilled entrecôte, pickled onions, fries and Béarnaise 495,-
+    `;
+
+    expect(
+      filterPlainTextBeverageSectionItems(items, visibleText).map(
+        (entry) => [entry.name, entry.priceMinor],
+      ),
+    ).toEqual([
+      [
+        "Grillet Entrecôte med syltet løk, pommes frites og saus Béarnaise",
+        49500,
+      ],
     ]);
   });
 

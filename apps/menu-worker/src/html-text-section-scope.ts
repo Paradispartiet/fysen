@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v13";
+export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v14";
 
 const SECTION_COUNT_SUFFIX = /\s*\(\s*\d{1,3}\s*\)\s*$/u;
 const BEVERAGE_SECTION_LABEL =
@@ -58,8 +58,28 @@ const TRAILING_ITEM_ALLERGEN_CODES =
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const DIRECT_SOURCE_PRICE =
   /^(?:(?:fra|from)\s*)?(?:(?:NOK|kr\.?)\s*)?[1-9]\d{0,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|NOK)?$/iu;
+const REPEATED_TRANSLATION_PRICE_AT_END =
+  /(?:^|\s)(?:(?:NOK|kr\.?)\s*)?([1-9]\d{1,3})(?:[.,](\d{1,2}))?\s*(?:,-|kr\.?|NOK)?$/iu;
+const NAMED_MENU_SECTION_BOUNDARY = /^(?:meny|menu)\s+\p{L}/iu;
+const TRANSLATED_STARTER_PART =
+  /^(?:forretter?|starters?|appetizers?|entr[ée]es?)$/iu;
+const TRANSLATED_MAIN_PART =
+  /^(?:hovedretter?|mains?|main\s+courses?|plats?\s+principaux)$/iu;
+const TRANSLATED_DESSERT_PART = /^(?:desserter?|desserts?)$/iu;
 
 type MenuSectionState = "unknown" | "food" | "beverage";
+type TranslatedFoodSectionFamily = "starter" | "main" | "dessert";
+
+interface RepeatedTranslatedPriceEntry {
+  readonly titlePosition: number;
+  readonly priceMinor: number;
+  readonly normalizedTitle: string;
+}
+
+interface RepeatedTranslatedSectionEvidence {
+  readonly pricedEntries: readonly RepeatedTranslatedPriceEntry[];
+  readonly secondBlockEntries: readonly RepeatedTranslatedPriceEntry[];
+}
 
 function normalizeLine(value: string): string {
   return value
@@ -71,6 +91,217 @@ function normalizeLine(value: string): string {
 
 function normalizedSectionLabel(value: string): string {
   return normalizeLine(value).replace(SECTION_COUNT_SUFFIX, "").trim();
+}
+
+function translatedFoodSectionFamily(
+  value: string,
+): TranslatedFoodSectionFamily | null {
+  const parts = normalizeLine(value)
+    .split(/\s*(?:\/|\|)\s*/u)
+    .map((part) => part.trim())
+    .filter(Boolean);
+  if (parts.length < 2) return null;
+
+  const families = parts
+    .map((part): TranslatedFoodSectionFamily | null => {
+      if (TRANSLATED_STARTER_PART.test(part)) return "starter";
+      if (TRANSLATED_MAIN_PART.test(part)) return "main";
+      if (TRANSLATED_DESSERT_PART.test(part)) return "dessert";
+      return null;
+    })
+    .filter(
+      (family): family is TranslatedFoodSectionFamily => family !== null,
+    );
+  if (families.length < 2) return null;
+  const distinct = new Set(families);
+  return distinct.size === 1 ? (families[0] ?? null) : null;
+}
+
+function parseRepeatedTranslationPriceMinor(
+  value: string,
+): { readonly priceMinor: number; readonly matchIndex: number } | null {
+  const line = normalizeLine(value);
+  const match = line.match(REPEATED_TRANSLATION_PRICE_AT_END);
+  if (!match?.[1]) return null;
+  const whole = Number(match[1]);
+  const decimals = (match[2] ?? "").padEnd(2, "0").slice(0, 2);
+  const priceMinor = whole * 100 + Number(decimals || "0");
+  if (priceMinor < 4_000 || priceMinor > 1_000_000) return null;
+  return {
+    priceMinor,
+    matchIndex: match.index ?? 0,
+  };
+}
+
+function repeatedTranslatedPricedEntry(
+  lines: readonly string[],
+  position: number,
+): RepeatedTranslatedPriceEntry | null {
+  const line = lines[position] ?? "";
+  const parsed = parseRepeatedTranslationPriceMinor(line);
+  if (!parsed) return null;
+
+  let title = line.slice(0, parsed.matchIndex).trim();
+  let titlePosition = position;
+  if (!title) {
+    for (let index = position - 1; index >= Math.max(0, position - 2); index -= 1) {
+      const candidate = normalizeLine(lines[index] ?? "");
+      if (!candidate) continue;
+      if (
+        translatedFoodSectionFamily(candidate) ||
+        FOOD_SECTION_LABEL.test(normalizedSectionLabel(candidate)) ||
+        BEVERAGE_SECTION_LABEL.test(normalizedSectionLabel(candidate))
+      ) {
+        return null;
+      }
+      title = candidate;
+      titlePosition = index;
+      break;
+    }
+  }
+
+  const normalizedTitle = normalizeDishName(title);
+  if (!normalizedTitle || !/\p{L}/u.test(title)) return null;
+  return {
+    titlePosition,
+    priceMinor: parsed.priceMinor,
+    normalizedTitle,
+  };
+}
+
+function isRepeatedTranslationSectionBoundary(value: string): boolean {
+  const sectionLabel = normalizedSectionLabel(value);
+  return (
+    translatedFoodSectionFamily(sectionLabel) !== null ||
+    FOOD_SECTION_LABEL.test(sectionLabel) ||
+    PREFIXED_MAIN_COURSE_SECTION_LABEL.test(sectionLabel) ||
+    BEVERAGE_SECTION_LABEL.test(sectionLabel) ||
+    MENU_ROOT_SECTION_LABEL.test(sectionLabel) ||
+    MENU_END_SECTION_LABEL.test(sectionLabel) ||
+    NAMED_MENU_SECTION_BOUNDARY.test(sectionLabel)
+  );
+}
+
+function repeatedTranslatedSectionEvidence(
+  lines: readonly string[],
+): RepeatedTranslatedSectionEvidence {
+  const sectionPricedEntries: RepeatedTranslatedPriceEntry[] = [];
+  const secondBlockEntries: RepeatedTranslatedPriceEntry[] = [];
+
+  for (let headingPosition = 0; headingPosition < lines.length; headingPosition += 1) {
+    if (!translatedFoodSectionFamily(lines[headingPosition] ?? "")) continue;
+
+    let sectionEnd = lines.length;
+    for (let index = headingPosition + 1; index < lines.length; index += 1) {
+      if (!isRepeatedTranslationSectionBoundary(lines[index] ?? "")) continue;
+      sectionEnd = index;
+      break;
+    }
+
+    const pricedEntries: RepeatedTranslatedPriceEntry[] = [];
+    for (let index = headingPosition + 1; index < sectionEnd; index += 1) {
+      const entry = repeatedTranslatedPricedEntry(lines, index);
+      if (!entry) continue;
+      if (
+        pricedEntries.some(
+          (candidate) => candidate.titlePosition === entry.titlePosition,
+        )
+      ) {
+        continue;
+      }
+      pricedEntries.push(entry);
+    }
+    if (pricedEntries.length < 4) continue;
+
+    let best:
+      | {
+          readonly start: number;
+          readonly halfLength: number;
+          readonly priceMatches: number;
+        }
+      | null = null;
+
+    for (let start = 0; start <= pricedEntries.length - 4; start += 1) {
+      const maxHalfLength = Math.floor((pricedEntries.length - start) / 2);
+      for (let halfLength = 2; halfLength <= maxHalfLength; halfLength += 1) {
+        let priceMatches = 0;
+        let titleDifferences = 0;
+        for (let offset = 0; offset < halfLength; offset += 1) {
+          const first = pricedEntries[start + offset];
+          const second = pricedEntries[start + halfLength + offset];
+          if (!first || !second) continue;
+          if (first.priceMinor === second.priceMinor) priceMatches += 1;
+          if (first.normalizedTitle !== second.normalizedTitle)
+            titleDifferences += 1;
+        }
+
+        const allowedPriceMismatches = halfLength >= 5 ? 1 : 0;
+        if (priceMatches < halfLength - allowedPriceMismatches) continue;
+        if (
+          titleDifferences <
+          Math.max(2, Math.ceil(halfLength / 2))
+        ) {
+          continue;
+        }
+
+        if (
+          !best ||
+          halfLength > best.halfLength ||
+          (halfLength === best.halfLength &&
+            priceMatches > best.priceMatches) ||
+          (halfLength === best.halfLength &&
+            priceMatches === best.priceMatches &&
+            start < best.start)
+        ) {
+          best = { start, halfLength, priceMatches };
+        }
+      }
+    }
+    if (!best) continue;
+
+    sectionPricedEntries.push(...pricedEntries);
+    for (let offset = 0; offset < best.halfLength; offset += 1) {
+      const first = pricedEntries[best.start + offset];
+      const second =
+        pricedEntries[best.start + best.halfLength + offset];
+      if (!first || !second) continue;
+      if (first.normalizedTitle === second.normalizedTitle) continue;
+      secondBlockEntries.push(second);
+    }
+  }
+
+  return {
+    pricedEntries: sectionPricedEntries,
+    secondBlockEntries,
+  };
+}
+
+function itemNameMatchesRepeatedTranslatedEntry(
+  item: MenuObservedItem,
+  entry: RepeatedTranslatedPriceEntry,
+): boolean {
+  const itemName = item.normalizedName;
+  const rawName = entry.normalizedTitle;
+  return (
+    itemName === rawName ||
+    rawName.startsWith(`${itemName} `) ||
+    itemName.startsWith(`${rawName} `)
+  );
+}
+
+function itemMatchesRepeatedTranslatedEntry(
+  item: MenuObservedItem,
+  entry: RepeatedTranslatedPriceEntry,
+): boolean {
+  if (item.priceMinor !== entry.priceMinor) return false;
+  if (!itemNameMatchesRepeatedTranslatedEntry(item, entry)) return false;
+
+  const rawName = entry.normalizedTitle;
+  const excerpt = normalizeDishName(item.sourceExcerpt ?? "");
+  const excerptMatches =
+    Boolean(excerpt) &&
+    (excerpt.includes(rawName) || rawName.includes(excerpt));
+  return item.position === entry.titlePosition || excerptMatches;
 }
 
 function sectionStateByPosition(
@@ -87,6 +318,14 @@ function sectionStateByPosition(
 
     if (!countedSection && !sawPrice && MENU_ROOT_SECTION_LABEL.test(sectionLabel)) {
       state = "unknown";
+      states[index] = "unknown";
+      continue;
+    }
+    if (
+      !countedSection &&
+      translatedFoodSectionFamily(sectionLabel) !== null
+    ) {
+      state = "food";
       states[index] = "unknown";
       continue;
     }
@@ -135,7 +374,11 @@ function isBilingualMenuSection(value: string): boolean {
     .split(/[|/]/u)
     .map((part) => part.trim())
     .filter(Boolean);
-  return parts.length >= 2 && parts.every((part) => BILINGUAL_SECTION_PART.test(part));
+  return (
+    translatedFoodSectionFamily(value) !== null ||
+    (parts.length >= 2 &&
+      parts.every((part) => BILINGUAL_SECTION_PART.test(part)))
+  );
 }
 
 function looksLikeDescriptionFragment(value: string): boolean {
@@ -167,6 +410,32 @@ function isObviousOutputNoise(
     isBilingualMenuSection(withoutLeadingDelimiter) ||
     BEVERAGE_SECTION_LABEL.test(normalizedSectionLabel(withoutLeadingDelimiter)) ||
     /^(?:gluten[- ]?fri|gluten[- ]?free)$/iu.test(withoutLeadingDelimiter)
+  );
+}
+
+function hasConflictingExplicitNamePrice(
+  item: MenuObservedItem,
+  repeatedEntries: readonly RepeatedTranslatedPriceEntry[],
+): boolean {
+  if (item.priceMinor === null) return false;
+  const normalizedName = normalizeLine(item.name);
+  const match = normalizedName.match(
+    /\s+(?:(?:nok|kr\.?)\s*)?([1-9]\d{1,3})(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)\s*$/iu,
+  );
+  if (!match?.[1] || match.index === undefined) return false;
+  const embeddedPriceMinor = Number(match[1]) * 100;
+  if (embeddedPriceMinor === item.priceMinor) return false;
+
+  const baseName = normalizeDishName(
+    normalizedName.slice(0, match.index).trim(),
+  );
+  if (!baseName) return false;
+  return repeatedEntries.some(
+    (entry) =>
+      entry.priceMinor === embeddedPriceMinor &&
+      (entry.normalizedTitle === baseName ||
+        entry.normalizedTitle.startsWith(`${baseName} `) ||
+        baseName.startsWith(`${entry.normalizedTitle} `)),
   );
 }
 
@@ -253,14 +522,31 @@ export function filterPlainTextBeverageSectionItems(
   options: BeverageSectionFilterOptions = {},
 ): readonly MenuObservedItem[] {
   if (items.length === 0) return items;
-  const cleanedItems = items.map(cleanOutputArtifactName);
   const lines = visibleText.split("\n").map(normalizeLine).filter(Boolean);
   const hasBeverageSection = lines.some((line) =>
     BEVERAGE_SECTION_LABEL.test(normalizedSectionLabel(line)),
   );
   const states = sectionStateByPosition(lines);
+  const repeatedTranslatedEvidence =
+    repeatedTranslatedSectionEvidence(lines);
+  const cleanedItems = items
+    .filter(
+      (item) =>
+        !hasConflictingExplicitNamePrice(
+          item,
+          repeatedTranslatedEvidence.pricedEntries,
+        ),
+    )
+    .map(cleanOutputArtifactName);
 
   return cleanedItems.filter((item) => {
+    if (
+      repeatedTranslatedEvidence.secondBlockEntries.some((entry) =>
+        itemMatchesRepeatedTranslatedEntry(item, entry),
+      )
+    ) {
+      return false;
+    }
     const evidence = sectionEvidenceForItem(
       item,
       lines,
