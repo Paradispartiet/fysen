@@ -77,6 +77,7 @@ interface RepeatedTranslatedPriceEntry {
 }
 
 interface RepeatedTranslatedSectionEvidence {
+  readonly pricedEntries: readonly RepeatedTranslatedPriceEntry[];
   readonly secondBlockEntries: readonly RepeatedTranslatedPriceEntry[];
 }
 
@@ -184,6 +185,7 @@ function isRepeatedTranslationSectionBoundary(value: string): boolean {
 function repeatedTranslatedSectionEvidence(
   lines: readonly string[],
 ): RepeatedTranslatedSectionEvidence {
+  const sectionPricedEntries: RepeatedTranslatedPriceEntry[] = [];
   const secondBlockEntries: RepeatedTranslatedPriceEntry[] = [];
 
   for (let headingPosition = 0; headingPosition < lines.length; headingPosition += 1) {
@@ -257,6 +259,7 @@ function repeatedTranslatedSectionEvidence(
     }
     if (!best) continue;
 
+    sectionPricedEntries.push(...pricedEntries);
     for (let offset = 0; offset < best.halfLength; offset += 1) {
       const first = pricedEntries[best.start + offset];
       const second =
@@ -267,7 +270,10 @@ function repeatedTranslatedSectionEvidence(
     }
   }
 
-  return { secondBlockEntries };
+  return {
+    pricedEntries: sectionPricedEntries,
+    secondBlockEntries,
+  };
 }
 
 function itemNameMatchesRepeatedTranslatedEntry(
@@ -407,13 +413,30 @@ function isObviousOutputNoise(
   );
 }
 
-function hasConflictingExplicitNamePrice(item: MenuObservedItem): boolean {
+function hasConflictingExplicitNamePrice(
+  item: MenuObservedItem,
+  repeatedEntries: readonly RepeatedTranslatedPriceEntry[],
+): boolean {
   if (item.priceMinor === null) return false;
-  const match = normalizeLine(item.name).match(
+  const normalizedName = normalizeLine(item.name);
+  const match = normalizedName.match(
     /\s+(?:(?:nok|kr\.?)\s*)?([1-9]\d{1,3})(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|nok)\s*$/iu,
   );
-  if (!match?.[1]) return false;
-  return Number(match[1]) * 100 !== item.priceMinor;
+  if (!match?.[1] || match.index === undefined) return false;
+  const embeddedPriceMinor = Number(match[1]) * 100;
+  if (embeddedPriceMinor === item.priceMinor) return false;
+
+  const baseName = normalizeDishName(
+    normalizedName.slice(0, match.index).trim(),
+  );
+  if (!baseName) return false;
+  return repeatedEntries.some(
+    (entry) =>
+      entry.priceMinor === embeddedPriceMinor &&
+      (entry.normalizedTitle === baseName ||
+        entry.normalizedTitle.startsWith(`${baseName} `) ||
+        baseName.startsWith(`${entry.normalizedTitle} `)),
+  );
 }
 
 function cleanOutputArtifactName(item: MenuObservedItem): MenuObservedItem {
@@ -499,9 +522,6 @@ export function filterPlainTextBeverageSectionItems(
   options: BeverageSectionFilterOptions = {},
 ): readonly MenuObservedItem[] {
   if (items.length === 0) return items;
-  const cleanedItems = items
-    .filter((item) => !hasConflictingExplicitNamePrice(item))
-    .map(cleanOutputArtifactName);
   const lines = visibleText.split("\n").map(normalizeLine).filter(Boolean);
   const hasBeverageSection = lines.some((line) =>
     BEVERAGE_SECTION_LABEL.test(normalizedSectionLabel(line)),
@@ -509,6 +529,15 @@ export function filterPlainTextBeverageSectionItems(
   const states = sectionStateByPosition(lines);
   const repeatedTranslatedEvidence =
     repeatedTranslatedSectionEvidence(lines);
+  const cleanedItems = items
+    .filter(
+      (item) =>
+        !hasConflictingExplicitNamePrice(
+          item,
+          repeatedTranslatedEvidence.pricedEntries,
+        ),
+    )
+    .map(cleanOutputArtifactName);
 
   return cleanedItems.filter((item) => {
     if (
