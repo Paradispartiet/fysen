@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-michelin-festningen-reproof-20260919",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "festningen-restaurant-oslo",
+        "name": "Festningen Restaurant",
+        "websiteUrl": "https://www.festningenrestaurant.no/",
+        "address": "Myntgata 9, 0151 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.festningenrestaurant.no/middag",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-19",
+          "note": "Exact-head live reproof for generic interleaved bilingual dish-card canonicalization. No parser exception, source substitution, item-floor weakening, or canonical promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 7,
+      "forbiddenDishNames": [
+        "CHEF’S MENU",
+        "FORRETTER // STARTERS",
+        "HOVEDRETTER // MAINS",
+        "DESSERT OG OST // DESSERT & CHEESE",
+        "DAGENS RETT",
+        "CURED MEAT",
+        "TRUFFLE AND MUSHROOM RISOTTO (milk, sulfitte)"
+      ]
+    }
+  ]
+}
