@@ -25,8 +25,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-18",
-      "note": "Current Favrit public menu API reproof on 2026-09-18 no longer returns Entrecote; the remaining representative dish and price assertions continue to anchor the live source. Kitchen-hours completeness remains unverified."
+      "checkedAt": "2026-09-20",
+      "note": "Fresh scheduled catalog-health reproof on 2026-09-20 confirmed the current Favrit public menu API still returns 53 clean priced dishes, but Grillet ytrefilet 220gr has left the live menu. Replace only that stale representative assertion with current Pane Pork Chop @ 205 NOK; source, 44-item floor and the remaining representative assertions stay unchanged. Kitchen-hours completeness remains unverified."
     }
   },
   "actions": [],
@@ -38,7 +38,7 @@
       "Friterte artisjokker",
       "Gambas al ajillo",
       "Blåskjell escabeche",
-      "Grillet ytrefilet 220gr",
+      "Pane Pork Chop",
       "Presa Ibérica (200 g)"
     ],
     "requiredDishVariants": [
@@ -67,8 +67,8 @@
         "priceMinor": 23000
       },
       {
-        "name": "Grillet ytrefilet 220gr",
-        "priceMinor": 31000
+        "name": "Pane Pork Chop",
+        "priceMinor": 20500
       },
       {
         "name": "Presa Ibérica (200 g)",
