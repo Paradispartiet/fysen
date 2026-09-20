@@ -954,29 +954,72 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
       const page = await document.getPage(pageNumber);
       const content = await page.getTextContent();
       const operatorList = await page.getOperatorList();
+      const collectGlyphText = (value: unknown): string => {
+        if (Array.isArray(value)) return value.map(collectGlyphText).join("");
+        if (typeof value === "string") return value;
+        if (
+          value &&
+          typeof value === "object" &&
+          "unicode" in value &&
+          typeof (value as { unicode?: unknown }).unicode === "string"
+        ) {
+          return (value as { unicode: string }).unicode;
+        }
+        return "";
+      };
+      const opName = (fn: number): string =>
+        Object.entries(OPS).find(([, value]) => value === fn)?.[0] ?? String(fn);
+      const compactArgs = (args: unknown): unknown => {
+        if (!Array.isArray(args)) return args;
+        return args.map((value) => {
+          if (typeof value === "number" || typeof value === "string") return value;
+          if (Array.isArray(value)) {
+            const text = collectGlyphText(value);
+            return text ? { text } : value.filter((entry) => typeof entry === "number");
+          }
+          const text = collectGlyphText(value);
+          return text ? { text } : null;
+        });
+      };
+      let previousTextEvent:
+        | { readonly index: number; readonly text: string }
+        | null = null;
       for (let opIndex = 0; opIndex < operatorList.fnArray.length; opIndex += 1) {
         const fn = operatorList.fnArray[opIndex];
         if (fn !== OPS.showText && fn !== OPS.showSpacedText) continue;
-        const collectGlyphText = (value: unknown): string => {
-          if (Array.isArray(value)) return value.map(collectGlyphText).join("");
-          if (typeof value === "string") return value;
-          if (
-            value &&
-            typeof value === "object" &&
-            "unicode" in value &&
-            typeof (value as { unicode?: unknown }).unicode === "string"
-          ) {
-            return (value as { unicode: string }).unicode;
-          }
-          return "";
-        };
         const operatorText = collectGlyphText(operatorList.argsArray[opIndex]);
-        if (operatorText.trim()) {
-          console.warn(
-            "[pdf-operator-diagnostic]",
-            JSON.stringify({ page: pageNumber, opIndex, fn, text: operatorText }),
-          );
+        if (!operatorText.trim()) continue;
+        if (previousTextEvent) {
+          const pair = `${previousTextEvent.text}|||${operatorText}`;
+          if (
+            /(?:PROFI\|\|\|LE:|D\|\|\|IJON|BO\|\|\|EU|EU\|\|\|F|CHAMPAG\|\|\|N|N\|\|\|E VINEGAR|SAUCE B\|\|\|É|É\|\|\|ARNAISE|GLACED ONIONS\|\|\|AND|AND\|\|\|SAUCE B|NORWEGIAN CATTLE\|\|\|W|W\|\|\|ITH)/u.test(
+              pair,
+            )
+          ) {
+            const between = [];
+            for (
+              let betweenIndex = previousTextEvent.index + 1;
+              betweenIndex < opIndex;
+              betweenIndex += 1
+            ) {
+              between.push({
+                index: betweenIndex,
+                op: opName(operatorList.fnArray[betweenIndex] ?? -1),
+                args: compactArgs(operatorList.argsArray[betweenIndex]),
+              });
+            }
+            console.warn(
+              "[pdf-operator-boundary]",
+              JSON.stringify({
+                page: pageNumber,
+                previous: previousTextEvent,
+                current: { index: opIndex, text: operatorText },
+                between,
+              }),
+            );
+          }
         }
+        previousTextEvent = { index: opIndex, text: operatorText };
       }
       lines.push(...reconstructLines(content.items, pageNumber));
       page.cleanup();
