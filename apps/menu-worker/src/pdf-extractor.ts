@@ -17,8 +17,10 @@ export interface ExtractedPdfMenu {
 
 interface PdfWhitespaceEvidence {
   readonly aligned: boolean;
+  readonly trusted: boolean;
   readonly rawBoundaries: ReadonlySet<number>;
   readonly contentBoundaries: ReadonlySet<number>;
+  readonly supportedContentBoundaries: number;
 }
 
 function normalizedGlyphSequence(value: string): string {
@@ -57,12 +59,26 @@ function pdfWhitespaceEvidence(
   rawOperatorText: string,
   contentText: string,
 ): PdfWhitespaceEvidence {
+  const rawGlyphs = normalizedGlyphSequence(rawOperatorText);
+  const contentGlyphs = normalizedGlyphSequence(contentText);
+  const rawBoundaries = whitespaceBoundaries(rawOperatorText);
+  const contentBoundaries = whitespaceBoundaries(contentText);
+  let supportedContentBoundaries = 0;
+  for (const boundary of contentBoundaries) {
+    if (rawBoundaries.has(boundary)) supportedContentBoundaries += 1;
+  }
+  const supportRatio =
+    contentBoundaries.size === 0
+      ? 1
+      : supportedContentBoundaries / contentBoundaries.size;
+  const aligned = rawGlyphs.length > 0 && rawGlyphs === contentGlyphs;
+
   return {
-    aligned:
-      normalizedGlyphSequence(rawOperatorText).length > 0 &&
-      normalizedGlyphSequence(rawOperatorText) === normalizedGlyphSequence(contentText),
-    rawBoundaries: whitespaceBoundaries(rawOperatorText),
-    contentBoundaries: whitespaceBoundaries(contentText),
+    aligned,
+    trusted: aligned && supportRatio >= 0.8,
+    rawBoundaries,
+    contentBoundaries,
+    supportedContentBoundaries,
   };
 }
 
@@ -248,7 +264,7 @@ function reconstructSequentialLines(
     const rawText = rawItem.str.normalize("NFKC");
     const itemStartGlyphOffset = glyphOffset;
     glyphOffset += normalizedGlyphSequence(rawText).length;
-    const authoritativeWhitespace = whitespaceEvidence?.aligned === true;
+    const authoritativeWhitespace = whitespaceEvidence?.trusted === true;
     const reconstructedRawText = authoritativeWhitespace
       ? filterPdfItemWhitespace(
           rawText,
@@ -1044,7 +1060,7 @@ export function reconstructPdfTextLines(
   return reconstructLines(
     items,
     page,
-    evidence?.aligned ? evidence : null,
+    evidence?.trusted ? evidence : null,
   ).map((line) => line.text);
 }
 
@@ -1080,7 +1096,7 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
         ...reconstructLines(
           content.items,
           pageNumber,
-          whitespaceEvidence.aligned ? whitespaceEvidence : null,
+          whitespaceEvidence.trusted ? whitespaceEvidence : null,
         ),
       );
       page.cleanup();

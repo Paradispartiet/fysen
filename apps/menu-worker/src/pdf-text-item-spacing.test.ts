@@ -47,4 +47,21 @@ describe("PDF text-item spacing", () => {
     expect(lines).toEqual(["CÔTE DE BOEUF MED", "SAUS BÉARNAISE"]);
   });
 
+  it("falls back when raw operators do not reliably encode content word spaces", () => {
+    const lines = reconstructPdfTextLines(
+      [
+        {
+          str: "Pasta carbonara",
+          transform: [1, 0, 0, 1, 100, 700],
+          width: 90,
+          hasEOL: true,
+        },
+      ],
+      1,
+      "Pastacarbonara",
+    );
+
+    expect(lines).toEqual(["Pasta carbonara"]);
+  });
+
 });
