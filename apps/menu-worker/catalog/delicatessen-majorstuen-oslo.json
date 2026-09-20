@@ -25,8 +25,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-18",
-      "note": "Current Favrit public menu API reproof on 2026-09-18 no longer returns Entrecote; the remaining representative dish and price assertions continue to anchor the live source. Kitchen-hours completeness remains unverified."
+      "checkedAt": "2026-09-20",
+      "note": "Current Favrit public menu API reproof on 2026-09-20 still yields 53 canonical items against the unchanged 44-item floor. Grillet ytrefilet 220gr has left the live menu; Grillet blekksprut @ 210 NOK now replaces that stale representative assertion. Source, floor and the remaining semantic assertions are unchanged. Kitchen-hours completeness remains unverified."
     }
   },
   "actions": [],
@@ -38,7 +38,7 @@
       "Friterte artisjokker",
       "Gambas al ajillo",
       "Blåskjell escabeche",
-      "Grillet ytrefilet 220gr",
+      "Grillet blekksprut",
       "Presa Ibérica (200 g)"
     ],
     "requiredDishVariants": [
@@ -67,8 +67,8 @@
         "priceMinor": 23000
       },
       {
-        "name": "Grillet ytrefilet 220gr",
-        "priceMinor": 31000
+        "name": "Grillet blekksprut",
+        "priceMinor": 21000
       },
       {
         "name": "Presa Ibérica (200 g)",
