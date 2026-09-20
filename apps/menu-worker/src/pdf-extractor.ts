@@ -132,6 +132,7 @@ function reconstructSequentialLines(
   let buffer = "";
   let lastY: number | null = null;
   let lastRight: number | null = null;
+  let lastRawEndedWithWhitespace = false;
 
   const flush = (): void => {
     const text = normalizeLine(buffer);
@@ -139,11 +140,13 @@ function reconstructSequentialLines(
     buffer = "";
     lastY = null;
     lastRight = null;
+    lastRawEndedWithWhitespace = false;
   };
 
   for (const rawItem of items) {
     if (!isTextItem(rawItem)) continue;
-    const text = normalizeLine(rawItem.str);
+    const rawText = rawItem.str.normalize("NFKC");
+    const text = normalizeLine(rawText);
     if (!text) {
       if (rawItem.hasEOL) flush();
       continue;
@@ -158,8 +161,26 @@ function reconstructSequentialLines(
     const largeGap = x !== null && lastRight !== null && x - lastRight > 140;
 
     if (buffer && (movedLine || movedBack || largeGap)) flush();
-    if (buffer && !buffer.endsWith(" ")) buffer += " ";
+    if (buffer && !buffer.endsWith(" ")) {
+      const hasReliableHorizontalGeometry =
+        x !== null &&
+        lastRight !== null &&
+        Number.isFinite(x) &&
+        Number.isFinite(lastRight);
+      const explicitWhitespaceBoundary =
+        lastRawEndedWithWhitespace || /^\s/u.test(rawText);
+      const geometricWordGap =
+        hasReliableHorizontalGeometry && x - lastRight > 2;
+      if (
+        explicitWhitespaceBoundary ||
+        !hasReliableHorizontalGeometry ||
+        geometricWordGap
+      ) {
+        buffer += " ";
+      }
+    }
     buffer += text;
+    lastRawEndedWithWhitespace = /\s$/u.test(rawText);
     if (y !== null) lastY = y;
     if (x !== null) lastRight = x + Math.max(width, 0);
     if (rawItem.hasEOL) flush();
