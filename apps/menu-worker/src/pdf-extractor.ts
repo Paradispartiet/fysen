@@ -952,7 +952,7 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
   try {
     for (let pageNumber = 1; pageNumber <= pageCount; pageNumber += 1) {
       const page = await document.getPage(pageNumber);
-      const content = await page.getTextContent();
+      const content = await page.getTextContent({ disableNormalization: true });
       lines.push(...reconstructLines(content.items, pageNumber));
       page.cleanup();
     }
