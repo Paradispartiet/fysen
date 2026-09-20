@@ -935,8 +935,7 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
         const sameVisualRow = positionedDebugItems.filter(
           (item) =>
             item.y !== null &&
-            Math.abs(item.y - anchorY) <= 2 &&
-            /\p{L}/u.test(item.str),
+            Math.abs(item.y - anchorY) <= 2,
         );
         console.error(
           "[pdf-token-spacing-diagnostic]",
