@@ -92,7 +92,7 @@ describe("PDF menu extractor", () => {
       "3 OR 6 OYSTERS 190,- / 380,-",
     ]);
 
-    expect(PDF_EXTRACTOR_VERSION).toBe("pdf-text-v16");
+    expect(PDF_EXTRACTOR_VERSION).toBe("pdf-text-v17");
     expect(items).toHaveLength(1);
     expect(items[0]).toMatchObject({
       name: "3 OR 6 OYSTERS",
