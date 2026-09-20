@@ -993,8 +993,9 @@ function buildItems(lines: readonly PdfLine[]): readonly MenuObservedItem[] {
 export function reconstructPdfTextLines(
   items: readonly unknown[],
   page = 1,
-  _rawOperatorText?: string,
+  rawOperatorText?: string,
 ): readonly string[] {
+  void rawOperatorText;
   return reconstructLines(items, page).map((line) => line.text);
 }
 
