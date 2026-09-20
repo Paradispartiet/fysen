@@ -162,18 +162,19 @@ function reconstructSequentialLines(
 
     if (buffer && (movedLine || movedBack || largeGap)) flush();
     if (buffer && !buffer.endsWith(" ")) {
-      const hasReliableHorizontalGeometry =
+      const horizontalGap =
         x !== null &&
         lastRight !== null &&
         Number.isFinite(x) &&
-        Number.isFinite(lastRight);
+        Number.isFinite(lastRight)
+          ? x - lastRight
+          : null;
       const explicitWhitespaceBoundary =
         lastRawEndedWithWhitespace || /^\s/u.test(rawText);
-      const geometricWordGap =
-        hasReliableHorizontalGeometry && x - lastRight > 2;
+      const geometricWordGap = horizontalGap !== null && horizontalGap > 2;
       if (
         explicitWhitespaceBoundary ||
-        !hasReliableHorizontalGeometry ||
+        horizontalGap === null ||
         geometricWordGap
       ) {
         buffer += " ";
