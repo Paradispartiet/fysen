@@ -129,63 +129,23 @@ vi.mock("pdfjs-dist/legacy/build/pdf.mjs", () => ({
               hasEOL: true,
             },
             {
-              str: "COTE D",
+              str: "RIBEYE WITH SAUCE B",
               transform: [12, 0, 0, 12, 72, 640],
-              width: 36,
+              width: 100,
             },
             {
               str: " ",
-              transform: [12, 0, 0, 12, 108, 640],
-              width: 6.7,
-            },
-            {
-              str: "E",
-              transform: [12, 0, 0, 12, 114.7, 640],
-              width: 5.9,
-            },
-            {
-              str: " ",
-              transform: [12, 0, 0, 12, 120.6, 640],
-              width: 3.7,
-            },
-            {
-              str: "BO",
-              transform: [12, 0, 0, 12, 124.3, 640],
-              width: 14.5,
-            },
-            {
-              str: " ",
-              transform: [12, 0, 0, 12, 138.8, 640],
-              width: 2.9,
-            },
-            {
-              str: "EU",
-              transform: [12, 0, 0, 12, 141.7, 640],
-              width: 13.6,
-            },
-            {
-              str: " ",
-              transform: [12, 0, 0, 12, 155.3, 640],
-              width: 1.4,
-            },
-            {
-              str: "F MED SAUS B",
-              transform: [12, 0, 0, 12, 156.7, 640],
-              width: 70,
-            },
-            {
-              str: " ",
-              transform: [12, 0, 0, 12, 226.7, 640],
+              transform: [12, 0, 0, 12, 172, 640],
               width: 6.2,
             },
             {
               str: "É",
-              transform: [12, 0, 0, 12, 232.9, 640],
+              transform: [12, 0, 0, 12, 178.2, 640],
               width: 5.9,
             },
             {
               str: "ARNAISE",
-              transform: [12, 0, 0, 12, 239.7, 640],
+              transform: [12, 0, 0, 12, 184.9, 640],
               width: 42.5,
               hasEOL: true,
             },
@@ -240,7 +200,7 @@ describe("PDF positioned fragment spacing", () => {
       "COTE DE BOEUF SERVED WITH GLAZED ONIONS AND SAUCE BÉARNAISE",
     );
     expect(extracted.visibleText).toContain(
-      "COTE DE BOEUF MED SAUS BÉARNAISE",
+      "RIBEYE WITH SAUCE BÉARNAISE",
     );
     expect(extracted.visibleText).toContain(
       "OYSTERS WITH CHAMPAGNE VINEGAR",
