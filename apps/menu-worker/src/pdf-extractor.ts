@@ -909,17 +909,32 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
     for (let pageNumber = 1; pageNumber <= pageCount; pageNumber += 1) {
       const page = await document.getPage(pageNumber);
       const content = await page.getTextContent();
-      for (const rawItem of content.items) {
-        if (
-          isTextItem(rawItem) &&
+      const diagnosticItems = content.items.filter(isTextItem);
+      const diagnosticYs = diagnosticItems
+        .filter((rawItem) =>
           /(?:BO|EUF|CHAMPAG|IJON|PROFI|ÉARNAISE|BÉARNAISE|BEARNAISE|ARNAISE)/iu.test(
             rawItem.str,
-          )
+          ),
+        )
+        .map((rawItem) =>
+          rawItem.transform && rawItem.transform.length >= 6
+            ? Number(rawItem.transform[5])
+            : null,
+        )
+        .filter((value): value is number => value !== null && Number.isFinite(value));
+      for (const [rawIndex, rawItem] of diagnosticItems.entries()) {
+        const transform = rawItem.transform;
+        const y =
+          transform && transform.length >= 6 ? Number(transform[5]) : null;
+        if (
+          y !== null &&
+          diagnosticYs.some((targetY) => Math.abs(y - targetY) <= 0.25)
         ) {
           console.log(
-            "[pdf-fragment-diagnostic]",
+            "[pdf-fragment-row-diagnostic]",
             JSON.stringify({
               page: pageNumber,
+              rawIndex,
               str: rawItem.str,
               transform: rawItem.transform ?? null,
               width: rawItem.width ?? null,
