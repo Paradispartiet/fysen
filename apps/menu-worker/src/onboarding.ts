@@ -94,8 +94,9 @@ export interface PublishedManifestRefreshState {
 }
 
 export function shouldRefreshPublishedSnapshotForManifest(
-  _state: PublishedManifestRefreshState,
+  state: PublishedManifestRefreshState,
 ): boolean {
+  void state;
   return false;
 }
 
