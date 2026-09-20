@@ -15,6 +15,63 @@ export interface ExtractedPdfMenu {
   readonly method: "pdf_text";
 }
 
+interface PdfWhitespaceEvidence {
+  readonly aligned: boolean;
+  readonly rawBoundaries: ReadonlySet<number>;
+  readonly contentBoundaries: ReadonlySet<number>;
+  readonly supportedContentBoundaries: number;
+}
+
+function normalizedGlyphSequence(value: string): string {
+  return Array.from(value.normalize("NFKC"))
+    .filter((character) => !/\s/u.test(character))
+    .join("");
+}
+
+function whitespaceBoundaries(value: string): ReadonlySet<number> {
+  const normalized = value.normalize("NFKC");
+  const characters = Array.from(normalized);
+  const boundaries = new Set<number>();
+  let nonWhitespaceCount = 0;
+  for (let index = 0; index < characters.length; index += 1) {
+    const character = characters[index] ?? "";
+    if (!/\s/u.test(character)) {
+      nonWhitespaceCount += 1;
+      continue;
+    }
+    if (nonWhitespaceCount === 0) continue;
+    let nextIndex = index + 1;
+    while (
+      nextIndex < characters.length &&
+      /\s/u.test(characters[nextIndex] ?? "")
+    ) {
+      nextIndex += 1;
+    }
+    if (nextIndex < characters.length) boundaries.add(nonWhitespaceCount);
+  }
+  return boundaries;
+}
+
+function pdfWhitespaceEvidence(
+  rawOperatorText: string,
+  contentText: string,
+): PdfWhitespaceEvidence {
+  const rawGlyphs = normalizedGlyphSequence(rawOperatorText);
+  const contentGlyphs = normalizedGlyphSequence(contentText);
+  const rawBoundaries = whitespaceBoundaries(rawOperatorText);
+  const contentBoundaries = whitespaceBoundaries(contentText);
+  let supportedContentBoundaries = 0;
+  for (const boundary of contentBoundaries) {
+    if (rawBoundaries.has(boundary)) supportedContentBoundaries += 1;
+  }
+  return {
+    aligned: rawGlyphs.length > 0 && rawGlyphs === contentGlyphs,
+    rawBoundaries,
+    contentBoundaries,
+    supportedContentBoundaries,
+  };
+}
+
 interface TextItemLike {
   readonly str: string;
   readonly transform?: readonly number[];
@@ -1021,6 +1078,37 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
         }
         previousTextEvent = { index: opIndex, text: operatorText };
       }
+      const rawOperatorText = operatorList.fnArray
+        .map((fn, index) =>
+          fn === OPS.showText || fn === OPS.showSpacedText
+            ? collectGlyphText(operatorList.argsArray[index])
+            : "",
+        )
+        .join("");
+      const contentText = content.items
+        .filter(isTextItem)
+        .map((item) => item.str)
+        .join("");
+      const whitespaceEvidence = pdfWhitespaceEvidence(
+        rawOperatorText,
+        contentText,
+      );
+      console.warn(
+        "[pdf-whitespace-evidence]",
+        JSON.stringify({
+          page: pageNumber,
+          aligned: whitespaceEvidence.aligned,
+          rawBoundaryCount: whitespaceEvidence.rawBoundaries.size,
+          contentBoundaryCount: whitespaceEvidence.contentBoundaries.size,
+          supportedContentBoundaries:
+            whitespaceEvidence.supportedContentBoundaries,
+          supportRatio:
+            whitespaceEvidence.contentBoundaries.size === 0
+              ? 1
+              : whitespaceEvidence.supportedContentBoundaries /
+                whitespaceEvidence.contentBoundaries.size,
+        }),
+      );
       lines.push(...reconstructLines(content.items, pageNumber));
       page.cleanup();
     }
