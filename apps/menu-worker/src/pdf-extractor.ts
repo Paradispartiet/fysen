@@ -1106,6 +1106,20 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
               ? 1
               : whitespaceEvidence.supportedContentBoundaries /
                 whitespaceEvidence.contentBoundaries.size,
+          unsupportedContentBoundarySamples: [
+            ...whitespaceEvidence.contentBoundaries,
+          ]
+            .filter((boundary) => !whitespaceEvidence.rawBoundaries.has(boundary))
+            .map((boundary) => {
+              const glyphs = normalizedGlyphSequence(contentText);
+              return {
+                boundary,
+                context: `${glyphs.slice(Math.max(0, boundary - 18), boundary)}|${glyphs.slice(
+                  boundary,
+                  boundary + 18,
+                )}`,
+              };
+            }),
         }),
       );
       lines.push(...reconstructLines(content.items, pageNumber));
