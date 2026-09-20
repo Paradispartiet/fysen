@@ -133,6 +133,7 @@ function reconstructSequentialLines(
   let lastY: number | null = null;
   let lastRight: number | null = null;
   let lastRawEndedWithWhitespace = false;
+  let lastRawText = "";
 
   const flush = (): void => {
     const text = normalizeLine(buffer);
@@ -141,6 +142,7 @@ function reconstructSequentialLines(
     lastY = null;
     lastRight = null;
     lastRawEndedWithWhitespace = false;
+    lastRawText = "";
   };
 
   for (const rawItem of items) {
@@ -172,6 +174,26 @@ function reconstructSequentialLines(
       const explicitWhitespaceBoundary =
         lastRawEndedWithWhitespace || /^\s/u.test(rawText);
       const geometricWordGap = horizontalGap !== null && horizontalGap > 2;
+      const diagnosticPair = `${lastRawText}|||${rawText}`;
+      if (
+        /(?:BO\|\|\|EUF|D\|\|\|IJON|PROFI\|\|\|LE|CHAMPAG\|\|\|NE|B\|\|\|ÉARNAISE)/u.test(
+          diagnosticPair,
+        )
+      ) {
+        console.warn(
+          "[pdf-spacing-diagnostic]",
+          JSON.stringify({
+            previous: lastRawText,
+            current: rawText,
+            x,
+            lastRight,
+            horizontalGap,
+            width,
+            y,
+            explicitWhitespaceBoundary,
+          }),
+        );
+      }
       if (
         explicitWhitespaceBoundary ||
         horizontalGap === null ||
@@ -182,6 +204,7 @@ function reconstructSequentialLines(
     }
     buffer += text;
     lastRawEndedWithWhitespace = /\s$/u.test(rawText);
+    lastRawText = rawText;
     if (y !== null) lastY = y;
     if (x !== null) lastRight = x + Math.max(width, 0);
     if (rawItem.hasEOL) flush();
