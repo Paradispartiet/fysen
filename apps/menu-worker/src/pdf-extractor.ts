@@ -888,6 +888,13 @@ function buildItems(lines: readonly PdfLine[]): readonly MenuObservedItem[] {
   return items;
 }
 
+export function reconstructPdfTextLines(
+  items: readonly unknown[],
+  page = 1,
+): readonly string[] {
+  return reconstructLines(items, page).map((line) => line.text);
+}
+
 export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMenu> {
   if (bytes.length < 5 || Buffer.from(bytes.subarray(0, 5)).toString("ascii") !== "%PDF-") {
     throw new Error("PDF source did not start with a PDF signature");
