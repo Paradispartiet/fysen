@@ -1086,8 +1086,7 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
         )
         .join("");
       const contentText = content.items
-        .filter(isTextItem)
-        .map((item) => item.str)
+        .map((item) => (isTextItem(item) ? item.str : ""))
         .join("");
       const whitespaceEvidence = pdfWhitespaceEvidence(
         rawOperatorText,
