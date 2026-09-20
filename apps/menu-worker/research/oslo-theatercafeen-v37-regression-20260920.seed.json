@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-theatercafeen-v37-regression-20260920",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "theatercafeen-oslo",
+        "name": "Theatercaféen",
+        "websiteUrl": "https://www.theatercafeen.no/",
+        "address": "Stortingsgata 24, 0161 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.theatercafeen.no/wp-content/uploads/sites/5/2026/08/Middagsmeny42.pdf",
+        "sourceType": "pdf",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-20",
+          "note": "Exact-head diagnostic reproof after pdf-text-v37 materialization lost the unchanged TUNA CRUDO assertion. The official site uses the hotel's N-0117 contact postcode, while Kartverket resolves the physical Stortingsgata 24 entrance to street postcode 0161; intake must keep cocktails, wine, bilingual descriptions and layout fragments outside canonical dish output."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "HOUSE COCKTAILS",
+        "BEST SERVED MEDIUM",
+        "PERFECT WITH VODKA",
+        "ADD BUFFALO MOZZARELLA",
+        "Firefox",
+        "Paloma Naranja",
+        "Crémant de Bourgogne"
+      ]
+    }
+  ]
+}
