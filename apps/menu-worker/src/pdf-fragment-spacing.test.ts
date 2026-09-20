@@ -129,23 +129,53 @@ vi.mock("pdfjs-dist/legacy/build/pdf.mjs", () => ({
               hasEOL: true,
             },
             {
-              str: "RIBEYE WITH SAUCE B",
+              str: "STEAK DE",
               transform: [12, 0, 0, 12, 72, 640],
-              width: 100,
+              width: 44,
             },
             {
               str: " ",
-              transform: [12, 0, 0, 12, 172, 640],
+              transform: [12, 0, 0, 12, 116, 640],
+              width: 7.8,
+            },
+            {
+              str: "BO",
+              transform: [12, 0, 0, 12, 123.8, 640],
+              width: 14.5,
+            },
+            {
+              str: " ",
+              transform: [12, 0, 0, 12, 138.3, 640],
+              width: 2.9,
+            },
+            {
+              str: "EU",
+              transform: [12, 0, 0, 12, 141.2, 640],
+              width: 13.6,
+            },
+            {
+              str: " ",
+              transform: [12, 0, 0, 12, 154.8, 640],
+              width: 1.4,
+            },
+            {
+              str: "F WITH SAUCE B",
+              transform: [12, 0, 0, 12, 156.2, 640],
+              width: 84,
+            },
+            {
+              str: " ",
+              transform: [12, 0, 0, 12, 240.2, 640],
               width: 6.2,
             },
             {
               str: "É",
-              transform: [12, 0, 0, 12, 178.2, 640],
+              transform: [12, 0, 0, 12, 246.4, 640],
               width: 5.9,
             },
             {
               str: "ARNAISE",
-              transform: [12, 0, 0, 12, 184.9, 640],
+              transform: [12, 0, 0, 12, 253.1, 640],
               width: 42.5,
               hasEOL: true,
             },
@@ -216,7 +246,7 @@ describe("PDF positioned fragment spacing", () => {
       "COTE DE BOEUF SERVED WITH GLAZED ONIONS AND SAUCE BÉARNAISE",
     );
     expect(extracted.visibleText).toContain(
-      "RIBEYE WITH SAUCE BÉARNAISE",
+      "STEAK DE BOEUF WITH SAUCE BÉARNAISE",
     );
     expect(extracted.visibleText).toContain(
       "OYSTERS WITH CHAMPAGNE VINEGAR",
