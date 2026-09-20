@@ -901,6 +901,30 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
     for (let pageNumber = 1; pageNumber <= pageCount; pageNumber += 1) {
       const page = await document.getPage(pageNumber);
       const content = await page.getTextContent();
+      const positionedDebugItems = content.items.filter(isTextItem).map((item, originalIndex) => ({
+        str: item.str,
+        x: item.transform && item.transform.length >= 6 ? Number(item.transform[4]) : null,
+        y: item.transform && item.transform.length >= 6 ? Number(item.transform[5]) : null,
+        width: Number(item.width ?? 0),
+        hasEOL: item.hasEOL ?? false,
+        originalIndex,
+      }));
+      const coteAnchors = positionedDebugItems.filter((item) =>
+        /CÔTE/iu.test(item.str),
+      );
+      for (const anchor of coteAnchors) {
+        if (anchor.y === null) continue;
+        const sameVisualRow = positionedDebugItems.filter(
+          (item) =>
+            item.y !== null &&
+            Math.abs(item.y - anchor.y) <= 2 &&
+            /\p{L}/u.test(item.str),
+        );
+        console.error(
+          "[pdf-token-spacing-diagnostic]",
+          JSON.stringify({ page: pageNumber, anchor, sameVisualRow }),
+        );
+      }
       lines.push(...reconstructLines(content.items, pageNumber));
       page.cleanup();
     }
