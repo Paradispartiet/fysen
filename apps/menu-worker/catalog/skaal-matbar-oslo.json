@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-18",
-      "note": "Fresh production reproof on 2026-09-18 confirmed the current first-party page still yields 20 canonical dishes, but Smash Burger has left the live menu and \"Pulled Brisket\" is now the current 195 NOK dish. Rebaseline only the stale representative assertion; source, 20-item floor and semantic guards remain unchanged."
+      "checkedAt": "2026-09-20",
+      "note": "Fresh production reproof on 2026-09-20 still yields 20 canonical dishes against the unchanged 20-item floor. Brownie is still present but its live price has moved from 155 NOK to 165 NOK; rebaseline only that stale price assertion. Source and semantic guards remain unchanged."
     }
   },
   "actions": [],
@@ -73,7 +73,7 @@
       },
       {
         "name": "Brownie",
-        "priceMinor": 15500
+        "priceMinor": 16500
       }
     ],
     "forbiddenDishNames": [
