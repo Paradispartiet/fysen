@@ -1,4 +1,4 @@
-import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
+import { getDocument, OPS } from "pdfjs-dist/legacy/build/pdf.mjs";
 import {
   createMenuItemSourceKey,
   normalizeDishName,
@@ -6,13 +6,127 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v16";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v17";
+const RAW_PDF_WHITESPACE_SUPPORT_THRESHOLD = 0.8;
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
   readonly visibleText: string;
   readonly pageCount: number;
   readonly method: "pdf_text";
+}
+
+interface PdfWhitespaceEvidence {
+  readonly aligned: boolean;
+  readonly trusted: boolean;
+  readonly rawBoundaries: ReadonlySet<number>;
+  readonly contentBoundaries: ReadonlySet<number>;
+  readonly supportedContentBoundaries: number;
+}
+
+function normalizedGlyphSequence(value: string): string {
+  return Array.from(value.normalize("NFKC"))
+    .filter((character) => !/\s/u.test(character))
+    .join("");
+}
+
+function whitespaceBoundaries(value: string): ReadonlySet<number> {
+  const characters = Array.from(value.normalize("NFKC"));
+  const boundaries = new Set<number>();
+  let nonWhitespaceCount = 0;
+
+  for (let index = 0; index < characters.length; index += 1) {
+    const character = characters[index] ?? "";
+    if (!/\s/u.test(character)) {
+      nonWhitespaceCount += 1;
+      continue;
+    }
+    if (nonWhitespaceCount === 0) continue;
+
+    let nextIndex = index + 1;
+    while (
+      nextIndex < characters.length &&
+      /\s/u.test(characters[nextIndex] ?? "")
+    ) {
+      nextIndex += 1;
+    }
+    if (nextIndex < characters.length) boundaries.add(nonWhitespaceCount);
+  }
+
+  return boundaries;
+}
+
+function pdfWhitespaceEvidence(
+  rawOperatorText: string,
+  contentText: string,
+): PdfWhitespaceEvidence {
+  const rawGlyphs = normalizedGlyphSequence(rawOperatorText);
+  const contentGlyphs = normalizedGlyphSequence(contentText);
+  const rawBoundaries = whitespaceBoundaries(rawOperatorText);
+  const contentBoundaries = whitespaceBoundaries(contentText);
+  let supportedContentBoundaries = 0;
+  for (const boundary of contentBoundaries) {
+    if (rawBoundaries.has(boundary)) supportedContentBoundaries += 1;
+  }
+  const supportRatio =
+    contentBoundaries.size === 0
+      ? 1
+      : supportedContentBoundaries / contentBoundaries.size;
+  const aligned = rawGlyphs.length > 0 && rawGlyphs === contentGlyphs;
+
+  return {
+    aligned,
+    trusted: aligned && supportRatio >= RAW_PDF_WHITESPACE_SUPPORT_THRESHOLD,
+    rawBoundaries,
+    contentBoundaries,
+    supportedContentBoundaries,
+  };
+}
+
+function collectPdfGlyphText(value: unknown): string {
+  if (Array.isArray(value)) return value.map(collectPdfGlyphText).join("");
+  if (typeof value === "string") return value;
+  if (
+    value &&
+    typeof value === "object" &&
+    "unicode" in value &&
+    typeof (value as { unicode?: unknown }).unicode === "string"
+  ) {
+    return (value as { unicode: string }).unicode;
+  }
+  return "";
+}
+
+function filterPdfItemWhitespace(
+  value: string,
+  startGlyphOffset: number,
+  rawBoundaries: ReadonlySet<number>,
+): string {
+  const characters = Array.from(value.normalize("NFKC"));
+  let glyphOffset = startGlyphOffset;
+  let pendingWhitespace = false;
+  let filtered = "";
+
+  for (const character of characters) {
+    if (/\s/u.test(character)) {
+      pendingWhitespace = true;
+      continue;
+    }
+
+    if (
+      pendingWhitespace &&
+      filtered &&
+      !filtered.endsWith(" ") &&
+      rawBoundaries.has(glyphOffset)
+    ) {
+      filtered += " ";
+    }
+    pendingWhitespace = false;
+    filtered += character;
+    glyphOffset += 1;
+  }
+
+  return filtered;
 }
 
 interface TextItemLike {
@@ -127,11 +241,14 @@ function isTextItem(value: unknown): value is TextItemLike {
 function reconstructSequentialLines(
   items: readonly unknown[],
   page: number,
+  whitespaceEvidence: PdfWhitespaceEvidence | null = null,
 ): readonly PdfLine[] {
   const lines: PdfLine[] = [];
   let buffer = "";
   let lastY: number | null = null;
   let lastRight: number | null = null;
+  let lastRawEndedWithWhitespace = false;
+  let glyphOffset = 0;
 
   const flush = (): void => {
     const text = normalizeLine(buffer);
@@ -139,11 +256,25 @@ function reconstructSequentialLines(
     buffer = "";
     lastY = null;
     lastRight = null;
+    lastRawEndedWithWhitespace = false;
   };
 
   for (const rawItem of items) {
     if (!isTextItem(rawItem)) continue;
-    const text = normalizeLine(rawItem.str);
+
+    const rawText = rawItem.str.normalize("NFKC");
+    const itemStartGlyphOffset = glyphOffset;
+    glyphOffset += normalizedGlyphSequence(rawText).length;
+    const authoritativeWhitespace = whitespaceEvidence?.trusted === true;
+    const reconstructedRawText = authoritativeWhitespace
+      ? filterPdfItemWhitespace(
+          rawText,
+          itemStartGlyphOffset,
+          whitespaceEvidence.rawBoundaries,
+        )
+      : rawText;
+    const text = normalizeLine(reconstructedRawText);
+
     if (!text) {
       if (rawItem.hasEOL) flush();
       continue;
@@ -158,12 +289,36 @@ function reconstructSequentialLines(
     const largeGap = x !== null && lastRight !== null && x - lastRight > 140;
 
     if (buffer && (movedLine || movedBack || largeGap)) flush();
-    if (buffer && !buffer.endsWith(" ")) buffer += " ";
+
+    if (buffer && !buffer.endsWith(" ")) {
+      const horizontalGap =
+        x !== null &&
+        lastRight !== null &&
+        Number.isFinite(x) &&
+        Number.isFinite(lastRight)
+          ? x - lastRight
+          : null;
+      const geometricWordGap = horizontalGap !== null && horizontalGap > 2;
+
+      const insertSpace = authoritativeWhitespace
+        ? whitespaceEvidence.rawBoundaries.has(itemStartGlyphOffset) ||
+          (!whitespaceEvidence.contentBoundaries.has(itemStartGlyphOffset) &&
+            (horizontalGap === null || geometricWordGap))
+        : lastRawEndedWithWhitespace ||
+          /^\s/u.test(rawText) ||
+          horizontalGap === null ||
+          geometricWordGap;
+
+      if (insertSpace) buffer += " ";
+    }
+
     buffer += text;
+    lastRawEndedWithWhitespace = /\s$/u.test(rawText);
     if (y !== null) lastY = y;
     if (x !== null) lastRight = x + Math.max(width, 0);
     if (rawItem.hasEOL) flush();
   }
+
   flush();
   return lines;
 }
@@ -293,8 +448,12 @@ function shouldUseVisualReadingOrder(lines: readonly VisualPdfLine[]): boolean {
   return upwardTransitions >= 2 && upwardTransitions / transitions >= 0.2;
 }
 
-function reconstructLines(items: readonly unknown[], page: number): readonly PdfLine[] {
-  const sequential = reconstructSequentialLines(items, page);
+function reconstructLines(
+  items: readonly unknown[],
+  page: number,
+  whitespaceEvidence: PdfWhitespaceEvidence | null = null,
+): readonly PdfLine[] {
+  const sequential = reconstructSequentialLines(items, page, whitespaceEvidence);
   const positioned = positionedTextItems(items);
   if (!positioned) return sequential;
   const visual = visualPdfLines(positioned);
@@ -888,6 +1047,24 @@ function buildItems(lines: readonly PdfLine[]): readonly MenuObservedItem[] {
   return items;
 }
 
+export function reconstructPdfTextLines(
+  items: readonly unknown[],
+  page = 1,
+  rawOperatorText?: string,
+): readonly string[] {
+  const contentText = items
+    .map((item) => (isTextItem(item) ? item.str : ""))
+    .join("");
+  const evidence = rawOperatorText
+    ? pdfWhitespaceEvidence(rawOperatorText, contentText)
+    : null;
+  return reconstructLines(
+    items,
+    page,
+    evidence?.trusted ? evidence : null,
+  ).map((line) => line.text);
+}
+
 export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMenu> {
   if (bytes.length < 5 || Buffer.from(bytes.subarray(0, 5)).toString("ascii") !== "%PDF-") {
     throw new Error("PDF source did not start with a PDF signature");
@@ -901,7 +1078,28 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
     for (let pageNumber = 1; pageNumber <= pageCount; pageNumber += 1) {
       const page = await document.getPage(pageNumber);
       const content = await page.getTextContent();
-      lines.push(...reconstructLines(content.items, pageNumber));
+      const operatorList = await page.getOperatorList();
+      const rawOperatorText = operatorList.fnArray
+        .map((fn, index) =>
+          fn === OPS.showText || fn === OPS.showSpacedText
+            ? collectPdfGlyphText(operatorList.argsArray[index])
+            : "",
+        )
+        .join("");
+      const contentText = content.items
+        .map((item) => (isTextItem(item) ? item.str : ""))
+        .join("");
+      const whitespaceEvidence = pdfWhitespaceEvidence(
+        rawOperatorText,
+        contentText,
+      );
+      lines.push(
+        ...reconstructLines(
+          content.items,
+          pageNumber,
+          whitespaceEvidence.trusted ? whitespaceEvidence : null,
+        ),
+      );
       page.cleanup();
     }
   } finally {
