@@ -88,6 +88,17 @@ export function shouldRestorePublishedCoverageAfterRefreshFailure(
   return state.temporarilyDeactivated && state.latestSnapshotIsSafe;
 }
 
+export interface PublishedManifestRefreshState {
+  readonly requiresExtractorRefresh: boolean;
+  readonly latestSnapshotAccepted: boolean;
+}
+
+export function shouldRefreshPublishedSnapshotForManifest(
+  state: PublishedManifestRefreshState,
+): boolean {
+  return !state.requiresExtractorRefresh && !state.latestSnapshotAccepted;
+}
+
 function accepted(summary: MenuWatchSummary): boolean {
   return acceptedOutcomes.has(summary.outcome);
 }
@@ -377,6 +388,26 @@ async function onboardOne(
       }
 
       latestQuality = await assertLatestSnapshot(repository, source.id, manifest);
+      if (
+        shouldRefreshPublishedSnapshotForManifest({
+          requiresExtractorRefresh,
+          latestSnapshotAccepted: latestQuality.accepted,
+        })
+      ) {
+        try {
+          firstWatch = await watchMenu();
+        } catch (error) {
+          await setRestaurantCoverageActive(pool, candidate.id, false);
+          throw new Error(
+            `Published manifest refresh watch threw: ${error instanceof Error ? error.message : String(error)}`,
+          );
+        }
+        if (!accepted(firstWatch)) {
+          await setRestaurantCoverageActive(pool, candidate.id, false);
+          throw new Error(`Published manifest refresh watch was ${firstWatch.outcome}`);
+        }
+        latestQuality = await assertLatestSnapshot(repository, source.id, manifest);
+      }
       if (!latestQuality.accepted) {
         latestRefreshSnapshotIsSafe = false;
         await setRestaurantCoverageActive(pool, candidate.id, false);

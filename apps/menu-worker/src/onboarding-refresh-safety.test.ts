@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { shouldRestorePublishedCoverageAfterRefreshFailure } from "./onboarding.js";
+import {
+  shouldRefreshPublishedSnapshotForManifest,
+  shouldRestorePublishedCoverageAfterRefreshFailure,
+} from "./onboarding.js";
 
 describe("published coverage during extractor refresh", () => {
   it("restores previous coverage when refresh fails before a new accepted snapshot", () => {
@@ -34,6 +37,30 @@ describe("published coverage during extractor refresh", () => {
       shouldRestorePublishedCoverageAfterRefreshFailure({
         temporarilyDeactivated: false,
         latestSnapshotIsSafe: true,
+      }),
+    ).toBe(false);
+  });
+});
+
+
+describe("published manifest snapshot refresh", () => {
+  it("refreshes only a stale published snapshot outside extractor refresh", () => {
+    expect(
+      shouldRefreshPublishedSnapshotForManifest({
+        requiresExtractorRefresh: false,
+        latestSnapshotAccepted: false,
+      }),
+    ).toBe(true);
+    expect(
+      shouldRefreshPublishedSnapshotForManifest({
+        requiresExtractorRefresh: false,
+        latestSnapshotAccepted: true,
+      }),
+    ).toBe(false);
+    expect(
+      shouldRefreshPublishedSnapshotForManifest({
+        requiresExtractorRefresh: true,
+        latestSnapshotAccepted: false,
       }),
     ).toBe(false);
   });
