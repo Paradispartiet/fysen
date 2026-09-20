@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-michelin-hansken-reproof-20260920",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "brasserie-hansken-oslo",
+        "name": "Brasserie Hansken",
+        "websiteUrl": "https://brasseriehansken.no/",
+        "address": "Christiania Torv 4, 0158 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://brasseriehansken.no/uploads/3ETdFPSU/MENYKVELDSENSOMMER20261.pdf",
+        "sourceType": "pdf",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-20",
+          "note": "Fresh Oslo MICHELIN coverage reproof after a test-first generic PDF repair. The unchanged first-party 2026 evening PDF can expose `PER KG 2050` as artificial word-fragment spacing that earlier extraction preserved, while the prior PER KG 2050 repair remains required. Reproof under pdf-text-v37 without restaurant-specific exceptions or floor weakening; promotion remains blocked unless semantic coverage is sufficient."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Allergener: MELK, HVETE",
+        "FORRETTER",
+        "HOVEDRETTER",
+        "DESSERTER",
+        "VELKOMMEN!"
+      ]
+    }
+  ]
+}
