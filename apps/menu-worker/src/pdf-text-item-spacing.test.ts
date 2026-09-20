@@ -22,8 +22,16 @@ describe("PDF text-item spacing", () => {
     ]);
   });
   it("drops synthetic PDF.js whitespace boundaries that raw PDF text does not contain", () => {
+    const trustedContext =
+      "ONE TWO THREE FOUR FIVE SIX SEVEN EIGHT NINE TEN ELEVEN TWELVE THIRTEEN FOURTEEN FIFTEEN";
     const lines = reconstructPdfTextLines(
       [
+        {
+          str: trustedContext,
+          transform: [1, 0, 0, 1, 100, 720],
+          width: 320,
+          hasEOL: true,
+        },
         { str: "CÔTE D", transform: [1, 0, 0, 1, 100, 700], width: 36 },
         { str: " ", transform: [1, 0, 0, 1, 136, 700], width: 6 },
         { str: "E", transform: [1, 0, 0, 1, 142, 700], width: 5 },
@@ -41,10 +49,14 @@ describe("PDF text-item spacing", () => {
         { str: "ARNAISE", transform: [1, 0, 0, 1, 146, 680], width: 42, hasEOL: true },
       ],
       1,
-      "CÔTE DE BOEUF MED SAUS BÉARNAISE",
+      `${trustedContext} CÔTE DE BOEUF MED SAUS BÉARNAISE`,
     );
 
-    expect(lines).toEqual(["CÔTE DE BOEUF MED", "SAUS BÉARNAISE"]);
+    expect(lines).toEqual([
+      trustedContext,
+      "CÔTE DE BOEUF MED",
+      "SAUS BÉARNAISE",
+    ]);
   });
 
   it("falls back when raw operators do not reliably encode content word spaces", () => {

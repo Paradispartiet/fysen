@@ -7,6 +7,7 @@ import {
 } from "@fysen/menu-core";
 
 export const PDF_EXTRACTOR_VERSION = "pdf-text-v17";
+const RAW_PDF_WHITESPACE_SUPPORT_THRESHOLD = 0.8;
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -75,7 +76,7 @@ function pdfWhitespaceEvidence(
 
   return {
     aligned,
-    trusted: aligned && supportRatio >= 0.8,
+    trusted: aligned && supportRatio >= RAW_PDF_WHITESPACE_SUPPORT_THRESHOLD,
     rawBoundaries,
     contentBoundaries,
     supportedContentBoundaries,
