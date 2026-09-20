@@ -88,6 +88,17 @@ export function shouldRestorePublishedCoverageAfterRefreshFailure(
   return state.temporarilyDeactivated && state.latestSnapshotIsSafe;
 }
 
+export interface PublishedManifestRefreshState {
+  readonly requiresExtractorRefresh: boolean;
+  readonly latestSnapshotAccepted: boolean;
+}
+
+export function shouldRefreshPublishedSnapshotForManifest(
+  _state: PublishedManifestRefreshState,
+): boolean {
+  return false;
+}
+
 function accepted(summary: MenuWatchSummary): boolean {
   return acceptedOutcomes.has(summary.outcome);
 }
