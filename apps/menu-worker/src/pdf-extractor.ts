@@ -124,14 +124,247 @@ function isTextItem(value: unknown): value is TextItemLike {
   );
 }
 
+const PDF_FRAGMENT_JOIN_GAP = 3;
+const PDF_FRAGMENT_MAX_INLINE_GAP = 140;
+const PDF_SHORT_STANDALONE_WORDS = new Set([
+  "A",
+  "I",
+  "O",
+  "E",
+  "Y",
+  "DE",
+  "OF",
+  "IN",
+  "ON",
+  "TO",
+  "OG",
+  "AV",
+  "EN",
+  "ET",
+  "LA",
+  "LE",
+  "EL",
+  "AL",
+  "AN",
+  "AS",
+  "AT",
+  "BY",
+  "OR",
+  "NO",
+  "SO",
+  "DA",
+  "DO",
+  "DI",
+  "DU",
+  "AU",
+]);
+
+function pdfWordKey(value: string): string {
+  return value
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
+    .toLocaleUpperCase("en-US")
+    .replace(/[^\p{L}]/gu, "");
+}
+
+function leadingPdfWord(value: string): string | null {
+  return normalizeLine(value).match(/^(\p{L}+)/u)?.[1] ?? null;
+}
+
+function trailingPdfWord(value: string): string | null {
+  return normalizeLine(value).match(/(\p{L}+)$/u)?.[1] ?? null;
+}
+
+function textItemPosition(rawItem: TextItemLike): {
+  readonly x: number | null;
+  readonly y: number | null;
+  readonly right: number | null;
+} {
+  const transform = rawItem.transform;
+  const x = transform && transform.length >= 6 ? Number(transform[4]) : null;
+  const y = transform && transform.length >= 6 ? Number(transform[5]) : null;
+  const width = Number(rawItem.width ?? 0);
+  return {
+    x,
+    y,
+    right: x === null ? null : x + Math.max(width, 0),
+  };
+}
+
+function leadingJoinedPdfWord(
+  items: readonly unknown[],
+  startIndex: number,
+): string | null {
+  let combined = "";
+  let lastY: number | null = null;
+  let lastRight: number | null = null;
+
+  for (let index = startIndex; index < items.length; index += 1) {
+    const rawItem = items[index];
+    if (!isTextItem(rawItem)) continue;
+
+    const text = normalizeLine(rawItem.str);
+    if (!text) {
+      if (rawItem.hasEOL) break;
+      continue;
+    }
+
+    const position = textItemPosition(rawItem);
+    if (
+      lastY !== null &&
+      position.y !== null &&
+      Math.abs(position.y - lastY) > 2
+    ) {
+      break;
+    }
+    if (
+      lastRight !== null &&
+      position.x !== null &&
+      position.x - lastRight > PDF_FRAGMENT_JOIN_GAP
+    ) {
+      break;
+    }
+
+    const word = leadingPdfWord(text);
+    if (!word) break;
+    combined += word;
+
+    const rest = text.slice(word.length);
+    if (rest || rawItem.hasEOL) break;
+
+    if (position.y !== null) lastY = position.y;
+    if (position.right !== null) lastRight = position.right;
+  }
+
+  return combined || null;
+}
+
+function documentPdfWordKeys(items: readonly unknown[]): ReadonlySet<string> {
+  const words = new Set<string>();
+  for (const rawItem of items) {
+    if (!isTextItem(rawItem)) continue;
+    for (const match of rawItem.str.matchAll(/\p{L}{2,}/gu)) {
+      const key = pdfWordKey(match[0]);
+      if (key) words.add(key);
+    }
+  }
+  return words;
+}
+
+function pdfFragmentBoundaryCounts(
+  items: readonly unknown[],
+): ReadonlyMap<string, number> {
+  const counts = new Map<string, number>();
+  let previousIndex: number | null = null;
+
+  for (let index = 0; index < items.length; index += 1) {
+    const rawItem = items[index];
+    if (!isTextItem(rawItem)) continue;
+
+    const text = normalizeLine(rawItem.str);
+    if (!text) {
+      if (rawItem.hasEOL) previousIndex = null;
+      continue;
+    }
+
+    if (previousIndex !== null) {
+      const previous = items[previousIndex];
+      if (isTextItem(previous)) {
+        const previousPosition = textItemPosition(previous);
+        const currentPosition = textItemPosition(rawItem);
+        const sameLine =
+          previousPosition.y !== null &&
+          currentPosition.y !== null &&
+          Math.abs(currentPosition.y - previousPosition.y) <= 2;
+        const gap =
+          previousPosition.right !== null && currentPosition.x !== null
+            ? currentPosition.x - previousPosition.right
+            : null;
+
+        if (
+          sameLine &&
+          gap !== null &&
+          gap > PDF_FRAGMENT_JOIN_GAP &&
+          gap <= PDF_FRAGMENT_MAX_INLINE_GAP
+        ) {
+          const left = trailingPdfWord(previous.str);
+          const right = leadingJoinedPdfWord(items, index);
+          if (left && right) {
+            const key = `${pdfWordKey(left)}|${pdfWordKey(right)}`;
+            counts.set(key, (counts.get(key) ?? 0) + 1);
+          }
+        }
+      }
+    }
+
+    previousIndex = rawItem.hasEOL ? null : index;
+  }
+
+  return counts;
+}
+
+function shouldJoinPdfFragmentBoundary(args: {
+  readonly buffer: string;
+  readonly rawPreviousText: string | null;
+  readonly currentText: string;
+  readonly items: readonly unknown[];
+  readonly currentIndex: number;
+  readonly interFragmentGap: number | null;
+  readonly documentWords: ReadonlySet<string>;
+  readonly boundaryCounts: ReadonlyMap<string, number>;
+}): boolean {
+  if (
+    args.interFragmentGap !== null &&
+    args.interFragmentGap <= PDF_FRAGMENT_JOIN_GAP
+  ) {
+    return true;
+  }
+  if (args.interFragmentGap === null) return false;
+
+  const left = trailingPdfWord(args.buffer);
+  const right = leadingJoinedPdfWord(args.items, args.currentIndex);
+  if (!left || !right) return false;
+
+  const combinedKey = pdfWordKey(left + right);
+  if (combinedKey.length >= 4 && args.documentWords.has(combinedKey)) {
+    return true;
+  }
+
+  const rawLeft = args.rawPreviousText
+    ? trailingPdfWord(args.rawPreviousText)
+    : null;
+  if (!rawLeft) return false;
+
+  const leftKey = pdfWordKey(rawLeft);
+  const rightKey = pdfWordKey(right);
+  const boundaryKey = `${leftKey}|${rightKey}`;
+  const repeated = (args.boundaryCounts.get(boundaryKey) ?? 0) >= 2;
+  const shorterKey =
+    leftKey.length <= rightKey.length ? leftKey : rightKey;
+  const shortFragment = Math.min(leftKey.length, rightKey.length) <= 2;
+  const rightFollowedByPunctuation =
+    /^\p{L}{1,2}[:;,]/u.test(args.currentText);
+
+  return (
+    repeated &&
+    combinedKey.length >= 5 &&
+    shortFragment &&
+    (!PDF_SHORT_STANDALONE_WORDS.has(shorterKey) ||
+      rightFollowedByPunctuation)
+  );
+}
+
 function reconstructSequentialLines(
   items: readonly unknown[],
   page: number,
 ): readonly PdfLine[] {
   const lines: PdfLine[] = [];
+  const documentWords = documentPdfWordKeys(items);
+  const boundaryCounts = pdfFragmentBoundaryCounts(items);
   let buffer = "";
   let lastY: number | null = null;
   let lastRight: number | null = null;
+  let lastRawText: string | null = null;
 
   const flush = (): void => {
     const text = normalizeLine(buffer);
@@ -139,9 +372,11 @@ function reconstructSequentialLines(
     buffer = "";
     lastY = null;
     lastRight = null;
+    lastRawText = null;
   };
 
-  for (const rawItem of items) {
+  for (let index = 0; index < items.length; index += 1) {
+    const rawItem = items[index];
     if (!isTextItem(rawItem)) continue;
     const text = normalizeLine(rawItem.str);
     if (!text) {
@@ -149,29 +384,50 @@ function reconstructSequentialLines(
       continue;
     }
 
-    const transform = rawItem.transform;
-    const x = transform && transform.length >= 6 ? Number(transform[4]) : null;
-    const y = transform && transform.length >= 6 ? Number(transform[5]) : null;
-    const width = Number(rawItem.width ?? 0);
-    const movedLine = y !== null && lastY !== null && Math.abs(y - lastY) > 2;
-    const movedBack = x !== null && lastRight !== null && x + 4 < lastRight - 24;
+    const position = textItemPosition(rawItem);
+    const movedLine =
+      position.y !== null &&
+      lastY !== null &&
+      Math.abs(position.y - lastY) > 2;
+    const movedBack =
+      position.x !== null &&
+      lastRight !== null &&
+      position.x + 4 < lastRight - 24;
     const interFragmentGap =
-      x !== null && lastRight !== null ? x - lastRight : null;
-    const largeGap = interFragmentGap !== null && interFragmentGap > 140;
+      position.x !== null && lastRight !== null
+        ? position.x - lastRight
+        : null;
+    const largeGap =
+      interFragmentGap !== null &&
+      interFragmentGap > PDF_FRAGMENT_MAX_INLINE_GAP;
 
     if (buffer && (movedLine || movedBack || largeGap)) flush();
-    if (
+
+    const joinBoundary =
       buffer &&
       !buffer.endsWith(" ") &&
-      (interFragmentGap === null || interFragmentGap > 2)
-    ) {
+      shouldJoinPdfFragmentBoundary({
+        buffer,
+        rawPreviousText: lastRawText,
+        currentText: text,
+        items,
+        currentIndex: index,
+        interFragmentGap,
+        documentWords,
+        boundaryCounts,
+      });
+
+    if (buffer && !buffer.endsWith(" ") && !joinBoundary) {
       buffer += " ";
     }
+
     buffer += text;
-    if (y !== null) lastY = y;
-    if (x !== null) lastRight = x + Math.max(width, 0);
+    if (position.y !== null) lastY = position.y;
+    if (position.right !== null) lastRight = position.right;
+    lastRawText = text;
     if (rawItem.hasEOL) flush();
   }
+
   flush();
   return lines;
 }
