@@ -124,7 +124,7 @@ function isTextItem(value: unknown): value is TextItemLike {
   );
 }
 
-const PDF_FRAGMENT_JOIN_GAP = 3;
+const PDF_FRAGMENT_JOIN_GAP = 2;
 const PDF_FRAGMENT_MAX_INLINE_GAP = 140;
 const PDF_SHORT_STANDALONE_WORDS = new Set([
   "A",
