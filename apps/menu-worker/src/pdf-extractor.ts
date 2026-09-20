@@ -901,23 +901,41 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
     for (let pageNumber = 1; pageNumber <= pageCount; pageNumber += 1) {
       const page = await document.getPage(pageNumber);
       const content = await page.getTextContent();
-      const positionedDebugItems = content.items.filter(isTextItem).map((item, originalIndex) => ({
-        str: item.str,
-        x: item.transform && item.transform.length >= 6 ? Number(item.transform[4]) : null,
-        y: item.transform && item.transform.length >= 6 ? Number(item.transform[5]) : null,
-        width: Number(item.width ?? 0),
-        hasEOL: item.hasEOL ?? false,
-        originalIndex,
-      }));
+      const positionedDebugItems: Array<{
+        str: string;
+        x: number | null;
+        y: number | null;
+        width: number;
+        hasEOL: boolean;
+        originalIndex: number;
+      }> = [];
+      for (const [originalIndex, rawItem] of content.items.entries()) {
+        if (!isTextItem(rawItem)) continue;
+        positionedDebugItems.push({
+          str: rawItem.str,
+          x:
+            rawItem.transform && rawItem.transform.length >= 6
+              ? Number(rawItem.transform[4])
+              : null,
+          y:
+            rawItem.transform && rawItem.transform.length >= 6
+              ? Number(rawItem.transform[5])
+              : null,
+          width: Number(rawItem.width ?? 0),
+          hasEOL: rawItem.hasEOL ?? false,
+          originalIndex,
+        });
+      }
       const coteAnchors = positionedDebugItems.filter((item) =>
         /CÔTE/iu.test(item.str),
       );
       for (const anchor of coteAnchors) {
-        if (anchor.y === null) continue;
+        const anchorY = anchor.y;
+        if (anchorY === null) continue;
         const sameVisualRow = positionedDebugItems.filter(
           (item) =>
             item.y !== null &&
-            Math.abs(item.y - anchor.y) <= 2 &&
+            Math.abs(item.y - anchorY) <= 2 &&
             /\p{L}/u.test(item.str),
         );
         console.error(
