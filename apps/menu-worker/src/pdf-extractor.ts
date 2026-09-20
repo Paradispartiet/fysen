@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v16";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v17";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -155,10 +155,18 @@ function reconstructSequentialLines(
     const width = Number(rawItem.width ?? 0);
     const movedLine = y !== null && lastY !== null && Math.abs(y - lastY) > 2;
     const movedBack = x !== null && lastRight !== null && x + 4 < lastRight - 24;
-    const largeGap = x !== null && lastRight !== null && x - lastRight > 140;
+    const interFragmentGap =
+      x !== null && lastRight !== null ? x - lastRight : null;
+    const largeGap = interFragmentGap !== null && interFragmentGap > 140;
 
     if (buffer && (movedLine || movedBack || largeGap)) flush();
-    if (buffer && !buffer.endsWith(" ")) buffer += " ";
+    if (
+      buffer &&
+      !buffer.endsWith(" ") &&
+      (interFragmentGap === null || interFragmentGap > 2)
+    ) {
+      buffer += " ";
+    }
     buffer += text;
     if (y !== null) lastY = y;
     if (x !== null) lastRight = x + Math.max(width, 0);
