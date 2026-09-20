@@ -909,6 +909,25 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
     for (let pageNumber = 1; pageNumber <= pageCount; pageNumber += 1) {
       const page = await document.getPage(pageNumber);
       const content = await page.getTextContent();
+      for (const rawItem of content.items) {
+        if (
+          isTextItem(rawItem) &&
+          /(?:BO|EUF|CHAMPAG|IJON|PROFI|ÉARNAISE|BÉARNAISE|BEARNAISE|ARNAISE)/iu.test(
+            rawItem.str,
+          )
+        ) {
+          console.log(
+            "[pdf-fragment-diagnostic]",
+            JSON.stringify({
+              page: pageNumber,
+              str: rawItem.str,
+              transform: rawItem.transform ?? null,
+              width: rawItem.width ?? null,
+              hasEOL: rawItem.hasEOL ?? null,
+            }),
+          );
+        }
+      }
       lines.push(...reconstructLines(content.items, pageNumber));
       page.cleanup();
     }
