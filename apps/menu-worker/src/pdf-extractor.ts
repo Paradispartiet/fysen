@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v16";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v17";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -19,7 +19,6 @@ interface PdfWhitespaceEvidence {
   readonly aligned: boolean;
   readonly rawBoundaries: ReadonlySet<number>;
   readonly contentBoundaries: ReadonlySet<number>;
-  readonly supportedContentBoundaries: number;
 }
 
 function normalizedGlyphSequence(value: string): string {
@@ -29,10 +28,10 @@ function normalizedGlyphSequence(value: string): string {
 }
 
 function whitespaceBoundaries(value: string): ReadonlySet<number> {
-  const normalized = value.normalize("NFKC");
-  const characters = Array.from(normalized);
+  const characters = Array.from(value.normalize("NFKC"));
   const boundaries = new Set<number>();
   let nonWhitespaceCount = 0;
+
   for (let index = 0; index < characters.length; index += 1) {
     const character = characters[index] ?? "";
     if (!/\s/u.test(character)) {
@@ -40,6 +39,7 @@ function whitespaceBoundaries(value: string): ReadonlySet<number> {
       continue;
     }
     if (nonWhitespaceCount === 0) continue;
+
     let nextIndex = index + 1;
     while (
       nextIndex < characters.length &&
@@ -49,6 +49,7 @@ function whitespaceBoundaries(value: string): ReadonlySet<number> {
     }
     if (nextIndex < characters.length) boundaries.add(nonWhitespaceCount);
   }
+
   return boundaries;
 }
 
@@ -56,20 +57,59 @@ function pdfWhitespaceEvidence(
   rawOperatorText: string,
   contentText: string,
 ): PdfWhitespaceEvidence {
-  const rawGlyphs = normalizedGlyphSequence(rawOperatorText);
-  const contentGlyphs = normalizedGlyphSequence(contentText);
-  const rawBoundaries = whitespaceBoundaries(rawOperatorText);
-  const contentBoundaries = whitespaceBoundaries(contentText);
-  let supportedContentBoundaries = 0;
-  for (const boundary of contentBoundaries) {
-    if (rawBoundaries.has(boundary)) supportedContentBoundaries += 1;
-  }
   return {
-    aligned: rawGlyphs.length > 0 && rawGlyphs === contentGlyphs,
-    rawBoundaries,
-    contentBoundaries,
-    supportedContentBoundaries,
+    aligned:
+      normalizedGlyphSequence(rawOperatorText).length > 0 &&
+      normalizedGlyphSequence(rawOperatorText) === normalizedGlyphSequence(contentText),
+    rawBoundaries: whitespaceBoundaries(rawOperatorText),
+    contentBoundaries: whitespaceBoundaries(contentText),
   };
+}
+
+function collectPdfGlyphText(value: unknown): string {
+  if (Array.isArray(value)) return value.map(collectPdfGlyphText).join("");
+  if (typeof value === "string") return value;
+  if (
+    value &&
+    typeof value === "object" &&
+    "unicode" in value &&
+    typeof (value as { unicode?: unknown }).unicode === "string"
+  ) {
+    return (value as { unicode: string }).unicode;
+  }
+  return "";
+}
+
+function filterPdfItemWhitespace(
+  value: string,
+  startGlyphOffset: number,
+  rawBoundaries: ReadonlySet<number>,
+): string {
+  const characters = Array.from(value.normalize("NFKC"));
+  let glyphOffset = startGlyphOffset;
+  let pendingWhitespace = false;
+  let filtered = "";
+
+  for (const character of characters) {
+    if (/\s/u.test(character)) {
+      pendingWhitespace = true;
+      continue;
+    }
+
+    if (
+      pendingWhitespace &&
+      filtered &&
+      !filtered.endsWith(" ") &&
+      rawBoundaries.has(glyphOffset)
+    ) {
+      filtered += " ";
+    }
+    pendingWhitespace = false;
+    filtered += character;
+    glyphOffset += 1;
+  }
+
+  return filtered;
 }
 
 interface TextItemLike {
@@ -184,13 +224,14 @@ function isTextItem(value: unknown): value is TextItemLike {
 function reconstructSequentialLines(
   items: readonly unknown[],
   page: number,
+  whitespaceEvidence: PdfWhitespaceEvidence | null = null,
 ): readonly PdfLine[] {
   const lines: PdfLine[] = [];
   let buffer = "";
   let lastY: number | null = null;
   let lastRight: number | null = null;
   let lastRawEndedWithWhitespace = false;
-  let lastRawText = "";
+  let glyphOffset = 0;
 
   const flush = (): void => {
     const text = normalizeLine(buffer);
@@ -199,13 +240,24 @@ function reconstructSequentialLines(
     lastY = null;
     lastRight = null;
     lastRawEndedWithWhitespace = false;
-    lastRawText = "";
   };
 
   for (const rawItem of items) {
     if (!isTextItem(rawItem)) continue;
+
     const rawText = rawItem.str.normalize("NFKC");
-    const text = normalizeLine(rawText);
+    const itemStartGlyphOffset = glyphOffset;
+    glyphOffset += normalizedGlyphSequence(rawText).length;
+    const authoritativeWhitespace = whitespaceEvidence?.aligned === true;
+    const reconstructedRawText = authoritativeWhitespace
+      ? filterPdfItemWhitespace(
+          rawText,
+          itemStartGlyphOffset,
+          whitespaceEvidence.rawBoundaries,
+        )
+      : rawText;
+    const text = normalizeLine(reconstructedRawText);
+
     if (!text) {
       if (rawItem.hasEOL) flush();
       continue;
@@ -220,6 +272,7 @@ function reconstructSequentialLines(
     const largeGap = x !== null && lastRight !== null && x - lastRight > 140;
 
     if (buffer && (movedLine || movedBack || largeGap)) flush();
+
     if (buffer && !buffer.endsWith(" ")) {
       const horizontalGap =
         x !== null &&
@@ -228,44 +281,27 @@ function reconstructSequentialLines(
         Number.isFinite(lastRight)
           ? x - lastRight
           : null;
-      const explicitWhitespaceBoundary =
-        lastRawEndedWithWhitespace || /^\s/u.test(rawText);
       const geometricWordGap = horizontalGap !== null && horizontalGap > 2;
-      const diagnosticPair = `${lastRawText}|||${rawText}`;
-      if (
-        /(?:BO\|\|\|EUF|D\|\|\|IJON|PROFI\|\|\|LE|CHAMPAG\|\|\|NE|B\|\|\|ÉARNAISE)/u.test(
-          diagnosticPair,
-        )
-      ) {
-        console.warn(
-          "[pdf-spacing-diagnostic]",
-          JSON.stringify({
-            previous: lastRawText,
-            current: rawText,
-            x,
-            lastRight,
-            horizontalGap,
-            width,
-            y,
-            explicitWhitespaceBoundary,
-          }),
-        );
-      }
-      if (
-        explicitWhitespaceBoundary ||
-        horizontalGap === null ||
-        geometricWordGap
-      ) {
-        buffer += " ";
-      }
+
+      const insertSpace = authoritativeWhitespace
+        ? whitespaceEvidence.rawBoundaries.has(itemStartGlyphOffset) ||
+          (!whitespaceEvidence.contentBoundaries.has(itemStartGlyphOffset) &&
+            (horizontalGap === null || geometricWordGap))
+        : lastRawEndedWithWhitespace ||
+          /^\s/u.test(rawText) ||
+          horizontalGap === null ||
+          geometricWordGap;
+
+      if (insertSpace) buffer += " ";
     }
+
     buffer += text;
     lastRawEndedWithWhitespace = /\s$/u.test(rawText);
-    lastRawText = rawText;
     if (y !== null) lastY = y;
     if (x !== null) lastRight = x + Math.max(width, 0);
     if (rawItem.hasEOL) flush();
   }
+
   flush();
   return lines;
 }
@@ -395,8 +431,12 @@ function shouldUseVisualReadingOrder(lines: readonly VisualPdfLine[]): boolean {
   return upwardTransitions >= 2 && upwardTransitions / transitions >= 0.2;
 }
 
-function reconstructLines(items: readonly unknown[], page: number): readonly PdfLine[] {
-  const sequential = reconstructSequentialLines(items, page);
+function reconstructLines(
+  items: readonly unknown[],
+  page: number,
+  whitespaceEvidence: PdfWhitespaceEvidence | null = null,
+): readonly PdfLine[] {
+  const sequential = reconstructSequentialLines(items, page, whitespaceEvidence);
   const positioned = positionedTextItems(items);
   if (!positioned) return sequential;
   const visual = visualPdfLines(positioned);
@@ -995,8 +1035,17 @@ export function reconstructPdfTextLines(
   page = 1,
   rawOperatorText?: string,
 ): readonly string[] {
-  void rawOperatorText;
-  return reconstructLines(items, page).map((line) => line.text);
+  const contentText = items
+    .map((item) => (isTextItem(item) ? item.str : ""))
+    .join("");
+  const evidence = rawOperatorText
+    ? pdfWhitespaceEvidence(rawOperatorText, contentText)
+    : null;
+  return reconstructLines(
+    items,
+    page,
+    evidence?.aligned ? evidence : null,
+  ).map((line) => line.text);
 }
 
 export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMenu> {
@@ -1013,77 +1062,10 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
       const page = await document.getPage(pageNumber);
       const content = await page.getTextContent();
       const operatorList = await page.getOperatorList();
-      const collectGlyphText = (value: unknown): string => {
-        if (Array.isArray(value)) return value.map(collectGlyphText).join("");
-        if (typeof value === "string") return value;
-        if (
-          value &&
-          typeof value === "object" &&
-          "unicode" in value &&
-          typeof (value as { unicode?: unknown }).unicode === "string"
-        ) {
-          return (value as { unicode: string }).unicode;
-        }
-        return "";
-      };
-      const opName = (fn: number): string =>
-        Object.entries(OPS).find(([, value]) => value === fn)?.[0] ?? String(fn);
-      const compactArgs = (args: unknown): unknown => {
-        if (!Array.isArray(args)) return args;
-        return args.map((value) => {
-          if (typeof value === "number" || typeof value === "string") return value;
-          if (Array.isArray(value)) {
-            const text = collectGlyphText(value);
-            return text ? { text } : value.filter((entry) => typeof entry === "number");
-          }
-          const text = collectGlyphText(value);
-          return text ? { text } : null;
-        });
-      };
-      let previousTextEvent:
-        | { readonly index: number; readonly text: string }
-        | null = null;
-      for (let opIndex = 0; opIndex < operatorList.fnArray.length; opIndex += 1) {
-        const fn = operatorList.fnArray[opIndex];
-        if (fn !== OPS.showText && fn !== OPS.showSpacedText) continue;
-        const operatorText = collectGlyphText(operatorList.argsArray[opIndex]);
-        if (!operatorText.trim()) continue;
-        if (previousTextEvent) {
-          const pair = `${previousTextEvent.text}|||${operatorText}`;
-          if (
-            /(?:PROFI\|\|\|LE:|D\|\|\|IJON|BO\|\|\|EU|EU\|\|\|F|CHAMPAG\|\|\|N|N\|\|\|E VINEGAR|SAUCE B\|\|\|É|É\|\|\|ARNAISE|GLACED ONIONS\|\|\|AND|AND\|\|\|SAUCE B|NORWEGIAN CATTLE\|\|\|W|W\|\|\|ITH)/u.test(
-              pair,
-            )
-          ) {
-            const between = [];
-            for (
-              let betweenIndex = previousTextEvent.index + 1;
-              betweenIndex < opIndex;
-              betweenIndex += 1
-            ) {
-              between.push({
-                index: betweenIndex,
-                op: opName(operatorList.fnArray[betweenIndex] ?? -1),
-                args: compactArgs(operatorList.argsArray[betweenIndex]),
-              });
-            }
-            console.warn(
-              "[pdf-operator-boundary]",
-              JSON.stringify({
-                page: pageNumber,
-                previous: previousTextEvent,
-                current: { index: opIndex, text: operatorText },
-                between,
-              }),
-            );
-          }
-        }
-        previousTextEvent = { index: opIndex, text: operatorText };
-      }
       const rawOperatorText = operatorList.fnArray
         .map((fn, index) =>
           fn === OPS.showText || fn === OPS.showSpacedText
-            ? collectGlyphText(operatorList.argsArray[index])
+            ? collectPdfGlyphText(operatorList.argsArray[index])
             : "",
         )
         .join("");
@@ -1094,37 +1076,13 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
         rawOperatorText,
         contentText,
       );
-      console.warn(
-        "[pdf-whitespace-evidence]",
-        JSON.stringify({
-          page: pageNumber,
-          aligned: whitespaceEvidence.aligned,
-          rawBoundaryCount: whitespaceEvidence.rawBoundaries.size,
-          contentBoundaryCount: whitespaceEvidence.contentBoundaries.size,
-          supportedContentBoundaries:
-            whitespaceEvidence.supportedContentBoundaries,
-          supportRatio:
-            whitespaceEvidence.contentBoundaries.size === 0
-              ? 1
-              : whitespaceEvidence.supportedContentBoundaries /
-                whitespaceEvidence.contentBoundaries.size,
-          unsupportedContentBoundarySamples: [
-            ...whitespaceEvidence.contentBoundaries,
-          ]
-            .filter((boundary) => !whitespaceEvidence.rawBoundaries.has(boundary))
-            .map((boundary) => {
-              const glyphs = normalizedGlyphSequence(contentText);
-              return {
-                boundary,
-                context: `${glyphs.slice(Math.max(0, boundary - 18), boundary)}|${glyphs.slice(
-                  boundary,
-                  boundary + 18,
-                )}`,
-              };
-            }),
-        }),
+      lines.push(
+        ...reconstructLines(
+          content.items,
+          pageNumber,
+          whitespaceEvidence.aligned ? whitespaceEvidence : null,
+        ),
       );
-      lines.push(...reconstructLines(content.items, pageNumber));
       page.cleanup();
     }
   } finally {
