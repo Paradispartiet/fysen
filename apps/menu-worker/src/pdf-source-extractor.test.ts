@@ -593,4 +593,27 @@ describe("PDF source scope", () => {
     expect(scoped.some((item) => /^Allergener:/iu.test(item.name))).toBe(false);
   });
 
+
+  it("normalizes asymmetric PDF punctuation spacing without collapsing real separators", () => {
+    const lines = [
+      "HOVEDRETTER",
+      "WILD -CAUGHT FISH “ON THE BONE ” WITH BEET ROOTS AND SAUCE HOLLANDAISE 695",
+      "PIGGVAR - TURBOT 595",
+      "DESSERTER",
+      "KAFFE IS – COFFEE ICE -CREAM 85",
+      "MOULES «À LA CRÈME » 285",
+      "TERRINE « À PARTAGER » 235",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual([
+      "WILD-CAUGHT FISH “ON THE BONE” WITH BEET ROOTS AND SAUCE HOLLANDAISE",
+      "PIGGVAR - TURBOT",
+      "KAFFE IS – COFFEE ICE-CREAM",
+      "MOULES «À LA CRÈME»",
+      "TERRINE « À PARTAGER »",
+    ]);
+  });
+
 });
