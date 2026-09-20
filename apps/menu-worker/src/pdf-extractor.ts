@@ -1,4 +1,4 @@
-import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
+import { getDocument, OPS } from "pdfjs-dist/legacy/build/pdf.mjs";
 import {
   createMenuItemSourceKey,
   normalizeDishName,
@@ -952,7 +952,32 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
   try {
     for (let pageNumber = 1; pageNumber <= pageCount; pageNumber += 1) {
       const page = await document.getPage(pageNumber);
-      const content = await page.getTextContent({ disableNormalization: true });
+      const content = await page.getTextContent();
+      const operatorList = await page.getOperatorList();
+      for (let opIndex = 0; opIndex < operatorList.fnArray.length; opIndex += 1) {
+        const fn = operatorList.fnArray[opIndex];
+        if (fn !== OPS.showText && fn !== OPS.showSpacedText) continue;
+        const collectGlyphText = (value: unknown): string => {
+          if (Array.isArray(value)) return value.map(collectGlyphText).join("");
+          if (typeof value === "string") return value;
+          if (
+            value &&
+            typeof value === "object" &&
+            "unicode" in value &&
+            typeof (value as { unicode?: unknown }).unicode === "string"
+          ) {
+            return (value as { unicode: string }).unicode;
+          }
+          return "";
+        };
+        const operatorText = collectGlyphText(operatorList.argsArray[opIndex]);
+        if (operatorText.trim()) {
+          console.warn(
+            "[pdf-operator-diagnostic]",
+            JSON.stringify({ page: pageNumber, opIndex, fn, text: operatorText }),
+          );
+        }
+      }
       lines.push(...reconstructLines(content.items, pageNumber));
       page.cleanup();
     }
