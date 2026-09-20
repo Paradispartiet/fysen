@@ -150,6 +150,22 @@ vi.mock("pdfjs-dist/legacy/build/pdf.mjs", () => ({
               hasEOL: true,
             },
             {
+              str: "(m,sen,su)",
+              transform: [9.96, 0, 0, 9.96, 72, 610],
+              width: 42.32,
+            },
+            {
+              str: " ",
+              transform: [9.96, 0, 0, 9.96, 114.32, 610],
+              width: 2.35,
+            },
+            {
+              str: "1500,- kg",
+              transform: [11.04, 0, 0, 11.04, 116.67, 610],
+              width: 41.06,
+              hasEOL: true,
+            },
+            {
               str: "OYSTERS WITH CHAMPAG",
               transform: [9, 0, 0, 9, 72, 620],
               width: 100,
@@ -211,6 +227,8 @@ describe("PDF positioned fragment spacing", () => {
     expect(extracted.visibleText).not.toContain("BO EUF");
     expect(extracted.visibleText).not.toContain("B ÉARNAISE");
     expect(extracted.visibleText).not.toContain("CHAMPAG NE");
+    expect(extracted.visibleText).toContain("(m,sen,su) 1500,- kg");
+    expect(extracted.visibleText).not.toContain("(m,sen,su)1500,- kg");
     expect(extracted.visibleText).toContain("DE BOEUF");
     expect(extracted.visibleText).toContain("BOEUF SERVED");
   });
