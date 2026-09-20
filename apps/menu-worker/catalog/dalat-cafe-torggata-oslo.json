@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 25,
+    "minimumExpectedItems": 24,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": []
@@ -25,15 +25,14 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-08-20",
-      "note": "Identity is independently matched to the Torggata restaurant; Batch 01 uses the current priced Foodora service menu because a complete machine-readable first-party menu has not yet been proven. It must not be described as complete dine-in coverage."
+      "checkedAt": "2026-09-20",
+      "note": "Fresh scheduled catalog-health reproof on 2026-09-20 confirmed the current Foodora service menu returns 24 clean priced dishes: Vietnamesisk Baguette (Bánh mì) has left the live menu while the other 24 observed dishes remain stable. Rebaseline only the stale baguette assertion and the exact-count floor from 25 to 24; source and the remaining representative assertions stay unchanged. This remains service-menu evidence, not complete dine-in coverage."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
       "Wonton Suppe (Súp hoành thánh)",
-      "Vietnamesisk Baguette (Bánh mì)",
       "Wonton Suppe (Mì hoành thánh)",
       "Stekt Ris (Cơm chiên dương châu)",
       "Biff & Brokkoli (Bò xào bông cải)",
@@ -45,11 +44,6 @@
       {
         "name": "Wonton Suppe (Súp hoành thánh)",
         "priceMinor": 13900
-      },
-      {
-        "name": "Vietnamesisk Baguette (Bánh mì)",
-        "priceMinor": 16900,
-        "priceKind": "from"
       },
       {
         "name": "Wonton Suppe (Mì hoành thánh)",
