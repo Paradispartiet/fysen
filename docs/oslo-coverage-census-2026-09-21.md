@@ -1053,6 +1053,43 @@ Ahaan is not collapsed into Plah or the combined Plah & Ahaan product without ex
 This closes classification for the complete current VisitOSLO afternoon-tea source family. It does not
 close the broad 326-product restaurant catalogue or resolve the remaining review queue.
 
+## Current source refresh — VisitOSLO game bars complete
+
+The current VisitOSLO guide to game bars was re-opened on 2026-09-21. The Norwegian article is dated
+2026-05-26, updated 2026-09-21, and names **10 / 10** current venues across its main recommendations
+and "Flere spillbarer" section.
+
+Source:
+- https://www.visitoslo.com/no/artikler/spillbarer-i-oslo
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| The Good Knight | excluded | Current VisitOSLO product is a chess café/bar; the current surface establishes drinks and chess activity but no restaurant dish offering. |
+| Oche Torggata | canonical | Current catalog contains exact identity `oche-torggata-oslo` with a current first-party food menu. |
+| Tilt | excluded | Current VisitOSLO product is an arcade/beer bar; the current surface establishes drinks and games but no restaurant dish offering. |
+| Røør | excluded | Existing current microbrewery exclusion; the current surface establishes beer and shuffleboard but no restaurant food offering. |
+| Oslo Camping | excluded | Current VisitOSLO product is a mini-golf bar/club; the current surface establishes drinks/activity but no restaurant dish offering. |
+| Raadhuset | review | Current VisitOSLO product has an explicit Mexican-inspired menu with tacos, burritos, nachos and vegan alternatives; no canonical manifest/source-intake proof is established yet. |
+| Spillbaren Barcode | excluded | Current VisitOSLO product establishes games and cocktail-bar service but no own restaurant food offering in the inspected surface. |
+| Spillbaren Majorstuen | excluded | Current VisitOSLO product establishes games and bar service but no own restaurant food offering in the inspected surface. |
+| Grønland Boulebar | review | Current VisitOSLO product explicitly includes a restaurant serving French-inspired food centered on rotisserie chicken; no canonical manifest/source-intake proof is established yet. |
+| Underground Golf Club | review | Current VisitOSLO product explicitly serves thin-crust pizza through Barry’s Pizza Shack at the venue; exact dish-source/canonical identity remains unresolved. |
+
+Game-bar reconciliation:
+- canonical: **1**;
+- review: **3**;
+- excluded: **6**;
+- missing: **0**.
+
+This pass applies the dish-first contract venue by venue. Oche is already canonical. Raadhuset,
+Grønland Boulebar and Underground Golf Club have explicit current food service and therefore remain
+review until a stable canonical dish source or identity proof is established. The six excluded venues
+are activity/bar identities whose currently inspected VisitOSLO product surfaces establish no own
+restaurant dish offering.
+
+This closes classification for the complete current VisitOSLO game-bar guide. It does not close the
+broad 326-product restaurant catalogue or resolve the remaining review queue.
+
 ## Closeout order
 
 The census should now proceed in this order:
@@ -1076,7 +1113,7 @@ The census should now proceed in this order:
 ## Next concrete unit of work
 
 The VisitOSLO hidden-gems, hotel-restaurants, quick-bite, local-foodies, lunch, vegan/vegetarian,
-budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food, fine-dining, fireplace-restaurant, wine-bar, microbrewery, cocktail-bar, brunch and afternoon-tea source families
+budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food, fine-dining, fireplace-restaurant, wine-bar, microbrewery, cocktail-bar, brunch, afternoon-tea and game-bar source families
 are now fully classified with `missing = 0`. Continue the refreshed VisitOSLO universe and remaining
 current thematic sources while the broad 326-product catalogue enumeration remains open. Kafé Republik
 stays in its generic extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
