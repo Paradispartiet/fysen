@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-coverage-visitoslo-tranche1-20260921",
+  "concurrency": 3,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "brasserie-coucou-oslo",
+        "name": "Brasserie Coucou",
+        "websiteUrl": "https://www.brasseriecoucou.no/",
+        "address": "Henrik Ibsens gate 60C, 0255 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.brasseriecoucou.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-21",
+          "note": "VisitOSLO tranche-1 coverage gap. Active first-party identity at Henrik Ibsens gate 60C with a current menu surface. Research only: exact-head intake must prove current named/priced canonical dish output before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "ekebergrestauranten-oslo",
+        "name": "Ekebergrestauranten",
+        "websiteUrl": "https://www.ekebergrestauranten.com/",
+        "address": "Kongsveien 15, 0193 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.ekebergrestauranten.com/middagsmeny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-21",
+          "note": "VisitOSLO tranche-1 coverage gap. Current first-party dinner page publishes individually priced starters, mains and desserts. Research only: bilingual/package labels must remain fail-closed under semantic artifact QA."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "FORRETTER (STARTERS)",
+        "HOVEDRETTER (MAIN COURSES)",
+        "DESSERTER (DESSERTS)",
+        "3-retter",
+        "4-retter",
+        "5-retter"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "folkvang-sagene-oslo",
+        "name": "Folkvang Sagene",
+        "websiteUrl": "https://folkvangsagene.no/",
+        "address": "Maridalsveien 153B, 0461 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://folkvangsagene.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-21",
+          "note": "VisitOSLO tranche-1 coverage gap. Current first-party lunch/dinner page publishes many individually priced named dishes and provides a distinct Sagene geographic option. Research only: exact-head intake and semantic artifact QA are required before promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Til å begynne med",
+        "Kjøkkensjefens Delemeny",
+        "Forretter",
+        "Hovedretter",
+        "Tilbehør",
+        "Til å dele",
+        "Dessert"
+      ]
+    }
+  ]
+}
