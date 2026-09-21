@@ -39,7 +39,7 @@ Therefore the census-start coverage baseline is **745 canonical manifests**, not
 - PR #848 merged the census ledger without changing the catalog.
 - PR #849 produced a fresh Brasserie Hansken exact-head proof.
 - PR #850 promoted Brasserie Hansken and merged as `101f55385da8c1053f1bb864b8cf82179ed46d2a`.
-- The current Git catalog baseline after #850 is **746 manifests**. A new full-catalog production-health claim is not inferred from that Git count alone; the last explicitly cited full health proof above remains 745/745.
+- The Git catalog baseline after #850 was **746 manifests**. The Ringnes Brygghus promotion adds one exact artifact manifest, making the expected Git catalog baseline **747 manifests** after this PR. A new full-catalog production-health claim is not inferred from the Git count alone; the last explicitly cited full health proof above remains 745/745.
 
 ## Historical benchmark reconciliation
 
@@ -225,22 +225,22 @@ Source:
 | Izakaya | canonical | Current catalog contains `izakaya-by-vladimir-pak-oslo`. |
 | Kafé Republik | review | Exact-head intake #1109 generated and strict-validated 13 items, but the current first-party page contains 15 individually priced dishes. Semantic/source comparison shows extraction loss for `Grilled Beef Skewers, Peanut Sauce` (185 NOK) and `Spekemat` (165 NOK). Keep fail-closed pending generic extraction repair and fresh reproof. |
 | St. Lars | review | Existing historical P1 review; audited source state was image-only. |
-| Ringnes Brygghus | **missing** | Exact-head intake #1109 generated and strict-validated all 10 current first-party pizzas with correct name/price bindings and clean semantic output. Promotion-ready from artifact `10654979415`; remains `missing` only until separate byte-identical canonical promotion. |
+| Ringnes Brygghus | canonical | Promoted byte-for-byte from exact-head intake #1110 artifact `10656010234`; all 10 current first-party pizzas were strict-validated with correct name/price bindings and clean semantic output. Canonical identity: `ringnes-brygghus-oslo`. |
 | Angst Bar | excluded | Current VisitOSLO identity is explicitly a bar/club and no restaurant food surface is established; outside the dish-first restaurant census. |
 | Latter Restaurant & Bar | review | Active restaurant identity is established, but the current first-party public surface found in this refresh does not expose a stable named/priced a la carte list suitable for immediate intake. |
 
-Hidden-gems reconciliation after exact-head intake #1109:
-- canonical: **2**;
+Hidden-gems reconciliation after Ringnes promotion:
+- canonical: **3**;
 - review: **5**;
 - excluded: **2**;
-- missing: **1**.
+- missing: **0**.
 
-Exact-head proof on `5e055411b0fdcfbf9df38cd5230f49080b081dcc` generated **2/2** candidates,
-strict-validated **2/2**, and uploaded artifact `10654979415` with SHA-256
-`12fc6e90b25b97b5fd6d5f179e7d1ceaa0d7f3d9dc8020735ca3fd2b262c3d19`.
-Structural green was not treated as semantic promotion approval: Ringnes is clean 10/10 and
-promotion-ready, while Kafé Republik returns to review because two priced source dishes are absent from
-the 13-item canonical extraction.
+Final research proof on exact head `b2ecbaabc890b5a82dad756833aa6902a3c9d3b2` used Restaurant batch
+intake #1110: **2/2 generated, 2/2 strict accepted, 0 failed**. Artifact `10656010234` has ZIP SHA-256
+`a77216f70cf69a27a7d2f2b7c65149e1d964d691ac9acae2dd22558913085dbf`. The promoted Ringnes manifest
+has SHA-256 `7b208eba2404977967d8c524bf415b07d01774338b0fc1295a7bd261de6cab6d` and Git blob
+`08ed7d7ba0d467bf8b48726cc22a8664d2cb2cb5`, identical to the accepted artifact. Kafé Republik remains
+review because two priced source dishes are absent from the 13-item canonical extraction.
 
 ## Closeout order
 
@@ -264,10 +264,6 @@ The census should now proceed in this order:
 
 ## Next concrete unit of work
 
-Merge the evidence-backed hidden-gems research classification, then promote **Ringnes Brygghus** in a
-separate PR from the exact accepted artifact. Kafé Republik remains an extraction-review item and must
-not be promoted from the incomplete 13/15 output.
-
-After Ringnes is canonical, hidden-gems reaches `missing = 0`. Continue the refreshed VisitOSLO
-universe and remaining current thematic sources while resolving Kafé Republik and other blocker families
-separately.
+The VisitOSLO hidden-gems source family is now fully classified with `missing = 0`. Continue the
+refreshed VisitOSLO universe and remaining current thematic sources. Kafé Republik stays in its generic
+extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
