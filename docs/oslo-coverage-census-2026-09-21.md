@@ -207,6 +207,41 @@ Tranche-1 closeout classification after exact-head research:
 
 This closes `missing` for the **first 12 VisitOSLO products only**. It does not close Oslo coverage: VisitOSLO pages 2–28, Anders Husa/current thematic sources and demand-gap inputs are not yet fully reconciled, and all nine tranche-1 review identities remain unresolved for a final coverage claim.
 
+## Current source refresh — VisitOSLO hidden gems complete
+
+The current VisitOSLO "Skjulte perler" list was re-opened on 2026-09-21 and exposes **10 / 10**
+current products. This source family is fully enumerated and reconciled independently of the broader
+326-product restaurant catalogue.
+
+Source:
+- https://www.visitoslo.com/no/oslo-for-deg/oslo-for-foodies/skjulte-perler
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| Nektar | canonical | Current catalog contains `nektar-vinbar-oslo`. |
+| Konoji | review | Existing historical P1 review; no sufficient current first-party menu/identity evidence has closed the hold. |
+| Farine | review | Current first-party identity is a bakery/spiseri with simple breakfast/lunch food, but the current public surface does not establish a stable individually priced dish menu suitable for immediate canonical intake. |
+| Middagscruise i Oslofjorden med Brim Explorer | excluded | Tour/package identity rather than a fixed restaurant identity. The current product includes a three-course dinner, but it is outside the restaurant census contract. |
+| Izakaya | canonical | Current catalog contains `izakaya-by-vladimir-pak-oslo`. |
+| Kafé Republik | review | Exact-head intake #1109 generated and strict-validated 13 items, but the current first-party page contains 15 individually priced dishes. Semantic/source comparison shows extraction loss for `Grilled Beef Skewers, Peanut Sauce` (185 NOK) and `Spekemat` (165 NOK). Keep fail-closed pending generic extraction repair and fresh reproof. |
+| St. Lars | review | Existing historical P1 review; audited source state was image-only. |
+| Ringnes Brygghus | **missing** | Exact-head intake #1109 generated and strict-validated all 10 current first-party pizzas with correct name/price bindings and clean semantic output. Promotion-ready from artifact `10654979415`; remains `missing` only until separate byte-identical canonical promotion. |
+| Angst Bar | excluded | Current VisitOSLO identity is explicitly a bar/club and no restaurant food surface is established; outside the dish-first restaurant census. |
+| Latter Restaurant & Bar | review | Active restaurant identity is established, but the current first-party public surface found in this refresh does not expose a stable named/priced a la carte list suitable for immediate intake. |
+
+Hidden-gems reconciliation after exact-head intake #1109:
+- canonical: **2**;
+- review: **5**;
+- excluded: **2**;
+- missing: **1**.
+
+Exact-head proof on `5e055411b0fdcfbf9df38cd5230f49080b081dcc` generated **2/2** candidates,
+strict-validated **2/2**, and uploaded artifact `10654979415` with SHA-256
+`12fc6e90b25b97b5fd6d5f179e7d1ceaa0d7f3d9dc8020735ca3fd2b262c3d19`.
+Structural green was not treated as semantic promotion approval: Ringnes is clean 10/10 and
+promotion-ready, while Kafé Republik returns to review because two priced source dishes are absent from
+the 13-item canonical extraction.
+
 ## Closeout order
 
 The census should now proceed in this order:
@@ -229,6 +264,10 @@ The census should now proceed in this order:
 
 ## Next concrete unit of work
 
-Close PR #851 as the evidence-backed tranche-1 census classification. Then repair the Folkvang multiple-price title defect generically with a test-first regression and fresh live reproof; Ekebergrestauranten remains a separate HTML semantic-noise family and Brasserie Coucou remains source/extraction review.
+Merge the evidence-backed hidden-gems research classification, then promote **Ringnes Brygghus** in a
+separate PR from the exact accepted artifact. Kafé Republik remains an extraction-review item and must
+not be promoted from the incomplete 13/15 output.
 
-After the tranche-1 classification is merged, continue VisitOSLO universe reconciliation page-by-page while resolving blocker families separately rather than arbitrary restaurant order.
+After Ringnes is canonical, hidden-gems reaches `missing = 0`. Continue the refreshed VisitOSLO
+universe and remaining current thematic sources while resolving Kafé Republik and other blocker families
+separately.
