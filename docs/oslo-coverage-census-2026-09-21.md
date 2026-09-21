@@ -1131,6 +1131,89 @@ Tjuvholmen or another Åpent Bakeri location without exact venue/source proof.
 This closes classification for the complete current VisitOSLO baked-goods-and-cakes source family. It
 does not close the broad 326-product restaurant catalogue or resolve the remaining review queue.
 
+## Current source refresh — Anders Husa Oslo guide complete
+
+The current Anders Husa / Anders & Kaitlin Oslo city guide was re-opened on 2026-09-21. The page
+shows an update date of **2026-07-07** and exposes its complete server-rendered Oslo food-map list.
+The full current list contains **48 entries**, including restaurants, bakeries, bars, coffee shops and
+one explicitly labelled recommended hotel.
+
+Source:
+- https://andershusa.com/destinations/best-restaurants-oslo/
+
+This is an independent relevance source rather than canonical truth. The guide itself demonstrates that
+point: it still contains À L'aise even though the fresher VisitOSLO evidence explicitly marks that venue
+closed. Existing stronger identity/closure evidence therefore remains authoritative for census status.
+
+| Venue / product | Census status | Reason |
+|---|---|---|
+| Maaemo | review | Existing historical P0 review; no stable public current named dish output suitable for dish-first canonical intake. |
+| Tabuno | review | Existing historical P1 review; current independent guide confirms relevance, but fresh canonical source proof remains unresolved. |
+| Betong | review | Existing historical P0 review; tasting-menu formats/prices do not provide stable individually priced named dishes. |
+| Koie Ramen | review | Existing historical P1 review; current independent guide confirms relevance, but separate exact canonical identity/source proof remains unresolved. |
+| Madonna | canonical | Current catalog contains `madonna-oslo`. |
+| Vaaghals | review | Existing historical P0 review; first-party PDF transport was repaired, but latest canonical extraction proof remained insufficient. |
+| ZZ Pizza | canonical | Current guide lists St. Halvards gate 33, matching canonical `zz-pizza-gamlebyen-oslo`. |
+| Hobo Hotel Oslo | excluded | The source explicitly labels this as a recommended hotel umbrella containing several food concepts, not one restaurant identity for the restaurant census. |
+| Svanen | excluded | Current independent guide describes a cocktail bar; current VisitOSLO evidence likewise establishes drinks but no restaurant dish surface. |
+| Savage | review | Existing historical P0 review; current independent guide confirms relevance, but stable dish-level canonical intake evidence remains unresolved. |
+| Substans | review | Existing historical P1 review; current independent guide confirms relevance, but fresh canonical source proof remains unresolved. |
+| Stranden 30 | review | Existing historical P1 review; current independent guide confirms relevance, but fresh canonical source proof remains unresolved. |
+| Eero | review | Existing historical P0 review; current menu evidence remains package/set-menu led rather than stable individually priced dishes. |
+| Palace Grill | review | Existing historical P1 review; current independent guide confirms relevance, but fresh canonical source proof remains unresolved. |
+| Bakeriet ved Credo | review | Current independent bakery identity at Nasjonalbiblioteket with prepared food and pastries; it is separate from Credo restaurant and has no canonical manifest/source-intake proof yet. |
+| Punk Royale | review | Existing historical P1 review; current independent guide confirms relevance, but fresh canonical source proof remains unresolved. |
+| Corral’s Tacos | canonical | Current guide lists Frognerveien 9D, matching exact canonical Solli identity `corrals-tacos-solli-oslo`; it is not the separate Grønland venue. |
+| Kafeteria August | review | Existing historical P1 review; current independent guide confirms active all-day restaurant relevance, but canonical source proof remains unresolved. |
+| Mon Oncle | review | Existing historical P0 review; public surface exposes menu formats/prices rather than stable named individually priced dishes. |
+| Tomodomo | canonical | Current catalog contains `tomodomo-oslo`. |
+| Fuglen | excluded | Current independent guide describes coffee-bar-by-day / cocktail-bar-by-night use; current VisitOSLO evidence likewise establishes no restaurant dish offering. |
+| Panu | review | Existing historical/current review; menu remains image-led with no stable textual named-priced canonical list proven. |
+| Fox and Loaf | review | Existing historical P1 review; current independent guide confirms restaurant relevance, but fresh canonical source proof remains unresolved. |
+| Arakataka | canonical | Current catalog contains `arakataka-oslo`. |
+| Ugly Duckling | canonical | Current guide lists Torggata 21b, matching exact canonical `ugly-duckling-oslo`. |
+| The Little Pickle | review | Existing historical P0 review; dinner menu remains image-led with no stable textual priced dinner list proven. |
+| Le Benjamin | review | Existing historical P0 review; fresh first-party priced PDF is semantically useful but production fetching is blocked by publisher robots policy. |
+| Territoriet | review | Existing current wine-bar review; independent guide confirms the venue but does not itself resolve dish-first restaurant relevance or canonical source fit. |
+| Nektar | canonical | Current catalog contains `nektar-vinbar-oslo`. |
+| Hrímnir Ramen | canonical | Current catalog contains `hrimnir-ramen-storgata`, matching the current Maridalsveien identity. |
+| Hot Temper | canonical | Current guide lists Nordre gate 24, matching exact canonical `hot-temper-grunerlokka-oslo`. |
+| Haralds Vaffel | canonical | Current catalog contains `haralds-vaffel-grunerlokka-oslo`. |
+| Kontrast | review | Existing historical P0 review; set-menu formats/prices do not provide a stable individually priced named dish list. |
+| Tim Wendelboe | excluded | Current independent guide describes a specialty coffee bar; no restaurant dish surface is established for the restaurant census. |
+| Skaal Matbar | canonical | Current catalog contains `skaal-matbar-oslo`. |
+| Dumpling AS | review | Current independent guide establishes an active full restaurant with named dumpling dishes, but no exact canonical manifest/source-intake proof exists yet. |
+| Supreme Roastworks | excluded | Current independent guide describes a specialty coffee shop; no restaurant dish surface is established for the restaurant census. |
+| Rikkes Hage | review | Current independent guide establishes a seasonal beer garden with an own kitchen serving prepared bar snacks; canonical source/seasonality handling remains unresolved. |
+| Rodeo | review | Current independent guide establishes an active globally inspired bistro with substantial prepared dishes; no canonical manifest/source-intake proof exists yet. |
+| Render Burger | canonical | Current guide lists Toftes gate 19B, matching exact canonical `render-burger-grunerlokka-oslo`. |
+| Hot Shop | review | Existing historical P0 review; tasting-menu/package evidence remains unresolved and the venue is separately tracked for announced 2026 closure. |
+| Liminal | review | Current independent guide establishes an active seasonal tasting-menu restaurant in Torshov; no canonical manifest/source-intake proof exists yet. |
+| Daegens | review | Current independent guide establishes an active Lilleborg bakery with prepared buns and BMO food; no canonical manifest/source-intake proof exists yet. |
+| Roze Gastro | review | Current independent guide establishes an active Bislett tasting-menu restaurant with named dishes; no canonical manifest/source-intake proof exists yet. |
+| St. Lars | review | Existing historical P1 review; audited source state was image-only despite clear current restaurant relevance. |
+| Smalhans | review | Existing historical P0 review; named dishes exist but published prices bind to menu packages rather than individual dishes. |
+| Grotto | review | Current independent guide establishes an active full French-style bistro with substantial prepared dishes; no canonical manifest/source-intake proof exists yet. |
+| À L'aise | excluded | The independent guide still contains the venue, but current VisitOSLO evidence explicitly marks À L’aise closed; stronger closure evidence keeps it outside the active universe. |
+
+Anders Husa current-guide reconciliation:
+- canonical: **12**;
+- review: **30**;
+- excluded: **6**;
+- missing: **0**.
+
+The independent guide contributes several relevant identities not previously closed by the VisitOSLO
+families, including Bakeriet ved Credo, Dumpling AS, Rikkes Hage, Rodeo, Liminal, Daegens, Roze Gastro
+and Grotto. They remain review until exact dish-source and canonical-intake proof is established.
+
+Physical identity remains strict. Corral's Tacos at Frognerveien 9D maps specifically to canonical
+`corrals-tacos-solli-oslo`, not the separate Grønland venue. Bakeriet ved Credo is not collapsed into
+Credo restaurant. The recommended Hobo Hotel umbrella is outside the restaurant-identity census even
+though the guide describes several food concepts inside the hotel.
+
+This closes classification for the complete current Anders Husa Oslo city-guide list. It does not close
+the broad 326-product VisitOSLO restaurant catalogue or resolve the remaining review queue.
+
 ## Closeout order
 
 The census should now proceed in this order:
@@ -1153,8 +1236,8 @@ The census should now proceed in this order:
 
 ## Next concrete unit of work
 
-The VisitOSLO hidden-gems, hotel-restaurants, quick-bite, local-foodies, lunch, vegan/vegetarian,
-budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food, fine-dining, fireplace-restaurant, wine-bar, microbrewery, cocktail-bar, brunch, afternoon-tea, game-bar and baked-goods-and-cakes source families
-are now fully classified with `missing = 0`. Continue the refreshed VisitOSLO universe and remaining
-current thematic sources while the broad 326-product catalogue enumeration remains open. Kafé Republik
-stays in its generic extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
+The major finite VisitOSLO thematic families audited in this census and the complete current Anders Husa
+Oslo city guide are now fully classified with `missing = 0`. Continue with additional independent current
+Oslo relevance/demand sources and resolve the accumulated review blocker families while the broad
+326-product VisitOSLO catalogue enumeration remains open. Kafé Republik stays in its generic
+extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
