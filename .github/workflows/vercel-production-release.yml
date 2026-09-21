@@ -356,3 +356,17 @@ jobs:
     with:
       source_sha: ${{ needs.prepare.outputs.source_sha }}
     secrets: inherit
+
+  revenue_proof:
+    needs: [prepare, web, api, proof]
+    if: >-
+      always() &&
+      needs.prepare.result == 'success' &&
+      (needs.prepare.outputs.web_needed == 'true' || needs.prepare.outputs.api_needed == 'true') &&
+      (needs.web.result == 'success' || needs.web.result == 'skipped') &&
+      (needs.api.result == 'success' || needs.api.result == 'skipped') &&
+      needs.proof.result == 'success'
+    uses: ./.github/workflows/revenue-production-proof.yml
+    with:
+      source_sha: ${{ needs.prepare.outputs.source_sha }}
+    secrets: inherit
