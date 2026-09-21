@@ -349,6 +349,53 @@ intentionally physical-identity aware: the VisitOSLO product is Oscars gate 81 a
 canonical status from the separate Bjørvika branch. The 16 review identities still need their existing
 blocker families resolved before a final Oslo-wide coverage declaration.
 
+## Current source refresh — VisitOSLO lunch guide complete
+
+The current VisitOSLO lunch guide was re-opened on 2026-09-21. The source was published 2026-07-03,
+updated 2026-09-18, and exposes **26 / 26** current products.
+
+Source:
+- https://www.visitoslo.com/restaurants-nightlife/convenient/lunch
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| Rorbua | canonical | Current catalog contains `rorbua-oslo`. |
+| Lofoten Fish Restaurant | review | Same physical identity as historical `Lofoten Fiskerestaurant` review at Stranden 75; prior fresh reproof emitted a platter description instead of the canonical dish title. |
+| Festningen Restaurant | canonical | Current catalog contains `festningen-restaurant-oslo`. |
+| Sabaki Skøyen | canonical | Current catalog contains `sabaki-skoyen-oslo`. |
+| Palmen Restaurant & Bar | canonical | Current catalog contains `palmen-restaurant-oslo`. |
+| Bønder i byen Grünerløkka | canonical | Current catalog contains `bonder-i-byen-oslo`. |
+| Ekspedisjonshallen | review | Existing historical P1 review; current PDF source remains blocked by publisher robots policy. |
+| Kaffistova | canonical | Current catalog contains `kaffistova-oslo`. |
+| Grand Café | review | Active current lunch restaurant at Karl Johans gate 31, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Atlas Brasserie & Café | canonical | Current catalog contains `atlas-brasserie-oslo`. |
+| Maschmanns Food Market | review | Current VisitOSLO identity is a food-market umbrella at Karenslyst allé 51 that includes a bakery and pizzeria; venue-level dish-first source fit and marginal value require explicit resolution. |
+| Dalat Café | canonical | Current catalog contains `dalat-cafe-torggata-oslo`. |
+| Vespa & Humla | review | Active current lunch/bakery identity at Københavngata 2C, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Paleet Food Hall | canonical | Current catalog contains `paleet-food-hall-oslo`. |
+| Amundsen Bryggeri & Spiseri | review | Active current eatery at Stortingsgata 20 with a food menu, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Burger Joint Aker Brygge | canonical | Current catalog contains `burger-joint-aker-brygge-oslo`. |
+| El Camino | canonical | VisitOSLO's lunch identity is the Frogner location at Niels Juels gate 31; current catalog contains the same physical identity as `el-camino-frogner-oslo`. |
+| VIA Village | review | Existing current VisitOSLO review; food-court umbrella over named independent stalls, several already canonical individually. |
+| Südøst Restaurant | canonical | VisitOSLO lists Trondheimsveien 5; current catalog contains the same physical identity as `sudost-trondheimsveien-oslo`. |
+| Mamma Pizza Osteria | canonical | VisitOSLO lists Dronningens gate 22; current catalog contains the same physical identity as `mamma-pizza-osteria-italiana-oslo`. |
+| Hitchhiker | review | Active current restaurant at Øvre Slottsgate 3, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Kafé Republik | review | Existing hidden-gems review; exact-head extraction returns 13 of 15 individually priced source dishes and remains fail-closed pending generic extraction repair. |
+| Lorry Restaurant | canonical | Current catalog contains `lorry-restaurant-oslo`. |
+| Anne på landet – Frognerparken | review | Existing current VisitOSLO review; active café with lunch/dinner dishes, but no separate canonical intake proof yet. |
+| Anne på landet – Hønse-Lovisas hus | review | Active current café at Sandakerveien 2 with handmade food and lunch service, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Nordvegan | review | Existing historical P1 review; named rotating buffet food is published without individual item prices. |
+
+Lunch-guide reconciliation:
+- canonical: **14**;
+- review: **12**;
+- excluded: **0**;
+- missing: **0**.
+
+This closes classification for this finite and recently updated VisitOSLO source family. It does not
+resolve the 12 review identities or substitute for complete reconciliation of the broad 326-product
+restaurant catalogue.
+
 ## Closeout order
 
 The census should now proceed in this order:
