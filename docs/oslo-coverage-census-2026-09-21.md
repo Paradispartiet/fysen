@@ -769,6 +769,66 @@ proven; they are not promoted solely because VisitOSLO includes them.
 This closes classification for all three finite product sets in this current VisitOSLO article. It does
 not close the broad 326-product restaurant catalogue or resolve the remaining review queue.
 
+## Current source refresh — VisitOSLO fine dining complete
+
+The current VisitOSLO guide "Fine dining the Oslo way" was re-opened on 2026-09-21. The article was
+published 2026-05-27, updated 2026-07-14, and exposes **34 / 34** current fine-dining products on one
+finite list.
+
+Source:
+- https://www.visitoslo.com/your-oslo/oslo-for-foodies/fine-dining
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| Maaemo | review | No stable public current named dish output suitable for dish-first intake. |
+| Statholdergaarden | canonical | Current catalog contains `statholdergaarden-oslo`. |
+| Restaurant Kontrast | review | Same physical identity as historical `Kontrast` review; set-menu formats/prices do not provide a stable individually priced named dish list. |
+| J2 Modern Korean | review | Package menu rather than individually priced dish output. |
+| Restaurant À L’aise (closed) | excluded | VisitOSLO explicitly marks this identity closed; outside the active restaurant universe. |
+| Sabi Omakase Oslo | review | Omakase/package price without stable named individually priced current courses. |
+| Palace Grill | review | P1 round-2 evidence remained insufficient for canonical dish-first intake; needs fresh current-source reproof. |
+| Hot Shop | review | Tasting-menu package evidence; additionally tracked as sunset/review after announced 2026 closure. |
+| PANU | review | Menu is image-led / no stable textual named-priced list proven. |
+| Mon Oncle | review | Public surface exposes menu formats/prices rather than stable named individually priced dishes. |
+| Plah & Ahaan | review | Combined current VisitOSLO product remains review; it is not silently collapsed into Plah or Ahaan without exact physical/menu identity proof. |
+| Vaaghals | review | First-party PDF transport was repaired, but the latest Michelin reproof still failed canonical extraction. |
+| Katla | canonical | Current catalog contains `katla-oslo`. |
+| Apostrophe | review | Active current fine-dining guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Kastellet | review | Active current fine-dining guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Arakataka | canonical | Current catalog contains `arakataka-oslo`. |
+| Alex Sushi | review | Active current fine-dining guide identity; no exact canonical manifest/source-intake proof is established in the current census yet. |
+| Code Restaurant | review | Active current fine-dining guide identity; no exact canonical manifest/source-intake proof is established. It is not equated with Dinner Barcode or other Barcode venues. |
+| TAK Oslo | review | Active current fine-dining guide identity; no exact canonical manifest/source-intake proof is established. Similar string fragments in other catalog slugs are not identity evidence. |
+| The Top Restaurant | canonical | Current catalog contains `the-top-restaurant-oslo`; this remains distinct from The Top Terrace. |
+| Ekebergrestauranten | review | Exact-head intake previously exposed bilingual headings, allergen rows and waiter/presentation instructions as priced dishes; keep fail-closed pending generic HTML cleanup and fresh reproof. |
+| Feinschmecker | review | Active current fine-dining guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Grefsenkollen restaurant | review | Active current restaurant identity, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Lofoten Fish Restaurant | review | Same physical identity as historical `Lofoten Fiskerestaurant` review at Stranden 75; prior fresh reproof emitted a platter description instead of the canonical dish title. |
+| Frognerseteren - Restaurant Finstua | canonical | Same restaurant identity as canonical `frognerseteren-finstua-oslo`; its first-party menu source is explicitly Restaurant Finstua. |
+| Palmen Restaurant & Bar | canonical | Current catalog contains `palmen-restaurant-oslo`. |
+| Grand Café | review | Active current lunch/fine-dining restaurant at Karl Johans gate 31, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Dinner Barcode | canonical | Current catalog contains exact venue identity `dinner-barcode-oslo`. |
+| Dinner National | canonical | Current catalog contains the Nationaltheatret venue as `dinner-nationaltheatret-oslo`. |
+| Bar Boman | canonical | Current catalog contains `bar-boman-oslo`. |
+| Festningen Restaurant | canonical | Current catalog contains `festningen-restaurant-oslo`. |
+| Restaurant Eik Annen Etage | review | Active current fine-dining guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| SEVEN | review | Active current fine-dining guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Credo Restaurant | review | Existing historical P0 review; no stable current public named/priced first-party dish list has been proven. |
+
+Fine-dining reconciliation:
+- canonical: **10**;
+- review: **23**;
+- excluded: **1**;
+- missing: **0**.
+
+The closed À L’aise listing is excluded from the active universe. String similarity is not used as
+physical-identity evidence: Code Restaurant is not equated with Dinner Barcode, and TAK Oslo is not
+equated with Arakataka, Taki or Tatakii. Conversely, Dinner Barcode, Dinner National and Restaurant
+Finstua map to exact established canonical venue identities.
+
+This closes classification for the complete current VisitOSLO fine-dining source family. It does not
+close the broad 326-product restaurant catalogue or resolve the remaining review queue.
+
 ## Closeout order
 
 The census should now proceed in this order:
@@ -792,7 +852,7 @@ The census should now proceed in this order:
 ## Next concrete unit of work
 
 The VisitOSLO hidden-gems, hotel-restaurants, quick-bite, local-foodies, lunch, vegan/vegetarian,
-budget, family-friendly, outdoor-dining, accessibility and traditional-Norwegian-food source families
+budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food and fine-dining source families
 are now fully classified with `missing = 0`. Continue the refreshed VisitOSLO universe and remaining
 current thematic sources while the broad 326-product catalogue enumeration remains open. Kafé Republik
 stays in its generic extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
