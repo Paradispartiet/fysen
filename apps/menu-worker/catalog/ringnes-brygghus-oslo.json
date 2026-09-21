@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ringnes-brygghus-oslo",
+    "name": "Ringnes Brygghus",
+    "websiteUrl": "https://ringnesbrygghus.no/",
+    "address": "Thorvald Meyers gate 2A, 0555 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.930179384813485,
+    "longitude": 10.759251969442406
+  },
+  "menuSource": {
+    "url": "https://ringnesbrygghus.no/mat/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-21",
+      "note": "Current VisitOSLO hidden-gems coverage refresh. First-party food page publishes ten named and individually priced pizzas. Research only: exact-head identity, dedupe, extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "KLASSIKEREN",
+      "ARBEIDEREN",
+      "GULLGUTTEN",
+      "SURFEREN",
+      "GARTNEREN",
+      "HELEHOGGEN",
+      "KAMERATEN",
+      "MADAM PÆRE"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "KLASSIKEREN",
+        "priceMinor": 21000
+      },
+      {
+        "name": "ARBEIDEREN",
+        "priceMinor": 25000
+      },
+      {
+        "name": "GULLGUTTEN",
+        "priceMinor": 26000
+      },
+      {
+        "name": "SURFEREN",
+        "priceMinor": 25000
+      },
+      {
+        "name": "GARTNEREN",
+        "priceMinor": 25000
+      },
+      {
+        "name": "HELEHOGGEN",
+        "priceMinor": 26000
+      },
+      {
+        "name": "KAMERATEN",
+        "priceMinor": 26000
+      },
+      {
+        "name": "MADAM PÆRE",
+        "priceMinor": 25000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
