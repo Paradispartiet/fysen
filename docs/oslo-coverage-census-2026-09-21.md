@@ -306,6 +306,49 @@ Quick-bite reconciliation:
 This closes classification for this finite VisitOSLO thematic source. It does **not** resolve the six
 review identities, and it does not substitute for the still-incomplete broad 326-product catalogue.
 
+## Current source refresh — VisitOSLO local-foodies guide complete
+
+The current VisitOSLO "Do as the local foodies" guide was re-opened on 2026-09-21. The source was
+published 2026-05-27, updated 2026-07-09, and exposes **21 / 21** current restaurant products.
+
+Source:
+- https://www.visitoslo.com/restaurants-nightlife/the-taste-of-oslo/local-foodies
+
+| Restaurant | Census status | Reason |
+|---|---|---|
+| Vaaghals | review | Existing historical P0 review; first-party PDF transport was repaired, but the latest canonical reproof still failed extraction. |
+| Basso Social | review | Existing historical P1 review; package prices / generic serving categories do not establish a stable individually priced named menu. |
+| Keyser Social | review | Existing historical P1 review; current evidence is tasting/package led and menu presentation is image-based. |
+| KöD Frogner | review | Existing historical P1 review; shared current menu source is image-only under the audited source state. |
+| Eero | review | Existing historical P0 review; current first-party pricing is event/set-menu package based rather than stable individually priced dishes. |
+| St. Lars | review | Existing historical P1 review; audited current menu source remains image-only. |
+| ZZ Pizza | canonical | VisitOSLO lists St. Halvards gate 33; current catalog contains the same physical identity as `zz-pizza-gamlebyen-oslo`. |
+| The Little Pickle | review | Existing historical P0 review; dinner menu remains image-led without a stable textual priced dinner list proven. |
+| Madonna | canonical | Current catalog contains `madonna-oslo`. |
+| Izakaya | canonical | Current catalog contains `izakaya-by-vladimir-pak-oslo`. |
+| Konoji | review | Existing historical P1 review; current first-party menu/identity evidence remains insufficient for canonical intake. |
+| PANU | review | Existing historical P0 review; menu remains image-led without a stable textual named/priced source proven. |
+| Happolati | review | Existing historical P1 review; current first-party menu/identity evidence remains insufficient for canonical intake. |
+| Arakataka | canonical | Current catalog contains `arakataka-oslo`. |
+| Kolonialen Bislett | review | Existing historical P0 review; no stable public named/priced menu has been proven. |
+| J2 Modern Korean | review | Existing historical P1 review; current public evidence is package-menu led rather than individually priced dish output. |
+| KöD Posthallen | review | Existing historical P1 review; shared current menu source is image-only under the audited source state. |
+| Restaurant Betong | review | Same physical identity as historical `Betong` review; tasting-menu formats/prices do not provide stable individually priced named dishes. |
+| Jewel of India | review | VisitOSLO's foodie-list identity is the active Oscars gate 81 restaurant. The current catalog contains only the distinct Bjørvika identity `jewel-of-india-bjorvika-oslo`; Oscars gate requires its own source/intake proof before promotion. |
+| Le Benjamin Bar & Bistro | review | Same physical identity as historical `Le Benjamin` review; current first-party priced PDF is useful but production fetching is blocked by publisher robots policy. |
+| Brasserie France | canonical | Current catalog contains `brasserie-france-oslo`. |
+
+Local-foodies reconciliation:
+- canonical: **5**;
+- review: **16**;
+- excluded: **0**;
+- missing: **0**.
+
+This closes classification for this finite current VisitOSLO thematic source. The Jewel of India row is
+intentionally physical-identity aware: the VisitOSLO product is Oscars gate 81 and must not inherit
+canonical status from the separate Bjørvika branch. The 16 review identities still need their existing
+blocker families resolved before a final Oslo-wide coverage declaration.
+
 ## Closeout order
 
 The census should now proceed in this order:
