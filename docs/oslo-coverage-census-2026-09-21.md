@@ -439,6 +439,51 @@ This closes classification for this finite and recently updated VisitOSLO themat
 resolve the ten review identities or substitute for complete reconciliation of the broad 326-product
 restaurant catalogue.
 
+## Current source refresh — VisitOSLO cheap-restaurants guide complete
+
+The current VisitOSLO "Billige restauranter" guide was re-opened on 2026-09-21. The source was
+published and updated 2026-07-03 and exposes **25 / 25** current products.
+
+Source:
+- https://www.visitoslo.com/no/oslo-for-deg/billig-oslo/billige-restauranter
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| MelaCafé | review | Existing current VisitOSLO review; active restaurant at Mariboes gate 8 without canonical source-intake proof yet. |
+| Tullins Café | canonical | Current catalog contains `tullins-cafe-oslo`. |
+| Dovrehallen Bar & Restaurant | review | Same physical identity as historical `Dovrehallen` review; fresh reproof missed current priced dishes/variants. |
+| Paleet Food Hall | canonical | Current catalog contains `paleet-food-hall-oslo`. |
+| Syverkiosken | review | Active current food identity, but no canonical manifest/source-intake proof is established in the current census yet. |
+| El Camino | canonical | VisitOSLO's product is the Frogner location at Niels Juels gate 31; current catalog contains `el-camino-frogner-oslo`. |
+| Restaurant Schrøder | review | Existing historical P0 review; fresh reproof retained title/description fusion. |
+| Koie Ramen Torggata | review | Existing Koie Ramen review family; a separate canonical physical identity remains unresolved and needs fresh identity/source reproof. |
+| Koie Ramen Munch | review | Existing Koie Ramen review family; a separate canonical physical identity remains unresolved and needs fresh identity/source reproof. |
+| Haralds Vaffel | canonical | Current catalog contains `haralds-vaffel-grunerlokka-oslo`. |
+| Vippa Oslo | review | Existing current VisitOSLO review; food/culture centre with multiple food stalls rather than one already-proven canonical restaurant menu. |
+| Istanbul Restaurant Grünerløkka | review | VisitOSLO lists Trondheimsgate 11. The current Istanbul catalog manifest is Trondheimsveien 13, so the physical identity is not treated as canonical without a fresh identity check. |
+| Istanbul Restaurant Grønland | canonical | VisitOSLO lists Grønland 14; current catalog contains the same physical identity as `istanbul-kebab-gronland-oslo`. |
+| Tuk Tuk Thai | review | Active current Thai restaurant at Møllergata 8, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Krishnas Cuisine | canonical | Current catalog contains `krishnas-cuisine-oslo`. |
+| Freddy Fuego Burrito Bar | canonical | Current catalog contains `freddy-fuego-burrito-bar-hausmanns-gate-oslo`. |
+| Nam Fah | review | Existing current VisitOSLO review; active Thai restaurant at Maridalsveien 21 without canonical source-intake proof yet. |
+| Mediterranean Grill | canonical | Current catalog contains `mediterranean-grill-torggata-oslo`. |
+| Rice Bowl Thai Café | canonical | Current catalog contains `rice-bowl-kirkegata-oslo`. |
+| Postkontoret | review | Active current bar/restaurant at Hagegata 27 with a pizza menu, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Dattera til Hagen | review | Active current bar/café at Grønland 10 with a food offering, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Café Sara | canonical | Current catalog contains `cafe-sara-hausmanns-gate-oslo`. |
+| Oslo Street Food | review | Existing current VisitOSLO review; food-court umbrella with multiple vendors rather than one already-proven canonical restaurant identity. |
+| Barcode Street Food | review | Existing current VisitOSLO review; food-hall umbrella with multiple stalls, several already represented individually in the catalog. |
+| Ricksha Pakistani Street Food | canonical | Current catalog contains `ricksha-pakistani-street-food-oslo`. |
+
+Cheap-restaurants reconciliation:
+- canonical: **11**;
+- review: **14**;
+- excluded: **0**;
+- missing: **0**.
+
+This closes classification for this finite VisitOSLO thematic source. It does not resolve the 14 review
+identities or substitute for complete reconciliation of the broad 326-product restaurant catalogue.
+
 ## Closeout order
 
 The census should now proceed in this order:
