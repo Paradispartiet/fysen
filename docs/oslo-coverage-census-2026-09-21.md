@@ -701,6 +701,74 @@ This closes classification for the complete current VisitOSLO accessibility rest
 not close the broad 326-product VisitOSLO restaurant catalogue and it does not resolve the remaining
 review queue.
 
+## Current source refresh — VisitOSLO traditional Norwegian food complete
+
+The current VisitOSLO guide "Where to eat traditional Norwegian food" was re-opened on 2026-09-21.
+The article was published 2026-05-26, updated 2026-07-16, and exposes three finite restaurant/product
+sets: **15 / 15** traditional-Norwegian places, **11 / 11** sandwich places and **11 / 11** seafood
+places. After overlap, the source family contains **35 unique identities**.
+
+Source:
+- https://www.visitoslo.com/articles/norwegian-restaurants
+
+| Restaurant / product | Source set | Census status | Reason |
+|---|---|---|---|
+| Kaffistova | traditional | canonical | Current catalog contains `kaffistova-oslo`. |
+| Rorbua | traditional | canonical | Current catalog contains `rorbua-oslo`. |
+| Helt Vilt | traditional | canonical | Current catalog contains exact Helt Vilt identity `helt-vilt-vulkan-oslo` at Vulkan 5. |
+| Stortorvets Gjæstgiveri | traditional | review | Active identity, but no stable current first-party named/priced menu proven in the P0 pass. |
+| Gamle Raadhus Restaurant | traditional+sandwiches | review | Semantic QA still emitted garnish/component fragments as standalone dishes; needs generic output repair and reproof. |
+| Frognerseteren - Restaurant Finstua | traditional | canonical | Same restaurant identity as canonical `frognerseteren-finstua-oslo`; the first-party source itself is the Restaurant Finstua menu. |
+| Bønder i byen Grünerløkka | traditional | canonical | Current catalog contains the established same venue as `bonder-i-byen-oslo`. |
+| Bristol Grill | traditional | canonical | Current catalog contains `bristol-grill-oslo`. |
+| Asylet | traditional | canonical | Current catalog contains the same physical identity as `kafe-asylet-gronland-oslo`. |
+| Smalhans | traditional | review | Named dishes exist, but published prices bind to menu packages rather than individual dishes. |
+| Restaurant Schrøder | traditional | review | Fresh P0 reproof retained title/description fusion. |
+| Den Glade Gris | traditional | review | PDF beverage/layout leakage remains. |
+| Lorry Restaurant | traditional | canonical | Current catalog contains `lorry-restaurant-oslo`. |
+| Engebret Café | traditional+sandwiches | review | Fresh #811 reproof showed English translation/description rows inheriting following Norwegian dish prices. |
+| Dovrehallen Bar & Restaurant | traditional | review | Same physical identity as historical `Dovrehallen` review; fresh reproof missed current priced dishes/variants. |
+| Theatercaféen | sandwiches | canonical | Current catalog contains `theatercafeen-oslo`. |
+| Nasjonalmuseet Kafe | sandwiches | review | Current VisitOSLO sandwich-list identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Mendel’s Oslo | sandwiches | review | Current VisitOSLO sandwich-list identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Atlas Brasserie & Café | sandwiches | canonical | Current catalog contains `atlas-brasserie-oslo`. |
+| Frognerseteren - Kafé Seterstua | sandwiches | review | Separate current café product at Frognerseteren; it is not equated with canonical `frognerseteren-finstua-oslo` without its own menu/source proof. |
+| Palmen Restaurant & Bar | sandwiches | canonical | Current catalog contains `palmen-restaurant-oslo`. |
+| Åpent Bakeri Barcode | sandwiches | review | Hybrid/bakery candidate not closed by current canonical evidence; needs fresh marginal-value/source reproof. |
+| Karlsborg Spiseforretning | sandwiches | review | Current VisitOSLO sandwich-list identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Vintage Kitchen | sandwiches | canonical | Current catalog contains `vintage-kitchen-oslo`. |
+| The Salmon | seafood | review | Fresh #811 reproof was nondeterministic (53 vs 0 items) and also exposed generic numbered menu-package labels. |
+| Sjømagasinet Restaurant og Vinbar | seafood | canonical | Current catalog contains the same physical identity as `sjomagasinet-oslo`. |
+| Louise | seafood | review | First-party menu endpoint failed deterministically; no secondary authority substituted. |
+| Lofoten Fish Restaurant | seafood | review | Same physical identity as historical `Lofoten Fiskerestaurant` review at Stranden 75; prior fresh reproof emitted a platter description instead of the canonical dish title. |
+| Havsmak | seafood | review | Section-heading leak was fixed, but legitimate dishes immediately after headings were still not fully recovered. |
+| Lofotstua | seafood | review | No stable public first-party priced dish menu proven. |
+| Skur 33 | seafood | review | Component/allergen/layout fragments remain in generated output. |
+| Sabi Omakase Oslo | seafood | review | Omakase/package price without stable named individually priced current courses. |
+| Solsiden Restaurant | seafood | review | Cross-card price-association risk remains fail-closed. |
+| Fiskeriet Youngstorget | seafood | canonical | Current catalog contains `fiskeriet-youngstorget-oslo`. |
+| Fiskeriet Bjørvika | seafood | canonical | Current catalog contains `fiskeriet-bjorvika-oslo`. |
+
+Traditional-Norwegian-food reconciliation across the **35 unique identities**:
+- canonical: **15**;
+- review: **20**;
+- excluded: **0**;
+- missing: **0**.
+
+Per finite source set:
+- traditional Norwegian: **8 canonical / 7 review / 0 excluded / 0 missing**;
+- sandwiches: **4 canonical / 7 review / 0 excluded / 0 missing**;
+- seafood: **3 canonical / 8 review / 0 excluded / 0 missing**.
+
+Physical identities remain strict. VisitOSLO's Restaurant Finstua maps to canonical
+`frognerseteren-finstua-oslo`, whose first-party menu source is explicitly Restaurant Finstua, while
+Frognerseteren Kafé Seterstua remains a separate review identity. The new Nasjonalmuseet Kafe,
+Mendel’s Oslo and Karlsborg Spiseforretning signals stay in review until their dish-first source fit is
+proven; they are not promoted solely because VisitOSLO includes them.
+
+This closes classification for all three finite product sets in this current VisitOSLO article. It does
+not close the broad 326-product restaurant catalogue or resolve the remaining review queue.
+
 ## Closeout order
 
 The census should now proceed in this order:
@@ -723,6 +791,8 @@ The census should now proceed in this order:
 
 ## Next concrete unit of work
 
-The VisitOSLO hidden-gems source family is now fully classified with `missing = 0`. Continue the
-refreshed VisitOSLO universe and remaining current thematic sources. Kafé Republik stays in its generic
-extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
+The VisitOSLO hidden-gems, hotel-restaurants, quick-bite, local-foodies, lunch, vegan/vegetarian,
+budget, family-friendly, outdoor-dining, accessibility and traditional-Norwegian-food source families
+are now fully classified with `missing = 0`. Continue the refreshed VisitOSLO universe and remaining
+current thematic sources while the broad 326-product catalogue enumeration remains open. Kafé Republik
+stays in its generic extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
