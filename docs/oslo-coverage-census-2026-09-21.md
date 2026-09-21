@@ -829,6 +829,40 @@ Finstua map to exact established canonical venue identities.
 This closes classification for the complete current VisitOSLO fine-dining source family. It does not
 close the broad 326-product restaurant catalogue or resolve the remaining review queue.
 
+## Current source refresh — VisitOSLO fireplace restaurants complete
+
+The current VisitOSLO winter page was re-opened on 2026-09-21. Its "Fire place restaurants" section
+exposes **10 / 10** current products on one finite list.
+
+Source:
+- https://www.visitoslo.com/your-oslo/winter
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| Rorbua | canonical | Current catalog contains `rorbua-oslo`. |
+| Grefsenkollen restaurant | review | Active current restaurant identity, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Kafé Celsius | review | Current VisitOSLO fireplace-restaurant identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Hos Thea | review | Current VisitOSLO fireplace-restaurant identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Holmenkollen Restaurant | review | Current VisitOSLO fireplace-restaurant identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Stortorvets Gjæstgiveri | review | Existing historical P0 review; active identity, but no stable current first-party named/priced menu was proven. |
+| Gamle Raadhus Restaurant | review | Existing historical P0 review; semantic QA emitted garnish/component fragments as standalone dishes and needs generic output repair plus reproof. |
+| Frognerseteren - Kafé Seterstua | review | Separate current café product at Frognerseteren; it is not equated with canonical `frognerseteren-finstua-oslo` without its own menu/source proof. |
+| Eataly Ristorante | review | Current VisitOSLO fireplace-restaurant identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Olivia Aker Brygge | canonical | Current catalog contains `olivia-aker-brygge-oslo`. |
+
+Fireplace-restaurant reconciliation:
+- canonical: **2**;
+- review: **8**;
+- excluded: **0**;
+- missing: **0**.
+
+This source adds explicit review signals for Kafé Celsius, Hos Thea, Holmenkollen Restaurant and Eataly
+Ristorante. Frognerseteren Kafé Seterstua remains separate from canonical Restaurant Finstua. No
+restaurant is promoted solely because it appears in the VisitOSLO seasonal guide.
+
+This closes classification for the complete current fireplace-restaurant list. It does not close the
+broad 326-product restaurant catalogue or resolve the remaining review queue.
+
 ## Closeout order
 
 The census should now proceed in this order:
@@ -852,7 +886,7 @@ The census should now proceed in this order:
 ## Next concrete unit of work
 
 The VisitOSLO hidden-gems, hotel-restaurants, quick-bite, local-foodies, lunch, vegan/vegetarian,
-budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food and fine-dining source families
+budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food, fine-dining and fireplace-restaurant source families
 are now fully classified with `missing = 0`. Continue the refreshed VisitOSLO universe and remaining
 current thematic sources while the broad 326-product catalogue enumeration remains open. Kafé Republik
 stays in its generic extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
