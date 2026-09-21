@@ -540,6 +540,70 @@ This closes classification for this finite and recently updated VisitOSLO themat
 resolve the 12 review identities or substitute for complete reconciliation of the broad 326-product
 restaurant catalogue.
 
+## Current source refresh — VisitOSLO outdoor-seating restaurants complete
+
+The current VisitOSLO outdoor-dining guide was re-opened on 2026-09-21. The source was published
+2026-05-27, updated 2026-09-18, and its restaurant section exposes **41 / 41** current products.
+The separate drinks-in-the-sun section is not counted in this restaurant tranche.
+
+Source:
+- https://www.visitoslo.com/restaurants-nightlife/outdoor-dining
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| Stortorvets Gjæstgiveri | review | Existing historical P0 review; active identity, but no stable current first-party named/priced menu was proven in the prior pass. |
+| Sumo Restaurant Bjørvika | canonical | Current catalog contains `sumo-bjorvika-oslo`. |
+| Grefsenkollen restaurant | review | Active current restaurant identity, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Sumo Restaurant Hegdehaugsveien | canonical | Current catalog contains `sumo-hegdehaugsveien-oslo`. |
+| Gamle Raadhus Restaurant | review | Existing historical P0 review; semantic QA emitted garnish/component fragments as standalone dishes and needs generic output repair plus reproof. |
+| Sjømagasinet Restaurant og Vinbar | canonical | Current catalog contains the same physical identity as `sjomagasinet-oslo`. |
+| The Salmon | review | Existing historical P0 review; fresh reproof was nondeterministic and also exposed generic numbered menu-package labels. |
+| Brasserie Opera | review | Existing current VisitOSLO review; active restaurant, but the inspected first-party surface has not yet established the final canonical priced dish source. |
+| Sumo Solli Plass | canonical | Current catalog contains `sumo-solli-plass-oslo`. |
+| Aanerud Bakeri Oslo | review | Active current bakery/restaurant identity, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Carls | review | Current VisitOSLO venue combines food, drink and activities; restaurant-level source fit and a canonical dish source remain unresolved. |
+| Rorbua | canonical | Current catalog contains `rorbua-oslo`. |
+| Sumo Storo | canonical | Current catalog contains `sumo-storo-oslo`. |
+| Ekebergrestauranten | review | Existing current VisitOSLO review; exact-head intake exposed headings, allergen rows and waiter/presentation instructions as priced dishes. |
+| Lofoten Fish Restaurant | review | Same physical identity as historical `Lofoten Fiskerestaurant` review; prior fresh reproof emitted a platter description instead of the canonical dish title. |
+| Frognerseteren - Kafé Seterstua | review | Separate current café product at Frognerseteren; it is not equated with canonical `frognerseteren-finstua-oslo` without its own menu/source proof. |
+| Festningen Restaurant | canonical | Current catalog contains `festningen-restaurant-oslo`. |
+| Sumo Restaurant Karl Johan | canonical | Current catalog contains `sumo-karl-johan-oslo`. |
+| Kafé Villa Grande | review | Active current café identity, but no canonical manifest/source-intake proof is established in the current census yet. |
+| The Top Terrace | review | Separate terrace product; it is not equated with canonical `the-top-restaurant-oslo` without a physical/menu identity proof. |
+| Shutter by Sky | review | Active current food-and-drink identity, but no canonical manifest/source-intake proof is established in the current census yet. |
+| ASIA Aker Brygge | canonical | Current catalog contains `asia-aker-brygge-oslo`. |
+| Voksenåsen Bar & Terrace | review | Active hotel bar/terrace food identity; dish-first relevance and a canonical source remain unresolved. |
+| Louise | review | Existing historical P0 review; first-party menu endpoint failed deterministically and no secondary authority was substituted. |
+| Den Gamle Major | review | Active current pub/restaurant identity, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Folkvang Sagene | review | Existing current VisitOSLO review; exact-head output passed structurally but semantic QA found incorrect multiple-price binding. |
+| Store Stå Pub | review | Active current pub/food identity; dish-first relevance and canonical source fit remain unresolved. |
+| Skaugum | review | Active current food-and-drink venue; restaurant identity/source fit remains unresolved in the census. |
+| Solsiden Restaurant | review | Existing historical P0 review; cross-card price-association risk remains fail-closed. |
+| Kunstnernes Jur | review | Active current bar/café identity at Kunstnernes Hus; restaurant-level source fit and canonical intake remain unresolved. |
+| FYR Bistronomi & Bar | review | Existing historical P0 review; first-party source is rich, but canonical extraction remained below floor and needs fresh-main generic repair/reproof. |
+| Lanternen Yacht Club | review | Active seasonal food-and-drink identity; canonical dish source and restaurant-level source fit remain unresolved. |
+| Burger Joint Aker Brygge | canonical | Current catalog contains `burger-joint-aker-brygge-oslo`. |
+| Anne på landet – Hønse-Lovisas hus | review | Existing current VisitOSLO review; active café with handmade food and lunch service, but no canonical source-intake proof yet. |
+| Kafé Vigeland | review | Active current café identity at the Vigeland area, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Jakobs Hage | review | Active current food-and-drink identity, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Lekter'n | review | Active current seasonal restaurant/bar identity at Aker Brygge, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Olivia Aker Brygge | canonical | Current catalog contains `olivia-aker-brygge-oslo`. |
+| Food at SALT Art & Music | review | Current VisitOSLO product is a mixed cultural/food venue; restaurant-level source fit and canonical dish source remain unresolved. |
+| Asylet | canonical | Current catalog contains the same physical identity as `kafe-asylet-gronland-oslo`. |
+| Lorry Restaurant | canonical | Current catalog contains `lorry-restaurant-oslo`. |
+
+Outdoor-seating restaurant reconciliation:
+- canonical: **13**;
+- review: **28**;
+- excluded: **0**;
+- missing: **0**.
+
+This closes classification for the **41-product restaurant section** of this current VisitOSLO thematic
+source. The separate 13-product drinks-in-the-sun section is not silently treated as restaurants and
+can be reconciled separately if it contributes restaurant identities. The 28 review items remain open
+until their source-fit or parser blocker families are resolved.
+
 ## Closeout order
 
 The census should now proceed in this order:
