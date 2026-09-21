@@ -898,6 +898,45 @@ collapse [Vin] Bjørvika into another Bjørvika venue.
 This closes classification for the complete current VisitOSLO wine-bar source family. It does not close
 the broad 326-product restaurant catalogue or resolve the remaining review queue.
 
+## Current source refresh — VisitOSLO microbreweries complete
+
+The current VisitOSLO microbrewery guide was re-opened on 2026-09-21. The article was published
+2026-05-26, updated 2026-08-20, and names **10 / 10** current brewery/bar products including its
+three additional beer-enthusiast suggestions.
+
+Source:
+- https://www.visitoslo.com/articles/microbreweries-in-oslo
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| Ringnes Brygghus | canonical | Current catalog contains exact identity `ringnes-brygghus-oslo`; current VisitOSLO product explicitly combines microbrewery and pizzeria. |
+| Crow Bar & Brewery | review | Current VisitOSLO guide explicitly documents a substantial food offering alongside the brewery/bar, but no exact canonical manifest/source-intake proof is established yet. |
+| Røør | excluded | Current product is a gaming/beer bar with 70+ taps and shuffleboards; the current VisitOSLO surface establishes no restaurant food offering. |
+| Schouskjelleren Mikrobryggeri | excluded | Current product is a beer-focused microbrewery/bar; the current VisitOSLO surface establishes no restaurant food offering. |
+| Oslo Mikrobryggeri | excluded | Current product is a brewery pub focused on its beer selection; the current VisitOSLO surface establishes no restaurant food offering. |
+| Grünerløkka Brygghus | review | VisitOSLO explicitly documents traditional English pub food and rustic European fare, but no exact canonical manifest/source-intake proof is established yet. |
+| Amundsen Bryggeri & Spiseri | review | VisitOSLO explicitly documents a broad food offer from snacks through fish & chips and desserts; no exact canonical manifest/source-intake proof is established yet. |
+| Brygg | review | VisitOSLO explicitly states that Brygg combines food with beer and also hosts pop-up restaurants; stable own dish-source fit remains unresolved. |
+| Bar Babylon | review | Current VisitOSLO bar product is drink-led, but a current VisitOSLO article also documents a weekly changing snack menu; keep review pending dish-first marginal-value/source-fit decision. |
+| Beer Palace | excluded | Current VisitOSLO product is a beer pub; food is delivered from neighbouring Burger Joint rather than established as Beer Palace's own restaurant menu. |
+
+Microbrewery reconciliation:
+- canonical: **1**;
+- review: **5**;
+- excluded: **4**;
+- missing: **0**.
+
+This pass applies the dish-first contract rather than treating every bar as a restaurant. Crow,
+Grünerløkka Brygghus, Amundsen and Brygg have explicit current food signals, while Bar Babylon has a
+separate current VisitOSLO signal for a rotating snack menu; all remain review until a stable canonical
+dish source or an explicit marginal-value decision is established. Røør, Schouskjelleren and Oslo
+Mikrobryggeri are excluded on the current evidence because their product surfaces establish beer/bar
+use but no restaurant food surface. Beer Palace is also excluded because its described food is supplied
+by neighbouring Burger Joint rather than a Beer Palace restaurant menu.
+
+This closes classification for the complete current VisitOSLO microbrewery source family. It does not
+close the broad 326-product restaurant catalogue or resolve the remaining review queue.
+
 ## Closeout order
 
 The census should now proceed in this order:
@@ -921,7 +960,7 @@ The census should now proceed in this order:
 ## Next concrete unit of work
 
 The VisitOSLO hidden-gems, hotel-restaurants, quick-bite, local-foodies, lunch, vegan/vegetarian,
-budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food, fine-dining, fireplace-restaurant and wine-bar source families
+budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food, fine-dining, fireplace-restaurant, wine-bar and microbrewery source families
 are now fully classified with `missing = 0`. Continue the refreshed VisitOSLO universe and remaining
 current thematic sources while the broad 326-product catalogue enumeration remains open. Kafé Republik
 stays in its generic extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
