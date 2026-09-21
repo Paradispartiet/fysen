@@ -978,6 +978,41 @@ not silently collapsed into canonical `norda-oslo`.
 This closes classification for the complete current VisitOSLO cocktail-bar source family. It does not
 close the broad 326-product restaurant catalogue or resolve the remaining review queue.
 
+## Current source refresh — VisitOSLO brunch complete
+
+The current VisitOSLO brunch guide was re-opened on 2026-09-21. The article was published
+2026-05-27, updated 2026-08-07, and exposes **10 / 10** current products on one finite list.
+
+Source:
+- https://www.visitoslo.com/no/spise-og-drikke/kaffe-kake/brunsj
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| Theatercaféen | canonical | Current catalog contains `theatercafeen-oslo`. |
+| Bon Bon Oslo | canonical | Same current physical identity as canonical `bonbon-bjorvika-oslo` at Dronning Eufemias gate 43. |
+| KUMI Gamlebyen | review | Current first-party page has unpriced dishes; priced PDF is stale and the prior Wolt venue was deleted. |
+| Mauriske Salonger | canonical | Current catalog contains `mauriske-salonger-oslo`. |
+| KUMI Oslobukta | review | Current first-party page has unpriced dishes; priced PDF is stale and the prior Wolt venue was deleted. |
+| Katla | canonical | Current catalog contains `katla-oslo`. |
+| Vintage Kitchen | canonical | Current catalog contains `vintage-kitchen-oslo`. |
+| About Contrasts | review | Current VisitOSLO explicitly confirms café/brunch service by day, strengthening restaurant relevance, but canonical dish-source proof remains unresolved. |
+| Åpent Bakeri Barcode | review | Hybrid bakery/brunch candidate remains unresolved under the dish-first marginal-value/source contract; no canonical manifest proof yet. |
+| Skaal Matbar | canonical | Current catalog contains `skaal-matbar-oslo`. |
+
+Brunch reconciliation:
+- canonical: **6**;
+- review: **4**;
+- excluded: **0**;
+- missing: **0**.
+
+Bon Bon Oslo is matched to the exact canonical Bjørvika identity rather than to unrelated similarly
+named catalog entries. The two KUMI venues remain distinct review identities with the existing stale-
+price/source blocker. About Contrasts and Åpent Bakeri Barcode remain review despite clear brunch
+relevance because relevance alone is not canonical intake proof.
+
+This closes classification for the complete current VisitOSLO brunch source family. It does not close
+the broad 326-product restaurant catalogue or resolve the remaining review queue.
+
 ## Closeout order
 
 The census should now proceed in this order:
@@ -1001,7 +1036,7 @@ The census should now proceed in this order:
 ## Next concrete unit of work
 
 The VisitOSLO hidden-gems, hotel-restaurants, quick-bite, local-foodies, lunch, vegan/vegetarian,
-budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food, fine-dining, fireplace-restaurant, wine-bar, microbrewery and cocktail-bar source families
+budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food, fine-dining, fireplace-restaurant, wine-bar, microbrewery, cocktail-bar and brunch source families
 are now fully classified with `missing = 0`. Continue the refreshed VisitOSLO universe and remaining
 current thematic sources while the broad 326-product catalogue enumeration remains open. Kafé Republik
 stays in its generic extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
