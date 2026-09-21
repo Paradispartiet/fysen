@@ -197,7 +197,7 @@ First-page reconciliation:
 | Dyna Fyr | review | New current benchmark signal, but primarily a seasonal/private-event set-menu restaurant; relevance/source-fit must be decided explicitly before intake. |
 | Ekebergrestauranten | review | New current benchmark identity outside the historical 85. Run #1103 generated 32 items but semantic QA exposed generic noise as priced dishes: bilingual section headings, allergen lines and waiter/presentation instructions. Keep fail-closed pending generic HTML cleanup and fresh reproof. |
 | Festningen Restaurant | canonical | Current catalog contains `festningen-restaurant-oslo`. |
-| Folkvang Sagene | review | New current benchmark identity outside the historical 85. Run #1103 generated and strict-validated 26/26 items with no missing required dishes or forbidden leakage. The clean candidate remains review until separate byte-identical canonical promotion is merged. |
+| Folkvang Sagene | review | New current benchmark identity outside the historical 85. Run #1107 generated and strict-validated 26/26, but semantic QA found `Ukens Husmann 240` bound to 280 NOK from a `240,- / 280,-` source row. Keep fail-closed pending a generic multiple-price title repair and fresh reproof. |
 
 Tranche-1 closeout classification after exact-head research:
 - canonical: **3**;
@@ -211,8 +211,8 @@ This closes `missing` for the **first 12 VisitOSLO products only**. It does not 
 
 The census should now proceed in this order:
 
-1. **Close clean census candidates without mixing blocker families.**
-   Brasserie Hansken is complete through #850. Folkvang Sagene is now the clean tranche-1 promotion candidate after run #1103. FYR must not be treated as equivalent because its proposed #829 parser repair is not merged.
+1. **Close census candidates without mixing blocker families.**
+   Brasserie Hansken is complete through #850. VisitOSLO tranche 1 has no remaining `missing`, but all three newly found identities are now explicit review items: Coucou on source/extraction, Ekeberg on HTML semantic noise, and Folkvang on multiple-price title parsing. FYR remains a separate historical blocker family.
 2. **Reproof parser/semantic holds in generic blocker families.**
    Group HTML semantic leakage, PDF layout/title binding, nondeterministic extraction, robots/source
    blockers and package-only menus rather than creating restaurant-specific runtime exceptions.
@@ -229,6 +229,6 @@ The census should now proceed in this order:
 
 ## Next concrete unit of work
 
-Close PR #851 with a clean Folkvang-only exact-head artifact. If semantic QA remains unchanged, promote Folkvang from that exact artifact in a separate PR. Ekebergrestauranten remains a generic HTML semantic-cleanup problem and Brasserie Coucou remains a source/extraction review; neither should be forced into the Folkvang promotion.
+Close PR #851 as the evidence-backed tranche-1 census classification. Then repair the Folkvang multiple-price title defect generically with a test-first regression and fresh live reproof; Ekebergrestauranten remains a separate HTML semantic-noise family and Brasserie Coucou remains source/extraction review.
 
-After the tranche-1 closeout, continue VisitOSLO universe reconciliation page-by-page and resolve blocker families separately rather than arbitrary restaurant order.
+After the tranche-1 classification is merged, continue VisitOSLO universe reconciliation page-by-page while resolving blocker families separately rather than arbitrary restaurant order.
