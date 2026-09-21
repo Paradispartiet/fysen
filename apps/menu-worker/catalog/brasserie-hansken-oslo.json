@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "brasserie-hansken-oslo",
+    "name": "Brasserie Hansken",
+    "websiteUrl": "https://brasseriehansken.no/",
+    "address": "Christiania Torv 4, 0158 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91051723414686,
+    "longitude": 10.73955101494216
+  },
+  "menuSource": {
+    "url": "https://brasseriehansken.no/uploads/3ETdFPSU/MENYKVELDSENSOMMER20261.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 9,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-21",
+      "note": "Fresh Oslo coverage closeout reproof after merged PR #843. Re-run the unchanged first-party 2026 evening PDF on current main with the generic pdf-text-v38 boundary repair; no restaurant-specific exception, source substitution, assertion weakening, or item-floor weakening."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "TODAYS SELECTION OF CHEESE",
+      "KAFFE IS – COFFEE ICE - CREAM",
+      "KAFFE GODIS - PETIT FOUR",
+      "BELUGA « HUSO HUSO » – TASTE PROFILE: CREAM, BUTTER, ALMOND, LIME PER GRAM",
+      "TERRINE OF PORK CHEEKS WITH DIJON MUSTARD AND FRISSÈ",
+      "CÔTE DE BOEUF SERVED WITH GLACED ONIONS AND SAUCE BÉARNAISE",
+      "OYSTERS FROM DAVID HERVÈ SERVED WITH LEMON AND CHAMPAGNE VINEGAR",
+      "FRENCH ONION SOUP GRATINATED WITH GRUYÈRE CHEESE"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "TODAYS SELECTION OF CHEESE",
+        "priceMinor": 29500
+      },
+      {
+        "name": "KAFFE IS – COFFEE ICE - CREAM",
+        "priceMinor": 8500
+      },
+      {
+        "name": "KAFFE GODIS - PETIT FOUR",
+        "priceMinor": 8500
+      },
+      {
+        "name": "BELUGA « HUSO HUSO » – TASTE PROFILE: CREAM, BUTTER, ALMOND, LIME PER GRAM",
+        "priceMinor": 7700
+      },
+      {
+        "name": "TERRINE OF PORK CHEEKS WITH DIJON MUSTARD AND FRISSÈ",
+        "priceMinor": 23500
+      },
+      {
+        "name": "CÔTE DE BOEUF SERVED WITH GLACED ONIONS AND SAUCE BÉARNAISE",
+        "priceMinor": 205000
+      },
+      {
+        "name": "OYSTERS FROM DAVID HERVÈ SERVED WITH LEMON AND CHAMPAGNE VINEGAR",
+        "priceMinor": 39500,
+        "priceKind": "multiple",
+        "priceMaxMinor": 79000
+      },
+      {
+        "name": "FRENCH ONION SOUP GRATINATED WITH GRUYÈRE CHEESE",
+        "priceMinor": 16500,
+        "priceKind": "multiple",
+        "priceMaxMinor": 19500
+      }
+    ],
+    "forbiddenDishNames": [
+      "Allergener: MELK, HVETE",
+      "FORRETTER",
+      "HOVEDRETTER",
+      "DESSERTER",
+      "VELKOMMEN!"
+    ]
+  }
+}
