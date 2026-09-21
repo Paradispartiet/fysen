@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v17";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v18";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -313,12 +313,6 @@ function shouldJoinPdfFragmentBoundary(args: {
   readonly documentWords: ReadonlySet<string>;
   readonly boundaryCounts: ReadonlyMap<string, number>;
 }): boolean {
-  if (
-    args.interFragmentGap !== null &&
-    args.interFragmentGap <= PDF_FRAGMENT_JOIN_GAP
-  ) {
-    return true;
-  }
   if (args.interFragmentGap === null) return false;
 
   const left = trailingPdfWord(args.buffer);
@@ -337,6 +331,10 @@ function shouldJoinPdfFragmentBoundary(args: {
 
   const leftKey = pdfWordKey(rawLeft);
   const rightKey = pdfWordKey(right);
+  const continuedJoinedFragment =
+    args.interFragmentGap <= PDF_FRAGMENT_JOIN_GAP &&
+    pdfWordKey(left).length > leftKey.length;
+  if (continuedJoinedFragment) return true;
   const boundaryKey = `${leftKey}|${rightKey}`;
   const repeated = (args.boundaryCounts.get(boundaryKey) ?? 0) >= 2;
   const shorterKey =
