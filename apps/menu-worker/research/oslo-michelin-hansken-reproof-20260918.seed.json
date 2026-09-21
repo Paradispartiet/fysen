@@ -23,8 +23,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-09-19",
-          "note": "Fresh Oslo MICHELIN coverage reproof after a test-first generic PDF repair. The unchanged first-party 2026 evening PDF can expose `PER KG 2050` as split numeric tokens that pdf-text-v35 misread as 50 NOK. Reproof under pdf-text-v36 without restaurant-specific exceptions or floor weakening; promotion remains blocked unless semantic coverage is sufficient."
+          "checkedAt": "2026-09-21",
+          "note": "Exact-head Oslo MICHELIN reproof for the generic pdf-text-v18/pdf-text-v38 boundary repair. The unchanged first-party 2026 evening PDF must retain repaired split-word names and the correct `PER KG 2050` price without restaurant-specific exceptions or floor weakening; promotion remains separate."
         }
       },
       "actions": [],
