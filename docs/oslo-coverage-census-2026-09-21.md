@@ -207,6 +207,39 @@ Tranche-1 closeout classification after exact-head research:
 
 This closes `missing` for the **first 12 VisitOSLO products only**. It does not close Oslo coverage: VisitOSLO pages 2–28, Anders Husa/current thematic sources and demand-gap inputs are not yet fully reconciled, and all nine tranche-1 review identities remain unresolved for a final coverage claim.
 
+## Current source refresh — VisitOSLO hidden gems complete
+
+The current VisitOSLO "Skjulte perler" list was re-opened on 2026-09-21 and exposes **10 / 10**
+current products. This source family is fully enumerated and reconciled independently of the broader
+326-product restaurant catalogue.
+
+Source:
+- https://www.visitoslo.com/no/oslo-for-deg/oslo-for-foodies/skjulte-perler
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| Nektar | canonical | Current catalog contains `nektar-vinbar-oslo`. |
+| Konoji | review | Existing historical P1 review; no sufficient current first-party menu/identity evidence has closed the hold. |
+| Farine | review | Current first-party identity is a bakery/spiseri with simple breakfast/lunch food, but the current public surface does not establish a stable individually priced dish menu suitable for immediate canonical intake. |
+| Middagscruise i Oslofjorden med Brim Explorer | excluded | Tour/package identity rather than a fixed restaurant identity. The current product includes a three-course dinner, but it is outside the restaurant census contract. |
+| Izakaya | canonical | Current catalog contains `izakaya-by-vladimir-pak-oslo`. |
+| Kafé Republik | **missing** | Active Oslo bistro with a current first-party a la carte surface containing many named individually priced dishes; no canonical manifest exists. Added to exact-head research seed. |
+| St. Lars | review | Existing historical P1 review; audited source state was image-only. |
+| Ringnes Brygghus | **missing** | Active brewery/spiseri with a current first-party food page containing ten named individually priced pizzas; no canonical manifest exists. Added to exact-head research seed. |
+| Angst Bar | excluded | Current VisitOSLO identity is explicitly a bar/club and no restaurant food surface is established; outside the dish-first restaurant census. |
+| Latter Restaurant & Bar | review | Active restaurant identity is established, but the current first-party public surface found in this refresh does not expose a stable named/priced a la carte list suitable for immediate intake. |
+
+Hidden-gems reconciliation before exact-head intake:
+- canonical: **2**;
+- review: **4**;
+- excluded: **2**;
+- missing: **2**.
+
+The two missing identities are isolated in
+`apps/menu-worker/research/oslo-visitoslo-hidden-gems-20260921.seed.json`.
+They remain `missing` until exact-head research either proves a promotion-ready candidate or moves the
+identity to an evidence-backed `review` / `excluded` state.
+
 ## Closeout order
 
 The census should now proceed in this order:
@@ -229,6 +262,10 @@ The census should now proceed in this order:
 
 ## Next concrete unit of work
 
-Close PR #851 as the evidence-backed tranche-1 census classification. Then repair the Folkvang multiple-price title defect generically with a test-first regression and fresh live reproof; Ekebergrestauranten remains a separate HTML semantic-noise family and Brasserie Coucou remains source/extraction review.
+Run exact-head Restaurant batch intake for the two-candidate VisitOSLO hidden-gems seed:
+Kafé Republik and Ringnes Brygghus. Inspect the generated artifacts semantically before changing either
+census status or creating a promotion PR. Do not mix any parser repair discovered here with Folkvang,
+Ekebergrestauranten, Brasserie Coucou or FYR unless the same generic root cause is proven.
 
-After the tranche-1 classification is merged, continue VisitOSLO universe reconciliation page-by-page while resolving blocker families separately rather than arbitrary restaurant order.
+After the hidden-gems source family has `missing = 0`, continue the refreshed VisitOSLO universe and
+the remaining current thematic sources while resolving blocker families separately.
