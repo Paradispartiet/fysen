@@ -604,6 +604,103 @@ source. The separate 13-product drinks-in-the-sun section is not silently treate
 can be reconciled separately if it contributes restaurant identities. The 28 review items remain open
 until their source-fit or parser blocker families are resolved.
 
+## Current source refresh — VisitOSLO accessible restaurants complete
+
+The current VisitOSLO accessible-restaurants guide was re-opened on 2026-09-21. The guide was
+published 2026-05-27, updated 2026-07-10, and exposes two finite restaurant sets:
+**39 / 39** under wheelchair access and **42 / 42** under lower-noise dining. The two sets overlap by
+**20** identities, for **61 unique current identities** in this source family.
+
+Source:
+- https://www.visitoslo.com/your-oslo/accessibility/accessible-restaurants
+
+VisitOSLO explicitly states that these recommendations are compiled from external sources and are not
+VisitOSLO certifications of accessibility. This census uses the page only as a current restaurant-discovery
+signal; accessibility claims are not imported into Fysen's restaurant model.
+
+| Restaurant / product | Source set | Census status | Reason |
+|---|---|---|---|
+| Sjømagasinet Restaurant og Vinbar | both | canonical | Same physical identity already established as `sjomagasinet-oslo`. |
+| Brasserie Opera | both | review | New current benchmark signal. Active Oslo restaurant, but the currently inspected first-party landing page does not itself establish the final canonical priced dish surface. |
+| Vaaghals | both | review | First-party PDF transport was repaired, but the latest Michelin reproof still failed canonical extraction. |
+| Atlas Brasserie & Café | wheelchair | canonical | Current catalog contains `atlas-brasserie-oslo`. |
+| Feast at MUNCH | wheelchair | review | Current guide product is not automatically equated with `munch-kafe-bjorvika-oslo`; exact venue/menu identity must be proven first. |
+| The Top Restaurant | wheelchair | canonical | Current catalog contains `the-top-restaurant-oslo`; this is not the separate The Top Terrace product. |
+| Madonna | wheelchair | canonical | Current catalog contains `madonna-oslo`. |
+| Ahaan | both | review | Current Ahaan product is kept separate from the combined Plah & Ahaan listing and has no canonical manifest proof. |
+| Cru wine & kitchen | both | canonical | Current catalog contains the established Cru identity `cru-oslo`. |
+| Vintage Kitchen | both | canonical | Current catalog contains `vintage-kitchen-oslo`. |
+| Piazza Italia | both | review | Active current guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Mendel’s Oslo | both | review | Active current guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Mamma Pizza Vika - Osteria di mare | both | canonical | Current catalog contains the same Vika venue as `mamma-pizza-vika-oslo` (Ruseløkkveien 26). |
+| Nam Fah | wheelchair | review | Active current Thai restaurant at Maridalsveien 21, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Vinoteket | wheelchair | review | Active current guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Peloton | both | review | Active current guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Louise | wheelchair | review | First-party menu endpoint failed deterministically; no secondary authority substituted. |
+| Smalhans | wheelchair | review | Named dishes exist, but published prices bind to menu packages rather than individual dishes. |
+| Trattoria Popolare | wheelchair | review | Active current restaurant at Trondheimsveien 2 with an à la carte food offering, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Mon Oncle | wheelchair | review | Public surface exposes menu formats/prices rather than stable named individually priced dishes. |
+| Girotondo | both | review | Active current guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Hrímnir Ramen | wheelchair | canonical | Current catalog contains `hrimnir-ramen-storgata`. |
+| Restaurant À L’aise (closed) | both | excluded | VisitOSLO explicitly marks this identity closed; it is outside the active restaurant universe. |
+| Bristol Grill | wheelchair | canonical | Current catalog contains `bristol-grill-oslo`. |
+| Grilleriet | wheelchair | review | Active current guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Restaurant Eik Annen Etage | wheelchair | review | Active current guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Ekspedisjonshallen | both | review | Current PDF was blocked by source robots policy. |
+| Hot Shop | both | review | Tasting-menu package evidence; additionally tracked as sunset/review after announced 2026 closure. |
+| TAK Oslo | wheelchair | review | Active current guide identity; no canonical manifest/source-intake proof is established; it is not confused with similarly named catalog entries. |
+| Hard Rock Cafe Oslo | wheelchair | review | Active current guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Festningen Restaurant | wheelchair | canonical | Current catalog contains `festningen-restaurant-oslo`. |
+| SEVEN | wheelchair | review | Active current guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| KöD Frogner | both | review | Shared image-only menu source; no supported textual dish source proven. |
+| Maaemo | both | review | No stable public current named dish output suitable for dish-first intake. |
+| Centropa | both | review | Active current guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Arakataka | both | canonical | Current catalog contains `arakataka-oslo`. |
+| Kafé Republik | both | review | Exact-head intake #1109 generated and strict-validated 13 items, but the current first-party page contains 15 individually priced dishes. Semantic/source comparison shows extraction loss for `Grilled Beef Skewers, Peanut Sauce` (185 NOK) and `Spekemat` (165 NOK). Keep fail-closed pending generic extraction repair and fresh reproof. |
+| Bar Boman | wheelchair | canonical | Current catalog contains `bar-boman-oslo`. |
+| Restaurant Betong | both | review | Same physical identity as historical `Betong` review; tasting-menu formats/prices do not provide stable individually priced named dishes. |
+| ASIA Aker Brygge | quiet | canonical | Current catalog contains `asia-aker-brygge-oslo`. |
+| Nodee Sky | quiet | canonical | Current catalog contains exact identity `nodee-sky-oslo`. |
+| Ostebutikken Deli & Bistro | quiet | review | Active current guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Brasserie Blanche | quiet | canonical | Current catalog contains `brasserie-blanche-oslo`. |
+| Lille Herbern | quiet | review | Active current guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Kolonialen Bislett | quiet | review | No stable public named/priced menu proven. |
+| Ruffino Ristorante Italiano | quiet | review | Active current guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Gangnam Korean Restaurant | quiet | canonical | Current catalog contains exact identity `gangnam-korean-restaurant-oslo`. |
+| SAVAGE | quiet | review | Current first-party surface has not yielded stable dish-level canonical intake evidence. |
+| Trancher Grünerløkka | quiet | review | Active current guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Restaurant Stallen | quiet | review | Seasonal serving/package menu rather than individually priced named dishes. |
+| J2 Modern Korean | quiet | review | Package menu rather than individually priced dish output. |
+| Brasserie Hansken | quiet | canonical | Current catalog contains `brasserie-hansken-oslo`. |
+| Baltazar Ristorante & Enoteca | quiet | review | Active current restaurant at Dronningens gate 27 with a seasonal à la carte menu and pizza, but no canonical manifest/source-intake proof is established in the current census yet. |
+| [Vin] Tjuvholmen | quiet | review | Active current guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Plah & Ahaan | quiet | review | Combined current guide product remains review; it is not silently collapsed into either Plah or Ahaan without exact physical/menu identity proof. |
+| Brasserie France | quiet | canonical | Current catalog contains `brasserie-france-oslo`. |
+| Brasserie Rivoli | quiet | review | Active current guide identity; no canonical manifest/source-intake proof is established in the current census yet. |
+| Theatercaféen | quiet | canonical | Current catalog contains `theatercafeen-oslo`. |
+| Dinner National | quiet | canonical | Current catalog contains the Nationaltheatret venue as `dinner-nationaltheatret-oslo`. |
+| Kain Neo-Filipino Bistro | quiet | canonical | Current catalog contains exact identity `kain-neo-filipino-bistro-oslo`. |
+| Restaurant Kontrast | quiet | review | Set-menu formats/prices and concept, not a stable individually priced named dish list. |
+
+Accessible-restaurants reconciliation across the **61 unique identities**:
+- canonical: **21**;
+- review: **39**;
+- excluded: **1**;
+- missing: **0**.
+
+Per finite source set:
+- wheelchair-access list: **12 canonical / 26 review / 1 excluded / 0 missing**;
+- lower-noise list: **14 canonical / 27 review / 1 excluded / 0 missing**.
+
+The closed À L’aise listing is excluded from the active universe. Review rows remain review rather than
+being silently equated with similarly named or co-located canonical venues. In particular, Feast at MUNCH
+is not automatically collapsed into MUNCH Kafé, Ahaan is not collapsed into Plah & Ahaan, and current
+physical venue identities remain distinct unless the catalog/source evidence establishes equivalence.
+
+This closes classification for the complete current VisitOSLO accessibility restaurant guide. It does
+not close the broad 326-product VisitOSLO restaurant catalogue and it does not resolve the remaining
+review queue.
+
 ## Closeout order
 
 The census should now proceed in this order:
