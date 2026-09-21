@@ -242,6 +242,37 @@ has SHA-256 `7b208eba2404977967d8c524bf415b07d01774338b0fc1295a7bd261de6cab6d` a
 `08ed7d7ba0d467bf8b48726cc22a8664d2cb2cb5`, identical to the accepted artifact. Kafé Republik remains
 review because two priced source dishes are absent from the 13-item canonical extraction.
 
+## Current source refresh — VisitOSLO hotel restaurants complete
+
+The current VisitOSLO hotel-restaurants guide was re-opened on 2026-09-21. The source was published
+2026-05-27, updated 2026-08-07, and exposes **10 / 10** current products. All ten identities were
+already classified elsewhere in this census, so this source family adds no new `missing` identity.
+
+Source:
+- https://www.visitoslo.com/restaurants-nightlife/convenient/hotel-restaurants
+
+| Restaurant | Census status | Reason |
+|---|---|---|
+| Norda | canonical | Current catalog contains `norda-oslo`. |
+| SAVAGE | review | Existing historical P0 review; current first-party surface has not yielded stable dish-level canonical intake evidence. |
+| Ekspedisjonshallen | review | Existing historical P1 review; current PDF source remains blocked by publisher robots policy. |
+| Theatercaféen | canonical | Current catalog contains `theatercafeen-oslo`. |
+| Bar Boman | canonical | Current catalog contains `bar-boman-oslo`. |
+| Bristol Grill | canonical | Current catalog contains `bristol-grill-oslo`. |
+| To Søstre | review | Existing historical P1 review; current offering is afternoon-tea/package led rather than a stable individually priced named dish list. |
+| Atlas Brasserie & Café | canonical | Current catalog contains `atlas-brasserie-oslo`. |
+| Palmen Restaurant & Bar | canonical | Current catalog contains `palmen-restaurant-oslo`. |
+| The Top Restaurant | canonical | Current catalog contains `the-top-restaurant-oslo`. |
+
+Hotel-restaurants reconciliation:
+- canonical: **7**;
+- review: **3**;
+- excluded: **0**;
+- missing: **0**.
+
+This closes classification for this finite VisitOSLO thematic source. It does **not** close the broad
+326-product catalogue or resolve the three review identities.
+
 ## Closeout order
 
 The census should now proceed in this order:
