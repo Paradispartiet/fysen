@@ -49,7 +49,7 @@
       "BÁNH HỎI HEO QUAY - Tynne rismelark med ribbe",
       "PHỞ BIFF BÒ TÁI",
       "PHỞ KYLLING GÀ",
-      "BÚN BÒ NỨC NỞ",
+      "BÚN BÒ XÀO XẢ ỚT - Risnudler med marinert biff",
       "MÌ XÀO - Stir-fried egg noodles"
     ],
     "requiredDishVariants": [
@@ -61,7 +61,7 @@
       { "name": "BÁNH HỎI HEO QUAY - Tynne rismelark med ribbe", "priceMinor": 25900 },
       { "name": "PHỞ BIFF BÒ TÁI", "priceMinor": 24900 },
       { "name": "PHỞ KYLLING GÀ", "priceMinor": 24900 },
-      { "name": "BÚN BÒ NỨC NỞ", "priceMinor": 26900 },
+      { "name": "BÚN BÒ XÀO XẢ ỚT - Risnudler med marinert biff", "priceMinor": 24900 },
       { "name": "MÌ XÀO - Stir-fried egg noodles", "priceMinor": 23900 }
     ],
     "forbiddenDishNames": [
