@@ -39,7 +39,10 @@ Therefore the census-start coverage baseline is **745 canonical manifests**, not
 - PR #848 merged the census ledger without changing the catalog.
 - PR #849 produced a fresh Brasserie Hansken exact-head proof.
 - PR #850 promoted Brasserie Hansken and merged as `101f55385da8c1053f1bb864b8cf82179ed46d2a`.
-- The Git catalog baseline after #850 was **746 manifests**. The Ringnes Brygghus promotion adds one exact artifact manifest, making the expected Git catalog baseline **747 manifests** after this PR. A new full-catalog production-health claim is not inferred from the Git count alone; the last explicitly cited full health proof above remains 745/745.
+- The Git catalog baseline after #850 was **746 manifests**.
+- PR #853 promoted Ringnes Brygghus and merged as `64d663983917ad022a563498eb998783c6c15a60`, bringing the Git catalog to **747 manifests**.
+- Catalog health #264 on exact `64d663983917ad022a563498eb998783c6c15a60` proved **747 manifests / 747 accepted / 0 failed**. Exact evidence artifact: `10658640142`.
+- PRs #855–#860 change only this dated census ledger and do not alter `apps/menu-worker/catalog/`; therefore the current Git catalog baseline remains **747 manifests** after those merges.
 
 ## Historical benchmark reconciliation
 
