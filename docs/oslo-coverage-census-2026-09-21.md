@@ -273,6 +273,39 @@ Hotel-restaurants reconciliation:
 This closes classification for this finite VisitOSLO thematic source. It does **not** close the broad
 326-product catalogue or resolve the three review identities.
 
+## Current source refresh — VisitOSLO quick-bite guide complete
+
+The current VisitOSLO quick-bite guide was re-opened on 2026-09-21. The source was published
+2026-05-27, updated 2026-07-03, and exposes **11 / 11** current products. This source mixes individual
+restaurants with food-hall / food-court umbrella identities, so umbrella products remain explicit
+`review` items until venue-level marginal value and source fit are resolved.
+
+Source:
+- https://www.visitoslo.com/restaurants-nightlife/convenient/a-quick-bite
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| CiCi Tollgaarden | canonical | Current catalog contains `cici-tollgaarden-oslo`. |
+| Mathallen Food Hall | review | Current VisitOSLO identity is an umbrella food hall with more than 30 shops, cafés and restaurants; several tenants are already canonical individually. Venue-level marginal value and source fit remain unresolved. |
+| Yo! Sushi | canonical | Current catalog contains `yo-sushi-oslo-s-oslo` at Jernbanetorget 1. |
+| CiCi Osteria Kirkegata | canonical | Same physical identity as current catalog `cici-kirkegata-oslo` at Kirkegata 23. |
+| VIA Village | review | Current VisitOSLO identity is a food-court umbrella over named independent stalls; several VIA Village stalls are already canonical individually. Venue-level marginal value and source fit remain unresolved. |
+| Vippa Oslo | review | Current VisitOSLO identity is a food/culture centre with multiple food stalls rather than one already-proven canonical restaurant menu. |
+| Paleet Food Hall | canonical | Current catalog contains `paleet-food-hall-oslo` at Karl Johans gate 39. |
+| Freddy Fuego Burrito Bar | canonical | Current catalog contains `freddy-fuego-burrito-bar-hausmanns-gate-oslo` at Hausmanns gate 31A. |
+| Barcode Street Food | review | Current VisitOSLO identity is a food-hall umbrella with multiple stalls; individual Barcode stalls are already represented separately in the catalog. Venue-level marginal value and source fit remain unresolved. |
+| Oslo Street Food | review | Current VisitOSLO identity is a food-court umbrella with multiple stalls; individual vendors are represented separately in the catalog. Venue-level marginal value and source fit remain unresolved. |
+| Anne på landet – Frognerparken | review | Active current café identity with lunch/dinner dishes, but no separate canonical identity is proven yet; first-party menu/source intake remains to be established. |
+
+Quick-bite reconciliation:
+- canonical: **5**;
+- review: **6**;
+- excluded: **0**;
+- missing: **0**.
+
+This closes classification for this finite VisitOSLO thematic source. It does **not** resolve the six
+review identities, and it does not substitute for the still-incomplete broad 326-product catalogue.
+
 ## Closeout order
 
 The census should now proceed in this order:
