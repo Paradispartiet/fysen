@@ -1,43 +1,8 @@
 {
   "version": 1,
   "outputDirectory": "candidates/oslo-coverage-visitoslo-tranche1-20260921",
-  "concurrency": 2,
+  "concurrency": 1,
   "restaurants": [
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "ekebergrestauranten-oslo",
-        "name": "Ekebergrestauranten",
-        "websiteUrl": "https://www.ekebergrestauranten.com/",
-        "address": "Kongsveien 15, 0193 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.ekebergrestauranten.com/middagsmeny",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-21",
-          "note": "VisitOSLO tranche-1 coverage gap. Current first-party dinner page publishes individually priced starters, mains and desserts. Initial exact-head intake generated 32 canonical items; keep bilingual/package labels fail-closed under strict validation and semantic artifact QA."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": [
-        "FORRETTER (STARTERS)",
-        "HOVEDRETTER (MAIN COURSES)",
-        "DESSERTER (DESSERTS)",
-        "3-retter",
-        "4-retter",
-        "5-retter"
-      ]
-    },
     {
       "version": 1,
       "restaurant": {
@@ -59,7 +24,7 @@
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-09-21",
-          "note": "VisitOSLO tranche-1 coverage gap. First-party pages publish Maridalsveien 153B, while the active restaurant entity is registered at Maridalsveien 153, 0461 Oslo in Brønnøysundregistrene. Initial exact-head intake generated 26 canonical items; strict validation and semantic artifact QA remain required before promotion."
+          "note": "VisitOSLO tranche-1 coverage gap. First-party pages publish Maridalsveien 153B, while the active restaurant entity is registered at Maridalsveien 153, 0461 Oslo in Brønnøysundregistrene. Exact-head run #1103 generated and strict-validated 26/26 canonical items with no missing required dishes or forbidden leakage. Keep this sole clean candidate for final research closeout."
         }
       },
       "actions": [],
