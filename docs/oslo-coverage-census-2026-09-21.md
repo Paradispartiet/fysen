@@ -863,6 +863,41 @@ restaurant is promoted solely because it appears in the VisitOSLO seasonal guide
 This closes classification for the complete current fireplace-restaurant list. It does not close the
 broad 326-product restaurant catalogue or resolve the remaining review queue.
 
+## Current source refresh — VisitOSLO wine bars complete
+
+The current VisitOSLO wine-bar guide was re-opened on 2026-09-21. The article was published
+2026-05-27, updated 2026-07-03, and exposes **10 / 10** current products on one finite list.
+
+Source:
+- https://www.visitoslo.com/restaurants-nightlife/nightlife/wine-bars-in-oslo
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| Vinoteket | review | Current VisitOSLO wine-bar identity; no exact canonical manifest is established. Dish-first restaurant relevance and a stable priced food source remain to be resolved. |
+| Katla | canonical | Current catalog contains `katla-oslo`. |
+| [Vin] Bjørvika | review | Current VisitOSLO wine-bar identity in Bjørvika; no exact canonical manifest/source-intake proof is established in the census yet. |
+| Becco | review | Current VisitOSLO wine-bar identity; no exact canonical manifest/source-intake proof is established. Keep review until dish-first restaurant relevance is resolved. |
+| Oh Dear | review | Current VisitOSLO wine-bar identity; no exact canonical manifest/source-intake proof is established. Keep review until dish-first restaurant relevance is resolved. |
+| Grand Café | review | Existing current VisitOSLO review; active restaurant at Karl Johans gate 31, but no canonical manifest/source-intake proof is established yet. |
+| Cru wine & kitchen | canonical | Same established physical identity as canonical `cru-oslo`. |
+| Nektar | canonical | Current catalog contains `nektar-vinbar-oslo`. |
+| Territoriet | review | Current VisitOSLO wine-bar identity; no exact canonical manifest/source-intake proof is established. Keep review until dish-first restaurant relevance is resolved. |
+| Skaal Matbar | canonical | Current catalog contains `skaal-matbar-oslo`. |
+
+Wine-bar reconciliation:
+- canonical: **4**;
+- review: **6**;
+- excluded: **0**;
+- missing: **0**.
+
+A wine-bar label is not itself an exclusion reason under the dish-first coverage contract. Non-canonical
+identities therefore remain in review until their meaningful food coverage and stable dish source are
+established or an explicit exclusion decision is justified. String/location similarity is not used to
+collapse [Vin] Bjørvika into another Bjørvika venue.
+
+This closes classification for the complete current VisitOSLO wine-bar source family. It does not close
+the broad 326-product restaurant catalogue or resolve the remaining review queue.
+
 ## Closeout order
 
 The census should now proceed in this order:
@@ -886,7 +921,7 @@ The census should now proceed in this order:
 ## Next concrete unit of work
 
 The VisitOSLO hidden-gems, hotel-restaurants, quick-bite, local-foodies, lunch, vegan/vegetarian,
-budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food, fine-dining and fireplace-restaurant source families
+budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food, fine-dining, fireplace-restaurant and wine-bar source families
 are now fully classified with `missing = 0`. Continue the refreshed VisitOSLO universe and remaining
 current thematic sources while the broad 326-product catalogue enumeration remains open. Kafé Republik
 stays in its generic extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
