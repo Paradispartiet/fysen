@@ -72,7 +72,7 @@
         "slug": "folkvang-sagene-oslo",
         "name": "Folkvang Sagene",
         "websiteUrl": "https://folkvangsagene.no/",
-        "address": "Maridalsveien 153B, 0461 Oslo",
+        "address": "Maridalsveien 153, 0461 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
@@ -87,7 +87,7 @@
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-09-21",
-          "note": "VisitOSLO tranche-1 coverage gap. Current first-party lunch/dinner page publishes many individually priced named dishes and provides a distinct Sagene geographic option. Research only: exact-head intake and semantic artifact QA are required before promotion."
+          "note": "VisitOSLO tranche-1 coverage gap. First-party pages publish the venue as Maridalsveien 153B, while the active restaurant entity is registered at Maridalsveien 153, 0461 Oslo in Brønnøysundregistrene. Current lunch/dinner page publishes many individually priced named dishes; exact-head intake and semantic artifact QA are required before promotion."
         }
       },
       "actions": [],
