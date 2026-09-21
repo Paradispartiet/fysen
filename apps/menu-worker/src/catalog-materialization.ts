@@ -1,6 +1,7 @@
 import {
   createDatabasePool,
   getLatestMenuWatchOutcome,
+  getMenuSourceWatchHealth,
   MenuIndexRepository,
   reconcileRestaurantCatalogCoverage,
   setRestaurantCoverageActive,
@@ -58,8 +59,27 @@ export function parseCatalogMaterializationConcurrency(raw: string | undefined):
   return parsed;
 }
 
-export function shouldRepairCatalogSourceHealth(outcome: WatchOutcome | null): boolean {
-  return outcome === null || !ACCEPTED_WATCH_OUTCOMES.has(outcome);
+export interface CatalogSourceHealthState {
+  readonly latestOutcome: WatchOutcome | null;
+  readonly lastCheckedAt: string | null;
+  readonly checkIntervalMinutes: number;
+}
+
+export function shouldRepairCatalogSourceHealth(
+  health: CatalogSourceHealthState | null,
+  nowMs = Date.now(),
+): boolean {
+  if (!health || health.latestOutcome === null || !ACCEPTED_WATCH_OUTCOMES.has(health.latestOutcome)) {
+    return true;
+  }
+
+  const lastCheckedAt = health.lastCheckedAt ? new Date(health.lastCheckedAt) : null;
+  if (!lastCheckedAt || Number.isNaN(lastCheckedAt.getTime())) return true;
+  if (!Number.isFinite(health.checkIntervalMinutes) || health.checkIntervalMinutes <= 0) return true;
+
+  const freshForMinutes = Math.max(health.checkIntervalMinutes * 3, 1_440);
+  const freshUntil = lastCheckedAt.getTime() + freshForMinutes * 60_000;
+  return nowMs > freshUntil;
 }
 
 export async function mapWithBoundedConcurrency<T, R>(
@@ -110,8 +130,9 @@ async function repairUnhealthyCanonicalSources(
     async ({ entry, result }): Promise<CatalogHealthRepairResult | null> => {
       const menuSourceId = result.menuSourceId as string;
       const restaurantId = result.restaurantId as string;
-      const previousOutcome = await getLatestMenuWatchOutcome(pool, menuSourceId);
-      if (!shouldRepairCatalogSourceHealth(previousOutcome)) return null;
+      const previousHealth = await getMenuSourceWatchHealth(pool, menuSourceId);
+      const previousOutcome = previousHealth?.latestOutcome ?? null;
+      if (!shouldRepairCatalogSourceHealth(previousHealth)) return null;
 
       try {
         const watch = await watchMenuSourceOnce(
