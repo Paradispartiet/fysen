@@ -32,14 +32,69 @@ describe("catalog materialization concurrency", () => {
 });
 
 describe("catalog source health repair selection", () => {
-  it("repairs missing or failed latest watcher outcomes without re-fetching healthy sources", () => {
-    expect(shouldRepairCatalogSourceHealth(null)).toBe(true);
-    expect(shouldRepairCatalogSourceHealth("fetch_error")).toBe(true);
-    expect(shouldRepairCatalogSourceHealth("extraction_error")).toBe(true);
-    expect(shouldRepairCatalogSourceHealth("quarantined")).toBe(true);
-    expect(shouldRepairCatalogSourceHealth("blocked_by_robots")).toBe(true);
-    expect(shouldRepairCatalogSourceHealth("changed")).toBe(false);
-    expect(shouldRepairCatalogSourceHealth("unchanged")).toBe(false);
-    expect(shouldRepairCatalogSourceHealth("not_modified")).toBe(false);
+  const now = Date.parse("2026-09-21T03:00:00.000Z");
+
+  it("repairs missing or failed latest watcher outcomes", () => {
+    const base = {
+      lastCheckedAt: "2026-09-21T02:00:00.000Z",
+      checkIntervalMinutes: 60,
+    };
+
+    expect(shouldRepairCatalogSourceHealth(null, now)).toBe(true);
+    expect(shouldRepairCatalogSourceHealth({ ...base, latestOutcome: null }, now)).toBe(true);
+    expect(shouldRepairCatalogSourceHealth({ ...base, latestOutcome: "fetch_error" }, now)).toBe(true);
+    expect(shouldRepairCatalogSourceHealth({ ...base, latestOutcome: "extraction_error" }, now)).toBe(true);
+    expect(shouldRepairCatalogSourceHealth({ ...base, latestOutcome: "quarantined" }, now)).toBe(true);
+    expect(shouldRepairCatalogSourceHealth({ ...base, latestOutcome: "blocked_by_robots" }, now)).toBe(true);
+  });
+
+  it("repairs accepted watcher outcomes once the reconcile freshness window has expired", () => {
+    const accepted = ["changed", "unchanged", "not_modified"] as const;
+
+    for (const latestOutcome of accepted) {
+      expect(shouldRepairCatalogSourceHealth({
+        latestOutcome,
+        lastCheckedAt: "2026-09-20T03:00:00.000Z",
+        checkIntervalMinutes: 60,
+      }, now)).toBe(false);
+
+      expect(shouldRepairCatalogSourceHealth({
+        latestOutcome,
+        lastCheckedAt: "2026-09-20T02:59:59.999Z",
+        checkIntervalMinutes: 60,
+      }, now)).toBe(true);
+    }
+  });
+
+  it("uses three check intervals when that exceeds the one-day freshness floor", () => {
+    expect(shouldRepairCatalogSourceHealth({
+      latestOutcome: "unchanged",
+      lastCheckedAt: "2026-09-19T21:00:00.000Z",
+      checkIntervalMinutes: 600,
+    }, now)).toBe(false);
+
+    expect(shouldRepairCatalogSourceHealth({
+      latestOutcome: "unchanged",
+      lastCheckedAt: "2026-09-19T20:59:59.999Z",
+      checkIntervalMinutes: 600,
+    }, now)).toBe(true);
+  });
+
+  it("repairs accepted outcomes with missing or invalid freshness metadata", () => {
+    expect(shouldRepairCatalogSourceHealth({
+      latestOutcome: "unchanged",
+      lastCheckedAt: null,
+      checkIntervalMinutes: 60,
+    }, now)).toBe(true);
+    expect(shouldRepairCatalogSourceHealth({
+      latestOutcome: "unchanged",
+      lastCheckedAt: "not-a-date",
+      checkIntervalMinutes: 60,
+    }, now)).toBe(true);
+    expect(shouldRepairCatalogSourceHealth({
+      latestOutcome: "unchanged",
+      lastCheckedAt: "2026-09-21T02:00:00.000Z",
+      checkIntervalMinutes: 0,
+    }, now)).toBe(true);
   });
 });
