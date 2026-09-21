@@ -216,6 +216,28 @@ vi.mock("pdfjs-dist/legacy/build/pdf.mjs", () => ({
               width: 40,
               hasEOL: true,
             },
+            {
+              str: "Chocolate",
+              transform: [9, 0, 0, 9, 72, 590],
+              width: 40,
+            },
+            {
+              str: "Mousse 145,-",
+              transform: [9, 0, 0, 9, 113.5, 590],
+              width: 58,
+              hasEOL: true,
+            },
+            {
+              str: "TUNA",
+              transform: [9, 0, 0, 9, 72, 570],
+              width: 24,
+            },
+            {
+              str: "CRUDO 195,-",
+              transform: [9, 0, 0, 9, 97.5, 570],
+              width: 55,
+              hasEOL: true,
+            },
           ],
         }),
         cleanup: () => undefined,
@@ -251,6 +273,10 @@ describe("PDF positioned fragment spacing", () => {
     expect(extracted.visibleText).toContain(
       "OYSTERS WITH CHAMPAGNE VINEGAR",
     );
+    expect(extracted.visibleText).toContain("Chocolate Mousse 145,-");
+    expect(extracted.visibleText).toContain("TUNA CRUDO 195,-");
+    expect(extracted.visibleText).not.toContain("ChocolateMousse");
+    expect(extracted.visibleText).not.toContain("TUNACRUDO");
 
     expect(extracted.visibleText).not.toContain("D IJON");
     expect(extracted.visibleText).not.toContain("PROFI LE");
