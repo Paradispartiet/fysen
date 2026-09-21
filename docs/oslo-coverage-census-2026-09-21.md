@@ -223,22 +223,24 @@ Source:
 | Farine | review | Current first-party identity is a bakery/spiseri with simple breakfast/lunch food, but the current public surface does not establish a stable individually priced dish menu suitable for immediate canonical intake. |
 | Middagscruise i Oslofjorden med Brim Explorer | excluded | Tour/package identity rather than a fixed restaurant identity. The current product includes a three-course dinner, but it is outside the restaurant census contract. |
 | Izakaya | canonical | Current catalog contains `izakaya-by-vladimir-pak-oslo`. |
-| Kafé Republik | **missing** | Active Oslo bistro with a current first-party a la carte surface containing many named individually priced dishes; no canonical manifest exists. Added to exact-head research seed. |
+| Kafé Republik | review | Exact-head intake #1109 generated and strict-validated 13 items, but the current first-party page contains 15 individually priced dishes. Semantic/source comparison shows extraction loss for `Grilled Beef Skewers, Peanut Sauce` (185 NOK) and `Spekemat` (165 NOK). Keep fail-closed pending generic extraction repair and fresh reproof. |
 | St. Lars | review | Existing historical P1 review; audited source state was image-only. |
-| Ringnes Brygghus | **missing** | Active brewery/spiseri with a current first-party food page containing ten named individually priced pizzas; no canonical manifest exists. Added to exact-head research seed. |
+| Ringnes Brygghus | **missing** | Exact-head intake #1109 generated and strict-validated all 10 current first-party pizzas with correct name/price bindings and clean semantic output. Promotion-ready from artifact `10654979415`; remains `missing` only until separate byte-identical canonical promotion. |
 | Angst Bar | excluded | Current VisitOSLO identity is explicitly a bar/club and no restaurant food surface is established; outside the dish-first restaurant census. |
 | Latter Restaurant & Bar | review | Active restaurant identity is established, but the current first-party public surface found in this refresh does not expose a stable named/priced a la carte list suitable for immediate intake. |
 
-Hidden-gems reconciliation before exact-head intake:
+Hidden-gems reconciliation after exact-head intake #1109:
 - canonical: **2**;
-- review: **4**;
+- review: **5**;
 - excluded: **2**;
-- missing: **2**.
+- missing: **1**.
 
-The two missing identities are isolated in
-`apps/menu-worker/research/oslo-visitoslo-hidden-gems-20260921.seed.json`.
-They remain `missing` until exact-head research either proves a promotion-ready candidate or moves the
-identity to an evidence-backed `review` / `excluded` state.
+Exact-head proof on `5e055411b0fdcfbf9df38cd5230f49080b081dcc` generated **2/2** candidates,
+strict-validated **2/2**, and uploaded artifact `10654979415` with SHA-256
+`12fc6e90b25b97b5fd6d5f179e7d1ceaa0d7f3d9dc8020735ca3fd2b262c3d19`.
+Structural green was not treated as semantic promotion approval: Ringnes is clean 10/10 and
+promotion-ready, while Kafé Republik returns to review because two priced source dishes are absent from
+the 13-item canonical extraction.
 
 ## Closeout order
 
@@ -262,10 +264,10 @@ The census should now proceed in this order:
 
 ## Next concrete unit of work
 
-Run exact-head Restaurant batch intake for the two-candidate VisitOSLO hidden-gems seed:
-Kafé Republik and Ringnes Brygghus. Inspect the generated artifacts semantically before changing either
-census status or creating a promotion PR. Do not mix any parser repair discovered here with Folkvang,
-Ekebergrestauranten, Brasserie Coucou or FYR unless the same generic root cause is proven.
+Merge the evidence-backed hidden-gems research classification, then promote **Ringnes Brygghus** in a
+separate PR from the exact accepted artifact. Kafé Republik remains an extraction-review item and must
+not be promoted from the incomplete 13/15 output.
 
-After the hidden-gems source family has `missing = 0`, continue the refreshed VisitOSLO universe and
-the remaining current thematic sources while resolving blocker families separately.
+After Ringnes is canonical, hidden-gems reaches `missing = 0`. Continue the refreshed VisitOSLO
+universe and remaining current thematic sources while resolving Kafé Republik and other blocker families
+separately.
