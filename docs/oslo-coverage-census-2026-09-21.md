@@ -146,6 +146,42 @@ coverage. The external benchmark universe must be refreshed after this reconcili
 | Kafeteria August | review | P1 round-2 evidence remained insufficient for canonical dish-first intake; needs fresh current-source reproof. |
 | Fox and Loaf | review | P1 round-2 evidence remained insufficient for canonical dish-first intake; needs fresh current-source reproof. |
 
+## Current source refresh — tranche 1
+
+The current VisitOSLO restaurant catalogue was re-opened on 2026-09-21. It exposes **326**
+restaurant products. The first 12 current products were reconciled against the current canonical catalog
+and the historical 85-place review ledger before moving to later pages.
+
+Source:
+- https://www.visitoslo.com/restaurants-nightlife/restaurants
+
+First-page reconciliation:
+
+| Restaurant | Census status | Reason |
+|---|---|---|
+| Basso Social | review | Existing historical P1 review. |
+| Bønder i byen Grünerløkka | canonical | Current catalog contains `bonder-i-byen-oslo`. |
+| Brasilia Oslo | review | New current benchmark signal. Active Oslo restaurant, but the present buffet/experience pricing model needs dish-first marginal-value and source-fit review before classifying it as a missing canonical restaurant. |
+| Brasserie Coucou | **missing** | New current benchmark identity outside the historical 85. Active Oslo restaurant with a current first-party menu surface and individually priced French dishes; no canonical manifest exists. |
+| Brasserie Opera | review | New current benchmark signal. Active Oslo restaurant, but the currently inspected first-party landing page does not itself establish the final canonical priced dish surface. |
+| CiCi Tollgaarden | canonical | Current catalog contains `cici-tollgaarden-oslo`. |
+| Credo Restaurant | review | Existing historical P0 review. |
+| Den Glade Gris | review | Existing historical P0 review. |
+| Dyna Fyr | review | New current benchmark signal, but primarily a seasonal/private-event set-menu restaurant; relevance/source-fit must be decided explicitly before intake. |
+| Ekebergrestauranten | **missing** | New current benchmark identity outside the historical 85. Active first-party menu exposes individually priced named dishes; no canonical manifest exists. |
+| Festningen Restaurant | canonical | Current catalog contains `festningen-restaurant-oslo`. |
+| Folkvang Sagene | **missing** | New current benchmark identity outside the historical 85. Active first-party lunch/dinner menu exposes many individually priced named dishes and adds a clear Sagene geographic option; no canonical manifest exists. |
+
+Tranche-1 result:
+- canonical: **3**;
+- review: **6**;
+- newly confirmed missing: **3**;
+- excluded: **0**.
+
+Therefore the refreshed Oslo census already has **`missing >= 3`** before VisitOSLO pages 2–28,
+MICHELIN refresh, Anders Husa refresh, the remaining VisitOSLO thematic lists and demand-gap inputs are
+fully reconciled. The old 85-place queue cannot be used as a present-day coverage declaration.
+
 ## Closeout order
 
 The census should now proceed in this order:
