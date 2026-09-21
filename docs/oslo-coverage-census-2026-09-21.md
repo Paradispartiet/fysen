@@ -1013,6 +1013,46 @@ relevance because relevance alone is not canonical intake proof.
 This closes classification for the complete current VisitOSLO brunch source family. It does not close
 the broad 326-product restaurant catalogue or resolve the remaining review queue.
 
+## Current source refresh — VisitOSLO afternoon tea complete
+
+The current VisitOSLO afternoon-tea guide was re-opened on 2026-09-21. The article was published
+2026-05-27, updated 2026-08-07, and exposes **13 / 13** current products on one finite list.
+
+Source:
+- https://www.visitoslo.com/fr/restaurants-vie-nocturne/cafe-et-gateaux/afternoon-tea
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| Nasjonalmuseet Kafe | review | Current VisitOSLO café/afternoon-tea identity; no canonical manifest/source-intake proof is established in the census yet. |
+| The Top Bar | review | Separate current VisitOSLO product at Radisson Blu Plaza with afternoon tea and bar service; it is not equated with canonical `the-top-restaurant-oslo`. |
+| Palmen Restaurant & Bar | canonical | Current catalog contains `palmen-restaurant-oslo`. |
+| TAK Oslo | review | Existing current fine-dining review; no exact canonical manifest/source-intake proof is established. Similar string fragments in other catalog slugs are not identity evidence. |
+| Mauriske Salonger | canonical | Current catalog contains `mauriske-salonger-oslo`. |
+| To Søstre | review | Existing historical P1 review; current offering is afternoon-tea/package led rather than a stable individually priced named dish list. |
+| THIEF RESTAURANT | review | Current VisitOSLO restaurant identity with snacks, fast food and main courses, but no exact canonical manifest/source-intake proof is established in the census yet. |
+| Pascal Henrik Ibsens gate | review | Current VisitOSLO pastry-shop/restaurant identity with warm lunch and dinner service; no exact canonical manifest/source-intake proof is established yet. |
+| Ahaan | review | Current standalone Ahaan product remains review; it is not silently collapsed into Plah or the combined Plah & Ahaan listing without exact physical/menu identity proof. |
+| Mendel’s Oslo | review | Current pastry-shop/café identity with afternoon tea; no canonical manifest/source-intake proof is established in the census yet. |
+| Spor av Nord | review | Current café/restaurant identity with breakfast, lunch, dinner and afternoon tea; no canonical manifest/source-intake proof is established yet. |
+| A.C. Perchs Thehandel | review | Current tea-room/café identity with afternoon tea and lunch signal; dish-first marginal value and stable canonical source remain unresolved. |
+| Lysebu Restaurant | review | Current full restaurant identity with à la carte, seasonal menus and afternoon tea; no canonical manifest/source-intake proof is established yet. |
+
+Afternoon-tea reconciliation:
+- canonical: **2**;
+- review: **11**;
+- excluded: **0**;
+- missing: **0**.
+
+The source family is restaurant-relevant even when the product is primarily a café, pastry shop or
+tea room, because the current product surfaces establish actual food service. Those identities remain
+review rather than being excluded or promoted without a stable canonical dish source.
+
+Physical identities remain strict: The Top Bar is not collapsed into The Top Restaurant, and standalone
+Ahaan is not collapsed into Plah or the combined Plah & Ahaan product without exact identity proof.
+
+This closes classification for the complete current VisitOSLO afternoon-tea source family. It does not
+close the broad 326-product restaurant catalogue or resolve the remaining review queue.
+
 ## Closeout order
 
 The census should now proceed in this order:
@@ -1036,7 +1076,7 @@ The census should now proceed in this order:
 ## Next concrete unit of work
 
 The VisitOSLO hidden-gems, hotel-restaurants, quick-bite, local-foodies, lunch, vegan/vegetarian,
-budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food, fine-dining, fireplace-restaurant, wine-bar, microbrewery, cocktail-bar and brunch source families
+budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food, fine-dining, fireplace-restaurant, wine-bar, microbrewery, cocktail-bar, brunch and afternoon-tea source families
 are now fully classified with `missing = 0`. Continue the refreshed VisitOSLO universe and remaining
 current thematic sources while the broad 326-product catalogue enumeration remains open. Kafé Republik
 stays in its generic extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
