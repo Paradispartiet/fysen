@@ -396,6 +396,49 @@ This closes classification for this finite and recently updated VisitOSLO source
 resolve the 12 review identities or substitute for complete reconciliation of the broad 326-product
 restaurant catalogue.
 
+## Current source refresh — VisitOSLO vegan & vegetarian guide complete
+
+The current VisitOSLO vegan/vegetarian guide was re-opened on 2026-09-21. The source was published
+2026-05-27, updated 2026-09-18, and exposes **21** current physical/product identities across its
+plant-based, vegetarian/vegan, and vegetarian-alternative sections.
+
+Source:
+- https://www.visitoslo.com/restaurants-nightlife/vegan-vegetarian
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| Håndbakt OSLO | canonical | VisitOSLO lists Kjølbergata 21; current catalog contains the same physical identity as `handbakt-oslo`. |
+| Oslo Raw | canonical | VisitOSLO lists Skovveien 16; current catalog contains the same physical identity as `oslo-raw-frogner-oslo`. |
+| Nordvegan | review | Existing historical P1 review; named rotating buffet food is published without individual item prices. |
+| KUMI Gamlebyen | review | Existing historical P0 review; current first-party page has unpriced dishes, the priced PDF is stale and the prior Wolt venue is deleted. |
+| KUMI Oslobukta | review | Existing historical P0 review; current first-party page has unpriced dishes, the priced PDF is stale and the prior Wolt venue is deleted. |
+| Krishnas Cuisine | canonical | Current catalog contains `krishnas-cuisine-oslo`. |
+| Sumo Restaurant Karl Johan | canonical | Current catalog contains `sumo-karl-johan-oslo`. |
+| Mathallen Food Hall | review | Existing current VisitOSLO review; umbrella food hall with many independent tenants, several already canonical individually. |
+| Konoji | review | Existing historical P1 review; current first-party menu/identity evidence remains insufficient for canonical intake. |
+| Sumo Restaurant Hegdehaugsveien | canonical | Current catalog contains `sumo-hegdehaugsveien-oslo`. |
+| MelaCafé | review | Active current restaurant at Mariboes gate 8, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Zarathustra Meyhane | review | Active current restaurant at Thorvald Meyers gate 80, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Sumo Restaurant Bjørvika | canonical | Current catalog contains `sumo-bjorvika-oslo`. |
+| VIA Village | review | Existing current VisitOSLO review; food-court umbrella over independent stalls, several already canonical individually. |
+| Hrímnir Ramen | canonical | Current catalog contains `hrimnir-ramen-storgata`. |
+| Listen to Delhi | canonical | Current catalog contains `listen-to-delhi-oslo`. |
+| Sumo Storo | canonical | Current catalog contains `sumo-storo-oslo`. |
+| Vippa Oslo | review | Existing current VisitOSLO review; food/culture centre with multiple food stalls rather than one already-proven canonical restaurant menu. |
+| ASIA Aker Brygge | canonical | Current catalog contains `asia-aker-brygge-oslo`. |
+| Nam Fah | review | Active current Thai restaurant at Maridalsveien 21, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Sumo Solli Plass | canonical | Current catalog contains `sumo-solli-plass-oslo`. |
+
+Vegan/vegetarian reconciliation:
+- canonical: **11**;
+- review: **10**;
+- excluded: **0**;
+- missing: **0**.
+
+This closes classification for this finite and recently updated VisitOSLO thematic source. It does not
+resolve the ten review identities or substitute for complete reconciliation of the broad 326-product
+restaurant catalogue.
+
 ## Closeout order
 
 The census should now proceed in this order:
