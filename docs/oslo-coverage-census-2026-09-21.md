@@ -1090,6 +1090,47 @@ restaurant dish offering.
 This closes classification for the complete current VisitOSLO game-bar guide. It does not close the
 broad 326-product restaurant catalogue or resolve the remaining review queue.
 
+## Current source refresh — VisitOSLO baked goods and cakes complete
+
+The current VisitOSLO guide to baked goods and cakes was re-opened on 2026-09-21 through the indexed
+French locale. The article was published 2026-05-27, updated 2026-08-07, and exposes **13 / 13**
+current products on one finite list.
+
+Source:
+- https://www.visitoslo.com/fr/restaurants-vie-nocturne/cafe-et-gateaux/viennoiseries-et-patisseries
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| Aanerud Bakeri Oslo | review | Existing current VisitOSLO review; active bakery/café identity, but no canonical manifest/source-intake proof is established yet. |
+| Talormade Oslobukta | review | Current bakery/donut identity in Oslobukta; no exact canonical manifest/source-intake proof is established in the census yet. |
+| Mauriske Salonger | canonical | Current catalog contains `mauriske-salonger-oslo`. |
+| Pascal Henrik Ibsens gate | review | Current pastry-shop/restaurant identity with warm lunch and dinner service; no exact canonical manifest/source-intake proof is established yet. |
+| Theatercaféen | canonical | Current catalog contains `theatercafeen-oslo`. |
+| Mendel’s Oslo | review | Current pastry-shop/café identity with afternoon tea; no canonical manifest/source-intake proof is established yet. |
+| Åpent Bakeri Inkognito terrasse | review | Current bakery/café identity; it is not collapsed into other Åpent Bakeri locations without exact physical/source identity proof. |
+| Haralds Vaffel | canonical | Current catalog contains `haralds-vaffel-grunerlokka-oslo`. |
+| Fjærkonfekt | review | Current confectionery/pastry identity; no canonical manifest/source-intake proof is established yet. |
+| Godt Brød bakery | review | Current bakery identity; no exact canonical manifest/source-intake proof is established in the census yet. |
+| Sverre Sætre confectionery | review | Current artisan confectionery/cake identity; no canonical manifest/source-intake proof is established yet. |
+| Anne på landet – Hønse-Lovisas hus | review | Existing current VisitOSLO review; active café with handmade food and lunch service, but no canonical source-intake proof yet. |
+| Farine | review | Existing hidden-gems review; bakery/spiseri identity is active but no stable individually priced dish menu has been proven for immediate canonical intake. |
+
+Baked-goods-and-cakes reconciliation:
+- canonical: **3**;
+- review: **10**;
+- excluded: **0**;
+- missing: **0**.
+
+This source family remains relevant under the dish-first contract because the products sell prepared
+food, pastries, cakes or café meals. Non-canonical bakery/confectionery identities remain review rather
+than being excluded solely for not being full-service restaurants.
+
+Physical identities remain strict: Åpent Bakeri Inkognito terrasse is not collapsed into Barcode,
+Tjuvholmen or another Åpent Bakeri location without exact venue/source proof.
+
+This closes classification for the complete current VisitOSLO baked-goods-and-cakes source family. It
+does not close the broad 326-product restaurant catalogue or resolve the remaining review queue.
+
 ## Closeout order
 
 The census should now proceed in this order:
@@ -1113,7 +1154,7 @@ The census should now proceed in this order:
 ## Next concrete unit of work
 
 The VisitOSLO hidden-gems, hotel-restaurants, quick-bite, local-foodies, lunch, vegan/vegetarian,
-budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food, fine-dining, fireplace-restaurant, wine-bar, microbrewery, cocktail-bar, brunch, afternoon-tea and game-bar source families
+budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food, fine-dining, fireplace-restaurant, wine-bar, microbrewery, cocktail-bar, brunch, afternoon-tea, game-bar and baked-goods-and-cakes source families
 are now fully classified with `missing = 0`. Continue the refreshed VisitOSLO universe and remaining
 current thematic sources while the broad 326-product catalogue enumeration remains open. Kafé Republik
 stays in its generic extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
