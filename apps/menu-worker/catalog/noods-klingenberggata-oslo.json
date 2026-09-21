@@ -38,7 +38,7 @@
       "Tender Short Ribs 招牌牛肋油泼面",
       "Beijing ChaCha 牛肉炸酱面",
       "Szechuan Braised Beef 秘制红油牛肉粉",
-      "Kung Fu Beef Burger 红烧牛肉夾饃"
+      "Noods Burger 红烧牛肉夾饃"
     ],
     "requiredDishVariants": [
       {
@@ -58,8 +58,8 @@
         "priceMinor": 19500
       },
       {
-        "name": "Kung Fu Beef Burger 红烧牛肉夾饃",
-        "priceMinor": 9300
+        "name": "Noods Burger 红烧牛肉夾饃",
+        "priceMinor": 7900
       }
     ]
   }
