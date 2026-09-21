@@ -17,7 +17,25 @@ try {
     page.setDefaultTimeout(30_000);
     page.setDefaultNavigationTimeout(60_000);
 
-    await page.goto(sourceUrl, { waitUntil: "domcontentloaded" });
+    const initialResponse = await page.goto(sourceUrl, { waitUntil: "domcontentloaded" });
+    await page.waitForTimeout(5_000);
+
+    const initialDiagnostic = {
+      status: initialResponse?.status() ?? null,
+      url: page.url(),
+      title: await page.title(),
+      bodyText: (await page.locator("body").innerText()).slice(0, 8_000),
+      headings: await page.locator("h1:visible, h2:visible, h3:visible, h4:visible").allTextContents(),
+      links: await page.locator("a:visible").evaluateAll((nodes) =>
+        nodes.slice(0, 100).map((node) => ({
+          text: (node.textContent ?? "").replace(/\s+/g, " ").trim(),
+          href: node.getAttribute("href")
+        }))
+      )
+    };
+    console.log("INITIAL_VISITOSLO_DIAGNOSTIC");
+    console.log(JSON.stringify(initialDiagnostic, null, 2));
+
     await page.waitForFunction(() =>
       /Showing\s+\d+\s*[–-]\s*\d+\s+of\s+\d+\s+products/i.test(document.body.innerText)
     );
