@@ -937,6 +937,47 @@ by neighbouring Burger Joint rather than a Beer Palace restaurant menu.
 This closes classification for the complete current VisitOSLO microbrewery source family. It does not
 close the broad 326-product restaurant catalogue or resolve the remaining review queue.
 
+## Current source refresh — VisitOSLO cocktail bars complete
+
+The current VisitOSLO cocktail-bar guide was re-opened on 2026-09-21 and exposes **11 / 11**
+current products on one finite list.
+
+Source:
+- https://www.visitoslo.com/your-oslo/oslo-for-foodies/cocktail-scene
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| Norda | canonical | Current catalog contains `norda-oslo`; this row is the restaurant identity, not the separate Norda Cocktail Bar product. |
+| Fuglen | excluded | Current VisitOSLO product is a coffee shop by day and cocktail bar by night; the current surface establishes coffee/tea and drinks but no restaurant dish offering. |
+| Himkok | review | Current VisitOSLO product is cocktail/distillery-led but explicitly describes an outdoor kitchen in the venue summary; keep review pending stable own dish-source proof. |
+| Svanen Oslo | excluded | Current VisitOSLO cocktail guide establishes the bar identity but no restaurant food surface in the currently inspected source evidence. |
+| Posthallen Drinkhub | review | VisitOSLO classifies it as a restaurant/bar venue and explicitly documents snacks plus a food discount; exact dish-source/canonical identity remains unresolved. |
+| Anam Cara | review | VisitOSLO explicitly shows and describes snacks, including cured meats/cheese, alongside the cocktail/wine bar; stable dish-first source fit remains unresolved. |
+| Pier 42 | excluded | Current VisitOSLO product is the Amerikalinjen cocktail bar and the current surface establishes cocktails but no restaurant dish offering. |
+| Bar Boca | excluded | Current VisitOSLO product is a cocktail/wine bar and the current surface establishes drinks but no restaurant dish offering. |
+| Torggata Botaniske | excluded | Current VisitOSLO product is an intimate cocktail bar and the current surface establishes drinks but no restaurant dish offering. |
+| About Contrasts | review | Existing P1 review; current VisitOSLO now explicitly describes the venue as a café and brunch venue by day and cocktail bar by night, strengthening restaurant relevance without proving canonical intake. |
+| Norda Cocktail Bar | review | Separate current bar product at The Hub; VisitOSLO explicitly documents a range of bar snacks. It is not silently collapsed into canonical `norda-oslo` without exact menu/physical-identity proof. |
+
+Cocktail-bar reconciliation:
+- canonical: **1**;
+- review: **5**;
+- excluded: **5**;
+- missing: **0**.
+
+This pass applies the dish-first restaurant contract rather than treating every cocktail bar as a
+restaurant. Posthallen Drinkhub, Anam Cara, Himkok, About Contrasts and Norda Cocktail Bar have current
+food signals and therefore remain review until stable own dish sources or explicit marginal-value
+decisions are established. Fuglen, Svanen Oslo, Pier 42, Bar Boca and Torggata Botaniske are excluded
+on the currently inspected VisitOSLO evidence because their product surfaces establish drink/café-bar
+use but no restaurant dish offering.
+
+Physical identities remain strict: Norda Cocktail Bar is a separate current VisitOSLO product and is
+not silently collapsed into canonical `norda-oslo`.
+
+This closes classification for the complete current VisitOSLO cocktail-bar source family. It does not
+close the broad 326-product restaurant catalogue or resolve the remaining review queue.
+
 ## Closeout order
 
 The census should now proceed in this order:
@@ -960,7 +1001,7 @@ The census should now proceed in this order:
 ## Next concrete unit of work
 
 The VisitOSLO hidden-gems, hotel-restaurants, quick-bite, local-foodies, lunch, vegan/vegetarian,
-budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food, fine-dining, fireplace-restaurant, wine-bar and microbrewery source families
+budget, family-friendly, outdoor-dining, accessibility, traditional-Norwegian-food, fine-dining, fireplace-restaurant, wine-bar, microbrewery and cocktail-bar source families
 are now fully classified with `missing = 0`. Continue the refreshed VisitOSLO universe and remaining
 current thematic sources while the broad 326-product catalogue enumeration remains open. Kafé Republik
 stays in its generic extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
