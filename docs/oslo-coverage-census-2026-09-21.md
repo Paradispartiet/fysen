@@ -487,6 +487,59 @@ Cheap-restaurants reconciliation:
 This closes classification for this finite VisitOSLO thematic source. It does not resolve the 14 review
 identities or substitute for complete reconciliation of the broad 326-product restaurant catalogue.
 
+## Current source refresh — VisitOSLO child-friendly restaurants complete
+
+The current VisitOSLO child-friendly restaurant guide was re-opened on 2026-09-21. The source was
+published 2026-07-03, updated 2026-08-11, and exposes **32 / 32** current products.
+
+Source:
+- https://www.visitoslo.com/no/oslo-for-deg/barnas-oslo/barnevennlige-restauranter
+
+| Restaurant / product | Census status | Reason |
+|---|---|---|
+| The Salmon | review | Existing historical P0 review; fresh reproof was nondeterministic and also exposed generic numbered menu-package labels. |
+| CiCi Osteria Kirkegata | canonical | Current catalog contains the same physical identity as `cici-kirkegata-oslo`. |
+| Bønder i byen Grünerløkka | canonical | Current catalog contains `bonder-i-byen-oslo`. |
+| Ekebergrestauranten | review | Existing current VisitOSLO review; exact-head intake generated 32 items, but semantic QA exposed headings, allergen rows and waiter/presentation instructions as priced dishes. |
+| CiCi Tollgaarden | canonical | Current catalog contains `cici-tollgaarden-oslo`. |
+| Mathallen Oslo | review | Same current umbrella identity as Mathallen Food Hall; multiple independent tenants, several already canonical individually, so venue-level source fit remains unresolved. |
+| ASIA Aker Brygge | canonical | Current catalog contains `asia-aker-brygge-oslo`. |
+| Mother India | review | Active current restaurant at Pilestredet 63 with a substantial food offering, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Egon Karl Johan | canonical | Current catalog contains `egon-karl-johan-oslo`. |
+| Le Benjamin Bar & Bistro | review | Existing historical review; current first-party priced PDF is useful but production fetching remains blocked by publisher robots policy. |
+| Olivia Aker Brygge | canonical | Current catalog contains `olivia-aker-brygge-oslo`. |
+| Olivia Østbanehallen | canonical | Current catalog contains `olivia-ostbanehallen-oslo`. |
+| Mehfel Restaurant | canonical | Current catalog contains `mehfel-kirkegata-oslo`. |
+| Villa Paradiso Grünerløkka | canonical | Current catalog contains `villa-paradiso-grunerlokka-oslo`. |
+| Villa Paradiso Tivoli | canonical | Current catalog contains `villa-paradiso-tivoli-oslo`. |
+| Mamma Pizza Osteria | canonical | Current catalog contains the Dronningens gate 22 identity as `mamma-pizza-osteria-italiana-oslo`. |
+| Syverkiosken | review | Existing current VisitOSLO review; active food identity without canonical source-intake proof yet. |
+| Tuk Tuk Thai | review | Existing current VisitOSLO review; active Thai restaurant at Møllergata 8 without canonical source-intake proof yet. |
+| Haralds Vaffel | canonical | Current catalog contains `haralds-vaffel-grunerlokka-oslo`. |
+| Vippa Oslo | review | Existing current VisitOSLO review; food/culture centre with multiple stalls rather than one already-proven canonical restaurant menu. |
+| Trattoria Popolare | review | Active current restaurant at Trondheimsveien 2 with an à la carte food offering, but no canonical manifest/source-intake proof is established in the current census yet. |
+| Fiskeriet Youngstorget | canonical | Current catalog contains `fiskeriet-youngstorget-oslo`. |
+| Freddy Fuego Burrito Bar | canonical | Current catalog contains `freddy-fuego-burrito-bar-hausmanns-gate-oslo`. |
+| Masala Politics | canonical | Current catalog contains `masala-politics-karl-johans-gate-oslo`. |
+| Yaya's Vika | canonical | Current catalog contains `yayas-vika-oslo`. |
+| Bun's Sørenga | canonical | Current catalog contains `buns-sorenga-oslo`. |
+| Oslo Street Food | review | Existing current VisitOSLO review; food-court umbrella with multiple vendors rather than one already-proven canonical restaurant identity. |
+| Barcode Street Food | review | Existing current VisitOSLO review; food-hall umbrella with multiple stalls, several already represented individually in the catalog. |
+| Olivia Hegdehaugsveien | canonical | Current catalog contains `olivia-hegdehaugsveien-oslo`. |
+| TGI Friday's City | canonical | Current catalog contains `tgi-fridays-oslo-city-oslo`. |
+| Der Peppern Gror | canonical | VisitOSLO lists Fridtjof Nansens plass 7; current catalog contains the same physical identity as `der-peppern-gror-radhusplassen-oslo`. |
+| Baltazar Ristorante & Enoteca | review | Active current restaurant at Dronningens gate 27 with a seasonal à la carte menu and pizza, but no canonical manifest/source-intake proof is established in the current census yet. |
+
+Child-friendly reconciliation:
+- canonical: **20**;
+- review: **12**;
+- excluded: **0**;
+- missing: **0**.
+
+This closes classification for this finite and recently updated VisitOSLO thematic source. It does not
+resolve the 12 review identities or substitute for complete reconciliation of the broad 326-product
+restaurant catalogue.
+
 ## Closeout order
 
 The census should now proceed in this order:
