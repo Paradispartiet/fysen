@@ -1214,6 +1214,46 @@ though the guide describes several food concepts inside the hotel.
 This closes classification for the complete current Anders Husa Oslo city-guide list. It does not close
 the broad 326-product VisitOSLO restaurant catalogue or resolve the remaining review queue.
 
+## Current source refresh — Anders Husa Cheap Eats complete
+
+The current Anders Husa / Anders & Kaitlin "Best Cheap Eats in Oslo" guide was re-opened on
+2026-09-21. The article was updated **2026-04-03** and its editorial list contains **8 / 8**
+recommendations. Reader comments and user-suggested venues below the article are not counted as
+editorial recommendations.
+
+Source:
+- https://andershusa.com/cheap-eats-oslo/
+
+The guide is particularly useful as an independent demand/relevance signal because it explicitly limits
+itself to savory, substantial street-food, takeaway and counter-service meals rather than fine dining or
+desserts.
+
+| Venue / product | Census status | Reason |
+|---|---|---|
+| Syverkiosken | review | Existing current review; active prepared-food identity at Maridalsveien 45B, but no canonical manifest/source-intake proof is established yet. |
+| Stykke | review | The current guide anchors this recommendation to Møllergata 12, while canonical Stykke manifests are Universitetsgata 2 and Hasle. Do not collapse the source identity across locations without exact relocation/identity proof. |
+| Focacceria | canonical | Current guide lists Markveien 34, matching exact canonical `focacceria-grunerlokka-oslo`. |
+| Falafel Me | review | Current independent guide establishes an active falafel identity at Storgata 13, but no exact canonical manifest/source-intake proof exists yet. |
+| Stangeriet | review | Current independent guide establishes an active prepared-food counter at Vulkan 5, but no canonical manifest/source-intake proof exists yet. |
+| Illegal Burger | review | The guide recommendation is brand-level and its contact block points to Olaf Ryes plass 4 while also mentioning Møllergata. The only current canonical Illegal Burger manifest is Møllergata 23, so strict physical identity remains unresolved. |
+| Freddy Fuego | canonical | Current guide lists Hausmanns gate 31A, matching canonical `freddy-fuego-burrito-bar-hausmanns-gate-oslo`. |
+| Fly Chicken | canonical | Current guide points to the Torggata venue; Fly Chicken's current first-party location page confirms Torggata 9A, matching canonical `fly-chicken-torggata-oslo`. |
+
+Anders Husa Cheap Eats reconciliation:
+- canonical: **3**;
+- review: **5**;
+- excluded: **0**;
+- missing: **0**.
+
+Physical identity remains strict. Stykke is not marked canonical merely because the catalog contains
+other Stykke branches: the guide's Møllergata 12 identity does not match the current canonical addresses.
+Likewise, the Illegal Burger recommendation spans/anchors a different location than the single current
+canonical Møllergata manifest, so it remains review. Fly Chicken Torggata is canonical only after the
+current first-party location page confirms the article's abbreviated Torggata 9 address is Torggata 9A.
+
+This closes classification for the complete current Anders Husa Cheap Eats editorial list. It does not
+close the broad 326-product VisitOSLO restaurant catalogue or resolve the remaining review queue.
+
 ## Closeout order
 
 The census should now proceed in this order:
@@ -1236,8 +1276,8 @@ The census should now proceed in this order:
 
 ## Next concrete unit of work
 
-The major finite VisitOSLO thematic families audited in this census and the complete current Anders Husa
-Oslo city guide are now fully classified with `missing = 0`. Continue with additional independent current
-Oslo relevance/demand sources and resolve the accumulated review blocker families while the broad
-326-product VisitOSLO catalogue enumeration remains open. Kafé Republik stays in its generic
-extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
+The major finite VisitOSLO thematic families, the complete current Anders Husa Oslo city guide and the
+current Anders Husa Cheap Eats editorial list are now fully classified with `missing = 0`. Continue with
+additional independent current Oslo relevance/demand sources and resolve the accumulated review blocker
+families while the broad 326-product VisitOSLO catalogue enumeration remains open. Kafé Republik stays
+in its generic extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
