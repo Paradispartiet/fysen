@@ -21,9 +21,9 @@ A coverage refresh is not closed while `missing > 0`. A claim that all relevant 
 covered also requires the remaining `review` queue to be resolved to `canonical` or `excluded`;
 `review` is not equivalent to coverage.
 
-## Exact repository baseline
+## Census start baseline
 
-- current `main`: `1259e32a1637b40201d87f1e7c1fe9e186f8f753`;
+- census-start `main`: `1259e32a1637b40201d87f1e7c1fe9e186f8f753`;
 - catalog JSON manifests on that tree: **745**;
 - last full catalog-health proof before the workflow-only current head:
   `d08fa3b36ff2a11699166a9d0cd0f310b332757f`, Catalog health #262;
@@ -32,21 +32,28 @@ covered also requires the remaining `review` queue to be resolved to `canonical`
   `.github/workflows/revenue-production-proof.yml` and
   `.github/workflows/vercel-production-release.yml`; no catalog file changed.
 
-Therefore the current coverage baseline is **745 canonical manifests**, not 744.
+Therefore the census-start coverage baseline is **745 canonical manifests**, not 744.
+
+### Progress after census start
+
+- PR #848 merged the census ledger without changing the catalog.
+- PR #849 produced a fresh Brasserie Hansken exact-head proof.
+- PR #850 promoted Brasserie Hansken and merged as `101f55385da8c1053f1bb864b8cf82179ed46d2a`.
+- The current Git catalog baseline after #850 is **746 manifests**. A new full-catalog production-health claim is not inferred from that Git count alone; the last explicitly cited full health proof above remains 745/745.
 
 ## Historical benchmark reconciliation
 
 The 2026-09-11 quality audit identified 85 benchmark gaps: 52 P0 and 33 P1.
-Against current `main`:
+Against current `main` after Brasserie Hansken promotion #850:
 
-- **28 / 85 are now canonical**;
-- **57 / 85 remain non-canonical review items**;
+- **29 / 85 are now canonical**;
+- **56 / 85 remain non-canonical review items**;
 - **0 / 85 are unclassified inside that historical benchmark**.
 
 This closes classification of the old 85-place snapshot, but it does **not** prove present-day Oslo
 coverage. The external benchmark universe must be refreshed after this reconciliation.
 
-### Historical gaps now canonical — 28
+### Historical gaps now canonical — 29
 
 | Restaurant | Status | Current canonical identity |
 |---|---|---|
@@ -57,6 +64,7 @@ coverage. The external benchmark universe must be refreshed after this reconcili
 | Cru | canonical | `cru-oslo` |
 | Arakataka | canonical | `arakataka-oslo` |
 | Brasserie Blanche | canonical | `brasserie-blanche-oslo` |
+| Brasserie Hansken | canonical | `brasserie-hansken-oslo` |
 | Madonna | canonical | `madonna-oslo` |
 | Festningen Restaurant | canonical | `festningen-restaurant-oslo` |
 | Kaffistova | canonical | `kaffistova-oslo` |
@@ -79,7 +87,7 @@ coverage. The external benchmark universe must be refreshed after this reconcili
 | Tomodomo | canonical | `tomodomo-oslo` |
 | Nektar | canonical | `nektar-vinbar-oslo` |
 
-### Historical P0 gaps still in review — 36
+### Historical P0 gaps still in review — 35
 
 | Restaurant | Status | Current blocker / latest useful evidence |
 |---|---|---|
@@ -94,7 +102,6 @@ coverage. The external benchmark universe must be refreshed after this reconcili
 | The Little Pickle | review | Dinner menu remains image-led; no stable textual priced dinner list proven. |
 | Frances Vinbar | review | Rotating food offering without a stable current named/priced public menu proven. |
 | Betong | review | Tasting-menu formats/prices, not stable individually priced named dishes. |
-| Brasserie Hansken | review | **Technical blocker now resolved:** PR #843 is merged and exact live proof generated/accepted 9/9 clean items. No later canonical promotion exists; this is the highest-maturity historical review item. |
 | Varemottaket | review | No stable public named dish list proven. |
 | Kolonialen Bislett | review | No stable public named/priced menu proven. |
 | Vaaghals | review | First-party PDF transport was repaired, but the latest Michelin reproof still failed canonical extraction. |
@@ -156,9 +163,9 @@ in the historical benchmark ledger above.
 Source:
 - https://guide.michelin.com/no/en/oslo-region/restaurants
 
-Current reconciliation of the active 28:
-- canonical: **9**;
-- review: **19**;
+Current reconciliation of the active 28 after Hansken #850:
+- canonical: **10**;
+- review: **18**;
 - missing: **0**;
 - newly discovered active identities: **0**.
 
@@ -182,34 +189,30 @@ First-page reconciliation:
 | Basso Social | review | Existing historical P1 review. |
 | Bønder i byen Grünerløkka | canonical | Current catalog contains `bonder-i-byen-oslo`. |
 | Brasilia Oslo | review | New current benchmark signal. Active Oslo restaurant, but the present buffet/experience pricing model needs dish-first marginal-value and source-fit review before classifying it as a missing canonical restaurant. |
-| Brasserie Coucou | **missing** | New current benchmark identity outside the historical 85. Active Oslo restaurant with a current first-party menu surface and individually priced French dishes; no canonical manifest exists. |
+| Brasserie Coucou | review | New current benchmark identity outside the historical 85. Exact-head run #1102 passed identity/geocoding but the current first-party menu surface produced 0 canonical items under the generic HTML stack. Keep as source/extraction review; no parser exception or weaker floor. |
 | Brasserie Opera | review | New current benchmark signal. Active Oslo restaurant, but the currently inspected first-party landing page does not itself establish the final canonical priced dish surface. |
 | CiCi Tollgaarden | canonical | Current catalog contains `cici-tollgaarden-oslo`. |
 | Credo Restaurant | review | Existing historical P0 review. |
 | Den Glade Gris | review | Existing historical P0 review. |
 | Dyna Fyr | review | New current benchmark signal, but primarily a seasonal/private-event set-menu restaurant; relevance/source-fit must be decided explicitly before intake. |
-| Ekebergrestauranten | **missing** | New current benchmark identity outside the historical 85. Active first-party menu exposes individually priced named dishes; no canonical manifest exists. |
+| Ekebergrestauranten | review | New current benchmark identity outside the historical 85. Run #1103 generated 32 items but semantic QA exposed generic noise as priced dishes: bilingual section headings, allergen lines and waiter/presentation instructions. Keep fail-closed pending generic HTML cleanup and fresh reproof. |
 | Festningen Restaurant | canonical | Current catalog contains `festningen-restaurant-oslo`. |
-| Folkvang Sagene | **missing** | New current benchmark identity outside the historical 85. Active first-party lunch/dinner menu exposes many individually priced named dishes and adds a clear Sagene geographic option; no canonical manifest exists. |
+| Folkvang Sagene | review | New current benchmark identity outside the historical 85. Run #1103 generated and strict-validated 26/26 items with no missing required dishes or forbidden leakage. The clean candidate remains review until separate byte-identical canonical promotion is merged. |
 
-Tranche-1 result:
+Tranche-1 closeout classification after exact-head research:
 - canonical: **3**;
-- review: **6**;
-- newly confirmed missing: **3**;
+- review: **9**;
+- missing: **0**;
 - excluded: **0**.
 
-Therefore the refreshed Oslo census already has **`missing >= 3`** before VisitOSLO pages 2–28,
-MICHELIN refresh, Anders Husa refresh, the remaining VisitOSLO thematic lists and demand-gap inputs are
-fully reconciled. The old 85-place queue cannot be used as a present-day coverage declaration.
+This closes `missing` for the **first 12 VisitOSLO products only**. It does not close Oslo coverage: VisitOSLO pages 2–28, Anders Husa/current thematic sources and demand-gap inputs are not yet fully reconciled, and all nine tranche-1 review identities remain unresolved for a final coverage claim.
 
 ## Closeout order
 
 The census should now proceed in this order:
 
-1. **Promote/reproof mature historical holds first.**
-   Brasserie Hansken is first because the generic parser blocker is already fixed on main and a 9/9
-   exact-head artifact exists. FYR must not be treated as equivalent because its proposed #829 parser
-   repair is not merged.
+1. **Close clean census candidates without mixing blocker families.**
+   Brasserie Hansken is complete through #850. Folkvang Sagene is now the clean tranche-1 promotion candidate after run #1103. FYR must not be treated as equivalent because its proposed #829 parser repair is not merged.
 2. **Reproof parser/semantic holds in generic blocker families.**
    Group HTML semantic leakage, PDF layout/title binding, nondeterministic extraction, robots/source
    blockers and package-only menus rather than creating restaurant-specific runtime exceptions.
@@ -226,8 +229,6 @@ The census should now proceed in this order:
 
 ## Next concrete unit of work
 
-Brasserie Hansken should be the first closeout unit: reproduce the merged #843 9/9 proof from fresh
-`main`, create the exact promotion manifest from the proven artifact if semantic QA still matches,
-then run the ordinary promotion gates and post-merge catalog/materialization proof.
+Close PR #851 with a clean Folkvang-only exact-head artifact. If semantic QA remains unchanged, promote Folkvang from that exact artifact in a separate PR. Ekebergrestauranten remains a generic HTML semantic-cleanup problem and Brasserie Coucou remains a source/extraction review; neither should be forced into the Folkvang promotion.
 
-After Hansken, proceed through blocker families rather than arbitrary restaurant order.
+After the tranche-1 closeout, continue VisitOSLO universe reconciliation page-by-page and resolve blocker families separately rather than arbitrary restaurant order.
