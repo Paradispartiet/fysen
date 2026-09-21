@@ -146,6 +146,26 @@ coverage. The external benchmark universe must be refreshed after this reconcili
 | Kafeteria August | review | P1 round-2 evidence remained insufficient for canonical dish-first intake; needs fresh current-source reproof. |
 | Fox and Loaf | review | P1 round-2 evidence remained insufficient for canonical dish-first intake; needs fresh current-source reproof. |
 
+## Current source refresh — MICHELIN complete
+
+The MICHELIN Guide Oslo listing was re-opened on 2026-09-21 and currently renders **29 Oslo
+restaurants**. One entry, À L'aise, is the already documented closed identity from the 2026-09 audit and
+remains excluded from the active coverage universe. The remaining 28 identities are all already present
+in the historical benchmark ledger above.
+
+Source:
+- https://guide.michelin.com/no/en/oslo-region/restaurants
+
+Current reconciliation of the active 28:
+- canonical: **9**;
+- review: **19**;
+- missing: **0**;
+- newly discovered active identities: **0**.
+
+This source family is therefore fully reconciled for the current census. MICHELIN remains a research
+signal rather than canonical truth; the stale À L'aise listing is a concrete reason not to treat a guide
+entry as proof of active restaurant identity.
+
 ## Current source refresh — tranche 1
 
 The current VisitOSLO restaurant catalogue was re-opened on 2026-09-21. It exposes **326**
