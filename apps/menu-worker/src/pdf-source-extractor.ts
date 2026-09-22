@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v38";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v39";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -27,7 +27,7 @@ const PDF_ADDON_INSTRUCTION_ITEM =
 const PDF_LOWERCASE_SENTENCE_FRAGMENT = /^[a-zæøå].{2,220}[.]$/u;
 const PDF_PARENTHETICAL_ALLERGEN_ITEM =
   /^\(\s*(?:(?:fisk|fish|skalldyr|shellfish|bløtdyr|molluscs?|melk|milk|laktose|lactose|egg|eggs?|hvete|wheat|hvetegluten|gluten|soya?|soy|selleri|celery|sennep|mustard|sesam|sesame|sulfitt|sulphites?|nøtter?|nuts?|peanøtter?|peanuts?|lupin|citrus|sitrus)\s*[,/+&]?\s*)+\)$/iu;
-const PDF_QUANTITY_PRICE_LABEL = /^\d{1,3}\s+(?:for|stk\.?|pieces?|pcs?\.?)$/iu;
+const PDF_QUANTITY_PRICE_LABEL = /^(?:\d{1,3}\s+(?:for|stk\.?|pieces?|pcs?\.?)|(?:\d+(?:[.,]\d+)?|\d+\s*\/\s*\d+)\s*(?:doz\.?|dozen))$/iu;
 const PDF_BEVERAGE_PAIRING_METADATA = /\b(?:wine\s+pairing|vinpakke|vinanbefaling|wine\s+recomm?endation)\b/iu;
 const PDF_WINE_STYLE_ITEM =
   /\b(?:sauvignon\s+blanc|cabernet\s+sauvignon|pinot\s+(?:noir|grigio|gris)|chardonnay|riesling|barbera|zinfandel|chablis|sancerre|sauternes|moscatel|tokaji|madeira|meursault|montrachet|chambertin|saint[- ]emilion|cr[eé]mant|prosecco)\b/iu;
