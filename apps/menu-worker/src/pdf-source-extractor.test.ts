@@ -518,6 +518,7 @@ describe("PDF source scope", () => {
   });
 
   it("filters fractional-dozen oyster quantity rows before source-key conflict validation", () => {
+    // Grotto’s first-party menu uses `1/2 doz.` as an oyster portion label, not a dish name.
     const lines = [
       "ØSTERS",
       "Saint-Vaast no.3",
