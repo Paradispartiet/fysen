@@ -517,6 +517,34 @@ describe("PDF source scope", () => {
     ]);
   });
 
+  it("filters fractional-dozen oyster quantity rows before source-key conflict validation", () => {
+    const lines = [
+      "ØSTERS",
+      "Saint-Vaast no.3",
+      "Normandie, Frankrike (su)",
+      "1/2 doz. 445",
+      "Utah Beach no. 2",
+      "Camargue, Frankrike (su)",
+      "1/2 doz. 465",
+      "FORRETTER",
+      "Vårsalat & Feta 185",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const quantityRows = parsed.filter((item) => item.name === "1/2 doz.");
+    expect(quantityRows).toHaveLength(2);
+    expect(new Set(quantityRows.map((item) => item.sourceKey)).size).toBe(1);
+
+    const eligible = filterPdfConflictMetadataItems(parsed);
+    const disambiguated = disambiguateConflictingPdfSourceKeys(
+      lines.join("\n"),
+      eligible,
+    );
+    const scoped = scopePdfMenuItems(lines.join("\n"), disambiguated);
+
+    expect(scoped.some((item) => item.name === "1/2 doz.")).toBe(false);
+    expect(scoped.map((item) => item.name)).toContain("Vårsalat & Feta");
+  });
+
   it("recognizes letter-spaced predrinks and rejects compound wine-pairing price rows", () => {
     const lines = [
       "M A I N S",
