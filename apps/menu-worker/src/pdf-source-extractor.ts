@@ -131,6 +131,7 @@ function normalizeVisibleLine(value: string): string {
 
 function isBeverageSectionHeading(value: string): boolean {
   const line = normalizeScopeLine(value);
+  if (line === "aperitif" || line === "aperitifs") return true;
   return /^(?:bia va ruou(?: beer spirits)?|beer(?: and)? spirits|giai khat(?: non alcohol(?:ic)?)?|non alcoholic(?: drinks?)?|alkoholfrie? alternativ(?: non alcoholic alternative)?(?: glass bottle)?|ruou pha(?: cocktails?)?|(?:[\p{L}\p{N}]+ )?cocktails?|aperitifs?|khong con(?: mocktails?)?|mocktails?|pre ?drinks?(?: \d{2,4})?|do uong(?: drinks?)?|drikke(?:meny)?|drinks?|beverages?|soft drinks?|barnedrinker|barne drikker|kids drinks?|children s drinks?|vinkart|vin(?:kart|liste|meny)?|musserende(?: sparkling)?(?: glass bottle)?|sparkling(?: wine)?s?(?: glass bottle)?|hvitvin(?: white wines?)?(?: glass bottle)?|white wines?(?: glass bottle)?|rodvin(?: red wines?)?(?: glass bottle)?|red wines?(?: glass bottle)?|rosevin(?: rose wines?)?(?: glass bottle)?|rose wines?(?: glass bottle)?|wine(?: list| menu| by the glass)?|bubbles|champagne|ol(?: beer)?|beer(?:s)?|(?:single malt )?whisk(?:e)?y(?: bourbon)?|bourbon|brandy(?: cognac)?|cognac|bitters?|(?:various )?spirits?|brennevin|liquor|vodka|gin|rum|tequila(?: mezcal)?|mezcal|aquavit|akevitt|liqueurs?|calvados|armagnac|grappa|port(?: wine)?|sherry|vermouth|sake|coffee|kaffe|tea|te|varm drikke(?: hot beverages?)?)$/u.test(
     line,
   );
