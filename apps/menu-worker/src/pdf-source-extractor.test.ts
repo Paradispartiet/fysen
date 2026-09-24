@@ -29,7 +29,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v39");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v40");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -544,6 +544,25 @@ describe("PDF source scope", () => {
 
     expect(scoped.some((item) => item.name === "1/2 doz.")).toBe(false);
     expect(scoped.map((item) => item.name)).toContain("Vårsalat & Feta");
+  });
+
+  it("blocks aperitif sections before resuming at food", () => {
+    const lines = [
+      "APÉRITIF",
+      "Champagne Pol Roger NV 299",
+      "Pastis (Ricard) 95",
+      "Campari Soda 125",
+      "FORRETTER",
+      "Vårsalat & Feta (m) 195",
+      "Biff Tartar Garniture Classique (e,f,se,gh) 265",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual([
+      "Vårsalat & Feta (m)",
+      "Biff Tartar Garniture Classique (e,f,se,gh)",
+    ]);
   });
 
   it("recognizes letter-spaced predrinks and rejects compound wine-pairing price rows", () => {
