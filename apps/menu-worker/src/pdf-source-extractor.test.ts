@@ -557,7 +557,7 @@ describe("PDF source scope", () => {
       "Biff Tartar Garniture Classique (e,f,se,gh) 265",
     ];
     const parsed = extractMenuItemsFromPdfLines(lines);
-    const scoped = scopePdfMenuItems(lines.join("\\n"), parsed);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
 
     expect(scoped.map((item) => item.name)).toEqual([
       "Vårsalat & Feta (m)",
