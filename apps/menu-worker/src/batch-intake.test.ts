@@ -114,6 +114,38 @@ describe("restaurant batch intake", () => {
     ]);
   });
 
+  it("excludes structured ordering-instruction sections from the integrity floor", () => {
+    const manifest = buildGeneratedRestaurantManifest(entry, [
+      item("Dish 1", 0),
+      item("Dish 2", 1),
+      item("Dish 3", 2),
+      item("Dish 4", 3),
+      {
+        ...item("Varmes hjemme", 4, { priceMinor: null }),
+        extractionMethod: "json_ld",
+        sectionName: "Les før bestilling",
+      },
+      {
+        ...item("Alt du trenger, følger med", 5, { priceMinor: null }),
+        extractionMethod: "json_ld",
+        sectionName: "Les før bestilling",
+      },
+      {
+        ...item("Dampeboks gjør det enkelt", 6, { priceMinor: null }),
+        extractionMethod: "json_ld",
+        sectionName: "Les før bestilling",
+      },
+    ]);
+
+    expect(manifest.menuSource.minimumExpectedItems).toBe(4);
+    expect(manifest.qualityAssertions.requiredDishNames).toEqual([
+      "Dish 1",
+      "Dish 2",
+      "Dish 3",
+      "Dish 4",
+    ]);
+  });
+
   it("does not inflate the integrity floor for repeated equivalent source keys", () => {
     const first = item("Dish 1", 0);
     const repeated = { ...first, position: 1 };
