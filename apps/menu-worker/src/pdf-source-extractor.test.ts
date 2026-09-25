@@ -33,7 +33,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v41");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v42");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -569,6 +569,34 @@ describe("PDF source scope", () => {
     ]);
   });
 
+  it("resumes food at seafood-bar headings after interleaved aperitifs", () => {
+    const lines = [
+      "APÉRITIF",
+      "Campari Soda 125",
+      "COCKTAILS",
+      "Negroni 195",
+      "- FRA SJØMATBAREN -",
+      "Rekecocktail (sk,f) 195",
+      "FORRETTER",
+      "Vårsalat & Feta (m) 195",
+      "APÉRITIF",
+      "Pastis (Ricard) 95",
+      "- FROM THE SEAFOOD BAR -",
+      "Shrimp Cocktail (cr,f) 195",
+      "STARTERS",
+      "Spring Vegetable Salad & Feta (m) 195",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    const scoped = scopePdfMenuItems(lines.join("\n"), parsed);
+
+    expect(scoped.map((item) => item.name)).toEqual([
+      "Rekecocktail",
+      "Vårsalat & Feta (m)",
+      "Shrimp Cocktail",
+      "Spring Vegetable Salad & Feta (m)",
+    ]);
+  });
+
   it("collapses aligned translated PDF pages with the same prices", () => {
     const norwegian = [
       "FORRETTER",
@@ -618,6 +646,38 @@ describe("PDF source scope", () => {
     expect(() => deduplicateTranslatedPdfPages(conflicting)).toThrow(
       /Dampede Knivskjell & Chermoula \/ Steamed Razor Clams & Chermoula: 27500 \/ 21500/u,
     );
+
+    const norwegianWithFragment = [norwegian[0]!, "FOR 2 1350", ...norwegian.slice(1)];
+    const englishWithFragments = [
+      english[0]!,
+      "(f,su,mu,mo) 295",
+      "(cr,f,su,m,e,c,mo,mu) 1350",
+      ...english.slice(1),
+    ];
+    const pagesWithFragments = [norwegianWithFragment, englishWithFragments];
+    const fragmentItems = filterPdfConflictMetadataItems(
+      extractMenuItemsFromPdfPages(pagesWithFragments),
+    );
+    expect(
+      scopePdfMenuItems(pagesWithFragments.flat().join("\n"), fragmentItems),
+    ).toHaveLength(8);
+
+    const conflictingWithFragments = [
+      [
+        ...norwegianWithFragment.slice(0, 6),
+        "Dampede Knivskjell & Chermoula 275",
+        ...norwegianWithFragment.slice(7),
+      ],
+      englishWithFragments,
+    ];
+    expect(() =>
+      scopePdfMenuItems(
+        conflictingWithFragments.flat().join("\n"),
+        filterPdfConflictMetadataItems(
+          extractMenuItemsFromPdfPages(conflictingWithFragments),
+        ),
+      ),
+    ).toThrow(/Dampede Knivskjell & Chermoula \/ Steamed Razor Clams/u);
   });
 
   it("preserves distinct PDF pages even when many prices coincide", () => {
