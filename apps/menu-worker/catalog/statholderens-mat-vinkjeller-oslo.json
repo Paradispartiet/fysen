@@ -27,59 +27,59 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-09-11",
-      "note": "Exact-head semantic parser proof on PR #660 confirms 10 canonical priced à la carte dishes, including Bakt Røye, Entrecote and Svinenakke, with ingredient/sauce fragments excluded."
+      "note": "The 2026-09-25 first-party à la carte reproof shows ten new priced dishes after the previous seasonal menu changed. Kitchen hours remain unverified."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Krabbesalat",
-      "Blomkål",
-      "Carpaccio",
-      "Bakt Røye",
-      "Entrecote",
-      "Svinenakke",
+      "Røkt Kveite",
+      "Rødbete tartar",
+      "Softshell krabbe",
+      "Steinbit",
+      "Lam",
+      "Andebryst",
       "Dagens oster",
-      "Melkesjokolade bonnet",
-      "Vaniljeparfait",
+      "Eple- mandelkake",
+      "Mørk sjokolademousse",
       "Liten frisk"
     ],
     "requiredDishVariants": [
       {
-        "name": "Krabbesalat",
+        "name": "Røkt Kveite",
         "priceMinor": 28500
       },
       {
-        "name": "Blomkål",
+        "name": "Rødbete tartar",
         "priceMinor": 24500
       },
       {
-        "name": "Carpaccio",
-        "priceMinor": 28500
+        "name": "Softshell krabbe",
+        "priceMinor": 27500
       },
       {
-        "name": "Bakt Røye",
-        "priceMinor": 53500
+        "name": "Steinbit",
+        "priceMinor": 52500
       },
       {
-        "name": "Entrecote",
+        "name": "Lam",
+        "priceMinor": 49000
+      },
+      {
+        "name": "Andebryst",
         "priceMinor": 54500
-      },
-      {
-        "name": "Svinenakke",
-        "priceMinor": 47500
       },
       {
         "name": "Dagens oster",
         "priceMinor": 25500
       },
       {
-        "name": "Melkesjokolade bonnet",
+        "name": "Eple- mandelkake",
         "priceMinor": 25000
       },
       {
-        "name": "Vaniljeparfait",
-        "priceMinor": 25000
+        "name": "Mørk sjokolademousse",
+        "priceMinor": 24000
       },
       {
         "name": "Liten frisk",

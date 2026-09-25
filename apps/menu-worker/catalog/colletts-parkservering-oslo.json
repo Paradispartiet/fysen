@@ -16,7 +16,13 @@
     "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 20
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "browserBlockedOrigins": [
+        "https://pagead2.googlesyndication.com",
+        "https://googleads.g.doubleclick.net"
+      ]
+    }
   },
   "hoursSource": {
     "url": "https://collettsparkservering.com/kontakt",
