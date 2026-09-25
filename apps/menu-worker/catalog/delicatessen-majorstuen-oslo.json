@@ -26,7 +26,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-09-20",
-      "note": "Fresh scheduled catalog-health reproof on 2026-09-20 confirmed the current Favrit public menu API still returns 53 clean priced dishes, but Grillet ytrefilet 220gr has left the live menu. Replace only that stale representative assertion with current Pane Pork Chop @ 205 NOK; source, 44-item floor and the remaining representative assertions stay unchanged. Kitchen-hours completeness remains unverified."
+      "note": "The 2026-09-25 Favrit menu reproof shows 52 priced dishes; Pane Pork Chop has left the live menu and Grillet blekksprut is listed at 210 NOK. Kitchen-hours completeness remains unverified."
     }
   },
   "actions": [],
@@ -38,7 +38,7 @@
       "Friterte artisjokker",
       "Gambas al ajillo",
       "Blåskjell escabeche",
-      "Pane Pork Chop",
+      "Grillet blekksprut",
       "Presa Ibérica (200 g)"
     ],
     "requiredDishVariants": [
@@ -67,8 +67,8 @@
         "priceMinor": 23000
       },
       {
-        "name": "Pane Pork Chop",
-        "priceMinor": 20500
+        "name": "Grillet blekksprut",
+        "priceMinor": 21000
       },
       {
         "name": "Presa Ibérica (200 g)",

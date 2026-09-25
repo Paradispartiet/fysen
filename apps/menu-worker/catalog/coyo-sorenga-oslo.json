@@ -56,9 +56,9 @@
       "Taco de Pescado",
       "Mango Jalisco Salad",
       "Shrimp Mango Jalisco Salad",
-      "Salmon Sashimi",
-      "Coyo Sashimi 4pc",
-      "PX Maki 8pc"
+      "Chicken Jalisco Bowl",
+      "Beef Jalisco Bowl",
+      "Veggie Jalisco Bowl"
     ],
     "requiredDishVariants": [
       { "name": "Guacamole Classic", "priceMinor": 18900 },
@@ -76,9 +76,9 @@
       { "name": "Taco de Pescado", "priceMinor": 18900 },
       { "name": "Mango Jalisco Salad", "priceMinor": 20700 },
       { "name": "Shrimp Mango Jalisco Salad", "priceMinor": 28900 },
-      { "name": "Salmon Sashimi", "priceMinor": 13900 },
-      { "name": "Coyo Sashimi 4pc", "priceMinor": 26900 },
-      { "name": "PX Maki 8pc", "priceMinor": 22500 }
+      { "name": "Chicken Jalisco Bowl", "priceMinor": 27900 },
+      { "name": "Beef Jalisco Bowl", "priceMinor": 27900 },
+      { "name": "Veggie Jalisco Bowl", "priceMinor": 25900 }
     ],
     "forbiddenDishNames": [
       "Coca-Cola Classic",
