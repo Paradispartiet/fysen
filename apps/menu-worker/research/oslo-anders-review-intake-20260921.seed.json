@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-anders-review-intake-20260921",
+  "concurrency": 2,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "rodeo-oslo",
+        "name": "Rodeo",
+        "websiteUrl": "https://www.rodeooslo.no/",
+        "address": "Sannergata 2, 0557 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.rodeooslo.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-21",
+          "note": "Current independent Oslo coverage review. First-party Rodeo page publishes a substantial named and individually priced food menu at Sannergata 2. Research only: exact-head identity, dedupe, extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "grotto-oslo",
+        "name": "Grotto",
+        "websiteUrl": "https://www.grottooslo.no/",
+        "address": "Hallings gate 5, 0170 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO",
+        "latitude": 59.9220959,
+        "longitude": 10.7390563
+      },
+      "menuSource": {
+        "url": "https://static1.squarespace.com/static/651ae847e0df6e607de06fe4/t/6a3bcfa358495b284708c831/1782304675395/Grotto.mainMenu.2026.23.6..pdf",
+        "sourceType": "pdf",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-21",
+          "note": "Current independent Oslo coverage review. Grotto's first-party site links this current detailed priced menu PDF, identifies Hallings gate 5 and links directly to the venue map pin at 59.9220959, 10.7390563. Research only: exact-head PDF transport, extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dumpling-as-oslo",
+        "name": "Dumpling AS",
+        "websiteUrl": "https://www.dumplingas.no/",
+        "address": "Thorvald Meyers gate 26, 0555 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/360dumplingas",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-21",
+          "note": "Current independent Oslo coverage review. First-party site establishes the active restaurant while the current public service-menu surface provides a broad individually priced menu at the same venue. Research only: exact-head identity, extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ]
+}
