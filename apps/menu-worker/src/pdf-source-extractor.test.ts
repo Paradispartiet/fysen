@@ -33,7 +33,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v42");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v43");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -597,6 +597,23 @@ describe("PDF source scope", () => {
     ]);
   });
 
+  it("does not interpret a PDF year range as a priced dish", () => {
+    const lines = [
+      "FORRETTER",
+      "Vårsalat & Feta 220",
+      "KONG HARALD V 1937 - 2026",
+      "STARTERS",
+      "Spring Vegetable Salad & Feta 220",
+      "KING HARALD V 1937 - 2026",
+    ];
+    const parsed = extractMenuItemsFromPdfLines(lines);
+    expect(parsed.filter((item) => /HARALD/u.test(item.name))).toHaveLength(2);
+    expect(scopePdfMenuItems(lines.join("\n"), parsed).map((item) => item.name)).toEqual([
+      "Vårsalat & Feta",
+      "Spring Vegetable Salad & Feta",
+    ]);
+  });
+
   it("collapses aligned translated PDF pages with the same prices", () => {
     const norwegian = [
       "FORRETTER",
@@ -645,6 +662,18 @@ describe("PDF source scope", () => {
     ]);
     expect(() => deduplicateTranslatedPdfPages(conflicting)).toThrow(
       /Dampede Knivskjell & Chermoula \/ Steamed Razor Clams & Chermoula: 27500 \/ 21500/u,
+    );
+
+    const changedDish = extractMenuItemsFromPdfPages([
+      norwegian,
+      [
+        ...english.slice(0, 5),
+        "Grilled Porkchop with Peaches 375",
+        ...english.slice(6),
+      ],
+    ]);
+    expect(() => deduplicateTranslatedPdfPages(changedDish)).toThrow(
+      /disagree on row for Dampede Knivskjell & Chermoula \/ Grilled Porkchop with Peaches/u,
     );
 
     const norwegianWithFragment = [norwegian[0]!, "FOR 2 1350", ...norwegian.slice(1)];
@@ -705,6 +734,71 @@ describe("PDF source scope", () => {
     ];
     const items = extractMenuItemsFromPdfPages([first, second]);
     expect(deduplicateTranslatedPdfPages(items)).toHaveLength(16);
+  });
+
+  it("rejects a changed dish across Grotto-style translated pages after removing a year-range heading", () => {
+    const norwegian = [
+      "FRA SJØMATBAREN",
+      "Rekecocktail 195",
+      "Krabbesalat 225",
+      "Snøkrabbe 565",
+      "Oliven Tapenade 110",
+      "Chévre & Artisjokkdipp 120",
+      "Chipolatas & Aprikossennep 125",
+      "Kyllingleverterrine 165",
+      "Røkt Koljerillettes 155",
+      "Tomat, Melon & Fetasalat 220",
+      "Biff Tartar Garniture Classique 265",
+      "Sellerigrateng m/ Roquefort & Valnøtter 265",
+      "Kremet Villsopp, Speilegg & Kalix Løyrom 285",
+      "Indrefilet m/ Peppersaus 625",
+      "Grillet Poussin & Aïoli 425",
+      "And & Plommer for 2-3 1195",
+      "Torsk m/ Skorsonnerrot & Oliven Beurre Blanc 375",
+      "Kveite Meunière for 2 850",
+      "KONG HARALD V 1937 - 2026",
+    ];
+    const english = [
+      "FROM THE SEAFOOD BAR",
+      "Shrimp Cocktail 195",
+      "Crab Salad 225",
+      "Snow Crab 565",
+      "Olive Tapenade 110",
+      "Goat Cheese & Artichoke Dip 120",
+      "Chipolatas & Apricot Mustard 125",
+      "Chicken Liver Terrine 165",
+      "Smoked Haddock Rillettes 155",
+      "Tomato, Melon & Feta Salad 220",
+      "Steak Tartare Garniture Classique 265",
+      "Celery Gratin w/ Roquefort & Walnuts 265",
+      "Grilled Porkchop w/ Peaches & Mustard Gastrique 375",
+      "Steak au Poivre 625",
+      "Roasted Poussin & Aïoli 425",
+      "Duck & Plums for 2-3 1195",
+      "Cod w/ Salsify & Black Olive Beurre Blanc 375",
+      "Halibut Meunière for 2 850",
+      "KING HARALD V 1937 - 2026",
+    ];
+    const pages = [norwegian, english];
+    const items = extractMenuItemsFromPdfPages(pages);
+    expect(() => scopePdfMenuItems(pages.flat().join("\n"), items)).toThrow(
+      /disagree on row for Kremet Villsopp, Speilegg & Kalix Løyrom \/ Grilled Porkchop/u,
+    );
+
+    const aligned = [
+      norwegian,
+      [
+        ...english.slice(0, 12),
+        "Creamed Wild Mushrooms, Fried Egg & Kalix Roe 285",
+        ...english.slice(13),
+      ],
+    ];
+    expect(
+      scopePdfMenuItems(
+        aligned.flat().join("\n"),
+        extractMenuItemsFromPdfPages(aligned),
+      ),
+    ).toHaveLength(17);
   });
 
   it("recognizes letter-spaced predrinks and rejects compound wine-pairing price rows", () => {

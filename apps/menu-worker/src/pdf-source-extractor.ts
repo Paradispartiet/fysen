@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v42";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v43";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -369,6 +369,18 @@ function looksLikePricingMetadata(name: string): boolean {
   );
 }
 
+function looksLikePdfYearRangeMetadata(item: MenuObservedItem): boolean {
+  const firstYear = item.name.match(/\b((?:18|19|20)\d{2})\s*[-–]$/u)?.[1];
+  const lastYear = (item.priceMinor ?? 0) / 100;
+  return Boolean(
+    firstYear &&
+      item.priceKind === "exact" &&
+      Number.isInteger(lastYear) &&
+      lastYear >= Number(firstYear) &&
+      lastYear <= 2100,
+  );
+}
+
 function stripTrailingParentheticalPdfAllergenCodes(value: string): string {
   const line = normalizeVisibleLine(value);
   const match = line.match(/\s+\(([^()]{1,120})\)$/u);
@@ -492,6 +504,7 @@ export function scopePdfMenuItems(
   for (const item of items) {
     if (
       looksLikePricingMetadata(item.name) ||
+      looksLikePdfYearRangeMetadata(item) ||
       isFoodSectionHeading(item.name) ||
       looksLikePdfBeverageItem(item.name) ||
       looksLikePdfDescriptionFragment(item.name)
@@ -567,7 +580,7 @@ export function deduplicateTranslatedPdfPages(
     if (
       samePrice < previous.length - 1 ||
       distinctPrices < 5 ||
-      sharedAnchors < Math.ceil(previous.length / 2) ||
+      sharedAnchors < Math.ceil(previous.length * 0.4) ||
       translatedTitles < 3
     )
       continue;
@@ -579,7 +592,7 @@ export function deduplicateTranslatedPdfPages(
         original.priceMaxMinor !== item.priceMaxMinor
       ) {
         throw new Error(
-          `Translated PDF pages disagree on price for ${original.name} / ${item.name}: ${original.priceMinor} / ${item.priceMinor}`,
+          `Translated PDF pages disagree on ${sharedDishAnchor(original.name, item.name) ? "price" : "row"} for ${original.name} / ${item.name}: ${original.priceMinor} / ${item.priceMinor}`,
         );
       }
       omitted.add(item);
