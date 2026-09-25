@@ -18,7 +18,10 @@
     "checkIntervalMinutes": 360,
     "minimumExpectedItems": 20,
     "sourceSupport": {
-      "browserBlockedOrigins": ["https://googleads.g.doubleclick.net"]
+      "browserBlockedOrigins": [
+        "https://pagead2.googlesyndication.com",
+        "https://googleads.g.doubleclick.net"
+      ]
     }
   },
   "hoursSource": {
