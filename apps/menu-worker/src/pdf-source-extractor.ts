@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v41";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v42";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -75,11 +75,15 @@ const SPLIT_PDF_ALLERGEN_CODES = new Set([
   ...RECOVERY_ALLERGEN_CODES,
   "by",
   "c",
+  "cr",
+  "gw",
   "has",
   "hn",
   "k",
   "lu",
   "mac",
+  "mo",
+  "mu",
   "par",
   "pk",
   "s",
@@ -107,6 +111,15 @@ function looksLikeSplitPdfAllergenCodeFragment(value: string): boolean {
         /^[A-ZÆØÅ]{1,3}$/u.test(token) &&
         SPLIT_PDF_ALLERGEN_CODES.has(token.toLocaleLowerCase("nb-NO")),
     )
+  );
+}
+
+function looksLikeBarePdfAllergenCodes(value: string): boolean {
+  const match = normalizeVisibleLine(value).match(/^\(([^()]*)\)$/u);
+  if (!match?.[1]) return false;
+  const tokens = match[1].split(/[\s,/+&;]+/u).filter(Boolean);
+  return tokens.length > 0 && tokens.every((token) =>
+    /^[a-zæøå]{1,3}$/u.test(token) && SPLIT_PDF_ALLERGEN_CODES.has(token),
   );
 }
 
@@ -138,7 +151,7 @@ function isBeverageSectionHeading(value: string): boolean {
 
 function isFoodSectionHeading(value: string): boolean {
   const line = normalizeScopeLine(value);
-  return /^(?:do ngot(?: dessert)?|desserts?(?: dessert)?|dolci|mat|food|all day|evening|middagsmeny(?: dinner menu)?|dinner menu(?: middagsmeny)?|forrett(?: starter)?|forretter(?: starters?)?|starters?|mellomrett(?: middle course)?|middle course(?: mellomrett)?|smaretter|small plates?|snacks?|hovedrett(?: main course)?|hovedretter(?: main courses?)?|main courses?|mains?|sides?|burgers?|set menus?)$/u.test(
+  return /^(?:do ngot(?: dessert)?|desserts?(?: dessert)?|dolci|mat|food|all day|evening|middagsmeny(?: dinner menu)?|dinner menu(?: middagsmeny)?|fra sj[oø]matbaren|from the seafood bar|forrett(?: starter)?|forretter(?: starters?)?|starters?|mellomrett(?: middle course)?|middle course(?: mellomrett)?|smaretter|small plates?|snacks?|hovedrett(?: main course)?|hovedretter(?: main courses?)?|main courses?|mains?|sides?|burgers?|set menus?)$/u.test(
     line,
   );
 }
@@ -334,6 +347,7 @@ function looksLikePdfDescriptionFragment(name: string): boolean {
     PDF_LOWERCASE_SENTENCE_FRAGMENT.test(normalized) ||
     looksLikeLabeledPdfAllergenMetadata(normalized) ||
     PDF_PARENTHETICAL_ALLERGEN_ITEM.test(normalized) ||
+    looksLikeBarePdfAllergenCodes(normalized) ||
     looksLikeSplitPdfAllergenCodeFragment(normalized) ||
     PDF_ADDON_INSTRUCTION_ITEM.test(normalized)
   );
@@ -346,6 +360,7 @@ function looksLikePricingMetadata(name: string): boolean {
       normalized,
     ) ||
     PDF_QUANTITY_PRICE_LABEL.test(normalizeVisibleLine(name)) ||
+    /^for \d{1,2}$/u.test(normalized) ||
     PDF_BEVERAGE_PAIRING_METADATA.test(name) ||
     PDF_FIXED_COURSE_MENU_ITEM.test(normalizeVisibleLine(name)) ||
     PDF_GENERIC_SECTION_PRICE_LABEL.test(normalizeVisibleLine(name)) ||
@@ -460,6 +475,7 @@ export function filterPdfConflictMetadataItems(
   return items.filter(
     (item) =>
       !looksLikeSplitPdfAllergenCodeFragment(item.name) &&
+      !looksLikeBarePdfAllergenCodes(item.name) &&
       !looksLikeLabeledPdfAllergenMetadata(item.name),
   );
 }
