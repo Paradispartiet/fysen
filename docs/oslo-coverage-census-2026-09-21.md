@@ -42,7 +42,8 @@ Therefore the census-start coverage baseline is **745 canonical manifests**, not
 - The Git catalog baseline after #850 was **746 manifests**.
 - PR #853 promoted Ringnes Brygghus and merged as `64d663983917ad022a563498eb998783c6c15a60`, bringing the Git catalog to **747 manifests**.
 - Catalog health #264 on exact `64d663983917ad022a563498eb998783c6c15a60` proved **747 manifests / 747 accepted / 0 failed**. Exact evidence artifact: `10658640142`.
-- PRs #855–#860 change only this dated census ledger and do not alter `apps/menu-worker/catalog/`; therefore the current Git catalog baseline remains **747 manifests** after those merges.
+- PRs #855–#860 changed only this dated census ledger; the catalog remained at **747 manifests** after those merges.
+- PR #881 promoted Rodeo and Dumpling AS as `a384f7bbf19ef9b1e55d32747f40095a617fe74b`, bringing the Git catalog to **749 manifests**. Exact-head CI #3193 and live validation #1515 passed before merge. Grotto remains review.
 
 ## Historical benchmark reconciliation
 
@@ -1182,10 +1183,10 @@ closed. Existing stronger identity/closure evidence therefore remains authoritat
 | Kontrast | review | Existing historical P0 review; set-menu formats/prices do not provide a stable individually priced named dish list. |
 | Tim Wendelboe | excluded | Current independent guide describes a specialty coffee bar; no restaurant dish surface is established for the restaurant census. |
 | Skaal Matbar | canonical | Current catalog contains `skaal-matbar-oslo`. |
-| Dumpling AS | review | Current independent guide establishes an active full restaurant with named dumpling dishes, but no exact canonical manifest/source-intake proof exists yet. |
+| Dumpling AS | canonical | `dumpling-as-oslo` promoted in #881: current service menu, 27 canonical priced items and eight price-bound assertions; kitchen hours unverified. |
 | Supreme Roastworks | excluded | Current independent guide describes a specialty coffee shop; no restaurant dish surface is established for the restaurant census. |
 | Rikkes Hage | review | Current independent guide establishes a seasonal beer garden with an own kitchen serving prepared bar snacks; canonical source/seasonality handling remains unresolved. |
-| Rodeo | review | Current independent guide establishes an active globally inspired bistro with substantial prepared dishes; no canonical manifest/source-intake proof exists yet. |
+| Rodeo | canonical | `rodeo-oslo` promoted in #881: first-party menu, 15 canonical priced items and eight price-bound assertions; kitchen hours unverified. |
 | Render Burger | canonical | Current guide lists Toftes gate 19B, matching exact canonical `render-burger-grunerlokka-oslo`. |
 | Hot Shop | review | Existing historical P0 review; tasting-menu/package evidence remains unresolved and the venue is separately tracked for announced 2026 closure. |
 | Liminal | review | Current independent guide establishes an active seasonal tasting-menu restaurant in Torshov; no canonical manifest/source-intake proof exists yet. |
@@ -1193,18 +1194,18 @@ closed. Existing stronger identity/closure evidence therefore remains authoritat
 | Roze Gastro | review | Current independent guide establishes an active Bislett tasting-menu restaurant with named dishes; no canonical manifest/source-intake proof exists yet. |
 | St. Lars | review | Existing historical P1 review; audited source state was image-only despite clear current restaurant relevance. |
 | Smalhans | review | Existing historical P0 review; named dishes exist but published prices bind to menu packages rather than individual dishes. |
-| Grotto | review | Current independent guide establishes an active full French-style bistro with substantial prepared dishes; no canonical manifest/source-intake proof exists yet. |
+| Grotto | review | Research seed #877 proves the active menu and address, but its two language pages disagree on razor clams (275/215 kr). PDF v41 fails closed on that conflict; the seafood-bar column still needs extraction proof before promotion. |
 | À L'aise | excluded | The independent guide still contains the venue, but current VisitOSLO evidence explicitly marks À L’aise closed; stronger closure evidence keeps it outside the active universe. |
 
 Anders Husa current-guide reconciliation:
-- canonical: **12**;
-- review: **30**;
+- canonical: **14**;
+- review: **28**;
 - excluded: **6**;
 - missing: **0**.
 
 The independent guide contributes several relevant identities not previously closed by the VisitOSLO
-families, including Bakeriet ved Credo, Dumpling AS, Rikkes Hage, Rodeo, Liminal, Daegens, Roze Gastro
-and Grotto. They remain review until exact dish-source and canonical-intake proof is established.
+families, including Bakeriet ved Credo, Rikkes Hage, Liminal, Daegens, Roze Gastro and Grotto.
+Rodeo and Dumpling AS are now canonical; the others remain review until their distinct source and menu blockers are resolved.
 
 Physical identity remains strict. Corral's Tacos at Frognerveien 9D maps specifically to canonical
 `corrals-tacos-solli-oslo`, not the separate Grønland venue. Bakeriet ved Credo is not collapsed into
