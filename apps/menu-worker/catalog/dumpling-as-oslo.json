@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dumpling-as-oslo",
+    "name": "Dumpling AS",
+    "websiteUrl": "https://www.dumplingas.no/",
+    "address": "Thorvald Meyers gate 26, 0555 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92756001955747,
+    "longitude": 10.759279669723046
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/360dumplingas",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 27,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-24",
+      "note": "Oslo review intake #1130 on exact head 90d223c4: 27 canonical priced menu items, eight price-bound assertions and strict live validation. First-party restaurant identity at Thorvald Meyers gate 26; current public service menu provides the priced dishes. Kitchen hours remain unverified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Liten kombo",
+      "Klippfisk & Løpstikke",
+      "Sheng Jian Bao",
+      "Okse Dumpling, 6stk",
+      "Kyllingdumplings",
+      "Kimchi",
+      "You Tiao",
+      "Ekstra kryddersoya"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Liten kombo",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Klippfisk & Løpstikke",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Sheng Jian Bao",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Okse Dumpling, 6stk",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Kyllingdumplings",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Kimchi",
+        "priceMinor": 4500
+      },
+      {
+        "name": "You Tiao",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Ekstra kryddersoya",
+        "priceMinor": 1500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

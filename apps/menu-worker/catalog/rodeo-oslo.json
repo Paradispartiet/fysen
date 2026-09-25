@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "rodeo-oslo",
+    "name": "Rodeo",
+    "websiteUrl": "https://www.rodeooslo.no/",
+    "address": "Sannergata 2, 0557 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92859596535574,
+    "longitude": 10.757432400922063
+  },
+  "menuSource": {
+    "url": "https://www.rodeooslo.no/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 15,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-24",
+      "note": "Oslo review intake #1130 on exact head 90d223c4: 15 canonical priced menu items, eight price-bound assertions and strict live validation. First-party menu and restaurant identity at Sannergata 2. Kitchen hours remain unverified."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Spek",
+      "Hamachi med shiso og ponzugele - 2 stk",
+      "Munker med røkt løyrom",
+      "Ricotta dumplings med grilla mais og trøffel",
+      "Fiskefrikadelle",
+      "Grilla piggvar med voksbønner & Vin Jaune",
+      "Lammelår fra Gålå",
+      "Saffron crème brûlée with pistachio ice cream"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Spek",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Hamachi med shiso og ponzugele - 2 stk",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Munker med røkt løyrom",
+        "priceMinor": 32500
+      },
+      {
+        "name": "Ricotta dumplings med grilla mais og trøffel",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Fiskefrikadelle",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Grilla piggvar med voksbønner & Vin Jaune",
+        "priceMinor": 64500
+      },
+      {
+        "name": "Lammelår fra Gålå",
+        "priceMinor": 59500
+      },
+      {
+        "name": "Saffron crème brûlée with pistachio ice cream",
+        "priceMinor": 19500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
