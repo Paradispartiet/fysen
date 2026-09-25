@@ -38,8 +38,8 @@ export interface RestaurantBatchValidationSummary {
 interface RestaurantBatchValidationOptions {
   readonly concurrency?: number;
   readonly maxAttempts?: number;
-  readonly onStart?: (path: string) => void;
-  readonly onResult?: (result: RestaurantBatchValidationResult) => void;
+  readonly onStart?: ((path: string) => void) | undefined;
+  readonly onResult?: ((result: RestaurantBatchValidationResult) => void) | undefined;
   readonly validatePath?: (
     path: string,
   ) => Promise<RestaurantManifestValidationResult>;
