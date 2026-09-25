@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v40";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v41";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -487,7 +487,89 @@ export function scopePdfMenuItems(
     scoped.push(cleanPdfOutputItemName(item));
   }
 
-  return scoped.map((item, position) => ({ ...item, position }));
+  return deduplicateTranslatedPdfPages(scoped).map((item, position) => ({
+    ...item,
+    position,
+  }));
+}
+
+function pdfPageNumber(item: MenuObservedItem): number | null {
+  const match = item.sourceExcerpt?.match(/^page (\d+):/u);
+  return match?.[1] ? Number(match[1]) : null;
+}
+
+function sharedDishAnchor(left: string, right: string): boolean {
+  const words = (name: string) =>
+    new Set(
+      normalizeScopeLine(name.replace(/\s*\([^)]*\)\s*$/u, ""))
+        .split(" ")
+        .filter((word) => word.length >= 5),
+    );
+  const leftWords = words(left);
+  return [...words(right)].some((word) => leftWords.has(word));
+}
+
+/** A translated page repeats the same priced rows in the same order. Keep the
+ * first language, but fail on a disagreement rather than choosing a price. */
+export function deduplicateTranslatedPdfPages(
+  items: readonly MenuObservedItem[],
+): readonly MenuObservedItem[] {
+  const pages = new Map<number, MenuObservedItem[]>();
+  for (const item of items) {
+    const page = pdfPageNumber(item);
+    if (page === null) return items;
+    const group = pages.get(page) ?? [];
+    group.push(item);
+    pages.set(page, group);
+  }
+  const omitted = new Set<MenuObservedItem>();
+  const pageNumbers = [...pages.keys()];
+  for (let index = 1; index < pageNumbers.length; index += 1) {
+    const previous = pages.get(pageNumbers[index - 1]!)!;
+    const current = pages.get(pageNumbers[index]!)!;
+    if (
+      pageNumbers[index]! !== pageNumbers[index - 1]! + 1 ||
+      previous.length < 8 ||
+      previous.length !== current.length
+    )
+      continue;
+    const samePrice = previous.filter(
+      (item, row) =>
+        item.priceMinor === current[row]?.priceMinor &&
+        item.priceKind === current[row]?.priceKind &&
+        item.priceMaxMinor === current[row]?.priceMaxMinor,
+    ).length;
+    const sharedAnchors = previous.filter((item, row) =>
+      sharedDishAnchor(item.name, current[row]!.name),
+    ).length;
+    const translatedTitles = previous.filter(
+      (item, row) =>
+        normalizeDishName(item.name) !== normalizeDishName(current[row]!.name),
+    ).length;
+    const distinctPrices = new Set(previous.map((item) => item.priceMinor))
+      .size;
+    if (
+      samePrice < previous.length - 1 ||
+      distinctPrices < 5 ||
+      sharedAnchors < Math.ceil(previous.length / 2) ||
+      translatedTitles < 3
+    )
+      continue;
+    for (const [row, item] of current.entries()) {
+      const original = previous[row]!;
+      if (
+        original.priceMinor !== item.priceMinor ||
+        original.priceKind !== item.priceKind ||
+        original.priceMaxMinor !== item.priceMaxMinor
+      ) {
+        throw new Error(
+          `Translated PDF pages disagree on price for ${original.name} / ${item.name}: ${original.priceMinor} / ${item.priceMinor}`,
+        );
+      }
+      omitted.add(item);
+    }
+  }
+  return items.filter((item) => !omitted.has(item));
 }
 
 export async function extractScopedPdfMenu(

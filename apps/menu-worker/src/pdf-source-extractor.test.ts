@@ -1,7 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { extractMenuItemsFromPdfLines } from "./pdf-extractor.js";
+import {
+  extractMenuItemsFromPdfLines,
+  extractMenuItemsFromPdfPages,
+} from "./pdf-extractor.js";
 import {
   PDF_SOURCE_EXTRACTOR_VERSION,
+  deduplicateTranslatedPdfPages,
   disambiguateConflictingPdfSourceKeys,
   filterPdfConflictMetadataItems,
   recoverExplicitLowPerItemPdfRows,
@@ -29,7 +33,7 @@ describe("PDF source scope", () => {
     const parsed = extractMenuItemsFromPdfLines(lines);
     const scoped = scopePdfMenuItems(visibleText, parsed);
 
-    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v40");
+    expect(PDF_SOURCE_EXTRACTOR_VERSION).toBe("pdf-text-v41");
     expect(scoped.map((item) => item.name)).toEqual([
       "Phở bò tái / Pho beef noodle soup",
       "Kem yuzu / Yuzu ice cream",
@@ -563,6 +567,84 @@ describe("PDF source scope", () => {
       "Vårsalat & Feta (m)",
       "Biff Tartar Garniture Classique (e,f,se,gh)",
     ]);
+  });
+
+  it("collapses aligned translated PDF pages with the same prices", () => {
+    const norwegian = [
+      "FORRETTER",
+      "Vårsalat & Feta 195",
+      "Biff Tartar Garniture Classique 265",
+      "Asparges, Gribiche & Kalix Løyrom 285",
+      "Krabbeomelett 275",
+      "Dampede Knivskjell & Chermoula 215",
+      "Fylt Tomat Florentine 325",
+      "Grillet Nyretapp & Hvitløkssmør 415",
+      "Grillet Poussin & Aïoli 425",
+    ];
+    const english = [
+      "STARTERS",
+      "Spring Vegetable Salad & Feta 195",
+      "Steak Tartare Garniture Classique 265",
+      "Asparagus, Gribiche & Kalix Løyrom 285",
+      "Crab Omelette 275",
+      "Steamed Razor Clams & Chermoula 215",
+      "Filled Tomato Florentine 325",
+      "Grilled Hanger Steak & Garlic Butter 415",
+      "Roasted Poussin & Aïoli 425",
+    ];
+    const items = extractMenuItemsFromPdfPages([norwegian, english]);
+    const scoped = scopePdfMenuItems(
+      [...norwegian, ...english].join("\n"),
+      items,
+    );
+
+    expect(items).toHaveLength(16);
+    expect(scoped).toHaveLength(8);
+    expect(scoped.map((item) => item.position)).toEqual([
+      0, 1, 2, 3, 4, 5, 6, 7,
+    ]);
+    expect(scoped.map((item) => item.name)).toEqual(
+      norwegian.slice(1).map((line) => line.replace(/ \d+$/u, "")),
+    );
+
+    const conflicting = extractMenuItemsFromPdfPages([
+      [
+        ...norwegian.slice(0, 5),
+        "Dampede Knivskjell & Chermoula 275",
+        ...norwegian.slice(6),
+      ],
+      english,
+    ]);
+    expect(() => deduplicateTranslatedPdfPages(conflicting)).toThrow(
+      /Dampede Knivskjell & Chermoula \/ Steamed Razor Clams & Chermoula: 27500 \/ 21500/u,
+    );
+  });
+
+  it("preserves distinct PDF pages even when many prices coincide", () => {
+    const first = [
+      "MAINS",
+      "Salmon with potato 195",
+      "Beef with rice 265",
+      "Duck with beans 285",
+      "Chicken with lemon 275",
+      "Lamb with mint 215",
+      "Cod with butter 325",
+      "Pasta with mushrooms 415",
+      "Pie with apples 425",
+    ];
+    const second = [
+      "MAINS",
+      "Tuna with potato 195",
+      "Pork with rice 265",
+      "Goose with lentils 285",
+      "Turkey with pepper 275",
+      "Venison with garlic 215",
+      "Haddock with cream 325",
+      "Risotto with herbs 415",
+      "Cake with cherries 425",
+    ];
+    const items = extractMenuItemsFromPdfPages([first, second]);
+    expect(deduplicateTranslatedPdfPages(items)).toHaveLength(16);
   });
 
   it("recognizes letter-spaced predrinks and rejects compound wine-pairing price rows", () => {
