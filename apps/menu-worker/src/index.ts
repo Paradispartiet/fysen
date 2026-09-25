@@ -107,9 +107,19 @@ async function main(): Promise<void> {
       process.env.FYSEN_CANDIDATE_VALIDATION_MAX_ATTEMPTS ?? "3",
       10,
     );
+    const reportProgress = process.env.FYSEN_CANDIDATE_VALIDATION_PROGRESS === "1";
     const summary = await validateRestaurantManifestBatch(directory, {
       concurrency: configuredConcurrency,
       maxAttempts: configuredMaxAttempts,
+      onStart: reportProgress
+        ? (path) => process.stderr.write(`catalog start ${path}\n`)
+        : undefined,
+      onResult: reportProgress
+        ? (result) =>
+            process.stderr.write(
+              `catalog ${result.accepted ? "accepted" : "failed"} ${result.path} ${result.failureFamilies.join(",")}\n`,
+            )
+        : undefined,
     });
     print(summary);
     if (summary.failedCount > 0) process.exitCode = 1;
