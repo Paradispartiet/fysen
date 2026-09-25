@@ -38,6 +38,8 @@ export interface RestaurantBatchValidationSummary {
 interface RestaurantBatchValidationOptions {
   readonly concurrency?: number;
   readonly maxAttempts?: number;
+  readonly onStart?: (path: string) => void;
+  readonly onResult?: (result: RestaurantBatchValidationResult) => void;
   readonly validatePath?: (
     path: string,
   ) => Promise<RestaurantManifestValidationResult>;
@@ -218,6 +220,7 @@ export async function validateRestaurantManifestBatch(
     .sort();
   const paths = fileNames.map((fileName) => resolve(directory, fileName));
   const results = await mapConcurrent(paths, concurrency, async (path) => {
+    options.onStart?.(path);
     try {
       const validation = await validatePathWithTransientRetry(
         path,
@@ -225,7 +228,7 @@ export async function validateRestaurantManifestBatch(
         retryDelayMs,
         maxAttempts,
       );
-      return {
+      const result = {
         path,
         slug: validation.slug,
         accepted: validation.accepted,
@@ -233,8 +236,10 @@ export async function validateRestaurantManifestBatch(
         validation,
         error: null,
       } satisfies RestaurantBatchValidationResult;
+      options.onResult?.(result);
+      return result;
     } catch (error) {
-      return {
+      const result = {
         path,
         slug: null,
         accepted: false,
@@ -242,6 +247,8 @@ export async function validateRestaurantManifestBatch(
         validation: null,
         error: error instanceof Error ? error.message : String(error),
       } satisfies RestaurantBatchValidationResult;
+      options.onResult?.(result);
+      return result;
     }
   });
 
