@@ -753,7 +753,7 @@ function findFallbackCardRecovery(
     const line = lines[index] ?? "";
     if (!PRICE_AT_END.test(line) || !line.startsWith(item.name)) continue;
     const title = recoveredTitle(lines, index - 1);
-    if (title) return { lineIndex: index, title } : null;
+    if (title) return { lineIndex: index, title };
   }
   return null;
 }
