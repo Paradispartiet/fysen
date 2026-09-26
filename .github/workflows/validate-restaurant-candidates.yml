@@ -43,6 +43,96 @@ jobs:
       - name: Build menu-worker dependency graph
         run: pnpm --filter @fysen/menu-worker... build
 
+      - name: TEMP diff Finstua recovered and final items
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from "node:fs";
+          import { normalizeHtmlHeadingLineBreaks } from "./apps/menu-worker/dist/html-heading-normalizer.js";
+          import { stripExplicitlyHiddenHtmlContent } from "./apps/menu-worker/dist/html-extractor.js";
+          import { extractScopedHtmlMenu } from "./apps/menu-worker/dist/html-source-extractor.js";
+          import { recoverDescriptionNamedHtmlItems } from "./apps/menu-worker/dist/html-description-title-recovery.js";
+          import { filterHtmlBeverageSectionItemsWithScopedProvenance } from "./apps/menu-worker/dist/html-text-section-scope.js";
+          import {
+            extractMenuSource,
+            fetchMenuSource,
+            normalizeHtmlPriceNotation,
+          } from "./apps/menu-worker/dist/menu-source-runtime.js";
+
+          const manifest = JSON.parse(
+            fs.readFileSync("./apps/menu-worker/catalog/frognerseteren-finstua-oslo.json", "utf8"),
+          );
+          const source = manifest.menuSource;
+          const fetched = await fetchMenuSource({
+            url: source.url,
+            sourceType: source.sourceType,
+            fetchMode: source.fetchMode,
+            userAgent: source.userAgent,
+            etag: null,
+            lastModified: null,
+            maxResponseBytes: source.maxResponseBytes ?? null,
+            sourceSupport: source.sourceSupport,
+          });
+          if (fetched.kind !== "content") throw new Error("Expected live content");
+
+          const normalizedHtml = normalizeHtmlPriceNotation(
+            normalizeHtmlHeadingLineBreaks(fetched.body),
+          );
+          const scoped = extractScopedHtmlMenu(normalizedHtml);
+          const recoveryHtml = stripExplicitlyHiddenHtmlContent(normalizedHtml);
+          const recovered = recoverDescriptionNamedHtmlItems(scoped.items, scoped.visibleText);
+          const filtered = filterHtmlBeverageSectionItemsWithScopedProvenance(
+            recovered,
+            scoped.visibleText,
+            recoveryHtml.replace(/<[^>]*>/g, "\n"),
+          );
+          const final = await extractMenuSource(source.sourceType, fetched);
+
+          const byKey = (items) => new Map(items.map((item) => [`${item.normalizedName}\u0000${item.priceMinor}`, item]));
+          const recoveredMap = byKey(recovered);
+          const filteredMap = byKey(filtered);
+          const finalMap = byKey(final.items);
+
+          for (const [key, item] of recoveredMap) {
+            if (!filteredMap.has(key)) {
+              console.log("FINSTUA DROPPED BY TEXT SCOPE", JSON.stringify({
+                name: item.name,
+                priceMinor: item.priceMinor,
+                position: item.position,
+                sectionName: item.sectionName,
+                sourceExcerpt: item.sourceExcerpt,
+              }));
+            }
+            if (!finalMap.has(key)) {
+              console.log("FINSTUA ABSENT FROM FINAL", JSON.stringify({
+                name: item.name,
+                priceMinor: item.priceMinor,
+                position: item.position,
+                sectionName: item.sectionName,
+                sourceExcerpt: item.sourceExcerpt,
+              }));
+            }
+          }
+          for (const [key, item] of finalMap) {
+            if (!recoveredMap.has(key)) {
+              console.log("FINSTUA FINAL ADDITION", JSON.stringify({
+                name: item.name,
+                priceMinor: item.priceMinor,
+                position: item.position,
+                sectionName: item.sectionName,
+                sourceExcerpt: item.sourceExcerpt,
+              }));
+            }
+          }
+          console.log("FINSTUA COUNTS", JSON.stringify({
+            scoped: scoped.items.length,
+            recovered: recovered.length,
+            filtered: filtered.length,
+            final: final.items.length,
+          }));
+          NODE
+
       - name: Collect exact-head PR proof manifests
         if: github.event_name == 'pull_request'
         id: proof
@@ -60,8 +150,6 @@ jobs:
 
           git diff --name-only "$BASE_SHA" "$HEAD_SHA" > "$changed_file"
 
-          # Manifest changes prove themselves. Deleted manifests are intentionally
-          # excluded because there is no source contract left to validate.
           git diff --name-only --diff-filter=ACMRT "$BASE_SHA" "$HEAD_SHA" -- \
             'apps/menu-worker/candidates/*.json' \
             'apps/menu-worker/catalog/*.json' \
@@ -79,8 +167,6 @@ jobs:
             esac
           done < "$changed_file"
 
-          # A parser/runtime PR can request concrete live proofs directly in its
-          # normal PR body. This replaces disposable proof branches/workflows.
           requested="$(
             printf '%s\n' "$PR_BODY" \
               | sed -nE 's/^[[:space:]]*Live-proof manifests:[[:space:]]*(.*)$/\1/ip' \
@@ -93,18 +179,11 @@ jobs:
               manifest="$(printf '%s' "$raw" | xargs)"
               [[ -n "$manifest" ]] || continue
               case "$manifest" in
-                catalog/*.json|candidates/*.json)
-                  ;;
-                *)
-                  echo "Live-proof manifest must be catalog/*.json or candidates/*.json: $manifest" >&2
-                  exit 1
-                  ;;
+                catalog/*.json|candidates/*.json) ;;
+                *) echo "Live-proof manifest must be catalog/*.json or candidates/*.json: $manifest" >&2; exit 1 ;;
               esac
               case "$manifest" in
-                *..*)
-                  echo "Live-proof manifest may not contain '..': $manifest" >&2
-                  exit 1
-                  ;;
+                *..*) echo "Live-proof manifest may not contain '..': $manifest" >&2; exit 1 ;;
               esac
               if [[ ! -f "apps/menu-worker/$manifest" ]]; then
                 echo "Requested live-proof manifest does not exist on PR head: $manifest" >&2
@@ -146,8 +225,6 @@ jobs:
           while IFS= read -r manifest; do
             [[ -n "$manifest" ]] || continue
             echo "Strict live validation: $manifest"
-            # validate:manifest performs one direct validation; it does not hide
-            # a first-pass failure behind batch retry behavior.
             pnpm --filter @fysen/menu-worker validate:manifest "$manifest"
           done < "$PROOF_FILE"
 
@@ -159,14 +236,7 @@ jobs:
         run: |
           set -euo pipefail
           case "$MANIFEST_PATH" in
-            /*|*".."*)
-              echo "manifest_path must stay inside apps/menu-worker" >&2
-              exit 1
-              ;;
-            *.json)
-              pnpm --filter @fysen/menu-worker validate:manifest "$MANIFEST_PATH"
-              ;;
-            *)
-              pnpm --filter @fysen/menu-worker validate:batch "$MANIFEST_PATH"
-              ;;
+            /*|*".."*) echo "manifest_path must stay inside apps/menu-worker" >&2; exit 1 ;;
+            *.json) pnpm --filter @fysen/menu-worker validate:manifest "$MANIFEST_PATH" ;;
+            *) pnpm --filter @fysen/menu-worker validate:batch "$MANIFEST_PATH" ;;
           esac
