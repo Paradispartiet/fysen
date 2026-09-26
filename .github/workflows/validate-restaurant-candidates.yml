@@ -43,14 +43,14 @@ jobs:
       - name: Build menu-worker dependency graph
         run: pnpm --filter @fysen/menu-worker... build
 
-      - name: TEMP diff Finstua recovered and final items
+      - name: TEMP concise Finstua recovered/final diff
         if: github.event_name == 'pull_request'
         shell: bash
         run: |
           node --input-type=module <<'NODE'
           import fs from "node:fs";
           import { normalizeHtmlHeadingLineBreaks } from "./apps/menu-worker/dist/html-heading-normalizer.js";
-          import { stripExplicitlyHiddenHtmlContent } from "./apps/menu-worker/dist/html-extractor.js";
+          import { extractHtmlVisibleText, stripExplicitlyHiddenHtmlContent } from "./apps/menu-worker/dist/html-extractor.js";
           import { extractScopedHtmlMenu } from "./apps/menu-worker/dist/html-source-extractor.js";
           import { recoverDescriptionNamedHtmlItems } from "./apps/menu-worker/dist/html-description-title-recovery.js";
           import { filterHtmlBeverageSectionItemsWithScopedProvenance } from "./apps/menu-worker/dist/html-text-section-scope.js";
@@ -85,52 +85,36 @@ jobs:
           const filtered = filterHtmlBeverageSectionItemsWithScopedProvenance(
             recovered,
             scoped.visibleText,
-            recoveryHtml.replace(/<[^>]*>/g, "\n"),
+            extractHtmlVisibleText(recoveryHtml),
           );
           const final = await extractMenuSource(source.sourceType, fetched);
 
-          const byKey = (items) => new Map(items.map((item) => [`${item.normalizedName}\u0000${item.priceMinor}`, item]));
-          const recoveredMap = byKey(recovered);
-          const filteredMap = byKey(filtered);
-          const finalMap = byKey(final.items);
+          const key = (item) => `${item.normalizedName}\u0000${item.priceMinor}`;
+          const filteredKeys = new Set(filtered.map(key));
+          const finalKeys = new Set(final.items.map(key));
+          const recoveredKeys = new Set(recovered.map(key));
+          const project = (item) => ({
+            name: item.name,
+            priceMinor: item.priceMinor,
+            position: item.position,
+            sectionName: item.sectionName,
+            sourceExcerpt: item.sourceExcerpt,
+          });
+          const droppedByTextScope = recovered.filter((item) => !filteredKeys.has(key(item))).map(project);
+          const absentFromFinal = recovered.filter((item) => !finalKeys.has(key(item))).map(project);
+          const finalAdditions = final.items.filter((item) => !recoveredKeys.has(key(item))).map(project);
 
-          for (const [key, item] of recoveredMap) {
-            if (!filteredMap.has(key)) {
-              console.log("FINSTUA DROPPED BY TEXT SCOPE", JSON.stringify({
-                name: item.name,
-                priceMinor: item.priceMinor,
-                position: item.position,
-                sectionName: item.sectionName,
-                sourceExcerpt: item.sourceExcerpt,
-              }));
-            }
-            if (!finalMap.has(key)) {
-              console.log("FINSTUA ABSENT FROM FINAL", JSON.stringify({
-                name: item.name,
-                priceMinor: item.priceMinor,
-                position: item.position,
-                sectionName: item.sectionName,
-                sourceExcerpt: item.sourceExcerpt,
-              }));
-            }
-          }
-          for (const [key, item] of finalMap) {
-            if (!recoveredMap.has(key)) {
-              console.log("FINSTUA FINAL ADDITION", JSON.stringify({
-                name: item.name,
-                priceMinor: item.priceMinor,
-                position: item.position,
-                sectionName: item.sectionName,
-                sourceExcerpt: item.sourceExcerpt,
-              }));
-            }
-          }
-          console.log("FINSTUA COUNTS", JSON.stringify({
-            scoped: scoped.items.length,
-            recovered: recovered.length,
-            filtered: filtered.length,
-            final: final.items.length,
-          }));
+          throw new Error(`FINSTUA_DIFF ${JSON.stringify({
+            counts: {
+              scoped: scoped.items.length,
+              recovered: recovered.length,
+              filtered: filtered.length,
+              final: final.items.length,
+            },
+            droppedByTextScope,
+            absentFromFinal,
+            finalAdditions,
+          })}`);
           NODE
 
       - name: Collect exact-head PR proof manifests
