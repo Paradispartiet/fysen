@@ -697,7 +697,12 @@ function hasDirectPriceSourceProvenance(item: MenuObservedItem): boolean {
     .filter(Boolean);
   if (segments.length < 2) return false;
   if (normalizeDishName(segments[0] ?? "") !== item.normalizedName) return false;
-  return DIRECT_SOURCE_PRICE.test(segments[1] ?? "");
+  const trailingSegments = segments.slice(1);
+  const directPrice = trailingSegments[trailingSegments.length - 1] ?? "";
+  if (!DIRECT_SOURCE_PRICE.test(directPrice)) return false;
+  return trailingSegments
+    .slice(0, -1)
+    .every((segment) => ALLERGEN_CODE_ONLY.test(segment));
 }
 
 function lineReferencesItem(
