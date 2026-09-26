@@ -11,12 +11,12 @@ import {
 } from "./html-extractor.js";
 import { recoverElementorPriceListHtmlItems } from "./html-elementor-price-list-recovery.js";
 
-export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v21";
+export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v22";
 
 const HEADING_MARKER = "__FYSEN_HEADING_LEVEL_";
 const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|vin\s*(?:&|og)\s*musserende|wine(?:\s+(?:list|menu))?|wine\s*(?:&|and)\s*sparkling|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
 const MENU_END_SECTION_HEADING = /^(?:allergen(?:oversikt|er|s)?|reservasjoner?|reservations?|kontakt(?:\s+oss)?|contact(?:\s+us)?|booking|bordbestilling)$/iu;
-const FOOD_SECTION_LABEL = /^(?:forretter?|starters?|appetizers?|small\s+plates?|small\s+dishes?\s*(?:&|and)\s*sharing\s+plates?|classics?|dumplings?|proteins?|hovedretter?|mains?|main\s+courses?|desserter?|desserts?|sushiruller?|sushi\s+rolls?|sushi|sides?|tilbehør|noodles?|nudler|curr(?:y|ies)|wok|soups?|supper?|salads?|salater?)$/iu;
+const FOOD_SECTION_LABEL = /^(?:forretter?|starters?|appetizers?|small\s+plates?|small\s+dishes?\s*(?:&|and)\s*sharing\s+plates?|classics?|dumplings?|proteins?|hovedretter?|mains?|main\s+courses?|lunsjretter?|sandwich(?:es)?|kjøtt(?:retter?)?|fisk(?:\s*\/\s*(?:vegetar|vegatar))?|ost|desserter?|desserts?|sushiruller?|sushi\s+rolls?|sushi|sides?|tilbehør|noodles?|nudler|curr(?:y|ies)|wok|soups?|supper?|salads?|salater?)$/iu;
 const DUPLICATE_DISH_SECTION_LABEL = /^(?:forretter?|starters?|appetizers?|small\s+dishes?\s*(?:&|and)\s*sharing\s+plates?|classics?|småretter|hovedretter?|mains?|main\s+courses?|dessert(?:er|s)?|tilbehør|sides?|pizza(?:er|s)?|pizzeria|kylling\s+og\s+lam|mezah[- ]retter|salater?\s*(?:&|og)\s*suppe(?:r)?|kylling|kjøttretter?|fiskeretter?|salater?|supper?)$/iu;
 const BEVERAGE_ITEM_NAME = /^(?:kaffe(?:\b|[-/])|coffee(?:\b|[-/])|filterkaffe\b|iskaffe\b|iced\s+coffee\b|espresso\b|americano\b|cappuccino\b|latte\b|arabisk\s+kaffe\b|libanesisk\s+kaffe\b|te(?:\b|[-/])|tea(?:\b|[-/])|(?:grønn\s+|green\s+)?thai\s+(?:te|tea)\b)/iu;
 const PRICE_TOKEN = "(?:(?:kr\\.?\\s*)?[1-9]\\d{1,3}(?:[.,]\\d{1,2})?(?:\\s*(?:,-|kr\\.?|nok))?)";
@@ -28,6 +28,7 @@ const NUMBERED_DISH_TITLE = /^(?!\d{1,4}\s*(?:kr\.?|nok)\b)(?:\d{1,3}\s*[.)]?\s+
 const EXTRAS_TRIGGER = /^(?:ekstra\s+sulten\s*\??|extra\s+hungry\s*\??|extras?\s*\??|add[- ]?ons?\s*\??|tillegg\s*\??)$/iu;
 const MORE_LABEL = /^(?:vis\s+mer|show\s+more)$/iu;
 const TRAILING_ALLERGEN_CODES = /\s+\((?:[\p{L}\d]{1,5}\s*,?\s*){1,20}\)$/u;
+const STANDALONE_ALLERGEN_CODES = /^\((?:[\p{L}\d]{1,5}\s*,?\s*){1,20}\)$/u;
 
 const LEADING_QUANTITY_UNIT =
   /^\d{1,4}\s+(?:g|gram(?:s)?|kg|ml|cl|l|stk|st|pcs?|pieces?|biter|biter\s+av)\b/iu;
@@ -296,7 +297,14 @@ function syntheticHtmlFromVisibleText(visibleText: string): string {
 function plausibleCardTitle(value: string): boolean {
   const title = normalizeVisibleLine(value);
   if (title.length < 2 || title.length > 180 || !/\p{L}/u.test(title)) return false;
-  if (PRICE_AT_END.test(title) || STANDALONE_PRICE.test(title) || CARD_TITLE_BOUNDARY.test(title)) return false;
+  if (
+    PRICE_AT_END.test(title) ||
+    STANDALONE_PRICE.test(title) ||
+    STANDALONE_ALLERGEN_CODES.test(title) ||
+    CARD_TITLE_BOUNDARY.test(title)
+  ) {
+    return false;
+  }
   if (/^[*+]/u.test(title) || /https?:\/\/|@/iu.test(title)) return false;
   return true;
 }
@@ -497,6 +505,26 @@ function extractStandalonePriceBlocks(
     let titleIndex: number | null = null;
     let name: string | null = null;
 
+    const contentStart = lastHeading === null ? blockStart : lastHeading + 1;
+    const allergenIndex = pricePosition - 1;
+    const allergenAdjacentTitleIndex = pricePosition - 2;
+    const contentIndexes: number[] = [];
+    for (let index = contentStart; index < pricePosition; index += 1) {
+      if (!headingLevels.has(index) && (lines[index]?.trim() ?? "")) contentIndexes.push(index);
+    }
+    const allergenAdjacentTitle = lines[allergenAdjacentTitleIndex]?.trim() ?? "";
+    if (
+      allergenAdjacentTitleIndex >= contentStart &&
+      STANDALONE_ALLERGEN_CODES.test(lines[allergenIndex]?.trim() ?? "") &&
+      contentIndexes.length === 2 &&
+      contentIndexes[0] === allergenAdjacentTitleIndex &&
+      contentIndexes[1] === allergenIndex &&
+      looksLikeDirectPricedFoodTitle(allergenAdjacentTitle)
+    ) {
+      titleIndex = allergenAdjacentTitleIndex;
+      name = canonicalCardTitle(allergenAdjacentTitle);
+    }
+
     const immediateTitleIndex = pricePosition - 1;
     const immediateTitle = lines[immediateTitleIndex]?.trim() ?? "";
     const directPricedFoodTitle =
@@ -508,6 +536,7 @@ function extractStandalonePriceBlocks(
       ) &&
       looksLikeDirectPricedFoodTitle(immediateTitle);
     if (
+      titleIndex === null &&
       immediateTitleIndex >= blockStart &&
       (looksLikeImmediateUppercaseTitle(immediateTitle) || directPricedFoodTitle)
     ) {
@@ -724,7 +753,7 @@ function findFallbackCardRecovery(
     const line = lines[index] ?? "";
     if (!PRICE_AT_END.test(line) || !line.startsWith(item.name)) continue;
     const title = recoveredTitle(lines, index - 1);
-    if (title) return { lineIndex: index, title };
+    if (title) return { lineIndex: index, title } : null;
   }
   return null;
 }
