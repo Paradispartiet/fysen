@@ -43,7 +43,7 @@ jobs:
       - name: Build menu-worker dependency graph
         run: pnpm --filter @fysen/menu-worker... build
 
-      - name: TEMP inspect Finstua recovery families
+      - name: TEMP inspect Finstua runtime selection
         if: github.event_name == 'pull_request'
         shell: bash
         run: |
@@ -53,12 +53,22 @@ jobs:
           import { stripExplicitlyHiddenHtmlContent } from "./apps/menu-worker/dist/html-extractor.js";
           import { extractScopedHtmlMenu } from "./apps/menu-worker/dist/html-source-extractor.js";
           import { recoverDescriptionNamedHtmlItems } from "./apps/menu-worker/dist/html-description-title-recovery.js";
-          import { recoverTrailingPriceCardHtmlItems } from "./apps/menu-worker/dist/html-trailing-price-card-recovery.js";
+          import {
+            recoverTrailingPriceCardHtmlItems,
+            isStrongDirectTrailingPriceCardRecovery,
+            isStrongNumberedTrailingPriceCardRecovery,
+          } from "./apps/menu-worker/dist/html-trailing-price-card-recovery.js";
+          import { recoverPriceWrappedHtmlItems } from "./apps/menu-worker/dist/html-price-wrapped-recovery.js";
+          import { recoverAdjacentHeadingPriceHtmlItems } from "./apps/menu-worker/dist/html-adjacent-heading-price-recovery.js";
+          import { recoverStrongTitlePriceHtmlItems } from "./apps/menu-worker/dist/html-strong-title-price-recovery.js";
+          import { recoverExplicitFromPriceHtmlItems } from "./apps/menu-worker/dist/html-explicit-from-price-recovery.js";
+          import { recoverFirstCardAfterPlainFoodSections } from "./apps/menu-worker/dist/html-section-first-card-recovery.js";
           import {
             extractMenuSource,
             fetchMenuSource,
             isCanonicalHtmlMenuItem,
             normalizeHtmlPriceNotation,
+            shouldPreferDominantHeadingRecovery,
           } from "./apps/menu-worker/dist/menu-source-runtime.js";
 
           const manifest = JSON.parse(
@@ -85,7 +95,75 @@ jobs:
           const recovered = recoverDescriptionNamedHtmlItems(scoped.items, scoped.visibleText);
           const trailingRaw = recoverTrailingPriceCardHtmlItems(recoveryHtml);
           const trailing = recoverDescriptionNamedHtmlItems(trailingRaw, scoped.visibleText);
-          const final = await extractMenuSource(source.sourceType, fetched);
+          const wrapped = recoverPriceWrappedHtmlItems(scoped.visibleText);
+          const inline = recoverTrailingPriceCardHtmlItems ? [] : [];
+          const heading = recoverAdjacentHeadingPriceHtmlItems(recoveryHtml);
+          const strong = recoverStrongTitlePriceHtmlItems(recoveryHtml);
+          const from = recoverExplicitFromPriceHtmlItems(scoped.visibleText);
+          const sectionFirst = recoverFirstCardAfterPlainFoodSections(scoped.visibleText);
+
+          const strongPreferred =
+            strong.length >= 6 &&
+            strong.length >= recovered.length &&
+            strong.length >= trailing.length;
+          const semanticTrailing =
+            trailing.length >= 4 &&
+            trailing.every((item) => item.sectionName !== null && item.confidence >= 0.99);
+          const numberedTrailing = isStrongNumberedTrailingPriceCardRecovery(trailing);
+          const directTrailing =
+            isStrongDirectTrailingPriceCardRecovery(trailing) &&
+            trailing.length >= recovered.length;
+          const isolatedTrailing = semanticTrailing || numberedTrailing || directTrailing;
+          const headingDominates = shouldPreferDominantHeadingRecovery(
+            heading.length,
+            trailing.length,
+            recovered.length,
+          );
+          const isolatedSemantic = isolatedTrailing || strongPreferred || headingDominates;
+          const trailingQualifies =
+            isolatedTrailing ||
+            (trailing.length >= 4 &&
+              (recovered.length === 0 ||
+                trailing.length >= Math.max(6, Math.ceil(recovered.length * 1.5))));
+          const headingThreshold = Math.ceil(recovered.length * 0.75);
+          const headingCoverage =
+            heading.length >= 4 &&
+            (recovered.length === 0 || heading.length >= headingThreshold);
+          const wrappedDominates =
+            wrapped.length >= 3 && wrapped.length >= recovered.length * 2;
+
+          let preferred = "recovered";
+          if (strongPreferred) preferred = "strong";
+          else if (headingDominates) preferred = "heading";
+          else if (isolatedTrailing) preferred = "trailing-isolated";
+          else if (trailingQualifies) preferred = "trailing-qualified";
+          else if (headingCoverage) preferred = "heading-coverage";
+          else if (wrappedDominates) preferred = "wrapped";
+
+          console.log("Finstua family counts", JSON.stringify({
+            scoped: scoped.items.length,
+            recovered: recovered.length,
+            trailing: trailing.length,
+            heading: heading.length,
+            strong: strong.length,
+            wrapped: wrapped.length,
+            from: from.length,
+            sectionFirst: sectionFirst.length,
+          }));
+          console.log("Finstua selection", JSON.stringify({
+            strongPreferred,
+            semanticTrailing,
+            numberedTrailing,
+            directTrailing,
+            isolatedTrailing,
+            headingDominates,
+            isolatedSemantic,
+            trailingQualifies,
+            headingThreshold,
+            headingCoverage,
+            wrappedDominates,
+            preferred,
+          }));
           const dump = (label, items) => {
             const canonical = items.filter(isCanonicalHtmlMenuItem);
             console.log(`Finstua ${label}: raw=${items.length} canonical=${canonical.length}`);
@@ -93,9 +171,9 @@ jobs:
               console.log(`Finstua ${label}: ${item.priceMinor} :: ${item.name}`);
             }
           };
-          dump("scoped", scoped.items);
-          dump("recovered", recovered);
-          dump("trailing", trailing);
+          dump("heading", heading);
+          dump("wrapped", wrapped);
+          const final = await extractMenuSource(source.sourceType, fetched);
           console.log(`Finstua final: ${final.items.length}`);
           for (const item of final.items) {
             console.log(`Finstua final: ${item.priceMinor} :: ${item.name}`);
