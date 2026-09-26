@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v18";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v19";
 
 const PRICE_LINE =
   /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
@@ -20,7 +20,7 @@ const SHORT_PREPARATION_TITLE =
 const SPLIT_PARENTHETICAL_CONTINUATION = /^(?:med|with)\b.*\)$/iu;
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const SECTION_LABEL =
-  /^(?:meny|menu|à\s+la\s+carte|a\s+la\s+carte|forretter?|starters?|appetizers?|small\s+plates?|small\s+dishes?\s*(?:&|and)\s*sharing\s+plates?|classics?|dumplings?|proteins?|småretter|hovedretter?|mains?|main\s+courses?|dessert(?:er|s)?|tilbehør|sides?|pizza(?:er|s)?|pizzeria|kylling\s+og\s+lam|mezah[- ]retter)$/iu;
+  /^(?:meny|menu|à\s+la\s+carte|a\s+la\s+carte|lunsjretter?|sandwich(?:es)?|forretter?|starters?|appetizers?|small\s+plates?|small\s+dishes?\s*(?:&|and)\s*sharing\s+plates?|classics?|dumplings?|proteins?|småretter|hovedretter?|mains?|main\s+courses?|dessert(?:er|s)?|tilbehør|sides?|pizza(?:er|s)?|pizzeria|kylling\s+og\s+lam|mezah[- ]retter)$/iu;
 const SEMANTIC_SECTION_LABEL =
   /^(?:salater?\s*(?:&|og)\s*suppe(?:r)?|kylling|kjøttretter?|fiskeretter?|salater?|supper?)$/iu;
 const ALLERGEN_PREFIX = /^(?:allergener?|allergens?)\s*:\s*/iu;
@@ -132,9 +132,11 @@ function allergenParts(value: string): readonly string[] {
 function looksLikeAllergenMetadata(value: string): boolean {
   const line = normalizeVisibleLine(value);
   if (!line) return false;
+  const parenthetical = line.match(PARENTHETICAL_QUALIFIER)?.[1] ?? null;
+  const shortCodeLine = parenthetical ? normalizeVisibleLine(parenthetical) : line;
   if (
-    SHORT_ALLERGEN_CODE_LIST.test(line) &&
-    SHORT_ALLERGEN_CODE_SEPARATOR.test(line)
+    SHORT_ALLERGEN_CODE_LIST.test(shortCodeLine) &&
+    SHORT_ALLERGEN_CODE_SEPARATOR.test(shortCodeLine)
   )
     return true;
   const hasPrefix = ALLERGEN_PREFIX.test(line);
