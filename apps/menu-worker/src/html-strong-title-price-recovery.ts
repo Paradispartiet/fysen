@@ -6,11 +6,14 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION = "strong-title-price-v1";
+export const HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION = "strong-title-price-v2";
 
 const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK|kr\.?)\s*)?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?\s*(?:,?[-–—]|,-|kr\.?|NOK)?(?:\s+per\s+(?:person|personer?|persons?))?(?:\s+minimum\s+\d+\s+(?:personer?|persons?))?$/iu;
 const SEPARATOR_LINE = /^(?:[-–—•·]\s*)+$/u;
 const ROOT_OR_UI_HEADING = /^(?:menu|meny|our\s+menu|vår\s+meny|opening(?:\s+hours)?|åpningstider|contact|kontakt|booking|reservation(?:s)?|reservasjoner?)$/iu;
+const FOOD_SECTION_LABEL = /^(?:forretter?|starters?|appetizers?|småretter|small\s+plates?|lunsjretter?|lunch(?:\s+dishes?)?|sandwich(?:es)?|hovedretter?|mains?|main\s+courses?|fisk(?:\s*\/\s*(?:vegetar|vegatar))?|fish(?:\s*\/\s*vegetarian)?|kjøtt(?:retter?)?|meat|desserter?|desserts?|tilbehør|sides?|salater?|salads?|supper?|soups?)$/iu;
+const ALLERGEN_CODE_ONLY = /^\(\s*(?:[\p{L}\d]{1,5}\s*,?\s*){1,20}\)$/u;
+const TRAILING_ALLERGEN_CODES = /\s+\(\s*(?:[\p{L}\d]{1,5}\s*,?\s*){1,20}\)\s*$/u;
 
 interface ParsedPrice {
   readonly priceMinor: number;
@@ -23,6 +26,10 @@ function normalizeText(value: string): string {
     .replace(/[\u200B-\u200D\uFEFF]/gu, "")
     .replace(/\s+/gu, " ")
     .trim();
+}
+
+function canonicalTitle(value: string): string {
+  return normalizeText(value).replace(TRAILING_ALLERGEN_CODES, "").trim();
 }
 
 function parsePrice(value: string): ParsedPrice | null {
@@ -50,9 +57,10 @@ function parsePrice(value: string): ParsedPrice | null {
 }
 
 function looksLikeTitle(value: string): boolean {
-  const title = normalizeText(value);
+  const title = canonicalTitle(value);
   if (!title || title.length < 2 || title.length > 180 || !/\p{L}/u.test(title)) return false;
   if (PRICE_LINE.test(title) || SEPARATOR_LINE.test(title)) return false;
+  if (FOOD_SECTION_LABEL.test(title) || ALLERGEN_CODE_ONLY.test(title)) return false;
   if (/^(?:©|™|https?:\/\/|www\.|phone\s*:|telefon\s*:)/iu.test(title)) return false;
   return title.split(/\s+/u).filter(Boolean).length <= 16;
 }
@@ -80,13 +88,31 @@ export function recoverStrongTitlePriceHtmlItems(html: string): readonly MenuObs
     if (!firstStrong || !fullText.toLocaleLowerCase().startsWith(firstStrong.toLocaleLowerCase())) return;
 
     const combinedStrong = normalizeText(strongTexts.join(" "));
-    const title =
+    const rawStrongTitle =
       combinedStrong && fullText.toLocaleLowerCase() === combinedStrong.toLocaleLowerCase()
         ? combinedStrong
         : firstStrong;
-    if (!looksLikeTitle(title)) return;
 
-    const inlineDescription = normalizeText(fullText.slice(title.length)) || null;
+    let title = canonicalTitle(rawStrongTitle);
+    let inlineDescription =
+      fullText.toLocaleLowerCase() === rawStrongTitle.toLocaleLowerCase()
+        ? null
+        : normalizeText(fullText.slice(rawStrongTitle.length)) || null;
+
+    if (FOOD_SECTION_LABEL.test(firstStrong)) {
+      const inlineDish = canonicalTitle(fullText.slice(firstStrong.length));
+      if (!looksLikeTitle(inlineDish)) return;
+      title = inlineDish;
+      inlineDescription = null;
+    } else if (ALLERGEN_CODE_ONLY.test(firstStrong)) {
+      const precedingDish = canonicalTitle(block.prev().text());
+      if (!looksLikeTitle(precedingDish)) return;
+      title = precedingDish;
+      inlineDescription = null;
+    } else if (!looksLikeTitle(title)) {
+      return;
+    }
+
     let sibling = block.next();
     let standaloneDescription: string | null = null;
     let price: ParsedPrice | null = null;
@@ -151,7 +177,7 @@ export function recoverStrongTitlePriceHtmlItems(html: string): readonly MenuObs
       position,
       extractionMethod: "html_heuristic",
       confidence: 0.995,
-      sourceExcerpt: `${sectionName ? `${sectionName} — ` : ""}${fullText}${standaloneDescription ? ` — ${standaloneDescription}` : ""} — ${priceText}`.slice(0, 1000),
+      sourceExcerpt: `${sectionName ? `${sectionName} — ` : ""}${title}${fullText !== title ? ` — ${fullText}` : ""}${standaloneDescription ? ` — ${standaloneDescription}` : ""} — ${priceText}`.slice(0, 1000),
     });
     position += 1;
   });
