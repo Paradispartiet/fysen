@@ -43,6 +43,65 @@ jobs:
       - name: Build menu-worker dependency graph
         run: pnpm --filter @fysen/menu-worker... build
 
+      - name: TEMP inspect Finstua recovery families
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from "node:fs";
+          import { normalizeHtmlHeadingLineBreaks } from "./apps/menu-worker/dist/html-heading-normalizer.js";
+          import { stripExplicitlyHiddenHtmlContent } from "./apps/menu-worker/dist/html-extractor.js";
+          import { extractScopedHtmlMenu } from "./apps/menu-worker/dist/html-source-extractor.js";
+          import { recoverDescriptionNamedHtmlItems } from "./apps/menu-worker/dist/html-description-title-recovery.js";
+          import { recoverTrailingPriceCardHtmlItems } from "./apps/menu-worker/dist/html-trailing-price-card-recovery.js";
+          import {
+            extractMenuSource,
+            fetchMenuSource,
+            isCanonicalHtmlMenuItem,
+            normalizeHtmlPriceNotation,
+          } from "./apps/menu-worker/dist/menu-source-runtime.js";
+
+          const manifest = JSON.parse(
+            fs.readFileSync("./apps/menu-worker/catalog/frognerseteren-finstua-oslo.json", "utf8"),
+          );
+          const source = manifest.menuSource;
+          const fetched = await fetchMenuSource({
+            url: source.url,
+            sourceType: source.sourceType,
+            fetchMode: source.fetchMode,
+            userAgent: source.userAgent,
+            etag: null,
+            lastModified: null,
+            maxResponseBytes: source.maxResponseBytes ?? null,
+            sourceSupport: source.sourceSupport,
+          });
+          if (fetched.kind !== "content") throw new Error("Expected live content");
+
+          const normalizedHtml = normalizeHtmlPriceNotation(
+            normalizeHtmlHeadingLineBreaks(fetched.body),
+          );
+          const scoped = extractScopedHtmlMenu(normalizedHtml);
+          const recoveryHtml = stripExplicitlyHiddenHtmlContent(normalizedHtml);
+          const recovered = recoverDescriptionNamedHtmlItems(scoped.items, scoped.visibleText);
+          const trailingRaw = recoverTrailingPriceCardHtmlItems(recoveryHtml);
+          const trailing = recoverDescriptionNamedHtmlItems(trailingRaw, scoped.visibleText);
+          const final = await extractMenuSource(source.sourceType, fetched);
+          const dump = (label, items) => {
+            const canonical = items.filter(isCanonicalHtmlMenuItem);
+            console.log(`Finstua ${label}: raw=${items.length} canonical=${canonical.length}`);
+            for (const item of canonical) {
+              console.log(`Finstua ${label}: ${item.priceMinor} :: ${item.name}`);
+            }
+          };
+          dump("scoped", scoped.items);
+          dump("recovered", recovered);
+          dump("trailing", trailing);
+          console.log(`Finstua final: ${final.items.length}`);
+          for (const item of final.items) {
+            console.log(`Finstua final: ${item.priceMinor} :: ${item.name}`);
+          }
+          NODE
+
       - name: Collect exact-head PR proof manifests
         if: github.event_name == 'pull_request'
         id: proof
