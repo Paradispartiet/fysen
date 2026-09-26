@@ -64,4 +64,20 @@ describe("standalone price block title selection", () => {
     expect(result.items.map((item) => item.priceMinor)).toEqual([21900, 24900]);
     expect(result.items[0]?.description).toContain("Fersk laks med ovnsstekte rotgrønnsaker");
   });
+
+  it("handles long parenthetical dish prose beside a standalone price", () => {
+    const html = `
+      <html><body>
+        <h5>Rødbetcarpaccio</h5>
+        <p>med syltet gulbete (inlagd med hylleblomst, sherry og grønn kardemommesirup), chèvre, valnøtter og karse</p>
+        <p>Inneholder: M, N1, S</p>
+        <p>Kr. 255,-</p>
+      </body></html>
+    `;
+
+    const result = extractHtmlMenu(html);
+    expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Rødbetcarpaccio", 25500],
+    ]);
+  });
 });

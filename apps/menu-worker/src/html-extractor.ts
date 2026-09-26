@@ -5,7 +5,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EXTRACTOR_VERSION = "html-v10";
+export const HTML_EXTRACTOR_VERSION = "html-v11";
 
 export interface ExtractedHtmlMenu {
   readonly items: readonly MenuObservedItem[];
@@ -21,7 +21,16 @@ export function stripExplicitlyHiddenHtmlContent(html: string): string {
 
 type JsonRecord = Record<string, unknown>;
 
-const SHORT_ALLERGEN_SUFFIX = /\s+\((?:[\p{L}\d]{1,5}\s*(?:[,/+ ]\s*)?){1,20}\)$/u;
+function shortAllergenSuffix(value: string): string | null {
+  const match = value.match(/\s+\(([^()]*)\)$/u);
+  if (!match?.[1]) return null;
+  const tokens = match[1].split(/[\s,/+]+/u).filter(Boolean);
+  return tokens.length > 0 &&
+    tokens.length <= 20 &&
+    tokens.every((token) => /^[\p{L}\d]{1,5}$/u.test(token))
+    ? match[0]
+    : null;
+}
 const INLINE_ADDON_PRICE_LEAD = /^(?:add(?:-on)?|additional)\b/iu;
 
 function isRecord(value: unknown): value is JsonRecord {
@@ -188,7 +197,7 @@ function looksLikeDescriptor(line: string): boolean {
 
 function looksLikeStandaloneDescription(line: string): boolean {
   const trimmed = line.trim();
-  if (!trimmed || SHORT_ALLERGEN_SUFFIX.test(trimmed)) return false;
+  if (!trimmed || shortAllergenSuffix(trimmed) !== null) return false;
   const withoutMenuNumber = trimmed.replace(/^\d{1,3}\s*[.)]\s*/u, "").trim();
   const words = withoutMenuNumber.split(/\s+/).filter(Boolean);
   return (
@@ -225,7 +234,8 @@ function looksLikeSharedChildHeading(line: string): boolean {
 }
 
 function splitHeuristicName(value: string): { readonly name: string; readonly description: string | null } {
-  const withoutAllergens = value.replace(SHORT_ALLERGEN_SUFFIX, "").trim();
+  const suffix = shortAllergenSuffix(value);
+  const withoutAllergens = (suffix ? value.slice(0, -suffix.length) : value).trim();
   const withoutMenuNumber = withoutAllergens.replace(/^\d{1,3}\s*[.)]\s*/u, "").trim();
   const commaIndex = withoutMenuNumber.indexOf(",");
   if (commaIndex >= 3 && commaIndex <= 120) {
