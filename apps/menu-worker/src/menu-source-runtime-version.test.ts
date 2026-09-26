@@ -63,7 +63,7 @@ describe("HTML runtime extractor version", () => {
     );
     expect(HTML_PRICE_WRAPPED_RECOVERY_VERSION).toBe("price-wrapped-v2");
     expect(HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION).toBe(
-      "strong-title-price-v1",
+      "strong-title-price-v2",
     );
     expect(HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION).toBe(
       "heading-supplement-v1",
