@@ -1,0 +1,102 @@
+name: TEMP Finstua recovery introspection
+
+on:
+  push:
+    branches:
+      - fix/finstua-allergen-price-blocks-20260926
+    paths:
+      - ".github/workflows/temp-finstua-recovery-introspection.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.4.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Inspect Finstua recovery families on exact live bytes
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import {
+            extractMenuSource,
+            fetchMenuSource,
+            isCanonicalHtmlMenuItem,
+            normalizeHtmlItemName,
+            normalizeHtmlPriceNotation,
+          } from './dist/menu-source-runtime.js';
+          import { stripExplicitlyHiddenHtmlContent } from './dist/html-extractor.js';
+          import { normalizeHtmlHeadingLineBreaks } from './dist/html-heading-normalizer.js';
+          import { extractScopedHtmlMenu } from './dist/html-source-extractor.js';
+          import { recoverEmbeddedStructuredMenuJson } from './dist/html-embedded-menu-json-recovery.js';
+          import { recoverDescriptionNamedHtmlItems } from './dist/html-description-title-recovery.js';
+          import {
+            recoverInlineMarkedPriceTextItems,
+            recoverTrailingPriceCardHtmlItems,
+          } from './dist/html-trailing-price-card-recovery.js';
+          import { recoverPriceWrappedHtmlItems } from './dist/html-price-wrapped-recovery.js';
+          import { recoverAdjacentHeadingPriceHtmlItems } from './dist/html-adjacent-heading-price-recovery.js';
+          import { recoverStrongTitlePriceHtmlItems } from './dist/html-strong-title-price-recovery.js';
+          import { recoverExplicitFromPriceHtmlItems } from './dist/html-explicit-from-price-recovery.js';
+          import { recoverFirstCardAfterPlainFoodSections } from './dist/html-section-first-card-recovery.js';
+
+          const input = {
+            url: 'https://www.frognerseteren.no/restaurant-finstua-meny',
+            sourceType: 'html',
+            fetchMode: 'http',
+            userAgent: process.env.FYSEN_MENU_BOT_USER_AGENT ?? 'FysenMenuBot/0.1',
+            etag: null,
+            lastModified: null,
+            maxResponseBytes: 4194304,
+            sourceSupport: { redirectOrigins: [], browserDataOrigins: [], browserBlockedOrigins: [] },
+          };
+
+          const fetched = await fetchMenuSource(input);
+          if (fetched.kind !== 'content') throw new Error(`Unexpected fetch kind ${fetched.kind}`);
+          const normalizedHtml = normalizeHtmlPriceNotation(normalizeHtmlHeadingLineBreaks(fetched.body));
+          const scoped = extractScopedHtmlMenu(normalizedHtml);
+          const recoveryHtml = stripExplicitlyHiddenHtmlContent(normalizedHtml);
+          const rawTrailing = recoverTrailingPriceCardHtmlItems(recoveryHtml);
+          const families = {
+            scoped: scoped.items,
+            recovered: recoverDescriptionNamedHtmlItems(scoped.items, scoped.visibleText),
+            rawTrailing,
+            trailing: recoverDescriptionNamedHtmlItems(rawTrailing, scoped.visibleText),
+            wrapped: recoverPriceWrappedHtmlItems(scoped.visibleText),
+            inline: recoverInlineMarkedPriceTextItems(scoped.visibleText),
+            heading: recoverAdjacentHeadingPriceHtmlItems(recoveryHtml),
+            strong: recoverStrongTitlePriceHtmlItems(recoveryHtml),
+            explicitFrom: recoverExplicitFromPriceHtmlItems(scoped.visibleText),
+            sectionFirst: recoverFirstCardAfterPlainFoodSections(scoped.visibleText),
+            embedded: recoverEmbeddedStructuredMenuJson(recoveryHtml).filter(isCanonicalHtmlMenuItem),
+          };
+          const final = await extractMenuSource('html', fetched);
+
+          const compact = (items) => items.map((item) => ({
+            name: item.name,
+            priceMinor: item.priceMinor,
+            sectionName: item.sectionName,
+            confidence: item.confidence,
+          }));
+          for (const [name, items] of Object.entries(families)) {
+            const canonical = items.map(normalizeHtmlItemName).filter(isCanonicalHtmlMenuItem);
+            console.log(`\n=== FAMILY ${name} raw=${items.length} canonical=${canonical.length} ===`);
+            console.log(JSON.stringify(compact(items), null, 2));
+          }
+          console.log(`\n=== FINAL count=${final.items.length} version=${final.extractorVersion} ===`);
+          console.log(JSON.stringify(compact(final.items), null, 2));
+          NODE
