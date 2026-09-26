@@ -412,6 +412,31 @@ function sourceExcerptDirectlyPricesObservedName(
   return false;
 }
 
+function sourceExcerptPricesObservedNameThroughAllergenMetadata(
+  item: MenuObservedItem,
+): boolean {
+  const sourceExcerpt = item.sourceExcerpt?.trim() ?? "";
+  if (!sourceExcerpt) return false;
+
+  const current = normalizeVisibleLine(item.name);
+  const segments = sourceExcerpt
+    .split(SOURCE_EXCERPT_SEPARATOR)
+    .map(normalizeVisibleLine)
+    .filter(Boolean);
+  if (segments.length < 3) return false;
+  if (
+    segments[0]?.toLocaleLowerCase("nb-NO") !==
+    current.toLocaleLowerCase("nb-NO")
+  ) {
+    return false;
+  }
+
+  const finalSegment = segments[segments.length - 1] ?? "";
+  if (!PRICE_LINE.test(finalSegment)) return false;
+  const metadata = segments.slice(1, -1);
+  return metadata.length > 0 && metadata.every(looksLikeAllergenMetadata);
+}
+
 function recoverForwardTitleFromSourceExcerpt(
   item: MenuObservedItem,
 ): SourceExcerptTitleRecovery | null {
@@ -688,6 +713,7 @@ export function recoverDescriptionNamedHtmlItems(
       !contextualDescriptionTitle &&
       (anchoredPreparationTitle ||
         sourceExcerptInlinePricesObservedName(item) ||
+        sourceExcerptPricesObservedNameThroughAllergenMetadata(item) ||
         (looksLikeDirectlyPricedObservedTitle(item.name) &&
           sourceExcerptDirectlyPricesObservedName(item)));
     const descriptionRecovery = contextualDescriptionTitle
