@@ -9,13 +9,13 @@ import {
 
 export * from "./html-text-section-scope-base.js";
 
-export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v17";
+export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v15";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const DIRECT_SOURCE_PRICE =
   /^(?:(?:fra|from)\s*)?(?:(?:NOK|kr\.?)\s*)?[1-9]\d{0,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|NOK)?$/iu;
 const ALLERGEN_CODE_ONLY =
-  /^\(\s*[a-z]{1,4}\+?(?:\s*[,/]\s*[a-z]{1,4}\+?)*\s*\)\.?$/iu;
+  /^\(\s*[a-z]{1,4}\d*\+?(?:\s*[,/]\s*[a-z]{1,4}\d*\+?)*\s*\)\.?$/iu;
 const DESCRIPTION_PHRASE =
   /\b(?:serveres(?:\s+med)?|servert(?:\s+med)?)\b/iu;
 
