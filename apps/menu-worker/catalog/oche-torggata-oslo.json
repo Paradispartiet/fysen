@@ -35,11 +35,11 @@
       "Pollo",
       "Funghi",
       "Margherita",
-      "Nduja",
-      "Mexican Snack",
-      "Nachos! con salsa y guac",
-      "BBQ Wings",
-      "Vegetarian Samosa"
+      "N'duja",
+      "OCHE NACHOS",
+      "BUFFALO WINGS",
+      "OCHE CLUB SANDWICH",
+      "GARLIC BREAD & HUMMUS"
     ],
     "requiredDishVariants": [
       {
@@ -55,24 +55,24 @@
         "priceMinor": 21900
       },
       {
-        "name": "Nduja",
-        "priceMinor": 25500
+        "name": "N'duja",
+        "priceMinor": 25900
       },
       {
-        "name": "Mexican Snack",
-        "priceMinor": 29900
-      },
-      {
-        "name": "Nachos! con salsa y guac",
+        "name": "OCHE NACHOS",
         "priceMinor": 11900
       },
       {
-        "name": "BBQ Wings",
-        "priceMinor": 16900
+        "name": "BUFFALO WINGS",
+        "priceMinor": 14900
       },
       {
-        "name": "Vegetarian Samosa",
-        "priceMinor": 19900
+        "name": "OCHE CLUB SANDWICH",
+        "priceMinor": 18500
+      },
+      {
+        "name": "GARLIC BREAD & HUMMUS",
+        "priceMinor": 10900
       }
     ],
     "forbiddenDishNames": []

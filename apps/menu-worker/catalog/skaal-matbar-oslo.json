@@ -39,7 +39,7 @@
       "\"SKAAL Lasagne\"",
       "Brillat Savarin",
       "Thaisalat m/Reker",
-      "\"Pulled Brisket\"",
+      "Meatball Sub",
       "Brownie"
     ],
     "requiredDishVariants": [
@@ -68,8 +68,8 @@
         "priceMinor": 22500
       },
       {
-        "name": "\"Pulled Brisket\"",
-        "priceMinor": 19500
+        "name": "Meatball Sub",
+        "priceMinor": 21500
       },
       {
         "name": "Brownie",
