@@ -1,30 +1,26 @@
 name: TEMP patch Finstua scoped provenance
 
 on:
-  pull_request:
-    types: [synchronize]
-    paths:
-      - ".github/workflows/validate-restaurant-candidates.yml"
+  push:
+    branches:
+      - fix/finstua-allergen-price-blocks-20260926
 
 permissions:
   contents: write
 
 jobs:
   patch:
-    if: github.event.pull_request.number == 888
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout PR head
+      - name: Checkout branch head
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
 
       - name: Apply exact Finstua text-scope patch and self-clean
         shell: bash
         env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          BASE_SHA: eb7681d3cd5ec63a56919a1ecbe18cb748875857
         run: |
           set -euo pipefail
           python - <<'PY'
@@ -117,4 +113,4 @@ jobs:
                   apps/menu-worker/src/html-text-section-scope-finstua-regression.test.ts \
                   .github/workflows/validate-restaurant-candidates.yml
           git commit -m "Fix scoped direct-price provenance for Finstua"
-          git push origin "HEAD:$HEAD_REF"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
