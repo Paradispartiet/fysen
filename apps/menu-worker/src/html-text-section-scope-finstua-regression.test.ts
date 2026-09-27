@@ -65,4 +65,44 @@ describe("Finstua text-section provenance", () => {
       toast,
     ]);
   });
+
+  it("recovers scoped direct-priced dishes when the scoped slice starts after the food heading", () => {
+    const charcuterie =
+      "Spekefjøl med tronfjellskinke, speket elgpølse og fenalår serveres med ramsløkost, pickles, rømme og flatbrød";
+    const toast =
+      "Toast Skagen servert på kefirbrød med ørretrogn, sitron og pepperrot";
+    const items = [
+      item(charcuterie, 31500, `${charcuterie} — (M, G1, G2, S) — Kr. 315,-`),
+      item(toast, 32500, `${toast} — (SK, M, G1, E, SP) — Kr. 325,-`),
+    ];
+    const scopedVisibleText = [
+      charcuterie,
+      "(M, G1, G2, S)",
+      "Kr. 315,-",
+      toast,
+      "(SK, M, G1, E, SP)",
+      "Kr. 325,-",
+    ].join("\n");
+    const fullVisibleText = [
+      "Lunsjretter",
+      charcuterie,
+      "(M, G1, G2, S)",
+      "Kr. 315,-",
+      "Sandwiches",
+      toast,
+      "(SK, M, G1, E, SP)",
+      "Kr. 325,-",
+    ].join("\n");
+
+    const result = filterHtmlBeverageSectionItemsWithScopedProvenance(
+      items,
+      scopedVisibleText,
+      fullVisibleText,
+    );
+
+    expect(result.map((entry) => entry.name)).toEqual([
+      charcuterie,
+      toast,
+    ]);
+  });
 });
