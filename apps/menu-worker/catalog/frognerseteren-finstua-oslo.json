@@ -34,22 +34,22 @@
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Kremet fiskesuppe med med reker",
-      "Toast Skagen servert på landbrød med ørretrogn",
+      "Kremet fiskesuppe med med reker, fisk og friske grønnsaker",
+      "Toast Skagen servert på kefirbrød med ørretrogn, sitron og pepperrot",
       "Mørk sjokoladecremeux på kjeks med basilikum-lime-sorbet og limecurds",
       "Petit four",
       "Kremet soppsuppe",
-      "Saltbakt rødbetsbygotto",
+      "Soppbygotto",
       "Ost",
       "Frognerseterens berømte eplekake"
     ],
     "requiredDishVariants": [
       {
-        "name": "Kremet fiskesuppe med med reker",
-        "priceMinor": 31500
+        "name": "Kremet fiskesuppe med med reker, fisk og friske grønnsaker",
+        "priceMinor": 33500
       },
       {
-        "name": "Toast Skagen servert på landbrød med ørretrogn",
+        "name": "Toast Skagen servert på kefirbrød med ørretrogn, sitron og pepperrot",
         "priceMinor": 32500
       },
       {
@@ -65,7 +65,7 @@
         "priceMinor": 26500
       },
       {
-        "name": "Saltbakt rødbetsbygotto",
+        "name": "Soppbygotto",
         "priceMinor": 37500
       },
       {
