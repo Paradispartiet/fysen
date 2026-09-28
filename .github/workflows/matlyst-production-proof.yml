@@ -2,6 +2,10 @@ name: Matlyst v3 production proof
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/matlyst-production-proof.yml
+      - apps/web/tests/matlyst-live-browser-proof.mjs
   workflow_run:
     workflows: ["Fysen batched Vercel production release"]
     types: [completed]
