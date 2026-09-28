@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: fysen-matlyst-v3-production-proof
@@ -24,7 +25,28 @@ jobs:
     env:
       FYSEN_PUBLIC_WEB_URL: https://fysen.vercel.app
     steps:
+      - name: Check that the upstream release deployed an app
+        if: github.event_name == 'workflow_run'
+        id: upstream
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          UPSTREAM_RUN_ID: ${{ github.event.workflow_run.id }}
+          GH_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          jobs="$(curl --fail --silent --show-error \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            "https://api.github.com/repos/$GH_REPOSITORY/actions/runs/$UPSTREAM_RUN_ID/jobs?per_page=100")"
+          deployed="$(jq -r '[.jobs[] | select(.name == "web" or .name == "api") | select(.conclusion == "success")] | length > 0' <<< "$jobs")"
+          echo "deployed=$deployed" >> "$GITHUB_OUTPUT"
+          if [[ "$deployed" == false ]]; then
+            echo 'Upstream release deployed neither web nor API; Matlyst production proof is deferred.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
       - name: Verify Matlyst v3 public consumer journeys
+        if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
         shell: bash
         run: |
           set -euo pipefail
