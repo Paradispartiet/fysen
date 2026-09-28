@@ -153,4 +153,4 @@ jobs:
 
       - name: Verify live restaurant examples in the mobile browser
         if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
-        run: pnpm --filter @fysen/menu-worker exec node src/matlyst-live-browser-proof.mjs
+        run: pnpm --filter @fysen/web exec node tests/matlyst-live-browser-proof.mjs
