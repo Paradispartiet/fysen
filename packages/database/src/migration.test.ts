@@ -26,6 +26,7 @@ describe("database migrations", () => {
       "0019_spring_rolls_dish_concept.sql",
       "0020_menu_source_blocked_origins.sql",
       "0021_menu_source_response_limit_6mib.sql",
+      "0022_menu_source_response_limit_8mib.sql",
     ]);
 
     const schemaSql = await readFile(new URL("../migrations/0001_menu_index.sql", import.meta.url), "utf8");
