@@ -40,7 +40,7 @@ export interface ConfirmedSuspiciousDropInput {
   readonly confirmationAssessment: ExtractionAssessment | null;
   readonly firstFingerprint: string | null;
   readonly confirmationFingerprint: string | null;
-  readonly approvedRebaselineFingerprint?: string;
+  readonly approvedRebaselineFingerprint?: string | undefined;
 }
 
 export function shouldAcceptConfirmedSuspiciousDrop(
