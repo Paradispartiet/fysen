@@ -16,7 +16,7 @@ test("Matlyst production proof følger den gjenopprettede sekskorts-forsiden", (
     assert.match(proofSource, new RegExp(cuisine, "u"));
   }
   assert.match(proofSource, /cuisineCard cuisineCardInteractive/u);
-  assert.match(proofSource, /cuisineRestaurantNames/u);
+  assert.match(proofSource, /matlyst-live-browser-proof\.mjs/u);
   assert.match(proofSource, /På menyen nå/u);
 });
 
