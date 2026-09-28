@@ -125,6 +125,7 @@ export const restaurantOnboardingManifestSchema = z
     qualityAssertions: z.object({
       requiredDishNames: z.array(z.string().trim().min(2).max(300)).min(1).max(20),
       requiredDishVariants: z.array(requiredDishVariantSchema).max(20).default([]),
+      approvedRebaselineFingerprint: z.string().regex(/^[a-f0-9]{64}$/).optional(),
       forbiddenDishNames: z.array(z.string().trim().min(2).max(300)).max(20).default([]),
     }),
   })
