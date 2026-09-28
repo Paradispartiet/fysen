@@ -1,4 +1,5 @@
 import { chromium } from "playwright-core";
+import process from "node:process";
 
 const base = (process.env.FYSEN_PUBLIC_WEB_URL || "https://fysen.vercel.app").replace(/\/$/, "");
 const expectedCuisines = ["Asiatisk", "Indisk", "Fast food", "Italiensk", "Midtøsten", "Mexicansk"];
