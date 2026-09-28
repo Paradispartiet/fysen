@@ -2,6 +2,10 @@ name: Matlyst v3 production proof
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/matlyst-production-proof.yml
+      - apps/web/tests/matlyst-live-browser-proof.mjs
   workflow_run:
     workflows: ["Fysen batched Vercel production release"]
     types: [completed]
@@ -44,6 +48,16 @@ jobs:
           if [[ "$deployed" == false ]]; then
             echo 'Upstream release deployed neither web nor API; Matlyst production proof is deferred.' >> "$GITHUB_STEP_SUMMARY"
           fi
+
+      - name: Checkout browser proof
+        if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Setup browser proof workspace
+        if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Verify Matlyst v3 public consumer journeys
         if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
@@ -107,7 +121,6 @@ jobs:
             ...homeCuisines,
           );
           requireOccurrences(home, "cuisineCard cuisineCardInteractive", homeCuisines.length);
-          requireOccurrences(home, "cuisineRestaurantNames", homeCuisines.length);
 
           const journeys = [
             ["Japansk", "/search?city=Oslo&cuisine=Japansk", "Ramen"],
@@ -141,3 +154,7 @@ jobs:
             journeys: verified,
           }, null, 2)}\n`);
           NODE
+
+      - name: Verify live restaurant examples in the mobile browser
+        if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
+        run: pnpm --filter @fysen/web exec node tests/matlyst-live-browser-proof.mjs
