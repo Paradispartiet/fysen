@@ -15,7 +15,8 @@
     "sourceType": "html",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 10
+    "minimumExpectedItems": 10,
+    "maxResponseBytes": 4194304
   },
   "hoursSource": {
     "url": "https://www.hrimnir-ramen.no/",
