@@ -17,7 +17,7 @@
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "maxResponseBytes": 4194304,
-    "minimumExpectedItems": 27,
+    "minimumExpectedItems": 25,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -36,7 +36,7 @@
     "requiredDishNames": [
       "Kremet fiskesuppe med med reker, fisk og friske grønnsaker",
       "Toast Skagen servert på kefirbrød med ørretrogn, sitron og pepperrot",
-      "Mørk sjokoladecremeux på kjeks med basilikum-lime-sorbet og limecurds",
+      "Sjokoladecrèmeux",
       "Petit four",
       "Kremet soppsuppe",
       "Soppbygotto",
@@ -53,8 +53,8 @@
         "priceMinor": 32500
       },
       {
-        "name": "Mørk sjokoladecremeux på kjeks med basilikum-lime-sorbet og limecurds",
-        "priceMinor": 21500
+        "name": "Sjokoladecrèmeux",
+        "priceMinor": 22500
       },
       {
         "name": "Petit four",
