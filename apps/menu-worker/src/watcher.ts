@@ -31,6 +31,7 @@ export interface MenuWatchSummary {
 export interface MenuWatchOptions {
   readonly allowDisabled?: boolean;
   readonly acceptConfirmedSuspiciousDrop?: boolean;
+  readonly approvedRebaselineFingerprint?: string;
 }
 
 export interface ConfirmedSuspiciousDropInput {
@@ -39,13 +40,16 @@ export interface ConfirmedSuspiciousDropInput {
   readonly confirmationAssessment: ExtractionAssessment | null;
   readonly firstFingerprint: string | null;
   readonly confirmationFingerprint: string | null;
+  readonly approvedRebaselineFingerprint?: string;
 }
 
 export function shouldAcceptConfirmedSuspiciousDrop(
   input: ConfirmedSuspiciousDropInput,
 ): boolean {
   return (
-    input.forceReextract &&
+    (input.forceReextract ||
+      (input.approvedRebaselineFingerprint !== undefined &&
+        input.approvedRebaselineFingerprint === input.firstFingerprint)) &&
     input.firstAssessment.accepted === false &&
     input.firstAssessment.code === "suspicious_drop" &&
     input.confirmationAssessment?.accepted === false &&
@@ -262,6 +266,7 @@ export async function watchMenuSourceOnce(
       confirmationAssessment,
       firstFingerprint: firstRejectedFingerprint,
       confirmationFingerprint,
+      approvedRebaselineFingerprint: options.approvedRebaselineFingerprint,
     })
   ) {
     assessment = {
