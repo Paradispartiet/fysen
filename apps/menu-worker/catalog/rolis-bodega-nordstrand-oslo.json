@@ -16,7 +16,8 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
-    "minimumExpectedItems": 18
+    "minimumExpectedItems": 18,
+    "maxResponseBytes": 4194304
   },
   "hoursSource": {
     "url": "https://www.rolis-bodega.no/book-bord",
