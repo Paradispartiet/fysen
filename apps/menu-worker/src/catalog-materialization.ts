@@ -140,6 +140,12 @@ async function repairUnhealthyCanonicalSources(
           menuSourceId,
           httpClient,
           entry.manifest.menuSource.sourceSupport,
+          entry.manifest.qualityAssertions.approvedRebaselineFingerprint
+            ? {
+                acceptConfirmedSuspiciousDrop: true,
+                approvedRebaselineFingerprint: entry.manifest.qualityAssertions.approvedRebaselineFingerprint,
+              }
+            : {},
         );
         if (!ACCEPTED_WATCH_OUTCOMES.has(watch.outcome)) {
           return {

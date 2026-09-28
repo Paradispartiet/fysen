@@ -46,6 +46,7 @@
     }
   ],
   "qualityAssertions": {
+    "approvedRebaselineFingerprint": "875add872aff1c629245a149381eed9d8d5d9e59b001d57d64533965b89add9f",
     "requiredDishNames": [
       "Dagens Suppe",
       "Friterte Calamares",

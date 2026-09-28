@@ -56,6 +56,26 @@ describe("confirmed extractor-refresh rebaseline", () => {
     ).toBe(true);
   });
 
+  it("accepts a reviewed exact fingerprint after two identical suspicious-drop extractions", () => {
+    expect(shouldAcceptConfirmedSuspiciousDrop({
+      forceReextract: false,
+      firstAssessment: suspiciousDrop,
+      confirmationAssessment: suspiciousDrop,
+      firstFingerprint: "reviewed-fingerprint",
+      confirmationFingerprint: "reviewed-fingerprint",
+      approvedRebaselineFingerprint: "reviewed-fingerprint",
+    })).toBe(true);
+
+    expect(shouldAcceptConfirmedSuspiciousDrop({
+      forceReextract: false,
+      firstAssessment: suspiciousDrop,
+      confirmationAssessment: suspiciousDrop,
+      firstFingerprint: "changed-fingerprint",
+      confirmationFingerprint: "changed-fingerprint",
+      approvedRebaselineFingerprint: "reviewed-fingerprint",
+    })).toBe(false);
+  });
+
   it("does not weaken ordinary watcher quarantine behavior", () => {
     expect(
       shouldAcceptConfirmedSuspiciousDrop({
