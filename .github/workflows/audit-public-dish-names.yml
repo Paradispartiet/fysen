@@ -1,0 +1,33 @@
+name: Audit public Oslo dish names
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/audit-public-dish-names.mjs
+      - .github/workflows/audit-public-dish-names.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Read public Oslo browse and prepare review queue
+        env:
+          FYSEN_PUBLIC_API_URL: https://fysen-api.vercel.app
+        run: node scripts/audit-public-dish-names.mjs
+      - name: Publish summary
+        run: head -n 35 reports/oslo-public-dish-names/audit.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: oslo-public-dish-name-audit
+          path: reports/oslo-public-dish-names/
+          retention-days: 14
