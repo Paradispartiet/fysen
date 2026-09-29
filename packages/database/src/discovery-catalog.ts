@@ -67,9 +67,11 @@ export function classifyDiscoveryCandidate(candidate: DiscoveryCandidate): Disco
 
 export function canonicalMenuDishName(value: string): string {
   const withoutNoise = value
+    .replace(/^\s*[-–—•]\s+/u, "")
     .replace(/^\s*\d+[.)-]\s*/, "")
     .replace(/\s*\([A-ZÆØÅ](?:\s*,\s*[A-ZÆØÅ])*\)\s*$/u, "")
     .replace(/\s+\d+\s*(?:stk|biter|pieces?|g|gram)\s*$/iu, "")
+    .replace(/,\s*$/u, "")
     .replace(/\s+/g, " ")
     .trim();
   return withoutNoise || value.trim();
