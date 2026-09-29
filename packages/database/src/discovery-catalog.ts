@@ -25,6 +25,9 @@ function normalized(value: string | null): string {
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLocaleLowerCase("nb-NO")
+    .replace(/æ/g, "ae")
+    .replace(/ø/g, "o")
+    .replace(/å/g, "a")
     .replace(/[^a-z0-9]+/g, " ")
     .trim();
 }
@@ -38,24 +41,34 @@ export function classifyDiscoveryCandidate(candidate: DiscoveryCandidate): Disco
   const section = normalized(candidate.sectionName);
   const description = normalized(candidate.description);
 
-  if (!/[a-z]/.test(name) || matches(name, [/^\d+\s*(stk|cl|ml|l|g|kg|biter|pieces?|bottles?)?$/, /^(n a|null|undefined|ukjent)$/])) {
+  if (!/[a-z]/.test(name) || matches(name, [
+    /^\d+\s*(stk|cl|ml|l|g|kg|biter|pieces?|bottles?)?$/,
+    /^(n a|null|undefined|ukjent|nok)$/,
+    /^\d{2,4}\s*\/?$/,
+    /^(?:\d+\s*g\s*nok\s*\d+\s*\/?\s*)+$/,
+  ])) {
     return "invalid_fragment";
   }
   if (matches(name, [/^allergen/, /^inneholder\b/, /^kan inneholde\b/, /^informasjon\b/, /^les mer\b/]) || matches(description, [/^allergen/])) {
     return "allergen_or_information";
   }
-  if (matches(name, [/^(velg|choose|valg|ekstra|extra|tilvalg|add on)\b/, /^per stk$/, /^chefs? spesialitet$/])) {
+  if (matches(name, [/^(velg|velgbar|choose|valg|ekstra|extra|tilvalg|add on)\b/, /^per stk$/, /^chefs? spesialitet$/])) {
     return "modifier";
   }
   if (matches(section, [/\b(drikke|drinks?|beverage|vin|wine|ol|beer|cocktail|sprit|spirits?)\b/]) || matches(name, [
-    /\b(vann|water|cola|fanta|sprite|pepsi|solo|juice|limonade|lemonade|kaffe|coffee|espresso|cappuccino|latte|te|tea)\b/,
-    /\b(ol|beer|pils|ipa|lager|vin|wine|prosecco|champagne|cava|cocktail|gin|vodka|whisk(?:e)?y|cognac|akevitt|aperol spritz)\b/,
+    /\b(vann|water|cola|fanta|sprite|pepsi|solo|juice|limonade|lemonade|kaffe|coffee|espresso|cappuccino|capuccino|latte|te|tea)\b/,
+    /^(?:ol|beer|pils|ipa|lager|vin|wine|prosecco|champagne|cava|cocktail|gin|vodka|whisk(?:e)?y|cognac|akevitt|aperol spritz)\b/,
     /^\d+[,.]?\d*\s*(cl|ml|liter|l)\b/,
+    /^(?:7up|almdudler|asahi|augustiner|ayran|banjo vand|beck s|bionade|black acai|black jack|bonaqua|byso|christinen|cocio|club mate|danskvand|egekilde|energidryck|faxe kondi|fritz kola|fritz limo|gazoz|ginger joe|harboe|heineken|hervik appelsinjuice|honeymoon|jarritos|jim beam|kildevand|kirin|kullsyrevann|loka|mariestads|mezzadro|mezzo mix|mis ayran|mork femmer|mozell|nestea|nocco|powerking|ramlosa|ramune|reggiano lambrusco|roccaventosa|royal classic\s+\d+\s*cl|sapporo|sportdryck|tamek|thai iste|tomomasu|trocadero|tropico s|tsing ?(?:dao|tao)|tsingtao|tuborg|urge|villa|vitamindryck|vitamalz|zingo)\b/,
+    /^(?:0\s*heineken|0\s*weihenstephaner|fripa\s*0|gringo\s*0|himla humle\s*0|nogne stripped\s*0)\b/,
+    /^(?:chocolate|oreo|salted caramel|strawberry|vanilla) shake\b/,
   ])) {
     return "beverage";
   }
   if (matches(section, [/\b(saus|sauce|tilbehor|sides?|extras?)\b/]) || matches(name, [
     /^(aioli|majones|mayo|chimichurri|chiliolje|chili oil|tzatziki|dressing|saus|sauce|ris|rice|bulgur|pommes frites|fries|coleslaw|agurk|cucumber)$/,
+    /^(?:(?:mild|stark|blandad)\s+)?(?:bearnaisesas|kebabsas|currysas|rhode islandsas|vitlokssas|creme fraiche|soya sauce)\b(?:\s+\d+\s*(?:cl|ml))?$/,
+    /^(?:kimbo dumpling sauce|vegetable fruit sauce)\b.*\b\d+\s*ml\b/,
   ])) {
     return "sauce_or_side";
   }
@@ -71,7 +84,7 @@ export function canonicalMenuDishName(value: string): string {
     .replace(/^\s*\d+[.)-]\s*/, "")
     .replace(/\s*\([A-ZÆØÅ](?:\s*,\s*[A-ZÆØÅ])*\)\s*$/u, "")
     .replace(/\s+\d+\s*(?:stk|biter|pieces?|g|gram)\s*$/iu, "")
-    .replace(/,\s*$/u, "")
+    .replace(/(?:,|\s+[-–—])\s*$/u, "")
     .replace(/\s+/g, " ")
     .trim();
   return withoutNoise || value.trim();
