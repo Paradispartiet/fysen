@@ -536,10 +536,15 @@ export async function extractMenuSource(
         : [];
     const trailingPriceCardItems =
       extracted.method === "html_heuristic"
-        ? recoverDescriptionNamedHtmlItems(
-            rawTrailingPriceCardItems,
-            extracted.visibleText,
+        ? rawTrailingPriceCardItems.length >= 4 &&
+          rawTrailingPriceCardItems.every(
+            (item) => item.sectionName !== null && item.confidence >= 0.99,
           )
+          ? rawTrailingPriceCardItems
+          : recoverDescriptionNamedHtmlItems(
+              rawTrailingPriceCardItems,
+              extracted.visibleText,
+            )
         : rawTrailingPriceCardItems;
     const priceWrappedItems =
       extracted.method === "html_heuristic"
