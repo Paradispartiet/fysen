@@ -7,8 +7,8 @@ const journeys = [];
 
 async function noHorizontalOverflow(page, surface) {
   const dimensions = await page.evaluate(() => ({
-    viewport: window.innerWidth,
-    document: document.documentElement.scrollWidth,
+    viewport: globalThis.innerWidth,
+    document: globalThis.document.documentElement.scrollWidth,
   }));
   if (dimensions.document > dimensions.viewport + 1) {
     throw new Error(`${surface} overflows horizontally: ${JSON.stringify(dimensions)}`);
