@@ -43,7 +43,7 @@ export function classifyDiscoveryCandidate(candidate: DiscoveryCandidate): Disco
 
   if (!/[a-z]/.test(name) || matches(name, [
     /^\d+\s*(stk|cl|ml|l|g|kg|biter|pieces?|bottles?)?$/,
-    /^(n a|null|undefined|ukjent)$/,
+    /^(n a|null|undefined|ukjent|nok)$/,
     /^\d{2,4}\s*\/?$/,
     /^(?:\d+\s*g\s*nok\s*\d+\s*\/?\s*)+$/,
   ])) {
@@ -56,16 +56,19 @@ export function classifyDiscoveryCandidate(candidate: DiscoveryCandidate): Disco
     return "modifier";
   }
   if (matches(section, [/\b(drikke|drinks?|beverage|vin|wine|ol|beer|cocktail|sprit|spirits?)\b/]) || matches(name, [
-    /\b(vann|water|cola|fanta|sprite|pepsi|solo|juice|limonade|lemonade|kaffe|coffee|espresso|cappuccino|latte|te|tea)\b/,
+    /\b(vann|water|cola|fanta|sprite|pepsi|solo|juice|limonade|lemonade|kaffe|coffee|espresso|cappuccino|capuccino|latte|te|tea)\b/,
     /^(?:ol|beer|pils|ipa|lager|vin|wine|prosecco|champagne|cava|cocktail|gin|vodka|whisk(?:e)?y|cognac|akevitt|aperol spritz)\b/,
     /^\d+[,.]?\d*\s*(cl|ml|liter|l)\b/,
-    /^(?:7up|almdudler|asahi|augustiner|ayran|beck s|bionade|bonaqua|cocio|club mate|danskvand|energidryck|faxe kondi|fritz kola|fritz limo|gazoz|harboe|heineken|jarritos|kildevand|kirin|kullsyrevann|loka|mariestads|mezzo mix|mozell|nestea|nocco|powerking|ramlosa|ramune|sapporo|trocadero|tsing ?tao|tsingtao|tuborg|urge|villa|vitamindryck|vitamalz|zingo)\b/,
+    /^(?:7up|almdudler|asahi|augustiner|ayran|banjo vand|beck s|bionade|black acai|black jack|bonaqua|byso|christinen|cocio|club mate|danskvand|egekilde|energidryck|faxe kondi|fritz kola|fritz limo|gazoz|ginger joe|harboe|heineken|hervik appelsinjuice|honeymoon|jarritos|jim beam|kildevand|kirin|kullsyrevann|loka|mariestads|mezzadro|mezzo mix|mis ayran|mork femmer|mozell|nestea|nocco|powerking|ramlosa|ramune|reggiano lambrusco|roccaventosa|royal classic\s+\d+\s*cl|sapporo|sportdryck|tamek|thai iste|tomomasu|trocadero|tropico s|tsing ?(?:dao|tao)|tsingtao|tuborg|urge|villa|vitamindryck|vitamalz|zingo)\b/,
+    /^(?:0\s*heineken|0\s*weihenstephaner|fripa\s*0|gringo\s*0|himla humle\s*0|nogne stripped\s*0)\b/,
+    /^(?:chocolate|oreo|salted caramel|strawberry|vanilla) shake\b/,
   ])) {
     return "beverage";
   }
   if (matches(section, [/\b(saus|sauce|tilbehor|sides?|extras?)\b/]) || matches(name, [
     /^(aioli|majones|mayo|chimichurri|chiliolje|chili oil|tzatziki|dressing|saus|sauce|ris|rice|bulgur|pommes frites|fries|coleslaw|agurk|cucumber)$/,
     /^(?:(?:mild|stark|blandad)\s+)?(?:bearnaisesas|kebabsas|currysas|rhode islandsas|vitlokssas|creme fraiche|soya sauce)\b(?:\s+\d+\s*(?:cl|ml))?$/,
+    /^(?:kimbo dumpling sauce|vegetable fruit sauce)\b.*\b\d+\s*ml\b/,
   ])) {
     return "sauce_or_side";
   }

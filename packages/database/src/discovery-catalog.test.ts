@@ -20,14 +20,23 @@ describe("consumer discovery catalog", () => {
     ["16 STK", null, "invalid_fragment"],
     ["159,- /", null, "invalid_fragment"],
     ["30 g - NOK 420 / 50 g - NOK 620 /", null, "invalid_fragment"],
+    ["NOK", null, "invalid_fragment"],
     ["7Up 33 cl", null, "beverage"],
     ["Faxe Kondi 0,5 l", null, "beverage"],
     ["Mariestads Alkoholfri Øl 0,33L", null, "beverage"],
+    ["0% Heineken", null, "beverage"],
+    ["Chocolate Shake 0,45 l", null, "beverage"],
+    ["Egekilde citrus m/brus 33 cl", null, "beverage"],
+    ["Reggiano Lambrusco Roter Perlwine 1,5 l", null, "beverage"],
+    ["Sportdryck Mountain Blast Zero Sugar 50cl - Powerade", null, "beverage"],
     ["Bearnaisesås 10 cl", null, "sauce_or_side"],
     ["Blandad kebabsås 20 cl", null, "sauce_or_side"],
+    ["KIMBO Dumpling Sauce Hot 190ml 水饺酱", null, "sauce_or_side"],
     ["Grillet Andefilet flambert med kinesisk ØL", "Middag", "dish"],
     ["Hamburger 160g Meny m/ Pommes og 0,5L Drikke", "Middag", "dish"],
+    ["40% - Big Mac stor meny", "Middag", "dish"],
     ["Ben & Jerry's Cookie Dough 465ml", null, "dish"],
+    ["Classic 350ml", null, "dish"],
   ])("classifies %s as %s", (name, sectionName, expected) => {
     expect(classifyDiscoveryCandidate(candidate(name, sectionName, sectionName === null ? null : 19900))).toBe(expected);
   });
