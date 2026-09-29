@@ -45,7 +45,8 @@ export function classifyDiscoveryCandidate(candidate: DiscoveryCandidate): Disco
     /^\d+\s*(stk|cl|ml|l|g|kg|biter|pieces?|bottles?)?$/,
     /^(n a|null|undefined|ukjent|nok)$/,
     /^\d{2,4}\s*\/?$/,
-    /^(?:\d+\s*g\s*nok\s*\d+\s*\/?\s*)+$/,
+    /^\d{2,4}\s+\d+\s*(?:biter|stk|pieces?)$/,
+    /^(?:\d+\s*g\s*nok\s*\d+\s*)+(?:\d+\s*g)?$/,
   ])) {
     return "invalid_fragment";
   }
