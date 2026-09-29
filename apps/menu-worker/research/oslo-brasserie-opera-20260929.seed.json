@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-brasserie-opera-20260929",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "brasserie-opera-oslo",
+        "name": "Brasserie Opera",
+        "websiteUrl": "https://www.brasserieopera.no/",
+        "address": "Kirsten Flagstads plass 1, 0150 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.brasserieopera.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-29",
+          "note": "Research only. Current first-party menu has individually priced named dishes, but also bilingual duplicates, package prices, generic daily dishes and allergen text. Inspect exact-head generated output against the live menu before any canonical promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "DAGENS LUNSJPAKKE",
+        "DAGENS BRUNSJPAKKE",
+        "Dagens 3-retters meny",
+        "Dagens vinpakke",
+        "FORRETTER",
+        "HOVEDRETTER",
+        "DESSERTER"
+      ]
+    }
+  ]
+}
