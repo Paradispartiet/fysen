@@ -194,7 +194,7 @@ First-page reconciliation:
 | Bønder i byen Grünerløkka | canonical | Current catalog contains `bonder-i-byen-oslo`. |
 | Brasilia Oslo | review | New current benchmark signal. Active Oslo restaurant, but the present buffet/experience pricing model needs dish-first marginal-value and source-fit review before classifying it as a missing canonical restaurant. |
 | Brasserie Coucou | review | New current benchmark identity outside the historical 85. Exact-head run #1102 passed identity/geocoding but the current first-party menu surface produced 0 canonical items under the generic HTML stack. Keep as source/extraction review; no parser exception or weaker floor. |
-| Brasserie Opera | review | New current benchmark signal. Active Oslo restaurant, but the currently inspected first-party landing page does not itself establish the final canonical priced dish surface. |
+| Brasserie Opera | review | Current first-party `/meny` has individually priced dishes; exact-head intake #1186 extracted only five items, including two allergen lines. Generic HTML recovery and source-complete semantic reproof are required. |
 | CiCi Tollgaarden | canonical | Current catalog contains `cici-tollgaarden-oslo`. |
 | Credo Restaurant | review | Existing historical P0 review. |
 | Den Glade Gris | review | Existing historical P0 review. |
@@ -210,6 +210,18 @@ Tranche-1 closeout classification after exact-head research:
 - excluded: **0**.
 
 This closes `missing` for the **first 12 VisitOSLO products only**. It does not close Oslo coverage: VisitOSLO pages 2–28, Anders Husa/current thematic sources and demand-gap inputs are not yet fully reconciled, and all nine tranche-1 review identities remain unresolved for a final coverage claim.
+
+### Brasserie Opera reproof — 2026-09-29
+
+The current first-party menu at https://www.brasserieopera.no/meny publishes separately priced,
+named snacks, lunch dishes, starters, mains and desserts. VisitOSLO identifies the restaurant at
+Kirsten Flagstads plass 1. Research seed PR #905 ran on exact head
+`1579498a1b5494463e557e4c2c999c708b5145bc`; Restaurant batch intake #1186 was technically
+green with 1/1 generated and strict accepted. Artifact `11023664718` shows five extracted items,
+but two are `Allergenes: wheat, milk, egg` and `Allergenes: wheat, fish, egg`. Most of the first-party
+menu was not extracted. The five-item generated floor and assertions therefore do not establish
+source-complete dish coverage. Keep `review`; repair the generic bilingual HTML item/price binding
+and section recovery, then reproof against the live menu with semantic QA before promotion.
 
 ## Current source refresh — VisitOSLO hidden gems complete
 
@@ -559,7 +571,7 @@ Source:
 | Gamle Raadhus Restaurant | review | Existing historical P0 review; semantic QA emitted garnish/component fragments as standalone dishes and needs generic output repair plus reproof. |
 | Sjømagasinet Restaurant og Vinbar | canonical | Current catalog contains the same physical identity as `sjomagasinet-oslo`. |
 | The Salmon | review | Existing historical P0 review; fresh reproof was nondeterministic and also exposed generic numbered menu-package labels. |
-| Brasserie Opera | review | Existing current VisitOSLO review; active restaurant, but the inspected first-party surface has not yet established the final canonical priced dish source. |
+| Brasserie Opera | review | First-party `/meny` has individually priced dishes, but intake #1186 extracted only five items and included two allergen lines. Generic HTML repair and reproof required. |
 | Sumo Solli Plass | canonical | Current catalog contains `sumo-solli-plass-oslo`. |
 | Aanerud Bakeri Oslo | review | Active current bakery/restaurant identity, but no canonical manifest/source-intake proof is established in the current census yet. |
 | Carls | review | Current VisitOSLO venue combines food, drink and activities; restaurant-level source fit and a canonical dish source remain unresolved. |
@@ -622,7 +634,7 @@ signal; accessibility claims are not imported into Fysen's restaurant model.
 | Restaurant / product | Source set | Census status | Reason |
 |---|---|---|---|
 | Sjømagasinet Restaurant og Vinbar | both | canonical | Same physical identity already established as `sjomagasinet-oslo`. |
-| Brasserie Opera | both | review | New current benchmark signal. Active Oslo restaurant, but the currently inspected first-party landing page does not itself establish the final canonical priced dish surface. |
+| Brasserie Opera | both | review | First-party `/meny` has individually priced dishes, but intake #1186 extracted only five items and included two allergen lines. Generic HTML repair and reproof required. |
 | Vaaghals | both | review | First-party PDF transport was repaired, but the latest Michelin reproof still failed canonical extraction. |
 | Atlas Brasserie & Café | wheelchair | canonical | Current catalog contains `atlas-brasserie-oslo`. |
 | Feast at MUNCH | wheelchair | review | Current guide product is not automatically equated with `munch-kafe-bjorvika-oslo`; exact venue/menu identity must be proven first. |
