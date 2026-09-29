@@ -18,6 +18,16 @@ describe("consumer discovery catalog", () => {
     ["Allergener: melk, gluten", null, "allergen_or_information"],
     ["Hovedretter", null, "menu_heading"],
     ["16 STK", null, "invalid_fragment"],
+    ["159,- /", null, "invalid_fragment"],
+    ["30 g - NOK 420 / 50 g - NOK 620 /", null, "invalid_fragment"],
+    ["7Up 33 cl", null, "beverage"],
+    ["Faxe Kondi 0,5 l", null, "beverage"],
+    ["Mariestads Alkoholfri Øl 0,33L", null, "beverage"],
+    ["Bearnaisesås 10 cl", null, "sauce_or_side"],
+    ["Blandad kebabsås 20 cl", null, "sauce_or_side"],
+    ["Grillet Andefilet flambert med kinesisk ØL", "Middag", "dish"],
+    ["Hamburger 160g Meny m/ Pommes og 0,5L Drikke", "Middag", "dish"],
+    ["Ben & Jerry's Cookie Dough 465ml", null, "dish"],
   ])("classifies %s as %s", (name, sectionName, expected) => {
     expect(classifyDiscoveryCandidate(candidate(name, sectionName, sectionName === null ? null : 19900))).toBe(expected);
   });
@@ -29,5 +39,7 @@ describe("consumer discovery catalog", () => {
     expect(canonicalMenuDishIdentity("Pizza Margherita")).toBe("pizza margherita");
     expect(canonicalMenuDishName("- 150g Himeji A5 Wagyu Ribeye, Japan,")).toBe("150g Himeji A5 Wagyu Ribeye, Japan");
     expect(canonicalMenuDishIdentity("- 150g Himeji A5 Wagyu Ribeye, Japan,")).toBe("150g himeji a5 wagyu ribeye japan");
+    expect(canonicalMenuDishName("Chili Laks -")).toBe("Chili Laks");
+    expect(canonicalMenuDishName("Fine No.3 - classic")).toBe("Fine No.3 - classic");
   });
 });
