@@ -7,6 +7,7 @@ const ahaApiBaseUrl = (process.env.AHA_PUBLIC_API_URL?.trim() || "https://aha-ca
 const ahaWebBaseUrl = (process.env.AHA_PUBLIC_WEB_URL?.trim() || "https://paradispartiet.github.io/AHA-EchoNet").replace(/\/$/, "");
 const claimRestaurantSlug = process.env.FYSEN_PROOF_CLAIM_RESTAURANT_SLUG?.trim() || "punjab-tandoori-gronland-oslo";
 const ahaCallbackUrl = `${webBaseUrl}/api/aha/callback`;
+const includeAha = process.env.FYSEN_PROOF_AHA === "true";
 
 function fail(message, details = null) {
   const suffix = details === null ? "" : `: ${JSON.stringify(details)}`;
@@ -118,10 +119,7 @@ async function verifyRevenueSchema(pool) {
     "restaurant_pro_setup_tokens",
     "restaurant_pro_sessions",
     "restaurant_pro_access_audit_log",
-    "aha_consumer_sessions",
-    "min_mat_items",
-    "aha_analysis_handoffs",
-    "aha_consumer_audit_log",
+    ...(includeAha ? ["aha_consumer_sessions", "min_mat_items", "aha_analysis_handoffs", "aha_consumer_audit_log"] : []),
   ];
 
   const tableResult = await pool.query(
@@ -137,8 +135,7 @@ async function verifyRevenueSchema(pool) {
   const tokenTables = [
     "restaurant_pro_setup_tokens",
     "restaurant_pro_sessions",
-    "aha_consumer_sessions",
-    "aha_analysis_handoffs",
+    ...(includeAha ? ["aha_consumer_sessions", "aha_analysis_handoffs"] : []),
   ];
   const tokenColumnResult = await pool.query(
     `SELECT relation.relname AS table_name,
@@ -173,29 +170,31 @@ async function verifyRevenueSchema(pool) {
     if (forbiddenRawColumns.length > 0) fail(`${tableName} exposes a raw token column`, forbiddenRawColumns);
   }
 
-  const consumerTables = ["aha_consumer_sessions", "min_mat_items", "aha_analysis_handoffs", "aha_consumer_audit_log"];
-  const proTables = ["restaurant_access_grants", "restaurant_pro_sessions", "restaurant_claims"];
-  const crossDomainForeignKeys = await pool.query(
-    `SELECT source.relname AS source_table,
-            target.relname AS target_table,
-            constraint_row.conname
-       FROM pg_constraint AS constraint_row
-       JOIN pg_class AS source ON source.oid = constraint_row.conrelid
-       JOIN pg_namespace AS source_namespace ON source_namespace.oid = source.relnamespace
-       JOIN pg_class AS target ON target.oid = constraint_row.confrelid
-       JOIN pg_namespace AS target_namespace ON target_namespace.oid = target.relnamespace
-      WHERE constraint_row.contype = 'f'
-        AND source_namespace.nspname = 'fysen'
-        AND target_namespace.nspname = 'fysen'
-        AND (
-          (source.relname = ANY($1::text[]) AND target.relname = ANY($2::text[]))
-          OR
-          (source.relname = ANY($2::text[]) AND target.relname = ANY($1::text[]))
-        )`,
-    [consumerTables, proTables],
-  );
-  if (crossDomainForeignKeys.rows.length > 0) {
-    fail("AHA consumer identity is linked to Restaurant Claim or Fysen Pro by foreign key", crossDomainForeignKeys.rows);
+  if (includeAha) {
+    const consumerTables = ["aha_consumer_sessions", "min_mat_items", "aha_analysis_handoffs", "aha_consumer_audit_log"];
+    const proTables = ["restaurant_access_grants", "restaurant_pro_sessions", "restaurant_claims"];
+    const crossDomainForeignKeys = await pool.query(
+      `SELECT source.relname AS source_table,
+              target.relname AS target_table,
+              constraint_row.conname
+         FROM pg_constraint AS constraint_row
+         JOIN pg_class AS source ON source.oid = constraint_row.conrelid
+         JOIN pg_namespace AS source_namespace ON source_namespace.oid = source.relnamespace
+         JOIN pg_class AS target ON target.oid = constraint_row.confrelid
+         JOIN pg_namespace AS target_namespace ON target_namespace.oid = target.relnamespace
+        WHERE constraint_row.contype = 'f'
+          AND source_namespace.nspname = 'fysen'
+          AND target_namespace.nspname = 'fysen'
+          AND (
+            (source.relname = ANY($1::text[]) AND target.relname = ANY($2::text[]))
+            OR
+            (source.relname = ANY($2::text[]) AND target.relname = ANY($1::text[]))
+          )`,
+      [consumerTables, proTables],
+    );
+    if (crossDomainForeignKeys.rows.length > 0) {
+      fail("AHA consumer identity is linked to Restaurant Claim or Fysen Pro by foreign key", crossDomainForeignKeys.rows);
+    }
   }
 
   const demandSourceResult = await pool.query(
@@ -222,10 +221,9 @@ async function verifyRevenueSchema(pool) {
     tokenStorage: {
       restaurantProSetupTokens: "hash-only",
       restaurantProSessions: "hash-only",
-      ahaConsumerSessions: "hash-only",
-      ahaAnalysisHandoffs: "hash-only",
+      ...(includeAha ? { ahaConsumerSessions: "hash-only", ahaAnalysisHandoffs: "hash-only" } : {}),
     },
-    consumerProIsolation: "no-cross-domain-foreign-keys",
+    consumerProIsolation: includeAha ? "no-cross-domain-foreign-keys" : "deferred",
     demandSourceDefault: "legacy_unclassified",
   };
 }
@@ -285,15 +283,6 @@ async function verifyPublicRevenueApi() {
     });
   }
 
-  const minMatUrl = `${apiBaseUrl}/v1/min-mat`;
-  const minMatResponse = await fetchWithProofTimeout(minMatUrl, { redirect: "manual" });
-  if (minMatResponse.status !== 401) {
-    fail("Public Min mat API is not fail-closed without an AHA consumer session", {
-      status: minMatResponse.status,
-      minMatUrl,
-    });
-  }
-
   return {
     claimContext: {
       url: claimUrl,
@@ -306,12 +295,20 @@ async function verifyPublicRevenueApi() {
       unauthenticatedStatus: 401,
       failClosed: true,
     },
-    minMat: {
-      url: minMatUrl,
-      unauthenticatedStatus: 401,
-      failClosed: true,
-    },
+    ...(includeAha ? { minMat: await verifyMinMatApiBoundary() } : {}),
   };
+}
+
+async function verifyMinMatApiBoundary() {
+  const minMatUrl = `${apiBaseUrl}/v1/min-mat`;
+  const minMatResponse = await fetchWithProofTimeout(minMatUrl, { redirect: "manual" });
+  if (minMatResponse.status !== 401) {
+    fail("Public Min mat API is not fail-closed without an AHA consumer session", {
+      status: minMatResponse.status,
+      minMatUrl,
+    });
+  }
+  return { url: minMatUrl, unauthenticatedStatus: 401, failClosed: true };
 }
 
 async function verifyAhaFysenBoundary() {
@@ -435,8 +432,23 @@ async function verifyPublicRevenueWeb() {
   const minMatResponse = await fetchWithProofTimeout(minMatUrl);
   if (!minMatResponse.ok) fail("Public Min mat web is unavailable", { status: minMatResponse.status, minMatUrl });
   const minMatHtml = await minMatResponse.text();
-  if (!minMatHtml.includes("Min mat") || !minMatHtml.includes("Logg inn med AHA")) {
-    fail("Public Min mat web is not rendering the AHA consumer login surface", { minMatUrl });
+  if (!minMatHtml.includes("Min mat") || !minMatHtml.includes(includeAha ? "Logg inn med AHA" : "Piloten er satt på pause")) {
+    fail("Public Min mat web does not match the selected pilot state", { minMatUrl, includeAha });
+  }
+  if (!includeAha) {
+    if (minMatHtml.includes("Logg inn med AHA")) fail("Paused Min mat still offers AHA login", { minMatUrl });
+    const connectUrl = `${webBaseUrl}/api/aha/connect`;
+    const connectResponse = await fetchWithProofTimeout(connectUrl, { redirect: "manual" });
+    const connectLocation = connectResponse.headers.get("location") ?? "";
+    if (connectResponse.status !== 303 || new URL(connectLocation, webBaseUrl).pathname !== "/min-mat") {
+      fail("Paused AHA connect route is still active", { status: connectResponse.status, location: connectLocation });
+    }
+    return {
+      claim: { url: claimUrl, rendered: true },
+      proLogin: { url: proLoginUrl, rendered: true },
+      proDashboard: { url: proDashboardUrl, unauthenticatedRedirect: proLocation, failClosed: true },
+      minMat: { url: minMatUrl, pilot: "paused", loginOffered: false },
+    };
   }
   const handoffFailureUrl = `${webBaseUrl}/min-mat?handoff=failed`;
   const handoffFailureResponse = await fetchWithProofTimeout(handoffFailureUrl);
@@ -506,7 +518,7 @@ try {
   const checks = [
     await captureProof("schema", () => verifyRevenueSchema(pool)),
     await captureProof("api", verifyPublicRevenueApi),
-    await captureProof("aha", verifyAhaFysenBoundary),
+    ...(includeAha ? [await captureProof("aha", verifyAhaFysenBoundary)] : []),
     await captureProof("web", verifyPublicRevenueWeb),
   ];
   const failures = checks.filter((check) => check.status === "failed");
@@ -514,10 +526,11 @@ try {
 
   process.stdout.write(`${JSON.stringify({
     status: failures.length === 0 ? "verified" : "failed",
+    scope: includeAha ? "revenue-and-aha-pilot" : "revenue-with-aha-pilot-paused",
     mutatingProductionRequests: false,
     schema: valueFor("schema"),
     api: valueFor("api"),
-    aha: valueFor("aha"),
+    aha: includeAha ? valueFor("aha") : { status: "deferred" },
     web: valueFor("web"),
     failures: failures.map(({ name, error }) => ({ name, error })),
   }, null, 2)}\n`);

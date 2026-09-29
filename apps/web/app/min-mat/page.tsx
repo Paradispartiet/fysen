@@ -4,6 +4,7 @@ import { GlobalHeader } from "../../components/global-header";
 import { MinMatLogoutButton } from "../../components/min-mat-logout-button";
 import { MinMatRemoveButton } from "../../components/min-mat-remove-button";
 import { getMinMat } from "../../lib/aha-min-mat-api";
+import { ahaMinMatPilotEnabled } from "../../lib/aha-min-mat-pilot";
 import { FYSEN_AHA_SESSION_COOKIE } from "../../lib/aha-consumer-session";
 import { withPublicBasePath } from "../../lib/public-path";
 
@@ -32,9 +33,9 @@ export default async function MinMatPage({ searchParams }: { searchParams: Promi
       <GlobalHeader />
       <main className="minMatShell">
         <header className="minMatHero">
-          <p className="minMatEyebrow">AHA × Fysen</p>
+          <p className="minMatEyebrow">Fysen</p>
           <h1>Min mat</h1>
-          <p>Samle retter du vil huske. Søkehistorikken din blir ikke lagt her og blir ikke koblet til AHA-identiteten.</p>
+          <p>{ahaMinMatPilotEnabled ? "Samle retter du vil huske. Søkehistorikken din blir ikke lagt her og blir ikke koblet til AHA-identiteten." : "Min mat er en senere pilot og er ikke åpen for nye innlogginger nå."}</p>
         </header>
 
         {handoff === "failed" ? (
@@ -44,7 +45,13 @@ export default async function MinMatPage({ searchParams }: { searchParams: Promi
           </section>
         ) : null}
 
-        {!signedIn ? (
+        {!ahaMinMatPilotEnabled && !signedIn ? (
+          <section className="minMatPanel">
+            <h2>Piloten er satt på pause</h2>
+            <p>Du kan fortsatt søke etter retter og finne restauranter i Oslo.</p>
+            <a className="minMatPrimary" href={withPublicBasePath("/search?city=Oslo")}>Finn en rett</a>
+          </section>
+        ) : !signedIn ? (
           <section className="minMatPanel">
             <h2>Ta samlingen med deg</h2>
             <p>Logg inn med AHA for å lagre retter på tvers av enheter og velge når du vil analysere samlingen i AHA.</p>
@@ -60,7 +67,7 @@ export default async function MinMatPage({ searchParams }: { searchParams: Promi
             {data.items.length === 0 ? (
               <section className="minMatPanel minMatEmpty">
                 <h2>Samlingen er tom</h2>
-                <p>Søk etter en rett og velg «Lagre i Min mat» på et resultat du vil ta vare på.</p>
+                <p>{ahaMinMatPilotEnabled ? "Søk etter en rett og velg «Lagre i Min mat» på et resultat du vil ta vare på." : "Du har ingen lagrede retter. Nye lagringer er satt på pause."}</p>
                 <a className="minMatPrimary" href={withPublicBasePath("/search?city=Oslo")}>Finn en rett</a>
               </section>
             ) : (
@@ -77,7 +84,7 @@ export default async function MinMatPage({ searchParams }: { searchParams: Promi
                     </li>
                   ))}
                 </ul>
-                <section className="minMatAnalysis">
+                {ahaMinMatPilotEnabled ? <section className="minMatAnalysis">
                   <div>
                     <p className="minMatEyebrow">Eksplisitt handoff</p>
                     <h2>Utforsk samlingen i AHA</h2>
@@ -86,7 +93,7 @@ export default async function MinMatPage({ searchParams }: { searchParams: Promi
                   <form action={withPublicBasePath("/api/min-mat/handoff")} method="post">
                     <button className="minMatPrimary" type="submit">Analyser i AHA</button>
                   </form>
-                </section>
+                </section> : null}
               </>
             )}
           </>

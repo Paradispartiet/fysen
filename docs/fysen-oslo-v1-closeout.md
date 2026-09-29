@@ -27,18 +27,17 @@ Deretter ble **New Delhi Tjuvholmen** den 56. canonical restauranten. #402 bevis
 
 Permanent metode, historiske batchresultater og datert produksjonsbevis ligger i [`restaurant-production.md`](./restaurant-production.md).
 
-Denne baselinen betyr **ikke** at hele Fysen Oslo v1 er ferdig. Release-, Min mat/AHA-, Claim/Pro-, mobil- og representative E2E-portene nedenfor må fortsatt være grønne på riktig produksjons-SHA før v1-erklæringen kan gis.
+Denne baselinen betyr **ikke** at hele Fysen Oslo v1 er ferdig. Release-, Claim/Pro-, mobil- og representative E2E-portene nedenfor må fortsatt være grønne på riktig produksjons-SHA før v1-erklæringen kan gis. Min mat/AHA er en separat, utsatt pilot.
 
-## De åtte låste portene
+## De sju låste portene
 
 | Port | Permanent bevis | Ferdig når |
 |---|---|---|
-| Production release | batchet release + production proof | Alle retter, `/min-mat`, Claim og Pro svarer fra samme forventede `main` |
-| Min mat + AHA | DB-integrasjon + offentlig boundary-proof + kontrollert brukerpilot | lagre, fjerne, lagre igjen, ny session, 50-cap, privat payload, one-time/replay og utløp er bevist |
+| Production release | batchet release + production proof | Offentlig søk, rettliste, Claim og Pro svarer fra samme forventede `main`; Min mat viser pausemelding |
 | Claim + Pro | ikke-muterende proof + `pro:pilot-proof` | offentlig claim, setup/session, ekte dashboard og én verifisert restaurant er kjørt ende til ende |
 | Consumer catalog | `consumer-v1` quality-metadata | rå oppføringer klassifiseres, ikke-retter fjernes og forsiktige varianter dedupliseres |
 | Matleksikon | concept/menu-identiteter + UI-lenker | leksikonrett har både «Om retten» og serveringssteder; annen valid rett har bare serveringssteder |
-| Mobil finish | browser-smoke på liten viewport | de fem låste reisene kan gjennomføres uten skjult handling, horisontal overflow eller blindvei |
+| Mobil finish | browser-smoke på liten viewport | de fire offentlige reisene kan gjennomføres uten skjult handling, horisontal overflow eller blindvei |
 | Representative E2E | production-pilot-proof | scenarioene under er grønne mot production |
 | V1-erklæring | samlet closeout-resultat | alle portene er grønne på samme produksjons-SHA |
 
@@ -64,10 +63,9 @@ Kjør på en liten mobilviewport etter ordinær produksjonsrelease:
 1. `Hva har du lyst på? → treff → restaurant → menybevis → booking/order`;
 2. `Matlyst → kjøkken → rett → restaurant`;
 3. `Alle retter → rett → treff`;
-4. `Søk → Om retten → tilbake til serveringssteder`;
-5. `Lagre → Min mat → AHA`.
+4. `Søk → Om retten → tilbake til serveringssteder`.
 
-Min mat skal ved feil eller utløpt/replayed handoff vise en kontrollert melding og beholde samlingen. Fjern-handlingen skal være minst 44 px, blokkere dobbel innsending og tilby «Prøv igjen» ved feil.
+«Lagre i Min mat» og lenken i toppmenyen er skjult mens piloten er satt på pause. Direkte besøk til `/min-mat` skal forklare pausen, og nye forsøk på AHA-innlogging skal ikke sende brukeren til AHA. Eksisterende gyldige Fysen-sesjoner kan fortsatt se og fjerne sine lagrede retter.
 
 ## Representative production E2E-gater
 
@@ -83,20 +81,22 @@ Det permanente proof-settet dekker:
 - geolokasjon med beregnet avstand;
 - canonical concept-/leksikonidentitet;
 - valid ikke-leksikonrett (`menu:`);
-- Min mat/AHA-boundary og kontrollert handoff-feil.
+- Min mat-pausen og kontrollert AHA-connect-stopp i ordinær release-proof.
 
-Produksjonsproofen er bevisst ikke-muterende. Stateful Min mat og den faktiske restaurantpiloten kjøres kontrollert med ekte AHA-/restaurantidentitet; hemmelige tokens skal aldri inn i CI, argv, logger eller artifacts.
+Produksjonsproofen er bevisst ikke-muterende. Restaurantpiloten kjøres kontrollert med en verifisert restaurantidentitet; hemmelige tokens skal aldri inn i CI, argv, logger eller artifacts. Stateful Min mat/AHA-bevis hører til en separat pilot når AHA er driftsklar, har et avtalt testmiljø og et godkjent kostnadstak. Ordinær produksjonsrelease skal ikke kontakte AHA.
 
 ## V1-erklæring
 
 Fysen Oslo v1 skal ikke erklæres ferdig på grunnlag av restauranttall, rått menyitem-tall eller grønn CI alene. Erklæringen kan gis når følgende er bevist sammen i produksjon:
 
-> search + discovery + restaurant action + knowledge + personal collection + production integrity
+> search + discovery + restaurant action + knowledge + production integrity
 
 Etter erklæringen er restaurant-onboarding løpende innholdsproduksjon. Nye større forbruker- eller revenue-features tilhører neste eksplisitte produktfase.
 
 ## Overgang til v2
 
-Oslo v1-scope forblir frosset til alle åtte porter er grønne. Det er ikke tillatt å bruke en ny v2-feature som erstatning for manglende release-, mobil-, AHA- eller restaurantpilotbevis.
+Oslo v1-scope forblir frosset til alle sju porter er grønne. Det er ikke tillatt å bruke en ny v2-feature som erstatning for manglende release-, mobil- eller restaurantpilotbevis.
+
+Min mat/AHA er ikke en v1-port. Reaktivering krever en egen beslutning om AHA-drift, et kostnadstak og en kontrollert brukerpilot. Den eksisterende integrasjonskoden beholdes, men er av som standard med `NEXT_PUBLIC_FYSEN_ENABLE_AHA_MIN_MAT`. AHA-boundary kan kjøres separat med `include_aha` i revenue-proof-workflowen når piloten faktisk er aktivert.
 
 Når v1 er erklært ferdig, følger videre produktarbeid den portstyrte planen i [`fysen-v2.md`](./fysen-v2.md). Hovedretningen er eksplisitt, privat og forklarbar matpersonalisering. Flerbyutrulling og Pro v2 er senere, separate spor.

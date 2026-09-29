@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { issueAhaHandoff } from "../../../../lib/aha-min-mat-api";
+import { ahaMinMatPilotEnabled } from "../../../../lib/aha-min-mat-pilot";
 import {
   AHA_FYSEN_HANDOFF_PAGE,
   FYSEN_AHA_SESSION_COOKIE,
@@ -8,6 +9,9 @@ import {
 import { withPublicBasePath } from "../../../../lib/public-path";
 
 export async function POST(request: Request): Promise<NextResponse> {
+  if (!ahaMinMatPilotEnabled) {
+    return NextResponse.redirect(new URL(withPublicBasePath("/min-mat"), request.url), 303);
+  }
   const token = (await cookies()).get(FYSEN_AHA_SESSION_COOKIE)?.value;
   if (!token) {
     const connect = `${withPublicBasePath("/api/aha/connect")}?returnTo=${encodeURIComponent(withPublicBasePath("/min-mat"))}`;

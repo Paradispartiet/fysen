@@ -1,5 +1,7 @@
 import { createHash, randomBytes } from "node:crypto";
 import { NextResponse } from "next/server";
+import { ahaMinMatPilotEnabled } from "../../../../lib/aha-min-mat-pilot";
+import { withPublicBasePath } from "../../../../lib/public-path";
 import {
   AHA_FYSEN_AUTHORIZE_PAGE,
   FYSEN_AHA_PKCE_COOKIE,
@@ -12,6 +14,9 @@ import {
 const COOKIE_MAX_AGE = 10 * 60;
 
 export async function GET(request: Request): Promise<NextResponse> {
+  if (!ahaMinMatPilotEnabled) {
+    return NextResponse.redirect(new URL(withPublicBasePath("/min-mat"), request.url), 303);
+  }
   const requestUrl = new URL(request.url);
   const returnTo = safeLocalReturnTo(requestUrl.searchParams.get("returnTo"));
   const codeVerifier = randomBytes(32).toString("base64url");

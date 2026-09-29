@@ -2,6 +2,7 @@ import { timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { connectAhaConsumer } from "../../../../lib/aha-min-mat-api";
+import { ahaMinMatPilotEnabled } from "../../../../lib/aha-min-mat-pilot";
 import {
   FYSEN_AHA_PKCE_COOKIE,
   FYSEN_AHA_RETURN_COOKIE,
@@ -32,6 +33,11 @@ function clearTransient(response: NextResponse): void {
 }
 
 export async function GET(request: Request): Promise<NextResponse> {
+  if (!ahaMinMatPilotEnabled) {
+    const response = NextResponse.redirect(new URL(withPublicBasePath("/min-mat"), request.url), 303);
+    clearTransient(response);
+    return response;
+  }
   const url = new URL(request.url);
   const code = String(url.searchParams.get("code") ?? "").trim();
   const returnedState = String(url.searchParams.get("state") ?? "").trim();

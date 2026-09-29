@@ -1,13 +1,24 @@
-name: Fysen revenue and AHA production proof
+name: Fysen revenue production proof
 
 on:
   workflow_dispatch:
+    inputs:
+      include_aha:
+        description: Run the separate AHA pilot boundary proof when the pilot is enabled
+        required: false
+        type: boolean
+        default: false
   workflow_call:
     inputs:
       source_sha:
         description: Exact source revision that was materially deployed
         required: true
         type: string
+      include_aha:
+        description: Include the separately approved AHA pilot
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -26,6 +37,7 @@ jobs:
       NODE_ENV: production
       FYSEN_PUBLIC_API_URL: https://fysen-api.vercel.app
       FYSEN_PUBLIC_WEB_URL: https://fysen.vercel.app
+      FYSEN_PROOF_AHA: ${{ inputs.include_aha && 'true' || 'false' }}
       AHA_PUBLIC_API_URL: https://aha-canonical-api-production.redground-9c6e20c2.northeurope.azurecontainerapps.io
       AHA_PUBLIC_WEB_URL: https://paradispartiet.github.io/AHA-EchoNet
     steps:
@@ -51,14 +63,14 @@ jobs:
           pnpm --filter @fysen/menu-core build
           pnpm --filter @fysen/database build
 
-      - name: Verify Demand, Revenue R3/R4 and AHA Min mat production boundaries
+      - name: Verify Demand and Revenue R3/R4 production boundaries
         shell: bash
         run: |
           node scripts/revenue-production-proof.mjs | tee /tmp/fysen-revenue-production-proof.json
           {
-            echo '## Fysen revenue + AHA Min mat production proof'
+            echo '## Fysen revenue production proof'
             echo
-            echo 'This proof is non-mutating and runs after product deployment or explicit manual dispatch, not after unrelated restaurant catalog materialization.'
+            echo 'This proof is non-mutating. AHA is deferred by default and checked only when include_aha is explicitly selected for the separate pilot.'
             echo
             echo '```json'
             cat /tmp/fysen-revenue-production-proof.json
