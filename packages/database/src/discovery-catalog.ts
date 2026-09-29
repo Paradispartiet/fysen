@@ -63,6 +63,8 @@ export function classifyDiscoveryCandidate(candidate: DiscoveryCandidate): Disco
     /^(?:7up|almdudler|asahi|augustiner|ayran|banjo vand|beck s|bionade|black acai|black jack|bonaqua|byso|christinen|cocio|club mate|danskvand|egekilde|energidryck|faxe kondi|fritz kola|fritz limo|gazoz|ginger joe|harboe|heineken|hervik appelsinjuice|honeymoon|jarritos|jim beam|kildevand|kirin|kullsyrevann|loka|mariestads|mezzadro|mezzo mix|mis ayran|mork femmer|mozell|nestea|nocco|powerking|ramlosa|ramune|reggiano lambrusco|roccaventosa|royal classic\s+\d+\s*cl|sapporo|sportdryck|tamek|thai iste|tomomasu|trocadero|tropico s|tsing ?(?:dao|tao)|tsingtao|tuborg|urge|villa|vitamindryck|vitamalz|zingo)\b/,
     /^(?:0\s*heineken|0\s*weihenstephaner|fripa\s*0|gringo\s*0|himla humle\s*0|nogne stripped\s*0)\b/,
     /^(?:chocolate|oreo|salted caramel|strawberry|vanilla) shake\b/,
+    /^(?:mini|full|premium) (?:wine|beer) (?:package|pairing)\b/,
+    /^lettmelk\b/,
   ])) {
     return "beverage";
   }
@@ -85,7 +87,7 @@ export function canonicalMenuDishName(value: string): string {
     .replace(/^\s*\d+[.)-]\s*/, "")
     .replace(/\s*\([A-ZÆØÅ](?:\s*,\s*[A-ZÆØÅ])*\)\s*$/u, "")
     .replace(/\s+\d+\s*(?:stk|biter|pieces?|g|gram)\s*$/iu, "")
-    .replace(/(?:,|\s+[-–—])\s*$/u, "")
+    .replace(/(?:[,;:]|\s+[-–—])\s*$/u, "")
     .replace(/\s+/g, " ")
     .trim();
   return withoutNoise || value.trim();

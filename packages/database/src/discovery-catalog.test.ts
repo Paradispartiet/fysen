@@ -31,6 +31,9 @@ describe("consumer discovery catalog", () => {
     ["Egekilde citrus m/brus 33 cl", null, "beverage"],
     ["Reggiano Lambrusco Roter Perlwine 1,5 l", null, "beverage"],
     ["Sportdryck Mountain Blast Zero Sugar 50cl - Powerade", null, "beverage"],
+    ["mini wine package (3 glasses) :", null, "beverage"],
+    ["Premium Wine Pairing (5 glasses) :", null, "beverage"],
+    ["Lettmelk 0,5% Fett", null, "beverage"],
     ["Bearnaisesås 10 cl", null, "sauce_or_side"],
     ["Blandad kebabsås 20 cl", null, "sauce_or_side"],
     ["KIMBO Dumpling Sauce Hot 190ml 水饺酱", null, "sauce_or_side"],
@@ -51,6 +54,8 @@ describe("consumer discovery catalog", () => {
     expect(canonicalMenuDishName("- 150g Himeji A5 Wagyu Ribeye, Japan,")).toBe("150g Himeji A5 Wagyu Ribeye, Japan");
     expect(canonicalMenuDishIdentity("- 150g Himeji A5 Wagyu Ribeye, Japan,")).toBe("150g himeji a5 wagyu ribeye japan");
     expect(canonicalMenuDishName("Chili Laks -")).toBe("Chili Laks");
+    expect(canonicalMenuDishName("Egg og bacon:")).toBe("Egg og bacon");
+    expect(canonicalMenuDishName("Signature Black Caviar Maki: Tuna Tartare Maki")).toBe("Signature Black Caviar Maki: Tuna Tartare Maki");
     expect(canonicalMenuDishName("Fine No.3 - classic")).toBe("Fine No.3 - classic");
   });
 });
