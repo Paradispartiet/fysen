@@ -69,7 +69,7 @@ jobs:
             echo
             echo 'This proof reads the canonical production catalog dynamically, verifies every catalog restaurant against production DB + watcher state, runs the locked Oslo v1 search scenarios directly without recording funnel events, then verifies the canonical consumer browse API and web surface.'
             echo
-            echo 'Revenue/Pro/AHA boundaries are intentionally owned by the separate revenue production proof and are not rerun after every restaurant materialization.'
+            echo 'Claim/Pro boundaries are owned by the separate revenue production proof. The AHA pilot is deferred and requires an explicit proof run.'
             echo
             echo '```json'
             cat /tmp/fysen-production-pilot-proof.json

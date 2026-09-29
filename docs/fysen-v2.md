@@ -16,15 +16,15 @@ Personaliseringen skal være aktivt valgt, privat og forklarbar. Fysen skal ikke
 
 ## Inngangsport: Oslo v1 må være production-closed
 
-Ingen stor v2-feature kan starte før alle åtte portene i [`fysen-oslo-v1-closeout.md`](./fysen-oslo-v1-closeout.md) er grønne på samme produksjons-SHA.
+Ingen stor v2-feature kan starte før alle sju portene i [`fysen-oslo-v1-closeout.md`](./fysen-oslo-v1-closeout.md) er grønne på samme produksjons-SHA.
 
 Det innebærer blant annet:
 
 - canonical consumer catalog live;
-- `/min-mat`, Claim Restaurant og Fysen Pro live;
-- stateful Min mat/AHA-pilot bevist;
+- Min mat/AHA-piloten satt på pause med kontrollert brukerflate;
+- Claim Restaurant og Fysen Pro live;
 - én faktisk restaurantpilot gjennom Claim → setup → Pro-dashboard;
-- de fem mobile brukerreisene bevist;
+- de fire offentlige mobile brukerreisene bevist;
 - representativ production E2E grønn;
 - web og API bekreftet på forventet `main`;
 - releasekontrakten på maksimalt tre endringskvalifiserte produksjonsbatcher per Europe/Oslo-døgn, uten faste klokkeslett, bevart.
@@ -37,8 +37,8 @@ Restaurant-onboarding fortsetter som løpende innholdsproduksjon og er ikke en g
 |---|---|---|
 | Produktavgrensning | God | Dish-first løser ett tydelig behov uten å bli en generell restaurantkatalog. |
 | Teknisk fundament | Profesjonelt | Ferskhet, kildebelegg, canonical identitet, fail-closed publication og permanente produksjonsporter er riktige valg. |
-| Forbrukeropplevelse | Nesten production-closed | Live-release, mobilbevis og stateful piloter må lukkes før produktet omtales som komplett. |
-| Innovasjon | Sterk i kombinasjonen | Det særegne er rett → ferskt menybevis → restaurant → kunnskap → handling → privat samling. |
+| Forbrukeropplevelse | Nesten production-closed | Live-release, mobilbevis og restaurantpiloten må lukkes før produktet omtales som komplett. |
+| Innovasjon | Sterk i kombinasjonen | Det særegne i v1 er rett → ferskt menybevis → restaurant → kunnskap → handling. |
 | Enkeltfeatures | Ikke alene unike | Søk, lagring og booking finnes andre steder; differensieringen ligger i den beviste sammenhengen. |
 
 Fysen skal derfor ikke markedsføres som ferdig bare fordi kode og CI er grønne. Den profesjonelle standarden er at samme produktfortelling fungerer og er bevist i produksjon.
@@ -53,7 +53,6 @@ Fysen skal derfor ikke markedsføres som ferdig bare fordi kode og CI er grønne
 - verifisert booking/order;
 - Matlyst og canonical «Alle retter»;
 - matleksikon koblet til serveringssteder;
-- Min mat og eksplisitt AHA-handoff;
 - Claim Restaurant og Fysen Pro v1.
 
 ### Bevisst utenfor v1
@@ -66,6 +65,7 @@ Fysen skal derfor ikke markedsføres som ferdig bare fordi kode og CI er grønne
 - automatiske anbefalinger fra skjult søkehistorikk;
 - betaling, partneroppgjør og sponsede retter;
 - generell flerbylansering.
+- Min mat/AHA-pilot til AHA er driftsklar og har avtalt kostnadstak.
 
 Disse punktene er ikke v1-mangler. Bare de eksplisitt valgte v2-sporene under skal bygges videre.
 
@@ -97,14 +97,13 @@ Bygg den minimale canonical modellen for eksplisitte preferanser:
 
 ### V2.1 — navngitte samlinger
 
-Utvid Min mat fra én flat liste til brukerdefinerte samlinger, for eksempel «Vil prøve», «Favoritter» eller «Middag med venner».
+Avklar først identitet, lagring og driftskostnad for en selvstendig Fysen-samling. Utvid deretter til brukerdefinerte samlinger, for eksempel «Vil prøve», «Favoritter» eller «Middag med venner».
 
 - samme rett kan inngå i flere samlinger uten å duplisere canonical menydata;
-- hver samling kan sendes eksplisitt til AHA;
-- AHA-handoff beholder preview, 50-cap, personvernsflagg og one-time-token;
+- en eventuell AHA-handoff kommer først etter separat drifts- og kostnadsbeslutning og beholder preview, 50-cap, personvernsflagg og one-time-token;
 - tomme, utløpte og slettede samlinger feiler kontrollert.
 
-**Ferdig når:** lagre → organiser → åpne på ny session → velg samling → AHA fungerer ende til ende på mobil.
+**Ferdig når:** lagre → organiser → åpne på ny session → velg samling fungerer ende til ende på mobil uten krav om AHA.
 
 ### V2.2 — kontekstuell og forklarbar discovery
 
@@ -189,17 +188,17 @@ Sponsing kan aldri gjøre en udokumentert rett søkbar, endre canonical match-ty
 ## Prioritert videre arbeid
 
 1. Lukk ordinær Oslo v1-release og kjør production proof.
-2. Kjør stateful Min mat/AHA-pilot med ekte AHA-identitet.
-3. Kjør én faktisk Claim → Pro-restaurantpilot.
-4. Fullfør de fem mobile live-reisene og erklær v1 bare dersom alle åtte porter er grønne.
-5. Frys v1 permanent og opprett V2.0 preference-contract som første v2-epic.
-6. Lever navngitte samlinger før anbefalingslogikk, slik at brukeren først får kontroll over signalene.
-7. Bygg forklarbar discovery på de eksplisitte signalene.
-8. Utvid retts-/smaksgrafen og deretter følger/varsler.
-9. Velg første nye by først når Oslo-modellen er stabil i drift.
-10. Behandle Pro v2 som separat kommersielt spor etter dokumentert Pro v1-pilot.
+2. Kjør én faktisk Claim → Pro-restaurantpilot.
+3. Fullfør de fire offentlige mobile live-reisene og erklær v1 bare dersom alle sju porter er grønne.
+4. Frys v1 permanent og opprett V2.0 preference-contract som første v2-epic.
+5. Avklar Fysens egen samlingsløsning og lever navngitte samlinger før anbefalingslogikk.
+6. Bygg forklarbar discovery på de eksplisitte signalene.
+7. Utvid retts-/smaksgrafen og deretter følger/varsler.
+8. Velg første nye by først når Oslo-modellen er stabil i drift.
+9. Behandle Pro v2 som separat kommersielt spor etter dokumentert Pro v1-pilot.
+10. Vurder AHA-integrasjonen separat når tjenesten er klar og driftskostnaden er avklart.
 
-Det skal ikke åpnes arbeid på punkt 5–10 før punkt 1–4 er production-closed.
+Det skal ikke åpnes arbeid på punkt 4–10 før punkt 1–3 er production-closed.
 
 ## V2-ferdigdefinisjon
 

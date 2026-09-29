@@ -1,5 +1,7 @@
 # AHA × Fysen — Min mat v1
 
+**Status:** Separat pilot, satt på pause for Fysen Oslo v1. Lagre- og Min mat-innganger er skjult som standard; direkte besøk til `/min-mat` viser pausemelding. Reaktivering krever driftsklar AHA, godkjent kostnadstak og kontrollert brukerpilot. Denne integrasjonskontrakten gjelder når piloten aktiveres igjen.
+
 ## Produktgrense
 
 AHA eier identitet og analyse. Fysen eier den eksplisitte private matsamlingen `Min mat`.

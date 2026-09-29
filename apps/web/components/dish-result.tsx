@@ -1,4 +1,5 @@
 import type { DishSearchResult } from "@fysen/contracts";
+import { ahaMinMatPilotEnabled } from "../lib/aha-min-mat-pilot";
 import { formatDishPrice } from "../lib/dish-price";
 import { restaurantClaimHref } from "../lib/public-path";
 import { DishComposition } from "./dish-composition";
@@ -77,7 +78,7 @@ export function DishResult({ result }: { result: DishSearchResult }) {
           <span className="openingStatus" data-state={result.opening.state}>{openingLabel(result)}</span>
         </div>
         <div className={actionsClassName}>
-          <SaveMinMatButton menuItemId={result.menuItemId} />
+          {ahaMinMatPilotEnabled ? <SaveMinMatButton menuItemId={result.menuItemId} /> : null}
           {result.actions.booking ? (
             <TrackedExternalLink
               className={primaryActionClassName}
