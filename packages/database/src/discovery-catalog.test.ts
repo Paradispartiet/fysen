@@ -27,5 +27,7 @@ describe("consumer discovery catalog", () => {
     expect(canonicalMenuDishIdentity("Margherita 4 stk")).toBe("margherita");
     expect(canonicalMenuDishIdentity("Adamame")).toBe("edamame");
     expect(canonicalMenuDishIdentity("Pizza Margherita")).toBe("pizza margherita");
+    expect(canonicalMenuDishName("- 150g Himeji A5 Wagyu Ribeye, Japan,")).toBe("150g Himeji A5 Wagyu Ribeye, Japan");
+    expect(canonicalMenuDishIdentity("- 150g Himeji A5 Wagyu Ribeye, Japan,")).toBe("150g himeji a5 wagyu ribeye japan");
   });
 });
