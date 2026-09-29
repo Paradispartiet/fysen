@@ -6,6 +6,7 @@ on:
     paths:
       - .github/workflows/matlyst-production-proof.yml
       - apps/web/tests/matlyst-live-browser-proof.mjs
+      - apps/web/tests/oslo-mobile-public-journeys-proof.mjs
   workflow_run:
     workflows: ["Fysen batched Vercel production release"]
     types: [completed]
@@ -22,8 +23,7 @@ jobs:
   proof:
     if: >-
       github.event_name != 'workflow_run' ||
-      (github.event.workflow_run.conclusion == 'success' &&
-       github.event.workflow_run.head_branch == 'main')
+      github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-latest
     timeout-minutes: 8
     env:
@@ -158,3 +158,7 @@ jobs:
       - name: Verify live restaurant examples in the mobile browser
         if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
         run: pnpm --filter @fysen/web exec node tests/matlyst-live-browser-proof.mjs
+
+      - name: Verify Oslo public journeys in the mobile browser
+        if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
+        run: pnpm --filter @fysen/web exec node tests/oslo-mobile-public-journeys-proof.mjs
