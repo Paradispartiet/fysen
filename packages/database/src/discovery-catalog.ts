@@ -56,7 +56,9 @@ export function classifyDiscoveryCandidate(candidate: DiscoveryCandidate): Disco
   if (matches(name, [/^(velg|velgbar|choose|valg|ekstra|extra|tilvalg|add on)\b/, /^per stk$/, /^chefs? spesialitet$/])) {
     return "modifier";
   }
-  if (matches(section, [/\b(drikke|drinks?|beverage|vin|wine|ol|beer|cocktail|sprit|spirits?)\b/]) || matches(name, [
+  if (matches(section, [/\b(drikke|drinks?|beverage|vin|wine|ol|beer|cocktail|sprit|spirits?)\b/])
+    || (name !== "menu med milkshake" && /\bmilkshake\b/.test(name))
+    || matches(name, [
     /\b(vann|water|cola|fanta|sprite|pepsi|solo|juice|limonade|lemonade|kaffe|coffee|espresso|cappuccino|capuccino|latte|te|tea)\b/,
     /^(?:ol|beer|pils|ipa|lager|vin|wine|prosecco|champagne|cava|cocktail|gin|vodka|whisk(?:e)?y|cognac|akevitt|aperol spritz)\b/,
     /^\d+[,.]?\d*\s*(cl|ml|liter|l)\b/,
@@ -65,6 +67,9 @@ export function classifyDiscoveryCandidate(candidate: DiscoveryCandidate): Disco
     /^(?:chocolate|oreo|salted caramel|strawberry|vanilla) shake\b/,
     /^(?:mini|full|premium) (?:wine|beer) (?:package|pairing)\b/,
     /^lettmelk\b/,
+    /^(?:ginger|gurkemeie|turmeric) shot$/,
+    /\bsparkling fruit drink$/,
+    /\bwhisk(?:e)?y\s+0\s+7\s*l$/,
   ])) {
     return "beverage";
   }
