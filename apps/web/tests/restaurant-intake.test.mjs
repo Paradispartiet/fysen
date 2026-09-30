@@ -56,6 +56,8 @@ test("request validates Oslo postcode, HTTPS, browser source type and action pro
   for (const change of [
     { address: "Testgata 1, Bergen" },
     { menuUrl: "http://restaurant.example/meny" },
+    { menuUrl: "not-a-url" },
+    { menuUrl: "HTTPS://restaurant.example/meny" },
     { menuUrl: "https://user:pass@restaurant.example/meny" },
     { sourceType: "pdf", fetchMode: "browser" },
     { bookingUrl: "https://restaurant.example/book" },
@@ -144,6 +146,7 @@ test("oversized, malformed and invalid requests never reach GitHub", async (t) =
     "{",
     "x".repeat(32_001),
     { ...input, name: "寿司" },
+    { ...input, menuUrl: "not-a-url" },
     { ...input, menuUrl: "http://restaurant.example" },
   ]) {
     assert.equal((await handleRestaurantIntake(request(body))).status, 400);

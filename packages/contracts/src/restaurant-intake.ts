@@ -6,8 +6,12 @@ const httpsUrl = z
   .max(2000)
   .url()
   .refine((value) => {
-    const url = new URL(value);
-    return url.protocol === "https:" && !url.username && !url.password;
+    try {
+      const url = new URL(value);
+      return value.startsWith("https://") && !url.username && !url.password;
+    } catch {
+      return false;
+    }
   }, "Bruk en HTTPS-lenke uten brukernavn eller passord.");
 
 const optionalHttpsUrl = z.preprocess(
