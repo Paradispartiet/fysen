@@ -1,0 +1,343 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-visitoslo-review-intake-2-20260930",
+  "concurrency": 2,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "melacafe-oslo",
+        "name": "MelaCafé",
+        "websiteUrl": "https://melacafe.no/",
+        "address": "Mariboes gate 8, 0183 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://melacafe.no/menu",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO vegan/vegetarian and cheap-restaurant review. First-party MelaCafé menu publishes named, individually priced Levantine and Middle Eastern dishes at Mariboes gate 8. Research only: exact-head identity, geocoding, food-versus-drink extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "nam-fah-oslo",
+        "name": "Nam Fah",
+        "websiteUrl": "https://nam-fah.com/",
+        "address": "Maridalsveien 21, 0175 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://nam-fah.com/butikk/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO vegan/vegetarian and cheap-restaurant review. First-party Nam Fah order menu publishes current named and priced Thai dishes at Maridalsveien 21. Research only: exact-head identity, geocoding, variant-price semantics, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "grefsenkollen-oslo",
+        "name": "Grefsenkollen restaurant",
+        "websiteUrl": "https://www.grefsenkollen.no/",
+        "address": "Grefsenkollveien 100, 0490 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.grefsenkollen.no/menyer",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO outdoor/fine-dining/fireplace review. First-party Grefsenkollen menu page publishes individually priced terrace and pizza dishes while clearly marking the seasonal restaurant section closed. Research only: exact-head identity, geocoding, active-section scoping, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "pascal-henrik-ibsens-gate-oslo",
+        "name": "Pascal Henrik Ibsens gate",
+        "websiteUrl": "https://www.pascal.no/lokasjoner/henrik-ibsens-gate-36",
+        "address": "Henrik Ibsens gate 36, 0255 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.pascal.no/lokasjoner/henrik-ibsens-gate-36",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO afternoon-tea and baked-goods review. First-party location page publishes a substantial individually priced lunch and dessert menu for the Henrik Ibsens gate 36 venue. Research only: exact-head identity, geocoding, location-specific extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "nasjonalmuseet-kafe-oslo",
+        "name": "Nasjonalmuseet Kafe",
+        "websiteUrl": "https://www.nasjonalmuseetkafe.no/",
+        "address": "Brynjulf Bulls plass 2, 0250 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.nasjonalmuseetkafe.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO traditional-sandwich and afternoon-tea review. First-party Nasjonalmuseet Kafe page publishes current individually priced sandwiches, lunch and a-la-carte dishes at Brynjulf Bulls plass 2. Research only: exact-head identity, geocoding, section duplication, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dattera-til-hagen-oslo",
+        "name": "Dattera til Hagen",
+        "websiteUrl": "https://www.dattera.no/",
+        "address": "Grønland 10, 0188 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.dattera.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO cheap-restaurant review. First-party Dattera menu publishes current individually priced small plates, lunch dishes, salads and pizzas at Grønland 10. Research only: exact-head identity, geocoding, add-on/modifier filtering, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "postkontoret-toyen-oslo",
+        "name": "Postkontoret",
+        "websiteUrl": "https://www.pktoyen.no/",
+        "address": "Hagegata 27, 0653 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.pktoyen.no/postkontoret/postkontoret/moment-rlzj8-fcwcg",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO cheap-restaurant review. First-party Postkontoret menu publishes current individually priced pizzas and other food at Hagegata 27. Research only: exact-head identity, geocoding, source extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "den-gamle-major-oslo",
+        "name": "Den Gamle Major",
+        "websiteUrl": "https://gamlemajor.no/",
+        "address": "Bogstadveien 66, 0366 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://gamlemajor.no/mat/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO outdoor review. First-party Den Gamle Major menu publishes individually priced restaurant dishes at Bogstadveien 66. Research only: exact-head identity, geocoding, add-on and organisation-number filtering, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "fjaer-konfekt-oslo",
+        "name": "Fjær Konfekt",
+        "websiteUrl": "https://fjaerkonfekt.no/",
+        "address": "Drammensveien 153B, 0277 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://fjaerkonfekt.no/category/porsjonskaker/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO baked-goods review. First-party Fjær Konfekt product category publishes individually priced portion desserts produced at its Oslo confectionery. Research only: exact-head identity, geocoding, product-versus-catering semantics, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "mother-india-bislett-oslo",
+        "name": "Mother India",
+        "websiteUrl": "https://motherindiaoslo.no/bislett/",
+        "address": "Pilestredet 63, 0350 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.motherindia.no/menus",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO child-friendly review. Mother India's current official menu publishes individually priced dishes, while the Bislett identity is anchored to Pilestredet 63. Research only: exact-head physical identity, branch applicability, geocoding, food-versus-drink extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "hard-rock-cafe-oslo",
+        "name": "Hard Rock Cafe Oslo",
+        "websiteUrl": "https://cafe.hardrock.com/oslo/",
+        "address": "Jernbanetorget 1, 0154 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://cafe.hardrock.com/oslo/files/7378/EATS_MENU_OSLO-7_1.pdf",
+        "sourceType": "pdf",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO accessibility review. Hard Rock Cafe Oslo's live first-party location page links its Oslo EATS menu PDF and identifies Jernbanetorget 1. Research only: exact-head identity, PDF freshness/transport, geocoding, modifier filtering, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "talormade-oslobukta-oslo",
+        "name": "Talormade Oslobukta",
+        "websiteUrl": "https://talormade.no/",
+        "address": "Operagata 69, 0191 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/nb/nor/oslo/venue/talormade-oslobukta",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO baked-goods review. Talormade's first-party surface establishes the Oslobukta identity but does not publish stable current product prices; the current Wolt venue at the same Operagata 69 identity is therefore used as secondary priced service-menu evidence under the Oslo pilot source hierarchy. Research only: exact-head identity, geocoding, service-menu extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ]
+}
