@@ -1,0 +1,44 @@
+.intakeMain {
+  --color-surface-raised: var(--color-paper);
+  --color-surface-subtle: var(--color-surface-2);
+  --color-text: var(--color-ink);
+  --color-text-muted: var(--color-muted);
+  --color-border: var(--color-line-strong);
+  color: var(--color-ink);
+}
+
+.intakeMain a {
+  color: var(--color-brand);
+}
+
+.intakeMain .claimError {
+  color: #ffb2b2;
+}
+
+.intakeFields {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.intakeDetails {
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.intakeDetails summary {
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.intakeDetails .claimField {
+  margin-top: 16px;
+}
+
+.intakeMain .claimSuccess button {
+  margin-top: 20px;
+}

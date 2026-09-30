@@ -14,6 +14,10 @@
       "types": "./dist/dish-browse.d.ts",
       "default": "./dist/dish-browse.js"
     },
+    "./restaurant-intake": {
+      "types": "./dist/restaurant-intake.d.ts",
+      "default": "./dist/restaurant-intake.js"
+    },
     "./restaurant-claims": {
       "types": "./dist/restaurant-claims.d.ts",
       "default": "./dist/restaurant-claims.js"
