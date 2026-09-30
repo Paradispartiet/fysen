@@ -12,6 +12,13 @@ const repository = "Paradispartiet/fysen";
 const apiRoot = `https://api.github.com/repos/${repository}`;
 const maxBodyBytes = 32_000;
 
+class GitHubResponseError extends Error {
+  constructor() {
+    super("GitHub intake request failed");
+    this.name = "GitHubResponseError";
+  }
+}
+
 function authorized(request: Request, secret: string): boolean {
   const header = request.headers.get("authorization") ?? "";
   const supplied = header.startsWith("Bearer ") ? header.slice(7) : "";
@@ -58,7 +65,7 @@ async function github(
     signal: AbortSignal.timeout(15_000),
     cache: "no-store",
   });
-  if (!response.ok) throw new Error("GitHub intake request failed");
+  if (!response.ok) throw new GitHubResponseError();
   return response.json() as Promise<unknown>;
 }
 
@@ -86,11 +93,13 @@ export async function createRestaurantIntakePullRequest(
   const seedPath = `apps/menu-worker/research/operator-${id}.seed.json`;
   const baseSha = mainSha(await github("git/ref/heads/main", token));
   const branchUrl = `https://github.com/${repository}/tree/${branch}`;
+  let branchCreated = false;
   try {
     await github("git/refs", token, {
       ref: `refs/heads/${branch}`,
       sha: baseSha,
     });
+    branchCreated = true;
     const response = await fetch(`${apiRoot}/contents/${seedPath}`, {
       method: "PUT",
       headers: {
@@ -131,7 +140,8 @@ export async function createRestaurantIntakePullRequest(
       pullRequestUrl: pr.html_url,
       seedPath,
     };
-  } catch {
+  } catch (error) {
+    if (!branchCreated && error instanceof GitHubResponseError) throw error;
     // A timed-out write may have succeeded. Preserve the branch for inspection
     // instead of deleting it or silently repeating an external mutation.
     return { status: "needs_review" as const, branchUrl, seedPath };
