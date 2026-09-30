@@ -227,6 +227,21 @@ test("main lookup failure performs no mutation and does not leak GitHub errors",
   assert.equal(network.mock.callCount(), 1);
 });
 
+test("definitive branch creation rejection does not return a false review link", async (t) => {
+  configure(t);
+  let calls = 0;
+  t.mock.method(globalThis, "fetch", async () => {
+    calls += 1;
+    if (calls === 1)
+      return Response.json({ object: { sha: "c".repeat(40) } });
+    return new Response("private upstream details", { status: 403 });
+  });
+  const response = await handleRestaurantIntake(request());
+  assert.equal(response.status, 502);
+  assert.deepEqual(await response.json(), { code: "INTAKE_UNAVAILABLE" });
+  assert.equal(calls, 2);
+});
+
 for (const failAt of [2, 3, 4])
   test(`uncertain GitHub write ${failAt} returns a review link without retry or deletion`, async (t) => {
     configure(t);
