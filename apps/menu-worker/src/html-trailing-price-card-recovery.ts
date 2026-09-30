@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v18";
+  "trailing-price-card-v19";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -46,6 +46,10 @@ const COMPONENT_QUANTITY_LABEL =
   /^\d+\s+(?:types?\s+of|pieces?\s+of|pcs?\s+of)\b/iu;
 const EXPLICIT_A_LA_CARTE_SECTION = "A LA CARTA";
 const MAX_PRECEDING_TITLE_DISTANCE = 12;
+const GENERIC_DAILY_OR_PACKAGE_TITLE =
+  /^(?:(?:dagens|today(?:['’]s)?)\b|(?:\d+\s*[- ]?retters?\s+meny|\d+\s*[- ]?course\s+menu)\b|.*\b(?:vinpakke|wine\s+pairing|lunsjpakke|brunsjpakke)\b)/iu;
+const MENU_SERVICE_NOTICE =
+  /\b(?:er\s+tilgjengelig|is\s+available|presenteres\s+av|is\s+presented\s+by)\b/iu;
 
 interface ParsedTrailingPrice {
   readonly priceMinor: number;
@@ -114,6 +118,76 @@ function parseTrailingPrice(value: string): ParsedTrailingPrice | null {
     priceKind: trailing[1] ? "from" : "exact",
     residual,
   };
+}
+
+function recoverTabbedMenuCards(html: string): readonly MenuObservedItem[] {
+  const $ = load(html);
+  if ($("[role='tablist'] [role='tab']").length < 2 ||
+      $("[role='tabpanel']").length < 2) return [];
+
+  const items = new Map<string, MenuObservedItem>();
+  let pricedCardCount = 0;
+  let position = 0;
+
+  $("[role='tabpanel'] .menu-section").each((_, section) => {
+    const sectionName = normalizeVisibleLine(
+      $(section).find(".menu-section-title").first().text(),
+    );
+    if (!sectionName) return;
+
+    $(section).find(".menu-items").each((_, group) => {
+      let pendingTitle: string | null = null;
+      let ambiguous = false;
+      $(group).children(".menu-item").each((_, card) => {
+        const title = normalizeVisibleLine($(card).find(".menu-item-title").first().text());
+        const priceText = normalizeVisibleLine(
+          $(card).find(".menu-item-price-top, .menu-item-price-bottom").text(),
+        );
+        const options = $(card).find(".menu-item-options .menu-item-option").toArray();
+        const singleOptionPrice = options.length === 1
+          ? normalizeVisibleLine($(options[0]).text()) : "";
+        const price = parseTrailingPrice(priceText || title) ||
+          (title ? parseTrailingPrice(singleOptionPrice) : null);
+        if (price?.residual) return;
+        if (price) {
+          pricedCardCount += 1;
+          const selectedTitle = title && !parseTrailingPrice(title) ? title : pendingTitle;
+          if (selectedTitle && !ambiguous &&
+              !GENERIC_DAILY_OR_PACKAGE_TITLE.test(selectedTitle)) {
+            const sourceKey = createMenuItemSourceKey(selectedTitle, sectionName);
+            if (!items.has(sourceKey)) {
+              items.set(sourceKey, {
+                sourceKey,
+                name: selectedTitle,
+                normalizedName: normalizeDishName(selectedTitle),
+                description: null,
+                sectionName,
+                priceMinor: price.priceMinor,
+                priceKind: price.priceKind,
+                currency: "NOK",
+                position,
+                extractionMethod: "html_heuristic",
+                confidence: 0.99,
+                sourceExcerpt: `${sectionName} — ${selectedTitle} — ${priceText || (parseTrailingPrice(title) ? title : singleOptionPrice)}`,
+              });
+            }
+          }
+          pendingTitle = null;
+          ambiguous = false;
+          position += 1;
+        } else if (title && MENU_SERVICE_NOTICE.test(title)) {
+          pendingTitle = null;
+          ambiguous = false;
+        } else if (title && !ALLERGEN_METADATA.test(title)) {
+          if (pendingTitle) ambiguous = true;
+          else pendingTitle = title;
+        }
+      });
+    });
+  });
+
+  if (items.size < 4 || items.size * 2 < pricedCardCount) return [];
+  return [...items.values()];
 }
 
 function looksLikeDescription(value: string): boolean {
@@ -549,6 +623,8 @@ export function isStrongDirectTrailingPriceCardRecovery(
 export function recoverTrailingPriceCardHtmlItems(
   html: string,
 ): readonly MenuObservedItem[] {
+  const tabbedCards = recoverTabbedMenuCards(html);
+  if (tabbedCards.length >= 4) return tabbedCards;
   const semanticCategoryItems = recoverSemanticCategoryCardHtmlItems(html);
   if (semanticCategoryItems.length >= 4) return semanticCategoryItems;
 
