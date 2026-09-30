@@ -317,7 +317,7 @@
         "slug": "talormade-oslobukta-oslo",
         "name": "Talormade Oslobukta",
         "websiteUrl": "https://talormade.no/",
-        "address": "Operagata 69, 0191 Oslo",
+        "address": "Operagata 67B, 0191 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
@@ -332,7 +332,7 @@
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-09-30",
-          "note": "Current VisitOSLO baked-goods review. Talormade's first-party surface establishes the Oslobukta identity but does not publish stable current product prices; the current Wolt venue at the same Operagata 69 identity is therefore used as secondary priced service-menu evidence under the Oslo pilot source hierarchy. Research only: exact-head identity, geocoding, service-menu extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+          "note": "Current VisitOSLO baked-goods review. Talormade's current first-party surface establishes the Bispevika/Oslobukta venue at Operagata 67B, while the current Wolt venue uses the same phone number but still lists Operagata 69. Wolt is therefore only secondary priced service-menu evidence under the Oslo pilot source hierarchy, and the address discrepancy must remain explicit until semantic QA proves the menu is safely attributable to the current venue. Research only: exact-head identity, geocoding, service-menu extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
         }
       },
       "actions": [],
