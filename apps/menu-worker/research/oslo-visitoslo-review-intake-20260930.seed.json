@@ -1,0 +1,343 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-visitoslo-review-intake-20260930",
+  "concurrency": 2,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "vinoteket-oslo",
+        "name": "Vinoteket",
+        "websiteUrl": "https://vinoteket.no/",
+        "address": "Henrik Ibsens gate 60 A, 0255 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://vinoteket.no/en/pizzas/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO coverage review. First-party Vinoteket pizza page publishes current individually priced starters and pizzas at Henrik Ibsens gate 60 A. Research only: exact-head identity, geocoding, extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "crow-bar-brewery-oslo",
+        "name": "Crow Bar & Brewery",
+        "websiteUrl": "https://www.crowbryggeri.com/",
+        "address": "Torggata 32, 0183 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.crowbryggeri.com/food",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO microbrewery review. First-party Crow food page publishes a small but individually priced own-kitchen menu at Torggata 32. Research only: exact-head identity, geocoding, extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "amundsen-bryggeri-spiseri-oslo",
+        "name": "Amundsen Bryggeri & Spiseri",
+        "websiteUrl": "https://www.amundsenspiseri.no/",
+        "address": "Stortingsgata 20, 0161 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.amundsenspiseri.no/meny-",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO lunch and microbrewery review. First-party Amundsen page publishes a substantial individually priced seasonal food menu at Stortingsgata 20. Research only: exact-head identity, geocoding, extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "gronland-boulebar-spiseri-oslo",
+        "name": "Grønland Boulebar & Spiseri",
+        "websiteUrl": "https://gronlandboule.no/",
+        "address": "Grønlandsleiret 27, 0190 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://gronlandboule.no/mat/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO game-bar review. First-party Grønland Boulebar & Spiseri page publishes a full individually priced restaurant menu at Grønlandsleiret 27. Research only: exact-head identity, geocoding, extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "maschmanns-skoyen-oslo",
+        "name": "Maschmanns",
+        "websiteUrl": "https://www.maschmanns.no/",
+        "address": "Karenslyst allé 51, 0279 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.maschmanns.no/shop",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO lunch review. First-party Maschmanns order surface publishes current individually priced pizzas from the same Karenslyst allé 51 business. Research only: exact-head identity, geocoding, extraction, strict restaurant-menu scoping, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "lysebu-restaurant-oslo",
+        "name": "Lysebu Restaurant",
+        "websiteUrl": "https://lysebu.no/",
+        "address": "Lysebuveien 12, 0790 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://lysebu.no/a-la-carte-meny/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO afternoon-tea review. First-party Lysebu a-la-carte page publishes current named and individually priced sandwiches, starters, mains and desserts at Lysebuveien 12. Research only: exact-head identity, geocoding, extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "ruffino-oslo",
+        "name": "Ruffino Ristorante Italiano",
+        "websiteUrl": "https://ruffino.no/",
+        "address": "Arbins gate 1, 0253 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://ruffino.no/wp-content/uploads/2026/05/Meny-sommer-2026.pdf",
+        "sourceType": "pdf",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO accessibility review. Ruffino's live first-party menu page links this 2026 menu PDF with a broad individually priced Italian menu at Arbins gate 1. Research only: exact-head PDF transport, geocoding, extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "baltazar-ristorante-enoteca-oslo",
+        "name": "Baltazar Ristorante & Enoteca",
+        "websiteUrl": "https://baltazar.no/",
+        "address": "Dronningens gate 27, 0154 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://baltazar.no/wp-content/uploads/2026/06/MENY.pdf",
+        "sourceType": "pdf",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO child-friendly review. Baltazar's live first-party site links this current 2026 menu PDF with individually priced antipasti, pasta, mains, pizza and desserts at Dronningens gate 27. Research only: exact-head PDF transport, geocoding, extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "seven-bjorvika-oslo",
+        "name": "SEVEN",
+        "websiteUrl": "https://www.sevenoslo.no/sevenoslo",
+        "address": "Dronning Eufemias gate 6A, 0191 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.sevenoslo.no/s/Seven-Meny-Var-2026-A-La-Carte-7g5g.pdf",
+        "sourceType": "pdf",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO fine-dining/accessibility review. SEVEN's live first-party site currently links this 2026 a-la-carte PDF with individually priced snacks, sushi, starters, mains and desserts at Dronning Eufemias gate 6A. Research only: exact-head PDF transport, geocoding, food-versus-drink semantic scoping, source-backed item floor, assertions and artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "grand-cafe-oslo",
+        "name": "Grand Café",
+        "websiteUrl": "https://www.grandcafeoslo.no/",
+        "address": "Karl Johans gate 31, 0159 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.grandcafeoslo.no/matmeny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO lunch/fine-dining/wine-bar review. First-party Grand Café page publishes broad current individually priced lunch and dinner menus at Karl Johans gate 31. Research only: exact-head identity, geocoding, extraction, duplicate lunch/dinner canonicalization, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "hitchhiker-oslo",
+        "name": "Hitchhiker",
+        "websiteUrl": "https://www.hitchhiker.no/",
+        "address": "Øvre Slottsgate 3, 0157 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.hitchhiker.no/kveldsmeny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO lunch review. First-party Hitchhiker dinner page publishes individually priced snacks, a-la-carte dishes and dessert at Øvre Slottsgate 3. Research only: exact-head identity, geocoding, extraction, source-backed item floor, assertions and semantic artifact QA must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "eik-annen-etage-oslo",
+        "name": "Restaurant Eik Annen Etage",
+        "websiteUrl": "https://eikannenetage.no/",
+        "address": "Stortingsgata 24/26, 0161 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://eikannenetage.no/english",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-30",
+          "note": "Current VisitOSLO accessibility/fine-dining review. First-party Eik Annen Etage page publishes current individually priced a-la-carte dishes in addition to set-menu information at Stortingsgata 24/26. Research only: exact-head identity, geocoding, extraction, package-versus-a-la-carte semantic QA, source-backed item floor and assertions must pass before any promotion."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ]
+}
