@@ -9,13 +9,17 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v18";
+  "trailing-price-card-v19";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
   /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{1,3})(?:[.,](\d{1,2}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
 const TRAILING_MARKED_PRICE =
   /(?:(fra|from)\s+)?([1-9]\d{1,3})(?:[.,](\d{1,2}))?\s*(?:,-|kr\.?|NOK)\s*$/iu;
+const INLINE_MARKED_FOOD_PRICE =
+  /(?:(fra|from)\s+)?([1-9]\d{1,3})(?:[.,](\d{1,2}))?\s*(?:,-|kr\.?|NOK)(?:\s*(?:\/\s*(?:stk\.?|pcs?|pieces?)|\([^()]{1,120}\)))?\s*$/iu;
+const TRAILING_DASH_SEPARATOR = /\s*[-–—]\s*$/u;
+const SPACED_DASH_SEPARATOR = /\s+[-–—]\s+/u;
 const ADDITIONAL_MARKED_PRICE =
   /(?:(?:NOK|kr\.?)\s*[1-9]\d{1,3}(?:[.,]\d{1,2})?|[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:,-|kr\.?|NOK))/iu;
 const EXPLICIT_PRICE_NOTATION = /(?:\bNOK\b|\bkr\.?|,-\s*$)/iu;
@@ -51,6 +55,13 @@ interface ParsedTrailingPrice {
   readonly priceMinor: number;
   readonly priceKind: MenuPriceKind;
   readonly residual: string;
+}
+
+interface ParsedInlineMarkedFoodRow {
+  readonly name: string;
+  readonly description: string | null;
+  readonly priceMinor: number;
+  readonly priceKind: MenuPriceKind;
 }
 
 interface TrailingPriceCandidate {
@@ -113,6 +124,56 @@ function parseTrailingPrice(value: string): ParsedTrailingPrice | null {
     priceMinor,
     priceKind: trailing[1] ? "from" : "exact",
     residual,
+  };
+}
+
+function looksLikeInlineFoodDescription(value: string): boolean {
+  const line = normalizeVisibleLine(value);
+  if (!line) return false;
+  const words = line.split(/\s+/u).filter(Boolean);
+  const commaCount = line.match(/,/gu)?.length ?? 0;
+  return commaCount >= 2 || words.length >= 4;
+}
+
+function parseInlineMarkedFoodRow(
+  value: string,
+): ParsedInlineMarkedFoodRow | null {
+  const line = normalizeVisibleLine(value);
+  const match = line.match(INLINE_MARKED_FOOD_PRICE);
+  if (!match?.[2] || match.index === undefined) return null;
+
+  const priceMinor = parsedAmount(match[2], match[3]);
+  if (priceMinor === null) return null;
+
+  const residual = line
+    .slice(0, match.index)
+    .replace(TRAILING_DASH_SEPARATOR, "")
+    .trim();
+  if (!residual || ADDITIONAL_MARKED_PRICE.test(residual)) return null;
+
+  const parts = residual
+    .split(SPACED_DASH_SEPARATOR)
+    .map((part) => part.trim())
+    .filter(Boolean);
+  let name = residual;
+  let description: string | null = null;
+
+  if (
+    parts.length >= 3 ||
+    (parts.length === 2 &&
+      parts[1] !== undefined &&
+      looksLikeInlineFoodDescription(parts[1]))
+  ) {
+    name = (parts[0] ?? "").replace(/[,;:]+$/u, "").trim();
+    description = parts.slice(1).join(" – ").trim() || null;
+  }
+
+  if (!looksLikeDishTitle(name)) return null;
+  return {
+    name,
+    description,
+    priceMinor,
+    priceKind: match[1] ? "from" : "exact",
   };
 }
 
@@ -702,7 +763,28 @@ export function recoverInlineMarkedPriceTextItems(
   const unique = new Map<string, MenuObservedItem>();
 
   for (let position = 0; position < lines.length; position += 1) {
-    const endpoint = parseTrailingPrice(lines[position] ?? "");
+    const line = lines[position] ?? "";
+    const directFood = parseInlineMarkedFoodRow(line);
+    if (directFood) {
+      const sourceKey = createMenuItemSourceKey(directFood.name);
+      unique.set(sourceKey, {
+        sourceKey,
+        name: directFood.name,
+        normalizedName: normalizeDishName(directFood.name),
+        description: directFood.description,
+        sectionName: null,
+        priceMinor: directFood.priceMinor,
+        priceKind: directFood.priceKind,
+        currency: "NOK",
+        position,
+        extractionMethod: "html_heuristic",
+        confidence: 0.98,
+        sourceExcerpt: line.slice(0, 1000),
+      });
+      continue;
+    }
+
+    const endpoint = parseTrailingPrice(line);
     if (!endpoint?.residual || !looksLikeDishTitle(endpoint.residual)) continue;
     const name = normalizeVisibleLine(endpoint.residual);
     const sourceKey = createMenuItemSourceKey(name);
@@ -718,7 +800,7 @@ export function recoverInlineMarkedPriceTextItems(
       position,
       extractionMethod: "html_heuristic",
       confidence: 0.97,
-      sourceExcerpt: lines[position]?.slice(0, 1000) ?? name,
+      sourceExcerpt: line.slice(0, 1000),
     });
   }
 
