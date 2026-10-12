@@ -9,7 +9,7 @@ import { recoverSemanticCategoryCardHtmlItems } from "./html-category-card-recov
 import { looksLikeHtmlDescription } from "./html-description-title-recovery.js";
 
 export const HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION =
-  "trailing-price-card-v18";
+  "trailing-price-card-v19";
 
 const HEADING_MARKER = "__FYSEN_TRAILING_PRICE_HEADING_LEVEL_";
 const PURE_PRICE_LINE =
@@ -147,6 +147,17 @@ function looksLikeDishTitle(value: string): boolean {
   if (looksLikeDescription(title) || /^(?:©|™|https?:\/\/|www\.)/iu.test(title))
     return false;
   return title.split(/\s+/).filter(Boolean).length <= 12;
+}
+
+function looksLikeExplicitlyPricedPreparationHeading(value: string): boolean {
+  const title = normalizeVisibleLine(value);
+  return (
+    /^(?:fritert|grillet|bakt|braisert|stekt|røkt|fried|grilled|baked|braised|smoked)\s+\p{L}/iu.test(title) &&
+    title.length <= 160 &&
+    title.split(/\s+/u).length <= 12 &&
+    !SECTION_OR_UI_LABEL.test(title) &&
+    !UI_ACTION_LEAD.test(title)
+  );
 }
 
 function annotatedLines(html: string): readonly string[] {
@@ -611,7 +622,12 @@ export function recoverTrailingPriceCardHtmlItems(
     } else if (structuredLeadingTitle) {
       titlePosition = structuredLeadingTitle.position;
       title = structuredLeadingTitle.title;
-    } else if (endpoint.residual && looksLikeDishTitle(endpoint.residual)) {
+     } else if (
+      endpoint.residual &&
+      (looksLikeDishTitle(endpoint.residual) ||
+        (isHeadingTitleLine(lines, pricePosition) &&
+          looksLikeExplicitlyPricedPreparationHeading(endpoint.residual)))
+    ) {
       titlePosition = pricePosition;
       title = normalizeVisibleLine(endpoint.residual);
     } else {
@@ -724,4 +740,50 @@ export function recoverInlineMarkedPriceTextItems(
 
   if (unique.size < 3) return [];
   return [...unique.values()].sort((a, b) => a.position - b.position);
+}
+
+/**
+ * Preserve two published prices on a directly priced heading (e.g. oyster
+ * preparations at 45/55,-). Do not collapse them to an invented exact price.
+ * Only semantic h3/h4 titles with both amounts on the heading qualify.
+ */
+export function recoverInlineHeadingMultiplePriceHtmlItems(
+  html: string,
+): readonly MenuObservedItem[] {
+  const $ = load(html);
+  $("script, style, noscript, svg, template").remove();
+  const unique = new Map<string, MenuObservedItem>();
+  $("h3, h4").each((position, element) => {
+    const visible = normalizeVisibleLine($(element).text());
+    const match = visible.match(/^(.{2,140}?)\s+([1-9]\d{0,3})\s*\/\s*([1-9]\d{0,3})\s*,-$/u);
+    if (!match?.[1] || !match[2] || !match[3]) return;
+    const name = normalizeVisibleLine(match[1]);
+    const firstPrice = Number(match[2]) * 100;
+    const lastPrice = Number(match[3]) * 100;
+    if (
+      !/\p{L}/u.test(name) ||
+      firstPrice < 4_000 ||
+      lastPrice < firstPrice ||
+      lastPrice > 1_000_000 ||
+      SECTION_OR_UI_LABEL.test(name) ||
+      UI_ACTION_LEAD.test(name)
+    ) return;
+    const sourceKey = createMenuItemSourceKey(name);
+    unique.set(sourceKey, {
+      sourceKey,
+      name,
+      normalizedName: normalizeDishName(name),
+      description: null,
+      sectionName: null,
+      priceMinor: firstPrice,
+      priceKind: "multiple",
+      priceMaxMinor: lastPrice,
+      currency: "NOK",
+      position,
+      extractionMethod: "html_heuristic",
+      confidence: 0.98,
+      sourceExcerpt: visible.slice(0, 1000),
+    });
+  });
+  return [...unique.values()];
 }
