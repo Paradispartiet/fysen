@@ -336,7 +336,7 @@ function preferUniquelyDirectPricedConflicts(
     groups.set(item.sourceKey, group);
   }
 
-  const preferredByKey = new Map<string, MenuObservedItem>();
+  const preferredByKey = new Map<string, ReadonlySet<MenuObservedItem>>();
   for (const [sourceKey, group] of groups) {
     if (group.length < 2) continue;
     const prices = new Set(
@@ -347,13 +347,19 @@ function preferUniquelyDirectPricedConflicts(
     );
     if (prices.size < 2) continue;
     const direct = group.filter(hasDirectPricedNameProvenance);
-    if (direct.length === 1 && direct[0]) preferredByKey.set(sourceKey, direct[0]);
+    // Repeated sections may publish the same title and exact price directly.
+    // Prefer all agreeing direct observations to prices inherited from
+    // neighboring dishes. Preserve conflicting direct prices as ambiguous.
+    const directPrices = new Set(direct.map((item) => item.priceMinor));
+    if (direct.length > 0 && directPrices.size === 1) {
+      preferredByKey.set(sourceKey, new Set(direct));
+    }
   }
   if (preferredByKey.size === 0) return items;
 
   return items.filter((item) => {
     const preferred = preferredByKey.get(item.sourceKey);
-    return preferred === undefined || item === preferred;
+    return preferred === undefined || preferred.has(item);
   });
 }
 function collapseSamePositionPricePrefixVariants(
