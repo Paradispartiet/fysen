@@ -11,24 +11,16 @@
     "longitude": 10.7530356
   },
   "menuSource": {
-    "url": "https://district4.winorder.no/en",
-    "sourceType": "html",
-    "fetchMode": "browser",
+    "url": "https://district4.no/wp-content/uploads/2026/08/D4_innemeny_A3_2026_aug.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
     "minimumExpectedItems": 19,
     "sourceSupport": {
       "redirectOrigins": [],
-      "browserDataOrigins": [
-        "https://api.winorder.no"
-      ],
-      "browserBlockedOrigins": [
-        "https://tracking.winorder.no"
-      ]
-    },
-    "readinessTexts": [
-      "Calamari"
-    ]
+      "browserDataOrigins": []
+    }
   },
   "hoursSource": {
     "url": "https://district4.no/",
@@ -39,8 +31,8 @@
   "verification": {
     "menu": {
       "status": "unverified",
-      "checkedAt": "2026-09-11",
-      "note": "Exact live reproof on PR #670 returned 36 items from the current first-party WinOrder source. Pepper beef and Beef Carpaccio are no longer present, so the assertion set is refreshed to five currently observed canonical dishes; the 19-item floor and source contract remain unchanged."
+      "checkedAt": "2026-10-12",
+      "note": "Official District4 website currently links its August 2026 first-party dine-in PDF; that source explicitly publishes all five locked dishes and prices, including Calamari 145 NOK. The separate first-party WinOrder takeaway extraction returned 34 items but omitted Calamari. This source switch is an exact-head reproof candidate, not a production acceptance claim; retain all five names, prices and the 19-item floor."
     }
   },
   "actions": [
