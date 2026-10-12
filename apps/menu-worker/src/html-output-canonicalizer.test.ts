@@ -361,6 +361,60 @@ describe("structural HTML output canonicalization", () => {
     ]);
   });
 
+  it("drops inherited toast prices when the same correct direct price occurs in several sections", () => {
+    const cheddarDinner = item(
+      "Toast - Cheddar & Jalapeño",
+      16500,
+      null,
+      "Toast - Cheddar & Jalapeño 165,-",
+    );
+    const cheddarLunch = item(
+      "Toast - Cheddar & Jalapeño",
+      16500,
+      null,
+      "Toast - Cheddar & Jalapeño 165,-",
+    );
+    const cheddarInherited = item(
+      "Toast - Cheddar & Jalapeño",
+      17500,
+      null,
+      "Toast - Cheddar & Jalapeño — other dish 175,-",
+    );
+    const porkDinner = item(
+      "Toast - Svineknoke, Cheddar/Jalapeno",
+      17500,
+      null,
+      "Toast - Svineknoke, Cheddar/Jalapeno 175,-",
+    );
+    const porkBrunch = item(
+      "Toast - Svineknoke, Cheddar/Jalapeno",
+      17500,
+      null,
+      "Toast - Svineknoke, Cheddar/Jalapeno 175,-",
+    );
+    const porkInherited = item(
+      "Toast - Svineknoke, Cheddar/Jalapeno",
+      22500,
+      null,
+      "Toast - Svineknoke, Cheddar/Jalapeno — pumpkin dish 225,-",
+    );
+    const output = canonicalizeHtmlOutputItems([
+      cheddarDinner,
+      cheddarLunch,
+      cheddarInherited,
+      porkDinner,
+      porkBrunch,
+      porkInherited,
+    ]);
+    expect(output).toHaveLength(4);
+    expect(output.map((entry) => [entry.name, entry.priceMinor])).toEqual([
+      ["Toast - Cheddar & Jalapeño", 16500],
+      ["Toast - Cheddar & Jalapeño", 16500],
+      ["Toast - Svineknoke, Cheddar/Jalapeno", 17500],
+      ["Toast - Svineknoke, Cheddar/Jalapeno", 17500],
+    ]);
+  });
+
   it("keeps fail-closed ambiguity when an unsectioned dish has two direct prices", () => {
     const lunch = item("House Curry", 22900, null, "House Curry 229,-");
     const dinner = item("House Curry", 26900, null, "House Curry 269,-");
