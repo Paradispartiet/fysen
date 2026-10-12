@@ -20,7 +20,7 @@
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
-      "browserBlockedOrigins": []
+      "browserBlockedOrigins": ["https://ad.doubleclick.net"]
     }
   },
   "hoursSource": {
