@@ -96,7 +96,15 @@ describe("Skaal first-party menu heading regressions", () => {
     ] as const) {
       expect(result.items).toContainEqual(expect.objectContaining({ name, priceMinor: price }));
     }
-    expect(result.items.filter((item) => item.name.startsWith("Østers"))).toHaveLength(3);
+    expect(
+      result.items
+        .filter((item) => item.name.startsWith("Østers"))
+        .map((item) => [item.name, item.priceMinor, item.priceKind, item.priceMaxMinor]),
+    ).toEqual([
+      ["Østers Naturell / Dagens topping", 4500, "multiple", 5500],
+      ["Østers Lunch", 4500, "multiple", 5500],
+      ["Østers Brunch", 4500, "multiple", 5500],
+    ]);
     expect(result.items.some((item) => /Thaisalat m\/Reker|Meatball Sub/u.test(item.name))).toBe(false);
   });
 });
