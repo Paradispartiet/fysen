@@ -11,24 +11,16 @@
     "longitude": 10.7530356
   },
   "menuSource": {
-    "url": "https://district4.winorder.no/en",
-    "sourceType": "html",
-    "fetchMode": "browser",
+    "url": "https://district4.no/wp-content/uploads/2026/08/D4_innemeny_A3_2026_aug.pdf",
+    "sourceType": "pdf",
+    "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
     "minimumExpectedItems": 19,
     "sourceSupport": {
       "redirectOrigins": [],
-      "browserDataOrigins": [
-        "https://api.winorder.no"
-      ],
-      "browserBlockedOrigins": [
-        "https://tracking.winorder.no"
-      ]
-    },
-    "readinessTexts": [
-      "Calamari"
-    ]
+      "browserDataOrigins": []
+    }
   },
   "hoursSource": {
     "url": "https://district4.no/",
@@ -39,8 +31,8 @@
   "verification": {
     "menu": {
       "status": "unverified",
-      "checkedAt": "2026-09-11",
-      "note": "Exact live reproof on PR #670 returned 36 items from the current first-party WinOrder source. Pepper beef and Beef Carpaccio are no longer present, so the assertion set is refreshed to five currently observed canonical dishes; the 19-item floor and source contract remain unchanged."
+      "checkedAt": "2026-10-12",
+      "note": "Official first-party August 2026 dine-in PDF yields 53 priced bilingual canonical names on exact-head live reproof #38294069297. The existing five menu assertions were tied to the English WinOrder names and thus did not match any bilingual PDF names, despite all five food identities and locked prices appearing in extracted variants. Align exactly to observed bilingual first-party labels, preserving the five prices and 19-item floor; draft until strict live reproof accepts."
     }
   },
   "actions": [
@@ -59,31 +51,31 @@
   ],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Dragon Ball",
-      "Tartar av indrefilet servert med hjemmelaget lotus chips",
-      "Chicken Hue-style",
-      "Pho special noodle soup",
-      "Calamari"
+      "Long Châu / Dragon Ball",
+      "Q4 Bò Tartar / D4 beef tartare",
+      "Gà xào lá Huế / Chicken Hue-style",
+      "Phở đặc biệt / Pho special noodle soup",
+      "Mực chiên / Calamari"
     ],
     "requiredDishVariants": [
       {
-        "name": "Dragon Ball",
+        "name": "Long Châu / Dragon Ball",
         "priceMinor": 13900
       },
       {
-        "name": "Tartar av indrefilet servert med hjemmelaget lotus chips",
+        "name": "Q4 Bò Tartar / D4 beef tartare",
         "priceMinor": 22500
       },
       {
-        "name": "Chicken Hue-style",
+        "name": "Gà xào lá Huế / Chicken Hue-style",
         "priceMinor": 23900
       },
       {
-        "name": "Pho special noodle soup",
+        "name": "Phở đặc biệt / Pho special noodle soup",
         "priceMinor": 24900
       },
       {
-        "name": "Calamari",
+        "name": "Mực chiên / Calamari",
         "priceMinor": 14500
       }
     ],
