@@ -50,7 +50,7 @@
       "Pinakbet",
       "Vegan Kare-kare",
       "Calamansi",
-      "Buko pandan"
+      "Yema & Blueberry"
     ],
     "requiredDishVariants": [
       { "name": "Sinuglaw", "priceMinor": 19900 },
@@ -62,7 +62,7 @@
       { "name": "Pinakbet", "priceMinor": 29900 },
       { "name": "Vegan Kare-kare", "priceMinor": 27900 },
       { "name": "Calamansi", "priceMinor": 16900 },
-      { "name": "Buko pandan", "priceMinor": 16900 }
+      { "name": "Yema & Blueberry", "priceMinor": 16900 }
     ],
     "forbiddenDishNames": [
       "5 COURSE MENU",
