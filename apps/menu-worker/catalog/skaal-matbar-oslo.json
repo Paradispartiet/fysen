@@ -38,8 +38,8 @@
       "Crispy Aubergine",
       "\"SKAAL Lasagne\"",
       "Brillat Savarin",
-      "Thaisalat m/Reker",
-      "Meatball Sub",
+      "Betesalat m/ Ricottakrem",
+      "Lammeribs",
       "Brownie"
     ],
     "requiredDishVariants": [
@@ -64,12 +64,12 @@
         "priceMinor": 16500
       },
       {
-        "name": "Thaisalat m/Reker",
-        "priceMinor": 22500
+        "name": "Betesalat m/ Ricottakrem",
+        "priceMinor": 20500
       },
       {
-        "name": "Meatball Sub",
-        "priceMinor": 21500
+        "name": "Lammeribs",
+        "priceMinor": 24500
       },
       {
         "name": "Brownie",
