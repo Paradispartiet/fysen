@@ -372,6 +372,28 @@ function collapseSamePositionPricePrefixVariants(
   );
 }
 
+// A multi-price heading can also be misread as an ordinary dish whose name
+// retains the 45/55 price pair, then borrows an unrelated later price.
+// Only discard this fragment when the correctly priced multiple item exists.
+function isMisreadMultiplePriceHeading(
+  item: MenuObservedItem,
+  items: readonly MenuObservedItem[],
+): boolean {
+  const match = item.name.trim().match(/^(.+?)\\s+([1-9]\\d{0,3})\\s*\\/\\s*([1-9]\\d{0,3}),?$/u);
+  if (!match?.[1] || !match[2] || !match[3]) return false;
+  const originalName = normalizeDishName(match[1]);
+  const lower = Number(match[2]) * 100;
+  const upper = Number(match[3]) * 100;
+  return items.some(
+    (candidate) =>
+      candidate !== item &&
+      candidate.normalizedName === originalName &&
+      candidate.priceKind === "multiple" &&
+      candidate.priceMinor === lower &&
+      candidate.priceMaxMinor === upper,
+  );
+}
+
 function isOutputNoiseLabel(item: MenuObservedItem): boolean {
   const name = item.name.trim();
   return (
@@ -435,7 +457,8 @@ export function canonicalizeHtmlOutputItems(
       !isHighPricedComponentQuantity(item) &&
       !isSamePriceExcerptFragment(item, labelFilteredItems) &&
       !isLowInformationSamePriceFragment(item, labelFilteredItems) &&
-      !isExtremeDuplicatePriceOutlier(item, labelFilteredItems),
+      !isExtremeDuplicatePriceOutlier(item, labelFilteredItems) &&
+      !isMisreadMultiplePriceHeading(item, labelFilteredItems),
   );
   return collapseSamePositionPricePrefixVariants(structurallyFilteredItems);
 }
