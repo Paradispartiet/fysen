@@ -33,7 +33,7 @@
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Norwegian Hamachi Tataki",
+      "Hiramasa Sashimi",
       "Tsukemono",
       "Edamame",
       "Togarashi Nuts",
@@ -44,7 +44,7 @@
     ],
     "requiredDishVariants": [
       {
-        "name": "Norwegian Hamachi Tataki",
+        "name": "Hiramasa Sashimi",
         "priceMinor": 15000
       },
       {
