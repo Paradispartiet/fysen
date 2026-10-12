@@ -32,7 +32,7 @@
     "menu": {
       "status": "unverified",
       "checkedAt": "2026-10-12",
-      "note": "Official District4 website currently links its August 2026 first-party dine-in PDF; that source explicitly publishes all five locked dishes and prices, including Calamari 145 NOK. The separate first-party WinOrder takeaway extraction returned 34 items but omitted Calamari. This source switch is an exact-head reproof candidate, not a production acceptance claim; retain all five names, prices and the 19-item floor."
+      "note": "Official first-party August 2026 dine-in PDF yields 53 priced bilingual canonical names on exact-head live reproof #38294069297. The existing five menu assertions were tied to the English WinOrder names and thus did not match any bilingual PDF names, despite all five food identities and locked prices appearing in extracted variants. Align exactly to observed bilingual first-party labels, preserving the five prices and 19-item floor; draft until strict live reproof accepts."
     }
   },
   "actions": [
@@ -51,31 +51,31 @@
   ],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Dragon Ball",
-      "Tartar av indrefilet servert med hjemmelaget lotus chips",
-      "Chicken Hue-style",
-      "Pho special noodle soup",
-      "Calamari"
+      "Long Châu / Dragon Ball",
+      "Q4 Bò Tartar / D4 beef tartare",
+      "Gà xào lá Huế / Chicken Hue-style",
+      "Phở đặc biệt / Pho special noodle soup",
+      "Mực chiên / Calamari"
     ],
     "requiredDishVariants": [
       {
-        "name": "Dragon Ball",
+        "name": "Long Châu / Dragon Ball",
         "priceMinor": 13900
       },
       {
-        "name": "Tartar av indrefilet servert med hjemmelaget lotus chips",
+        "name": "Q4 Bò Tartar / D4 beef tartare",
         "priceMinor": 22500
       },
       {
-        "name": "Chicken Hue-style",
+        "name": "Gà xào lá Huế / Chicken Hue-style",
         "priceMinor": 23900
       },
       {
-        "name": "Pho special noodle soup",
+        "name": "Phở đặc biệt / Pho special noodle soup",
         "priceMinor": 24900
       },
       {
-        "name": "Calamari",
+        "name": "Mực chiên / Calamari",
         "priceMinor": 14500
       }
     ],
