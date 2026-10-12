@@ -65,7 +65,7 @@
       "Mixgrill",
       "Eplekake",
       "Husets Creme Brulee",
-      "Husets Ostekaker"
+      "Sjokolade fondant"
     ],
     "requiredDishVariants": [
       { "name": "Dagens Suppe", "priceMinor": 19900 },
@@ -85,7 +85,7 @@
       { "name": "Mixgrill", "priceMinor": 39900 },
       { "name": "Eplekake", "priceMinor": 12900 },
       { "name": "Husets Creme Brulee", "priceMinor": 12900 },
-      { "name": "Husets Ostekaker", "priceMinor": 10900 }
+      { "name": "Sjokolade fondant", "priceMinor": 12900 }
     ],
     "forbiddenDishNames": [
       "Meny",
