@@ -36,11 +36,11 @@
       "Ansjostoast",
       "Hallomø fra Skarrbo gård",
       "Bakt blomkål med blomkål hummus og grønnkål",
-      "Brokkolini, paprika-labneh, mandel",
-      "Grillet squash med miso og sesam",
+      "Sellerirot-pakora, rødbetedip",
+      "Gresskar fra Bergsmyrene gård, labneh, jalapeno, macadamia",
       "Steinbit med karri-beurre blanc",
       "Kylling fra Hovelsrud med sopp, sesongens blad-grønnsaker",
-      "Karamelkrem med plommer fra Hovelsrud gård"
+      "Sticky toffee pudding"
     ],
     "requiredDishVariants": [
       {
@@ -56,11 +56,11 @@
         "priceMinor": 20500
       },
       {
-        "name": "Brokkolini, paprika-labneh, mandel",
+        "name": "Sellerirot-pakora, rødbetedip",
         "priceMinor": 20500
       },
       {
-        "name": "Grillet squash med miso og sesam",
+        "name": "Gresskar fra Bergsmyrene gård, labneh, jalapeno, macadamia",
         "priceMinor": 20500
       },
       {
@@ -72,8 +72,8 @@
         "priceMinor": 30500
       },
       {
-        "name": "Karamelkrem med plommer fra Hovelsrud gård",
-        "priceMinor": 17500
+        "name": "Sticky toffee pudding",
+        "priceMinor": 18500
       }
     ],
     "forbiddenDishNames": [

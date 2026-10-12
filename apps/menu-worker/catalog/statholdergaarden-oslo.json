@@ -33,41 +33,41 @@
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Hellefisk",
-      "Kamskjell",
-      "Kantarell",
-      "Ishavsrøye",
-      "Breiflabb",
-      "Due",
+      "Røye",
+      "Kongekrabbe",
+      "Bete & jordskokk",
+      "Piggvar",
+      "Skate",
+      "Rype",
       "Lam",
       "Norske oster",
-      "Blåbær & tonka",
-      "Eple",
+      "Bjørnebær",
+      "Tindved",
       "Liten frisk avslutning"
     ],
     "requiredDishVariants": [
       {
-        "name": "Hellefisk",
+        "name": "Røye",
         "priceMinor": 49500
       },
       {
-        "name": "Kamskjell",
+        "name": "Kongekrabbe",
         "priceMinor": 65000
       },
       {
-        "name": "Kantarell",
+        "name": "Bete & jordskokk",
         "priceMinor": 49500
       },
       {
-        "name": "Ishavsrøye",
+        "name": "Piggvar",
         "priceMinor": 75500
       },
       {
-        "name": "Breiflabb",
-        "priceMinor": 75500
+        "name": "Skate",
+        "priceMinor": 69500
       },
       {
-        "name": "Due",
+        "name": "Rype",
         "priceMinor": 79500
       },
       {
@@ -79,11 +79,11 @@
         "priceMinor": 39500
       },
       {
-        "name": "Blåbær & tonka",
+        "name": "Bjørnebær",
         "priceMinor": 39500
       },
       {
-        "name": "Eple",
+        "name": "Tindved",
         "priceMinor": 39500
       },
       {
