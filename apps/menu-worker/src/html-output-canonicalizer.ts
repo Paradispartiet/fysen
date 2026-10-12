@@ -379,7 +379,7 @@ function isMisreadMultiplePriceHeading(
   item: MenuObservedItem,
   items: readonly MenuObservedItem[],
 ): boolean {
-  const match = item.name.trim().match(/^(.+?)\\s+([1-9]\\d{0,3})\\s*\\/\\s*([1-9]\\d{0,3}),?$/u);
+  const match = item.name.trim().match(/^(.+?)\s+([1-9]\d{0,3})\s*\/\s*([1-9]\d{0,3}),?$/u);
   if (!match?.[1] || !match[2] || !match[3]) return false;
   const originalName = normalizeDishName(match[1]);
   const lower = Number(match[2]) * 100;
