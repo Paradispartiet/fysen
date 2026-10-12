@@ -38,8 +38,8 @@
       "Crispy Aubergine",
       "\"SKAAL Lasagne\"",
       "Brillat Savarin",
-      "Betesalat m/ Ricottakrem",
-      "Lammeribs",
+      "Fritert Gresskar m/ Hvit Bønne Hummus",
+      "Fritert Gresskar m/ Hvit Bønne Hummus & Egg",
       "Brownie"
     ],
     "requiredDishVariants": [
@@ -64,12 +64,12 @@
         "priceMinor": 16500
       },
       {
-        "name": "Betesalat m/ Ricottakrem",
-        "priceMinor": 20500
+        "name": "Fritert Gresskar m/ Hvit Bønne Hummus",
+        "priceMinor": 22500
       },
       {
-        "name": "Lammeribs",
-        "priceMinor": 24500
+        "name": "Fritert Gresskar m/ Hvit Bønne Hummus & Egg",
+        "priceMinor": 23500
       },
       {
         "name": "Brownie",
