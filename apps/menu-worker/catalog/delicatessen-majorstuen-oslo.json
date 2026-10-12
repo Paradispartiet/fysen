@@ -38,8 +38,8 @@
       "Friterte artisjokker",
       "Gambas al ajillo",
       "Blåskjell escabeche",
-      "Grillet blekksprut",
-      "Presa Ibérica (200 g)"
+      "Stekt blekksprut",
+      "Grillet ytrefilet 220gr"
     ],
     "requiredDishVariants": [
       {
@@ -67,12 +67,12 @@
         "priceMinor": 23000
       },
       {
-        "name": "Grillet blekksprut",
-        "priceMinor": 21000
+        "name": "Stekt blekksprut",
+        "priceMinor": 22000
       },
       {
-        "name": "Presa Ibérica (200 g)",
-        "priceMinor": 33000
+        "name": "Grillet ytrefilet 220gr",
+        "priceMinor": 31000
       }
     ],
     "forbiddenDishNames": []
