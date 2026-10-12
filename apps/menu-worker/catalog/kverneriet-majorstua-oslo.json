@@ -44,7 +44,7 @@
     "requiredDishVariants": [
       {
         "name": "Triple Chili Cheese",
-        "priceMinor": 13500
+        "priceMinor": 13900
       },
       {
         "name": "Ceasar Salad",
@@ -52,27 +52,27 @@
       },
       {
         "name": "Golden Cauli & Feta",
-        "priceMinor": 24900
+        "priceMinor": 25900
       },
       {
         "name": "True Blue",
-        "priceMinor": 26900
+        "priceMinor": 27900
       },
       {
         "name": "Umami",
-        "priceMinor": 24900
+        "priceMinor": 25900
       },
       {
         "name": "American Fries",
-        "priceMinor": 8400
+        "priceMinor": 8900
       },
       {
         "name": "Green Side Salad",
-        "priceMinor": 6500
+        "priceMinor": 6900
       },
       {
         "name": "Chocolate Fondant",
-        "priceMinor": 14900
+        "priceMinor": 15900
       }
     ],
     "forbiddenDishNames": []
