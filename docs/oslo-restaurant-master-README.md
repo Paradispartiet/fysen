@@ -2,7 +2,7 @@
 
 **Åpne én fil:** [Oslo-restaurantlisten (CSV)](./oslo-restaurant-master-2026-10-13.csv).
 
-Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskatalog. Den dekker alle **749 av 749** restaurantmanifester i Fysens katalog på commit `08c748003d1748a8282917cbd43198509a89e822` og **215** eksterne/eldre research-oppføringer: totalt **964 rader**. Slug brukes som unik identitet for alle 749 registrerte steder. Noen av kandidatene kan være aliaser, dubletter, ikke ordinære restauranter eller stengt og må kontrolleres før opptak. Tallet 964 er **ikke** antallet unike, aktive eller gode Oslo-restauranter og ikke bevis på at alle er funnet.
+Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskatalog. Den dekker alle **749 av 749** restaurantmanifester i Fysens katalog på commit `08c748003d1748a8282917cbd43198509a89e822` og **223** eksterne/eldre research-oppføringer: totalt **972 rader**. Slug brukes som unik identitet for alle 749 registrerte steder. Noen av kandidatene kan være aliaser, dubletter, ikke ordinære restauranter eller stengt og må kontrolleres før opptak. Tallet 972 er **ikke** antallet unike, aktive eller gode Oslo-restauranter og ikke bevis på at alle er funnet.
 
 | Felt | Bruk |
 |---|---|
@@ -17,7 +17,7 @@ Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskat
 
 **Eksterne lister:** Research-kandidatene bygger på [Fysens tidligere Oslo-census](./oslo-coverage-census-2026-09-21.md), [VisitOSLOs restaurantoversikt](https://www.visitoslo.com/restaurants-nightlife/restaurants), [VisitOSLOs tilgjengelige restauranter](https://www.visitoslo.com/no/oslo-for-deg/tilgjengelighet/tilgjengelige-restauranter) og [VisitOSLOs utvalg på forsiden](https://www.visitoslo.com/no). En oppføring her er ikke bevis for aktiv drift, selvstendig gateadresse eller tilstrekkelig restaurantkvalitet.
 
-**Hva er ferdig og hva mangler?** Selve sammenslåingen av **749 eksisterende + 215 registrerte eksterne oppføringer** er ferdig. For en påstand om **alle gode og ordinære restauranter i Oslo** må fortsatt de ikke-verifiserte delene av VisitOSLOs 330-oppføringers oversikt, bydelsvise lokale kilder, aliaser, aktualitet og manglende koordinater avstemmes. Ikke bruk antall rader som en dekningsprosent. Ingen endringer er gjort i produksjonskatalog, menyuttrekk, søk eller valideringsregler.
+**Hva er ferdig og hva mangler?** Selve sammenslåingen av **749 eksisterende + 223 registrerte eksterne oppføringer** er ferdig. For en påstand om **alle gode og ordinære restauranter i Oslo** må fortsatt de ikke-verifiserte delene av VisitOSLOs 330-oppføringers oversikt, bydelsvise lokale kilder, aliaser, aktualitet og manglende koordinater avstemmes. Ikke bruk antall rader som en dekningsprosent. Ingen endringer er gjort i produksjonskatalog, menyuttrekk, søk eller valideringsregler.
 
 ## Tidligere etterkontroll 13. oktober 2026
 
@@ -57,7 +57,7 @@ Den samme CSV-en har **en egen redaksjonell statuskolonne**, adskilt fra produks
 | --- | ---: | --- |
 | `PUBLISERT_I_FYSEN` | 749 | Eksisterende katalogposter, uten endret teknisk publisering |
 | `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART` | 18 | Aktuelt oppført i Michelin Guide, men ikke katalogisert; aktuell drift/meny må kontrolleres (gjelder også Hot Shop) |
-| `KILDEBEKREFTET_RELEVANT` | 86 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
+| `KILDEBEKREFTET_RELEVANT` | 94 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
 | `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART` | 56 | Navngitt på nyere VisitOSLO-restaurantguider; redaksjonelt aktuelt, men drift og produksjonsmeny ikke ferdig verifisert |
 | `MULIG_ALIAS` | 8 | Mulige navnevarianter som må avstemmes |
 | `UAVKLART` | 1 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
@@ -68,14 +68,23 @@ Den samme CSV-en har **en egen redaksjonell statuskolonne**, adskilt fra produks
 | `VINBAR_UTENFOR_RESTAURANTUTVALG` | 6 | Dokumenterte vinbarer; fortsatt synlige i researchlisten, men ikke telt som ordinære restauranter |
 | `BAR_UTENFOR_RESTAURANTUTVALG` | 9 | Cocktail-/hotellbarer med eventuell snacksservering |
 | `KAFE_BAKERI_UTENFOR_RESTAURANTUTVALG` | 14 | Bakerier, konditorier, tesalong og kafé med avgrenset matservering |
-| **Totalt** | **964** | **749 i katalogen, 215 øvrige** |
+| **Totalt** | **972** | **749 i katalogen, 223 øvrige** |
 
 
 ### Siste type- og identitetskontroll 13. oktober 2026
 
 Ytterligere **11 av de 12 åpne forskningsradene** er nå kildekontrollert i samme CSV, og antallet rader med redaksjonell status `UAVKLART` er **1**. **Khab Thai Barcode og Tabuno** er dokumenterte, relevante restauranter som ennå ikke er Fysen-katalogposter. **Braud Bakeri og Kafé Villa Grande** er klassifisert som bakeri/kafé; **Bar Babylon, Rikkes Hage og Skaugum** som bar-/utelivssteder. **Sushi Restaurant Alex** og **Istanbul Restaurant Grünerløkka** er merket `MULIG_ALIAS`, men fysisk identitet må fortsatt kontrolleres i sistnevnte tilfelle fordi Fysen- og operatøradressen avviker. **Illegal Burger** og **Stykke** som generiske navn er paraplyoppføringer og blir ikke telt som selvstendige restauranter. Hver rad har kilde, vurdering og uavklarte forbehold direkte i `notat`.
 
-**Den siste åpne posten er «[Vin] Tjuvholmen»**, der navnet ikke entydig identifiserer ett fysisk serveringssted. Dette betyr ikke at 964-listen er uttømmende: De 330 paginerte VisitOSLO-resultatene, de separate Michelin-/guide-kandidatene, kilde- og menyopptak og bydelsplassering gjenstår. **749/749 produksjonsmanifester er uendret.**
+**Den siste åpne posten er «[Vin] Tjuvholmen»**, der navnet ikke entydig identifiserer ett fysisk serveringssted. Dette betyr ikke at 972-listen er uttømmende: De 330 paginerte VisitOSLO-resultatene, de separate Michelin-/guide-kandidatene, kilde- og menyopptak og bydelsplassering gjenstår. **749/749 produksjonsmanifester er uendret.**
+
+
+### Supplerende restauranter oppdaget i åpne områdeguider – 13. oktober 2026
+
+**Åtte nye, separat kildebekreftede besøkssteder** er lagt til i **samme** hovedliste: **Brasserie Nouvelle** (Tjuvholmen allé 5), **Cordial** (Frognerveien 12B), **Lille Dilli** (Tjuvholmen allé 4), **Restaurant Teatro** (Stortingsgata 16), **Teatro Terrasse** (Dronning Mauds gate 1), **The Broker** (Bogstadveien 27), **Vadio** (Briskebyveien 26A) og **Villa Heftye** (Munkedamsveien 62A). Alle er dokumentert med operatørens egne sider, priset meny der tilgjengelig eller oppdatert områdeside; kildene og forbeholdene ligger i hver CSV-rad.
+
+**Status nå: 972 poster**, av disse **749 publisert i Fysen**, **94 eksterne kildebekreftede restaurant-/matstedsidentiteter** og **én redaksjonelt uavklart researchpost**. Ingen av de åtte er teknisk publisert. Lille Dilli er en matbar/tasting-lab, The Broker en pub med omfattende meny; dette forklares fremfor å fremstille dem som fullservicerestauranter. Restaurant Teatro og Teatro Terrasse er **to fysisk forskjellige** pizzarestauranter og skal ikke dedupliseres som én lokasjon.
+
+**VisitOSLOs paginerte 330-liste er fortsatt ikke uttømmende kontrollert.** Automatisk Chrome-kjøring i [PR #944](https://github.com/Paradispartiet/fysen/pull/944) ble stoppet av nettstedets Cloudflare-verifisering (HTTP 403). Den PR-en er lukket uten merge. Kildekontroll må bygge på tilgjengelige offentlige sider, og full 330/330-avstemming kan ikke hevdes gjennomført.
 
 ### Hele Michelin-utvalget er navnematchet
 
