@@ -1,9 +1,10 @@
 name: CI
 
+# Validate on the PR merge ref, not a second time after merge to main.
+# Main-only production workflows continue to handle release/publishing.
 on:
   pull_request:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
