@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v19");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v20");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -413,6 +413,30 @@ describe("structural HTML output canonicalization", () => {
       ["Toast - Svineknoke, Cheddar/Jalapeno", 17500],
       ["Toast - Svineknoke, Cheddar/Jalapeno", 17500],
     ]);
+  });
+
+  it("resolves cross-section toast prices from matching directly priced headings", () => {
+    const good = [
+      item("Toast - Cheddar & Jalapeño", 16500, "Kveldsmeny", "Toast - Cheddar & Jalapeño 165,-"),
+      item("Toast - Svineknoke, Cheddar/Jalapeno", 17500, "Kveldsmeny", "Toast - Svineknoke, Cheddar/Jalapeno 175,-"),
+      item("Toast - Cheddar & Jalapeño", 16500, "Brunch", "Toast - Cheddar & Jalapeño 165,-"),
+      item("Toast - Svineknoke, Cheddar/Jalapeno", 17500, "Brunch", "Toast - Svineknoke, Cheddar/Jalapeno 175,-"),
+    ];
+    const inherited = [
+      item("Toast - Cheddar & Jalapeño", 17500, "Lunch", "Toast - Cheddar & Jalapeño 165,- — Toast - Svineknoke, Cheddar/Jalapeno 175,-"),
+      item("Toast - Svineknoke, Cheddar/Jalapeno", 22500, "Lunch", "Toast - Svineknoke, Cheddar/Jalapeno 175,- — Fritert Gresskar m/ Hvit Bønne Hummus 225,-"),
+    ];
+    const result = canonicalizeHtmlOutputItems([...good, ...inherited]);
+    expect(result).toHaveLength(good.length);
+    expect(result.map((dish) => [dish.name, dish.priceMinor, dish.sectionName])).toEqual(
+      good.map((dish) => [dish.name, dish.priceMinor, dish.sectionName]),
+    );
+  });
+
+  it("preserves genuinely different, directly sourced prices across meal sections", () => {
+    const lunch = item("House Curry", 22900, "Lunch", "House Curry 229,-");
+    const dinner = item("House Curry", 26900, "Dinner", "House Curry 269,-");
+    expect(canonicalizeHtmlOutputItems([lunch, dinner])).toHaveLength(2);
   });
 
   it("keeps fail-closed ambiguity when an unsectioned dish has two direct prices", () => {
