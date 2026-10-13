@@ -236,33 +236,28 @@ Web/API-deploy er en separat releaseflate. Restaurantmaterialisering og DB/watch
 
 Den første dish-first kvalitetsauditten av Oslo-katalogen ligger i [`oslo-restaurant-quality-audit-2026-09-11.md`](./oslo-restaurant-quality-audit-2026-09-11.md). Auditten er den operative researchkøen for restaurantdekning og erstatter ikke `catalog/` som produksjonssannhet.
 
-## Prioritering mot Oslo-dekning
+## Prioritering mot Oslo-dekning — beslutning 13. oktober 2026
 
-Siste daterte kvalitets-/redundansaudit for Oslo ligger i [`oslo-restaurant-quality-gap-audit-2026-09-10.md`](./oslo-restaurant-quality-gap-audit-2026-09-10.md). Auditen er et research- og prioriteringssnapshot, ikke en parallell canonical katalog eller restaurantkvote.
+**Dekningsmålet er alle gode, ordinære restauranter i Oslo, ikke flest mulig menykilder eller bare restauranter med unik marginal rettverdi.** Restaurantens kvalitet og status som et relevant spisested vurderes separat fra om dagens parser kan publisere individuelle retter. Den permanente målgruppe- og kvalitetsdefinisjonen står i [Oslo Pilot v1](./oslo-pilot-v1.md), mens [coverage census](./oslo-coverage-census-2026-09-21.md) er research-ledger og `catalog/` er eneste produksjonskatalog.
 
-Restaurantproduksjonen skal optimalisere **rettdekning og marginal nytte**, ikke katalogstørrelse. En ny restaurant skal ha en eksplisitt coverage-begrunnelse før intake: minst ett konkret bidrag innen rett/kjøkken, geografi, dokumentert etterspørsel, kvalitativ betydning eller en nødvendig kildetype.
+### Før enhver intake
 
-Før en ny seed godtas skal research kontrollere:
+1. **Identitet og aktualitet:** dokumenter navn, fysisk adresse i Oslo, aktiv offentlig drift og reelt restaurant-/måltidstilbud; dedupliser etter faktisk lokasjon.
+2. **Kvalitet og ordinær restaurantverdi:** klassifiser om stedet er et godt etablert nabolags-, mellomklasse-, særpregs-, familierestaurant- eller gastronomisk alternativ. Underbygg med flere kilder der mulig. Michelin/guideoppføring og tallrating er aldri absolutte opptaksvilkår.
+3. **Serveringstype og avgrensning:** generiske takeaway-only pizza/kebab/burger-lokasjoner, kiosker, rene barer, virtuelle duplikatkjøkken og identiske kjedesteder tas ikke inn automatisk. En reelt god restaurant av disse kjøkkentypene kan inngå.
+4. **Dekningsstatus:** registrer `canonical`, `review`, `missing` eller eksplisitt begrunnet `excluded`; relevans er uavhengig av om menyprisene er maskinlesbare.
+5. **Kildebevis:** først ved produksjonsopptak dokumenteres fungerende source/transport, source-backed minimum og korrekt pris-/rettbinding. **Ikke senk validatornivå eller finn på priser for å ta inn viktige restauranter.**
+6. **Prioritet:** behandle sterke, manglende vanlige Oslo-restauranter og etablerte kvalitetssteder før enda en generisk volumrestaurant. Unike retter, geografiske hull, dokumentert etterspørsel og kildetilgjengelighet bestemmer arbeidsrekkefølge, ikke selve opptakskvalifiseringen.
 
-1. **Rettverdi:** tilfører kandidaten retter, varianter, regionale kjøkken eller spesialisering som dagens katalog ikke allerede dekker godt?
-2. **Etterspørsel:** løser kandidaten et dokumentert brukerbehov, nulltreff eller annet reelt demand-gap?
-3. **Geografisk verdi:** forbedrer kandidaten relevant nærhetsdekning i et område som ellers er svakt dekket?
-4. **Kvalitativ betydning:** er stedet faglig/redaksjonelt relevant, tydelig spesialisert, etablert eller på annen måte et viktig alternativ i Oslo-matbildet?
-5. **Kildekvalitet:** finnes en stabil, aktuell og tilstrekkelig komplett meny som kan holdes production-green?
-6. **Redundans:** finnes samme eller praktisk talt samme rettsett allerede i nærområdet eller i en kjede med identisk meny?
+### Når en god restaurant mangler publiserbar rettmeny
 
-Generisk volum er ikke en positiv faktor. Nye pizza-, kebab-, sushi-, burger- og grillsteder skal ikke onboardes automatisk bare fordi en maskinlesbar meny finnes. De skal bestå samme marginal-value-test som alle andre restauranter. Kjedelokasjoner med identisk meny skal bare prioriteres når fysisk lokasjon gir reell geografisk/handlingsmessig verdi; på sikt bør datamodellen kunne skille felles meny-/restaurantkonsept fra de fysiske stedene som serverer det.
+Behold den som **relevant og teknisk blokkert** i research-ledgeren (`review` med konkret source-/parser-/robots-/menyformatårsak). For tasting-/fastmeny-steder uten individuelle priser kan det være et strukturelt produktgap, ikke en dårlig restaurant. Ikke flytt slike steder til `excluded` bare for å få `review = 0`. Ikke opprett en parallell søkbar database eller fiktive rettposter. Eventuell særskilt restaurantprofil med kildebelagt konsept, men uten søkbare retter, trenger separat design og teknisk beslutning.
 
-Dekning bygges derfor slik:
+### Kontinuerlig Oslo-dekning
 
-- hold den aktive produksjonsbaselinen grønn før hver ny batch;
-- velg kandidater fra dokumenterte coverage-gap, ikke fra et mål om å fylle en batch eller nå et bestemt restauranttall;
-- prioriter kulinarisk bredde, særpreg, faktisk etterspørsel og geografiske hull;
-- bruk kvalitets-/omdømmesignaler som støtte, men aldri som erstatning for fersk menyproveniens;
-- promoter bare den delen som både er teknisk grønn og har dokumentert marginal nytte;
-- behold ubeviste eller lavverdige kandidater utenfor canonical katalog fremfor å produsere dem for volumets skyld;
-- auditér eksisterende catalog for **core / coverage / redundant**, slik at gammel volumproduksjon ikke blir permanent produktpremiss;
-- vurder konsolidering/nedprioritering av redundante lokasjoner uten å ødelegge nødvendig nærhets- eller handlingsdata;
-- mål suksess i løste retter, kjøkken, geografiske gap og demand-gap, ikke i andel av alle Oslo-serveringssteder.
+- Gå systematisk gjennom hele VisitOSLO-restaurantenes hovedoversikt, Michelins Oslo-oversikt, uavhengige redaksjonelle Oslo-guider og lokale bydelssignaler, inkludert ordinære steder som sjelden blir omtalt nasjonalt.
+- Oppdater status per navngitt restaurant og bydel. Behold begrunnelse, identitetsmatch, kilde-/sjekkdato og faktisk teknisk hindring.
+- Mål to størrelser separat: **identifiserte og vurderte relevante restauranter** og **relevante restauranter som faktisk er canonical/søkbare**. 749/749 grønn fullkatalogtest er produksjonskvalitet, ikke bevis på alle gode restauranter i Oslo.
+- Hold fullkatalog, materialisering, watcher og produksjonsbevis grønt under utvidelsen; produser bare nye restauranter som består de eksisterende source-/semantikkportene.
 
-Det finnes **ingen fast Oslo-kvote** og ingen canonical målsetting om 200, 1 000 eller full census-dekning. Eksterne restaurantregistre brukes som research-univers for å finne hull, ikke som backlog som automatisk skal materialiseres. Den avgjørende testen er om en kandidat gjør Fysen merkbart bedre til å svare troverdig på **«hvor kan jeg spise denne retten?»**.
+De historiske [kvalitetsaudittene fra 10. og 11. september](./oslo-restaurant-quality-gap-audit-2026-09-10.md) dokumenterer tidligere prioritering, **ikke** et gjeldende maksimum for hvor mange gode, vanlige restauranter som skal inngå. Ingen vilkårlig restaurantkvote brukes.
