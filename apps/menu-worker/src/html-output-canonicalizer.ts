@@ -1,6 +1,6 @@
 import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v18";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v20";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -331,13 +331,15 @@ function preferUniquelyDirectPricedConflicts(
 ): readonly MenuObservedItem[] {
   const groups = new Map<string, MenuObservedItem[]>();
   for (const item of items) {
-    const group = groups.get(item.sourceKey) ?? [];
+    // The same dish can appear in different meal sections with distinct sourceKeys.
+    // Resolve price conflicts by dish identity, not section identity.
+    const group = groups.get(item.normalizedName) ?? [];
     group.push(item);
-    groups.set(item.sourceKey, group);
+    groups.set(item.normalizedName, group);
   }
 
-  const preferredByKey = new Map<string, MenuObservedItem>();
-  for (const [sourceKey, group] of groups) {
+  const preferredByKey = new Map<string, ReadonlySet<MenuObservedItem>>();
+  for (const [normalizedName, group] of groups) {
     if (group.length < 2) continue;
     const prices = new Set(
       group.map(
@@ -347,13 +349,19 @@ function preferUniquelyDirectPricedConflicts(
     );
     if (prices.size < 2) continue;
     const direct = group.filter(hasDirectPricedNameProvenance);
-    if (direct.length === 1 && direct[0]) preferredByKey.set(sourceKey, direct[0]);
+    // Repeated sections may publish the same title and exact price directly.
+    // Prefer all agreeing direct observations to prices inherited from
+    // neighboring dishes. Preserve conflicting direct prices as ambiguous.
+    const directPrices = new Set(direct.map((item) => item.priceMinor));
+    if (direct.length > 0 && directPrices.size === 1) {
+      preferredByKey.set(normalizedName, new Set(direct));
+    }
   }
   if (preferredByKey.size === 0) return items;
 
   return items.filter((item) => {
-    const preferred = preferredByKey.get(item.sourceKey);
-    return preferred === undefined || item === preferred;
+    const preferred = preferredByKey.get(item.normalizedName);
+    return preferred === undefined || preferred.has(item);
   });
 }
 function collapseSamePositionPricePrefixVariants(
@@ -369,6 +377,28 @@ function collapseSamePositionPricePrefixVariants(
           candidate.normalizedName.length > item.normalizedName.length &&
           candidate.normalizedName.startsWith(`${item.normalizedName} `),
       ),
+  );
+}
+
+// A multi-price heading can also be misread as an ordinary dish whose name
+// retains the 45/55 price pair, then borrows an unrelated later price.
+// Only discard this fragment when the correctly priced multiple item exists.
+function isMisreadMultiplePriceHeading(
+  item: MenuObservedItem,
+  items: readonly MenuObservedItem[],
+): boolean {
+  const match = item.name.trim().match(/^(.+?)\s+([1-9]\d{0,3})\s*\/\s*([1-9]\d{0,3}),?$/u);
+  if (!match?.[1] || !match[2] || !match[3]) return false;
+  const originalName = normalizeDishName(match[1]);
+  const lower = Number(match[2]) * 100;
+  const upper = Number(match[3]) * 100;
+  return items.some(
+    (candidate) =>
+      candidate !== item &&
+      candidate.normalizedName === originalName &&
+      candidate.priceKind === "multiple" &&
+      candidate.priceMinor === lower &&
+      candidate.priceMaxMinor === upper,
   );
 }
 
@@ -435,7 +465,8 @@ export function canonicalizeHtmlOutputItems(
       !isHighPricedComponentQuantity(item) &&
       !isSamePriceExcerptFragment(item, labelFilteredItems) &&
       !isLowInformationSamePriceFragment(item, labelFilteredItems) &&
-      !isExtremeDuplicatePriceOutlier(item, labelFilteredItems),
+      !isExtremeDuplicatePriceOutlier(item, labelFilteredItems) &&
+      !isMisreadMultiplePriceHeading(item, labelFilteredItems),
   );
   return collapseSamePositionPricePrefixVariants(structurallyFilteredItems);
 }

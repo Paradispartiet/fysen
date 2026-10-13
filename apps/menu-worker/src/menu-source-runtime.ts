@@ -53,6 +53,7 @@ import {
   HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION,
   isStrongDirectTrailingPriceCardRecovery,
   isStrongNumberedTrailingPriceCardRecovery,
+  recoverInlineHeadingMultiplePriceHtmlItems,
   recoverInlineMarkedPriceTextItems,
   recoverTrailingPriceCardHtmlItems,
 } from "./html-trailing-price-card-recovery.js";
@@ -549,6 +550,10 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverInlineMarkedPriceTextItems(extracted.visibleText)
         : [];
+    const inlineHeadingMultiplePriceItems =
+      extracted.method === "html_heuristic"
+        ? recoverInlineHeadingMultiplePriceHtmlItems(recoveryHtml)
+        : [];
     const strongTitlePriceItems =
     extracted.method === "html_heuristic"
       ? recoverStrongTitlePriceHtmlItems(recoveryHtml)
@@ -679,10 +684,14 @@ export async function extractMenuSource(
             explicitFromPriceItems,
           )
         : wrappedSupplementedItems;
+    const multiPriceEnrichedItems =
+      extracted.method === "html_heuristic"
+        ? mergeMissingRecoveredItems(priceEnrichedItems, inlineHeadingMultiplePriceItems)
+        : priceEnrichedItems;
     const normalizedItems =
       extracted.method === "html_heuristic"
-        ? priceEnrichedItems.map(normalizeHtmlItemName)
-        : priceEnrichedItems;
+        ? multiPriceEnrichedItems.map(normalizeHtmlItemName)
+        : multiPriceEnrichedItems;
     const canonicalItems = normalizedItems.filter(
       extracted.method === "json_ld"
         ? isCanonicalStructuredMenuItem
