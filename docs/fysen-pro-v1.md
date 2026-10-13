@@ -14,6 +14,12 @@ Per 13. oktober 2026 finnes [beståtte Claim-/Pro-databaseintegrasjonstester](ht
 
 Se også [separate closeout-porter](./fysen-oslo-v1-closeout.md) og [operatørprosedyren](./fysen-pro-pilot-operator.md).
 
+## Teknisk godkjenning 13. oktober 2026
+
+Fysen Pro v1 er **teknisk leveranseklar innenfor pilotmodellens testkontrakt** etter databaseintegrasjon, API-/cookie-assertions og ikke-muterende Claim/Pro-produksjonskontroll. Se [teknisk godkjenning med bevis og begrensninger](./fysen-pro-v1-technical-signoff-2026-10-13.md).
+
+Ingen ekte restaurantrepresentant er verifisert eller har gjennomført autentisert produksjonspilot. Statusen er derfor **ikke partnerverifisert**, og kommersiell utrulling er fortsatt sperret.
+
 ## Tilgangsmodell for piloten
 
 Repoet har foreløpig ingen generell konto-/auth-plattform. R4 introduserer derfor ikke en ny ekstern auth-leverandør bare for piloten og åpner heller ikke et usikret dashboard basert på restaurant-slug.
