@@ -8,6 +8,9 @@
 import { normalizeDishName } from "@fysen/menu-core";
 import { extractHtmlVisibleText, stripExplicitlyHiddenHtmlContent } from "./html-extractor.js";
 import { normalizeHtmlHeadingLineBreaks } from "./html-heading-normalizer.js";
+import { recoverDescriptionNamedHtmlItems } from "./html-description-title-recovery.js";
+import { canonicalizeHtmlOutputItems } from "./html-output-canonicalizer.js";
+import { filterHtmlBeverageSectionItemsWithScopedProvenance } from "./html-text-section-scope.js";
 import {
   recoverAdjacentHeadingPriceHtmlItems,
 } from "./html-adjacent-heading-price-recovery.js";
@@ -21,6 +24,8 @@ import { extractScopedHtmlMenu } from "./html-source-extractor.js";
 import {
   extractMenuSource,
   fetchMenuSource,
+  isCanonicalHtmlMenuItem,
+  normalizeHtmlItemName,
   normalizeHtmlPriceNotation,
 } from "./menu-source-runtime.js";
 
@@ -90,6 +95,13 @@ async function main(): Promise<void> {
       const trailing = recoverTrailingPriceCardHtmlItems(sanitized);
       const adjacent = recoverAdjacentHeadingPriceHtmlItems(sanitized);
       const strong = recoverStrongTitlePriceHtmlItems(sanitized);
+      const described = recoverDescriptionNamedHtmlItems(trailing, scoped.visibleText);
+      const named = described.map(normalizeHtmlItemName);
+      const foodFiltered = named.filter(isCanonicalHtmlMenuItem);
+      const beverageFiltered = filterHtmlBeverageSectionItemsWithScopedProvenance(
+        foodFiltered, scoped.visibleText, extractHtmlVisibleText(sanitized),
+      );
+      const outputCanonicalized = canonicalizeHtmlOutputItems(beverageFiltered);
       const extracted = await extractMenuSource("html", fetched);
       const repeated = await extractMenuSource("html", fetched);
       attempts.push({
@@ -107,6 +119,24 @@ async function main(): Promise<void> {
           strongTitle: strong.length,
           selectedCanonical: extracted.items.length,
         },
+        trailingPipelineCounts: {
+          afterDescriptionRecovery: described.length,
+          afterNameNormalization: named.length,
+          afterFoodFilter: foodFiltered.length,
+          afterBeverageScope: beverageFiltered.length,
+          afterCanonicalizer: outputCanonicalized.length,
+        },
+        lockedStagePresence: LOCKED.map(({ name }) => {
+          const needle = normalizeDishName(name);
+          return {
+            name,
+            trailing: trailing.some((item) => item.normalizedName === needle),
+            described: described.some((item) => item.normalizedName === needle),
+            foodFiltered: foodFiltered.some((item) => item.normalizedName === needle),
+            beverageFiltered: beverageFiltered.some((item) => item.normalizedName === needle),
+            canonicalized: outputCanonicalized.some((item) => item.normalizedName === needle),
+          };
+        }),
         sameRawBodyDeterministic: signature(extracted.items) === signature(repeated.items),
         sections: SECTIONS.map((section) => ({
           section,
