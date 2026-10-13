@@ -1,5 +1,7 @@
 # Oslo restaurant quality-gap audit — 2026-09-10
 
+> **Historisk snapshot, ikke gjeldende opptaksmål (oppdatert 13.10.2026).** «Marginal rettverdi» og anslaget 120–180 i denne auditen var research-prioritering før beslutningen om å dekke **alle gode, ordinære restauranter i Oslo**. Manglende unike retter eller maskinlesbare individuelle priser er ikke lenger grunnlag for å avvise en god restaurant fra dekningsuniverset. Se [gjeldende policy](./oslo-pilot-v1.md) og [løpende census](./oslo-coverage-census-2026-09-21.md). Historiske tall og funn nedenfor beholdes uendret.
+
 ## Formål
 
 Denne auditen følger den canonical dish-first coverage-policyen i `oslo-pilot-v1.md` og `restaurant-production.md`. Den skal ikke etablere en restaurantkvote. Formålet er å finne konkrete Oslo-restauranter som sannsynligvis tilfører høy marginal rettverdi, samtidig som eksisterende katalogredundans identifiseres.
