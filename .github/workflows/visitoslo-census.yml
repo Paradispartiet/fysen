@@ -1,0 +1,36 @@
+name: VisitOSLO restaurant census
+
+on:
+  pull_request:
+    paths:
+      - apps/web/tests/visitoslo-census.mjs
+      - .github/workflows/visitoslo-census.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  census:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Fysen workspace
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Read every VisitOSLO restaurant listing page
+        env:
+          VISITOSLO_CENSUS_OUTPUT: visitoslo-census.json
+        run: pnpm --filter @fysen/web exec node tests/visitoslo-census.mjs
+
+      - name: Archive complete source census
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visitoslo-oslo-restaurants
+          path: apps/web/visitoslo-census.json
+          if-no-files-found: warn
+          retention-days: 14
