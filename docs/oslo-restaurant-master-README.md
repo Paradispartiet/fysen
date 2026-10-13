@@ -9,6 +9,7 @@ Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskat
 | navn / adresse | Stedets navn og kjent adresse; tomt felt betyr uavklart |
 | bydel | Presist plassert bare når manifestets koordinater traff bydelsgrensen; ellers `IKKE_KLASSIFISERT`, `UAVKLART` eller `GRENSE_UAVKLART` |
 | tilstede_i_fysen | `JA` = bekreftet canonical; `IKKE_IDENTIFISERT` = tidligere research til vurdering; `KANDIDAT_NETT` = ferskt eksternt navn som må matches; `MULIG_ALIAS` = sannsynlig navnevariant |
+| redaksjonell_status | Egen vurderingsakse: `PUBLISERT_I_FYSEN`, `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART`, `KILDEBEKREFTET_RELEVANT`, `MULIG_ALIAS`, `UAVKLART`. Dette er ikke en teknisk publiseringsbeslutning eller driftsgaranti |
 | katalog_slug | Eksakt canonical identitet når `JA`; mulig match ved `MULIG_ALIAS` |
 | kilde / notat | Opphav og kontrollbehov; historiske research-data er ikke ferskt driftsbevis |
 
@@ -47,3 +48,40 @@ Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskat
 **Nåværende hovedlistetall:** **955 rader = 749 JA + 196 IKKE_IDENTIFISERT + 8 KANDIDAT_NETT + 2 MULIG_ALIAS**. Fem nye kandidater kom til i dette passet. Ingen publiserte restauranter eller produksjonsregler er endret. Alle nye adresser ligger foreløpig med `UAVKLART` bydel inntil polygon- eller adresseverifisering; de er ikke gjettet fra postnummer.
 
 **Gjenstående før målet om alle relevante Oslo-restauranter kan erklæres oppfylt:** avstemme resten av VisitOSLOs 330 oppføringer, kontrollere ytterligere bydelsvise uavhengige kilder, verifisere identitet for de 196 eldre kandidatene, undersøke canonical-duplikatene og fastsette bydeler geografisk. Det skal gjøres i **den samme hovedlisten**, ikke i en parallell katalog.
+
+## Redaksjonell avstemming av én hovedliste – 13. oktober 2026
+
+Den samme CSV-en har nå **en egen redaksjonell statuskolonne**, adskilt fra produksjonsstatusen. Derved blandes ikke «er god/relevant restaurant» med «har teknisk publiserbar, priset meny».
+
+| Redaksjonell status | Antall rader | Betydning |
+| --- | ---: | --- |
+| `PUBLISERT_I_FYSEN` | 749 | Eksisterende katalogposter, uten endret teknisk publisering |
+| `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART` | 18 | Aktuelt oppført i Michelin Guide, men ikke katalogisert; aktuell drift/meny må kontrolleres (gjelder også Hot Shop) |
+| `KILDEBEKREFTET_RELEVANT` | 13 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
+| `MULIG_ALIAS` | 2 | Mulige navnevarianter som må avstemmes |
+| `UAVKLART` | 173 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
+| **Totalt** | **955** | **749 i katalogen, 206 øvrige** |
+
+### Hele Michelin-utvalget er navnematchet
+
+Michelins **offisielle 2026 Oslo-side har 28 restauranter** ([kilde](https://guide.michelin.com/no/en/oslo-region/oslo/restaurants)). **28/28 er nå funnet i samme masterliste**. Av disse er **10** merket som Fysen-katalogposter og **18** som eksterne research-oppføringer. De 18 er markert separat i kolonnen `redaksjonell_status` og har eksplisitt lenke til Michelin i `notat`. Michelin-anerkjennelse viser redaksjonell relevans, men er ikke tilstrekkelig teknisk bevis for menyparser eller drift. Ikke ekskluder dem fordi de kun publiserer sesongbaserte smaksmenyer eller pakkepriser.
+
+Den eksisterende masterlisten inneholder også samtlige **21 restaurantnavn** på [VisitOSLOs lokalfavorittliste](https://www.visitoslo.com/restaurants-nightlife/the-taste-of-oslo/local-foodies), hvor noen er navnevarianter av samme fysisk sted. Forkortelsen «Izakaya» i VisitOSLO er *ikke* behandlet som bevist alias for «Izakaya by Vladimir Pak».
+
+### Samme adresse betyr ikke samme restaurant
+
+Disse er kontrollert separat mot førstegangskilder og skal **ikke** slås sammen kun ut fra postadresse:
+
+- **Baltazar Ristorante & Enoteca** og **Café Cathedral**, Dronningens gate 27: [Baltazar](https://baltazar.no/baltazar-kontakt/) / [Café Cathedral](https://cafecathedral.no/kontakt/).
+- **Campo de' Fiori** og **Brasserie Blanche**, Josefines gate 23: [Campo](https://www.campo.no/) / [Blanche](https://blanche.no/).
+- **Grand Café** og **Palmen Restaurant**, Karl Johans gate 31: [Grand Hotel](https://grand.no/om-grand) / [Palmen](https://grand.no/content/palmen-restaurant).
+- **Mother India** og **Pizza Baronen Bislett**, Pilestredet 63: [Mother India](https://motherindiaoslo.no/bislett/) / [Pizza Baronen](https://wolt.com/nb/nor/oslo/restaurant/pizza-baronen-bislett).
+
+To andre par, **Haandtryk** og **Viet Kitchen**, deler navn, adresse og tilnærmet samme koordinater *og* har ulike katalog-slugs med forskjellige menykilder i sine respektive manifester. Dette er reelle potensielle doble katalogidentiteter, men man må bevare originalmanifestene frem til én trygg produksjonsmigrering kan dokumenteres. At kildene er ulike rettferdiggjør ikke to fysiske restauranter i en oversikt over unike steder.
+
+### Utestående før fullstendighet kan erklæres
+
+- Hovedlisten på VisitOSLO har 330 paginerte resultater. Den første siden og tilgjengelige fritt viste redaksjonelle/områdevise lister er kontrollert; **hele de 330 er ikke uttømmende høstet eller matchet**. Ingen dekningsprosent kan derfor oppgis.
+- De **173 `UAVKLART`** krever kildeverifisering, eksklusjonsbeslutning eller aliasmatch. De 18 Michelin-restaurantene krever kontroll av aktiv drift før produksjonsopptak.
+- Mange av de 749 Fysen-radene mangler verifisert bydel. Ikke gjett bydel ut fra postnummer.
+- Feil i søkevisning av rettnavn og tegn-/tallsortering er et **separat produktproblem** og er ikke endret i dette restaurantoversiktspasset.
