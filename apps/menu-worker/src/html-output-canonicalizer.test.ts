@@ -32,7 +32,7 @@ function item(
 
 describe("structural HTML output canonicalization", () => {
   it("drops a repeated promotional label that mirrors distinct priced parent dishes", () => {
-    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v20");
+    expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v21");
     const items = [
       item("Spicy Popcorn", 6500),
       item("Tortilla Chips", 10900),
@@ -86,6 +86,21 @@ describe("structural HTML output canonicalization", () => {
       item("Sharing", 19900),
     ];
     expect(canonicalizeHtmlOutputItems(items)).toHaveLength(items.length);
+  });
+
+  it("drops Sumo allergy controls without removing priced dishes", () => {
+    const items = [
+      item("View allergies", 26900),
+      item("Filter allergies", 26900),
+      item("Sim-Sim Poké", 26900),
+      item("Dirty Ushi Maki", 26900),
+      item("Family Combo", 119900),
+    ];
+    expect(canonicalizeHtmlOutputItems(items).map((entry) => entry.name)).toEqual([
+      "Sim-Sim Poké",
+      "Dirty Ushi Maki",
+      "Family Combo",
+    ]);
   });
 
   it("drops generic takeaway navigation labels without hiding menu dishes", () => {
