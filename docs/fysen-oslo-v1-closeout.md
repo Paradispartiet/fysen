@@ -61,6 +61,8 @@ Tekniske tester utføres i isolert testdatabase. Ingen test skal opprette fiktiv
 
 **Fysen forbruker Oslo v1 er GODKJENT / production-closed.** Seks operative produksjonsporter er avstemt mot faktiske Vercel-deployer, 749 canonical restauranter, live browse-/søke-API, post-deploy mobilbrowser og representative E2E-scenarioer. Permanent kildebevis: [Fysen forbruker Oslo v1 – signoff](./fysen-consumer-oslo-v1-signoff-2026-10-13.md). Fysen Pro-partnerakseptanse er fortsatt en separat åpen oppgave.
 
+**Pro v1 teknisk godkjenning:** [Signoff 13. oktober 2026](./fysen-pro-v1-technical-signoff-2026-10-13.md) dokumenterer eksisterende isolerte tester og ikke-muterende live-proof. Ingen ekte restaurantpilot er utført; partnerakseptanse og R5 forblir separate.
+
 ### Dokumentert kontrollstatus 13. oktober 2026
 
 - [Fullkatalog #38364566185](https://github.com/Paradispartiet/fysen/actions/runs/38364566185): **749/749** restaurantkilder godkjent.
