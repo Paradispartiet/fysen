@@ -1,6 +1,6 @@
 import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v19";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v20";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -331,13 +331,15 @@ function preferUniquelyDirectPricedConflicts(
 ): readonly MenuObservedItem[] {
   const groups = new Map<string, MenuObservedItem[]>();
   for (const item of items) {
-    const group = groups.get(item.sourceKey) ?? [];
+    // The same dish can appear in different meal sections with distinct sourceKeys.
+    // Resolve price conflicts by dish identity, not section identity.
+    const group = groups.get(item.normalizedName) ?? [];
     group.push(item);
-    groups.set(item.sourceKey, group);
+    groups.set(item.normalizedName, group);
   }
 
   const preferredByKey = new Map<string, ReadonlySet<MenuObservedItem>>();
-  for (const [sourceKey, group] of groups) {
+  for (const [normalizedName, group] of groups) {
     if (group.length < 2) continue;
     const prices = new Set(
       group.map(
@@ -352,13 +354,13 @@ function preferUniquelyDirectPricedConflicts(
     // neighboring dishes. Preserve conflicting direct prices as ambiguous.
     const directPrices = new Set(direct.map((item) => item.priceMinor));
     if (direct.length > 0 && directPrices.size === 1) {
-      preferredByKey.set(sourceKey, new Set(direct));
+      preferredByKey.set(normalizedName, new Set(direct));
     }
   }
   if (preferredByKey.size === 0) return items;
 
   return items.filter((item) => {
-    const preferred = preferredByKey.get(item.sourceKey);
+    const preferred = preferredByKey.get(item.normalizedName);
     return preferred === undefined || preferred.has(item);
   });
 }
