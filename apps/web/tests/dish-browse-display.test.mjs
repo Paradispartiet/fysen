@@ -5,24 +5,35 @@ import { fileURLToPath, URL } from "node:url";
 import { browseDishDisplayName, sortBrowseDishesForDisplay } from "../lib/dish-browse-display.ts";
 
 describe("Oslo live dish browse headings", () => {
-  it("removes only noisy leading icon, number, quantity or punctuation prefixes", () => {
+  it("uses letters-only display titles for real menu patterns without touching source data", () => {
     const cases = [
       ["🍕 Margherita", "Margherita"],
       ["12. 🍔 Burger", "Burger"],
       ["• 03 - 🍜 Ramen", "Ramen"],
-      ["- 150g Himeji A5 Wagyu Ribeye, Japan,", "Himeji A5 Wagyu Ribeye, Japan,"],
+      ["150g Himeji A5 Wagyu Ribeye, Japan,", "Himeji Wagyu Ribeye Japan"],
       ["🍤 2 stk. Nigiri", "Nigiri"],
       ["40% - Big Mac stor meny", "Big Mac stor meny"],
       ["🍜 4 Cheese Pizza", "Cheese Pizza"],
       ["🎌 海老天ぷら", "海老天ぷら"],
       ["Ærtesuppe", "Ærtesuppe"],
-      ["Kylling A5 (2 stk)", "Kylling A5 (2 stk)"],
+      ["Kylling A5 (2 stk)", "Kylling"],
       ["  🍝 Carbonara  ", "Carbonara"],
+      ["🌱 7a. Vegetar", "Vegetar"],
+      ["🌱12A. PINK MONEYBAG", "PINK MONEYBAG"],
+      ["* Sarda🌱", "Sarda"],
+      ["★ Green Garlic Chicken 🌶️🌶️ RECOMMENDED", "Green Garlic Chicken"],
+      ["1/2 Crispy Duck med pannekaker (1-2 pers)", "Crispy Duck med pannekaker"],
+      ["**Poprice Scampi (3 stk)", "Poprice Scampi"],
+      ['"Dong Po" Braisert Svineribbe', "Dong Po Braisert Svineribbe"],
+      ["1,2,3,4! Formaggio", "Formaggio"],
+      ["4ost", "ost"],
       ["💰 159,-", ""],
       ["---", ""],
     ];
     for (const [original, expected] of cases) {
-      assert.equal(browseDishDisplayName(original), expected, original);
+      const displayed = browseDishDisplayName(original);
+      assert.equal(displayed, expected, original);
+      assert.match(displayed, /^[\p{L}\p{M} ]*$/u, original);
     }
   });
 
