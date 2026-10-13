@@ -97,4 +97,4 @@ Databaseintegrasjonen skal bevise at:
 
 ## Neste lag
 
-R4 — Fysen Pro dashboard — skal bygges rundt de verifiserte access grants. Innlogging, teammedlemmer, innsiktsvisning og selvbetjent profilredigering hører hjemme der, ikke i Claim Restaurant v1.
+R4 — Fysen Pro dashboard — er bygget rundt verifiserte access grants med engangskode, restaurantbundet innlogging og innsiktsvisning. Teammedlemmer og selvbetjent profilredigering inngår ikke i dagens Pro v1-pilot. Partnerverifisering følger en separat akseptanseport og blokkerer ikke forbruker Oslo v1, jf. [sluttkontrakten](./fysen-oslo-v1-closeout.md).
