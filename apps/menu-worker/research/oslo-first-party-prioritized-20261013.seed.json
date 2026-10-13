@@ -202,7 +202,7 @@
         "slug": "grilleriet-oslo",
         "name": "Grilleriet",
         "websiteUrl": "https://www.grilleriet.no/",
-        "address": "Storgata 21/23, 0184 Oslo",
+        "address": "Storgata 21, 0184 Oslo",
         "city": "Oslo",
         "countryCode": "NO"
       },
@@ -221,7 +221,7 @@
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-10-13",
-          "note": "Kildebekreftet i docs/oslo-restaurant-master-2026-10-13.csv. Førsteparts prissatt meny på https://www.grilleriet.no/meny kontrollert 2026-10-13; live parser, full menykvalitet, adressekoordinater og kjøkkentider avgjøres separat før katalogopptak."
+          "note": "Kildebekreftet i docs/oslo-restaurant-master-2026-10-13.csv. Førsteparts prissatt meny på https://www.grilleriet.no/meny kontrollert 2026-10-13; live parser, full menykvalitet, adressekoordinater og kjøkkentider avgjøres separat før katalogopptak. Operatørens egen side angir Storgata 21; masterens tidligere 21/23 er korrigert før Kartverket-oppslag."
         }
       },
       "actions": [],
