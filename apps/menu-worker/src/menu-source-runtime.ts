@@ -118,7 +118,7 @@ const BEVERAGE_PACKAGE_ITEM =
 const STRUCTURED_MENU_CONTRACT_COMPATIBILITY_ITEM =
   /^(?:bestikk|cutlery|urge(?:\s+(?:zero|uten\s+sukker|zero\s+sugar))?(?:\s+.*)?|pepsi(?:\s+max)?(?:\s+.*)?|imsdal(?:\s+.*)?)$/iu;
 const BATCH_INTAKE_BEVERAGE_SECTION =
-  /^(?:juice|juices|drikke|drinks?|beverages?|mineralvann|brus|soft\s+drinks?|sodas?|kaffe|coffee|te|tea|vin|wine|øl|beer|cocktails?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?)$/iu;
+  /^(?:juice|juices|drikke|drinks?|beverages?|mineralvann|brus|soft\s+drinks?|sodas?|kaffe|coffee|te|tea|vin|wine|red\s+wine|white\s+wine|ros[ée]|bubbles|beer\s*(?:&|and)\s*cider|øl|beer|cocktails?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?)$/iu;
 const BATCH_INTAKE_NON_FOOD_SECTION =
   /^(?:les\s+før\s+bestilling|read\s+before\s+ordering)$/iu;
 

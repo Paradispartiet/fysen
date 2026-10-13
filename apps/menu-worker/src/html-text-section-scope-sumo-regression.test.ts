@@ -96,4 +96,42 @@ describe("Sumo food sections after beverage navigation", () => {
       expect(kept).not.toContain("House Lemonade");
     }
   });
+
+  it("keeps actual Sumo dishes and drops drink groups in both section orders", () => {
+    const cases = [
+      ["Starters", "Juicy Chicken Karaage", 22900, true],
+      ["Drinks", "House Lemonade", 8900, false],
+      ["Red Wine", "Mauro Moliino, La Morra Cuneo, Italia", 119500, false],
+      ["Rosé", "Bayanegra Rosé", 17900, false],
+      ["Extras", "Kimchi Salad", 5900, true],
+      ["Kids menu", "Chicken Nuggets", 12900, true],
+      ["White Wine", "Riesling GG", 109500, false],
+      ["Bubbles", "Henriot Rosé", 119500, false],
+      ["Bubbles", "Moët & Chandon", 124500, false],
+      ["Beer & Cider", "Aooni IPA", 16900, false],
+      ["Deluxe Maki", "Morudoba Sake", 19900, true],
+    ] as const;
+    const items = cases.map(([, name, priceMinor], index) =>
+      observed(name, index, priceMinor),
+    );
+    const expected = cases
+      .filter(([, , , food]) => food)
+      .map(([, name]) => name)
+      .sort();
+    for (const order of [
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      [4, 6, 7, 9, 0, 1, 2, 3, 10, 8, 5],
+    ]) {
+      const text = order.flatMap((index) => {
+        const row = cases[index];
+        if (!row) throw new Error("Missing Sumo test case");
+        const [heading, name, minor] = row;
+        return [heading, name, String(minor / 100)];
+      }).join("\n");
+      const names = filterHtmlBeverageSectionItemsWithScopedProvenance(
+        items, text, text,
+      ).map((item) => item.name).sort();
+      expect(names).toEqual(expected);
+    }
+  });
 });
