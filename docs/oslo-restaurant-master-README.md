@@ -2,14 +2,14 @@
 
 **Åpne én fil:** [Oslo-restaurantlisten (CSV)](./oslo-restaurant-master-2026-10-13.csv).
 
-Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskatalog. Den dekker alle **749 av 749** restaurantmanifester i Fysens katalog på commit `08c748003d1748a8282917cbd43198509a89e822` og **206** eksterne/eldre research-oppføringer: totalt **955 rader**. Slug brukes som unik identitet for alle 749 registrerte steder. Noen av kandidatene kan være aliaser, dubletter, ikke ordinære restauranter eller stengt og må kontrolleres før opptak. Tallet 955 er **ikke** antallet unike, aktive eller gode Oslo-restauranter og ikke bevis på at alle er funnet.
+Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskatalog. Den dekker alle **749 av 749** restaurantmanifester i Fysens katalog på commit `08c748003d1748a8282917cbd43198509a89e822` og **212** eksterne/eldre research-oppføringer: totalt **961 rader**. Slug brukes som unik identitet for alle 749 registrerte steder. Noen av kandidatene kan være aliaser, dubletter, ikke ordinære restauranter eller stengt og må kontrolleres før opptak. Tallet 961 er **ikke** antallet unike, aktive eller gode Oslo-restauranter og ikke bevis på at alle er funnet.
 
 | Felt | Bruk |
 |---|---|
 | navn / adresse | Stedets navn og kjent adresse; tomt felt betyr uavklart |
 | bydel | Presist plassert bare når manifestets koordinater traff bydelsgrensen; ellers `IKKE_KLASSIFISERT`, `UAVKLART` eller `GRENSE_UAVKLART` |
 | tilstede_i_fysen | `JA` = bekreftet canonical; `IKKE_IDENTIFISERT` = tidligere research til vurdering; `KANDIDAT_NETT` = ferskt eksternt navn som må matches; `MULIG_ALIAS` = sannsynlig navnevariant |
-| redaksjonell_status | Egen vurderingsakse: `PUBLISERT_I_FYSEN`, `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART`, `KILDEBEKREFTET_RELEVANT`, `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART`, `MULIG_ALIAS`, `UAVKLART`. Dette er ikke en teknisk publiseringsbeslutning eller driftsgaranti |
+| redaksjonell_status | Egen vurderingsakse: `PUBLISERT_I_FYSEN`, `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART`, `KILDEBEKREFTET_RELEVANT`, `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART`, `MULIG_ALIAS`, `MATHALL_FLERE_MATAKTORER`, `PARAPLYNAVN_FLERE_FILIALER`, `SERVERINGSARENA_FLERE_KONSEPTER`, `KOMBINERT_OPPFORING`, `UAVKLART`. Dette er ikke en teknisk publiseringsbeslutning eller driftsgaranti |
 | katalog_slug | Eksakt canonical identitet når `JA`; mulig match ved `MULIG_ALIAS` |
 | kilde / notat | Opphav og kontrollbehov; historiske research-data er ikke ferskt driftsbevis |
 
@@ -17,7 +17,7 @@ Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskat
 
 **Eksterne lister:** Research-kandidatene bygger på [Fysens tidligere Oslo-census](./oslo-coverage-census-2026-09-21.md), [VisitOSLOs restaurantoversikt](https://www.visitoslo.com/restaurants-nightlife/restaurants), [VisitOSLOs tilgjengelige restauranter](https://www.visitoslo.com/no/oslo-for-deg/tilgjengelighet/tilgjengelige-restauranter) og [VisitOSLOs utvalg på forsiden](https://www.visitoslo.com/no). En oppføring her er ikke bevis for aktiv drift, selvstendig gateadresse eller tilstrekkelig restaurantkvalitet.
 
-**Hva er ferdig og hva mangler?** Selve sammenslåingen av **749 eksisterende + 206 registrerte eksterne kandidater** er ferdig. For en påstand om **alle gode og ordinære restauranter i Oslo** må fortsatt den brede VisitOSLO-listen (330 oppføringer ved oktoberkontrollen), bydelsvise lokale kilder, aliaser, aktualitet og manglende koordinater avstemmes. Ikke bruk summen 954 som en dekningsprosent. Ingen endringer er gjort i produksjonskatalog, menyuttrekk, søk eller valideringsregler.
+**Hva er ferdig og hva mangler?** Selve sammenslåingen av **749 eksisterende + 212 registrerte eksterne oppføringer** er ferdig. For en påstand om **alle gode og ordinære restauranter i Oslo** må fortsatt de ikke-verifiserte delene av VisitOSLOs 330-oppføringers oversikt, bydelsvise lokale kilder, aliaser, aktualitet og manglende koordinater avstemmes. Ikke bruk antall rader som en dekningsprosent. Ingen endringer er gjort i produksjonskatalog, menyuttrekk, søk eller valideringsregler.
 
 ## Tidligere etterkontroll 13. oktober 2026
 
@@ -45,23 +45,27 @@ Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskat
 
 **Mulige doble canonical identiteter:** To slugs hver for Haandtryk og Viet Kitchen deler navn og adresse. Begge er flagget i notat, men ingen manifest, slug eller produksjons-ID er slettet. Katalogen må kontrolleres før eventuell sammenslåing.
 
-**Nåværende hovedlistetall:** **955 rader = 749 JA + 196 IKKE_IDENTIFISERT + 8 KANDIDAT_NETT + 2 MULIG_ALIAS**. Fem nye kandidater kom til i dette passet. Ingen publiserte restauranter eller produksjonsregler er endret. Alle nye adresser ligger foreløpig med `UAVKLART` bydel inntil polygon- eller adresseverifisering; de er ikke gjettet fra postnummer.
+**Historisk hovedlistetall etter første avstemmingspass:** **955 rader = 749 JA + 196 IKKE_IDENTIFISERT + 8 KANDIDAT_NETT + 2 MULIG_ALIAS**. Fem nye kandidater kom til i dette passet. Ingen publiserte restauranter eller produksjonsregler er endret. Alle nye adresser ligger foreløpig med `UAVKLART` bydel inntil polygon- eller adresseverifisering; de er ikke gjettet fra postnummer.
 
 **Gjenstående før målet om alle relevante Oslo-restauranter kan erklæres oppfylt:** avstemme resten av VisitOSLOs 330 oppføringer, kontrollere ytterligere bydelsvise uavhengige kilder, verifisere identitet for de 196 eldre kandidatene, undersøke canonical-duplikatene og fastsette bydeler geografisk. Det skal gjøres i **den samme hovedlisten**, ikke i en parallell katalog.
 
-## Redaksjonell avstemming av én hovedliste – 13. oktober 2026
+## Redaksjonell status i én hovedliste – oppdatert 13. oktober 2026
 
-Den samme CSV-en har nå **en egen redaksjonell statuskolonne**, adskilt fra produksjonsstatusen. Derved blandes ikke «er god/relevant restaurant» med «har teknisk publiserbar, priset meny».
+Den samme CSV-en har **en egen redaksjonell statuskolonne**, adskilt fra produksjonsstatusen. Tabellen nedenfor er gjeldende; etterkontrollnotater lenger ned inneholder også daterte mellomresultater. Derved blandes ikke «er god/relevant restaurant» med «har teknisk publiserbar, priset meny».
 
 | Redaksjonell status | Antall rader | Betydning |
 | --- | ---: | --- |
 | `PUBLISERT_I_FYSEN` | 749 | Eksisterende katalogposter, uten endret teknisk publisering |
 | `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART` | 18 | Aktuelt oppført i Michelin Guide, men ikke katalogisert; aktuell drift/meny må kontrolleres (gjelder også Hot Shop) |
-| `KILDEBEKREFTET_RELEVANT` | 13 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
+| `KILDEBEKREFTET_RELEVANT` | 39 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
 | `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART` | 56 | Navngitt på nyere VisitOSLO-restaurantguider; redaksjonelt aktuelt, men drift og produksjonsmeny ikke ferdig verifisert |
-| `MULIG_ALIAS` | 2 | Mulige navnevarianter som må avstemmes |
-| `UAVKLART` | 117 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
-| **Totalt** | **955** | **749 i katalogen, 206 øvrige** |
+| `MULIG_ALIAS` | 3 | Mulige navnevarianter som må avstemmes |
+| `UAVKLART` | 88 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
+| `MATHALL_FLERE_MATAKTORER` | 5 | Mathaller med flere matboder, ikke én selvstendig restaurant |
+| `PARAPLYNAVN_FLERE_FILIALER` | 1 | Samle-/merkevarenavn som ellers ville dobbeltelt filialer |
+| `SERVERINGSARENA_FLERE_KONSEPTER` | 1 | Serveringsarena med flere typer matkonsepter, ikke én restaurant |
+| `KOMBINERT_OPPFORING` | 1 | VisitOSLO omtaler to restaurantkonsepter under ett fellesnavn |
+| **Totalt** | **961** | **749 i katalogen, 212 øvrige** |
 
 ### Hele Michelin-utvalget er navnematchet
 
@@ -83,7 +87,7 @@ To andre par, **Haandtryk** og **Viet Kitchen**, deler navn, adresse og tilnærm
 ### Utestående før fullstendighet kan erklæres
 
 - Hovedlisten på VisitOSLO har 330 paginerte resultater. Den første siden og tilgjengelige fritt viste redaksjonelle/områdevise lister er kontrollert; **hele de 330 er ikke uttømmende høstet eller matchet**. Ingen dekningsprosent kan derfor oppgis.
-- De **117 `UAVKLART`** krever kildeverifisering, eksklusjonsbeslutning eller aliasmatch. De 18 Michelin-restaurantene krever kontroll av aktiv drift før produksjonsopptak.
+- De **88 `UAVKLART`** krever kildeverifisering, eksklusjonsbeslutning eller aliasmatch. De 18 Michelin-restaurantene krever kontroll av aktiv drift før produksjonsopptak.
 - Mange av de 749 Fysen-radene mangler verifisert bydel. Ikke gjett bydel ut fra postnummer.
 - Feil i søkevisning av rettnavn og tegn-/tallsortering er et **separat produktproblem** og er ikke endret i dette restaurantoversiktspasset.
 
@@ -99,4 +103,19 @@ Et nytt kryssøk av VisitOSLOs guider ga **14 eksisterende kandidater** som kunn
 
 Guideoppføringer gir **ikke** automatisk nåværende driftsstatus. Eksempelvis er «Restaurant À L’aise» eksplisitt merket «closed» i en VisitOSLO-oversikt og er ikke lagt inn som en ny aktiv restaurant. Verifiserte navnevarianter eller paraplyoppføringer skal ikke gi nye rader: «Südøst Restaurant»/SüdØst, «Lofoten Fish Restaurant»/Lofoten Fiskerestaurant, «Restaurant Kontrast»/Kontrast, «Credo Restaurant»/Credo og fellesoppføringen «Plah & Ahaan». Det er lagt inn presiseringer på respektive eksisterende rader.
 
-**Status etter dette passet:** 955 oppføringer: 749 i Fysen, 18 Michelin-guideoppføringer uten Fysen-status, 56 VisitOSLO-guideoppføringer uten Fysen-status, 13 særskilt kildebekreftede kandidater, 117 øvrige uavklarte og 2 mulige aliaser. Hver navnerad finnes fortsatt bare i én hovedliste. Den paginerte hovedoversikten på 330 VisitOSLO-oppføringer er ennå **ikke kontrollert i sin helhet**, så listen er ikke dokumentert uttømmende. Restaurantenes aktuelle åpning og eventuell menyimport krever separat kontroll.
+**Historisk status etter dette delpasset:** 955 oppføringer: 749 i Fysen, 18 Michelin-guideoppføringer uten Fysen-status, 56 VisitOSLO-guideoppføringer uten Fysen-status, 13 særskilt kildebekreftede kandidater, 117 øvrige uavklarte og 2 mulige aliaser. Hver navnerad finnes fortsatt bare i én hovedliste. Den paginerte hovedoversikten på 330 VisitOSLO-oppføringer er ennå **ikke kontrollert i sin helhet**, så listen er ikke dokumentert uttømmende. Restaurantenes aktuelle åpning og eventuell menyimport krever separat kontroll.
+
+## Videre kildekontroll: selvstendige restauranter og mathaller – 13. oktober 2026
+
+Hovedlisten er oppdatert i samme fil, uten en ny parallell restaurantliste:
+
+- **20 allerede navngitte restauranter** ble undersøkt mot deres egne restauranter/kjeders nettsider eller en spesifikk VisitOSLO-produktprofil: Hos Thea, Kafé Celsius, Grilleriet, Lille Herbern, Punk Royale, Trattoria Popolare, Koie Ramen Torggata, Koie Ramen Munch, Liminal, Trancher Grünerløkka, Grønland Boulebar, Kongen Marina, Substans, Vinoteket, STOCK Restaurant, THIEF RESTAURANT, Ruffino Ristorante Italiano, Lysebu Restaurant, Holmenkollen Restaurant og Piazza Italia. Kontrollert gateadresse og lenke står på hver rad, og status er nå `KILDEBEKREFTET_RELEVANT`.
+- **Seks nye fysiske restaurantkandidater** ble funnet med uavhengig adresse: Koie Ramen Løkka (Thorvald Meyers gate 44), Agora Lilleborg (Ivan Bjørndals gate 23), Corso (Rostockgata 61), Big Horn Steakhouse Aker Brygge (Fjordalléen 2), Big Horn Steakhouse Møllergata (Møllergata 10) og Scala Restaurant (Dronning Eufemias gate 4). Kildene er henholdsvis https://koieramen.no/ , https://agoralilleborg.no/mat-drikke/ , https://www.corso.no/ , https://bighorn.no/restauranter/aker-brygge/ , https://bighorn.no/restauranter/ og https://www.visitoslo.com/eat/scala-restaurant . De er **kandidater**, ikke publisert i Fysen.
+- **Koie Ramen** uten filial er en samlebetegnelse; offisiell filialliste bekrefter tre ulike adresser i Oslo (Torggata/Osterhausgate 13, Munch Brygge/Operagata 39 og Løkka/Thorvald Meyers gate 44). Samlebetegnelsen telles ikke som en fjerde restaurant.
+- **Fem mathaller** er skilt fra selvstendige spisesteder: Mathallen Food Hall, Barcode Street Food, Oslo Street Food, Vippa Oslo og VIA Village. De består av forskjellige mataktører. Navnene beholdes som bakgrunnskilder, ikke som én restaurantenhet hver.
+- **Mat på SALT Art & Music** er klassifisert som serveringsarena med flere tilbud. Den engelske oppføringen **Food at SALT Art & Music** er dokumentert som samme arena, ikke et nytt sted. **Plah & Ahaan** er en kombinert oppføring, ikke et tredje selvstendig konsept utover Plah og Ahaan.
+- **Lille Herbern** er sesongrestaurant; offisiell sommerinformasjon dokumenterer ikke at den er åpen i oktober. Kildebekreftet relevans betyr ikke alltid at stedet er åpent på kontrolltidspunktet.
+
+Gjeldende fordeling etter dette passet: **961 råoppføringer, hvorav 749 kanoniske Fysen-manifester, 39 kildebekreftede eksterne restaurantkandidater, 56 andre VisitOSLO-guidekandidater, 18 Michelin-kandidater, 88 uavklarte, 3 mulige aliaser og 8 paraply-/mathall-/kombinasjonsoppføringer**. Antall rader er ikke lik antall distinkte restauranter: to kanoniske navne-/adressepar (Haandtryk og Viet Kitchen) trenger fremdeles katalogmigrasjonskontroll, og noen researchposter er uttrykkelig ikke egne restauranter.
+
+**Metodebegrensning:** VisitOSLOs hovedkatalog viser 330 treff fordelt på 28 sider, men tilgangen i dette passet viste ikke de 27 etterfølgende paginerte treffsidene. Derfor er det fortsatt ikke dokumentert at alle 330 treff er direkte sammenlignet. Aktuelle restauranter er i tillegg verifisert på særskilte produkt-/restaurant-/områdesider. Tallet 330 er ikke en absolutt eller komplett restaurantcensus for hele Oslo. De **88 gjenstående `UAVKLART`-oppføringene** trenger egen avklaring. Alle nye bydelsfelt er satt til `UAVKLART` inntil korrekt geografisk klassifisering; adressene er ikke konvertert til bydel ved gjetning.
