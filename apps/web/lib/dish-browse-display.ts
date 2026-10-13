@@ -1,17 +1,29 @@
 import type { DishBrowseItem } from "@fysen/contracts/dish-browse";
 
-// Live menu names remain unchanged in the API and in the search links.
-// Only the visible browse titles are cleaned, so leading emoji, item numbers,
-// bullets and quantity labels cannot dominate the alphabetical browse list.
+// Source names, canonical IDs and search queries are deliberately untouched.
+// The public browse list alone uses alphabetic display labels and sorts on them.
 export function browseDishDisplayName(value: string): string {
-  const initial = value.trim().replace(/^[^\p{L}\p{N}]+/u, "");
-  const withoutLeadingQuantity = initial.replace(
-    /^(?:\d+(?:[.,]\d+)?\s*(?:kg|g|ml|cl|l|stk|biter|pieces?|pcs|x|×|%)(?!\p{L})[^\p{L}\p{N}]*)+/iu,
-    "",
+  const normalized = value.normalize("NFKC")
+    .replace(/\p{Variation_Selector}|\u200C|\u200D|\u20E3/gu, "");
+
+  // Strip menu quantities as a unit, not just their number ("2 stk", "150g").
+  const withoutQuantities = normalized.replace(
+    /(?:\p{N}+(?:[.,/⁄\-–]\p{N}+)*\s*)+(?:stk|stykker|pcs|pieces?|biter|kg|g|mg|ml|cl|l|pers(?:oner)?)(?!\p{L})/giu,
+    " ",
   );
-  // Allow any language's letters, not just ASCII/Norwegian letters.
-  // Names without letters are not usable dish titles in this list.
-  return withoutLeadingQuantity.replace(/^[^\p{L}]+/u, "").trim();
+
+  // "4ost" still has a useful word; codes like "7a" and "A5" do not.
+  const withoutNumericCodes = withoutQuantities
+    .replace(/(?<!\p{L})\p{N}+(?=\p{L}{3,}(?![\p{L}\p{N}]))/gu, "")
+    .replace(/[\p{L}\p{N}]*\p{N}[\p{L}\p{N}]*/gu, " ");
+
+  // Retain Unicode letters and combining accents, but no digits, symbols,
+  // emoji or punctuation anywhere in the visible browse title.
+  return withoutNumericCodes
+    .replace(/[^\p{L}\p{M}]+/gu, " ")
+    .replace(/\s+(?:RECOMMENDED|ANBEFALT)$/iu, "")
+    .replace(/\s+/gu, " ")
+    .trim();
 }
 
 const dishNameCollator = new Intl.Collator("nb-NO", { sensitivity: "base" });
