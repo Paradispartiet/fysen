@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, URL } from "node:url";
 import { browseDishDisplayName, sortBrowseDishesForDisplay } from "../lib/dish-browse-display.ts";
 
 describe("Oslo live dish browse headings", () => {
