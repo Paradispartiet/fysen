@@ -58,9 +58,9 @@ Den samme CSV-en har nå **en egen redaksjonell statuskolonne**, adskilt fra pro
 | `PUBLISERT_I_FYSEN` | 749 | Eksisterende katalogposter, uten endret teknisk publisering |
 | `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART` | 18 | Aktuelt oppført i Michelin Guide, men ikke katalogisert; aktuell drift/meny må kontrolleres (gjelder også Hot Shop) |
 | `KILDEBEKREFTET_RELEVANT` | 13 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
-| `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART` | 42 | Navngitt på nyere VisitOSLO-restaurantguider; redaksjonelt aktuelt, men drift og produksjonsmeny ikke ferdig verifisert |
+| `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART` | 56 | Navngitt på nyere VisitOSLO-restaurantguider; redaksjonelt aktuelt, men drift og produksjonsmeny ikke ferdig verifisert |
 | `MULIG_ALIAS` | 2 | Mulige navnevarianter som må avstemmes |
-| `UAVKLART` | 131 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
+| `UAVKLART` | 117 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
 | **Totalt** | **955** | **749 i katalogen, 206 øvrige** |
 
 ### Hele Michelin-utvalget er navnematchet
@@ -83,12 +83,20 @@ To andre par, **Haandtryk** og **Viet Kitchen**, deler navn, adresse og tilnærm
 ### Utestående før fullstendighet kan erklæres
 
 - Hovedlisten på VisitOSLO har 330 paginerte resultater. Den første siden og tilgjengelige fritt viste redaksjonelle/områdevise lister er kontrollert; **hele de 330 er ikke uttømmende høstet eller matchet**. Ingen dekningsprosent kan derfor oppgis.
-- De **131 `UAVKLART`** krever kildeverifisering, eksklusjonsbeslutning eller aliasmatch. De 18 Michelin-restaurantene krever kontroll av aktiv drift før produksjonsopptak.
+- De **117 `UAVKLART`** krever kildeverifisering, eksklusjonsbeslutning eller aliasmatch. De 18 Michelin-restaurantene krever kontroll av aktiv drift før produksjonsopptak.
 - Mange av de 749 Fysen-radene mangler verifisert bydel. Ikke gjett bydel ut fra postnummer.
 - Feil i søkevisning av rettnavn og tegn-/tallsortering er et **separat produktproblem** og er ikke endret i dette restaurantoversiktspasset.
 
 ### Kontroll av VisitOSLOs navngitte restaurantguider
 
-I én sammenhengende gjennomgang er **42 allerede kjente, men ikke publiserte restauranter** flyttet fra generell `UAVKLART` til `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART`. Dette bygger på konkrete oppføringer i nyere VisitOSLO-guider, ikke på antagelser om postnummer, restaurantkvalitet eller dagens publiserte meny. Eksempel: Brasserie Coucou, Brasserie Opera, Den Glade Gris, Ekebergrestauranten, Fish Me, KUMI Gamlebyen, KUMI Oslobukta, Keyser Social, KöD Frogner, Louise, Basso Social og Stortorvets Gjæstgiveri. Oppføringene har nå relevante kildelenker direkte i `notat` i **samme CSV**. De er ikke lagt til Fysen-produksjonskatalogen.
+I én sammenhengende gjennomgang er **56 allerede kjente, men ikke publiserte restauranter** flyttet fra generell `UAVKLART` til `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART`. Dette bygger på konkrete oppføringer i nyere VisitOSLO-guider, ikke på antagelser om postnummer, restaurantkvalitet eller dagens publiserte meny. Eksempel: Brasserie Coucou, Brasserie Opera, Den Glade Gris, Ekebergrestauranten, Fish Me, KUMI Gamlebyen, KUMI Oslobukta, Keyser Social, KöD Frogner, Louise, Basso Social og Stortorvets Gjæstgiveri. Oppføringene har nå relevante kildelenker direkte i `notat` i **samme CSV**. De er ikke lagt til Fysen-produksjonskatalogen.
 
 De kontrollerte sidene er blant andre [VisitOSLOs lokalfavoritter](https://www.visitoslo.com/restaurants-nightlife/the-taste-of-oslo/local-foodies), [utesteder med servering](https://www.visitoslo.com/no/spise-og-drikke/uteserveringer), [Michelin](https://www.visitoslo.com/no/spise-og-drikke/smaken-av-oslo/michelin), [restauranter i sentrum](https://www.visitoslo.com/no/aktiviteter-og-attraksjoner/omraader/sentrum/restauranter), [rimelige restauranter](https://www.visitoslo.com/no/oslo-for-deg/billig-oslo/billige-restauranter), [vegetar og vegansk](https://www.visitoslo.com/restaurants-nightlife/vegan-vegetarian), [hotellrestauranter](https://www.visitoslo.com/no/spise-og-drikke/lettvint-og-for-alle/hotellrestauranter) og [skjulte perler](https://www.visitoslo.com/no/oslo-for-deg/oslo-for-foodies/skjulte-perler). Flere oppføringer er omtalt på mer enn én side, men telles bare én gang i dette kontrollpasset. Kategoriene inkluderer dessuten noen serveringsformer som trenger egen vurdering mot Fysens vanlige restaurantmål. De er derfor fortsatt separat klassifisert, ikke automatisk godkjent.
+
+### Ytterligere 14 navnematchede spisesteder – 13. oktober 2026
+
+Et nytt kryssøk av VisitOSLOs guider ga **14 eksisterende kandidater** som kunne få dokumentert guide-relevans uten å legge til en ny rad: seks fra [fine dining](https://www.visitoslo.com/your-oslo/oslo-for-foodies/fine-dining) (Palace Grill, Kastellet, Code Restaurant, TAK Oslo, Feinschmecker og Restaurant Eik Annen Etage), fem fra [norsk restaurantmat](https://www.visitoslo.com/no/artikler/norske-restauranter) (Engebret Café, Karlsborg Spiseforretning, Havsmak, Lofotstua og Skur 33), og tre fra [lunsj](https://www.visitoslo.com/restaurants-nightlife/convenient/lunch) (Vespa & Humla, Amundsen Bryggeri & Spiseri og Hitchhiker).
+
+Guideoppføringer gir **ikke** automatisk nåværende driftsstatus. Eksempelvis er «Restaurant À L’aise» eksplisitt merket «closed» i en VisitOSLO-oversikt og er ikke lagt inn som en ny aktiv restaurant. Verifiserte navnevarianter eller paraplyoppføringer skal ikke gi nye rader: «Südøst Restaurant»/SüdØst, «Lofoten Fish Restaurant»/Lofoten Fiskerestaurant, «Restaurant Kontrast»/Kontrast, «Credo Restaurant»/Credo og fellesoppføringen «Plah & Ahaan». Det er lagt inn presiseringer på respektive eksisterende rader.
+
+**Status etter dette passet:** 955 oppføringer: 749 i Fysen, 18 Michelin-guideoppføringer uten Fysen-status, 56 VisitOSLO-guideoppføringer uten Fysen-status, 13 særskilt kildebekreftede kandidater, 117 øvrige uavklarte og 2 mulige aliaser. Hver navnerad finnes fortsatt bare i én hovedliste. Den paginerte hovedoversikten på 330 VisitOSLO-oppføringer er ennå **ikke kontrollert i sin helhet**, så listen er ikke dokumentert uttømmende. Restaurantenes aktuelle åpning og eventuell menyimport krever separat kontroll.
