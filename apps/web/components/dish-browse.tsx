@@ -4,6 +4,7 @@ import type { DishBrowseItem, DishBrowseResponse } from "@fysen/contracts/dish-b
 import { useMemo, useState } from "react";
 import { foodDishCatalog } from "../content/food-knowledge/catalog";
 import { foodKnowledgeDishIdSet } from "../content/food-knowledge/manifest";
+import { browseDishDisplayName, sortBrowseDishesForDisplay } from "../lib/dish-browse-display";
 import {
   discoveryCoverage,
   liveDishMatchesDescriptor,
@@ -137,7 +138,7 @@ export function DishBrowse({
       dishes = dishes.filter((dish) => scopedIds.has(dish.id));
     }
 
-    return dishes;
+    return sortBrowseDishesForDisplay(dishes);
   }, [cuisineDiscoveryScope, data, normalizedFilter, selectedCuisine]);
 
   const cuisinePath = [selectedCuisine?.name, selectedCuisineArea]
@@ -303,7 +304,7 @@ export function DishBrowse({
                   return (
                     <div className="dishBrowseItem" key={dish.id}>
                       <a className="dishBrowseItemMain" href={dishSearchHref(dish.query, data.city)}>
-                        <strong>{dish.name}</strong>
+                        <strong>{browseDishDisplayName(dish.name)}</strong>
                         <span>{dish.restaurantCount} {dish.restaurantCount === 1 ? "restaurant" : "restauranter"}</span>
                       </a>
                       {knowledgeDish ? (
