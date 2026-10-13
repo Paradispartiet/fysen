@@ -5,14 +5,8 @@ on:
   schedule:
     - cron: "17 3 * * *"
     - cron: "9 17 26 8 *"
-  push:
-    branches: [main]
-    paths:
-      - "apps/menu-worker/catalog/**"
-      - "apps/menu-worker/src/**"
-      - "packages/menu-core/src/**"
-      - ".github/workflows/restaurant-catalog-health.yml"
-      - ".github/restaurant-catalog-health.trigger"
+  # Full-catalog validation is nightly/manual. Changed restaurant
+  # manifests are validated on their PR by validate-restaurant-candidates.yml.
 
 permissions:
   contents: read
