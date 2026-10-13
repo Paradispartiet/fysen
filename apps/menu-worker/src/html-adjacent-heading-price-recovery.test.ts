@@ -18,7 +18,7 @@ describe("adjacent heading-price HTML recovery", () => {
       </body></html>
     `);
 
-    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v9");
+    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v10");
     expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
       ["Doro Wet", 29000, "exact"],
       ["Key Wet", 28000, "exact"],
@@ -331,5 +331,40 @@ describe("adjacent heading-price HTML recovery", () => {
     `);
 
     expect(items).toEqual([]);
+  });
+
+  it("recovers source-priced Sumo food headings while excluding drinks and UI", () => {
+    const html = [
+      "<html><body>",
+      "<h2>menu</h2>",
+      "<h3>Starters</h3><h4>Juicy Chicken Karaage</h4><p>Served with mayo • 229;-</p><div>View allergies</div>",
+      "<h3>Main courses</h3>",
+      "<h4>Pad Thai Noodles</h4><p>Choose chicken or scampi. Double chicken +99,- • 349;-</p>",
+      "<h4>San Lay Special</h4><p>Beef, bell peppers and thai curry sauce. Double tenderloin +99,- • 369;-</p>",
+      "<h4>Braised Beef Rib Udon</h4><p>Thick udon noodles with beef rib • 349;-</p>",
+      "<h3>Red Wine</h3><h4>Barolo</h4><p>Mauro Moliino, La Morra Cuneo, Italia • 1195;-</p>",
+      "<h3>Rosé</h3><h4>Bayanegra Rosé</h4><p>Albacete, Spain • 179;-</p>",
+      "<h3>White Wine</h3><h4>Riesling GG</h4><p>Germany • 1095;-</p>",
+      "<h3>Bubbles</h3><h4>Henriot Rosé</h4><p>Champagne • 1195;-</p>",
+      "<h3>Beer & Cider</h3><h4>Aooni IPA</h4><p>Beer • 169;-</p>",
+      "<h3>Nigiri</h3><h4>Flambeed Salmon Nigiri w/ teriaki sauce</h4><p>4 pieces • 169;-</p>",
+      "<h3>Dessert</h3><h4>Sorbet</h4><p>Strawberry-chili, two scoops • 139;-</p>",
+      "<h4>Vanilla Ice Cream</h4><p>2 scoops • 139;-</p>",
+      "<h3>Kids menu</h3><h4>Mini Burgers</h4><p>2 pcs, with fries or rice • 149;-</p><div>View allergies</div>",
+      "<h4>Chicken Nuggets</h4><p>With fries or rice • 129;-</p>",
+      "</body></html>",
+    ].join("");
+    const extracted = recoverAdjacentHeadingPriceHtmlItems(html);
+    expect(extracted.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Juicy Chicken Karaage", 22900],
+      ["Pad Thai Noodles", 34900],
+      ["San Lay Special", 36900],
+      ["Braised Beef Rib Udon", 34900],
+      ["Flambeed Salmon Nigiri w/ teriaki sauce", 16900],
+      ["Sorbet", 13900],
+      ["Vanilla Ice Cream", 13900],
+      ["Mini Burgers", 14900],
+      ["Chicken Nuggets", 12900],
+    ]);
   });
 });

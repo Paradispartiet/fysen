@@ -198,4 +198,23 @@ describe("restaurant batch intake", () => {
       ]),
     ).toThrow("at least 3 are required");
   });
+
+  it("does not generate Sumo intake locks for items in beverage sections", () => {
+    const items = [
+      item("Juicy Chicken Karaage", 0),
+      { ...item("Mauro Moliino, La Morra Cuneo, Italia", 1), sectionName: "Red Wine" },
+      item("Sim-Sim Poké", 2),
+      { ...item("Henriot Rosé", 3), sectionName: "Bubbles" },
+      { ...item("Bayanegra Rosé", 4), sectionName: "Rosé" },
+      item("Kimchi Salad", 5),
+      { ...item("Riesling GG", 6), sectionName: "White Wine" },
+      { ...item("Aooni IPA", 7), sectionName: "Beer & Cider" },
+      item("Morudoba Sake", 8),
+    ];
+    const manifest = buildGeneratedRestaurantManifest(entry, items);
+    expect(manifest.menuSource.minimumExpectedItems).toBe(4);
+    expect(manifest.qualityAssertions.requiredDishNames).toEqual([
+      "Juicy Chicken Karaage", "Sim-Sim Poké", "Kimchi Salad", "Morudoba Sake",
+    ]);
+  });
 });
