@@ -131,7 +131,7 @@ export function DishBrowse({
 
   const visibleLiveDishes = useMemo(() => {
     if (!data) return [];
-    let dishes = data.dishes.filter((dish) => matchesText([dish.name, dish.query], normalizedFilter));
+    let dishes = data.dishes.filter((dish) => !normalizedFilter || matchesText([dish.name, dish.query, browseDishDisplayName(dish.name)], normalizedFilter));
 
     if (selectedCuisine) {
       const scopedIds = new Set(liveItemsForDiscoveryScope(data.dishes, cuisineDiscoveryScope).map((dish) => dish.id));
