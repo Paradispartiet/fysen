@@ -2,16 +2,16 @@
   "version": 1,
   "restaurant": {
     "slug": "der-peppern-gror-bogstadveien-oslo",
-    "name": "Der Peppern Gror Bogstadveien",
+    "name": "Der Peppern Gror Aker Brygge",
     "websiteUrl": null,
-    "address": "Bogstadveien 1, 0355 Oslo",
+    "address": "Bryggetorget 6, 0250 Oslo",
     "city": "Oslo",
     "countryCode": "NO",
-    "latitude": 59.92409482601102,
-    "longitude": 10.725580094746746
+    "latitude": 59.90954,
+    "longitude": 10.72481
   },
   "menuSource": {
-    "url": "https://semeny.no/sted/derpepperngrorbogstadveien",
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/der-peppern-gror-bogstadveien",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-08-28",
-      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+      "checkedAt": "2026-10-13",
+      "note": "Physical relocation verified against operator: Bogstadveien restaurant closed and reopened at Bryggetorget 6. Source URL retains historical 'bogstadveien' slug but Wolt page now identifies Aker Brygge at Bryggetorget 6. Coordinates 59.90954,10.72481 are an approximate OSM venue point (not surveyed door). Wolt priced items checked 2026-10-13; kitchen hours/dine-in menu completeness unverified. https://akerbrygge.derpepperngror.no/stengt/ ; https://wolt.com/nb/nor/oslo/restaurant/der-peppern-gror-bogstadveien ; https://mapcarta.com/N14125728410"
     }
   },
   "actions": [],
@@ -45,23 +45,23 @@
     "requiredDishVariants": [
       {
         "name": "Chicken 65",
-        "priceMinor": 13500
+        "priceMinor": 16000
       },
       {
         "name": "Chicken Hariyali Tikka",
-        "priceMinor": 26500
+        "priceMinor": 29000
       },
       {
         "name": "Butter Chicken",
-        "priceMinor": 27900
+        "priceMinor": 29000
       },
       {
         "name": "Tadka Daal",
-        "priceMinor": 21000
+        "priceMinor": 26000
       },
       {
         "name": "Tandoori Parantha",
-        "priceMinor": 6000
+        "priceMinor": 6500
       },
       {
         "name": "Peshwari Naan",
@@ -69,11 +69,11 @@
       },
       {
         "name": "Desi-Salat",
-        "priceMinor": 5000
+        "priceMinor": 6000
       },
       {
         "name": "Luscombe Cool Ginger Beer 0,33l",
-        "priceMinor": 5500
+        "priceMinor": 8500
       }
     ],
     "forbiddenDishNames": []
