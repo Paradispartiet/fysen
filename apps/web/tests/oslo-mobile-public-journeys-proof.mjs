@@ -24,6 +24,22 @@ async function externalDestination(link, label) {
   return href;
 }
 
+async function assertDishDestination(page, href, label) {
+  if (!href) throw new Error(`${label} lacks a search link`);
+  const destination = new URL(href, base);
+  const query = destination.searchParams.get("q");
+  if (destination.origin !== new URL(base).origin || destination.pathname !== "/search" || !query) {
+    throw new Error(`${label} has an invalid dish search destination: ${href}`);
+  }
+  await page.waitForURL(
+    (url) => url.origin === destination.origin && url.pathname === destination.pathname && url.searchParams.get("q") === query,
+    { timeout: 30_000 },
+  );
+  const heading = (await page.locator(".resultsIntro h1").innerText()).trim();
+  if (heading !== query) throw new Error(`${label} reached ${heading} instead of ${query}`);
+  return query;
+}
+
 try {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
 
@@ -48,6 +64,7 @@ try {
   await knowledge.locator(".dishKnowledgeRestaurantGrid a").first().waitFor({ timeout: 30_000 });
   await noHorizontalOverflow(page, "Ramen knowledge dialog");
   await knowledge.getByRole("button", { name: "Lukk kunnskap om Ramen" }).click();
+  await knowledge.waitFor({ state: "hidden", timeout: 30_000 });
   await ramenResult.waitFor({ state: "visible" });
   journeys.push({ journey: "search → knowledge → serving places → results" });
 
@@ -60,11 +77,19 @@ try {
   const coveredDish = cuisine.locator('.cuisineExploreDish[data-has-coverage="true"]')
     .filter({ has: page.locator("li a strong") }).first();
   await coveredDish.waitFor({ timeout: 30_000 });
-  const example = await coveredDish.locator("li a strong").first().innerText();
-  await coveredDish.locator("li a").first().click();
+  const dishLabel = await coveredDish.locator(".cuisineExploreDishHeading h4").innerText();
+  const dishHref = await coveredDish.locator(".cuisineExploreDishHeading a").getAttribute("href");
+  const exampleLink = coveredDish.locator("li a").first();
+  const exampleHref = await exampleLink.getAttribute("href");
+  const example = await exampleLink.locator("strong").innerText();
+  if (!dishHref || !exampleHref || new URL(dishHref, base).searchParams.get("q") !== new URL(exampleHref, base).searchParams.get("q")) {
+    throw new Error(`Matlyst restaurant example does not point to the selected dish ${dishLabel}`);
+  }
+  await exampleLink.click();
+  const query = await assertDishDestination(page, exampleHref, `Matlyst ${dishLabel}`);
   await page.locator(".resultList .dishResult").first().waitFor({ timeout: 30_000 });
   await noHorizontalOverflow(page, "Matlyst dish results");
-  journeys.push({ journey: "Matlyst → cuisine → dish → restaurant results", example });
+  journeys.push({ journey: "Matlyst → cuisine → dish → restaurant results", dish: dishLabel, example, query });
 
   // 3. The live dish index leads to results for the selected dish.
   await page.goto(base, { waitUntil: "domcontentloaded", timeout: 30_000 });
@@ -73,11 +98,14 @@ try {
   await browse.getByRole("heading", { name: "Alle retter i Oslo" }).waitFor();
   await browse.locator(".dishBrowseItemMain").first().waitFor({ timeout: 30_000 });
   await noHorizontalOverflow(page, "All dishes");
-  const dish = await browse.locator(".dishBrowseItemMain strong").first().innerText();
-  await browse.locator(".dishBrowseItemMain").first().click();
+  const dishLink = browse.locator(".dishBrowseItemMain").first();
+  const dish = await dishLink.locator("strong").innerText();
+  const dishHref = await dishLink.getAttribute("href");
+  await dishLink.click();
+  const query = await assertDishDestination(page, dishHref, `All dishes ${dish}`);
   await page.locator(".resultList .dishResult").first().waitFor({ timeout: 30_000 });
   await noHorizontalOverflow(page, "All dishes results");
-  journeys.push({ journey: "all dishes → dish → results", dish });
+  journeys.push({ journey: "all dishes → dish → results", dish, query });
 
   process.stdout.write(`${JSON.stringify({ status: "verified", viewport: "390x844", journeys }, null, 2)}\n`);
 } finally {
