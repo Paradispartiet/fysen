@@ -2,6 +2,18 @@
 
 Fysen Pro v1 er Revenue R4: et grant-skopet restaurantdashboard over målt etterspørsel, resultatytelse og kildehelse. Det bygger på den verifiserte virksomhetstilknytningen fra Claim Restaurant v1 og endrer ikke Fysens organiske søk eller kildebevis.
 
+## Ferdigdefinisjon: teknisk leveranse og partnerakseptanse
+
+Fysen Pro v1 vurderes uavhengig av forbruker Oslo v1:
+
+- **Teknisk leveranseklar** når syntetisk Claim → grant → setup-token → session → dashboard → logout/revokering er integrasjonstestet i isolert database, API-/webkontraktene er testet, og offentlige Claim-/Pro-flater er kontrollert ikke-muterende mot produksjon. Dette kan fullføres uten restaurantrepresentant.
+- **Partnerverifisert** først når en ekte representant er verifisert gjennom uavhengig kanal og en kontrollert `pro:pilot-proof` er bestått mot produksjon. Dette kan ikke erklæres på grunnlag av syntetiske brukere.
+- **Kommersiell utrulling (R5)** venter på partnerakseptanse og særskilt godkjenning.
+
+Per 13. oktober 2026 finnes [beståtte Claim-/Pro-databaseintegrasjonstester](https://github.com/Paradispartiet/fysen/actions/runs/36514385344). Manglende ekte restaurantpartner er en separat ekstern avhengighet, ikke en feil i autentiseringsimplementasjonen. Den tekniske leveransen skal likevel ikke kalles ferdig før alle dens egne bevis er gjennomgått.
+
+Se også [separate closeout-porter](./fysen-oslo-v1-closeout.md) og [operatørprosedyren](./fysen-pro-pilot-operator.md).
+
 ## Tilgangsmodell for piloten
 
 Repoet har foreløpig ingen generell konto-/auth-plattform. R4 introduserer derfor ikke en ny ekstern auth-leverandør bare for piloten og åpner heller ikke et usikret dashboard basert på restaurant-slug.
