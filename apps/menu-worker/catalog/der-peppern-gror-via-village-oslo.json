@@ -4,11 +4,11 @@
     "slug": "der-peppern-gror-via-village-oslo",
     "name": "Der Peppern Gror - VIA Village",
     "websiteUrl": null,
-    "address": "Fridtjof Nansens plass 7, 0160 Oslo",
+    "address": "Munkedamsveien 29, 0251 Oslo",
     "city": "Oslo",
     "countryCode": "NO",
-    "latitude": 59.91260571720129,
-    "longitude": 10.735303452013065
+    "latitude": 59.91218,
+    "longitude": 10.72662
   },
   "menuSource": {
     "url": "https://semeny.no/sted/668derpepperngrorviavillage",
@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-09-04",
-      "note": "Batch 37 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+      "note": "2026-10-13: VIA Village is a distinct food-court vendor at Munkedamsveien 29 (Wolt restaurant listing / VisitOSLO venue profile). Coordinates are the VIA Village venue reference point, not independently surveyed stall entrance. This is NOT the Rådhusplassen location; retain independent slug and menu assertions. https://wolt.com/nb/nor/oslo/restaurant/der-peppern-gror-via-village ; https://www.visitoslo.com/eat/via-village"
     }
   },
   "actions": [],
