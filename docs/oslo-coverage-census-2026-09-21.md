@@ -3,23 +3,20 @@
 This document is a dated coverage audit and research ledger. It is **not** a parallel production catalog.
 `apps/menu-worker/catalog/` remains the only canonical restaurant list.
 
-## Coverage contract
+## Coverage contract — updated 2026-10-13
 
-"Relevant Oslo restaurant" follows the permanent dish-first policy in `docs/oslo-pilot-v1.md` and
-`docs/restaurant-production.md`: a place belongs in the coverage universe when omitting it would lose
-meaningful dish/cuisine coverage, geographic coverage, documented demand, qualitative significance, or
-a necessary source type. Fysen does not target every registered food-service business in Oslo.
+**Superseding decision:** Cover **all evidence-supported good, ordinary restaurants in Oslo**, not only restaurants with unique incremental dish/cuisine coverage. The permanent editorial policy is [Oslo Pilot v1](./oslo-pilot-v1.md) and the intact production gates remain in [Restaurant production](./restaurant-production.md). The dated listings below were classified before this decision and remain historical evidence, not a complete census under the revised objective.
+
+The coverage universe includes ordinary neighbourhood restaurants, local favourites, family restaurants, midrange dining, international and traditional kitchens, destination restaurants and fine dining. Neither Michelin recognition nor a novel dish is mandatory. Do not bulk-add every generic pizza, kebab, burger, takeaway-only or identical chain location: judge actual restaurant quality, identity and meal service with explicit evidence. **A genuinely good pizzeria/sushi/other specialist can be eligible.** Menu readability and individual dish prices determine technical publication readiness, not editorial relevance.
 
 The census statuses are:
 
-- `canonical`: present in `apps/menu-worker/catalog/`;
-- `excluded`: assessed and outside the current Fysen coverage contract, with an explicit reason;
-- `review`: relevant signal exists, but source/menu/semantic evidence or final promotion is unresolved;
-- `missing`: relevant in the refreshed source universe and neither canonical, excluded nor already under review.
+- `canonical`: present in `apps/menu-worker/catalog/` with verified production requirements; counts as published restaurant coverage;
+- `excluded`: assessed as outside the **revised quality/ordinary-restaurant scope**, closed, outside Oslo, a physical duplicate or otherwise explicitly excluded, with reason and sources. A parser problem is not an exclusion reason;
+- `review`: named restaurant with evidence of relevance, but quality/identity/source/menu/semantic validation or final promotion is unresolved. Include **editorially eligible but technically blocked** restaurants here, preserving the specific blocker;
+- `missing`: eligible or plausibly eligible restaurant found in refreshed sources but not yet classified as canonical/excluded/review.
 
-A coverage refresh is not closed while `missing > 0`. A claim that all relevant places are actually
-covered also requires the remaining `review` queue to be resolved to `canonical` or `excluded`;
-`review` is not equivalent to coverage.
+A restaurant under `review` is **not yet covered**, and a broad source sweep is incomplete until every item has been matched or classified. It is not permitted to clear `review` by reclassifying genuine restaurants as `excluded` merely because the current parser cannot capture their menu. Track two independent outcomes: the assessed editorial universe and the subset published with source-backed searchable dishes. Claiming coverage of all good ordinary Oslo restaurants requires completion of the broad-city source sweep, neighbourhood verification and resolution of eligible publication gaps; zero `missing` in narrow guide subsets does not suffice.
 
 ## Census start baseline
 
@@ -1294,3 +1291,47 @@ current Anders Husa Cheap Eats editorial list are now fully classified with `mis
 additional independent current Oslo relevance/demand sources and resolve the accumulated review blocker
 families while the broad 326-product VisitOSLO catalogue enumeration remains open. Kafé Republik stays
 in its generic extraction-loss blocker family and must not be promoted from the incomplete 13/15 output.
+
+
+## Updated execution plan — 13 October 2026 (supersedes historical prioritisation above)
+
+**Goal:** Establish a comprehensive, maintained Oslo list of good, ordinary restaurants without admitting every low-value generic fast-food/pizza/takeaway outlet. A restaurant may be relevant even when the present dish-index pipeline cannot publish it. The earlier 56/85 historical review residual and individual source-family counts are *dated snapshots*, not the complete backlog for this enlarged scope.
+
+### First: reconcile the full restaurant universe
+
+1. Enumerate **every page** of the [VisitOSLO full restaurant list](https://www.visitoslo.com/restaurants-nightlife/restaurants), not just the previously inspected first tranche or curated topical guides. VisitOSLO is a discovery source, not an automatic quality certificate.
+2. Add [Michelin](https://guide.michelin.com/no/en/oslo-region/restaurants), [VisitOSLO local-foodies](https://www.visitoslo.com/no/spise-og-drikke/smaken-av-oslo/lokale-foodies), the independently edited Oslo restaurant guides, and local district-specific research. Include ordinary establishments absent from curated lists.
+3. Match exact physical identities against the `apps/menu-worker/catalog/` manifest tree and any existing review/exclusion; do not count a chain's other branch, alias or broad brand name as a match for a distinct Oslo venue.
+4. For each relevant candidate record name, street address, district, current source/verification date, restaurant type, quality evidence, **editorial eligibility** and **technical menu-publishing blocker** separately. Do not create a second canonical catalog.
+5. Recheck closed/renamed/relocated venues using a current first-party source before deciding to add or exclude.
+
+### Borough × restaurant type matrix
+
+Maintain coverage of all 15 administrative Oslo districts:
+
+`Alna`, `Bjerke`, `Frogner`, `Gamle Oslo`, `Grorud`, `Grünerløkka`, `Nordre Aker`, `Nordstrand`, `Sagene`, `St. Hanshaugen`, `Stovner`, `Søndre Nordstrand`, `Ullern`, `Vestre Aker`, `Østensjø`.
+
+Report Sentrum/Bjørvika as an additional practical research area where helpful, without mistaking it for a separate administrative borough. For each area review ordinary restaurants across Norwegian/traditional, European, Asian, Middle Eastern, African, Latin American, seafood, vegetarian and other locally relevant food traditions; also price level and full-service vs substantial casual dining. **Empty cells trigger research, not a presumption that an establishment must exist.**
+
+### First validation tranche — restaurants previously researched but not in canonical catalog
+
+Start by refreshing identity, current service, quality evidence and menu/technical state for these **candidates, not assumed admissions**:
+
+| Segment | First candidates to reverify | Known historical source issues |
+|---|---|---|
+| Ordinary/traditional | Engebret Café; Gamle Raadhus Restaurant; Restaurant Schrøder; Den Glade Gris; Dovrehallen | Misbound prices, extracted descriptions, incomplete dish variants and incomplete first-party menu proof |
+| Broad sit-down options | Brasserie Opera; Ekebergrestauranten; Folkvang Sagene; Basso Social; Keyser Social | Incomplete HTML extraction; semantic noise; multiple-price titles; packages/tasting menus |
+| Seafood/other dining | Louise; Lofoten Fiskerestaurant; Solsiden Restaurant; The Salmon; Grotto | Transport/section layout, price association or semantic menu issues |
+
+For every candidate make a **separate editorial decision** (relevant / excluded / needs more evidence) and an **independent technical decision** (publishable / parser fix / access restriction / no individual prices / unknown). Candidates with a genuine restaurant identity and quality evidence remain `review` while technically blocked.
+
+After that tranche continue through the historical P0/P1 review items, remaining full VisitOSLO pages and local-district discoveries. Avoid selecting only easy-to-parse venues. Keep historical 2026-09 claims and counts auditable; publish a new dated status once the refreshed universe is enumerated.
+
+### Reporting and completion gates
+
+- **Known relevant venues:** counts by `canonical`, `review`, `missing`, `excluded`, with evidence and a distinct technical blocker count. Never convert unresolved restaurants to exclusions for cosmetic zero residual.
+- **Geographic and quality breadth:** each Oslo district and normal price/class of restaurant examined, with source date and any remaining unknowns.
+- **Publication integrity:** only source-proven current dishes/prices promoted by the existing strict candidate → QA → catalog → materialization sequence. Production restaurant count and menu acceptance are **not** editorial coverage completeness metrics.
+- **Coverage statement:** do not claim “all good Oslo restaurants” until full independent-source reconciliation and district-level research are complete, and eligible missing/review gaps have actually been addressed. Coverage is subsequently maintained by periodic refreshes as restaurants open and close.
+
+No production data, gate thresholds, parser, search ranking or Fysen v1 signoff changes are authorised by this research-policy update.

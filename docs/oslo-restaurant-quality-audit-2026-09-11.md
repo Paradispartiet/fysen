@@ -1,5 +1,7 @@
 # Oslo restaurant quality audit — 2026-09-11
 
+> **Historisk snapshot, ikke gjeldende dekningsmål (oppdatert 13.10.2026).** Denne auditen vektla marginal rettverdi. Gjeldende mål er **alle gode, ordinære restauranter i Oslo**, også de som overlapper i retter og kjøkken. En reelt god nabolagsrestaurant skal ikke avvises som «redundant» bare fordi menyen ligner et annet sted. De tekniske kravene til publiserbare rett-/prisdata er uendret. Se [gjeldende policy](./oslo-pilot-v1.md) og [census](./oslo-coverage-census-2026-09-21.md).
+
 Dette er en **dish-first kvalitetsaudit**, ikke en census over alle serveringssteder i Oslo. Formålet er å finne hvilke restauranter som gir Fysen ny rettverdi, hvilke hull som er åpenbare, og hvor dagens katalog er redundant.
 
 Snapshot:
