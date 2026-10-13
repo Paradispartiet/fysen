@@ -14,22 +14,20 @@ til:
 
 Personaliseringen skal være aktivt valgt, privat og forklarbar. Fysen skal ikke bygge en skjult smaksprofil fra søkehistorikk.
 
-## Inngangsport: Oslo v1 må være production-closed
+## Inngangsport: forbruker Oslo v1 må være production-closed
 
-Ingen stor v2-feature kan starte før alle sju portene i [`fysen-oslo-v1-closeout.md`](./fysen-oslo-v1-closeout.md) er grønne på samme produksjons-SHA.
+Ingen stor forbruker-v2-feature kan starte før de seks operative **forbrukerportene**, og den tilhørende forbruker-erklæringen, i [`fysen-oslo-v1-closeout.md`](./fysen-oslo-v1-closeout.md) er grønne mot aktuell produksjon.
 
 Det innebærer blant annet:
 
-- canonical consumer catalog live;
+- canonical forbrukerkatalog aktiv og kilde-/menyintegriteten dokumentert;
 - Min mat/AHA-piloten satt på pause med kontrollert brukerflate;
-- Claim Restaurant og Fysen Pro live;
-- én faktisk restaurantpilot gjennom Claim → setup → Pro-dashboard;
 - de fire offentlige mobile brukerreisene bevist;
 - representativ production E2E grønn;
-- web og API bekreftet på forventet `main`;
+- faktisk deployet web/API-runtime og aktuell katalogmaterialisering verifisert; uendret app-kode kan dokumenteres med commit-sammenligning uten unødvendig deploy;
 - releasekontrakten på maksimalt tre endringskvalifiserte produksjonsbatcher per Europe/Oslo-døgn, uten faste klokkeslett, bevart.
 
-Restaurant-onboarding fortsetter som løpende innholdsproduksjon og er ikke en generell v2-blocker.
+**En ekte Claim → Pro-restaurantpilot er ikke inngangsport til forbruker-v2.** Fysen Pro v1 har egen teknisk ferdigdefinisjon og senere partnerakseptanse. Restaurant-onboarding fortsetter som løpende innholdsproduksjon og er ikke en generell v2-blokkering.
 
 ## Produktvurdering ved v1-grensen
 
@@ -37,7 +35,7 @@ Restaurant-onboarding fortsetter som løpende innholdsproduksjon og er ikke en g
 |---|---|---|
 | Produktavgrensning | God | Dish-first løser ett tydelig behov uten å bli en generell restaurantkatalog. |
 | Teknisk fundament | Profesjonelt | Ferskhet, kildebelegg, canonical identitet, fail-closed publication og permanente produksjonsporter er riktige valg. |
-| Forbrukeropplevelse | Nesten production-closed | Live-release, mobilbevis og restaurantpiloten må lukkes før produktet omtales som komplett. |
+| Forbrukeropplevelse | Delbevis godkjent | Katalog og fire mobilreiser er dokumentert grønne; øvrige forbrukerporter avstemmes separat. En Pro-restaurantpilot er ikke et forbrukerkrav. |
 | Innovasjon | Sterk i kombinasjonen | Det særegne i v1 er rett → ferskt menybevis → restaurant → kunnskap → handling. |
 | Enkeltfeatures | Ikke alene unike | Søk, lagring og booking finnes andre steder; differensieringen ligger i den beviste sammenhengen. |
 
@@ -45,15 +43,16 @@ Fysen skal derfor ikke markedsføres som ferdig bare fordi kode og CI er grønne
 
 ## Funksjonsgrense
 
-### Ferdig i Oslo v1 når produksjonsportene er grønne
+### Ferdig i forbruker Oslo v1 når forbrukerportene er grønne
 
 - konkret rettsøk og moderate stavevariasjoner;
 - restaurant, pris, menybevis og ferskhet;
 - geolokasjon og avstand;
 - verifisert booking/order;
 - Matlyst og canonical «Alle retter»;
-- matleksikon koblet til serveringssteder;
-- Claim Restaurant og Fysen Pro v1.
+- matleksikon koblet til serveringssteder.
+
+Claim Restaurant og Fysen Pro v1 er separate virksomhetsleveranser med egen godkjenning; de er ikke krav for å lukke forbruker-v1.
 
 ### Bevisst utenfor v1
 
@@ -187,18 +186,17 @@ Sponsing kan aldri gjøre en udokumentert rett søkbar, endre canonical match-ty
 
 ## Prioritert videre arbeid
 
-1. Lukk ordinær Oslo v1-release og kjør production proof.
-2. Kjør én faktisk Claim → Pro-restaurantpilot.
-3. Fullfør de fire offentlige mobile live-reisene og erklær v1 bare dersom alle sju porter er grønne.
-4. Frys v1 permanent og opprett V2.0 preference-contract som første v2-epic.
-5. Avklar Fysens egen samlingsløsning og lever navngitte samlinger før anbefalingslogikk.
-6. Bygg forklarbar discovery på de eksplisitte signalene.
-7. Utvid retts-/smaksgrafen og deretter følger/varsler.
-8. Velg første nye by først når Oslo-modellen er stabil i drift.
-9. Behandle Pro v2 som separat kommersielt spor etter dokumentert Pro v1-pilot.
-10. Vurder AHA-integrasjonen separat når tjenesten er klar og driftskostnaden er avklart.
+1. Avstem de seks forbrukerportene mot gjeldende produksjon og dokumenter forbruker Oslo v1-erklæringen. Katalog 749/749 og mobil 4/4 har allerede dokumenterte delbevis.
+2. Frys forbruker-v1 og opprett V2.0 preference-contract som første v2-epic når forbrukerportene er lukket.
+3. Avklar Fysens egen samlingsløsning og lever navngitte samlinger før anbefalingslogikk.
+4. Bygg forklarbar discovery på de eksplisitte signalene.
+5. Utvid retts-/smaksgrafen og deretter følger/varsler.
+6. Velg første nye by først når Oslo-modellen er stabil i drift.
+7. Hold Fysen Pro v1 teknisk leveranseklar og gjennomfør en ekte Claim → Pro-pilot når en verifiserbar restaurantpartner finnes.
+8. Behandle Pro v2 og kommersialisering som separat spor først etter dokumentert Pro v1-pilot.
+9. Vurder AHA-integrasjonen separat når tjenesten er klar og driftskostnaden er avklart.
 
-Det skal ikke åpnes arbeid på punkt 4–10 før punkt 1–3 er production-closed.
+Punkt 2–6 krever lukket **forbruker-v1**, ikke Pro-pilot. Punkt 8 krever egen partnerakseptanse.
 
 ## V2-ferdigdefinisjon
 
