@@ -57,6 +57,10 @@ Baselinen fra august er historisk. Gjeldende katalogstatus skal alltid måles i 
 
 Tekniske tester utføres i isolert testdatabase. Ingen test skal opprette fiktive restaurantkrav, grants eller innlogginger i produksjon, bruke produksjonshemmeligheter i CI eller gi tilgang uten uavhengig verifisering. Offentlige Claim- og Pro-ruter kan eksistere på produksjon selv om ingen restaurant ennå er verifisert.
 
+### Sluttgodkjenning 13. oktober 2026
+
+**Fysen forbruker Oslo v1 er GODKJENT / production-closed.** Seks operative produksjonsporter er avstemt mot faktiske Vercel-deployer, 749 canonical restauranter, live browse-/søke-API, post-deploy mobilbrowser og representative E2E-scenarioer. Permanent kildebevis: [Fysen forbruker Oslo v1 – signoff](./fysen-consumer-oslo-v1-signoff-2026-10-13.md). Fysen Pro-partnerakseptanse er fortsatt en separat åpen oppgave.
+
 ### Dokumentert kontrollstatus 13. oktober 2026
 
 - [Fullkatalog #38364566185](https://github.com/Paradispartiet/fysen/actions/runs/38364566185): **749/749** restaurantkilder godkjent.
