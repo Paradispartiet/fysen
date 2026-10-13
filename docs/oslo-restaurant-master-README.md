@@ -2,7 +2,7 @@
 
 **Åpne én fil:** [Oslo-restaurantlisten (CSV)](./oslo-restaurant-master-2026-10-13.csv).
 
-Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskatalog. Den dekker alle **749 av 749** restaurantmanifester i Fysens katalog på commit `08c748003d1748a8282917cbd43198509a89e822` og **233** eksterne/eldre research-oppføringer: totalt **982 rader**. Slug brukes som unik identitet for alle 749 registrerte steder. Noen av kandidatene kan være aliaser, dubletter, ikke ordinære restauranter eller stengt og må kontrolleres før opptak. Tallet 982 er **ikke** antallet unike, aktive eller gode Oslo-restauranter og ikke bevis på at alle er funnet.
+Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskatalog. Den dekker alle **749 av 749** restaurantmanifester i Fysens katalog på commit `08c748003d1748a8282917cbd43198509a89e822` og **232** eksterne/eldre research-oppføringer: totalt **981 rader**. Slug brukes som unik identitet for alle 749 registrerte steder. Noen av kandidatene kan være aliaser, dubletter, ikke ordinære restauranter eller stengt og må kontrolleres før opptak. Tallet 982 er **ikke** antallet unike, aktive eller gode Oslo-restauranter og ikke bevis på at alle er funnet.
 
 | Felt | Bruk |
 |---|---|
@@ -17,7 +17,7 @@ Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskat
 
 **Eksterne lister:** Research-kandidatene bygger på [Fysens tidligere Oslo-census](./oslo-coverage-census-2026-09-21.md), [VisitOSLOs restaurantoversikt](https://www.visitoslo.com/restaurants-nightlife/restaurants), [VisitOSLOs tilgjengelige restauranter](https://www.visitoslo.com/no/oslo-for-deg/tilgjengelighet/tilgjengelige-restauranter) og [VisitOSLOs utvalg på forsiden](https://www.visitoslo.com/no). En oppføring her er ikke bevis for aktiv drift, selvstendig gateadresse eller tilstrekkelig restaurantkvalitet.
 
-**Hva er ferdig og hva mangler?** Selve sammenslåingen av **749 eksisterende + 233 registrerte eksterne oppføringer** er ferdig. For en påstand om **alle gode og ordinære restauranter i Oslo** må fortsatt de ikke-verifiserte delene av VisitOSLOs 330-oppføringers oversikt, bydelsvise lokale kilder, aliaser, aktualitet og manglende koordinater avstemmes. Ikke bruk antall rader som en dekningsprosent. Ingen endringer er gjort i produksjonskatalog, menyuttrekk, søk eller valideringsregler.
+**Hva er ferdig og hva mangler?** Selve sammenslåingen av **749 eksisterende + 232 registrerte eksterne oppføringer** er ferdig. For en påstand om **alle gode og ordinære restauranter i Oslo** må fortsatt de ikke-verifiserte delene av VisitOSLOs 330-oppføringers oversikt, bydelsvise lokale kilder, aliaser, aktualitet og manglende koordinater avstemmes. Ikke bruk antall rader som en dekningsprosent. Ingen endringer er gjort i produksjonskatalog, menyuttrekk, søk eller valideringsregler.
 
 ## Tidligere etterkontroll 13. oktober 2026
 
@@ -57,7 +57,7 @@ Den samme CSV-en har **en egen redaksjonell statuskolonne**, adskilt fra produks
 | --- | ---: | --- |
 | `PUBLISERT_I_FYSEN` | 749 | Eksisterende katalogposter, uten endret teknisk publisering |
 | `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART` | 18 | Aktuelt oppført i Michelin Guide, men ikke katalogisert; aktuell drift/meny må kontrolleres (gjelder også Hot Shop) |
-| `KILDEBEKREFTET_RELEVANT` | 104 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
+| `KILDEBEKREFTET_RELEVANT` | 103 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
 | `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART` | 56 | Navngitt på nyere VisitOSLO-restaurantguider; redaksjonelt aktuelt, men drift og produksjonsmeny ikke ferdig verifisert |
 | `MULIG_ALIAS` | 8 | Mulige navnevarianter som må avstemmes |
 | `UAVKLART` | 0 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
@@ -68,7 +68,7 @@ Den samme CSV-en har **en egen redaksjonell statuskolonne**, adskilt fra produks
 | `VINBAR_UTENFOR_RESTAURANTUTVALG` | 7 | Dokumenterte vinbarer; fortsatt synlige i researchlisten, men ikke telt som ordinære restauranter |
 | `BAR_UTENFOR_RESTAURANTUTVALG` | 9 | Cocktail-/hotellbarer med eventuell snacksservering |
 | `KAFE_BAKERI_UTENFOR_RESTAURANTUTVALG` | 14 | Bakerier, konditorier, tesalong og kafé med avgrenset matservering |
-| **Totalt** | **982** | **749 i katalogen, 233 øvrige** |
+| **Totalt** | **981** | **749 i katalogen, 232 øvrige** |
 
 
 ### Siste type- og identitetskontroll 13. oktober 2026
@@ -90,9 +90,9 @@ Ytterligere **11 av de 12 åpne forskningsradene** er nå kildekontrollert i sam
 
 I denne kilderunden er **10 nye, særskilt identifiserte matserveringssteder** lagt inn i **den eksisterende CSV-en**, uten å endre de 749 aktive Fysen-postene: Bygdøy Vertshus, Der Peppern Gror Aker Brygge, Donna Ristorante, Lasarett Matbar, Manci, Marani, MoMo Ghar, Oslo Sandwich Shop Vulkan, Phin. Restaurant Løren og Spice Bazaar. Alle har selvstendig navneidentitet og verifisert gateadresse; dokumentasjonen, offisielle lenker og eventuelle adresse- og konseptforbehold ligger på hver rad.
 
-**Gjeldende status: 982 oppføringer = 749 Fysen-poster + 233 eksterne researchoppføringer.** Av de eksterne er **104 kildebekreftede, relevante spisesteder**, men ingen er dermed teknisk publisert. Null researchoppføringer har nå status `UAVKLART`: [VIN] Tjuvholmen er identifisert som vinbar på Lille Stranden 4. Dette betyr ikke at alle andre kandidater er teknisk verifisert eller at listen dekker hele Oslo.
+**Tidligere status (før Bogstadveien/Aker Brygge-avstemming): 982 oppføringer = 749 Fysen-poster + 233 eksterne researchoppføringer.** Av de eksterne var **104 kildebekreftede, relevante spisesteder**, men ingen er dermed teknisk publisert. Null researchoppføringer har nå status `UAVKLART`: [VIN] Tjuvholmen er identifisert som vinbar på Lille Stranden 4. Dette betyr ikke at alle andre kandidater er teknisk verifisert eller at listen dekker hele Oslo.
 
-**Tre viktige datakvalitetsfunn:** Operatøren oppgir at **Der Peppern Gror Bogstadveien er stengt og har flyttet til Bryggetorget 6**; den gamle publiserte Fysen-posten må derfor revideres teknisk. Den tidligere antatte dubletten **Der Peppern Gror – VIA Village / Rådhusplassen er avkreftet**: VIA Village-matboden har dokumentert inngang fra Munkedamsveien 29 og en egen Wolt-meny, mens Rådhusplassen ligger på Fridtjof Nansens plass 7. Katalogens VIA-adresse og koordinater var feil og er korrigert, uten å fjerne noen slug. **Donna og Olivia Aker Brygge** oppgir begge Stranden 3 og er bekreftet som separate restauranter, mens **Phin. Restaurant og Massimo Pizza** bruker Lørenveien 60 som gateadresse og må holdes atskilt. Ingen manifest eller produksjonssøk er endret.
+**Tidligere identitetskontroll:** Operatøren oppgir at **Der Peppern Gror Bogstadveien er stengt og har flyttet til Bryggetorget 6**; den gamle publiserte Fysen-posten må derfor revideres teknisk. Den tidligere antatte dubletten **Der Peppern Gror – VIA Village / Rådhusplassen er avkreftet**: VIA Village-matboden har dokumentert inngang fra Munkedamsveien 29 og en egen Wolt-meny, mens Rådhusplassen ligger på Fridtjof Nansens plass 7. Katalogens VIA-adresse og koordinater var feil og er korrigert, uten å fjerne noen slug. **Donna og Olivia Aker Brygge** oppgir begge Stranden 3 og er bekreftet som separate restauranter, mens **Phin. Restaurant og Massimo Pizza** bruker Lørenveien 60 som gateadresse og må holdes atskilt. Ingen manifest eller produksjonssøk er endret.
 
 **Dekningsbegrensning:** VisitOSLOs brede restaurantkatalog er fortsatt ikke kontrollert 330/330. GitHub-nettleserforsøket i [PR #944](https://github.com/Paradispartiet/fysen/pull/944) feilet med HTTP 403 og ble lukket uten merge. Arbeidet fortsetter med tilgjengelige restaurantguider, operatørkilder og bydelsvis dekningskontroll, uten å oppgi falsk dekningsprosent.
 
@@ -100,11 +100,17 @@ I denne kilderunden er **10 nye, særskilt identifiserte matserveringssteder** l
 
 Både **[VIN] Tjuvholmen (Lille Stranden 4, 0252 Oslo)** og **[VIN] Bjørvika (Operagata 11, 0194 Oslo)** er bekreftet av operatørens [filialoversikt](https://www.vinoslo.no/). VisitOSLOs [egen produktprofil](https://www.visitoslo.com/eat/vin-tjuvholmen) beskriver [VIN] Tjuvholmen som vinbar. Begge forblir `VINBAR_UTENFOR_RESTAURANTUTVALG` i redaksjonell klassifisering. Den siste `UAVKLART`-posten er dermed avklart: **982 totalt, 749 publisert, 0 med status `UAVKLART`.** Dette gir ikke full katalogdekning; de 56 VisitOSLO-guidekandidatene, 18 Michelin-kandidatene, teknisk menyimport og bydelsavstemming gjenstår.
 
+### Bogstadveien flyttet til Aker Brygge – katalogavstemming 13. oktober 2026
+
+Operatøren bekrefter at **Bogstadveien-avdelingen er stengt og flyttet til Bryggetorget 6, 0250 Oslo**. [Wolts aktive Aker Brygge-butikk](https://wolt.com/nb/nor/oslo/restaurant/der-peppern-gror-bogstadveien) benytter fortsatt den gamle `bogstadveien`-URL-en, men viser **Der Peppern Gror Aker Brygge** og en ny meny med oppdaterte priser. Den tidligere SeMeny-siden for Bogstadveien viser fremdeles den nedlagte adressen og eldre priser; den er ikke lenger egnet som nåværende menykilde. Katalogposten beholder derfor stabil `der-peppern-gror-bogstadveien-oslo`-slug, men navn, adresse, omtrentlig [kartpunkt](https://mapcarta.com/N14125728410), Wolt-meny og åtte kvalitetsassertions er oppdatert. Ingen ekstra katalogpost er opprettet. Operatørkilde: https://akerbrygge.derpepperngror.no/stengt/ .
+
+Den separate researchraden for Aker Brygge er slått sammen med den eksisterende katalogidentiteten. **Ny gjeldende hovedliste: 981 rader = 749 katalogposter og 232 eksterne researchoppføringer**, der **103 er kildebekreftede relevante**. Tidligere 982-/104-tall nedenfor er historiske kontrollbilder. Rettingen skal bare merges ved grønn live-menykontroll; merge i GitHub og publisering/oppfriskning av produksjonsdata er separate hendelser.
+
 ### Retting av VIA Village-kartpunkt – 13. oktober 2026
 
 Eldre Fysen-data hadde feilaktig plassert **Der Peppern Gror – VIA Village** på **Fridtjof Nansens plass 7**, identisk med **Der Peppern Gror Rådhusplassen**. Det var en **adresse- og koordinatfeil, ikke dokumentert dobbeltregistrering**. Stedets egen Wolt-butikk oppgir [Munkedamsveien 29, 0251 Oslo](https://wolt.com/nb/nor/oslo/restaurant/der-peppern-gror-via-village), og [VisitOSLOs VIA Village-profil](https://www.visitoslo.com/eat/via-village) bekrefter Der Peppern Gror som selvstendig matbod i foodcourten. Et uavhengig [VIA Village-adressepunkt](https://norgeguide.com/oslo/rask-mat-og-gatekjokken/via-village-food-court/) gir omtrentlig koordinat **59.91218, 10.72662** (områdepunkt, ikke oppmålt inngang). Katalogmanifest og eksisterende CSV er oppdatert. **Begge restaurantenes slugs, forskjellige menybevis og kvalitetsassertions beholdes.**
 
-**Separat avvik gjenstår:** Bogstadveien-avdelingen er [oppgitt flyttet til Aker Brygge](https://akerbrygge.derpepperngror.no/stengt/), men dens gamle katalogmanifest er ennå ikke avviklet. Ingen produksjonsendring for Bogstadveien i denne rettingen.
+**Påfølgende avklaring:** Bogstadveien-avdelingen er [oppgitt flyttet til Aker Brygge](https://akerbrygge.derpepperngror.no/stengt/); det er nå rettet i en separat katalogendring, omtalt i seksjonen over.
 
 ### Hele Michelin-utvalget er navnematchet
 
