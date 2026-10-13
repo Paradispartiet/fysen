@@ -1,5 +1,6 @@
 import { chromium } from "playwright-core";
 import process from "node:process";
+import { URL } from "node:url";
 
 const base = (process.env.FYSEN_PUBLIC_WEB_URL || "https://fysen.vercel.app").replace(/\/$/, "");
 const browser = await chromium.launch({ channel: "chrome", headless: true, chromiumSandbox: true });
@@ -100,12 +101,12 @@ try {
   await noHorizontalOverflow(page, "All dishes");
   const dishLink = browse.locator(".dishBrowseItemMain").first();
   const dish = await dishLink.locator("strong").innerText();
-  const dishHref = await dishLink.getAttribute("href");
+  const browseDishHref = await dishLink.getAttribute("href");
   await dishLink.click();
-  const query = await assertDishDestination(page, dishHref, `All dishes ${dish}`);
+  const browseQuery = await assertDishDestination(page, browseDishHref, `All dishes ${dish}`);
   await page.locator(".resultList .dishResult").first().waitFor({ timeout: 30_000 });
   await noHorizontalOverflow(page, "All dishes results");
-  journeys.push({ journey: "all dishes → dish → results", dish, query });
+  journeys.push({ journey: "all dishes → dish → results", dish, query: browseQuery });
 
   process.stdout.write(`${JSON.stringify({ status: "verified", viewport: "390x844", journeys }, null, 2)}\n`);
 } finally {
