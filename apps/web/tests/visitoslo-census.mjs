@@ -24,7 +24,7 @@ async function readRange() {
 
 async function waitForRange(expectedStart) {
   await page.waitForFunction((start) => {
-    const match = document.body.innerText.match(/(?:Showing|Viser)\s+(\d+)\s*[–-]\s*(\d+)\s+(?:of|av)\s+(\d+)\s+(?:products|produkter)/iu);
+    const match = globalThis.document.body.innerText.match(/(?:Showing|Viser)\s+(\d+)\s*[–-]\s*(\d+)\s+(?:of|av)\s+(\d+)\s+(?:products|produkter)/iu);
     return !!match && Number(match[1]) === start;
   }, expectedStart, { timeout: 25000 });
 }
