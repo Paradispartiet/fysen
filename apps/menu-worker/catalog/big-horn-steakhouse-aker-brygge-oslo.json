@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "big-horn-steakhouse-aker-brygge-oslo",
+    "name": "Big Horn Steakhouse Aker Brygge",
+    "websiteUrl": "https://bighorn.no/restauranter/aker-brygge/",
+    "address": "Fjordalléen 2, 0250 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90904730380629,
+    "longitude": 10.72517459672773
+  },
+  "menuSource": {
+    "url": "https://bighorn.no/restauranter/aker-brygge/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    },
+    "minimumExpectedItems": 50
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-13",
+      "note": "Offisiell prissatt meny https://bighorn.no/restauranter/aker-brygge/. Kartverket-koordinater. Målt kildeuttrekk 63 retter 2026-10-13; minimum 50, åtte kildebaserte prisassertasjoner. Kjøkkentider ennå ikke kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "No. 1 Onion Soup",
+      "No. 15 Rib Eye – Entrecôte 300 g",
+      "No. 27 Mexican Pepper – Indrefilet 200 g",
+      "No. 51 Romano Salad",
+      "Ekstra poteter",
+      "No. 61 Peppersaus",
+      "No. 91 Juicy Bacon",
+      "No. 79 Mango- og bringebærsorbet"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "No. 1 Onion Soup",
+        "priceMinor": 18900
+      },
+      {
+        "name": "No. 15 Rib Eye – Entrecôte 300 g",
+        "priceMinor": 49900
+      },
+      {
+        "name": "No. 27 Mexican Pepper – Indrefilet 200 g",
+        "priceMinor": 54900
+      },
+      {
+        "name": "No. 51 Romano Salad",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Ekstra poteter",
+        "priceMinor": 4900
+      },
+      {
+        "name": "No. 61 Peppersaus",
+        "priceMinor": 4500
+      },
+      {
+        "name": "No. 91 Juicy Bacon",
+        "priceMinor": 28900
+      },
+      {
+        "name": "No. 79 Mango- og bringebærsorbet",
+        "priceMinor": 13900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

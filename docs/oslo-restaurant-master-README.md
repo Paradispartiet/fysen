@@ -2,7 +2,7 @@
 
 **Åpne én fil:** [Oslo-restaurantlisten (CSV)](./oslo-restaurant-master-2026-10-13.csv).
 
-Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskatalog. Den dekker alle **749 av 749** restaurantmanifester i Fysens katalog på commit `08c748003d1748a8282917cbd43198509a89e822` og **232** eksterne/eldre research-oppføringer: totalt **981 rader**. Slug brukes som unik identitet for alle 749 registrerte steder. Noen av kandidatene kan være aliaser, dubletter, ikke ordinære restauranter eller stengt og må kontrolleres før opptak. Tallet 982 er **ikke** antallet unike, aktive eller gode Oslo-restauranter og ikke bevis på at alle er funnet.
+Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskatalog. Den dekker alle **752 av 752** restaurantmanifester i Fysens katalog på commit `08c748003d1748a8282917cbd43198509a89e822` og **228** eksterne/eldre research-oppføringer: totalt **980 rader**. Slug brukes som unik identitet for alle 752 registrerte steder. Noen av kandidatene kan være aliaser, dubletter, ikke ordinære restauranter eller stengt og må kontrolleres før opptak. Tallet 982 er **ikke** antallet unike, aktive eller gode Oslo-restauranter og ikke bevis på at alle er funnet.
 
 | Felt | Bruk |
 |---|---|
@@ -17,7 +17,14 @@ Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskat
 
 **Eksterne lister:** Research-kandidatene bygger på [Fysens tidligere Oslo-census](./oslo-coverage-census-2026-09-21.md), [VisitOSLOs restaurantoversikt](https://www.visitoslo.com/restaurants-nightlife/restaurants), [VisitOSLOs tilgjengelige restauranter](https://www.visitoslo.com/no/oslo-for-deg/tilgjengelighet/tilgjengelige-restauranter) og [VisitOSLOs utvalg på forsiden](https://www.visitoslo.com/no). En oppføring her er ikke bevis for aktiv drift, selvstendig gateadresse eller tilstrekkelig restaurantkvalitet.
 
-**Hva er ferdig og hva mangler?** Selve sammenslåingen av **749 eksisterende + 232 registrerte eksterne oppføringer** er ferdig. For en påstand om **alle gode og ordinære restauranter i Oslo** må fortsatt de ikke-verifiserte delene av VisitOSLOs 330-oppføringers oversikt, bydelsvise lokale kilder, aliaser, aktualitet og manglende koordinater avstemmes. Ikke bruk antall rader som en dekningsprosent. Ingen endringer er gjort i produksjonskatalog, menyuttrekk, søk eller valideringsregler.
+**Hva er ferdig og hva mangler?** Selve sammenslåingen av **752 eksisterende + 228 registrerte eksterne oppføringer** er ferdig. For en påstand om **alle gode og ordinære restauranter i Oslo** må fortsatt de ikke-verifiserte delene av VisitOSLOs 330-oppføringers oversikt, bydelsvise lokale kilder, aliaser, aktualitet og manglende koordinater avstemmes. Ikke bruk antall rader som en dekningsprosent. Ingen endringer er gjort i produksjonskatalog, menyuttrekk, søk eller valideringsregler.
+
+
+**Siste avstemming – Borggården 13. oktober 2026:** Researchraden «Borggården» var en faktisk dublett av eksisterende canonical `borggarden-biffrestaurant-oslo` («Borggården Biffrestaurant»), med identisk besøksadresse og førstegangsmeny. Den overflødige researchraden er fjernet, og navnealiaset er dokumentert på canonical rad. Derfor er gjeldende totalsum **980** (749 publisert + 231 øvrige) og **102** kildebekreftede relevante eksterne kandidater. Ingen ny Borggården-post opprettes.
+
+**Batch #953 – Oslo-katalogtillegg (13. oktober 2026):** Tre nye kanoniske restauranter er lagt til fra prissatt operatørmeny: Alex Sushi, Big Horn Aker Brygge og Big Horn Møllergata. Alle har Kartverket-punkter og åtte uttrekksbaserte rett/prisassertasjoner hver. Oppdatert oversikt etter merge: 752 publiserte + 228 øvrige = 980 rader, hvorav 99 eksterne er kildebekreftede relevante.
+
+**Parseravvik, holdt utenfor katalogen:** 1947 Gandhi (noen pris-paringer knyttet til ingrediens-/tekstfragmenter), Brasserie Nouvelle (fragmenter som rettsnavn), Casbar (cocktailer fremfor pizza), Grilleriet (bestillingsknapp/fragmenter), Teatro og Teatro Terrasse (bare 2 unike prisede retter per kilde i dagens parser), The Broker (HTTP 404 på HTML-kilde). Disse sju forblir eksterne forskningskandidater inntil de kan verifiseres teknisk; feilinnhold blir ikke publisert.
 
 ## Tidligere etterkontroll 13. oktober 2026
 
@@ -55,9 +62,9 @@ Den samme CSV-en har **en egen redaksjonell statuskolonne**, adskilt fra produks
 
 | Redaksjonell status | Antall rader | Betydning |
 | --- | ---: | --- |
-| `PUBLISERT_I_FYSEN` | 749 | Eksisterende katalogposter, uten endret teknisk publisering |
+| `PUBLISERT_I_FYSEN` | 752 | Eksisterende katalogposter, uten endret teknisk publisering |
 | `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART` | 18 | Aktuelt oppført i Michelin Guide, men ikke katalogisert; aktuell drift/meny må kontrolleres (gjelder også Hot Shop) |
-| `KILDEBEKREFTET_RELEVANT` | 103 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
+| `KILDEBEKREFTET_RELEVANT` | 99 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
 | `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART` | 56 | Navngitt på nyere VisitOSLO-restaurantguider; redaksjonelt aktuelt, men drift og produksjonsmeny ikke ferdig verifisert |
 | `MULIG_ALIAS` | 8 | Mulige navnevarianter som må avstemmes |
 | `UAVKLART` | 0 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
@@ -68,7 +75,7 @@ Den samme CSV-en har **en egen redaksjonell statuskolonne**, adskilt fra produks
 | `VINBAR_UTENFOR_RESTAURANTUTVALG` | 7 | Dokumenterte vinbarer; fortsatt synlige i researchlisten, men ikke telt som ordinære restauranter |
 | `BAR_UTENFOR_RESTAURANTUTVALG` | 9 | Cocktail-/hotellbarer med eventuell snacksservering |
 | `KAFE_BAKERI_UTENFOR_RESTAURANTUTVALG` | 14 | Bakerier, konditorier, tesalong og kafé med avgrenset matservering |
-| **Totalt** | **981** | **749 i katalogen, 232 øvrige** |
+| **Totalt** | **980** | **752 i katalogen, 228 øvrige** |
 
 
 ### Siste type- og identitetskontroll 13. oktober 2026
@@ -104,7 +111,7 @@ Både **[VIN] Tjuvholmen (Lille Stranden 4, 0252 Oslo)** og **[VIN] Bjørvika (O
 
 Operatøren bekrefter at **Bogstadveien-avdelingen er stengt og flyttet til Bryggetorget 6, 0250 Oslo**. [Wolts aktive Aker Brygge-butikk](https://wolt.com/nb/nor/oslo/restaurant/der-peppern-gror-bogstadveien) benytter fortsatt den gamle `bogstadveien`-URL-en, men viser **Der Peppern Gror Aker Brygge** og en ny meny med oppdaterte priser. Den tidligere SeMeny-siden for Bogstadveien viser fremdeles den nedlagte adressen og eldre priser; den er ikke lenger egnet som nåværende menykilde. Katalogposten beholder derfor stabil `der-peppern-gror-bogstadveien-oslo`-slug, men navn, adresse og omtrentlig [kartpunkt](https://mapcarta.com/N14125728410) er oppdatert. Første live-validering mot Wolt ble kansellert etter 20 minutters heng (GitHub Actions run 38436157837), uten verifisert ekstraksjonsresultat. Katalogens kanoniske menykilde er derfor endret til [operatørens egen prisede HTML-meny](https://akerbrygge.derpepperngror.no/meny-norsk/) med 30-retters minstekrav og åtte kildebelagte navn/pris-assertions. Leveringsprisene på Wolt og serveringsprisene hos operatøren er ikke identiske; bland dem ikke. Ny live-validering må bestås før merge. Ingen ekstra katalogpost er opprettet. Operatørkilde: https://akerbrygge.derpepperngror.no/stengt/ .
 
-Den separate researchraden for Aker Brygge er slått sammen med den eksisterende katalogidentiteten. **Ny gjeldende hovedliste: 981 rader = 749 katalogposter og 232 eksterne researchoppføringer**, der **103 er kildebekreftede relevante**. Tidligere 982-/104-tall nedenfor er historiske kontrollbilder. Rettingen skal bare merges ved grønn live-menykontroll; merge i GitHub og publisering/oppfriskning av produksjonsdata er separate hendelser.
+Den separate researchraden for Aker Brygge er slått sammen med den eksisterende katalogidentiteten. **Historisk 2026-10-13 etter Aker Brygge-rettelsen: 981 rader = 749 katalogposter og 232 eksterne researchoppføringer**, der **103 var kildebekreftede relevante**. Tidligere 982-/104-tall nedenfor er historiske kontrollbilder. Rettingen skal bare merges ved grønn live-menykontroll; merge i GitHub og publisering/oppfriskning av produksjonsdata er separate hendelser.
 
 ### Retting av VIA Village-kartpunkt – 13. oktober 2026
 
