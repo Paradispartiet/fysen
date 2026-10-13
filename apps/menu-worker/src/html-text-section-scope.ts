@@ -8,7 +8,7 @@ import {
 
 export * from "./html-text-section-scope-base.js";
 
-export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v15";
+export const HTML_TEXT_SECTION_SCOPE_VERSION = "text-section-scope-v16";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const DIRECT_SOURCE_PRICE =
