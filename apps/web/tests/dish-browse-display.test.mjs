@@ -60,6 +60,7 @@ describe("Oslo live dish browse headings", () => {
     const path = fileURLToPath(new URL("../components/dish-browse.tsx", import.meta.url));
     const source = readFileSync(path, "utf8");
     assert.match(source, /return sortBrowseDishesForDisplay\(dishes\)/u);
+    assert.match(source, /browseDishDisplayName\(dish\.name\)\], normalizedFilter\)/u);
     assert.match(source, /<strong>\{browseDishDisplayName\(dish\.name\)\}<\/strong>/u);
     assert.match(source, /dishSearchHref\(dish\.query, data\.city\)/u);
   });
