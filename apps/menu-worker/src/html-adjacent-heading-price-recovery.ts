@@ -6,14 +6,14 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v9";
+export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v10";
 
 const HEADING_MARKER = "__FYSEN_ADJACENT_HEADING_LEVEL_";
 const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
 const EXPLICIT_PRICE_NOTATION = /(?:\bNOK\b|\bkr\.?|,-\s*$)/iu;
 const PER_PERSON_PRICE_PREFIX = /^(?:pr\.?|per)\s+(?:person|pers\.?)\s+(?=(?:NOK|kr\.?)\s*[1-9])/iu;
 const SECTION_OR_UI_LABEL = /^(?:our\s+menu|menu|meny|single\s+meat|single\s+(?:vegetar|vegetarian)(?:\s*&\s*vegan)?|pdf\s+version|drinks?|drikke(?:meny)?|popular\s+dish|opening(?:\s+hours)?|åpningstider|contact|kontakt|address|adresse|booking|reservation(?:s)?|reservasjoner?|allergens?|allergener?)$/iu;
-const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|wine\s+(?:pairing|package)(?:\s+for\s+.+)?|vinpakke(?:\s+.+)?|cocktails?|champagne(?:\s+cocktails?)?|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
+const BEVERAGE_SECTION_HEADING = /^(?:drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|wine(?:\s+(?:list|menu))?|red\s+wine|white\s+wine|ros[ée]|bubbles|beer\s*(?:&|and)\s*cider|wine\s+(?:pairing|package)(?:\s+for\s+.+)?|vinpakke(?:\s+.+)?|cocktails?|champagne(?:\s+cocktails?)?|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
 const BOTTLED_WATER_TITLE = /\b(?:still|sparkling)\s+(?:water|naturell)\b/iu;
 
 interface ParsedPrice {
@@ -37,6 +37,18 @@ function normalizedPriceLine(value: string): string {
 function hasExplicitPriceSyntax(value: string): boolean {
   const line = normalizedPriceLine(value);
   return PRICE_LINE.test(line) && EXPLICIT_PRICE_NOTATION.test(line);
+}
+
+// Some first-party HTML cards put the main price at the end of a description
+// after a visible bullet rather than in a standalone price element.
+// The bullet is the price provenance; unmarked add-on prices stay excluded.
+const BULLET_TERMINAL_PRICE =
+  /(?:^|\s)[•·]\s*((?:(?:fra|from)\s+)?(?:(?:NOK|kr\.?)\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:;-|,-|kr\.?|NOK)?)$/iu;
+
+function parseBulletTerminalPrice(value: string): ParsedPrice | null {
+  const match = normalizeVisibleLine(value).match(BULLET_TERMINAL_PRICE);
+  if (!match?.[1]) return null;
+  return parsePrice(match[1].replace(/;-\s*$/u, ",-"));
 }
 
 function parsePrice(value: string): ParsedPrice | null {
@@ -205,7 +217,7 @@ export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly Men
         if (nestedLevel > headingLevel) continue;
         break;
       }
-      const parsed = parsePrice(candidate);
+      const parsed = parsePrice(candidate) ?? parseBulletTerminalPrice(candidate);
       if (!parsed) {
         if (hasExplicitPriceSyntax(candidate)) break;
         continue;
