@@ -57,18 +57,25 @@ Den samme CSV-en har **en egen redaksjonell statuskolonne**, adskilt fra produks
 | --- | ---: | --- |
 | `PUBLISERT_I_FYSEN` | 749 | Eksisterende katalogposter, uten endret teknisk publisering |
 | `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART` | 18 | Aktuelt oppført i Michelin Guide, men ikke katalogisert; aktuell drift/meny må kontrolleres (gjelder også Hot Shop) |
-| `KILDEBEKREFTET_RELEVANT` | 84 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
+| `KILDEBEKREFTET_RELEVANT` | 86 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
 | `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART` | 56 | Navngitt på nyere VisitOSLO-restaurantguider; redaksjonelt aktuelt, men drift og produksjonsmeny ikke ferdig verifisert |
-| `MULIG_ALIAS` | 6 | Mulige navnevarianter som må avstemmes |
-| `UAVKLART` | 12 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
+| `MULIG_ALIAS` | 8 | Mulige navnevarianter som må avstemmes |
+| `UAVKLART` | 1 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
 | `MATHALL_FLERE_MATAKTORER` | 5 | Mathaller med flere matboder, ikke én selvstendig restaurant |
-| `PARAPLYNAVN_FLERE_FILIALER` | 2 | Samle-/merkevarenavn som ellers ville dobbeltelt filialer |
+| `PARAPLYNAVN_FLERE_FILIALER` | 4 | Samle-/merkevarenavn som ellers ville dobbeltelt filialer |
 | `SERVERINGSARENA_FLERE_KONSEPTER` | 7 | Serveringsarena med flere typer matkonsepter, ikke én restaurant |
 | `KOMBINERT_OPPFORING` | 1 | VisitOSLO omtaler to restaurantkonsepter under ett fellesnavn |
 | `VINBAR_UTENFOR_RESTAURANTUTVALG` | 6 | Dokumenterte vinbarer; fortsatt synlige i researchlisten, men ikke telt som ordinære restauranter |
-| `BAR_UTENFOR_RESTAURANTUTVALG` | 6 | Cocktail-/hotellbarer med eventuell snacksservering |
-| `KAFE_BAKERI_UTENFOR_RESTAURANTUTVALG` | 12 | Bakerier, konditorier, tesalong og kafé med avgrenset matservering |
+| `BAR_UTENFOR_RESTAURANTUTVALG` | 9 | Cocktail-/hotellbarer med eventuell snacksservering |
+| `KAFE_BAKERI_UTENFOR_RESTAURANTUTVALG` | 14 | Bakerier, konditorier, tesalong og kafé med avgrenset matservering |
 | **Totalt** | **964** | **749 i katalogen, 215 øvrige** |
+
+
+### Siste type- og identitetskontroll 13. oktober 2026
+
+Ytterligere **11 av de 12 åpne forskningsradene** er nå kildekontrollert i samme CSV, og antallet rader med redaksjonell status `UAVKLART` er **1**. **Khab Thai Barcode og Tabuno** er dokumenterte, relevante restauranter som ennå ikke er Fysen-katalogposter. **Braud Bakeri og Kafé Villa Grande** er klassifisert som bakeri/kafé; **Bar Babylon, Rikkes Hage og Skaugum** som bar-/utelivssteder. **Sushi Restaurant Alex** og **Istanbul Restaurant Grünerløkka** er merket `MULIG_ALIAS`, men fysisk identitet må fortsatt kontrolleres i sistnevnte tilfelle fordi Fysen- og operatøradressen avviker. **Illegal Burger** og **Stykke** som generiske navn er paraplyoppføringer og blir ikke telt som selvstendige restauranter. Hver rad har kilde, vurdering og uavklarte forbehold direkte i `notat`.
+
+**Den siste åpne posten er «[Vin] Tjuvholmen»**, der navnet ikke entydig identifiserer ett fysisk serveringssted. Dette betyr ikke at 964-listen er uttømmende: De 330 paginerte VisitOSLO-resultatene, de separate Michelin-/guide-kandidatene, kilde- og menyopptak og bydelsplassering gjenstår. **749/749 produksjonsmanifester er uendret.**
 
 ### Hele Michelin-utvalget er navnematchet
 
@@ -90,7 +97,7 @@ To andre par, **Haandtryk** og **Viet Kitchen**, deler navn, adresse og tilnærm
 ### Utestående før fullstendighet kan erklæres
 
 - Hovedlisten på VisitOSLO har 330 paginerte resultater. Den første siden og tilgjengelige fritt viste redaksjonelle/områdevise lister er kontrollert; **hele de 330 er ikke uttømmende høstet eller matchet**. Ingen dekningsprosent kan derfor oppgis.
-- De **12 `UAVKLART`** krever kildeverifisering, eksklusjonsbeslutning eller aliasmatch. De 18 Michelin-restaurantene krever kontroll av aktiv drift før produksjonsopptak.
+- Den **ene gjenværende `UAVKLART`** krever kildeverifisering, eksklusjonsbeslutning eller aliasmatch. De 18 Michelin-restaurantene krever kontroll av aktiv drift før produksjonsopptak.
 - Mange av de 749 Fysen-radene mangler verifisert bydel. Ikke gjett bydel ut fra postnummer.
 - Rettelse av rettnavn og alfabetisering er separat implementert, testet, merget og publisert i [PR #941](https://github.com/Paradispartiet/fysen/pull/941). Restaurantkatalogen er fortsatt uendret.
 
