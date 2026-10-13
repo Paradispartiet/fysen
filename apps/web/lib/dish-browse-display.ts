@@ -4,7 +4,7 @@ import type { DishBrowseItem } from "@fysen/contracts/dish-browse";
 // The public browse list alone uses alphabetic display labels and sorts on them.
 export function browseDishDisplayName(value: string): string {
   const normalized = value.normalize("NFKC")
-    .replace(/[\uFE00-\uFE0F\u200C\u200D\u20E3]/gu, "");
+    .replace(/\p{Variation_Selector}|\u200C|\u200D|\u20E3/gu, "");
 
   // Strip menu quantities as a unit, not just their number ("2 stk", "150g").
   const withoutQuantities = normalized.replace(
