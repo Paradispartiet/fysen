@@ -2,16 +2,16 @@
   "version": 1,
   "restaurant": {
     "slug": "der-peppern-gror-bogstadveien-oslo",
-    "name": "Der Peppern Gror Bogstadveien",
+    "name": "Der Peppern Gror Aker Brygge",
     "websiteUrl": null,
-    "address": "Bogstadveien 1, 0355 Oslo",
+    "address": "Bryggetorget 6, 0250 Oslo",
     "city": "Oslo",
     "countryCode": "NO",
-    "latitude": 59.92409482601102,
-    "longitude": 10.725580094746746
+    "latitude": 59.90954,
+    "longitude": 10.72481
   },
   "menuSource": {
-    "url": "https://semeny.no/sted/derpepperngrorbogstadveien",
+    "url": "https://akerbrygge.derpepperngror.no/meny-norsk/",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -26,54 +26,54 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-08-28",
-      "note": "Batch 13 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+      "checkedAt": "2026-10-13",
+      "note": "2026-10-13: Operator confirms Bogstadveien location closed/moved to Der Peppern Gror Aker Brygge, Bryggetorget 6. Official Aker Brygge HTML dine-in menu is the canonical source, distinct from Wolt delivery prices. Minimum 30 food items and eight source-priced representative dishes require exact live extraction proof. Coordinates 59.90954,10.72481 approximate map point, not surveyed entrance. Hours not verified. https://akerbrygge.derpepperngror.no/stengt/ ; https://akerbrygge.derpepperngror.no/meny-norsk/ ; https://mapcarta.com/N14125728410"
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Chicken 65",
-      "Chicken Hariyali Tikka",
-      "Butter Chicken",
       "Tadka Daal",
-      "Tandoori Parantha",
-      "Peshwari Naan",
-      "Desi-Salat",
-      "Luscombe Cool Ginger Beer 0,33l"
+      "Baingan Masala",
+      "Bhindi Do Payaza",
+      "Hariyali Chicken Tikka",
+      "Tandoori Challi",
+      "Kulia Chaat",
+      "Missi Roti",
+      "Extreme hot sauce"
     ],
     "requiredDishVariants": [
       {
-        "name": "Chicken 65",
-        "priceMinor": 13500
-      },
-      {
-        "name": "Chicken Hariyali Tikka",
-        "priceMinor": 26500
-      },
-      {
-        "name": "Butter Chicken",
-        "priceMinor": 27900
-      },
-      {
         "name": "Tadka Daal",
-        "priceMinor": 21000
+        "priceMinor": 27500
       },
       {
-        "name": "Tandoori Parantha",
+        "name": "Baingan Masala",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Bhindi Do Payaza",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Hariyali Chicken Tikka",
+        "priceMinor": 29000
+      },
+      {
+        "name": "Tandoori Challi",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Kulia Chaat",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Missi Roti",
         "priceMinor": 6000
       },
       {
-        "name": "Peshwari Naan",
-        "priceMinor": 7500
-      },
-      {
-        "name": "Desi-Salat",
-        "priceMinor": 5000
-      },
-      {
-        "name": "Luscombe Cool Ginger Beer 0,33l",
-        "priceMinor": 5500
+        "name": "Extreme hot sauce",
+        "priceMinor": 6500
       }
     ],
     "forbiddenDishNames": []
