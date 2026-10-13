@@ -60,12 +60,12 @@ Den samme CSV-en har **en egen redaksjonell statuskolonne**, adskilt fra produks
 | `KILDEBEKREFTET_RELEVANT` | 104 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
 | `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART` | 56 | Navngitt på nyere VisitOSLO-restaurantguider; redaksjonelt aktuelt, men drift og produksjonsmeny ikke ferdig verifisert |
 | `MULIG_ALIAS` | 8 | Mulige navnevarianter som må avstemmes |
-| `UAVKLART` | 1 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
+| `UAVKLART` | 0 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
 | `MATHALL_FLERE_MATAKTORER` | 5 | Mathaller med flere matboder, ikke én selvstendig restaurant |
 | `PARAPLYNAVN_FLERE_FILIALER` | 4 | Samle-/merkevarenavn som ellers ville dobbeltelt filialer |
 | `SERVERINGSARENA_FLERE_KONSEPTER` | 7 | Serveringsarena med flere typer matkonsepter, ikke én restaurant |
 | `KOMBINERT_OPPFORING` | 1 | VisitOSLO omtaler to restaurantkonsepter under ett fellesnavn |
-| `VINBAR_UTENFOR_RESTAURANTUTVALG` | 6 | Dokumenterte vinbarer; fortsatt synlige i researchlisten, men ikke telt som ordinære restauranter |
+| `VINBAR_UTENFOR_RESTAURANTUTVALG` | 7 | Dokumenterte vinbarer; fortsatt synlige i researchlisten, men ikke telt som ordinære restauranter |
 | `BAR_UTENFOR_RESTAURANTUTVALG` | 9 | Cocktail-/hotellbarer med eventuell snacksservering |
 | `KAFE_BAKERI_UTENFOR_RESTAURANTUTVALG` | 14 | Bakerier, konditorier, tesalong og kafé med avgrenset matservering |
 | **Totalt** | **982** | **749 i katalogen, 233 øvrige** |
@@ -75,7 +75,7 @@ Den samme CSV-en har **en egen redaksjonell statuskolonne**, adskilt fra produks
 
 Ytterligere **11 av de 12 åpne forskningsradene** er nå kildekontrollert i samme CSV, og antallet rader med redaksjonell status `UAVKLART` er **1**. **Khab Thai Barcode og Tabuno** er dokumenterte, relevante restauranter som ennå ikke er Fysen-katalogposter. **Braud Bakeri og Kafé Villa Grande** er klassifisert som bakeri/kafé; **Bar Babylon, Rikkes Hage og Skaugum** som bar-/utelivssteder. **Sushi Restaurant Alex** og **Istanbul Restaurant Grünerløkka** er merket `MULIG_ALIAS`, men fysisk identitet må fortsatt kontrolleres i sistnevnte tilfelle fordi Fysen- og operatøradressen avviker. **Illegal Burger** og **Stykke** som generiske navn er paraplyoppføringer og blir ikke telt som selvstendige restauranter. Hver rad har kilde, vurdering og uavklarte forbehold direkte i `notat`.
 
-**Den siste åpne posten er «[Vin] Tjuvholmen»**, der navnet ikke entydig identifiserer ett fysisk serveringssted. Dette betyr ikke at 982-listen er uttømmende: De 330 paginerte VisitOSLO-resultatene, de separate Michelin-/guide-kandidatene, kilde- og menyopptak og bydelsplassering gjenstår. **749/749 produksjonsmanifester er uendret.**
+**Den tidligere åpne posten «[Vin] Tjuvholmen» er nå dokumentert som vinbar på Lille Stranden 4.** Det gjenstår ingen rader med redaksjonell status `UAVKLART`, men mange øvrige kandidater har fremdeles uavklart drift og teknisk kildeegnethet. Dette betyr ikke at 982-listen er uttømmende: De 330 paginerte VisitOSLO-resultatene, de separate Michelin-/guide-kandidatene, kilde- og menyopptak og bydelsplassering gjenstår. **749/749 produksjonsmanifester er uendret.**
 
 
 ### Supplerende restauranter oppdaget i åpne områdeguider – 13. oktober 2026
@@ -90,11 +90,15 @@ Ytterligere **11 av de 12 åpne forskningsradene** er nå kildekontrollert i sam
 
 I denne kilderunden er **10 nye, særskilt identifiserte matserveringssteder** lagt inn i **den eksisterende CSV-en**, uten å endre de 749 aktive Fysen-postene: Bygdøy Vertshus, Der Peppern Gror Aker Brygge, Donna Ristorante, Lasarett Matbar, Manci, Marani, MoMo Ghar, Oslo Sandwich Shop Vulkan, Phin. Restaurant Løren og Spice Bazaar. Alle har selvstendig navneidentitet og verifisert gateadresse; dokumentasjonen, offisielle lenker og eventuelle adresse- og konseptforbehold ligger på hver rad.
 
-**Gjeldende status: 982 oppføringer = 749 Fysen-poster + 233 eksterne researchoppføringer.** Av de eksterne er **104 kildebekreftede, relevante spisesteder**, men ingen er dermed teknisk publisert. Én researchoppføring er fortsatt redaksjonelt `UAVKLART` (den ubestemte betegnelsen «[Vin] Tjuvholmen»). Dette er ikke en andel av Oslos totale restaurantmarked.
+**Gjeldende status: 982 oppføringer = 749 Fysen-poster + 233 eksterne researchoppføringer.** Av de eksterne er **104 kildebekreftede, relevante spisesteder**, men ingen er dermed teknisk publisert. Null researchoppføringer har nå status `UAVKLART`: [VIN] Tjuvholmen er identifisert som vinbar på Lille Stranden 4. Dette betyr ikke at alle andre kandidater er teknisk verifisert eller at listen dekker hele Oslo.
 
 **Tre viktige datakvalitetsfunn:** Operatøren oppgir at **Der Peppern Gror Bogstadveien er stengt og har flyttet til Bryggetorget 6**; den gamle publiserte Fysen-posten må derfor revideres teknisk. Katalogen har dessuten **to slugs på samme adresse** for Der Peppern Gror - VIA Village og Der Peppern Gror Rådhusplassen; identitet og menykilder må undersøkes før sammenslåing. **Donna og Olivia Aker Brygge** oppgir begge Stranden 3 og er bekreftet som separate restauranter, mens **Phin. Restaurant og Massimo Pizza** bruker Lørenveien 60 som gateadresse og må holdes atskilt. Ingen manifest eller produksjonssøk er endret.
 
 **Dekningsbegrensning:** VisitOSLOs brede restaurantkatalog er fortsatt ikke kontrollert 330/330. GitHub-nettleserforsøket i [PR #944](https://github.com/Paradispartiet/fysen/pull/944) feilet med HTTP 403 og ble lukket uten merge. Arbeidet fortsetter med tilgjengelige restaurantguider, operatørkilder og bydelsvis dekningskontroll, uten å oppgi falsk dekningsprosent.
+
+### Siste identitetsavklaring: begge [VIN]-barene – 13. oktober 2026
+
+Både **[VIN] Tjuvholmen (Lille Stranden 4, 0252 Oslo)** og **[VIN] Bjørvika (Operagata 11, 0194 Oslo)** er bekreftet av operatørens [filialoversikt](https://www.vinoslo.no/). VisitOSLOs [egen produktprofil](https://www.visitoslo.com/eat/vin-tjuvholmen) beskriver [VIN] Tjuvholmen som vinbar. Begge forblir `VINBAR_UTENFOR_RESTAURANTUTVALG` i redaksjonell klassifisering. Den siste `UAVKLART`-posten er dermed avklart: **982 totalt, 749 publisert, 0 med status `UAVKLART`.** Dette gir ikke full katalogdekning; de 56 VisitOSLO-guidekandidatene, 18 Michelin-kandidatene, teknisk menyimport og bydelsavstemming gjenstår.
 
 ### Hele Michelin-utvalget er navnematchet
 
