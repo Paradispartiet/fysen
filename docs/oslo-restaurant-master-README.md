@@ -57,17 +57,17 @@ Den samme CSV-en har **en egen redaksjonell statuskolonne**, adskilt fra produks
 | --- | ---: | --- |
 | `PUBLISERT_I_FYSEN` | 749 | Eksisterende katalogposter, uten endret teknisk publisering |
 | `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART` | 18 | Aktuelt oppført i Michelin Guide, men ikke katalogisert; aktuell drift/meny må kontrolleres (gjelder også Hot Shop) |
-| `KILDEBEKREFTET_RELEVANT` | 67 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
+| `KILDEBEKREFTET_RELEVANT` | 84 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
 | `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART` | 56 | Navngitt på nyere VisitOSLO-restaurantguider; redaksjonelt aktuelt, men drift og produksjonsmeny ikke ferdig verifisert |
 | `MULIG_ALIAS` | 6 | Mulige navnevarianter som må avstemmes |
-| `UAVKLART` | 37 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
+| `UAVKLART` | 12 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
 | `MATHALL_FLERE_MATAKTORER` | 5 | Mathaller med flere matboder, ikke én selvstendig restaurant |
 | `PARAPLYNAVN_FLERE_FILIALER` | 2 | Samle-/merkevarenavn som ellers ville dobbeltelt filialer |
-| `SERVERINGSARENA_FLERE_KONSEPTER` | 3 | Serveringsarena med flere typer matkonsepter, ikke én restaurant |
+| `SERVERINGSARENA_FLERE_KONSEPTER` | 7 | Serveringsarena med flere typer matkonsepter, ikke én restaurant |
 | `KOMBINERT_OPPFORING` | 1 | VisitOSLO omtaler to restaurantkonsepter under ett fellesnavn |
-| `VINBAR_UTENFOR_RESTAURANTUTVALG` | 5 | Dokumenterte vinbarer; fortsatt synlige i researchlisten, men ikke telt som ordinære restauranter |
-| `BAR_UTENFOR_RESTAURANTUTVALG` | 5 | Cocktail-/hotellbarer med eventuell snacksservering |
-| `KAFE_BAKERI_UTENFOR_RESTAURANTUTVALG` | 10 | Bakerier, konditorier, tesalong og kafé med avgrenset matservering |
+| `VINBAR_UTENFOR_RESTAURANTUTVALG` | 6 | Dokumenterte vinbarer; fortsatt synlige i researchlisten, men ikke telt som ordinære restauranter |
+| `BAR_UTENFOR_RESTAURANTUTVALG` | 6 | Cocktail-/hotellbarer med eventuell snacksservering |
+| `KAFE_BAKERI_UTENFOR_RESTAURANTUTVALG` | 12 | Bakerier, konditorier, tesalong og kafé med avgrenset matservering |
 | **Totalt** | **964** | **749 i katalogen, 215 øvrige** |
 
 ### Hele Michelin-utvalget er navnematchet
@@ -90,9 +90,9 @@ To andre par, **Haandtryk** og **Viet Kitchen**, deler navn, adresse og tilnærm
 ### Utestående før fullstendighet kan erklæres
 
 - Hovedlisten på VisitOSLO har 330 paginerte resultater. Den første siden og tilgjengelige fritt viste redaksjonelle/områdevise lister er kontrollert; **hele de 330 er ikke uttømmende høstet eller matchet**. Ingen dekningsprosent kan derfor oppgis.
-- De **37 `UAVKLART`** krever kildeverifisering, eksklusjonsbeslutning eller aliasmatch. De 18 Michelin-restaurantene krever kontroll av aktiv drift før produksjonsopptak.
+- De **12 `UAVKLART`** krever kildeverifisering, eksklusjonsbeslutning eller aliasmatch. De 18 Michelin-restaurantene krever kontroll av aktiv drift før produksjonsopptak.
 - Mange av de 749 Fysen-radene mangler verifisert bydel. Ikke gjett bydel ut fra postnummer.
-- Feil i søkevisning av rettnavn og tegn-/tallsortering er et **separat produktproblem** og er ikke endret i dette restaurantoversiktspasset.
+- Rettelse av rettnavn og alfabetisering er separat implementert, testet, merget og publisert i [PR #941](https://github.com/Paradispartiet/fysen/pull/941). Restaurantkatalogen er fortsatt uendret.
 
 ### Kontroll av VisitOSLOs navngitte restaurantguider
 
@@ -154,3 +154,11 @@ Ytterligere **14 eksisterende rader** i samme CSV er avklart med direkte produkt
 Av de øvrige seks radene er Åpent Bakeri Barcode, Åpent Bakeri Inkognito terrasse og Kafé Vigeland dokumentert som kafé-/bakerioppføringer, Voksenåsen Bar & Terrace som hotellbar med enklere matservering, Posthallen Drinkhub som **barhall med åtte barer** (ikke en individuell restaurant), og Jimmy's som et sannsynlig navnealias til Fysens eksisterende Jimmy's Restaurant & Bar på Leirfallsgata 6. Ingen av radene er slettet.
 
 **Ny redaksjonell status:** 964 oppføringer, 749 i Fysen, 67 særskilt kildebekreftede restauranter, 56 VisitOSLO-guidekandidater, 18 Michelin-kandidater, 37 uavklarte, 6 mulige aliaser, 5 vinbarer, 5 barer, 10 kafé-/bakerioppføringer, 5 mathaller, 3 serveringsarenaer, 2 paraplynavn og 1 kombinert oppføring. Den paginerte 330-listen hos VisitOSLO og full bydelsgeografi er fortsatt ikke dokumentert ferdig. Ingen Fysen-søk eller produksjonsdata er endret.
+
+### Ny kildekontroll – 25 tidligere uavklarte oppføringer (13. oktober 2026)
+
+25 eksisterende researchrader er avstemt mot nylig tilgjengelige kilder. Redaksjonell status `UAVKLART` går **37 → 12**, uten å øke antallet oppføringer eller endre aktive restauranter i Fysen. Hver endret rad har konkret kildelenke, typevurdering og besøksadresse der denne kunne verifiseres. Endringen er **kun CSV og denne dokumentasjonen**, ikke ny katalogimport.
+
+Kildebekreftede restaurant-/matsteder: Bistro Fourrage, Borggården, Carmel Grill, Casbar, Crow Bar & Brewery, Falafel Me, Fox and Loaf, Jakobs Hage (sesong), Kunstnernes Jur, Palate, Papa Rosa, Pascal Henrik Ibsens gate, Riviera Restaurant & Bar, Shutter by Sky (sesong), Stangeriet, Syverkiosken og Waaberi (adressestrid). Kafé/bakeri: Bakeriet ved Credo og Daegens. Vinbar/pub: Vinkassen og Store Stå Pub. Flerkonsepts- eller serveringsarenaer: Brygg, Carls, Feast at MUNCH og Underground Golf Club. Klassene er redaksjonelle og ingen restaurant får produksjonsstatus av dette.
+
+**Gjenstående:** 12 `UAVKLART`, samtlige 330 paginerte VisitOSLO-treff er ennå ikke uttømmende navne-/adresseavstemt, samt manglende verifisert bydel, aliaser og drift/menyimport for researchkandidater.
