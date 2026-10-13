@@ -1,13 +1,19 @@
-# Fysen Oslo v1 — closeout-kontrakt
+# Fysen Oslo v1 — separate sluttkontrakter for forbruker og Pro
 
-Dette er den permanente ferdigdefinisjonen for Oslo v1. Et grønt mergebevis er nødvendig, men v1 kan først erklæres ferdig når den ordinære produksjonsreleasen og production proofen er grønne på samme `main`-SHA.
+**Beslutning 13. oktober 2026:** Fysen forbruker Oslo v1 og Fysen Pro v1 er to selvstendige leveranser med hver sin godkjenning. En manglende restaurantrepresentant kan ikke blokkere godkjenning eller videreutvikling av forbrukerappen.
+
+- **Fysen forbruker Oslo v1:** kan erklæres produksjonsferdig når forbrukerportene nedenfor er dokumentert grønne mot aktuell produksjon. En autentisert restaurantpilot inngår ikke i denne ferdigdefinisjonen.
+- **Fysen Pro v1 — teknisk leveranseklar:** kan godkjennes med isolerte syntetiske tester, integrasjonstester og ikke-muterende produksjonskontroller av offentlig Claim/Pro og sikkerhetsgrenser. Dette er ikke det samme som at en virkelig restaurant har tatt løsningen i bruk.
+- **Fysen Pro v1 — partnerverifisert:** krever en ekte, uavhengig verifisert restaurantrepresentant som gjennomfører Claim → review → access grant → engangskode → Pro-session → dashboard → logout/revokering. Denne akseptansen gjennomføres når en partner finnes, og kan ikke erstattes av fiktive produksjonsidentiteter.
+
+Kommersialisering av Pro, partnerbetaling og sponsing krever fortsatt særskilt pilotbevis og egen beslutning. Ingen sikkerhetsgrense eller kildekvalitetsport svekkes gjennom oppdelingen.
 
 ## Releasekontrakt
 
 - Produksjon deployes i maksimalt tre batcher per Europe/Oslo-døgn, uten faste klokkeslett.
 - En grønn `main`-CI evaluerer om nok produksjonsrelevante endringer har samlet seg; uten relevante endringer opprettes ingen Vercel-deploy.
 - Når dagsgrensen er nådd, blir ventende endringer stående til neste Europe/Oslo-døgn.
-- Production proof skal lese både API og web etter en faktisk release og bevise at de kjører forventet `main`-SHA.
+- Production proof skal kontrollere faktisk deployet web/API-revisjon, aktive API-/webflater og produksjonsdata. Hvis nyere `main`-commits bare endrer menyinnhenting eller katalog, kan uendret `apps/web/` og `apps/api/` dokumenteres ved commit-sammenligning i stedet for å kreve en unødvendig ny Vercel-deploy. En grønn release-workflow med hoppede deployjobber er ikke alene deploybevis. Katalogmaterialisering og produksjonsintegritet kontrolleres separat.
 
 ## Restaurantproduksjonsbaseline 2026-08-22
 
@@ -27,19 +33,39 @@ Deretter ble **New Delhi Tjuvholmen** den 56. canonical restauranten. #402 bevis
 
 Permanent metode, historiske batchresultater og datert produksjonsbevis ligger i [`restaurant-production.md`](./restaurant-production.md).
 
-Denne baselinen betyr **ikke** at hele Fysen Oslo v1 er ferdig. Release-, Claim/Pro-, mobil- og representative E2E-portene nedenfor må fortsatt være grønne på riktig produksjons-SHA før v1-erklæringen kan gis. Min mat/AHA er en separat, utsatt pilot.
+Baselinen fra august er historisk. Gjeldende katalogstatus skal alltid måles i siste produksjonskontroll; det historiske 56-tallet er ingen lanseringskvote. Min mat/AHA er en separat, utsatt pilot.
 
-## De sju låste portene
+## Forbruker Oslo v1 — sju selvstendige porter
 
 | Port | Permanent bevis | Ferdig når |
 |---|---|---|
-| Production release | batchet release + production proof | Offentlig søk, rettliste, Claim og Pro svarer fra samme forventede `main`; Min mat viser pausemelding |
-| Claim + Pro | ikke-muterende proof + `pro:pilot-proof` | offentlig claim, setup/session, ekte dashboard og én verifisert restaurant er kjørt ende til ende |
-| Consumer catalog | `consumer-v1` quality-metadata | rå oppføringer klassifiseres, ikke-retter fjernes og forsiktige varianter dedupliseres |
-| Matleksikon | concept/menu-identiteter + UI-lenker | leksikonrett har både «Om retten» og serveringssteder; annen valid rett har bare serveringssteder |
-| Mobil finish | browser-smoke på liten viewport | de fire offentlige reisene kan gjennomføres uten skjult handling, horisontal overflow eller blindvei |
-| Representative E2E | production-pilot-proof | scenarioene under er grønne mot production |
-| V1-erklæring | samlet closeout-resultat | alle portene er grønne på samme produksjons-SHA |
+| 1. Web/API og release | faktisk Vercel-deploy + production proof og eventuell dokumentert uendret app-kode | offentlig søk, rettliste og brukerhandlinger virker mot riktig produksjonsruntime; Min mat viser pausemelding |
+| 2. Restaurantintegritet | fullkatalog + materialisering/reconcile + production proof | alle canonical restauranter som regnes med, er aktive, har godkjente kilder og er søkbare uten drift |
+| 3. Consumer catalog | `consumer-v1` quality-metadata | rå oppføringer klassifiseres, ikke-retter fjernes og forsiktige varianter dedupliseres |
+| 4. Matleksikon | concept/menu-identiteter + UI-lenker | leksikonrett har både «Om retten» og serveringssteder; annen gyldig rett har bare serveringssteder |
+| 5. Mobil finish | browser-smoke på liten viewport | de fire offentlige reisene gjennomføres uten skjult handling, horisontal overflow eller blindvei |
+| 6. Representative E2E | `production-pilot-proof` | scenarioene under er grønne mot produksjon |
+| 7. Consumer v1-erklæring | dokumentert avstemming av port 1–6 | forbrukerflyten er bevist mot aktuell, konsistent produksjon; Pro-partnerpilot kreves ikke |
+
+## Fysen Pro v1 — egen godkjenning
+
+| Nivå | Bevis | Tillatt status |
+|---|---|---|
+| Teknisk leveranseklar | API-/webtester, isolert databaseintegrasjon med syntetiske restauranter og grants, kontroll av hashing, one-time token, restaurant-skoping, logout, revokering og privat Demand Loop, samt ikke-muterende live-kontroll av Claim/Pro | «Teknisk leveranseklar» når bevisene er dokumentert; aldri «partnerverifisert» |
+| Partnerverifisert | én ekte restaurant gjennom `docs/fysen-pro-pilot-operator.md` og `pro:pilot-proof`, med uavhengig virksomhetsverifisering | «Pilot godkjent» først etter faktisk kontroll |
+| Kommersiell utrulling / R5 | særskilt beslutning etter fungerende partnerpilot og godkjent produksjonsgrunnlag | Ikke åpnet av teknisk ferdigmelding alene |
+
+Tekniske tester utføres i isolert testdatabase. Ingen test skal opprette fiktive restaurantkrav, grants eller innlogginger i produksjon, bruke produksjonshemmeligheter i CI eller gi tilgang uten uavhengig verifisering. Offentlige Claim- og Pro-ruter kan eksistere på produksjon selv om ingen restaurant ennå er verifisert.
+
+### Dokumentert kontrollstatus 13. oktober 2026
+
+- [Fullkatalog #38364566185](https://github.com/Paradispartiet/fysen/actions/runs/38364566185): **749/749** restaurantkilder godkjent.
+- [Produksjonsbevis #38371310094](https://github.com/Paradispartiet/fysen/actions/runs/38371310094): grønt etter siste materialisering og avklaring av åtte midlertidig inaktive restauranter.
+- [Mobilbevis #38376406202](https://github.com/Paradispartiet/fysen/actions/runs/38376406202): **4/4** offentlige reiser bestått på **390 × 844**. [PR #926](https://github.com/Paradispartiet/fysen/pull/926) styrket navigasjons- og dialogassertions og ble merget.
+- [Database-CI #36514385344](https://github.com/Paradispartiet/fysen/actions/runs/36514385344): Claim- og Pro-integrasjonstestene på isolert PostgreSQL bestått.
+- Pro har **ingen gjennomført reell restaurantpilot**. Det er en eksplisitt ekstern avhengighet i Pro-sporet, ikke et gjenstående krav til forbruker-v1.
+
+Dette er dokumenterte delbevis, ikke en automatisk sluttsignering av de øvrige forbrukerportene. De avstemmes etter tabellen over.
 
 ## Canonical consumer catalog
 
@@ -85,18 +111,22 @@ Det permanente proof-settet dekker:
 
 Produksjonsproofen er bevisst ikke-muterende. Restaurantpiloten kjøres kontrollert med en verifisert restaurantidentitet; hemmelige tokens skal aldri inn i CI, argv, logger eller artifacts. Stateful Min mat/AHA-bevis hører til en separat pilot når AHA er driftsklar, har et avtalt testmiljø og et godkjent kostnadstak. Ordinær produksjonsrelease skal ikke kontakte AHA.
 
-## V1-erklæring
+## Separate ferdigerklæringer
 
-Fysen Oslo v1 skal ikke erklæres ferdig på grunnlag av restauranttall, rått menyitem-tall eller grønn CI alene. Erklæringen kan gis når følgende er bevist sammen i produksjon:
+**Fysen forbruker Oslo v1** skal ikke erklæres ferdig på grunnlag av restauranttall, rå menyitem-tall eller grønn CI alene. Erklæringen kan gis når forbrukerportene 1–6 er avstemt mot aktuell produksjon:
 
 > search + discovery + restaurant action + knowledge + production integrity
 
-Etter erklæringen er restaurant-onboarding løpende innholdsproduksjon. Nye større forbruker- eller revenue-features tilhører neste eksplisitte produktfase.
+**Fysen Pro v1 — teknisk leveranseklar** kan erklæres når den isolerte autentiserte testkjeden og relevante offentlige, ikke-muterende kontroller er dokumentert. En ekte restaurantpilot kreves for senere **partnerverifisert Pro v1**, ikke for å godkjenne teknisk implementasjon eller forbrukerprodukt.
+
+Etter consumer-erklæringen er restaurant-onboarding løpende innholdsproduksjon. Større consumer-funksjoner og Pro-kommersialisering følger hvert sitt videre spor.
 
 ## Overgang til v2
 
-Oslo v1-scope forblir frosset til alle sju porter er grønne. Det er ikke tillatt å bruke en ny v2-feature som erstatning for manglende release-, mobil- eller restaurantpilotbevis.
+Forbruker-v2 kan starte først når **forbruker Oslo v1** er produksjonsgodkjent etter sine egne porter. En manglende restaurantpartner eller Pro-pilot skal ikke stoppe forbruker-v2. V2-funksjoner kan aldri erstatte manglende release-, mobil-, søke- eller katalogbevis.
 
-Min mat/AHA er ikke en v1-port. Reaktivering krever en egen beslutning om AHA-drift, et kostnadstak og en kontrollert brukerpilot. Den eksisterende integrasjonskoden beholdes, men er av som standard med `NEXT_PUBLIC_FYSEN_ENABLE_AHA_MIN_MAT`. AHA-boundary kan kjøres separat med `include_aha` i revenue-proof-workflowen når piloten faktisk er aktivert.
+Pro v2, betaling, partneroppgjør og sponsing er fortsatt sperret til Pro v1 har en reell, godkjent restaurantpilot og egen produktbeslutning.
 
-Når v1 er erklært ferdig, følger videre produktarbeid den portstyrte planen i [`fysen-v2.md`](./fysen-v2.md). Hovedretningen er eksplisitt, privat og forklarbar matpersonalisering. Flerbyutrulling og Pro v2 er senere, separate spor.
+Min mat/AHA er ikke en forbruker-v1-port. Reaktivering krever en egen beslutning om AHA-drift, et kostnadstak og en kontrollert brukerpilot. Den eksisterende integrasjonskoden beholdes, men er av som standard med `NEXT_PUBLIC_FYSEN_ENABLE_AHA_MIN_MAT`. AHA-boundary kan kjøres separat med `include_aha` i revenue-proof-workflowen når piloten faktisk er aktivert.
+
+Når forbruker-v1 er erklært ferdig, følger videre produktarbeid den portstyrte planen i [`fysen-v2.md`](./fysen-v2.md). Hovedretningen er eksplisitt, privat og forklarbar matpersonalisering. Flerbyutrulling og Pro v2 er senere, separate spor.
