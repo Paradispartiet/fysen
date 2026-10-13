@@ -135,38 +135,6 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "borggarden-oslo",
-        "name": "Borggården",
-        "websiteUrl": "https://borggarden.no/",
-        "address": "Fridtjof Nansens plass 5, 0160 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://borggarden.no/meny",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720,
-        "sourceSupport": {
-          "redirectOrigins": [],
-          "browserDataOrigins": []
-        }
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-10-13",
-          "note": "Kildebekreftet i docs/oslo-restaurant-master-2026-10-13.csv. Førsteparts prissatt meny på https://borggarden.no/meny kontrollert 2026-10-13; live parser, full menykvalitet, adressekoordinater og kjøkkentider avgjøres separat før katalogopptak."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
         "slug": "brasserie-nouvelle-oslo",
         "name": "Brasserie Nouvelle",
         "websiteUrl": "https://www.brasserienouvelle.no/",
