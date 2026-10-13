@@ -9,7 +9,7 @@ Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskat
 | navn / adresse | Stedets navn og kjent adresse; tomt felt betyr uavklart |
 | bydel | Presist plassert bare når manifestets koordinater traff bydelsgrensen; ellers `IKKE_KLASSIFISERT`, `UAVKLART` eller `GRENSE_UAVKLART` |
 | tilstede_i_fysen | `JA` = bekreftet canonical; `IKKE_IDENTIFISERT` = tidligere research til vurdering; `KANDIDAT_NETT` = ferskt eksternt navn som må matches; `MULIG_ALIAS` = sannsynlig navnevariant |
-| redaksjonell_status | Egen vurderingsakse: `PUBLISERT_I_FYSEN`, `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART`, `KILDEBEKREFTET_RELEVANT`, `MULIG_ALIAS`, `UAVKLART`. Dette er ikke en teknisk publiseringsbeslutning eller driftsgaranti |
+| redaksjonell_status | Egen vurderingsakse: `PUBLISERT_I_FYSEN`, `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART`, `KILDEBEKREFTET_RELEVANT`, `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART`, `MULIG_ALIAS`, `UAVKLART`. Dette er ikke en teknisk publiseringsbeslutning eller driftsgaranti |
 | katalog_slug | Eksakt canonical identitet når `JA`; mulig match ved `MULIG_ALIAS` |
 | kilde / notat | Opphav og kontrollbehov; historiske research-data er ikke ferskt driftsbevis |
 
@@ -58,8 +58,9 @@ Den samme CSV-en har nå **en egen redaksjonell statuskolonne**, adskilt fra pro
 | `PUBLISERT_I_FYSEN` | 749 | Eksisterende katalogposter, uten endret teknisk publisering |
 | `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART` | 18 | Aktuelt oppført i Michelin Guide, men ikke katalogisert; aktuell drift/meny må kontrolleres (gjelder også Hot Shop) |
 | `KILDEBEKREFTET_RELEVANT` | 13 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
+| `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART` | 42 | Navngitt på nyere VisitOSLO-restaurantguider; redaksjonelt aktuelt, men drift og produksjonsmeny ikke ferdig verifisert |
 | `MULIG_ALIAS` | 2 | Mulige navnevarianter som må avstemmes |
-| `UAVKLART` | 173 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
+| `UAVKLART` | 131 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
 | **Totalt** | **955** | **749 i katalogen, 206 øvrige** |
 
 ### Hele Michelin-utvalget er navnematchet
@@ -82,6 +83,12 @@ To andre par, **Haandtryk** og **Viet Kitchen**, deler navn, adresse og tilnærm
 ### Utestående før fullstendighet kan erklæres
 
 - Hovedlisten på VisitOSLO har 330 paginerte resultater. Den første siden og tilgjengelige fritt viste redaksjonelle/områdevise lister er kontrollert; **hele de 330 er ikke uttømmende høstet eller matchet**. Ingen dekningsprosent kan derfor oppgis.
-- De **173 `UAVKLART`** krever kildeverifisering, eksklusjonsbeslutning eller aliasmatch. De 18 Michelin-restaurantene krever kontroll av aktiv drift før produksjonsopptak.
+- De **131 `UAVKLART`** krever kildeverifisering, eksklusjonsbeslutning eller aliasmatch. De 18 Michelin-restaurantene krever kontroll av aktiv drift før produksjonsopptak.
 - Mange av de 749 Fysen-radene mangler verifisert bydel. Ikke gjett bydel ut fra postnummer.
 - Feil i søkevisning av rettnavn og tegn-/tallsortering er et **separat produktproblem** og er ikke endret i dette restaurantoversiktspasset.
+
+### Kontroll av VisitOSLOs navngitte restaurantguider
+
+I én sammenhengende gjennomgang er **42 allerede kjente, men ikke publiserte restauranter** flyttet fra generell `UAVKLART` til `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART`. Dette bygger på konkrete oppføringer i nyere VisitOSLO-guider, ikke på antagelser om postnummer, restaurantkvalitet eller dagens publiserte meny. Eksempel: Brasserie Coucou, Brasserie Opera, Den Glade Gris, Ekebergrestauranten, Fish Me, KUMI Gamlebyen, KUMI Oslobukta, Keyser Social, KöD Frogner, Louise, Basso Social og Stortorvets Gjæstgiveri. Oppføringene har nå relevante kildelenker direkte i `notat` i **samme CSV**. De er ikke lagt til Fysen-produksjonskatalogen.
+
+De kontrollerte sidene er blant andre [VisitOSLOs lokalfavoritter](https://www.visitoslo.com/restaurants-nightlife/the-taste-of-oslo/local-foodies), [utesteder med servering](https://www.visitoslo.com/no/spise-og-drikke/uteserveringer), [Michelin](https://www.visitoslo.com/no/spise-og-drikke/smaken-av-oslo/michelin), [restauranter i sentrum](https://www.visitoslo.com/no/aktiviteter-og-attraksjoner/omraader/sentrum/restauranter), [rimelige restauranter](https://www.visitoslo.com/no/oslo-for-deg/billig-oslo/billige-restauranter), [vegetar og vegansk](https://www.visitoslo.com/restaurants-nightlife/vegan-vegetarian), [hotellrestauranter](https://www.visitoslo.com/no/spise-og-drikke/lettvint-og-for-alle/hotellrestauranter) og [skjulte perler](https://www.visitoslo.com/no/oslo-for-deg/oslo-for-foodies/skjulte-perler). Flere oppføringer er omtalt på mer enn én side, men telles bare én gang i dette kontrollpasset. Kategoriene inkluderer dessuten noen serveringsformer som trenger egen vurdering mot Fysens vanlige restaurantmål. De er derfor fortsatt separat klassifisert, ikke automatisk godkjent.
