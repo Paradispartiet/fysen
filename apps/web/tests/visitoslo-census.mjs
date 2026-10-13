@@ -62,7 +62,8 @@ async function clickNext() {
 
 const batches = [];
 try {
-  await page.goto(SOURCE, { waitUntil: "domcontentloaded", timeout: 45000 });
+  const navigation = await page.goto(SOURCE, { waitUntil: "domcontentloaded", timeout: 45000 });
+  process.stdout.write("VISITOSLO_NAVIGATION " + JSON.stringify({ status: navigation?.status(), url: page.url(), title: await page.title(), body: (await page.locator("body").innerText()).slice(0, 1100) }) + "\\n");
   try {
     await page.locator("#onetrust-accept-btn-handler").click({ timeout: 2000 });
   } catch { /* Cookie prompt absent or unobtrusive. */ }
@@ -105,6 +106,8 @@ try {
   process.stderr.write("VISITOSLO_ERROR " + String(error) + "\n");
   process.stderr.write("VISITOSLO_DIAGNOSTIC " + JSON.stringify({
     url: page.url(),
+    statusTitle: await page.title().catch(() => ""),
+    visibleText: await page.locator("body").innerText().then((t) => t.slice(0, 2500)).catch(() => ""),
     range: await readRange().catch(() => null),
     headings: await page.locator("h3").allTextContents().catch(() => []),
     pagination: await page.locator("a,button").evaluateAll((nodes) => nodes
