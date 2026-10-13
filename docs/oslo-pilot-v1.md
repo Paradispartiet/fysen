@@ -19,40 +19,54 @@ Piloten skal ikke optimaliseres for flest mulig restauranter eller flest mulig m
 - tydelig skille mellom hva restauranten selv publiserer og hva en leverings-/bestillingstjeneste dokumenterer;
 - en tydelig vei fra oppdagelse til restaurant, booking eller bestilling der dette er verifisert.
 
-Restaurant-onboarding er en løpende coverage-maskin. Nye restauranter prioriteres når etterspørsel, geografi, kjøkken eller en nødvendig kildetype viser et reelt gap.
+Restaurant-onboarding er en løpende dekningsoppgave. **Beslutning 13. oktober 2026:** Fysen skal sikte mot **alle gode og ordinære restauranter i Oslo kommune**. Dette gjelder også etablerte nabolagsrestauranter som ikke er prisbelønt, ikke omtalt i internasjonale guider og serverer kjente retter. Dish-first søk er fremdeles produktløftet, men «unik marginal rettverdi» er **ikke lenger et vilkår for restaurantens relevans**.
 
-## Coverage-policy: rettverdi fremfor restaurantantall
+## Coverage-policy: bred dekning av gode, ordinære restauranter
 
-Fysen har **ikke et mål om å dekke alle restauranter i Oslo**, og et høyere restauranttall er ikke i seg selv fremgang. Produktet er dish-first: en restaurant skal først prioriteres når den øker sannsynligheten for at en bruker finner en relevant rett, et kjøkken, en stil eller et geografisk alternativ som ikke allerede er godt dekket.
+### Hvilke restauranter tilhører dekningsmålet?
 
-Den operative hovedtesten er **marginal coverage value**:
+Et sted er normalt innenfor når det er en aktiv, offentlig tilgjengelig, fysisk restaurant i Oslo kommune, tilbyr et reelt måltidstilbud og det finnes konkrete holdepunkter for at det er et godt eller relevant restaurantvalg. Vi skal dekke hele spennet:
 
-> Hvis denne restauranten fjernes eller ikke onboardes, mister Fysen meningsfull rettdekning, kjøkkendekning, geografisk dekning, dokumentert etterspørsel eller et kvalitativt viktig alternativ?
+- gode, vanlige bydels- og nabolagsrestauranter med bordservering eller et reelt spisetilbud;
+- norsk/tradisjon, sjømat, europeiske og internasjonale kjøkken, familierestauranter og regionale spesialister;
+- rimelige og mellomprisede steder **på lik linje med** fine dining, tasting-menu-restauranter og Michelin-restauranter;
+- gode uavhengige pizzeriaer, sushi-, burger- og lignende restauranter når de har dokumenterbar kvalitet, særpreg eller er viktige lokale alternativer.
 
-Hvis svaret er nei, skal restauranten normalt ikke prioriteres bare for å øke katalogstørrelsen.
+**Overlapp er ikke grunn til utelukkelse.** To gode italienske restauranter i samme bydel er fortsatt to relevante restauranter, selv når begge serverer pizza og pasta. Om stedet tilfører nye rettnavn, kan påvirke *arbeidsrekkefølge*, ikke om det hører hjemme i dekningsuniverset.
 
-Positive signaler er blant annet:
+### Slik vurderer vi «god»
 
-- nye eller underdekkede retter, regionale kjøkken, spesialisering eller tydelige signaturretter;
-- dokumentert brukeretterspørsel eller et reelt null-/fuzzy-gap;
-- geografisk verdi der eksisterende rettdekning er svak;
-- stabil, aktuell og relativt komplett menyproveniens;
-- faglig eller redaksjonell relevans, tydelig spesialisering, lang levetid eller annen kvalitativ betydning;
-- variasjon i prisnivå, kosthold og serveringsform når dette faktisk øker brukerens valgmuligheter.
+«God» er en dokumentert kvalitativ vurdering, ikke et vilkårlig krav om Michelin-stjerne, høy pris eller én bestemt Google-rating. Bruk samlet og etterprøvbar dokumentasjon:
 
-Negative signaler er blant annet:
+1. Etabler faktisk identitet, adresse i Oslo, åpen drift og ordinært, vesentlig mattilbud.
+2. Undersøk restaurantens egen profil/meny, kjøkken, faglige særpreg, normal drift, prisnivå og relevant serveringsform.
+3. Vurder bredere kvalitets- og omdømmesignaler: VisitOSLO, Michelin, uavhengige restaurantguider, troverdige lokale redaksjoner, vedvarende lokal etterspørsel og flere konkrete gjesteerfaringer. Én listeplassering eller score er verken nødvendig eller tilstrekkelig.
+4. Ta med reelle nabolagsfavoritter selv om de mangler guideomtale, dersom flere uavhengige holdepunkter støtter at de er gode ordinære restauranter.
+5. Noter usikkerhet eller motstridende kilder som `review` i dekningsanalysen; ikke oppgi egen preferanse eller manglende kjennskap som bevis for «dårlig».
 
-- enda en lokasjon eller restaurant med nesten samme rettsett som allerede er godt dekket i samme område;
-- store mengder generisk pizza, kebab, sushi, burger eller tilsvarende uten særskilt rett-, kvalitets- eller geografisk verdi;
-- kjedelokasjoner med praktisk talt identisk meny når lokasjonen ikke tilfører vesentlig nærhetsverdi;
-- ustabil, svært støyete eller ufullstendig menyflate som gir lavere tillit til rettdataene;
-- catering-only, lukkede kantiner/institusjoner, kiosk/dagligvare med mat som sideprodukt, rene barer uten substansiell matmeny og virtuelle brands som bare dupliserer samme fysiske kjøkken og rettsett.
+### Hva skal vi ikke samle ukritisk?
 
-Ratings alene er **ikke** en hard gate. Kvalitet skal vurderes som et sammensatt signal og må aldri brukes til å overstyre kildebevis, faktisk rettdekning eller dokumentert etterspørsel.
+Vi skal **ikke** telle alle generiske pizza-, kebab-, burger- eller takeawayutsalg, alle kjedelokasjoner med nesten identisk tilbud eller alle serveringsregistrerte virksomheter bare for å øke antallet. Ren bar uten substansiell matservering, catering-only, lukket kantine, butikk/kiosk med mat som sideprodukt, virtuelt duplikatkjøkken, ikke-aktivt eller feilgeografisk sted er normalt utenfor.
 
-Eksisterende katalog skal også kunne auditeres etter samme prinsipp. En canonical restaurant kan klassifiseres redaksjonelt som **core**, **coverage** eller **redundant**. `redundant` betyr ikke automatisk sletting; det betyr at stedet ikke skal telle som begrunnelse for videre kvantitetsvekst, og at konsolidering, nedprioritering eller representasjon som lokasjon under et felles restaurant-/menykonsept bør vurderes.
+Dette er en kvalitets-/serveringsvurdering, **ikke** et forbud mot kjøkkentyper. En særpreget eller veldrevet pizzeria kan være `core`; en generisk lavverdiavdeling skal ikke automatisk bli canonical. Steder uten klar klassifisering holdes i `review`, ikke avvises automatisk.
 
-Det finnes derfor ingen fast Oslo-kvote som 200, 1 000 eller «alle registrerte restauranter». Coverage vurderes ut fra hvor godt Fysen kan svare på spørsmålet **«hvor kan jeg spise denne retten?»** med ferske, troverdige og nyttige alternativer.
+### To uavhengige porter: relevans og publiserbart menybevis
+
+**Port A — redaksjonell restaurantdekning:** Er dette en god, ordinær restaurant som bør inngå i Oslo-universet? Her er et bekreftet tasting-/pakke-menykonsept, bildemeny, robotblokkert PDF eller manglende individuell rettpris **ikke** grunnlag for å kalle restauranten irrelevant.
+
+**Port B — teknisk publisering:** Kan Fysen publisere faktiske retter, priser og menybevis trygt gjennom eksisterende canonical source/quality-gater? Bare steder som består Port B legges i `apps/menu-worker/catalog/` og materialiseres som søkbare restauranter under dagens arkitektur. Hvis Port A er bestått, men B feiler, skal stedet forbli **relevant / review / ikke publisert** med navngitt kildehindring – ikke `excluded` og ikke et oppdiktet menytreff.
+
+Denne beslutningen oppretter **ikke** en alternativ produksjonskatalog eller en usikret restaurant-only-publisering. Eventuell fremtidig publisering av dokumentert restaurantprofil uten individuelle rettpriser krever egen datamodell- og UI-beslutning.
+
+### Dekningskontroll og prioritering
+
+- Kartlegg hele Oslo kommune systematisk per bydel, prisnivå og serverings-/kjøkkentype, med sentrum som eget søkeområde.
+- Sammenhold hele den brede VisitOSLO-restaurantlisten, relevante temaguider, Michelin, uavhengige Oslo-guider, lokale kilder og konkret etterspørsel; identitet må kontrolleres mot faktisk adresse.
+- Alle kandidater får `canonical`, `review`, `missing` eller begrunnet `excluded` i research-ledgeren. `review` teller **ikke** som dekket.
+- Prioriter de viktigste uavklarte restaurantene først; marginal rettdekning og lett tilgjengelig parserkilde brukes som *rekkefølge-*, aldri som *utelukkelseskriterium*.
+- Revisjoner skal rapportere både **andel relevante restauranter identifisert/klassifisert** og **andel relevante restauranter trygt publisert med søkbar meny**. Et høyt antall aksepterte kilder alene beviser ikke komplett restaurantdekning.
+
+Det finnes ingen kunstig Oslo-kvote. Ambisjonen er **alle dokumenterbart gode ordinære restauranter**, mens en ferdigerklæring krever systematisk og kildebelagt avstemming av dekning – ikke bare en grønn fullkatalogtest. Gjeldende research-ledger er [Oslo coverage census](./oslo-coverage-census-2026-09-21.md).
 
 ## Status 20. august 2026
 
