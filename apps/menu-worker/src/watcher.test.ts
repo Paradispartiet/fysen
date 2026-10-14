@@ -7,6 +7,7 @@ import { HTML_EXTRACTOR_VERSION } from "./html-extractor.js";
 import { HTML_HEADING_NORMALIZER_VERSION } from "./html-heading-normalizer.js";
 import { HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION } from "./html-heading-recovery-supplement.js";
 import { HTML_OUTPUT_CANONICALIZER_VERSION } from "./html-output-canonicalizer.js";
+import { HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION } from "./html-visible-layout-reconciliation.js";
 import { HTML_PRICE_WRAPPED_RECOVERY_VERSION } from "./html-price-wrapped-recovery.js";
 import { HTML_SECTION_FIRST_CARD_RECOVERY_VERSION } from "./html-section-first-card-recovery.js";
 import { HTML_SOURCE_EXTRACTOR_VERSION } from "./html-source-extractor.js";
@@ -56,6 +57,7 @@ describe("menu source runtime extractor refresh policy", () => {
       HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION,
       HTML_TEXT_SECTION_SCOPE_VERSION,
       HTML_OUTPUT_CANONICALIZER_VERSION,
+      HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION,
       HTML_RECOVERY_SELECTION_VERSION,
     ].join("+");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
