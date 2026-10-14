@@ -41,6 +41,7 @@ export function reconcileVisibleSizePrices(
   const labelledSizes = /(?:^|\b)L\s*XL\b/iu.test(header);
   const pizzaSection = /\bPIZZA\b/iu.test(header);
   const priceByName = new Map<string, readonly number[]>();
+  let inferredSizesFromRepeatedRows = false;
   for (const [index, title] of titles.entries()) {
     const next = titles[index + 1]?.line ?? Math.min(lines.length, title.line + 55);
     const blockLines = lines.slice(title.line + 1, Math.min(next, title.line + 55));
@@ -96,12 +97,14 @@ export function reconcileVisibleSizePrices(
       }
     }
     if (candidatePairs.size >= 4 && /\bpizza\b/iu.test(flattened)) {
+      inferredSizesFromRepeatedRows = true;
       for (const [name, amounts] of candidatePairs) priceByName.set(name, amounts);
     }
   }
   // With the labels absent from extracted DOM text, repeated numbered pizza
   // rows with two matching prices independently establish a multi-price grid.
-  if (!labelledSizes && !(pizzaSection && priceByName.size >= 4)) return items;
+  if (!labelledSizes && !(pizzaSection && priceByName.size >= 4) && !inferredSizesFromRepeatedRows)
+    return items;
   return items.map((item) => {
     const prices = priceByName.get(item.normalizedName);
     if (!prices || prices[0] !== item.priceMinor) return item;
