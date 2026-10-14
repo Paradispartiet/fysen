@@ -2,7 +2,7 @@ import { load } from "cheerio";
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 import { extractHtmlVisibleText } from "./html-extractor.js";
 
-export const HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION = "visible-layout-v4";
+export const HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION = "visible-layout-v5";
 
 const NUMBERED_MENU_TITLE = /^(\d{1,2})\s*[.)]\s*(.+)$/u;
 const STANDALONE_PRICE = /^(?:kr\.?\s*)?([1-9]\d{1,3})(?:\s*,[-–])?$/iu;
@@ -177,7 +177,16 @@ export function removeUnpricedParentMenuHeadings(
   return items.filter((item) => {
     if (!bareHeadings.has(item.normalizedName)) return true;
     const headingLine = lines.findIndex((line) => normalizeDishName(line) === item.normalizedName);
-    if (headingLine < 0) return true;
+    if (headingLine < 0 || item.priceMinor === null) return true;
+
+    // Only cross the known failure boundary: a preceding priced group menu
+    // supplying its price to an unpriced following section heading. Ordinary
+    // h2 dish titles elsewhere must remain untouched.
+    const beforeHeading = lines.slice(Math.max(0, headingLine - 45), headingLine).join(" ");
+    const groupMenuScope = /(?:selskapsmenyer|group\s+menus|set\s+menus?)/iu.test(beforeHeading);
+    const inheritedGroupPrice = new RegExp("(?:^|\\D)" + String(item.priceMinor / 100) + "(?:\\D|$)", "u")
+      .test(beforeHeading);
+    if (!groupMenuScope || !inheritedGroupPrice) return true;
 
     // The next independent dish, not a directly adjacent price, must follow
     // the parent heading; otherwise this could itself be a priced h2 dish.
