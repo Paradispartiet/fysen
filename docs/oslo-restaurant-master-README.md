@@ -2,7 +2,7 @@
 
 **Åpne én fil:** [Oslo-restaurantlisten (CSV)](./oslo-restaurant-master-2026-10-13.csv).
 
-Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskatalog. Den dekker alle **752 av 752** restaurantmanifester i Fysens katalog på commit `08c748003d1748a8282917cbd43198509a89e822` og **228** eksterne/eldre research-oppføringer: totalt **980 rader**. Slug brukes som unik identitet for alle 752 registrerte steder. Noen av kandidatene kan være aliaser, dubletter, ikke ordinære restauranter eller stengt og må kontrolleres før opptak. Tallet 982 er **ikke** antallet unike, aktive eller gode Oslo-restauranter og ikke bevis på at alle er funnet.
+Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskatalog. Den dekker alle **754 av 754** restaurantmanifester i Fysens katalog etter bolken 14. oktober 2026 og **226** eksterne/eldre research-oppføringer: totalt **980 rader**. Slug brukes som unik identitet for alle 752 registrerte steder. Noen av kandidatene kan være aliaser, dubletter, ikke ordinære restauranter eller stengt og må kontrolleres før opptak. Tallet 980 er **ikke** antallet unike, aktive eller gode Oslo-restauranter og ikke bevis på at alle er funnet.
 
 | Felt | Bruk |
 |---|---|
@@ -13,14 +13,17 @@ Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskat
 | katalog_slug | Eksakt canonical identitet når `JA`; mulig match ved `MULIG_ALIAS` |
 | kilde / notat | Opphav og kontrollbehov; historiske research-data er ikke ferskt driftsbevis |
 
-**Bydeler:** Alle 15 Oslo-bydeler og Sentrum brukes som geografiske kontrollområder. Plassering er bare sikker der koordinater er tilgjengelige og passer geometri fra [offentlig tilgjengelig kartdatasett over Oslo-bydeler](https://github.com/AnalyseABO/Kart-fylker-og-kommuner-json/blob/main/Bydeler_Oslo_u_marka-S.json). **Bare 70 av de 749 canonical radene** hadde koordinater hentet i dette uttrekket; av disse var 3 uten entydig polygonmatch. Resten står bevisst uten klassifisert bydel, ikke i vilkårlige postnummerbaserte bydeler.
+**Bydeler:** Alle 15 Oslo-bydeler og Sentrum brukes som geografiske kontrollområder. Plassering er bare sikker der koordinater er tilgjengelige og passer geometri fra [offentlig tilgjengelig kartdatasett over Oslo-bydeler](https://github.com/AnalyseABO/Kart-fylker-og-kommuner-json/blob/main/Bydeler_Oslo_u_marka-S.json). **Ved det første grunnlagsuttrekket hadde bare 70 av 749 canonical rader** hentede koordinater; av disse var 3 uten entydig polygonmatch. Resten står bevisst uten klassifisert bydel, ikke i vilkårlige postnummerbaserte bydeler.
 
 **Eksterne lister:** Research-kandidatene bygger på [Fysens tidligere Oslo-census](./oslo-coverage-census-2026-09-21.md), [VisitOSLOs restaurantoversikt](https://www.visitoslo.com/restaurants-nightlife/restaurants), [VisitOSLOs tilgjengelige restauranter](https://www.visitoslo.com/no/oslo-for-deg/tilgjengelighet/tilgjengelige-restauranter) og [VisitOSLOs utvalg på forsiden](https://www.visitoslo.com/no). En oppføring her er ikke bevis for aktiv drift, selvstendig gateadresse eller tilstrekkelig restaurantkvalitet.
 
-**Hva er ferdig og hva mangler?** Selve sammenslåingen av **752 eksisterende + 228 registrerte eksterne oppføringer** er ferdig. For en påstand om **alle gode og ordinære restauranter i Oslo** må fortsatt de ikke-verifiserte delene av VisitOSLOs 330-oppføringers oversikt, bydelsvise lokale kilder, aliaser, aktualitet og manglende koordinater avstemmes. Ikke bruk antall rader som en dekningsprosent. Ingen endringer er gjort i produksjonskatalog, menyuttrekk, søk eller valideringsregler.
+**Hva er ferdig og hva mangler?** Selve sammenslåingen av **754 eksisterende + 226 registrerte eksterne oppføringer** er ferdig. For en påstand om **alle gode og ordinære restauranter i Oslo** må fortsatt de ikke-verifiserte delene av VisitOSLOs 330-oppføringers oversikt, bydelsvise lokale kilder, aliaser, aktualitet og manglende koordinater avstemmes. Ikke bruk antall rader som en dekningsprosent. Ingen endringer er gjort i produksjonskatalog, menyuttrekk, søk eller valideringsregler.
 
 
 **Siste avstemming – Borggården 13. oktober 2026:** Researchraden «Borggården» var en faktisk dublett av eksisterende canonical `borggarden-biffrestaurant-oslo` («Borggården Biffrestaurant»), med identisk besøksadresse og førstegangsmeny. Den overflødige researchraden er fjernet, og navnealiaset er dokumentert på canonical rad. Derfor er gjeldende totalsum **980** (749 publisert + 231 øvrige) og **102** kildebekreftede relevante eksterne kandidater. Ingen ny Borggården-post opprettes.
+
+
+**Batch #957 – to nye kildebaserte katalogposter (14. oktober 2026):** Grisen og Campo de' Fiori er innført som to selvstendige restauranter med dokumenterte Kartverket-koordinater, minimumskrav til faktiske matretter og åtte konkrete rett/prisassertasjoner hver. Begge var allerede registrert som forskningskandidater; den samme masterlisten er derfor fortsatt **980 rader** med **754 katalogposter og 226 øvrige oppføringer**. Grisen er ikke Den Glade Gris; Campo de' Fiori er ikke Brasserie Blanche selv om begge oppgir Josefines gate 23. Åpningstider er fortsatt uverifisert. **Chicago Pizza & Brew er fortsatt bare forskningskandidat:** HTTP-uttrekket dokumenterer sju L-priser, men henter ennå ikke alle XL-prisvariantene og må ikke publiseres uten dem.
 
 **Batch #953 – Oslo-katalogtillegg (13. oktober 2026):** Tre nye kanoniske restauranter er lagt til fra prissatt operatørmeny: Alex Sushi, Big Horn Aker Brygge og Big Horn Møllergata. Alle har Kartverket-punkter og åtte uttrekksbaserte rett/prisassertasjoner hver. Oppdatert oversikt etter merge: 752 publiserte + 228 øvrige = 980 rader, hvorav 99 eksterne er kildebekreftede relevante.
 
@@ -56,15 +59,15 @@ Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskat
 
 **Gjenstående før målet om alle relevante Oslo-restauranter kan erklæres oppfylt:** avstemme resten av VisitOSLOs 330 oppføringer, kontrollere ytterligere bydelsvise uavhengige kilder, verifisere identitet for de 196 eldre kandidatene, undersøke canonical-duplikatene og fastsette bydeler geografisk. Det skal gjøres i **den samme hovedlisten**, ikke i en parallell katalog.
 
-## Redaksjonell status i én hovedliste – gjeldende kontroll 13. oktober 2026
+## Redaksjonell status i én hovedliste – gjeldende kontroll 14. oktober 2026
 
 Den samme CSV-en har **en egen redaksjonell statuskolonne**, adskilt fra produksjonsstatusen. Tabellen nedenfor er gjeldende; etterkontrollnotater lenger ned inneholder også daterte mellomresultater. Derved blandes ikke «er god/relevant restaurant» med «har teknisk publiserbar, priset meny».
 
 | Redaksjonell status | Antall rader | Betydning |
 | --- | ---: | --- |
-| `PUBLISERT_I_FYSEN` | 752 | Eksisterende katalogposter, uten endret teknisk publisering |
+| `PUBLISERT_I_FYSEN` | 754 | Eksisterende katalogposter, uten endret teknisk publisering |
 | `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART` | 18 | Aktuelt oppført i Michelin Guide, men ikke katalogisert; aktuell drift/meny må kontrolleres (gjelder også Hot Shop) |
-| `KILDEBEKREFTET_RELEVANT` | 99 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
+| `KILDEBEKREFTET_RELEVANT` | 97 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
 | `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART` | 56 | Navngitt på nyere VisitOSLO-restaurantguider; redaksjonelt aktuelt, men drift og produksjonsmeny ikke ferdig verifisert |
 | `MULIG_ALIAS` | 8 | Mulige navnevarianter som må avstemmes |
 | `UAVKLART` | 0 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
@@ -75,14 +78,14 @@ Den samme CSV-en har **en egen redaksjonell statuskolonne**, adskilt fra produks
 | `VINBAR_UTENFOR_RESTAURANTUTVALG` | 7 | Dokumenterte vinbarer; fortsatt synlige i researchlisten, men ikke telt som ordinære restauranter |
 | `BAR_UTENFOR_RESTAURANTUTVALG` | 9 | Cocktail-/hotellbarer med eventuell snacksservering |
 | `KAFE_BAKERI_UTENFOR_RESTAURANTUTVALG` | 14 | Bakerier, konditorier, tesalong og kafé med avgrenset matservering |
-| **Totalt** | **980** | **752 i katalogen, 228 øvrige** |
+| **Totalt** | **980** | **754 i katalogen, 226 øvrige** |
 
 
 ### Siste type- og identitetskontroll 13. oktober 2026
 
 Ytterligere **11 av de 12 åpne forskningsradene** er nå kildekontrollert i samme CSV, og antallet rader med redaksjonell status `UAVKLART` er **1**. **Khab Thai Barcode og Tabuno** er dokumenterte, relevante restauranter som ennå ikke er Fysen-katalogposter. **Braud Bakeri og Kafé Villa Grande** er klassifisert som bakeri/kafé; **Bar Babylon, Rikkes Hage og Skaugum** som bar-/utelivssteder. **Sushi Restaurant Alex** og **Istanbul Restaurant Grünerløkka** er merket `MULIG_ALIAS`, men fysisk identitet må fortsatt kontrolleres i sistnevnte tilfelle fordi Fysen- og operatøradressen avviker. **Illegal Burger** og **Stykke** som generiske navn er paraplyoppføringer og blir ikke telt som selvstendige restauranter. Hver rad har kilde, vurdering og uavklarte forbehold direkte i `notat`.
 
-**Den tidligere åpne posten «[Vin] Tjuvholmen» er nå dokumentert som vinbar på Lille Stranden 4.** Det gjenstår ingen rader med redaksjonell status `UAVKLART`, men mange øvrige kandidater har fremdeles uavklart drift og teknisk kildeegnethet. Dette betyr ikke at 982-listen er uttømmende: De 330 paginerte VisitOSLO-resultatene, de separate Michelin-/guide-kandidatene, kilde- og menyopptak og bydelsplassering gjenstår. **749/749 produksjonsmanifester er uendret.**
+**Den tidligere åpne posten «[Vin] Tjuvholmen» er nå dokumentert som vinbar på Lille Stranden 4.** Det gjenstår ingen rader med redaksjonell status `UAVKLART`, men mange øvrige kandidater har fremdeles uavklart drift og teknisk kildeegnethet. Dette betyr ikke at 980-listen er uttømmende: De 330 paginerte VisitOSLO-resultatene, de separate Michelin-/guide-kandidatene, kilde- og menyopptak og bydelsplassering gjenstår. **749/749 produksjonsmanifester er uendret.**
 
 
 ### Supplerende restauranter oppdaget i åpne områdeguider – 13. oktober 2026
