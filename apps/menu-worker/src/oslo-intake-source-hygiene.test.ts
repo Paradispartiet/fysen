@@ -28,6 +28,9 @@ describe("Oslo intake source hygiene", () => {
       "Allergener: melk, hvete",
       "22144444 eller 924 32",
       "22144444",
+      "DESSERT : TIRAMISU",
+      "FORRETT: SHARING AV ITALIENSK SPEKEMAT",
+      "HOVEDRETT: PASTA OG PIZZA SHARING",
     ]) {
       expect(isCanonicalHtmlMenuItem(item(name)), name).toBe(false);
       expect(isCanonicalBatchIntakeMenuItem(item(name)), name).toBe(false);
