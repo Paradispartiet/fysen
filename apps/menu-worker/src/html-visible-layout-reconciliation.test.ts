@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 import {
+  reconcileImmediatelyPricedItems,
   reconcileVisibleSizePrices,
   removeUnpricedParentMenuHeadings,
 } from "./html-visible-layout-reconciliation.js";
@@ -128,6 +129,19 @@ describe("price and section hierarchy reconciliation", () => {
     ];
     expect(removeUnpricedParentMenuHeadings(html, observed).map((item) => item.name))
       .toEqual(observed.map((item) => item.name).filter((name) => name !== "PIZZA DE ROMA"));
+  });
+
+  it("corrects a price inherited from a previous group menu when the dish has a direct price", () => {
+    const html = "<html><body><p>Meny Roma</p><p>pris 895</p><h2>PIZZA DE ROMA</h2><div>REGINA</div><div>289</div></body></html>";
+    const observed = [dish("REGINA", 895)];
+    const output = reconcileImmediatelyPricedItems(html, observed);
+    expect(output[0]?.priceMinor).toBe(28900);
+  });
+
+  it("preserves an already correctly priced dish", () => {
+    const html = "<html><body><div>PIZZA TATLER</div><div>319</div></body></html>";
+    expect(reconcileImmediatelyPricedItems(html, [dish("PIZZA TATLER", 319)])[0]?.priceMinor)
+      .toBe(31900);
   });
 
   it("preserves a directly priced h2 dish and parent headings without three priced children", () => {
