@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-priced-firstparty-20261013",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "grisen-torshov-oslo",
+        "name": "Grisen",
+        "websiteUrl": "https://www.oslogrisen.no/",
+        "address": "Torshovgata 2, 0476 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.oslogrisen.no/menu-1",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-13",
+          "note": "Offisiell kilde observert 2026-10-13: Operatørens prisede matmeny og kjøkkentider; historiske/sesongbetonte seksjoner må ikke feiltolkes som samtidig tilgjengelige. Research-only; publisering forutsetter Kartverket-geokoding, live ekstraksjon, prisbevis, semantisk output-QA og exact-head-validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "campo-de-fiori-oslo",
+        "name": "Campo de' Fiori",
+        "websiteUrl": "https://www.campo.no/",
+        "address": "Josefines gate 23, 0351 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.campo.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-13",
+          "note": "Offisiell kilde observert 2026-10-13: Operatørens aktuelle italienske meny med prisede pizzaer, pastaretter, forretter og desserter på forsiden. Tospråklig rettsbeskrivelse og selskapsmenyer krever riktig skille. Research-only; publisering forutsetter Kartverket-geokoding, live ekstraksjon, prisbevis, semantisk output-QA og exact-head-validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "chicago-pizza-brew-oslo",
+        "name": "Chicago Pizza & Brew",
+        "websiteUrl": "https://www.chicagopizza.no/",
+        "address": "Sonja Henies plass 3, 0185 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.chicagopizza.no/menu",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-13",
+          "note": "Offisiell kilde observert 2026-10-13: Operatørens offentlige prisede pizzaer i L/XL-varianter samt tilbehør; sesongpizza uten publisert pris skal ikke fabrikeres. Research-only; publisering forutsetter Kartverket-geokoding, live ekstraksjon, prisbevis, semantisk output-QA og exact-head-validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ]
+}
