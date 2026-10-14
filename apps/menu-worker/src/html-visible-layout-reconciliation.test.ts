@@ -86,6 +86,20 @@ describe("price and section hierarchy reconciliation", () => {
     expect(result.items.map((item) => item.name)).not.toContain("Seasonal Pizza");
   });
 
+  it("recognizes price spans concatenated by HTML layout without explicit size tokens", () => {
+    const html = [
+      "<html><body><h1>PIZZA</h1>",
+      ...chicagoPizzas.map(([name, l, xl], index) =>
+        "<h3>" + (index + 1) + "." + name + "</h3><div>" + l + ",-" + xl + ",-</div>"
+      ),
+      "</body></html>",
+    ].join("\n");
+    const items = chicagoPizzas.map(([name, price]) => dish(name, price));
+    const result = reconcileVisibleSizePrices(html, items);
+    expect(result.map((item) => [item.name, item.priceMinor, item.priceMaxMinor]))
+      .toEqual(chicagoPizzas.map(([name, l, xl]) => [name, l * 100, xl * 100]));
+  });
+
   it("does not invent a second price when the L/XL header is absent", () => {
     const html = "<html><body><div>1.Regina</div><p>289</p><p>450</p></body></html>";
     const result = reconcileVisibleSizePrices(html, [dish("Regina", 289)]);
