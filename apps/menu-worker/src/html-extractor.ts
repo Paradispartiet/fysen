@@ -5,7 +5,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_EXTRACTOR_VERSION = "html-v11";
+export const HTML_EXTRACTOR_VERSION = "html-v12";
 
 export interface ExtractedHtmlMenu {
   readonly items: readonly MenuObservedItem[];
@@ -474,7 +474,22 @@ export function extractHtmlMenu(html: string): ExtractedHtmlMenu {
   const structured = extractJsonLdItems(html);
   const visibleText = extractHtmlVisibleText(html);
   if (structured.length > 0) {
-    return { items: structured, method: "json_ld", visibleText };
+    // A sufficiently complete visible menu can expose stale JSON-LD entries.
+    // Only prune missing names when at least four structured titles and at
+    // least 75% of the structured menu are independently visible. Preserve
+    // script-only menus, whose titles have no comparable visible evidence.
+    const normalizedVisibleMenu = normalizeDishName(visibleText);
+    const visibleStructuredItems = structured.filter((item) =>
+      normalizedVisibleMenu.includes(normalizeDishName(item.name)),
+    );
+    const trustworthyVisibleCoverage =
+      visibleStructuredItems.length >= 4 &&
+      visibleStructuredItems.length >= Math.ceil(structured.length * 0.75);
+    return {
+      items: trustworthyVisibleCoverage ? visibleStructuredItems : structured,
+      method: "json_ld",
+      visibleText,
+    };
   }
   return { items: extractHeuristicItems(visibleText), method: "html_heuristic", visibleText };
 }
