@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "outputDirectory": "candidates/oslo-semeny-two-new-sites-20261014",
+  "outputDirectory": "candidates/oslo-jagger-unavailable-lunch-research-20261014",
   "concurrency": 5,
   "restaurants": [
     {
@@ -15,36 +15,6 @@
       },
       "menuSource": {
         "url": "https://semeny.no/sted/268jaggerstorgata",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-10-14",
-          "note": "Ny live-kildeprøve 2026-10-14 fra Semeny-priset visningsmeny, kun research inntil kildeparitet og fysisk identitet er kontrollert; åpningstidene er uverifiserte."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": [
-        "Bestikk"
-      ]
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "subway-lambertseter-oslo",
-        "name": "Subway Lambertseter",
-        "websiteUrl": null,
-        "address": "Cecilie Thoresens vei 17, 1153 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://semeny.no/sted/subwaylambertseter",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
