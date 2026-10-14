@@ -103,6 +103,8 @@ const UNLABELED_PHONE_METADATA_ITEM =
   /^(?:\+?47\s*)?\d{7,8}(?:\s+(?:eller|or)\s+\d{2,8}(?:\s+\d{2,4}){0,2})?$/iu;
 // Menus such as Grisen repeat "A:" allergen lines between priced dishes.
 const PREFIXED_ALLERGEN_METADATA_ITEM = /^(?:a\s*:|allerg(?:en|ener|ens)\s*:)\s*\p{L}/iu;
+// A course description inside a priced set menu is not a separately priced dish.
+const SET_MENU_COURSE_DESCRIPTION = /^(?:forrett|starter|hovedrett|main\s+course|dessert)\s*:\s*\p{L}/iu;
 const NON_DISH_MENU_SECTION =
   /^(?:meny|à la carte|(?:kvelds?|lunsj|lunch)\s*meny(?:\s+.*)?|brunch(?:\s*\([^)]*\))?(?:\s*[-–—:]\s*.*)?|forretter|småretter|grillretter|hovedretter|dessert(?:er)?|drikkemeny|drikke(?:r)?|drikkevarer|cocktails?|vin|øl|bestill|bord|åpningstider|kontakt|snacks?|sandwich(?:es)?\s*[-–—:]\s*.+|sandwich(?:es)?\s+with\s+(?:meat|seafood|vegetarian)|maki|grill|antipasti|vegan|klassiske\s+forretter\s+og\s+supper)$/iu;
 const ALLERGEN_ONLY_ITEM =
@@ -142,7 +144,7 @@ const COCKTAIL_DESCRIPTION_ITEM =
   /^(?:(?:mimosa|(?:black|white)\s+russian(?:\s+kahlua)?|classic\s+mojito|vodka\s+cranberry)$|(?=.*,)(?=.*\b(?:gin|vodka|rom|rum|tequila|whisk(?:e)?y|bourbon|aperol|prosecco|kahlua|makers\s+mark|jack\s+daniels|cointreau)\b)(?=.*\b(?:tonic|cola|cranberry|prosecco|lime|sitron|lemon|appelsin|orange|eggehvite|egg\s*whites?|ginger\s+ale|ingefærøl|lemon\s+soda|sitronbrus)\b).+)$/iu;
 export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v3";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
-export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v14";
+export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v15";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v12";
 export const HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION = "structured-compat-v1";
 export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v5";
@@ -248,6 +250,7 @@ export function isCanonicalHtmlMenuItem(item: MenuObservedItem): boolean {
     !UNLABELED_PHONE_METADATA_ITEM.test(filterName) &&
     !PREFIXED_ALLERGEN_METADATA_ITEM.test(filterName) &&
     !NON_DISH_MENU_SECTION.test(filterName) &&
+    !SET_MENU_COURSE_DESCRIPTION.test(filterName) &&
     !ALLERGEN_ONLY_ITEM.test(filterName) &&
     !NON_DISH_METADATA_ITEM.test(filterName) &&
     !NON_DISH_FRAGMENT_ITEM.test(filterName) &&
