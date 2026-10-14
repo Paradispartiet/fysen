@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "campo-de-fiori-oslo",
+    "name": "Campo de' Fiori",
+    "websiteUrl": "https://www.campo.no/",
+    "address": "Josefines gate 23, 0351 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.923093654381496,
+    "longitude": 10.725903810829392
+  },
+  "menuSource": {
+    "url": "https://www.campo.no/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 32,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-14",
+      "note": "Offisiell meny kontrollert 2026-10-14; Kartverket-koordinater fra eksakt kandidatuttrekk. Åpningstider ennå ikke verifisert. Aktuelle priser kontrollert mot operatørens offentlig publiserte meny; avvis kilde-/parserstøy."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tagliere misto (2 pers)",
+      "Tre bruschette e sto ́",
+      "RAVIOLI DELL ́ ORTO",
+      "REGINA",
+      "NORCINA",
+      "CARCERATO",
+      "CALZONE DE CAMPO",
+      "CREMA AL MASCARPONE"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Tagliere misto (2 pers)",
+        "priceMinor": 69500
+      },
+      {
+        "name": "Tre bruschette e sto ́",
+        "priceMinor": 22500
+      },
+      {
+        "name": "RAVIOLI DELL ́ ORTO",
+        "priceMinor": 38900
+      },
+      {
+        "name": "REGINA",
+        "priceMinor": 28900
+      },
+      {
+        "name": "NORCINA",
+        "priceMinor": 31900
+      },
+      {
+        "name": "CARCERATO",
+        "priceMinor": 31000
+      },
+      {
+        "name": "CALZONE DE CAMPO",
+        "priceMinor": 31900
+      },
+      {
+        "name": "CREMA AL MASCARPONE",
+        "priceMinor": 18900
+      }
+    ],
+    "forbiddenDishNames": [
+      "PIZZA DE ROMA",
+      "DESSERT : TIRAMISU",
+      "22144444 eller 924 32"
+    ]
+  }
+}
