@@ -12,6 +12,7 @@ import { HTML_SOURCE_EXTRACTOR_VERSION } from "./html-source-extractor.js";
 import { HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION } from "./html-strong-title-price-recovery.js";
 import { HTML_OUTPUT_CANONICALIZER_VERSION } from "./html-output-canonicalizer.js";
 import { HTML_TEXT_SECTION_SCOPE_VERSION } from "./html-text-section-scope.js";
+import { HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION } from "./html-visible-layout-reconciliation.js";
 import { HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION } from "./html-trailing-price-card-recovery.js";
 import { PUBLIC_MENU_API_EXTRACTOR_VERSION } from "./public-menu-api-extractor.js";
 import {
@@ -47,6 +48,7 @@ describe("HTML runtime extractor version", () => {
       HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION,
       HTML_TEXT_SECTION_SCOPE_VERSION,
       HTML_OUTPUT_CANONICALIZER_VERSION,
+      HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION,
       HTML_RECOVERY_SELECTION_VERSION,
     ].join("+");
 
@@ -77,6 +79,7 @@ describe("HTML runtime extractor version", () => {
     );
     expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v18");
     expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v21");
+    expect(HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION).toBe("visible-layout-v1");
     expect(HTML_RECOVERY_SELECTION_VERSION).toBe("recovery-selection-v5");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
