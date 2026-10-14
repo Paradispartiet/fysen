@@ -72,6 +72,7 @@ import {
 } from "./html-text-section-scope.js";
 import {
   HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION,
+  reconcileImmediatelyPricedItems,
   reconcileVisibleSizePrices,
   removeUnpricedParentMenuHeadings,
 } from "./html-visible-layout-reconciliation.js";
@@ -722,9 +723,12 @@ export async function extractMenuSource(
         : canonicalItems;
     const items =
       extracted.method === "html_heuristic"
-        ? removeUnpricedParentMenuHeadings(
+        ? reconcileImmediatelyPricedItems(
             normalizedHtml,
-            canonicalizeHtmlOutputItems(beverageScopedItems),
+            removeUnpricedParentMenuHeadings(
+              normalizedHtml,
+              canonicalizeHtmlOutputItems(beverageScopedItems),
+            ),
           )
         : reconcileVisibleSizePrices(normalizedHtml, beverageScopedItems);
     return {
