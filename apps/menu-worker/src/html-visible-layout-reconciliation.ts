@@ -2,7 +2,7 @@ import { load } from "cheerio";
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 import { extractHtmlVisibleText } from "./html-extractor.js";
 
-export const HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION = "visible-layout-v1";
+export const HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION = "visible-layout-v2";
 
 const NUMBERED_MENU_TITLE = /^(\d{1,2})\s*[.)]\s*(.+)$/u;
 const STANDALONE_PRICE = /^(?:kr\.?\s*)?([1-9]\d{1,3})(?:\s*,[-–])?$/iu;
@@ -38,18 +38,29 @@ export function reconcileVisibleSizePrices(
   }
   if (titles.length < 3) return items;
   const header = lines.slice(Math.max(0, titles[0]!.line - 12), titles[0]!.line).join(" ");
-  if (!/\bL\s+XL\b/iu.test(header)) return items;
+  const labelledSizes = /(?:^|\b)L\s*XL\b/iu.test(header);
+  const pizzaSection = /\bPIZZA\b/iu.test(header);
   const priceByName = new Map<string, readonly number[]>();
   for (const [index, title] of titles.entries()) {
     const next = titles[index + 1]?.line ?? Math.min(lines.length, title.line + 55);
-    const prices = lines
-      .slice(title.line + 1, Math.min(next, title.line + 55))
-      .map(asPriceMinor)
-      .filter((price): price is number => price !== null);
+    const blockLines = lines.slice(title.line + 1, Math.min(next, title.line + 55));
+    const prices = blockLines.flatMap((line) => {
+      const whole = asPriceMinor(line);
+      if (whole !== null) return [whole];
+      // Some websites render the currency marker in adjacent inline spans,
+      // yielding a single text node such as "255,-400,-".
+      const inlinePrices = [...line.matchAll(/(?<!\d)([1-9]\d{1,3})\s*,\s*-/gu)]
+        .map((match) => Number(match[1]) * 100)
+        .filter((amount) => amount >= 4_000 && amount <= 1_000_000);
+      return inlinePrices;
+    });
     if (prices.length === 2 && prices[1]! > prices[0]!) {
       priceByName.set(title.name, prices);
     }
   }
+  // With the labels absent from extracted DOM text, repeated numbered pizza
+  // rows with two matching prices independently establish a multi-price grid.
+  if (!labelledSizes && !(pizzaSection && priceByName.size >= 4)) return items;
   return items.map((item) => {
     const prices = priceByName.get(item.normalizedName);
     if (!prices || prices[0] !== item.priceMinor) return item;
@@ -57,7 +68,7 @@ export function reconcileVisibleSizePrices(
       ...item,
       priceKind: "multiple" as const,
       priceMaxMinor: prices[1]!,
-      sourceExcerpt: [item.sourceExcerpt, "Visible size prices: L " + prices[0]! / 100 + " NOK, XL " + prices[1]! / 100 + " NOK"]
+      sourceExcerpt: [item.sourceExcerpt, (labelledSizes ? "Visible size prices: L " : "Two visible prices: ") + prices[0]! / 100 + " NOK, " + (labelledSizes ? "XL " : "") + prices[1]! / 100 + " NOK"]
         .filter(Boolean)
         .join(" — ")
         .slice(0, 1000),
