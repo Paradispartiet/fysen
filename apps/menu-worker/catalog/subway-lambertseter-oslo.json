@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "subway-lambertseter-oslo",
+    "name": "Subway Lambertseter",
+    "websiteUrl": null,
+    "address": "Cecilie Thoresens vei 17, 1153 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.874913885569924,
+    "longitude": 10.810462446756771
+  },
+  "menuSource": {
+    "url": "https://semeny.no/sted/subwaylambertseter",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 82,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-14",
+      "note": "Semeny-løpende restaurantmeny med prisede 15/30 cm subs, wraps og tilbehør. Kilde kontrollert 2026-10-14; mellomledd, ikke operatørens egen meny. Identitet og Kartverket-adresse avstemt. Åpningstider ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Veggie Delite®, 30cm",
+      "Subway MeltTM, 30cm",
+      "Tunfisk, 15cm",
+      "Clubhouse, 30 cm",
+      "Creamy Chicken Bacon, 15 cm",
+      "Italian B.M.T.® Wrap",
+      "Spicy Vegan Wrap",
+      "Doritos Nacho Cheese"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Veggie Delite®, 30cm",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Subway MeltTM, 30cm",
+        "priceMinor": 16200
+      },
+      {
+        "name": "Tunfisk, 15cm",
+        "priceMinor": 8600
+      },
+      {
+        "name": "Clubhouse, 30 cm",
+        "priceMinor": 17400
+      },
+      {
+        "name": "Creamy Chicken Bacon, 15 cm",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Italian B.M.T.® Wrap",
+        "priceMinor": 10800
+      },
+      {
+        "name": "Spicy Vegan Wrap",
+        "priceMinor": 10800
+      },
+      {
+        "name": "Doritos Nacho Cheese",
+        "priceMinor": 1800
+      }
+    ],
+    "forbiddenDishNames": [
+      "Bestikk"
+    ]
+  }
+}

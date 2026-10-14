@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-jagger-unavailable-lunch-research-20261014",
+  "concurrency": 5,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "jagger-storgata-oslo",
+        "name": "Jagger Storgata",
+        "websiteUrl": null,
+        "address": "Storgata 31, 0184 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/268jaggerstorgata",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-14",
+          "note": "Ny live-kildeprøve 2026-10-14 fra Semeny-priset visningsmeny, kun research inntil kildeparitet og fysisk identitet er kontrollert; åpningstidene er uverifiserte."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Bestikk"
+      ]
+    }
+  ]
+}
