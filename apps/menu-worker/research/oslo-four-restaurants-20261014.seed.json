@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-menu-batch-20261014",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "chicago-pizza-brew-oslo",
+        "name": "Chicago Pizza & Brew",
+        "websiteUrl": "https://www.chicagopizza.no/",
+        "address": "Sonja Henies plass 3, 0185 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.chicagopizza.no/menu",
+        "sourceType": "html",
+        "fetchMode": "browser",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720,
+        "sourceSupport": {
+          "redirectOrigins": [],
+          "browserDataOrigins": [],
+          "browserBlockedOrigins": [
+            "https://ad.doubleclick.net"
+          ]
+        }
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-14",
+          "note": "Operatørens offisielle restaurantmeny med priser kontrollert i research 2026-10-14. Ikke publisert før selvstendig kilde- og prisavstemming. Ukjente åpningstider må verifiseres senere."
+        }
+      },
+      "actions": [],
+      "assertionCount": 6,
+      "forbiddenDishNames": [
+        "Mediterranean Chicken Salad",
+        "Seasonal Pizza"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "casbar-oslo",
+        "name": "Casbar",
+        "websiteUrl": "https://www.casbar.no/",
+        "address": "Olav Vs gate 2, 0161 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.casbar.no/no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-14",
+          "note": "Operatørens offisielle restaurantmeny med priser kontrollert i research 2026-10-14. Ikke publisert før selvstendig kilde- og prisavstemming. Ukjente åpningstider må verifiseres senere."
+        }
+      },
+      "actions": [],
+      "assertionCount": 5,
+      "forbiddenDishNames": [
+        "Minuty Rosé 2024",
+        "Côtes de Provence"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "grilleriet-oslo",
+        "name": "Grilleriet",
+        "websiteUrl": "https://www.grilleriet.no/",
+        "address": "Storgata 21, 0184 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.grilleriet.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-14",
+          "note": "Operatørens offisielle restaurantmeny med priser kontrollert i research 2026-10-14. Ikke publisert før selvstendig kilde- og prisavstemming. Ukjente åpningstider må verifiseres senere."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Bestill bord",
+        "Allergener"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "brasserie-nouvelle-oslo",
+        "name": "Brasserie Nouvelle",
+        "websiteUrl": "https://www.brasserienouvelle.no/",
+        "address": "Tjuvholmen allé 5, 0252 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.brasserienouvelle.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-14",
+          "note": "Operatørens offisielle restaurantmeny med priser kontrollert i research 2026-10-14. Ikke publisert før selvstendig kilde- og prisavstemming. Ukjente åpningstider må verifiseres senere."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "1.GLUTEN 2.SKALLDYR"
+      ]
+    }
+  ]
+}
