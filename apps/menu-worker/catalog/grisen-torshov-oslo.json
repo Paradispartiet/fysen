@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "grisen-torshov-oslo",
+    "name": "Grisen",
+    "websiteUrl": "https://www.oslogrisen.no/",
+    "address": "Torshovgata 2A, 0476 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93420775469711,
+    "longitude": 10.762937362033052
+  },
+  "menuSource": {
+    "url": "https://www.oslogrisen.no/menu-1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 27,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-14",
+      "note": "Offisiell meny kontrollert 2026-10-14; Kartverket-koordinater fra eksakt kandidatuttrekk. Åpningstider ennå ikke verifisert. Aktuelle priser kontrollert mot operatørens offentlig publiserte meny; avvis kilde-/parserstøy."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fries & Hvitløksmajones",
+      "Chilinøtter/Peanøtter",
+      "Dagens",
+      "SCAMPI",
+      "FISH & CHIPS",
+      "VEGETARBURGER & FRIES",
+      "DEKONSTRUERT OSTEKAKE",
+      "PASTA CARBONARA"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fries & Hvitløksmajones",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Chilinøtter/Peanøtter",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Dagens",
+        "priceMinor": 25500
+      },
+      {
+        "name": "SCAMPI",
+        "priceMinor": 15500
+      },
+      {
+        "name": "FISH & CHIPS",
+        "priceMinor": 28500
+      },
+      {
+        "name": "VEGETARBURGER & FRIES",
+        "priceMinor": 28900
+      },
+      {
+        "name": "DEKONSTRUERT OSTEKAKE",
+        "priceMinor": 16500
+      },
+      {
+        "name": "PASTA CARBONARA",
+        "priceMinor": 13900
+      }
+    ],
+    "forbiddenDishNames": [
+      "A: hvete, milk, egg",
+      "A: Egg, melk, hvete"
+    ]
+  }
+}
