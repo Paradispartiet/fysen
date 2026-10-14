@@ -2,7 +2,7 @@ import { load } from "cheerio";
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 import { extractHtmlVisibleText } from "./html-extractor.js";
 
-export const HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION = "visible-layout-v2";
+export const HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION = "visible-layout-v3";
 
 const NUMBERED_MENU_TITLE = /^(\d{1,2})\s*[.)]\s*(.+)$/u;
 const STANDALONE_PRICE = /^(?:kr\.?\s*)?([1-9]\d{1,3})(?:\s*,[-–])?$/iu;
@@ -69,6 +69,39 @@ export function reconcileVisibleSizePrices(
       priceKind: "multiple" as const,
       priceMaxMinor: prices[1]!,
       sourceExcerpt: [item.sourceExcerpt, (labelledSizes ? "Visible size prices: L " : "Two visible prices: ") + prices[0]! / 100 + " NOK, " + (labelledSizes ? "XL " : "") + prices[1]! / 100 + " NOK"]
+        .filter(Boolean)
+        .join(" — ")
+        .slice(0, 1000),
+    };
+  });
+}
+
+/**
+ * Price bindings are stronger when the source visibly prints a number on the
+ * line immediately following the exact dish title. Correct misattributions
+ * from adjacent set-menu sections without guessing from nearby amounts.
+ */
+export function reconcileImmediatelyPricedItems(
+  html: string,
+  items: readonly MenuObservedItem[],
+): readonly MenuObservedItem[] {
+  const lines = visibleLines(html);
+  const directPrices = new Map<string, number>();
+  for (let index = 0; index < lines.length - 1; index += 1) {
+    const name = normalizeDishName(lines[index]!);
+    const price = asPriceMinor(lines[index + 1]!);
+    if (name && price !== null) directPrices.set(name, price);
+  }
+  return items.map((item) => {
+    if (item.priceKind === "multiple") return item;
+    const direct = directPrices.get(item.normalizedName);
+    if (direct === undefined || direct === item.priceMinor) return item;
+    return {
+      ...item,
+      priceMinor: direct,
+      priceKind: "exact" as const,
+      priceMaxMinor: null,
+      sourceExcerpt: [item.sourceExcerpt, "Immediately following visible price: " + direct / 100 + " NOK"]
         .filter(Boolean)
         .join(" — ")
         .slice(0, 1000),
