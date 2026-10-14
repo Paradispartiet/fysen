@@ -55,7 +55,7 @@ describe("HTML runtime extractor version", () => {
     expect(HTML_EXTRACTOR_VERSION).toBe("html-v12");
     expect(HTML_HEADING_NORMALIZER_VERSION).toBe("heading-v3");
     expect(HTML_ITEM_NAME_NORMALIZER_VERSION).toBe("item-name-v8");
-    expect(HTML_NON_DISH_FILTER_VERSION).toBe("non-dish-v14");
+    expect(HTML_NON_DISH_FILTER_VERSION).toBe("non-dish-v15");
     expect(HTML_BEVERAGE_FILTER_VERSION).toBe("beverage-v12");
     expect(HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION).toBe(
       "structured-compat-v1",
@@ -79,7 +79,7 @@ describe("HTML runtime extractor version", () => {
     );
     expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v18");
     expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v21");
-    expect(HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION).toBe("visible-layout-v1");
+    expect(HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION).toBe("visible-layout-v2");
     expect(HTML_RECOVERY_SELECTION_VERSION).toBe("recovery-selection-v5");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
