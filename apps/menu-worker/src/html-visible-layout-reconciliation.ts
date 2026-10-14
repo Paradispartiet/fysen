@@ -2,7 +2,7 @@ import { load } from "cheerio";
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 import { extractHtmlVisibleText } from "./html-extractor.js";
 
-export const HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION = "visible-layout-v3";
+export const HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION = "visible-layout-v4";
 
 const NUMBERED_MENU_TITLE = /^(\d{1,2})\s*[.)]\s*(.+)$/u;
 const STANDALONE_PRICE = /^(?:kr\.?\s*)?([1-9]\d{1,3})(?:\s*,[-–])?$/iu;
@@ -56,6 +56,47 @@ export function reconcileVisibleSizePrices(
     });
     if (prices.length === 2 && prices[1]! > prices[0]!) {
       priceByName.set(title.name, prices);
+    }
+  }
+  // Text extraction can concatenate separate inline price spans. Read a
+  // second, tag-boundary-preserving view only for independently named dishes;
+  // require a repeated sequence, and agreement with the structured base price.
+  if (priceByName.size < 4) {
+    const $ = load(html);
+    $("script, style, noscript, svg, template").remove();
+    const withSpaces = ($("body").html() ?? "").replace(/<[^>]+>/gu, " ");
+    const decoded = load("<body>" + withSpaces + "</body>")("body").text();
+    const flattened = normalizeDishName(decoded);
+    const placements = items
+      .map((item) => ({ item, start: flattened.indexOf(item.normalizedName) }))
+      .filter((entry) => entry.start >= 0)
+      .sort((left, right) => left.start - right.start);
+    const candidatePairs = new Map<string, readonly number[]>();
+    for (const [index, placement] of placements.entries()) {
+      const start = placement.start + placement.item.normalizedName.length;
+      const next = placements[index + 1]?.start ?? flattened.length;
+      const seasonal = flattened.indexOf("seasonal pizza", start);
+      const nextSection = flattened.indexOf("sides", start);
+      const end = Math.min(
+        next,
+        seasonal >= 0 ? seasonal : flattened.length,
+        nextSection >= 0 ? nextSection : flattened.length,
+        start + 600,
+      );
+      if (end <= start) continue;
+      const prices = [...flattened.slice(start, end).matchAll(/\b([1-9]\d{1,3})\b/gu)]
+        .map((match) => Number(match[1]) * 100)
+        .filter((amount) => amount >= 4_000 && amount <= 1_000_000);
+      const priceIndex = prices.indexOf(placement.item.priceMinor ?? -1);
+      if (priceIndex >= 0 && prices[priceIndex + 1]! > prices[priceIndex]!) {
+        candidatePairs.set(placement.item.normalizedName, [
+          prices[priceIndex]!,
+          prices[priceIndex + 1]!,
+        ]);
+      }
+    }
+    if (candidatePairs.size >= 4 && /\bpizza\b/iu.test(flattened)) {
+      for (const [name, amounts] of candidatePairs) priceByName.set(name, amounts);
     }
   }
   // With the labels absent from extracted DOM text, repeated numbered pizza
