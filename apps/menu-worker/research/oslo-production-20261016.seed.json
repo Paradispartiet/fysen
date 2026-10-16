@@ -1,0 +1,658 @@
+{
+  "version": 1,
+  "batch": "oslo-menu-production-2026-10-16",
+  "outputDirectory": "candidates",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "agora-lilleborg-oslo",
+        "name": "Agora Lilleborg",
+        "websiteUrl": "https://agoralilleborg.no/",
+        "address": "Ivan Bjørndals gate 23, 0472 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://agoralilleborg.no/mat-drikke/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "apostrophe-oslo",
+        "name": "Apostrophe",
+        "websiteUrl": "https://www.restaurant-apostrophe.com/",
+        "address": "Kirkegårdsgata 7A, 0558 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.restaurant-apostrophe.com/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "brasserie-rivoli-oslo",
+        "name": "Brasserie Rivoli",
+        "websiteUrl": "https://www.rivoli.no/",
+        "address": "Operagata 3, 0194 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.rivoli.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "cordial-oslo",
+        "name": "Cordial",
+        "websiteUrl": "https://www.cordial.no/",
+        "address": "Frognerveien 12B, 0263 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.cordial.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "gronland-boulebar-oslo",
+        "name": "Grønland Boulebar",
+        "websiteUrl": "https://gronlandboule.no/",
+        "address": "Grønlandsleiret 27, 0190 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://gronlandboule.no/mat/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "hos-thea-oslo",
+        "name": "Hos Thea",
+        "websiteUrl": "https://www.hosthea.no/",
+        "address": "Gabels gate 11, 0272 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.hosthea.no/no/mat",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "kafe-celsius-oslo",
+        "name": "Kafé Celsius",
+        "websiteUrl": "https://www.kafecelsius.no/",
+        "address": "Rådhusgata 19, 0158 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.kafecelsius.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "khab-thai-barcode-oslo",
+        "name": "Khab Thai Barcode",
+        "websiteUrl": null,
+        "address": "Dronning Eufemias gate 20, 0191 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://favrit.com/menu/location/L5q8G0DwKA1",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "kongen-marina-oslo",
+        "name": "Kongen Marina",
+        "websiteUrl": "https://www.kongenmarina.no/",
+        "address": "Frognerstranda 4, 0250 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.kongenmarina.no/restaurant",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "lasarett-matbar-oslo",
+        "name": "Lasarett Matbar",
+        "websiteUrl": "https://www.lasarett.no/",
+        "address": "Torshovgata 15, 0476 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.lasarett.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "lindo-s-oslo",
+        "name": "Lindo's",
+        "websiteUrl": "https://www.lindos.no/",
+        "address": "Thorvald Meyers gate 61, 0552 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.lindos.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "lysebu-restaurant-oslo",
+        "name": "Lysebu Restaurant",
+        "websiteUrl": "https://lysebu.no/",
+        "address": "Lysebuveien 12, 0790 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://lysebu.no/restaurant/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "momo-ghar-oslo",
+        "name": "MoMo Ghar",
+        "websiteUrl": "https://www.momoghar.no/",
+        "address": "Pilestredet 63C, 0350 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.momoghar.no/menu",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "mother-india-oslo",
+        "name": "Mother India",
+        "websiteUrl": "https://motherindiaoslo.no/",
+        "address": "Pilestredet 63, 0350 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://motherindiaoslo.no/bislett/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "palate-oslo",
+        "name": "Palate",
+        "websiteUrl": "https://palate.no/",
+        "address": "Dronning Eufemias gate 23, 0194 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://palate.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "pastis-bistrobar-oslo",
+        "name": "Pastis Bistrobar",
+        "websiteUrl": "https://www.pastisbistrobar.no/",
+        "address": "Stranden 3, 0250 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.pastisbistrobar.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "phin-restaurant-loren-oslo",
+        "name": "Phin. Restaurant Løren",
+        "websiteUrl": "https://restaurant.phin.no/",
+        "address": "Lørenveien 60, 0585 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://restaurant.phin.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "riviera-restaurant-bar-oslo",
+        "name": "Riviera Restaurant & Bar",
+        "websiteUrl": "https://www.riviera.restaurant/",
+        "address": "Grensen 10, 0159 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.riviera.restaurant/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "ruffino-ristorante-italiano-oslo",
+        "name": "Ruffino Ristorante Italiano",
+        "websiteUrl": "https://ruffino.no/",
+        "address": "Arbins gate 1, 0253 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://ruffino.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "seaport-oslo",
+        "name": "Seaport",
+        "websiteUrl": "https://sea-port.no/",
+        "address": "Sørengkaia 101, 0194 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://sea-port.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "spice-bazaar-oslo",
+        "name": "Spice Bazaar",
+        "websiteUrl": "https://spicebazaar.no/",
+        "address": "Maridalsveien 154A, 0461 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://spicebazaar.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "stock-restaurant-oslo",
+        "name": "STOCK Restaurant",
+        "websiteUrl": "https://www.stockoslo.no/",
+        "address": "Dronning Eufemias gate 14, 0191 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.stockoslo.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "trancher-grunerlokka-oslo",
+        "name": "Trancher Grünerløkka",
+        "websiteUrl": "https://trancher.no/",
+        "address": "Thorvald Meyers gate 78, 0550 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://trancher.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "trattoria-popolare-oslo",
+        "name": "Trattoria Popolare",
+        "websiteUrl": "https://www.popolare.no/",
+        "address": "Trondheimsveien 2, 0560 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.popolare.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "villa-heftye-oslo",
+        "name": "Villa Heftye",
+        "websiteUrl": "https://www.villaheftye.no/",
+        "address": "Munkedamsveien 62A, 0270 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.villaheftye.no/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Kildebasert kandidat fra Oslo-hovedlisten 13.10.2026. Aktuell priset meny og kildeintegritet skal dokumenteres ved samlet innhenting før publisering. Kjøkkentider ikke bekreftet."
+        }
+      },
+      "actions": []
+    }
+  ]
+}
