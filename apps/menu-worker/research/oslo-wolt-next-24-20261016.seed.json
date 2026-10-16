@@ -1,0 +1,679 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-wolt-next-24-20261016",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "pizza-baronen-lilleaker-oslo",
+        "name": "Pizza Baronen Lilleaker",
+        "websiteUrl": null,
+        "address": "Lilleakerveien 47, 0284 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/pizza-baronen-lilleaker",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "digg-pizza-gronland-oslo",
+        "name": "Digg Pizza Grønland",
+        "websiteUrl": null,
+        "address": "Grønlandsleiret 1, 0190 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/digg-pizza-gronland",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "undercover-burger-oslo",
+        "name": "Undercover Burger",
+        "websiteUrl": null,
+        "address": "Kjølberggata 21, 0653 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/undercover-burger-1",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "charlies-kebab-pizza-lilleaker-oslo",
+        "name": "Charlies Kebab & Pizza",
+        "websiteUrl": null,
+        "address": "Lilleakerveien 21, 0283 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/charlies-kebab-pizza-1",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "big-bite-byporten-oslo",
+        "name": "Big Bite Byporten",
+        "websiteUrl": null,
+        "address": "Jernbanetorget 6, 0154 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/big-bite-byporten-1",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "falafel-n-juice-majorstuen-oslo",
+        "name": "FALAFEL n' JUICE Majorstuen",
+        "websiteUrl": null,
+        "address": "Bogstadveien 51, 0366 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/falafel-n-juice-majorstuen-1",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "pronto-di-olivia-storo-oslo",
+        "name": "Pronto di Olivia Storo",
+        "websiteUrl": null,
+        "address": "Vitaminveien 7, 0485 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/pronto-di-olivia-1",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "district-4-sagene-oslo",
+        "name": "District 4",
+        "websiteUrl": null,
+        "address": "Kristiansands gate 1, 0463 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/district-4",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "eckers-lokka-oslo",
+        "name": "Eckers Løkka",
+        "websiteUrl": null,
+        "address": "Markveien 34, 0554 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/eckers-lokka",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "thai-food-frogner-oslo",
+        "name": "Thai Food Frogner",
+        "websiteUrl": null,
+        "address": "Middelthuns gate 25A, 0368 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/thai-food-frogner-1",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "zam-zam-hasle-oslo",
+        "name": "Zam-Zam Hasle",
+        "websiteUrl": null,
+        "address": "Hovinveien 39, 0661 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/zam-zam-hasle",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "eckers-frogner-oslo",
+        "name": "Eckers Frogner",
+        "websiteUrl": null,
+        "address": "Eckersbergs gate 41, 0267 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/eckers-frogner",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "eckers-ulleval-oslo",
+        "name": "Eckers Ullevål",
+        "websiteUrl": null,
+        "address": "Vestgrensa 2, 0851 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/eckers-ulleval",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "kebabish-norge-ravnkollbakken-oslo",
+        "name": "Kebabish Norge",
+        "websiteUrl": null,
+        "address": "Ravnkollbakken 64, 0971 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/kebabish-norge",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "munch-mania-oslo",
+        "name": "Munch Mania",
+        "websiteUrl": null,
+        "address": "Enebakkveien 17A, 0657 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/munch-mania-1",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "zorba-barcode-street-food-oslo",
+        "name": "Zorba – Barcode Street Food",
+        "websiteUrl": null,
+        "address": "Dronning Eufemias gate 14, 0191 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/zorba-barcode-street-food",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "zorba-oslo-street-food-oslo",
+        "name": "Zorba – Oslo Street Food",
+        "websiteUrl": null,
+        "address": "Torggata 16B, 0181 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/zorba-oslo-street-food",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "golden-gyros-parkveien-oslo",
+        "name": "Golden Gyros",
+        "websiteUrl": null,
+        "address": "Parkveien 13, 0350 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/golden-gyros",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dr-gyros-pilestredet-oslo",
+        "name": "Dr. Gyros – Smaken Av Hellas",
+        "websiteUrl": null,
+        "address": "Pilestredet 51B, 0350 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dr-gyros-smaken-av-hellas",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "kitchen-afrique-oslo",
+        "name": "Kitchen Afrique",
+        "websiteUrl": null,
+        "address": "Deichmans gate 9A, 0178 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/kitchen-afrique",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "tasty-thai-bislett-oslo",
+        "name": "Tasty Thai Bislett",
+        "websiteUrl": null,
+        "address": "Thereses gate 51E, 0354 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/tasty-thai-bislett",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "fjord-fries-youngstorget-oslo",
+        "name": "Fjord Fries",
+        "websiteUrl": null,
+        "address": "Youngstorget 5, 0181 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/fjord-fries",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "jordbarpikene-byporten-oslo",
+        "name": "Jordbærpikene Byporten",
+        "websiteUrl": null,
+        "address": "Jernbanetorget 6, 0154 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/jordbrpikene-byporten",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "injera-restaurant-oslo",
+        "name": "Injera Restaurant",
+        "websiteUrl": null,
+        "address": "Calmeyers gate 9A, 0183 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/injera-restaurant",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ]
+}
