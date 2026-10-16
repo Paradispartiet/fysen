@@ -1163,6 +1163,47 @@ export async function extractPdfMenu(bytes: Uint8Array): Promise<ExtractedPdfMen
     for (let pageNumber = 1; pageNumber <= pageCount; pageNumber += 1) {
       const page = await document.getPage(pageNumber);
       const content = await page.getTextContent();
+      const positionedDebugItems: Array<{
+        str: string;
+        x: number | null;
+        y: number | null;
+        width: number;
+        hasEOL: boolean;
+        originalIndex: number;
+      }> = [];
+      for (const [originalIndex, rawItem] of content.items.entries()) {
+        if (!isTextItem(rawItem)) continue;
+        positionedDebugItems.push({
+          str: rawItem.str,
+          x:
+            rawItem.transform && rawItem.transform.length >= 6
+              ? Number(rawItem.transform[4])
+              : null,
+          y:
+            rawItem.transform && rawItem.transform.length >= 6
+              ? Number(rawItem.transform[5])
+              : null,
+          width: Number(rawItem.width ?? 0),
+          hasEOL: rawItem.hasEOL ?? false,
+          originalIndex,
+        });
+      }
+      const coteAnchors = positionedDebugItems.filter((item) =>
+        /CÔTE/iu.test(item.str),
+      );
+      for (const anchor of coteAnchors) {
+        const anchorY = anchor.y;
+        if (anchorY === null) continue;
+        const sameVisualRow = positionedDebugItems.filter(
+          (item) =>
+            item.y !== null &&
+            Math.abs(item.y - anchorY) <= 2,
+        );
+        console.error(
+          "[pdf-token-spacing-diagnostic]",
+          JSON.stringify({ page: pageNumber, anchor, sameVisualRow }),
+        );
+      }
       lines.push(...reconstructLines(content.items, pageNumber));
       page.cleanup();
     }
