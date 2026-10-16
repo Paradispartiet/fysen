@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-girotondo-surcharge-fix-20261016",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "girotondo-youngs-gate-oslo",
+        "name": "Girotondo",
+        "websiteUrl": "https://www.girotondo.no/",
+        "address": "Youngs gate 19, 0181 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO",
+        "latitude": 59.91511712570621,
+        "longitude": 10.750031851434365
+      },
+      "menuSource": {
+        "url": "https://www.girotondo.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Reproof after generic HTML correction: pizza surcharge +60 and standalone '2 smaker av iskrem' dessert description must not become priced dishes. Exact Kartverket location from previous PR #961 artifact."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Alle våre pizzaer kan lages glutenfri +",
+        "2 smaker av iskrem (vanilje, jordbær)",
+        "Bestikk"
+      ]
+    }
+  ]
+}
