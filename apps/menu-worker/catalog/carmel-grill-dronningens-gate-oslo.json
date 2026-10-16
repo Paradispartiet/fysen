@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "carmel-grill-dronningens-gate-oslo",
+    "name": "Carmel Grill",
+    "websiteUrl": null,
+    "address": "Dronningens gate 27, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91219149561444,
+    "longitude": 10.747765332261467
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/carmel-grill",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Leveringsmeny og priser fra Wolt kontrollert 2026-10-16; dette er en tredjeparts leveringsmeny, ikke uavhengig bevis for spisesalpriser. Carmel Grill AS er registrert på Dronningens gate 27. Adressekoordinater beregnet fra oppgitt eiendomskartpunkt ETRS89/UTM33; Kartverket-presisjon ikke bekreftet. Åpningstider ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kylling Shawarma Middag",
+      "Lam Shawarma Middag",
+      "Kylling Shawarma i Rull",
+      "Lam Shawarma i Rull",
+      "Grillmix",
+      "Shishkebab",
+      "Falafel i Rull",
+      "Hummus"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kylling Shawarma Middag",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Lam Shawarma Middag",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Kylling Shawarma i Rull",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Lam Shawarma i Rull",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Grillmix",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Shishkebab",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Falafel i Rull",
+        "priceMinor": 11000
+      },
+      {
+        "name": "Hummus",
+        "priceMinor": 9000
+      }
+    ],
+    "forbiddenDishNames": [
+      "Vis alle",
+      "Mest bestilt",
+      "NOK 35.00"
+    ]
+  }
+}
