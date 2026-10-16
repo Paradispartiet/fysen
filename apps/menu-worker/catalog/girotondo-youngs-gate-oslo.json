@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "girotondo-youngs-gate-oslo",
+    "name": "Girotondo",
+    "websiteUrl": "https://www.girotondo.no/",
+    "address": "Youngs gate 19, 0181 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91511712570621,
+    "longitude": 10.750031851434365
+  },
+  "menuSource": {
+    "url": "https://www.girotondo.no/meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 42,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Operatørens egen gjeldende prisede pizza-, antipasti- og dessertmeny kontrollert 2026-10-16. 44 maskinelt innhentede pristekster, hvorav 2 beskrivelser/tillegg som må filtreres; minst 42 reelle prisede matretter generert fra kilde på research-PR #961; nøyaktig adresse og representasjonspunkt fra Kartverket Adresser API v1, kommunenummer 0301, postnummer 0181. Full menysemantikk og kildeparitet må bestå livevalidering i denne PR; åpningstider ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "MARINARA",
+      "PESCIAROLA",
+      "GUSTOSA",
+      "PRINCIPESSA",
+      "PICCANTE",
+      "FOCACCIA ROSMARINO",
+      "COPPA E BURRATA AL TARTUFO",
+      "TIRAMISU"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "MARINARA",
+        "priceMinor": 18000
+      },
+      {
+        "name": "PESCIAROLA",
+        "priceMinor": 28000
+      },
+      {
+        "name": "GUSTOSA",
+        "priceMinor": 28500
+      },
+      {
+        "name": "PRINCIPESSA",
+        "priceMinor": 28500
+      },
+      {
+        "name": "PICCANTE",
+        "priceMinor": 28000
+      },
+      {
+        "name": "FOCACCIA ROSMARINO",
+        "priceMinor": 13000
+      },
+      {
+        "name": "COPPA E BURRATA AL TARTUFO",
+        "priceMinor": 29500
+      },
+      {
+        "name": "TIRAMISU",
+        "priceMinor": 15000
+      }
+    ],
+    "forbiddenDishNames": [
+      "Bestikk",
+      "(Hvetegluten)",
+      "(Melk)",
+      "Alle våre pizzaer kan lages glutenfri +",
+      "2 smaker av iskrem (vanilje, jordbær)"
+    ]
+  }
+}

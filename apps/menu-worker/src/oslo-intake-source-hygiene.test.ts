@@ -31,6 +31,10 @@ describe("Oslo intake source hygiene", () => {
       "DESSERT : TIRAMISU",
       "FORRETT: SHARING AV ITALIENSK SPEKEMAT",
       "HOVEDRETT: PASTA OG PIZZA SHARING",
+      "Alle våre pizzaer kan lages glutenfri +",
+      "Alle pizzaer kan lages glutenfri",
+      "All our pizzas can be made gluten-free +",
+      "2 smaker av iskrem (vanilje, jordbær)",
     ]) {
       expect(isCanonicalHtmlMenuItem(item(name)), name).toBe(false);
       expect(isCanonicalBatchIntakeMenuItem(item(name)), name).toBe(false);

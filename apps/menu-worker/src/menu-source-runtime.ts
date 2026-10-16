@@ -112,6 +112,10 @@ const ALLERGEN_ONLY_ITEM =
   /^(?:\(\s*)?(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|tree\s+nuts?|selleri|celery|citrus|sitrus|sulfitt|sulphites?)(?:\s*[,/+&]\s*(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|tree\s+nuts?|selleri|celery|citrus|sitrus|sulfitt|sulphites?))*\s*\)?$/iu;
 const NON_DISH_METADATA_ITEM =
   /^(?:hjemmeside|homepage|bestikk|cutlery|top\s+of\s+page|mine\s+favoritter|my\s+favou?rites|favoritter|favou?rites|pers\.?|medium|gluten[- ]?free|glutenfri|spør\s+oss(?:\s+.*)?|spør\s+om\s+dagens\b.*)$/iu;
+// A restaurant-wide optional gluten-free crust surcharge is an add-on notice, not a dish.
+const PIZZA_GLUTEN_FREE_SURCHARGE_NOTE = /^(?:alle\s+(?:våre\s+)?pizzaer\s+kan\s+lages\s+glutenfri\b|all\s+(?:our\s+)?pizzas?\s+(?:can\s+be\s+made|available)\s+gluten[- ]?free\b)/iu;
+// A dessert serving description next to a separately named/priced gelato item is not a second dish.
+const ICE_CREAM_SERVING_DESCRIPTION = /^\d+\s+smaker\s+av\s+iskrem\b/iu;
 const NON_DISH_FRAGMENT_ITEM = /^(?:stk\.?|biter\.)\s+/iu;
 const NON_DISH_SET_MENU_ITEM =
   /^(?:(?:chef(?:['’]?s)?|chefs)\s+)?(?:\d+|two|three|four|five|six|seven|eight|nine|ten)\s*[- ]?\s*course(?:s)?(?:\s+(?:menu|set\s+menu))?$/iu;
@@ -145,7 +149,7 @@ const COCKTAIL_DESCRIPTION_ITEM =
   /^(?:(?:mimosa|(?:black|white)\s+russian(?:\s+kahlua)?|classic\s+mojito|vodka\s+cranberry)$|(?=.*,)(?=.*\b(?:gin|vodka|rom|rum|tequila|whisk(?:e)?y|bourbon|aperol|prosecco|kahlua|makers\s+mark|jack\s+daniels|cointreau)\b)(?=.*\b(?:tonic|cola|cranberry|prosecco|lime|sitron|lemon|appelsin|orange|eggehvite|egg\s*whites?|ginger\s+ale|ingefærøl|lemon\s+soda|sitronbrus)\b).+)$/iu;
 export const HTML_PRICE_NOTATION_NORMALIZER_VERSION = "price-notation-v3";
 export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
-export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v15";
+export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v16";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v12";
 export const HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION = "structured-compat-v1";
 export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v5";
@@ -254,6 +258,8 @@ export function isCanonicalHtmlMenuItem(item: MenuObservedItem): boolean {
     !SET_MENU_COURSE_DESCRIPTION.test(filterName) &&
     !ALLERGEN_ONLY_ITEM.test(filterName) &&
     !NON_DISH_METADATA_ITEM.test(filterName) &&
+    !PIZZA_GLUTEN_FREE_SURCHARGE_NOTE.test(filterName) &&
+    !ICE_CREAM_SERVING_DESCRIPTION.test(filterName) &&
     !NON_DISH_FRAGMENT_ITEM.test(filterName) &&
     !NON_DISH_SET_MENU_ITEM.test(filterName) &&
     !NON_DISH_ADDON_ITEM.test(filterName) &&
