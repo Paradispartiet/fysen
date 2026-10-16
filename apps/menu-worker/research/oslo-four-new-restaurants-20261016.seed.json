@@ -1,38 +1,8 @@
 {
   "version": 1,
-  "outputDirectory": "candidates/oslo-four-new-restaurants-20261016",
-  "concurrency": 4,
+  "outputDirectory": "candidates/oslo-three-source-menus-20261016",
+  "concurrency": 3,
   "restaurants": [
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "eataly-ristorante-aker-brygge-oslo",
-        "name": "Eataly Ristorante",
-        "websiteUrl": "https://www.eataly.no/",
-        "address": "Bryggetorget 18, 0250 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://semeny.no/sted/671eatalyristorante",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Eksisterende hovedlistekandidat, restaurantens separate identitet bekreftet; SE MENY publiserer 14 prisede pizzaer samt drikke. Match alle navngitte matretter til faktisk kilde og ikke ta med drikke. Ingen åpningstidsbekreftelse i denne research-seed."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": [
-        "Bestikk"
-      ]
-    },
     {
       "version": 1,
       "restaurant": {
