@@ -112,7 +112,11 @@ const ALLERGEN_ONLY_ITEM =
   /^(?:\(\s*)?(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|tree\s+nuts?|selleri|celery|citrus|sitrus|sulfitt|sulphites?)(?:\s*[,/+&]\s*(?:soy(?:a)?|sesam(?:e)?|eggs?|melk|milk|fisk|fish|skalldyr|shellfish|hvete(?:mel)?|wheat|gluten|peanøtt(?:er)?|peanuts?|cashew(?:nøtt(?:er)?)?|tree\s+nuts?|selleri|celery|citrus|sitrus|sulfitt|sulphites?))*\s*\)?$/iu;
 const NON_DISH_METADATA_ITEM =
   /^(?:hjemmeside|homepage|bestikk|cutlery|top\s+of\s+page|mine\s+favoritter|my\s+favou?rites|favoritter|favou?rites|pers\.?|medium|gluten[- ]?free|glutenfri|spør\s+oss(?:\s+.*)?|spør\s+om\s+dagens\b.*)$/iu;
-// A restaurant-wide optional gluten-free crust surcharge is an add-on notice, not a dish.\nconst PIZZA_GLUTEN_FREE_SURCHARGE_NOTE = /^(?:alle\s+(?:våre\s+)?pizzaer\s+kan\s+lages\s+glutenfri\b|all\s+(?:our\s+)?pizzas?\s+(?:can\s+be\s+made|available)\s+gluten[- ]?free\b)/iu;\n// A dessert serving description next to a separately named/priced gelato item is not a second dish.\nconst ICE_CREAM_SERVING_DESCRIPTION = /^\d+\s+smaker\s+av\s+iskrem\b/iu;\nconst NON_DISH_FRAGMENT_ITEM = /^(?:stk\.?|biter\.)\s+/iu;
+// A restaurant-wide optional gluten-free crust surcharge is an add-on notice, not a dish.
+const PIZZA_GLUTEN_FREE_SURCHARGE_NOTE = /^(?:alle\s+(?:våre\s+)?pizzaer\s+kan\s+lages\s+glutenfri\b|all\s+(?:our\s+)?pizzas?\s+(?:can\s+be\s+made|available)\s+gluten[- ]?free\b)/iu;
+// A dessert serving description next to a separately named/priced gelato item is not a second dish.
+const ICE_CREAM_SERVING_DESCRIPTION = /^\d+\s+smaker\s+av\s+iskrem\b/iu;
+const NON_DISH_FRAGMENT_ITEM = /^(?:stk\.?|biter\.)\s+/iu;
 const NON_DISH_SET_MENU_ITEM =
   /^(?:(?:chef(?:['’]?s)?|chefs)\s+)?(?:\d+|two|three|four|five|six|seven|eight|nine|ten)\s*[- ]?\s*course(?:s)?(?:\s+(?:menu|set\s+menu))?$/iu;
 const NON_DISH_ADDON_ITEM =
