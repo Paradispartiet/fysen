@@ -67,7 +67,7 @@
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://www.rivoli.no/",
+        "url": "https://www.rivoli.no/meny",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
@@ -561,7 +561,7 @@
         "countryCode": "NO"
       },
       "menuSource": {
-        "url": "https://www.stockoslo.no/",
+        "url": "https://www.stockoslo.no/menyer/",
         "sourceType": "html",
         "fetchMode": "http",
         "userAgent": "FysenMenuBot/0.1",
