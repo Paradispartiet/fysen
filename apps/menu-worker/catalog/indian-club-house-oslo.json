@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "indian-club-house-oslo",
+    "name": "Indian Club House",
+    "websiteUrl": null,
+    "address": "Tordenskiolds gate 7, 0160 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9128656,
+    "longitude": 10.7360324
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/indian-club-house",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 26,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Lammebiryani",
+      "Butter Chicken",
+      "Pishori Naan",
+      "Lammekoteletter",
+      "Aloo Samosa Chaat",
+      "Naturell Naan",
+      "Tandoori Chicken",
+      "Ostenaan"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Lammebiryani",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Butter Chicken",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Pishori Naan",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Lammekoteletter",
+        "priceMinor": 39500
+      },
+      {
+        "name": "Aloo Samosa Chaat",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Naturell Naan",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Tandoori Chicken",
+        "priceMinor": 30500
+      },
+      {
+        "name": "Ostenaan",
+        "priceMinor": 9500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

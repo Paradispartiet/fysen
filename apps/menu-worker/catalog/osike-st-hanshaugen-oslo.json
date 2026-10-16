@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "osike-st-hanshaugen-oslo",
+    "name": "Osike St. Hanshaugen",
+    "websiteUrl": null,
+    "address": "Waldemar Thranes gate 2, 0171 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9229467,
+    "longitude": 10.7384555
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/osike-st-hanshaugen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 68,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chilimajones",
+      "19. Vegetar Maki 8 Biter 🌱",
+      "15 Biter Sashimi",
+      "31. Tempura Futo",
+      "1. Kylling Vårruller",
+      "40. Rainbow Maki",
+      "35. Tiger Futo Maki ( 12 Biter )",
+      "10 Biter Sashimi"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chilimajones",
+        "priceMinor": 3200
+      },
+      {
+        "name": "19. Vegetar Maki 8 Biter 🌱",
+        "priceMinor": 10800
+      },
+      {
+        "name": "15 Biter Sashimi",
+        "priceMinor": 31800
+      },
+      {
+        "name": "31. Tempura Futo",
+        "priceMinor": 10240
+      },
+      {
+        "name": "1. Kylling Vårruller",
+        "priceMinor": 10800
+      },
+      {
+        "name": "40. Rainbow Maki",
+        "priceMinor": 17800
+      },
+      {
+        "name": "35. Tiger Futo Maki ( 12 Biter )",
+        "priceMinor": 18800
+      },
+      {
+        "name": "10 Biter Sashimi",
+        "priceMinor": 26800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

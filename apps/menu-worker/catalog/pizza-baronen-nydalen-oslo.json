@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizza-baronen-nydalen-oslo",
+    "name": "Pizza Baronen Nydalen",
+    "websiteUrl": null,
+    "address": "Maridalsveien 256, 0872 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9462699,
+    "longitude": 10.7598665
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/pizza-baronen-nydalen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 93,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hot Chili Pizza (Medium)",
+      "Hamburgertallerken 200g",
+      "New Orleans Original (Stor)",
+      "New York (Stor)",
+      "Pisa (Medium)",
+      "Mega Hamburgertallerken 400g",
+      "Chef's Special (Stor)",
+      "Løkringer"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hot Chili Pizza (Medium)",
+        "priceMinor": 26300
+      },
+      {
+        "name": "Hamburgertallerken 200g",
+        "priceMinor": 25800
+      },
+      {
+        "name": "New Orleans Original (Stor)",
+        "priceMinor": 35900
+      },
+      {
+        "name": "New York (Stor)",
+        "priceMinor": 32300
+      },
+      {
+        "name": "Pisa (Medium)",
+        "priceMinor": 22700
+      },
+      {
+        "name": "Mega Hamburgertallerken 400g",
+        "priceMinor": 38400
+      },
+      {
+        "name": "Chef's Special (Stor)",
+        "priceMinor": 35900
+      },
+      {
+        "name": "Løkringer",
+        "priceMinor": 10100
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

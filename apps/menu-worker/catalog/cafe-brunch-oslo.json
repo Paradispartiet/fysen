@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "cafe-brunch-oslo",
+    "name": "Café Brunch",
+    "websiteUrl": null,
+    "address": "Schweigaards gate 6, 0185 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9119126,
+    "longitude": 10.756443
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/cafe-brunch-2",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 51,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hamburger",
+      "Kylling Kebab m/ Grønnsaker & Saus",
+      "Braccio Di Ferro",
+      "Kebab Pizza 🌶",
+      "Chicken Burger",
+      "Spicy Chicken Potato",
+      "Tuna Mayo Potato",
+      "Hawai"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hamburger",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Kylling Kebab m/ Grønnsaker & Saus",
+        "priceMinor": 8800
+      },
+      {
+        "name": "Braccio Di Ferro",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Kebab Pizza 🌶",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Chicken Burger",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Spicy Chicken Potato",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Tuna Mayo Potato",
+        "priceMinor": 10000
+      },
+      {
+        "name": "Hawai",
+        "priceMinor": 18000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

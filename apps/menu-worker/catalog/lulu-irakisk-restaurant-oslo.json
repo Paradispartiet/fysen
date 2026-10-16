@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lulu-irakisk-restaurant-oslo",
+    "name": "Lulu Irakisk Restaurant",
+    "websiteUrl": null,
+    "address": "Grønland 18, 0188 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.913023,
+    "longitude": 10.7614024
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/lulu-sadaf-restaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 17,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Okrasuppe",
+      "Masgouf (Karpe) Familiefat",
+      "Mix Grill",
+      "Mix Grill Super Spesial",
+      "Lam Tikka",
+      "Grillet Lammelever",
+      "Sade ris med suppe",
+      "Quzi Lam"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Okrasuppe",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Masgouf (Karpe) Familiefat",
+        "priceMinor": 79900
+      },
+      {
+        "name": "Mix Grill",
+        "priceMinor": 34900
+      },
+      {
+        "name": "Mix Grill Super Spesial",
+        "priceMinor": 76900
+      },
+      {
+        "name": "Lam Tikka",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Grillet Lammelever",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Sade ris med suppe",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Quzi Lam",
+        "priceMinor": 24900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "alna-grill-baguette-oslo",
+    "name": "Alna Grill & Baguette",
+    "websiteUrl": null,
+    "address": "Verkseier Furulunds vei 1, 0668 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9273655,
+    "longitude": 10.8512905
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/alna-grill-baguette",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 57,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "32. Cheeseburger",
+      "91. Roastbiff m / potetsalat el. Remulade",
+      "11. Tandori Kylling (Sterk)",
+      "33. Baconcheese",
+      "15. Kebab Kjøtt",
+      "90. Ost og skinke",
+      "37. Hamburgertallerken-100g",
+      "66. Mix Kebab rull Kylling, biff og kebabkjøtt."
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "32. Cheeseburger",
+        "priceMinor": 8900
+      },
+      {
+        "name": "91. Roastbiff m / potetsalat el. Remulade",
+        "priceMinor": 6900
+      },
+      {
+        "name": "11. Tandori Kylling (Sterk)",
+        "priceMinor": 24900
+      },
+      {
+        "name": "33. Baconcheese",
+        "priceMinor": 9900
+      },
+      {
+        "name": "15. Kebab Kjøtt",
+        "priceMinor": 23900
+      },
+      {
+        "name": "90. Ost og skinke",
+        "priceMinor": 6900
+      },
+      {
+        "name": "37. Hamburgertallerken-100g",
+        "priceMinor": 11900
+      },
+      {
+        "name": "66. Mix Kebab rull Kylling, biff og kebabkjøtt.",
+        "priceMinor": 16900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
