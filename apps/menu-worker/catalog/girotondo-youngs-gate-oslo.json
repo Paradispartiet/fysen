@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 44,
+    "minimumExpectedItems": 42,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-16",
-      "note": "Operatørens egen gjeldende prisede pizza-, antipasti- og dessertmeny kontrollert 2026-10-16. 44 kanoniske prisposter generert fra kilde på research-PR #961; nøyaktig adresse og representasjonspunkt fra Kartverket Adresser API v1, kommunenummer 0301, postnummer 0181. Full menysemantikk og kildeparitet må bestå livevalidering i denne PR; åpningstider ikke uavhengig kontrollert."
+      "note": "Operatørens egen gjeldende prisede pizza-, antipasti- og dessertmeny kontrollert 2026-10-16. 44 maskinelt innhentede pristekster, hvorav 2 beskrivelser/tillegg som må filtreres; minst 42 reelle prisede matretter generert fra kilde på research-PR #961; nøyaktig adresse og representasjonspunkt fra Kartverket Adresser API v1, kommunenummer 0301, postnummer 0181. Full menysemantikk og kildeparitet må bestå livevalidering i denne PR; åpningstider ikke uavhengig kontrollert."
     }
   },
   "actions": [],
