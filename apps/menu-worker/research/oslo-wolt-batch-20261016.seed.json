@@ -241,32 +241,6 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "charlies-kebab-pizza-oslo",
-        "name": "Charlies Kebab & Pizza",
-        "websiteUrl": null,
-        "address": "Lilleakerveien 21, 0283 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://wolt.com/en/nor/oslo/restaurant/charlies-kebab-pizza-1",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
-        }
-      },
-      "actions": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
         "slug": "bocadillos-majorstuen-oslo",
         "name": "Bocadillos Majorstuen",
         "websiteUrl": null,
