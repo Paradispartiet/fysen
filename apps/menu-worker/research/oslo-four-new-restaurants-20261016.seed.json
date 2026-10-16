@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-four-new-restaurants-20261016",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "eataly-ristorante-aker-brygge-oslo",
+        "name": "Eataly Ristorante",
+        "websiteUrl": "https://www.eataly.no/",
+        "address": "Bryggetorget 18, 0250 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://semeny.no/sted/671eatalyristorante",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Eksisterende hovedlistekandidat, restaurantens separate identitet bekreftet; SE MENY publiserer 14 prisede pizzaer samt drikke. Match alle navngitte matretter til faktisk kilde og ikke ta med drikke. Ingen åpningstidsbekreftelse i denne research-seed."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Bestikk"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "casbar-olav-vs-gate-oslo",
+        "name": "Casbar",
+        "websiteUrl": "https://www.casbar.no/",
+        "address": "Olav Vs gate 2, 0161 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://meny.semeny.no/sted/119casbar",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Separat restaurant i hovedlisten med 8 prisede pizzaer og 4 drikker fra SE MENY. Tidligere official-site parser ga cocktailfragmenter; bare prisede pizzaer får bli med. Ingen åpningstidsbekreftelse i denne research-seed."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Bestikk"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "girotondo-youngs-gate-oslo",
+        "name": "Girotondo",
+        "websiteUrl": "https://www.girotondo.no/",
+        "address": "Youngs gate 19, 0181 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.girotondo.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Operatørens offisielle aktuelle prisede pizzameny; strukturen inkluderer allergenlinjer mellom hver rett og overskrifter uten pris. Kontroller semantisk kvalitet. Ingen åpningstidsbekreftelse i denne research-seed."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Bestikk"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "corso-bjorvika-oslo",
+        "name": "Corso",
+        "websiteUrl": "https://www.corso.no/",
+        "address": "Rostockgata 61, 0194 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.corso.no/lunsj",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-16",
+          "note": "Operatørens nåværende prissatte lunsjmeny; priser står før rettsnavn og igjen etter beskrivelse. Unngå feilrett/pris-paring og allergener som retter. Ingen åpningstidsbekreftelse i denne research-seed."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Bestikk"
+      ]
+    }
+  ]
+}
