@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "vine-olives-oslo",
+    "name": "Vine & Olives",
+    "websiteUrl": null,
+    "address": "Bygdøy allé 62, 0265 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9187045,
+    "longitude": 10.7022062
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/vine-olives",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Meat tasting menu",
+      "Saganaki Cheese",
+      "Homemade velvet hummus with Greek pita",
+      "Kleftiko Brisket",
+      "Tzatziki with Greek pita",
+      "Bulgur Zucchini Salad",
+      "Tirokafteri with Greek pita",
+      "Portokalopita"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Meat tasting menu",
+        "priceMinor": 120000
+      },
+      {
+        "name": "Saganaki Cheese",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Homemade velvet hummus with Greek pita",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Kleftiko Brisket",
+        "priceMinor": 48000
+      },
+      {
+        "name": "Tzatziki with Greek pita",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Bulgur Zucchini Salad",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Tirokafteri with Greek pita",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Portokalopita",
+        "priceMinor": 22000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

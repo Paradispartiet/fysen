@@ -1,5 +1,10 @@
 # Oslo-restauranter — samlet arbeidsliste (13. oktober 2026)
 
+## Produksjonsbolk 16. oktober 2026 – 18 prissatte Wolt-restauranter
+
+Denne endringen øker canonical katalog fra **757 til 775** Oslo-restauranter, og oppdaterer masterlisten fra **981 til 997 rader** (775 canonical + 222 øvrige kandidater). 23 kilder bestod samlet live- og adressevalidering; 18 ble promotert etter semantisk vurdering av representativt mat-/prisuttak, mens fem ble holdt utenfor. De prissatte kildene er **Wolt-leveringsmenyer**, ikke attestert fullstendige spisesalmenyer eller kjøkkentider. Kildene blir overvåket gjennom eksisterende Fysen-løype uten parserendringer. Bevis: [PR #964](https://github.com/Paradispartiet/fysen/pull/964) og [intake-artifact](https://github.com/Paradispartiet/fysen/actions/runs/38955216354/artifacts/12069613999). Tidligere avsnitt nedenfor dokumenterer historiske baseliner, ikke gjeldende totalsum.
+
+
 **Åpne én fil:** [Oslo-restaurantlisten (CSV)](./oslo-restaurant-master-2026-10-13.csv).
 
 Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskatalog. Den dekker alle **757 av 757** restaurantmanifester i Fysens katalog etter bolken 14. oktober 2026 og **224** eksterne/eldre research-oppføringer: totalt **981 rader**. Slug brukes som unik identitet for alle 757 registrerte steder. Noen av kandidatene kan være aliaser, dubletter, ikke ordinære restauranter eller stengt og må kontrolleres før opptak. Tallet 981 er **ikke** antallet unike, aktive eller gode Oslo-restauranter og ikke bevis på at alle er funnet.

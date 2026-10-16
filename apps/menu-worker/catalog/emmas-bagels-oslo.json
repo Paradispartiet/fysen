@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "emmas-bagels-oslo",
+    "name": "Emmas Bagels",
+    "websiteUrl": null,
+    "address": "Waldemar Thranes gate 84B, 0175 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9282882,
+    "longitude": 10.752889
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/emmas-bagels",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 16,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kremost 100 G",
+      "Eple",
+      "Bagel 6-Pakk",
+      "Bagel Combo",
+      "Kremost Combo",
+      "Lunsj Combo",
+      "Laks",
+      "Kremost"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kremost 100 G",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Eple",
+        "priceMinor": 11000
+      },
+      {
+        "name": "Bagel 6-Pakk",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Bagel Combo",
+        "priceMinor": 49000
+      },
+      {
+        "name": "Kremost Combo",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Lunsj Combo",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Laks",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Kremost",
+        "priceMinor": 7500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

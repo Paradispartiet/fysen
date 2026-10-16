@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bocadillos-majorstuen-oslo",
+    "name": "Bocadillos Majorstuen",
+    "websiteUrl": null,
+    "address": "Sørkedalsveien 5B, 0369 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.930691,
+    "longitude": 10.7121973
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/bocadillos-majorstuen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 9,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bocadillo Gran Reserva.",
+      "Bocadillo de Atún",
+      "Bocadillo Jamón Serrano",
+      "Bocadillo Tortilla de Patatas",
+      "Chilenske Empanadas",
+      "Bocadillo de Chorizo",
+      "Bocadillo de Salchichón",
+      "Tapasbrett"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bocadillo Gran Reserva.",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Bocadillo de Atún",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Bocadillo Jamón Serrano",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Bocadillo Tortilla de Patatas",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Chilenske Empanadas",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Bocadillo de Chorizo",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Bocadillo de Salchichón",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Tapasbrett",
+        "priceMinor": 15900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

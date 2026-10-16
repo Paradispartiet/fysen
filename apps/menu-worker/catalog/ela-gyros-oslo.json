@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ela-gyros-oslo",
+    "name": "Ela Gyros",
+    "websiteUrl": null,
+    "address": "Marienlundveien 3A, 1178 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8831072,
+    "longitude": 10.7839785
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/ela-gyros-1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 6,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Gresk salat",
+      "Pommes Frites",
+      "Gyrostallerken",
+      "Gyros",
+      "Gresk flatbrød",
+      "Fries & tzatziki"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Gresk salat",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Pommes Frites",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Gyrostallerken",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Gyros",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Gresk flatbrød",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Fries & tzatziki",
+        "priceMinor": 11500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

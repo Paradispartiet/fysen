@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pio-pio-sagene-oslo",
+    "name": "PIO PIO Sagene",
+    "websiteUrl": null,
+    "address": "Bergensgata 5C, 0468 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.940997,
+    "longitude": 10.7596282
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/pio-pio-sagene",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 15,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hvitløksdressing i Beger",
+      "Rømmedressing i Beger",
+      "5. Chicken Spinach",
+      "9. Bistecca Parmigiano Biff",
+      "7. Prosciutto Mushroom",
+      "1. Diavola",
+      "Veggie Double Delight",
+      "3. Quatro Formaggio"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hvitløksdressing i Beger",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Rømmedressing i Beger",
+        "priceMinor": 4500
+      },
+      {
+        "name": "5. Chicken Spinach",
+        "priceMinor": 26000
+      },
+      {
+        "name": "9. Bistecca Parmigiano Biff",
+        "priceMinor": 28000
+      },
+      {
+        "name": "7. Prosciutto Mushroom",
+        "priceMinor": 26000
+      },
+      {
+        "name": "1. Diavola",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Veggie Double Delight",
+        "priceMinor": 40800
+      },
+      {
+        "name": "3. Quatro Formaggio",
+        "priceMinor": 24000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "spice-bazaar-oslo",
+    "name": "Spice Bazaar",
+    "websiteUrl": null,
+    "address": "Maridalsveien 154A, 0461 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9375435,
+    "longitude": 10.755937
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/spice-bazaar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 44,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "40. Lam Biryani",
+      "24. Kylling Saag",
+      "42. Grønnsaker Biryani 🌱",
+      "45. Chana 🌱",
+      "41. Kongereker Biryani",
+      "18. Kongereker",
+      "34. Lam Tikka Masala",
+      "36. Pepper Lam"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "40. Lam Biryani",
+        "priceMinor": 29500
+      },
+      {
+        "name": "24. Kylling Saag",
+        "priceMinor": 28900
+      },
+      {
+        "name": "42. Grønnsaker Biryani 🌱",
+        "priceMinor": 23500
+      },
+      {
+        "name": "45. Chana 🌱",
+        "priceMinor": 23500
+      },
+      {
+        "name": "41. Kongereker Biryani",
+        "priceMinor": 30900
+      },
+      {
+        "name": "18. Kongereker",
+        "priceMinor": 35500
+      },
+      {
+        "name": "34. Lam Tikka Masala",
+        "priceMinor": 32500
+      },
+      {
+        "name": "36. Pepper Lam",
+        "priceMinor": 30900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

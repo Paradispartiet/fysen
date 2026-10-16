@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "67grill-oslo",
+    "name": "67Grill",
+    "websiteUrl": null,
+    "address": "Thorvald Meyers gate 73, 0552 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9209338,
+    "longitude": 10.7588537
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/67-grill",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 28,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "02. Bacon Bbq Burger",
+      "36. Dønner-Tallerken",
+      "Løkringer (4 stk)",
+      "35. Dønner-Pita",
+      "09. Shawarma-Tallerken",
+      "01. Biff Cheeseburger",
+      "30. Margarita",
+      "06. Løkring Burger"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "02. Bacon Bbq Burger",
+        "priceMinor": 15900
+      },
+      {
+        "name": "36. Dønner-Tallerken",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Løkringer (4 stk)",
+        "priceMinor": 4900
+      },
+      {
+        "name": "35. Dønner-Pita",
+        "priceMinor": 13900
+      },
+      {
+        "name": "09. Shawarma-Tallerken",
+        "priceMinor": 16900
+      },
+      {
+        "name": "01. Biff Cheeseburger",
+        "priceMinor": 13900
+      },
+      {
+        "name": "30. Margarita",
+        "priceMinor": 17900
+      },
+      {
+        "name": "06. Løkring Burger",
+        "priceMinor": 13900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

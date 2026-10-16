@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mother-india-oslo",
+    "name": "Mother India",
+    "websiteUrl": null,
+    "address": "Pilestredet 63, 0350 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9237798,
+    "longitude": 10.73111
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/mother-india-oslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 51,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "11. Swad Pakora",
+      "32. Murgh Malai Tikka",
+      "42. Chicken Korma",
+      "53. Gosht Korma",
+      "64. Goan FIsh Curry",
+      "78. Palak Paneer",
+      "92. Peshawari Nan",
+      "Mango Chutney"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "11. Swad Pakora",
+        "priceMinor": 14500
+      },
+      {
+        "name": "32. Murgh Malai Tikka",
+        "priceMinor": 28900
+      },
+      {
+        "name": "42. Chicken Korma",
+        "priceMinor": 28900
+      },
+      {
+        "name": "53. Gosht Korma",
+        "priceMinor": 29900
+      },
+      {
+        "name": "64. Goan FIsh Curry",
+        "priceMinor": 29900
+      },
+      {
+        "name": "78. Palak Paneer",
+        "priceMinor": 27900
+      },
+      {
+        "name": "92. Peshawari Nan",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Mango Chutney",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

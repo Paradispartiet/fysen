@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "big-bite-manglerud-oslo",
+    "name": "Big Bite Manglerud",
+    "websiteUrl": null,
+    "address": "Plogveien 6, 0679 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8972901,
+    "longitude": 10.8128602
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/big-bite-manglerud",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 44,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Roastbeef Glutenfri",
+      "Taco Wrap",
+      "Gresk Kylling Bowl",
+      "Gresk Kylling Wrap",
+      "Roastbeef Halv",
+      "Green Fajitas Glutenfri",
+      "Fajitas Bowl",
+      "Taco Glutenfri"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Roastbeef Glutenfri",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Taco Wrap",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Gresk Kylling Bowl",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Gresk Kylling Wrap",
+        "priceMinor": 10600
+      },
+      {
+        "name": "Roastbeef Halv",
+        "priceMinor": 10700
+      },
+      {
+        "name": "Green Fajitas Glutenfri",
+        "priceMinor": 12100
+      },
+      {
+        "name": "Fajitas Bowl",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Taco Glutenfri",
+        "priceMinor": 12600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

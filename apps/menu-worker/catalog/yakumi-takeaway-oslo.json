@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "yakumi-takeaway-oslo",
+    "name": "Yakumi Takeaway",
+    "websiteUrl": null,
+    "address": "Briskebyveien 22B, 0259 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9196862,
+    "longitude": 10.7183297
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/yakumi-takeaway",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 60,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-16",
+      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kimchi Maki - 8 Biter",
+      "Omega Maks - 30 Biter",
+      "Spicy Kremet Vegetar - 8 Biter",
+      "Tigerkongen - 10 Biter",
+      "Kobako - 12 Biter",
+      "Sulten - 16 Biter",
+      "Kokt Scampi Nigiri",
+      "Omega Pluss - 16 Biter"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kimchi Maki - 8 Biter",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Omega Maks - 30 Biter",
+        "priceMinor": 42900
+      },
+      {
+        "name": "Spicy Kremet Vegetar - 8 Biter",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Tigerkongen - 10 Biter",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Kobako - 12 Biter",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Sulten - 16 Biter",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Kokt Scampi Nigiri",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Omega Pluss - 16 Biter",
+        "priceMinor": 24900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
