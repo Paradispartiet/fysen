@@ -2,7 +2,7 @@
 
 **Åpne én fil:** [Oslo-restaurantlisten (CSV)](./oslo-restaurant-master-2026-10-13.csv).
 
-Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskatalog. Den dekker alle **755 av 755** restaurantmanifester i Fysens katalog etter bolken 14. oktober 2026 og **226** eksterne/eldre research-oppføringer: totalt **981 rader**. Slug brukes som unik identitet for alle 755 registrerte steder. Noen av kandidatene kan være aliaser, dubletter, ikke ordinære restauranter eller stengt og må kontrolleres før opptak. Tallet 981 er **ikke** antallet unike, aktive eller gode Oslo-restauranter og ikke bevis på at alle er funnet.
+Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskatalog. Den dekker alle **757 av 757** restaurantmanifester i Fysens katalog etter bolken 14. oktober 2026 og **224** eksterne/eldre research-oppføringer: totalt **981 rader**. Slug brukes som unik identitet for alle 757 registrerte steder. Noen av kandidatene kan være aliaser, dubletter, ikke ordinære restauranter eller stengt og må kontrolleres før opptak. Tallet 981 er **ikke** antallet unike, aktive eller gode Oslo-restauranter og ikke bevis på at alle er funnet.
 
 | Felt | Bruk |
 |---|---|
@@ -17,11 +17,13 @@ Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskat
 
 **Eksterne lister:** Research-kandidatene bygger på [Fysens tidligere Oslo-census](./oslo-coverage-census-2026-09-21.md), [VisitOSLOs restaurantoversikt](https://www.visitoslo.com/restaurants-nightlife/restaurants), [VisitOSLOs tilgjengelige restauranter](https://www.visitoslo.com/no/oslo-for-deg/tilgjengelighet/tilgjengelige-restauranter) og [VisitOSLOs utvalg på forsiden](https://www.visitoslo.com/no). En oppføring her er ikke bevis for aktiv drift, selvstendig gateadresse eller tilstrekkelig restaurantkvalitet.
 
-**Hva er ferdig og hva mangler?** Selve sammenslåingen av **755 eksisterende + 226 registrerte eksterne oppføringer** er ferdig. For en påstand om **alle gode og ordinære restauranter i Oslo** må fortsatt de ikke-verifiserte delene av VisitOSLOs 330-oppføringers oversikt, bydelsvise lokale kilder, aliaser, aktualitet og manglende koordinater avstemmes. Ikke bruk antall rader som en dekningsprosent. Ingen endringer er gjort i produksjonskatalog, menyuttrekk, søk eller valideringsregler.
+**Hva er ferdig og hva mangler?** Selve sammenslåingen av **757 eksisterende + 224 registrerte eksterne oppføringer** er ferdig. For en påstand om **alle gode og ordinære restauranter i Oslo** må fortsatt de ikke-verifiserte delene av VisitOSLOs 330-oppføringers oversikt, bydelsvise lokale kilder, aliaser, aktualitet og manglende koordinater avstemmes. Ikke bruk antall rader som en dekningsprosent. Ingen endringer er gjort i produksjonskatalog, menyuttrekk, søk eller valideringsregler.
 
 
 **Siste avstemming – Borggården 13. oktober 2026:** Researchraden «Borggården» var en faktisk dublett av eksisterende canonical `borggarden-biffrestaurant-oslo` («Borggården Biffrestaurant»), med identisk besøksadresse og førstegangsmeny. Den overflødige researchraden er fjernet, og navnealiaset er dokumentert på canonical rad. Derfor er gjeldende totalsum **980** (749 publisert + 231 øvrige) og **102** kildebekreftede relevante eksterne kandidater. Ingen ny Borggården-post opprettes.
 
+
+**Batch 16. oktober 2026 – 1947 Gandhi og Bygdøy Vertshus:** To eksisterende kildebekreftede Oslo-kandidater er flyttet til egne canonical manifester med operatørens offentlige prissatte menyer og åtte konkrete rett/prisassertasjoner hver. Oslo-masterlisten beholder **981 rader**, men fordelingen endres til **757 canonical + 224 øvrige** etter merge. Innhentings- og kildeparitet må godkjennes i målrettet validering før operativ publisering; databaseoppdatering er ikke attestert. Koordinater er adressebaserte offentlige kartpunkt og ikke Kartverket-verifiserte; åpningstider forblir uverifiserte.
 
 **Batch #959 – Subway Lambertseter (14. oktober 2026):** En ny selvstendig katalogpost på Cecilie Thoresens vei 17 har Kartverket-koordinater og åtte konkrete rett-/prisassertasjoner fra Semeny (82 prisede mat-/tilbehørsposter, sekundær menyformidler). Oslo-masterlisten øker med én rad til **981 totalt**, **755 canonical**, **226 øvrige**. Lamberts, NAMI Asian Fusion og Smash by Ghost Town ble gjenkjent som eksisterende canonical menykilder under andre research-slugs; ingen dubletter ble opprettet. Jagger Storgata er research-only fordi menyen omfatter «Lunch Offer (Not Available)» og disse tilbudene ennå ikke er sikkert filtrert. Åpningstidene er ikke uavhengig verifisert.
 
@@ -67,9 +69,9 @@ Den samme CSV-en har **en egen redaksjonell statuskolonne**, adskilt fra produks
 
 | Redaksjonell status | Antall rader | Betydning |
 | --- | ---: | --- |
-| `PUBLISERT_I_FYSEN` | 755 | Eksisterende katalogposter, uten endret teknisk publisering |
+| `PUBLISERT_I_FYSEN` | 757 | Eksisterende katalogposter, uten endret teknisk publisering |
 | `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART` | 18 | Aktuelt oppført i Michelin Guide, men ikke katalogisert; aktuell drift/meny må kontrolleres (gjelder også Hot Shop) |
-| `KILDEBEKREFTET_RELEVANT` | 97 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
+| `KILDEBEKREFTET_RELEVANT` | 95 | Restaurantidentitet og restaurantservering dokumentert med aktuell offisiell kilde eller VisitOSLO; fremdeles ikke produksjonspublisert |
 | `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART` | 56 | Navngitt på nyere VisitOSLO-restaurantguider; redaksjonelt aktuelt, men drift og produksjonsmeny ikke ferdig verifisert |
 | `MULIG_ALIAS` | 8 | Mulige navnevarianter som må avstemmes |
 | `UAVKLART` | 0 | Resterende eksterne forsknings-/kandidatposter uten avsluttet redaksjonell vurdering |
@@ -80,7 +82,7 @@ Den samme CSV-en har **en egen redaksjonell statuskolonne**, adskilt fra produks
 | `VINBAR_UTENFOR_RESTAURANTUTVALG` | 7 | Dokumenterte vinbarer; fortsatt synlige i researchlisten, men ikke telt som ordinære restauranter |
 | `BAR_UTENFOR_RESTAURANTUTVALG` | 9 | Cocktail-/hotellbarer med eventuell snacksservering |
 | `KAFE_BAKERI_UTENFOR_RESTAURANTUTVALG` | 14 | Bakerier, konditorier, tesalong og kafé med avgrenset matservering |
-| **Totalt** | **981** | **755 i katalogen, 226 øvrige** |
+| **Totalt** | **981** | **757 i katalogen, 224 øvrige** |
 
 
 ### Siste type- og identitetskontroll 13. oktober 2026
