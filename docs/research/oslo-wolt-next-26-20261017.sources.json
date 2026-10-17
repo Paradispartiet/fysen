@@ -736,12 +736,12 @@
   "archivedProductionStatus": {
     "pr": 968,
     "initialCandidates": 26,
-    "accepted": 11,
+    "accepted": 10,
     "catalogBaseline": 827,
-    "catalogAfter": 838,
+    "catalogAfter": 837,
     "deferredReasons": {
       "geocodeFailures": 4,
-      "oversizeLiveSources": 10,
+      "oversizeLiveSources": 11,
       "insufficientUniqueDishes": 1
     },
     "note": "Archival source list. The seed is moved out of the active research workflow after final publication to prevent duplicate post-promotion intake. No source not present in catalog has been published."
