@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizzeria-valentino-oslo",
+    "name": "Pizzeria Valentino",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 139A, 0570 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.929340078974555,
+    "longitude": 10.77830087243118
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/pizzeria-valentino1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 19,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner er generert og bestod målrettet livevalidering i samlet PR #968 den 17. oktober 2026. Leveringspriser kan avvike fra restaurantbordet; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Pizza Toscana",
+      "Pizza Calabrese",
+      "Pizza Campagnola",
+      "Tagliatelle",
+      "Pizza Gioardino",
+      "Pizza Fontana"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Pizza Toscana",
+        "priceMinor": 35900
+      },
+      {
+        "name": "Pizza Calabrese",
+        "priceMinor": 31900
+      },
+      {
+        "name": "Pizza Campagnola",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Tagliatelle",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Pizza Gioardino",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Pizza Fontana",
+        "priceMinor": 29900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

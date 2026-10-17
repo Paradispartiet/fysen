@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dominos-pizza-nydalen-oslo",
+    "name": "Domino's Pizza Nydalen",
+    "websiteUrl": null,
+    "address": "Fernanda Nissens gate 3A, 0484 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94611835932849,
+    "longitude": 10.76734567534869
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/dominos-pizza-nydalen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 56,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner er generert og bestod målrettet livevalidering i samlet PR #968 den 17. oktober 2026. Leveringspriser kan avvike fra restaurantbordet; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Loaded Tots - Cheesy Bacon",
+      "Spicy Chicken 🌶️",
+      "Pepperoni & Pineapple",
+      "Chicken Drumsticks 10stk",
+      "Choco Sticks",
+      "Loaded Tots - Cheesy Jalapeño",
+      "Unn deg litt ekstra"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Loaded Tots - Cheesy Bacon",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Spicy Chicken 🌶️",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Pepperoni & Pineapple",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Chicken Drumsticks 10stk",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Choco Sticks",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Loaded Tots - Cheesy Jalapeño",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Unn deg litt ekstra",
+        "priceMinor": 33900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

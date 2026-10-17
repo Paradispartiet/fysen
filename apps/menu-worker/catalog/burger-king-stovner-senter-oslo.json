@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "burger-king-stovner-senter-oslo",
+    "name": "Burger King Stovner Senter",
+    "websiteUrl": null,
+    "address": "Stovner Senter 3, 0985 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.96214559760663,
+    "longitude": 10.924523629568801
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/burger-king-stovner-senter",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 69,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner er generert og bestod målrettet livevalidering i samlet PR #968 den 17. oktober 2026. Leveringspriser kan avvike fra restaurantbordet; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Gourmet Grill Chili Mayo",
+      "Bacon King Meny",
+      "Gourmet Grill Bacon Cheese",
+      "BBQ Wrap",
+      "Chili Cheese Crispy Chicken",
+      "Cheeseburger",
+      "Steakhouse Bacon King Meny",
+      "Gourmet Grill Ramsløk Aioli"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Gourmet Grill Chili Mayo",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Bacon King Meny",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Gourmet Grill Bacon Cheese",
+        "priceMinor": 18500
+      },
+      {
+        "name": "BBQ Wrap",
+        "priceMinor": 7400
+      },
+      {
+        "name": "Chili Cheese Crispy Chicken",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Cheeseburger",
+        "priceMinor": 4100
+      },
+      {
+        "name": "Steakhouse Bacon King Meny",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Gourmet Grill Ramsløk Aioli",
+        "priceMinor": 19500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

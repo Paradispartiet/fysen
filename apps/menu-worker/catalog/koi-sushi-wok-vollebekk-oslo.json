@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "koi-sushi-wok-vollebekk-oslo",
+    "name": "Koi Sushi & Wok Vollebekk",
+    "websiteUrl": null,
+    "address": "Midtveien 58, 0598 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93628815368467,
+    "longitude": 10.829973134613082
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/koi-sushi-wok-vollebekk",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 85,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner er generert og bestod målrettet livevalidering i samlet PR #968 den 17. oktober 2026. Leveringspriser kan avvike fra restaurantbordet; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "10. Barne Meny",
+      "Vegetar Koi Salat",
+      "13. Cashewnøtter",
+      "65. Teriyaki Chicken Maki - 8 biter",
+      "57. Crispy Laks - 6 biter",
+      "Flamber Laks Nigiri",
+      "47. Spicy Tuna Maki - 8 biter",
+      "62. Crazy Koi Maki - 12 biter"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "10. Barne Meny",
+        "priceMinor": 9800
+      },
+      {
+        "name": "Vegetar Koi Salat",
+        "priceMinor": 16400
+      },
+      {
+        "name": "13. Cashewnøtter",
+        "priceMinor": 21900
+      },
+      {
+        "name": "65. Teriyaki Chicken Maki - 8 biter",
+        "priceMinor": 11600
+      },
+      {
+        "name": "57. Crispy Laks - 6 biter",
+        "priceMinor": 11600
+      },
+      {
+        "name": "Flamber Laks Nigiri",
+        "priceMinor": 7200
+      },
+      {
+        "name": "47. Spicy Tuna Maki - 8 biter",
+        "priceMinor": 10900
+      },
+      {
+        "name": "62. Crazy Koi Maki - 12 biter",
+        "priceMinor": 20800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

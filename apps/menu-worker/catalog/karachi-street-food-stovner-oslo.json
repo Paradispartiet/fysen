@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "karachi-street-food-stovner-oslo",
+    "name": "Karachi Street Food",
+    "websiteUrl": null,
+    "address": "Stovner Senter 3, 0985 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.96214559760663,
+    "longitude": 10.924523629568801
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/karachi-street-food",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 58,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner er generert og bestod målrettet livevalidering i samlet PR #968 den 17. oktober 2026. Leveringspriser kan avvike fra restaurantbordet; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kylling Cloud Nan",
+      "Samosa Chat",
+      "Chicken Tikka Masala",
+      "Veggie Paratha Rull",
+      "Biff Cloud Nan",
+      "Karachi Biff Pizza Stor",
+      "Døner nanrull"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kylling Cloud Nan",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Samosa Chat",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Chicken Tikka Masala",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Veggie Paratha Rull",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Biff Cloud Nan",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Karachi Biff Pizza Stor",
+        "priceMinor": 31500
+      },
+      {
+        "name": "Døner nanrull",
+        "priceMinor": 15500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

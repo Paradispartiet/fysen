@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dominos-pizza-ulleval-oslo",
+    "name": "Domino's Pizza Ullevål",
+    "websiteUrl": null,
+    "address": "Sognsveien 75A, 0855 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94855766850175,
+    "longitude": 10.732822800704366
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/dominos-pizza-ullevl",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 56,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner er generert og bestod målrettet livevalidering i samlet PR #968 den 17. oktober 2026. Leveringspriser kan avvike fra restaurantbordet; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Share the favorite",
+      "Veggie Supreme 🌱",
+      "Mighty Meat",
+      "Hvit Bacon",
+      "Parm Bites",
+      "BBQ Heaven",
+      "Hot Honey"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Share the favorite",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Veggie Supreme 🌱",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Mighty Meat",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Hvit Bacon",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Parm Bites",
+        "priceMinor": 9500
+      },
+      {
+        "name": "BBQ Heaven",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Hot Honey",
+        "priceMinor": 26500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sugar-spice-oslo",
+    "name": "Sugar & Spice",
+    "websiteUrl": null,
+    "address": "Bøkkerveien 6A, 0579 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92683502026628,
+    "longitude": 10.794485345658948
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/sugar-spice",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 24,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner er generert og bestod målrettet livevalidering i samlet PR #968 den 17. oktober 2026. Leveringspriser kan avvike fra restaurantbordet; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fried Chicken Bao",
+      "Edamame",
+      "Pork Salad",
+      "Beef Wok",
+      "Vegan Red Curry",
+      "Stir Fry Noodle Wok",
+      "Big Combo",
+      "Salmon tartare taco"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fried Chicken Bao",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Edamame",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Pork Salad",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Beef Wok",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Vegan Red Curry",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Stir Fry Noodle Wok",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Big Combo",
+        "priceMinor": 42800
+      },
+      {
+        "name": "Salmon tartare taco",
+        "priceMinor": 16900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
