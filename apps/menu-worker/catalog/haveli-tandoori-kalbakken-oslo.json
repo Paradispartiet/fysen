@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "haveli-tandoori-kalbakken-oslo",
+    "name": "Haveli Tandoori",
+    "websiteUrl": null,
+    "address": "Nedre Kalbakkvei 2C, 0950 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.951089384651276,
+    "longitude": 10.866992619588935
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/haveli-tandoori",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 61,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny med faktiske rett-/prisassertasjoner generert og målrettet livevalidert i PR #966 2026-10-17. Prisene er leveringspriser og åpningstider er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "1. Nan",
+      "34. Achar Lam Tikka",
+      "75. Chana Masala",
+      "53. Kylling Saag",
+      "36. Kylling Shasli",
+      "48. Kalv Tikka Masala",
+      "42. Kylling Ginger",
+      "49. Kalv Karahi"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "1. Nan",
+        "priceMinor": 4900
+      },
+      {
+        "name": "34. Achar Lam Tikka",
+        "priceMinor": 28900
+      },
+      {
+        "name": "75. Chana Masala",
+        "priceMinor": 23900
+      },
+      {
+        "name": "53. Kylling Saag",
+        "priceMinor": 25900
+      },
+      {
+        "name": "36. Kylling Shasli",
+        "priceMinor": 25900
+      },
+      {
+        "name": "48. Kalv Tikka Masala",
+        "priceMinor": 29900
+      },
+      {
+        "name": "42. Kylling Ginger",
+        "priceMinor": 25900
+      },
+      {
+        "name": "49. Kalv Karahi",
+        "priceMinor": 28900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

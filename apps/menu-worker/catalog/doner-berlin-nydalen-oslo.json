@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "doner-berlin-nydalen-oslo",
+    "name": "Döner Berlin Oslo",
+    "websiteUrl": null,
+    "address": "Nydalen allé 1, 0484 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94860821097692,
+    "longitude": 10.766728030246009
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/dner-berlin-oslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 34,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny med faktiske rett-/prisassertasjoner generert og målrettet livevalidert i PR #966 2026-10-17. Prisene er leveringspriser og åpningstider er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Cinnamon",
+      "Dürum Roll",
+      "American Cheese",
+      "Berlin VS Oklahoma",
+      "Alexander Dönerbox",
+      "Classic",
+      "4. DB Pizza",
+      "Jack Daniels & DB"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Cinnamon",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Dürum Roll",
+        "priceMinor": 20400
+      },
+      {
+        "name": "American Cheese",
+        "priceMinor": 16400
+      },
+      {
+        "name": "Berlin VS Oklahoma",
+        "priceMinor": 16400
+      },
+      {
+        "name": "Alexander Dönerbox",
+        "priceMinor": 24400
+      },
+      {
+        "name": "Classic",
+        "priceMinor": 17400
+      },
+      {
+        "name": "4. DB Pizza",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Jack Daniels & DB",
+        "priceMinor": 18400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

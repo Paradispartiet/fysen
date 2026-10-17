@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jonk-frysja-oslo",
+    "name": "Jønk Frysja",
+    "websiteUrl": null,
+    "address": "Frysjaveien 40A, 0884 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.965632370896124,
+    "longitude": 10.77082874682461
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/jnk-frysja",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 55,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny med faktiske rett-/prisassertasjoner generert og målrettet livevalidert i PR #966 2026-10-17. Prisene er leveringspriser og åpningstider er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fried Wingman kyllingburger🌶 🌶",
+      "Spicy Burger Meal 🌶",
+      "Oklahoma Style Onion Burger",
+      "Fried Chicken Burger",
+      "Sweet Potato Fries",
+      "House Dressing Dip",
+      "Veggie Beyond Meat Meal",
+      "Fried Wingman Meal 🌶🌶"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fried Wingman kyllingburger🌶 🌶",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Spicy Burger Meal 🌶",
+        "priceMinor": 30000
+      },
+      {
+        "name": "Oklahoma Style Onion Burger",
+        "priceMinor": 19000
+      },
+      {
+        "name": "Fried Chicken Burger",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Sweet Potato Fries",
+        "priceMinor": 8200
+      },
+      {
+        "name": "House Dressing Dip",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Veggie Beyond Meat Meal",
+        "priceMinor": 31000
+      },
+      {
+        "name": "Fried Wingman Meal 🌶🌶",
+        "priceMinor": 31000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

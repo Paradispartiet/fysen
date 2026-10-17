@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "linderud-pizza-grill-oslo",
+    "name": "Linderud Pizza & Grill",
+    "websiteUrl": null,
+    "address": "Linderudveien 2, 0594 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94076191709369,
+    "longitude": 10.838754845545623
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/linderud-pizza-og-grill",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 58,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny med faktiske rett-/prisassertasjoner generert og målrettet livevalidert i PR #966 2026-10-17. Prisene er leveringspriser og åpningstider er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Meal Deal 1",
+      "Margarita",
+      "Kyllingkebab i Rull",
+      "Döner pizza",
+      "Linderud Spesial",
+      "Kim's Chips",
+      "Løvbiffburger",
+      "Løvbiff middag"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Meal Deal 1",
+        "priceMinor": 79900
+      },
+      {
+        "name": "Margarita",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Kyllingkebab i Rull",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Döner pizza",
+        "priceMinor": 38900
+      },
+      {
+        "name": "Linderud Spesial",
+        "priceMinor": 38900
+      },
+      {
+        "name": "Kim's Chips",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Løvbiffburger",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Løvbiff middag",
+        "priceMinor": 26900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "tasty-thai-gronland-oslo",
+    "name": "Tasty Thai Grønland",
+    "websiteUrl": null,
+    "address": "Grønland 12B, 0188 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.913304903116085,
+    "longitude": 10.760469347640923
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/tasty-thai-gronland",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 36,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny med faktiske rett-/prisassertasjoner generert og målrettet livevalidert i PR #966 2026-10-17. Prisene er leveringspriser og åpningstider er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kao Phad",
+      "Tasty Thai",
+      "Phad Prik",
+      "Phad Medd Mamuang",
+      "Tom Yum Ramen",
+      "Satay Gai",
+      "Lab Gai",
+      "Phad Phed Naw Mai"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kao Phad",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Tasty Thai",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Phad Prik",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Phad Medd Mamuang",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Tom Yum Ramen",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Satay Gai",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Lab Gai",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Phad Phed Naw Mai",
+        "priceMinor": 24900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

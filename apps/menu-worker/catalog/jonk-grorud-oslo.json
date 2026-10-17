@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jonk-grorud-oslo",
+    "name": "Jønk Grorud",
+    "websiteUrl": null,
+    "address": "Bergensveien 2H, 0963 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.96057642572976,
+    "longitude": 10.881999205130915
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/jonk-grorud",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 54,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny med faktiske rett-/prisassertasjoner generert og målrettet livevalidert i PR #966 2026-10-17. Prisene er leveringspriser og åpningstider er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fried Hot Chicken 🌶️🌶️🌶️",
+      "Fried Hot Chicken Meal Deal 🌶️🌶️🌶️",
+      "Cheeseburger Kids Meal",
+      "BBQ Burger Meal",
+      "Sweet Jønk Fries",
+      "Chili Cheese",
+      "Fresh Chicken Fillet Nuggets Kids Meal",
+      "Fried Wingman kyllingburger🌶 🌶"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fried Hot Chicken 🌶️🌶️🌶️",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Fried Hot Chicken Meal Deal 🌶️🌶️🌶️",
+        "priceMinor": 31000
+      },
+      {
+        "name": "Cheeseburger Kids Meal",
+        "priceMinor": 17000
+      },
+      {
+        "name": "BBQ Burger Meal",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Sweet Jønk Fries",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Chili Cheese",
+        "priceMinor": 8000
+      },
+      {
+        "name": "Fresh Chicken Fillet Nuggets Kids Meal",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Fried Wingman kyllingburger🌶 🌶",
+        "priceMinor": 18500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
