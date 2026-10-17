@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kitchen-afrique-oslo",
+    "name": "Kitchen Afrique",
+    "websiteUrl": null,
+    "address": "Deichmans gate 9A, 0178 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91950265200683,
+    "longitude": 10.749634880593874
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/kitchen-afrique",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 29,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Publisert Wolt-leveringsmeny med konkrete rett-/prisassertasjoner er kontrollert gjennom målrettet livevalidering 2026-10-17 (PR #965). Prisene gjelder levering, ikke nødvendigvis restaurantbordet. Åpningstidene er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "18. Ekstra Fritert Plantain",
+      "19. Kokt Yam m/ Eggsaus",
+      "31. Stockfish",
+      "22. Salat u/ Egg",
+      "7. Hvitstuvet Yam m/ Protein",
+      "24. Ekstra Kylling/Storfekjøtt",
+      "2. Stekt Ris",
+      "4. Egusi-Suppe m/ Swallow"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "18. Ekstra Fritert Plantain",
+        "priceMinor": 10000
+      },
+      {
+        "name": "19. Kokt Yam m/ Eggsaus",
+        "priceMinor": 24500
+      },
+      {
+        "name": "31. Stockfish",
+        "priceMinor": 10000
+      },
+      {
+        "name": "22. Salat u/ Egg",
+        "priceMinor": 13000
+      },
+      {
+        "name": "7. Hvitstuvet Yam m/ Protein",
+        "priceMinor": 27500
+      },
+      {
+        "name": "24. Ekstra Kylling/Storfekjøtt",
+        "priceMinor": 5000
+      },
+      {
+        "name": "2. Stekt Ris",
+        "priceMinor": 27000
+      },
+      {
+        "name": "4. Egusi-Suppe m/ Swallow",
+        "priceMinor": 27900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

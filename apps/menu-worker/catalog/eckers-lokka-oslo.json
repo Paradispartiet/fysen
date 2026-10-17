@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "eckers-lokka-oslo",
+    "name": "Eckers Løkka",
+    "websiteUrl": null,
+    "address": "Markveien 34, 0554 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.923705173927765,
+    "longitude": 10.757393777677615
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/eckers-lokka",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 22,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Publisert Wolt-leveringsmeny med konkrete rett-/prisassertasjoner er kontrollert gjennom målrettet livevalidering 2026-10-17 (PR #965). Prisene gjelder levering, ikke nødvendigvis restaurantbordet. Åpningstidene er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vegansk Burrito 🌱",
+      "Vegetarsalat 🌱",
+      "Kylling Toast",
+      "Italiano Toast",
+      "Kyllingsalat",
+      "Honning",
+      "Acai",
+      "Surf shake"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vegansk Burrito 🌱",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Vegetarsalat 🌱",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Kylling Toast",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Italiano Toast",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Kyllingsalat",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Honning",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Acai",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Surf shake",
+        "priceMinor": 9500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

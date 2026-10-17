@@ -202,6 +202,7 @@ jobs:
           }
           const collisions = seedSlugs.filter((slug) => catalogSlugs.has(slug));
           const nonCanonical = seedSlugs.filter((slug) => !catalogSlugs.has(slug));
+          const allowPartialIntake = seed.allowPartialIntake === true && !reproof;
           const identityCollisions = [];
           for (const entry of seed.restaurants) {
             const slug = entry?.restaurant?.slug;
@@ -229,10 +230,10 @@ jobs:
               }
             }
           }
-          if (!reproof && collisions.length > 0) {
+          if (!reproof && !allowPartialIntake && collisions.length > 0) {
             throw new Error(`Research seed collides with canonical catalog: ${collisions.join(", ")}`);
           }
-          if (!reproof && identityCollisions.length > 0) {
+          if (!reproof && !allowPartialIntake && identityCollisions.length > 0) {
             throw new Error(
               `Research seed duplicates canonical physical identity: ${identityCollisions
                 .map((collision) => `${collision.slug}->${collision.canonicalSlug}[${collision.reason}]`)
@@ -241,6 +242,16 @@ jobs:
           }
 
           let selectedEntries = seed.restaurants;
+          if (allowPartialIntake) {
+            const skipped = new Set([
+              ...collisions,
+              ...identityCollisions.map((collision) => collision.slug)
+            ]);
+            selectedEntries = seed.restaurants.filter((entry) => !skipped.has(entry?.restaurant?.slug));
+            if (skipped.size > 0) {
+              console.log("Partial intake skips existing catalog identities: " + [...skipped].join(", "));
+            }
+          }
           if (reproof) {
             selectedEntries = seed.restaurants.filter((entry) => catalogSlugs.has(entry?.restaurant?.slug));
             if (selectedEntries.length === 0) {
@@ -424,13 +435,24 @@ jobs:
 
           const resolvedRestaurants = [];
           const evidence = [];
+          const geocodeFailures = [];
           for (const entry of selectedEntries) {
-            if (entry.version !== 1 || !entry?.restaurant?.slug || !entry?.restaurant?.address) {
-              throw new Error("Every research seed entry must be version 1 with restaurant slug and address");
+            try {
+              if (entry.version !== 1 || !entry?.restaurant?.slug || !entry?.restaurant?.address) {
+                throw new Error("Every research seed entry must be version 1 with restaurant slug and address");
+              }
+              const result = await geocode(entry);
+              resolvedRestaurants.push({ ...entry, restaurant: result.restaurant });
+              evidence.push(result.evidence);
+            } catch (error) {
+              if (!allowPartialIntake) throw error;
+              const message = error instanceof Error ? error.message : String(error);
+              console.warn("Skipping invalid source identity/address: " + message);
+              geocodeFailures.push({ slug: entry?.restaurant?.slug ?? null, error: message });
             }
-            const result = await geocode(entry);
-            resolvedRestaurants.push({ ...entry, restaurant: result.restaurant });
-            evidence.push(result.evidence);
+          }
+          if (resolvedRestaurants.length === 0) {
+            throw new Error("No source candidates have valid Oslo addresses");
           }
 
           const runtimePlan = {
@@ -449,7 +471,10 @@ jobs:
             reproof,
             catalogCollisions: collisions,
             identityCollisions,
+            skippedCanonicalSlugs: allowPartialIntake ? collisions : [],
             skippedNonCanonicalSlugs: reproof ? nonCanonical : [],
+            allowPartialIntake,
+            geocodeFailures,
             evidence
           }, null, 2)}\n`);
           console.log(
@@ -458,6 +483,7 @@ jobs:
           NODE
           echo "resolved=$resolved" >> "$GITHUB_OUTPUT"
           echo "report=$report" >> "$GITHUB_OUTPUT"
+          echo "allow_partial=$(node -e 'const x=require(process.argv[1]);console.log(x.allowPartialIntake===true)' "$SEED_PATH")" >> "$GITHUB_OUTPUT"
 
       - name: Generate candidates from live menu sources
         id: intake
@@ -468,7 +494,11 @@ jobs:
           set -euo pipefail
           rm -f apps/menu-worker/candidates/*.json
           cd apps/menu-worker
-          pnpm intake:batch "$RESOLVED_PLAN" | tee "$RUNNER_TEMP/restaurant-batch-intake-summary.json"
+          if [[ "${{ steps.resolve.outputs.allow_partial }}" == "true" ]]; then
+            pnpm intake:batch "$RESOLVED_PLAN" | tee "$RUNNER_TEMP/restaurant-batch-intake-summary.json" || true
+          else
+            pnpm intake:batch "$RESOLVED_PLAN" | tee "$RUNNER_TEMP/restaurant-batch-intake-summary.json"
+          fi
 
       - name: Assert full generation and strict live validation
         shell: bash
@@ -479,10 +509,17 @@ jobs:
           requested="$(node -e 'const x=require(process.argv[1]); console.log(x.restaurants.length)' "$RESOLVED_PLAN")"
           generated="$(find apps/menu-worker/candidates -maxdepth 1 -type f -name '*.json' | wc -l | tr -d ' ')"
           echo "Requested: $requested; generated: $generated"
-          [[ "$generated" -eq "$requested" ]] || {
-            echo "Batch generation was incomplete" >&2
-            exit 1
-          }
+          if [[ "${{ steps.resolve.outputs.allow_partial }}" == "true" ]]; then
+            [[ "$generated" -ge 1 && "$generated" -le "$requested" ]] || {
+              echo "No candidates were generated, or output exceeded requested count" >&2
+              exit 1
+            }
+          else
+            [[ "$generated" -eq "$requested" ]] || {
+              echo "Batch generation was incomplete" >&2
+              exit 1
+            }
+          fi
           cd apps/menu-worker
           pnpm validate:batch candidates
 

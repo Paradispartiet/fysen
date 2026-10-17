@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "eckers-ulleval-oslo",
+    "name": "Eckers Ullevål",
+    "websiteUrl": null,
+    "address": "Vestgrensa 2, 0851 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94078959762097,
+    "longitude": 10.72913267279311
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/eckers-ulleval",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 22,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Publisert Wolt-leveringsmeny med konkrete rett-/prisassertasjoner er kontrollert gjennom målrettet livevalidering 2026-10-17 (PR #965). Prisene gjelder levering, ikke nødvendigvis restaurantbordet. Åpningstidene er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Acai",
+      "Serrano Toast",
+      "Honning",
+      "Kyllingsalat",
+      "Vegansk salat 🌱",
+      "Kylling Burrito",
+      "Italiano Toast",
+      "Rosa ananas"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Acai",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Serrano Toast",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Honning",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Kyllingsalat",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Vegansk salat 🌱",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Kylling Burrito",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Italiano Toast",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Rosa ananas",
+        "priceMinor": 9500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

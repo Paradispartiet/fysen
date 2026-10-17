@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pronto-di-olivia-storo-oslo",
+    "name": "Pronto di Olivia Storo",
+    "websiteUrl": null,
+    "address": "Vitaminveien 7, 0485 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94684205812542,
+    "longitude": 10.77538723559638
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/pronto-di-olivia-1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 7,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Publisert Wolt-leveringsmeny med konkrete rett-/prisassertasjoner er kontrollert gjennom målrettet livevalidering 2026-10-17 (PR #965). Prisene gjelder levering, ikke nødvendigvis restaurantbordet. Åpningstidene er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita 🌱",
+      "Chocolate chip cookie",
+      "Smash burger",
+      "Parma",
+      "Red velvet cookie",
+      "Pistachio cookie",
+      "Calabrese 🌶️"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita 🌱",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Chocolate chip cookie",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Smash burger",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Parma",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Red velvet cookie",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Pistachio cookie",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Calabrese 🌶️",
+        "priceMinor": 19900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jordbarpikene-byporten-oslo",
+    "name": "Jordbærpikene Byporten",
+    "websiteUrl": null,
+    "address": "Jernbanetorget 6, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.911771086559426,
+    "longitude": 10.7515529777059
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/jordbrpikene-byporten",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 22,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Publisert Wolt-leveringsmeny med konkrete rett-/prisassertasjoner er kontrollert gjennom målrettet livevalidering 2026-10-17 (PR #965). Prisene gjelder levering, ikke nødvendigvis restaurantbordet. Åpningstidene er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Club sandwich med fries",
+      "Nachos (barn)",
+      "Rødbete burger",
+      "Klassisk burger med Fries",
+      "Søtpotetfries med aioli",
+      "Bakt potet med bacon",
+      "Kremet pasta med kylling (barn)",
+      "Kremet pasta med kylling"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Club sandwich med fries",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Nachos (barn)",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Rødbete burger",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Klassisk burger med Fries",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Søtpotetfries med aioli",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Bakt potet med bacon",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Kremet pasta med kylling (barn)",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Kremet pasta med kylling",
+        "priceMinor": 25900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

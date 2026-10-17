@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "undercover-burger-oslo",
+    "name": "Undercover Burger",
+    "websiteUrl": null,
+    "address": "Kjølberggata 21, 0653 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91113787529822,
+    "longitude": 10.778385870870046
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/undercover-burger-1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 9,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Publisert Wolt-leveringsmeny med konkrete rett-/prisassertasjoner er kontrollert gjennom målrettet livevalidering 2026-10-17 (PR #965). Prisene gjelder levering, ikke nødvendigvis restaurantbordet. Åpningstidene er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chicken Nuggets (6 pcs)",
+      "Yellow Dune",
+      "Cheezeform X",
+      "Comet Blaze",
+      "First Contact",
+      "Potetbåter",
+      "Truffle Rift",
+      "Basil Arc"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chicken Nuggets (6 pcs)",
+        "priceMinor": 8000
+      },
+      {
+        "name": "Yellow Dune",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Cheezeform X",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Comet Blaze",
+        "priceMinor": 24900
+      },
+      {
+        "name": "First Contact",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Potetbåter",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Truffle Rift",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Basil Arc",
+        "priceMinor": 24900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
