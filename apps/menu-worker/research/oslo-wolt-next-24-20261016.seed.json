@@ -619,5 +619,6 @@
       "assertionCount": 8,
       "forbiddenDishNames": []
     }
-  ]
+  ],
+  "allowPartialIntake": true
 }
