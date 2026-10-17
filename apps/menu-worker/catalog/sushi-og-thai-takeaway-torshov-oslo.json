@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sushi-og-thai-takeaway-torshov-oslo",
+    "name": "Sushi og Thai Takeaway",
+    "websiteUrl": null,
+    "address": "Vogts gate 39, 0474 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.933256761133755,
+    "longitude": 10.763531159728682
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/sushi-og-thai-takeaway",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 62,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner ble generert og bestod samlet livevalidering i PR #969 den 17. oktober 2026. Representative påstander er redaksjonelt avgrenset til matretter, uten drikke/krydder. Leveringspriser kan avvike fra bordprisene. Åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "45. Vårruller",
+      "82. Meny 4",
+      "49. Gæng Phed",
+      "63. Kai/Goong Tord",
+      "31. Red Dragon Roll",
+      "90. Laks Mango Maki",
+      "13. Nigiri 20 Biter",
+      "18. Søtpotet maki"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "45. Vårruller",
+        "priceMinor": 8500
+      },
+      {
+        "name": "82. Meny 4",
+        "priceMinor": 28900
+      },
+      {
+        "name": "49. Gæng Phed",
+        "priceMinor": 20800
+      },
+      {
+        "name": "63. Kai/Goong Tord",
+        "priceMinor": 23800
+      },
+      {
+        "name": "31. Red Dragon Roll",
+        "priceMinor": 16900
+      },
+      {
+        "name": "90. Laks Mango Maki",
+        "priceMinor": 10500
+      },
+      {
+        "name": "13. Nigiri 20 Biter",
+        "priceMinor": 31500
+      },
+      {
+        "name": "18. Søtpotet maki",
+        "priceMinor": 9500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "oslo-sandwich-shop-maridalsveien-oslo",
+    "name": "Oslo Sandwich Shop",
+    "websiteUrl": null,
+    "address": "Maridalsveien 21, 0178 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92340974879979,
+    "longitude": 10.751110879057174
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/oslo-sandwich-shop",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner ble generert og bestod samlet livevalidering i PR #969 den 17. oktober 2026. Representative påstander er redaksjonelt avgrenset til matretter, uten drikke/krydder. Leveringspriser kan avvike fra bordprisene. Åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Loaded waffle fries",
+      "Smoked steakhouseburger 180g",
+      "Waffle fries, chipotle ketchup",
+      "Wagyu burger 150g",
+      "Chopped cheese 180g",
+      "Combo deal med drikke",
+      "Halloumi burger",
+      "Combo deal"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Loaded waffle fries",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Smoked steakhouseburger 180g",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Waffle fries, chipotle ketchup",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Wagyu burger 150g",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Chopped cheese 180g",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Combo deal med drikke",
+        "priceMinor": 33500
+      },
+      {
+        "name": "Halloumi burger",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Combo deal",
+        "priceMinor": 29900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

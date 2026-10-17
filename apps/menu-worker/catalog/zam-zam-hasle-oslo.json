@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "zam-zam-hasle-oslo",
+    "name": "Zam-Zam Hasle",
+    "websiteUrl": null,
+    "address": "Hovinveien 39, 0661 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.920041906528766,
+    "longitude": 10.791077290081
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/zam-zam-hasle",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 46,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner ble generert og bestod samlet livevalidering i PR #969 den 17. oktober 2026. Representative påstander er redaksjonelt avgrenset til matretter, uten drikke/krydder. Leveringspriser kan avvike fra bordprisene. Åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kyllingsnadder Platter",
+      "Beef Cheesesteak Sandwich",
+      "Beef Naanwich",
+      "Spicy Avocado",
+      "Cheese Please",
+      "Beef Cheesesteak Sandwich Meal"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kyllingsnadder Platter",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Beef Cheesesteak Sandwich",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Beef Naanwich",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Spicy Avocado",
+        "priceMinor": 19000
+      },
+      {
+        "name": "Cheese Please",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Beef Cheesesteak Sandwich Meal",
+        "priceMinor": 28500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "roast-smash-burger-oslo",
+    "name": "Roast Smash Burger",
+    "websiteUrl": null,
+    "address": "Torggata 16B, 0181 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91592601318643,
+    "longitude": 10.751004570650899
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/roast-smash-burger",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 5,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner ble generert og bestod samlet livevalidering i PR #969 den 17. oktober 2026. Representative påstander er redaksjonelt avgrenset til matretter, uten drikke/krydder. Leveringspriser kan avvike fra bordprisene. Åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "French Fries",
+      "🔥DIRTY FRIES🍟",
+      "BBQ Burger",
+      "Classic Burger",
+      "Spicy Burger 🌶"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "French Fries",
+        "priceMinor": 4900
+      },
+      {
+        "name": "🔥DIRTY FRIES🍟",
+        "priceMinor": 15900
+      },
+      {
+        "name": "BBQ Burger",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Classic Burger",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Spicy Burger 🌶",
+        "priceMinor": 15900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

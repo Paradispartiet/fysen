@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "digg-pizza-manglerud-oslo",
+    "name": "DIGG Pizza Manglerud",
+    "websiteUrl": null,
+    "address": "Plogveien 6, 0679 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.89729012445715,
+    "longitude": 10.812860159653528
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/digg-pizza-manglerud",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 45,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner ble generert og bestod samlet livevalidering i PR #969 den 17. oktober 2026. Representative påstander er redaksjonelt avgrenset til matretter, uten drikke/krydder. Leveringspriser kan avvike fra bordprisene. Åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Trøffel Meny",
+      "Hjemme Alene",
+      "Margherita Bernemeny",
+      "Pepperoni Meny",
+      "Spenstig Kylling Meny",
+      "Skinke Meny"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Trøffel Meny",
+        "priceMinor": 24600
+      },
+      {
+        "name": "Hjemme Alene",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Margherita Bernemeny",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Pepperoni Meny",
+        "priceMinor": 22700
+      },
+      {
+        "name": "Spenstig Kylling Meny",
+        "priceMinor": 24600
+      },
+      {
+        "name": "Skinke Meny",
+        "priceMinor": 21700
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

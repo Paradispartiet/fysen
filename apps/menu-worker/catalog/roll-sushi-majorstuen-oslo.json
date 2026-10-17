@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "roll-sushi-majorstuen-oslo",
+    "name": "Roll Sushi",
+    "websiteUrl": null,
+    "address": "Sørkedalsveien 5C, 0369 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93074643464094,
+    "longitude": 10.712074924003794
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/roll-sushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 76,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner ble generert og bestod samlet livevalidering i PR #969 den 17. oktober 2026. Representative påstander er redaksjonelt avgrenset til matretter, uten drikke/krydder. Leveringspriser kan avvike fra bordprisene. Åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "48. Duckie Salat",
+      "Deluxe 40 Sushi Meny A m/ Softshell Crab",
+      "Asian Crispy Fried Snacks",
+      "Party Deluxe 50 Biter (4-5 Pers.)",
+      "21. Crispy Futo Salmon 6 Biter",
+      "46. Salmon Hot Crispy Futo Maki 12 Biter",
+      "05. Liten Roll Meny 10 Biter",
+      "49. Roll's Poke Bowl"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "48. Duckie Salat",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Deluxe 40 Sushi Meny A m/ Softshell Crab",
+        "priceMinor": 94500
+      },
+      {
+        "name": "Asian Crispy Fried Snacks",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Party Deluxe 50 Biter (4-5 Pers.)",
+        "priceMinor": 105000
+      },
+      {
+        "name": "21. Crispy Futo Salmon 6 Biter",
+        "priceMinor": 11900
+      },
+      {
+        "name": "46. Salmon Hot Crispy Futo Maki 12 Biter",
+        "priceMinor": 16900
+      },
+      {
+        "name": "05. Liten Roll Meny 10 Biter",
+        "priceMinor": 18500
+      },
+      {
+        "name": "49. Roll's Poke Bowl",
+        "priceMinor": 24900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

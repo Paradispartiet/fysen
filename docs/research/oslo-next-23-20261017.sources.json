@@ -1,0 +1,677 @@
+{
+  "version": 1,
+  "allowPartialIntake": true,
+  "outputDirectory": "candidates",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "pizza-baronen-lilleaker-oslo",
+        "name": "Pizza Baronen Lilleaker",
+        "websiteUrl": null,
+        "address": "Lilleakerveien 47, 0284 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/pizza-baronen-lilleaker",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "habibi-restaurant-kafe-oslo",
+        "name": "Habibi Restaurant & Kafé",
+        "websiteUrl": null,
+        "address": "Møllergata 10, 0179 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/habibi-restaurant-og-kafe",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "charlies-kebab-pizza-lilleaker-oslo",
+        "name": "Charlies Kebab & Pizza",
+        "websiteUrl": null,
+        "address": "Lilleakerveien 21, 0283 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/charlies-kebab-pizza-1",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "umami-sushi-oslo",
+        "name": "Umami Sushi Oslo",
+        "websiteUrl": null,
+        "address": "Langgata 2, 0566 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/umami-sushi-oslo",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "roll-sushi-majorstuen-oslo",
+        "name": "Roll Sushi",
+        "websiteUrl": null,
+        "address": "Sørkedalsveien 5C, 0369 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/roll-sushi",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "zam-zam-hasle-oslo",
+        "name": "Zam-Zam Hasle",
+        "websiteUrl": null,
+        "address": "Hovinveien 39, 0661 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/zam-zam-hasle",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "oslo-sandwich-shop-maridalsveien-oslo",
+        "name": "Oslo Sandwich Shop",
+        "websiteUrl": null,
+        "address": "Maridalsveien 21, 0178 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/oslo-sandwich-shop",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "eckers-frogner-oslo",
+        "name": "Eckers Frogner",
+        "websiteUrl": null,
+        "address": "Eckersbergs gate 41, 0267 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/eckers-frogner",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "roast-smash-burger-oslo",
+        "name": "Roast Smash Burger",
+        "websiteUrl": null,
+        "address": "Torggata 16B, 0181 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/roast-smash-burger",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "truck-burger-jernkroken-oslo",
+        "name": "Truck Burger",
+        "websiteUrl": null,
+        "address": "Jernkroken 11, 0976 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/hq-burgers",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "folkets-kebab-alnabru-oslo",
+        "name": "Folkets Kebab Alnabru",
+        "websiteUrl": null,
+        "address": "Arvesetveien 2-4, 0668 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/folkets-kebab-alnabru",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "peppes-pizza-stortingsgata-oslo",
+        "name": "Peppes Pizza Stortingsgaten",
+        "websiteUrl": null,
+        "address": "Stortingsgata 4, 0158 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/peppes-pizza-stortingsgaten",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "sushi-og-thai-takeaway-torshov-oslo",
+        "name": "Sushi og Thai Takeaway",
+        "websiteUrl": null,
+        "address": "Vogts gate 39, 0474 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/sushi-og-thai-takeaway",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "joemi-sushi-wok-lambertseter-oslo",
+        "name": "Joemi Sushi & Wok",
+        "websiteUrl": null,
+        "address": "Mikrobølgen 27, 1150 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/joemi-sushi-wok",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "stangeriet-vulkan-oslo",
+        "name": "Stangeriet",
+        "websiteUrl": null,
+        "address": "Vulkan 5, 0178 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/stangeriet",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "momo-ghar-bislett-oslo",
+        "name": "MOMO Ghar",
+        "websiteUrl": null,
+        "address": "Pilestredet 63C, 0350 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/momo-ghar",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "digg-pizza-manglerud-oslo",
+        "name": "DIGG Pizza Manglerud",
+        "websiteUrl": null,
+        "address": "Plogveien 6, 0679 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/digg-pizza-manglerud",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Restaurant og Wolt-leveringsmeny er dokumentert som intake-kandidat 2026-10-17. Adresse, kanoniske matretter og konkrete prisassertasjoner må bestå batchens Kartverket-oppslag og livevalidering. Wolt-leveringspriser kan avvike fra bordpris."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "teatro-terrasse-oslo",
+        "name": "Teatro Terrasse",
+        "websiteUrl": null,
+        "address": "Dronning Mauds gate 1, 0250 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://teatroterrasse.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Kildebekreftet restaurant fra Oslo-master med offisiell nettside/meny. Prisede retter, åpningstider og korrekt semantisk uttrekk er ennå ikke validert; publiseres kun etter bestått intake og målrettet kontroll."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "gronland-boulebar-oslo",
+        "name": "Grønland Boulebar",
+        "websiteUrl": null,
+        "address": "Grønlandsleiret 27, 0190 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://gronlandboule.no/mat/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Kildebekreftet restaurant fra Oslo-master med offisiell nettside/meny. Prisede retter, åpningstider og korrekt semantisk uttrekk er ennå ikke validert; publiseres kun etter bestått intake og målrettet kontroll."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "vadio-frogner-oslo",
+        "name": "Vadio",
+        "websiteUrl": null,
+        "address": "Briskebyveien 26A, 0259 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.vadio-oslo.com/menu",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Kildebekreftet restaurant fra Oslo-master med offisiell nettside/meny. Prisede retter, åpningstider og korrekt semantisk uttrekk er ennå ikke validert; publiseres kun etter bestått intake og målrettet kontroll."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "agora-lilleborg-oslo",
+        "name": "Agora Lilleborg",
+        "websiteUrl": null,
+        "address": "Ivan Bjørndals gate 23, 0472 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://agoralilleborg.no/mat-drikke/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Kildebekreftet restaurant fra Oslo-master med offisiell nettside/meny. Prisede retter, åpningstider og korrekt semantisk uttrekk er ennå ikke validert; publiseres kun etter bestått intake og målrettet kontroll."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "kongen-marina-oslo",
+        "name": "Kongen Marina",
+        "websiteUrl": null,
+        "address": "Frognerstranda 4, 0250 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.kongenmarina.no/restaurant",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Kildebekreftet restaurant fra Oslo-master med offisiell nettside/meny. Prisede retter, åpningstider og korrekt semantisk uttrekk er ennå ikke validert; publiseres kun etter bestått intake og målrettet kontroll."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "brasserie-nouvelle-tjuvholmen-oslo",
+        "name": "Brasserie Nouvelle",
+        "websiteUrl": null,
+        "address": "Tjuvholmen allé 5, 0252 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.brasserienouvelle.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Kildebekreftet restaurant fra Oslo-master med offisiell nettside/meny. Prisede retter, åpningstider og korrekt semantisk uttrekk er ennå ikke validert; publiseres kun etter bestått intake og målrettet kontroll."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ],
+  "archivedProductionStatus": {
+    "sourcePr": 969,
+    "intakeRunId": 39050547417,
+    "requestedCount": 23,
+    "geocodedCount": 19,
+    "generatedCandidateCount": 14,
+    "publishedCount": 11,
+    "deferredCount": 12,
+    "publishedSlugs": [
+      "digg-pizza-manglerud-oslo",
+      "habibi-restaurant-kafe-oslo",
+      "joemi-sushi-wok-lambertseter-oslo",
+      "momo-ghar-bislett-oslo",
+      "oslo-sandwich-shop-maridalsveien-oslo",
+      "pizza-baronen-lilleaker-oslo",
+      "roast-smash-burger-oslo",
+      "roll-sushi-majorstuen-oslo",
+      "sushi-og-thai-takeaway-torshov-oslo",
+      "umami-sushi-oslo",
+      "zam-zam-hasle-oslo"
+    ],
+    "note": "Three address resolution failures, one catalog collision, five extraction failures, and three editorial deferrals (two menu extraction leaks, one uncertain identity). Clean subset only; original seed moved to docs/research to avoid redundant CI intake.",
+    "pricing": "Wolt delivery prices, not verified dine-in prices",
+    "productionDatabase": "not separately verified"
+  }
+}

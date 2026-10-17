@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizza-baronen-lilleaker-oslo",
+    "name": "Pizza Baronen Lilleaker",
+    "websiteUrl": null,
+    "address": "Lilleakerveien 47A, 0284 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.922127486852695,
+    "longitude": 10.638236693382323
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/pizza-baronen-lilleaker",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 93,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner ble generert og bestod samlet livevalidering i PR #969 den 17. oktober 2026. Representative påstander er redaksjonelt avgrenset til matretter, uten drikke/krydder. Leveringspriser kan avvike fra bordprisene. Åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "The American Dream 200g",
+      "Oreo Sjokoladekake",
+      "Döner Pizza (Medium)",
+      "Baronens Spesial (Medium)",
+      "Los Bandidos (Medium)",
+      "Kebab (Pita/Rull)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "The American Dream 200g",
+        "priceMinor": 19100
+      },
+      {
+        "name": "Oreo Sjokoladekake",
+        "priceMinor": 9200
+      },
+      {
+        "name": "Döner Pizza (Medium)",
+        "priceMinor": 22700
+      },
+      {
+        "name": "Baronens Spesial (Medium)",
+        "priceMinor": 22700
+      },
+      {
+        "name": "Los Bandidos (Medium)",
+        "priceMinor": 22700
+      },
+      {
+        "name": "Kebab (Pita/Rull)",
+        "priceMinor": 17400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
