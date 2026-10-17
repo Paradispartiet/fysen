@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "outputDirectory": "candidates/oslo-wolt-next-24-20261016",
+  "outputDirectory": "candidates/oslo-wolt-next-22-20261017",
   "concurrency": 4,
   "restaurants": [
     {
@@ -23,8 +23,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -51,8 +51,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -79,8 +79,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -107,8 +107,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -135,8 +135,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -163,8 +163,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -191,36 +191,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "district-4-sagene-oslo",
-        "name": "District 4",
-        "websiteUrl": null,
-        "address": "Kristiansands gate 1, 0463 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://wolt.com/en/nor/oslo/restaurant/district-4",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -247,8 +219,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -275,8 +247,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -303,8 +275,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -331,8 +303,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -359,8 +331,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -387,8 +359,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -415,8 +387,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -443,8 +415,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -471,8 +443,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -499,36 +471,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "dr-gyros-pilestredet-oslo",
-        "name": "Dr. Gyros – Smaken Av Hellas",
-        "websiteUrl": null,
-        "address": "Pilestredet 51B, 0350 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://wolt.com/en/nor/oslo/restaurant/dr-gyros-smaken-av-hellas",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -555,8 +499,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -583,8 +527,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -611,8 +555,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -639,8 +583,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
@@ -667,8 +611,8 @@
       "verification": {
         "hours": {
           "status": "unverified",
-          "checkedAt": "2026-10-16",
-          "note": "Offentlig prissatt Wolt-leveringsmeny og oppgitt besøksadresse kildekontrollert 2026-10-16. Leveringspriser er ikke attestert som spisesalpriser, og åpningstider er ikke uavhengig kontrollert. Publisering krever Kartverket-adresse, korrekt live-matuttrekk og målrettet validering."
+          "checkedAt": "2026-10-17",
+          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
         }
       },
       "actions": [],
