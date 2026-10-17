@@ -1,0 +1,736 @@
+{
+  "version": 1,
+  "allowPartialIntake": true,
+  "outputDirectory": "candidates/oslo-wolt-batch-26-20261017",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "jordal-haveli-oslo",
+        "name": "Jordal Haveli",
+        "websiteUrl": null,
+        "address": "Strømsveien 22A, 0657 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/jordal-haveli",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "afghan-house-gronland-oslo",
+        "name": "Afghan House",
+        "websiteUrl": null,
+        "address": "Grønland 18, 0188 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/afghan-house",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "kryddern-oslo",
+        "name": "Kryddern",
+        "websiteUrl": null,
+        "address": "Thygesons vei 40, 0667 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/kryddern",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "biryani-express-barcode-oslo",
+        "name": "Biryani Express",
+        "websiteUrl": null,
+        "address": "Dronning Eufemias gate 14, 0191 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/biryani-express",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "fragrance-of-the-heart-majorstuen-oslo",
+        "name": "The Fragrance of the Heart Majorstuen",
+        "websiteUrl": null,
+        "address": "Majorstuveien 33, 0367 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/the-fragrance-of-the-heart-majorstuen",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "gate-of-india-majorstuen-oslo",
+        "name": "Gate of India",
+        "websiteUrl": null,
+        "address": "Bogstadveien 66A, 0366 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/gate-of-india",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "indique-flavours-oslo",
+        "name": "Indique Flavours",
+        "websiteUrl": null,
+        "address": "Tore Hals Mejdells vei 5, 0751 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/indique-flavours",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "curry-ketchup-majorstuen-oslo",
+        "name": "Curry and Ketchup",
+        "websiteUrl": null,
+        "address": "Kirkeveien 51, 0368 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/curry-and-ketchup",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "jaffna-food-corner-oslo",
+        "name": "Jaffna Food Corner",
+        "websiteUrl": null,
+        "address": "Kakkelovnskroken 5, 0954 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/jaffna-food-corner",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "indi-gastro-bar-oslo",
+        "name": "Indi Gastro Bar",
+        "websiteUrl": null,
+        "address": "Normannsgata 5B, 0655 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/indi-gastro-bar",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "mr-fish-colosseum-oslo",
+        "name": "Mr. Fish Colosseum",
+        "websiteUrl": null,
+        "address": "Sørkedalsveien 10, 0369 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/mr-fish-colosseum",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "bambus-byporten-oslo",
+        "name": "Bambus Byporten",
+        "websiteUrl": null,
+        "address": "Biskop Gunnerus' gate 6, 0155 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/bambus-byporten",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "estar-sushi-oslo",
+        "name": "Estar Sushi",
+        "websiteUrl": null,
+        "address": "Kirkeveien 48A, 0368 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/estar-sushi",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "wasabi-sushi-wok-toyen-oslo",
+        "name": "Wasabi Sushi og Wok",
+        "websiteUrl": null,
+        "address": "Hagegata 22, 0653 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/wasabi-sushi-og-wok",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "sushi-rose-majorstua-oslo",
+        "name": "Sushi Rose Majorstua",
+        "websiteUrl": null,
+        "address": "Sporveisgata 12, 0354 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/sushi-rose-majorstua-a",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "asiamix-toyen-oslo",
+        "name": "Asiamix",
+        "websiteUrl": null,
+        "address": "Åkebergveien 38B, 0650 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/asiamix2021",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "fukuya-frogner-oslo",
+        "name": "Fukuya",
+        "websiteUrl": null,
+        "address": "Frognerveien 58, 0266 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/fukuya-frogner",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "zeytouna-grill-house-oslo",
+        "name": "Zeytouna Grill-House",
+        "websiteUrl": null,
+        "address": "Trondheimsveien 8, 0560 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/zeytouna-grill-house",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "gorgonzo-oslo",
+        "name": "Gorgonzo",
+        "websiteUrl": null,
+        "address": "Waldemar Thranes gate 32, 0171 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/gorgonzo",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dinos-pizza-lokka-oslo",
+        "name": "Dino's Pizza",
+        "websiteUrl": null,
+        "address": "Seilduksgata 9, 0554 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dinos-pizza",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "verona-pizza-brugata-oslo",
+        "name": "Verona Pizza",
+        "websiteUrl": null,
+        "address": "Brugata 10, 0186 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/verona-pizza-oslo",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "roma-pizza-vinderen-oslo",
+        "name": "Roma Pizza Vinderen",
+        "websiteUrl": null,
+        "address": "Holmenveien 11, 0374 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/roma-pizza-vinderen",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "pizza-mesteren-ensjo-oslo",
+        "name": "Pizza Mesteren",
+        "websiteUrl": null,
+        "address": "Gladengveien 15B, 0661 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/pizza-mesteren",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "gregor-pizza-bislett-oslo",
+        "name": "Gregor Pizza",
+        "websiteUrl": null,
+        "address": "Thereses gate 42, 0168 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/gregor-pizza",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "vinnys-kebab-storgata-oslo",
+        "name": "Vinny's Kebab",
+        "websiteUrl": null,
+        "address": "Storgata 32, 0184 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/vinnys-kebab",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "buoni-amici-skoyen-oslo",
+        "name": "Buoni Amici",
+        "websiteUrl": null,
+        "address": "Drammensveien 130C, 0277 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/midpoint-cafe-bar",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ]
+}
