@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jordal-haveli-oslo",
+    "name": "Jordal Haveli",
+    "websiteUrl": null,
+    "address": "Strømsveien 22A, 0657 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90887796488801,
+    "longitude": 10.786434157120249
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/jordal-haveli",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 63,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Seekh Kebab",
+      "Kylling Do Piaza",
+      "Saag Gosht",
+      "Mix Sabzi",
+      "Surf & Turf",
+      "Samosa",
+      "Kashmiri Nan",
+      "Pommes Frites"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Seekh Kebab",
+        "priceMinor": 35000
+      },
+      {
+        "name": "Kylling Do Piaza",
+        "priceMinor": 34000
+      },
+      {
+        "name": "Saag Gosht",
+        "priceMinor": 34500
+      },
+      {
+        "name": "Mix Sabzi",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Surf & Turf",
+        "priceMinor": 35000
+      },
+      {
+        "name": "Samosa",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Kashmiri Nan",
+        "priceMinor": 9000
+      },
+      {
+        "name": "Pommes Frites",
+        "priceMinor": 4000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jaffna-food-corner-oslo",
+    "name": "Jaffna Food Corner",
+    "websiteUrl": null,
+    "address": "Kakkelovnskroken 5, 0954 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.95130162805854,
+    "longitude": 10.858194448175578
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/jaffna-food-corner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 11,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Veechu Rotti & Karri",
+      "Vadai",
+      "Roast Bread & Karri",
+      "Kylling Kottu",
+      "Ris & Karri",
+      "Biff Kottu",
+      "Rolls",
+      "Reker Kottu"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Veechu Rotti & Karri",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Vadai",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Roast Bread & Karri",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Kylling Kottu",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Ris & Karri",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Biff Kottu",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Rolls",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Reker Kottu",
+        "priceMinor": 16500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

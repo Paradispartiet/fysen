@@ -1,5 +1,12 @@
 # Oslo-restauranter — samlet arbeidsliste (13. oktober 2026)
 
+## Produksjonsbolk 17. oktober 2026 – PR #967
+
+**24 nye Oslo-restauranter** er hentet fra lokasjonsspesifikke Wolt-menyer, verifisert mot Kartverket og målrettet livekontrollert med åtte rettsnavn/prisassertasjoner per restaurant. Katalogen øker fra **803 til 827** ved merge. Av 26 kandidatsteder bestod 24 adresse- og livekontroll; Dino's Pizza og Buoni Amici ble holdt utenfor fordi publisert adresse ikke ga godkjent Kartverket-koordinat. Prisene er hentet fra Wolt-leveringsmenyene, ikke garantert bordpriser. Åpningstider og produksjonsdatasynkronisering er ikke særskilt verifisert.
+
+**Restauranter:** Afghan House, Asiamix, Bambus Byporten, Biryani Express, Curry and Ketchup, Estar Sushi, The Fragrance of the Heart Majorstuen, Fukuya, Gate of India, Gorgonzo, Gregor Pizza, Indi Gastro Bar, Indique Flavours, Jaffna Food Corner, Jordal Haveli, Kryddern, Mr. Fish Colosseum, Pizza Mesteren, Roma Pizza Vinderen, Sushi Rose Majorstua, Verona Pizza, Vinny's Kebab, Wasabi Sushi og Wok, Zeytouna Grill-House.
+
+
 ## Produksjonsbolk 17. oktober 2026 – PR #966
 
 15 nye katalogmanifester er generert fra prissatte, lokasjonsspesifikke Wolt-menyer og valgt etter målrettet livevalidering. Oslo-katalogen øker fra **788 til 803** restauranter ved merge. Av 21 undersøkte kilder fikk 19 Kartverket-adressepunkt; 18 ga teknisk validert menyuttak, én (Stangeriet) ga ingen kanoniske retter, og tre teknisk gyldige menyer ble holdt tilbake etter semantisk vurdering av drikke-/nikotininnhold. De to uavklarte adressene ble også holdt utenfor. Både restaurantidentitet og priser gjelder den dokumenterte Wolt-leveringskilden. Åpningstider og synkronisering til produksjonsdatabasen er ikke særskilt bekreftet. Ingen ekstra full katalogregresjon er planlagt.

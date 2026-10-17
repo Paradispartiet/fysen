@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "vinnys-kebab-storgata-oslo",
+    "name": "Vinny's Kebab",
+    "websiteUrl": null,
+    "address": "Storgata 32, 0184 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91416271135265,
+    "longitude": 10.752914934865391
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/vinnys-kebab",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hamburger 100g",
+      "Kyllingburger",
+      "Kebab i Pita",
+      "Kylling Shawarma",
+      "Fish'n Chips",
+      "Kylling Pita",
+      "Hamburger 250g",
+      "Fish & Chips Tallerken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hamburger 100g",
+        "priceMinor": 12200
+      },
+      {
+        "name": "Kyllingburger",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Kebab i Pita",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Kylling Shawarma",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Fish'n Chips",
+        "priceMinor": 17800
+      },
+      {
+        "name": "Kylling Pita",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Hamburger 250g",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Fish & Chips Tallerken",
+        "priceMinor": 17800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

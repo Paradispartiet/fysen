@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kryddern-oslo",
+    "name": "Kryddern",
+    "websiteUrl": null,
+    "address": "Thygesons vei 40, 0667 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.910102214434346,
+    "longitude": 10.83074560279377
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/kryddern",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 29,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "1. Samosa",
+      "5. Butter Chicken",
+      "9. Chicken Korma",
+      "13. Lam Korma",
+      "18. Chicken Garlic Tikka",
+      "25. Butter Paneer",
+      "29. Garlic Nan",
+      "EXTRA RIS"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "1. Samosa",
+        "priceMinor": 7900
+      },
+      {
+        "name": "5. Butter Chicken",
+        "priceMinor": 26500
+      },
+      {
+        "name": "9. Chicken Korma",
+        "priceMinor": 25900
+      },
+      {
+        "name": "13. Lam Korma",
+        "priceMinor": 26900
+      },
+      {
+        "name": "18. Chicken Garlic Tikka",
+        "priceMinor": 27900
+      },
+      {
+        "name": "25. Butter Paneer",
+        "priceMinor": 25900
+      },
+      {
+        "name": "29. Garlic Nan",
+        "priceMinor": 5900
+      },
+      {
+        "name": "EXTRA RIS",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

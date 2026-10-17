@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "gorgonzo-oslo",
+    "name": "Gorgonzo",
+    "websiteUrl": null,
+    "address": "Waldemar Thranes gate 32A, 0171 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.924975632851364,
+    "longitude": 10.74260526077912
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/gorgonzo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 103,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "15. Salami Picante (Stor)",
+      "2. Capricciosa (Medium)",
+      "37. Paganini (Medium)",
+      "44. Parma E Pomodori Secchi (Medium)",
+      "16. Salsiccia (Stor)",
+      "47. Acapulco (Medium)",
+      "49. Kebabpizza nr. 2 (Stor)",
+      "5. Bislett Spesial (Stor)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "15. Salami Picante (Stor)",
+        "priceMinor": 34500
+      },
+      {
+        "name": "2. Capricciosa (Medium)",
+        "priceMinor": 19500
+      },
+      {
+        "name": "37. Paganini (Medium)",
+        "priceMinor": 23500
+      },
+      {
+        "name": "44. Parma E Pomodori Secchi (Medium)",
+        "priceMinor": 23500
+      },
+      {
+        "name": "16. Salsiccia (Stor)",
+        "priceMinor": 32500
+      },
+      {
+        "name": "47. Acapulco (Medium)",
+        "priceMinor": 21000
+      },
+      {
+        "name": "49. Kebabpizza nr. 2 (Stor)",
+        "priceMinor": 34000
+      },
+      {
+        "name": "5. Bislett Spesial (Stor)",
+        "priceMinor": 33500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

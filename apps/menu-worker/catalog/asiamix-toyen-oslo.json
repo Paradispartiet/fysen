@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "asiamix-toyen-oslo",
+    "name": "Asiamix",
+    "websiteUrl": null,
+    "address": "Åkebergveien 38B, 0650 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.909867708845184,
+    "longitude": 10.77566752022834
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/asiamix2021",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 38,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "1. Liten Sushi",
+      "6. Familie Combo",
+      "12. Spicy Kamskjell Maki",
+      "17. Spicy Tempura Scampi Maki",
+      "22. Green Dragon Maki",
+      "27. Asiamix Vårruller",
+      "33. Pad Thai",
+      "Wakame/Sjøgress"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "1. Liten Sushi",
+        "priceMinor": 13900
+      },
+      {
+        "name": "6. Familie Combo",
+        "priceMinor": 79900
+      },
+      {
+        "name": "12. Spicy Kamskjell Maki",
+        "priceMinor": 10900
+      },
+      {
+        "name": "17. Spicy Tempura Scampi Maki",
+        "priceMinor": 10900
+      },
+      {
+        "name": "22. Green Dragon Maki",
+        "priceMinor": 13900
+      },
+      {
+        "name": "27. Asiamix Vårruller",
+        "priceMinor": 7900
+      },
+      {
+        "name": "33. Pad Thai",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Wakame/Sjøgress",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

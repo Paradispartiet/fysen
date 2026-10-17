@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sushi-rose-majorstua-oslo",
+    "name": "Sushi Rose Majorstua",
+    "websiteUrl": null,
+    "address": "Sporveisgata 12, 0354 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92551401022955,
+    "longitude": 10.7270798061288
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/sushi-rose-majorstua-a",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 70,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "12A. Popcorn Philadelphia (10 biter)",
+      "Chilimajones",
+      "10 Laks Nigiri",
+      "18E. Tempura Mango (8 biter)",
+      "5. Sushi Drøm (26 biter)",
+      "7. Partybrett (60 biter)",
+      "17. Kylling Maki (8 biter)",
+      "1B. Maki De Luxe (12 biter)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "12A. Popcorn Philadelphia (10 biter)",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Chilimajones",
+        "priceMinor": 3000
+      },
+      {
+        "name": "10 Laks Nigiri",
+        "priceMinor": 24900
+      },
+      {
+        "name": "18E. Tempura Mango (8 biter)",
+        "priceMinor": 10900
+      },
+      {
+        "name": "5. Sushi Drøm (26 biter)",
+        "priceMinor": 41900
+      },
+      {
+        "name": "7. Partybrett (60 biter)",
+        "priceMinor": 84900
+      },
+      {
+        "name": "17. Kylling Maki (8 biter)",
+        "priceMinor": 9900
+      },
+      {
+        "name": "1B. Maki De Luxe (12 biter)",
+        "priceMinor": 13900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

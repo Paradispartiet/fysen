@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "fragrance-of-the-heart-majorstuen-oslo",
+    "name": "The Fragrance of the Heart Majorstuen",
+    "websiteUrl": null,
+    "address": "Majorstuveien 33A, 0367 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.927445995751505,
+    "longitude": 10.715859224146493
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/the-fragrance-of-the-heart-majorstuen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 19,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bliss Burger",
+      "Raw Brownie",
+      "Raw Cake",
+      "Raw Caramel Slice",
+      "Soup of The Day Small",
+      "Black Bean Burger",
+      "Burrito Delight",
+      "Banana Bread"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bliss Burger",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Raw Brownie",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Raw Cake",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Raw Caramel Slice",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Soup of The Day Small",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Black Bean Burger",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Burrito Delight",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Banana Bread",
+        "priceMinor": 5900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

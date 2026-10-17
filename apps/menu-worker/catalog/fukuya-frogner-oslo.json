@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "fukuya-frogner-oslo",
+    "name": "Fukuya",
+    "websiteUrl": null,
+    "address": "Frognerveien 58, 0266 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92232262222121,
+    "longitude": 10.704395294145112
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/fukuya-frogner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 60,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "33.Sprøstekt oksekjøtt 🌶️",
+      "11. Cha Siu & And",
+      "20. Sichuan Gong Bao Scampi 🌶",
+      "Laks Nigiri",
+      "Laks Futo",
+      "Extra Andekjøtt",
+      "Salmon Bowl",
+      "34. La Zi Chicken 🌶️"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "33.Sprøstekt oksekjøtt 🌶️",
+        "priceMinor": 29900
+      },
+      {
+        "name": "11. Cha Siu & And",
+        "priceMinor": 28900
+      },
+      {
+        "name": "20. Sichuan Gong Bao Scampi 🌶",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Laks Nigiri",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Laks Futo",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Extra Andekjøtt",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Salmon Bowl",
+        "priceMinor": 27900
+      },
+      {
+        "name": "34. La Zi Chicken 🌶️",
+        "priceMinor": 29900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

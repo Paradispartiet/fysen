@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "wasabi-sushi-wok-toyen-oslo",
+    "name": "Wasabi Sushi og Wok",
+    "websiteUrl": null,
+    "address": "Hagegata 22, 0653 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.914420834487764,
+    "longitude": 10.775438542801346
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/wasabi-sushi-og-wok",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 70,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Misosuppe",
+      "9.Familie Meny - 56 biter",
+      "17. Spicy Laks med Kimchi",
+      "32C. Husets Spesial Laksemaki (8 biter)",
+      "40. Tofu",
+      "46. Chop Suey",
+      "Rekechips",
+      "Jasmin Ris"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Misosuppe",
+        "priceMinor": 10900
+      },
+      {
+        "name": "9.Familie Meny - 56 biter",
+        "priceMinor": 103900
+      },
+      {
+        "name": "17. Spicy Laks med Kimchi",
+        "priceMinor": 15900
+      },
+      {
+        "name": "32C. Husets Spesial Laksemaki (8 biter)",
+        "priceMinor": 17900
+      },
+      {
+        "name": "40. Tofu",
+        "priceMinor": 14900
+      },
+      {
+        "name": "46. Chop Suey",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Rekechips",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Jasmin Ris",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mr-fish-colosseum-oslo",
+    "name": "Mr. Fish Colosseum",
+    "websiteUrl": null,
+    "address": "Sørkedalsveien 10, 0369 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.930728937159806,
+    "longitude": 10.709962423944258
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/mr-fish-colosseum",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 29,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Banh Maki - TIKTOK VIRAL",
+      "Liten Sashimi",
+      "California Maki",
+      "Kamskjell Maki",
+      "Mrs. Fish Maki",
+      "Aburi Nigiri Tunfisk",
+      "Edamamebønner med salt",
+      "Salmon lovers"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Banh Maki - TIKTOK VIRAL",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Liten Sashimi",
+        "priceMinor": 13400
+      },
+      {
+        "name": "California Maki",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Kamskjell Maki",
+        "priceMinor": 11000
+      },
+      {
+        "name": "Mrs. Fish Maki",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Aburi Nigiri Tunfisk",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Edamamebønner med salt",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Salmon lovers",
+        "priceMinor": 14900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "roma-pizza-vinderen-oslo",
+    "name": "Roma Pizza Vinderen",
+    "websiteUrl": null,
+    "address": "Holmenveien 11, 0374 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94341088847431,
+    "longitude": 10.699793953147303
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/roma-pizza-vinderen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 95,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "100. Skinkepizza",
+      "113. familie pizza",
+      "128. Roma stor",
+      "138. Baconcheese",
+      "155. Chicken Nugget's Tallerken",
+      "168. Falafel I Pita",
+      "187. Barnepizza",
+      "Medium kebabsaus"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "100. Skinkepizza",
+        "priceMinor": 17900
+      },
+      {
+        "name": "113. familie pizza",
+        "priceMinor": 19900
+      },
+      {
+        "name": "128. Roma stor",
+        "priceMinor": 29900
+      },
+      {
+        "name": "138. Baconcheese",
+        "priceMinor": 15000
+      },
+      {
+        "name": "155. Chicken Nugget's Tallerken",
+        "priceMinor": 22900
+      },
+      {
+        "name": "168. Falafel I Pita",
+        "priceMinor": 12900
+      },
+      {
+        "name": "187. Barnepizza",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Medium kebabsaus",
+        "priceMinor": 3500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
