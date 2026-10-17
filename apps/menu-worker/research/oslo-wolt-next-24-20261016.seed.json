@@ -398,62 +398,6 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "zorba-barcode-street-food-oslo",
-        "name": "Zorba – Barcode Street Food",
-        "websiteUrl": null,
-        "address": "Dronning Eufemias gate 14, 0191 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://wolt.com/en/nor/oslo/restaurant/zorba-barcode-street-food",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-10-17",
-          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "zorba-oslo-street-food-oslo",
-        "name": "Zorba – Oslo Street Food",
-        "websiteUrl": null,
-        "address": "Torggata 16B, 0181 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://wolt.com/en/nor/oslo/restaurant/zorba-oslo-street-food",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-10-17",
-          "note": "Kandidat for samlet live-menyinnhenting. Restaurantidentitet, adresse og Wolt-meny må valideres mot faktiske kilder; ingen pris, driftsstatus eller menyuttrekk er attestert før proof. Wolt-leveringspriser er ikke priser ved restaurantbordet."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
         "slug": "golden-gyros-parkveien-oslo",
         "name": "Golden Gyros",
         "websiteUrl": null,

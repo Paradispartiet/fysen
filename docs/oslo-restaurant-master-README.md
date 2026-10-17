@@ -1,10 +1,10 @@
 # Oslo-restauranter — samlet arbeidsliste (13. oktober 2026)
 
-## Produksjonsbolk 17. oktober 2026 – 15 nye prissatte restauranter
+## Produksjonsbolk 17. oktober 2026 – 13 nye prissatte restauranter
 
-PR #965 legger til **15 selvstendige Oslo-restauranter** i canonical katalog og oppdaterer samme hovedliste fra **775 til 790 katalogposter**. I alt 22 kilder ble forsøkt etter deduplisering; 20 bestod Kartverket-/liveinntak, og fem av disse ble holdt tilbake ved semantisk vurdering av rettsnavn/tilbehør/drikke. To kilder ble avvist på uavklart Kartverket-adresse. Prisene er dokumentert fra Wolt-leveringsmenyer og er ikke attestert som spisesalpriser. Åpningstider og produksjonsdatabasesynkronisering er ikke særskilt verifisert.
+PR #965 legger til **13 selvstendige Oslo-restauranter** i canonical katalog og oppdaterer samme hovedliste fra **775 til 788 katalogposter**. I alt 22 kilder ble forsøkt etter deduplisering; 20 bestod Kartverket-/liveinntak, og sju av disse ble holdt tilbake ved semantisk vurdering eller kildeendringer (inkludert begge Zorba-kildene). To kilder ble avvist på uavklart Kartverket-adresse. Prisene er dokumentert fra Wolt-leveringsmenyer og er ikke attestert som spisesalpriser. Åpningstider og produksjonsdatabasesynkronisering er ikke særskilt verifisert.
 
-**Publisert i denne bolken:** Big Bite Byporten, Digg Pizza Grønland, Eckers Løkka, Eckers Ullevål, FALAFEL n' JUICE Majorstuen, Golden Gyros, Injera Restaurant, Jordbærpikene Byporten, Kitchen Afrique, Pronto di Olivia Storo, Tasty Thai Bislett, Thai Food Frogner, Undercover Burger, Zorba – Barcode Street Food, Zorba – Oslo Street Food. Detaljene og rett-/prisassertasjonene ligger i katalogmanifestene. CI og målrettet endringsvalidering er publiseringsportene; ingen full katalogregresjon i denne bolken.
+**Publisert i denne bolken:** Big Bite Byporten, Digg Pizza Grønland, Eckers Løkka, Eckers Ullevål, FALAFEL n' JUICE Majorstuen, Golden Gyros, Injera Restaurant, Jordbærpikene Byporten, Kitchen Afrique, Pronto di Olivia Storo, Tasty Thai Bislett, Thai Food Frogner, Undercover Burger, Detaljene og rett-/prisassertasjonene ligger i katalogmanifestene. CI og målrettet endringsvalidering er publiseringsportene; ingen full katalogregresjon i denne bolken.
 
 
 ## Produksjonsbolk 16. oktober 2026 – 18 prissatte Wolt-restauranter
