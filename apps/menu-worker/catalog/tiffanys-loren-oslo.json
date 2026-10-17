@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "tiffanys-loren-oslo",
+    "name": "Tiffany's Løren",
+    "websiteUrl": null,
+    "address": "Peter Møllers vei 5A, 0585 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93030037463347,
+    "longitude": 10.792616403330054
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/tiffanys-lren",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 45,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny med faktiske rett-/prisassertasjoner generert og målrettet livevalidert i PR #966 2026-10-17. Prisene er leveringspriser og åpningstider er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hjemmelaget brownie",
+      "Jalapeno Punch",
+      "Caesarburger",
+      "🌱 Tokyo Tofubowl",
+      "Tofu Tonkatsu Snacks",
+      "🌱 Ubud Tofu Sataybowl",
+      "Kids Chicken & Fries",
+      "Korean Beef Bowl"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hjemmelaget brownie",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Jalapeno Punch",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Caesarburger",
+        "priceMinor": 19400
+      },
+      {
+        "name": "🌱 Tokyo Tofubowl",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Tofu Tonkatsu Snacks",
+        "priceMinor": 8900
+      },
+      {
+        "name": "🌱 Ubud Tofu Sataybowl",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Kids Chicken & Fries",
+        "priceMinor": 9300
+      },
+      {
+        "name": "Korean Beef Bowl",
+        "priceMinor": 24900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

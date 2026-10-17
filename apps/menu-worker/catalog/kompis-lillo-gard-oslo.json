@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kompis-lillo-gard-oslo",
+    "name": "Kompis Lillo Gård",
+    "websiteUrl": null,
+    "address": "Sandakerveien 102D, 0484 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9447559102122,
+    "longitude": 10.77156085055653
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/kompis-lillo-grd",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 69,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny med faktiske rett-/prisassertasjoner generert og målrettet livevalidert i PR #966 2026-10-17. Prisene er leveringspriser og åpningstider er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "BBQ-saus",
+      "Veggis - stor",
+      "Kompis",
+      "Tzatziki",
+      "No Veggie Today",
+      "Trøffel Fries",
+      "Brooklyn Special FX",
+      "Smokey"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "BBQ-saus",
+        "priceMinor": 3600
+      },
+      {
+        "name": "Veggis - stor",
+        "priceMinor": 39500
+      },
+      {
+        "name": "Kompis",
+        "priceMinor": 19200
+      },
+      {
+        "name": "Tzatziki",
+        "priceMinor": 3600
+      },
+      {
+        "name": "No Veggie Today",
+        "priceMinor": 25100
+      },
+      {
+        "name": "Trøffel Fries",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Brooklyn Special FX",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Smokey",
+        "priceMinor": 19800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

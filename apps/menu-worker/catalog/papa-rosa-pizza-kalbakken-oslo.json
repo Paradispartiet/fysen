@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "papa-rosa-pizza-kalbakken-oslo",
+    "name": "Papa Rosa Pizza Kalbakken",
+    "websiteUrl": null,
+    "address": "Nedre Kalbakkvei 4, 0950 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.95096841023619,
+    "longitude": 10.8672902261799
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/papa-rosa-pizza-kalbakken",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 56,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny med faktiske rett-/prisassertasjoner generert og målrettet livevalidert i PR #966 2026-10-17. Prisene er leveringspriser og åpningstider er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Vegetar 🌱",
+      "Mexicaner",
+      "Knock Out",
+      "Kylling Halal",
+      "Allpalino",
+      "Liten Kebab i Pitabrød",
+      "Kebab m/ Brus",
+      "Kylling Nuggets"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Vegetar 🌱",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Mexicaner",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Knock Out",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Kylling Halal",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Allpalino",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Liten Kebab i Pitabrød",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Kebab m/ Brus",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Kylling Nuggets",
+        "priceMinor": 15900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

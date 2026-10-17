@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kebab-kompaniet-stovner-oslo",
+    "name": "Kebab Kompaniet Stovner",
+    "websiteUrl": null,
+    "address": "Stovner Senter 3, 0985 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.96214559760663,
+    "longitude": 10.924523629568801
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/kebab-kompaniet-stovner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 44,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny med faktiske rett-/prisassertasjoner generert og målrettet livevalidert i PR #966 2026-10-17. Prisene er leveringspriser og åpningstider er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Stor Tunfisk Pizza",
+      "Standard Tunfisk Pizza",
+      "Mix Kebab Biff",
+      "Kebabsalat",
+      "Beirut Kylling",
+      "Maestro Pizza",
+      "Mix Tallerken",
+      "Mix Pizza"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Stor Tunfisk Pizza",
+        "priceMinor": 32000
+      },
+      {
+        "name": "Standard Tunfisk Pizza",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Mix Kebab Biff",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Kebabsalat",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Beirut Kylling",
+        "priceMinor": 16000
+      },
+      {
+        "name": "Maestro Pizza",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Mix Tallerken",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Mix Pizza",
+        "priceMinor": 24900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

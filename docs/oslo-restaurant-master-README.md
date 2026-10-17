@@ -1,5 +1,12 @@
 # Oslo-restauranter — samlet arbeidsliste (13. oktober 2026)
 
+## Produksjonsbolk 17. oktober 2026 – PR #966
+
+15 nye katalogmanifester er generert fra prissatte, lokasjonsspesifikke Wolt-menyer og valgt etter målrettet livevalidering. Oslo-katalogen øker fra **788 til 803** restauranter ved merge. Av 21 undersøkte kilder fikk 19 Kartverket-adressepunkt; 18 ga teknisk validert menyuttak, én (Stangeriet) ga ingen kanoniske retter, og tre teknisk gyldige menyer ble holdt tilbake etter semantisk vurdering av drikke-/nikotininnhold. De to uavklarte adressene ble også holdt utenfor. Både restaurantidentitet og priser gjelder den dokumenterte Wolt-leveringskilden. Åpningstider og synkronisering til produksjonsdatabasen er ikke særskilt bekreftet. Ingen ekstra full katalogregresjon er planlagt.
+
+**Publiserte steder i bolken:** 88 Street Burger Storgata, Alibaba Grill & Steak House Stovner, Döner Berlin Oslo, Dr. Crunchy Kiellands, Flamenco Pizza Ammerud, Haveli Tandoori, Jønk Frysja, Jønk Grorud, Kebab Kompaniet Stovner, Kompis Lillo Gård, Linderud Pizza & Grill, Papa Rosa Pizza Kalbakken, Tasty Thai Grønland, Tiffany's Løren, Vestlibua.
+
+
 ## Produksjonsbolk 17. oktober 2026 – 13 nye prissatte restauranter
 
 PR #965 legger til **13 selvstendige Oslo-restauranter** i canonical katalog og oppdaterer samme hovedliste fra **775 til 788 katalogposter**. I alt 22 kilder ble forsøkt etter deduplisering; 20 bestod Kartverket-/liveinntak, og sju av disse ble holdt tilbake ved semantisk vurdering eller kildeendringer (inkludert begge Zorba-kildene). To kilder ble avvist på uavklart Kartverket-adresse. Prisene er dokumentert fra Wolt-leveringsmenyer og er ikke attestert som spisesalpriser. Åpningstider og produksjonsdatabasesynkronisering er ikke særskilt verifisert.

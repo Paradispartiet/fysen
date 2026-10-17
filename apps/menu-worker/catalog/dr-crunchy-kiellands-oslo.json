@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dr-crunchy-kiellands-oslo",
+    "name": "Dr. Crunchy Kiellands",
+    "websiteUrl": null,
+    "address": "Waldemar Thranes gate 63A, 0173 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.927581463388805,
+    "longitude": 10.748958098572125
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/dr-crunchy",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 34,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny med faktiske rett-/prisassertasjoner generert og målrettet livevalidert i PR #966 2026-10-17. Prisene er leveringspriser og åpningstider er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "5 mozarella sticks",
+      "Classic Fries",
+      "Crunchy Burger",
+      "Strips",
+      "Box 8 strips + 8 wings",
+      "Crunchy Wrap Korean",
+      "Croissant Sweet Chili",
+      "BURGER DEAL"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "5 mozarella sticks",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Classic Fries",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Crunchy Burger",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Strips",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Box 8 strips + 8 wings",
+        "priceMinor": 36900
+      },
+      {
+        "name": "Crunchy Wrap Korean",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Croissant Sweet Chili",
+        "priceMinor": 8900
+      },
+      {
+        "name": "BURGER DEAL",
+        "priceMinor": 21000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

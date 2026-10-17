@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "88-street-burger-storgata-oslo",
+    "name": "88 Street Burger Storgata",
+    "websiteUrl": null,
+    "address": "Storgata 8, 0155 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91310618759989,
+    "longitude": 10.749083571336639
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/88-street-burger-storgata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 42,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny med faktiske rett-/prisassertasjoner generert og målrettet livevalidert i PR #966 2026-10-17. Prisene er leveringspriser og åpningstider er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hash Browns",
+      "Chili Cheese Burger Meal",
+      "Crunchy Mexican 🌶️ Meny",
+      "Tex Cheese Meny",
+      "Cheese Burger",
+      "Truffle Mayo Dipp",
+      "Truffle 88",
+      "Chili Cheese Burger"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hash Browns",
+        "priceMinor": 10800
+      },
+      {
+        "name": "Chili Cheese Burger Meal",
+        "priceMinor": 29800
+      },
+      {
+        "name": "Crunchy Mexican 🌶️ Meny",
+        "priceMinor": 30800
+      },
+      {
+        "name": "Tex Cheese Meny",
+        "priceMinor": 28800
+      },
+      {
+        "name": "Cheese Burger",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Truffle Mayo Dipp",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Truffle 88",
+        "priceMinor": 21800
+      },
+      {
+        "name": "Chili Cheese Burger",
+        "priceMinor": 20800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

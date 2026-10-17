@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "flamenco-pizza-ammerud-oslo",
+    "name": "Flamenco Pizza Ammerud",
+    "websiteUrl": null,
+    "address": "Ammerudveien 19E, 0958 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.95874546678706,
+    "longitude": 10.87123482759294
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/flamenco-pizza-ammerud",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 94,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny med faktiske rett-/prisassertasjoner generert og målrettet livevalidert i PR #966 2026-10-17. Prisene er leveringspriser og åpningstider er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "11. Kyllingpizza",
+      "62. Bacon burger",
+      "17. Kebabpizza",
+      "Fiske Burger Tallerken",
+      "Chicken Nuggets",
+      "Bacon Burger Tallerken",
+      "37. Roma",
+      "Kylling Shawarma Tallerken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "11. Kyllingpizza",
+        "priceMinor": 19900
+      },
+      {
+        "name": "62. Bacon burger",
+        "priceMinor": 12900
+      },
+      {
+        "name": "17. Kebabpizza",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Fiske Burger Tallerken",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Chicken Nuggets",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Bacon Burger Tallerken",
+        "priceMinor": 18900
+      },
+      {
+        "name": "37. Roma",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Kylling Shawarma Tallerken",
+        "priceMinor": 18900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

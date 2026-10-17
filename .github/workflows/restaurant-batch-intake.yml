@@ -483,7 +483,7 @@ jobs:
           NODE
           echo "resolved=$resolved" >> "$GITHUB_OUTPUT"
           echo "report=$report" >> "$GITHUB_OUTPUT"
-          echo "allow_partial=$(node -e 'const x=require(process.argv[1]);console.log(x.allowPartialIntake===true)' "$SEED_PATH")" >> "$GITHUB_OUTPUT"
+          echo "allow_partial=$(node -e 'const fs=require("node:fs");const x=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));console.log(x.allowPartialIntake===true)' "$SEED_PATH")" >> "$GITHUB_OUTPUT"
 
       - name: Generate candidates from live menu sources
         id: intake

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "vestlibua-oslo",
+    "name": "Vestlibua",
+    "websiteUrl": null,
+    "address": "Vestlisvingen 51, 0986 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.96752571540424,
+    "longitude": 10.926985706624722
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/vestlibua",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 30,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny med faktiske rett-/prisassertasjoner generert og målrettet livevalidert i PR #966 2026-10-17. Prisene er leveringspriser og åpningstider er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "1. Hawaii",
+      "10. Vestlibua Spesial",
+      "Kyllingburger",
+      "Kylling Big Meal",
+      "12. Super Pizza",
+      "8. Vegetarina 🌱",
+      "Kyllingsnadder Tallerken",
+      "Pommes Frites"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "1. Hawaii",
+        "priceMinor": 26900
+      },
+      {
+        "name": "10. Vestlibua Spesial",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Kyllingburger",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Kylling Big Meal",
+        "priceMinor": 25900
+      },
+      {
+        "name": "12. Super Pizza",
+        "priceMinor": 26900
+      },
+      {
+        "name": "8. Vegetarina 🌱",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Kyllingsnadder Tallerken",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Pommes Frites",
+        "priceMinor": 6500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
