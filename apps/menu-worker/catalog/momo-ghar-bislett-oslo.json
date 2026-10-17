@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "momo-ghar-bislett-oslo",
+    "name": "MoMo Ghar",
+    "websiteUrl": null,
+    "address": "Pilestredet 63C, 0350 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92403185327468,
+    "longitude": 10.731069476100554
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/momo-ghar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 17,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner ble generert og bestod samlet livevalidering i PR #969 den 17. oktober 2026. Representative påstander er redaksjonelt avgrenset til matretter, uten drikke/krydder. Leveringspriser kan avvike fra bordprisene. Åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Dampet MO:MO 🌿🍗",
+      "Paneer Chili 🌿",
+      "Sadheko MO:MO 🌿🍗",
+      "Kylling Chowmein 🍗",
+      "Jhol MO:MO 🌿🍗",
+      "Kylling Chili 🍗",
+      "Chili MO:MO 🌿🍗",
+      "Kyllingnuggets og pommes frites 🍗"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Dampet MO:MO 🌿🍗",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Paneer Chili 🌿",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Sadheko MO:MO 🌿🍗",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Kylling Chowmein 🍗",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Jhol MO:MO 🌿🍗",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Kylling Chili 🍗",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Chili MO:MO 🌿🍗",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Kyllingnuggets og pommes frites 🍗",
+        "priceMinor": 15900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

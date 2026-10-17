@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "umami-sushi-oslo",
+    "name": "Umami Sushi Oslo",
+    "websiteUrl": null,
+    "address": "Langgata 2A, 0566 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9239798303477,
+    "longitude": 10.768155733761917
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/umami-sushi-oslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 51,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner ble generert og bestod samlet livevalidering i PR #969 den 17. oktober 2026. Representative påstander er redaksjonelt avgrenset til matretter, uten drikke/krydder. Leveringspriser kan avvike fra bordprisene. Åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Scampiboller – 5 stk",
+      "3. Stor Sushi – 20 Biter",
+      "Scampi Nigiri - 2 Biter",
+      "21. California - 8 biter",
+      "Tempura Laks Maki",
+      "Tunfisk Nigiri - 2 Biter",
+      "Laks Nigiri - 2 Biter",
+      "Yakitori"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Scampiboller – 5 stk",
+        "priceMinor": 11000
+      },
+      {
+        "name": "3. Stor Sushi – 20 Biter",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Scampi Nigiri - 2 Biter",
+        "priceMinor": 5500
+      },
+      {
+        "name": "21. California - 8 biter",
+        "priceMinor": 11000
+      },
+      {
+        "name": "Tempura Laks Maki",
+        "priceMinor": 13000
+      },
+      {
+        "name": "Tunfisk Nigiri - 2 Biter",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Laks Nigiri - 2 Biter",
+        "priceMinor": 5000
+      },
+      {
+        "name": "Yakitori",
+        "priceMinor": 29000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

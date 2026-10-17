@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "habibi-restaurant-kafe-oslo",
+    "name": "Habibi Restaurant & Kafé",
+    "websiteUrl": null,
+    "address": "Møllergata 10, 0179 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.914399657935014,
+    "longitude": 10.747041052233127
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/habibi-restaurant-og-kafe",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 18,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner ble generert og bestod samlet livevalidering i PR #969 den 17. oktober 2026. Representative påstander er redaksjonelt avgrenset til matretter, uten drikke/krydder. Leveringspriser kan avvike fra bordprisene. Åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kjøtt Mezah",
+      "Kylling Tawok",
+      "Hummus",
+      "Vegetar Mezah",
+      "Dolma",
+      "Kyllinggryte",
+      "Lam-kylling kombo",
+      "Mashawi"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kjøtt Mezah",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Kylling Tawok",
+        "priceMinor": 28000
+      },
+      {
+        "name": "Hummus",
+        "priceMinor": 7000
+      },
+      {
+        "name": "Vegetar Mezah",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Dolma",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Kyllinggryte",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Lam-kylling kombo",
+        "priceMinor": 16000
+      },
+      {
+        "name": "Mashawi",
+        "priceMinor": 28900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -648,5 +648,30 @@
       "assertionCount": 8,
       "forbiddenDishNames": []
     }
-  ]
+  ],
+  "archivedProductionStatus": {
+    "sourcePr": 969,
+    "intakeRunId": 39050547417,
+    "requestedCount": 23,
+    "geocodedCount": 19,
+    "generatedCandidateCount": 14,
+    "publishedCount": 11,
+    "deferredCount": 12,
+    "publishedSlugs": [
+      "digg-pizza-manglerud-oslo",
+      "habibi-restaurant-kafe-oslo",
+      "joemi-sushi-wok-lambertseter-oslo",
+      "momo-ghar-bislett-oslo",
+      "oslo-sandwich-shop-maridalsveien-oslo",
+      "pizza-baronen-lilleaker-oslo",
+      "roast-smash-burger-oslo",
+      "roll-sushi-majorstuen-oslo",
+      "sushi-og-thai-takeaway-torshov-oslo",
+      "umami-sushi-oslo",
+      "zam-zam-hasle-oslo"
+    ],
+    "note": "Three address resolution failures, one catalog collision, five extraction failures, and three editorial deferrals (two menu extraction leaks, one uncertain identity). Clean subset only; original seed moved to docs/research to avoid redundant CI intake.",
+    "pricing": "Wolt delivery prices, not verified dine-in prices",
+    "productionDatabase": "not separately verified"
+  }
 }

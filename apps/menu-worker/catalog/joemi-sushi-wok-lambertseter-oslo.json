@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "joemi-sushi-wok-lambertseter-oslo",
+    "name": "Joemi Sushi & Wok",
+    "websiteUrl": null,
+    "address": "Mikrobølgen 27, 1150 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.86770690050462,
+    "longitude": 10.81301598266857
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/joemi-sushi-wok",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 81,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner ble generert og bestod samlet livevalidering i PR #969 den 17. oktober 2026. Representative påstander er redaksjonelt avgrenset til matretter, uten drikke/krydder. Leveringspriser kan avvike fra bordprisene. Åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "1. Stekt Ris med biff",
+      "Kamskjell Nigiri",
+      "66. Sumo Futo Maki",
+      "49. Rainbow Maki",
+      "Edamame",
+      "16. Frityrstekt Scampi 3 Stk",
+      "39. California Maki",
+      "41. Scampi Tempura Maki"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "1. Stekt Ris med biff",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Kamskjell Nigiri",
+        "priceMinor": 3000
+      },
+      {
+        "name": "66. Sumo Futo Maki",
+        "priceMinor": 18900
+      },
+      {
+        "name": "49. Rainbow Maki",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Edamame",
+        "priceMinor": 7900
+      },
+      {
+        "name": "16. Frityrstekt Scampi 3 Stk",
+        "priceMinor": 8900
+      },
+      {
+        "name": "39. California Maki",
+        "priceMinor": 11500
+      },
+      {
+        "name": "41. Scampi Tempura Maki",
+        "priceMinor": 11500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
