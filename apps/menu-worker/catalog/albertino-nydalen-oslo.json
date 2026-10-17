@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "albertino-nydalen-oslo",
+    "name": "Albertino",
+    "websiteUrl": null,
+    "address": "Sandakerveien 106, 0484 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94521737396824,
+    "longitude": 10.771975760973628
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/albertino",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 25,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner er generert og bestod målrettet livevalidering i samlet PR #968 den 17. oktober 2026. Leveringspriser kan avvike fra restaurantbordet; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pinsa Bianco",
+      "Classico",
+      "Tiramisu",
+      "Croissant med sjokolade & pistasjkrem",
+      "Gustoso",
+      "Parma Bucatini",
+      "Tunfisksalat",
+      "Kylling Alfredo"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pinsa Bianco",
+        "priceMinor": 21300
+      },
+      {
+        "name": "Classico",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Tiramisu",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Croissant med sjokolade & pistasjkrem",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Gustoso",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Parma Bucatini",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Tunfisksalat",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Kylling Alfredo",
+        "priceMinor": 22900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

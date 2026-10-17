@@ -1,0 +1,749 @@
+{
+  "version": 1,
+  "allowPartialIntake": true,
+  "outputDirectory": "candidates/oslo-wolt-next-26-20261017",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dominos-pizza-grorud-oslo",
+        "name": "Domino's Pizza Grorud",
+        "websiteUrl": null,
+        "address": "Bergensveien 2-4, 0580 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dominos-pizza-grorud",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dominos-pizza-pilestredet-oslo",
+        "name": "Domino's Pizza Pilestredet",
+        "websiteUrl": null,
+        "address": "Pilestredet 57, 0350 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dominos-pilestredet",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dominos-pizza-grunerlokka-oslo",
+        "name": "Domino's Pizza Grünerløkka",
+        "websiteUrl": null,
+        "address": "Thorvald Meyers gate 72, 0552 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dominos-grnerlkka",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dominos-pizza-majorstuen-oslo",
+        "name": "Domino's Pizza Majorstuen",
+        "websiteUrl": null,
+        "address": "Sørkedalsveien 9, 0369 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dominos-pizza-majorstuen",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dominos-pizza-helsfyr-oslo",
+        "name": "Domino's Pizza Helsfyr",
+        "websiteUrl": null,
+        "address": "Strømsveien 96, 0663 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dominos-pizza-helsfyr",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dominos-pizza-loren-oslo",
+        "name": "Domino's Pizza Løren",
+        "websiteUrl": null,
+        "address": "Lørenveien 50, 0580 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dominos-pizza-lren",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dominos-pizza-ulleval-oslo",
+        "name": "Domino's Pizza Ullevål",
+        "websiteUrl": null,
+        "address": "Sognsveien 75A, 0855 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dominos-pizza-ullevl",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dominos-pizza-nydalen-oslo",
+        "name": "Domino's Pizza Nydalen",
+        "websiteUrl": null,
+        "address": "Fernanda Nissens gate 3, 0484 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dominos-pizza-nydalen",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dominos-pizza-skoyen-oslo",
+        "name": "Domino's Pizza Skøyen",
+        "websiteUrl": null,
+        "address": "Engebrets vei 7, 0275 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dominos-pizza-skyen",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dominos-pizza-tveita-oslo",
+        "name": "Domino's Pizza Tveita",
+        "websiteUrl": null,
+        "address": "Tvetenveien 150, 0671 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dominos-pizza-tveita",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dominos-pizza-lambertseter-oslo",
+        "name": "Domino's Pizza Lambertseter",
+        "websiteUrl": null,
+        "address": "Langbølgen 5, 1155 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dominos-pizza-lambertseter",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dominos-pizza-hauketo-oslo",
+        "name": "Domino's Pizza Hauketo",
+        "websiteUrl": null,
+        "address": "Hauketoveien 8, 1266 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dominos-pizza-hauketo",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "burger-king-stovner-senter-oslo",
+        "name": "Burger King Stovner Senter",
+        "websiteUrl": null,
+        "address": "Stovner Senter 3, 0985 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/burger-king-stovner-senter",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "burger-king-mortensrud-oslo",
+        "name": "Burger King Mortensrud",
+        "websiteUrl": null,
+        "address": "Lofsrudveien 6, 1281 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/burger-king-mortensrud",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "burger-king-sater-oslo",
+        "name": "Burger King Sæter",
+        "websiteUrl": null,
+        "address": "Ekebergveien 235, 1162 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/burger-king-ster",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "burger-king-hegdehaugsveien-oslo",
+        "name": "Burger King Hegdehaugsveien",
+        "websiteUrl": null,
+        "address": "Hegdehaugsveien 32, 0352 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/burger-king-hegdehaugsveien",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "tiki-sushi-kalbakken-oslo",
+        "name": "Tiki Sushi",
+        "websiteUrl": null,
+        "address": "Trondheimsveien 391, 0953 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/tiki-sushi",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "marajah-indisk-restaurant-oslo",
+        "name": "Marajah Indisk Restaurant",
+        "websiteUrl": null,
+        "address": "Trondheimsveien 391, 0953 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/marajah-indisk-restaurant",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "sugar-spice-oslo",
+        "name": "Sugar & Spice",
+        "websiteUrl": null,
+        "address": "Bøkkerveien 6, 0579 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/sugar-spice",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "pizzeria-valentino-oslo",
+        "name": "Pizzeria Valentino",
+        "websiteUrl": null,
+        "address": "Trondheimsveien 139A, 0570 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/pizzeria-valentino1",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "karachi-street-food-stovner-oslo",
+        "name": "Karachi Street Food",
+        "websiteUrl": null,
+        "address": "Stovner Senter 3, 0985 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/karachi-street-food",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "koi-sushi-wok-vollebekk-oslo",
+        "name": "Koi Sushi & Wok Vollebekk",
+        "websiteUrl": null,
+        "address": "Midtveien 58, 0598 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/koi-sushi-wok-vollebekk",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "jafs-stovner-oslo",
+        "name": "Jafs Stovner",
+        "websiteUrl": null,
+        "address": "Stovner Senter 3, 0985 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/max-grill",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "smak-av-karachi-oslo",
+        "name": "Smak Av Karachi",
+        "websiteUrl": null,
+        "address": "Raschs vei 49, 1153 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/smak-av-karachi",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "albertino-nydalen-oslo",
+        "name": "Albertino",
+        "websiteUrl": null,
+        "address": "Sandakerveien 106, 0484 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/albertino",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "tasty-grill-pizza-stovner-oslo",
+        "name": "Tasty Grill & Pizza",
+        "websiteUrl": null,
+        "address": "Haavard Martinsens vei 38, 0978 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/tasty-grill-pizza",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Wolt oppgir adresse og individuelt prissatte retter; identitet, koordinater, faktisk prisuttrekk og semantisk menyinnhold må bekreftes i live-inntak. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ],
+  "archivedProductionStatus": {
+    "pr": 968,
+    "initialCandidates": 26,
+    "accepted": 10,
+    "catalogBaseline": 827,
+    "catalogAfter": 837,
+    "deferredReasons": {
+      "geocodeFailures": 4,
+      "oversizeLiveSources": 11,
+      "insufficientUniqueDishes": 1
+    },
+    "note": "Archival source list. The seed is moved out of the active research workflow after final publication to prevent duplicate post-promotion intake. No source not present in catalog has been published."
+  }
+}

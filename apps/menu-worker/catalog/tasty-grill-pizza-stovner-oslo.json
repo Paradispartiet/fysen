@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "tasty-grill-pizza-stovner-oslo",
+    "name": "Tasty Grill & Pizza",
+    "websiteUrl": null,
+    "address": "Haavard Martinsens vei 38, 0978 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.96169730303562,
+    "longitude": 10.910190810835749
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/tasty-grill-pizza",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 109,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner er generert og bestod målrettet livevalidering i samlet PR #968 den 17. oktober 2026. Leveringspriser kan avvike fra restaurantbordet; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "7. Vegetarian Meal (Medium)",
+      "26. Vegetarian Supreme Hot (Stor)",
+      "6. Canon Ball (Stor)",
+      "36. Fly Chicken (Stor)",
+      "5. Golden Special (Medium)",
+      "Kyllingkebab Middag",
+      "9. Your Choice (Stor)",
+      "Døner Pizza (Stor)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "7. Vegetarian Meal (Medium)",
+        "priceMinor": 19900
+      },
+      {
+        "name": "26. Vegetarian Supreme Hot (Stor)",
+        "priceMinor": 27900
+      },
+      {
+        "name": "6. Canon Ball (Stor)",
+        "priceMinor": 27900
+      },
+      {
+        "name": "36. Fly Chicken (Stor)",
+        "priceMinor": 27900
+      },
+      {
+        "name": "5. Golden Special (Medium)",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Kyllingkebab Middag",
+        "priceMinor": 18900
+      },
+      {
+        "name": "9. Your Choice (Stor)",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Døner Pizza (Stor)",
+        "priceMinor": 28900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

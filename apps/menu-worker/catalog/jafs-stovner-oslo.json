@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jafs-stovner-oslo",
+    "name": "Jafs Stovner",
+    "websiteUrl": null,
+    "address": "Stovner Senter 3, 0985 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.96214559760663,
+    "longitude": 10.924523629568801
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/max-grill",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 56,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner er generert og bestod målrettet livevalidering i samlet PR #968 den 17. oktober 2026. Leveringspriser kan avvike fra restaurantbordet; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Nr 2. NORWEGIAN WAY (Halal)",
+      "Deal 4 - Hamburger Meny 200g",
+      "Kylling Kebab Pita liten",
+      "Nr 1. Margherita Pizza",
+      "160g Hamburger tallerken",
+      "Doner i Pita stor",
+      "Hamburger 160g"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Nr 2. NORWEGIAN WAY (Halal)",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Deal 4 - Hamburger Meny 200g",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Kylling Kebab Pita liten",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Nr 1. Margherita Pizza",
+        "priceMinor": 21900
+      },
+      {
+        "name": "160g Hamburger tallerken",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Doner i Pita stor",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Hamburger 160g",
+        "priceMinor": 14900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

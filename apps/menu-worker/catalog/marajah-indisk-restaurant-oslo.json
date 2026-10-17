@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "marajah-indisk-restaurant-oslo",
+    "name": "Marajah Indisk Restaurant",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 391, 0953 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.952359466756505,
+    "longitude": 10.86736849318855
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/marajah-indisk-restaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 56,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner er generert og bestod målrettet livevalidering i samlet PR #968 den 17. oktober 2026. Leveringspriser kan avvike fra restaurantbordet; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Sri Lankan Biff Biriyani",
+      "Tamil Thali Vegetarmat",
+      "Chicken Garlic",
+      "Garlic Lamb",
+      "Lamb Biryani",
+      "Nan Brød",
+      "6. Pepperoni & Ananas",
+      "Egg Dosa"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Sri Lankan Biff Biriyani",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Tamil Thali Vegetarmat",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Chicken Garlic",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Garlic Lamb",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Lamb Biryani",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Nan Brød",
+        "priceMinor": 5400
+      },
+      {
+        "name": "6. Pepperoni & Ananas",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Egg Dosa",
+        "priceMinor": 16900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

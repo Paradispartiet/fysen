@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "tiki-sushi-kalbakken-oslo",
+    "name": "Tiki Sushi",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 391, 0953 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.952359466756505,
+    "longitude": 10.86736849318855
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/tiki-sushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 63,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner er generert og bestod målrettet livevalidering i samlet PR #968 den 17. oktober 2026. Leveringspriser kan avvike fra restaurantbordet; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "60. Vårruller Vegetar",
+      "Dagens 3",
+      "Familie Meny 5",
+      "24. California Maki",
+      "32. Spicy Laks & Scampi",
+      "52. Tiger Roll",
+      "71. Innbakt m/ Sursøt Saus",
+      "79b. Duck 1/2"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "60. Vårruller Vegetar",
+        "priceMinor": 7000
+      },
+      {
+        "name": "Dagens 3",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Familie Meny 5",
+        "priceMinor": 79900
+      },
+      {
+        "name": "24. California Maki",
+        "priceMinor": 7000
+      },
+      {
+        "name": "32. Spicy Laks & Scampi",
+        "priceMinor": 9900
+      },
+      {
+        "name": "52. Tiger Roll",
+        "priceMinor": 15000
+      },
+      {
+        "name": "71. Innbakt m/ Sursøt Saus",
+        "priceMinor": 18500
+      },
+      {
+        "name": "79b. Duck 1/2",
+        "priceMinor": 44500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

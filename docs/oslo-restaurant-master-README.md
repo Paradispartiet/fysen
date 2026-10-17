@@ -1,5 +1,12 @@
 # Oslo-restauranter — samlet arbeidsliste (13. oktober 2026)
 
+## Produksjonsbolk 17. oktober 2026 – PR #968
+
+**10 nye Oslo-restauranter** med dokumenterte Wolt-matretter og konkrete priser. 26 live-kilder innhentet samlet: 4 adressefeil, 11 kilder oversteg 2 MB-grensen for kildehenting, 1 kilde ga bare én unik prissatt rett, og 10 står klare for publiseringsvalidering (to tidligere godkjente kilder endret størrelse før sluttkontroll) og redaksjonell kontroll av rett-/prisassertasjoner. Det er ikke endret parser eller innhentingsgrense for å presse flere kandidater gjennom. Katalogen øker fra **827 til 837** ved merge. Wolt-leveringspriser er ikke nødvendigvis spisesalpriser, og produksjonsdatasynk er ikke særskilt attestert.
+
+**Godkjente restauranter:** Albertino, Domino's Pizza Nydalen, Jafs Stovner, Karachi Street Food, Koi Sushi & Wok Vollebekk, Marajah Indisk Restaurant, Pizzeria Valentino, Sugar & Spice, Tasty Grill & Pizza, Tiki Sushi.
+
+
 ## Produksjonsbolk 17. oktober 2026 – PR #967
 
 **24 nye Oslo-restauranter** er hentet fra lokasjonsspesifikke Wolt-menyer, verifisert mot Kartverket og målrettet livekontrollert med åtte rettsnavn/prisassertasjoner per restaurant. Katalogen øker fra **803 til 827** ved merge. Av 26 kandidatsteder bestod 24 adresse- og livekontroll; Dino's Pizza og Buoni Amici ble holdt utenfor fordi publisert adresse ikke ga godkjent Kartverket-koordinat. Prisene er hentet fra Wolt-leveringsmenyene, ikke garantert bordpriser. Åpningstider og produksjonsdatasynkronisering er ikke særskilt verifisert.
