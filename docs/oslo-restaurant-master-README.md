@@ -1,5 +1,12 @@
 # Oslo-restauranter — samlet arbeidsliste (13. oktober 2026)
 
+## Produksjonsbolk 17. oktober 2026 – 15 nye prissatte restauranter
+
+PR #965 legger til **15 selvstendige Oslo-restauranter** i canonical katalog og oppdaterer samme hovedliste fra **775 til 790 katalogposter**. I alt 22 kilder ble forsøkt etter deduplisering; 20 bestod Kartverket-/liveinntak, og fem av disse ble holdt tilbake ved semantisk vurdering av rettsnavn/tilbehør/drikke. To kilder ble avvist på uavklart Kartverket-adresse. Prisene er dokumentert fra Wolt-leveringsmenyer og er ikke attestert som spisesalpriser. Åpningstider og produksjonsdatabasesynkronisering er ikke særskilt verifisert.
+
+**Publisert i denne bolken:** Big Bite Byporten, Digg Pizza Grønland, Eckers Løkka, Eckers Ullevål, FALAFEL n' JUICE Majorstuen, Golden Gyros, Injera Restaurant, Jordbærpikene Byporten, Kitchen Afrique, Pronto di Olivia Storo, Tasty Thai Bislett, Thai Food Frogner, Undercover Burger, Zorba – Barcode Street Food, Zorba – Oslo Street Food. Detaljene og rett-/prisassertasjonene ligger i katalogmanifestene. CI og målrettet endringsvalidering er publiseringsportene; ingen full katalogregresjon i denne bolken.
+
+
 ## Produksjonsbolk 16. oktober 2026 – 18 prissatte Wolt-restauranter
 
 Denne endringen øker canonical katalog fra **757 til 775** Oslo-restauranter, og oppdaterer masterlisten fra **981 til 997 rader** (775 canonical + 222 øvrige kandidater). 23 kilder bestod samlet live- og adressevalidering; 18 ble promotert etter semantisk vurdering av representativt mat-/prisuttak, mens fem ble holdt utenfor. De prissatte kildene er **Wolt-leveringsmenyer**, ikke attestert fullstendige spisesalmenyer eller kjøkkentider. Kildene blir overvåket gjennom eksisterende Fysen-løype uten parserendringer. Bevis: [PR #964](https://github.com/Paradispartiet/fysen/pull/964) og [intake-artifact](https://github.com/Paradispartiet/fysen/actions/runs/38955216354/artifacts/12069613999). Tidligere avsnitt nedenfor dokumenterer historiske baseliner, ikke gjeldende totalsum.

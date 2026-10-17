@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "digg-pizza-gronland-oslo",
+    "name": "Digg Pizza Grønland",
+    "websiteUrl": null,
+    "address": "Grønlandsleiret 1, 0190 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91259137379548,
+    "longitude": 10.762851450619072
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/digg-pizza-gronland",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 47,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Publisert Wolt-leveringsmeny med konkrete rett-/prisassertasjoner er kontrollert gjennom målrettet livevalidering 2026-10-17 (PR #965). Prisene gjelder levering, ikke nødvendigvis restaurantbordet. Åpningstidene er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hvitløksdressing",
+      "Netflix & Digg",
+      "Pepperoni Meny",
+      "Cookie",
+      "Grisedigg",
+      "Pesto & Potet Meny🌱",
+      "Margherita Meny",
+      "Creamy Burrata"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hvitløksdressing",
+        "priceMinor": 3300
+      },
+      {
+        "name": "Netflix & Digg",
+        "priceMinor": 45900
+      },
+      {
+        "name": "Pepperoni Meny",
+        "priceMinor": 22700
+      },
+      {
+        "name": "Cookie",
+        "priceMinor": 3300
+      },
+      {
+        "name": "Grisedigg",
+        "priceMinor": 18300
+      },
+      {
+        "name": "Pesto & Potet Meny🌱",
+        "priceMinor": 22700
+      },
+      {
+        "name": "Margherita Meny",
+        "priceMinor": 21200
+      },
+      {
+        "name": "Creamy Burrata",
+        "priceMinor": 4100
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

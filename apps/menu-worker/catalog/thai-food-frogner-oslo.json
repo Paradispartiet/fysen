@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "thai-food-frogner-oslo",
+    "name": "Thai Food Frogner",
+    "websiteUrl": null,
+    "address": "Middelthuns gate 25A, 0368 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9282734621654,
+    "longitude": 10.708851889647498
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/thai-food-frogner-1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Publisert Wolt-leveringsmeny med konkrete rett-/prisassertasjoner er kontrollert gjennom målrettet livevalidering 2026-10-17 (PR #965). Prisene gjelder levering, ikke nødvendigvis restaurantbordet. Åpningstidene er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "#1 Biffwok",
+      "#6 Gryte Green Curry",
+      "#8 Stekt Ris m/ Kylling & Scampi",
+      "#20 Pad See Ew",
+      "#23 Scampidumplings - 12 Biter",
+      "#27 Larb Kyllingkjøttdeigsalat",
+      "#33 Pho",
+      "Wok Pork Kjøttdeig m/ Holy Basil ( 2 chili)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "#1 Biffwok",
+        "priceMinor": 33800
+      },
+      {
+        "name": "#6 Gryte Green Curry",
+        "priceMinor": 33800
+      },
+      {
+        "name": "#8 Stekt Ris m/ Kylling & Scampi",
+        "priceMinor": 33900
+      },
+      {
+        "name": "#20 Pad See Ew",
+        "priceMinor": 33900
+      },
+      {
+        "name": "#23 Scampidumplings - 12 Biter",
+        "priceMinor": 33900
+      },
+      {
+        "name": "#27 Larb Kyllingkjøttdeigsalat",
+        "priceMinor": 42900
+      },
+      {
+        "name": "#33 Pho",
+        "priceMinor": 39900
+      },
+      {
+        "name": "Wok Pork Kjøttdeig m/ Holy Basil ( 2 chili)",
+        "priceMinor": 34900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

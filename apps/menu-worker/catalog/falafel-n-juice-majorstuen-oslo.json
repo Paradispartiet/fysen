@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "falafel-n-juice-majorstuen-oslo",
+    "name": "FALAFEL n' JUICE Majorstuen",
+    "websiteUrl": null,
+    "address": "Bogstadveien 51, 0366 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92875453275395,
+    "longitude": 10.716069960326017
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/falafel-n-juice-majorstuen-1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Publisert Wolt-leveringsmeny med konkrete rett-/prisassertasjoner er kontrollert gjennom målrettet livevalidering 2026-10-17 (PR #965). Prisene gjelder levering, ikke nødvendigvis restaurantbordet. Åpningstidene er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Falafel i Pita",
+      "Hummus 'n' Salat",
+      "Golden Chips",
+      "Golden Falafel",
+      "Falafel Deluxe",
+      "Falafel 'n' Salat",
+      "Falafelmiddag",
+      "Falafel i Rull"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Falafel i Pita",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Hummus 'n' Salat",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Golden Chips",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Golden Falafel",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Falafel Deluxe",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Falafel 'n' Salat",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Falafelmiddag",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Falafel i Rull",
+        "priceMinor": 12900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

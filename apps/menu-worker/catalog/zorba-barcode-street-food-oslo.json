@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "zorba-barcode-street-food-oslo",
+    "name": "Zorba – Barcode Street Food",
+    "websiteUrl": null,
+    "address": "Dronning Eufemias gate 14, 0191 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90843779479827,
+    "longitude": 10.758251636671032
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/zorba-barcode-street-food",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 7,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Publisert Wolt-leveringsmeny med konkrete rett-/prisassertasjoner er kontrollert gjennom målrettet livevalidering 2026-10-17 (PR #965). Prisene gjelder levering, ikke nødvendigvis restaurantbordet. Åpningstidene er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chicken Gyros",
+      "Pork Gyros",
+      "Halloumi Gyros",
+      "Gyros"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chicken Gyros",
+        "priceMinor": 17400
+      },
+      {
+        "name": "Pork Gyros",
+        "priceMinor": 17400
+      },
+      {
+        "name": "Halloumi Gyros",
+        "priceMinor": 17400
+      },
+      {
+        "name": "Gyros",
+        "priceMinor": 17400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

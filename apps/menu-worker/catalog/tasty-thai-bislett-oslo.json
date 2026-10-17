@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "tasty-thai-bislett-oslo",
+    "name": "Tasty Thai Bislett",
+    "websiteUrl": null,
+    "address": "Thereses gate 51E, 0354 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92596854742554,
+    "longitude": 10.730567406150003
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/tasty-thai-bislett",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 35,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Publisert Wolt-leveringsmeny med konkrete rett-/prisassertasjoner er kontrollert gjennom målrettet livevalidering 2026-10-17 (PR #965). Prisene gjelder levering, ikke nødvendigvis restaurantbordet. Åpningstidene er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Gaeng Massaman Curry",
+      "Penang Curry",
+      "Phad Nam Man Hoi",
+      "Phad Prik",
+      "Frityrstekt Scampi",
+      "Satay Gai",
+      "Yam Wonn Sen",
+      "Phad Thai"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Gaeng Massaman Curry",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Penang Curry",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Phad Nam Man Hoi",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Phad Prik",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Frityrstekt Scampi",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Satay Gai",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Yam Wonn Sen",
+        "priceMinor": 30500
+      },
+      {
+        "name": "Phad Thai",
+        "priceMinor": 24900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "injera-restaurant-oslo",
+    "name": "Injera Restaurant",
+    "websiteUrl": null,
+    "address": "Calmeyers gate 9A, 0183 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91624971001399,
+    "longitude": 10.754489970860694
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/injera-restaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 16,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Publisert Wolt-leveringsmeny med konkrete rett-/prisassertasjoner er kontrollert gjennom målrettet livevalidering 2026-10-17 (PR #965). Prisene gjelder levering, ikke nødvendigvis restaurantbordet. Åpningstidene er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pølser & Fries",
+      "Shiro",
+      "Timtimo",
+      "Zilzil Tibsi",
+      "Veg Mesob",
+      "Gored Gored",
+      "Doro Wet",
+      "Kitfo"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pølser & Fries",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Shiro",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Timtimo",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Zilzil Tibsi",
+        "priceMinor": 32000
+      },
+      {
+        "name": "Veg Mesob",
+        "priceMinor": 40000
+      },
+      {
+        "name": "Gored Gored",
+        "priceMinor": 32000
+      },
+      {
+        "name": "Doro Wet",
+        "priceMinor": 32000
+      },
+      {
+        "name": "Kitfo",
+        "priceMinor": 32000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "golden-gyros-parkveien-oslo",
+    "name": "Golden Gyros",
+    "websiteUrl": null,
+    "address": "Parkveien 13, 0350 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9218874862736,
+    "longitude": 10.730286883565382
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/golden-gyros",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 35,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Publisert Wolt-leveringsmeny med konkrete rett-/prisassertasjoner er kontrollert gjennom målrettet livevalidering 2026-10-17 (PR #965). Prisene gjelder levering, ikke nødvendigvis restaurantbordet. Åpningstidene er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Club Traditional",
+      "Club Parmesana",
+      "Gyro Traditional",
+      "Bolli's Meat Supreme Meal Deal",
+      "Gyro Nachos",
+      "Gyro Traditional Meal Deal",
+      "Almondy Cheesecake Oreo 80g",
+      "Gyros Tallerken Bolli's Meat Supreme"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Club Traditional",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Club Parmesana",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Gyro Traditional",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Bolli's Meat Supreme Meal Deal",
+        "priceMinor": 30900
+      },
+      {
+        "name": "Gyro Nachos",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Gyro Traditional Meal Deal",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Almondy Cheesecake Oreo 80g",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Gyros Tallerken Bolli's Meat Supreme",
+        "priceMinor": 26900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

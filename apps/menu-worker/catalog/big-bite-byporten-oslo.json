@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "big-bite-byporten-oslo",
+    "name": "Big Bite Byporten",
+    "websiteUrl": null,
+    "address": "Jernbanetorget 6, 0154 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.911771086559426,
+    "longitude": 10.7515529777059
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/big-bite-byporten-1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 32,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Publisert Wolt-leveringsmeny med konkrete rett-/prisassertasjoner er kontrollert gjennom målrettet livevalidering 2026-10-17 (PR #965). Prisene gjelder levering, ikke nødvendigvis restaurantbordet. Åpningstidene er ikke uavhengig verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kylling Parmesan Hel",
+      "Ost & Skinke Hel",
+      "Roastbeef Hel",
+      "Taco Hel",
+      "Gresk Kylling Wrap",
+      "Green Fajitas Hel",
+      "Club Halv",
+      "Roastbeef Halv"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kylling Parmesan Hel",
+        "priceMinor": 15100
+      },
+      {
+        "name": "Ost & Skinke Hel",
+        "priceMinor": 15100
+      },
+      {
+        "name": "Roastbeef Hel",
+        "priceMinor": 16400
+      },
+      {
+        "name": "Taco Hel",
+        "priceMinor": 16100
+      },
+      {
+        "name": "Gresk Kylling Wrap",
+        "priceMinor": 10600
+      },
+      {
+        "name": "Green Fajitas Hel",
+        "priceMinor": 15600
+      },
+      {
+        "name": "Club Halv",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Roastbeef Halv",
+        "priceMinor": 10700
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
