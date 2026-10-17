@@ -1,0 +1,596 @@
+{
+  "version": 1,
+  "allowPartialIntake": true,
+  "outputDirectory": "candidates/oslo-wolt-batch-21-20261017",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "jonk-frysja-oslo",
+        "name": "Jønk Frysja",
+        "websiteUrl": null,
+        "address": "Frysjaveien 40, 0884 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/jnk-frysja",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "doner-berlin-nydalen-oslo",
+        "name": "Döner Berlin Oslo",
+        "websiteUrl": null,
+        "address": "Nydalen allé 1, 0484 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dner-berlin-oslo",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "linderud-pizza-grill-oslo",
+        "name": "Linderud Pizza & Grill",
+        "websiteUrl": null,
+        "address": "Linderudveien 2, 0594 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/linderud-pizza-og-grill",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "tiffanys-loren-oslo",
+        "name": "Tiffany's Løren",
+        "websiteUrl": null,
+        "address": "Peter Møllers vei 5, 0585 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/tiffanys-lren",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "kompis-lillo-gard-oslo",
+        "name": "Kompis Lillo Gård",
+        "websiteUrl": null,
+        "address": "Sandakerveien 102D, 0484 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/kompis-lillo-grd",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "folkets-kebab-alnabru-oslo",
+        "name": "Folkets Kebab Alnabru",
+        "websiteUrl": null,
+        "address": "Arvesetveien 2-4, 0668 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/folkets-kebab-alnabru",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "kebabbiten-oslo",
+        "name": "Kebabbiten",
+        "websiteUrl": null,
+        "address": "Trondheimsveien 154, 0570 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/kebabbiten",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "flamenco-pizza-ammerud-oslo",
+        "name": "Flamenco Pizza Ammerud",
+        "websiteUrl": null,
+        "address": "Ammerudveien 19E, 0958 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/flamenco-pizza-ammerud",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "papa-rosa-pizza-kalbakken-oslo",
+        "name": "Papa Rosa Pizza Kalbakken",
+        "websiteUrl": null,
+        "address": "Nedre Kalbakkvei 4, 0950 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/papa-rosa-pizza-kalbakken",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "kylling-pizza-kalbakken-oslo",
+        "name": "Kylling & Pizza Kalbakken",
+        "websiteUrl": null,
+        "address": "Trondheimsveien 391, 0953 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/kylling-pizza-kalbakken",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "loren-kiosk-grill-oslo",
+        "name": "Løren Kiosk & Grill",
+        "websiteUrl": null,
+        "address": "Lørenveien 40, 0585 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/lren-kiosk-grill",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "kebab-kompaniet-stovner-oslo",
+        "name": "Kebab Kompaniet Stovner",
+        "websiteUrl": null,
+        "address": "Stovner Senter 3, 0985 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/kebab-kompaniet-stovner",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "lille-sitha-cafe-oslo",
+        "name": "Lille Sitha Cafe",
+        "websiteUrl": null,
+        "address": "Waldemar Thranes gate 55A, 0173 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/lille-sitha-cafe",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "jonk-grorud-oslo",
+        "name": "Jønk Grorud",
+        "websiteUrl": null,
+        "address": "Bergensveien 2H, 0963 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/jonk-grorud",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dr-crunchy-kiellands-oslo",
+        "name": "Dr. Crunchy Kiellands",
+        "websiteUrl": null,
+        "address": "Waldemar Thranes gate 63A, 0173 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dr-crunchy",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "alibaba-grill-stovner-oslo",
+        "name": "Alibaba Grill & Steak House Stovner",
+        "websiteUrl": null,
+        "address": "Stovner Senter 3, 0985 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/alibaba-stovner-senter",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "vestlibua-oslo",
+        "name": "Vestlibua",
+        "websiteUrl": null,
+        "address": "Vestlisvingen 51, 0986 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/vestlibua",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "stangeriet-mathallen-oslo",
+        "name": "Stangeriet",
+        "websiteUrl": null,
+        "address": "Vulkan 5, 0178 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/stangeriet",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "88-street-burger-storgata-oslo",
+        "name": "88 Street Burger Storgata",
+        "websiteUrl": null,
+        "address": "Storgata 8, 0155 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/88-street-burger-storgata",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "tasty-thai-gronland-oslo",
+        "name": "Tasty Thai Grønland",
+        "websiteUrl": null,
+        "address": "Grønland 12B, 0188 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/tasty-thai-gronland",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "haveli-tandoori-kalbakken-oslo",
+        "name": "Haveli Tandoori",
+        "websiteUrl": null,
+        "address": "Nedre Kalbakkvei 2C, 0950 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/haveli-tandoori",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-17",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ]
+}
