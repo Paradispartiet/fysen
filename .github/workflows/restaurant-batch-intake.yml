@@ -202,6 +202,7 @@ jobs:
           }
           const collisions = seedSlugs.filter((slug) => catalogSlugs.has(slug));
           const nonCanonical = seedSlugs.filter((slug) => !catalogSlugs.has(slug));
+          const allowPartialIntake = seed.allowPartialIntake === true && !reproof;
           const identityCollisions = [];
           for (const entry of seed.restaurants) {
             const slug = entry?.restaurant?.slug;
@@ -229,10 +230,10 @@ jobs:
               }
             }
           }
-          if (!reproof && collisions.length > 0) {
+          if (!reproof && !allowPartialIntake && collisions.length > 0) {
             throw new Error(`Research seed collides with canonical catalog: ${collisions.join(", ")}`);
           }
-          if (!reproof && identityCollisions.length > 0) {
+          if (!reproof && !allowPartialIntake && identityCollisions.length > 0) {
             throw new Error(
               `Research seed duplicates canonical physical identity: ${identityCollisions
                 .map((collision) => `${collision.slug}->${collision.canonicalSlug}[${collision.reason}]`)
@@ -241,6 +242,16 @@ jobs:
           }
 
           let selectedEntries = seed.restaurants;
+          if (allowPartialIntake) {
+            const skipped = new Set([
+              ...collisions,
+              ...identityCollisions.map((collision) => collision.slug)
+            ]);
+            selectedEntries = seed.restaurants.filter((entry) => !skipped.has(entry?.restaurant?.slug));
+            if (skipped.size > 0) {
+              console.log("Partial intake skips existing catalog identities: " + [...skipped].join(", "));
+            }
+          }
           if (reproof) {
             selectedEntries = seed.restaurants.filter((entry) => catalogSlugs.has(entry?.restaurant?.slug));
             if (selectedEntries.length === 0) {
@@ -425,7 +436,6 @@ jobs:
           const resolvedRestaurants = [];
           const evidence = [];
           const geocodeFailures = [];
-          const allowPartialIntake = seed.allowPartialIntake === true && !reproof;
           for (const entry of selectedEntries) {
             try {
               if (entry.version !== 1 || !entry?.restaurant?.slug || !entry?.restaurant?.address) {
@@ -461,6 +471,7 @@ jobs:
             reproof,
             catalogCollisions: collisions,
             identityCollisions,
+            skippedCanonicalSlugs: allowPartialIntake ? collisions : [],
             skippedNonCanonicalSlugs: reproof ? nonCanonical : [],
             allowPartialIntake,
             geocodeFailures,
