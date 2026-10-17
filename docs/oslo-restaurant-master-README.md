@@ -2,9 +2,9 @@
 
 ## Produksjonsbolk 17. oktober 2026 – PR #968
 
-**12 nye Oslo-restauranter** med dokumenterte Wolt-matretter og konkrete priser. 26 live-kilder innhentet samlet: 4 adressefeil, 9 kilder oversteg 2 MB-grensen for kildehenting, 1 kilde ga bare én unik prissatt rett, og 12 bestod livevalidering og redaksjonell kontroll av rett-/prisassertasjoner. Det er ikke endret parser eller innhentingsgrense for å presse flere kandidater gjennom. Katalogen øker fra **827 til 839** ved merge. Wolt-leveringspriser er ikke nødvendigvis spisesalpriser, og produksjonsdatasynk er ikke særskilt attestert.
+**11 nye Oslo-restauranter** med dokumenterte Wolt-matretter og konkrete priser. 26 live-kilder innhentet samlet: 4 adressefeil, 9 kilder oversteg 2 MB-grensen for kildehenting, 1 kilde ga bare én unik prissatt rett, og 11 bestod publiseringsvalidering (én tidligere godkjent kilde endret størrelse før sluttkontroll) og redaksjonell kontroll av rett-/prisassertasjoner. Det er ikke endret parser eller innhentingsgrense for å presse flere kandidater gjennom. Katalogen øker fra **827 til 838** ved merge. Wolt-leveringspriser er ikke nødvendigvis spisesalpriser, og produksjonsdatasynk er ikke særskilt attestert.
 
-**Godkjente restauranter:** Albertino, Burger King Stovner Senter, Domino's Pizza Nydalen, Domino's Pizza Ullevål, Jafs Stovner, Karachi Street Food, Koi Sushi & Wok Vollebekk, Marajah Indisk Restaurant, Pizzeria Valentino, Sugar & Spice, Tasty Grill & Pizza, Tiki Sushi.
+**Godkjente restauranter:** Albertino, Domino's Pizza Nydalen, Domino's Pizza Ullevål, Jafs Stovner, Karachi Street Food, Koi Sushi & Wok Vollebekk, Marajah Indisk Restaurant, Pizzeria Valentino, Sugar & Spice, Tasty Grill & Pizza, Tiki Sushi.
 
 
 ## Produksjonsbolk 17. oktober 2026 – PR #967
