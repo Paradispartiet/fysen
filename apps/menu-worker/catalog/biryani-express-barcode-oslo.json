@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "biryani-express-barcode-oslo",
+    "name": "Biryani Express",
+    "websiteUrl": null,
+    "address": "Dronning Eufemias gate 14, 0191 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90843779479827,
+    "longitude": 10.758251636671032
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/biryani-express",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 23,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chettinad Chicken Biryani",
+      "Party Chicken 65 Biryani",
+      "Brinjal Gravy",
+      "Family Egg Biryani",
+      "Chicken 65 Biryani",
+      "Family Chettinad Chicken Biryani",
+      "Dindigul Mutton Biryani",
+      "Party Egg Biryani"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chettinad Chicken Biryani",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Party Chicken 65 Biryani",
+        "priceMinor": 84900
+      },
+      {
+        "name": "Brinjal Gravy",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Family Egg Biryani",
+        "priceMinor": 43900
+      },
+      {
+        "name": "Chicken 65 Biryani",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Family Chettinad Chicken Biryani",
+        "priceMinor": 54900
+      },
+      {
+        "name": "Dindigul Mutton Biryani",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Party Egg Biryani",
+        "priceMinor": 74900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

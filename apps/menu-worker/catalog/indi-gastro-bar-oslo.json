@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "indi-gastro-bar-oslo",
+    "name": "Indi Gastro Bar",
+    "websiteUrl": null,
+    "address": "Normannsgata 5B, 0655 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90877116798196,
+    "longitude": 10.779722136179098
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/indi-gastro-bar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 53,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chilli Chicken Sterk!",
+      "Scampi Tikka Masala",
+      "Mix Pakora",
+      "Lam Karahi",
+      "Tandoori Mixed Grill",
+      "Garlic Naan",
+      "Chicken Chana",
+      "Chilli Scampi Sterk!"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chilli Chicken Sterk!",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Scampi Tikka Masala",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Mix Pakora",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Lam Karahi",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Tandoori Mixed Grill",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Garlic Naan",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Chicken Chana",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Chilli Scampi Sterk!",
+        "priceMinor": 26900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

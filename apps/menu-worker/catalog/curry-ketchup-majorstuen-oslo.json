@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "curry-ketchup-majorstuen-oslo",
+    "name": "Curry and Ketchup",
+    "websiteUrl": null,
+    "address": "Kirkeveien 51, 0368 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.927661452118606,
+    "longitude": 10.713794733133769
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/curry-and-ketchup",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 66,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chop Suey Chicken",
+      "🌱 Plain Dosa",
+      "🌱 Mixed Vegetable Tikka",
+      "Chettinad",
+      "Ris",
+      "Peshawari Naan",
+      "Himalayan Fried Momos",
+      "Piri Piri Chicken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chop Suey Chicken",
+        "priceMinor": 25900
+      },
+      {
+        "name": "🌱 Plain Dosa",
+        "priceMinor": 19900
+      },
+      {
+        "name": "🌱 Mixed Vegetable Tikka",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Chettinad",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Ris",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Peshawari Naan",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Himalayan Fried Momos",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Piri Piri Chicken",
+        "priceMinor": 27900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

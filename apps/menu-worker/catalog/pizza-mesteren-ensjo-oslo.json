@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizza-mesteren-ensjo-oslo",
+    "name": "Pizza Mesteren",
+    "websiteUrl": null,
+    "address": "Gladengveien 15B, 0661 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91724573355407,
+    "longitude": 10.792348698652933
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/pizza-mesteren",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 82,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Capricciosa",
+      "Vegetar nr. 1",
+      "Torino",
+      "Calzone 2",
+      "Verona",
+      "San Remo",
+      "Spicy nduja",
+      "Döner pita med hjemmeleget brød"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Capricciosa",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Vegetar nr. 1",
+        "priceMinor": 32500
+      },
+      {
+        "name": "Torino",
+        "priceMinor": 32500
+      },
+      {
+        "name": "Calzone 2",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Verona",
+        "priceMinor": 34900
+      },
+      {
+        "name": "San Remo",
+        "priceMinor": 32500
+      },
+      {
+        "name": "Spicy nduja",
+        "priceMinor": 34900
+      },
+      {
+        "name": "Döner pita med hjemmeleget brød",
+        "priceMinor": 18900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

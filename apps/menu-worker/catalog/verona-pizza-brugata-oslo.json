@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "verona-pizza-brugata-oslo",
+    "name": "Verona Pizza",
+    "websiteUrl": null,
+    "address": "Brugata 10, 0186 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91400894588276,
+    "longitude": 10.75481885000884
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/verona-pizza-oslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 28,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pommes Frites",
+      "Kylling Shawarma Rull",
+      "Margherita",
+      "Kebab I Pita",
+      "Sultan",
+      "Hamburger Tallerken m/ Ost",
+      "Kyllingkebab I Pita",
+      "Kylling Tikka Tallerken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pommes Frites",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Kylling Shawarma Rull",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Margherita",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Kebab I Pita",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Sultan",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Hamburger Tallerken m/ Ost",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Kyllingkebab I Pita",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Kylling Tikka Tallerken",
+        "priceMinor": 24900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

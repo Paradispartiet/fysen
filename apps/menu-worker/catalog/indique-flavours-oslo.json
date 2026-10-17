@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "indique-flavours-oslo",
+    "name": "Indique Flavours",
+    "websiteUrl": null,
+    "address": "Tore Hals Mejdells vei 5, 0751 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.946188372601256,
+    "longitude": 10.643122615389483
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/indique-flavours",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 69,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "53. Plain Naan",
+      "49. Jodhpuri Chicken Biryani",
+      "11. Murgh Tandoori Tikka",
+      "34. Gosht Korma",
+      "21. Paneer Tikka",
+      "42. Paneer Makhani",
+      "47. Chana Masala",
+      "5. Aloo Samosa Chat"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "53. Plain Naan",
+        "priceMinor": 5900
+      },
+      {
+        "name": "49. Jodhpuri Chicken Biryani",
+        "priceMinor": 27000
+      },
+      {
+        "name": "11. Murgh Tandoori Tikka",
+        "priceMinor": 29800
+      },
+      {
+        "name": "34. Gosht Korma",
+        "priceMinor": 29800
+      },
+      {
+        "name": "21. Paneer Tikka",
+        "priceMinor": 18900
+      },
+      {
+        "name": "42. Paneer Makhani",
+        "priceMinor": 27500
+      },
+      {
+        "name": "47. Chana Masala",
+        "priceMinor": 26000
+      },
+      {
+        "name": "5. Aloo Samosa Chat",
+        "priceMinor": 12900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

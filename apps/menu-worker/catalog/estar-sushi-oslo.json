@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "estar-sushi-oslo",
+    "name": "Estar Sushi",
+    "websiteUrl": null,
+    "address": "Kirkeveien 48A, 0368 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92754834315402,
+    "longitude": 10.712822665720662
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/estar-sushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 75,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "20a . Flambert laks maki 8 biter",
+      "8a . Kombi meny 2 ( 2 person)",
+      "11. Fritert Tofu Maki 🌱",
+      "23. Spicy Kamskjell Maki",
+      "38. Kamskjell Nigiri",
+      "54. Chop Suey",
+      "Burrito sushi ( laks )",
+      "3bbb . Scampi bolle"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "20a . Flambert laks maki 8 biter",
+        "priceMinor": 21900
+      },
+      {
+        "name": "8a . Kombi meny 2 ( 2 person)",
+        "priceMinor": 54500
+      },
+      {
+        "name": "11. Fritert Tofu Maki 🌱",
+        "priceMinor": 11900
+      },
+      {
+        "name": "23. Spicy Kamskjell Maki",
+        "priceMinor": 15500
+      },
+      {
+        "name": "38. Kamskjell Nigiri",
+        "priceMinor": 3900
+      },
+      {
+        "name": "54. Chop Suey",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Burrito sushi ( laks )",
+        "priceMinor": 19900
+      },
+      {
+        "name": "3bbb . Scampi bolle",
+        "priceMinor": 25900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

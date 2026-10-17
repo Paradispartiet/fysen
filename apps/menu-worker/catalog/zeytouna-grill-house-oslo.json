@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "zeytouna-grill-house-oslo",
+    "name": "Zeytouna Grill-House",
+    "websiteUrl": null,
+    "address": "Trondheimsveien 8, 0560 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.919270082062525,
+    "longitude": 10.763719124034177
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/zeytouna-grill-house",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 46,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "6. Fatoush",
+      "14. Linsesuppe",
+      "19. Lam Spyd",
+      "28. Kebab Kofte,",
+      "12. fritert kibbeh",
+      "15. Falafel",
+      "34. Dorade",
+      "50. Crispy Kyllingfilet - 2 Biter."
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "6. Fatoush",
+        "priceMinor": 10900
+      },
+      {
+        "name": "14. Linsesuppe",
+        "priceMinor": 9900
+      },
+      {
+        "name": "19. Lam Spyd",
+        "priceMinor": 34500
+      },
+      {
+        "name": "28. Kebab Kofte,",
+        "priceMinor": 28900
+      },
+      {
+        "name": "12. fritert kibbeh",
+        "priceMinor": 17900
+      },
+      {
+        "name": "15. Falafel",
+        "priceMinor": 20900
+      },
+      {
+        "name": "34. Dorade",
+        "priceMinor": 29900
+      },
+      {
+        "name": "50. Crispy Kyllingfilet - 2 Biter.",
+        "priceMinor": 16500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

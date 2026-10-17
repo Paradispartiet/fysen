@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "gregor-pizza-bislett-oslo",
+    "name": "Gregor Pizza",
+    "websiteUrl": null,
+    "address": "Thereses gate 42, 0168 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.926995387124066,
+    "longitude": 10.731778569113407
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/gregor-pizza",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 42,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Salami Picante",
+      "Hawaii",
+      "Valentino",
+      "Chevre",
+      "Døner Pizza #1",
+      "Bianca Hot",
+      "XL Mix Rullekebab"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Salami Picante",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Hawaii",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Valentino",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Chevre",
+        "priceMinor": 20000
+      },
+      {
+        "name": "Døner Pizza #1",
+        "priceMinor": 20500
+      },
+      {
+        "name": "Bianca Hot",
+        "priceMinor": 20000
+      },
+      {
+        "name": "XL Mix Rullekebab",
+        "priceMinor": 18000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "gate-of-india-majorstuen-oslo",
+    "name": "Gate of India",
+    "websiteUrl": null,
+    "address": "Bogstadveien 66A, 0366 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92866022510806,
+    "longitude": 10.715725106405335
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/gate-of-india",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 89,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chicken Soup",
+      "2. Chicken Pakora",
+      "32. Lam Bhuna",
+      "56. Tandoori King Prawns",
+      "74. Saag Paneer",
+      "81. Vegetable Biryani",
+      "Extra Ris",
+      "68 Paneer Tikka Masala"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chicken Soup",
+        "priceMinor": 9900
+      },
+      {
+        "name": "2. Chicken Pakora",
+        "priceMinor": 11900
+      },
+      {
+        "name": "32. Lam Bhuna",
+        "priceMinor": 30900
+      },
+      {
+        "name": "56. Tandoori King Prawns",
+        "priceMinor": 31900
+      },
+      {
+        "name": "74. Saag Paneer",
+        "priceMinor": 26900
+      },
+      {
+        "name": "81. Vegetable Biryani",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Extra Ris",
+        "priceMinor": 5000
+      },
+      {
+        "name": "68 Paneer Tikka Masala",
+        "priceMinor": 26900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

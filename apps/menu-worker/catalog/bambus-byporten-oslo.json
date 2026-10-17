@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bambus-byporten-oslo",
+    "name": "Bambus Byporten",
+    "websiteUrl": null,
+    "address": "Biskop Gunnerus' gate 6, 0155 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.912002489919594,
+    "longitude": 10.752387880623399
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/bambus-byporten",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 24,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Familie Luksus",
+      "Familie Combo",
+      "Vegetar Vårrull 4 Stk.",
+      "Salt Edamame",
+      "Tempura Scampi 3 Stk.",
+      "Osaka Salmon",
+      "Vegetar Luksus",
+      "Tempura Laks"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Familie Luksus",
+        "priceMinor": 104900
+      },
+      {
+        "name": "Familie Combo",
+        "priceMinor": 87500
+      },
+      {
+        "name": "Vegetar Vårrull 4 Stk.",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Salt Edamame",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Tempura Scampi 3 Stk.",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Osaka Salmon",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Vegetar Luksus",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Tempura Laks",
+        "priceMinor": 13500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

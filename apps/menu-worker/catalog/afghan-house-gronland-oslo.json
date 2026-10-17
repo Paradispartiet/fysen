@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "afghan-house-gronland-oslo",
+    "name": "Afghan House",
+    "websiteUrl": null,
+    "address": "Grønland 18, 0188 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91302299503146,
+    "longitude": 10.761402354667814
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/afghan-house",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 24,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chaplin Kebab",
+      "Borani Banjan 🌱",
+      "Biryani",
+      "Seekh Kebab",
+      "Lobiya Karahi",
+      "Mantu",
+      "Bolani 🌱",
+      "Chapli Kebab"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chaplin Kebab",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Borani Banjan 🌱",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Biryani",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Seekh Kebab",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Lobiya Karahi",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Mantu",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Bolani 🌱",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Chapli Kebab",
+        "priceMinor": 14900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
