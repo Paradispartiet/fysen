@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sidechick-stovner-senter-oslo",
+    "name": "SideChick Stovner Senter",
+    "address": "Stovner Senter 3, 0985 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9608841,
+    "longitude": 10.9250495
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/sidechick-stovner-senter",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Wolt menyobservasjon 2026-10-18 med 10 konkrete matrett-/prispar og besøksadresse. Egen kylling- og burgermeny på Stovner Senter, ikke Subway/Burger King. Wolt-leveringspriser; ikke attestert som bordpriser. Åpningstider, eksakt inngang og produksjonsdatasynk ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "SideChick Burger",
+      "SideChick Fries",
+      "Korean BBQ",
+      "SideChick Burger Meal",
+      "Fries",
+      "MainChick Burger",
+      "10 wings",
+      "5 wings",
+      "O.G. wrap",
+      "MainChick Burger Meal"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "SideChick Burger",
+        "priceMinor": 15000
+      },
+      {
+        "name": "SideChick Fries",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Korean BBQ",
+        "priceMinor": 15000
+      },
+      {
+        "name": "SideChick Burger Meal",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Fries",
+        "priceMinor": 6000
+      },
+      {
+        "name": "MainChick Burger",
+        "priceMinor": 15000
+      },
+      {
+        "name": "10 wings",
+        "priceMinor": 14500
+      },
+      {
+        "name": "5 wings",
+        "priceMinor": 8500
+      },
+      {
+        "name": "O.G. wrap",
+        "priceMinor": 16500
+      },
+      {
+        "name": "MainChick Burger Meal",
+        "priceMinor": 24900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

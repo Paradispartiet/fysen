@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizza-baronen-furuset-oslo",
+    "name": "Pizza Baronen Furuset",
+    "address": "Professor Birkelands vei 32B, 1081 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9425852,
+    "longitude": 10.8814405
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/pizza-baronen-furuset",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Wolt menyobservasjon 2026-10-18 med 10 konkrete matrett-/prispar og besøksadresse. Selvstendig Furuset-filial, men samme operatør/telefon og nærliggende Wolt-identitet som Furuset Grill; sistnevnte er ikke registrert separat. Wolt-leveringspriser; ikke attestert som bordpriser. Åpningstider, eksakt inngang og produksjonsdatasynk ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Miss America (Stor)",
+      "Chicken Georgia (Stor)",
+      "Döner Pizza (Stor)",
+      "Miss America (Medium)",
+      "Baronens Knock Out (Stor)",
+      "Chef's Special (Stor)",
+      "Döner Pizza (Medium)",
+      "Pigs In Space (Stor)",
+      "Napoli (Medium)",
+      "Baronens Spesial (Stor)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Miss America (Stor)",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Chicken Georgia (Stor)",
+        "priceMinor": 35900
+      },
+      {
+        "name": "Döner Pizza (Stor)",
+        "priceMinor": 33000
+      },
+      {
+        "name": "Miss America (Medium)",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Baronens Knock Out (Stor)",
+        "priceMinor": 37100
+      },
+      {
+        "name": "Chef's Special (Stor)",
+        "priceMinor": 35900
+      },
+      {
+        "name": "Döner Pizza (Medium)",
+        "priceMinor": 22700
+      },
+      {
+        "name": "Pigs In Space (Stor)",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Napoli (Medium)",
+        "priceMinor": 22700
+      },
+      {
+        "name": "Baronens Spesial (Stor)",
+        "priceMinor": 33000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

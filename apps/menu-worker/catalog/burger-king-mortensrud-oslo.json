@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "burger-king-mortensrud-oslo",
+    "name": "Burger King Mortensrud",
+    "address": "Lofsrudveien 6, 1281 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.848659,
+    "longitude": 10.830011
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/burger-king-mortensrud",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Wolt menyobservasjon 2026-10-18 med 10 konkrete matrett-/prispar og besøksadresse. Egen filial i Lofsrudveien 6 med individuell Wolt-side. Wolt-leveringspriser; ikke attestert som bordpriser. Åpningstider, eksakt inngang og produksjonsdatasynk ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Whopper Cheese Meny",
+      "Crispy Chicken Meny",
+      "Crispy Chicken",
+      "Cheeseburger",
+      "Fries",
+      "BK® Fish Meny",
+      "8 stk Pannekaker",
+      "Chili Cheese",
+      "Chili Cheeseburger",
+      "X-Long Chili Cheese Meny"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Whopper Cheese Meny",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Crispy Chicken Meny",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Crispy Chicken",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Cheeseburger",
+        "priceMinor": 4100
+      },
+      {
+        "name": "Fries",
+        "priceMinor": 6500
+      },
+      {
+        "name": "BK® Fish Meny",
+        "priceMinor": 14500
+      },
+      {
+        "name": "8 stk Pannekaker",
+        "priceMinor": 4100
+      },
+      {
+        "name": "Chili Cheese",
+        "priceMinor": 6200
+      },
+      {
+        "name": "Chili Cheeseburger",
+        "priceMinor": 5900
+      },
+      {
+        "name": "X-Long Chili Cheese Meny",
+        "priceMinor": 19900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "burger-king-hegdehaugsveien-oslo",
+    "name": "Burger King Hegdehaugsveien",
+    "address": "Hegdehaugsveien 32, 0352 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.921769,
+    "longitude": 10.726536
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/burger-king-hegdehaugsveien",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Wolt menyobservasjon 2026-10-18 med 10 konkrete matrett-/prispar og besøksadresse. Egen filial i Hegdehaugsveien 32, ikke eksisterende Burger King-filialer. Wolt-leveringspriser; ikke attestert som bordpriser. Åpningstider, eksakt inngang og produksjonsdatasynk ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Crispy Chicken",
+      "Whopper Cheese Meny",
+      "Fries",
+      "Cheeseburger",
+      "Crispy Chicken Meny",
+      "Chili Cheese",
+      "Chili Cheeseburger",
+      "Steakhouse Bacon King Meny",
+      "Chicken Nuggets 9 Biter",
+      "Bacon King Meny"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Crispy Chicken",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Whopper Cheese Meny",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Fries",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Cheeseburger",
+        "priceMinor": 4100
+      },
+      {
+        "name": "Crispy Chicken Meny",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Chili Cheese",
+        "priceMinor": 6200
+      },
+      {
+        "name": "Chili Cheeseburger",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Steakhouse Bacon King Meny",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Chicken Nuggets 9 Biter",
+        "priceMinor": 11000
+      },
+      {
+        "name": "Bacon King Meny",
+        "priceMinor": 23900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

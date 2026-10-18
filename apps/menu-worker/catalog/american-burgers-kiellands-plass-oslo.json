@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "american-burgers-kiellands-plass-oslo",
+    "name": "American Burgers Kiellands Plass",
+    "address": "Waldemar Thranes gate 65B, 0173 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9278757,
+    "longitude": 10.7493806
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/american-burgers-kiellands-plass",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Wolt menyobservasjon 2026-10-18 med 10 konkrete matrett-/prispar og besøksadresse. Kiellands plass-filial, separat fra eksisterende American Burgers Hegdehaugsveien. Wolt-leveringspriser; ikke attestert som bordpriser. Åpningstider, eksakt inngang og produksjonsdatasynk ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Classico",
+      "BBQ",
+      "Argentina",
+      "BBQ Meny",
+      "American",
+      "Blue Cheese",
+      "American Meny",
+      "Oscar's",
+      "Classico Meny",
+      "New Mexican"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Classico",
+        "priceMinor": 18900
+      },
+      {
+        "name": "BBQ",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Argentina",
+        "priceMinor": 19900
+      },
+      {
+        "name": "BBQ Meny",
+        "priceMinor": 31900
+      },
+      {
+        "name": "American",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Blue Cheese",
+        "priceMinor": 19900
+      },
+      {
+        "name": "American Meny",
+        "priceMinor": 31900
+      },
+      {
+        "name": "Oscar's",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Classico Meny",
+        "priceMinor": 30900
+      },
+      {
+        "name": "New Mexican",
+        "priceMinor": 21900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
