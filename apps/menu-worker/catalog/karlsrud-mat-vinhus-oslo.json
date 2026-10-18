@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "karlsrud-mat-vinhus-oslo",
+    "name": "Karlsrud Mat & Vinhus",
+    "address": "Raschs vei 38, 1153 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.87966374409819,
+    "longitude": 10.804020332469852
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/karlsrud-mat-og-vinhus-oslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 31,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Wolt-kilden ga livevaliderte og prisede retter i samlet PR #970 den 18. oktober 2026. Representative rett- og prisassertasjoner er gjennomgått redaksjonelt. Wolt-leveringspriser kan avvike fra bordpriser; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "52. Sprøstekt And Sursøt",
+      "47. Innbakt Scampi",
+      "Rekechips",
+      "Stekt Ris m/ Kylling Barnemeny",
+      "71. Stekt Ris m/ Kylling",
+      "Vårrull m/ Kjøttdeig",
+      "30. Innbakt Svinekjøtt",
+      "18. Mala"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "52. Sprøstekt And Sursøt",
+        "priceMinor": 25900
+      },
+      {
+        "name": "47. Innbakt Scampi",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Rekechips",
+        "priceMinor": 3500
+      },
+      {
+        "name": "Stekt Ris m/ Kylling Barnemeny",
+        "priceMinor": 16900
+      },
+      {
+        "name": "71. Stekt Ris m/ Kylling",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Vårrull m/ Kjøttdeig",
+        "priceMinor": 4500
+      },
+      {
+        "name": "30. Innbakt Svinekjøtt",
+        "priceMinor": 22900
+      },
+      {
+        "name": "18. Mala",
+        "priceMinor": 23500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

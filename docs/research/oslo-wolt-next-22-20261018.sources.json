@@ -620,5 +620,37 @@
       "assertionCount": 8,
       "forbiddenDishNames": []
     }
-  ]
+  ],
+  "archivedProductionStatus": {
+    "sourcePr": 970,
+    "intakeRunId": 39100623541,
+    "sourceCount": 22,
+    "resolvedCount": 13,
+    "generatedCount": 11,
+    "publishedCount": 6,
+    "deferredCount": 16,
+    "publishedSlugs": [
+      "al-shahba-gronland-oslo",
+      "bobos-pizza-boler-oslo",
+      "en-til-pizza-refstad-oslo",
+      "holtet-pizza-kebab-oslo",
+      "karlsrud-mat-vinhus-oslo",
+      "zio-pizza-marienlyst-oslo"
+    ],
+    "deferredGroups": {
+      "sourceOrAddress": 9,
+      "liveGeneration": 2,
+      "semanticMenuQuality": 5
+    },
+    "qualityDeferredSlugs": [
+      "kylling-pizza-kalbakken-oslo",
+      "lille-sitha-cafe-oslo",
+      "loren-kiosk-grill-oslo",
+      "paradis-pizza-ullern-oslo",
+      "pizzamix-konows-gate-oslo"
+    ],
+    "note": "Six output-clean, separately addressed Wolt restaurant manifests with live-priced menu assertions approved for publication. Other restaurant candidates deferred without global parser changes, no forced approvals.",
+    "prices": "Wolt delivery; not verified as dine-in",
+    "productionDatabase": "not separately verified"
+  }
 }

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "en-til-pizza-refstad-oslo",
+    "name": "En Til Pizza",
+    "address": "Refstadveien 60, 0589 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94251890410738,
+    "longitude": 10.811349610161221
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/en-til-pizza",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 35,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Wolt-kilden ga livevaliderte og prisede retter i samlet PR #970 den 18. oktober 2026. Representative rett- og prisassertasjoner er gjennomgått redaksjonelt. Wolt-leveringspriser kan avvike fra bordpriser; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Husets #18",
+      "Vegetar #4",
+      "Kylling #9",
+      "Husets #14",
+      "Salami #20",
+      "Kyllingsalat",
+      "Salami #23",
+      "Margherita Tomaticus"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Husets #18",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Vegetar #4",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Kylling #9",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Husets #14",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Salami #20",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Kyllingsalat",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Salami #23",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Margherita Tomaticus",
+        "priceMinor": 12900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "al-shahba-gronland-oslo",
+    "name": "Al-Shahba",
+    "address": "Grønlandsleiret 37, 0190 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91108130377942,
+    "longitude": 10.766897346333266
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/al-shahba-oslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 38,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Wolt-kilden ga livevaliderte og prisede retter i samlet PR #970 den 18. oktober 2026. Representative rett- og prisassertasjoner er gjennomgått redaksjonelt. Wolt-leveringspriser kan avvike fra bordpriser; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "37. Mini Mezza",
+      "Gryllet Kylling uten bein",
+      "35. Samsbusa",
+      "18. Pepperoni",
+      "28. Baba Ganouch",
+      "32. Falafel Vegetar (4stk)",
+      "11. Marina Shawarma",
+      "16. Margarita"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "37. Mini Mezza",
+        "priceMinor": 32900
+      },
+      {
+        "name": "Gryllet Kylling uten bein",
+        "priceMinor": 50900
+      },
+      {
+        "name": "35. Samsbusa",
+        "priceMinor": 11900
+      },
+      {
+        "name": "18. Pepperoni",
+        "priceMinor": 21900
+      },
+      {
+        "name": "28. Baba Ganouch",
+        "priceMinor": 11500
+      },
+      {
+        "name": "32. Falafel Vegetar (4stk)",
+        "priceMinor": 11500
+      },
+      {
+        "name": "11. Marina Shawarma",
+        "priceMinor": 23900
+      },
+      {
+        "name": "16. Margarita",
+        "priceMinor": 18900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
