@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "flints-baguett-grill-furuset-oslo",
+    "name": "Flints Baguett & Grill",
+    "address": "Professor Birkelands vei 27B, 1081 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94166,
+    "longitude": 10.88402
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/flints-baguett-grill-pb",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Navn, adresse og representative rett-/prispar lest fra offentlig Wolt-side 2026-10-18. Restaurantkoordinater hos NorgeGuide, samme adresse som Wolt. Prisene er Wolt-leveringspriser; åpningstider er ikke uavhengig attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Varm Baguette m/ Kylling Shawarma",
+      "Varm Baguette m/ Döner",
+      "Varm Baguette m/ Kebab",
+      "Baguette m/ Kylling Karri",
+      "Baguette m/ Roastbiff",
+      "Baguette m/ Egg",
+      "Kebab I Pita",
+      "Varm Baguette m/ Biffsnadder"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Varm Baguette m/ Kylling Shawarma",
+        "priceMinor": 12539
+      },
+      {
+        "name": "Varm Baguette m/ Döner",
+        "priceMinor": 13639
+      },
+      {
+        "name": "Varm Baguette m/ Kebab",
+        "priceMinor": 12539
+      },
+      {
+        "name": "Baguette m/ Kylling Karri",
+        "priceMinor": 10339
+      },
+      {
+        "name": "Baguette m/ Roastbiff",
+        "priceMinor": 10339
+      },
+      {
+        "name": "Baguette m/ Egg",
+        "priceMinor": 10339
+      },
+      {
+        "name": "Kebab I Pita",
+        "priceMinor": 13309
+      },
+      {
+        "name": "Varm Baguette m/ Biffsnadder",
+        "priceMinor": 13639
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
