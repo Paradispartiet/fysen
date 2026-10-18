@@ -34,7 +34,7 @@
   "qualityAssertions": {
     "requiredDishNames": [
       "Neo Margherita",
-      "Sunflower",
+      "Sunflower - Vegetarian Pizza",
       "Chorizoo",
       "Capricciosa",
       "Spicy Thai Chicken",
@@ -48,7 +48,7 @@
         "priceMinor": 24500
       },
       {
-        "name": "Sunflower",
+        "name": "Sunflower - Vegetarian Pizza",
         "priceMinor": 27000
       },
       {
