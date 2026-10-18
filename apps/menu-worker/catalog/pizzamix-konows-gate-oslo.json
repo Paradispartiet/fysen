@@ -34,7 +34,7 @@
   "qualityAssertions": {
     "requiredDishNames": [
       "Butter Chicken Pizza",
-      "Beef&Bérnaise",
+      "New Orleans",
       "Spicy Pepperoni",
       "Pepperoni Star",
       "Hangover",
@@ -50,8 +50,8 @@
         "priceMinor": 24900
       },
       {
-        "name": "Beef&Bérnaise",
-        "priceMinor": 28300
+        "name": "New Orleans",
+        "priceMinor": 22900
       },
       {
         "name": "Spicy Pepperoni",
