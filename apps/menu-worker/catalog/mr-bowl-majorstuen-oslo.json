@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "mr-bowl-majorstuen-oslo",
+    "name": "Mr. Bowl Majorstuen",
+    "address": "Hegdehaugsveien 36, 0352 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9237454,
+    "longitude": 10.7251826
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/mr-bowl-majorstuen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Åtte konkrete matrett-/prispar hentet fra Wolts offentlige meny 2026-10-18; besøksadresse og koordinater fra restaurantens Wolt-kartlenke. Leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Fried Rice Chicken",
+      "Sesame Chicken Bowl",
+      "Chicken Noodle",
+      "Marinated Beef Bowl",
+      "Marinated Beef Noodle",
+      "Chicken Spring Rolls 3pc",
+      "Marinated Chicken Bowl",
+      "Chicken Fingers"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Fried Rice Chicken",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Sesame Chicken Bowl",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Chicken Noodle",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Marinated Beef Bowl",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Marinated Beef Noodle",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Chicken Spring Rolls 3pc",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Marinated Chicken Bowl",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Chicken Fingers",
+        "priceMinor": 12900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
