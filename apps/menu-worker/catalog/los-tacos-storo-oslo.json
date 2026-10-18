@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-18",
-      "note": "8 konkrete matrett-/prispar mot Wolt-menysiden kontrollert 2026-10-18. Prisene er Wolt-leveringspriser, ikke bekreftede bordpriser. Åpningstider/produksjonsdatabase ikke attestert. Tilnærmet bygningskoordinat fra publisert Egon Storo på Vitaminveien 9–11; nøyaktig inngang ikke attestert."
+      "note": "8 konkrete matrett-/prispar mot Wolt-menysiden kontrollert 2026-10-18. Prisene er Wolt-leveringspriser, ikke bekreftede bordpriser. Åpningstider/produksjonsdatabase ikke attestert. Tilnærmet bygningskoordinat fra publisert Egon Storo på Vitaminveien 9–11; nøyaktig inngang ikke attestert. Tre kombomenypriser rettet fra faktisk streng Wolt-uttrekk i CI 2026-10-18."
     }
   },
   "actions": [],
@@ -65,15 +65,15 @@
       },
       {
         "name": "Combo: Califorinia Burrito + Nachos/Fries + Soda",
-        "priceMinor": 34400
+        "priceMinor": 31900
       },
       {
         "name": "Combo: Cheesy Burrito Crunch + Nachos/Fries + Soda",
-        "priceMinor": 32400
+        "priceMinor": 29900
       },
       {
         "name": "Combo: Chipotle Chicken Burrito + Nachos/Fries + Soda",
-        "priceMinor": 32400
+        "priceMinor": 29900
       }
     ],
     "forbiddenDishNames": []
