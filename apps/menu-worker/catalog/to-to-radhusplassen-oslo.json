@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "to-to-radhusplassen-oslo",
+    "name": "To-To",
+    "address": "Fridtjof Nansens plass 7–9, 0160 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.912606,
+    "longitude": 10.735303
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/to-to",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 konkrete matrett-/prispar mot Wolt-menysiden kontrollert 2026-10-18. Prisene er Wolt-leveringspriser, ikke bekreftede bordpriser. Åpningstider/produksjonsdatabase ikke attestert. Tilnærmet adressekoordinat fra publisert restaurant på Fridtjof Nansens plass 7 (samme bygningsrekke); nøyaktig inngang ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Crispy Kyllingburger",
+      "Smashed BBQ Burger",
+      "Smashed Trøffelburger",
+      "Smashed Cheeseburger",
+      "Smashed Jalapeñoburger",
+      "Halloumiburger",
+      "Fish & Chips",
+      "Club Sandwich"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Crispy Kyllingburger",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Smashed BBQ Burger",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Smashed Trøffelburger",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Smashed Cheeseburger",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Smashed Jalapeñoburger",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Halloumiburger",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Fish & Chips",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Club Sandwich",
+        "priceMinor": 22900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

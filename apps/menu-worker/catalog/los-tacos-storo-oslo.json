@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "los-tacos-storo-oslo",
+    "name": "Los Tacos Storo",
+    "address": "Vitaminveien 11, 0484 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94658508837636,
+    "longitude": 10.77472716705884
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/los-tacos-storo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 konkrete matrett-/prispar mot Wolt-menysiden kontrollert 2026-10-18. Prisene er Wolt-leveringspriser, ikke bekreftede bordpriser. Åpningstider/produksjonsdatabase ikke attestert. Tilnærmet bygningskoordinat fra publisert Egon Storo på Vitaminveien 9–11; nøyaktig inngang ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "California Burrito",
+      "Grilled Steak Burrito",
+      "Cheesy Burrito Crunch",
+      "Chipotle Chicken Burrito",
+      "The BJK Burrito",
+      "Combo: Califorinia Burrito + Nachos/Fries + Soda",
+      "Combo: Cheesy Burrito Crunch + Nachos/Fries + Soda",
+      "Combo: Chipotle Chicken Burrito + Nachos/Fries + Soda"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "California Burrito",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Grilled Steak Burrito",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Cheesy Burrito Crunch",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Chipotle Chicken Burrito",
+        "priceMinor": 19900
+      },
+      {
+        "name": "The BJK Burrito",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Combo: Califorinia Burrito + Nachos/Fries + Soda",
+        "priceMinor": 34400
+      },
+      {
+        "name": "Combo: Cheesy Burrito Crunch + Nachos/Fries + Soda",
+        "priceMinor": 32400
+      },
+      {
+        "name": "Combo: Chipotle Chicken Burrito + Nachos/Fries + Soda",
+        "priceMinor": 32400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

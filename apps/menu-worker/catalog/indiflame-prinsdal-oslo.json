@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "indiflame-prinsdal-oslo",
+    "name": "Indiflame Restaurant & Bar",
+    "address": "Nedre Prinsdals vei 77, 1263 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8335927,
+    "longitude": 10.8069909
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/grand-taj-leveres-av-restauranten",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 konkrete matrett-/prispar mot Wolt-menysiden kontrollert 2026-10-18. Prisene er Wolt-leveringspriser, ikke bekreftede bordpriser. Åpningstider/produksjonsdatabase ikke attestert. Koordinat gjenbrukt fra publisert Prinsdal Sushi Wok med samme besøksadresse. Wolt-kildens URL har eldre Grand Taj-navn, men gjeldende Wolt-tittel er Indiflame."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "19. Butter Chicken",
+      "20. Murg Tikka Masala",
+      "49. Chicken Biryani",
+      "50. Lamb Biryani",
+      "2. Samosa Chaat",
+      "42. Palak Paneer",
+      "46. Dal Makhani (Chef Special)",
+      "54. Garlic Naan"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "19. Butter Chicken",
+        "priceMinor": 29900
+      },
+      {
+        "name": "20. Murg Tikka Masala",
+        "priceMinor": 29900
+      },
+      {
+        "name": "49. Chicken Biryani",
+        "priceMinor": 27900
+      },
+      {
+        "name": "50. Lamb Biryani",
+        "priceMinor": 28900
+      },
+      {
+        "name": "2. Samosa Chaat",
+        "priceMinor": 12900
+      },
+      {
+        "name": "42. Palak Paneer",
+        "priceMinor": 25900
+      },
+      {
+        "name": "46. Dal Makhani (Chef Special)",
+        "priceMinor": 24900
+      },
+      {
+        "name": "54. Garlic Naan",
+        "priceMinor": 6900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

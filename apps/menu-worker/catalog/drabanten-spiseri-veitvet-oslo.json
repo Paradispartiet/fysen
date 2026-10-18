@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "drabanten-spiseri-veitvet-oslo",
+    "name": "Drabanten Spiseri",
+    "address": "Veitvetveien 8, 0596 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94398548402759,
+    "longitude": 10.84781311406986
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/drabanten-spiseri",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 konkrete matrett-/prispar mot Wolt-menysiden kontrollert 2026-10-18. Prisene er Wolt-leveringspriser, ikke bekreftede bordpriser. Åpningstider/produksjonsdatabase ikke attestert. Koordinat gjenbrukt fra eksisterende restaurantmanifest på samme besøksadresse, Veitvetveien 8. Flere serveringssteder ved kjøpesenteret må ikke sammenblandes."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Panang Curry m/Kylling",
+      "Stekt Ris m/Kylling Og Grønnsaker",
+      "Kebab-Rull",
+      "Kebab-Tallerken XL",
+      "Grillet Halloumi",
+      "Husets Berømte Burger",
+      "Pasta Favorita m/ Kjøttboller",
+      "Fish & Chips"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Panang Curry m/Kylling",
+        "priceMinor": 29770
+      },
+      {
+        "name": "Stekt Ris m/Kylling Og Grønnsaker",
+        "priceMinor": 25870
+      },
+      {
+        "name": "Kebab-Rull",
+        "priceMinor": 18070
+      },
+      {
+        "name": "Kebab-Tallerken XL",
+        "priceMinor": 24570
+      },
+      {
+        "name": "Grillet Halloumi",
+        "priceMinor": 28470
+      },
+      {
+        "name": "Husets Berømte Burger",
+        "priceMinor": 29770
+      },
+      {
+        "name": "Pasta Favorita m/ Kjøttboller",
+        "priceMinor": 28470
+      },
+      {
+        "name": "Fish & Chips",
+        "priceMinor": 29770
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
