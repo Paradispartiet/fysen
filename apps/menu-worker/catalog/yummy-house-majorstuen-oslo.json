@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "yummy-house-majorstuen-oslo",
+    "name": "Yummy House",
+    "address": "Sørkedalsveien 5, 0369 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9306924,
+    "longitude": 10.7124693
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/yummy-house",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Restaurantidentitet, adresse og navngitte prissatte matretter kontrollert mot offentlig Wolt-side 2026-10-18. Koordinater fra samme Wolt-steds Google Maps-lenke. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Stekte Nudler 牛肉炒面",
+      "Biff à la Szechuan 🌶️🌶️ 四川风味牛肉",
+      "Kinesisk Pepperbiff 黑椒牛肉",
+      "Sliced Beef In Hot Chili Oil 🌶️🌶️🌶️🌶️🌶️ 水煮牛肉",
+      "Vårruller 春卷",
+      "Innbakt Svinefilet 咕老肉",
+      "Twice Cooked Pork 🌶️🌶️ 回锅肉",
+      "Gonbao Kylling 🌶️🌶️ 宫保鸡肉",
+      "Pekingsuppe 🌶️ 酸辣汤",
+      "Stekt Ris 扬州炒饭"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Stekte Nudler 牛肉炒面",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Biff à la Szechuan 🌶️🌶️ 四川风味牛肉",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Kinesisk Pepperbiff 黑椒牛肉",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Sliced Beef In Hot Chili Oil 🌶️🌶️🌶️🌶️🌶️ 水煮牛肉",
+        "priceMinor": 35900
+      },
+      {
+        "name": "Vårruller 春卷",
+        "priceMinor": 11800
+      },
+      {
+        "name": "Innbakt Svinefilet 咕老肉",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Twice Cooked Pork 🌶️🌶️ 回锅肉",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Gonbao Kylling 🌶️🌶️ 宫保鸡肉",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Pekingsuppe 🌶️ 酸辣汤",
+        "priceMinor": 11800
+      },
+      {
+        "name": "Stekt Ris 扬州炒饭",
+        "priceMinor": 23900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bella-bistro-grefsen-oslo",
+    "name": "Bella Bistro",
+    "address": "Grefsenveien 94A, 0492 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9559706,
+    "longitude": 10.7853567
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/bella-bistro-1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Restaurantidentitet, adresse og navngitte prissatte matretter kontrollert mot offentlig Wolt-side 2026-10-18. Koordinater fra samme Wolt-steds Google Maps-lenke. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kjelsås",
+      "Husets Mix Grill",
+      "Lasagne",
+      "Arams Pita",
+      "Plankebiff",
+      "Kyllingpasta",
+      "Platået",
+      "Spaghetti a la Carbonara",
+      "Husets Biffsnadder"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kjelsås",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Husets Mix Grill",
+        "priceMinor": 34900
+      },
+      {
+        "name": "Lasagne",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Arams Pita",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Plankebiff",
+        "priceMinor": 42900
+      },
+      {
+        "name": "Kyllingpasta",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Platået",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Spaghetti a la Carbonara",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Husets Biffsnadder",
+        "priceMinor": 39900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

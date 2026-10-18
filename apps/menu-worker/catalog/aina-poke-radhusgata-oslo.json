@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "aina-poke-radhusgata-oslo",
+    "name": "Aina Poké",
+    "address": "Rådhusgata 20, 0151 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9094363,
+    "longitude": 10.7420458
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/aina-poke-oslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 15,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Restaurantidentitet, adresse og navngitte prissatte matretter kontrollert mot offentlig Wolt-side 2026-10-18. Koordinater fra samme Wolt-steds Google Maps-lenke. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Mainland Poke",
+      "Katsu Plate",
+      "Road to Hana",
+      "Broke da'mout",
+      "HuliHuli Chicken",
+      "Spam Musubi",
+      "Beef Bulgogi",
+      "Hawaiian Classic",
+      "Paia Shore (Vegetar)",
+      "Banh mi bulgogi"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Mainland Poke",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Katsu Plate",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Road to Hana",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Broke da'mout",
+        "priceMinor": 23900
+      },
+      {
+        "name": "HuliHuli Chicken",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Spam Musubi",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Beef Bulgogi",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Hawaiian Classic",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Paia Shore (Vegetar)",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Banh mi bulgogi",
+        "priceMinor": 17900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
