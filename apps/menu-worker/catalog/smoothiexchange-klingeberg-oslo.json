@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-18",
-      "note": "5 representative matrett-/prispar fra Wolt per 2026-10-18; koordinater fra restaurantens individuelle Wolt-kartlenke. Leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert. Bare açaí-bowls brukes i assertions; smoothies og drikke er holdt utenfor."
+      "note": "5 representative matrett-/prispar fra Wolt per 2026-10-18; koordinater fra restaurantens individuelle Wolt-kartlenke. Leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert. Bare açaí-bowls brukes i assertions; smoothies og drikke er holdt utenfor. Fem açaí-bowl-priser korrigert til 125 kr i liveuttrekket fra GitHub CI 2026-10-18; tidligere Wolt-side viste 119 kr."
     }
   },
   "actions": [],
@@ -42,23 +42,23 @@
     "requiredDishVariants": [
       {
         "name": "The Original",
-        "priceMinor": 11900
+        "priceMinor": 12500
       },
       {
         "name": "Peanut Banana",
-        "priceMinor": 11900
+        "priceMinor": 12500
       },
       {
         "name": "Purple Power",
-        "priceMinor": 11900
+        "priceMinor": 12500
       },
       {
         "name": "Mango Passion",
-        "priceMinor": 11900
+        "priceMinor": 12500
       },
       {
         "name": "Rainforest Edition",
-        "priceMinor": 11900
+        "priceMinor": 12500
       }
     ],
     "forbiddenDishNames": []
