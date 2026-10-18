@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "los-tacos-steen-strom-oslo",
+    "name": "Los Tacos Steen & Strøm",
+    "address": "Nedre Slottsgate 8, 0157 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91215712574447,
+    "longitude": 10.742755978420295
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/los-tacos-steen-strm",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "10 navngitte matretter med Wolt-leveringspriser lest 2026-10-18. Lokasjon er separat fra andre Los Tacos-filialer. Koordinat fra eksisterende Fysen-manifest for LETT Steen & Strøm ved samme adresse (Nedre Slottsgate 8); eksakt inngang/etasje ikke attestert. Ikke dokumentert som bordpriser; åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "California Burrito",
+      "Grilled Steak Burrito",
+      "Cheesy Burrito Crunch",
+      "Chipotle Chicken Burrito",
+      "The BJK Burrito",
+      "The Friday Burrito",
+      "The Vegan Burrito",
+      "Jalapeño Chicken Burrito",
+      "The Quesadilla",
+      "Premium Quesadilla"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "California Burrito",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Grilled Steak Burrito",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Cheesy Burrito Crunch",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Chipotle Chicken Burrito",
+        "priceMinor": 19900
+      },
+      {
+        "name": "The BJK Burrito",
+        "priceMinor": 19900
+      },
+      {
+        "name": "The Friday Burrito",
+        "priceMinor": 19900
+      },
+      {
+        "name": "The Vegan Burrito",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Jalapeño Chicken Burrito",
+        "priceMinor": 19900
+      },
+      {
+        "name": "The Quesadilla",
+        "priceMinor": 18400
+      },
+      {
+        "name": "Premium Quesadilla",
+        "priceMinor": 19900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
