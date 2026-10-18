@@ -37,17 +37,17 @@
       "Classic Korean Toasty",
       "Cheese Doodle",
       "Ms. Choi",
-      "Flaming Cheetos",
+      "Salt and Pepper",
       "Doritos Nacho Cheese"
     ],
     "requiredDishVariants": [
       {
         "name": "The Classic",
-        "priceMinor": 12400
+        "priceMinor": 11900
       },
       {
         "name": "Classic Korean Toasty",
-        "priceMinor": 19600
+        "priceMinor": 18100
       },
       {
         "name": "Cheese Doodle",
@@ -55,11 +55,11 @@
       },
       {
         "name": "Ms. Choi",
-        "priceMinor": 12400
+        "priceMinor": 11900
       },
       {
-        "name": "Flaming Cheetos",
-        "priceMinor": 11900
+        "name": "Salt and Pepper",
+        "priceMinor": 12900
       },
       {
         "name": "Doritos Nacho Cheese",
