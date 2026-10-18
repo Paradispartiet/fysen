@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-18",
-      "note": "Wolt menyobservasjon 2026-10-18 med 10 konkrete matrett-/prispar og besøksadresse. Stovner-filial, separat fra Tasty Thai Bislett og Grønland. Punktet deles med annen aktør på senteret. Wolt-leveringspriser; ikke attestert som bordpriser. Åpningstider, eksakt inngang og produksjonsdatasynk ikke særskilt attestert."
+      "note": "Wolt menyobservasjon 2026-10-18 med 10 konkrete matrett-/prispar og besøksadresse. Stovner-filial, separat fra Tasty Thai Bislett og Grønland. Punktet deles med annen aktør på senteret. Wolt-leveringspriser; ikke attestert som bordpriser. Åpningstider, eksakt inngang og produksjonsdatasynk ikke særskilt attestert. Målrettet CI 2026-10-18 fant 7 avvikende 289→249 NOK; prisassertasjonene er korrigert til observerte Wolt-leveringspriser."
     }
   },
   "actions": [],
@@ -47,19 +47,19 @@
     "requiredDishVariants": [
       {
         "name": "Phad Si-Ew",
-        "priceMinor": 28900
+        "priceMinor": 24900
       },
       {
         "name": "Phad Thai",
-        "priceMinor": 28900
+        "priceMinor": 24900
       },
       {
         "name": "Phad Medd Mamuang",
-        "priceMinor": 28900
+        "priceMinor": 24900
       },
       {
         "name": "Tasty Thai",
-        "priceMinor": 28900
+        "priceMinor": 24900
       },
       {
         "name": "Tom Yum Ramen",
@@ -71,15 +71,15 @@
       },
       {
         "name": "Phad Karri",
-        "priceMinor": 28900
+        "priceMinor": 24900
       },
       {
         "name": "Phad Phed Naw Mai",
-        "priceMinor": 28900
+        "priceMinor": 24900
       },
       {
         "name": "Gaeng Phed",
-        "priceMinor": 28900
+        "priceMinor": 24900
       },
       {
         "name": "Stekt Kyllinggyoza",
