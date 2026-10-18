@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "em-oi-brugata-oslo",
+    "name": "Em Oi",
+    "address": "Brugata 15, 0186 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.913776,
+    "longitude": 10.757014
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/em-oi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Navn, adresse og representative rett-/prispar lest fra offentlig Wolt-side 2026-10-18. Adressepunkt for Brugata 15 fra lokalhistoriewiki.no/wiki/Brugata_15_(Oslo); Wolt bekrefter adressen. Prisene er Wolt-leveringspriser; åpningstider er ikke uavhengig attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Phở",
+      "Wontonsuppe",
+      "Mì Hoành Thánh",
+      "Bun Ga Xao",
+      "Bánh Mì Kylling",
+      "Bánh Mì Egg"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Phở",
+        "priceMinor": 29590
+      },
+      {
+        "name": "Wontonsuppe",
+        "priceMinor": 15290
+      },
+      {
+        "name": "Mì Hoành Thánh",
+        "priceMinor": 29590
+      },
+      {
+        "name": "Bun Ga Xao",
+        "priceMinor": 27390
+      },
+      {
+        "name": "Bánh Mì Kylling",
+        "priceMinor": 18150
+      },
+      {
+        "name": "Bánh Mì Egg",
+        "priceMinor": 16390
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
