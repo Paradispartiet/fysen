@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-18",
-      "note": "Navn, besøksadresse, koordinater via Wolts kartlenke og åtte representative rett-/prispar er kontrollert mot offentlig Wolt-meny 2026-10-18. Wolt-leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke attestert."
+      "note": "Navn, besøksadresse, koordinater via Wolts kartlenke og åtte representative rett-/prispar er kontrollert mot offentlig Wolt-meny 2026-10-18. Wolt-leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke attestert. To prisassertasjoner korrigert etter målrettet livevalidering i CI 2026-10-18 (Wolt serverte andre priser enn tidligere kildevisning)."
     }
   },
   "actions": [],
@@ -69,11 +69,11 @@
       },
       {
         "name": "Tenders Mini Box",
-        "priceMinor": 21900
+        "priceMinor": 17900
       },
       {
         "name": "Single Box",
-        "priceMinor": 30900
+        "priceMinor": 26900
       }
     ],
     "forbiddenDishNames": []
