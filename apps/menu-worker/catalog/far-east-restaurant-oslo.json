@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "far-east-restaurant-oslo",
+    "name": "Far East Restaurant",
+    "address": "Bernt Ankers gate 4, 0183 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.915137,
+    "longitude": 10.753163
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/far-east-restaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Åtte konkrete matrett-/prispar hentet fra Wolts offentlige meny 2026-10-18; besøksadresse og koordinater fra restaurantens Wolt-kartlenke. Leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "13. Phở Bở/Phở Gà",
+      "21. Udon Risnudler Xào",
+      "23. Pad Thai",
+      "2. Chả Giò",
+      "28. Cơm Chiên",
+      "9. Bún Bò Xào",
+      "37. Xào Bông Cải",
+      "7. Súp Cà Thái"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "13. Phở Bở/Phở Gà",
+        "priceMinor": 28800
+      },
+      {
+        "name": "21. Udon Risnudler Xào",
+        "priceMinor": 27800
+      },
+      {
+        "name": "23. Pad Thai",
+        "priceMinor": 27800
+      },
+      {
+        "name": "2. Chả Giò",
+        "priceMinor": 14800
+      },
+      {
+        "name": "28. Cơm Chiên",
+        "priceMinor": 27800
+      },
+      {
+        "name": "9. Bún Bò Xào",
+        "priceMinor": 27800
+      },
+      {
+        "name": "37. Xào Bông Cải",
+        "priceMinor": 27800
+      },
+      {
+        "name": "7. Súp Cà Thái",
+        "priceMinor": 15800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

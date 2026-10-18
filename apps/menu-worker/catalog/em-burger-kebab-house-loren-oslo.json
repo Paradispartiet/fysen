@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "em-burger-kebab-house-loren-oslo",
+    "name": "EM Burger & Kebab House",
+    "address": "Lørenveien 71, 0580 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9287602,
+    "longitude": 10.7996393
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/em-burger-kebab-house",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Åtte konkrete matrett-/prispar hentet fra Wolts offentlige meny 2026-10-18; besøksadresse og koordinater fra restaurantens Wolt-kartlenke. Leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pepperoni Star",
+      "Biff Pizza",
+      "Kyllingpizza",
+      "Hamburgertallerken",
+      "Hamburgertallerken (500g)",
+      "Hamburger",
+      "Løvstekburger",
+      "Fiskeburger"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pepperoni Star",
+        "priceMinor": 28600
+      },
+      {
+        "name": "Biff Pizza",
+        "priceMinor": 33600
+      },
+      {
+        "name": "Kyllingpizza",
+        "priceMinor": 32400
+      },
+      {
+        "name": "Hamburgertallerken",
+        "priceMinor": 16100
+      },
+      {
+        "name": "Hamburgertallerken (500g)",
+        "priceMinor": 28600
+      },
+      {
+        "name": "Hamburger",
+        "priceMinor": 11100
+      },
+      {
+        "name": "Løvstekburger",
+        "priceMinor": 16800
+      },
+      {
+        "name": "Fiskeburger",
+        "priceMinor": 11100
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

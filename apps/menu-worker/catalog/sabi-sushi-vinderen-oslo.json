@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sabi-sushi-vinderen-oslo",
+    "name": "Sabi Sushi Vinderen",
+    "address": "Holmenveien 1, 0374 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9428835,
+    "longitude": 10.7032819
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/sabi-sushi-vinderen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Åtte matrett-/prispar hentet fra offentlig Wolt-meny 2026-10-18. Besøksadresse og koordinater fra Wolt-kartlenke. Leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Sabi Bare Laks",
+      "Tempura scampi maki",
+      "Edamame",
+      "Gyoza",
+      "Sabi Vårruller Wagyu",
+      "Bento Box",
+      "Flambert Laks",
+      "Spicy laks special"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Sabi Bare Laks",
+        "priceMinor": 34800
+      },
+      {
+        "name": "Tempura scampi maki",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Edamame",
+        "priceMinor": 10100
+      },
+      {
+        "name": "Gyoza",
+        "priceMinor": 18400
+      },
+      {
+        "name": "Sabi Vårruller Wagyu",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Bento Box",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Flambert Laks",
+        "priceMinor": 25300
+      },
+      {
+        "name": "Spicy laks special",
+        "priceMinor": 25300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

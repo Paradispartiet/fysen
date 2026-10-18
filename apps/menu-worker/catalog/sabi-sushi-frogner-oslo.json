@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sabi-sushi-frogner-oslo",
+    "name": "Sabi Sushi Frogner",
+    "address": "Bygdøy allé 63B, 0265 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.918995,
+    "longitude": 10.703491
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/sabi-sushi-frogner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Åtte konkrete matrett-/prispar hentet fra Wolts offentlige meny 2026-10-18; besøksadresse og koordinater fra restaurantens Wolt-kartlenke. Leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Sabi Bare Laks",
+      "Tempura scampi maki",
+      "Edamame",
+      "Gyoza",
+      "Spicy laks special",
+      "Laks tempura mango",
+      "Sabi Vårruller Wagyu",
+      "Newbie"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Sabi Bare Laks",
+        "priceMinor": 34800
+      },
+      {
+        "name": "Tempura scampi maki",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Edamame",
+        "priceMinor": 10100
+      },
+      {
+        "name": "Gyoza",
+        "priceMinor": 18400
+      },
+      {
+        "name": "Spicy laks special",
+        "priceMinor": 25300
+      },
+      {
+        "name": "Laks tempura mango",
+        "priceMinor": 25300
+      },
+      {
+        "name": "Sabi Vårruller Wagyu",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Newbie",
+        "priceMinor": 37200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

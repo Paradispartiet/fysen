@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kebabbiten-solli-oslo",
+    "name": "Kebabbiten Solli",
+    "address": "Frognerveien 1B, 0257 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91541833115028,
+    "longitude": 10.717332125835412
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/kebab-biten-solli",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Åtte konkrete matrett-/prispar hentet fra Wolts offentlige meny 2026-10-18; besøksadresse og koordinater fra restaurantens Wolt-kartlenke. Leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kylling",
+      "Biff",
+      "Kebab i Pita",
+      "Kyllingkebab i pita",
+      "Biff Shawarma i Rull",
+      "Kebabtallerken",
+      "Kyllingkebabtallerken",
+      "Biffkebabtallerken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kylling",
+        "priceMinor": 33500
+      },
+      {
+        "name": "Biff",
+        "priceMinor": 35400
+      },
+      {
+        "name": "Kebab i Pita",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Kyllingkebab i pita",
+        "priceMinor": 18200
+      },
+      {
+        "name": "Biff Shawarma i Rull",
+        "priceMinor": 22800
+      },
+      {
+        "name": "Kebabtallerken",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Kyllingkebabtallerken",
+        "priceMinor": 23300
+      },
+      {
+        "name": "Biffkebabtallerken",
+        "priceMinor": 22900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

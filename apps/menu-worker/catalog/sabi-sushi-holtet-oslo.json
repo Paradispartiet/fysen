@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sabi-sushi-holtet-oslo",
+    "name": "Sabi Sushi Holtet",
+    "address": "Kongsveien 91, 1177 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8817917,
+    "longitude": 10.7829952
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/sabi-sushi-holtet",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Åtte matrett-/prispar hentet fra offentlig Wolt-meny 2026-10-18. Besøksadresse og koordinater fra Wolt-kartlenke. Leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tempura scampi maki",
+      "Sabi Bare Laks",
+      "Gyoza",
+      "Laks vårløk",
+      "Bento Box",
+      "Hotroll futomaki",
+      "Kylling Karaage",
+      "Laks tempura mango"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Tempura scampi maki",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Sabi Bare Laks",
+        "priceMinor": 34800
+      },
+      {
+        "name": "Gyoza",
+        "priceMinor": 18400
+      },
+      {
+        "name": "Laks vårløk",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Bento Box",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Hotroll futomaki",
+        "priceMinor": 20400
+      },
+      {
+        "name": "Kylling Karaage",
+        "priceMinor": 19600
+      },
+      {
+        "name": "Laks tempura mango",
+        "priceMinor": 25300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
