@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "hys-sushi-asian-dining-hasle-oslo",
+    "name": "Hy's Sushi & Asian Dining",
+    "address": "Hovinveien 39, 0661 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9199589,
+    "longitude": 10.7912487
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/hys-sushi-asian-dining",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 9,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "9 representative rett-/prispar fra individuell offentlig Wolt-meny 2026-10-18; koordinater fra Wolt-kartlenken. Wolt-leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "27. Stor (16 biter)",
+      "8. Fritert Kylling Gyoza",
+      "66. Crispy Chicken Bao",
+      "49. Tempura Scampi",
+      "48. Dragon Maki",
+      "1. Vårruller",
+      "22. Stekt Ris",
+      "10. Rød Karri (Thaigryte)",
+      "39. Laks m/ Avokado"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "27. Stor (16 biter)",
+        "priceMinor": 25900
+      },
+      {
+        "name": "8. Fritert Kylling Gyoza",
+        "priceMinor": 10900
+      },
+      {
+        "name": "66. Crispy Chicken Bao",
+        "priceMinor": 12900
+      },
+      {
+        "name": "49. Tempura Scampi",
+        "priceMinor": 11900
+      },
+      {
+        "name": "48. Dragon Maki",
+        "priceMinor": 14900
+      },
+      {
+        "name": "1. Vårruller",
+        "priceMinor": 10900
+      },
+      {
+        "name": "22. Stekt Ris",
+        "priceMinor": 22900
+      },
+      {
+        "name": "10. Rød Karri (Thaigryte)",
+        "priceMinor": 21900
+      },
+      {
+        "name": "39. Laks m/ Avokado",
+        "priceMinor": 9900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

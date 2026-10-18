@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "acai-house-via-village-oslo",
+    "name": "Acai House",
+    "address": "Munkedamsveien 29, 0250 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91218121,
+    "longitude": 10.72670316
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/acai-house",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 representative rett-/prispar fra individuell offentlig Wolt-meny 2026-10-18; koordinater fra Wolt-kartlenken. Wolt-leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Smash Acai Bowl",
+      "Dubai Açaí Bowl",
+      "Cottage Cheese Bowl",
+      "Naturell Yoghurt Bowl",
+      "Chia Pudding Bowl",
+      "Belgiske protein vaffler",
+      "Fuel Up Acai Bowl 💪🏽",
+      "Nutella Overload Açaí Bowl 🍩"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Smash Acai Bowl",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Dubai Açaí Bowl",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Cottage Cheese Bowl",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Naturell Yoghurt Bowl",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Chia Pudding Bowl",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Belgiske protein vaffler",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Fuel Up Acai Bowl 💪🏽",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Nutella Overload Açaí Bowl 🍩",
+        "priceMinor": 15900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

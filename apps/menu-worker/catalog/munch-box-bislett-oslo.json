@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "munch-box-bislett-oslo",
+    "name": "Munch Box",
+    "address": "Parkveien 13, 0350 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9218591,
+    "longitude": 10.7302303
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/munch-box",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "10 representative rett-/prispar fra individuell offentlig Wolt-meny 2026-10-18; koordinater fra Wolt-kartlenken. Wolt-leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Classic Munch Meal Deal",
+      "Cheese Munch Meal Deal",
+      "Cheese Lovers Munch Meal Deal",
+      "BBQ Munch Meal Deal",
+      "Blue Munch Meal Deal",
+      "Hot Munch Meal Deal",
+      "Special Munch Meal Deal",
+      "Tex Munch Meal Deal",
+      "Munch Box Single",
+      "Classic Munch"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Classic Munch Meal Deal",
+        "priceMinor": 30500
+      },
+      {
+        "name": "Cheese Munch Meal Deal",
+        "priceMinor": 30500
+      },
+      {
+        "name": "Cheese Lovers Munch Meal Deal",
+        "priceMinor": 31900
+      },
+      {
+        "name": "BBQ Munch Meal Deal",
+        "priceMinor": 30900
+      },
+      {
+        "name": "Blue Munch Meal Deal",
+        "priceMinor": 32900
+      },
+      {
+        "name": "Hot Munch Meal Deal",
+        "priceMinor": 31500
+      },
+      {
+        "name": "Special Munch Meal Deal",
+        "priceMinor": 33500
+      },
+      {
+        "name": "Tex Munch Meal Deal",
+        "priceMinor": 31500
+      },
+      {
+        "name": "Munch Box Single",
+        "priceMinor": 36900
+      },
+      {
+        "name": "Classic Munch",
+        "priceMinor": 19900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

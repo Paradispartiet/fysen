@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "upper-crust-oslo-s-oslo",
+    "name": "Upper Crust",
+    "address": "Jernbanetorget 1, 0152 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91072555,
+    "longitude": 10.75287811
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/upper-crust",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "10 representative rett-/prispar fra individuell offentlig Wolt-meny 2026-10-18; koordinater fra Wolt-kartlenken. Wolt-leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Ost & Skinke",
+      "Posh Italian",
+      "Brie & Bacon",
+      "Premium Salmon",
+      "Egg & Tomat",
+      "Spicy Tuna",
+      "Chicken Tikka",
+      "Mozzarella Tomat",
+      "BLT",
+      "Premium Reker"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Ost & Skinke",
+        "priceMinor": 14100
+      },
+      {
+        "name": "Posh Italian",
+        "priceMinor": 16200
+      },
+      {
+        "name": "Brie & Bacon",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Premium Salmon",
+        "priceMinor": 18700
+      },
+      {
+        "name": "Egg & Tomat",
+        "priceMinor": 14100
+      },
+      {
+        "name": "Spicy Tuna",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Chicken Tikka",
+        "priceMinor": 16400
+      },
+      {
+        "name": "Mozzarella Tomat",
+        "priceMinor": 12500
+      },
+      {
+        "name": "BLT",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Premium Reker",
+        "priceMinor": 19300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
