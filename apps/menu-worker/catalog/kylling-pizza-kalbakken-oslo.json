@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kylling-pizza-kalbakken-oslo",
+    "name": "Kylling & Pizza Kalbakken",
+    "address": "Trondheimsveien 391, 0953 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9520219,
+    "longitude": 10.8671813
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/kylling-pizza-kalbakken",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Navn, besøksadresse, koordinater via Wolts kartlenke og åtte representative rett-/prispar er kontrollert mot offentlig Wolt-meny 2026-10-18. Wolt-leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kylling Baguette",
+      "Hot Wings Mini Box",
+      "Kylling Tacos",
+      "Kylling & Pizza Special Stor Amerikansk",
+      "Hot Wings Medium Box (10 Hot Wings)",
+      "Chicken PopCorn Box",
+      "Tenders Mini Box",
+      "Single Box"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kylling Baguette",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Hot Wings Mini Box",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Kylling Tacos",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Kylling & Pizza Special Stor Amerikansk",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Hot Wings Medium Box (10 Hot Wings)",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Chicken PopCorn Box",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Tenders Mini Box",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Single Box",
+        "priceMinor": 30900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

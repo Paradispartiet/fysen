@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "folkets-kebab-alnabru-oslo",
+    "name": "Folkets Kebab Alnabru",
+    "address": "Arvesetveien 2-4, 0668 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92897031,
+    "longitude": 10.84603967
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/folkets-kebab-alnabru",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Navn, besøksadresse, koordinater via Wolts kartlenke og åtte representative rett-/prispar er kontrollert mot offentlig Wolt-meny 2026-10-18. Wolt-leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebabtallerken",
+      "Kebab I Pita",
+      "Texasburgertallerken 160G",
+      "Kyllingtallerken",
+      "Texasburgertallerken",
+      "Dønertallerken",
+      "Texasburger",
+      "Kebab I Rull"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebabtallerken",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Kebab I Pita",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Texasburgertallerken 160G",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Kyllingtallerken",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Texasburgertallerken",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Dønertallerken",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Texasburger",
+        "priceMinor": 14100
+      },
+      {
+        "name": "Kebab I Rull",
+        "priceMinor": 16900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

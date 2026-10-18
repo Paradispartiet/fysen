@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kebabish-norge-ravnkollbakken-oslo",
+    "name": "Kebabish Norge",
+    "address": "Ravnkollbakken 64, 0971 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9682665,
+    "longitude": 10.8918621
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/kebabish-norge",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Navn, besøksadresse, koordinater via Wolts kartlenke og åtte representative rett-/prispar er kontrollert mot offentlig Wolt-meny 2026-10-18. Wolt-leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "27. Mix Grill",
+      "33. Garlic Nan",
+      "12. Butter Chicken",
+      "30. Chicken Biryani",
+      "4. Nan Kebab",
+      "13. Chicken Tikka Masala",
+      "29. Lam Biryani",
+      "5. Chicken Tikka Nan Kebab"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "27. Mix Grill",
+        "priceMinor": 29900
+      },
+      {
+        "name": "33. Garlic Nan",
+        "priceMinor": 3500
+      },
+      {
+        "name": "12. Butter Chicken",
+        "priceMinor": 28900
+      },
+      {
+        "name": "30. Chicken Biryani",
+        "priceMinor": 19900
+      },
+      {
+        "name": "4. Nan Kebab",
+        "priceMinor": 7900
+      },
+      {
+        "name": "13. Chicken Tikka Masala",
+        "priceMinor": 28900
+      },
+      {
+        "name": "29. Lam Biryani",
+        "priceMinor": 21900
+      },
+      {
+        "name": "5. Chicken Tikka Nan Kebab",
+        "priceMinor": 8900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

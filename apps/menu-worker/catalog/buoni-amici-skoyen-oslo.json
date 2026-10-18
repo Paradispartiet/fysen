@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "buoni-amici-skoyen-oslo",
+    "name": "Buoni Amici",
+    "address": "Drammensveien 130 C2, 0277 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.921689557325436,
+    "longitude": 10.68747946234106
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/midpoint-cafe-bar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Navn, besøksadresse, koordinater via Wolts kartlenke og åtte representative rett-/prispar er kontrollert mot offentlig Wolt-meny 2026-10-18. Wolt-leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Parma (Pizza)",
+      "Lasagne",
+      "Mortadella",
+      "Chorizo Piccante",
+      "Prosciutto Cotto",
+      "Quattro Formaggi",
+      "Bacon Heaven"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Parma (Pizza)",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Lasagne",
+        "priceMinor": 25200
+      },
+      {
+        "name": "Mortadella",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Chorizo Piccante",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Prosciutto Cotto",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Quattro Formaggi",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Bacon Heaven",
+        "priceMinor": 24900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

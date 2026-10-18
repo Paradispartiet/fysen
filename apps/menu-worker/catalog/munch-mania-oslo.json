@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "munch-mania-oslo",
+    "name": "Munch Mania",
+    "address": "Enebakkveien 17A, 0657 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9072256,
+    "longitude": 10.7821824
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/munch-mania-1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Navn, besøksadresse, koordinater via Wolts kartlenke og åtte representative rett-/prispar er kontrollert mot offentlig Wolt-meny 2026-10-18. Wolt-leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "El Clasico",
+      "El Classico Meny",
+      "Takis",
+      "Rockstar",
+      "Por Tres",
+      "Wild West",
+      "Chili Cheese",
+      "Döner Fries"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "El Clasico",
+        "priceMinor": 19900
+      },
+      {
+        "name": "El Classico Meny",
+        "priceMinor": 30900
+      },
+      {
+        "name": "Takis",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Rockstar",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Por Tres",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Wild West",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Chili Cheese",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Döner Fries",
+        "priceMinor": 10500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
