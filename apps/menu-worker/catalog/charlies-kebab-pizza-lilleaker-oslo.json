@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "charlies-kebab-pizza-lilleaker-oslo",
+    "name": "Charlies Kebab & Pizza",
+    "address": "Lilleakerveien 21, 0283 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9184065,
+    "longitude": 10.6368781
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/charlies-kebab-pizza-1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Restaurantidentitet, adresse og navngitte prissatte matretter kontrollert mot offentlig Wolt-side 2026-10-18. Koordinater fra samme Wolt-steds Google Maps-lenke. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Cheeseburgertallerken",
+      "Kebabtallerken",
+      "Kebab i Pita",
+      "Kebab i Rull",
+      "Pommes Frites",
+      "Biffsnaddertallerken",
+      "Cheeseburger",
+      "Shishbebab Rull",
+      "Kyllingnuggets Tallerken",
+      "Shishkebab Tallerken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Cheeseburgertallerken",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Kebabtallerken",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Kebab i Pita",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Kebab i Rull",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Pommes Frites",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Biffsnaddertallerken",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Cheeseburger",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Shishbebab Rull",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Kyllingnuggets Tallerken",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Shishkebab Tallerken",
+        "priceMinor": 20900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
