@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sushi-deluxe-gamlebyen-oslo",
+    "name": "Sushi Deluxe",
+    "address": "Schweigaards gate 50, 0191 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.908912,
+    "longitude": 10.768317
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/sushi-deluxe-oslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Åtte konkrete matrett-/prispar hentet fra Wolts offentlige meny 2026-10-18; besøksadresse og koordinater fra restaurantens Wolt-kartlenke. Leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "27. Dragon Maki",
+      "29. Tempura Scampi",
+      "19. Philadelphia Roll",
+      "Vårruller",
+      "28. Fritert Laks",
+      "4. Stor",
+      "Fritert gyoza",
+      "17. Laks"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "27. Dragon Maki",
+        "priceMinor": 13900
+      },
+      {
+        "name": "29. Tempura Scampi",
+        "priceMinor": 10500
+      },
+      {
+        "name": "19. Philadelphia Roll",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Vårruller",
+        "priceMinor": 6900
+      },
+      {
+        "name": "28. Fritert Laks",
+        "priceMinor": 13900
+      },
+      {
+        "name": "4. Stor",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Fritert gyoza",
+        "priceMinor": 8900
+      },
+      {
+        "name": "17. Laks",
+        "priceMinor": 9500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
