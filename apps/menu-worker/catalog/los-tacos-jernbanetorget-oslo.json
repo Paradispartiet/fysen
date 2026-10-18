@@ -41,7 +41,7 @@
       "The Friday Burrito",
       "The Vegan Burrito",
       "Jalapeño Chicken Burrito",
-      "The Quesadilla",
+      "Crunchy Quesadilla",
       "Premium Quesadilla"
     ],
     "requiredDishVariants": [
@@ -78,8 +78,8 @@
         "priceMinor": 19900
       },
       {
-        "name": "The Quesadilla",
-        "priceMinor": 18400
+        "name": "Crunchy Quesadilla",
+        "priceMinor": 17900
       },
       {
         "name": "Premium Quesadilla",
