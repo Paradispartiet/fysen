@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "phin-restaurant-loren-oslo",
+    "name": "Phin Restaurant",
+    "address": "Lørenveien 60, 0585 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9295928,
+    "longitude": 10.7974009
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/phin-restaurant",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 18,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Navn, besøksadresse og prissatte matretter kontrollert mot offentlig Wolt-menyside 2026-10-18. Koordinater fra Wolts kartlenke for samme sted. Prisene er Wolt-leveringspriser og ikke attestert som bordpriser. Åpningstider og maskinelt liveinntak er ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "P1. Phở Bò",
+      "K8. Gỏi Cuốn (2pcs)",
+      "P1.a. Phở Bò Tái Lăn",
+      "K7. Chả Giò (2pcs)",
+      "B3. Bún Bò Xào Nam Bộ",
+      "C4. Cơm Heo Quay",
+      "K3. Cánh Gà Rang Muối Ớt (5pcs)",
+      "BM8. Bánh Mì Nem Nướng"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "P1. Phở Bò",
+        "priceMinor": 26500
+      },
+      {
+        "name": "K8. Gỏi Cuốn (2pcs)",
+        "priceMinor": 14900
+      },
+      {
+        "name": "P1.a. Phở Bò Tái Lăn",
+        "priceMinor": 27500
+      },
+      {
+        "name": "K7. Chả Giò (2pcs)",
+        "priceMinor": 12500
+      },
+      {
+        "name": "B3. Bún Bò Xào Nam Bộ",
+        "priceMinor": 27500
+      },
+      {
+        "name": "C4. Cơm Heo Quay",
+        "priceMinor": 27500
+      },
+      {
+        "name": "K3. Cánh Gà Rang Muối Ớt (5pcs)",
+        "priceMinor": 14900
+      },
+      {
+        "name": "BM8. Bánh Mì Nem Nướng",
+        "priceMinor": 19500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

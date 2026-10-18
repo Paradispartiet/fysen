@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "posteria-tollbugata-oslo",
+    "name": "Posteria",
+    "address": "Tollbugata 13, 0152 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9101935,
+    "longitude": 10.7454913
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/posteria",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 9,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Navn, besøksadresse og prissatte matretter kontrollert mot offentlig Wolt-menyside 2026-10-18. Koordinater fra Wolts kartlenke for samme sted. Prisene er Wolt-leveringspriser og ikke attestert som bordpriser. Åpningstider og maskinelt liveinntak er ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Vegetariana",
+      "Diavola 2.0",
+      "Formaggi",
+      "Parmigiana",
+      "Parma",
+      "Tartufata",
+      "Foccacia",
+      "Garlic Bread"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Vegetariana",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Diavola 2.0",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Formaggi",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Parmigiana",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Parma",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Tartufata",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Foccacia",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Garlic Bread",
+        "priceMinor": 13500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

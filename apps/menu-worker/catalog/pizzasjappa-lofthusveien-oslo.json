@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizzasjappa-lofthusveien-oslo",
+    "name": "Pizzasjapp'A",
+    "address": "Lofthusveien 66, 0588 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9458228,
+    "longitude": 10.8089497
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/pizzasjappa-detroit-style",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 18,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Navn, besøksadresse og prissatte matretter kontrollert mot offentlig Wolt-menyside 2026-10-18. Koordinater fra Wolts kartlenke for samme sted. Prisene er Wolt-leveringspriser og ikke attestert som bordpriser. Åpningstider og maskinelt liveinntak er ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Soppen og Skinka",
+      "Pepperoni & Sopp",
+      "Biff & Bearnaise",
+      "Biff Kebabpizza",
+      "Biff BBQ",
+      "Honning pepperoni",
+      "Bacon Duo"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Soppen og Skinka",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Pepperoni & Sopp",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Biff & Bearnaise",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Biff Kebabpizza",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Biff BBQ",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Honning pepperoni",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Bacon Duo",
+        "priceMinor": 24900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
