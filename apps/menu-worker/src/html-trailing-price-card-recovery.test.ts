@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION,
   isStrongNumberedTrailingPriceCardRecovery,
+  recoverInlineMarkedPriceTextItems,
   recoverTrailingPriceCardHtmlItems,
 } from "./html-trailing-price-card-recovery.js";
 
@@ -530,4 +531,42 @@ describe("trailing-price HTML card recovery", () => {
       items.some((item) => item.name === "98 piece / 495 1⁄2 dozen"),
     ).toBe(false);
   });
+
+  it("recovers direct dash-delimited food rows with trailing allergen or per-item metadata", () => {
+    const visibleText = [
+      "SNACKS",
+      "Nocellara-oliven – 95,- /stk",
+      "Valenciamandler – 95,- /stk",
+      "KALDE FORRETTER",
+      "Kalix løyrom – rømme, dill, sitron, chips, syltet sjalottløk – 300,-",
+      "Bifftartar – sjalottløk, cornichon, jordskokkchips, chilimajones – 265,-",
+      "Chèvrekrem - rødbeter, syltet løk, tørket oliven, urteolje - 205,- (M, SU)",
+      "HOVEDRETTER",
+      "Oksekjake, – potetpuré, gulrot, oksejus, trøffelchips - 495,-",
+      "Confitert andelår – rødkål, hash brown, solbær, andejus – 465,-",
+      "DESSERT",
+      "Ostekake – kirsebær – pekannøtter – 180,-",
+      "Hvit sjokolade med yoghurt - blåbær, krokan, sitronmelisse – 195,- (M, SU, MA)",
+      "All Over India – Mixed Grill – 179,-",
+    ].join("\\n");
+
+    expect(
+      recoverInlineMarkedPriceTextItems(visibleText).map((item) => [
+        item.name,
+        item.priceMinor,
+      ]),
+    ).toEqual([
+      ["Nocellara-oliven", 9500],
+      ["Valenciamandler", 9500],
+      ["Kalix løyrom", 30000],
+      ["Bifftartar", 26500],
+      ["Chèvrekrem", 20500],
+      ["Oksekjake", 49500],
+      ["Confitert andelår", 46500],
+      ["Ostekake", 18000],
+      ["Hvit sjokolade med yoghurt", 19500],
+      ["All Over India – Mixed Grill", 17900],
+    ]);
+  });
+
 });
