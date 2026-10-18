@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "175c-k-fried-vulkan-oslo",
+    "name": "175C K-Fried",
+    "address": "Vulkan 7, 0178 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9226922,
+    "longitude": 10.752037
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/175c",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 17,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Restaurantidentitet, adresse og navngitte prissatte matretter kontrollert mot offentlig Wolt-side 2026-10-18. Koordinater fra samme Wolt-steds Google Maps-lenke. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Korean Yangnyeom - Boneless",
+      "Honey Soy - Boneless",
+      "Korean Yangnyeom - Wings(10pcs)",
+      "Hot Chilli - Boneless",
+      "Crispy K-Fried - Boneless",
+      "Garlic Mayo - Boneless",
+      "Crispy K-Fried - Wings(10pcs)",
+      "Honey Soy - Wings(10pcs)",
+      "Hot Chilli - Wings(10pcs)",
+      "Snowing Cheese - Boneless"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Korean Yangnyeom - Boneless",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Honey Soy - Boneless",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Korean Yangnyeom - Wings(10pcs)",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Hot Chilli - Boneless",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Crispy K-Fried - Boneless",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Garlic Mayo - Boneless",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Crispy K-Fried - Wings(10pcs)",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Honey Soy - Wings(10pcs)",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Hot Chilli - Wings(10pcs)",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Snowing Cheese - Boneless",
+        "priceMinor": 23900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
