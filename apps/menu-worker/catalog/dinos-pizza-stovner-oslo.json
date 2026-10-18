@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dinos-pizza-stovner-oslo",
+    "name": "Dino's Pizza Stovner",
+    "address": "Haavard Martinsens vei 38, 0978 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9622559,
+    "longitude": 10.9143824
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/dinos-pizza-stovner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "10 representative rett-/prispar fra individuell offentlig Wolt-meny 2026-10-18; koordinater fra Wolt-kartlenken. Wolt-leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "5. Golden Special (Stor)",
+      "Kebabmiddag",
+      "36. Fly Chicken (Stor)",
+      "Dønerkebab Middag",
+      "35. T-Rex (Stor)",
+      "9. Your Choice (Medium)",
+      "50/50 (Stor)",
+      "32. Dino's Tandoori Hot (Stor)",
+      "9. Your Choice (Stor)",
+      "Garlic Bread"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "5. Golden Special (Stor)",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Kebabmiddag",
+        "priceMinor": 17900
+      },
+      {
+        "name": "36. Fly Chicken (Stor)",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Dønerkebab Middag",
+        "priceMinor": 18900
+      },
+      {
+        "name": "35. T-Rex (Stor)",
+        "priceMinor": 28900
+      },
+      {
+        "name": "9. Your Choice (Medium)",
+        "priceMinor": 22900
+      },
+      {
+        "name": "50/50 (Stor)",
+        "priceMinor": 30900
+      },
+      {
+        "name": "32. Dino's Tandoori Hot (Stor)",
+        "priceMinor": 29900
+      },
+      {
+        "name": "9. Your Choice (Stor)",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Garlic Bread",
+        "priceMinor": 6900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "tao-lilleaker-oslo",
+    "name": "TAO",
+    "address": "Lilleakerveien 47, 0284 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9221934,
+    "longitude": 10.6382942
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/tao-oslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 representative rett-/prispar fra individuell offentlig Wolt-meny 2026-10-18; koordinater fra Wolt-kartlenken. Wolt-leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "TAOs Spesial - 10 Biter",
+      "Tempura Scampi - 8 Biter",
+      "Dining For 1 Person",
+      "Poke Bowl",
+      "Dining For 2 Personer",
+      "Vårruller 2 stk",
+      "Mango Spesial - 10 Biter",
+      "Chicken Gyoza 5 Stk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "TAOs Spesial - 10 Biter",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Tempura Scampi - 8 Biter",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Dining For 1 Person",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Poke Bowl",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Dining For 2 Personer",
+        "priceMinor": 43600
+      },
+      {
+        "name": "Vårruller 2 stk",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Mango Spesial - 10 Biter",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Chicken Gyoza 5 Stk",
+        "priceMinor": 11500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

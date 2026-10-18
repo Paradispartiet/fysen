@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "romsas-pizza-oslo",
+    "name": "Romsås Pizza",
+    "address": "Romsås Senter 1, 0970 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.963917,
+    "longitude": 10.89256
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/romss-pizza",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "10 representative rett-/prispar fra individuell offentlig Wolt-meny 2026-10-18; koordinater fra Wolt-kartlenken. Wolt-leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebab Pita",
+      "Halal Tandoori Kylling",
+      "Halal Biff",
+      "Fries",
+      "Kebabtallerken",
+      "Hamburger",
+      "Kebab pizza",
+      "Kyllingburger",
+      "Margherita",
+      "Hamburger tallerken 160g"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebab Pita",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Halal Tandoori Kylling",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Halal Biff",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Fries",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Kebabtallerken",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Hamburger",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Kebab pizza",
+        "priceMinor": 21400
+      },
+      {
+        "name": "Kyllingburger",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Margherita",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Hamburger tallerken 160g",
+        "priceMinor": 18900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
