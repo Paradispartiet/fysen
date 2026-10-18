@@ -34,7 +34,7 @@
   "qualityAssertions": {
     "requiredDishNames": [
       "2. Pepperoni [Stor]",
-      "18. Mix Pizza [Stor]",
+      "13. Nordlysdrøm [Stor]",
       "2. Pepperoni [Medium]",
       "11. Inferno Biff [Medium] 🌶️",
       "18. Mix Pizza [Medium]",
@@ -48,7 +48,7 @@
         "priceMinor": 29500
       },
       {
-        "name": "18. Mix Pizza [Stor]",
+        "name": "13. Nordlysdrøm [Stor]",
         "priceMinor": 33000
       },
       {
