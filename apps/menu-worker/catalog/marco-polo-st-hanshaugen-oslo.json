@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "marco-polo-st-hanshaugen-oslo",
+    "name": "Marco Polo St. Hanshaugen",
+    "address": "Dalsbergstien 6A, 0170 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9228667,
+    "longitude": 10.739546
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/marco-polo-st-hanshaugen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Åtte konkrete matrett-/prispar hentet fra Wolts offentlige meny 2026-10-18; besøksadresse og koordinater fra restaurantens Wolt-kartlenke. Leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Szechuan",
+      "Sesampanert Kylling i Søtsur Saus",
+      "Chop suey",
+      "Sweet Fire Chicken",
+      "Innbakte Kongereker",
+      "Stekte Nudler",
+      "Rød Curry (Kaeng Phet )",
+      "Karri"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Szechuan",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Sesampanert Kylling i Søtsur Saus",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Chop suey",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Sweet Fire Chicken",
+        "priceMinor": 25200
+      },
+      {
+        "name": "Innbakte Kongereker",
+        "priceMinor": 11300
+      },
+      {
+        "name": "Stekte Nudler",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Rød Curry (Kaeng Phet )",
+        "priceMinor": 25200
+      },
+      {
+        "name": "Karri",
+        "priceMinor": 23900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
