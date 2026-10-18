@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "baba-sushi-bubble-tea-holmlia-oslo",
+    "name": "Baba Sushi & Bubble Tea Holmlia",
+    "address": "Holmliaveien 75, 1255 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.83436067513571,
+    "longitude": 10.795410544329457
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/baba-sushi-bubble-tea-holmlia",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Wolt menyobservasjon 2026-10-18 med 10 konkrete matrett-/prispar og besøksadresse. Individuell sushi- og bubble tea-restaurant på Holmlia. Wolt-leveringspriser; ikke attestert som bordpriser. Åpningstider, eksakt inngang og produksjonsdatasynk ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "93. Vulkan Bowl",
+      "40. Crispy Ebi",
+      "25. Tempura Maki",
+      "42. Crispy Laks",
+      "12. Dagens Maki (12 Biter)",
+      "29. Mango Laks Maki",
+      "Meny 1-16 Biter",
+      "Meny 2-20 Biter",
+      "3. Innbakt Tempura",
+      "36. Kylling Teriyaki Futo"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "93. Vulkan Bowl",
+        "priceMinor": 22900
+      },
+      {
+        "name": "40. Crispy Ebi",
+        "priceMinor": 8900
+      },
+      {
+        "name": "25. Tempura Maki",
+        "priceMinor": 12900
+      },
+      {
+        "name": "42. Crispy Laks",
+        "priceMinor": 9500
+      },
+      {
+        "name": "12. Dagens Maki (12 Biter)",
+        "priceMinor": 15900
+      },
+      {
+        "name": "29. Mango Laks Maki",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Meny 1-16 Biter",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Meny 2-20 Biter",
+        "priceMinor": 26500
+      },
+      {
+        "name": "3. Innbakt Tempura",
+        "priceMinor": 8900
+      },
+      {
+        "name": "36. Kylling Teriyaki Futo",
+        "priceMinor": 8900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

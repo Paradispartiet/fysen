@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "subway-lille-grensen-oslo",
+    "name": "Subway Lille Grensen",
+    "address": "Akersgata 43, 0158 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9137013,
+    "longitude": 10.7419446
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/subway-lille-grensen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Wolt menyobservasjon 2026-10-18 med 10 konkrete matrett-/prispar og besøksadresse. Akersgata 43, egen filial forskjellig fra publiserte Subway Skippergata/Pilestredet. Wolt-leveringspriser; ikke attestert som bordpriser. Åpningstider, eksakt inngang og produksjonsdatasynk ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Italian B.M.T.®, 30cm",
+      "Taco Sub, 30cm",
+      "Tunfisk, 30cm",
+      "Taco Sub, 15cm",
+      "Chicken Teriyaki, 30cm",
+      "3 Cookies",
+      "Subway Melt™, 30cm",
+      "Chicken Teriyaki Meal Deal, 30cm",
+      "Skinke, 30cm",
+      "Taco Wrap"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Italian B.M.T.®, 30cm",
+        "priceMinor": 16400
+      },
+      {
+        "name": "Taco Sub, 30cm",
+        "priceMinor": 16100
+      },
+      {
+        "name": "Tunfisk, 30cm",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Taco Sub, 15cm",
+        "priceMinor": 9000
+      },
+      {
+        "name": "Chicken Teriyaki, 30cm",
+        "priceMinor": 19600
+      },
+      {
+        "name": "3 Cookies",
+        "priceMinor": 4800
+      },
+      {
+        "name": "Subway Melt™, 30cm",
+        "priceMinor": 18600
+      },
+      {
+        "name": "Chicken Teriyaki Meal Deal, 30cm",
+        "priceMinor": 23200
+      },
+      {
+        "name": "Skinke, 30cm",
+        "priceMinor": 14800
+      },
+      {
+        "name": "Taco Wrap",
+        "priceMinor": 10800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

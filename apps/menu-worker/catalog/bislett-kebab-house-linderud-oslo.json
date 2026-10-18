@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bislett-kebab-house-linderud-oslo",
+    "name": "Bislett Kebab House Linderud",
+    "address": "Trondheimsveien 320, 0593 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9440608,
+    "longitude": 10.8331918
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/bislett-kebab-house-linderud",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Wolt menyobservasjon 2026-10-18 med 9 konkrete matrett-/prispar og besøksadresse. Egen Linderud-filial, ikke eksisterende Bislett Kebab House-lokasjoner. Wolt-leveringspriser; ikke attestert som bordpriser. Åpningstider, eksakt inngang og produksjonsdatasynk ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebab i Pita",
+      "Kebabtallerken",
+      "Bislett Kebab Original",
+      "Kylling Shawarma i Rull",
+      "Kylling Shawarma i Pita",
+      "Kebab i Rull",
+      "Smash Fries",
+      "Döner i Pita",
+      "Kylling Shawarma Tallerken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebab i Pita",
+        "priceMinor": 12800
+      },
+      {
+        "name": "Kebabtallerken",
+        "priceMinor": 20700
+      },
+      {
+        "name": "Bislett Kebab Original",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Kylling Shawarma i Rull",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Kylling Shawarma i Pita",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Kebab i Rull",
+        "priceMinor": 12800
+      },
+      {
+        "name": "Smash Fries",
+        "priceMinor": 12100
+      },
+      {
+        "name": "Döner i Pita",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Kylling Shawarma Tallerken",
+        "priceMinor": 25500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ikigai-japanese-food-oslo",
+    "name": "Ikigai Japanese Food",
+    "address": "Torggata 16B, 0181 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.915909,
+    "longitude": 10.7508451
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/ikigai-japanese-food",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Wolt menyobservasjon 2026-10-18 med 8 konkrete matrett-/prispar og besøksadresse. Egen Wolt-meny ved Oslo Street Food, avgrenset fra andre operatører i Torggata 16B. Wolt-leveringspriser; ikke attestert som bordpriser. Åpningstider, eksakt inngang og produksjonsdatasynk ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Karaage",
+      "Katsu",
+      "Oyako",
+      "Karaage Snacks",
+      "Tonkatsu",
+      "Edamaki Spring Roll",
+      "Edamame",
+      "Rice"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Karaage",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Katsu",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Oyako",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Karaage Snacks",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Tonkatsu",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Edamaki Spring Roll",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Edamame",
+        "priceMinor": 6000
+      },
+      {
+        "name": "Rice",
+        "priceMinor": 3000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

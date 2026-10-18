@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "subway-stovner-oslo",
+    "name": "Subway Stovner",
+    "address": "Stovner Senter 3, 0985 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.961484,
+    "longitude": 10.925449
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/subway-stovner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Wolt menyobservasjon 2026-10-18 med 10 konkrete matrett-/prispar og besøksadresse. Selvstendig Stovner-filial med egne priser (skiller seg fra Lille Grensen). Wolt-leveringspriser; ikke attestert som bordpriser. Åpningstider, eksakt inngang og produksjonsdatasynk ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tunfisk, 30cm",
+      "Tunfisk, 15cm",
+      "Chicken Teriyaki, 30cm",
+      "Taco Sub, 30cm",
+      "Steak & Cheese, 30cm",
+      "3 Cookies",
+      "Taco Sub, 15cm",
+      "Italian B.M.T.®, 30cm",
+      "Kalkun, 15cm",
+      "Skinke, 30cm"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Tunfisk, 30cm",
+        "priceMinor": 16400
+      },
+      {
+        "name": "Tunfisk, 15cm",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Chicken Teriyaki, 30cm",
+        "priceMinor": 20100
+      },
+      {
+        "name": "Taco Sub, 30cm",
+        "priceMinor": 16600
+      },
+      {
+        "name": "Steak & Cheese, 30cm",
+        "priceMinor": 18400
+      },
+      {
+        "name": "3 Cookies",
+        "priceMinor": 4800
+      },
+      {
+        "name": "Taco Sub, 15cm",
+        "priceMinor": 9300
+      },
+      {
+        "name": "Italian B.M.T.®, 30cm",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Kalkun, 15cm",
+        "priceMinor": 8400
+      },
+      {
+        "name": "Skinke, 30cm",
+        "priceMinor": 15300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

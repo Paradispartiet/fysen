@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "burger-king-saeter-oslo",
+    "name": "Burger King Sæter",
+    "address": "Ekebergveien 235, 1162 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8610331,
+    "longitude": 10.799855
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/burger-king-ster",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Wolt menyobservasjon 2026-10-18 med 10 konkrete matrett-/prispar og besøksadresse. Sæter-filial, Wolt-slug er burger-king-ster. Wolt-leveringspriser; ikke attestert som bordpriser. Åpningstider, eksakt inngang og produksjonsdatasynk ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Whopper Cheese Meny",
+      "Crispy Chicken Meny",
+      "Cheeseburger",
+      "Chili Cheese",
+      "Crispy Chicken",
+      "Fries",
+      "8 stk Pannekaker",
+      "Chicken Nuggets 9 Biter",
+      "Steakhouse Bacon King Meny",
+      "Bacon King Meny"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Whopper Cheese Meny",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Crispy Chicken Meny",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Cheeseburger",
+        "priceMinor": 4100
+      },
+      {
+        "name": "Chili Cheese",
+        "priceMinor": 6200
+      },
+      {
+        "name": "Crispy Chicken",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Fries",
+        "priceMinor": 6500
+      },
+      {
+        "name": "8 stk Pannekaker",
+        "priceMinor": 4100
+      },
+      {
+        "name": "Chicken Nuggets 9 Biter",
+        "priceMinor": 11000
+      },
+      {
+        "name": "Steakhouse Bacon King Meny",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Bacon King Meny",
+        "priceMinor": 23900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
