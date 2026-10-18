@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizzabussen-ellingsrud-oslo",
+    "name": "Pizzabussen",
+    "address": "Skansen terrasse 2, 1063 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9385564,
+    "longitude": 10.9078939
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/pizzabussen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "10 navngitte pizzaer og tilhørende Wolt-leveringspriser lest 2026-10-18. Wolt oppgir Skansen terassen 2, 1061 Oslo, mens offentlig adresse til samme bygg oppgis som Skansen terrasse 2, 1063 Oslo. Koordinat er publisert for Rema 1000 Ellingsrud på samme adresse (etilbudsavis.no), 59.9385564, 10.9078939; restaurantens eksakte inngang ikke attestert. Ikke dokumentert som bordpriser; åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "1. Vesuvio",
+      "2. Capricciosa",
+      "3. Funghi",
+      "4. Margarita",
+      "5. Sorrento",
+      "6. Paradiso",
+      "7. Capri Luxus",
+      "8. Cacciatora",
+      "9. Pepperoni",
+      "10. Calzone"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "1. Vesuvio",
+        "priceMinor": 21900
+      },
+      {
+        "name": "2. Capricciosa",
+        "priceMinor": 22200
+      },
+      {
+        "name": "3. Funghi",
+        "priceMinor": 21900
+      },
+      {
+        "name": "4. Margarita",
+        "priceMinor": 20900
+      },
+      {
+        "name": "5. Sorrento",
+        "priceMinor": 22400
+      },
+      {
+        "name": "6. Paradiso",
+        "priceMinor": 22400
+      },
+      {
+        "name": "7. Capri Luxus",
+        "priceMinor": 22600
+      },
+      {
+        "name": "8. Cacciatora",
+        "priceMinor": 22400
+      },
+      {
+        "name": "9. Pepperoni",
+        "priceMinor": 22400
+      },
+      {
+        "name": "10. Calzone",
+        "priceMinor": 21900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
