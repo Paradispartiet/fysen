@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lille-sitha-cafe-oslo",
+    "name": "Lille Sitha Cafe",
+    "address": "Waldemar Thranes gate 55A, 0173 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9270177,
+    "longitude": 10.7475918
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/lille-sitha-cafe",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Navn, besøksadresse, koordinater via Wolts kartlenke og åtte representative rett-/prispar er kontrollert mot offentlig Wolt-meny 2026-10-18. Wolt-leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Stekt Ris m/ Egg, Kjøtt, & Grønnsaker",
+      "Hot Spicy Kjøtt m/ Kokosmelk",
+      "Kjøtt m/ Sataycurry & Grønnsaker",
+      "Beef Lok Lak",
+      "Karbonadesmørbrød m/ Stekt Løk",
+      "Ciabatta/Focaccia m/ Jamon Serrano Skinke",
+      "Wok m/ Kjøtt, Grønnsaker & Cashewnøtter",
+      "Stekt Kjøtt m/ Eggnudler, Grønnsaker & Oystersaus"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Stekt Ris m/ Egg, Kjøtt, & Grønnsaker",
+        "priceMinor": 23600
+      },
+      {
+        "name": "Hot Spicy Kjøtt m/ Kokosmelk",
+        "priceMinor": 23600
+      },
+      {
+        "name": "Kjøtt m/ Sataycurry & Grønnsaker",
+        "priceMinor": 23600
+      },
+      {
+        "name": "Beef Lok Lak",
+        "priceMinor": 26000
+      },
+      {
+        "name": "Karbonadesmørbrød m/ Stekt Løk",
+        "priceMinor": 17300
+      },
+      {
+        "name": "Ciabatta/Focaccia m/ Jamon Serrano Skinke",
+        "priceMinor": 14300
+      },
+      {
+        "name": "Wok m/ Kjøtt, Grønnsaker & Cashewnøtter",
+        "priceMinor": 23600
+      },
+      {
+        "name": "Stekt Kjøtt m/ Eggnudler, Grønnsaker & Oystersaus",
+        "priceMinor": 23600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

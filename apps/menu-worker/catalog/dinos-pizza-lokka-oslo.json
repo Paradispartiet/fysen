@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dinos-pizza-lokka-oslo",
+    "name": "Dino's Pizza",
+    "address": "Seilduksgata 9, 0554 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9254314,
+    "longitude": 10.7578778
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/dinos-pizza",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Navn, besøksadresse, koordinater via Wolts kartlenke og åtte representative rett-/prispar er kontrollert mot offentlig Wolt-meny 2026-10-18. Wolt-leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "5. Golden Special (Stor)",
+      "12. Volcano (Stor)",
+      "10. Chicken Special (Stor)",
+      "13. Bacon House (Stor)",
+      "Hamburger tallerken",
+      "2. Pizza Original (Stor)",
+      "9. Your Choice (Stor)",
+      "5. Golden Special (Medium)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "5. Golden Special (Stor)",
+        "priceMinor": 27900
+      },
+      {
+        "name": "12. Volcano (Stor)",
+        "priceMinor": 27900
+      },
+      {
+        "name": "10. Chicken Special (Stor)",
+        "priceMinor": 29900
+      },
+      {
+        "name": "13. Bacon House (Stor)",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Hamburger tallerken",
+        "priceMinor": 21900
+      },
+      {
+        "name": "2. Pizza Original (Stor)",
+        "priceMinor": 25900
+      },
+      {
+        "name": "9. Your Choice (Stor)",
+        "priceMinor": 31900
+      },
+      {
+        "name": "5. Golden Special (Medium)",
+        "priceMinor": 21900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
