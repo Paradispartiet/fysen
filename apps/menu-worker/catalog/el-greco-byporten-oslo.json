@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "el-greco-byporten-oslo",
+    "name": "EL GRECO Byporten",
+    "address": "Jernbanetorget 6, 0154 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9114571,
+    "longitude": 10.7531133
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/el-greco-byporten",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 representative rett-/prisassertasjoner dokumentert mot Wolts offentlige meny 2026-10-18. Kartkoordinater er fra lenken «Se kart» på den individuelle Wolt-siden. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser. Åpningstider og produksjonsdatabase er ikke attestert. Wolt viser skrivefeilen 'Jernbaneroget 6'. Gateadressen er normalisert til Jernbanetorget 6, samme Byporten-senter."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pita Gyros",
+      "Meny Pita Gyros",
+      "Greek Loaded Fries",
+      "Greek Salad",
+      "Barnemeny",
+      "Pommes Frites",
+      "Tzatziki",
+      "Pitabrød"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pita Gyros",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Meny Pita Gyros",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Greek Loaded Fries",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Greek Salad",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Barnemeny",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Pommes Frites",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Tzatziki",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Pitabrød",
+        "priceMinor": 3900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

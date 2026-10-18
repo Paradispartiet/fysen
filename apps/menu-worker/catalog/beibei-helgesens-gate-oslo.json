@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "beibei-helgesens-gate-oslo",
+    "name": "BeiBei",
+    "address": "Helgesens gate 12, 0553 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9246028,
+    "longitude": 10.7581318
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/beibei",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 representative rett-/prisassertasjoner dokumentert mot Wolts offentlige meny 2026-10-18. Kartkoordinater er fra lenken «Se kart» på den individuelle Wolt-siden. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser. Åpningstider og produksjonsdatabase er ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bulgogi Cheese Steak Banh Mi",
+      "Karaage Banh MI NEW 🔥",
+      "Gangnam Banh mi",
+      "Ultimate Banh Mi",
+      "Korean Chick Bao",
+      "Summer Rolls",
+      "Pork Belly Bao",
+      "Pho Bo"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bulgogi Cheese Steak Banh Mi",
+        "priceMinor": 16700
+      },
+      {
+        "name": "Karaage Banh MI NEW 🔥",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Gangnam Banh mi",
+        "priceMinor": 16700
+      },
+      {
+        "name": "Ultimate Banh Mi",
+        "priceMinor": 16700
+      },
+      {
+        "name": "Korean Chick Bao",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Summer Rolls",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Pork Belly Bao",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Pho Bo",
+        "priceMinor": 26000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

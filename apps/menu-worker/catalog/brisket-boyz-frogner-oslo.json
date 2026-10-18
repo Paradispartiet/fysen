@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "brisket-boyz-frogner-oslo",
+    "name": "Brisket Boyz",
+    "address": "Skovveien 8, 0257 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9165099,
+    "longitude": 10.716122
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/valkyrien-grill-frogner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 representative rett-/prisassertasjoner dokumentert mot Wolts offentlige meny 2026-10-18. Kartkoordinater er fra lenken «Se kart» på den individuelle Wolt-siden. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser. Åpningstider og produksjonsdatabase er ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Classic Brisket",
+      "Beef Philly",
+      "Smokehouse fries",
+      "200g Smoked Brisket",
+      "Loaded Jalapeño",
+      "Loaded Mash Bowl",
+      "Creamy Truffle",
+      "100g Smoked Brisket"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Classic Brisket",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Beef Philly",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Smokehouse fries",
+        "priceMinor": 21800
+      },
+      {
+        "name": "200g Smoked Brisket",
+        "priceMinor": 37500
+      },
+      {
+        "name": "Loaded Jalapeño",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Loaded Mash Bowl",
+        "priceMinor": 21800
+      },
+      {
+        "name": "Creamy Truffle",
+        "priceMinor": 23500
+      },
+      {
+        "name": "100g Smoked Brisket",
+        "priceMinor": 22500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

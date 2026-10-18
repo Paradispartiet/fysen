@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "tasen-cafebar-oslo",
+    "name": "Tåsen Cafebar",
+    "address": "Kaj Munks vei 41, 0876 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9524972,
+    "longitude": 10.751687
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/tsen-cafebar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "7 representative rett-/prisassertasjoner dokumentert mot Wolts offentlige meny 2026-10-18. Kartkoordinater er fra lenken «Se kart» på den individuelle Wolt-siden. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser. Åpningstider og produksjonsdatabase er ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Mix Pita",
+      "Marinert Kylling",
+      "Marinert Biffkjøtt",
+      "Mix Tallerken",
+      "Kylling Tallerken",
+      "Biff Tallerken",
+      "Falafel 🌱"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Mix Pita",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Marinert Kylling",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Marinert Biffkjøtt",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Mix Tallerken",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Kylling Tallerken",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Biff Tallerken",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Falafel 🌱",
+        "priceMinor": 14900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lille-persille-hasle-oslo",
+    "name": "Lille Persille",
+    "address": "Hasleveien 28, 0571 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9287508,
+    "longitude": 10.7822365
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/lille-persille",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 representative rett-/prisassertasjoner dokumentert mot Wolts offentlige meny 2026-10-18. Kartkoordinater er fra lenken «Se kart» på den individuelle Wolt-siden. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser. Åpningstider og produksjonsdatabase er ikke attestert. Én sandwichlinje ble ikke tolket som rett i streng parser; erstattet med matrett og pris fra liveuttrekk i CI."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Salat - Cæsar m/ Kylling, Bacon & Parmesan",
+      "Salat - Bakt Søtpotet, Feta & Marinerte Oliven",
+      "Wraps - Kylling, Cheddar & Grillet Paprika",
+      "Salat - Kyllingsatay & Thaiagurker",
+      "Salat - Asiatisk Nudelsalat",
+      "Wraps - Sprøstekt Bacon, Parmesan & Egg",
+      "Salat - Chevre & Honning",
+      "Salat - Texmex m/ Chipotle Kylling"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Salat - Cæsar m/ Kylling, Bacon & Parmesan",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Salat - Bakt Søtpotet, Feta & Marinerte Oliven",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Wraps - Kylling, Cheddar & Grillet Paprika",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Salat - Kyllingsatay & Thaiagurker",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Salat - Asiatisk Nudelsalat",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Wraps - Sprøstekt Bacon, Parmesan & Egg",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Salat - Chevre & Honning",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Salat - Texmex m/ Chipotle Kylling",
+        "priceMinor": 16900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
