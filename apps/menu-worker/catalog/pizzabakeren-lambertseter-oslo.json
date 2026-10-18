@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizzabakeren-lambertseter-oslo",
+    "name": "Pizzabakeren Lambertseter",
+    "address": "Raschs vei 40, 1153 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8799366,
+    "longitude": 10.8051806
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/pizzabakeren-lambertseter",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "10/18/2026 Wolt kildeobservasjon med 10 konkrete matrett-/prispar og individuell besøksadresse. Egen Pizzabakeren-avdeling ved Raschs vei 40, ikke de publiserte Pilestredet-, Tåsen- eller Ulsrud-avdelingene. 10 navngitte storpizzaer; punkt fra Wolt-kartlenke. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "S02 Kvess",
+      "S03 Drømmen",
+      "S04 Pizzabakeren Spesial",
+      "S05 Snadder",
+      "S06 Mix",
+      "S08 Biffen",
+      "S09 Den Marinerte",
+      "S10 Peppersvennen 🌶️",
+      "S20 Drengen",
+      "S21 Mr.X"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "S02 Kvess",
+        "priceMinor": 26300
+      },
+      {
+        "name": "S03 Drømmen",
+        "priceMinor": 28000
+      },
+      {
+        "name": "S04 Pizzabakeren Spesial",
+        "priceMinor": 31100
+      },
+      {
+        "name": "S05 Snadder",
+        "priceMinor": 30400
+      },
+      {
+        "name": "S06 Mix",
+        "priceMinor": 30400
+      },
+      {
+        "name": "S08 Biffen",
+        "priceMinor": 34200
+      },
+      {
+        "name": "S09 Den Marinerte",
+        "priceMinor": 34000
+      },
+      {
+        "name": "S10 Peppersvennen 🌶️",
+        "priceMinor": 34000
+      },
+      {
+        "name": "S20 Drengen",
+        "priceMinor": 29900
+      },
+      {
+        "name": "S21 Mr.X",
+        "priceMinor": 34000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "casbar-olav-vs-gate-oslo",
+    "name": "Casbar",
+    "address": "Olav Vs gate 2, 0161 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91402,
+    "longitude": 10.732635
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/casbar",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "10/18/2026 Wolt kildeobservasjon med 8 konkrete matrett-/prispar og individuell besøksadresse. Selvstendig restaurant fra tidligere kildebekreftet kandidatpost. Åtte pizzaer og leveringspriser fra individuell Wolt-meny, punkt fra Wolt-kartlenke. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Neo Margherita",
+      "Sunflower",
+      "Chorizoo",
+      "Capricciosa",
+      "Spicy Thai Chicken",
+      "Pepperoni",
+      "Better Than Parma",
+      "Carbonara-ish"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Neo Margherita",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Sunflower",
+        "priceMinor": 27000
+      },
+      {
+        "name": "Chorizoo",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Capricciosa",
+        "priceMinor": 28000
+      },
+      {
+        "name": "Spicy Thai Chicken",
+        "priceMinor": 28000
+      },
+      {
+        "name": "Pepperoni",
+        "priceMinor": 29000
+      },
+      {
+        "name": "Better Than Parma",
+        "priceMinor": 29800
+      },
+      {
+        "name": "Carbonara-ish",
+        "priceMinor": 28500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
