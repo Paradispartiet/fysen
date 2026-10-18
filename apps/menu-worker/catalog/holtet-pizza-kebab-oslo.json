@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "holtet-pizza-kebab-oslo",
+    "name": "Holtet Pizza & Kebab",
+    "address": "Kongsveien 92, 1177 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8821269491231,
+    "longitude": 10.78320762641743
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/holtet-pizza-kebab",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 46,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Wolt-kilden ga livevaliderte og prisede retter i samlet PR #970 den 18. oktober 2026. Representative rett- og prisassertasjoner er gjennomgått redaksjonelt. Wolt-leveringspriser kan avvike fra bordpriser; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Mexicana",
+      "Pepperoni Star",
+      "Magnifico",
+      "Amerikansk Hamburger",
+      "Kyllingkebab i Rull",
+      "Kebabtallerken",
+      "Pommes Frites"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Mexicana",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Pepperoni Star",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Magnifico",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Amerikansk Hamburger",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Kyllingkebab i Rull",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Kebabtallerken",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Pommes Frites",
+        "priceMinor": 8500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

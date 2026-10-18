@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "zio-pizza-marienlyst-oslo",
+    "name": "Zio Pizza Marienlyst",
+    "address": "Wilhelm Færdens vei 1A, 0361 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.93260907469789,
+    "longitude": 10.724214903016792
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/zio-pizza",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 15,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Wolt-kilden ga livevaliderte og prisede retter i samlet PR #970 den 18. oktober 2026. Representative rett- og prisassertasjoner er gjennomgått redaksjonelt. Wolt-leveringspriser kan avvike fra bordpriser; åpningstider er ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Coppa ham",
+      "Capricciosa",
+      "Parma Prosciutto",
+      "New Ultimate Vegetarianer",
+      "Tiramisu",
+      "New Ultimate Vegan",
+      "Porchetta"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Coppa ham",
+        "priceMinor": 28000
+      },
+      {
+        "name": "Capricciosa",
+        "priceMinor": 26000
+      },
+      {
+        "name": "Parma Prosciutto",
+        "priceMinor": 27000
+      },
+      {
+        "name": "New Ultimate Vegetarianer",
+        "priceMinor": 26000
+      },
+      {
+        "name": "Tiramisu",
+        "priceMinor": 10500
+      },
+      {
+        "name": "New Ultimate Vegan",
+        "priceMinor": 26000
+      },
+      {
+        "name": "Porchetta",
+        "priceMinor": 27000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
