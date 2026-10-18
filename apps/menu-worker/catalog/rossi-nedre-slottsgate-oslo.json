@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "rossi-nedre-slottsgate-oslo",
+    "name": "Rossi",
+    "address": "Nedre Slottsgate 8, 0157 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91179098,
+    "longitude": 10.74297536
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/rossi-oslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 representative rett/pris-assertasjoner fra offentlig Wolt-menykilde, kontrollert 2026-10-18. Adresse og punkt fra individuell Wolt-side og dens Se kart-lenke; Wolt-leveringspriser, ikke attestert som bordpriser. Åpningstider og produksjonsdatabase ikke separat attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita",
+      "Diavola",
+      "Capricciosa",
+      "Quattro Formaggi",
+      "Cotto",
+      "Bolognese",
+      "Carbonara",
+      "Tortellini"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Diavola",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Capricciosa",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Quattro Formaggi",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Cotto",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Bolognese",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Carbonara",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Tortellini",
+        "priceMinor": 22900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
