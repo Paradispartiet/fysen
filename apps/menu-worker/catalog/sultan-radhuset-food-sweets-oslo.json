@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sultan-radhuset-food-sweets-oslo",
+    "name": "Sultan Rådhuset Food & Sweets",
+    "address": "Fridtjof Nansens plass 9, 0160 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9120794,
+    "longitude": 10.735076
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/sultan-radhuset-food-sweets-1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 22,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Restaurantidentitet, adresse og navngitte prissatte matretter kontrollert mot offentlig Wolt-side 2026-10-18. Koordinater fra samme Wolt-steds Google Maps-lenke. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kylling Shawarma Tallerken",
+      "Lamme Shawarma Tallerken",
+      "Sultan Spesial Kylling Shawarma Tallerken",
+      "Crispy Kyllingtallerken",
+      "Crispy kylling i Rull",
+      "Kylling Fajita Tallerken",
+      "Kylling Fajita i Rull",
+      "La Polo",
+      "Classic Beef pizza",
+      "Sultan Spacial pizza"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kylling Shawarma Tallerken",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Lamme Shawarma Tallerken",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Sultan Spesial Kylling Shawarma Tallerken",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Crispy Kyllingtallerken",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Crispy kylling i Rull",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Kylling Fajita Tallerken",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Kylling Fajita i Rull",
+        "priceMinor": 18000
+      },
+      {
+        "name": "La Polo",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Classic Beef pizza",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Sultan Spacial pizza",
+        "priceMinor": 25000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
