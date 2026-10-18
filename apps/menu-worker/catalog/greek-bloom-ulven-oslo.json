@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "greek-bloom-ulven-oslo",
+    "name": "Greek Bloom",
+    "address": "Ulvenveien 79, Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9256752,
+    "longitude": 10.8112218
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/greek-bloom-1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 representative matrett-/prispar fra Wolt per 2026-10-18; koordinater fra restaurantens individuelle Wolt-kartlenke. Leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert. Wolt oppgir postnummer 0301 for Ulvenveien 79, som ikke er uavhengig bekreftet. Postnummer utelatt i katalogen; kartpunkt fra Wolt."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "4. Kyllinggyros med pommes frites",
+      "8. Gyrossandwich",
+      "5. Vegetarisk pita med halloumi",
+      "Pai med spinat og feta",
+      "Kyllingpai",
+      "3. Kyllinggyros",
+      "1. Svinegyros",
+      "9. Kyllinggyros-salat"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "4. Kyllinggyros med pommes frites",
+        "priceMinor": 18900
+      },
+      {
+        "name": "8. Gyrossandwich",
+        "priceMinor": 26900
+      },
+      {
+        "name": "5. Vegetarisk pita med halloumi",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Pai med spinat og feta",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Kyllingpai",
+        "priceMinor": 8500
+      },
+      {
+        "name": "3. Kyllinggyros",
+        "priceMinor": 17900
+      },
+      {
+        "name": "1. Svinegyros",
+        "priceMinor": 17900
+      },
+      {
+        "name": "9. Kyllinggyros-salat",
+        "priceMinor": 18900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "prinsdal-sushi-wok-oslo",
+    "name": "Prinsdal Sushi Wok",
+    "address": "Nedre Prinsdals vei 77, 1263 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8335927,
+    "longitude": 10.8069909
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/prinsdal-sushi-wok",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 representative matrett-/prispar fra Wolt per 2026-10-18; koordinater fra restaurantens individuelle Wolt-kartlenke. Leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "47. Kylling Futo Maki 12 Biter Halal",
+      "32. Tempura Maki 8 Biter",
+      "9. Vegetar Vårruller 2 Stk",
+      "18. Bento 2 - 17 Biter",
+      "45. Fritert Laks Futo Maki 12 Biter",
+      "33. Kylling Maki 8 Biter Halal",
+      "12. Medium Meny 16 Biter",
+      "64. 10 Nigiri Laks"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "47. Kylling Futo Maki 12 Biter Halal",
+        "priceMinor": 18270
+      },
+      {
+        "name": "32. Tempura Maki 8 Biter",
+        "priceMinor": 13860
+      },
+      {
+        "name": "9. Vegetar Vårruller 2 Stk",
+        "priceMinor": 5670
+      },
+      {
+        "name": "18. Bento 2 - 17 Biter",
+        "priceMinor": 25830
+      },
+      {
+        "name": "45. Fritert Laks Futo Maki 12 Biter",
+        "priceMinor": 18270
+      },
+      {
+        "name": "33. Kylling Maki 8 Biter Halal",
+        "priceMinor": 13860
+      },
+      {
+        "name": "12. Medium Meny 16 Biter",
+        "priceMinor": 24570
+      },
+      {
+        "name": "64. 10 Nigiri Laks",
+        "priceMinor": 19530
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

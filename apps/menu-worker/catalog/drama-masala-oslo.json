@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "drama-masala-oslo",
+    "name": "Drama Masala",
+    "address": "Folketeaterpassasjen, 0160 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9145154,
+    "longitude": 10.7498416
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/drama-masala-1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "10 representative matrett-/prispar fra Wolt per 2026-10-18; koordinater fra restaurantens individuelle Wolt-kartlenke. Leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "The Quick Style Biryani",
+      "Smokey Butter Chicken",
+      "Paneer Butter masala",
+      "Meal Box 1",
+      "Meal Box 2",
+      "Dal makhani",
+      "Palak Paneer",
+      "Samosa Chaat",
+      "Chicken Tikka",
+      "Amritsari Rekepakora"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "The Quick Style Biryani",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Smokey Butter Chicken",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Paneer Butter masala",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Meal Box 1",
+        "priceMinor": 42900
+      },
+      {
+        "name": "Meal Box 2",
+        "priceMinor": 41900
+      },
+      {
+        "name": "Dal makhani",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Palak Paneer",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Samosa Chaat",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Chicken Tikka",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Amritsari Rekepakora",
+        "priceMinor": 14900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

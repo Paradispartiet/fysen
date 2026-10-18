@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "kai-sushi-hasle-oslo",
+    "name": "Kai Sushi",
+    "address": "Hasleveien 10, 0571 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.927894,
+    "longitude": 10.7792551
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/kai-sushi-hasle",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 representative matrett-/prispar fra Wolt per 2026-10-18; koordinater fra restaurantens individuelle Wolt-kartlenke. Leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Signatur Lux Box - 18 Biter",
+      "Poke Bowl",
+      "Laks Lux Box - 18 Biter",
+      "Mango Lux Box - 18 Biter",
+      "Tempura Kylling - 6 Biter",
+      "Vårruller 2 stk",
+      "Vegetar Vårruller 2 stk",
+      "Tempura Scampi 4stk"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Signatur Lux Box - 18 Biter",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Poke Bowl",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Laks Lux Box - 18 Biter",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Mango Lux Box - 18 Biter",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Tempura Kylling - 6 Biter",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Vårruller 2 stk",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Vegetar Vårruller 2 stk",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Tempura Scampi 4stk",
+        "priceMinor": 11500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

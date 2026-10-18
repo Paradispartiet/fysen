@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "gondol-restaurant-bar-stovner-oslo",
+    "name": "Gondol Restaurant & Bar",
+    "address": "Stovner Senter 3, 0985 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9614845,
+    "longitude": 10.9244294
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/gondol-restaurant-bar-1",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 representative matrett-/prispar fra Wolt per 2026-10-18; koordinater fra restaurantens individuelle Wolt-kartlenke. Leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Beyti (Velg Mellom Adana Eller Døner Kjøtt)",
+      "Maccheroni Ala Gratinati",
+      "Cheeseburger m/ Potetbåter",
+      "Kyllingspyd",
+      "Ciao Ciao",
+      "Chiliburger m/ Potetbåter",
+      "Nachos",
+      "Mix Grill"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Beyti (Velg Mellom Adana Eller Døner Kjøtt)",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Maccheroni Ala Gratinati",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Cheeseburger m/ Potetbåter",
+        "priceMinor": 25400
+      },
+      {
+        "name": "Kyllingspyd",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Ciao Ciao",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Chiliburger m/ Potetbåter",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Nachos",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Mix Grill",
+        "priceMinor": 29900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

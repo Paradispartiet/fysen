@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "smoothiexchange-klingeberg-oslo",
+    "name": "SmoothieXchange Klingeberg",
+    "address": "Olav Vs gate 6, 0161 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9131446,
+    "longitude": 10.7327979
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/smoothiexchange",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 5,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "5 representative matrett-/prispar fra Wolt per 2026-10-18; koordinater fra restaurantens individuelle Wolt-kartlenke. Leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert. Bare açaí-bowls brukes i assertions; smoothies og drikke er holdt utenfor. Fem açaí-bowl-priser korrigert til 125 kr i liveuttrekket fra GitHub CI 2026-10-18; tidligere Wolt-side viste 119 kr."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "The Original",
+      "Peanut Banana",
+      "Purple Power",
+      "Mango Passion",
+      "Rainforest Edition"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "The Original",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Peanut Banana",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Purple Power",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Mango Passion",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Rainforest Edition",
+        "priceMinor": 12500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
