@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jamals-falafel-gronland-oslo",
+    "name": "Jamal’s Falafel",
+    "address": "Heimdalsgata 2C, 0561 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9185198,
+    "longitude": 10.762014
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/jamals-falafel",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 representative matrett-/prispar fra Wolt per 2026-10-18; koordinater fra restaurantens individuelle Wolt-kartlenke. Leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Mix Falafel",
+      "Falafel Spesial",
+      "Falafel m/ Humus",
+      "Baba Falafel",
+      "Mama Falafel",
+      "Jamals Falafel Middag",
+      "Falafel Middag",
+      "Jamal Fries Sandwich"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Mix Falafel",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Falafel Spesial",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Falafel m/ Humus",
+        "priceMinor": 12600
+      },
+      {
+        "name": "Baba Falafel",
+        "priceMinor": 13800
+      },
+      {
+        "name": "Mama Falafel",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Jamals Falafel Middag",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Falafel Middag",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Jamal Fries Sandwich",
+        "priceMinor": 11400
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

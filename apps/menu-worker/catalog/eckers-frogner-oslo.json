@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "eckers-frogner-oslo",
+    "name": "Eckers Frogner",
+    "address": "Eckersbergs gate 41, 0267 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9200087,
+    "longitude": 10.7077014
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/eckers-frogner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 representative matrett-/prispar fra Wolt per 2026-10-18; koordinater fra restaurantens individuelle Wolt-kartlenke. Leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kylling Sandwich",
+      "Tuna Melt Toast",
+      "Kyllingsalat",
+      "Serrano Toast",
+      "Kylling Burrito",
+      "Pepperoni Toast",
+      "Serrano Sandwich",
+      "Kylling Toast"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kylling Sandwich",
+        "priceMinor": 15800
+      },
+      {
+        "name": "Tuna Melt Toast",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Kyllingsalat",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Serrano Toast",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Kylling Burrito",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Pepperoni Toast",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Serrano Sandwich",
+        "priceMinor": 15800
+      },
+      {
+        "name": "Kylling Toast",
+        "priceMinor": 14500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
