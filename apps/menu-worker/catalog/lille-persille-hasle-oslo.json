@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-18",
-      "note": "8 representative rett-/prisassertasjoner dokumentert mot Wolts offentlige meny 2026-10-18. Kartkoordinater er fra lenken «Se kart» på den individuelle Wolt-siden. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser. Åpningstider og produksjonsdatabase er ikke attestert."
+      "note": "8 representative rett-/prisassertasjoner dokumentert mot Wolts offentlige meny 2026-10-18. Kartkoordinater er fra lenken «Se kart» på den individuelle Wolt-siden. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser. Åpningstider og produksjonsdatabase er ikke attestert. Én sandwichlinje ble ikke tolket som rett i streng parser; erstattet med matrett og pris fra liveuttrekk i CI."
     }
   },
   "actions": [],
@@ -38,7 +38,7 @@
       "Wraps - Kylling, Cheddar & Grillet Paprika",
       "Salat - Kyllingsatay & Thaiagurker",
       "Salat - Asiatisk Nudelsalat",
-      "Sandwich - Cæsar m/ Kylling & Bacon",
+      "Wraps - Sprøstekt Bacon, Parmesan & Egg",
       "Salat - Chevre & Honning",
       "Salat - Texmex m/ Chipotle Kylling"
     ],
@@ -64,8 +64,8 @@
         "priceMinor": 16900
       },
       {
-        "name": "Sandwich - Cæsar m/ Kylling & Bacon",
-        "priceMinor": 12900
+        "name": "Wraps - Sprøstekt Bacon, Parmesan & Egg",
+        "priceMinor": 13900
       },
       {
         "name": "Salat - Chevre & Honning",
