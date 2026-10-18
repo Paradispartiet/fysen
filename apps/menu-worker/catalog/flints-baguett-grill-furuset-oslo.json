@@ -33,10 +33,10 @@
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Varm Baguette m/ Kylling Shawarma",
+      "Spicy Deluxe Baguette",
       "Varm Baguette m/ Döner",
       "Varm Baguette m/ Kebab",
-      "Baguette m/ Kylling Karri",
+      "Baguette m/ Bacon & Eggerøre",
       "Baguette m/ Roastbiff",
       "Baguette m/ Egg",
       "Kebab I Pita",
@@ -44,8 +44,8 @@
     ],
     "requiredDishVariants": [
       {
-        "name": "Varm Baguette m/ Kylling Shawarma",
-        "priceMinor": 12539
+        "name": "Spicy Deluxe Baguette",
+        "priceMinor": 14190
       },
       {
         "name": "Varm Baguette m/ Döner",
@@ -56,7 +56,7 @@
         "priceMinor": 12539
       },
       {
-        "name": "Baguette m/ Kylling Karri",
+        "name": "Baguette m/ Bacon & Eggerøre",
         "priceMinor": 10339
       },
       {
