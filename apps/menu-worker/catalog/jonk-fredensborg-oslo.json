@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jonk-fredensborg-oslo",
+    "name": "Jønk Fredensborg",
+    "address": "Fredensborgveien 27, 0177 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9189101,
+    "longitude": 10.7483111
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/jnk-fredensborg",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 25,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Restaurantidentitet, adresse og navngitte prissatte matretter kontrollert mot offentlig Wolt-side 2026-10-18. Koordinater fra samme Wolt-steds Google Maps-lenke. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Classic Burger Meal",
+      "Cheese Burger",
+      "Classic Burger",
+      "Fried Chicken Burger Meal",
+      "Riffle Cut Fries",
+      "Chili Cheese",
+      "Chicken Bites -100% Fresh Chicken Bites",
+      "Cheese Burger Meal",
+      "Mozzarella Sticks",
+      "BBQ Burger"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Classic Burger Meal",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Cheese Burger",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Classic Burger",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Fried Chicken Burger Meal",
+        "priceMinor": 30000
+      },
+      {
+        "name": "Riffle Cut Fries",
+        "priceMinor": 7200
+      },
+      {
+        "name": "Chili Cheese",
+        "priceMinor": 8000
+      },
+      {
+        "name": "Chicken Bites -100% Fresh Chicken Bites",
+        "priceMinor": 8500
+      },
+      {
+        "name": "Cheese Burger Meal",
+        "priceMinor": 29000
+      },
+      {
+        "name": "Mozzarella Sticks",
+        "priceMinor": 8000
+      },
+      {
+        "name": "BBQ Burger",
+        "priceMinor": 18000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
