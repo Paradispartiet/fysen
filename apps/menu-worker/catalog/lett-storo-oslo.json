@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lett-storo-oslo",
+    "name": "LETT Storo",
+    "address": "Vitaminveien 7-9, 0485 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.947163,
+    "longitude": 10.7745164
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/lett-storo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Åtte konkrete matrett-/prispar hentet fra Wolts offentlige meny 2026-10-18; besøksadresse og koordinater fra restaurantens Wolt-kartlenke. Leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Søtpotet feta bowl",
+      "Spicy kylling bowl",
+      "Poké bowl",
+      "Asiatisk bowl",
+      "Kylling Cæsar bowl",
+      "Meksikansk bowl",
+      "Spicy kylling wrap",
+      "Burrata salami bowl"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Søtpotet feta bowl",
+        "priceMinor": 19700
+      },
+      {
+        "name": "Spicy kylling bowl",
+        "priceMinor": 18700
+      },
+      {
+        "name": "Poké bowl",
+        "priceMinor": 20700
+      },
+      {
+        "name": "Asiatisk bowl",
+        "priceMinor": 17700
+      },
+      {
+        "name": "Kylling Cæsar bowl",
+        "priceMinor": 19700
+      },
+      {
+        "name": "Meksikansk bowl",
+        "priceMinor": 18700
+      },
+      {
+        "name": "Spicy kylling wrap",
+        "priceMinor": 20200
+      },
+      {
+        "name": "Burrata salami bowl",
+        "priceMinor": 20700
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
