@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizzamix-konows-gate-oslo",
+    "name": "PizzaMix",
+    "address": "Konows gate 75B, 0196 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9017991,
+    "longitude": 10.7888496
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/pizzamix-egenlevering",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "10 navngitte pizzaer og tilhørende Wolt-leveringspriser lest 2026-10-18. Wolt oppgir Konows gate 75 B U, mens eiendomsregister og adressekart oppgir 75B; koordinat 59.9017991, 10.7888496 er et adressenærpunkt, eksakt inngang ikke attestert. Menyen inkluderer andre varegrupper som ikke er del av disse matrettsassertasjonene. Ikke dokumentert som bordpriser; åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Butter Chicken Pizza",
+      "New Orleans",
+      "Spicy Pepperoni",
+      "Pepperoni Star",
+      "Hangover",
+      "Chicken New Jersey",
+      "Very Heavy & Very Special",
+      "Turkish Delight",
+      "Butter Chicken Pizza (italiensk bunn)",
+      "Meatlover (italiensk bunn)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Butter Chicken Pizza",
+        "priceMinor": 24900
+      },
+      {
+        "name": "New Orleans",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Spicy Pepperoni",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Pepperoni Star",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Hangover",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Chicken New Jersey",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Very Heavy & Very Special",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Turkish Delight",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Butter Chicken Pizza (italiensk bunn)",
+        "priceMinor": 34900
+      },
+      {
+        "name": "Meatlover (italiensk bunn)",
+        "priceMinor": 34900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
