@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizza-break-ulven-oslo",
+    "name": "Pizza Break",
+    "address": "Persveien 22, 0581 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9247723,
+    "longitude": 10.8189626
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/pizza-break",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 9,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Restaurantidentitet, adresse og navngitte prissatte matretter kontrollert mot offentlig Wolt-side 2026-10-18. Koordinater fra samme Wolt-steds Google Maps-lenke. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita Medium",
+      "Margherita",
+      "Pepperoni",
+      "Mais Chicken",
+      "Veggie",
+      "Biff",
+      "Fifty Fifty",
+      "All In One",
+      "Skinke"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita Medium",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Margherita",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Pepperoni",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Mais Chicken",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Veggie",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Biff",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Fifty Fifty",
+        "priceMinor": 27900
+      },
+      {
+        "name": "All In One",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Skinke",
+        "priceMinor": 23900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
