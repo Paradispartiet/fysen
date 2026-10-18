@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "east-meets-west-marienlundveien-oslo",
+    "name": "East Meets West",
+    "address": "Marienlundveien 2, 1178 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8823681,
+    "longitude": 10.7834498
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/east-meets-west",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 10,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Navn, besøksadresse og prissatte matretter kontrollert mot offentlig Wolt-menyside 2026-10-18. Koordinater fra Wolts kartlenke for samme sted. Prisene er Wolt-leveringspriser og ikke attestert som bordpriser. Åpningstider og maskinelt liveinntak er ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Våruller m/ Kylling 3 Stk.",
+      "Vegetar Våruller 3 Stk. 🌱",
+      "Trøffel Hamburger 160g.",
+      "Svinekjøtt Adobo m/Ris & Syltet Grønn Papaya",
+      "Grillet Kylling m/Sitrongress, Ris & Syltet Grønn Papaya",
+      "Pad Thai m/Scampi & Risnudler",
+      "Biff Wok m/Grønnsaker & Ris",
+      "Scampi Wok m/Grønnsaker & Ris",
+      "Thai Grønn Karri Kylling"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Våruller m/ Kylling 3 Stk.",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Vegetar Våruller 3 Stk. 🌱",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Trøffel Hamburger 160g.",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Svinekjøtt Adobo m/Ris & Syltet Grønn Papaya",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Grillet Kylling m/Sitrongress, Ris & Syltet Grønn Papaya",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Pad Thai m/Scampi & Risnudler",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Biff Wok m/Grønnsaker & Ris",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Scampi Wok m/Grønnsaker & Ris",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Thai Grønn Karri Kylling",
+        "priceMinor": 23900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
