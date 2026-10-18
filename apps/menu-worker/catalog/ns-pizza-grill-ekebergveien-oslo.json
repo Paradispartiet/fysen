@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ns-pizza-grill-ekebergveien-oslo",
+    "name": "NS Pizza & Grill",
+    "address": "Ekebergveien 235, 1162 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.86099,
+    "longitude": 10.7999
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/ns-pizza-grill",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 15,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Navn, adresse og representative rett-/prispar lest fra offentlig Wolt-side 2026-10-18. Adressepunkt hos NorgeGuide for NS Pizza & Grill, samsvarer med Wolt-adresse. Prisene er Wolt-leveringspriser; åpningstider er ikke uavhengig attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebabtallerken",
+      "Kebab i Pita",
+      "Norwegian",
+      "Biffsnadder Pizza",
+      "Kebab i Rull/wrap",
+      "100g Hamburgertallerken",
+      "Kyllingsnadder Pizza",
+      "NS Spesial"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebabtallerken",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Kebab i Pita",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Norwegian",
+        "priceMinor": 35900
+      },
+      {
+        "name": "Biffsnadder Pizza",
+        "priceMinor": 35900
+      },
+      {
+        "name": "Kebab i Rull/wrap",
+        "priceMinor": 22900
+      },
+      {
+        "name": "100g Hamburgertallerken",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Kyllingsnadder Pizza",
+        "priceMinor": 35900
+      },
+      {
+        "name": "NS Spesial",
+        "priceMinor": 42500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "ming-kjokken-rosenhoff-oslo",
+    "name": "Ming Kjøkken",
+    "address": "Rosenhoffgata 1A, 0569 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.92891805,
+    "longitude": 10.77702158
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/ming-sushi",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 12,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Navn, adresse og representative rett-/prispar lest fra offentlig Wolt-side 2026-10-18. Foreløpig nærpunkt: Trondheimsveien 154, ca. 15 m fra Rosenhoffgata 1A ifølge Merinfo; må oppdateres til presist adressepunkt ved senere geokoding. Prisene er Wolt-leveringspriser; åpningstider er ikke uavhengig attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Stekt Nudler",
+      "Gong Bao kylling 🌶️",
+      "Szechuan Biff",
+      "Biff Våruller",
+      "Wonton suppe",
+      "Innbakt kylling i sur og søt saus",
+      "Biff chop suey",
+      "Crispy And"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Stekt Nudler",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Gong Bao kylling 🌶️",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Szechuan Biff",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Biff Våruller",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Wonton suppe",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Innbakt kylling i sur og søt saus",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Biff chop suey",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Crispy And",
+        "priceMinor": 27500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

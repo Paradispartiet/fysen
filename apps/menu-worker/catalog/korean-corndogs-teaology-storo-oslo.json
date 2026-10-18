@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "korean-corndogs-teaology-storo-oslo",
+    "name": "Korean Corndogs & TeaOlogy Storo Storsenter",
+    "address": "Vitaminveien 7, 0485 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.94684205812542,
+    "longitude": 10.77538723559638
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/teaology-storo-storsenter",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 12,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Navn, adresse og representative rett-/prispar lest fra offentlig Wolt-side 2026-10-18. Storo Storsenter, samme adresserte bygg som Pronto di Olivia Storo (koordinat fra katalog); Wolt bekrefter separat Storo-filial. Prisene er Wolt-leveringspriser; åpningstider er ikke uavhengig attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "The Classic",
+      "Classic Korean Toasty",
+      "Cheese Doodle",
+      "Ms. Choi",
+      "Salt and Pepper",
+      "Doritos Nacho Cheese"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "The Classic",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Classic Korean Toasty",
+        "priceMinor": 18100
+      },
+      {
+        "name": "Cheese Doodle",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Ms. Choi",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Salt and Pepper",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Doritos Nacho Cheese",
+        "priceMinor": 14200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
