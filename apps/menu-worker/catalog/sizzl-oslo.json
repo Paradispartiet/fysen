@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "sizzl-oslo",
+    "name": "Sizzl Oslo",
+    "address": "Karl Johans gate 13C, 0154 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9125137,
+    "longitude": 10.7449018
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/sizzl-oslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 representative rett-/prisassertasjoner dokumentert mot Wolts offentlige meny 2026-10-18. Kartkoordinater er fra lenken «Se kart» på den individuelle Wolt-siden. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser. Åpningstider og produksjonsdatabase er ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Sizzl Loco",
+      "Sizzl Chix",
+      "Sizzl Chicken Over Rice",
+      "Sizzl O.G.",
+      "Sizzl East-End",
+      "Sizzl Vegapunk",
+      "Sizzl Tuna",
+      "Sizzl Tamago"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Sizzl Loco",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Sizzl Chix",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Sizzl Chicken Over Rice",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Sizzl O.G.",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Sizzl East-End",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Sizzl Vegapunk",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Sizzl Tuna",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Sizzl Tamago",
+        "priceMinor": 14900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

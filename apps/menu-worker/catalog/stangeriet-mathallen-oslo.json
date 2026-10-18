@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "stangeriet-mathallen-oslo",
+    "name": "Stange",
+    "address": "Vulkan 5, 0178 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9222297,
+    "longitude": 10.7520516
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/stangeriet",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 3,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "3 representative rett-/prisassertasjoner dokumentert mot Wolts offentlige meny 2026-10-18. Kartkoordinater er fra lenken «Se kart» på den individuelle Wolt-siden. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser. Åpningstider og produksjonsdatabase er ikke attestert. Wolt bruker merkenavnet Stange og adressen Maridalsveien 17 A, Vulkan 5 (postnummer 0275 er ikke samstemt); katalogens eksisterende Stangeriet-kandidat er samme matbod på Vulkan 5, 0178 Oslo. Tre matretter, øvrig tilbud primært drikke. Ingen ekstra restaurantrad opprettes i master."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Pulled Chicken Sandwich",
+      "Kyllingburger",
+      "Stangetallerken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Pulled Chicken Sandwich",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Kyllingburger",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Stangetallerken",
+        "priceMinor": 18900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

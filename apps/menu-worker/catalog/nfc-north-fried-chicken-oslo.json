@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "nfc-north-fried-chicken-oslo",
+    "name": "NFC - North Fried Chicken",
+    "address": "Storgata 32, 0184 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9136967,
+    "longitude": 10.753652
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/nfc-north-fried-chicken",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "8 representative rett-/prisassertasjoner dokumentert mot Wolts offentlige meny 2026-10-18. Kartkoordinater er fra lenken «Se kart» på den individuelle Wolt-siden. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser. Åpningstider og produksjonsdatabase er ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Big Mix Menu",
+      "Double Mix Menu",
+      "Tenders 12 stk.",
+      "Wings 8 stk.",
+      "Tenders 8 stk.",
+      "Wings 12 stk.",
+      "Cajun Chicken 4 stk.",
+      "Chicken Burger"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Big Mix Menu",
+        "priceMinor": 31500
+      },
+      {
+        "name": "Double Mix Menu",
+        "priceMinor": 52500
+      },
+      {
+        "name": "Tenders 12 stk.",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Wings 8 stk.",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Tenders 8 stk.",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Wings 12 stk.",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Cajun Chicken 4 stk.",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Chicken Burger",
+        "priceMinor": 17900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
