@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-18",
-      "note": "Åtte konkrete matrett-/prispar hentet fra Wolts offentlige meny 2026-10-18; besøksadresse og koordinater fra restaurantens Wolt-kartlenke. Leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+      "note": "Åtte konkrete matrett-/prispar hentet fra Wolts offentlige meny 2026-10-18; besøksadresse og koordinater fra restaurantens Wolt-kartlenke. Leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert. Alle åtte prisassertasjonene er synkronisert med faktisk liveuttrekk fra streng CI 2026-10-18; kilden serverte andre priser enn forhåndsvist meny."
     }
   },
   "actions": [],
@@ -45,35 +45,35 @@
     "requiredDishVariants": [
       {
         "name": "Szechuan",
-        "priceMinor": 22900
+        "priceMinor": 21800
       },
       {
         "name": "Sesampanert Kylling i Søtsur Saus",
-        "priceMinor": 23900
+        "priceMinor": 21800
       },
       {
         "name": "Chop suey",
-        "priceMinor": 23900
+        "priceMinor": 21800
       },
       {
         "name": "Sweet Fire Chicken",
-        "priceMinor": 25200
+        "priceMinor": 21800
       },
       {
         "name": "Innbakte Kongereker",
-        "priceMinor": 11300
+        "priceMinor": 9200
       },
       {
         "name": "Stekte Nudler",
-        "priceMinor": 24900
+        "priceMinor": 21800
       },
       {
         "name": "Rød Curry (Kaeng Phet )",
-        "priceMinor": 25200
+        "priceMinor": 21800
       },
       {
         "name": "Karri",
-        "priceMinor": 23900
+        "priceMinor": 21800
       }
     ],
     "forbiddenDishNames": []
