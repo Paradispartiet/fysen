@@ -40,7 +40,7 @@
       "5. Scampi",
       "6. Quatro Fromaggi",
       "7. Con Carne",
-      "8. Zucchini"
+      "10. Spinachio"
     ],
     "requiredDishVariants": [
       {
@@ -72,8 +72,8 @@
         "priceMinor": 23400
       },
       {
-        "name": "8. Zucchini",
-        "priceMinor": 22700
+        "name": "10. Spinachio",
+        "priceMinor": 23400
       }
     ],
     "forbiddenDishNames": []
