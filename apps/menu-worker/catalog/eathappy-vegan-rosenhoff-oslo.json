@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "eathappy-vegan-rosenhoff-oslo",
+    "name": "EatHappy Vegan Rosenhoff",
+    "address": "Trondheimsveien 139, 0570 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9294755,
+    "longitude": 10.7784001
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/eathappy-vegan-rosenhoff",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 22,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "Restaurantidentitet, adresse og navngitte prissatte matretter kontrollert mot offentlig Wolt-side 2026-10-18. Koordinater fra samme Wolt-steds Google Maps-lenke. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "B1. Eathappy Banh Mi Husets Spesial 🌱",
+      "A2. Sommerrull 🌱 (GA)",
+      "B4. Pho Banh Mi 🌱",
+      "D8. Vegansk \"Biff\" Wok 🌱🌶️",
+      "A4. Fritert Dumplings 🌱",
+      "D5. Stekte spicy XO Udon 🌱🌶️",
+      "A1. Vårrull 🌱",
+      "D4. Stekte Nudler 🌱",
+      "C2. Bun Hue Spicy Suppe 🌱 (GA)",
+      "D11. Crispy fried peking duck 🌱"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "B1. Eathappy Banh Mi Husets Spesial 🌱",
+        "priceMinor": 20500
+      },
+      {
+        "name": "A2. Sommerrull 🌱 (GA)",
+        "priceMinor": 16500
+      },
+      {
+        "name": "B4. Pho Banh Mi 🌱",
+        "priceMinor": 19500
+      },
+      {
+        "name": "D8. Vegansk \"Biff\" Wok 🌱🌶️",
+        "priceMinor": 29900
+      },
+      {
+        "name": "A4. Fritert Dumplings 🌱",
+        "priceMinor": 12900
+      },
+      {
+        "name": "D5. Stekte spicy XO Udon 🌱🌶️",
+        "priceMinor": 29900
+      },
+      {
+        "name": "A1. Vårrull 🌱",
+        "priceMinor": 12900
+      },
+      {
+        "name": "D4. Stekte Nudler 🌱",
+        "priceMinor": 29900
+      },
+      {
+        "name": "C2. Bun Hue Spicy Suppe 🌱 (GA)",
+        "priceMinor": 31000
+      },
+      {
+        "name": "D11. Crispy fried peking duck 🌱",
+        "priceMinor": 32500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
