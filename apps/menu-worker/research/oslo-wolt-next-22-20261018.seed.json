@@ -1,0 +1,624 @@
+{
+  "version": 1,
+  "allowPartialIntake": true,
+  "outputDirectory": "candidates",
+  "concurrency": 4,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "green-taste-gamle-oslo",
+        "name": "Green Taste",
+        "address": "Oslo gate 39A, 0192 Oslo",
+        "websiteUrl": null,
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/green-taste-oslo",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Wolt-kilde oppgir navngitt restaurant og Oslo-adresse med prissatt meny. Krever liveinntak, koordinatbevis, kontroll av restaurantidentitet og semantisk korrekte rett-/prisassertasjoner. Wolt-leveringspriser kan avvike fra bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "roots-of-india-storo-oslo",
+        "name": "Roots Of India",
+        "address": "Grefsenveien 6D, 0487 Oslo",
+        "websiteUrl": null,
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/roots-of-india",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Wolt-kilde oppgir navngitt restaurant og Oslo-adresse med prissatt meny. Krever liveinntak, koordinatbevis, kontroll av restaurantidentitet og semantisk korrekte rett-/prisassertasjoner. Wolt-leveringspriser kan avvike fra bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "indisk-idag-lambertseter-oslo",
+        "name": "Indisk I dag",
+        "address": "Cecilie Thoresens vei 7, 1153 Oslo",
+        "websiteUrl": null,
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/indisk-idag",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Wolt-kilde oppgir navngitt restaurant og Oslo-adresse med prissatt meny. Krever liveinntak, koordinatbevis, kontroll av restaurantidentitet og semantisk korrekte rett-/prisassertasjoner. Wolt-leveringspriser kan avvike fra bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "paradis-pizza-ullern-oslo",
+        "name": "Paradis Pizza",
+        "address": "Ullern allé 4, 0381 Oslo",
+        "websiteUrl": null,
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/paradis-pizza",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Wolt-kilde oppgir navngitt restaurant og Oslo-adresse med prissatt meny. Krever liveinntak, koordinatbevis, kontroll av restaurantidentitet og semantisk korrekte rett-/prisassertasjoner. Wolt-leveringspriser kan avvike fra bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "rice-bowl-sentrum-oslo",
+        "name": "Rice Bowl",
+        "address": "Kirkegata 20, 0153 Oslo",
+        "websiteUrl": null,
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/rice-bowl",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Wolt-kilde oppgir navngitt restaurant og Oslo-adresse med prissatt meny. Krever liveinntak, koordinatbevis, kontroll av restaurantidentitet og semantisk korrekte rett-/prisassertasjoner. Wolt-leveringspriser kan avvike fra bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "karlsrud-mat-vinhus-oslo",
+        "name": "Karlsrud Mat & Vinhus",
+        "address": "Raschs vei 38, 1153 Oslo",
+        "websiteUrl": null,
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/karlsrud-mat-og-vinhus-oslo",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Wolt-kilde oppgir navngitt restaurant og Oslo-adresse med prissatt meny. Krever liveinntak, koordinatbevis, kontroll av restaurantidentitet og semantisk korrekte rett-/prisassertasjoner. Wolt-leveringspriser kan avvike fra bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "zio-pizza-marienlyst-oslo",
+        "name": "Zio Pizza Marienlyst",
+        "address": "Wilhelm Færdens vei 1A, 0361 Oslo",
+        "websiteUrl": null,
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/zio-pizza",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Wolt-kilde oppgir navngitt restaurant og Oslo-adresse med prissatt meny. Krever liveinntak, koordinatbevis, kontroll av restaurantidentitet og semantisk korrekte rett-/prisassertasjoner. Wolt-leveringspriser kan avvike fra bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "bobos-pizza-boler-oslo",
+        "name": "BOBOS PIZZA",
+        "address": "Bølerlia 2, 0691 Oslo",
+        "websiteUrl": null,
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/bobos-pizza",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Wolt-kilde oppgir navngitt restaurant og Oslo-adresse med prissatt meny. Krever liveinntak, koordinatbevis, kontroll av restaurantidentitet og semantisk korrekte rett-/prisassertasjoner. Wolt-leveringspriser kan avvike fra bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "en-til-pizza-refstad-oslo",
+        "name": "En Til Pizza",
+        "address": "Refstadveien 60, 0589 Oslo",
+        "websiteUrl": null,
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/en-til-pizza",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Wolt-kilde oppgir navngitt restaurant og Oslo-adresse med prissatt meny. Krever liveinntak, koordinatbevis, kontroll av restaurantidentitet og semantisk korrekte rett-/prisassertasjoner. Wolt-leveringspriser kan avvike fra bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "holtet-pizza-kebab-oslo",
+        "name": "Holtet Pizza & Kebab",
+        "address": "Kongsveien 92, 1177 Oslo",
+        "websiteUrl": null,
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/holtet-pizza-kebab",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Wolt-kilde oppgir navngitt restaurant og Oslo-adresse med prissatt meny. Krever liveinntak, koordinatbevis, kontroll av restaurantidentitet og semantisk korrekte rett-/prisassertasjoner. Wolt-leveringspriser kan avvike fra bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "awari-pizza-kebab-oslo",
+        "name": "Awari Pizza & Kebab",
+        "address": "Helgesens gate 72, 0558 Oslo",
+        "websiteUrl": null,
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/awari-pizza-kebab-oslo-hybrid",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Wolt-kilde oppgir navngitt restaurant og Oslo-adresse med prissatt meny. Krever liveinntak, koordinatbevis, kontroll av restaurantidentitet og semantisk korrekte rett-/prisassertasjoner. Wolt-leveringspriser kan avvike fra bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "al-shahba-gronland-oslo",
+        "name": "Al-Shahba",
+        "address": "Grønlandsleiret 37, 0190 Oslo",
+        "websiteUrl": null,
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/al-shahba-oslo",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Wolt-kilde oppgir navngitt restaurant og Oslo-adresse med prissatt meny. Krever liveinntak, koordinatbevis, kontroll av restaurantidentitet og semantisk korrekte rett-/prisassertasjoner. Wolt-leveringspriser kan avvike fra bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "pizzamix-konows-gate-oslo",
+        "name": "PizzaMix",
+        "address": "Konows gate 75B, 0196 Oslo",
+        "websiteUrl": null,
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/pizzamix-egenlevering",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Wolt-kilde oppgir navngitt restaurant og Oslo-adresse med prissatt meny. Krever liveinntak, koordinatbevis, kontroll av restaurantidentitet og semantisk korrekte rett-/prisassertasjoner. Wolt-leveringspriser kan avvike fra bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "sky-grill-karlsrud-oslo",
+        "name": "Sky Grill",
+        "address": "Raschs vei 42, 1153 Oslo",
+        "websiteUrl": null,
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/sky-grill",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Wolt-kilde oppgir navngitt restaurant og Oslo-adresse med prissatt meny. Krever liveinntak, koordinatbevis, kontroll av restaurantidentitet og semantisk korrekte rett-/prisassertasjoner. Wolt-leveringspriser kan avvike fra bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "mix-trosterud-oslo",
+        "name": "Mix Trosterud",
+        "address": "Tvetenveien 217, 0675 Oslo",
+        "websiteUrl": null,
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/mix-trosterud",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Wolt-kilde oppgir navngitt restaurant og Oslo-adresse med prissatt meny. Krever liveinntak, koordinatbevis, kontroll av restaurantidentitet og semantisk korrekte rett-/prisassertasjoner. Wolt-leveringspriser kan avvike fra bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "din-kebab-pizza-lambertseter-oslo",
+        "name": "Din Kebab og Pizza",
+        "address": "Feltspatveien 25, 1155 Oslo",
+        "websiteUrl": null,
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/din-kebab-og-pizza",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Wolt-kilde oppgir navngitt restaurant og Oslo-adresse med prissatt meny. Krever liveinntak, koordinatbevis, kontroll av restaurantidentitet og semantisk korrekte rett-/prisassertasjoner. Wolt-leveringspriser kan avvike fra bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "dinos-pizza-lokka-oslo",
+        "name": "Dino's Pizza",
+        "websiteUrl": null,
+        "address": "Seilduksgata 9, 0554 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/dinos-pizza",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "buoni-amici-skoyen-oslo",
+        "name": "Buoni Amici",
+        "websiteUrl": null,
+        "address": "Drammensveien 130C, 0277 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/midpoint-cafe-bar",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Sted og adresse oppgitt på aktivt Wolt-menysted per 2026-10-17. Kartverket-koordinater og menyrett-/prisassertasjoner krever egen livevalidering; Wolt-priser er leveringspriser, ikke nødvendigvis spisesalpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "kebabbiten-oslo",
+        "name": "Kebabbiten",
+        "websiteUrl": null,
+        "address": "Trondheimsveien 154, 0570 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/kebabbiten",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "kylling-pizza-kalbakken-oslo",
+        "name": "Kylling & Pizza Kalbakken",
+        "websiteUrl": null,
+        "address": "Trondheimsveien 391, 0953 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/kylling-pizza-kalbakken",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "loren-kiosk-grill-oslo",
+        "name": "Løren Kiosk & Grill",
+        "websiteUrl": null,
+        "address": "Lørenveien 40, 0585 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/lren-kiosk-grill",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "lille-sitha-cafe-oslo",
+        "name": "Lille Sitha Cafe",
+        "websiteUrl": null,
+        "address": "Waldemar Thranes gate 55A, 0173 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://wolt.com/en/nor/oslo/restaurant/lille-sitha-cafe",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-18",
+          "note": "Offentlig Wolt-leveringsmeny med navngitte og prissatte matretter og oppgitt besøksadresse observert i Oslo-kildekartlegging 2026-10-17. Endelig restaurantidentitet, Kartverket-koordinater, komplett semantisk meny og prisassertasjoner skal bekreftes i live-inntak; leveringspriser er ikke bordpriser."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": []
+    }
+  ]
+}
