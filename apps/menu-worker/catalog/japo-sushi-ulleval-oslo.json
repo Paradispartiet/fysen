@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "japo-sushi-ulleval-oslo",
+    "name": "Japo Sushi Ullevål",
+    "address": "Sognsveien 70, 0855 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.948212,
+    "longitude": 10.731538
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/japo-sushi-ullevaal",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "10/18/2026 Wolt kildeobservasjon med 10 konkrete matrett-/prispar og individuell besøksadresse. Selvstendig Ullevål-filial i Sognsveien 70, ulik publiserte Japo Sushi Skøyen. Punkt fra Wolt-kartlenke. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Nr 32 - Tempura Maki",
+      "Nr 23 - Spicy Laks Maki",
+      "Dagens 3 - 12 Biter Sushi",
+      "Nr 54 - 2 Stk. Vårruller m/ Salat",
+      "Bento 3 - 2 Personer",
+      "Nr 22 - Laks Advokado Maki",
+      "Nr 28 - Lakserogn Maki",
+      "Dagens 2 - 10 Biter Sushi",
+      "Dagens 1 - 10 Biter Sushi",
+      "Nr 87 - Stekt Ris"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Nr 32 - Tempura Maki",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Nr 23 - Spicy Laks Maki",
+        "priceMinor": 9800
+      },
+      {
+        "name": "Dagens 3 - 12 Biter Sushi",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Nr 54 - 2 Stk. Vårruller m/ Salat",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Bento 3 - 2 Personer",
+        "priceMinor": 47800
+      },
+      {
+        "name": "Nr 22 - Laks Advokado Maki",
+        "priceMinor": 9800
+      },
+      {
+        "name": "Nr 28 - Lakserogn Maki",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Dagens 2 - 10 Biter Sushi",
+        "priceMinor": 16800
+      },
+      {
+        "name": "Dagens 1 - 10 Biter Sushi",
+        "priceMinor": 14800
+      },
+      {
+        "name": "Nr 87 - Stekt Ris",
+        "priceMinor": 25800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "truck-burger-jernkroken-oslo",
+    "name": "Truck Burger",
+    "address": "Jernkroken 11, 0976 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9549331,
+    "longitude": 10.8941473
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/hq-burgers",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "10/18/2026 Wolt kildeobservasjon med 10 konkrete matrett-/prispar og individuell besøksadresse. Wolt viser navnet Truck Burger, kilde-URL har eldre slug hq-burgers; samme individuelle kilde, ikke en separat ekstra restaurant. Punkt fra Wolt-kartlenke. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Tandoori Chicken",
+      "Spicy Masala 150 g",
+      "Classic 150 g",
+      "BBQ 150 g",
+      "Trøffel 150 g",
+      "Blue Cheese 150 g",
+      "Tandoori Chicken Combo",
+      "Spicy Masala Combo",
+      "Classic Combo",
+      "BBQ Combo"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Tandoori Chicken",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Spicy Masala 150 g",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Classic 150 g",
+        "priceMinor": 17900
+      },
+      {
+        "name": "BBQ 150 g",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Trøffel 150 g",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Blue Cheese 150 g",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Tandoori Chicken Combo",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Spicy Masala Combo",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Classic Combo",
+        "priceMinor": 28900
+      },
+      {
+        "name": "BBQ Combo",
+        "priceMinor": 28900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

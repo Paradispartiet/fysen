@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "holy-crust-lindeberg-oslo",
+    "name": "Holy Crust",
+    "address": "Jerikoveien 1, 1067 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9327918,
+    "longitude": 10.8814885
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/holy-crust-oslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-18",
+      "note": "10/18/2026 Wolt kildeobservasjon med 10 konkrete matrett-/prispar og individuell besøksadresse. Selvstendig Wolt-menykilde og operatør ved Jerikoveien 1; ikke slå sammen med Tyrkisk Kjøkken på samme adresse. Punkt fra individuell Wolt-kartlenke; eksakt inngang ikke attestert. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita Pizza 🌱",
+      "Pepperoni Pizza",
+      "Chicken Tikka Pizza",
+      "Peri Peri Pizza",
+      "Beef Blessing Pizza",
+      "Holy Steak Pizza",
+      "Hot Beef Pizza",
+      "Holy Kebabpizza",
+      "Holy Veggie Pizza 🌱",
+      "Pepperoni Detroit Style Pizza"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita Pizza 🌱",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Pepperoni Pizza",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Chicken Tikka Pizza",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Peri Peri Pizza",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Beef Blessing Pizza",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Holy Steak Pizza",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Hot Beef Pizza",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Holy Kebabpizza",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Holy Veggie Pizza 🌱",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Pepperoni Detroit Style Pizza",
+        "priceMinor": 19900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
