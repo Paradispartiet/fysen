@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-19",
-      "note": "Wolt-menykilde kontrollert 2026-10-19 med 10 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+      "note": "Wolt-menykilde kontrollert 2026-10-19 med 10 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert. Streng live-validering observerte oppdaterte prisvarianter Pepperoni Medium 244 kr og Margherita Medium 219 kr, og pizzaene 5.Pastrami Medium 239 kr og 8. Barbeque Medium 239 kr. To ikke-uttrukne retter ble erstattet; 10 konkrete prisassertasjoner opprettholdes."
     }
   },
   "actions": [],
@@ -35,27 +35,27 @@
     "requiredDishNames": [
       "4. Pepperoni [Medium]",
       "2. Capricciosa (Medium)",
-      "Kebabpizza Nr. 3 (Medium)",
+      "5.Pastrami (Medium)",
       "6. Roma [Medium]",
       "3. Hawaii [Medium]",
       "1.Margherita (Medium)",
       "7. Strichi (Medium)",
-      "Døner i rull m/ Hjemmelaget Brød",
+      "8. Barbeque (Medium)",
       "19.Salsiccia (Medium)",
       "20. Bari (Medium)"
     ],
     "requiredDishVariants": [
       {
         "name": "4. Pepperoni [Medium]",
-        "priceMinor": 21900
+        "priceMinor": 24400
       },
       {
         "name": "2. Capricciosa (Medium)",
         "priceMinor": 21900
       },
       {
-        "name": "Kebabpizza Nr. 3 (Medium)",
-        "priceMinor": 25900
+        "name": "5.Pastrami (Medium)",
+        "priceMinor": 23900
       },
       {
         "name": "6. Roma [Medium]",
@@ -67,15 +67,15 @@
       },
       {
         "name": "1.Margherita (Medium)",
-        "priceMinor": 19900
+        "priceMinor": 21900
       },
       {
         "name": "7. Strichi (Medium)",
         "priceMinor": 23900
       },
       {
-        "name": "Døner i rull m/ Hjemmelaget Brød",
-        "priceMinor": 18900
+        "name": "8. Barbeque (Medium)",
+        "priceMinor": 23900
       },
       {
         "name": "19.Salsiccia (Medium)",
