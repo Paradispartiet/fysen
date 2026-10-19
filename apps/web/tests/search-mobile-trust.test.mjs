@@ -38,6 +38,24 @@ describe("Search-to-restaurant mobile trust contract", () => {
     assert.doesNotMatch(controls, /router\.push\(\x60\/search\?/u);
   });
 
+  it("opens the matching restaurant marker from either result list and returns to the dish", () => {
+    const results = read("../components/search-results.tsx");
+    const card = read("../components/dish-result.tsx");
+    const styles = read("../components/dish-result.module.css");
+    const preview = read("../components/static-preview-search-page.tsx");
+
+    assert.match(results, /onShowOnMap=\{showRestaurantOnMap\}/u);
+    assert.match(results, /setSelectedSlug\(restaurantSlug\)/u);
+    assert.match(results, /setShowMap\(true\)/u);
+    assert.match(results, /fysen-search-map/u);
+    assert.match(results, /#dish-\$\{selected\.menuItemId\}/u);
+    assert.match(card, /aria-label=\{`Vis \$\{result\.restaurant\.name\} på kart`\}/u);
+    assert.match(card, /id=\{`dish-\$\{result\.menuItemId\}`\}/u);
+    assert.match(styles, /\.mapAction\s*\{[^}]*min-height: 44px/su);
+    assert.match(preview, /<SearchResults/u);
+    assert.doesNotMatch(preview, /<DishResult/u);
+  });
+
   it("keeps fuzzy matches separate, price evidence conditional and touch actions usable", () => {
     const page = read("../app/search/page.tsx");
     const card = read("../components/dish-result.tsx");
