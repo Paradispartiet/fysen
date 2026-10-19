@@ -1,9 +1,7 @@
 name: Fysen batched Vercel production release
 
 on:
-  workflow_run:
-    workflows: [CI]
-    types: [completed]
+  push:
     branches: [main]
   workflow_dispatch:
     inputs:
@@ -16,6 +14,8 @@ on:
 
 permissions:
   contents: read
+  actions: read
+  pull-requests: read
 
 concurrency:
   group: fysen-vercel-production-release
@@ -35,31 +35,42 @@ jobs:
       release_mode: ${{ steps.window.outputs.release_mode }}
       source_sha: ${{ steps.window.outputs.source_sha }}
     steps:
-      - name: Resolve on-demand release request
+      - name: Resolve verified main merge or on-demand request
         id: window
         shell: bash
         env:
           REQUESTED_TARGET: ${{ inputs.target || 'auto' }}
-          COMPLETED_CI_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
-          COMPLETED_CI_SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
+          GH_API_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "workflow_run" ]]; then
-            if [[ "$COMPLETED_CI_CONCLUSION" != "success" ]]; then
-              echo "active=false" >> "$GITHUB_OUTPUT"
-              echo "target=auto" >> "$GITHUB_OUTPUT"
-              echo "release_mode=ci-not-green" >> "$GITHUB_OUTPUT"
-              echo "source_sha=$COMPLETED_CI_SOURCE_SHA" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
-            if [[ -z "$COMPLETED_CI_SOURCE_SHA" ]]; then
-              echo "Completed CI run did not provide an immutable source SHA" >&2
+          if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
+            # CI intentionally runs once on PRs, not again on main. Verify that
+            # this exact push is a merged PR with a successful PR CI run.
+            merged_prs="$(curl --fail --silent --show-error --retry 2 \
+              -H "Authorization: Bearer $GH_API_TOKEN" \
+              -H 'Accept: application/vnd.github+json' \
+              "https://api.github.com/repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls")"
+            pr_head="$(printf '%s' "$merged_prs" | jq -r --arg commit "$GITHUB_SHA" \
+              '[.[] | select(.merged_at != null and .base.ref == "main" and .merge_commit_sha == $commit)][0].head.sha // ""')"
+            if [[ -z "$pr_head" ]]; then
+              echo "::error title=Unverified main push::Production release requires an associated merged main PR."
               exit 1
             fi
+
+            verified_ci="$(curl --fail --silent --show-error --retry 2 \
+              -H "Authorization: Bearer $GH_API_TOKEN" \
+              -H 'Accept: application/vnd.github+json' \
+              "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/runs?event=pull_request&head_sha=$pr_head&per_page=30")"
+            if ! printf '%s' "$verified_ci" | jq -e --arg head "$pr_head" \
+              'any(.workflow_runs[]?; .head_sha == $head and .name == "CI" and .conclusion == "success")' >/dev/null; then
+              echo "::error title=CI not verified::No successful PR CI run matches the merged PR head."
+              exit 1
+            fi
+
             echo "active=true" >> "$GITHUB_OUTPUT"
             echo "target=auto" >> "$GITHUB_OUTPUT"
-            echo "release_mode=qualified-main" >> "$GITHUB_OUTPUT"
-            echo "source_sha=$COMPLETED_CI_SOURCE_SHA" >> "$GITHUB_OUTPUT"
+            echo "release_mode=qualified-main-merge" >> "$GITHUB_OUTPUT"
+            echo "source_sha=$GITHUB_SHA" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -68,8 +79,8 @@ jobs:
             exit 1
           fi
           echo "active=true" >> "$GITHUB_OUTPUT"
-          echo "target=${REQUESTED_TARGET:-auto}" >> "$GITHUB_OUTPUT"
-          echo "release_mode=on-demand-${REQUESTED_TARGET:-auto}" >> "$GITHUB_OUTPUT"
+          echo "target=$REQUESTED_TARGET" >> "$GITHUB_OUTPUT"
+          echo "release_mode=on-demand-$REQUESTED_TARGET" >> "$GITHUB_OUTPUT"
           echo "source_sha=$GITHUB_SHA" >> "$GITHUB_OUTPUT"
 
   prepare:

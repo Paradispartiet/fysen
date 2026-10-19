@@ -19,13 +19,15 @@ if grep -Eq '^[[:space:]]+schedule:' "$workflow" || grep -F 'cron:' "$workflow" 
   echo "Production releases must be on demand, not tied to unreliable clock windows" >&2
   exit 1
 fi
-grep -F 'workflow_run:' "$workflow" >/dev/null
-grep -F 'workflows: [CI]' "$workflow" >/dev/null
-grep -F 'types: [completed]' "$workflow" >/dev/null
+grep -F '  push:' "$workflow" >/dev/null
 grep -F 'branches: [main]' "$workflow" >/dev/null
-grep -F 'COMPLETED_CI_CONCLUSION: ${{ github.event.workflow_run.conclusion }}' "$workflow" >/dev/null
-grep -F 'COMPLETED_CI_SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}' "$workflow" >/dev/null
-grep -F 'release_mode=qualified-main' "$workflow" >/dev/null
+grep -F 'actions: read' "$workflow" >/dev/null
+grep -F 'pull-requests: read' "$workflow" >/dev/null
+grep -F 'commits/$GITHUB_SHA/pulls' "$workflow" >/dev/null
+grep -F 'actions/workflows/ci.yml/runs?event=pull_request&head_sha=$pr_head' "$workflow" >/dev/null
+grep -F 'No successful PR CI run matches the merged PR head.' "$workflow" >/dev/null
+grep -F 'Unverified main push' "$workflow" >/dev/null
+grep -F 'release_mode=qualified-main-merge' "$workflow" >/dev/null
 grep -F 'workflow_dispatch:' "$workflow" >/dev/null
 grep -F 'default: auto' "$workflow" >/dev/null
 grep -F 'Manual Fysen production releases must be dispatched from main.' "$workflow" >/dev/null
@@ -88,4 +90,4 @@ for obsolete in \
   fi
 done
 
-echo "On-demand, maximum-three-daily Vercel production release contract passed"
+echo "Verified-PR-merge or on-demand, maximum-three-daily Vercel production release contract passed"
