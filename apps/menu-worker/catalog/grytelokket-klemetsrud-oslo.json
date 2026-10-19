@@ -27,14 +27,14 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-19",
-      "note": "Wolt-menykilde kontrollert 2026-10-19 med 12 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+      "note": "Wolt-menykilde kontrollert 2026-10-19 med 12 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert. De to kampanjefølsomme opprinnelige prisassertasjonene Kebabmiddag og BigMeal BigBurger er erstattet med Kylling Nuggets og Crispy Chicken Middag etter streng Wolt-livevalidering; 12 priser opprettholdes."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Kebabmiddag",
-      "BigMeal BigBurger",
+      "Kylling Nuggets",
+      "Crispy Chicken Middag",
       "Lokket's Babb",
       "BigBurger Middag",
       "Kyllingkebab",
@@ -48,12 +48,12 @@
     ],
     "requiredDishVariants": [
       {
-        "name": "Kebabmiddag",
-        "priceMinor": 19800
+        "name": "Kylling Nuggets",
+        "priceMinor": 8500
       },
       {
-        "name": "BigMeal BigBurger",
-        "priceMinor": 23400
+        "name": "Crispy Chicken Middag",
+        "priceMinor": 19800
       },
       {
         "name": "Lokket's Babb",
