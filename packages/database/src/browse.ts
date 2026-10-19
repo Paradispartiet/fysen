@@ -6,6 +6,7 @@ import {
   discoveryExclusionCategories,
   type DiscoveryExclusionCategory,
 } from "./discovery-catalog.js";
+import { normalizeDishName } from "@fysen/menu-core";
 
 export interface DishBrowseDatabaseInput {
   readonly city: string;
@@ -46,10 +47,24 @@ export interface RecentlyAddedDish {
   readonly detectedAt: string;
 }
 
+export interface PopularDish {
+  readonly id: string;
+  readonly name: string;
+  readonly query: string;
+  readonly restaurantCount: number;
+  readonly searchCount: number;
+}
+
 export interface DishBrowseDatabaseResponse {
   readonly dishes: readonly DishBrowseDatabaseResult[];
   readonly recentDishes: readonly RecentlyAddedDish[];
+  readonly popularDishes: readonly PopularDish[];
   readonly quality: DishBrowseDatabaseQuality;
+}
+
+interface PopularSearchRow extends QueryResultRow {
+  normalized_query: string;
+  search_count: string;
 }
 
 interface RecentlyAddedRow extends QueryResultRow {
@@ -259,6 +274,49 @@ export async function browseDishes(
     };
   }).sort((left, right) => left.name.localeCompare(right.name, "nb") || left.id.localeCompare(right.id));
 
+  // Popularity comes from actual intentional user searches, not page views,
+  // editorial defaults, suggestions or individual impressions.
+  const popularSearches = await pool.query<PopularSearchRow>(
+    `
+      SELECT normalized_query, count(*)::text AS search_count
+      FROM fysen.search_events
+      WHERE lower(city) = lower($1)
+        AND demand_source = 'explicit_search'
+        AND result_count > 0
+        AND occurred_at BETWEEN now() - interval '30 days' AND now()
+      GROUP BY normalized_query
+      HAVING count(*) >= 3
+      ORDER BY count(*) DESC, normalized_query ASC
+      LIMIT 200
+    `,
+    [input.city],
+  );
+  const dishesByQuery = new Map<string, DishBrowseDatabaseResult>();
+  for (const dish of dishes) {
+    for (const term of [dish.query, dish.name]) {
+      const key = normalizeDishName(term);
+      const prior = dishesByQuery.get(key);
+      if (key && (!prior || dish.restaurantCount > prior.restaurantCount)) {
+        dishesByQuery.set(key, dish);
+      }
+    }
+  }
+  const popularDishes: PopularDish[] = [];
+  const shownPopular = new Set<string>();
+  for (const row of popularSearches.rows) {
+    const dish = dishesByQuery.get(normalizeDishName(row.normalized_query));
+    if (!dish || shownPopular.has(dish.id)) continue;
+    shownPopular.add(dish.id);
+    popularDishes.push({
+      id: dish.id,
+      name: dish.name,
+      query: dish.query,
+      restaurantCount: dish.restaurantCount,
+      searchCount: Number(row.search_count),
+    });
+    if (popularDishes.length === 6) break;
+  }
+
   const recentDishes: RecentlyAddedDish[] = [];
   const seen = new Set<string>();
   const byRestaurant = new Map<string, number>();
@@ -300,6 +358,7 @@ export async function browseDishes(
   return {
     dishes,
     recentDishes,
+    popularDishes,
     quality: {
       filterVersion: "consumer-v1",
       rawItemCount: result.rows.length,
