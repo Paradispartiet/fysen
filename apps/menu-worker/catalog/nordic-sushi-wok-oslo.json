@@ -23,14 +23,16 @@
         "https://consumer-api.wolt.com",
         "https://restaurant-api.wolt.com"
       ],
-      "browserBlockedOrigins": []
+      "browserBlockedOrigins": [
+        "https://live.ravelin.click"
+      ]
     }
   },
   "verification": {
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-19",
-      "note": "Kildeverifisering 2026-10-19: Wolts nettleservisning bruker HTTPS-datakildene consumer-api.wolt.com og restaurant-api.wolt.com. Begge er eksplisitt avgrenset til dette ene manifestets xhr/fetch-trafikk. Alle øvrige nettverksopprinnelser, dokumentredirects og ikke-offentlige mål forblir sperret. Browser-uttak er ikke godkjent før eksakt PR-head dokumenterer minst 34 prissatte produkter og alle åtte navngitte prisassertasjoner. Kilde-URL og kvalitetskrav uendret; leveringspriser, åpningstider ubekreftet."
+      "note": "Kildekontroll 2026-10-19: Browser-kilden krever de to verifiserte Wolt-API-originene consumer-api.wolt.com og restaurant-api.wolt.com for xhr/fetch. Den tredjeparts forespørselen live.ravelin.click blokkeres eksplisitt uten å utvide nettverkstillatelsene. Kvalitetsgulvet 34 og åtte navngitte rett-/prisassertasjoner er uendret og må bestå streng livevalidering før merge; leveringspriser og ikke uavhengig bekreftede åpningstider."
     }
   },
   "actions": [],
