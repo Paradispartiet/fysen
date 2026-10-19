@@ -95,7 +95,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
 
   const countLabel = data
     ? primaryResults.length > 0
-      ? `${primaryResults.length} menytreff`
+      ? `${primaryResults.length} sikre menytreff${data.results.length === 20 ? " blant de 20 viste" : ""}`
       : nearResults.length > 0
         ? "Ingen sikre treff"
         : "Ingen ferske menytreff"
@@ -109,6 +109,9 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
           city={city}
           buttonLabel="Finn retten"
           inputId="results-dish-query"
+          latitude={hasLocation ? latitude : null}
+          longitude={hasLocation ? longitude : null}
+          sort={sort}
         />
       </GlobalHeader>
 
@@ -161,9 +164,12 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
               {nearResults.length > 0 ? (
                 <section className="nearResults" aria-labelledby="near-results-title">
                   {primaryResults.length === 0 ? (
-                    <p className="nearResultsLead">Vi fant ikke et sikkert rettetreff, men disse menyoppføringene ligner.</p>
+                    <p className="nearResultsLead">Ingen sikre treff på «{q}». Disse rettene har lignende navn – sjekk menyen før du velger.</p>
                   ) : null}
-                  <h2 id="near-results-title">Nære treff</h2>
+                  <h2 id="near-results-title">Lignende retter</h2>
+                  {primaryResults.length > 0 ? (
+                    <p className="nearResultsLead">Ikke sikre treff på «{q}» – disse rettene ligner bare i navn.</p>
+                  ) : null}
                   <div className="resultList">
                     {nearResults.map((result) => <DishResult result={result} key={result.menuItemId} />)}
                   </div>

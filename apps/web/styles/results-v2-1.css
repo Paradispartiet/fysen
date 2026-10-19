@@ -212,3 +212,19 @@
     border-radius: 12px;
   }
 }
+
+/* Keep the dish, restaurant and source price readable at narrow mobile widths. */
+@media (max-width: 390px) {
+  .dishResultTopline {
+    gap: 10px;
+  }
+
+  .dishResultIdentity h2 {
+    font-size: 23px;
+    line-height: 1.16;
+  }
+
+  .dishResultFacts {
+    overflow-wrap: anywhere;
+  }
+}
