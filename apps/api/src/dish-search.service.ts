@@ -24,6 +24,7 @@ export class DishSearchService {
       count: result.dishes.length,
       dishes: result.dishes,
       recentDishes: result.recentDishes,
+      popularDishes: result.popularDishes,
       quality: result.quality,
     });
   }
