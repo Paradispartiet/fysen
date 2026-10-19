@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-19",
-      "note": "Wolt-kilde og 10 prisassertasjoner undersøkt 2026-10-19, adresse og koordinater fra individuell Wolt-profil. Wolt-leveringspriser, ikke bekreftede bordpriser. Åpningstider og live-produksjonsdatasynk ikke særskilt attestert. Eksisterende Veggie Veggie på samme gateadresse har annen meny og separat handelsidentitet; Nordvegan har egen offisiell nettside, registrert juridisk enhet og eget Wolt-sted."
+      "note": "Wolt-kilde og 10 prisassertasjoner undersøkt 2026-10-19, adresse og koordinater fra individuell Wolt-profil. Wolt-leveringspriser, ikke bekreftede bordpriser. Åpningstider og live-produksjonsdatasynk ikke særskilt attestert. Eksisterende Veggie Veggie på samme gateadresse har annen meny og separat handelsidentitet; Nordvegan har egen offisiell nettside, registrert juridisk enhet og eget Wolt-sted. Streng live-Wolt-validering på forrige PR-head observerte Beyond Burger og Chickn't Burger til 195 kr (Wolt-nettvisning viste 224 kr). Prisassertasjonene er satt til 195 kr etter live-uttrekk; øvrige krav uendret."
     }
   },
   "actions": [],
@@ -47,11 +47,11 @@
     "requiredDishVariants": [
       {
         "name": "Beyond Burger🌱",
-        "priceMinor": 22400
+        "priceMinor": 19500
       },
       {
         "name": "Chickn't Burger🌱",
-        "priceMinor": 22400
+        "priceMinor": 19500
       },
       {
         "name": "Meatball Goulash",
