@@ -16,6 +16,8 @@ import {
   type DishSuggestion,
 } from "./cuisine-explorer-data";
 
+const EMPTY_DISHES: readonly DishBrowseItem[] = [];
+
 type DishCoverage = {
   readonly dish: DishSuggestion;
   readonly restaurantCount: number;
@@ -125,7 +127,7 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const effectiveBrowseData = browseData ?? previewBrowseData;
-  const liveDishes = effectiveBrowseData?.dishes ?? [];
+  const liveDishes = effectiveBrowseData?.dishes ?? EMPTY_DISHES;
 
   useEffect(() => {
     if (browseData) return;
