@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jonk-holmlia-oslo",
+    "name": "Jønk Holmlia",
+    "address": "Holmlia Senter vei 9, 1255 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.834937,
+    "longitude": 10.795506
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/jnk-holmlia",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-menykilde kontrollert 2026-10-19 med 11 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Classic Burger Meal",
+      "Chicken & Fries 🌶",
+      "Fried Chicken Burger Meal",
+      "Classic Burger",
+      "Hot Mama Burger Meal 🌶🌶",
+      "Cheese Burger",
+      "Cheese Burger Meal",
+      "Jønk Fries 🌶",
+      "Chili Cheese",
+      "Mozzarella Sticks",
+      "BBQ Burger Meal"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Classic Burger Meal",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Chicken & Fries 🌶",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Fried Chicken Burger Meal",
+        "priceMinor": 30000
+      },
+      {
+        "name": "Classic Burger",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Hot Mama Burger Meal 🌶🌶",
+        "priceMinor": 31000
+      },
+      {
+        "name": "Cheese Burger",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Cheese Burger Meal",
+        "priceMinor": 29000
+      },
+      {
+        "name": "Jønk Fries 🌶",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Chili Cheese",
+        "priceMinor": 8000
+      },
+      {
+        "name": "Mozzarella Sticks",
+        "priceMinor": 8000
+      },
+      {
+        "name": "BBQ Burger Meal",
+        "priceMinor": 29500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

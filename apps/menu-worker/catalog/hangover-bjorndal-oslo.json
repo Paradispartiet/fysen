@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "hangover-bjorndal-oslo",
+    "name": "Hangover Bjørndal",
+    "address": "Granbergstubben 16, 1275 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.82640716,
+    "longitude": 10.83690678
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/hangover-bjrndal",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-menykilde kontrollert 2026-10-19 med 10 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Classic Fries",
+      "Hangover Kebab",
+      "Kylling Pizza",
+      "Loaded Chicken Fries",
+      "Hangover Classic Burger",
+      "Dønerkebabtallerken",
+      "Hangover Zinger Burger Crispy Chicken",
+      "Hangover Burger",
+      "Dirty Fries",
+      "BBQ Burger"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Classic Fries",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Hangover Kebab",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Kylling Pizza",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Loaded Chicken Fries",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Hangover Classic Burger",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Dønerkebabtallerken",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Hangover Zinger Burger Crispy Chicken",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Hangover Burger",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Dirty Fries",
+        "priceMinor": 12900
+      },
+      {
+        "name": "BBQ Burger",
+        "priceMinor": 18900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
