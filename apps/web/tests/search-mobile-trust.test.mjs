@@ -42,7 +42,8 @@ describe("Search-to-restaurant mobile trust contract", () => {
     const page = read("../app/search/page.tsx");
     const card = read("../components/dish-result.tsx");
     const actions = read("../components/dish-result.module.css");
-    assert.match(page, /Lignende retter/u);
+    assert.match(read("../components/search-results.tsx"), /Lignende retter/u);
+    assert.match(page, /<SearchResults/u);
     assert.match(card, /result\.match\.type === "fuzzy"/u);
     assert.match(card, /result\.dish\.priceMinor !== null/u);
     assert.match(card, /priceProvenanceLabel\(result\.menu\.sourceUrl\)/u);

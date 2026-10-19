@@ -53,3 +53,12 @@ Tre kilder med ferske uttrekk, men utdaterte navn/priskontroller, er oppdatert i
 Tre **separate, fortsatt uløste** feil gjelder `extraction_error` ved health-repair for Dr. Crunchy Kiellands, Eckers Løkka og Nordic Sushi & Wok. Ingen annen kilde eller parserstrategi erstattes uten live-bevis; disse er fortsatt kildehelseblokkerere frem til verifisert ny uthenting.
 
 Målrettet livevalidering på eksakt PR-commit er obligatorisk før merge. Kvalitetsgulv, menykilde-URL, antall navngitte priskontroller og fail-closed-krav er uendret.
+
+
+## Produktbolk: filtre, kart og navigasjon (etter PR #991)
+
+- Pris, kjøkkenstatus og (ved delt posisjon) avstand filtreres på **de inntil 20 returnerte resultatene**, ikke i hele databasen. Alle filtrerte tellere og hjelpetekster opplyser om denne begrensningen.
+- Manglende prispunkt, kjøkkenstatus eller avstand regnes ikke som sikkert match for det filteret. Filtreringen kan nullstilles direkte uten nytt API-kall.
+- Sikre menytreff og lignende navnetreff forblir egne lister også etter filtrering. Lignende retter fremstilles aldri som sikre.
+- Et valgfritt kart viser besøkskoordinatene for valgt restaurant. Kart fra OpenStreetMap lastes først ved eksplisitt åpning, viser én markør av gangen og gir lenker til større kart og veibeskrivelse.
+- Brukerflyten skal verifiseres i produksjon på 320–390 px mobil; en vellykket TypeScript/CI-kjøring er ikke tilstrekkelig lanseringsbevis.

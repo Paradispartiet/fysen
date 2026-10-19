@@ -1,0 +1,27 @@
+.surface { width: min(980px, 100%); }
+.filterPanel { margin: 0 0 24px; padding: 18px; border: 1px solid var(--color-line); border-radius: 14px; background: var(--color-paper); }
+.filters { display: flex; flex-wrap: wrap; align-items: end; gap: 12px 16px; }
+.checkbox { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; font-size: 13px; cursor: pointer; }
+.checkbox input { width: 18px; height: 18px; accent-color: var(--color-brand); }
+.filterField { display: grid; gap: 5px; color: var(--color-muted); font-size: 12px; }
+.filterField select { min-height: 44px; min-width: 130px; max-width: 100%; padding: 8px 10px; font: inherit; font-size: 14px; color: var(--color-ink); border: 1px solid var(--color-line-strong); border-radius: 9px; background: var(--color-surface-2); }
+.reset, .mapToggle, .empty button { min-height: 44px; padding: 8px 12px; font: inherit; font-size: 13px; font-weight: 650; border: 1px solid var(--color-brand); border-radius: 9px; cursor: pointer; color: var(--color-brand); background: transparent; }
+.viewControls { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; margin-top: 16px; }
+.count { margin: 0; font-size: 13px; font-weight: 600; }
+.limitNote { margin: 10px 0 0; color: var(--color-muted); font-size: 12px; line-height: 1.45; }
+.mapPanel { display: grid; grid-template-columns: minmax(170px, 1fr) minmax(0, 2fr); gap: 14px; margin: 0 0 22px; }
+.mapChoices { display: flex; flex-direction: column; gap: 7px; max-height: 410px; padding: 3px; overflow-y: auto; }
+.restaurantChoice, .selectedRestaurant { display: grid; gap: 4px; width: 100%; min-height: 52px; padding: 10px 12px; text-align: left; color: var(--color-ink); font: inherit; border: 1px solid var(--color-line); border-radius: 10px; background: var(--color-paper); cursor: pointer; }
+.restaurantChoice span, .selectedRestaurant span { font-size: 11px; color: var(--color-muted); }
+.selectedRestaurant { border-color: var(--color-brand); background: var(--color-brand-subtle); }
+.mapArea { min-width: 0; overflow: hidden; border: 1px solid var(--color-line); border-radius: 12px; background: var(--color-paper); }
+.mapArea iframe { display: block; width: 100%; height: 290px; border: 0; background: var(--color-surface-2); }
+.mapFooter { display: grid; gap: 5px; padding: 13px; font-size: 13px; line-height: 1.4; overflow-wrap: anywhere; }
+.mapFooter > span { color: var(--color-muted); }
+.mapLinks { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 7px; }
+.mapLinks a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-brand); font-weight: 650; }
+.mapNote { grid-column: 1 / -1; margin: 0; color: var(--color-muted); font-size: 12px; }
+.empty { display: grid; justify-items: start; gap: 12px; margin: 20px 0; padding: 20px; color: var(--color-muted); background: var(--color-paper); border: 1px solid var(--color-line); border-radius: 10px; }
+.filterPanel :is(button, input, select):focus-visible, .mapPanel :is(button, a):focus-visible, .empty button:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 3px; }
+@media (max-width: 640px) { .mapPanel { grid-template-columns: minmax(0, 1fr); } .mapChoices { flex-direction: row; max-height: none; overflow-x: auto; padding-bottom: 9px; } .restaurantChoice, .selectedRestaurant { flex: 0 0 min(220px, 75vw); } .filterField { flex: 1 1 130px; } .filterField select { width: 100%; } }
+@media (max-width: 390px) { .filterPanel { padding: 12px; } .viewControls { align-items: stretch; } .mapToggle { width: 100%; } .mapArea iframe { height: 260px; } }
