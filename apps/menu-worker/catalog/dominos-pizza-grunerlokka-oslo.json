@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dominos-pizza-grunerlokka-oslo",
+    "name": "Domino's Pizza Grünerløkka",
+    "address": "Thorvald Meyers gate 72, 0552 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9198412,
+    "longitude": 10.7595438
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/dominos-grnerlkka",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt kildeobservasjon 2026-10-19 med 10 navngitte rett-/prispar fra individuell restaurantmeny, besøksadresse og Wolt-kartkoordinat. Filialen har egen adresse og Wolt-identitet, og skal ikke slås sammen med andre Domino's-filialer. Wolt-leveringspriser, ikke bekreftede bordpriser; åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita 🌱",
+      "Pepperoni Passion",
+      "Ham & Cheese",
+      "Corny Chicken",
+      "Mighty Meat",
+      "Tennessee BBQ Chicken",
+      "Kebabpizza 🌶️",
+      "Hot Honey",
+      "BBQ Heaven",
+      "No Doubt"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita 🌱",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Pepperoni Passion",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Ham & Cheese",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Corny Chicken",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Mighty Meat",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Tennessee BBQ Chicken",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Kebabpizza 🌶️",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Hot Honey",
+        "priceMinor": 26500
+      },
+      {
+        "name": "BBQ Heaven",
+        "priceMinor": 26500
+      },
+      {
+        "name": "No Doubt",
+        "priceMinor": 10900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
