@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v10";
+export const HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION = "heading-price-v11";
 
 const HEADING_MARKER = "__FYSEN_ADJACENT_HEADING_LEVEL_";
 const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK\s*)|(?:kr\.?\s*))?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?(?:\s*(?:,-|kr\.?|NOK))?$/iu;
@@ -76,13 +76,16 @@ function parsePrice(value: string): ParsedPrice | null {
   };
 }
 
-function looksLikeDishTitle(value: string): boolean {
+function looksLikeDishTitle(value: string, headingLevel: number): boolean {
   const title = normalizeVisibleLine(value);
   if (!title || title.length < 2 || title.length > 180 || !/\p{L}/u.test(title)) return false;
   if (SECTION_OR_UI_LABEL.test(title) || PRICE_LINE.test(title) || BOTTLED_WATER_TITLE.test(title)) return false;
   if (/^(?:©|™|https?:\/\/|www\.|phone\s*:|telefon\s*:)/iu.test(title)) return false;
   if (/[.!?]$/u.test(title)) return false;
-  return title.split(/\s+/).filter(Boolean).length <= 12;
+  // Menu headings can contain full ingredients and sides; retain the stricter
+  // bound for higher-level section labels and require an actual priced card.
+  const wordLimit = headingLevel >= 3 ? 24 : 12;
+  return title.split(/\s+/).filter(Boolean).length <= wordLimit;
 }
 
 function annotatedLines(html: string): readonly string[] {
@@ -196,7 +199,7 @@ export function recoverAdjacentHeadingPriceHtmlItems(html: string): readonly Men
       continue;
     }
     if (blockedSectionLevel !== null && headingLevel > blockedSectionLevel) continue;
-    if (!looksLikeDishTitle(title)) continue;
+    if (!looksLikeDishTitle(title, headingLevel)) continue;
 
     let price: ParsedPrice | null = null;
     let pricePosition: number | null = null;

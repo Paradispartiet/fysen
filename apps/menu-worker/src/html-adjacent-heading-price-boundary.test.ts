@@ -19,7 +19,7 @@ describe("adjacent heading-price low-price boundaries", () => {
       </body></html>
     `);
 
-    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v10");
+    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v11");
     expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
       ["Shrimp chips", 5500],
       ["Kimchi salad", 9500],

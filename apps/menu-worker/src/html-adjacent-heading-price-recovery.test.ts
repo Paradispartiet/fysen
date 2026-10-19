@@ -18,7 +18,7 @@ describe("adjacent heading-price HTML recovery", () => {
       </body></html>
     `);
 
-    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v10");
+    expect(HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION).toBe("heading-price-v11");
     expect(items.map((item) => [item.name, item.priceMinor, item.priceKind])).toEqual([
       ["Doro Wet", 29000, "exact"],
       ["Key Wet", 28000, "exact"],
@@ -89,6 +89,37 @@ describe("adjacent heading-price HTML recovery", () => {
     expect(items.some((item) => item.name === "Card without price")).toBe(false);
   });
 
+
+  it("recovers long separately priced French main-course headings without accepting an unpriced Royal platter", () => {
+    const items = recoverAdjacentHeadingPriceHtmlItems(`
+      <html><body>
+        <h2>PLATS PRINCIPAUX - VIANDES</h2>
+        <h3>Klassisk tartar (180 g) * blandet for deg eller av deg egg, løk, kapers, rødbeter, pommes frites</h3>
+        <p>Inneholder: egg sennep sulfitt</p><p>430,-</p>
+        <h3>Grillet entrecote av okse, tomat, aspargesbønner og løkkompott, bearnaisesauce og pommes frites</h3>
+        <p>550,-</p>
+        <h3>Flambert pepperstek av oksefilet tomat, aspargesbønner, bacon, kremet peppersaus og fløtegratinerte poteter</h3>
+        <p>590,-</p>
+        <h3>Sprøstekt andelår ‘confit’ fra Holte gård kremet pastinakk og gulrot, rødløkskompott, andesjy med stjerneanis</h3>
+        <p>455,-</p>
+        <h3>Rosastekt fransk kalvelever med champignon, småløk og bacon, kalvesjy</h3>
+        <p>455,-</p>
+        <h2>PLATEAU DE FRUITS DE MER</h2>
+        <h3>Plateau de Fruits de Mer Royal</h3><p>Dagens pris!</p>
+        <h3>L'Assiette du Mareyeur</h3><p>495,-</p>
+      </body></html>
+    `);
+
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Klassisk tartar (180 g) * blandet for deg eller av deg egg, løk, kapers, rødbeter, pommes frites", 43000],
+      ["Grillet entrecote av okse, tomat, aspargesbønner og løkkompott, bearnaisesauce og pommes frites", 55000],
+      ["Flambert pepperstek av oksefilet tomat, aspargesbønner, bacon, kremet peppersaus og fløtegratinerte poteter", 59000],
+      ["Sprøstekt andelår ‘confit’ fra Holte gård kremet pastinakk og gulrot, rødløkskompott, andesjy med stjerneanis", 45500],
+      ["Rosastekt fransk kalvelever med champignon, småløk og bacon, kalvesjy", 45500],
+      ["L'Assiette du Mareyeur", 49500],
+    ]);
+    expect(items.some((item) => item.name === "Plateau de Fruits de Mer Royal")).toBe(false);
+  });
 
   it("prefers higher-rank dish headings over nested descriptions and excludes wine-pairing sections", () => {
     const items = recoverAdjacentHeadingPriceHtmlItems(`
