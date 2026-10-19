@@ -13,7 +13,7 @@
   "menuSource": {
     "url": "https://wolt.com/en/nor/oslo/restaurant/nordic-sushi-wok",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 34,
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-16",
-      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+      "checkedAt": "2026-10-19",
+      "note": "Wolt publiserer fortsatt en omfattende priset sushi-/wokmeny, men HTTP-extractor fikk 2026-10-19 bare fire irrelevante/partielle kort (Poke Bowl, W1 Ramen, W2 Nudler og Risalléen) mot 34 tidligere godkjente. Browsertransport testes på uendret kilde-URL uten å endre minsteantall 34 eller de åtte rett-/prisassertasjonene. Denne endringen er en transportkandidat som MÅ bestå streng livevalidering på eksakt PR-head før merge. Prisene er leveringspriser, og åpningstider er ikke uavhengig verifisert."
     }
   },
   "actions": [],
