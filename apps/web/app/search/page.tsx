@@ -2,7 +2,7 @@ import type { DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import type { DishSearchResponse, DishSearchSort } from "@fysen/contracts";
 import { DishBrowse } from "../../components/dish-browse";
 import { DishKnowledgeNote } from "../../components/dish-knowledge-note";
-import { DishResult } from "../../components/dish-result";
+import { SearchResults } from "../../components/search-results";
 import { DishSearch } from "../../components/dish-search";
 import { GlobalHeader } from "../../components/global-header";
 import { LocationControls } from "../../components/location-controls";
@@ -155,25 +155,13 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
                 />
               ) : null}
 
-              {primaryResults.length > 0 ? (
-                <div className="resultList">
-                  {primaryResults.map((result) => <DishResult result={result} key={result.menuItemId} />)}
-                </div>
-              ) : null}
-
-              {nearResults.length > 0 ? (
-                <section className="nearResults" aria-labelledby="near-results-title">
-                  {primaryResults.length === 0 ? (
-                    <p className="nearResultsLead">Ingen sikre treff på «{q}». Disse rettene har lignende navn – sjekk menyen før du velger.</p>
-                  ) : null}
-                  <h2 id="near-results-title">Lignende retter</h2>
-                  {primaryResults.length > 0 ? (
-                    <p className="nearResultsLead">Ikke sikre treff på «{q}» – disse rettene ligner bare i navn.</p>
-                  ) : null}
-                  <div className="resultList">
-                    {nearResults.map((result) => <DishResult result={result} key={result.menuItemId} />)}
-                  </div>
-                </section>
+              {data && data.results.length > 0 ? (
+                <SearchResults
+                  primaryResults={primaryResults}
+                  nearResults={nearResults}
+                  hasLocation={hasLocation}
+                  searchLimitReached={data.results.length === 20}
+                />
               ) : null}
             </>
           )}
