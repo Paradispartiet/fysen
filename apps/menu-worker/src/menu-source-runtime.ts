@@ -152,7 +152,7 @@ export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v16";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v12";
 export const HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION = "structured-compat-v1";
-export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v5";
+export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v6";
 
 export function shouldPreferDominantHeadingRecovery(
   headingCount: number,
@@ -539,13 +539,6 @@ export async function extractMenuSource(
             isCanonicalHtmlMenuItem,
           )
         : [];
-    if (embeddedItems.length >= 4) {
-      return {
-        items: embeddedItems,
-        method: extracted.method,
-        extractorVersion: HTML_RUNTIME_EXTRACTOR_VERSION,
-      };
-    }
     const recoveredItems =
       extracted.method === "html_heuristic"
         ? recoverDescriptionNamedHtmlItems(
@@ -737,8 +730,20 @@ export async function extractMenuSource(
             ),
           )
         : reconcileVisibleSizePrices(normalizedHtml, beverageScopedItems);
+    // A partial hydration payload must not silently truncate a larger, directly
+    // priced visible menu. Keep embedded data as the default authoritative path
+    // unless the HTML recovery is substantially broader and mostly priced.
+    const visibleMenuHasIndependentCoverage =
+      extracted.method === "html_heuristic" &&
+      embeddedItems.length >= 4 &&
+      items.length >= Math.max(8, embeddedItems.length * 2) &&
+      items.filter((item) => item.priceMinor !== null).length >=
+        Math.ceil(items.length * 0.9);
     return {
-      items,
+      items:
+        embeddedItems.length >= 4 && !visibleMenuHasIndependentCoverage
+          ? embeddedItems
+          : items,
       method: extracted.method,
       extractorVersion: HTML_RUNTIME_EXTRACTOR_VERSION,
     };
