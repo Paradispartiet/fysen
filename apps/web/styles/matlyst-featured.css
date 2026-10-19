@@ -1,0 +1,129 @@
+/* Actual new dishes and most-searched dishes sit within Matlyst discovery. */
+.cuisineExplorer .matlystFeaturedBlock {
+  margin: 20px 0 32px;
+}
+
+.matlystFeaturedHeading {
+  margin-bottom: 15px;
+}
+
+.matlystFeaturedHeading h3 {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: clamp(22px, 2.5vw, 30px);
+  font-weight: 670;
+  letter-spacing: -0.032em;
+  line-height: 1.1;
+}
+
+.matlystFeaturedHeading p {
+  max-width: 680px;
+  margin: 8px 0 0;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.matlystFeaturedGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.matlystFeaturedCard {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 18px;
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+}
+
+.matlystFeaturedTopline {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--color-muted);
+  font-size: 11px;
+}
+
+.matlystFeaturedTopline > span {
+  color: var(--color-brand);
+  font-weight: 730;
+}
+
+.matlystFeaturedCard h4 {
+  margin: 16px 0 8px;
+  overflow-wrap: anywhere;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.matlystFeaturedRestaurant { margin: 0; font-size: 13px; font-weight: 710; }
+.matlystFeaturedMuted { margin: 6px 0 0; font-size: 11px; line-height: 1.4; color: var(--color-muted); }
+.matlystFeaturedPrice { margin: 18px 0 0; font-size: 18px; font-weight: 710; font-variant-numeric: tabular-nums; }
+
+.matlystFeaturedLinks {
+  display: flex;
+  gap: 7px 14px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.matlystFeaturedLinks a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--color-brand);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.matlystFeaturedLinks a:hover { color: var(--color-brand-hover); }
+.matlystFeaturedLinks a:focus-visible,
+.matlystPopularCard:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 3px; }
+
+.matlystPopularGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.matlystPopularCard {
+  display: flex;
+  min-width: 0;
+  min-height: 83px;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  color: var(--color-ink);
+  text-decoration: none;
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+}
+
+.matlystPopularCard:hover { border-color: var(--color-brand); }
+.matlystPopularRank { font-size: 20px; font-weight: 800; color: var(--color-brand); }
+.matlystPopularIdentity { display: grid; flex: 1; min-width: 0; gap: 5px; }
+.matlystPopularIdentity strong { overflow-wrap: anywhere; font-size: 16px; line-height: 1.15; }
+.matlystPopularIdentity small { color: var(--color-muted); font-size: 11px; }
+.matlystPopularAction { color: var(--color-brand); }
+
+@media (max-width: 1000px) {
+  .matlystFeaturedGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .matlystPopularGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 767px) {
+  .cuisineExplorer .matlystFeaturedBlock { margin: 16px 0 26px; }
+  .matlystFeaturedGrid { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 8px; scroll-snap-type: x proximity; }
+  .matlystFeaturedCard { min-width: min(280px, 78vw); scroll-snap-align: start; }
+  .matlystPopularGrid { grid-template-columns: 1fr; }
+  .matlystPopularCard { min-height: 70px; }
+}
