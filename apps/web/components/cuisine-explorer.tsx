@@ -7,6 +7,8 @@ import type {
 } from "@fysen/contracts/dish-browse";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { browseDishesClient } from "../lib/client-dish-search";
+import { RecentDishes } from "./recent-dishes";
+import { PopularDishes } from "./popular-dishes";
 import { discoveryCoverage } from "../lib/dish-discovery";
 import { dishSearchHref } from "../lib/public-path";
 import {
@@ -200,6 +202,9 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
         </div>
         <p>Velg et kjøkken eller en region, oppdag relevante retter, og se hvem som faktisk har dem på en fersk meny.</p>
       </div>
+
+      <RecentDishes dishes={effectiveBrowseData?.recentDishes ?? []} />
+      <PopularDishes dishes={effectiveBrowseData?.popularDishes ?? []} />
 
       <div className="cuisineGrid">
         {homeCuisines.map((cuisine) => {
