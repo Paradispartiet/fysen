@@ -17,6 +17,7 @@
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 56,
+    "maxResponseBytes": 8388608,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],

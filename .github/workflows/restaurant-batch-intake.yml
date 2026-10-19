@@ -6,8 +6,9 @@ on:
     paths:
       - "apps/menu-worker/research/*.seed.json"
       - "apps/menu-worker/src/**"
+      - "!apps/menu-worker/src/**/*.test.ts"
       - "packages/menu-core/src/**"
-      - ".github/workflows/restaurant-batch-intake.yml"
+      - "!packages/menu-core/src/**/*.test.ts"
   workflow_dispatch:
     inputs:
       seed_path:

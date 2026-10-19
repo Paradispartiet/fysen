@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 const materializer = readFileSync(
@@ -7,6 +7,10 @@ const materializer = readFileSync(
 );
 const watcher = readFileSync(
   new URL("../../../.github/workflows/watch-menus.yml", import.meta.url),
+  "utf8",
+);
+const batchIntake = readFileSync(
+  new URL("../../../.github/workflows/restaurant-batch-intake.yml", import.meta.url),
   "utf8",
 );
 
@@ -37,9 +41,34 @@ describe("production menu mutation workflows", () => {
     expect(watcher).not.toContain("run: pnpm --filter @fysen/menu-worker onboard:catalog");
   });
 
-  it("keeps enough menu-source capacity and runtime headroom for the production catalog", () => {
+  it("maintains source-check capacity above the live catalog's scheduled demand", () => {
     expect(watcher).toContain("timeout-minutes: 30");
-    expect(watcher).toContain('FYSEN_MENU_WATCH_BATCH_SIZE: "50"');
+    expect(watcher).toContain('cron: "17,47 * * * *"');
+    expect(watcher).toContain('FYSEN_MENU_WATCH_BATCH_SIZE: "100"');
+
+    const catalogUrl = new URL("../catalog/", import.meta.url);
+    const manifestFiles = readdirSync(catalogUrl).filter((name) => name.endsWith(".json"));
+    const requiredChecksPerHour = manifestFiles.reduce((total, fileName) => {
+      const manifest = JSON.parse(readFileSync(new URL(fileName, catalogUrl), "utf8")) as {
+        menuSource: { checkIntervalMinutes: number };
+      };
+      const interval = manifest.menuSource.checkIntervalMinutes;
+      expect(Number.isFinite(interval) && interval > 0).toBe(true);
+      return total + 60 / interval;
+    }, 0);
+
+    // The due-source query is capped at 100 per run. Reserve 50% headroom
+    // for delayed GitHub schedules, retries and a growing catalog.
+    const hourlyCapacity = 2 * 100;
+    expect(hourlyCapacity).toBeGreaterThan(requiredChecksPerHour * 1.5);
+  });
+
+  it("keeps menu test-only changes out of live restaurant intake", () => {
+    expect(batchIntake).toContain('"apps/menu-worker/src/**"');
+    expect(batchIntake).toContain('"!apps/menu-worker/src/**/*.test.ts"');
+    expect(batchIntake).toContain('"packages/menu-core/src/**"');
+    expect(batchIntake).toContain('"!packages/menu-core/src/**/*.test.ts"');
+    expect(batchIntake).not.toContain('      - ".github/workflows/restaurant-batch-intake.yml"');
   });
 
   it("runs only bounded operational watcher stages before preserving failure signal", () => {
