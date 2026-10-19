@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lett-sjolyst-oslo",
+    "name": "LETT Sjølyst",
+    "address": "Karenslyst allé 9, 0278 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9206715,
+    "longitude": 10.6835699
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/lett-sjlyst",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-kilde og 11 prisassertasjoner undersøkt 2026-10-19, adresse og koordinater fra individuell Wolt-profil. Wolt-leveringspriser, ikke bekreftede bordpriser. Åpningstider og live-produksjonsdatasynk ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Søtpotet feta bowl",
+      "Spicy kylling bowl",
+      "Poké bowl",
+      "Kylling avokado sandwich",
+      "Asiatisk bowl",
+      "Kylling Cæsar bowl",
+      "Søtpotet feta wrap",
+      "Meksikansk bowl",
+      "Spicy kylling wrap",
+      "Rødbet chèvre bowl",
+      "Snickerskake"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Søtpotet feta bowl",
+        "priceMinor": 19700
+      },
+      {
+        "name": "Spicy kylling bowl",
+        "priceMinor": 18700
+      },
+      {
+        "name": "Poké bowl",
+        "priceMinor": 20700
+      },
+      {
+        "name": "Kylling avokado sandwich",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Asiatisk bowl",
+        "priceMinor": 17700
+      },
+      {
+        "name": "Kylling Cæsar bowl",
+        "priceMinor": 19700
+      },
+      {
+        "name": "Søtpotet feta wrap",
+        "priceMinor": 19700
+      },
+      {
+        "name": "Meksikansk bowl",
+        "priceMinor": 18700
+      },
+      {
+        "name": "Spicy kylling wrap",
+        "priceMinor": 20200
+      },
+      {
+        "name": "Rødbet chèvre bowl",
+        "priceMinor": 19200
+      },
+      {
+        "name": "Snickerskake",
+        "priceMinor": 7000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
