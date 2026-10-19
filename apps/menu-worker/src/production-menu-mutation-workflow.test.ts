@@ -39,7 +39,8 @@ describe("production menu mutation workflows", () => {
 
   it("keeps enough menu-source capacity and runtime headroom for the production catalog", () => {
     expect(watcher).toContain("timeout-minutes: 30");
-    expect(watcher).toContain('FYSEN_MENU_WATCH_BATCH_SIZE: "50"');
+    expect(watcher).toContain('FYSEN_MENU_WATCH_BATCH_SIZE: "100"');
+    expect(watcher).toContain('- cron: "17,47 * * * *"');
   });
 
   it("runs only bounded operational watcher stages before preserving failure signal", () => {

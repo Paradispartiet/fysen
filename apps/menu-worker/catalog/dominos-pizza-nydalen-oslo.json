@@ -21,7 +21,8 @@
       "redirectOrigins": [],
       "browserDataOrigins": [],
       "browserBlockedOrigins": []
-    }
+    },
+    "maxResponseBytes": 8388608
   },
   "verification": {
     "hours": {
