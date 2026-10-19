@@ -2,7 +2,7 @@ name: Watch Fysen menus
 
 on:
   schedule:
-    - cron: "17 * * * *"
+    - cron: "17,47 * * * *"
   workflow_dispatch:
   workflow_run:
     workflows: ["Deploy Fysen database"]
@@ -26,7 +26,9 @@ jobs:
       DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
       DATABASE_SSL: "verify-full"
       NODE_ENV: production
-      FYSEN_MENU_WATCH_BATCH_SIZE: "50"
+      # The catalog contains many 12-hour sources; 50/hour cannot keep up at this scale.
+      # Due-source selection prevents fetching sources before their next_check_at.
+      FYSEN_MENU_WATCH_BATCH_SIZE: "100"
       FYSEN_HOURS_WATCH_BATCH_SIZE: "25"
       FYSEN_ACTION_VERIFY_BATCH_SIZE: "25"
       FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
