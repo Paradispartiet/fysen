@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "det-gronne-kjokken-sentrum-oslo",
+    "name": "Det Grønne Kjøkken",
+    "address": "Kongens gate 4, 0153 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9092892,
+    "longitude": 10.7418365
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/det-gronne-kjokken",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-kilde og 12 prisassertasjoner undersøkt 2026-10-19, adresse og koordinater fra individuell Wolt-profil. Wolt-leveringspriser, ikke bekreftede bordpriser. Åpningstider og live-produksjonsdatasynk ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Cæsar salat",
+      "Ham & Cheese Toast",
+      "Fersk Tunfiskrøre",
+      "Husets Økologiske Omelett",
+      "Husets Croque Madame",
+      "Spicy Salami & Brie Toast",
+      "Hjemmelaget Pai",
+      "Ukens Suppe",
+      "Avocado Toast",
+      "🌱Hjemmelaget Vegetar Lasagne",
+      "Fransk Croque Monsieur",
+      "Mozzarella & Pesto Toast"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Cæsar salat",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Ham & Cheese Toast",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Fersk Tunfiskrøre",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Husets Økologiske Omelett",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Husets Croque Madame",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Spicy Salami & Brie Toast",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Hjemmelaget Pai",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Ukens Suppe",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Avocado Toast",
+        "priceMinor": 17900
+      },
+      {
+        "name": "🌱Hjemmelaget Vegetar Lasagne",
+        "priceMinor": 25000
+      },
+      {
+        "name": "Fransk Croque Monsieur",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Mozzarella & Pesto Toast",
+        "priceMinor": 12500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

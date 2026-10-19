@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "limon-byporten-oslo",
+    "name": "Limón Byporten",
+    "address": "Jernbanetorget 6, 0154 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.911749,
+    "longitude": 10.752952
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/limn-byporten",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-kilde og 11 prisassertasjoner undersøkt 2026-10-19, adresse og koordinater fra individuell Wolt-profil. Wolt-leveringspriser, ikke bekreftede bordpriser. Åpningstider og live-produksjonsdatasynk ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Hawaiian Salmon",
+      "Spicy Salmon",
+      "Mango Chicken",
+      "Salmon Mango",
+      "Beef - NEW!",
+      "Spicy Chicken",
+      "Açaí Berry (Vegan) 🌱",
+      "Tuna Freshness",
+      "Spicy Tuna",
+      "Beetroot Poke (Vegan) 🌱",
+      "Chips + Guac"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Hawaiian Salmon",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Spicy Salmon",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Mango Chicken",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Salmon Mango",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Beef - NEW!",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Spicy Chicken",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Açaí Berry (Vegan) 🌱",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Tuna Freshness",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Spicy Tuna",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Beetroot Poke (Vegan) 🌱",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Chips + Guac",
+        "priceMinor": 10900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

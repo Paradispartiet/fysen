@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "nordvegan-oslo",
+    "name": "Nordvegan",
+    "address": "Kristian IVs gate 15B, 0164 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9156379,
+    "longitude": 10.7381156
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/nordvegan",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-kilde og 10 prisassertasjoner undersøkt 2026-10-19, adresse og koordinater fra individuell Wolt-profil. Wolt-leveringspriser, ikke bekreftede bordpriser. Åpningstider og live-produksjonsdatasynk ikke særskilt attestert. Eksisterende Veggie Veggie på samme gateadresse har annen meny og separat handelsidentitet; Nordvegan har egen offisiell nettside, registrert juridisk enhet og eget Wolt-sted. Streng live-Wolt-validering på forrige PR-head observerte Beyond Burger og Chickn't Burger til 195 kr (Wolt-nettvisning viste 224 kr). Prisassertasjonene er satt til 195 kr etter live-uttrekk; øvrige krav uendret."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Beyond Burger🌱",
+      "Chickn't Burger🌱",
+      "Meatball Goulash",
+      "Jamaican Curry 🌱",
+      "Crispy Fried Gyoza (7p)🌱",
+      "Spring rolls (2) 🌱",
+      "Potato Tots",
+      "Spinach Soup 🌱",
+      "Spicy Jalapeno Poppers (2pcs)",
+      "Toasted Chick'n Caesar Wrap 🌱"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Beyond Burger🌱",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Chickn't Burger🌱",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Meatball Goulash",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Jamaican Curry 🌱",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Crispy Fried Gyoza (7p)🌱",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Spring rolls (2) 🌱",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Potato Tots",
+        "priceMinor": 6500
+      },
+      {
+        "name": "Spinach Soup 🌱",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Spicy Jalapeno Poppers (2pcs)",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Toasted Chick'n Caesar Wrap 🌱",
+        "priceMinor": 16900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

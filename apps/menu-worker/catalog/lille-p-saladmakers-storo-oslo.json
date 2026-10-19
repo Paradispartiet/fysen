@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lille-p-saladmakers-storo-oslo",
+    "name": "Lille P. Saladmakers Storo",
+    "address": "Vitaminveien 7, 0485 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.946965,
+    "longitude": 10.774126
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/lille-p-storo-storsenter",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-kilde og 12 prisassertasjoner undersøkt 2026-10-19, adresse og koordinater fra individuell Wolt-profil. Wolt-leveringspriser, ikke bekreftede bordpriser. Åpningstider og live-produksjonsdatasynk ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Middelhavskylling Salat",
+      "Cæsarsalat",
+      "Poké Laks Bowl",
+      "Protein Plus Bowl",
+      "Spicy Kylling Bowl (Strøm-Larsen)",
+      "Asiatisk Nudelsalat",
+      "Chipotle Biff Bowl (Strøm-Larsen)",
+      "Spicy Kyllingwrap (Strøm-Larsen)",
+      "Gresk Lam Bowl (Strøm-Larsen)",
+      "Fransk Chevre Salat",
+      "Chilibeans Wrap (Vegetar)",
+      "Hoisinkylling Wrap"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Middelhavskylling Salat",
+        "priceMinor": 19700
+      },
+      {
+        "name": "Cæsarsalat",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Poké Laks Bowl",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Protein Plus Bowl",
+        "priceMinor": 19700
+      },
+      {
+        "name": "Spicy Kylling Bowl (Strøm-Larsen)",
+        "priceMinor": 19700
+      },
+      {
+        "name": "Asiatisk Nudelsalat",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Chipotle Biff Bowl (Strøm-Larsen)",
+        "priceMinor": 19700
+      },
+      {
+        "name": "Spicy Kyllingwrap (Strøm-Larsen)",
+        "priceMinor": 19700
+      },
+      {
+        "name": "Gresk Lam Bowl (Strøm-Larsen)",
+        "priceMinor": 19700
+      },
+      {
+        "name": "Fransk Chevre Salat",
+        "priceMinor": 19700
+      },
+      {
+        "name": "Chilibeans Wrap (Vegetar)",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Hoisinkylling Wrap",
+        "priceMinor": 14300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
