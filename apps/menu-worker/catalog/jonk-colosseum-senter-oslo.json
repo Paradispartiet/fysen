@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "jonk-colosseum-senter-oslo",
+    "name": "Jønk Colosseum Senter",
+    "address": "Sørkedalsveien 10, 0369 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.930205,
+    "longitude": 10.710102
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/jnk-colosseum",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-menykilde observert 2026-10-19 med 14 individuelle navngitte rett-/prispar og besøksadresse. Koordinatgrunnlag: Wolt-kartpunkt. Filial/restaurant er separat fra andre katalogidentiteter. Wolt-leveringspriser, ikke bekreftede bordpriser; åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Classic Burger Meal",
+      "Classic Burger",
+      "Chicken & Fries 🌶",
+      "Cheese Burger",
+      "Cheese Burger Meal",
+      "BBQ Burger Meal",
+      "Jønk Fries 🌶",
+      "Mozzarella Sticks",
+      "Béarnaise Burger",
+      "Oklahoma Style Onion Burger",
+      "Spicy Burger 🌶",
+      "Helt Texas Burger",
+      "Fried Chicken Burger Meal",
+      "BBQ Burger"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Classic Burger Meal",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Classic Burger",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Chicken & Fries 🌶",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Cheese Burger",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Cheese Burger Meal",
+        "priceMinor": 29000
+      },
+      {
+        "name": "BBQ Burger Meal",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Jønk Fries 🌶",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Mozzarella Sticks",
+        "priceMinor": 8000
+      },
+      {
+        "name": "Béarnaise Burger",
+        "priceMinor": 19000
+      },
+      {
+        "name": "Oklahoma Style Onion Burger",
+        "priceMinor": 19000
+      },
+      {
+        "name": "Spicy Burger 🌶",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Helt Texas Burger",
+        "priceMinor": 19000
+      },
+      {
+        "name": "Fried Chicken Burger Meal",
+        "priceMinor": 30000
+      },
+      {
+        "name": "BBQ Burger",
+        "priceMinor": 18000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "burger-king-mortensrud-oslo",
+    "name": "Burger King Mortensrud",
+    "address": "Lofsrudveien 6, 1281 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.848756,
+    "longitude": 10.829616
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/burger-king-mortensrud",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-menykilde observert 2026-10-19 med 14 individuelle navngitte rett-/prispar og besøksadresse. Koordinatgrunnlag: adressebasert byggpunkt fra Oslo kommunes adresseliste (ikke verifisert Wolt-kartpunkt). Filial/restaurant er separat fra andre katalogidentiteter. Wolt-leveringspriser, ikke bekreftede bordpriser; åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Whopper Cheese Meny",
+      "Crispy Chicken Meny",
+      "Crispy Chicken",
+      "Chili Cheese",
+      "Cheeseburger",
+      "Fries",
+      "BK® Fish Meny",
+      "Long Chicken Meny",
+      "Chili Cheeseburger",
+      "Chicken Nuggets 9 Biter",
+      "Gourmet Katsu",
+      "Gourmet Katsu Double",
+      "Gourmet Chicken Katsu",
+      "Gourmet Katsu Meny"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Whopper Cheese Meny",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Crispy Chicken Meny",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Crispy Chicken",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Chili Cheese",
+        "priceMinor": 6200
+      },
+      {
+        "name": "Cheeseburger",
+        "priceMinor": 4100
+      },
+      {
+        "name": "Fries",
+        "priceMinor": 6500
+      },
+      {
+        "name": "BK® Fish Meny",
+        "priceMinor": 14500
+      },
+      {
+        "name": "Long Chicken Meny",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Chili Cheeseburger",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Chicken Nuggets 9 Biter",
+        "priceMinor": 11000
+      },
+      {
+        "name": "Gourmet Katsu",
+        "priceMinor": 18100
+      },
+      {
+        "name": "Gourmet Katsu Double",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Gourmet Chicken Katsu",
+        "priceMinor": 16300
+      },
+      {
+        "name": "Gourmet Katsu Meny",
+        "priceMinor": 23600
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
