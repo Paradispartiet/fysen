@@ -19,7 +19,9 @@
     "minimumExpectedItems": 34,
     "sourceSupport": {
       "redirectOrigins": [],
-      "browserDataOrigins": [],
+      "browserDataOrigins": [
+        "https://consumer-api.wolt.com"
+      ],
       "browserBlockedOrigins": []
     }
   },
@@ -27,7 +29,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-19",
-      "note": "Wolt publiserer fortsatt en omfattende priset sushi-/wokmeny, men HTTP-extractor fikk 2026-10-19 bare fire irrelevante/partielle kort (Poke Bowl, W1 Ramen, W2 Nudler og Risalléen) mot 34 tidligere godkjente. Browsertransport testes på uendret kilde-URL uten å endre minsteantall 34 eller de åtte rett-/prisassertasjonene. Denne endringen er en transportkandidat som MÅ bestå streng livevalidering på eksakt PR-head før merge. Prisene er leveringspriser, og åpningstider er ikke uavhengig verifisert."
+      "note": "HTML-nettleseruthenting 2026-10-19 krever Wolt sin egen HTTPS-API-datakilde https://consumer-api.wolt.com; annet kryssopphav forblir blokkert og alle nettverkskall valideres offentlig. Dette er en kildebasert transportkandidat, ikke godkjent inntil streng livevalidering beviser minst 34 retter og samtlige åtte individuelle rett-/prispar. Kilde-URL, matgulv og prisassertasjoner er uendret. Prisene gjelder Wolt-levering; åpningstider er ikke uavhengig verifisert."
     }
   },
   "actions": [],
