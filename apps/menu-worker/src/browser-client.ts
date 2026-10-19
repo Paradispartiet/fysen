@@ -10,6 +10,7 @@ import {
 const MAX_RENDERED_HTML_BYTES = 2 * 1024 * 1024;
 const MAX_BROWSER_ROUTE_EVENTS = 1000;
 const MAX_BROWSER_NETWORK_REQUESTS = 120;
+const MAX_WOLT_BROWSER_NETWORK_REQUESTS = 320;
 const NAVIGATION_TIMEOUT_MS = 15_000;
 const NETWORK_IDLE_TIMEOUT_MS = 5_000;
 const RENDER_READINESS_TIMEOUT_MS = 10_000;
@@ -159,9 +160,17 @@ export function browserRequestDecision(input: BrowserRequestPolicyInput): Browse
   return { action: "allow", validatePublicNetwork: true };
 }
 
+export function browserNetworkRequestLimitForSource(sourceOrigin: string): number {
+  const hostname = new URL(sourceOrigin).hostname.toLowerCase().replace(/\.$/u, "");
+  return hostname === "wolt.com"
+    ? MAX_WOLT_BROWSER_NETWORK_REQUESTS
+    : MAX_BROWSER_NETWORK_REQUESTS;
+}
+
 export function accountBrowserRequest(
   current: BrowserRequestBudget,
   decision: BrowserRequestDecision,
+  maxNetworkRequests = MAX_BROWSER_NETWORK_REQUESTS,
 ): BrowserRequestBudgetResult {
   const routeEvents = current.routeEvents + 1;
   if (routeEvents > MAX_BROWSER_ROUTE_EVENTS) {
@@ -182,12 +191,12 @@ export function accountBrowserRequest(
   }
 
   const networkRequests = current.networkRequests + 1;
-  if (networkRequests > MAX_BROWSER_NETWORK_REQUESTS) {
+  if (networkRequests > maxNetworkRequests) {
     return {
       budget: { routeEvents, networkRequests },
       violation: {
         code: "BROWSER_REQUEST_LIMIT",
-        message: `Rendered source exceeded ${MAX_BROWSER_NETWORK_REQUESTS} allowed browser network requests`,
+        message: `Rendered source exceeded ${maxNetworkRequests} allowed browser network requests`,
       },
     };
   }
@@ -206,6 +215,7 @@ async function installNetworkPolicy(
 ): Promise<void> {
   const validatedUrls = new Map<string, Promise<void>>();
   let budget: BrowserRequestBudget = { routeEvents: 0, networkRequests: 0 };
+  const networkRequestLimit = browserNetworkRequestLimitForSource(sourceOrigin);
 
   await context.route("**/*", async (route: Route) => {
     try {
@@ -220,7 +230,7 @@ async function installNetworkPolicy(
           ? { browserBlockedOrigins: support.browserBlockedOrigins }
           : {}),
       });
-      const accounted = accountBrowserRequest(budget, decision);
+      const accounted = accountBrowserRequest(budget, decision, networkRequestLimit);
       budget = accounted.budget;
       if (accounted.violation) {
         violation.value ??= new MenuFetchError(accounted.violation.code, accounted.violation.message);
