@@ -62,6 +62,35 @@ describe("browser request policy", () => {
     }
   });
 
+  it("allows only an explicitly listed Wolt API origin for browser menu data", () => {
+    expect(
+      browserRequestDecision({
+        sourceOrigin: "https://wolt.com",
+        requestUrl: "https://consumer-api.wolt.com/v1/pages/menu",
+        resourceType: "xhr",
+        browserDataOrigins: ["https://consumer-api.wolt.com"],
+      }),
+    ).toEqual({ action: "allow", validatePublicNetwork: true });
+
+    expect(
+      browserRequestDecision({
+        sourceOrigin: "https://wolt.com",
+        requestUrl: "https://unexpected-api.example/menu",
+        resourceType: "xhr",
+        browserDataOrigins: ["https://consumer-api.wolt.com"],
+      }),
+    ).toMatchObject({ action: "block", fatal: true });
+
+    expect(
+      browserRequestDecision({
+        sourceOrigin: "https://wolt.com",
+        requestUrl: "https://consumer-api.wolt.com/redirect",
+        resourceType: "document",
+        browserDataOrigins: ["https://consumer-api.wolt.com"],
+      }),
+    ).toMatchObject({ action: "block", fatal: true });
+  });
+
   it("blocks explicitly denied origins non-fatally for document, xhr and fetch", () => {
     for (const resourceType of ["document", "xhr", "fetch"]) {
       expect(
