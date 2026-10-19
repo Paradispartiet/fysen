@@ -1,6 +1,7 @@
 import type { DishSearchResult } from "@fysen/contracts";
 import { ahaMinMatPilotEnabled } from "../lib/aha-min-mat-pilot";
 import { formatDishPrice } from "../lib/dish-price";
+import { priceProvenanceLabel } from "../lib/price-provenance";
 import { restaurantClaimHref } from "../lib/public-path";
 import { DishComposition } from "./dish-composition";
 import { FreshnessStatus } from "./freshness-status";
@@ -38,6 +39,9 @@ export function DishResult({ result }: { result: DishSearchResult }) {
       <div className="dishResultTopline">
         <div className="dishResultIdentity">
           <h2>{result.dish.name}</h2>
+          {result.match.type === "fuzzy" ? (
+            <p className={styles.fuzzyNotice ?? ""}>Lignende rett – kontroller menyen</p>
+          ) : null}
           <p className="restaurantName">
             {result.restaurant.websiteUrl ? (
               <TrackedExternalLink
@@ -58,9 +62,14 @@ export function DishResult({ result }: { result: DishSearchResult }) {
             Driver du {result.restaurant.name}?
           </a>
         </div>
-        <p className={result.dish.priceMinor === null ? "dishPrice isMissing" : "dishPrice"}>
-          {formatDishPrice(result.dish)}
-        </p>
+        <div className={styles.priceBlock ?? ""}>
+          <p className={result.dish.priceMinor === null ? "dishPrice isMissing" : "dishPrice"}>
+            {formatDishPrice(result.dish)}
+          </p>
+          {result.dish.priceMinor !== null ? (
+            <span className={styles.priceEvidence ?? ""}>{priceProvenanceLabel(result.menu.sourceUrl)}</span>
+          ) : null}
+        </div>
       </div>
 
       {result.dish.description ? <p className="dishDescription">{result.dish.description}</p> : null}

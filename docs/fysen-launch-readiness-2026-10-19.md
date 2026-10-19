@@ -30,3 +30,12 @@ Forbrukerappen prioriteres foran generell Oslo-utvidelse. De **979 manifestene p
 5. **Lansering:** Feilgrenser, responstid og tilgjengelighet overvåkes for faktisk produksjonsruntime. Realistiske tester med mennesker må gjennomføres og dokumenteres; automatiske nettlesertester alene er ikke slike tester.
 
 **Ferdigdefinisjon:** En ny bruker kan søke etter en bestemt rett, se en fersk og korrekt pris knyttet til riktig restaurant, og fullføre et meningsfullt neste steg uten hjelp. Inntil ny produksjonskontroll er bestått er status *publisering av katalog blokkert*, ikke *979 live*.
+
+## Produktbolk: søk og mobil (PR etter #989)
+
+- Søkefeltet på resultatsiden viderefører valgt breddegrad, lengdegrad og avstandssortering ved nytt søk. Brukeren skal ikke måtte dele posisjonen flere ganger i samme søkeflyt.
+- Posiskjonskontroller navigerer med `withPublicBasePath`, så GitHub Pages-preview med base path ikke hopper ut av appen.
+- Resultatsiden skiller eksplisitt sikre menymatcher fra fuzzy-navnelikhet; en lignende rett presenteres aldri som dokumentasjon for at den søkte retten serveres.
+- Priskilden merkes: Wolt/Foodora-beløp er leveringspriser og kan avvike fra bordpriser. Ingen antatt eller utfylt pris når kilden mangler tall.
+- CTA for bestilling får minst 44 px berøringsflate, og sortering/posisjonsknapper får tydelig tastaturfokus og mobiltilpasning.
+- Test med ekte brukere og endelig produksjonsavstemming står fortsatt åpent; automatisk CI erstatter ikke dette.

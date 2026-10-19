@@ -3,6 +3,7 @@
 import type { DishSearchSort } from "@fysen/contracts";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { withPublicBasePath } from "../lib/public-path";
 import styles from "./location-controls.module.css";
 
 interface LocationControlsProps {
@@ -23,7 +24,7 @@ export function LocationControls({ hasLocation, sort }: LocationControlsProps) {
   function navigate(update: (params: URLSearchParams) => void): void {
     const params = new URLSearchParams(searchParams.toString());
     update(params);
-    router.push(`/search?${params.toString()}`, { scroll: false });
+    router.push(`${withPublicBasePath("/search")}?${params.toString()}`, { scroll: false });
   }
 
   function useLocation(): void {
@@ -88,7 +89,8 @@ export function LocationControls({ hasLocation, sort }: LocationControlsProps) {
         </button>
       ) : (
         <>
-          <div className={sortGroupClassName} aria-label="Sorter søkeresultater">
+          <span className={styles.locationActive ?? ""}>Posisjon brukes i søket</span>
+          <div className={sortGroupClassName} role="group" aria-label="Sorter søkeresultater">
             <button
               className={`${sortClassName} ${sort === "relevance" ? sortActiveClassName : ""}`.trim()}
               type="button"

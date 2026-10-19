@@ -9,7 +9,7 @@
 .primary,
 .sort,
 .clear {
-  min-height: 38px;
+  min-height: 44px;
   border: 0;
   font: inherit;
   cursor: pointer;
@@ -43,8 +43,8 @@
 }
 
 .sort {
-  min-height: 32px;
-  padding: 5px 10px;
+  min-height: 38px;
+  padding: 5px 12px;
   color: var(--color-muted);
   font-size: 12px;
   font-weight: 520;
@@ -81,4 +81,27 @@
   color: var(--color-muted, #777);
   font-size: 12px;
   line-height: 1.4;
+}
+
+.locationActive {
+  color: var(--color-brand);
+  font-size: 12px;
+  font-weight: 550;
+}
+
+.primary:focus-visible,
+.sort:focus-visible,
+.clear:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+@media (max-width: 390px) {
+  .sortGroup {
+    order: 2;
+  }
+
+  .clear {
+    order: 3;
+  }
 }
