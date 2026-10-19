@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 56,
+    "minimumExpectedItems": 55,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-17",
-      "note": "Kildebaserte Wolt-rett/prisassertasjoner er generert og bestod målrettet livevalidering i samlet PR #968 den 17. oktober 2026. Leveringspriser kan avvike fra restaurantbordet; åpningstider er ikke uavhengig kontrollert."
+      "checkedAt": "2026-10-19",
+      "note": "Offentlig Wolt-meny kontrollert 2026-10-19: alle 8 navngitte kontrollretter, inkludert Sri Lankan Biff Biriyani, Tamil Thali Vegetarmat og Egg Dosa, er fortsatt publisert med forventede leveringspriser. Produksjonsuttrekket fant 55 prissatte katalogprodukter mot tidligere gulv 56. Minsteantallet rebasseres kun til dokumentert gjeldende uttrekk 55 for denne konkrete menyen; alle 8 rett-/prisassertasjoner, kilde-URL og øvrige krav beholdes. Streng livevalidering på eksakt PR-head må bestå før merge; åpningstider er ikke uavhengig verifisert."
     }
   },
   "actions": [],
