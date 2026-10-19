@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dominos-pizza-tveita-oslo",
+    "name": "Domino's Pizza Tveita",
+    "address": "Tvetenveien 150, 0671 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.91409,
+    "longitude": 10.8416723
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/dominos-pizza-tveita",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt restaurantmeny gjennomgått 2026-10-19 med 8 konkrete rett-/prispar, egen besøksadresse og kartkoordinater fra Wolt. Priser fra nyere nettsøk i Wolt-meny, ikke den eldre indekserte prislistevisningen. Filial leverer selv; livevalidator bestemmer endelig aksept. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Margherita 🌱",
+      "Kebabpizza 🌶️",
+      "Pepperoni Passion",
+      "Ham & Cheese",
+      "Mighty Meat",
+      "Hot Honey",
+      "Sterke Folle! by Spårtsklubben",
+      "Pepperoni & Pineapple"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Margherita 🌱",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Kebabpizza 🌶️",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Pepperoni Passion",
+        "priceMinor": 10900
+      },
+      {
+        "name": "Ham & Cheese",
+        "priceMinor": 10500
+      },
+      {
+        "name": "Mighty Meat",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Hot Honey",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Sterke Folle! by Spårtsklubben",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Pepperoni & Pineapple",
+        "priceMinor": 10500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

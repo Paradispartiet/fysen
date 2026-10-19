@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "rosto-sandwichs-burgers-gronland-oslo",
+    "name": "Rosto Sandwichs & Burgers",
+    "address": "Grønland 30, 0188 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9129384,
+    "longitude": 10.7630859
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/bella-gronland-oslo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-meny og individuelt Wolt-kartpunkt, 11 konkrete rett-/prispar observert 2026-10-19. Wolt har historisk bella-gronland-oslo URL-slug, men viser nå Rosto Sandwichs & Burgers; samme Wolt-kilde og ikke en ekstra Bella-restaurant. Wolt-leveringspriser, ikke bekreftede bordpriser; åpningstider/produksjonsdatabase ikke særskilt verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Rosto",
+      "Zinger sterk 🔥",
+      "Pommes frites-boks",
+      "Pommes frites med cheddar- og jalapeñosaus",
+      "Fajita",
+      "Zinger Box",
+      "ROSTO Smash Burger",
+      "Burger med Egg",
+      "Burger med løk og sopp",
+      "HOT SMASH BURGER",
+      "Pomms i surdeigsbrød"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Rosto",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Zinger sterk 🔥",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Pommes frites-boks",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Pommes frites med cheddar- og jalapeñosaus",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Fajita",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Zinger Box",
+        "priceMinor": 16000
+      },
+      {
+        "name": "ROSTO Smash Burger",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Burger med Egg",
+        "priceMinor": 17500
+      },
+      {
+        "name": "Burger med løk og sopp",
+        "priceMinor": 16500
+      },
+      {
+        "name": "HOT SMASH BURGER",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Pomms i surdeigsbrød",
+        "priceMinor": 12900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

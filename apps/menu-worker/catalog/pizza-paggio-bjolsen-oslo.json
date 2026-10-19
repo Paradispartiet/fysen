@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizza-paggio-bjolsen-oslo",
+    "name": "Pizza Paggio Bjølsen",
+    "address": "Maridalsveien 174, 0469 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.939806,
+    "longitude": 10.759133
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/pizza-paggio-maridalsveien",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt restaurantmeny gjennomgått 2026-10-19 med 11 konkrete rett-/prispar, egen besøksadresse og kartkoordinater fra Wolt.  Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "1.Margherita",
+      "2.Firenze",
+      "3.Aloha Napoli",
+      "4.Milano",
+      "5.Hawaii Diavola",
+      "6.Napoli Nord",
+      "7.Etna Vulcano",
+      "9.Cashew Polo",
+      "11.Vegetariana",
+      "16.Bistecca Bearnaise",
+      "19.Paggio Inferno"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "1.Margherita",
+        "priceMinor": 20900
+      },
+      {
+        "name": "2.Firenze",
+        "priceMinor": 21900
+      },
+      {
+        "name": "3.Aloha Napoli",
+        "priceMinor": 21900
+      },
+      {
+        "name": "4.Milano",
+        "priceMinor": 21900
+      },
+      {
+        "name": "5.Hawaii Diavola",
+        "priceMinor": 21900
+      },
+      {
+        "name": "6.Napoli Nord",
+        "priceMinor": 23300
+      },
+      {
+        "name": "7.Etna Vulcano",
+        "priceMinor": 23300
+      },
+      {
+        "name": "9.Cashew Polo",
+        "priceMinor": 23300
+      },
+      {
+        "name": "11.Vegetariana",
+        "priceMinor": 22300
+      },
+      {
+        "name": "16.Bistecca Bearnaise",
+        "priceMinor": 23300
+      },
+      {
+        "name": "19.Paggio Inferno",
+        "priceMinor": 23300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bloom-brew-stenersgata-oslo",
+    "name": "Bloom & Brew Stenersgata",
+    "address": "Stenersgata 10, 0184 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.913255,
+    "longitude": 10.75242519
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/bloom-brew-stenersgata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt offentlig restaurantmeny gjennomgått 2026-10-19 med 12 matrett-/prispar og Wolt-kartkoordinater. Kaféservering med dokumenterte sandwicher, crêpes og desserter i Fysens matutvalg. Priser fra Wolt-levering, ikke bordpriser; åpningstider og produksjonsdatabase ikke attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Strawberry Delight",
+      "Oreo Cheese Cake",
+      "Spicy Chicken",
+      "Chocolate Cookie",
+      "Chicken",
+      "Spicy Tuna",
+      "Sandwich & Drink",
+      "Berry Mix Symphony",
+      "Mad Mozzarella",
+      "Snowberry Bliss",
+      "Pistachio Lover",
+      "Dubai Pistachio"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Strawberry Delight",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Oreo Cheese Cake",
+        "priceMinor": 7500
+      },
+      {
+        "name": "Spicy Chicken",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Chocolate Cookie",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Chicken",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Spicy Tuna",
+        "priceMinor": 11000
+      },
+      {
+        "name": "Sandwich & Drink",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Berry Mix Symphony",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Mad Mozzarella",
+        "priceMinor": 10000
+      },
+      {
+        "name": "Snowberry Bliss",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Pistachio Lover",
+        "priceMinor": 19000
+      },
+      {
+        "name": "Dubai Pistachio",
+        "priceMinor": 24000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

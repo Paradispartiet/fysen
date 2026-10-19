@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "frybox-barcode-oslo",
+    "name": "Frybox",
+    "address": "Dronning Eufemias gate 14, 0191 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9083918,
+    "longitude": 10.7581059
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/frybox-barcode",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt restaurantmeny gjennomgått 2026-10-19 med 10 konkrete rett-/prispar, egen besøksadresse og kartkoordinater fra Wolt.  Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Frybox Signature Tenders",
+      "Hot Chicken Wings",
+      "Philly Cheese Steak",
+      "Frybox Fried Chicken Wrap",
+      "Ceasar Salad",
+      "Parmesan Aioli Fries",
+      "Plain Fries",
+      "Mix Box Chicken Platter",
+      "Dirty Fries",
+      "Kickin' Chicken Sandwich"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Frybox Signature Tenders",
+        "priceMinor": 22900
+      },
+      {
+        "name": "Hot Chicken Wings",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Philly Cheese Steak",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Frybox Fried Chicken Wrap",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Ceasar Salad",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Parmesan Aioli Fries",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Plain Fries",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Mix Box Chicken Platter",
+        "priceMinor": 28900
+      },
+      {
+        "name": "Dirty Fries",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Kickin' Chicken Sandwich",
+        "priceMinor": 18900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
