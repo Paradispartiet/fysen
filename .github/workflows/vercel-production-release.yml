@@ -46,12 +46,23 @@ jobs:
           if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
             # CI intentionally runs once on PRs, not again on main. Verify that
             # this exact push is a merged PR with a successful PR CI run.
-            merged_prs="$(curl --fail --silent --show-error --retry 2 \
-              -H "Authorization: Bearer $GH_API_TOKEN" \
-              -H 'Accept: application/vnd.github+json' \
-              "https://api.github.com/repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls")"
-            pr_head="$(printf '%s' "$merged_prs" | jq -r --arg commit "$GITHUB_SHA" \
-              '[.[] | select(.merged_at != null and .base.ref == "main" and .merge_commit_sha == $commit)][0].head.sha // ""')"
+            # A just-merged squash commit may not yet have its PR association indexed.
+            # Keep exact-commit validation and fail closed after bounded retries.
+            pr_head=""
+            for attempt in 1 2 3 4 5 6; do
+              merged_prs="$(curl --fail --silent --show-error --retry 2 \
+                -H "Authorization: Bearer $GH_API_TOKEN" \
+                -H 'Accept: application/vnd.github+json' \
+                "https://api.github.com/repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls")"
+              pr_head="$(printf '%s' "$merged_prs" | jq -r --arg commit "$GITHUB_SHA" \
+                '[.[] | select(.merged_at != null and .base.ref == "main" and .merge_commit_sha == $commit)][0].head.sha // ""')"
+              if [[ -n "$pr_head" ]]; then
+                break
+              fi
+              if [[ "$attempt" -lt 6 ]]; then
+                sleep 5
+              fi
+            done
             if [[ -z "$pr_head" ]]; then
               echo "::error title=Unverified main push::Production release requires an associated merged main PR."
               exit 1
