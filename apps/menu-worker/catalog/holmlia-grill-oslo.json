@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-19",
-      "note": "Wolt-menykilde kontrollert 2026-10-19 med 11 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+      "note": "Wolt-menykilde kontrollert 2026-10-19 med 11 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert. Ved live validering ble Kyllingkebab utenfor den ekstraherte menyen; erstattet av prisverifisert Kyllingburger Meny 149 kr. Antall assertasjoner uendret."
     }
   },
   "actions": [],
@@ -41,7 +41,7 @@
       "Kebab Meny",
       "Kyllingkebab Meny",
       "Holmlia",
-      "Kyllingkebab",
+      "Kyllingburger Meny",
       "Jafsburger Meny",
       "Hamburger Meny"
     ],
@@ -79,7 +79,7 @@
         "priceMinor": 25900
       },
       {
-        "name": "Kyllingkebab",
+        "name": "Kyllingburger Meny",
         "priceMinor": 14900
       },
       {
