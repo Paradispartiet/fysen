@@ -9,6 +9,10 @@ const watcher = readFileSync(
   new URL("../../../.github/workflows/watch-menus.yml", import.meta.url),
   "utf8",
 );
+const batchIntake = readFileSync(
+  new URL("../../../.github/workflows/restaurant-batch-intake.yml", import.meta.url),
+  "utf8",
+);
 
 describe("production menu mutation workflows", () => {
   it("keeps materialization independent from the watcher pending queue", () => {
@@ -57,6 +61,14 @@ describe("production menu mutation workflows", () => {
     // for delayed GitHub schedules, retries and a growing catalog.
     const hourlyCapacity = 2 * 100;
     expect(hourlyCapacity).toBeGreaterThan(requiredChecksPerHour * 1.5);
+  });
+
+  it("keeps menu test-only changes out of live restaurant intake", () => {
+    expect(batchIntake).toContain('"apps/menu-worker/src/**"');
+    expect(batchIntake).toContain('"!apps/menu-worker/src/**/*.test.ts"');
+    expect(batchIntake).toContain('"packages/menu-core/src/**"');
+    expect(batchIntake).toContain('"!packages/menu-core/src/**/*.test.ts"');
+    expect(batchIntake).not.toContain('      - ".github/workflows/restaurant-batch-intake.yml"');
   });
 
   it("runs only bounded operational watcher stages before preserving failure signal", () => {
