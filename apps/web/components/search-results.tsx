@@ -1,7 +1,7 @@
 "use client";
 
 import type { DishSearchResult } from "@fysen/contracts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { filterSearchResults, oneResultPerRestaurant } from "../lib/search-result-filters";
 import { DishResult } from "./dish-result";
 import { TrackedExternalLink } from "./tracked-external-link";
@@ -48,6 +48,20 @@ export function SearchResults({ primaryResults, nearResults, hasLocation, search
   const [distanceCap, setDistanceCap] = useState("");
   const [showMap, setShowMap] = useState(false);
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+
+  // Only card-initiated map navigation scrolls the viewport; filter changes
+  // and map-marker selection must not unexpectedly move the user's position.
+  const [mapNavigationRequest, setMapNavigationRequest] = useState(0);
+  useEffect(() => {
+    if (mapNavigationRequest === 0) return;
+    document.getElementById("fysen-search-map")?.scrollIntoView({ block: "start" });
+  }, [mapNavigationRequest]);
+
+  function showRestaurantOnMap(restaurantSlug: string): void {
+    setSelectedSlug(restaurantSlug);
+    setShowMap(true);
+    setMapNavigationRequest((request) => request + 1);
+  }
 
   const filters = {
     openNow,
@@ -151,6 +165,7 @@ export function SearchResults({ primaryResults, nearResults, hasLocation, search
                   <strong>{selected.restaurant.name}</strong>
                   <span>{selected.restaurant.address}, {selected.restaurant.city}</span>
                   <div className={styles.mapLinks}>
+                    <a href={`#dish-${selected.menuItemId}`}>Til rettetreffet</a>
                     <a href={osmPageUrl(selected.restaurant.latitude, selected.restaurant.longitude)} target="_blank" rel="noreferrer">
                       Stort kart ↗
                     </a>
@@ -183,7 +198,7 @@ export function SearchResults({ primaryResults, nearResults, hasLocation, search
 
       {filteredPrimary.length > 0 ? (
         <div className="resultList">
-          {filteredPrimary.map((result) => <DishResult result={result} key={result.menuItemId} />)}
+          {filteredPrimary.map((result) => <DishResult result={result} onShowOnMap={showRestaurantOnMap} key={result.menuItemId} />)}
         </div>
       ) : null}
 
@@ -194,7 +209,7 @@ export function SearchResults({ primaryResults, nearResults, hasLocation, search
             Dette er bare navnelignende oppføringer, ikke sikre bevis på at den søkte retten serveres.
           </p>
           <div className="resultList">
-            {filteredNear.map((result) => <DishResult result={result} key={result.menuItemId} />)}
+            {filteredNear.map((result) => <DishResult result={result} onShowOnMap={showRestaurantOnMap} key={result.menuItemId} />)}
           </div>
         </section>
       ) : null}
