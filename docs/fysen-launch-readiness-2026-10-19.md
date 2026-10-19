@@ -39,3 +39,17 @@ Forbrukerappen prioriteres foran generell Oslo-utvidelse. De **979 manifestene p
 - Priskilden merkes: Wolt/Foodora-beløp er leveringspriser og kan avvike fra bordpriser. Ingen antatt eller utfylt pris når kilden mangler tall.
 - CTA for bestilling får minst 44 px berøringsflate, og sortering/posisjonsknapper får tydelig tastaturfokus og mobiltilpasning.
 - Test med ekte brukere og endelig produksjonsavstemming står fortsatt åpent; automatisk CI erstatter ikke dette.
+
+## Kataloghelse etter #989 og videre kildebevis
+
+Materialiseringsjobb [#39186491171](https://github.com/Paradispartiet/fysen/actions/runs/39186491171) bekreftet **0 blokkerende onboarding-feil** etter #989, men **6 blokkerende health-repair-feil**. Det er ikke det samme som 979 aktive/søkbare restauranter.
+
+Tre kilder med ferske uttrekk, men utdaterte navn/priskontroller, er oppdatert i denne bolken:
+
+- **Bamboo Skøyen:** Fire nye enkeltretter med eksplisitte priser fra [Wolt-menyen](https://wolt.com/en/nor/oslo/restaurant/bamboo-skoyen). Eksisterende uttrekk var 86/86, men prisvariantene for noen dupliserte navn var ikke entydige.
+- **The Fragrance of the Heart:** [Wolt-menyen](https://wolt.com/en/nor/oslo/restaurant/the-fragrance-of-the-heart-majorstuen) dokumenterer `Fragrance of the Heart Bowl` 289 kr og `Power Bowl` 249 kr. Tidligere dessertbevis for `Raw Cake` og `Banana Bread` finnes i offentlig Wolt-meny, men manglet i det siste canonicale uttrekket; erstattet med de to entydige bowl-variantene.
+- **Rolis Bodega:** [Nåværende førstehåndsmeny](https://www.rolis-bodega.no/meny) dokumenterer at flere tapas- og hovedretter er skiftet ut. Nye kontroller bruker dokumenterte retter og priser. `Ungarsk gulasj` har både lunsj- og middagspris og erstattes som tvetydig kontroll. Andre kildekrav og forbudte overskrifter beholdes.
+
+Tre **separate, fortsatt uløste** feil gjelder `extraction_error` ved health-repair for Dr. Crunchy Kiellands, Eckers Løkka og Nordic Sushi & Wok. Ingen annen kilde eller parserstrategi erstattes uten live-bevis; disse er fortsatt kildehelseblokkerere frem til verifisert ny uthenting.
+
+Målrettet livevalidering på eksakt PR-commit er obligatorisk før merge. Kvalitetsgulv, menykilde-URL, antall navngitte priskontroller og fail-closed-krav er uendret.
