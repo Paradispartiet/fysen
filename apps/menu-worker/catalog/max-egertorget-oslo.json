@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-19",
-      "note": "Wolt offentlig restaurantmeny gjennomgått 2026-10-19 med 10 matrett-/prispar og Wolt-kartkoordinater.  Priser fra Wolt-levering, ikke bordpriser; åpningstider og produksjonsdatabase ikke attestert."
+      "note": "Wolt offentlig restaurantmeny gjennomgått 2026-10-19 med 10 matrett-/prispar og Wolt-kartkoordinater.  Priser fra Wolt-levering, ikke bordpriser; åpningstider og produksjonsdatabase ikke attestert. To utgåtte kombinasjonsretter erstattet 2026-10-19 med live-observerte Raclette Melt Beef 'n' Bacon 203 kr og Cheddar Melt Maxoumi-meny 227 kr."
     }
   },
   "actions": [],
@@ -41,8 +41,8 @@
       "Supreme Combo for to",
       "Movie Night Original",
       "Movie Night Maxoumi",
-      "Dobbel Maxoumi-meny og 5 Mozzarella Sticks.",
-      "Grand Chicken Parmesan-meny og 5 Mozzarella Sticks."
+      "Raclette Melt Beef 'n' Bacon",
+      "Cheddar Melt Maxoumi-meny"
     ],
     "requiredDishVariants": [
       {
@@ -78,12 +78,12 @@
         "priceMinor": 37800
       },
       {
-        "name": "Dobbel Maxoumi-meny og 5 Mozzarella Sticks.",
-        "priceMinor": 29300
+        "name": "Raclette Melt Beef 'n' Bacon",
+        "priceMinor": 20300
       },
       {
-        "name": "Grand Chicken Parmesan-meny og 5 Mozzarella Sticks.",
-        "priceMinor": 28500
+        "name": "Cheddar Melt Maxoumi-meny",
+        "priceMinor": 22700
       }
     ],
     "forbiddenDishNames": []
