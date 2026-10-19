@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-19",
-      "note": "Wolt-meny og individuelt Wolt-kartpunkt, 14 konkrete rett-/prispar observert 2026-10-19. Filial i Akersgata 51, separat fra kjedens andre publiserte Oslo-adresser. Wolt-leveringspriser, ikke bekreftede bordpriser; åpningstider/produksjonsdatabase ikke særskilt verifisert."
+      "note": "Wolt-meny og individuelt Wolt-kartpunkt, 14 konkrete rett-/prispar observert 2026-10-19. Filial i Akersgata 51, separat fra kjedens andre publiserte Oslo-adresser. Wolt-leveringspriser, ikke bekreftede bordpriser; åpningstider/produksjonsdatabase ikke særskilt verifisert. Livevalidering 2026-10-19 erstattet utgått combo med Wolt-dokumentert Bananbrød 52 NOK."
     }
   },
   "actions": [],
@@ -42,7 +42,7 @@
       "Acai Bowl",
       "Tunacado Sandwich",
       "Gulrotkake",
-      "Juice & Sandwich Combo x 2",
+      "Bananbrød",
       "Power Bowl",
       "Gut Start",
       "Yoghurt Bowl",
@@ -86,8 +86,8 @@
         "priceMinor": 5200
       },
       {
-        "name": "Juice & Sandwich Combo x 2",
-        "priceMinor": 51000
+        "name": "Bananbrød",
+        "priceMinor": 5200
       },
       {
         "name": "Power Bowl",
