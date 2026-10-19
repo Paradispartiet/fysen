@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   accountBrowserRequest,
   browserRequestDecision,
+  browserNetworkRequestLimitForSource,
   normalizedBrowserReadinessTexts,
   type BrowserRequestBudget,
   type BrowserRequestDecision,
@@ -153,6 +154,26 @@ describe("browser request budget", () => {
     expect(overflow.violation).toEqual({
       code: "BROWSER_REQUEST_LIMIT",
       message: "Rendered source exceeded 120 allowed browser network requests",
+    });
+  });
+
+  it("uses 320 requests only for the exact Wolt browser origin", () => {
+    expect(browserNetworkRequestLimitForSource("https://wolt.com")).toBe(320);
+    expect(browserNetworkRequestLimitForSource("https://WOLT.COM")).toBe(320);
+    expect(browserNetworkRequestLimitForSource("https://www.wolt.com")).toBe(120);
+    expect(browserNetworkRequestLimitForSource("https://wolt.com.other.example")).toBe(120);
+    expect(browserNetworkRequestLimitForSource("https://restaurant.example")).toBe(120);
+
+    const allowedAtLimit = accountBrowserRequest(
+      { routeEvents: 319, networkRequests: 319 }, allowed, 320,
+    );
+    expect(allowedAtLimit.violation).toBeNull();
+    expect(allowedAtLimit.budget.networkRequests).toBe(320);
+
+    const overflow = accountBrowserRequest(allowedAtLimit.budget, allowed, 320);
+    expect(overflow.violation).toEqual({
+      code: "BROWSER_REQUEST_LIMIT",
+      message: "Rendered source exceeded 320 allowed browser network requests",
     });
   });
 
