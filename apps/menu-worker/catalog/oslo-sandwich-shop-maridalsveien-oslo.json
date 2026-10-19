@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 8,
+    "minimumExpectedItems": 7,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-17",
-      "note": "Kildebaserte Wolt-rett/prisassertasjoner ble generert og bestod samlet livevalidering i PR #969 den 17. oktober 2026. Representative påstander er redaksjonelt avgrenset til matretter, uten drikke/krydder. Leveringspriser kan avvike fra bordprisene. Åpningstider er ikke uavhengig kontrollert."
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-leveringsmenyen ble kontrollert 2026-10-19: 4 burgere, 1 kombopakke og 2 sideretter (7 unike mat-/komboprodukter). Den tidligere Combo deal med drikke er ikke lenger oppført. Den foreldede rett-/prisassertasjonen er fjernet og minsteantallet rebassert fra 8 til 7 etter direkte kildesammenligning; alle 7 gjenstående konkrete priskontroller beholdes. Livevalidering på PR-head og produksjonsoppdatering gjenstår. Prisene gjelder levering; åpningstider er ikke verifisert."
     }
   },
   "actions": [],
@@ -38,7 +38,6 @@
       "Waffle fries, chipotle ketchup",
       "Wagyu burger 150g",
       "Chopped cheese 180g",
-      "Combo deal med drikke",
       "Halloumi burger",
       "Combo deal"
     ],
@@ -62,10 +61,6 @@
       {
         "name": "Chopped cheese 180g",
         "priceMinor": 25500
-      },
-      {
-        "name": "Combo deal med drikke",
-        "priceMinor": 33500
       },
       {
         "name": "Halloumi burger",
