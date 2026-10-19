@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-19",
-      "note": "Wolt restaurantmeny gjennomgått 2026-10-19 med 8 konkrete rett-/prispar, egen besøksadresse og kartkoordinater fra Wolt. Priser fra nyere nettsøk i Wolt-meny, ikke den eldre indekserte prislistevisningen. Filial leverer selv; livevalidator bestemmer endelig aksept. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+      "note": "Wolt restaurantmeny gjennomgått 2026-10-19 med 8 konkrete rett-/prispar, egen besøksadresse og kartkoordinater fra Wolt. Priser fra nyere nettsøk i Wolt-meny, ikke den eldre indekserte prislistevisningen. Filial leverer selv; livevalidator bestemmer endelig aksept. Wolt-leveringspriser, ikke attestert som bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert. Målrettet livevalidering 2026-10-19 bekreftet Wolt-navn Pepperoni & Ananas 🍍 til 105 kr (ikke tidligere engelsk navn)."
     }
   },
   "actions": [],
@@ -40,7 +40,7 @@
       "Mighty Meat",
       "Hot Honey",
       "Sterke Folle! by Spårtsklubben",
-      "Pepperoni & Pineapple"
+      "Pepperoni & Ananas 🍍"
     ],
     "requiredDishVariants": [
       {
@@ -72,7 +72,7 @@
         "priceMinor": 25900
       },
       {
-        "name": "Pepperoni & Pineapple",
+        "name": "Pepperoni & Ananas 🍍",
         "priceMinor": 10500
       }
     ],
