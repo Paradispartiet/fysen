@@ -2,7 +2,7 @@ name: Watch Fysen menus
 
 on:
   schedule:
-    - cron: "17 * * * *"
+    - cron: "17,47 * * * *"
   workflow_dispatch:
   workflow_run:
     workflows: ["Deploy Fysen database"]
@@ -26,7 +26,7 @@ jobs:
       DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
       DATABASE_SSL: "verify-full"
       NODE_ENV: production
-      FYSEN_MENU_WATCH_BATCH_SIZE: "50"
+      FYSEN_MENU_WATCH_BATCH_SIZE: "100"
       FYSEN_HOURS_WATCH_BATCH_SIZE: "25"
       FYSEN_ACTION_VERIFY_BATCH_SIZE: "25"
       FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
@@ -57,7 +57,7 @@ jobs:
         run: pnpm --filter @fysen/menu-worker run:due
 
       # Full catalog materialization is owned by the separate
-      # Materialize Fysen production catalog workflow. The hourly watcher
+      # Materialize Fysen production catalog workflow. The twice-hourly watcher
       # intentionally remains bounded to due-source/hour/action batches.
 
       - name: Watch due restaurant hours
