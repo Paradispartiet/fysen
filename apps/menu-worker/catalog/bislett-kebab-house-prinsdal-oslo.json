@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bislett-kebab-house-prinsdal-oslo",
+    "name": "Bislett Kebab House Prinsdal",
+    "address": "Nedre Prinsdals vei 77, 1263 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8335927,
+    "longitude": 10.8069909
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/bislett-kebab-house-prinsdal",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-menykilde observert 2026-10-19 med 13 individuelle navngitte rett-/prispar og besøksadresse. Koordinatgrunnlag: Wolt-kartpunkt. Filial/restaurant er separat fra andre katalogidentiteter. Wolt-leveringspriser, ikke bekreftede bordpriser; åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebab i Pita",
+      "Kebabtallerken",
+      "Smash Fries",
+      "Kylling Shawarma i Rull",
+      "Kebab i Rull",
+      "Döner i Rull",
+      "Döner i Pita",
+      "Kylling Shawarma Tallerken",
+      "Dönertallerken",
+      "Kylling Shawarma i Pita",
+      "Kebab Meal Deal",
+      "Shishtallerken",
+      "Marinert Kyllingtallerken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebab i Pita",
+        "priceMinor": 12800
+      },
+      {
+        "name": "Kebabtallerken",
+        "priceMinor": 20700
+      },
+      {
+        "name": "Smash Fries",
+        "priceMinor": 12100
+      },
+      {
+        "name": "Kylling Shawarma i Rull",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Kebab i Rull",
+        "priceMinor": 12800
+      },
+      {
+        "name": "Döner i Rull",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Döner i Pita",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Kylling Shawarma Tallerken",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Dönertallerken",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Kylling Shawarma i Pita",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Kebab Meal Deal",
+        "priceMinor": 16700
+      },
+      {
+        "name": "Shishtallerken",
+        "priceMinor": 24300
+      },
+      {
+        "name": "Marinert Kyllingtallerken",
+        "priceMinor": 25900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
