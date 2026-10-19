@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lille-marmaris-grorud-oslo",
+    "name": "Lille Marmaris",
+    "address": "Bergensveien 4A, 0963 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.959912,
+    "longitude": 10.880837
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/lille-marmaris",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt kildeobservasjon 2026-10-19 med 12 navngitte rett-/prispar fra individuell restaurantmeny, besøksadresse og Wolt-kartkoordinat.  Wolt-leveringspriser, ikke bekreftede bordpriser; åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "1. Margherita medium",
+      "2. Vegetar medium 🌱",
+      "3. Kylling Pizza medium",
+      "6. Pepperoni medium",
+      "7. Marmaris medium",
+      "8. Spesial medium",
+      "9. Kebab Pizza medium",
+      "11. Galatasaray medium",
+      "1. Margherita stor",
+      "3. Kylling Pizza stor",
+      "7. Marmaris stor",
+      "9. Kebab pizza stor"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "1. Margherita medium",
+        "priceMinor": 19900
+      },
+      {
+        "name": "2. Vegetar medium 🌱",
+        "priceMinor": 20900
+      },
+      {
+        "name": "3. Kylling Pizza medium",
+        "priceMinor": 22900
+      },
+      {
+        "name": "6. Pepperoni medium",
+        "priceMinor": 22900
+      },
+      {
+        "name": "7. Marmaris medium",
+        "priceMinor": 23900
+      },
+      {
+        "name": "8. Spesial medium",
+        "priceMinor": 23900
+      },
+      {
+        "name": "9. Kebab Pizza medium",
+        "priceMinor": 24900
+      },
+      {
+        "name": "11. Galatasaray medium",
+        "priceMinor": 25900
+      },
+      {
+        "name": "1. Margherita stor",
+        "priceMinor": 23900
+      },
+      {
+        "name": "3. Kylling Pizza stor",
+        "priceMinor": 29900
+      },
+      {
+        "name": "7. Marmaris stor",
+        "priceMinor": 31900
+      },
+      {
+        "name": "9. Kebab pizza stor",
+        "priceMinor": 34900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
