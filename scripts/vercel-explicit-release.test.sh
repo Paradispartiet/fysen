@@ -24,6 +24,9 @@ grep -F 'branches: [main]' "$workflow" >/dev/null
 grep -F 'actions: read' "$workflow" >/dev/null
 grep -F 'pull-requests: read' "$workflow" >/dev/null
 grep -F 'commits/$GITHUB_SHA/pulls' "$workflow" >/dev/null
+grep -F 'for attempt in 1 2 3 4 5 6; do' "$workflow" >/dev/null
+grep -F 'if [[ "$attempt" -lt 6 ]]; then' "$workflow" >/dev/null
+grep -F 'sleep 5' "$workflow" >/dev/null
 grep -F 'actions/workflows/ci.yml/runs?event=pull_request&head_sha=$pr_head' "$workflow" >/dev/null
 grep -F 'No successful PR CI run matches the merged PR head.' "$workflow" >/dev/null
 grep -F 'Unverified main push' "$workflow" >/dev/null
