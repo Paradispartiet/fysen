@@ -20,7 +20,8 @@
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [
-        "https://consumer-api.wolt.com"
+        "https://consumer-api.wolt.com",
+        "https://restaurant-api.wolt.com"
       ],
       "browserBlockedOrigins": []
     }
@@ -29,7 +30,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-19",
-      "note": "HTML-nettleseruthenting 2026-10-19 krever Wolt sin egen HTTPS-API-datakilde https://consumer-api.wolt.com; annet kryssopphav forblir blokkert og alle nettverkskall valideres offentlig. Dette er en kildebasert transportkandidat, ikke godkjent inntil streng livevalidering beviser minst 34 retter og samtlige åtte individuelle rett-/prispar. Kilde-URL, matgulv og prisassertasjoner er uendret. Prisene gjelder Wolt-levering; åpningstider er ikke uavhengig verifisert."
+      "note": "Kildeverifisering 2026-10-19: Wolts nettleservisning bruker HTTPS-datakildene consumer-api.wolt.com og restaurant-api.wolt.com. Begge er eksplisitt avgrenset til dette ene manifestets xhr/fetch-trafikk. Alle øvrige nettverksopprinnelser, dokumentredirects og ikke-offentlige mål forblir sperret. Browser-uttak er ikke godkjent før eksakt PR-head dokumenterer minst 34 prissatte produkter og alle åtte navngitte prisassertasjoner. Kilde-URL og kvalitetskrav uendret; leveringspriser, åpningstider ubekreftet."
     }
   },
   "actions": [],
