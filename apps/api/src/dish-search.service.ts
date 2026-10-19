@@ -23,6 +23,8 @@ export class DishSearchService {
       city: input.city,
       count: result.dishes.length,
       dishes: result.dishes,
+      recentDishes: result.recentDishes,
+      popularDishes: result.popularDishes,
       quality: result.quality,
     });
   }

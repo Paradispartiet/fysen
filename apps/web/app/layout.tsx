@@ -15,6 +15,7 @@ import "../styles/food-knowledge-v1.css";
 import "../styles/dish-knowledge-restaurants.css";
 import "../styles/discovery-quality-v1.css";
 import "../styles/dish-browse.css";
+import "../styles/matlyst-featured.css";
 import "../styles/restaurant-claim.css";
 import "../styles/fysen-pro.css";
 import "../styles/min-mat.css";

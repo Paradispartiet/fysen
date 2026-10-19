@@ -16,7 +16,7 @@ function formatExactPrice(priceMinor: number, currency: string): string {
   }).format(priceMinor / 100);
 }
 
-export function formatDishPrice(dish: DishSearchResult["dish"]): string {
+export function formatDishPrice(dish: Pick<DishSearchResult["dish"], "priceMinor" | "priceKind" | "priceMaxMinor" | "currency">): string {
   if (dish.priceMinor === null) return "Pris ikke oppgitt";
 
   if (dish.priceKind === "from") {

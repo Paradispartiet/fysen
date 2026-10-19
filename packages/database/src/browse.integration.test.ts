@@ -102,7 +102,12 @@ integrationDescribe("dish browse integration", () => {
           sourceExcerpt: "Biff tartar 225",
         },
       ],
-      changes: [],
+      changes: [{
+        itemSourceKey: "6".repeat(64),
+        kind: "added",
+        before: null,
+        after: { name: "Biff tartar" },
+      }],
     });
 
     const secondRestaurantId = await repository.upsertRestaurant({
@@ -164,6 +169,14 @@ integrationDescribe("dish browse integration", () => {
   });
 
   it("groups canonical aliases across restaurants and ignores older snapshots", async () => {
+    await pool.query(
+      `INSERT INTO fysen.search_events (normalized_query, city, result_count, demand_source)
+       SELECT 'biff tartar', 'Oslo', 2, 'explicit_search' FROM generate_series(1, 4)`,
+    );
+    await pool.query(
+      `INSERT INTO fysen.search_events (normalized_query, city, result_count, demand_source)
+       SELECT 'ramen', 'Oslo', 0, 'explicit_search' FROM generate_series(1, 9)`,
+    );
     const result = await browseDishes(pool, { city: "Oslo" });
 
     expect(result.dishes).toEqual([
@@ -186,6 +199,28 @@ integrationDescribe("dish browse integration", () => {
         ],
       },
     ]);
+    expect(result.recentDishes).toEqual([
+      expect.objectContaining({
+        name: "Biff tartar",
+        query: "biff tartar",
+        restaurantName: "Browse Bistro",
+        restaurantAddress: "Rettgata 1",
+        priceMinor: 22500,
+        priceKind: "exact",
+        currency: "NOK",
+        sourceUrl: "https://browse.example.com/menu",
+        detectedAt: expect.any(String),
+      }),
+    ]);
+    expect(result.popularDishes).toEqual([
+      {
+        id: "concept:beef-tartare",
+        name: "Biff tartar",
+        query: "biff tartar",
+        restaurantCount: 2,
+        searchCount: 4,
+      },
+    ]);
     expect(result.quality).toEqual({
       filterVersion: "consumer-v1",
       rawItemCount: 2,
@@ -206,6 +241,8 @@ integrationDescribe("dish browse integration", () => {
   it("keeps browse results city-scoped", async () => {
     await expect(browseDishes(pool, { city: "Bergen" })).resolves.toEqual({
       dishes: [],
+      recentDishes: [],
+      popularDishes: [],
       quality: {
         filterVersion: "consumer-v1",
         rawItemCount: 0,
