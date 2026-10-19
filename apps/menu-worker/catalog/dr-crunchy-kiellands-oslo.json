@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 34,
+    "minimumExpectedItems": 33,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-17",
-      "note": "Wolt-leveringsmeny med faktiske rett-/prisassertasjoner generert og målrettet livevalidert i PR #966 2026-10-17. Prisene er leveringspriser og åpningstider er ikke uavhengig verifisert."
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-kilden kontrollert 2026-10-19: Matseksjonene Meal, Middag og Sides viser 33 unike prissatte mat-/komboprodukter; Most ordered gjentar disse og Dip/Drinks er ikke med i matgulvet. Siste produksjonsuttrekk ga 33 av tidligere minimum 34. Minsteantallet er derfor rebassert til 33 basert på offentlig kilde; alle 8 navngitte rett-/prisassertasjoner er beholdt. Streng livevalidering av dette manifestet på eksakt PR-head er påkrevd før merge. Prisene er Wolt-leveringspriser; åpningstider er ikke uavhengig verifisert."
     }
   },
   "actions": [],

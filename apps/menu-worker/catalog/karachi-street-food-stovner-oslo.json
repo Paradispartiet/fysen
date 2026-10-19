@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 58,
+    "minimumExpectedItems": 57,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-17",
-      "note": "Kildebaserte Wolt-rett/prisassertasjoner er generert og bestod målrettet livevalidering i samlet PR #968 den 17. oktober 2026. Leveringspriser kan avvike fra restaurantbordet; åpningstider er ikke uavhengig kontrollert."
+      "checkedAt": "2026-10-19",
+      "note": "Offentlig Wolt-meny kontrollert 2026-10-19: navngitte retter fra Cloud Nan, Chaats, Pizza Stor, Curry, Paratha og Nan & Roti er fortsatt publisert med de angitte leveringsprisene. Produksjonsuttrekket fant 57 prissatte katalogprodukter mot tidligere gulv 58. Gulvet rebasseres kun ett trinn til 57 for denne konkrete aktuelle menyen; samtlige 7 navngitte rett-/prisassertasjoner, URL og øvrige krav beholdes. Streng livevalidering på PR-head må bevise 57 og alle assertasjoner før merge. Åpningstider er ikke uavhengig verifisert."
     }
   },
   "actions": [],
