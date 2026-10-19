@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "bloom-brew-vulkan-oslo",
+    "name": "Bloom & Brew Vulkan",
+    "address": "Vulkan 28, 0178 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9225766,
+    "longitude": 10.7516341
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/bloom-brew",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-meny og individuelt Wolt-kartpunkt, 12 konkrete rett-/prispar observert 2026-10-19. Vulkan-filial med egen Wolt-side; ikke samme sted som Bloom & Brew i Stenersgata. Wolt-leveringspriser, ikke bekreftede bordpriser; åpningstider/produksjonsdatabase ikke særskilt verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Chicken",
+      "Strawberry Delight",
+      "Mad Mozzarella",
+      "Chocolate Cookie",
+      "Spicy Chicken",
+      "Tuna",
+      "Banana Caramel Delight",
+      "Strawberry Temptation",
+      "Snowberry Bliss",
+      "Pistachio Lover",
+      "Berry Mix Symphony",
+      "Dubai Pistachio"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Chicken",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Strawberry Delight",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Mad Mozzarella",
+        "priceMinor": 10000
+      },
+      {
+        "name": "Chocolate Cookie",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Spicy Chicken",
+        "priceMinor": 12000
+      },
+      {
+        "name": "Tuna",
+        "priceMinor": 11000
+      },
+      {
+        "name": "Banana Caramel Delight",
+        "priceMinor": 16000
+      },
+      {
+        "name": "Strawberry Temptation",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Snowberry Bliss",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Pistachio Lover",
+        "priceMinor": 19000
+      },
+      {
+        "name": "Berry Mix Symphony",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Dubai Pistachio",
+        "priceMinor": 24000
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

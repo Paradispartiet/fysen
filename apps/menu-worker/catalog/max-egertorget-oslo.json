@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "max-egertorget-oslo",
+    "name": "MAX Egertorget",
+    "address": "Karl Johans gate 18C, 0159 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9126946,
+    "longitude": 10.7416886
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/max-egertorget",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt offentlig restaurantmeny gjennomgått 2026-10-19 med 10 matrett-/prispar og Wolt-kartkoordinater.  Priser fra Wolt-levering, ikke bordpriser; åpningstider og produksjonsdatabase ikke attestert. To utgåtte kombinasjonsretter erstattet 2026-10-19 med live-observerte Raclette Melt Beef 'n' Bacon 203 kr og Cheddar Melt Maxoumi-meny 227 kr."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Festpakke",
+      "Nuggets, nuggets, nuggets...",
+      "Vennskapsmåltid",
+      "Det gigantiske måltidet",
+      "Grand Combo for to",
+      "Supreme Combo for to",
+      "Movie Night Original",
+      "Movie Night Maxoumi",
+      "Raclette Melt Beef 'n' Bacon",
+      "Cheddar Melt Maxoumi-meny"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Festpakke",
+        "priceMinor": 141400
+      },
+      {
+        "name": "Nuggets, nuggets, nuggets...",
+        "priceMinor": 63500
+      },
+      {
+        "name": "Vennskapsmåltid",
+        "priceMinor": 52600
+      },
+      {
+        "name": "Det gigantiske måltidet",
+        "priceMinor": 50600
+      },
+      {
+        "name": "Grand Combo for to",
+        "priceMinor": 49400
+      },
+      {
+        "name": "Supreme Combo for to",
+        "priceMinor": 49400
+      },
+      {
+        "name": "Movie Night Original",
+        "priceMinor": 37800
+      },
+      {
+        "name": "Movie Night Maxoumi",
+        "priceMinor": 37800
+      },
+      {
+        "name": "Raclette Melt Beef 'n' Bacon",
+        "priceMinor": 20300
+      },
+      {
+        "name": "Cheddar Melt Maxoumi-meny",
+        "priceMinor": 22700
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

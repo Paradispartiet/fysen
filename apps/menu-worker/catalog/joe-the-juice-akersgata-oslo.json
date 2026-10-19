@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "joe-the-juice-akersgata-oslo",
+    "name": "Joe & The Juice Akersgata",
+    "address": "Akersgata 51, 0190 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9148872,
+    "longitude": 10.7430085
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/joe-the-juice-akersgata",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-meny og individuelt Wolt-kartpunkt, 14 konkrete rett-/prispar observert 2026-10-19. Filial i Akersgata 51, separat fra kjedens andre publiserte Oslo-adresser. Wolt-leveringspriser, ikke bekreftede bordpriser; åpningstider/produksjonsdatabase ikke særskilt verifisert. Livevalidering 2026-10-19 erstattet utgått combo med Wolt-dokumentert Bananbrød 52 NOK."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "JOE´s Club Sandwich",
+      "Spicy Tuna Sandwich",
+      "Sandwich & Juice/Shake Combo (1+1)",
+      "Serrano Sandwich",
+      "The Steak",
+      "Avokado Sandwich",
+      "Acai Bowl",
+      "Tunacado Sandwich",
+      "Gulrotkake",
+      "Bananbrød",
+      "Power Bowl",
+      "Gut Start",
+      "Yoghurt Bowl",
+      "Vegan Avocado Sandwich"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "JOE´s Club Sandwich",
+        "priceMinor": 14700
+      },
+      {
+        "name": "Spicy Tuna Sandwich",
+        "priceMinor": 14700
+      },
+      {
+        "name": "Sandwich & Juice/Shake Combo (1+1)",
+        "priceMinor": 25500
+      },
+      {
+        "name": "Serrano Sandwich",
+        "priceMinor": 14700
+      },
+      {
+        "name": "The Steak",
+        "priceMinor": 16900
+      },
+      {
+        "name": "Avokado Sandwich",
+        "priceMinor": 14700
+      },
+      {
+        "name": "Acai Bowl",
+        "priceMinor": 13100
+      },
+      {
+        "name": "Tunacado Sandwich",
+        "priceMinor": 14700
+      },
+      {
+        "name": "Gulrotkake",
+        "priceMinor": 5200
+      },
+      {
+        "name": "Bananbrød",
+        "priceMinor": 5200
+      },
+      {
+        "name": "Power Bowl",
+        "priceMinor": 10300
+      },
+      {
+        "name": "Gut Start",
+        "priceMinor": 10300
+      },
+      {
+        "name": "Yoghurt Bowl",
+        "priceMinor": 10300
+      },
+      {
+        "name": "Vegan Avocado Sandwich",
+        "priceMinor": 14700
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

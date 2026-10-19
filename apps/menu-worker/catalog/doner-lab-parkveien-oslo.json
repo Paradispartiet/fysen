@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "doner-lab-parkveien-oslo",
+    "name": "Døner Lab",
+    "address": "Parkveien 13, 0350 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9218591,
+    "longitude": 10.7302303
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/dner-lab",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Konkret Wolt-prisgrunnlag fra offentlig restaurantmeny kontrollert 2026-10-19, 8 matrett-/prispar og stedets egen Wolt-kartlenke. Gjeldende Wolt-meny viser side- og friesretter; ingen usikre dønerassertasjoner fra tidligere menyskanning. Dette er leveringspriser, ikke bekreftede bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Lab Classic Fries",
+      "Lab Spesial Fries",
+      "Lab Cheddar Fries",
+      "Lab Wing Boks",
+      "Chili Cheese (5 stk)",
+      "Onion Rings (5 stk)",
+      "Mozzarella Sticks (5 stk)",
+      "Churros med Nutella"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Lab Classic Fries",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Lab Spesial Fries",
+        "priceMinor": 15900
+      },
+      {
+        "name": "Lab Cheddar Fries",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Lab Wing Boks",
+        "priceMinor": 9900
+      },
+      {
+        "name": "Chili Cheese (5 stk)",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Onion Rings (5 stk)",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Mozzarella Sticks (5 stk)",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Churros med Nutella",
+        "priceMinor": 12900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

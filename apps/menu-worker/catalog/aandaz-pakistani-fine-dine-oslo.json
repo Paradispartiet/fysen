@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "aandaz-pakistani-fine-dine-oslo",
+    "name": "Aandaz Pakistani Fine Dine",
+    "address": "Bygdøy allé 63C, 0265 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.918826,
+    "longitude": 10.7037305
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/aandaz-pakistani-street-food",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Konkret Wolt-prisgrunnlag fra offentlig restaurantmeny kontrollert 2026-10-19, 9 matrett-/prispar og stedets egen Wolt-kartlenke. Vilkår om Wolt-leveringspriser; unngår midlertidige kampanjepriser fra curryretter. Dette er leveringspriser, ikke bekreftede bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Garlic Naan",
+      "Plain Naan",
+      "Cheese Naan",
+      "Butter Naan",
+      "Aandaz Golgappe",
+      "3 Stykk Kyllingvårruller",
+      "Chicken Tikka",
+      "Lam Tikka",
+      "Chicken Garlic Tikka"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Garlic Naan",
+        "priceMinor": 5900
+      },
+      {
+        "name": "Plain Naan",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Cheese Naan",
+        "priceMinor": 6900
+      },
+      {
+        "name": "Butter Naan",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Aandaz Golgappe",
+        "priceMinor": 12900
+      },
+      {
+        "name": "3 Stykk Kyllingvårruller",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Chicken Tikka",
+        "priceMinor": 33200
+      },
+      {
+        "name": "Lam Tikka",
+        "priceMinor": 34300
+      },
+      {
+        "name": "Chicken Garlic Tikka",
+        "priceMinor": 34300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
