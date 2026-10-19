@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizza-baronen-hauketo-oslo",
+    "name": "Pizza Baronen Hauketo",
+    "address": "Ljabruveien 92, 1266 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8491428,
+    "longitude": 10.8046152
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/pizza-baronen-hauketo",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-menykilde kontrollert 2026-10-19 med 11 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Miss America (Stor)",
+      "Döner Pizza (Stor)",
+      "Miss America (Medium)",
+      "Pigs In Space (Stor)",
+      "Chef's Special (Stor)",
+      "Chicken Georgia (Stor)",
+      "New York (Stor)",
+      "Poppers",
+      "Baronens Spesial (Stor)",
+      "Chicken Georgia (Medium)",
+      "Kebabmiddag 200g"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Miss America (Stor)",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Döner Pizza (Stor)",
+        "priceMinor": 33000
+      },
+      {
+        "name": "Miss America (Medium)",
+        "priceMinor": 21500
+      },
+      {
+        "name": "Pigs In Space (Stor)",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Chef's Special (Stor)",
+        "priceMinor": 35900
+      },
+      {
+        "name": "Chicken Georgia (Stor)",
+        "priceMinor": 35900
+      },
+      {
+        "name": "New York (Stor)",
+        "priceMinor": 32300
+      },
+      {
+        "name": "Poppers",
+        "priceMinor": 11300
+      },
+      {
+        "name": "Baronens Spesial (Stor)",
+        "priceMinor": 33000
+      },
+      {
+        "name": "Chicken Georgia (Medium)",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Kebabmiddag 200g",
+        "priceMinor": 25200
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "familie-sushi-saeter-oslo",
+    "name": "Familie Sushi Sæter",
+    "address": "Ekebergveien 235, 1162 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8610331,
+    "longitude": 10.799855
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/familie-sushi-ster",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-menykilde kontrollert 2026-10-19 med 11 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "07. Stor Sushi Meny",
+      "31. Tempura Scampi Maki",
+      "1A. Vietnamesiske Vårruller",
+      "06. Medium Sushi Meny",
+      "1C. Sommerruller",
+      "50. Laks Nigiri",
+      "66. Stekt Ris",
+      "24. Philadelphia",
+      "1B. Vegetar Vårruller",
+      "67. Stekte Nudler",
+      "19. Spicy Laks Maki"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "07. Stor Sushi Meny",
+        "priceMinor": 25900
+      },
+      {
+        "name": "31. Tempura Scampi Maki",
+        "priceMinor": 10900
+      },
+      {
+        "name": "1A. Vietnamesiske Vårruller",
+        "priceMinor": 9500
+      },
+      {
+        "name": "06. Medium Sushi Meny",
+        "priceMinor": 19500
+      },
+      {
+        "name": "1C. Sommerruller",
+        "priceMinor": 10900
+      },
+      {
+        "name": "50. Laks Nigiri",
+        "priceMinor": 5400
+      },
+      {
+        "name": "66. Stekt Ris",
+        "priceMinor": 23900
+      },
+      {
+        "name": "24. Philadelphia",
+        "priceMinor": 10900
+      },
+      {
+        "name": "1B. Vegetar Vårruller",
+        "priceMinor": 9500
+      },
+      {
+        "name": "67. Stekte Nudler",
+        "priceMinor": 25900
+      },
+      {
+        "name": "19. Spicy Laks Maki",
+        "priceMinor": 10900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

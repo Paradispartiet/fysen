@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "spicy-vibes-oslo",
+    "name": "Spicy Vibes",
+    "address": "Asperudveien 67, 1255 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8355326,
+    "longitude": 10.7962383
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/spicy-vibes",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-menykilde kontrollert 2026-10-19 med 10 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Butter Chicken",
+      "Chicken Tikka Masala",
+      "Chicken Korma",
+      "Chicken Mango Curry",
+      "Chicken Karahi",
+      "Chicken Palak",
+      "Lam Korma",
+      "Paneer Makhni",
+      "Mix Vegetar",
+      "11. Mix Grill"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Butter Chicken",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Chicken Tikka Masala",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Chicken Korma",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Chicken Mango Curry",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Chicken Karahi",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Chicken Palak",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Lam Korma",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Paneer Makhni",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Mix Vegetar",
+        "priceMinor": 23900
+      },
+      {
+        "name": "11. Mix Grill",
+        "priceMinor": 31900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

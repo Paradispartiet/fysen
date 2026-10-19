@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "pizza-pancetta-valerenga-oslo",
+    "name": "Pizza Pancetta Vålerenga",
+    "address": "Østerdalsgata 2A, 0658 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9097675,
+    "longitude": 10.7899782
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/pizza-pancetta-vlerenga",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-menykilde kontrollert 2026-10-19 med 10 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "4. Pepperoni [Medium]",
+      "2. Capricciosa (Medium)",
+      "Kebabpizza Nr. 3 (Medium)",
+      "6. Roma [Medium]",
+      "3. Hawaii [Medium]",
+      "1.Margherita (Medium)",
+      "7. Strichi (Medium)",
+      "Døner i rull m/ Hjemmelaget Brød",
+      "19.Salsiccia (Medium)",
+      "20. Bari (Medium)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "4. Pepperoni [Medium]",
+        "priceMinor": 21900
+      },
+      {
+        "name": "2. Capricciosa (Medium)",
+        "priceMinor": 21900
+      },
+      {
+        "name": "Kebabpizza Nr. 3 (Medium)",
+        "priceMinor": 25900
+      },
+      {
+        "name": "6. Roma [Medium]",
+        "priceMinor": 23900
+      },
+      {
+        "name": "3. Hawaii [Medium]",
+        "priceMinor": 21900
+      },
+      {
+        "name": "1.Margherita (Medium)",
+        "priceMinor": 19900
+      },
+      {
+        "name": "7. Strichi (Medium)",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Døner i rull m/ Hjemmelaget Brød",
+        "priceMinor": 18900
+      },
+      {
+        "name": "19.Salsiccia (Medium)",
+        "priceMinor": 23900
+      },
+      {
+        "name": "20. Bari (Medium)",
+        "priceMinor": 23900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

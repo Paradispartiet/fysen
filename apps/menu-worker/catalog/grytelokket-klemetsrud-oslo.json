@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "grytelokket-klemetsrud-oslo",
+    "name": "Grytelokket Klemetsrud",
+    "address": "Enebakkveien 393, 1279 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8358541,
+    "longitude": 10.8418792
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/grytelokket-klemetsrud",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-menykilde kontrollert 2026-10-19 med 12 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebabmiddag",
+      "BigMeal BigBurger",
+      "Lokket's Babb",
+      "BigBurger Middag",
+      "Kyllingkebab",
+      "Lokket’s Burger 160g",
+      "Kebabrull",
+      "Kyllingrull",
+      "Falafel Rull",
+      "Kyllingmiddag",
+      "Falafelmiddag",
+      "Crispy Chicken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebabmiddag",
+        "priceMinor": 19800
+      },
+      {
+        "name": "BigMeal BigBurger",
+        "priceMinor": 23400
+      },
+      {
+        "name": "Lokket's Babb",
+        "priceMinor": 13800
+      },
+      {
+        "name": "BigBurger Middag",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Kyllingkebab",
+        "priceMinor": 17400
+      },
+      {
+        "name": "Lokket’s Burger 160g",
+        "priceMinor": 17400
+      },
+      {
+        "name": "Kebabrull",
+        "priceMinor": 16200
+      },
+      {
+        "name": "Kyllingrull",
+        "priceMinor": 18600
+      },
+      {
+        "name": "Falafel Rull",
+        "priceMinor": 15000
+      },
+      {
+        "name": "Kyllingmiddag",
+        "priceMinor": 23400
+      },
+      {
+        "name": "Falafelmiddag",
+        "priceMinor": 19800
+      },
+      {
+        "name": "Crispy Chicken",
+        "priceMinor": 13800
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

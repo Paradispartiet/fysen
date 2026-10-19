@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "abildso-grill-pizza-oslo",
+    "name": "Abildsø Grill & Pizza",
+    "address": "Enebakkveien 267A, 1187 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8802524,
+    "longitude": 10.8252105
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/abilds-grill-pizza",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-menykilde kontrollert 2026-10-19 med 12 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Cheeseburger Tallerken",
+      "Kebabtallerken",
+      "Kebab i Pita",
+      "Kyllingkebab Tallerken",
+      "Kyllingkebab i Pita",
+      "Kebab i Rull",
+      "Döner Tallerken",
+      "Döner i Rull",
+      "Døner Kebab",
+      "Kyllingnuggetsmiddag",
+      "Mix Grill",
+      "Falafeltallerken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Cheeseburger Tallerken",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Kebabtallerken",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Kebab i Pita",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Kyllingkebab Tallerken",
+        "priceMinor": 21000
+      },
+      {
+        "name": "Kyllingkebab i Pita",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Kebab i Rull",
+        "priceMinor": 16000
+      },
+      {
+        "name": "Döner Tallerken",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Döner i Rull",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Døner Kebab",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Kyllingnuggetsmiddag",
+        "priceMinor": 19500
+      },
+      {
+        "name": "Mix Grill",
+        "priceMinor": 30500
+      },
+      {
+        "name": "Falafeltallerken",
+        "priceMinor": 18500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

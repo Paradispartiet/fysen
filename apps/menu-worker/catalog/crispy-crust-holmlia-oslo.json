@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "crispy-crust-holmlia-oslo",
+    "name": "Crispy Crust Holmlia",
+    "address": "Rosenholmveien 4, 1252 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.83051792,
+    "longitude": 10.79459373
+  },
+  "menuSource": {
+    "url": "https://wolt.com/nb/nor/oslo/restaurant/crispy-crust",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-menykilde kontrollert 2026-10-19 med 11 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebab",
+      "Cheeseburger",
+      "Dønerburger",
+      "kylling Kebab (tandori)",
+      "Dønerkebab",
+      "Hamburger",
+      "Kyllingburger",
+      "Kebab Baguette",
+      "Døner Baguette",
+      "Kylling Baguette",
+      "Tandoori Chicken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebab",
+        "priceMinor": 11200
+      },
+      {
+        "name": "Cheeseburger",
+        "priceMinor": 13200
+      },
+      {
+        "name": "Dønerburger",
+        "priceMinor": 15700
+      },
+      {
+        "name": "kylling Kebab (tandori)",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Dønerkebab",
+        "priceMinor": 17000
+      },
+      {
+        "name": "Hamburger",
+        "priceMinor": 11900
+      },
+      {
+        "name": "Kyllingburger",
+        "priceMinor": 13200
+      },
+      {
+        "name": "Kebab Baguette",
+        "priceMinor": 8200
+      },
+      {
+        "name": "Døner Baguette",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Kylling Baguette",
+        "priceMinor": 10100
+      },
+      {
+        "name": "Tandoori Chicken",
+        "priceMinor": 31300
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

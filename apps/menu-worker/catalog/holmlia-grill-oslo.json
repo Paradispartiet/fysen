@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "holmlia-grill-oslo",
+    "name": "Holmlia Grill",
+    "address": "Nordåsveien 8, 1252 Oslo",
+    "websiteUrl": null,
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.8307295,
+    "longitude": 10.792798
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/holmlia-grill",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 8,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-19",
+      "note": "Wolt-menykilde kontrollert 2026-10-19 med 11 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kebab i Pita",
+      "Kyllingkebab i Pita",
+      "Chicken New Jersey",
+      "Hamburger",
+      "Pommes Frites",
+      "Kebab Meny",
+      "Kyllingkebab Meny",
+      "Holmlia",
+      "Kyllingkebab",
+      "Jafsburger Meny",
+      "Hamburger Meny"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kebab i Pita",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Kyllingkebab i Pita",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Chicken New Jersey",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Hamburger",
+        "priceMinor": 8900
+      },
+      {
+        "name": "Pommes Frites",
+        "priceMinor": 4500
+      },
+      {
+        "name": "Kebab Meny",
+        "priceMinor": 13900
+      },
+      {
+        "name": "Kyllingkebab Meny",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Holmlia",
+        "priceMinor": 25900
+      },
+      {
+        "name": "Kyllingkebab",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Jafsburger Meny",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Hamburger Meny",
+        "priceMinor": 13500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
