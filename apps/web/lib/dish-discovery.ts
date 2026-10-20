@@ -30,15 +30,33 @@ function containsPhrase(value: string, phrase: string): boolean {
   return value === phrase || value.startsWith(`${phrase} `) || value.endsWith(` ${phrase}`) || value.includes(` ${phrase} `);
 }
 
+// The same large browse payload is compared against many cuisine descriptors.
+// Re-normalizing every string for every card can monopolize mobile Safari's main thread.
+const itemTermsCache = new WeakMap<DishBrowseItem, readonly string[]>();
+const descriptorTermsCache = new WeakMap<DiscoveryDishDescriptor, readonly string[]>();
+
 function descriptorTerms(descriptor: DiscoveryDishDescriptor): readonly string[] {
-  const terms = [descriptor.query, descriptor.label, ...(descriptor.aliases ?? [])]
-    .map(normalizeDiscoveryText)
-    .filter(Boolean);
-  return [...new Set(terms)];
+  const cached = descriptorTermsCache.get(descriptor);
+  if (cached) return cached;
+  const terms = [...new Set(
+    [descriptor.query, descriptor.label, ...(descriptor.aliases ?? [])]
+      .map(normalizeDiscoveryText)
+      .filter(Boolean),
+  )];
+  descriptorTermsCache.set(descriptor, terms);
+  return terms;
+}
+
+function normalizedItemValues(item: DishBrowseItem): readonly string[] {
+  const cached = itemTermsCache.get(item);
+  if (cached) return cached;
+  const values = [item.query, item.name].map(normalizeDiscoveryText).filter(Boolean);
+  itemTermsCache.set(item, values);
+  return values;
 }
 
 function matchScore(item: DishBrowseItem, descriptor: DiscoveryDishDescriptor): number {
-  const values = [item.query, item.name].map(normalizeDiscoveryText).filter(Boolean);
+  const values = normalizedItemValues(item);
   const terms = descriptorTerms(descriptor);
 
   for (const term of terms) {
@@ -58,15 +76,23 @@ export function discoveryCoverage(
   dishes: readonly DishBrowseItem[],
   descriptor: DiscoveryDishDescriptor,
 ): DiscoveryCoverage {
-  const ranked = dishes
-    .map((item) => ({ item, score: matchScore(item, descriptor) }))
-    .filter((entry) => entry.score > 0)
-    .sort((left, right) => right.score - left.score || right.item.restaurantCount - left.item.restaurantCount || left.item.name.localeCompare(right.item.name, "nb"));
+  let bestScore = 0;
+  const strongest: DishBrowseItem[] = [];
+  for (const item of dishes) {
+    const score = matchScore(item, descriptor);
+    if (score === 0 || score < bestScore) continue;
+    if (score > bestScore) {
+      strongest.length = 0;
+      bestScore = score;
+    }
+    strongest.push(item);
+  }
+  if (strongest.length === 0) return { restaurantCount: 0, restaurantExamples: [], matchedDishes: [] };
 
-  const best = ranked[0];
-  if (!best) return { restaurantCount: 0, restaurantExamples: [], matchedDishes: [] };
-
-  const strongest = ranked.filter((entry) => entry.score === best.score).map((entry) => entry.item);
+  // Only rank actual strongest matches, not thousands of nonmatching dishes.
+  strongest.sort((left, right) =>
+    right.restaurantCount - left.restaurantCount || left.name.localeCompare(right.name, "nb"),
+  );
   const seenRestaurants = new Set<string>();
   const restaurantExamples = strongest.flatMap((item) => item.restaurantExamples).filter((restaurant) => {
     if (seenRestaurants.has(restaurant.id) || seenRestaurants.size >= 2) return false;

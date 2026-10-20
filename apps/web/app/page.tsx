@@ -1,6 +1,6 @@
 import type { DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import { CuisineExplorer } from "../components/cuisine-explorer";
-import { DishLearningSection } from "../components/dish-learning-section";
+import { DeferredDishLearningSection } from "../components/deferred-dish-learning-section";
 import { DishSearch } from "../components/dish-search";
 import { GlobalHeader } from "../components/global-header";
 import { browseDishes } from "../lib/fysen-api";
@@ -33,7 +33,7 @@ export default async function HomePage() {
           </div>
         </section>
         <CuisineExplorer browseData={browseData} />
-        <DishLearningSection />
+        <DeferredDishLearningSection />
       </main>
     </div>
   );
