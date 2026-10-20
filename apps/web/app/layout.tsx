@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans } from "next/font/google";
 import type { ReactNode } from "react";
 import "../styles/tokens.css";
@@ -19,6 +19,10 @@ import "../styles/matlyst-featured.css";
 import "../styles/restaurant-claim.css";
 import "../styles/fysen-pro.css";
 import "../styles/min-mat.css";
+import "../styles/mobile-app.css";
+import { PwaRegistration } from "../components/pwa-registration";
+import { MobileTabBar } from "../components/mobile-tab-bar";
+import { withPublicBasePath } from "../lib/public-path";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -29,12 +33,26 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Fysen — finn retten du har lyst på",
   description: "Søk etter en rett og finn restauranter som har den på en fersk, sporbar meny.",
+  applicationName: "Fysen",
+  manifest: withPublicBasePath("/manifest.webmanifest"),
+  icons: {
+    icon: [{ url: withPublicBasePath("/icon.svg"), type: "image/svg+xml" }],
+    apple: [{ url: withPublicBasePath("/brand/fysen-mark-exact.png") }],
+  },
+  appleWebApp: { capable: true, title: "Fysen", statusBarStyle: "default" },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#070807",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="nb">
-      <body className={dmSans.variable}>{children}</body>
+      <body className={dmSans.variable}>{children}<MobileTabBar /><PwaRegistration /></body>
     </html>
   );
 }
