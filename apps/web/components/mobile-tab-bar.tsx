@@ -22,7 +22,7 @@ export function MobileTabBar() {
   return (
     <nav className="mobileTabBar" aria-label="Appnavigasjon">
       {tabs.map(({ href, label, icon }) => {
-        const path = href.split("?")[0];
+        const path = href.split("?")[0] ?? href;
         const active = path === withPublicBasePath("/")
           ? pathname === path
           : path === withPublicBasePath("/search")
