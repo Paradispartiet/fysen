@@ -37,7 +37,10 @@ export async function browseDishesClient(
   };
   if (options.signal) requestInit.signal = options.signal;
 
-  const response = await fetch(`${withPublicBasePath("/api/dishes/browse")}?${params.toString()}`, requestInit);
+  const url = configuredBasePath && clientPreviewApiBaseUrl
+    ? `${clientPreviewApiBaseUrl}/v1/dishes/browse?${params.toString()}`
+    : `${withPublicBasePath("/api/dishes/browse")}?${params.toString()}`;
+  const response = await fetch(url, requestInit);
   if (!response.ok) {
     throw new Error(`Fysen dish browse failed with HTTP ${response.status}`);
   }
