@@ -1,19 +1,10 @@
-import type { DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import { CuisineExplorer } from "../components/cuisine-explorer";
 import { DishLearningSection } from "../components/dish-learning-section";
 import { DishSearch } from "../components/dish-search";
 import { GlobalHeader } from "../components/global-header";
-import { browseDishes } from "../lib/fysen-api";
 import { dishBrowseHref } from "../lib/public-path";
 
 export default async function HomePage() {
-  let browseData: DishBrowseResponse | null = null;
-  try {
-    browseData = await browseDishes({ city: "Oslo" });
-  } catch {
-    browseData = null;
-  }
-
   return (
     <div className="homePage">
       <GlobalHeader />
@@ -32,7 +23,7 @@ export default async function HomePage() {
             </a>
           </div>
         </section>
-        <CuisineExplorer browseData={browseData} />
+        <CuisineExplorer browseData={null} />
         <DishLearningSection />
       </main>
     </div>
