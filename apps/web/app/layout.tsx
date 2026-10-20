@@ -36,8 +36,8 @@ export const metadata: Metadata = {
   applicationName: "Fysen",
   manifest: withPublicBasePath("/manifest.webmanifest"),
   icons: {
-    icon: [{ url: withPublicBasePath("/icon.svg"), type: "image/svg+xml" }],
-    apple: [{ url: withPublicBasePath("/brand/fysen-mark-exact.png") }],
+    icon: [{ url: withPublicBasePath("/pwa-icons/192"), sizes: "192x192", type: "image/png" }],
+    apple: [{ url: withPublicBasePath("/pwa-icons/180"), sizes: "180x180", type: "image/png" }],
   },
   appleWebApp: { capable: true, title: "Fysen", statusBarStyle: "default" },
 };
