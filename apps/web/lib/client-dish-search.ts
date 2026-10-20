@@ -1,5 +1,6 @@
 import { dishSearchResponseSchema, type DishSearchResponse } from "@fysen/contracts";
 import { dishBrowseResponseSchema, type DishBrowseResponse } from "@fysen/contracts/dish-browse";
+import { withPublicBasePath } from "./public-path";
 
 const configuredBasePath = process.env.NEXT_PUBLIC_FYSEN_BASE_PATH?.trim() ?? "";
 const defaultPreviewApiBaseUrl = "https://fysen-api.vercel.app";
@@ -26,19 +27,17 @@ function clientSearchUrl(query: string, city: string, limit: number): string {
 
 export async function browseDishesClient(
   city = "Oslo",
-  options: { readonly signal?: AbortSignal } = {},
+  options: { readonly signal?: AbortSignal; readonly homePreview?: boolean } = {},
 ): Promise<DishBrowseResponse> {
-  if (!clientPreviewApiBaseUrl) {
-    throw new Error("Fysen preview API is not configured");
-  }
-
   const params = new URLSearchParams({ city: city.trim() || "Oslo" });
+  if (options.homePreview) params.set("view", "home");
   const requestInit: RequestInit = {
     headers: { accept: "application/json" },
+    cache: "no-store",
   };
   if (options.signal) requestInit.signal = options.signal;
 
-  const response = await fetch(`${clientPreviewApiBaseUrl}/v1/dishes/browse?${params.toString()}`, requestInit);
+  const response = await fetch(`${withPublicBasePath("/api/dishes/browse")}?${params.toString()}`, requestInit);
   if (!response.ok) {
     throw new Error(`Fysen dish browse failed with HTTP ${response.status}`);
   }
