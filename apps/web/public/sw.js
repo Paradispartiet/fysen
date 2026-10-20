@@ -1,3 +1,4 @@
+/* global self, caches, URL, fetch, Response */
 /* Offline fallback only. Never cache searches, menus, accounts, or API responses. */
 const CACHE_NAME = "fysen-offline-v1";
 const OFFLINE_URL = new URL("offline.html", self.registration.scope).pathname;
