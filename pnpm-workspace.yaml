@@ -6,6 +6,10 @@ engineStrict: true
 strictPeerDependencies: true
 saveExact: true
 
+# Keep the transitive webpack version compatible with schema-utils peer requirements.
+overrides:
+  webpack: "^5.112.0"
+
 allowBuilds:
   esbuild: true
   sharp: true
