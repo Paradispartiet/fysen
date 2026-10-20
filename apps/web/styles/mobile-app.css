@@ -1,0 +1,41 @@
+/* Mobile-only app shell; preserve the established desktop/admin layouts. */
+@media (max-width: 767px) {
+  body:has(.mobileTabBar) { padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+  .mobileTabBar {
+    position: fixed; inset: auto 0 0; z-index: 90;
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    min-height: calc(70px + env(safe-area-inset-bottom, 0px));
+    padding: 5px max(14px, env(safe-area-inset-right, 0px)) calc(5px + env(safe-area-inset-bottom, 0px)) max(14px, env(safe-area-inset-left, 0px));
+    background: rgba(7, 8, 7, .97);
+    border-top: 1px solid rgba(121, 201, 135, .22);
+    -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+  }
+  .mobileTab {
+    display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 3px;
+    min-height: 54px; color: #d6ded4; font-size: 12px; font-weight: 680;
+    text-decoration: none; border-radius: 12px;
+  }
+  .mobileTab svg { width: 22px; height: 22px; }
+  .mobileTab.active { color: #79c987; background: rgba(121, 201, 135, .10); }
+  .mobileTab:focus-visible { outline: 3px solid #79c987; outline-offset: -3px; }
+}
+@media (min-width: 768px) { .mobileTabBar { display: none; } }
+.favoriteToggle {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 44px; min-width: 44px; padding: 9px 13px;
+  border: 1px solid var(--color-line, #d2d2d2); border-radius: 12px;
+  background: transparent; color: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+}
+.favoriteToggle[aria-pressed="true"] { border-color: var(--color-brand, #79c987); color: var(--color-brand, #79c987); }
+.favoriteToggle:focus-visible { outline: 3px solid var(--color-brand, #79c987); outline-offset: 3px; }
+.favoritesPage { max-width: 850px; min-height: 70dvh; margin: 0 auto; padding: clamp(38px, 9vw, 72px) 20px 70px; }
+.favoritesPage h1 { margin: 0; font-size: clamp(38px, 9vw, 60px); line-height: 1.08; letter-spacing: -.045em; }
+.favoritesLead { max-width: 610px; margin: 14px 0 28px; color: var(--color-muted); line-height: 1.6; }
+.favoritesList { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.favoritesList li { padding: 19px; border: 1px solid var(--color-line); border-radius: 16px; }
+.favoritesList h2 { margin: 0 0 5px; font-size: 22px; }
+.favoritesList p { margin: 0 0 16px; color: var(--color-muted); }
+.favoritesActions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.favoritesActions a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border: 1px solid var(--color-line); border-radius: 12px; color: inherit; font-weight: 700; text-decoration: none; }
+.favoritesActions a:first-child { background: #79c987; color: #070807; border-color: #79c987; }
+.favoritesNote { margin: 20px 0 0; color: var(--color-muted); font-size: 14px; }
