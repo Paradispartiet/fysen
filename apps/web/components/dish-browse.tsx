@@ -1,7 +1,7 @@
 "use client";
 
 import type { DishBrowseItem, DishBrowseResponse } from "@fysen/contracts/dish-browse";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { foodDishCatalog } from "../content/food-knowledge/catalog";
 import { foodKnowledgeDishIdSet } from "../content/food-knowledge/manifest";
 import { browseDishDisplayName, sortBrowseDishesForDisplay } from "../lib/dish-browse-display";
@@ -141,8 +141,6 @@ export function DishBrowse({
 
     return sortBrowseDishesForDisplay(dishes);
   }, [cuisineDiscoveryScope, data, normalizedFilter, selectedCuisine]);
-
-  useEffect(() => { setVisibleCount(80); }, [normalizedFilter, selectedCuisineName, selectedCuisineArea]);
 
   const cuisinePath = [selectedCuisine?.name, selectedCuisineArea]
     .filter((value): value is string => Boolean(value));
