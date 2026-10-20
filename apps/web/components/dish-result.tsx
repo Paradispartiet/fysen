@@ -29,13 +29,19 @@ function directionsUrl(latitude: number, longitude: number): string {
   return `https://www.google.com/maps/dir/?api=1&destination=${destination}`;
 }
 
-export function DishResult({ result }: { result: DishSearchResult }) {
+export function DishResult({
+  result,
+  onShowOnMap,
+}: {
+  result: DishSearchResult;
+  onShowOnMap?: (restaurantSlug: string) => void;
+}) {
   const actionsClassName = styles.actions ?? "";
   const primaryActionClassName = styles.primaryAction ?? "";
   const claimLinkClassName = styles.claimLink ?? "";
 
   return (
-    <article className="dishResult">
+    <article id={`dish-${result.menuItemId}`} className="dishResult">
       <div className="dishResultTopline">
         <div className="dishResultIdentity">
           <h2>{result.dish.name}</h2>
@@ -111,6 +117,16 @@ export function DishResult({ result }: { result: DishSearchResult }) {
             >
               Bestill mat
             </TrackedExternalLink>
+          ) : null}
+          {onShowOnMap ? (
+            <button
+              className={styles.mapAction}
+              type="button"
+              onClick={() => onShowOnMap(result.restaurant.slug)}
+              aria-label={`Vis ${result.restaurant.name} på kart`}
+            >
+              Vis på kart
+            </button>
           ) : null}
           <TrackedExternalLink
             className="evidenceLink"

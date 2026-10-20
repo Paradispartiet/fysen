@@ -57,6 +57,23 @@ try {
   if (!(await ramenResult.innerText()).includes("Sjekket")) throw new Error("Restaurant result lacks menu freshness");
   await noHorizontalOverflow(page, "Ramen results");
   journeys.push({ journey: "search → result → restaurant/menu/booking", restaurant, menu, booking });
+  // Mobile map navigation must choose the actual restaurant, not just the first map result.
+  await ramenResult.getByRole("button", { name: "Vis Hrimnir Ramen Storgata på kart" }).click();
+  const map = page.getByRole("region", { name: "Kart over restauranter i de viste treffene" });
+  await map.getByTitle("Kart: Hrimnir Ramen Storgata").waitFor({ state: "visible" });
+  const backToDish = map.getByRole("link", { name: "Til rettetreffet" });
+  const returnHref = await backToDish.getAttribute("href");
+  if (returnHref !== "#" + await ramenResult.getAttribute("id")) {
+    throw new Error("Map did not link back to the selected restaurant's dish");
+  }
+  await noHorizontalOverflow(page, "Restaurant-specific map at 390px");
+  await page.setViewportSize({ width: 320, height: 720 });
+  await noHorizontalOverflow(page, "Restaurant-specific map at 320px");
+  await page.getByRole("button", { name: "Skjul kart" }).click();
+  await map.waitFor({ state: "hidden" });
+  await page.setViewportSize({ width: 390, height: 844 });
+  journeys.push({ journey: "restaurant card → selected map → same dish", viewportWidths: [390, 320] });
+
 
   // 4. Food knowledge opens in a mobile dialog, shows fresh serving places, and closes back to results.
   await page.locator(".dishKnowledgeNote").getByRole("button", { name: "Lær om retten" }).click();
