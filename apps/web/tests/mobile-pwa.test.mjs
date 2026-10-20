@@ -11,7 +11,7 @@ test("PWA manifest and installable app use brand PNG icons", () => {
   const png = read("../app/pwa-icons/[size]/route.tsx");
   assert.match(manifest, /display: "standalone"/u);
   assert.match(manifest, /start_url: withPublicBasePath\("\/"\)/u);
-  assert.match(manifest, /purpose: "any maskable"/u);
+  assert.match(manifest, /purpose: "maskable"/u);
   assert.match(manifest, /pwa-icons\/512/u);
   assert.match(layout, /appleWebApp/u);
   assert.match(layout, /viewportFit: "cover"/u);
