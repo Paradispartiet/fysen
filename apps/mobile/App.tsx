@@ -19,6 +19,7 @@ import { loadFeatured, searchDishes, type FeaturedResponse } from "./src/api";
 import { cleanDishName, formatPrice, safeHttpsUrl, validateSearchTerm } from "./src/format";
 import { favoriteKey, readFavorites, writeFavorites, type FavoriteDish } from "./src/favorites";
 import { colors } from "./src/theme";
+import { groupDishMatches, priceProvenanceLabel } from "./src/search-presentation";
 import { parseFysenDeepLink } from "./src/deep-link";
 
 type Tab = "search" | "matlyst" | "favorites";
@@ -80,6 +81,7 @@ function SearchResultCard({
   isFavorite: boolean;
   onFavorite: (dish: FavoriteDish) => void;
 }) {
+  const [expanded, setExpanded] = useState(false);
   const query = (result.match.canonicalDish?.name || result.dish.normalizedName || result.dish.name).slice(0, 80).trim();
   const booking = result.actions.booking?.url;
   const order = result.actions.order?.url;
@@ -105,8 +107,28 @@ function SearchResultCard({
           <Text style={[styles.star, isFavorite && styles.starSaved]}>{isFavorite ? "★" : "☆"}</Text>
         </Pressable>
       </View>
-      {result.dish.description ? <Text style={styles.description}>{result.dish.description}</Text> : null}
+      {result.dish.description ? (
+        <View>
+          <Text style={styles.description} numberOfLines={expanded ? undefined : 3}>
+            {result.dish.description}
+          </Text>
+          {result.dish.description.length > 140 ? (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={expanded ? "Vis kortere rettsbeskrivelse" : "Les hele rettsbeskrivelsen"}
+              accessibilityState={{ expanded }}
+              onPress={() => setExpanded((previous) => !previous)}
+              style={styles.descriptionToggle}
+            >
+              <Text style={styles.descriptionToggleText}>{expanded ? "Vis mindre ↑" : "Les mer ↓"}</Text>
+            </Pressable>
+          ) : null}
+        </View>
+      ) : null}
       <Text style={styles.price}>{formatPrice(result.dish)}</Text>
+      {result.dish.priceMinor !== null ? (
+        <Text style={styles.priceSource}>{priceProvenanceLabel(result.menu.sourceUrl)}</Text>
+      ) : null}
       <Text style={styles.address}>{result.restaurant.address}</Text>
       <Text style={styles.freshness}>{verifiedText} · Kontroller alltid meny og pris</Text>
       <View style={styles.actions}>
@@ -173,6 +195,19 @@ function SearchScreen({
 
   useEffect(() => () => { request.current?.abort(); }, []);
 
+  const { direct, similar } = groupDishMatches(results);
+  const renderResult = (result: DishSearchResult) => (
+    <SearchResultCard
+      key={result.menuItemId}
+      result={result}
+      isFavorite={favorites.some((item) =>
+        favoriteKey(item.query) === favoriteKey(
+          (result.match.canonicalDish?.name || result.dish.normalizedName || result.dish.name).slice(0, 80).trim(),
+        ))}
+      onFavorite={onFavorite}
+    />
+  );
+
   return (
     <ScrollView contentContainerStyle={styles.screenContent} keyboardShouldPersistTaps="handled">
       <SectionHeading kicker="OSLO • MAT PÅ MENYEN" title="Hva har du lyst på?"
@@ -209,17 +244,28 @@ function SearchScreen({
       {error ? <View style={styles.notice}><Text style={styles.noticeText}>{error}</Text><Pill label="Prøv igjen" onPress={() => void perform(value)} /></View> : null}
       {searched && !loading && !error ? (
         <>
-          <Text style={styles.resultsLabel}>{results.length} treff i Oslo</Text>
+          <Text style={styles.resultsLabel}>
+            Viser {results.length} treff i Oslo{results.length === 20 ? " · opptil 20 per søk" : ""}
+          </Text>
           {results.length === 0 ? (
             <Text style={styles.muted}>Ingen ferske treff. Prøv et annet navn på retten.</Text>
-          ) : results.map((result) => (
-            <SearchResultCard
-              key={result.menuItemId}
-              result={result}
-              isFavorite={favorites.some((item) => favoriteKey(item.query) === favoriteKey((result.match.canonicalDish?.name || result.dish.normalizedName || result.dish.name).slice(0, 80).trim()))}
-              onFavorite={onFavorite}
-            />
-          ))}
+          ) : (
+            <>
+              {direct.length > 0 ? (
+                <>
+                  <Text style={styles.groupHeading}>Menytreff ({direct.length})</Text>
+                  {direct.map(renderResult)}
+                </>
+              ) : null}
+              {similar.length > 0 ? (
+                <>
+                  <Text style={styles.groupHeading}>Lignende retter ({similar.length})</Text>
+                  <Text style={styles.groupIntro}>Disse er ikke eksakte treff på søket ditt.</Text>
+                  {similar.map(renderResult)}
+                </>
+              ) : null}
+            </>
+          )}
         </>
       ) : null}
       <Text style={styles.footerNote}>Fysen viser dokumenterte menytreff, ikke garantier for tilgjengelighet.</Text>
@@ -491,6 +537,11 @@ const styles = StyleSheet.create({
   dishName: { color: colors.white, fontSize: 21, fontWeight: "800", lineHeight: 26 },
   restaurantName: { color: colors.green, fontSize: 15, fontWeight: "600", marginTop: 8 },
   description: { color: colors.muted, fontSize: 13, lineHeight: 20, marginTop: 10 },
+  descriptionToggle: { alignSelf: "flex-start", minHeight: 44, justifyContent: "center", paddingRight: 18 },
+  descriptionToggleText: { color: colors.green, fontSize: 13, fontWeight: "700" },
+  priceSource: { color: colors.muted, fontSize: 12, marginTop: 5 },
+  groupHeading: { color: colors.white, fontSize: 16, fontWeight: "800", marginTop: 20, marginBottom: 10 },
+  groupIntro: { color: colors.muted, fontSize: 12, lineHeight: 18, marginBottom: 12 },
   price: { color: colors.white, fontSize: 20, fontWeight: "800", marginTop: 14 },
   address: { color: colors.muted, fontSize: 12, lineHeight: 19, marginTop: 8 },
   freshness: { color: colors.soft, fontSize: 11, marginTop: 11 },
