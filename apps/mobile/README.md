@@ -40,3 +40,18 @@ Fullfør native ikon/splash i Fysen-design, fysisk QA på iPhone/Android, tilgje
 - Fysisk iPhone: Expo Go for utvikling; signert distribusjon gjennom TestFlight/App Store krever normalt betalt Apple Developer Program.
 
 Ved hver mobil-PR kontrollerer '.github/workflows/native-js-bundle.yml' at iOS- og Android-JavaScript faktisk kan pakkes. Det er **ikke** en signert app eller en fysisk funksjonstest.
+
+## Gratis Android APK fra GitHub
+
+En signert Android-testfil kan bygges uten Expo-konto og uten Google Play-avgift:
+
+1. Åpne **Actions → Fysen Android installable test APK** i GitHub.
+2. Velg **Run workflow** fra `main`, etter at PR-en med workflowen er merget.
+3. Åpne vellykket kjøring og hent artefakten `fysen-android-qa-apk`.
+4. Pakk ut `app-release.apk`, overfør til Android-telefon og godkjenn installasjon fra den valgte filbehandleren om nødvendig.
+
+Første PR som legger til workflowen utløser én kontrollbygging. Deretter kjøres den **bare ved manuell bestilling**, for ikke å sløse med GitHub Actions.
+
+Denne APK-en bygges i release-modus, har JS-koden innbakt og verifiseres med Android `apksigner`, men er signert med **utviklingsnøkkel**. Den er til intern kvalitetskontroll, ikke til Play Store eller offentlig distribusjon. Eksterne lenker, ferske søk og Matlyst krever fremdeles nett.
+
+På iPhone kan man teste React Native-appen med en kompatibel Expo Go-versjon og en aktiv Metro-server. Gratis GitHub-bygging gir **ikke** en signert iOS-app for installasjon på andres iPhone; Apple krever normalt et betalt utviklermedlemskap for distribusjon.
