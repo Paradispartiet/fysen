@@ -32,8 +32,13 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Verify preinstalled Android SDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d "${ANDROID_HOME:?}/platforms"
+          test -d "$ANDROID_HOME/build-tools"
+          echo "Using GitHub runner's preinstalled Android SDK: $ANDROID_HOME"
 
       - name: Build shared API types
         run: pnpm --filter @fysen/contracts build
