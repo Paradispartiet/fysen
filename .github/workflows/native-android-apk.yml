@@ -67,13 +67,33 @@ jobs:
           build_tools="$(find "$ANDROID_HOME/build-tools" -maxdepth 1 -mindepth 1 -type d | sort -V | tail -n 1)"
           test -n "$build_tools"
           "$build_tools/apksigner" verify --verbose --print-certs "$apk"
-          echo "APK is a signed, standalone Android QA artifact (debug credentials, not store distribution)." >> "$GITHUB_STEP_SUMMARY"
+          "$build_tools/aapt" dump badging "$apk" | grep -F "package: name='no.fysen.app'"
+          echo "APK is a signed, standalone Android QA artifact for no.fysen.app (debug credentials, not store distribution)." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Record exact source used for QA
+        env:
+          FYSEN_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          release_dir="apps/mobile/android/app/build/outputs/apk/release"
+          cat > "$release_dir/qa-build-info.txt" <<EOF
+          Fysen Native Android QA
+          Source commit: $FYSEN_SOURCE_SHA
+          CI checkout: $(git rev-parse HEAD)
+          GitHub run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          Package: no.fysen.app
+          Signing: debug key (QA only; not Google Play)
+          EOF
+          cat "$release_dir/qa-build-info.txt" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload installable Android QA APK
         uses: actions/upload-artifact@v4
         with:
           name: fysen-android-qa-apk
-          path: apps/mobile/android/app/build/outputs/apk/release/app-release.apk
+          path: |
+            apps/mobile/android/app/build/outputs/apk/release/app-release.apk
+            apps/mobile/android/app/build/outputs/apk/release/qa-build-info.txt
           if-no-files-found: error
           retention-days: 14
           compression-level: 0
