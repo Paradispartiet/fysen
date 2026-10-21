@@ -89,3 +89,9 @@ Simulatorjobben kontrollerer oppstart samt navigasjon til Matlyst og et ramensø
 - Treffene er basert på menytekst: «ramen» kan også bety ramen-panert corn dog. Appen garanterer ikke kulinarisk kategorisering uten bedre kildedata.
 - Mobilkort viser et kort utdrag av lange menybeskrivelser med **Vis mer/Vis mindre** uten å endre originaldataene.
 - Resultattelleren sier «Viser inntil 20», ikke at alle restauranttreff i Oslo nødvendigvis er funnet.
+
+## Prismerking og pålitelighet
+
+Native søkekort og «Nye retter» i Matlyst viser nå **priskanal** for alle retter med dokumentert pris. Kilde fra Wolt eller Foodora merkes som leveringspris som kan avvike fra bordpris; øvrige kilder får den nøytrale teksten «Pris fra menykilden». Appen finner aldri på en pris når kilden mangler beløp.
+
+Domenegjenkjenningen krever riktig vertsnavn eller subdomene (ikke bare ordet «wolt» eller «foodora» i en lenke). Dette følger samme kildeprinsipp som Fysens nettside.
