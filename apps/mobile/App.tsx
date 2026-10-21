@@ -20,6 +20,7 @@ import { cleanDishName, formatPrice, safeHttpsUrl, validateSearchTerm } from "./
 import { favoriteKey, readFavorites, writeFavorites, type FavoriteDish } from "./src/favorites";
 import { colors } from "./src/theme";
 import { parseFysenDeepLink } from "./src/deep-link";
+import { descriptionPreview, groupDishMatches } from "./src/search-presentation";
 
 type Tab = "search" | "matlyst" | "favorites";
 
@@ -80,7 +81,11 @@ function SearchResultCard({
   isFavorite: boolean;
   onFavorite: (dish: FavoriteDish) => void;
 }) {
+  const [descriptionExpanded, setDescriptionExpanded] = useState(false);
   const query = (result.match.canonicalDish?.name || result.dish.normalizedName || result.dish.name).slice(0, 80).trim();
+  const description = result.dish.description?.replace(/\s+/gu, " ").trim() ?? "";
+  const preview = descriptionPreview(description);
+  const hasLongDescription = description.length > preview.length;
   const booking = result.actions.booking?.url;
   const order = result.actions.order?.url;
   const mapUrl = "https://www.google.com/maps/search/?api=1&query=" +
@@ -105,7 +110,20 @@ function SearchResultCard({
           <Text style={[styles.star, isFavorite && styles.starSaved]}>{isFavorite ? "★" : "☆"}</Text>
         </Pressable>
       </View>
-      {result.dish.description ? <Text style={styles.description}>{result.dish.description}</Text> : null}
+      {description ? (
+        <View>
+          <Text style={styles.description}>{descriptionExpanded ? description : preview}</Text>
+          {hasLongDescription ? (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={descriptionExpanded ? "Vis kort beskrivelse" : "Vis hele beskrivelsen"}
+              onPress={() => setDescriptionExpanded((previous) => !previous)}
+              style={styles.descriptionToggle}>
+              <Text style={styles.descriptionToggleText}>{descriptionExpanded ? "Vis mindre ↑" : "Vis mer ↓"}</Text>
+            </Pressable>
+          ) : null}
+        </View>
+      ) : null}
       <Text style={styles.price}>{formatPrice(result.dish)}</Text>
       <Text style={styles.address}>{result.restaurant.address}</Text>
       <Text style={styles.freshness}>{verifiedText} · Kontroller alltid meny og pris</Text>
@@ -173,6 +191,19 @@ function SearchScreen({
 
   useEffect(() => () => { request.current?.abort(); }, []);
 
+  const groupedResults = groupDishMatches(results);
+
+  function cardFor(result: DishSearchResult) {
+    return (
+      <SearchResultCard
+        key={result.menuItemId}
+        result={result}
+        isFavorite={favorites.some((item) => favoriteKey(item.query) === favoriteKey((result.match.canonicalDish?.name || result.dish.normalizedName || result.dish.name).slice(0, 80).trim()))}
+        onFavorite={onFavorite}
+      />
+    );
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.screenContent} keyboardShouldPersistTaps="handled">
       <SectionHeading kicker="OSLO • MAT PÅ MENYEN" title="Hva har du lyst på?"
@@ -209,17 +240,27 @@ function SearchScreen({
       {error ? <View style={styles.notice}><Text style={styles.noticeText}>{error}</Text><Pill label="Prøv igjen" onPress={() => void perform(value)} /></View> : null}
       {searched && !loading && !error ? (
         <>
-          <Text style={styles.resultsLabel}>{results.length} treff i Oslo</Text>
+          <Text style={styles.resultsLabel}>Viser {results.length} menytreff i Oslo</Text>
           {results.length === 0 ? (
             <Text style={styles.muted}>Ingen ferske treff. Prøv et annet navn på retten.</Text>
-          ) : results.map((result) => (
-            <SearchResultCard
-              key={result.menuItemId}
-              result={result}
-              isFavorite={favorites.some((item) => favoriteKey(item.query) === favoriteKey((result.match.canonicalDish?.name || result.dish.normalizedName || result.dish.name).slice(0, 80).trim()))}
-              onFavorite={onFavorite}
-            />
-          ))}
+          ) : (
+            <>
+              <Text style={styles.searchTrustNote}>Treff bygger på tekst i restaurantens meny, ikke en garanti for at retten er den du søker etter.</Text>
+              {groupedResults.direct.length ? (
+                <>
+                  <Text style={styles.resultGroupHeading}>Beste teksttreff</Text>
+                  {groupedResults.direct.map(cardFor)}
+                </>
+              ) : null}
+              {groupedResults.similar.length ? (
+                <>
+                  <Text style={styles.resultGroupHeading}>Lignende treff</Text>
+                  <Text style={styles.muted}>Navnet samsvarer bare delvis. Sjekk retten i menyen.</Text>
+                  <View style={styles.resultGroupCards}>{groupedResults.similar.map(cardFor)}</View>
+                </>
+              ) : null}
+            </>
+          )}
         </>
       ) : null}
       <Text style={styles.footerNote}>Fysen viser dokumenterte menytreff, ikke garantier for tilgjengelighet.</Text>
@@ -491,6 +532,11 @@ const styles = StyleSheet.create({
   dishName: { color: colors.white, fontSize: 21, fontWeight: "800", lineHeight: 26 },
   restaurantName: { color: colors.green, fontSize: 15, fontWeight: "600", marginTop: 8 },
   description: { color: colors.muted, fontSize: 13, lineHeight: 20, marginTop: 10 },
+  descriptionToggle: { minHeight: 40, justifyContent: "center", alignSelf: "flex-start", paddingRight: 15 },
+  descriptionToggleText: { color: colors.green, fontSize: 13, fontWeight: "700" },
+  resultGroupHeading: { color: colors.white, fontWeight: "800", fontSize: 17, marginTop: 17, marginBottom: 12 },
+  searchTrustNote: { color: colors.soft, fontSize: 12, lineHeight: 19, marginBottom: 4 },
+  resultGroupCards: { marginTop: 12 },
   price: { color: colors.white, fontSize: 20, fontWeight: "800", marginTop: 14 },
   address: { color: colors.muted, fontSize: 12, lineHeight: 19, marginTop: 8 },
   freshness: { color: colors.soft, fontSize: 11, marginTop: 11 },
