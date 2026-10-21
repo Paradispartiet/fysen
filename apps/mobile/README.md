@@ -89,3 +89,7 @@ Simulatorjobben kontrollerer oppstart samt navigasjon til Matlyst og et ramensø
 - Treffene er basert på menytekst: «ramen» kan også bety ramen-panert corn dog. Appen garanterer ikke kulinarisk kategorisering uten bedre kildedata.
 - Mobilkort viser et kort utdrag av lange menybeskrivelser med **Vis mer/Vis mindre** uten å endre originaldataene.
 - Resultattelleren sier «Viser inntil 20», ikke at alle restauranttreff i Oslo nødvendigvis er funnet.
+
+## Sporbar Android-testfil
+
+Hver GitHub-bygget Android QA-pakke inneholder nå `app-release.apk` og `qa-build-info.txt`. Den siste filen oppgir kilde-commit, CI-kjøring, pakkenavnet `no.fysen.app` og at utviklingssignatur brukes. Byggingen kontrollerer både Android-signatur og pakkenavn. Sjekk kilde-commit mot den aktuelle versjonen før du ber noen installere APK-en; gamle testpakker oppdateres ikke automatisk.
