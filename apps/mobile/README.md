@@ -70,3 +70,15 @@ GitHub Actions på et offentlig repo bruker GitHubs inkluderte standardressurser
 ## Visuell identitet
 
 Native iOS og Android bruker nå et faktisk 1024 × 1024 Fysen-appikon med den grønne bollen fra Fysens eksisterende merkevare. Rastersymbolet er lagret i `assets/icon.png`, og redigerbar vektorkilde finnes i `assets/icon-source.svg`. Appens splashbakgrunn er mørk, som resten av Fysen. Ikonet må kontrolleres visuelt på både iPhone-simulator og Android før butikkpublisering.
+
+## Native lenker og utvidet iOS-test
+
+Fysen har egne app-lenker som fungerer når appen er installert:
+
+- `fysen://matlyst` åpner Matlyst.
+- `fysen://favorites` åpner lokalt lagrede favoritter.
+- `fysen://search?q=ramen` søker på nytt i ferske menyer.
+
+Dette er et egendefinert appskjema, **ikke** verifiserte universal links fra nettsiden. Bare kjente ruter og søk på 2–80 tegn aksepteres.
+
+Simulatorjobben kontrollerer oppstart samt navigasjon til Matlyst og et ramensøk, og lagrer tre skjermbilder til manuell kontroll. Skjermbildene er ikke en erstatning for testing av trykkflater og favorittlagring på en fysisk iPhone.
