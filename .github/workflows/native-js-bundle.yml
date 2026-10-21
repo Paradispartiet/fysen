@@ -1,0 +1,38 @@
+name: Fysen Native Bundles
+
+on:
+  pull_request:
+    paths:
+      - "apps/mobile/**"
+      - "packages/contracts/**"
+      - ".github/workflows/native-js-bundle.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-native-bundle-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-node-pnpm
+      - name: Compile shared Fysen types
+        run: pnpm --filter @fysen/contracts build
+      - name: Bundle real iPhone and Android JavaScript
+        run: |
+          pnpm --filter @fysen/mobile exec expo export --platform ios --output-dir dist-ios
+          pnpm --filter @fysen/mobile exec expo export --platform android --output-dir dist-android
+      - name: Assert native bundles were produced
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d apps/mobile/dist-ios
+          test -d apps/mobile/dist-android
+          test -n "$(find apps/mobile/dist-ios -type f -name '*.js' -o -name '*.hbc' | head -n 1)"
+          test -n "$(find apps/mobile/dist-android -type f -name '*.js' -o -name '*.hbc' | head -n 1)"
