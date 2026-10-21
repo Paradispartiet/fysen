@@ -82,3 +82,7 @@ Fysen har egne app-lenker som fungerer når appen er installert:
 Dette er et egendefinert appskjema, **ikke** verifiserte universal links fra nettsiden. Bare kjente ruter og søk på 2–80 tegn aksepteres.
 
 Simulatorjobben kontrollerer oppstart samt navigasjon til Matlyst og et ramensøk, og lagrer tre skjermbilder til manuell kontroll. Skjermbildene er ikke en erstatning for testing av trykkflater og favorittlagring på en fysisk iPhone.
+
+## Kompakt søk på små skjermer
+
+Resultatkort viser pris før beskrivelse. Lange menytitler og beskrivelser beholdes i datakilden, men beskrivelsen vises i inntil tre linjer først; «Les mer» gir hele teksten. Søket beholder API-ets rekkefølge i hver gruppe og skiller fuzzy-/lignende treff fra ordinære treff, med tydelig beskjed om å kontrollere menyen. Det endrer ikke API-ets fasit, kategorisering eller data.
