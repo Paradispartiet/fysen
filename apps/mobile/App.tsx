@@ -21,6 +21,7 @@ import { favoriteKey, readFavorites, writeFavorites, type FavoriteDish } from ".
 import { colors } from "./src/theme";
 import { parseFysenDeepLink } from "./src/deep-link";
 import { descriptionPreview, groupDishMatches } from "./src/search-presentation";
+import { priceProvenanceLabel } from "./src/price-provenance";
 
 type Tab = "search" | "matlyst" | "favorites";
 
@@ -125,6 +126,9 @@ function SearchResultCard({
         </View>
       ) : null}
       <Text style={styles.price}>{formatPrice(result.dish)}</Text>
+      {result.dish.priceMinor !== null ? (
+        <Text style={styles.priceSource}>{priceProvenanceLabel(result.menu.sourceUrl)}</Text>
+      ) : null}
       <Text style={styles.address}>{result.restaurant.address}</Text>
       <Text style={styles.freshness}>{verifiedText} · Kontroller alltid meny og pris</Text>
       <View style={styles.actions}>
@@ -538,6 +542,7 @@ const styles = StyleSheet.create({
   searchTrustNote: { color: colors.soft, fontSize: 12, lineHeight: 19, marginBottom: 4 },
   resultGroupCards: { marginTop: 12 },
   price: { color: colors.white, fontSize: 20, fontWeight: "800", marginTop: 14 },
+  priceSource: { color: colors.muted, fontSize: 12, marginTop: 5 },
   address: { color: colors.muted, fontSize: 12, lineHeight: 19, marginTop: 8 },
   freshness: { color: colors.soft, fontSize: 11, marginTop: 11 },
   favoriteButton: { paddingHorizontal: 8, paddingVertical: 1, minWidth: 44, minHeight: 44, alignItems: "center" },
