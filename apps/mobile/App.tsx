@@ -18,6 +18,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { loadFeatured, searchDishes, type FeaturedResponse } from "./src/api";
 import { cleanDishName, formatPrice, safeHttpsUrl, validateSearchTerm } from "./src/format";
 import { favoriteKey, readFavorites, writeFavorites, type FavoriteDish } from "./src/favorites";
+import { createSerialWriter, toggleFavoriteList } from "./src/favorite-state";
 import { colors } from "./src/theme";
 import { parseFysenDeepLink } from "./src/deep-link";
 import { descriptionPreview, groupDishMatches } from "./src/search-presentation";
@@ -76,10 +77,12 @@ function SectionHeading({ kicker, title, intro }: {
 function SearchResultCard({
   result,
   isFavorite,
+  favoritesLoaded,
   onFavorite,
 }: {
   result: DishSearchResult;
   isFavorite: boolean;
+  favoritesLoaded: boolean;
   onFavorite: (dish: FavoriteDish) => void;
 }) {
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
@@ -106,6 +109,8 @@ function SearchResultCard({
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={isFavorite ? "Fjern rett fra favoritter" : "Lagre retten som favoritt"}
+          accessibilityState={{ disabled: !favoritesLoaded }}
+          disabled={!favoritesLoaded}
           onPress={() => onFavorite({ name: result.dish.name, query })}
           style={styles.favoriteButton}>
           <Text style={[styles.star, isFavorite && styles.starSaved]}>{isFavorite ? "★" : "☆"}</Text>
@@ -146,12 +151,14 @@ function SearchScreen({
   setValue,
   searchRequest,
   favorites,
+  favoritesLoaded,
   onFavorite,
 }: {
   value: string;
   setValue: (value: string) => void;
   searchRequest: number;
   favorites: readonly FavoriteDish[];
+  favoritesLoaded: boolean;
   onFavorite: (dish: FavoriteDish) => void;
 }) {
   const [results, setResults] = useState<DishSearchResult[]>([]);
@@ -203,6 +210,7 @@ function SearchScreen({
         key={result.menuItemId}
         result={result}
         isFavorite={favorites.some((item) => favoriteKey(item.query) === favoriteKey((result.match.canonicalDish?.name || result.dish.normalizedName || result.dish.name).slice(0, 80).trim()))}
+        favoritesLoaded={favoritesLoaded}
         onFavorite={onFavorite}
       />
     );
@@ -349,8 +357,9 @@ function MatlystScreen({
   );
 }
 
-function FavoritesScreen({ favorites, onPick, onRemove }: {
+function FavoritesScreen({ favorites, favoritesLoaded, onPick, onRemove }: {
   favorites: readonly FavoriteDish[];
+  favoritesLoaded: boolean;
   onPick: (query: string) => void;
   onRemove: (dish: FavoriteDish) => void;
 }) {
@@ -358,7 +367,9 @@ function FavoritesScreen({ favorites, onPick, onRemove }: {
     <ScrollView contentContainerStyle={styles.screenContent}>
       <SectionHeading kicker="DIN MATLISTE" title="Favoritter"
         intro="Lagret på denne mobilen. Åpne et nytt søk for å se oppdaterte menyer og priser." />
-      {!favorites.length ? (
+      {!favoritesLoaded ? (
+        <View style={styles.center}><ActivityIndicator color={colors.green} /><Text style={styles.muted}>Laster lagrede favoritter …</Text></View>
+      ) : !favorites.length ? (
         <View style={styles.notice}>
           <Text style={styles.noticeText}>Ingen favoritter ennå. Søk etter en rett og trykk på stjernen for å lagre den.</Text>
           <PrimaryButton label="Finn noe godt" onPress={() => onPick("ramen")} />
@@ -397,6 +408,9 @@ function NativeFysen() {
   const [query, setQuery] = useState("");
   const [searchRequest, setSearchRequest] = useState(0);
   const [favorites, setFavorites] = useState<FavoriteDish[]>([]);
+  const [favoritesLoaded, setFavoritesLoaded] = useState(false);
+  const favoritesRef = useRef<FavoriteDish[]>([]);
+  const favoritesWriter = useRef(createSerialWriter(writeFavorites));
   const [featured, setFeatured] = useState<FeaturedResponse | null>(null);
   const [loadingFeatured, setLoadingFeatured] = useState(true);
   const [featuredError, setFeaturedError] = useState(false);
@@ -422,8 +436,13 @@ function NativeFysen() {
   }, []);
 
   useEffect(() => {
-    void readFavorites().then(setFavorites).catch(() => {
-      Alert.alert("Favoritter", "Kunne ikke lese favorittene som er lagret på mobilen.");
+    void readFavorites().then((items) => {
+      favoritesRef.current = items;
+      setFavorites(items);
+      setFavoritesLoaded(true);
+    }).catch(() => {
+      // Do not claim the empty list represents stored state on read errors.
+      Alert.alert("Favoritter", "Kunne ikke lese lagrede favoritter. Prøv å starte appen på nytt.");
     });
     void refreshFeatured();
     return () => currentFeatured.current?.abort();
@@ -453,17 +472,25 @@ function NativeFysen() {
   }, [navigateToSearch]);
 
   async function toggleFavorite(dish: FavoriteDish) {
-    const previous = favorites;
-    const key = favoriteKey(dish.query);
-    const next = previous.some((entry) => favoriteKey(entry.query) === key)
-      ? previous.filter((entry) => favoriteKey(entry.query) !== key)
-      : [dish, ...previous];
+    if (!favoritesLoaded) return;
+    // Read the ref, not a stale React render, when multiple taps are quick.
+    const previous = favoritesRef.current;
+    const next = toggleFavoriteList(previous, dish) as FavoriteDish[];
+    if (next === previous) {
+      Alert.alert("Favoritter", "Du kan lagre inntil 100 retter.");
+      return;
+    }
+    favoritesRef.current = next;
     setFavorites(next);
     try {
-      await writeFavorites(next);
+      await favoritesWriter.current(next);
     } catch {
-      setFavorites(previous);
-      Alert.alert("Kunne ikke lagre", "Favoritten ble ikke lagret på mobilen. Prøv igjen.");
+      // Roll back only when no newer change has superseded this snapshot.
+      if (favoritesRef.current === next) {
+        favoritesRef.current = previous;
+        setFavorites(previous);
+        Alert.alert("Kunne ikke lagre", "Favoritten ble ikke lagret på mobilen. Prøv igjen.");
+      }
     }
   }
 
@@ -478,14 +505,15 @@ function NativeFysen() {
       <View style={styles.flex}>
         <View style={[styles.flex, tab !== "search" && styles.hidden]}>
           <SearchScreen value={query} setValue={setQuery} searchRequest={searchRequest}
-            favorites={favorites} onFavorite={(dish) => void toggleFavorite(dish)} />
+            favorites={favorites} favoritesLoaded={favoritesLoaded}
+            onFavorite={(dish) => void toggleFavorite(dish)} />
         </View>
         {tab === "matlyst" ? (
           <MatlystScreen featured={featured} loading={loadingFeatured} error={featuredError}
             retry={() => void refreshFeatured()} onPick={navigateToSearch} />
         ) : null}
         {tab === "favorites" ? (
-          <FavoritesScreen favorites={favorites} onPick={navigateToSearch}
+          <FavoritesScreen favorites={favorites} favoritesLoaded={favoritesLoaded} onPick={navigateToSearch}
             onRemove={(dish) => void toggleFavorite(dish)} />
         ) : null}
       </View>
