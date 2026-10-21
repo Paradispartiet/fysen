@@ -13,6 +13,7 @@ Fra roten:
 3. corepack pnpm --filter @fysen/mobile start
 4. Åpne utviklings-QR i Expo Go, eller en lokal iOS/Android-simulator med riktig Expo SDK.
 
+I Expo Go på en fysisk iPhone må Expo Go og Expo CLI være innlogget med samme gratis Expo-konto.
 Expo SDK 57 / React Native 0.86 brukes. Ved inkompatibilitet i Expo Go, bruk en utviklingsbuild.
 Det kreves ikke betalt Apple-medlemskap for å utvikle appen, men installasjon av en selvsignert iOS-utviklingsbuild krever Xcode/macOS. TestFlight og App Store krever normalt Apple Developer Program.
 
@@ -30,3 +31,12 @@ Det kreves ikke betalt Apple-medlemskap for å utvikle appen, men installasjon a
 ## Før offentlig lansering
 
 Fullfør native ikon/splash i Fysen-design, fysisk QA på iPhone/Android, tilgjengelighet, App Store/Play Store personvernmateriale, signert bygg og butikkutgivelse. App-ID-ene er foreløpige; bekreft eierskap før signering. Apple-avgift/Google Play-avgift er ikke betalt og blir ikke omgått av dette prosjektet.
+
+## Installasjonsbygg / gratis test
+
+- Kildekode uten native installasjonsfil: Expo Go på telefon og 'pnpm --filter @fysen/mobile start' på utviklingsmaskinen.
+- Android APK med gratis EAS-kvote: opprett gratis Expo-konto, logg inn med 'npx eas-cli login' og kjør fra 'apps/mobile': 'npx eas-cli build -p android --profile preview'. Dette bygger APK som kan installeres direkte, uten Google Play.
+- iOS-simulator: 'npx eas-cli build -p ios --profile preview' (simulator-bygg, ikke IPA til fysisk iPhone).
+- Fysisk iPhone: Expo Go for utvikling; signert distribusjon gjennom TestFlight/App Store krever normalt betalt Apple Developer Program.
+
+Ved hver mobil-PR kontrollerer '.github/workflows/native-js-bundle.yml' at iOS- og Android-JavaScript faktisk kan pakkes. Det er **ikke** en signert app eller en fysisk funksjonstest.
