@@ -66,3 +66,15 @@ Når workflowen er på `main`: GitHub → Actions → **Fysen iPhone simulator s
 For å teste på en fysisk iPhone uten betaling: bruk en kompatibel utgave av Expo Go og kjør Metro med `pnpm --filter @fysen/mobile start -- --tunnel` fra en utviklingsmaskin. Expo Go må støtte samme SDK; SDK 57 kan kreve Expo sin alternative distribusjon av Expo Go før Apple har godkjent oppdateringen. Det oppsettet gir utviklingstesting, ikke fri offentlig iOS-distribusjon. En egen iPhone-installasjonsfil for offentlig distribusjon krever normalt betalt Apple Developer Program.
 
 GitHub Actions på et offentlig repo bruker GitHubs inkluderte standardressurser. Ikke aktiver større/betalte runners.
+
+## Native lenker og utvidet iOS-test
+
+Fysen har egne app-lenker som fungerer når appen er installert:
+
+- `fysen://matlyst` åpner Matlyst.
+- `fysen://favorites` åpner lokalt lagrede favoritter.
+- `fysen://search?q=ramen` søker på nytt i ferske menyer.
+
+Dette er et egendefinert appskjema, **ikke** verifiserte universal links fra nettsiden. Bare kjente ruter og søk på 2–80 tegn aksepteres.
+
+Simulatorjobben kontrollerer oppstart samt navigasjon til Matlyst og et ramensøk, og lagrer tre skjermbilder til manuell kontroll. Skjermbildene er ikke en erstatning for testing av trykkflater og favorittlagring på en fysisk iPhone.
