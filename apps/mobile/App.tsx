@@ -111,6 +111,10 @@ function SearchResultCard({
           <Text style={[styles.star, isFavorite && styles.starSaved]}>{isFavorite ? "★" : "☆"}</Text>
         </Pressable>
       </View>
+      <Text style={styles.price}>{formatPrice(result.dish)}</Text>
+      {result.dish.priceMinor !== null ? (
+        <Text style={styles.priceSource}>{priceProvenanceLabel(result.menu.sourceUrl)}</Text>
+      ) : null}
       {description ? (
         <View>
           <Text style={styles.description}>{descriptionExpanded ? description : preview}</Text>
@@ -124,10 +128,6 @@ function SearchResultCard({
             </Pressable>
           ) : null}
         </View>
-      ) : null}
-      <Text style={styles.price}>{formatPrice(result.dish)}</Text>
-      {result.dish.priceMinor !== null ? (
-        <Text style={styles.priceSource}>{priceProvenanceLabel(result.menu.sourceUrl)}</Text>
       ) : null}
       <Text style={styles.address}>{result.restaurant.address}</Text>
       <Text style={styles.freshness}>{verifiedText} · Kontroller alltid meny og pris</Text>
