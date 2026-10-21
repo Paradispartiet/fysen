@@ -82,3 +82,10 @@ Fysen har egne app-lenker som fungerer når appen er installert:
 Dette er et egendefinert appskjema, **ikke** verifiserte universal links fra nettsiden. Bare kjente ruter og søk på 2–80 tegn aksepteres.
 
 Simulatorjobben kontrollerer oppstart samt navigasjon til Matlyst og et ramensøk, og lagrer tre skjermbilder til manuell kontroll. Skjermbildene er ikke en erstatning for testing av trykkflater og favorittlagring på en fysisk iPhone.
+
+## Søkeresultater og lesbarhet
+
+- Direkte teksttreff (exact/canonical/prefix) vises først i `Beste teksttreff`, mens contains/fuzzy får en tydelig merket `Lignende treff`-seksjon. Rekkefølgen fra Fysen-API-et **innen hver gruppe** beholdes.
+- Treffene er basert på menytekst: «ramen» kan også bety ramen-panert corn dog. Appen garanterer ikke kulinarisk kategorisering uten bedre kildedata.
+- Mobilkort viser et kort utdrag av lange menybeskrivelser med **Vis mer/Vis mindre** uten å endre originaldataene.
+- Resultattelleren sier «Viser inntil 20», ikke at alle restauranttreff i Oslo nødvendigvis er funnet.
