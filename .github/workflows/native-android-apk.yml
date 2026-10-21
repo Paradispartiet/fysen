@@ -1,0 +1,79 @@
+name: Fysen Android installable test APK
+
+# One proof build in the creating PR; later builds are explicitly dispatched.
+# No paid Expo account, Google Play account, or Apple account is required.
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/native-android-apk.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-android-apk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Checkout Fysen
+        uses: actions/checkout@v4
+
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Setup Java for Gradle
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Verify preinstalled Android SDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d "${ANDROID_HOME:?}/platforms"
+          test -d "$ANDROID_HOME/build-tools"
+          echo "Using GitHub runner's preinstalled Android SDK: $ANDROID_HOME"
+
+      - name: Build shared API types
+        run: pnpm --filter @fysen/contracts build
+
+      - name: Generate native Android project
+        working-directory: apps/mobile
+        env:
+          CI: "1"
+        run: pnpm exec expo prebuild --platform android --no-install --clean
+
+      - name: Assemble standalone release-mode APK with debug signing
+        working-directory: apps/mobile/android
+        env:
+          CI: "1"
+        run: |
+          chmod +x ./gradlew
+          ./gradlew :app:assembleRelease --no-daemon --stacktrace
+
+      - name: Verify APK is installable and bundles app code
+        shell: bash
+        run: |
+          set -euo pipefail
+          apk="apps/mobile/android/app/build/outputs/apk/release/app-release.apk"
+          test -s "$apk"
+          unzip -l "$apk" | grep -F 'assets/index.android.bundle'
+          build_tools="$(find "$ANDROID_HOME/build-tools" -maxdepth 1 -mindepth 1 -type d | sort -V | tail -n 1)"
+          test -n "$build_tools"
+          "$build_tools/apksigner" verify --verbose --print-certs "$apk"
+          echo "APK is a signed, standalone Android QA artifact (debug credentials, not store distribution)." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload installable Android QA APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-android-qa-apk
+          path: apps/mobile/android/app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0
