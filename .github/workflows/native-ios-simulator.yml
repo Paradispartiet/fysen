@@ -84,11 +84,51 @@ jobs:
           xcrun simctl boot "$device"
           xcrun simctl bootstatus "$device" -b
           xcrun simctl install "$device" "$app"
+
+          # CoreSimulator may otherwise show "Open in Fysen?" and keep the
+          # screenshot on a confirmation alert rather than navigating.
+          # This is an isolated, throwaway CI simulator preference only.
+          approval="$HOME/Library/Developer/CoreSimulator/Devices/$device/data/Library/Preferences/com.apple.launchservices.schemeapproval.plist"
+          mkdir -p "$(dirname "$approval")"
+          # Python plistlib creates a valid plist without plutil's missing-input
+          # failure. Launch Services uses the exact bridge-->scheme key.
+          python3 - "$approval" "$bundle_id" <<'PY'
+          import pathlib, plistlib, sys
+          path = pathlib.Path(sys.argv[1])
+          path.parent.mkdir(parents=True, exist_ok=True)
+          with path.open("wb") as output:
+              plistlib.dump({"com.apple.CoreSimulator.CoreSimulatorBridge-->fysen": sys.argv[2]}, output)
+          with path.open("rb") as inp:
+              assert plistlib.load(inp)["com.apple.CoreSimulator.CoreSimulatorBridge-->fysen"] == sys.argv[2]
+          PY
+          echo "Simulator scheme approval set for fysen -> $bundle_id"
           xcrun simctl launch "$device" "$bundle_id"
           sleep 10
           xcrun simctl io "$device" screenshot ios/fysen-iphone-smoke.png
           test -s ios/fysen-iphone-smoke.png
-          echo "Unsigned iPhone simulator app launched with bundled JS." >> "$GITHUB_STEP_SUMMARY"
+
+          # Open native tabs through the app's own URL scheme; no gesture automation needed.
+          xcrun simctl openurl "$device" "fysen://matlyst"
+          sleep 10
+          xcrun simctl io "$device" screenshot ios/fysen-iphone-matlyst.png
+          test -s ios/fysen-iphone-matlyst.png
+          xcrun simctl openurl "$device" "fysen://search?q=ramen"
+          sleep 10
+          xcrun simctl io "$device" screenshot ios/fysen-iphone-search-results.png
+          test -s ios/fysen-iphone-search-results.png
+
+          # A completed simctl openurl is not sufficient evidence: iOS can
+          # leave an unanswered "Open in Fysen?" alert above the unchanged UI.
+          if cmp -s ios/fysen-iphone-matlyst.png ios/fysen-iphone-search-results.png; then
+            echo "::error::Matlyst and search screenshots are identical: link navigation may be blocked by the iOS scheme-confirmation dialog."
+            exit 1
+          fi
+          if cmp -s ios/fysen-iphone-smoke.png ios/fysen-iphone-matlyst.png; then
+            echo "::error::Matlyst did not change the initial search screen."
+            exit 1
+          fi
+
+          echo "Unsigned iPhone simulator app launched with distinct search and Matlyst screens." >> "$GITHUB_STEP_SUMMARY"
 
       - name: Archive simulator app (not a device IPA)
         working-directory: apps/mobile
@@ -96,13 +136,16 @@ jobs:
           cd ios/build/Build/Products/Release-iphonesimulator
           zip -qry "$GITHUB_WORKSPACE/apps/mobile/fysen-ios-simulator.zip" Fysen.app
 
-      - name: Upload simulator app and screenshot
+      - name: Upload simulator app and screenshots for QA, including failures
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: fysen-iphone-simulator-qa
           path: |
             apps/mobile/fysen-ios-simulator.zip
             apps/mobile/ios/fysen-iphone-smoke.png
-          if-no-files-found: error
+            apps/mobile/ios/fysen-iphone-matlyst.png
+            apps/mobile/ios/fysen-iphone-search-results.png
+          if-no-files-found: warn
           retention-days: 14
           compression-level: 0
