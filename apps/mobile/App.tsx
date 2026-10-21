@@ -19,6 +19,7 @@ import { loadFeatured, searchDishes, type FeaturedResponse } from "./src/api";
 import { cleanDishName, formatPrice, safeHttpsUrl, validateSearchTerm } from "./src/format";
 import { favoriteKey, readFavorites, writeFavorites, type FavoriteDish } from "./src/favorites";
 import { colors } from "./src/theme";
+import { parseFysenDeepLink } from "./src/deep-link";
 
 type Tab = "search" | "matlyst" | "favorites";
 
@@ -380,11 +381,28 @@ function NativeFysen() {
     return () => currentFeatured.current?.abort();
   }, [refreshFeatured]);
 
-  function navigateToSearch(term: string) {
+  const navigateToSearch = useCallback((term: string) => {
     setQuery(term);
     setSearchRequest((previous) => previous + 1);
     setTab("search");
-  }
+  }, []);
+
+  useEffect(() => {
+    const navigateFromUrl = (url: string | null) => {
+      const destination = parseFysenDeepLink(url);
+      if (!destination) return;
+      if (destination.tab === "search" && destination.query) {
+        navigateToSearch(destination.query);
+      } else {
+        setTab(destination.tab);
+      }
+    };
+    void Linking.getInitialURL().then(navigateFromUrl).catch(() => {
+      // A failed initial-link lookup must never prevent the app opening.
+    });
+    const subscription = Linking.addEventListener("url", ({ url }) => navigateFromUrl(url));
+    return () => subscription.remove();
+  }, [navigateToSearch]);
 
   async function toggleFavorite(dish: FavoriteDish) {
     const previous = favorites;
