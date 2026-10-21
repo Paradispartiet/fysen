@@ -4,7 +4,8 @@
     "strict": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true
   },
   "include": [
     "**/*.ts",
