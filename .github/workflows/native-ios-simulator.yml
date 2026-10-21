@@ -91,7 +91,7 @@ jobs:
           approval="$HOME/Library/Developer/CoreSimulator/Devices/$device/data/Library/Preferences/com.apple.launchservices.schemeapproval.plist"
           mkdir -p "$(dirname "$approval")"
           if [[ ! -f "$approval" ]]; then
-            plutil -create xml1 -o "$approval"
+            plutil -create xml1 "$approval"
           fi
           /usr/libexec/PlistBuddy -c "Delete :com.apple.CoreSimulator.CoreSimulatorBridge-->fysen" "$approval" 2>/dev/null || true
           /usr/libexec/PlistBuddy -c "Add :com.apple.CoreSimulator.CoreSimulatorBridge-->fysen string $bundle_id" "$approval"
