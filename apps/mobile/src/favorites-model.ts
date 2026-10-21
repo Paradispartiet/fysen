@@ -35,7 +35,8 @@ export function toggleFavorite(
 ): FavoriteDish[] {
   const valid = normalizeFavorites([item]);
   if (valid.length === 0) return [...current];
-  const candidate = valid[0]!;
+  const candidate = valid[0];
+  if (!candidate) return [...current];
   const key = favoriteKey(candidate.query);
   const exists = current.some((entry) => favoriteKey(entry.query) === key);
   return exists
