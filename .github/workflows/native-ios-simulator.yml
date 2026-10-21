@@ -1,0 +1,108 @@
+name: Fysen iPhone simulator smoke
+
+# First proof run on the creating PR; later simulator builds are manual.
+# No Apple Developer account or signing identity is used.
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/native-ios-simulator.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-ios-sim-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  simulator:
+    runs-on: macos-26
+    timeout-minutes: 55
+    env:
+      CI: "1"
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+    steps:
+      - name: Checkout Fysen
+        uses: actions/checkout@v4
+
+      - name: Show Apple toolchain
+        shell: bash
+        run: |
+          xcodebuild -version
+          xcrun simctl list devices available
+
+      - name: Setup canonical workspace
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build shared Fysen types
+        run: pnpm --filter @fysen/contracts build
+
+      - name: Generate native iOS simulator project
+        working-directory: apps/mobile
+        run: pnpm exec expo prebuild --platform ios --no-install --clean
+
+      - name: Install CocoaPods dependencies
+        working-directory: apps/mobile/ios
+        run: pod install
+
+      - name: Build standalone Release iPhone simulator app (unsigned)
+        working-directory: apps/mobile
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -workspace ios/Fysen.xcworkspace \
+            -scheme Fysen \
+            -configuration Release \
+            -sdk iphonesimulator \
+            -destination "generic/platform=iOS Simulator" \
+            -derivedDataPath ios/build \
+            CODE_SIGNING_ALLOWED=NO \
+            build 2>&1 | tee /tmp/fysen-ios-xcodebuild.log
+
+      - name: Check embedded JavaScript and run in iPhone simulator
+        working-directory: apps/mobile
+        shell: bash
+        run: |
+          set -euo pipefail
+          app="ios/build/Build/Products/Release-iphonesimulator/Fysen.app"
+          test -d "$app"
+          test -s "$app/main.jsbundle"
+          test -f "$app/Info.plist"
+          bundle_id="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Info.plist")"
+          test "$bundle_id" = "no.fysen.app"
+          device="$(python3 - <<'PY'
+          import json,subprocess
+          data=json.loads(subprocess.check_output(["xcrun","simctl","list","devices","available","-j"],text=True))
+          devices=[d for entries in data["devices"].values() for d in entries if d["name"].startswith("iPhone") and d["isAvailable"]]
+          if not devices: raise SystemExit("No available iPhone simulator")
+          print(devices[0]["udid"])
+          PY
+          )"
+          echo "Testing iPhone simulator $device"
+          xcrun simctl boot "$device"
+          xcrun simctl bootstatus "$device" -b
+          xcrun simctl install "$device" "$app"
+          xcrun simctl launch "$device" "$bundle_id"
+          sleep 10
+          xcrun simctl io "$device" screenshot ios/fysen-iphone-smoke.png
+          test -s ios/fysen-iphone-smoke.png
+          echo "Unsigned iPhone simulator app launched with bundled JS." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Archive simulator app (not a device IPA)
+        working-directory: apps/mobile
+        run: |
+          cd ios/build/Build/Products/Release-iphonesimulator
+          zip -qry "$GITHUB_WORKSPACE/apps/mobile/fysen-ios-simulator.zip" Fysen.app
+
+      - name: Upload simulator app and screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-iphone-simulator-qa
+          path: |
+            apps/mobile/fysen-ios-simulator.zip
+            apps/mobile/ios/fysen-iphone-smoke.png
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0

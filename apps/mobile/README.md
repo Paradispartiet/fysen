@@ -55,3 +55,14 @@ Første PR som legger til workflowen utløser én kontrollbygging. Deretter kjø
 Denne APK-en bygges i release-modus, har JS-koden innbakt og verifiseres med Android `apksigner`, men er signert med **utviklingsnøkkel**. Den er til intern kvalitetskontroll, ikke til Play Store eller offentlig distribusjon. Eksterne lenker, ferske søk og Matlyst krever fremdeles nett.
 
 På iPhone kan man teste React Native-appen med en kompatibel Expo Go-versjon og en aktiv Metro-server. Gratis GitHub-bygging gir **ikke** en signert iOS-app for installasjon på andres iPhone; Apple krever normalt et betalt utviklermedlemskap for distribusjon.
+
+## iPhone-simulator uten Apple-abonnement
+
+GitHub Actions-jobben **Fysen iPhone simulator smoke** bruker en macOS 26-runner med Xcode.
+Ved første PR-kontroll og senere manuelle kjøringer bygger den en `Release-iphonesimulator/Fysen.app` med JavaScript innebygd, uten Apple-signatur eller utviklerkonto. Deretter forsøker den å starte appen i en iPhone-simulator og lagrer et skjermbilde og ZIP i `fysen-iphone-simulator-qa`.
+
+Når workflowen er på `main`: GitHub → Actions → **Fysen iPhone simulator smoke** → **Run workflow**. Nedlastingspakken er en simulator-app for macOS/Xcode, **ikke en IPA som kan installeres på en vanlig iPhone**.
+
+For å teste på en fysisk iPhone uten betaling: bruk en kompatibel utgave av Expo Go og kjør Metro med `pnpm --filter @fysen/mobile start -- --tunnel` fra en utviklingsmaskin. Expo Go må støtte samme SDK; SDK 57 kan kreve Expo sin alternative distribusjon av Expo Go før Apple har godkjent oppdateringen. Det oppsettet gir utviklingstesting, ikke fri offentlig iOS-distribusjon. En egen iPhone-installasjonsfil for offentlig distribusjon krever normalt betalt Apple Developer Program.
+
+GitHub Actions på et offentlig repo bruker GitHubs inkluderte standardressurser. Ikke aktiver større/betalte runners.
