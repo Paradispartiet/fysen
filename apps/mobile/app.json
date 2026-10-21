@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "Fysen",
+    "slug": "fysen",
+    "scheme": "fysen",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#090b09",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "no.fysen.app"
+    },
+    "android": {
+      "package": "no.fysen.app",
+      "edgeToEdgeEnabled": true
+    },
+    "extra": {
+      "apiBaseUrl": "https://fysen-api.vercel.app"
+    }
+  }
+}

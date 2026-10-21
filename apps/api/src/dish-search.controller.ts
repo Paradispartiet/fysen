@@ -37,6 +37,18 @@ export function parseDishSearchQuery(value: unknown): DishSearchQuery {
 export class DishSearchController {
   constructor(@Inject(DishSearchService) private readonly dishSearchService: DishSearchService) {}
 
+  @Get("featured")
+  async featured(@Query() query: unknown): Promise<Pick<DishBrowseResponse, "city" | "count" | "recentDishes" | "popularDishes">> {
+    // A bounded response for native clients; never transmit the full Oslo dish index.
+    const data = await this.dishSearchService.browse(parseDishBrowseQuery(query));
+    return {
+      city: data.city,
+      count: data.count,
+      recentDishes: data.recentDishes ?? [],
+      popularDishes: data.popularDishes ?? [],
+    };
+  }
+
   @Get("browse")
   async browse(@Query() query: unknown): Promise<DishBrowseResponse> {
     return this.dishSearchService.browse(parseDishBrowseQuery(query));
