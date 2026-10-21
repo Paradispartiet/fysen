@@ -66,3 +66,7 @@ Når workflowen er på `main`: GitHub → Actions → **Fysen iPhone simulator s
 For å teste på en fysisk iPhone uten betaling: bruk en kompatibel utgave av Expo Go og kjør Metro med `pnpm --filter @fysen/mobile start -- --tunnel` fra en utviklingsmaskin. Expo Go må støtte samme SDK; SDK 57 kan kreve Expo sin alternative distribusjon av Expo Go før Apple har godkjent oppdateringen. Det oppsettet gir utviklingstesting, ikke fri offentlig iOS-distribusjon. En egen iPhone-installasjonsfil for offentlig distribusjon krever normalt betalt Apple Developer Program.
 
 GitHub Actions på et offentlig repo bruker GitHubs inkluderte standardressurser. Ikke aktiver større/betalte runners.
+
+## Visuell identitet
+
+Native iOS og Android bruker nå et faktisk 1024 × 1024 Fysen-appikon med den grønne bollen fra Fysens eksisterende merkevare. Rastersymbolet er lagret i `assets/icon.png`, og redigerbar vektorkilde finnes i `assets/icon-source.svg`. Appens splashbakgrunn er mørk, som resten av Fysen. Ikonet må kontrolleres visuelt på både iPhone-simulator og Android før butikkpublisering.
