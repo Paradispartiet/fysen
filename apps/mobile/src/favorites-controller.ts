@@ -2,7 +2,7 @@ import {
   normalizeFavorites,
   toggleFavorite,
   type FavoriteDish,
-} from "./favorites-model";
+} from "./favorites-model.ts";
 
 export type FavoritesSnapshot = {
   ready: boolean;
