@@ -6,6 +6,7 @@ import {
   Alert,
   Keyboard,
   Linking,
+  Platform,
   Pressable,
   ScrollView,
   StatusBar,
@@ -22,6 +23,7 @@ import { colors } from "./src/theme";
 import { parseFysenDeepLink } from "./src/deep-link";
 import { descriptionPreview, groupDishMatches } from "./src/search-presentation";
 import { priceProvenanceLabel } from "./src/price-provenance";
+import { restaurantDirectionsUrl } from "./src/directions";
 
 type Tab = "search" | "matlyst" | "favorites";
 
@@ -89,8 +91,7 @@ function SearchResultCard({
   const hasLongDescription = description.length > preview.length;
   const booking = result.actions.booking?.url;
   const order = result.actions.order?.url;
-  const mapUrl = "https://www.google.com/maps/search/?api=1&query=" +
-    encodeURIComponent(result.restaurant.name + " " + result.restaurant.address);
+  const mapUrl = restaurantDirectionsUrl(Platform.OS, result.restaurant);
   const lastChecked = new Date(result.menu.lastCheckedAt);
   const verifiedText = Number.isNaN(lastChecked.getTime())
     ? "Menykilde oppgitt"
