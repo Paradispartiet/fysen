@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { priceProvenanceLabel } from "../src/price-provenance.ts";
 
@@ -35,7 +36,6 @@ test("does not mistake lookalike hosts for delivery services", () => {
 });
 
 test("native result and Matlyst cards show provenance only for sourced prices", () => {
-  const { readFileSync } = await import("node:fs");
   const code = readFileSync(new URL("../App.tsx", import.meta.url), "utf8");
   assert.match(code, /result\.dish\.priceMinor !== null \? \([\s\S]*priceProvenanceLabel\(result\.menu\.sourceUrl\)/);
   assert.match(code, /dish\.priceMinor !== null \? \([\s\S]*priceProvenanceLabel\(dish\.sourceUrl\)/);
