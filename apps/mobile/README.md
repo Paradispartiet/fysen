@@ -67,6 +67,10 @@ For å teste på en fysisk iPhone uten betaling: bruk en kompatibel utgave av Ex
 
 GitHub Actions på et offentlig repo bruker GitHubs inkluderte standardressurser. Ikke aktiver større/betalte runners.
 
+## Visuell identitet
+
+Native iOS og Android bruker nå et faktisk 1024 × 1024 Fysen-appikon med den grønne bollen fra Fysens eksisterende merkevare. Rastersymbolet er lagret i `assets/icon.png`, og redigerbar vektorkilde finnes i `assets/icon-source.svg`. Appens splashbakgrunn er mørk, som resten av Fysen. Ikonet må kontrolleres visuelt på både iPhone-simulator og Android før butikkpublisering.
+
 ## Native lenker og utvidet iOS-test
 
 Fysen har egne app-lenker som fungerer når appen er installert:
