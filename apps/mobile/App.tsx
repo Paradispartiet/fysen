@@ -79,7 +79,7 @@ function SearchResultCard({
   isFavorite: boolean;
   onFavorite: (dish: FavoriteDish) => void;
 }) {
-  const query = result.dish.normalizedName || result.dish.name;
+  const query = (result.match.canonicalDish?.name || result.dish.normalizedName || result.dish.name).slice(0, 80).trim();
   const booking = result.actions.booking?.url;
   const order = result.actions.order?.url;
   const mapUrl = "https://www.google.com/maps/search/?api=1&query=" +
@@ -168,7 +168,6 @@ function SearchScreen({
   useEffect(() => {
     if (searchRequest > 0) void perform(value);
     // New searches from Matlyst and Favoritter are coordinated by the request counter.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchRequest, perform]);
 
   useEffect(() => () => { request.current?.abort(); }, []);
@@ -209,14 +208,14 @@ function SearchScreen({
       {error ? <View style={styles.notice}><Text style={styles.noticeText}>{error}</Text><Pill label="Prøv igjen" onPress={() => void perform(value)} /></View> : null}
       {searched && !loading && !error ? (
         <>
-          <Text style={styles.resultsLabel}>{results.length} {results.length === 1 ? "treff" : "treff"} i Oslo</Text>
+          <Text style={styles.resultsLabel}>{results.length} treff i Oslo</Text>
           {results.length === 0 ? (
             <Text style={styles.muted}>Ingen ferske treff. Prøv et annet navn på retten.</Text>
           ) : results.map((result) => (
             <SearchResultCard
               key={result.menuItemId}
               result={result}
-              isFavorite={favorites.some((item) => favoriteKey(item.query) === favoriteKey(result.dish.normalizedName || result.dish.name))}
+              isFavorite={favorites.some((item) => favoriteKey(item.query) === favoriteKey((result.match.canonicalDish?.name || result.dish.normalizedName || result.dish.name).slice(0, 80).trim()))}
               onFavorite={onFavorite}
             />
           ))}
