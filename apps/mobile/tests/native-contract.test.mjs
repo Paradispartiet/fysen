@@ -27,7 +27,8 @@ test("Native API consumes bounded featured response and live dish search", () =>
 
 test("Favorites are local and limited, and external URLs are validated", () => {
   assert.match(read("src/favorites.ts"), /AsyncStorage/);
-  assert.match(read("src/favorites.ts"), /MAX_FAVORITES = 100/);
+  assert.match(read("src/favorites-controller.ts"), /writeQueue/);
+  assert.match(read("src/favorites-model.ts"), /MAX_FAVORITES = 100/);
   assert.match(read("src/format.ts"), /url\.protocol === "https:"/);
 });
 
