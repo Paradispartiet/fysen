@@ -82,3 +82,9 @@ Fysen har egne app-lenker som fungerer når appen er installert:
 Dette er et egendefinert appskjema, **ikke** verifiserte universal links fra nettsiden. Bare kjente ruter og søk på 2–80 tegn aksepteres.
 
 Simulatorjobben kontrollerer oppstart samt navigasjon til Matlyst og et ramensøk, og lagrer tre skjermbilder til manuell kontroll. Skjermbildene er ikke en erstatning for testing av trykkflater og favorittlagring på en fysisk iPhone.
+
+## Søkeresultater og kildeproveniens
+
+Den native resultatlisten prioriterer dokumenterte menytreff. Fuzzy-matcher skilles ut som **Lignende retter**, og de beholder sin innbyrdes rekkefølge fra API-et. Opp til 20 treff vises per søk; dette er ikke en telling av alle eksisterende retter i Oslo.
+
+Lange menybeskrivelser foldes sammen til tre linjer, men full tekst kan åpnes med **Les mer**. Når priskilden er Wolt eller Foodora, merkes leveringsprisen eksplisitt; ellers står **Pris fra menykilden**. Ingen kildepriser eller beskrivelser endres.
