@@ -48,3 +48,12 @@ test("Native Fysen icon is a real 1024px PNG matching brand setup", () => {
   assert.equal(icon.readUInt32BE(16), 1024);
   assert.equal(icon.readUInt32BE(20), 1024);
 });
+
+test("iPhone simulator smoke runs for native UI changes and checks distinct tab content", () => {
+  const workflow = fs.readFileSync(new URL("../../.github/workflows/native-ios-simulator.yml", base), "utf8");
+  assert.match(workflow, /apps\\/mobile\\/App\\.tsx/);
+  assert.match(workflow, /apps\\/mobile\\/src\\/\\*\\*/);
+  assert.match(workflow, /ios\\/fysen-iphone-favorites\\.png/);
+  assert.match(workflow, /cropToHeightWidth 1700 1080/);
+  assert.match(workflow, /qa-content\\/matlyst\\.png/);
+});
