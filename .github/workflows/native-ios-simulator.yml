@@ -88,7 +88,18 @@ jobs:
           sleep 10
           xcrun simctl io "$device" screenshot ios/fysen-iphone-smoke.png
           test -s ios/fysen-iphone-smoke.png
-          echo "Unsigned iPhone simulator app launched with bundled JS." >> "$GITHUB_STEP_SUMMARY"
+
+          # Open native tabs through the app's own URL scheme; no gesture automation needed.
+          xcrun simctl openurl "$device" "fysen://matlyst"
+          sleep 10
+          xcrun simctl io "$device" screenshot ios/fysen-iphone-matlyst.png
+          test -s ios/fysen-iphone-matlyst.png
+          xcrun simctl openurl "$device" "fysen://search?q=ramen"
+          sleep 10
+          xcrun simctl io "$device" screenshot ios/fysen-iphone-search-results.png
+          test -s ios/fysen-iphone-search-results.png
+
+          echo "Unsigned iPhone simulator app launched, deep-linked to Matlyst and searched ramen with bundled JS." >> "$GITHUB_STEP_SUMMARY"
 
       - name: Archive simulator app (not a device IPA)
         working-directory: apps/mobile
@@ -103,6 +114,8 @@ jobs:
           path: |
             apps/mobile/fysen-ios-simulator.zip
             apps/mobile/ios/fysen-iphone-smoke.png
+            apps/mobile/ios/fysen-iphone-matlyst.png
+            apps/mobile/ios/fysen-iphone-search-results.png
           if-no-files-found: error
           retention-days: 14
           compression-level: 0
