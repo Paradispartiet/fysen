@@ -89,3 +89,10 @@ Simulatorjobben kontrollerer oppstart samt navigasjon til Matlyst og et ramensø
 - Treffene er basert på menytekst: «ramen» kan også bety ramen-panert corn dog. Appen garanterer ikke kulinarisk kategorisering uten bedre kildedata.
 - Mobilkort viser et kort utdrag av lange menybeskrivelser med **Vis mer/Vis mindre** uten å endre originaldataene.
 - Resultattelleren sier «Viser inntil 20», ikke at alle restauranttreff i Oslo nødvendigvis er funnet.
+
+## Oppdaterte retter på mobilen
+
+- Både **Søk** og **Matlyst** støtter vanlig native dra-ned-for-å-oppdatere.
+- Etter minst 15 minutter i bakgrunnen oppdaterer appen automatisk Matlyst og det sist utførte søket når telefonen tas frem igjen.
+- Kortere bytter mellom apper utløser ikke unødvendige nettverkskall. Favoritter forblir lokale; menypriser lagres ikke som offline-data.
+- Dersom nettet svikter under oppdatering, skal appen vise en feiltilstand i stedet for å late som gamle resultater er ferske.

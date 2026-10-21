@@ -4,10 +4,12 @@ import type { PopularDishItem, RecentlyAddedDishItem } from "@fysen/contracts/di
 import {
   ActivityIndicator,
   Alert,
+  AppState,
   Keyboard,
   Linking,
   Platform,
   Pressable,
+  RefreshControl,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -21,6 +23,7 @@ import { cleanDishName, formatPrice, safeHttpsUrl, validateSearchTerm } from "./
 import { favoriteKey, readFavorites, writeFavorites, type FavoriteDish } from "./src/favorites";
 import { createFavoritesController, type FavoritesSnapshot } from "./src/favorites-controller";
 import { colors } from "./src/theme";
+import { shouldRefreshAfterResume } from "./src/freshness";
 import { parseFysenDeepLink } from "./src/deep-link";
 import { descriptionPreview, groupDishMatches } from "./src/search-presentation";
 import { priceProvenanceLabel } from "./src/price-provenance";
@@ -151,6 +154,7 @@ function SearchScreen({
   value,
   setValue,
   searchRequest,
+  refreshRequest,
   favorites,
   favoritesReady,
   onFavorite,
@@ -158,6 +162,7 @@ function SearchScreen({
   value: string;
   setValue: (value: string) => void;
   searchRequest: number;
+  refreshRequest: number;
   favorites: readonly FavoriteDish[];
   favoritesReady: boolean;
   onFavorite: (dish: FavoriteDish) => void;
@@ -168,18 +173,24 @@ function SearchScreen({
   const [error, setError] = useState<string | null>(null);
   const request = useRef<AbortController | null>(null);
   const lastRequest = useRef(0);
+  const lastSearchedTerm = useRef<string | null>(null);
 
   const perform = useCallback(async (term: string) => {
+    request.current?.abort();
+    const current = ++lastRequest.current;
     const validated = validateSearchTerm(term);
     if (!validated) {
+      setLoading(false);
+      setResults([]);
+      setSearched(false);
+      lastSearchedTerm.current = null;
       setError("Skriv minst 2 og maksimalt 80 tegn.");
       return;
     }
     Keyboard.dismiss();
-    request.current?.abort();
     const controller = new AbortController();
     request.current = controller;
-    const current = ++lastRequest.current;
+    lastSearchedTerm.current = validated;
     setLoading(true);
     setSearched(true);
     setError(null);
@@ -192,7 +203,7 @@ function SearchScreen({
         setError("Kunne ikke hente ferske treff. Kontroller nettet og prøv igjen.");
       }
     } finally {
-      if (current === lastRequest.current) setLoading(false);
+      if (current === lastRequest.current && !controller.signal.aborted) setLoading(false);
     }
   }, []);
 
@@ -200,6 +211,10 @@ function SearchScreen({
     if (searchRequest > 0) void perform(value);
     // New searches from Matlyst and Favoritter are coordinated by the request counter.
   }, [searchRequest, perform]);
+
+  useEffect(() => {
+    if (refreshRequest > 0 && lastSearchedTerm.current) void perform(lastSearchedTerm.current);
+  }, [refreshRequest, perform]);
 
   useEffect(() => () => { request.current?.abort(); }, []);
 
@@ -218,7 +233,12 @@ function SearchScreen({
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.screenContent} keyboardShouldPersistTaps="handled">
+    <ScrollView contentContainerStyle={styles.screenContent} keyboardShouldPersistTaps="handled"
+      refreshControl={
+        <RefreshControl refreshing={loading}
+          onRefresh={() => { if (lastSearchedTerm.current) void perform(lastSearchedTerm.current); }}
+          tintColor={colors.green} colors={[colors.green]} />
+      }>
       <SectionHeading kicker="OSLO • MAT PÅ MENYEN" title="Hva har du lyst på?"
         intro="Finn en rett først. Se deretter hvilke restauranter som faktisk har den." />
       <View style={styles.searchBox}>
@@ -330,7 +350,8 @@ function MatlystScreen({
   onPick: (query: string) => void;
 }) {
   return (
-    <ScrollView contentContainerStyle={styles.screenContent}>
+    <ScrollView contentContainerStyle={styles.screenContent}
+      refreshControl={<RefreshControl refreshing={loading} onRefresh={retry} tintColor={colors.green} colors={[colors.green]} />}>
       <SectionHeading kicker="OPPDAG NOE NYTT" title="Matlyst"
         intro="Retter å utforske – med ekte restauranter og sporbare menyer." />
       {loading ? <View style={styles.center}><ActivityIndicator color={colors.green} size="large" /><Text style={styles.muted}>Henter Matlyst …</Text></View> : null}
@@ -408,6 +429,7 @@ function NativeFysen() {
   const [tab, setTab] = useState<Tab>("search");
   const [query, setQuery] = useState("");
   const [searchRequest, setSearchRequest] = useState(0);
+  const [refreshRequest, setRefreshRequest] = useState(0);
   const [favoriteState, setFavoriteState] = useState<FavoritesSnapshot>({ ready: false, items: [] });
   const favoriteController = useRef<ReturnType<typeof createFavoritesController> | null>(null);
   if (!favoriteController.current) {
@@ -423,6 +445,7 @@ function NativeFysen() {
   const [loadingFeatured, setLoadingFeatured] = useState(true);
   const [featuredError, setFeaturedError] = useState(false);
   const currentFeatured = useRef<AbortController | null>(null);
+  const backgroundAt = useRef<number | null>(null);
 
   const refreshFeatured = useCallback(async () => {
     currentFeatured.current?.abort();
@@ -447,6 +470,21 @@ function NativeFysen() {
     void favoriteController.current?.hydrate();
     void refreshFeatured();
     return () => currentFeatured.current?.abort();
+  }, [refreshFeatured]);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", (nextState) => {
+      if (nextState === "background" || nextState === "inactive") {
+        if (backgroundAt.current === null) backgroundAt.current = Date.now();
+      } else if (nextState === "active") {
+        if (shouldRefreshAfterResume(backgroundAt.current, Date.now())) {
+          void refreshFeatured();
+          setRefreshRequest((previous) => previous + 1);
+        }
+        backgroundAt.current = null;
+      }
+    });
+    return () => subscription.remove();
   }, [refreshFeatured]);
 
   const navigateToSearch = useCallback((term: string) => {
@@ -486,7 +524,7 @@ function NativeFysen() {
       </View>
       <View style={styles.flex}>
         <View style={[styles.flex, tab !== "search" && styles.hidden]}>
-          <SearchScreen value={query} setValue={setQuery} searchRequest={searchRequest}
+          <SearchScreen value={query} setValue={setQuery} searchRequest={searchRequest} refreshRequest={refreshRequest}
             favorites={favoriteState.items} favoritesReady={favoriteState.ready}
             onFavorite={toggleFavorite} />
         </View>
