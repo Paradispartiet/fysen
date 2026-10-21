@@ -1,11 +1,17 @@
 name: Fysen iPhone simulator smoke
 
-# First proof run on the creating PR; later simulator builds are manual.
+# Run for actual native UI changes, not documentation-only PRs.
 # No Apple Developer account or signing identity is used.
 on:
   pull_request:
     paths:
       - ".github/workflows/native-ios-simulator.yml"
+      - "apps/mobile/App.tsx"
+      - "apps/mobile/app.json"
+      - "apps/mobile/package.json"
+      - "apps/mobile/src/**"
+      - "apps/mobile/assets/**"
+      - "packages/contracts/src/**"
   workflow_dispatch:
 
 permissions:
@@ -116,19 +122,34 @@ jobs:
           sleep 10
           xcrun simctl io "$device" screenshot ios/fysen-iphone-search-results.png
           test -s ios/fysen-iphone-search-results.png
+          xcrun simctl openurl "$device" "fysen://favorites"
+          sleep 5
+          xcrun simctl io "$device" screenshot ios/fysen-iphone-favorites.png
+          test -s ios/fysen-iphone-favorites.png
 
-          # A completed simctl openurl is not sufficient evidence: iOS can
-          # leave an unanswered "Open in Fysen?" alert above the unchanged UI.
-          if cmp -s ios/fysen-iphone-matlyst.png ios/fysen-iphone-search-results.png; then
-            echo "::error::Matlyst and search screenshots are identical: link navigation may be blocked by the iOS scheme-confirmation dialog."
+          # The clock and status icons can change even if the app is frozen
+          # behind a confirmation dialog. Compare the central APP CONTENT,
+          # not entire screenshots. sips is available on macOS runners.
+          mkdir -p ios/qa-content
+          for screen in smoke matlyst search-results favorites; do
+            sips --cropToHeightWidth 1700 1080 \
+              "ios/fysen-iphone-$screen.png" \
+              --out "ios/qa-content/$screen.png" >/dev/null
+          done
+          if cmp -s ios/qa-content/smoke.png ios/qa-content/matlyst.png; then
+            echo "::error::Matlyst still shows the initial search screen."
             exit 1
           fi
-          if cmp -s ios/fysen-iphone-smoke.png ios/fysen-iphone-matlyst.png; then
-            echo "::error::Matlyst did not change the initial search screen."
+          if cmp -s ios/qa-content/matlyst.png ios/qa-content/search-results.png; then
+            echo "::error::Matlyst and search have the same app content: URL navigation may be blocked."
+            exit 1
+          fi
+          if cmp -s ios/qa-content/search-results.png ios/qa-content/favorites.png; then
+            echo "::error::Favorites did not replace the search results."
             exit 1
           fi
 
-          echo "Unsigned iPhone simulator app launched with distinct search and Matlyst screens." >> "$GITHUB_STEP_SUMMARY"
+          echo "Unsigned iPhone simulator app launched and opened search, Matlyst, ramen results and Favorites." >> "$GITHUB_STEP_SUMMARY"
 
       - name: Archive simulator app (not a device IPA)
         working-directory: apps/mobile
@@ -146,6 +167,7 @@ jobs:
             apps/mobile/ios/fysen-iphone-smoke.png
             apps/mobile/ios/fysen-iphone-matlyst.png
             apps/mobile/ios/fysen-iphone-search-results.png
+            apps/mobile/ios/fysen-iphone-favorites.png
           if-no-files-found: warn
           retention-days: 14
           compression-level: 0
