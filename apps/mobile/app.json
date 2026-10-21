@@ -14,10 +14,20 @@
     },
     "android": {
       "package": "no.fysen.app",
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#070807"
+      }
     },
     "extra": {
       "apiBaseUrl": "https://fysen-api.vercel.app"
+    },
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#090b09"
     }
   }
 }
