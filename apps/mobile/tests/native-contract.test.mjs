@@ -38,3 +38,13 @@ test("First release does not ask for GPS or account access", () => {
   const screen = read("App.tsx");
   assert.doesNotMatch(screen, /requestForegroundPermissions|requestLocationPermissions/);
 });
+
+test("Native Fysen icon is a real 1024px PNG matching brand setup", () => {
+  const app = JSON.parse(read("app.json"));
+  assert.equal(app.expo.icon, "./assets/icon.png");
+  assert.equal(app.expo.android.adaptiveIcon.foregroundImage, "./assets/icon.png");
+  const icon = fs.readFileSync(new URL("assets/icon.png", base));
+  assert.equal(icon.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
+  assert.equal(icon.readUInt32BE(16), 1024);
+  assert.equal(icon.readUInt32BE(20), 1024);
+});
