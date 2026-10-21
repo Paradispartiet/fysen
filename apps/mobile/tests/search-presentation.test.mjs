@@ -30,5 +30,5 @@ test("result cards keep price visible ahead of expandable menu text", async () =
   const card = file.slice(start, end);
   assert.ok(card.includes("numberOfLines={expandableDescription && !expandedDescription ? 3 : undefined}"), "description must initially fit three lines");
   assert.ok(card.includes("Les mer") && card.includes("Vis mindre"), "full source text must remain accessible");
-  assert.ok(card.indexOf("{formatPrice(result.dish)}") < card.indexOf("numberOfLines={expandedDescription"), "price appears before description");
+  assert.ok(card.indexOf("{formatPrice(result.dish)}") < card.indexOf("numberOfLines={expandableDescription"), "price appears before description");
 });
