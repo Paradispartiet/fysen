@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Fysen">
+  <rect width="512" height="512" fill="#070807"/>
+  <path d="M130 289h252c-7 77-57 124-126 124s-119-47-126-124Z" fill="#79c987"/>
+  <path d="M106 270h300" stroke="#79c987" stroke-width="26" stroke-linecap="round"/>
+  <path d="M202 228c-23-27-5-48 3-67m55 69c-19-28-1-51 9-68m51 65c-19-26-2-47 8-66" fill="none" stroke="#f3f0e8" stroke-width="21" stroke-linecap="round"/>
+  <circle cx="256" cy="340" r="16" fill="#070807"/>
+</svg>
