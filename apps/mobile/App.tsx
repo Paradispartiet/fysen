@@ -283,6 +283,9 @@ function RecentDishCard({ dish, onPick }: {
       <Text style={styles.restaurantName}>{dish.restaurantName}</Text>
       <Text style={styles.address}>{dish.restaurantAddress}</Text>
       <Text style={styles.price}>{formatPrice(dish)}</Text>
+      {dish.priceMinor !== null ? (
+        <Text style={styles.priceSource}>{priceProvenanceLabel(dish.sourceUrl)}</Text>
+      ) : null}
       <View style={styles.actions}>
         <Pill label="Finn retten →" onPress={() => onPick(dish.query)} />
         <Pill label="Se meny ↗" onPress={() => void openExternal(dish.sourceUrl)} />
