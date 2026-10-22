@@ -1,13 +1,12 @@
-import type { DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import type { DishSearchResponse, DishSearchSort } from "@fysen/contracts";
-import { DishBrowse } from "../../components/dish-browse";
+import { DishBrowseLoader } from "../../components/dish-browse-loader";
 import { DishKnowledgeNote } from "../../components/dish-knowledge-note";
 import { SearchResults } from "../../components/search-results";
 import { DishSearch } from "../../components/dish-search";
 import { GlobalHeader } from "../../components/global-header";
 import { LocationControls } from "../../components/location-controls";
 import { SearchState } from "../../components/search-state";
-import { browseDishes, searchDishes } from "../../lib/fysen-api";
+import { searchDishes } from "../../lib/fysen-api";
 import { withPublicBasePath } from "../../lib/public-path";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
@@ -36,17 +35,6 @@ function searchHref(
     params.set("lon", String(longitude));
   }
   return `${withPublicBasePath("/search")}?${params.toString()}`;
-}
-
-async function loadBrowse(city: string): Promise<{
-  data: DishBrowseResponse | null;
-  error: string | null;
-}> {
-  try {
-    return { data: await browseDishes({ city }), error: null };
-  } catch {
-    return { data: null, error: "Prøv igjen om litt." };
-  }
 }
 
 async function loadResults(
@@ -84,7 +72,6 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   const hasLocation = latitude !== null && longitude !== null;
   const requestedSort = first(params.sort);
   const sort: DishSearchSort = requestedSort === "distance" && hasLocation ? "distance" : "relevance";
-  const browseState = q.length === 0 ? await loadBrowse(city) : { data: null, error: null };
   const searchState = q.length === 0
     ? { data: null, error: null }
     : await loadResults(q, city, latitude, longitude, sort);
@@ -118,12 +105,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
       <main className="resultsMain">
         <section className="resultsContent" aria-live="polite">
           {q.length === 0 ? (
-            <DishBrowse
-              city={city}
-              data={browseState.data}
-              error={browseState.error}
-              initialCuisineName={first(params.cuisine)}
-            />
+            <DishBrowseLoader city={city} initialCuisineName={first(params.cuisine)} />
           ) : (
             <>
               <div className="resultsIntro">

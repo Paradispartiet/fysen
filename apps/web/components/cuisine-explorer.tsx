@@ -133,7 +133,7 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
     if (browseData) return;
 
     const controller = new AbortController();
-    void browseDishesClient("Oslo", { signal: controller.signal })
+    void browseDishesClient("Oslo", { signal: controller.signal, homePreview: true })
       .then((data) => {
         setPreviewBrowseData(data);
         setPreviewBrowseFailed(false);
