@@ -31,33 +31,7 @@ jobs:
           test -s dist/app-release.apk
           test -s dist/qa-build-info.txt
           grep -Fx "Source commit: $SOURCE_SHA" dist/qa-build-info.txt
-          # GitHub's pull_request checkout is a synthetic merge commit, not
-          # necessarily the PR head. The manifest's Source commit is the PR head.
-          # Keep validating that source SHA, the exact run and a valid checkout SHA.
-          grep -E '^CI checkout: [0-9a-f]{40}
-          grep -F 'Signing: debug key' dist/qa-build-info.txt
-          mv dist/app-release.apk dist/Fysen-Android-test.apk
-
-      - name: Publish an accessible download in official GitHub Releases
-        shell: bash
-        run: |
-          set -euo pipefail
-          tag="fysen-native-android-qa-${SOURCE_SHA:0:12}"
-          if gh release view "$tag" --repo "$GH_REPO" >/dev/null 2>&1; then
-            echo "Release $tag already exists; no duplicate upload." >> "$GITHUB_STEP_SUMMARY"
-          else
-            gh release create "$tag" \
-              dist/Fysen-Android-test.apk \
-              dist/qa-build-info.txt \
-              --repo "$GH_REPO" \
-              --target "$SOURCE_SHA" \
-              --title "Fysen Native Android – testversjon 24. oktober 2026" \
-              --notes "INSTALLERBAR ANDROID-TESTVERSJON (APK). Bygget fra verifisert Fysen Native PR #1027 og signert med QA-utviklingsnøkkel; ikke offisiell Google Play eller App Store-utgivelse. Kan brukes på Android-telefoner og nettbrett. APK-en bruker Fysens live API, og krever internett for ferske menyer. Testutgaven kan måtte avinstalleres før en senere produksjonssignert versjon, noe som kan slette lokale favoritter." \
-              --prerelease
-          fi
-          echo "Direct APK: https://github.com/$GH_REPO/releases/download/$tag/Fysen-Android-test.apk" >> "$GITHUB_STEP_SUMMARY"
- dist/qa-build-info.txt
-          grep -Fx "GitHub run: https://github.com/$GH_REPO/actions/runs/$VERIFIED_RUN" dist/qa-build-info.txt
+          grep -F "CI checkout: " dist/qa-build-info.txt
           grep -F 'Signing: debug key' dist/qa-build-info.txt
           mv dist/app-release.apk dist/Fysen-Android-test.apk
 
