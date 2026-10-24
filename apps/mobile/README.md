@@ -96,3 +96,12 @@ Simulatorjobben kontrollerer oppstart samt navigasjon til Matlyst og et ramensø
 - Etter minst 15 minutter i bakgrunnen oppdaterer appen automatisk Matlyst og det sist utførte søket når telefonen tas frem igjen.
 - Kortere bytter mellom apper utløser ikke unødvendige nettverkskall. Favoritter forblir lokale; menypriser lagres ikke som offline-data.
 - Dersom nettet svikter under oppdatering, skal appen vise en feiltilstand i stedet for å late som gamle resultater er ferske.
+
+## Nettbrett og rotasjon (v1-forbedring)
+
+- Fysen Native benytter nå tilgjengelig **skjermbredde i logiske punkter** fremfor en fast telefon-/nettbretttype. Under 760 punkter beholdes én kolonne, også ved delt iPad-skjerm.
+- Fra 760 punkter sentreres innholdet med maksimal bredde 1020 punkter, og søkeresultater samt Matlyst-kort fordeles over to kolonner.
+- Bunnnavigasjonen er avgrenset til samme bredde på store skjermer. Portrett og landskap er aktivert i Expo-konfigurasjonen.
+- Responsiv breakpoint og skjermkontrakt testes i `native-tablet-layout.test.mjs`. iOS CI starter både iPhone- og iPad-simulator med samme native Release-app og lagrer skjermbilder.
+- **Åpent før lansering:** verifiser iPad-landskap, delt skjerm, Android-nettbrett, berøringsflater og tekstforstørring på ekte enheter. Simulator-skjermbildet beviser ikke dette.
+- Når en appkonfigurasjonsendring merges til `main`, lager GitHub Actions en ny Android-QA-APK med `qa-build-info.txt` og kilde-SHA. Andre APK-bygg bestilles manuelt for å spare CI.

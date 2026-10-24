@@ -16,6 +16,7 @@ import {
   Text,
   TextInput,
   View,
+  useWindowDimensions,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { loadFeatured, searchDishes, type FeaturedResponse } from "./src/api";
@@ -23,6 +24,7 @@ import { cleanDishName, formatPrice, safeHttpsUrl, validateSearchTerm } from "./
 import { favoriteKey, readFavorites, writeFavorites, type FavoriteDish } from "./src/favorites";
 import { createFavoritesController, type FavoritesSnapshot } from "./src/favorites-controller";
 import { colors } from "./src/theme";
+import { isWideLayout } from "./src/layout";
 import { shouldRefreshAfterResume } from "./src/freshness";
 import { parseFysenDeepLink } from "./src/deep-link";
 import { descriptionPreview, groupDishMatches } from "./src/search-presentation";
@@ -153,6 +155,7 @@ function SearchResultCard({
 function SearchScreen({
   value,
   setValue,
+  wide,
   searchRequest,
   refreshRequest,
   favorites,
@@ -161,6 +164,7 @@ function SearchScreen({
 }: {
   value: string;
   setValue: (value: string) => void;
+  wide: boolean;
   searchRequest: number;
   refreshRequest: number;
   favorites: readonly FavoriteDish[];
@@ -222,18 +226,19 @@ function SearchScreen({
 
   function cardFor(result: DishSearchResult) {
     return (
+      <View key={result.menuItemId} style={wide ? styles.tabletGridCell : undefined}>
       <SearchResultCard
-        key={result.menuItemId}
         result={result}
         favoritesReady={favoritesReady}
         isFavorite={favorites.some((item) => favoriteKey(item.query) === favoriteKey((result.match.canonicalDish?.name || result.dish.normalizedName || result.dish.name).slice(0, 80).trim()))}
         onFavorite={onFavorite}
       />
+      </View>
     );
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.screenContent} keyboardShouldPersistTaps="handled"
+    <ScrollView contentContainerStyle={[styles.screenContent, wide && styles.wideContent]} keyboardShouldPersistTaps="handled"
       refreshControl={
         <RefreshControl refreshing={loading}
           onRefresh={() => { if (lastSearchedTerm.current) void perform(lastSearchedTerm.current); }}
@@ -282,14 +287,14 @@ function SearchScreen({
               {groupedResults.direct.length ? (
                 <>
                   <Text style={styles.resultGroupHeading}>Beste teksttreff</Text>
-                  {groupedResults.direct.map(cardFor)}
+                  <View style={wide ? styles.tabletGrid : undefined}>{groupedResults.direct.map(cardFor)}</View>
                 </>
               ) : null}
               {groupedResults.similar.length ? (
                 <>
                   <Text style={styles.resultGroupHeading}>Lignende treff</Text>
                   <Text style={styles.muted}>Navnet samsvarer bare delvis. Sjekk retten i menyen.</Text>
-                  <View style={styles.resultGroupCards}>{groupedResults.similar.map(cardFor)}</View>
+                  <View style={[styles.resultGroupCards, wide && styles.tabletGrid]}>{groupedResults.similar.map(cardFor)}</View>
                 </>
               ) : null}
             </>
@@ -341,16 +346,17 @@ function PopularDishCard({ dish, rank, onPick }: {
 }
 
 function MatlystScreen({
-  featured, loading, error, retry, onPick,
+  featured, loading, error, retry, onPick, wide,
 }: {
   featured: FeaturedResponse | null;
+  wide: boolean;
   loading: boolean;
   error: boolean;
   retry: () => void;
   onPick: (query: string) => void;
 }) {
   return (
-    <ScrollView contentContainerStyle={styles.screenContent}
+    <ScrollView contentContainerStyle={[styles.screenContent, wide && styles.wideContent]}
       refreshControl={<RefreshControl refreshing={loading} onRefresh={retry} tintColor={colors.green} colors={[colors.green]} />}>
       <SectionHeading kicker="OPPDAG NOE NYTT" title="Matlyst"
         intro="Retter å utforske – med ekte restauranter og sporbare menyer." />
@@ -365,28 +371,41 @@ function MatlystScreen({
         <>
           <SectionHeading kicker="SISTE 14 DAGER" title="Nye retter"
             intro="Nylig registrert i Fysen – ikke nødvendigvis nye på restaurantens meny." />
-          {featured.recentDishes.length ? featured.recentDishes.map((dish) => (
-            <RecentDishCard key={dish.id} dish={dish} onPick={onPick} />
-          )) : <Text style={styles.muted}>Ingen nylig verifiserte retter akkurat nå.</Text>}
+          {featured.recentDishes.length ? (
+            <View style={wide ? styles.tabletGrid : undefined}>
+              {featured.recentDishes.map((dish) => (
+                <View key={dish.id} style={wide ? styles.tabletGridCell : undefined}>
+                  <RecentDishCard dish={dish} onPick={onPick} />
+                </View>
+              ))}
+            </View>
+          ) : <Text style={styles.muted}>Ingen nylig verifiserte retter akkurat nå.</Text>}
           <SectionHeading kicker="SISTE 30 DAGER" title="Mest søkt"
             intro="Rettene folk har søkt mest etter i Oslo, med ferske menytreff." />
-          {featured.popularDishes.length ? featured.popularDishes.map((dish, index) => (
-            <PopularDishCard key={dish.id} dish={dish} rank={index + 1} onPick={onPick} />
-          )) : <Text style={styles.muted}>Ingen tilstrekkelig dokumenterte søk ennå.</Text>}
+          {featured.popularDishes.length ? (
+            <View style={wide ? styles.tabletGrid : undefined}>
+              {featured.popularDishes.map((dish, index) => (
+                <View key={dish.id} style={wide ? styles.tabletGridCell : undefined}>
+                  <PopularDishCard dish={dish} rank={index + 1} onPick={onPick} />
+                </View>
+              ))}
+            </View>
+          ) : <Text style={styles.muted}>Ingen tilstrekkelig dokumenterte søk ennå.</Text>}
         </>
       ) : null}
     </ScrollView>
   );
 }
 
-function FavoritesScreen({ favorites, ready, onPick, onRemove }: {
+function FavoritesScreen({ favorites, ready, onPick, onRemove, wide }: {
   favorites: readonly FavoriteDish[];
+  wide: boolean;
   ready: boolean;
   onPick: (query: string) => void;
   onRemove: (dish: FavoriteDish) => void;
 }) {
   return (
-    <ScrollView contentContainerStyle={styles.screenContent}>
+    <ScrollView contentContainerStyle={[styles.screenContent, wide && styles.wideContent]}>
       <SectionHeading kicker="DIN MATLISTE" title="Favoritter"
         intro="Lagret på denne mobilen. Åpne et nytt søk for å se oppdaterte menyer og priser." />
       {!ready ? (
@@ -426,6 +445,8 @@ function TabItem({ label, glyph, selected, onPress }: {
 }
 
 function NativeFysen() {
+  const { width } = useWindowDimensions();
+  const wide = isWideLayout(width);
   const [tab, setTab] = useState<Tab>("search");
   const [query, setQuery] = useState("");
   const [searchRequest, setSearchRequest] = useState(0);
@@ -524,23 +545,25 @@ function NativeFysen() {
       </View>
       <View style={styles.flex}>
         <View style={[styles.flex, tab !== "search" && styles.hidden]}>
-          <SearchScreen value={query} setValue={setQuery} searchRequest={searchRequest} refreshRequest={refreshRequest}
+          <SearchScreen value={query} setValue={setQuery} wide={wide} searchRequest={searchRequest} refreshRequest={refreshRequest}
             favorites={favoriteState.items} favoritesReady={favoriteState.ready}
             onFavorite={toggleFavorite} />
         </View>
         {tab === "matlyst" ? (
-          <MatlystScreen featured={featured} loading={loadingFeatured} error={featuredError}
+          <MatlystScreen wide={wide} featured={featured} loading={loadingFeatured} error={featuredError}
             retry={() => void refreshFeatured()} onPick={navigateToSearch} />
         ) : null}
         {tab === "favorites" ? (
-          <FavoritesScreen favorites={favoriteState.items} ready={favoriteState.ready}
+          <FavoritesScreen wide={wide} favorites={favoriteState.items} ready={favoriteState.ready}
             onPick={navigateToSearch} onRemove={toggleFavorite} />
         ) : null}
       </View>
-      <View style={styles.tabs} accessibilityRole="tablist">
-        <TabItem label="Søk" glyph="⌕" selected={tab === "search"} onPress={() => setTab("search")} />
-        <TabItem label="Matlyst" glyph="✦" selected={tab === "matlyst"} onPress={() => setTab("matlyst")} />
-        <TabItem label="Favoritter" glyph="☆" selected={tab === "favorites"} onPress={() => setTab("favorites")} />
+      <View style={styles.tabs}>
+        <View style={styles.tabsInner} accessibilityRole="tablist">
+          <TabItem label="Søk" glyph="⌕" selected={tab === "search"} onPress={() => setTab("search")} />
+          <TabItem label="Matlyst" glyph="✦" selected={tab === "matlyst"} onPress={() => setTab("matlyst")} />
+          <TabItem label="Favoritter" glyph="☆" selected={tab === "favorites"} onPress={() => setTab("favorites")} />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -565,6 +588,9 @@ const styles = StyleSheet.create({
   osloTag: { marginLeft: "auto", borderWidth: 1, borderColor: colors.border, borderRadius: 20, paddingHorizontal: 12, paddingVertical: 5 },
   osloTagText: { color: colors.muted, fontSize: 11, letterSpacing: 1.5, fontWeight: "700" },
   screenContent: { paddingHorizontal: 20, paddingTop: 22, paddingBottom: 44 },
+  wideContent: { width: "100%", maxWidth: 1020, alignSelf: "center", paddingHorizontal: 28 },
+  tabletGrid: { flexDirection: "row", flexWrap: "wrap", columnGap: 16, alignItems: "stretch" },
+  tabletGridCell: { width: "48%", flexGrow: 1, flexShrink: 1, minWidth: 300 },
   sectionHeading: { marginBottom: 20, marginTop: 10 },
   kicker: { color: colors.green, fontSize: 11, fontWeight: "800", letterSpacing: 2, marginBottom: 9 },
   sectionTitle: { color: colors.white, fontSize: 33, fontWeight: "800", letterSpacing: -1.1, lineHeight: 38 },
@@ -610,7 +636,8 @@ const styles = StyleSheet.create({
   notice: { backgroundColor: colors.surface, borderRadius: 16, padding: 18, gap: 14, marginVertical: 18 },
   noticeText: { color: colors.white, fontSize: 14, lineHeight: 21 },
   footerNote: { color: colors.soft, fontSize: 11, lineHeight: 18, marginTop: 24 },
-  tabs: { height: 68, backgroundColor: colors.paper, flexDirection: "row", borderTopWidth: 1, borderTopColor: colors.border },
+  tabs: { height: 68, backgroundColor: colors.paper, borderTopWidth: 1, borderTopColor: colors.border },
+  tabsInner: { width: "100%", maxWidth: 1020, alignSelf: "center", flex: 1, flexDirection: "row" },
   tabItem: { flex: 1, alignItems: "center", justifyContent: "center", gap: 3, minHeight: 60 },
   tabGlyph: { color: colors.soft, fontSize: 24, fontWeight: "700", lineHeight: 27 },
   tabLabel: { color: colors.soft, fontSize: 11, fontWeight: "700" },
