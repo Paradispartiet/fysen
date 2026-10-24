@@ -1,11 +1,17 @@
 name: Fysen Android installable test APK
 
-# One proof build in the creating PR; later builds are explicitly dispatched.
-# No paid Expo account, Google Play account, or Apple account is required.
+# Build one QA APK on Android-workflow edits. Also produce a new exact-main
+# installable APK when the native app config changes (e.g., a tablet release).
+# Ordinary app UI PRs remain opt-in via workflow_dispatch to save CI minutes.
+# No paid Expo, Google Play, or Apple account is required.
 on:
   pull_request:
     paths:
       - ".github/workflows/native-android-apk.yml"
+  push:
+    branches: [main]
+    paths:
+      - "apps/mobile/app.json"
   workflow_dispatch:
 
 permissions:
