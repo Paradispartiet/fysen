@@ -176,7 +176,26 @@ jobs:
             exit 1
           fi
 
-          echo "Unsigned iPhone simulator app launched and opened search, Matlyst, ramen results and Favorites." >> "$GITHUB_STEP_SUMMARY"
+          # Install the same native release build on a real iPad simulator.
+          # This catches iPad-only startup/layout crashes; physical tablet and
+          # landscape usability must still be checked before distribution.
+          ipad_device="$(python3 - <<'PY'
+          import json,subprocess
+          data=json.loads(subprocess.check_output(["xcrun","simctl","list","devices","available","-j"],text=True))
+          devices=[d for entries in data["devices"].values() for d in entries if d["name"].startswith("iPad") and d["isAvailable"]]
+          if not devices: raise SystemExit("No available iPad simulator")
+          print(devices[0]["udid"])
+          PY
+          )"
+          echo "Testing iPad simulator $ipad_device"
+          xcrun simctl boot "$ipad_device"
+          xcrun simctl bootstatus "$ipad_device" -b
+          xcrun simctl install "$ipad_device" "$app"
+          xcrun simctl launch "$ipad_device" "$bundle_id"
+          sleep 12
+          xcrun simctl io "$ipad_device" screenshot ios/fysen-ipad-portrait.png
+          test -s ios/fysen-ipad-portrait.png
+          echo "Unsigned native app launched on iPhone and iPad simulators. iPhone search, Matlyst and Favorites remained distinct." >> "$GITHUB_STEP_SUMMARY"
 
       - name: Archive simulator app (not a device IPA)
         working-directory: apps/mobile
@@ -195,6 +214,7 @@ jobs:
             apps/mobile/ios/fysen-iphone-matlyst.png
             apps/mobile/ios/fysen-iphone-search-results.png
             apps/mobile/ios/fysen-iphone-favorites.png
+            apps/mobile/ios/fysen-ipad-portrait.png
           if-no-files-found: warn
           retention-days: 14
           compression-level: 0
