@@ -12,6 +12,7 @@ on:
     branches: [main]
     paths:
       - "apps/mobile/app.json"
+      - ".github/workflows/native-android-apk.yml"
   workflow_dispatch:
 
 permissions:
@@ -103,3 +104,42 @@ jobs:
           if-no-files-found: error
           retention-days: 14
           compression-level: 0
+
+  # GitHub Actions artifacts expire in 14 days and generally require login.
+  # Publish an explicit *pre-release* on successful main builds, so testers
+  # have a permanent HTTPS download with no ChatGPT or GitHub login required.
+  # Keep write permission isolated from PR-triggered APK compilation.
+  publish-qa-release:
+    needs: apk
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download verified APK built in this run
+        uses: actions/download-artifact@v4
+        with:
+          name: fysen-android-qa-apk
+          path: release
+
+      - name: Create public Android QA pre-release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          test -s release/app-release.apk
+          test -s release/qa-build-info.txt
+          grep -Fx "CI checkout: $GITHUB_SHA" release/qa-build-info.txt
+          short_sha="${GITHUB_SHA:0:12}"
+          tag="fysen-native-android-qa-$short_sha"
+          notes=$'INTERN TESTVERSJON — IKKE GOOGLE PLAY ELLER APP STORE.\\n\\nFysen Native for Android-telefoner og nettbrett. APK er signert med en midlertidig debug-nøkkel, ikke produksjonsnøkkel. Last bare ned fra denne offisielle GitHub-adressen. Fordi CI-nøkkelen kan endre seg, må en eldre testutgave eventuelt avinstalleres før installasjon; lokale favoritter kan da bli slettet. Krever internettilgang for oppdaterte menyer og priser. Ikke distribuer som endelig 1.0.'
+          gh release create "$tag" \
+            "release/app-release.apk#Fysen-Android-test.apk" \
+            "release/qa-build-info.txt#qa-build-info.txt" \
+            --title "Fysen Android – testversjon $short_sha" \
+            --notes "$notes" \
+            --prerelease \
+            --target "$GITHUB_SHA"
+          echo "Public download: https://github.com/$GH_REPO/releases/download/$tag/Fysen-Android-test.apk" >> "$GITHUB_STEP_SUMMARY"
