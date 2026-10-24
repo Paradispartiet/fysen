@@ -118,6 +118,33 @@ jobs:
           sleep 10
           xcrun simctl io "$device" screenshot ios/fysen-iphone-matlyst.png
           test -s ios/fysen-iphone-matlyst.png
+
+          # The first custom-scheme dispatch after a fresh CoreSimulator boot
+          # can arrive before the app is ready to handle the URL. The observed
+          # failure in #1022 showed identical Search/Matlyst screenshots, while
+          # the following search and favorites links reached the correct tabs.
+          # Retry only that first transition, never waive the visual assertion.
+          mkdir -p ios/qa-content
+          for screen in smoke matlyst; do
+            sips --cropToHeightWidth 1700 1080 \
+              "ios/fysen-iphone-$screen.png" \
+              --out "ios/qa-content/$screen.png" >/dev/null
+          done
+          if cmp -s ios/qa-content/smoke.png ios/qa-content/matlyst.png; then
+            echo "::warning::First Matlyst deep link did not change app content; retrying once after simulator warm-up."
+            xcrun simctl openurl "$device" "fysen://matlyst"
+            sleep 10
+            xcrun simctl io "$device" screenshot ios/fysen-iphone-matlyst.png
+            test -s ios/fysen-iphone-matlyst.png
+            sips --cropToHeightWidth 1700 1080 \
+              ios/fysen-iphone-matlyst.png \
+              --out ios/qa-content/matlyst.png >/dev/null
+          fi
+          if cmp -s ios/qa-content/smoke.png ios/qa-content/matlyst.png; then
+            echo "::error::Matlyst did not replace Search after the initial delivery and one retry."
+            exit 1
+          fi
+
           xcrun simctl openurl "$device" "fysen://search?q=ramen"
           sleep 10
           xcrun simctl io "$device" screenshot ios/fysen-iphone-search-results.png
