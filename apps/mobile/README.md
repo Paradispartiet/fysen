@@ -105,3 +105,17 @@ Simulatorjobben kontrollerer oppstart samt navigasjon til Matlyst og et ramensø
 - Responsiv breakpoint og skjermkontrakt testes i `native-tablet-layout.test.mjs`. iOS CI starter både iPhone- og iPad-simulator med samme native Release-app og lagrer skjermbilder.
 - **Åpent før lansering:** verifiser iPad-landskap, delt skjerm, Android-nettbrett, berøringsflater og tekstforstørring på ekte enheter. Simulator-skjermbildet beviser ikke dette.
 - Når en appkonfigurasjonsendring merges til `main`, lager GitHub Actions en ny Android-QA-APK med `qa-build-info.txt` og kilde-SHA. Andre APK-bygg bestilles manuelt for å spare CI.
+
+
+## Fysisk iPhone/iPad via TestFlight (signert iOS-utgave)
+
+Fysen har separate kontrollspor: simulatorjobben bygger en **usignert simulator-app** (kan ikke installeres på iPhone), mens `native-ios-testflight.yml` bestiller en **Apple-signert butikkbygget IPA** for TestFlight.
+
+- EAS-profil `testflight` er konfigurert for fysisk iPhone/iPad med `distribution: store`. Den må ikke forveksles med `preview`, som fremdeles er en simulatorbygning.
+- På GitHub brukes **Actions → Fysen iOS signed TestFlight build → Run workflow → main → testflight** først når Apple- og Expo-kontotilgangen er konfigurert.
+- Kontoeier må ha Apple Developer Program, rettigheter til `no.fysen.app`, Expo/EAS-prosjekt, iOS-signering, App Store Connect-app-ID og API-nøkkel. Ingen Apple-private nøkler skal ligge i repository-koden.
+- De eneste GitHub-innstillingene er secret `EXPO_TOKEN` og variablene `EAS_PROJECT_ID` og `APP_STORE_CONNECT_APP_ID`.
+- Byggejobben **bestiller** EAS-bygg og automatisk TestFlight-opplasting. Grønn GitHub-jobb betyr ikke at Apple har godkjent bygget eller sendt ut en installasjonsinvitasjon.
+- Når Apple har behandlet opplastingen og en testgruppe er konfigurert, kan Fysen installeres på iPhone/iPad fra **TestFlight-appen**.
+
+Alle engangssteg og faktiske gjenstående publiseringsporter er dokumentert i [docs/fysen-ios-testflight.md](../../docs/fysen-ios-testflight.md).
