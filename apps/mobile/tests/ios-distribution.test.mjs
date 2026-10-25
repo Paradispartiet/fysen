@@ -32,7 +32,7 @@ test("iOS distribution is gated, manual, and requires Apple/Expo credentials", (
   assert.match(workflow, /--no-wait/);
   assert.match(workflow, /--non-interactive/);
   assert.match(workflow, /Source commit: \$GITHUB_SHA/);
-  assert.match(workflow, /do NOT prove Apple processed it/);
+  assert.match(workflow, /does NOT prove Apple processed it/);
 });
 
 test("never embed account-specific provisioning credentials in the repository", () => {
