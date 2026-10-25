@@ -1,0 +1,119 @@
+name: Fysen iOS signed TestFlight build
+
+# Distribution of iOS builds for physical iPhone/iPad requires Apple signing.
+# Run deliberately; never submit every commit to App Store Connect.
+on:
+  workflow_dispatch:
+    inputs:
+      delivery:
+        description: 'Build a signed IPA only, or also submit this exact build to TestFlight'
+        type: choice
+        required: true
+        default: testflight
+        options:
+          - build-only
+          - testflight
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-ios-testflight-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  ios-testflight:
+    # Never distribute unreviewed PR commits or arbitrary branches.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CI: '1'
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID }}
+      APP_STORE_CONNECT_APP_ID: ${{ vars.APP_STORE_CONNECT_APP_ID }}
+      IOS_DELIVERY: ${{ inputs.delivery }}
+    steps:
+      - name: Checkout approved Fysen main
+        uses: actions/checkout@v4
+
+      - name: Setup canonical pnpm workspace
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Compile shared native API contracts
+        run: pnpm --filter @fysen/contracts build
+
+      - name: Verify credentials and configure the linked Expo project
+        working-directory: apps/mobile
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${EXPO_TOKEN:-}" ]; then
+            echo '::error::Add EXPO_TOKEN as a GitHub Actions repository secret. Never commit the token.'
+            exit 1
+          fi
+          if [ -z "${EAS_PROJECT_ID:-}" ]; then
+            echo '::error::Link the Expo EAS project once, then set GitHub Actions variable EAS_PROJECT_ID.'
+            exit 1
+          fi
+          if [ "$IOS_DELIVERY" = 'testflight' ] && [ -z "${APP_STORE_CONNECT_APP_ID:-}" ]; then
+            echo '::error::Set the App Store Connect numerical app ID as Actions variable APP_STORE_CONNECT_APP_ID.'
+            exit 1
+          fi
+          # EAS project and App Store Connect IDs are account-specific public
+          # identifiers. Inject them only in the checked-out CI working tree;
+          # do not invent their values or commit any Apple credentials.
+          node <<'NODE'
+          const fs = require('node:fs');
+          const projectId = process.env.EAS_PROJECT_ID;
+          const ascAppId = process.env.APP_STORE_CONNECT_APP_ID;
+          const delivery = process.env.IOS_DELIVERY;
+          const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+          if (!uuid.test(projectId)) throw new Error('EAS_PROJECT_ID must be a valid Expo project UUID.');
+          if (!['build-only', 'testflight'].includes(delivery)) throw new Error('Unknown delivery mode');
+          const app = JSON.parse(fs.readFileSync('app.json', 'utf8'));
+          if (app.expo.ios.bundleIdentifier !== 'no.fysen.app' || app.expo.ios.supportsTablet !== true) {
+            throw new Error('Fysen bundle identifier or iPad support changed; verify Apple ownership before release');
+          }
+          app.expo.extra ??= {};
+          app.expo.extra.eas ??= {};
+          if (app.expo.extra.eas.projectId && app.expo.extra.eas.projectId !== projectId) {
+            throw new Error('Connected Expo project differs from configured EAS_PROJECT_ID');
+          }
+          app.expo.extra.eas.projectId = projectId;
+          fs.writeFileSync('app.json', JSON.stringify(app, null, 2) + '\n');
+          if (delivery === 'testflight') {
+            if (!/^[0-9]{6,20}$/.test(ascAppId || '')) throw new Error('Invalid numerical APP_STORE_CONNECT_APP_ID');
+            const eas = JSON.parse(fs.readFileSync('eas.json', 'utf8'));
+            eas.submit ??= {};
+            eas.submit.testflight = {ios: {ascAppId}};
+            fs.writeFileSync('eas.json', JSON.stringify(eas, null, 2) + '\n');
+          }
+          process.stdout.write('iOS TestFlight config validated: Fysen bundle no.fysen.app / iPad enabled.\n');
+          NODE
+
+      - name: Queue signed iOS build on EAS
+        working-directory: apps/mobile
+        shell: bash
+        run: |
+          set -euo pipefail
+          # EAS-managed Apple distribution credentials must have been set up
+          # interactively for this app before the first non-interactive CI run.
+          if [ "$IOS_DELIVERY" = 'testflight' ]; then
+            npx --yes eas-cli@latest build \
+              --platform ios \
+              --profile testflight \
+              --non-interactive \
+              --no-wait \
+              --auto-submit
+            echo 'Signed build and subsequent TestFlight upload requested on EAS. Check EAS and App Store Connect for actual completion.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            npx --yes eas-cli@latest build \
+              --platform ios \
+              --profile testflight \
+              --non-interactive \
+              --no-wait
+            echo 'Signed iOS store build requested on EAS. No TestFlight upload requested.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "Source commit: $GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
+          echo 'The CI job only queues the build; it does NOT prove Apple processed it or that a tester can install it.' >> "$GITHUB_STEP_SUMMARY"
