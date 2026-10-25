@@ -6,6 +6,7 @@ import { restaurantClaimHref } from "../lib/public-path";
 import { DishComposition } from "./dish-composition";
 import { FreshnessStatus } from "./freshness-status";
 import { SaveMinMatButton } from "./save-min-mat-button";
+import { FavoriteToggle } from "./favorite-toggle";
 import styles from "./dish-result.module.css";
 import { TrackedExternalLink } from "./tracked-external-link";
 
@@ -87,6 +88,7 @@ export function DishResult({ result }: { result: DishSearchResult }) {
           <span className="openingStatus" data-state={result.opening.state}>{openingLabel(result)}</span>
         </div>
         <div className={actionsClassName}>
+          <FavoriteToggle menuItemId={result.menuItemId} dishName={result.dish.name} restaurantName={result.restaurant.name} city={result.restaurant.city} />
           {ahaMinMatPilotEnabled ? <SaveMinMatButton menuItemId={result.menuItemId} /> : null}
           {result.actions.booking ? (
             <TrackedExternalLink

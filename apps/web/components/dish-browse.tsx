@@ -88,6 +88,7 @@ export function DishBrowse({
   const initialCuisine = cuisineByName.get(initialCuisineName) ?? null;
 
   const [filter, setFilter] = useState("");
+  const [visibleCount, setVisibleCount] = useState(80);
   const [selectedCuisineName, setSelectedCuisineName] = useState<string | null>(initialCuisine?.name ?? null);
   const [selectedCuisineArea, setSelectedCuisineArea] = useState<string | null>(null);
   const normalizedFilter = normalizeDiscoveryText(filter);
@@ -299,7 +300,7 @@ export function DishBrowse({
 
             {visibleLiveDishes.length > 0 ? (
               <div className="dishBrowseList">
-                {visibleLiveDishes.map((dish) => {
+                {visibleLiveDishes.slice(0, visibleCount).map((dish) => {
                   const knowledgeDish = knowledgeDishForLiveItem(dish);
                   return (
                     <div className="dishBrowseItem" key={dish.id}>
@@ -319,6 +320,11 @@ export function DishBrowse({
             ) : (
               <p className="dishBrowseEmptyFilter">Ingen canonicale retter matcher filteret.</p>
             )}
+            {visibleLiveDishes.length > visibleCount ? (
+              <button className="favoriteToggle" type="button" onClick={() => setVisibleCount((count) => count + 80)}>
+                Vis flere retter ({visibleLiveDishes.length - visibleCount} gjenstår)
+              </button>
+            ) : null}
           </section>
         </>
       ) : null}
