@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans } from "next/font/google";
 import type { ReactNode } from "react";
 import "../styles/tokens.css";
@@ -29,6 +29,21 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Fysen — finn retten du har lyst på",
   description: "Søk etter en rett og finn restauranter som har den på en fersk, sporbar meny.",
+  applicationName: "Fysen",
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: "/fysen-app-icon.svg",
+    apple: "/brand/fysen-mark-exact.png",
+  },
+  appleWebApp: {
+    capable: true,
+    title: "Fysen",
+    statusBarStyle: "black",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#090b09",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
