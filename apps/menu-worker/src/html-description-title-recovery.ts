@@ -717,8 +717,8 @@ export function reconcileUnpricedMenuDescriptionRows(
   return items.flatMap((item) => {
     // A section heading or a numbered multi-course menu is not an
     // individually-priced dish, even when the source publishes a set price.
-    if (/^(?:desserts?|main courses?|starters?|side dishes?|(?:meny|menu)\\s+[1-9]\\d?)$/iu.test(item.name.trim())) return [];
-    const servingHours = item.name.match(/^(.+?)\\s+(serveres|served)\\s+(\\d{1,2}[.:]\\d{2}\\s*[–-]\\s*\\d{1,2}[.:]\\d{2})$/iu);
+    if (/^(?:desserts?|main courses?|starters?|side dishes?|(?:meny|menu)\s+[1-9]\d?)$/iu.test(item.name.trim())) return [];
+    const servingHours = item.name.match(/^(.+?)\s+(serveres|served)\s+(\d{1,2}[.:]\d{2}\s*[–-]\s*\d{1,2}[.:]\d{2})$/iu);
     if (servingHours?.[1]) {
       const name = servingHours[1].trim();
       return [{
