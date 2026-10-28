@@ -146,14 +146,17 @@ describe("HTML first-party price provenance", () => {
     ]);
   });
 
-  it("never attaches an unsupported parent heading or a mismatching price", () => {
+  it("corrects source-confirmed price and never invents an unsupported parent heading", () => {
     const source = [
       "Biff med løk",
       "Indrefilet 150 g kr 415",
       "Indrefilet 220 g kr 585",
     ].join("\n");
+    // The wrong extracted price is corrected from the exact first-party
+    // size-price line; the parent is then safe to restore.
     expect(reconcileSourcePricedHtmlDishes([dish("Indrefilet 150 g", 499, 1)], source)
-      .map((item) => item.name)).toEqual(["Indrefilet 150 g"]);
+      .map((item) => [item.name, item.priceMinor]))
+      .toEqual([["Biff med løk (indrefilet 150 g)", 41500]]);
     expect(reconcileSourcePricedHtmlDishes([dish("Indrefilet 150 g", 415, 1)],
       "Indrefilet 150 g kr 415").map((item) => item.name))
       .toEqual(["Indrefilet 150 g"]);
