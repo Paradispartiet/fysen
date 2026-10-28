@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 16,
+    "minimumExpectedItems": 8,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -27,20 +27,20 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-09-06",
-      "note": "Batch 41 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+      "note": "Batch 41 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed. Source rechecked 2026-10-28: the service menu has exactly eight priced food items (four salads and four open sandwiches), ten beverages and one cutlery line; the source-backed food floor is eight. Drinks/cutlery must not satisfy menu assertions."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
       "Langtidsbakt Kylling",
+      "Steikeost fra Bygdø Kongsgård",
       "Varmrøkt laks og røkt ørret fra Fiskeeksperten Reinhartsen",
+      "Hjemmelaget viltkarbonade",
       "Langtidsbakt Kylling Smørbrød",
+      "Steikeost fra Bygdø Kongsgård Smørbrød",
       "Varmrøkt laks og røkt ørret fra Fiskeeksperten Reinhartsen Smørbrød",
-      "Grimstad Brus Sitron og Ingefær",
-      "Grimstad Brus Appelsin",
-      "Fruktsmekk Plomme og Ingefær",
-      "Surf Kombucha Ingefær"
+      "Hjemmelaget viltkarbonade Smørbrød"
     ],
     "requiredDishVariants": [
       {
@@ -48,7 +48,15 @@
         "priceMinor": 24900
       },
       {
+        "name": "Steikeost fra Bygdø Kongsgård",
+        "priceMinor": 24900
+      },
+      {
         "name": "Varmrøkt laks og røkt ørret fra Fiskeeksperten Reinhartsen",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Hjemmelaget viltkarbonade",
         "priceMinor": 24900
       },
       {
@@ -56,26 +64,30 @@
         "priceMinor": 16900
       },
       {
+        "name": "Steikeost fra Bygdø Kongsgård Smørbrød",
+        "priceMinor": 16900
+      },
+      {
         "name": "Varmrøkt laks og røkt ørret fra Fiskeeksperten Reinhartsen Smørbrød",
         "priceMinor": 16900
       },
       {
-        "name": "Grimstad Brus Sitron og Ingefær",
-        "priceMinor": 7000
-      },
-      {
-        "name": "Grimstad Brus Appelsin",
-        "priceMinor": 7000
-      },
-      {
-        "name": "Fruktsmekk Plomme og Ingefær",
-        "priceMinor": 7500
-      },
-      {
-        "name": "Surf Kombucha Ingefær",
-        "priceMinor": 7500
+        "name": "Hjemmelaget viltkarbonade Smørbrød",
+        "priceMinor": 16900
       }
     ],
-    "forbiddenDishNames": []
+    "forbiddenDishNames": [
+      "Grimstad Brus Sitron og Ingefær",
+      "Grimstad Brus Cuba Kuba",
+      "Grimstad Brus Appelsin",
+      "Fruktsmekk Rabarbra og hylleblomst",
+      "Fruktsmekk Plomme og Ingefær",
+      "Surf Kombucha Bringebær",
+      "Surf Kombucha Ingefær",
+      "Coca-Cola 0.33L",
+      "Coca-Cola Uten Sukker 0.33L",
+      "Sprite 0.33L",
+      "Engangsbestikk"
+    ]
   }
 }
