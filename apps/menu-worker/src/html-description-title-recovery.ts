@@ -715,9 +715,21 @@ export function reconcileUnpricedMenuDescriptionRows(
 ): readonly MenuObservedItem[] {
   const lines = visibleText.split("\n").map(normalizeVisibleLine);
   return items.flatMap((item) => {
-    // A section heading cannot become a priced dish merely by inheriting
-    // a neighboring dessert/card price.
-    if (/^(?:desserts?|main courses?|starters?|side dishes?)$/iu.test(item.name.trim())) return [];
+    // A section heading or a numbered multi-course menu is not an
+    // individually-priced dish, even when the source publishes a set price.
+    if (/^(?:desserts?|main courses?|starters?|side dishes?|(?:meny|menu)\\s+[1-9]\\d?)$/iu.test(item.name.trim())) return [];
+    const servingHours = item.name.match(/^(.+?)\\s+(serveres|served)\\s+(\\d{1,2}[.:]\\d{2}\\s*[–-]\\s*\\d{1,2}[.:]\\d{2})$/iu);
+    if (servingHours?.[1]) {
+      const name = servingHours[1].trim();
+      return [{
+        ...item,
+        name,
+        normalizedName: normalizeDishName(name),
+        sourceKey: createMenuItemSourceKey(name, item.sectionName),
+        description: [servingHours.slice(2).join(" "), item.description].filter(Boolean).join(" "),
+        confidence: Math.min(item.confidence, 0.9),
+      }];
+    }
     if (item.priceMinor === null || item.priceKind === "multiple") return [item];
     const observedName = normalizeDishName(item.name);
     const occurrences = lines.map((line, index) =>
