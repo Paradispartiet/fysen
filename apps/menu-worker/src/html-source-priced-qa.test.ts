@@ -106,6 +106,64 @@ describe("HTML first-party price provenance", () => {
     ]);
   });
 
+  it("links both size-priced steak options to their documented Biff med løk parent", () => {
+    const source = [
+      "HOVEDRETTER",
+      "Biff med løk",
+      "«Schrøders biff er viden kjent.» Dagbladet 1969.",
+      "m/løkkompott, sprø poteter og salat. ALL: sulfitt, laktose.",
+      "Indrefilet 150 g kr 415",
+      "Indrefilet 220 g kr 585",
+      "Gulsaus (Béarnaise) kr 78",
+    ].join("\n");
+    const result = reconcileSourcePricedHtmlDishes([
+      dish("Indrefilet 150 g", 415, 4),
+      dish("Indrefilet 220 g", 585, 5),
+    ], source);
+    expect(result.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["Biff med løk (indrefilet 150 g)", 41500],
+      ["Biff med løk (indrefilet 220 g)", 58500],
+    ]);
+    expect(result.every((item) => item.description?.includes("Biff med løk"))).toBe(true);
+    expect(result.every((item) => item.sourceExcerpt?.includes("Biff med løk"))).toBe(true);
+  });
+
+  it("never attaches an unsupported parent heading or a mismatching price", () => {
+    const source = [
+      "Biff med løk",
+      "Indrefilet 150 g kr 415",
+      "Indrefilet 220 g kr 585",
+    ].join("\n");
+    expect(reconcileSourcePricedHtmlDishes([dish("Indrefilet 150 g", 499, 1)], source)
+      .map((item) => item.name)).toEqual(["Indrefilet 150 g"]);
+    expect(reconcileSourcePricedHtmlDishes([dish("Indrefilet 150 g", 415, 1)],
+      "Indrefilet 150 g kr 415").map((item) => item.name))
+      .toEqual(["Indrefilet 150 g"]);
+  });
+
+  it("does not classify a 2 cl port-wine and brunost pairing as a pure food dish", () => {
+    const source = [
+      "DESSERT",
+      "Brimsoll Fra Sogn. Brunostsaus. ALL: laktose kr 179",
+      "Efter maten – kombinasjon Et stykke av den beste brunosten, og et lite glass (2 cl) portvin fra 1974. ALL: laktose kr 205",
+      "Stiftgårdskake Fra Trøndelag. ALL: laktose kr 195",
+    ].join("\n");
+    const rows = [
+      dish("Brimsoll", 179, 1),
+      dish("Efter maten – kombinasjon", 205, 2),
+      dish("Stiftgårdskake", 195, 3),
+    ];
+    expect(reconcileSourcePricedHtmlDishes(rows, source).map((item) => item.name))
+      .toEqual(["Brimsoll", "Stiftgårdskake"]);
+    // Wine pairing suggestions are not the same as wine being sold in a dish.
+    const recommendationOnly = source.replace(
+      "et lite glass (2 cl) portvin fra 1974",
+      "anbefalt med portvin",
+    );
+    expect(reconcileSourcePricedHtmlDishes(rows, recommendationOnly).map((item) => item.name))
+      .toEqual(["Brimsoll", "Efter maten – kombinasjon", "Stiftgårdskake"]);
+  });
+
   it("fails closed on ambiguous multiple prices and keeps unrelated existing dishes unchanged", () => {
     const source = [
       "Torsk",
@@ -115,6 +173,6 @@ describe("HTML first-party price provenance", () => {
     ].join("\n");
     const input = [dish("Torsk", 249, 1), dish("Blandet iskrem / Mixed ice cream", 125, 3)];
     expect(reconcileSourcePricedHtmlDishes(input, source)).toEqual(input);
-    expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v4");
+    expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v5");
   });
 });
