@@ -138,6 +138,15 @@ describe("price and section hierarchy reconciliation", () => {
     expect(output[0]?.priceMinor).toBe(28900);
   });
 
+  it("respects spaced comma-dash direct prices on a first-party fish-of-day card", () => {
+    // Restaurant source prints 350, - around the title; a preceding
+    // 395-kr fish soup must never supply this separate dish's price.
+    const html = "<html><body><div>LOFOTEN'S FISH SOUP</div><p>395,-</p>" +
+      "<div>350, -</div><div>FISH OF THE DAY</div><div>350, -</div></body></html>";
+    const corrected = reconcileImmediatelyPricedItems(html, [dish("FISH OF THE DAY", 395)]);
+    expect(corrected[0]?.priceMinor).toBe(35000);
+  });
+
   it("preserves an already correctly priced dish", () => {
     const html = "<html><body><div>PIZZA TATLER</div><div>319</div></body></html>";
     expect(reconcileImmediatelyPricedItems(html, [dish("PIZZA TATLER", 319)])[0]?.priceMinor)

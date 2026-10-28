@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v19";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v24";
 
 const PRICE_LINE =
   /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
@@ -692,6 +692,118 @@ function recoveredSectionLabelDescription(
     return description.slice(normalizedTitle.length).trim() || null;
   }
   return description;
+}
+
+// Menus can place a translated/unpriced sentence directly after allergen
+// notes, or list the components of a priced platter below its real heading.
+// Neither is an independently-priced dish. Preserve the genuine heading when
+// the first-party layout ties it unambiguously to the same exact price.
+const DIRECT_VISIBLE_PRICE = /\b(?:kr\.?|nok)\s*([1-9]\d{1,3})\b|\b([1-9]\d{1,3})\s*,?[-–]?\s*$/iu;
+const ALLERGEN_NOTE = /^(?:allergener?|allergens?)\s*:/iu;
+const COMPONENT_ENUMERATION = /(?:\s+[-–—]\s+.*){2,}/u;
+
+function explicitPriceKroner(value: string): number | null {
+  const match = normalizeVisibleLine(value).match(DIRECT_VISIBLE_PRICE);
+  if (!match) return null;
+  const valueNumber = Number(match[1] ?? match[2]);
+  return Number.isFinite(valueNumber) ? valueNumber : null;
+}
+
+export function reconcileUnpricedMenuDescriptionRows(
+  items: readonly MenuObservedItem[],
+  visibleText: string,
+  fullVisibleText = visibleText,
+): readonly MenuObservedItem[] {
+  const lines = visibleText.split("\n").map(normalizeVisibleLine);
+  return items.flatMap((item) => {
+    // A section heading or a numbered multi-course menu is not an
+    // individually-priced dish, even when the source publishes a set price.
+    if (/^(?:desserts?|main courses?|starters?|side dishes?|(?:meny|menu)\s+[1-9]\d?)$/iu.test(item.name.trim())) return [];
+    const servingHours = item.name.match(/^(.+?)\s+(serveres|served)\s+(\d{1,2}[.:]\d{2}\s*[–-]\s*\d{1,2}[.:]\d{2})$/iu);
+    if (servingHours?.[1]) {
+      const name = servingHours[1].trim();
+      return [{
+        ...item,
+        name,
+        normalizedName: normalizeDishName(name),
+        sourceKey: createMenuItemSourceKey(name, item.sectionName),
+        description: [servingHours.slice(2).join(" "), item.description].filter(Boolean).join(" "),
+        confidence: Math.min(item.confidence, 0.9),
+      }];
+    }
+    if (item.priceMinor === null || item.priceKind === "multiple") return [item];
+    const observedName = normalizeDishName(item.name);
+    const occurrences = lines.map((line, index) =>
+      normalizeDishName(line) === observedName && explicitPriceKroner(line) === null
+        ? index
+        : -1,
+    ).filter((index) => index > 0);
+
+    // A price with an explicitly published weight unit is not a per-dish
+    // price. Use full-page visible text as fallback: the scoped extractor
+    // sometimes excludes a non-priced "Price per kg" metadata line.
+    // Require the same exact displayed price beside each matching heading.
+    // Repeated source cards are safe only when every match has the same unit.
+    const unitLines = (fullVisibleText || visibleText).split("\n").map(normalizeVisibleLine);
+    const unitHeadings = unitLines.map((line, index) =>
+      normalizeDishName(line) === observedName ? index : -1,
+    ).filter((index) => index >= 0);
+    const isPerKilogram = /^(?:(?:price|pris)\s+(?:per|pr\.?|a)|pr\.\s*)\s*(?:kg|kilo(?:gram)?|kilogram)\.?$/iu;
+    if (unitHeadings.length > 0 && unitHeadings.every((heading) => {
+      const nearbyPrices = unitLines.slice(Math.max(0, heading - 2), heading + 6);
+      const unitMetadata = unitLines.slice(heading + 1, heading + 7);
+      return nearbyPrices.some((line) =>
+        explicitPriceKroner(line) === item.priceMinor! / 100,
+      ) && unitMetadata.some((line) => isPerKilogram.test(line));
+    })) return [];
+
+    // Require one unambiguous source occurrence, never guess between repeated
+    // card layouts or multiple contradictory sections.
+    if (occurrences.length !== 1) return [item];
+    const index = occurrences[0]!;
+    // A price explicitly published per kilogram is not the cost of one dish.
+    // Without a first-class unit in MenuObservedItem, quarantine it rather
+    // than misrepresent the price in the user-facing search results.
+    const nearbyLines = lines.slice(index + 1, index + 6);
+    const hasMatchingVisiblePrice = nearbyLines.some((line) =>
+      explicitPriceKroner(line) === item.priceMinor! / 100,
+    );
+    if (hasMatchingVisiblePrice && nearbyLines.some((line) =>
+      /^(?:price|pris|pr\.)\s+(?:per|pr\.?)\s*(?:kg|kilo(?:gram)?|kilogram)\.?$/iu.test(line),
+    )) return [];
+    const previous = lines[index - 1] ?? "";
+    if (ALLERGEN_NOTE.test(previous)) {
+      const beforeAllergens = lines[index - 2] ?? "";
+      if (explicitPriceKroner(beforeAllergens) !== null) return [];
+      return [item];
+    }
+
+    // Either an ingredient enumeration or a longer priced description that
+    // explicitly repeats the immediately preceding all-caps dish heading.
+    // Do not rewrite unrelated neighbouring menu cards.
+    const repeatsHeading = observedName.includes(normalizeDishName(previous));
+    if (!COMPONENT_ENUMERATION.test(item.name) && !repeatsHeading) return [item];
+    const previousIsRealTitle =
+      previous.length >= 5 &&
+      previous.length <= 90 &&
+      previous.toLocaleUpperCase("nb-NO") === previous &&
+      /[A-ZÆØÅ]{2}/u.test(previous) &&
+      !/^(?:STARTERS?|MAIN COURSES?|DESSERTS?|SHELLFISH|FISH|SIDES?)$/iu.test(previous);
+    const priorPrice = explicitPriceKroner(lines[index - 2] ?? "");
+    if (!previousIsRealTitle || priorPrice === null || priorPrice * 100 !== item.priceMinor)
+      return [item];
+
+    const name = previous;
+    return [{
+      ...item,
+      name,
+      normalizedName: normalizeDishName(name),
+      sourceKey: createMenuItemSourceKey(name, item.sectionName),
+      description: [item.name, item.description].filter(Boolean).join(" "),
+      confidence: Math.min(item.confidence, 0.8),
+      sourceExcerpt: [name, item.sourceExcerpt ?? item.name].join(" — ").slice(0, 1000),
+    }];
+  });
 }
 
 export function recoverDescriptionNamedHtmlItems(
