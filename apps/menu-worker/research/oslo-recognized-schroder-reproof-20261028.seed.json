@@ -24,7 +24,7 @@
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-10-28",
-          "note": "First-party price-bearing menu reviewed 2026-10-28. It publishes individual dishes (e.g. Kjøttkaker i brun saus, Flesk og duppe, Hellefisk); title/description/allergen separation and dish-price provenance require exact-head live intake plus semantic artifact QA. No kitchen-hours inference in seed."
+          "note": "First-party menu verified 2026-10-28. Strict food-only contract: 19 independently priced dish/portion options; Biff med løk contains two indrefilet weights, and the mixed brunost + 2 cl portvin dessert pairing is excluded from dish search pending a typed food/drink product. Opening and kitchen hours have not been independently verified."
         }
       },
       "actions": [],
@@ -45,9 +45,10 @@
         "Fra Trøndelag",
         "Gulsaus (Béarnaise)",
         "Rakfisk",
-        "Schrøder panne"
+        "Schrøder panne",
+        "Efter maten – kombinasjon"
       ],
-      "minimumSourceItems": 20,
+      "minimumSourceItems": 19,
       "requiredDishVariants": [
         {
           "name": "Grynsodd",
@@ -102,11 +103,11 @@
           "priceMinor": 46700
         },
         {
-          "name": "Indrefilet 150 g",
+          "name": "Biff med løk (indrefilet 150 g)",
           "priceMinor": 41500
         },
         {
-          "name": "Indrefilet 220 g",
+          "name": "Biff med løk (indrefilet 220 g)",
           "priceMinor": 58500
         },
         {
@@ -124,10 +125,6 @@
         {
           "name": "Kvæfjordkake",
           "priceMinor": 18900
-        },
-        {
-          "name": "Efter maten – kombinasjon",
-          "priceMinor": 20500
         }
       ]
     }
