@@ -833,8 +833,14 @@ export function restoreExplicitRepeatedPriceVariants(
   const lines = visibleText.split("\n").map(normalizeVisibleLine).filter(Boolean);
   const exactPrice = /^(?:kr\.?\s*)?([1-9]\d{1,3})\s*,?\s*[-–]?$/iu;
   const distinctNames = new Map<string, { name: string; priceMinor: number; qualifier: string }[]>();
-  const candidateItems = new Map(items.map((item) => [item.normalizedName, item]));
+  const candidateItems = new Map(items.map((item) => [normalizeDishName(item.name), item]));
+  const nameCounts = new Map<string, number>();
+  for (const item of items) {
+    const key = normalizeDishName(item.name);
+    nameCounts.set(key, (nameCounts.get(key) ?? 0) + 1);
+  }
   for (const [normalizedName, base] of candidateItems) {
+    if (nameCounts.get(normalizedName) !== 1) continue;
     if (base.priceMinor === null || base.priceKind === "multiple") continue;
     const occurrences = lines.map((line, index) =>
       normalizeDishName(line) === normalizedName ? index : -1,
@@ -860,7 +866,7 @@ export function restoreExplicitRepeatedPriceVariants(
     distinctNames.set(normalizedName, variants);
   }
   return items.flatMap((item) => {
-    const candidates = distinctNames.get(item.normalizedName);
+    const candidates = distinctNames.get(normalizeDishName(item.name));
     if (!candidates) return [item];
     return candidates.map((candidate) => ({
       ...item,
