@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 50,
+    "minimumExpectedItems": 47,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-11",
-      "note": "Current first-party Summer 2026 menu publishes multiple individually priced salmon, oyster and sushi dishes."
+      "checkedAt": "2026-10-28",
+      "note": "First-party VINTER 26/27 menu has 47 individually priced food variants across starters, hot dishes, lunch, sashimi, nigiri, maki, sushi platters and desserts. The three 3-course Meny 1–3 bundles are not individual dishes and are excluded from this floor. Hours remain unverified."
     }
   },
   "actions": [],
