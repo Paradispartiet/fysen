@@ -748,7 +748,7 @@ export function reconcileUnpricedMenuDescriptionRows(
     const unitHeadings = unitLines.map((line, index) =>
       normalizeDishName(line) === observedName ? index : -1,
     ).filter((index) => index >= 0);
-    const isPerKilogram = /^(?:(?:price|pris)\s+(?:per|pr\\.?|a)|pr\\.\s*)\s*(?:kg|kilo(?:gram)?|kilogram)\\.?$/iu;
+    const isPerKilogram = /^(?:(?:price|pris)\s+(?:per|pr\.?|a)|pr\.\s*)\s*(?:kg|kilo(?:gram)?|kilogram)\.?$/iu;
     if (unitHeadings.length > 0 && unitHeadings.every((heading) => {
       const nearbyPrices = unitLines.slice(Math.max(0, heading - 2), heading + 6);
       const unitMetadata = unitLines.slice(heading + 1, heading + 7);
