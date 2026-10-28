@@ -209,13 +209,17 @@ function restoreSourceBackedSteakParent(
   const size = /^Indrefilet\s+(150|220)\s*g$/iu.exec(item.name.trim())?.[1];
   if (!size || item.priceMinor === null || (item.priceKind ?? "exact") !== "exact")
     return item;
-  const parentIndex = lines.findIndex((line) => /^Biff med løk$/iu.test(line));
-  if (parentIndex < 0) return item;
-  const nearby = lines.slice(parentIndex + 1, parentIndex + 6);
+  // HTML visible text may fuse a heading with descriptive text, or put
+  // several empty/presentational rows between the heading and its prices.
+  // Search only the source's following main-course block, not the whole menu.
+  const visible = lines.join(" ");
+  const parent = /(?:^|\s)Biff\s+med\s+løk(?=\s|$)/iu.exec(visible);
+  if (!parent) return item;
+  const remainder = visible.slice(parent.index + parent[0].length, parent.index + 1800);
+  const courseBlock = remainder.split(/\b(?:Gulsaus|Dessert)\b/iu)[0] ?? "";
   const options = new Map<string, number>();
-  for (const line of nearby) {
-    const match = /^Indrefilet\s+(150|220)\s*g\s+kr\.?\s*([1-9]\d{1,3})$/iu.exec(line);
-    if (match) options.set(match[1]!, Number(match[2]) * 100);
+  for (const match of courseBlock.matchAll(/\bIndrefilet\s+(150|220)\s*g\s*kr\.?\s*([1-9]\d{1,3})\b/giu)) {
+    options.set(match[1]!, Number(match[2]) * 100);
   }
   if (options.size !== 2 || options.get(size) !== item.priceMinor) return item;
   const name = "Biff med løk (indrefilet " + size + " g)";
