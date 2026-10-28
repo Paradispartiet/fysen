@@ -6,37 +6,6 @@
     {
       "version": 1,
       "restaurant": {
-        "slug": "engebret-cafe-oslo",
-        "name": "Engebret Café",
-        "websiteUrl": "https://www.engebret-cafe.no/",
-        "address": "Bankplassen 1, 0151 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.engebret-cafe.no/menymenu",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-11",
-          "note": "Current first-party à la carte page publishes named and individually priced dishes and current kitchen hours."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": [
-        "Ost og desserter / Cheese and desserts",
-        "Langustine soup with fennel"
-      ]
-    },
-    {
-      "version": 1,
-      "restaurant": {
         "slug": "dovrehallen-oslo",
         "name": "Dovrehallen",
         "websiteUrl": "https://www.dovrehallen.no/",
@@ -91,41 +60,6 @@
       "actions": [],
       "assertionCount": 8,
       "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "lofoten-fiskerestaurant-oslo",
-        "name": "Lofoten Fiskerestaurant",
-        "websiteUrl": "https://www.lofoten-fiskerestaurant.no/",
-        "address": "Stranden 75, 0250 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.lofoten-fiskerestaurant.no/menu-eng",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-11",
-          "note": "Current first-party menu publishes priced lunch, dinner and shellfish dishes; source page also publishes 2026 opening-hour exceptions."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": [
-        "Small size (starter)",
-        "STARTERS",
-        "2 pcs / 4 pcs / 6 pcs",
-        "Big size (main course)",
-        "MAIN COURSE",
-        "Shrimps - mussels - 1/2 lobster from Maine"
-      ]
     },
     {
       "version": 1,
