@@ -2,10 +2,10 @@ import { load } from "cheerio";
 import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 import { extractHtmlVisibleText } from "./html-extractor.js";
 
-export const HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION = "visible-layout-v5";
+export const HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION = "visible-layout-v6";
 
 const NUMBERED_MENU_TITLE = /^(\d{1,2})\s*[.)]\s*(.+)$/u;
-const STANDALONE_PRICE = /^(?:kr\.?\s*)?([1-9]\d{1,3})(?:\s*,[-–])?$/iu;
+const STANDALONE_PRICE = /^(?:kr\.?\s*)?([1-9]\d{1,3})(?:\s*,\s*[-–])?$/iu;
 
 function visibleLines(html: string): readonly string[] {
   return extractHtmlVisibleText(html)
