@@ -60,36 +60,6 @@
       "actions": [],
       "assertionCount": 8,
       "forbiddenDishNames": []
-    },
-    {
-      "version": 1,
-      "restaurant": {
-        "slug": "havsmak-oslo",
-        "name": "Havsmak",
-        "websiteUrl": "https://www.havsmak.no/",
-        "address": "Kirsten Flagstads plass 1, 0150 Oslo",
-        "city": "Oslo",
-        "countryCode": "NO"
-      },
-      "menuSource": {
-        "url": "https://www.havsmak.no/meny",
-        "sourceType": "html",
-        "fetchMode": "http",
-        "userAgent": "FysenMenuBot/0.1",
-        "checkIntervalMinutes": 720
-      },
-      "verification": {
-        "hours": {
-          "status": "unverified",
-          "checkedAt": "2026-09-11",
-          "note": "Current first-party menu publishes seasonal named dishes, course menus and individually priced snacks; intake must preserve dish-first output rather than menu-package labels."
-        }
-      },
-      "actions": [],
-      "assertionCount": 8,
-      "forbiddenDishNames": [
-        "havsmaks 3-retter / havsmaks 3-course menu"
-      ]
     }
   ]
 }
