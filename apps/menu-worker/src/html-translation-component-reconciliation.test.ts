@@ -44,6 +44,21 @@ describe("bilingual and priced platter card layout", () => {
       .toEqual([]);
   });
 
+  it("keeps the real lunch dish while moving serving hours into its description", () => {
+    const result = reconcileUnpricedMenuDescriptionRows(
+      [dish("Laks Benedict Serveres 11.30–15.00", 255)],
+      "Laks Benedict Serveres 11.30–15.00",
+    );
+    expect(result.map((x) => x.name)).toEqual(["Laks Benedict"]);
+    expect(result[0]?.description).toContain("11.30–15.00");
+  });
+
+  it("rejects numbered three-course menu bundles rather than individual dishes", () => {
+    const items = [dish("Meny 1", 635), dish("Meny 2", 715), dish("Meny 3", 790)];
+    expect(reconcileUnpricedMenuDescriptionRows(items, items.map((x) => x.name).join("\n")))
+      .toEqual([]);
+  });
+
   it("preserves ordinary directly-priced dishes after allergen notes", () => {
     const name = "Boknatorsk med kremstuede rotgrønnsaker";
     const lines = ["allergener: melk, fisk", name + " kr 455"];
