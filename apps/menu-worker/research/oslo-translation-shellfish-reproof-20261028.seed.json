@@ -1,7 +1,7 @@
 {
   "version": 1,
   "outputDirectory": "candidates/oslo-translation-shellfish-reproof-20261028",
-  "concurrency": 2,
+  "concurrency": 3,
   "restaurants": [
     {
       "version": 1,
@@ -68,6 +68,39 @@
         "MAIN COURSE",
         "Shrimps - mussels - 1/2 lobster from Maine",
         "DESSERTS"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "the-salmon-oslo",
+        "name": "The Salmon",
+        "websiteUrl": "https://www.thesalmon.com/",
+        "address": "Strandpromenaden 11, 0252 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.thesalmon.com/menu/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-11",
+          "note": "Current first-party Summer 2026 menu publishes multiple individually priced salmon, oyster and sushi dishes."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Meny 1",
+        "Meny 2",
+        "Meny 3",
+        "Laks Benedict Serveres 11.30–15.00"
       ]
     }
   ]
