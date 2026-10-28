@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-recognized-schroder-20261028",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "restaurant-schroder-oslo",
+        "name": "Restaurant Schrøder",
+        "websiteUrl": "https://www.xn--restaurant-schrder-u4b.no/",
+        "address": "Waldemar Thranes gate 8, 0171 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.xn--restaurant-schrder-u4b.no/meny/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-28",
+          "note": "First-party menu verified 2026-10-28. Strict food-only contract: 19 independently priced dish/portion options; Biff med løk contains two indrefilet weights, and the mixed brunost + 2 cl portvin dessert pairing is excluded from dish search pending a typed food/drink product. Opening and kitchen hours have not been independently verified."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Hvaltartar Håndskåret hvaltartar med rå og røkt hval, neper, potet, rømme og løpstikke.ALL: laktose, sulfitt (Champagne, Riesling, Burgund.)",
+        "Hellefisk Pannestekt hellefisk (villkveite) med rømmesjy, agurksalat,potetstappe med muskat ALL: fisk, laktose, sulfitt. (Mâcon. St Aubin.)",
+        "Stikkelsbærgrøt Grønne stikkelsbær fra Hovelsrud, cognac og fløte. ALL: Sulfitt, laktose",
+        "Search",
+        "Schrøder",
+        "Rakfisk Rakørret fra Noraker Gård i Aurdal",
+        "«Verdens beste»",
+        "Reinsdyrhjerte Med rødbete og solbær",
+        "Oksetunge Pepperrotkrem",
+        "Brimsoll Fra Sogn. Brunostsaus",
+        "Med rødbete og solbær",
+        "Fra Sogn",
+        "Fra Trøndelag",
+        "Gulsaus (Béarnaise)",
+        "Rakfisk",
+        "Schrøder panne",
+        "Efter maten – kombinasjon"
+      ],
+      "minimumSourceItems": 19,
+      "requiredDishVariants": [
+        {
+          "name": "Grynsodd",
+          "priceMinor": 17800
+        },
+        {
+          "name": "Steinsopp- og kantarellsuppe",
+          "priceMinor": 19500
+        },
+        {
+          "name": "Reinsdyrhjerte",
+          "priceMinor": 22500
+        },
+        {
+          "name": "Oksetunge",
+          "priceMinor": 19500
+        },
+        {
+          "name": "Hvaltartar",
+          "priceMinor": 25500
+        },
+        {
+          "name": "Bøkling",
+          "priceMinor": 17800
+        },
+        {
+          "name": "Rakfisk (liten, 4 biter)",
+          "priceMinor": 23500
+        },
+        {
+          "name": "Rakfisk (stor, 8 biter)",
+          "priceMinor": 46500
+        },
+        {
+          "name": "Fetsild",
+          "priceMinor": 22500
+        },
+        {
+          "name": "Schrøder panne (per person, minst 2)",
+          "priceMinor": 59500
+        },
+        {
+          "name": "Kjøttkaker i brun saus",
+          "priceMinor": 28700
+        },
+        {
+          "name": "Flesk og duppe",
+          "priceMinor": 32500
+        },
+        {
+          "name": "Hellefisk",
+          "priceMinor": 46700
+        },
+        {
+          "name": "Biff med løk (indrefilet 150 g)",
+          "priceMinor": 41500
+        },
+        {
+          "name": "Biff med løk (indrefilet 220 g)",
+          "priceMinor": 58500
+        },
+        {
+          "name": "Karamellpudding med vanilje- og karamellsaus",
+          "priceMinor": 18900
+        },
+        {
+          "name": "Brimsoll",
+          "priceMinor": 17900
+        },
+        {
+          "name": "Stiftgårdskake",
+          "priceMinor": 19500
+        },
+        {
+          "name": "Kvæfjordkake",
+          "priceMinor": 18900
+        }
+      ]
+    }
+  ]
+}

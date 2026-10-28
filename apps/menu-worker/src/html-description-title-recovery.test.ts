@@ -103,7 +103,7 @@ describe("HTML description-title recovery", () => {
       visibleText,
     );
 
-    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v26");
+    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v27");
     expect(result.map((entry) => entry.name)).toEqual([
       "Hummus (kikert-og sesampuré)",
       "Hvitløkmarinerte kyllingvinger",

@@ -4,6 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 import { BrowserMenuClient } from "./browser-client.js";
+import { HTML_SOURCE_PRICED_QA_VERSION, reconcileSourcePricedHtmlDishes } from "./html-source-priced-qa.js";
 import {
   PUBLIC_MENU_API_EXTRACTOR_VERSION,
   extractPublicMenuApi,
@@ -23,6 +24,7 @@ import {
 import {
   HTML_DESCRIPTION_TITLE_RECOVERY_VERSION,
   recoverDescriptionNamedHtmlItems,
+  rejectAmbiguousMultiPriceDescriptionRows,
   reconcileUnpricedMenuDescriptionRows,
   restoreExplicitRepeatedPriceVariants,
 } from "./html-description-title-recovery.js";
@@ -167,7 +169,7 @@ export function shouldPreferDominantHeadingRecovery(
     headingCount >= trailingCount
   );
 }
-const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}+${HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION}+${HTML_RECOVERY_SELECTION_VERSION}`;
+const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}+${HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION}+${HTML_SOURCE_PRICED_QA_VERSION}+${HTML_RECOVERY_SELECTION_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf" | "api";
 export type MenuSourceFetchMode = "http" | "browser";
@@ -739,19 +741,21 @@ export async function extractMenuSource(
             ),
           )
         : reconcileVisibleSizePrices(normalizedHtml, beverageScopedItems);
-    return {
-      // The Salmon publishes structured JSON-LD: its numbered set menus and
-      // serving-hour suffixes need the same label safety gate as HTML rows.
-      // Structured dish prices remain authoritative; empty visible text limits
-      // reconciliation to unambiguous label-only corrections.
-      items: restoreExplicitRepeatedPriceVariants(
+    const restoredItems = restoreExplicitRepeatedPriceVariants(
         reconcileUnpricedMenuDescriptionRows(
           items,
           extracted.method === "html_heuristic" ? extracted.visibleText : "",
           extracted.method === "html_heuristic" ? fullVisibleText : "",
         ),
         extracted.method === "html_heuristic" ? fullVisibleText : "",
-      ),
+      );
+    return {
+      items: extracted.method === "html_heuristic"
+        ? rejectAmbiguousMultiPriceDescriptionRows(
+            reconcileSourcePricedHtmlDishes(restoredItems, fullVisibleText),
+            extracted.visibleText,
+          )
+        : restoredItems,
       method: extracted.method,
       extractorVersion: HTML_RUNTIME_EXTRACTOR_VERSION,
     };

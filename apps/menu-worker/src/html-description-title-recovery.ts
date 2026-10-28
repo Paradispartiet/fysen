@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v26";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v27";
 
 const PRICE_LINE =
   /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
@@ -601,6 +601,72 @@ function recoverForwardSplitParentheticalTitle(
   return candidates.size === 1 ? ([...candidates][0] ?? null) : null;
 }
 
+// Some restaurant pages publish a short, separate dish heading immediately
+// before a long price-bearing description. The generic HTML extractor can
+// mistakenly promote the start of the description as the dish title.
+// Restore the adjacent heading only if the description line is uniquely
+// identifiable by the observed name AND one exact explicit price. Avoid
+// multi-price/size lines, where reusing one price as the whole dish is unsafe.
+function recoverAdjacentHeadingFromPricedDescription(
+  lines: readonly string[],
+  item: MenuObservedItem,
+): string | null {
+  if (item.priceMinor === null || item.priceMinor % 100 !== 0) return null;
+  const kroner = String(item.priceMinor / 100);
+  const observedName = normalizeDishName(item.name);
+  if (!observedName || observedName.length < 3) return null;
+  const explicitPrices = /\b(?:kr\.?|nok)\s*([1-9]\d{1,3})\b/giu;
+  const names = new Set<string>();
+
+  for (let i = 1; i < lines.length; i += 1) {
+    const line = normalizeVisibleLine(lines[i] ?? "");
+    if (!line || !normalizeDishName(line).includes(observedName)) continue;
+    if (!/\b(?:ALL|allergener?|allergens?)\s*:/iu.test(line)) continue;
+
+    const observedPrices = [...line.matchAll(explicitPrices)].map((match) => match[1]);
+    if (observedPrices.length !== 1 || observedPrices[0] !== kroner) continue;
+
+    const preceding = normalizeVisibleLine(lines[i - 1] ?? "");
+    if (!preceding || !looksLikeRecoveredTitle(preceding) || PRICE_LINE.test(preceding))
+      continue;
+    if (normalizeDishName(preceding) === observedName) continue;
+    names.add(preceding);
+  }
+
+  return names.size === 1 ? ([...names][0] ?? null) : null;
+}
+
+// Never turn a two-size menu line into an exact-priced generic dish.
+// Example: "Liten (4) kr 235 Stor (8) kr 465" is not one 465-kr dish.
+export function rejectAmbiguousMultiPriceDescriptionRows(
+  items: readonly MenuObservedItem[],
+  visibleText: string,
+): readonly MenuObservedItem[] {
+  const lines = visibleText.split("\n").map(normalizeVisibleLine);
+  const priceTokens = /\b(?:kr\.?|nok)\s*([1-9]\d{1,3})\b/giu;
+  return items.filter((item) => {
+    if (item.priceMinor === null || item.priceKind === "multiple") return true;
+    const directPrice = item.priceMinor;
+    const name = normalizeDishName(item.name);
+    if (name.length < 6) return true;
+    // The visible menu sometimes prints the short heading separately; the
+    // price-bearing description begins with the second title token.
+    // Require a substantial contiguous suffix to avoid false matches.
+    const titleRemainder = name.split(" ").slice(1).join(" ");
+    return !lines.some((line) => {
+      const normalizedLine = normalizeDishName(line);
+      const matchesObservedDescription =
+        normalizedLine.includes(name) ||
+        (titleRemainder.length >= 24 &&
+          titleRemainder.split(" ").length >= 5 &&
+          normalizedLine.includes(titleRemainder));
+      if (!matchesObservedDescription) return false;
+      const distinct = new Set([...line.matchAll(priceTokens)].map((match) => match[1]));
+      return distinct.size > 1 && distinct.has(String(directPrice / 100));
+    });
+  });
+}
+
 function recoverTitle(
   lines: readonly string[],
   position: number,
@@ -892,11 +958,12 @@ export function recoverDescriptionNamedHtmlItems(
   const recovered = items.map((item) => {
     const position = item.position;
     const anchoredPreparationTitle = sourceExcerptAnchorsPreparationTitle(item);
-    const forwardRecovery = anchoredPreparationTitle
+    const adjacentHeadingTitle = recoverAdjacentHeadingFromPricedDescription(lines, item);
+    const forwardRecovery = anchoredPreparationTitle || adjacentHeadingTitle
       ? null
       : recoverForwardTitleFromSourceExcerpt(item);
     const contextualDescriptionTitle =
-      !forwardRecovery && !anchoredPreparationTitle
+      !forwardRecovery && !anchoredPreparationTitle && !adjacentHeadingTitle
         ? recoverImmediateConnectorDescriptionTitle(lines, position, item.name)
         : null;
     const directlyPricedObservedName =
@@ -923,7 +990,7 @@ export function recoverDescriptionNamedHtmlItems(
       forwardRecovery || descriptionTitle
         ? null
         : recoverParentheticalQualifiedTitle(lines, item);
-    const title = forwardRecovery?.title ?? descriptionTitle ?? qualifiedTitle;
+    const title = adjacentHeadingTitle ?? forwardRecovery?.title ?? descriptionTitle ?? qualifiedTitle;
 
     const next = title
       ? (() => {
@@ -933,21 +1000,25 @@ export function recoverDescriptionNamedHtmlItems(
             sourceKey,
             name: title,
             normalizedName: normalizeDishName(title),
-            description: forwardRecovery
-              ? recoveredSectionLabelDescription(item, forwardRecovery.title)
+            description: adjacentHeadingTitle
+              ? recoveredDescription(item, true)
+              : forwardRecovery
+                ? recoveredSectionLabelDescription(item, forwardRecovery.title)
               : descriptionRecovery
                 ? recoveredDescription(
                     item,
                     !descriptionRecovery.observedNameIsTitleContinuation,
                   )
                 : item.description,
-            confidence: forwardRecovery
-              ? Math.min(item.confidence, 0.82)
+            confidence: adjacentHeadingTitle
+              ? Math.min(item.confidence, 0.80)
+              : forwardRecovery
+                ? Math.min(item.confidence, 0.82)
               : descriptionRecovery
                 ? Math.min(item.confidence, 0.84)
                 : item.confidence,
             sourceExcerpt:
-              forwardRecovery || descriptionRecovery
+              adjacentHeadingTitle || forwardRecovery || descriptionRecovery
                 ? `${title} — ${item.sourceExcerpt ?? item.name}`.slice(0, 1000)
                 : item.sourceExcerpt,
           };

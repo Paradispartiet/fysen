@@ -58,6 +58,30 @@ const entry: RestaurantBatchIntakeEntry = {
 };
 
 describe("restaurant batch intake", () => {
+  it("requires an independently audited name, price and menu floor", () => {
+    const items = [item("Hval", 0, { priceMinor: 25500 }), item("Fisk (liten)", 1, { priceMinor: 23500 }),
+      item("Fisk (stor)", 2, { priceMinor: 46500 }), item("Kjøttkaker", 3, { priceMinor: 28700 })];
+    const strict: RestaurantBatchIntakeEntry = {
+      ...entry, minimumSourceItems: 4,
+      requiredDishVariants: [
+        { name: "Hval", priceMinor: 25500 },
+        { name: "Fisk (liten)", priceMinor: 23500 },
+        { name: "Fisk (stor)", priceMinor: 46500 },
+        { name: "Kjøttkaker", priceMinor: 28700 },
+      ],
+    };
+    const result = buildGeneratedRestaurantManifest(strict, items);
+    expect(result.menuSource.minimumExpectedItems).toBe(4);
+    expect(result.qualityAssertions.requiredDishVariants).toHaveLength(4);
+    expect(() => buildGeneratedRestaurantManifest({ ...strict, minimumSourceItems: 5 }, items))
+      .toThrow(/First-party minimum/);
+    expect(() => buildGeneratedRestaurantManifest(strict, items.slice(0, 3)))
+      .toThrow(/First-party minimum/);
+    expect(() => buildGeneratedRestaurantManifest({
+      ...strict, requiredDishVariants: [{ name: "Hval", priceMinor: 99900 }],
+    }, items)).toThrow(/First-party name\/price choice missing/);
+  });
+
   it("pins the complete canonical item count and representative live prices", () => {
     const items = Array.from({ length: 10 }, (_, index) =>
       item(`Dish ${index + 1}`, index),

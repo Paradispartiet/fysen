@@ -8,6 +8,23 @@ import {
 import { extractScopedHtmlMenu } from "./html-source-extractor.js";
 
 describe("HTML heading line-break normalizer", () => {
+  it("splits WordPress nonbreaking-space title and ingredient columns without guessing", () => {
+    const gap = "\u00a0 ".repeat(10);
+    const html = "<html><body><p>Oksetunge" + gap +
+      "Pepperrotkrem, syltet pære og kapers. ALL: sulfitt. Kr 195</p></body></html>";
+    const normalized = normalizeHtmlHeadingLineBreaks(html);
+    const text = load(normalized)("p").text();
+    expect(text).toContain("Oksetunge\nPepperrotkrem");
+  });
+
+  it("preserves short nonbreaking spaces within genuine titles", () => {
+    const normalized = normalizeHtmlHeadingLineBreaks(
+      "<html><body><p>Husets\u00a0biff med løk</p></body></html>",
+    );
+    expect(load(normalized)("p").text()).toBe("Husets\u00a0biff med løk");
+  });
+
+
   it("keeps a br-split dish heading semantically whole through the canonical HTML runtime chain", () => {
     const html = `
       <html><body>
@@ -30,7 +47,7 @@ describe("HTML heading line-break normalizer", () => {
     const extracted = extractScopedHtmlMenu(normalized);
     const recovered = recoverDescriptionNamedHtmlItems(extracted.items, extracted.visibleText);
 
-    expect(HTML_HEADING_NORMALIZER_VERSION).toBe("heading-v3");
+    expect(HTML_HEADING_NORMALIZER_VERSION).toBe("heading-v4");
     expect(recovered.map((item) => [item.name, item.priceMinor])).toContainEqual([
       "Kofta (arabisk gryterett med kjøttboller)",
       31000,
