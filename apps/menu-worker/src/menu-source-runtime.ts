@@ -23,6 +23,7 @@ import {
 import {
   HTML_DESCRIPTION_TITLE_RECOVERY_VERSION,
   recoverDescriptionNamedHtmlItems,
+  reconcileUnpricedMenuDescriptionRows,
 } from "./html-description-title-recovery.js";
 import {
   HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION,
@@ -738,7 +739,9 @@ export async function extractMenuSource(
           )
         : reconcileVisibleSizePrices(normalizedHtml, beverageScopedItems);
     return {
-      items,
+      items: extracted.method === "html_heuristic"
+        ? reconcileUnpricedMenuDescriptionRows(items, extracted.visibleText)
+        : items,
       method: extracted.method,
       extractorVersion: HTML_RUNTIME_EXTRACTOR_VERSION,
     };
