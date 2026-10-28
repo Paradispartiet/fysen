@@ -3,6 +3,7 @@ import type { MenuObservedItem } from "@fysen/menu-core";
 import {
   HTML_DESCRIPTION_TITLE_RECOVERY_VERSION,
   recoverDescriptionNamedHtmlItems,
+  looksLikeHtmlDescription,
 } from "./html-description-title-recovery.js";
 
 function item(
@@ -26,6 +27,12 @@ function item(
 }
 
 describe("HTML description-title recovery", () => {
+  it("distinguishes bilingual mixed food titles from descriptive prose", () => {
+    expect(looksLikeHtmlDescription("Blandet salat / Mixed salad")).toBe(false);
+    expect(looksLikeHtmlDescription("Blandet iskrem / Mixed ice cream")).toBe(false);
+    expect(looksLikeHtmlDescription("Blandet grønnsaker og krem")).toBe(true);
+  });
+
   it("recovers short and long Norwegian description lines from the preceding dish title", () => {
     const visibleText = [
       "À la carte",
@@ -61,7 +68,7 @@ describe("HTML description-title recovery", () => {
       visibleText,
     );
 
-    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v24");
+    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v25");
     expect(result.map((entry) => entry.name)).toEqual([
       "Hummus (kikert-og sesampuré)",
       "Hvitløkmarinerte kyllingvinger",
