@@ -171,6 +171,12 @@ function missingInlineDishes(lines: readonly string[], existing: ReadonlySet<str
     if (!/\b(?:ALL|allergener?|allergens?)\s*:/iu.test(priceLine)) continue;
     const name = normalizeDishName(title);
     if (existing.has(name)) continue;
+    // The beginning of a description ("Brimsoll Fra Sogn.") may look like
+    // a separate punctuated title. If its actual food heading is already
+    // captured, never add a second dish from the descriptive suffix.
+    const existingParent = /^(.+?)\s+(?:Fra|Med)\s+\p{L}/u.exec(title)?.[1];
+    if (existingParent && existing.has(normalizeDishName(existingParent)))
+      continue;
     const prices = [...priceLine.matchAll(CURRENCY_PRICE)];
     if (prices.length !== 1 || !TRAILING_PRICE.test(priceLine) || PRICE_PER_PERSON.test(priceLine))
       continue;
