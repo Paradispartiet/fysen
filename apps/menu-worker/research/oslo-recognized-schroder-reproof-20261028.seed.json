@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-recognized-schroder-20261028",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "restaurant-schroder-oslo",
+        "name": "Restaurant Schrøder",
+        "websiteUrl": "https://www.xn--restaurant-schrder-u4b.no/",
+        "address": "Waldemar Thranes gate 8, 0171 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.xn--restaurant-schrder-u4b.no/meny/",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-28",
+          "note": "First-party price-bearing menu reviewed 2026-10-28. It publishes individual dishes (e.g. Kjøttkaker i brun saus, Flesk og duppe, Hellefisk); title/description/allergen separation and dish-price provenance require exact-head live intake plus semantic artifact QA. No kitchen-hours inference in seed."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "Hvaltartar Håndskåret hvaltartar med rå og røkt hval, neper, potet, rømme og løpstikke.ALL: laktose, sulfitt (Champagne, Riesling, Burgund.)",
+        "Hellefisk Pannestekt hellefisk (villkveite) med rømmesjy, agurksalat,potetstappe med muskat ALL: fisk, laktose, sulfitt. (Mâcon. St Aubin.)",
+        "Stikkelsbærgrøt Grønne stikkelsbær fra Hovelsrud, cognac og fløte. ALL: Sulfitt, laktose",
+        "Search",
+        "Schrøder",
+        "Rakfisk Rakørret fra Noraker Gård i Aurdal",
+        "«Verdens beste»",
+        "Reinsdyrhjerte Med rødbete og solbær",
+        "Oksetunge Pepperrotkrem",
+        "Brimsoll Fra Sogn. Brunostsaus"
+      ]
+    }
+  ]
+}

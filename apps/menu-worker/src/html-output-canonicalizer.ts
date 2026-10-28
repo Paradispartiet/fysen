@@ -1,6 +1,6 @@
 import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
-export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v21";
+export const HTML_OUTPUT_CANONICALIZER_VERSION = "output-canonical-v23";
 
 const SOURCE_EXCERPT_SEPARATOR = /\s+—\s+/u;
 const ADDON_SECTION_HINT =
@@ -290,6 +290,85 @@ function isLowercaseAllergenDescriptionItem(name: string): boolean {
   return /^[a-zæøå]/u.test(name) && ALLERGEN_DESCRIPTION_PAREN.test(name);
 }
 
+// A few first-party menus put a genuine dish heading, a full description,
+// allergy notes and wine suggestions in the same price-bearing HTML block.
+// Recover only titles with an explicit, defensible boundary. Otherwise
+// quarantine the polluted row rather than publish guessed dish names.
+const INLINE_ALLERGEN_MARKER = /\b(?:ALL|allergener?|allergens?)\s*:/iu;
+const DESCRIPTION_YEAR_ATTRIBUTION =
+  /\s+[A-ZÆØÅ][\p{L}]+,\s*(?:19|20)\d{2}\./u;
+const MINIMUM_GUEST_DESCRIPTION =
+  /\s+minimum\s+\d+\s+(?:pers\.?|personer|persons?|people)\b/iu;
+const TITLE_SENTENCE_BOUNDARY = /\.\s+(?=[A-ZÆØÅ][\p{L}])/u;
+// A period is also a defensible title/description delimiter when an
+// untruncated first-party block starts a provenance-bearing ingredient note
+// (e.g. “Steinsopp- og kantarellsuppe. Skogsopp fra Jessheim”). Do not
+// split arbitrary sentences without this additional descriptive marker.
+const TRUNCATED_DESCRIPTION_BOUNDARY = /\.\s+(?=[A-ZÆØÅ][\p{L}-]*\s+(?:fra|med)\b)/iu;
+const REPEATED_PREPARATION_TITLE =
+  /^([\p{L}][\p{L}-]{3,})\s+(?:håndskåret|pannestekt|grillet|bakt|røkt|stekt)\s+\1\b/iu;
+// Only a single capitalized heading followed by an unusually capitalized
+// descriptive connector with additional source-style evidence. Do not split
+// ordinary lower-case 'med' or 'fra' occurring inside real dish titles.
+const CAPITALIZED_DESCRIPTION_CONNECTOR =
+  /^([\p{Lu}][\p{L}-]{4,})\s+(?:(?:Med)\s+[\p{Ll}][^.!?]{7,}(?:[.,]|$)|(?:Fra)\s+[\p{Lu}][\p{L}-]{2,}\.\s+[\p{Lu}])/u;
+
+function recoverAllergenAnnotatedTitle(item: MenuObservedItem): MenuObservedItem | null {
+  const name = item.name.trim();
+  const allergenMarker = INLINE_ALLERGEN_MARKER.exec(name);
+  // Joined descriptions can also be truncated by a source extractor before
+  // its allergen label. Use the same positive boundaries in either case.
+  if (item.priceMinor === null) return allergenMarker ? null : item;
+
+  const beforeAllergens = allergenMarker
+    ? name.slice(0, allergenMarker.index).trim()
+    : name;
+  const boundaryCandidates = [
+    DESCRIPTION_YEAR_ATTRIBUTION.exec(beforeAllergens)?.index,
+    MINIMUM_GUEST_DESCRIPTION.exec(beforeAllergens)?.index,
+    (allergenMarker ? TITLE_SENTENCE_BOUNDARY : TRUNCATED_DESCRIPTION_BOUNDARY)
+      .exec(beforeAllergens)?.index,
+    REPEATED_PREPARATION_TITLE.test(beforeAllergens)
+      ? beforeAllergens.indexOf(" ")
+      : undefined,
+    CAPITALIZED_DESCRIPTION_CONNECTOR.exec(beforeAllergens)?.[1]?.length,
+  ].filter((index): index is number => index !== undefined && index > 0);
+  // An otherwise clean, short title can simply be followed by an allergen
+  // list. Only reconstruct it when no description-like punctuation or
+  // wording makes the boundary ambiguous.
+  const unambiguousShortTitle = beforeAllergens.replace(/[.!?\s]+$/u, "").trim();
+  const plainAllergenSuffix =
+    boundaryCandidates.length === 0 &&
+    unambiguousShortTitle.length <= 80 &&
+    unambiguousShortTitle.split(/\s+/u).length <= 8 &&
+    !/[,;]/u.test(unambiguousShortTitle) &&
+    !/\b(?:minimum|serveres|served|allergener?)\b/iu.test(unambiguousShortTitle);
+
+  if (boundaryCandidates.length === 0 && !allergenMarker) return item;
+  if (boundaryCandidates.length === 0 && !plainAllergenSuffix) return null;
+
+  const cut = boundaryCandidates.length > 0
+    ? Math.min(...boundaryCandidates)
+    : beforeAllergens.length;
+  const title = beforeAllergens.slice(0, cut).replace(/[.!?\s]+$/u, "").trim();
+  const wordCount = title.split(/\s+/u).length;
+  if (title.length < 3 || title.length > 100 || wordCount > 12 || !/\p{L}/u.test(title))
+    return null;
+
+  const description = [
+    name.slice(cut).trim(),
+    item.description,
+  ].filter(Boolean).join(" ");
+  return {
+    ...item,
+    name: title,
+    normalizedName: normalizeDishName(title),
+    sourceKey: createMenuItemSourceKey(title, item.sectionName),
+    description: description || null,
+    confidence: Math.min(item.confidence, 0.8),
+  };
+}
+
 function cleanOutputItemName(item: MenuObservedItem): MenuObservedItem {
   const name = item.name
     .trim()
@@ -447,7 +526,10 @@ function isOutputNoiseLabel(item: MenuObservedItem): boolean {
 export function canonicalizeHtmlOutputItems(
   items: readonly MenuObservedItem[],
 ): readonly MenuObservedItem[] {
-  const cleanedItems = items.map(cleanOutputItemName);
+  const cleanedItems = items
+    .map(cleanOutputItemName)
+    .map(recoverAllergenAnnotatedTitle)
+    .filter((item): item is MenuObservedItem => item !== null);
   const provenanceResolvedItems =
     preferUniquelyDirectPricedConflicts(cleanedItems);
   const labelFilteredItems = provenanceResolvedItems.filter(

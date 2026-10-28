@@ -1,10 +1,14 @@
 import { load } from "cheerio";
 
-export const HTML_HEADING_NORMALIZER_VERSION = "heading-v3";
+export const HTML_HEADING_NORMALIZER_VERSION = "heading-v4";
 
 const STANDALONE_CURRENCY_LABEL = /^(?:NOK|kr\.?)$/iu;
 const NOK_PREFIXED_PRICE = /^NOK\s*([1-9]\d{1,3}(?:[.,]\d{1,2})?)$/iu;
 const DOT_DASH_NOK_PRICE = /(\b[1-9]\d{1,3})\s*\.-/gu;
+// WordPress menus can pad a heading and its description with four or more
+// non-breaking spaces instead of a line break. Preserve that explicit column
+// boundary for title/price provenance; do not split ordinary spaces.
+const NONBREAKING_COLUMN_GAP = /(?:\u00a0[ \t\u00a0]*){4,}/gu;
 const PRICE_WITH_TRAILING_PARENTHETICAL_METADATA =
   /^((?:(?:NOK\s*)|(?:kr\.?\s*))?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|NOK))?)\s*(\([^()]{1,240}\))$/iu;
 
@@ -66,7 +70,7 @@ export function normalizeHtmlHeadingLineBreaks(html: string): string {
     .contents()
     .each((_, content) => {
       if (content.type !== "text") return;
-      content.data = content.data.replace(DOT_DASH_NOK_PRICE, "$1,-");
+      content.data = content.data.replace(DOT_DASH_NOK_PRICE, "$1,-").replace(NONBREAKING_COLUMN_GAP, "\n");
     });
 
   return $.html();
