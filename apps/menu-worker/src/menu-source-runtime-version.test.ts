@@ -82,7 +82,7 @@ describe("HTML runtime extractor version", () => {
     expect(HTML_TEXT_SECTION_SCOPE_VERSION).toBe("text-section-scope-v18");
     expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v23");
     expect(HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION).toBe("visible-layout-v6");
-    expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v1");
+    expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v4");
     expect(HTML_RECOVERY_SELECTION_VERSION).toBe("recovery-selection-v5");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);

@@ -5,7 +5,7 @@ import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } fro
  * infer a serving unit or convert a per-person quote to a dish price.
  * This layer applies only after the ordinary HTML parser has finished.
  */
-export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v3";
+export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v4";
 
 const CURRENCY_PRICE = /\bkr\.?\s*([1-9]\d{1,3})\b/giu;
 const TRAILING_PRICE = /\bkr\.?\s*([1-9]\d{1,3})(?:\s*,-)?\s*$/iu;
@@ -159,6 +159,11 @@ function missingInlineDishes(lines: readonly string[], existing: ReadonlySet<str
     // and the priced allergen description on the immediately next line.
     const inlineTitle = line.match(TITLE_THEN_DESCRIPTION)?.[1]?.trim();
     const splitTitle = line.match(/^([\p{Lu}][\p{L}\s()\-–]{5,79})\.$/u)?.[1]?.trim();
+    // The line immediately after a stand-alone dish title is that dish's
+    // description, even when its first clause looks like another title.
+    const priorSplitTitle = (lines[position - 1] ?? "")
+      .match(/^([\p{Lu}][\p{L}\s()\-–]{5,79})\.$/u)?.[1]?.trim();
+    if (inlineTitle && priorSplitTitle) continue;
     const title = inlineTitle ?? splitTitle;
     if (!title || /^(?:med|fra|with|from)\s/u.test(title.toLowerCase()) ||
         title.split(/\s+/u).length < 2 || title.length > 80) continue;
