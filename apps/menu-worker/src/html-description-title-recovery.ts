@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v24";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v25";
 
 const PRICE_LINE =
   /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
@@ -156,6 +156,11 @@ function looksLikeAllergenQualifier(value: string): boolean {
 export function looksLikeHtmlDescription(value: string): boolean {
   const line = normalizeVisibleLine(value);
   if (!line) return false;
+  // A bilingual, directly named "mixed salad" or "mixed ice cream"
+  // is a dish title, not preparation prose just because it starts
+  // with the Norwegian adjective "Blandet".
+  if (/^blandet\s+(?:salat|iskrem)\s*\/\s*mixed\s+(?:salad|ice\s+cream)$/iu.test(line))
+    return false;
   const words = line.split(/\s+/).filter(Boolean);
   const commaCount = line.match(/,/gu)?.length ?? 0;
   const longQuestion = /\?$/u.test(line) && words.length >= 5;
