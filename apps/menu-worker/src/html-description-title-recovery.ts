@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v25";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v26";
 
 const PRICE_LINE =
   /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
@@ -162,6 +162,16 @@ export function looksLikeHtmlDescription(value: string): boolean {
   if (/^blandet\s+(?:salat|iskrem)\s*\/\s*mixed\s+(?:salad|ice\s+cream)$/iu.test(line))
     return false;
   const words = line.split(/\s+/).filter(Boolean);
+  // A bilingual dish title can exceed the generic description word-count
+  // limit because it prints the Norwegian and English names together.
+  // Do not exempt sentence-like descriptions or translated instructions.
+  const bilingualTitles = line.split(/\s+\/\s+/u);
+  if (bilingualTitles.length === 2 &&
+      bilingualTitles.every((title) =>
+        /^\p{Lu}/u.test(title) && title.split(/\s+/u).length <= 6 &&
+        !/[.!?;,]/u.test(title)) &&
+      words.length >= 9 &&
+      !DESCRIPTION_LEAD.test(line)) return false;
   const commaCount = line.match(/,/gu)?.length ?? 0;
   const longQuestion = /\?$/u.test(line) && words.length >= 5;
   return (
@@ -808,6 +818,62 @@ export function reconcileUnpricedMenuDescriptionRows(
       confidence: Math.min(item.confidence, 0.8),
       sourceExcerpt: [name, item.sourceExcerpt ?? item.name].join(" — ").slice(0, 1000),
     }];
+  });
+}
+
+// Several directly priced cards may share a visible title but differ in
+// published preparation/topping notes. A single sourceKey otherwise silently
+// collapses them to the last price. Recover only when every repeated card
+// gives its own exact adjacent price and a distinct short "Med/With" qualifier.
+export function restoreExplicitRepeatedPriceVariants(
+  items: readonly MenuObservedItem[],
+  visibleText: string,
+): readonly MenuObservedItem[] {
+  if (!visibleText) return items;
+  const lines = visibleText.split("\n").map(normalizeVisibleLine).filter(Boolean);
+  const exactPrice = /^(?:kr\.?\s*)?([1-9]\d{1,3})\s*,?\s*[-–]?$/iu;
+  const distinctNames = new Map<string, { name: string; priceMinor: number; qualifier: string }[]>();
+  const candidateItems = new Map(items.map((item) => [item.normalizedName, item]));
+  for (const [normalizedName, base] of candidateItems) {
+    if (base.priceMinor === null || base.priceKind === "multiple") continue;
+    const occurrences = lines.map((line, index) =>
+      normalizeDishName(line) === normalizedName ? index : -1,
+    ).filter((index) => index >= 0);
+    if (occurrences.length < 3 || occurrences.length > 6) continue;
+    const variants: { name: string; priceMinor: number; qualifier: string }[] = [];
+    for (const index of occurrences) {
+      const priceMatch = lines[index + 1]?.match(exactPrice);
+      const note = lines[index + 2] ?? "";
+      const shortNote = note.split(/\s*\/\s*/u)[0]?.trim() ?? "";
+      if (!priceMatch?.[1] ||
+          !/^(?:med|with)\s+\p{L}/iu.test(shortNote) ||
+          shortNote.length > 65 || /[.!?;]/u.test(shortNote)) break;
+      const priceMinor = Number(priceMatch[1]) * 100;
+      if (!Number.isSafeInteger(priceMinor)) break;
+      const qualifiedName = base.name + " (" + shortNote.toLocaleLowerCase("nb-NO") + ")";
+      variants.push({ name: qualifiedName, priceMinor, qualifier: note });
+    }
+    if (variants.length !== occurrences.length ||
+        !variants.some((variant) => variant.priceMinor === base.priceMinor) ||
+        new Set(variants.map((variant) => normalizeDishName(variant.name))).size !== variants.length)
+      continue;
+    distinctNames.set(normalizedName, variants);
+  }
+  return items.flatMap((item) => {
+    const candidates = distinctNames.get(item.normalizedName);
+    if (!candidates) return [item];
+    return candidates.map((candidate) => ({
+      ...item,
+      name: candidate.name,
+      normalizedName: normalizeDishName(candidate.name),
+      sourceKey: createMenuItemSourceKey(candidate.name, item.sectionName),
+      description: candidate.qualifier,
+      priceMinor: candidate.priceMinor,
+      priceKind: "exact" as const,
+      confidence: Math.min(item.confidence, 0.8),
+      sourceExcerpt: [item.name, candidate.qualifier, String(candidate.priceMinor / 100)]
+        .join(" — ").slice(0, 1000),
+    }));
   });
 }
 
