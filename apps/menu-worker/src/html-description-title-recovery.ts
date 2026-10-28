@@ -715,6 +715,9 @@ export function reconcileUnpricedMenuDescriptionRows(
 ): readonly MenuObservedItem[] {
   const lines = visibleText.split("\n").map(normalizeVisibleLine);
   return items.flatMap((item) => {
+    // A section heading cannot become a priced dish merely by inheriting
+    // a neighboring dessert/card price.
+    if (/^(?:desserts?|main courses?|starters?|side dishes?)$/iu.test(item.name.trim())) return [];
     if (item.priceMinor === null || item.priceKind === "multiple") return [item];
     const observedName = normalizeDishName(item.name);
     const occurrences = lines.map((line, index) =>
