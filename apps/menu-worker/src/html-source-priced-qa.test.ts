@@ -87,7 +87,7 @@ describe("HTML first-party price provenance", () => {
     ]);
   });
 
-  it("never treats a minimum-guest per-person platter or a sauce add-on as an ordinary dish", () => {
+  it("marks the priced per-person platter and removes the sauce add-on", () => {
     const source = [
       "Schrøder panne kr 595 PP",
       "Schrøder panne",
@@ -100,7 +100,10 @@ describe("HTML first-party price provenance", () => {
       dish("Indrefilet 150 g", 415, 4),
       dish("Gulsaus (Béarnaise)", 78, 5),
     ], source);
-    expect(out.map((v) => v.name)).toEqual(["Indrefilet 150 g"]);
+    expect(out.map((v) => [v.name, v.priceMinor])).toEqual([
+      ["Schrøder panne (per person, minst 2)", 59500],
+      ["Indrefilet 150 g", 41500],
+    ]);
   });
 
   it("fails closed on ambiguous multiple prices and keeps unrelated existing dishes unchanged", () => {
@@ -112,6 +115,6 @@ describe("HTML first-party price provenance", () => {
     ].join("\n");
     const input = [dish("Torsk", 249, 1), dish("Blandet iskrem / Mixed ice cream", 125, 3)];
     expect(reconcileSourcePricedHtmlDishes(input, source)).toEqual(input);
-    expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v2");
+    expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v3");
   });
 });

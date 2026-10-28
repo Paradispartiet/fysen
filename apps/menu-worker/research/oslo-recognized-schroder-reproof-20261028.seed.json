@@ -47,7 +47,7 @@
         "Rakfisk",
         "Schrøder panne"
       ],
-      "minimumSourceItems": 19,
+      "minimumSourceItems": 20,
       "requiredDishVariants": [
         {
           "name": "Grynsodd",
@@ -84,6 +84,10 @@
         {
           "name": "Fetsild",
           "priceMinor": 22500
+        },
+        {
+          "name": "Schrøder panne (per person, minst 2)",
+          "priceMinor": 59500
         },
         {
           "name": "Kjøttkaker i brun saus",

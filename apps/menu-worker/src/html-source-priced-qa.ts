@@ -5,7 +5,7 @@ import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } fro
  * infer a serving unit or convert a per-person quote to a dish price.
  * This layer applies only after the ordinary HTML parser has finished.
  */
-export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v2";
+export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v3";
 
 const CURRENCY_PRICE = /\bkr\.?\s*([1-9]\d{1,3})\b/giu;
 const TRAILING_PRICE = /\bkr\.?\s*([1-9]\d{1,3})(?:\s*,-)?\s*$/iu;
@@ -50,6 +50,44 @@ function withExactPrice(item: MenuObservedItem, kroner: number): MenuObservedIte
     sourceExcerpt: [item.sourceExcerpt, "Exact price at source heading: kr " + kroner]
       .filter(Boolean).join(" — ").slice(0, 1000),
   };
+}
+
+function explicitlyPricedPerPerson(
+  item: MenuObservedItem,
+  sourceLines: readonly string[],
+): MenuObservedItem[] {
+  const explicit = /\bkr\.?\s*([1-9]\d{1,3})\s*(?:pp|p\.p\.|per\s+(?:person|pers\.?)|pr\.?\s*(?:person|pers\.?))\b/giu;
+  const kroner = new Set<number>();
+  for (const line of sourceLines) {
+    for (const match of line.matchAll(explicit)) {
+      kroner.add(Number(match[1]));
+    }
+  }
+  // Never substitute an adjacent ordinary dish's exact price.
+  if (kroner.size !== 1) return [];
+  const amount = [...kroner][0]!;
+  if (amount < 40 || amount > 10_000) return [];
+  const minGuestMatches = sourceLines.join(" ").match(/\b(?:minimum|minst|min\.?)\s*(\d{1,2})\s*(?:pers\.?|personer?)\b/iu);
+  const minimumGuests = minGuestMatches ? Number(minGuestMatches[1]) : null;
+  const qualifier = minimumGuests !== null
+    ? "per person, minst " + minimumGuests
+    : "per person";
+  const name = item.name + " (" + qualifier + ")";
+  return [{
+    ...item,
+    name,
+    normalizedName: normalizeDishName(name),
+    sourceKey: createMenuItemSourceKey(name, item.sectionName),
+    priceMinor: amount * 100,
+    priceKind: "exact",
+    priceMaxMinor: null,
+    description: ["Kildepris kr " + amount + " per person", minimumGuests !== null
+      ? "minimum " + minimumGuests + " personer"
+      : null, item.description].filter(Boolean).join(". "),
+    confidence: Math.min(item.confidence, 0.80),
+    sourceExcerpt: [item.sourceExcerpt, ...sourceLines.filter((line) => PRICE_PER_PERSON.test(line))]
+      .filter(Boolean).join(" — ").slice(0, 1000),
+  }];
 }
 
 function explicitlyLinkedPrice(item: MenuObservedItem, lines: readonly string[]): number | null {
@@ -165,9 +203,10 @@ export function reconcileSourcePricedHtmlDishes(
     if (SAUCE_ONLY.test(item.name) && item.priceMinor !== null && item.priceMinor <= 15_000)
       return [];
     const source = anchoredSourceLines(item, lines);
-    // Quarantine per-person prices until the published price unit can be
-    // faithfully represented in the canonical dish schema.
-    if (source.some((line) => PRICE_PER_PERSON.test(line))) return [];
+    // Expose the unit and minimum-party requirement directly in the title;
+    // a scalar NOK amount must never masquerade as the total party price.
+    if (source.some((line) => PRICE_PER_PERSON.test(line)))
+      return explicitlyPricedPerPerson(item, source);
     const sizes = explicitSizes(item, lines);
     if (sizes) return sizes;
     const directlyPriced = explicitlyLinkedPrice(item, lines);
