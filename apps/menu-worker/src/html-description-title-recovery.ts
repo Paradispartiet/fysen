@@ -171,7 +171,8 @@ export function looksLikeHtmlDescription(value: string): boolean {
         /^\p{Lu}/u.test(title) && title.split(/\s+/u).length <= 6 &&
         !/[.!?;,]/u.test(title)) &&
       words.length >= 9 &&
-      !DESCRIPTION_LEAD.test(line)) return false;
+      !DESCRIPTION_LEAD.test(line) &&
+      !/^(?:med|with|serveres?|served)\b/iu.test(line)) return false;
   const commaCount = line.match(/,/gu)?.length ?? 0;
   const longQuestion = /\?$/u.test(line) && words.length >= 5;
   return (
