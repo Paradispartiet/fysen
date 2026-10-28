@@ -3,6 +3,8 @@ import type { MenuObservedItem } from "@fysen/menu-core";
 import {
   HTML_DESCRIPTION_TITLE_RECOVERY_VERSION,
   recoverDescriptionNamedHtmlItems,
+  looksLikeHtmlDescription,
+  restoreExplicitRepeatedPriceVariants,
 } from "./html-description-title-recovery.js";
 
 function item(
@@ -26,6 +28,46 @@ function item(
 }
 
 describe("HTML description-title recovery", () => {
+
+  it("does not mislabel long directly priced bilingual titles as descriptions", () => {
+    expect(looksLikeHtmlDescription("Salt Kjøtt og Flesk / Salted beef and pork")).toBe(false);
+    expect(looksLikeHtmlDescription("Med poteter og løk / With potatoes and onion")).toBe(true);
+  });
+
+  it("keeps every source-priced topping variant with an unambiguous adjacent description", () => {
+    const lines = [
+      "Karbonade / Minced Steak", "Kr. 140,-", "Med løk / With onion",
+      "Karbonade / Minced steak", "Kr. 140,-", "Med speilegg / With fried egg",
+      "Karbonade / Minced steak", "Kr. 175,-",
+      "Med speilegg og stekte poteter / With fried egg and fried potatoes",
+    ].join("\n");
+    const result = restoreExplicitRepeatedPriceVariants(
+      [item("Karbonade / Minced steak", 1, 17500)], lines,
+    );
+    expect(result.map((entry) => [entry.name, entry.priceMinor])).toEqual([
+      ["Karbonade / Minced steak (med løk)", 14000],
+      ["Karbonade / Minced steak (med speilegg)", 14000],
+      ["Karbonade / Minced steak (med speilegg og stekte poteter)", 17500],
+    ]);
+    expect(new Set(result.map((entry) => entry.sourceKey)).size).toBe(3);
+  });
+
+  it("does not invent variants when a price or the description is absent", () => {
+    const original = [item("Karbonade / Minced steak", 1, 17500)];
+    const incomplete = [
+      "Karbonade / Minced steak", "Kr. 140,-", "Med løk",
+      "Karbonade / Minced steak", "Kr. 140,-", "Med speilegg",
+      "Karbonade / Minced steak", "Kr. 175,-", "Spør servitøren",
+    ].join("\n");
+    expect(restoreExplicitRepeatedPriceVariants(original, incomplete)).toEqual(original);
+  });
+
+  it("distinguishes bilingual mixed food titles from descriptive prose", () => {
+    expect(looksLikeHtmlDescription("Blandet salat / Mixed salad")).toBe(false);
+    expect(looksLikeHtmlDescription("Blandet iskrem / Mixed ice cream")).toBe(false);
+    expect(looksLikeHtmlDescription("Blandet grønnsaker og krem")).toBe(true);
+  });
+
   it("recovers short and long Norwegian description lines from the preceding dish title", () => {
     const visibleText = [
       "À la carte",
@@ -61,7 +103,7 @@ describe("HTML description-title recovery", () => {
       visibleText,
     );
 
-    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v24");
+    expect(HTML_DESCRIPTION_TITLE_RECOVERY_VERSION).toBe("titles-v26");
     expect(result.map((entry) => entry.name)).toEqual([
       "Hummus (kikert-og sesampuré)",
       "Hvitløkmarinerte kyllingvinger",

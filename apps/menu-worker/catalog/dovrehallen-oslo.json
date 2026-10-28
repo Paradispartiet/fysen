@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dovrehallen-oslo",
+    "name": "Dovrehallen",
+    "websiteUrl": "https://www.dovrehallen.no/",
+    "address": "Storgata 22, 0184 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.913836828580834,
+    "longitude": 10.751554508320618
+  },
+  "menuSource": {
+    "url": "https://www.dovrehallen.no/var-meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 48,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "First-party priced menu has 48 distinct priced variants across Christmas dishes, starters, sandwiches (three karbonade toppings), daily specials, meat, fish, omelettes and desserts. 43-item parser output is incomplete; do not promote until live exact-head output reaches the verified 48 and all variants are source-matched."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Lutefisk",
+      "Rekecocktail / Shrimp cocktail",
+      "Rekesmørbrød / Shrimp sandwich",
+      "Onsdag - Bankebiff med grønnsaker",
+      "Stekt Kylling / Fried chicken",
+      "Svinekoteletter / Pork chops",
+      "Kryddersild",
+      "Riskrem/Rice Cream",
+      "Blandet salat / Mixed salad",
+      "Salt Kjøtt og Flesk / Salted beef and pork",
+      "Blandet iskrem / Mixed ice cream",
+      "Karbonade / Minced steak (med løk)",
+      "Karbonade / Minced steak (med speilegg)",
+      "Karbonade / Minced steak (med speilegg og stekte poteter)"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Lutefisk",
+        "priceMinor": 59900
+      },
+      {
+        "name": "Rekecocktail / Shrimp cocktail",
+        "priceMinor": 16000
+      },
+      {
+        "name": "Rekesmørbrød / Shrimp sandwich",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Onsdag - Bankebiff med grønnsaker",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Stekt Kylling / Fried chicken",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Svinekoteletter / Pork chops",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Kryddersild",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Riskrem/Rice Cream",
+        "priceMinor": 13500
+      },
+      {
+        "name": "Blandet salat / Mixed salad",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Salt Kjøtt og Flesk / Salted beef and pork",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Blandet iskrem / Mixed ice cream",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Karbonade / Minced steak (med løk)",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Karbonade / Minced steak (med speilegg)",
+        "priceMinor": 14000
+      },
+      {
+        "name": "Karbonade / Minced steak (med speilegg og stekte poteter)",
+        "priceMinor": 17500
+      }
+    ],
+    "forbiddenDishNames": [
+      "Omeletter"
+    ]
+  }
+}
