@@ -5,7 +5,7 @@ import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } fro
  * infer a serving unit or convert a per-person quote to a dish price.
  * This layer applies only after the ordinary HTML parser has finished.
  */
-export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v4";
+export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v5";
 
 const CURRENCY_PRICE = /\bkr\.?\s*([1-9]\d{1,3})\b/giu;
 const TRAILING_PRICE = /\bkr\.?\s*([1-9]\d{1,3})(?:\s*,-)?\s*$/iu;
@@ -196,6 +196,61 @@ function missingInlineDishes(lines: readonly string[], existing: ReadonlySet<str
   return added;
 }
 
+/**
+ * A priced weight option can belong to an unpriced named dish. Restore the
+ * heading only when BOTH exact-size prices are printed immediately under the
+ * independently present "Biff med løk" heading; never turn the heading into
+ * another priced item.
+ */
+function restoreSourceBackedSteakParent(
+  item: MenuObservedItem,
+  lines: readonly string[],
+): MenuObservedItem {
+  const size = /^Indrefilet\s+(150|220)\s*g$/iu.exec(item.name.trim())?.[1];
+  if (!size || item.priceMinor === null || (item.priceKind ?? "exact") !== "exact")
+    return item;
+  const parentIndex = lines.findIndex((line) => /^Biff med løk$/iu.test(line));
+  if (parentIndex < 0) return item;
+  const nearby = lines.slice(parentIndex + 1, parentIndex + 6);
+  const options = new Map<string, number>();
+  for (const line of nearby) {
+    const match = /^Indrefilet\s+(150|220)\s*g\s+kr\.?\s*([1-9]\d{1,3})$/iu.exec(line);
+    if (match) options.set(match[1]!, Number(match[2]) * 100);
+  }
+  if (options.size !== 2 || options.get(size) !== item.priceMinor) return item;
+  const name = "Biff med løk (indrefilet " + size + " g)";
+  return {
+    ...item,
+    name,
+    normalizedName: normalizeDishName(name),
+    sourceKey: createMenuItemSourceKey(name, item.sectionName),
+    description: ["Kildeoverskrift: Biff med løk", item.description]
+      .filter(Boolean).join(". "),
+    sourceExcerpt: [item.sourceExcerpt, "Biff med løk", "Indrefilet " + size + " g kr " + (item.priceMinor / 100)]
+      .filter(Boolean).join(" — ").slice(0, 1000),
+    confidence: Math.min(item.confidence, 0.8),
+  };
+}
+
+/**
+ * A listed dessert that explicitly includes a serving of fortified wine is
+ * not a food-only dish. Do not expose it as one until a mixed food/drink
+ * product type exists in the search catalog.
+ */
+function isSourceConfirmedAlcoholCombination(
+  item: MenuObservedItem,
+  lines: readonly string[],
+): boolean {
+  if (!/^Efter maten\s*[–—-]\s*kombinasjon$/iu.test(item.name.trim()))
+    return false;
+  return lines.some((line) =>
+    /^Efter maten\s*[–—-]\s*kombinasjon\b/iu.test(line) &&
+    /\bbrunost\b/iu.test(line) &&
+    /\bet lite glass\b.*\bportvin\b/iu.test(line) &&
+    /\b2\s*cl\b/iu.test(line)
+  );
+}
+
 export function reconcileSourcePricedHtmlDishes(
   items: readonly MenuObservedItem[],
   fullVisibleText: string,
@@ -204,6 +259,7 @@ export function reconcileSourcePricedHtmlDishes(
   const lines = visibleLines(fullVisibleText);
   const corrected = items.flatMap((item) => {
     if (isAdjacentDescriptionFragment(item, items, lines)) return [];
+    if (isSourceConfirmedAlcoholCombination(item, lines)) return [];
     // Generic food-scope guard: a sauce-only option is not a main dish.
     if (SAUCE_ONLY.test(item.name) && item.priceMinor !== null && item.priceMinor <= 15_000)
       return [];
@@ -215,7 +271,10 @@ export function reconcileSourcePricedHtmlDishes(
     const sizes = explicitSizes(item, lines);
     if (sizes) return sizes;
     const directlyPriced = explicitlyLinkedPrice(item, lines);
-    return [directlyPriced !== null ? withExactPrice(item, directlyPriced) : item];
+    return [restoreSourceBackedSteakParent(
+      directlyPriced !== null ? withExactPrice(item, directlyPriced) : item,
+      lines,
+    )];
   });
   const existing = new Set(corrected.map((item) => item.normalizedName));
   const recovered = missingInlineDishes(lines, existing);
