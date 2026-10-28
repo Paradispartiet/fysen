@@ -40,7 +40,7 @@ describe("bilingual and priced platter card layout", () => {
   });
 
   it("does not allow an inherited price to turn a section title into a dish", () => {
-    expect(reconcileUnpricedMenuDescriptionRows([dish("DESSERTS", 235)], "DESSERTS\\n235,-"))
+    expect(reconcileUnpricedMenuDescriptionRows([dish("DESSERTS", 235)], "DESSERTS\n235,-"))
       .toEqual([]);
   });
 
@@ -65,4 +65,4 @@ describe("bilingual and priced platter card layout", () => {
     expect(reconcileUnpricedMenuDescriptionRows([dish(name, 455)], lines.join("\n")))
       .toHaveLength(1);
   });
-}
+});
