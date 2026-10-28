@@ -247,12 +247,15 @@ function isSourceConfirmedAlcoholCombination(
 ): boolean {
   if (!/^Efter maten\s*[–—-]\s*kombinasjon$/iu.test(item.name.trim()))
     return false;
-  return lines.some((line) =>
-    /^Efter maten\s*[–—-]\s*kombinasjon\b/iu.test(line) &&
-    /\bbrunost(?:en)?\b/iu.test(line) &&
-    /\bet lite glass\b.*\bportvin\b/iu.test(line) &&
-    /\b2\s*cl\b/iu.test(line)
-  );
+  // Source headings and their priced descriptions may occupy separate text
+  // nodes. Only inspect a short span after this exact menu heading.
+  const visible = lines.join(" ");
+  const heading = /(?:^|\s)Efter\s+maten\s*[–—-]\s*kombinasjon(?=\s|$)/iu.exec(visible);
+  if (!heading) return false;
+  const nearby = visible.slice(heading.index + heading[0].length, heading.index + 850);
+  return /\bbrunost(?:en)?\b/iu.test(nearby) &&
+    /\bet lite glass\b[\s\S]*?\bportvin\b/iu.test(nearby) &&
+    /\b2\s*cl\b/iu.test(nearby);
 }
 
 export function reconcileSourcePricedHtmlDishes(
