@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "the-salmon-oslo",
+    "name": "The Salmon",
+    "websiteUrl": "https://www.thesalmon.com/",
+    "address": "Strandpromenaden 11, 0252 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.907932007949455,
+    "longitude": 10.723239042034312
+  },
+  "menuSource": {
+    "url": "https://www.thesalmon.com/menu/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 50,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "Current first-party Summer 2026 menu publishes multiple individually priced salmon, oyster and sushi dishes."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Østers",
+      "Laks trilogi",
+      "Norsk Vaffel “The Salmon”",
+      "Kveite, servert med ponzu | 6 stk",
+      "Kveite med shiso, havsalt og lime | 2 stk",
+      "Kveite aburi | 8 stk",
+      "Dagens fangst 20 biter",
+      "Sorbet"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Østers",
+        "priceMinor": 11000
+      },
+      {
+        "name": "Laks trilogi",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Norsk Vaffel “The Salmon”",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Kveite, servert med ponzu | 6 stk",
+        "priceMinor": 16000
+      },
+      {
+        "name": "Kveite med shiso, havsalt og lime | 2 stk",
+        "priceMinor": 11500
+      },
+      {
+        "name": "Kveite aburi | 8 stk",
+        "priceMinor": 18000
+      },
+      {
+        "name": "Dagens fangst 20 biter",
+        "priceMinor": 54000
+      },
+      {
+        "name": "Sorbet",
+        "priceMinor": 5500
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
