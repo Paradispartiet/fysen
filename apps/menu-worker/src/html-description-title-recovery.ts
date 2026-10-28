@@ -762,9 +762,8 @@ export function reconcileUnpricedMenuDescriptionRows(
     // Either an ingredient enumeration or a longer priced description that
     // explicitly repeats the immediately preceding all-caps dish heading.
     // Do not rewrite unrelated neighbouring menu cards.
-    const repeatsHeading = normalizedHeading => observedName.includes(normalizedHeading);
-    if (!COMPONENT_ENUMERATION.test(item.name) &&
-        !repeatsHeading(normalizeDishName(previous))) return [item];
+    const repeatsHeading = observedName.includes(normalizeDishName(previous));
+    if (!COMPONENT_ENUMERATION.test(item.name) && !repeatsHeading) return [item];
     const previousIsRealTitle =
       previous.length >= 5 &&
       previous.length <= 90 &&
