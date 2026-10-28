@@ -249,7 +249,7 @@ function isSourceConfirmedAlcoholCombination(
     return false;
   return lines.some((line) =>
     /^Efter maten\s*[–—-]\s*kombinasjon\b/iu.test(line) &&
-    /\bbrunost\b/iu.test(line) &&
+    /\bbrunost(?:en)?\b/iu.test(line) &&
     /\bet lite glass\b.*\bportvin\b/iu.test(line) &&
     /\b2\s*cl\b/iu.test(line)
   );
