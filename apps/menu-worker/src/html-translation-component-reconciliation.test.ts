@@ -39,6 +39,11 @@ describe("bilingual and priced platter card layout", () => {
       .toBe(description.name);
   });
 
+  it("does not allow an inherited price to turn a section title into a dish", () => {
+    expect(reconcileUnpricedMenuDescriptionRows([dish("DESSERTS", 235)], "DESSERTS\\n235,-"))
+      .toEqual([]);
+  });
+
   it("preserves ordinary directly-priced dishes after allergen notes", () => {
     const name = "Boknatorsk med kremstuede rotgrønnsaker";
     const lines = ["allergener: melk, fisk", name + " kr 455"];
