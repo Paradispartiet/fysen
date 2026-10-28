@@ -21,6 +21,21 @@ Piloten skal ikke optimaliseres for flest mulig restauranter eller flest mulig m
 
 Restaurant-onboarding er en løpende dekningsoppgave. **Beslutning 13. oktober 2026:** Fysen skal sikte mot **alle gode og ordinære restauranter i Oslo kommune**. Dette gjelder også etablerte nabolagsrestauranter som ikke er prisbelønt, ikke omtalt i internasjonale guider og serverer kjente retter. Dish-first søk er fremdeles produktløftet, men «unik marginal rettverdi» er **ikke lenger et vilkår for restaurantens relevans**.
 
+## Dekningsbeslutning 28. oktober 2026 — alle anerkjente restauranter i Oslo
+
+**Målet er full dekning av alle dokumenterbart anerkjente, aktive restauranter i Oslo kommune**, i tillegg til de gode ordinære restaurantene. Anerkjennelse kan dokumenteres gjennom MICHELIN, VisitOSLO, redaksjonelle Oslo-guider, lokale restaurantanmeldelser og flere uavhengige kilder; Michelin-stjerne eller en bestemt Google-score er ikke et vilkår. Kontroller faktisk adresse og driftsstatus før hver opptaksbeslutning.
+
+Dette er en **dekningsforpliktelse, ikke en påstand om at vi allerede er ferdige**:
+
+1. Alle bekreftet anerkjente restauranter skal identifiseres og spores med kilde, sjekkdato og fysisk Oslo-identitet. En gjenkjent restaurant kan ikke forsvinne fra arbeidskøen fordi menyen er vanskelig å lese.
+2. Hver får én redaksjonell beslutning (relevant / uavklart / dokumentert utenfor) og én **separat** publiseringsstatus (`canonical`, `review`, `missing`, eller dokumentert `excluded` der identiteten virkelig faller utenfor). `review` er et synlig dekningsgap, ikke en godkjenning.
+3. Mangel på individuell rettpris, vanskelig PDF/HTML, robots-blokkering og smaksmeny uten publiserte retter er **tekniske hindringer**, ikke grunnlag for å avvise anerkjente restauranter.
+4. Reparasjoner av kilde/transport/semantikk skal foregå i felles parser og ha positive og negative regresjonstester. Ikke senk live-validasjon, minstekrav, robots-/sikkerhetspolicy eller semantisk QA for å øke dekningstallet.
+5. Publisering som **søkbar rett** krever fortsatt faktisk, fersk, kildestøttet rett og korrekt prissemantikk. Restaurant-only profiler for relevante smaksmenysteder uten individuelt prisede retter er et separat, ennå ikke godkjent produktarbeid; de skal ikke skjules eller tildeles oppdiktede retter.
+6. Ferdigdekning skal måles som **verifiserte relevante restauranter publisert / alle verifiserte relevante restauranter**, med eksplisitt separat oversikt over `review`, `missing`, usikkerhet og kildedato. Et stort manifestantall eller grønn watcher er aldri fullgodt bevis.
+
+Praktisk gjenopprettingskø for 28. oktober: [anerkjente Oslo-restauranter](./oslo-recognized-restaurants-recovery-2026-10-28.md). Den eksisterende [coverage census](./oslo-coverage-census-2026-09-21.md) forblir research-ledger; `apps/menu-worker/catalog/` forblir eneste produksjonskatalog.
+
 ## Coverage-policy: bred dekning av gode, ordinære restauranter
 
 ### Hvilke restauranter tilhører dekningsmålet?

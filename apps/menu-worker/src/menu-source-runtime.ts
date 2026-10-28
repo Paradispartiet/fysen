@@ -23,6 +23,7 @@ import {
 import {
   HTML_DESCRIPTION_TITLE_RECOVERY_VERSION,
   recoverDescriptionNamedHtmlItems,
+  rejectAmbiguousMultiPriceDescriptionRows,
   reconcileUnpricedMenuDescriptionRows,
   restoreExplicitRepeatedPriceVariants,
 } from "./html-description-title-recovery.js";
@@ -739,19 +740,18 @@ export async function extractMenuSource(
             ),
           )
         : reconcileVisibleSizePrices(normalizedHtml, beverageScopedItems);
-    return {
-      // The Salmon publishes structured JSON-LD: its numbered set menus and
-      // serving-hour suffixes need the same label safety gate as HTML rows.
-      // Structured dish prices remain authoritative; empty visible text limits
-      // reconciliation to unambiguous label-only corrections.
-      items: restoreExplicitRepeatedPriceVariants(
+    const restoredItems = restoreExplicitRepeatedPriceVariants(
         reconcileUnpricedMenuDescriptionRows(
           items,
           extracted.method === "html_heuristic" ? extracted.visibleText : "",
           extracted.method === "html_heuristic" ? fullVisibleText : "",
         ),
         extracted.method === "html_heuristic" ? fullVisibleText : "",
-      ),
+      );
+    return {
+      items: extracted.method === "html_heuristic"
+        ? rejectAmbiguousMultiPriceDescriptionRows(restoredItems, extracted.visibleText)
+        : restoredItems,
       method: extracted.method,
       extractorVersion: HTML_RUNTIME_EXTRACTOR_VERSION,
     };
