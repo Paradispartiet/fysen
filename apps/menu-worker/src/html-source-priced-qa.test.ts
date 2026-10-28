@@ -128,6 +128,24 @@ describe("HTML first-party price provenance", () => {
     expect(result.every((item) => item.sourceExcerpt?.includes("Biff med løk"))).toBe(true);
   });
 
+  it("recovers steak parent when heading text and priced choices collapse into one HTML text block", () => {
+    const source = [
+      "HOVEDRETTER",
+      "Biff med løk «Schrøders biff er viden kjent.» Dagbladet, 1969. m/løkkompott.",
+      "ALL: sulfitt, laktose, selleri. (Bordeaux)",
+      "Indrefilet 150 g kr 415 Indrefilet 220 g kr 585 Gulsaus (Béarnaise) kr 78",
+      "DESSERT",
+    ].join("\n");
+    const result = reconcileSourcePricedHtmlDishes([
+      dish("Indrefilet 150 g", 415, 3),
+      dish("Indrefilet 220 g", 585, 4),
+    ], source);
+    expect(result.map((item) => item.name)).toEqual([
+      "Biff med løk (indrefilet 150 g)",
+      "Biff med løk (indrefilet 220 g)",
+    ]);
+  });
+
   it("never attaches an unsupported parent heading or a mismatching price", () => {
     const source = [
       "Biff med løk",
