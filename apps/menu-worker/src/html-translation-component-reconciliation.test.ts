@@ -68,6 +68,22 @@ describe("bilingual and priced platter card layout", () => {
     ]);
   });
 
+  it("uses the true all-caps dessert title, not its repeated-word description", () => {
+    const visible = ["245,-", "CRÈME BRÛLÉE", "Spicy pumpkin crème brûlée", "245,-",
+      "Allergens: milk, gluten, berries"].join("\\n");
+    const result = reconcileUnpricedMenuDescriptionRows(
+      [dish("Spicy pumpkin crème brûlée", 245)], visible);
+    expect(result.map((item) => [item.name, item.priceMinor]))
+      .toEqual([["CRÈME BRÛLÉE", 24500]]);
+  });
+
+  it("quarantines explicitly per-kilogram lobster prices rather than claiming plate prices", () => {
+    const visible = ["1550,-", "FRESH LOBSTER", "Fished straight from the aquarium.",
+      "1550,-", "Price per kg.", "Allergens: shellfish, egg, soy"].join("\\n");
+    expect(reconcileUnpricedMenuDescriptionRows([dish("FRESH LOBSTER", 1550)], visible))
+      .toEqual([]);
+  });
+
   it("preserves ordinary directly-priced dishes after allergen notes", () => {
     const name = "Boknatorsk med kremstuede rotgrønnsaker";
     const lines = ["allergener: melk, fisk", name + " kr 455"];
