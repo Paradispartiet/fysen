@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 43,
+    "minimumExpectedItems": 48,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-09-11",
-      "note": "Current first-party menu publishes a large priced traditional menu. Seasonal Christmas entries coexist with the ordinary menu and must be handled semantically by the runtime."
+      "note": "First-party priced menu has 48 distinct priced variants across Christmas dishes, starters, sandwiches (three karbonade toppings), daily specials, meat, fish, omelettes and desserts. 43-item parser output is incomplete; do not promote until live exact-head output reaches the verified 48 and all variants are source-matched."
     }
   },
   "actions": [],
@@ -40,7 +40,11 @@
       "Stekt Kylling / Fried chicken",
       "Svinekoteletter / Pork chops",
       "Kryddersild",
-      "Riskrem/Rice Cream"
+      "Riskrem/Rice Cream",
+      "Blandet salat / Mixed salad",
+      "Salt Kjøtt og Flesk / Salted beef and pork",
+      "Blandet iskrem / Mixed ice cream",
+      "Karbonade / Minced steak"
     ],
     "requiredDishVariants": [
       {
@@ -74,6 +78,22 @@
       {
         "name": "Riskrem/Rice Cream",
         "priceMinor": 13500
+      },
+      {
+        "name": "Blandet salat / Mixed salad",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Salt Kjøtt og Flesk / Salted beef and pork",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Blandet iskrem / Mixed ice cream",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Karbonade / Minced steak",
+        "priceMinor": 14000
       }
     ],
     "forbiddenDishNames": [
