@@ -746,6 +746,7 @@ export async function extractMenuSource(
       items: reconcileUnpricedMenuDescriptionRows(
         items,
         extracted.method === "html_heuristic" ? extracted.visibleText : "",
+        extracted.method === "html_heuristic" ? fullVisibleText : "",
       ),
       method: extracted.method,
       extractorVersion: HTML_RUNTIME_EXTRACTOR_VERSION,
