@@ -28,7 +28,7 @@ function item(name: string, position: number): MenuObservedItem {
 
 describe("Batch 02 generic parser families", () => {
   it("normalizes Scandinavian dot-dash whole-NOK notation before extraction", () => {
-    expect(HTML_HEADING_NORMALIZER_VERSION).toBe("heading-v3");
+    expect(HTML_HEADING_NORMALIZER_VERSION).toBe("heading-v4");
     const normalized = normalizeHtmlHeadingLineBreaks(`
       <html><body>
         <h3>Triple Chili Cheese 135.-</h3>
