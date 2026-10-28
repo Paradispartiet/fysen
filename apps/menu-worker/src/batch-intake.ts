@@ -1,6 +1,6 @@
 import { writeFile, readFile } from "node:fs/promises";
 import { isAbsolute, resolve, sep } from "node:path";
-import { type MenuObservedItem } from "@fysen/menu-core";
+import { normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 import { z } from "zod";
 import { HttpMenuClient } from "./http-client.js";
 import { canonicalizeUniqueMenuSourceKeys } from "./menu-source-key-canonicalizer.js";
@@ -26,6 +26,12 @@ const batchIntakeEntrySchema = z.object({
   verification: manifestShape.verification,
   actions: manifestShape.actions,
   assertionCount: z.number().int().min(3).max(20).default(8),
+  // A manual source audit may pin a minimum and required priced dishes.
+  minimumSourceItems: z.number().int().min(3).max(500).optional(),
+  requiredDishVariants: z.array(z.object({
+    name: z.string().trim().min(2).max(300),
+    priceMinor: z.number().int().positive(),
+  })).max(20).optional(),
   forbiddenDishNames: z
     .array(z.string().trim().min(2).max(300))
     .max(20)
@@ -120,7 +126,20 @@ export function buildGeneratedRestaurantManifest(
   );
   if (canonicalItems.length === 0)
     throw new Error("Live source exposed no canonical menu items");
-  const assertions = evenlySpacedItems(canonicalItems, entry.assertionCount);
+  if (entry.minimumSourceItems !== undefined && canonicalItems.length < entry.minimumSourceItems)
+    throw new Error("First-party minimum not met: " + canonicalItems.length + " extracted < " + entry.minimumSourceItems + " verified source choices");
+  const required = entry.requiredDishVariants;
+  const assertions = required && required.length > 0
+    ? required.map((expected) => {
+        const match = canonicalItems.find((item) =>
+          item.normalizedName === normalizeDishName(expected.name) &&
+          item.priceMinor === expected.priceMinor &&
+          (item.priceKind ?? "exact") === "exact"
+        );
+        if (!match) throw new Error("First-party name/price choice missing: " + expected.name + " / " + expected.priceMinor);
+        return match;
+      })
+    : evenlySpacedItems(canonicalItems, entry.assertionCount);
   const manifest = restaurantOnboardingManifestSchema.parse({
     version: 1,
     restaurant: entry.restaurant,
