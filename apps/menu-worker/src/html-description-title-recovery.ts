@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v23";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v24";
 
 const PRICE_LINE =
   /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
@@ -712,6 +712,7 @@ function explicitPriceKroner(value: string): number | null {
 export function reconcileUnpricedMenuDescriptionRows(
   items: readonly MenuObservedItem[],
   visibleText: string,
+  fullVisibleText = visibleText,
 ): readonly MenuObservedItem[] {
   const lines = visibleText.split("\n").map(normalizeVisibleLine);
   return items.flatMap((item) => {
@@ -737,6 +738,24 @@ export function reconcileUnpricedMenuDescriptionRows(
         ? index
         : -1,
     ).filter((index) => index > 0);
+
+    // A price with an explicitly published weight unit is not a per-dish
+    // price. Use full-page visible text as fallback: the scoped extractor
+    // sometimes excludes a non-priced "Price per kg" metadata line.
+    // Require the same exact displayed price beside each matching heading.
+    // Repeated source cards are safe only when every match has the same unit.
+    const unitLines = (fullVisibleText || visibleText).split("\n").map(normalizeVisibleLine);
+    const unitHeadings = unitLines.map((line, index) =>
+      normalizeDishName(line) === observedName ? index : -1,
+    ).filter((index) => index >= 0);
+    const isPerKilogram = /^(?:(?:price|pris)\\s+(?:per|pr\\.?|a)|pr\\.\\s*)\\s*(?:kg|kilo(?:gram)?|kilogram)\\.?$/iu;
+    if (unitHeadings.length > 0 && unitHeadings.every((heading) => {
+      const nearbyPrices = unitLines.slice(Math.max(0, heading - 2), heading + 6);
+      const unitMetadata = unitLines.slice(heading + 1, heading + 7);
+      return nearbyPrices.some((line) =>
+        explicitPriceKroner(line) === item.priceMinor! / 100,
+      ) && unitMetadata.some((line) => isPerKilogram.test(line));
+    })) return [];
 
     // Require one unambiguous source occurrence, never guess between repeated
     // card layouts or multiple contradictory sections.
