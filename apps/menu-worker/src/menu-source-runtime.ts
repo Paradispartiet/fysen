@@ -739,9 +739,14 @@ export async function extractMenuSource(
           )
         : reconcileVisibleSizePrices(normalizedHtml, beverageScopedItems);
     return {
-      items: extracted.method === "html_heuristic"
-        ? reconcileUnpricedMenuDescriptionRows(items, extracted.visibleText)
-        : items,
+      // The Salmon publishes structured JSON-LD: its numbered set menus and
+      // serving-hour suffixes need the same label safety gate as HTML rows.
+      // Structured dish prices remain authoritative; empty visible text limits
+      // reconciliation to unambiguous label-only corrections.
+      items: reconcileUnpricedMenuDescriptionRows(
+        items,
+        extracted.method === "html_heuristic" ? extracted.visibleText : "",
+      ),
       method: extracted.method,
       extractorVersion: HTML_RUNTIME_EXTRACTOR_VERSION,
     };
