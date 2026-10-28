@@ -5,7 +5,7 @@ import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } fro
  * infer a serving unit or convert a per-person quote to a dish price.
  * This layer applies only after the ordinary HTML parser has finished.
  */
-export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v1";
+export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v2";
 
 const CURRENCY_PRICE = /\bkr\.?\s*([1-9]\d{1,3})\b/giu;
 const TRAILING_PRICE = /\bkr\.?\s*([1-9]\d{1,3})(?:\s*,-)?\s*$/iu;
@@ -97,16 +97,39 @@ function explicitSizes(item: MenuObservedItem, lines: readonly string[]): MenuOb
   });
 }
 
+function isAdjacentDescriptionFragment(
+  item: MenuObservedItem,
+  items: readonly MenuObservedItem[],
+  lines: readonly string[],
+): boolean {
+  if (!/^(?:med|fra|with|from)\s+\p{L}/iu.test(item.name)) return false;
+  return lines.some((line, index) => {
+    if (!anchorMatches(line, item.normalizedName) || index === 0) return false;
+    const parentName = normalizeDishName(lines[index - 1]!);
+    return items.some((parent) =>
+      parent !== item &&
+      parent.normalizedName === parentName &&
+      parent.priceMinor === item.priceMinor
+    );
+  });
+}
+
 function missingInlineDishes(lines: readonly string[], existing: ReadonlySet<string>): MenuObservedItem[] {
   const added: MenuObservedItem[] = [];
   for (const [position, line] of lines.entries()) {
-    if (!/\b(?:ALL|allergener?|allergens?)\s*:/iu.test(line)) continue;
-    const title = line.match(TITLE_THEN_DESCRIPTION)?.[1]?.trim();
-    if (!title || title.split(/\s+/u).length < 2 || title.length > 80) continue;
+    // A layout may put the title ("Steinsopp- ...suppe.") on its own line
+    // and the priced allergen description on the immediately next line.
+    const inlineTitle = line.match(TITLE_THEN_DESCRIPTION)?.[1]?.trim();
+    const splitTitle = line.match(/^([\p{Lu}][\p{L}\s()\-–]{5,79})\.$/u)?.[1]?.trim();
+    const title = inlineTitle ?? splitTitle;
+    if (!title || /^(?:med|fra|with|from)\s/u.test(title.toLowerCase()) ||
+        title.split(/\s+/u).length < 2 || title.length > 80) continue;
+    const priceLine = inlineTitle ? line : (lines[position + 1] ?? "");
+    if (!/\b(?:ALL|allergener?|allergens?)\s*:/iu.test(priceLine)) continue;
     const name = normalizeDishName(title);
     if (existing.has(name)) continue;
-    const prices = [...line.matchAll(CURRENCY_PRICE)];
-    if (prices.length !== 1 || !TRAILING_PRICE.test(line) || PRICE_PER_PERSON.test(line))
+    const prices = [...priceLine.matchAll(CURRENCY_PRICE)];
+    if (prices.length !== 1 || !TRAILING_PRICE.test(priceLine) || PRICE_PER_PERSON.test(priceLine))
       continue;
     const priceMinor = Number(prices[0]?.[1]) * 100;
     if (!Number.isSafeInteger(priceMinor) || priceMinor < 4000 || priceMinor > 1_000_000) continue;
@@ -114,7 +137,7 @@ function missingInlineDishes(lines: readonly string[], existing: ReadonlySet<str
       name: title,
       normalizedName: name,
       sourceKey: createMenuItemSourceKey(title),
-      description: line.slice(title.length + 1).replace(/\bkr\.?\s*[1-9]\d{1,3}(?:\s*,-)?\s*$/iu, "").trim() || null,
+      description: priceLine.replace(/\bkr\.?\s*[1-9]\d{1,3}(?:\s*,-)?\s*$/iu, "").trim() || null,
       sectionName: null,
       priceMinor,
       priceKind: "exact",
@@ -123,7 +146,7 @@ function missingInlineDishes(lines: readonly string[], existing: ReadonlySet<str
       position,
       extractionMethod: "html_heuristic",
       confidence: 0.75,
-      sourceExcerpt: line.slice(0, 1000),
+      sourceExcerpt: [line, priceLine].filter(Boolean).join(" — ").slice(0, 1000),
     });
     existing = new Set([...existing, name]);
   }
@@ -137,6 +160,7 @@ export function reconcileSourcePricedHtmlDishes(
   if (!fullVisibleText) return items;
   const lines = visibleLines(fullVisibleText);
   const corrected = items.flatMap((item) => {
+    if (isAdjacentDescriptionFragment(item, items, lines)) return [];
     // Generic food-scope guard: a sauce-only option is not a main dish.
     if (SAUCE_ONLY.test(item.name) && item.priceMinor !== null && item.priceMinor <= 15_000)
       return [];

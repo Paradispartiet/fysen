@@ -55,6 +55,38 @@ describe("HTML first-party price provenance", () => {
     expect(out.map((v) => v.name)).toEqual(["Karamellpudding med vanilje- og karamellsaus", "Kvæfjordkake"]);
   });
 
+  it("recovers split title + allergy/price descriptions while rejecting source description duplicates", () => {
+    const source = [
+      "FORRETTER",
+      "Reinsdyrhjerte",
+      "Med rødbete og solbær. ALL: melk kr 225",
+      "Steinsopp- og kantarellsuppe.",
+      "Skogsopp fra Jessheim. ALL: melk kr 195",
+      "DESSERT",
+      "Brimsoll",
+      "Fra Sogn. Brunostsaus. ALL: melk kr 179",
+      "Stiftgårdskake",
+      "Fra Trøndelag. Med epler. ALL: melk kr 195",
+      "Karamellpudding med vanilje- og karamellsaus.",
+      "ALL: melk, egg kr 189",
+    ].join("\n");
+    const out = reconcileSourcePricedHtmlDishes([
+      dish("Reinsdyrhjerte", 225, 1),
+      dish("Med rødbete og solbær", 225, 2),
+      dish("Brimsoll", 179, 7),
+      dish("Fra Sogn", 179, 8),
+      dish("Stiftgårdskake", 195, 9),
+      dish("Fra Trøndelag", 195, 10),
+    ], source);
+    expect(out.map((x) => [x.name, x.priceMinor])).toEqual([
+      ["Reinsdyrhjerte", 22500],
+      ["Steinsopp- og kantarellsuppe", 19500],
+      ["Brimsoll", 17900],
+      ["Stiftgårdskake", 19500],
+      ["Karamellpudding med vanilje- og karamellsaus", 18900],
+    ]);
+  });
+
   it("never treats a minimum-guest per-person platter or a sauce add-on as an ordinary dish", () => {
     const source = [
       "Schrøder panne kr 595 PP",
@@ -80,6 +112,6 @@ describe("HTML first-party price provenance", () => {
     ].join("\n");
     const input = [dish("Torsk", 249, 1), dish("Blandet iskrem / Mixed ice cream", 125, 3)];
     expect(reconcileSourcePricedHtmlDishes(input, source)).toEqual(input);
-    expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v1");
+    expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v2");
   });
 });
