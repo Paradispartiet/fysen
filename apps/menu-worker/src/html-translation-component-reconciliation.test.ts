@@ -59,6 +59,15 @@ describe("bilingual and priced platter card layout", () => {
       .toEqual([]);
   });
 
+  it("sanitizes JSON-LD labels without using HTML line proximity", () => {
+    const input = [dish("Meny 1", 635), dish("Meny 2", 715),
+      dish("Laks Benedict Serveres 11.30–15.00", 255), dish("Laks trilogi", 245)];
+    const result = reconcileUnpricedMenuDescriptionRows(input, "");
+    expect(result.map((x) => [x.name, x.priceMinor])).toEqual([
+      ["Laks Benedict", 25500], ["Laks trilogi", 24500],
+    ]);
+  });
+
   it("preserves ordinary directly-priced dishes after allergen notes", () => {
     const name = "Boknatorsk med kremstuede rotgrønnsaker";
     const lines = ["allergener: melk, fisk", name + " kr 455"];
