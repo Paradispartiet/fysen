@@ -76,6 +76,11 @@
         "priceMinor": 5500
       }
     ],
-    "forbiddenDishNames": []
+    "forbiddenDishNames": [
+      "Meny 1",
+      "Meny 2",
+      "Meny 3",
+      "Laks Benedict Serveres 11.30–15.00"
+    ]
   }
 }
