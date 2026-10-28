@@ -182,6 +182,22 @@ describe("HTML first-party price provenance", () => {
       .toEqual(["Brimsoll", "Efter maten – kombinasjon", "Stiftgårdskake"]);
   });
 
+  it("excludes a wine-containing pairing even when the source splits heading and description", () => {
+    const source = [
+      "Dessert",
+      "Efter maten – kombinasjon",
+      "Et stykke av den beste brunosten fra Stordalen,",
+      "og et lite glass (2 cl) veldig god portvin fra 1974.",
+      "ALL: laktose kr 205",
+      "Åpningstider",
+    ].join("\n");
+    const result = reconcileSourcePricedHtmlDishes([
+      dish("Efter maten – kombinasjon", 205, 2),
+      dish("Kvæfjordkake", 189, 4),
+    ], source);
+    expect(result.map((item) => item.name)).toEqual(["Kvæfjordkake"]);
+  });
+
   it("fails closed on ambiguous multiple prices and keeps unrelated existing dishes unchanged", () => {
     const source = [
       "Torsk",
