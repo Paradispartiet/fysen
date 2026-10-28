@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "dovrehallen-oslo",
+    "name": "Dovrehallen",
+    "websiteUrl": "https://www.dovrehallen.no/",
+    "address": "Storgata 22, 0184 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.913836828580834,
+    "longitude": 10.751554508320618
+  },
+  "menuSource": {
+    "url": "https://www.dovrehallen.no/var-meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 43,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-11",
+      "note": "Current first-party menu publishes a large priced traditional menu. Seasonal Christmas entries coexist with the ordinary menu and must be handled semantically by the runtime."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Lutefisk",
+      "Rekecocktail / Shrimp cocktail",
+      "Rekesmørbrød / Shrimp sandwich",
+      "Onsdag - Bankebiff med grønnsaker",
+      "Stekt Kylling / Fried chicken",
+      "Svinekoteletter / Pork chops",
+      "Kryddersild",
+      "Riskrem/Rice Cream"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Lutefisk",
+        "priceMinor": 59900
+      },
+      {
+        "name": "Rekecocktail / Shrimp cocktail",
+        "priceMinor": 16000
+      },
+      {
+        "name": "Rekesmørbrød / Shrimp sandwich",
+        "priceMinor": 15500
+      },
+      {
+        "name": "Onsdag - Bankebiff med grønnsaker",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Stekt Kylling / Fried chicken",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Svinekoteletter / Pork chops",
+        "priceMinor": 23000
+      },
+      {
+        "name": "Kryddersild",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Riskrem/Rice Cream",
+        "priceMinor": 13500
+      }
+    ],
+    "forbiddenDishNames": [
+      "Omeletter"
+    ]
+  }
+}
