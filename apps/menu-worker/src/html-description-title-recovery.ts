@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v22";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v23";
 
 const PRICE_LINE =
   /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
@@ -742,6 +742,16 @@ export function reconcileUnpricedMenuDescriptionRows(
     // card layouts or multiple contradictory sections.
     if (occurrences.length !== 1) return [item];
     const index = occurrences[0]!;
+    // A price explicitly published per kilogram is not the cost of one dish.
+    // Without a first-class unit in MenuObservedItem, quarantine it rather
+    // than misrepresent the price in the user-facing search results.
+    const nearbyLines = lines.slice(index + 1, index + 6);
+    const hasMatchingVisiblePrice = nearbyLines.some((line) =>
+      explicitPriceKroner(line) === item.priceMinor! / 100,
+    );
+    if (hasMatchingVisiblePrice && nearbyLines.some((line) =>
+      /^(?:price|pris|pr\.)\s+(?:per|pr\.?)\s*(?:kg|kilo(?:gram)?|kilogram)\.?$/iu.test(line),
+    )) return [];
     const previous = lines[index - 1] ?? "";
     if (ALLERGEN_NOTE.test(previous)) {
       const beforeAllergens = lines[index - 2] ?? "";
@@ -749,7 +759,12 @@ export function reconcileUnpricedMenuDescriptionRows(
       return [item];
     }
 
-    if (!COMPONENT_ENUMERATION.test(item.name)) return [item];
+    // Either an ingredient enumeration or a longer priced description that
+    // explicitly repeats the immediately preceding all-caps dish heading.
+    // Do not rewrite unrelated neighbouring menu cards.
+    const repeatsHeading = normalizedHeading => observedName.includes(normalizedHeading);
+    if (!COMPONENT_ENUMERATION.test(item.name) &&
+        !repeatsHeading(normalizeDishName(previous))) return [item];
     const previousIsRealTitle =
       previous.length >= 5 &&
       previous.length <= 90 &&
