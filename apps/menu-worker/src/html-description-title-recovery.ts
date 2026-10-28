@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v19";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v20";
 
 const PRICE_LINE =
   /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
@@ -692,6 +692,70 @@ function recoveredSectionLabelDescription(
     return description.slice(normalizedTitle.length).trim() || null;
   }
   return description;
+}
+
+// Menus can place a translated/unpriced sentence directly after allergen
+// notes, or list the components of a priced platter below its real heading.
+// Neither is an independently-priced dish. Preserve the genuine heading when
+// the first-party layout ties it unambiguously to the same exact price.
+const DIRECT_VISIBLE_PRICE = /\b(?:kr\.?|nok)\s*([1-9]\d{1,3})\b|\b([1-9]\d{1,3})\s*,?[-–]?\s*$/iu;
+const ALLERGEN_NOTE = /^(?:allergener?|allergens?)\s*:/iu;
+const COMPONENT_ENUMERATION = /(?:\s+[-–—]\s+.*){2,}/u;
+
+function explicitPriceKroner(value: string): number | null {
+  const match = normalizeVisibleLine(value).match(DIRECT_VISIBLE_PRICE);
+  if (!match) return null;
+  const valueNumber = Number(match[1] ?? match[2]);
+  return Number.isFinite(valueNumber) ? valueNumber : null;
+}
+
+export function reconcileUnpricedMenuDescriptionRows(
+  items: readonly MenuObservedItem[],
+  visibleText: string,
+): readonly MenuObservedItem[] {
+  const lines = visibleText.split("\n").map(normalizeVisibleLine);
+  return items.flatMap((item) => {
+    if (item.priceMinor === null || item.priceKind === "multiple") return [item];
+    const observedName = normalizeDishName(item.name);
+    const occurrences = lines.map((line, index) =>
+      normalizeDishName(line) === observedName && explicitPriceKroner(line) === null
+        ? index
+        : -1,
+    ).filter((index) => index > 0);
+
+    // Require one unambiguous source occurrence, never guess between repeated
+    // card layouts or multiple contradictory sections.
+    if (occurrences.length !== 1) return [item];
+    const index = occurrences[0]!;
+    const previous = lines[index - 1] ?? "";
+    if (ALLERGEN_NOTE.test(previous)) {
+      const beforeAllergens = lines[index - 2] ?? "";
+      if (explicitPriceKroner(beforeAllergens) !== null) return [];
+      return [item];
+    }
+
+    if (!COMPONENT_ENUMERATION.test(item.name)) return [item];
+    const previousIsRealTitle =
+      previous.length >= 5 &&
+      previous.length <= 90 &&
+      previous.toLocaleUpperCase("nb-NO") === previous &&
+      /[A-ZÆØÅ]{2}/u.test(previous) &&
+      !/^(?:STARTERS?|MAIN COURSES?|DESSERTS?|SHELLFISH|FISH|SIDES?)$/iu.test(previous);
+    const priorPrice = explicitPriceKroner(lines[index - 2] ?? "");
+    if (!previousIsRealTitle || priorPrice === null || priorPrice * 100 !== item.priceMinor)
+      return [item];
+
+    const name = previous;
+    return [{
+      ...item,
+      name,
+      normalizedName: normalizeDishName(name),
+      sourceKey: createMenuItemSourceKey(name, item.sectionName),
+      description: [item.name, item.description].filter(Boolean).join(" "),
+      confidence: Math.min(item.confidence, 0.8),
+      sourceExcerpt: [name, item.sourceExcerpt ?? item.name].join(" — ").slice(0, 1000),
+    }];
+  });
 }
 
 export function recoverDescriptionNamedHtmlItems(
