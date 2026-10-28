@@ -31,10 +31,10 @@ describe("bilingual and priced platter card layout", () => {
 
   it("preserves different-price and multiply occurring layouts as uncertain", () => {
     const description = dish("Shrimps - mussels - 1/2 lobster from Maine", 645);
-    const layout = ["555,-", "SMALL SHELLFISH PLATTER", description.name].join("\\n");
+    const layout = ["555,-", "SMALL SHELLFISH PLATTER", description.name].join("\n");
     expect(reconcileUnpricedMenuDescriptionRows([description], layout)[0]?.name).toBe(description.name);
     const dup = ["555,-", "SMALL SHELLFISH PLATTER", description.name,
-      "555,-", "SMALL SHELLFISH PLATTER", description.name].join("\\n");
+      "555,-", "SMALL SHELLFISH PLATTER", description.name].join("\n");
     expect(reconcileUnpricedMenuDescriptionRows([dish(description.name, 555)], dup)[0]?.name)
       .toBe(description.name);
   });
@@ -70,7 +70,7 @@ describe("bilingual and priced platter card layout", () => {
 
   it("uses the true all-caps dessert title, not its repeated-word description", () => {
     const visible = ["245,-", "CRÈME BRÛLÉE", "Spicy pumpkin crème brûlée", "245,-",
-      "Allergens: milk, gluten, berries"].join("\\n");
+      "Allergens: milk, gluten, berries"].join("\n");
     const result = reconcileUnpricedMenuDescriptionRows(
       [dish("Spicy pumpkin crème brûlée", 245)], visible);
     expect(result.map((item) => [item.name, item.priceMinor]))
@@ -79,16 +79,16 @@ describe("bilingual and priced platter card layout", () => {
 
   it("quarantines explicitly per-kilogram lobster prices rather than claiming plate prices", () => {
     const visible = ["1550,-", "FRESH LOBSTER", "Fished straight from the aquarium.",
-      "1550,-", "Price per kg.", "Allergens: shellfish, egg, soy"].join("\\n");
+      "1550,-", "Price per kg.", "Allergens: shellfish, egg, soy"].join("\n");
     expect(reconcileUnpricedMenuDescriptionRows([dish("FRESH LOBSTER", 1550)], visible))
       .toEqual([]);
   });
 
   it("quarantines a kg-priced source card even when the scoped menu omits its unit note", () => {
-    const scoped = "SHELLFISH\\n1550,-\\nFRESH LOBSTER\\n1550,-";
+    const scoped = "SHELLFISH\n1550,-\nFRESH LOBSTER\n1550,-";
     const full = ["SHELLFISH", "1550,-", "FRESH LOBSTER",
       "Fished straight from the aquarium.", "1550,-", "Price per kg.",
-      "Allergens: shellfish, egg, soy"].join("\\n");
+      "Allergens: shellfish, egg, soy"].join("\n");
     expect(reconcileUnpricedMenuDescriptionRows(
       [dish("FRESH LOBSTER", 1550)], scoped, full,
     )).toEqual([]);
@@ -96,7 +96,7 @@ describe("bilingual and priced platter card layout", () => {
 
   it("does not quarantine a per-plate price when the unit evidence conflicts", () => {
     const mixed = ["1550,-", "FRESH LOBSTER", "1550,-", "Price per kg.",
-      "1550,-", "FRESH LOBSTER", "1550,-", "Served with bread"].join("\\n");
+      "1550,-", "FRESH LOBSTER", "1550,-", "Served with bread"].join("\n");
     expect(reconcileUnpricedMenuDescriptionRows(
       [dish("FRESH LOBSTER", 1550)], mixed, mixed,
     )).toHaveLength(1);
