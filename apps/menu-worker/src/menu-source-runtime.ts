@@ -786,7 +786,7 @@ export async function extractMenuSource(
               console.info("[fysen-numbered-source-diagnostic]", JSON.stringify({
                 foundSideHeading: recoveryHtml.includes("No. 43 Creamed Broccoli"),
                 recoveredCardCount: visibleCards.length,
-                numberedCardCount: visibleCards.filter((item) => /^No\\.\\s*\\d+/iu.test(item.name)).length,
+                numberedCardCount: visibleCards.filter((item) => /^No\.\s*\d+/iu.test(item.name)).length,
                 sample: visibleCards.slice(0, 12).map((item) => [item.name, item.priceMinor]),
               }));
             }
