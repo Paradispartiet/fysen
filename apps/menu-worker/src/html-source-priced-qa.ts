@@ -5,13 +5,51 @@ import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } fro
  * infer a serving unit or convert a per-person quote to a dish price.
  * This layer applies only after the ordinary HTML parser has finished.
  */
-export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v5";
+export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v6";
 
 const CURRENCY_PRICE = /\bkr\.?\s*([1-9]\d{1,3})\b/giu;
 const TRAILING_PRICE = /\bkr\.?\s*([1-9]\d{1,3})(?:\s*,-)?\s*$/iu;
 const PRICE_PER_PERSON = /\bkr\.?\s*[1-9]\d{1,3}\s*(?:pp|p\.p\.|per\s+(?:person|pers\.?)|pr\.?\s*(?:person|pers\.?))\b/iu;
 const PAIR_OF_SIZES = /\b(liten|small)\s*\(\s*(\d{1,2})\s*\)\s*kr\.?\s*([1-9]\d{1,3})\s+(stor|large)\s*\(\s*(\d{1,2})\s*\)\s*kr\.?\s*([1-9]\d{1,3})\b/iu;
 const SAUCE_ONLY = /^(?:[\p{L}-]{2,20}saus|b[eé]arnaise)(?:\s*\([^)]{2,40}\))?$/iu;
+const SAUCE_SECTION = /^(?:saus(?:er)?|sauces?)$/iu;
+const OTHER_MENU_SECTION = /^(?:forretter?|starters?|hovedretter?|main(?:\s+courses?)?|desserter?|desserts?|sideretter|tilbehør|sides?|klassiske viner|wine(?:\s+list)?|drikke(?:meny)?|drinks?)$/iu;
+const STANDALONE_MARKED_PRICE = /^(?:kr\.?\s*)?([1-9]\d{1,3})(?:\s*(?:kr\.?|,-))?$/iu;
+const ALLERGEN_NOTE = /^\(?\s*(?:inneholder|allergener?|allergens?)\s*:/iu;
+
+/**
+ * A published side sauce can be a genuine separately priced menu option.
+ * Only keep it when its own title and price appear within a dedicated sauce
+ * section; do not promote sauce names in meal descriptions or unpriced add-ons.
+ */
+function isIndividuallyPricedSauceInSection(
+  item: MenuObservedItem,
+  lines: readonly string[],
+): boolean {
+  if (item.priceMinor === null) return false;
+  for (let titleIndex = 0; titleIndex < lines.length; titleIndex += 1) {
+    if (normalizeDishName(lines[titleIndex] ?? "") !== item.normalizedName) continue;
+    let inSauceSection = false;
+    for (let index = titleIndex - 1; index >= Math.max(0, titleIndex - 32); index -= 1) {
+      const previous = lines[index] ?? "";
+      if (SAUCE_SECTION.test(previous)) {
+        inSauceSection = true;
+        break;
+      }
+      if (OTHER_MENU_SECTION.test(previous)) break;
+    }
+    if (!inSauceSection) continue;
+
+    for (let index = titleIndex + 1; index < Math.min(lines.length, titleIndex + 4); index += 1) {
+      const next = lines[index] ?? "";
+      if (ALLERGEN_NOTE.test(next)) continue;
+      const price = next.match(STANDALONE_MARKED_PRICE);
+      if (price?.[1] && Number(price[1]) * 100 === item.priceMinor) return true;
+      break;
+    }
+  }
+  return false;
+}
 const TITLE_THEN_DESCRIPTION = /^([\p{Lu}][\p{L}\s()\-–]{5,79}?)\.\s+(?=[\p{Lu}])/u;
 
 function visibleLines(text: string): string[] {
@@ -274,7 +312,8 @@ export function reconcileSourcePricedHtmlDishes(
     if (isAdjacentDescriptionFragment(item, items, lines)) return [];
     if (isSourceConfirmedAlcoholCombination(item, lines)) return [];
     // Generic food-scope guard: a sauce-only option is not a main dish.
-    if (SAUCE_ONLY.test(item.name) && item.priceMinor !== null && item.priceMinor <= 15_000)
+    if (SAUCE_ONLY.test(item.name) && item.priceMinor !== null && item.priceMinor <= 15_000 &&
+        !isIndividuallyPricedSauceInSection(item, lines))
       return [];
     const source = anchoredSourceLines(item, lines);
     // Expose the unit and minimum-party requirement directly in the title;

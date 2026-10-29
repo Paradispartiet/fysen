@@ -201,6 +201,49 @@ describe("HTML first-party price provenance", () => {
     expect(result.map((item) => item.name)).toEqual(["Kvæfjordkake"]);
   });
 
+  it("preserves directly priced sauce in a dedicated first-party sauce section", () => {
+    const source = [
+      "Sideretter",
+      "Pommes frites",
+      "(Inneholder: Sulfitter)",
+      "80 kr",
+      "Saus",
+      "Bristols Béarnaisesaus",
+      "(Inneholder: Egg, melk, sulfitter)",
+      "65 kr",
+      "Peppersaus",
+      "(Inneholder: Hvete, fisk, melk)",
+      "69 kr",
+      "Bordelaise-saus",
+      "(Inneholder: Sulfitter)",
+      "69 kr",
+      "Klassiske viner",
+    ].join("\n");
+    const out = reconcileSourcePricedHtmlDishes([
+      dish("Bordelaise-saus", 69, 11),
+      dish("Peppersaus", 69, 8),
+      dish("Pommes frites", 80, 1),
+    ], source);
+    expect(out.map((row) => [row.name, row.priceMinor])).toEqual([
+      ["Pommes frites", 8000],
+      ["Peppersaus", 6900],
+      ["Bordelaise-saus", 6900],
+    ]);
+  });
+
+  it("still rejects unpriced sauce add-ons, missing prices, and sauces outside their section", () => {
+    const items = [dish("Bordelaise-saus", 69, 2)];
+    expect(reconcileSourcePricedHtmlDishes(items, [
+      "Hovedretter", "Bordelaise-saus", "69 kr",
+    ].join("\n"))).toEqual([]);
+    expect(reconcileSourcePricedHtmlDishes(items, [
+      "Saus", "Bordelaise-saus", "uten egen pris", "Klassiske viner",
+    ].join("\n"))).toEqual([]);
+    expect(reconcileSourcePricedHtmlDishes(items, [
+      "Saus", "Bordelaise-saus", "79 kr",
+    ].join("\n"))).toEqual([]);
+  });
+
   it("fails closed on ambiguous multiple prices and keeps unrelated existing dishes unchanged", () => {
     const source = [
       "Torsk",
@@ -210,6 +253,6 @@ describe("HTML first-party price provenance", () => {
     ].join("\n");
     const input = [dish("Torsk", 249, 1), dish("Blandet iskrem / Mixed ice cream", 125, 3)];
     expect(reconcileSourcePricedHtmlDishes(input, source)).toEqual(input);
-    expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v5");
+    expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v6");
   });
 });
