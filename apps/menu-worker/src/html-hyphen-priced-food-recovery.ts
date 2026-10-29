@@ -74,7 +74,9 @@ export function mergeSourceBackedHyphenPricedFoodItems(
       continue;
     }
     const verboseIndex = result.findIndex((item) =>
-      item.normalizedName.startsWith(candidate.normalizedName + " - ") &&
+      item.name.normalize("NFKC").toLocaleLowerCase("nb-NO").startsWith(
+        candidate.name.normalize("NFKC").toLocaleLowerCase("nb-NO") + " - ",
+      ) &&
       item.priceMinor === candidate.priceMinor
     );
     if (verboseIndex >= 0) {
