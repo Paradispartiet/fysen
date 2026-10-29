@@ -16,6 +16,7 @@ import { HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION } from "./html-hyphen-priced-f
 import { HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION } from "./html-strong-title-price-recovery.js";
 import { HTML_TEXT_SECTION_SCOPE_VERSION } from "./html-text-section-scope.js";
 import { HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION } from "./html-trailing-price-card-recovery.js";
+import { HTML_SIBLING_PRICE_CARD_RECOVERY_VERSION } from "./html-sibling-price-card-recovery.js";
 import {
   HTML_BEVERAGE_FILTER_VERSION,
   HTML_ITEM_NAME_NORMALIZER_VERSION,
@@ -50,6 +51,7 @@ describe("menu source runtime extractor refresh policy", () => {
       HTML_BEVERAGE_FILTER_VERSION,
       HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION,
       HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION,
+      HTML_SIBLING_PRICE_CARD_RECOVERY_VERSION,
       HTML_PRICE_WRAPPED_RECOVERY_VERSION,
       HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION,
       HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION,
