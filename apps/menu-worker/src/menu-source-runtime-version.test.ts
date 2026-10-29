@@ -16,6 +16,7 @@ import { HTML_OUTPUT_CANONICALIZER_VERSION } from "./html-output-canonicalizer.j
 import { HTML_TEXT_SECTION_SCOPE_VERSION } from "./html-text-section-scope.js";
 import { HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION } from "./html-visible-layout-reconciliation.js";
 import { HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION } from "./html-trailing-price-card-recovery.js";
+import { HTML_SIBLING_PRICE_CARD_RECOVERY_VERSION } from "./html-sibling-price-card-recovery.js";
 import { PUBLIC_MENU_API_EXTRACTOR_VERSION } from "./public-menu-api-extractor.js";
 import {
   HTML_BEVERAGE_FILTER_VERSION,
@@ -41,6 +42,7 @@ describe("HTML runtime extractor version", () => {
       HTML_BEVERAGE_FILTER_VERSION,
       HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION,
       HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION,
+      HTML_SIBLING_PRICE_CARD_RECOVERY_VERSION,
       HTML_PRICE_WRAPPED_RECOVERY_VERSION,
       HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION,
       HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION,
@@ -67,6 +69,7 @@ describe("HTML runtime extractor version", () => {
     expect(HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION).toBe(
       "trailing-price-card-v19",
     );
+    expect(HTML_SIBLING_PRICE_CARD_RECOVERY_VERSION).toBe("sibling-priced-card-v1");
     expect(HTML_PRICE_WRAPPED_RECOVERY_VERSION).toBe("price-wrapped-v2");
     expect(HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION).toBe(
       "strong-title-price-v1",
@@ -86,7 +89,7 @@ describe("HTML runtime extractor version", () => {
     expect(HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION).toBe("visible-layout-v6");
     expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v6");
     expect(HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION).toBe("hyphen-priced-food-v1");
-    expect(HTML_RECOVERY_SELECTION_VERSION).toBe("recovery-selection-v5");
+    expect(HTML_RECOVERY_SELECTION_VERSION).toBe("recovery-selection-v6");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("api")).toBe(PUBLIC_MENU_API_EXTRACTOR_VERSION);
