@@ -11,7 +11,7 @@
     "longitude": 10.6942705
   },
   "menuSource": {
-    "url": "https://wolt.com/nb/nor/oslo/restaurant/nordic-sushi-wok",
+    "url": "https://nordicsushi.no/",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -33,46 +33,46 @@
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "4H California maki - 8 biter",
-      "10C Tuna Maki - 8 Biter",
-      "4C Spicy Tuna Maki - 8 Biter",
-      "18F Tataki tuna sashimi - 10 biter",
-      "18A Laks Sasami - 10 biter",
-      "10 Lobster Futomaki -10 Biter",
-      "24 Vegetar Sushi Combo - 16 Biter",
-      "18B Kveita Sasami - 10 biter"
+      "Nigiri Salmon",
+      "Nigiri Tuna",
+      "Nigiri Kveite",
+      "California Maki",
+      "Lobster Futomaki",
+      "Nordic Sushi Combo",
+      "Stekte Nudler",
+      "Pad Thai"
     ],
     "requiredDishVariants": [
       {
-        "name": "4H California maki - 8 biter",
-        "priceMinor": 11900
+        "name": "Nigiri Salmon",
+        "priceMinor": 9900
       },
       {
-        "name": "10C Tuna Maki - 8 Biter",
-        "priceMinor": 12900
+        "name": "Nigiri Tuna",
+        "priceMinor": 9900
       },
       {
-        "name": "4C Spicy Tuna Maki - 8 Biter",
+        "name": "Nigiri Kveite",
         "priceMinor": 10900
       },
       {
-        "name": "18F Tataki tuna sashimi - 10 biter",
-        "priceMinor": 20900
+        "name": "California Maki",
+        "priceMinor": 11900
       },
       {
-        "name": "18A Laks Sasami - 10 biter",
-        "priceMinor": 17900
-      },
-      {
-        "name": "10 Lobster Futomaki -10 Biter",
+        "name": "Lobster Futomaki",
         "priceMinor": 21900
       },
       {
-        "name": "24 Vegetar Sushi Combo - 16 Biter",
-        "priceMinor": 22900
+        "name": "Nordic Sushi Combo",
+        "priceMinor": 43900
       },
       {
-        "name": "18B Kveita Sasami - 10 biter",
+        "name": "Stekte Nudler",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Pad Thai",
         "priceMinor": 19900
       }
     ],
