@@ -218,7 +218,7 @@ describe("HTML first-party price provenance", () => {
       "(Inneholder: Sulfitter)",
       "69 kr",
       "Klassiske viner",
-    ].join("\\n");
+    ].join("\n");
     const out = reconcileSourcePricedHtmlDishes([
       dish("Bordelaise-saus", 69, 11),
       dish("Peppersaus", 69, 8),
@@ -235,13 +235,13 @@ describe("HTML first-party price provenance", () => {
     const items = [dish("Bordelaise-saus", 69, 2)];
     expect(reconcileSourcePricedHtmlDishes(items, [
       "Hovedretter", "Bordelaise-saus", "69 kr",
-    ].join("\\n"))).toEqual([]);
+    ].join("\n"))).toEqual([]);
     expect(reconcileSourcePricedHtmlDishes(items, [
       "Saus", "Bordelaise-saus", "uten egen pris", "Klassiske viner",
-    ].join("\\n"))).toEqual([]);
+    ].join("\n"))).toEqual([]);
     expect(reconcileSourcePricedHtmlDishes(items, [
       "Saus", "Bordelaise-saus", "79 kr",
-    ].join("\\n"))).toEqual([]);
+    ].join("\n"))).toEqual([]);
   });
 
   it("fails closed on ambiguous multiple prices and keeps unrelated existing dishes unchanged", () => {
