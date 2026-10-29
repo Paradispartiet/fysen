@@ -780,10 +780,18 @@ export async function extractMenuSource(
             extracted.visibleText,
             fullVisibleText,
           )
-        : reconcileStructuredNumberedVisibleDishes(
-            canonicalItems,
-            recoverTrailingPriceCardHtmlItems(recoveryHtml),
-          );
+        : (() => {
+            const visibleCards = recoverTrailingPriceCardHtmlItems(recoveryHtml);
+            if (canonicalItems.some((item) => item.name === "No. 1 Onion Soup")) {
+              console.info("[fysen-numbered-source-diagnostic]", JSON.stringify({
+                foundSideHeading: recoveryHtml.includes("No. 43 Creamed Broccoli"),
+                recoveredCardCount: visibleCards.length,
+                numberedCardCount: visibleCards.filter((item) => /^No\\.\\s*\\d+/iu.test(item.name)).length,
+                sample: visibleCards.slice(0, 12).map((item) => [item.name, item.priceMinor]),
+              }));
+            }
+            return reconcileStructuredNumberedVisibleDishes(canonicalItems, visibleCards);
+          })();
     const items =
       extracted.method === "html_heuristic"
         ? reconcileImmediatelyPricedItems(
