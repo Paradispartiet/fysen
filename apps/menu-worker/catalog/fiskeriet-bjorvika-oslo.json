@@ -26,54 +26,54 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-12",
-      "note": "Current first-party Bjørvika page publishes a substantial named and individually priced seafood menu and identifies the distinct Operagata location; kitchen hours are not promoted from this research seed."
+      "checkedAt": "2026-10-29",
+      "note": "First-party Bjørvika live menu reproof 2026-10-29: the source names Torskekroketter in a priced dish card followed by a hyphen and the description 'Fylt med ris & Västerbottenost' at NOK 229. Source-bound title/description recovery preserves this same price. Eight separately-priced name/price assertions and the 12-item floor remain unchanged. Oyster/caviar multiprice options are not treated as single plate prices; opening hours remain unverified."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Fine No.3 - classic",
-      "BB Boudeuse No.5 - small",
-      "Utah Beach No.2 - big",
-      "Oscietra - firm",
-      "IGP - butter",
-      "Langoustine - Gratinated in herb butter",
-      "Creamy Fish soup - fish of the day",
-      "Fresh Shrimps * - Salad"
+      "Torskekroketter",
+      "Laksetataki",
+      "Tørrmodnet Hamachi",
+      "Sjømatbisque",
+      "Fish & Chips",
+      "Bacalao",
+      "Grønn salat",
+      "Pommes frites"
     ],
     "requiredDishVariants": [
       {
-        "name": "Fine No.3 - classic",
-        "priceMinor": 58500
+        "name": "Torskekroketter",
+        "priceMinor": 22900
       },
       {
-        "name": "BB Boudeuse No.5 - small",
-        "priceMinor": 61500
+        "name": "Laksetataki",
+        "priceMinor": 22900
       },
       {
-        "name": "Utah Beach No.2 - big",
-        "priceMinor": 80500
+        "name": "Tørrmodnet Hamachi",
+        "priceMinor": 22900
       },
       {
-        "name": "Oscietra - firm",
-        "priceMinor": 122900
+        "name": "Sjømatbisque",
+        "priceMinor": 24900
       },
       {
-        "name": "IGP - butter",
-        "priceMinor": 122900
-      },
-      {
-        "name": "Langoustine - Gratinated in herb butter",
-        "priceMinor": 44900
-      },
-      {
-        "name": "Creamy Fish soup - fish of the day",
+        "name": "Fish & Chips",
         "priceMinor": 29800
       },
       {
-        "name": "Fresh Shrimps * - Salad",
+        "name": "Bacalao",
         "priceMinor": 29800
+      },
+      {
+        "name": "Grønn salat",
+        "priceMinor": 9800
+      },
+      {
+        "name": "Pommes frites",
+        "priceMinor": 8900
       }
     ],
     "forbiddenDishNames": [

@@ -10,6 +10,7 @@ import { HTML_PRICE_WRAPPED_RECOVERY_VERSION } from "./html-price-wrapped-recove
 import { HTML_SECTION_FIRST_CARD_RECOVERY_VERSION } from "./html-section-first-card-recovery.js";
 import { HTML_SOURCE_EXTRACTOR_VERSION } from "./html-source-extractor.js";
 import { HTML_SOURCE_PRICED_QA_VERSION } from "./html-source-priced-qa.js";
+import { HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION } from "./html-hyphen-priced-food-recovery.js";
 import { HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION } from "./html-strong-title-price-recovery.js";
 import { HTML_OUTPUT_CANONICALIZER_VERSION } from "./html-output-canonicalizer.js";
 import { HTML_TEXT_SECTION_SCOPE_VERSION } from "./html-text-section-scope.js";
@@ -51,6 +52,7 @@ describe("HTML runtime extractor version", () => {
       HTML_OUTPUT_CANONICALIZER_VERSION,
       HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION,
       HTML_SOURCE_PRICED_QA_VERSION,
+      HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION,
       HTML_RECOVERY_SELECTION_VERSION,
     ].join("+");
 
@@ -83,6 +85,7 @@ describe("HTML runtime extractor version", () => {
     expect(HTML_OUTPUT_CANONICALIZER_VERSION).toBe("output-canonical-v23");
     expect(HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION).toBe("visible-layout-v6");
     expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v6");
+    expect(HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION).toBe("hyphen-priced-food-v1");
     expect(HTML_RECOVERY_SELECTION_VERSION).toBe("recovery-selection-v5");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);

@@ -4,6 +4,11 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 import { BrowserMenuClient } from "./browser-client.js";
+import {
+  HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION,
+  recoverHyphenDescriptionPricedFoodItems,
+  mergeSourceBackedHyphenPricedFoodItems,
+} from "./html-hyphen-priced-food-recovery.js";
 import { HTML_SOURCE_PRICED_QA_VERSION, reconcileSourcePricedHtmlDishes } from "./html-source-priced-qa.js";
 import {
   PUBLIC_MENU_API_EXTRACTOR_VERSION,
@@ -169,7 +174,7 @@ export function shouldPreferDominantHeadingRecovery(
     headingCount >= trailingCount
   );
 }
-const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}+${HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION}+${HTML_SOURCE_PRICED_QA_VERSION}+${HTML_RECOVERY_SELECTION_VERSION}`;
+const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}+${HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION}+${HTML_SOURCE_PRICED_QA_VERSION}+${HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION}+${HTML_RECOVERY_SELECTION_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf" | "api";
 export type MenuSourceFetchMode = "http" | "browser";
@@ -714,10 +719,17 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? mergeMissingRecoveredItems(priceEnrichedItems, inlineHeadingMultiplePriceItems)
         : priceEnrichedItems;
+    const hyphenEnrichedItems =
+      extracted.method === "html_heuristic"
+        ? mergeSourceBackedHyphenPricedFoodItems(
+            multiPriceEnrichedItems,
+            recoverHyphenDescriptionPricedFoodItems(extracted.visibleText),
+          )
+        : multiPriceEnrichedItems;
     const normalizedItems =
       extracted.method === "html_heuristic"
-        ? multiPriceEnrichedItems.map(normalizeHtmlItemName)
-        : multiPriceEnrichedItems;
+        ? hyphenEnrichedItems.map(normalizeHtmlItemName)
+        : hyphenEnrichedItems;
     const canonicalItems = normalizedItems.filter(
       extracted.method === "json_ld"
         ? isCanonicalStructuredMenuItem
