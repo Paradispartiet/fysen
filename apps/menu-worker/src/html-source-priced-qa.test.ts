@@ -228,10 +228,7 @@ describe("HTML first-party price provenance", () => {
       ["Pommes frites", 8000],
       ["Peppersaus", 6900],
       ["Bordelaise-saus", 6900],
-    ].sort((a, b) => {
-      const order = ["Bordelaise-saus", "Peppersaus", "Pommes frites"];
-      return order.indexOf(String(a[0])) - order.indexOf(String(b[0]));
-    }));
+    ]);
   });
 
   it("still rejects unpriced sauce add-ons, missing prices, and sauces outside their section", () => {
