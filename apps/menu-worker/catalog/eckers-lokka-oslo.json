@@ -39,7 +39,7 @@
       "Vegansk salat 🌱",
       "Kyllingsalat",
       "Honning",
-      "Acai",
+      "Tuna Melt Toast",
       "Surf shake"
     ],
     "requiredDishVariants": [
@@ -68,8 +68,8 @@
         "priceMinor": 9500
       },
       {
-        "name": "Acai",
-        "priceMinor": 9500
+        "name": "Tuna Melt Toast",
+        "priceMinor": 14500
       },
       {
         "name": "Surf shake",
