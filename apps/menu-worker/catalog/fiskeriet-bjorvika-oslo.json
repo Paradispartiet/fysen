@@ -27,13 +27,13 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-29",
-      "note": "First-party Bjørvika menu checked 2026-10-29: the current page uses Norwegian descriptions and prices. All eight retained name/price assertions are for independently priced food options on today's first-party menu (not the 3/6/12 oyster or 10g/30g caviar multiprice options). Min. 12 observed items and kitchen-hours status unchanged; current front-end menu completeness is not claimed."
+      "note": "First-party Bjørvika live menu reproof 2026-10-29: source prints the dish as 'Torskekroketter - Fylt med ris & Västerbottenost' at NOK 229, not just Torskekroketter; the other seven assertions are independently priced food options. 8 name+price requirements and 12-item floor retained. Oyster/caviar prices for 3/6/12 pieces or 10/30 grams are not single-portion dish prices; opening hours remain unverified."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Torskekroketter",
+      "Torskekroketter - Fylt med ris & Västerbottenost",
       "Laksetataki",
       "Tørrmodnet Hamachi",
       "Sjømatbisque",
@@ -44,7 +44,7 @@
     ],
     "requiredDishVariants": [
       {
-        "name": "Torskekroketter",
+        "name": "Torskekroketter - Fylt med ris & Västerbottenost",
         "priceMinor": 22900
       },
       {
