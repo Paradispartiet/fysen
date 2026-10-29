@@ -40,7 +40,7 @@
       "Chicken Drumsticks 10stk",
       "Choco Sticks",
       "Loaded Tots - Cheesy Jalapeño",
-      "Unn deg litt ekstra"
+      "Treat Yourself?"
     ],
     "requiredDishVariants": [
       {
@@ -68,7 +68,7 @@
         "priceMinor": 9500
       },
       {
-        "name": "Unn deg litt ekstra",
+        "name": "Treat Yourself?",
         "priceMinor": 33900
       }
     ],
