@@ -8,17 +8,17 @@ import {
 // Do not inherit prices from neighboring lines or promote multi-size rows.
 export const HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION = "hyphen-priced-food-v1";
 
-const NAMED_PRICED_FOOD = /^(.{3,90}?)\\s+[-–—]\\s+(.{6,400}?)\\s+(?:[-–—]\\s+)?([1-9]\\d{1,3})\\s*,-(?:\\s*\\([^()]{1,90}\\))?\\s*$/u;
-const MULTI_PRICE = /[1-9]\\d{1,3}\\s*,-\\s*\\/\\s*[1-9]\\d{1,3}/u;
-const NON_FOOD_LEAD = /^(?:vermouth|cocktail|aperitif|aperol|vodka|gin|beer|øl|vin|wine|cava|whisk(?:e)?y|sangria)\\b/iu;
-const NON_FOOD_TITLE = /^(?:allergener?|allergens?|sideretter|dessert|hovedretter|forretter|småretter|kaviar|østers)\\b/iu;
+const NAMED_PRICED_FOOD = /^(.{3,90}?)\s+[-–—]\s+(.{6,400}?)\s+(?:[-–—]\s+)?([1-9]\d{1,3})\s*,-(?:\s*\([^()]{1,90}\))?\s*$/u;
+const MULTI_PRICE = /[1-9]\d{1,3}\s*,-\s*\/\s*[1-9]\d{1,3}/u;
+const NON_FOOD_LEAD = /^(?:vermouth|cocktail|aperitif|aperol|vodka|gin|beer|øl|vin|wine|cava|whisk(?:e)?y|sangria)\b/iu;
+const NON_FOOD_TITLE = /^(?:allergener?|allergens?|sideretter|dessert|hovedretter|forretter|småretter|kaviar|østers)\b/iu;
 
 export function recoverHyphenDescriptionPricedFoodItems(
   scopedMenuText: string,
 ): readonly MenuObservedItem[] {
   const found = new Map<string, MenuObservedItem>();
-  for (const [position, raw] of scopedMenuText.split("\\n").entries()) {
-    const line = raw.normalize("NFKC").replace(/\\s+/gu, " ").trim();
+  for (const [position, raw] of scopedMenuText.split("\n").entries()) {
+    const line = raw.normalize("NFKC").replace(/\s+/gu, " ").trim();
     if (!line || MULTI_PRICE.test(line)) continue;
     const m = line.match(NAMED_PRICED_FOOD);
     if (!m?.[1] || !m[2] || !m[3]) continue;
@@ -26,9 +26,9 @@ export function recoverHyphenDescriptionPricedFoodItems(
     const description = m[2].trim();
     const priceMinor = Number(m[3]) * 100;
     if (
-      name.split(/\\s+/u).length > 12 ||
+      name.split(/\s+/u).length > 12 ||
       name.endsWith("-") ||
-      !/\\p{L}/u.test(name) ||
+      !/\p{L}/u.test(name) ||
       NON_FOOD_LEAD.test(name) ||
       NON_FOOD_TITLE.test(name) ||
       priceMinor < 4_000 || priceMinor > 1_000_000
