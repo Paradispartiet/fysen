@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 56,
+    "minimumExpectedItems": 50,
     "maxResponseBytes": 8388608,
     "sourceSupport": {
       "redirectOrigins": [],
@@ -40,7 +40,7 @@
       "Chicken Drumsticks 10stk",
       "Choco Sticks",
       "Loaded Tots - Cheesy Jalapeño",
-      "Unn deg litt ekstra"
+      "Treat Yourself?"
     ],
     "requiredDishVariants": [
       {
@@ -68,7 +68,7 @@
         "priceMinor": 9500
       },
       {
-        "name": "Unn deg litt ekstra",
+        "name": "Treat Yourself?",
         "priceMinor": 33900
       }
     ],
