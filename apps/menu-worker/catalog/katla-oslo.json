@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-13",
-      "note": "The current first-party menu page publishes a broad named and individually priced à la carte menu; kitchen hours remain separately verified."
+      "checkedAt": "2026-10-29",
+      "note": "The exact-head live first-party Katla source fetched by GitHub on 2026-10-29 lists 17 a la carte items and MISO OSTEKAKE, KREM OG SYLTET PLOMME at 205 NOK. A stale indexed rendition of https://www.katlaoslo.no/meny still shows MISO OSTEKAKE, KREM OG SYLTEDE MORELLER, but the live fetch and parser are internally consistent. Keep 17-item floor, eight independent title and price assertions and forbidden headings unchanged. Kitchen hours not verified."
     }
   },
   "actions": [],
@@ -40,7 +40,7 @@
       "PEANØTTMOLE, GRILLET PAK CHOI & SQUASH",
       "NEW YORK STRIP, PAPRIKA SAUS & GRILLET KANTALLER",
       "PERLEPOTET",
-      "MISO OSTEKAKE, KREM OG SYLTEDE MORELLER"
+      "MISO OSTEKAKE, KREM OG SYLTET PLOMME"
     ],
     "requiredDishVariants": [
       {
@@ -72,7 +72,7 @@
         "priceMinor": 7500
       },
       {
-        "name": "MISO OSTEKAKE, KREM OG SYLTEDE MORELLER",
+        "name": "MISO OSTEKAKE, KREM OG SYLTET PLOMME",
         "priceMinor": 20500
       }
     ],
