@@ -75,11 +75,16 @@ export function mergeSourceBackedHyphenPricedFoodItems(
     }
     const verboseIndex = result.findIndex((item) =>
       item.normalizedName.startsWith(candidate.normalizedName + " - ") &&
-      item.priceMinor === candidate.priceMinor &&
-      item.sectionName === null
+      item.priceMinor === candidate.priceMinor
     );
     if (verboseIndex >= 0) {
-      result[verboseIndex] = candidate;
+      const verbose = result[verboseIndex]!;
+      result[verboseIndex] = {
+        ...candidate,
+        sectionName: verbose.sectionName,
+        sourceKey: createMenuItemSourceKey(candidate.name, verbose.sectionName),
+        position: verbose.position,
+      };
       continue;
     }
     result.push(candidate);
