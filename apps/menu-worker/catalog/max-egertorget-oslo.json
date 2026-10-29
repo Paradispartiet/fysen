@@ -21,7 +21,8 @@
       "redirectOrigins": [],
       "browserDataOrigins": [],
       "browserBlockedOrigins": []
-    }
+    },
+    "maxResponseBytes": 8388608
   },
   "verification": {
     "hours": {
@@ -41,8 +42,8 @@
       "Supreme Combo for to",
       "Movie Night Original",
       "Movie Night Maxoumi",
-      "Raclette Melt Beef 'n' Bacon",
-      "Cheddar Melt Maxoumi-meny"
+      "Cheese 'n' Bacon",
+      "Spicy Cheddar"
     ],
     "requiredDishVariants": [
       {
@@ -78,12 +79,12 @@
         "priceMinor": 37800
       },
       {
-        "name": "Raclette Melt Beef 'n' Bacon",
-        "priceMinor": 20300
+        "name": "Cheese 'n' Bacon",
+        "priceMinor": 18200
       },
       {
-        "name": "Cheddar Melt Maxoumi-meny",
-        "priceMinor": 22700
+        "name": "Spicy Cheddar",
+        "priceMinor": 17100
       }
     ],
     "forbiddenDishNames": []
