@@ -36,7 +36,11 @@ jobs:
       DATABASE_SSL: "verify-full"
       NODE_ENV: production
       FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
-      FYSEN_CATALOG_MATERIALIZATION_CONCURRENCY: "8"
+      # Each onboarding pool can use two sessions; 8 workers can exceed the
+      # production session-pooler limit of 15 before API/watcher traffic.
+      # Four workers cap onboarding and maintenance at 8 sessions, leaving
+      # headroom without sharing the watcher queue or suppressing failures.
+      FYSEN_CATALOG_MATERIALIZATION_CONCURRENCY: "4"
     steps:
       - name: Require production database secret
         shell: bash
