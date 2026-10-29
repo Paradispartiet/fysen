@@ -28,6 +28,11 @@
       "status": "unverified",
       "checkedAt": "2026-10-18",
       "note": "Wolt menyobservasjon 2026-10-18 med 10 konkrete matrett-/prispar og besøksadresse. Akersgata 43, egen filial forskjellig fra publiserte Subway Skippergata/Pilestredet. Wolt-leveringspriser; ikke attestert som bordpriser. Åpningstider, eksakt inngang og produksjonsdatasynk ikke særskilt attestert."
+    },
+    "menu": {
+      "status": "unverified",
+      "checkedAt": "2026-10-29",
+      "note": "2026-10-29: Canonical full-catalog health #40853503694 observed the current public source menu with these exact names and prices. Strict exact-head live validation is required before merge. Wolt/Foodora prices are service delivery prices, not independently verified dine-in prices."
     }
   },
   "actions": [],
@@ -39,7 +44,7 @@
       "Taco Sub, 15cm",
       "Chicken Teriyaki, 30cm",
       "3 Cookies",
-      "Subway Melt™, 30cm",
+      "Subway MeltTM, 30cm",
       "Chicken Teriyaki Meal Deal, 30cm",
       "Skinke, 30cm",
       "Taco Wrap"
@@ -47,31 +52,31 @@
     "requiredDishVariants": [
       {
         "name": "Italian B.M.T.®, 30cm",
-        "priceMinor": 16400
+        "priceMinor": 18800
       },
       {
         "name": "Taco Sub, 30cm",
-        "priceMinor": 16100
+        "priceMinor": 18800
       },
       {
         "name": "Tunfisk, 30cm",
-        "priceMinor": 15900
+        "priceMinor": 18800
       },
       {
         "name": "Taco Sub, 15cm",
-        "priceMinor": 9000
+        "priceMinor": 11400
       },
       {
         "name": "Chicken Teriyaki, 30cm",
-        "priceMinor": 19600
+        "priceMinor": 18800
       },
       {
         "name": "3 Cookies",
         "priceMinor": 4800
       },
       {
-        "name": "Subway Melt™, 30cm",
-        "priceMinor": 18600
+        "name": "Subway MeltTM, 30cm",
+        "priceMinor": 18800
       },
       {
         "name": "Chicken Teriyaki Meal Deal, 30cm",
@@ -79,11 +84,11 @@
       },
       {
         "name": "Skinke, 30cm",
-        "priceMinor": 14800
+        "priceMinor": 18800
       },
       {
         "name": "Taco Wrap",
-        "priceMinor": 10800
+        "priceMinor": 13200
       }
     ],
     "forbiddenDishNames": []

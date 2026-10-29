@@ -18,7 +18,9 @@
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 30,
     "sourceSupport": {
-      "redirectOrigins": [],
+      "redirectOrigins": [
+        "https://derpepperngror.no"
+      ],
       "browserDataOrigins": [],
       "browserBlockedOrigins": []
     }

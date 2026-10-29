@@ -28,6 +28,11 @@
       "status": "unverified",
       "checkedAt": "2026-10-17",
       "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    },
+    "menu": {
+      "status": "unverified",
+      "checkedAt": "2026-10-29",
+      "note": "2026-10-29: Canonical full-catalog health #40853503694 observed the current public source menu with these exact names and prices. Strict exact-head live validation is required before merge. Wolt/Foodora prices are service delivery prices, not independently verified dine-in prices."
     }
   },
   "actions": [],
@@ -45,35 +50,35 @@
     "requiredDishVariants": [
       {
         "name": "Chaplin Kebab",
-        "priceMinor": 14900
+        "priceMinor": 19370
       },
       {
         "name": "Borani Banjan 🌱",
-        "priceMinor": 9900
+        "priceMinor": 12870
       },
       {
         "name": "Biryani",
-        "priceMinor": 18900
+        "priceMinor": 24570
       },
       {
         "name": "Seekh Kebab",
-        "priceMinor": 19900
+        "priceMinor": 25870
       },
       {
         "name": "Lobiya Karahi",
-        "priceMinor": 11900
+        "priceMinor": 15470
       },
       {
         "name": "Mantu",
-        "priceMinor": 14900
+        "priceMinor": 19370
       },
       {
         "name": "Bolani 🌱",
-        "priceMinor": 12900
+        "priceMinor": 16770
       },
       {
         "name": "Chapli Kebab",
-        "priceMinor": 14900
+        "priceMinor": 19370
       }
     ],
     "forbiddenDishNames": []

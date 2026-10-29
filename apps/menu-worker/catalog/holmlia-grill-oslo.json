@@ -28,6 +28,11 @@
       "status": "unverified",
       "checkedAt": "2026-10-19",
       "note": "Wolt-menykilde kontrollert 2026-10-19 med 11 navngitte rett-/prispar, besøksadresse og Wolt-kartkoordinat. Leveringspriser fra Wolt, ikke bekreftede bordpriser. Åpningstider og produksjonsdatabase ikke uavhengig kontrollert. Ved live validering ble Kyllingkebab utenfor den ekstraherte menyen; erstattet av prisverifisert Kyllingburger Meny 149 kr. Antall assertasjoner uendret."
+    },
+    "menu": {
+      "status": "unverified",
+      "checkedAt": "2026-10-29",
+      "note": "2026-10-29: Canonical full-catalog health #40853503694 observed the current public source menu with these exact names and prices. Strict exact-head live validation is required before merge. Wolt/Foodora prices are service delivery prices, not independently verified dine-in prices."
     }
   },
   "actions": [],
@@ -48,19 +53,19 @@
     "requiredDishVariants": [
       {
         "name": "Kebab i Pita",
-        "priceMinor": 8900
+        "priceMinor": 11500
       },
       {
         "name": "Kyllingkebab i Pita",
-        "priceMinor": 12500
+        "priceMinor": 15500
       },
       {
         "name": "Chicken New Jersey",
-        "priceMinor": 24900
+        "priceMinor": 29900
       },
       {
         "name": "Hamburger",
-        "priceMinor": 8900
+        "priceMinor": 11500
       },
       {
         "name": "Pommes Frites",
@@ -68,7 +73,7 @@
       },
       {
         "name": "Kebab Meny",
-        "priceMinor": 13900
+        "priceMinor": 17900
       },
       {
         "name": "Kyllingkebab Meny",
@@ -76,19 +81,19 @@
       },
       {
         "name": "Holmlia",
-        "priceMinor": 25900
+        "priceMinor": 29900
       },
       {
         "name": "Kyllingburger Meny",
-        "priceMinor": 14900
-      },
-      {
-        "name": "Jafsburger Meny",
         "priceMinor": 17900
       },
       {
+        "name": "Jafsburger Meny",
+        "priceMinor": 19900
+      },
+      {
         "name": "Hamburger Meny",
-        "priceMinor": 13500
+        "priceMinor": 15900
       }
     ],
     "forbiddenDishNames": []
