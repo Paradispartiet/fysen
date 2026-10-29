@@ -1,1 +1,81 @@
-{"version":1,"restaurant":{"slug":"big-horn-steakhouse-mollergata-oslo","name":"Big Horn Steakhouse Møllergata","websiteUrl":"https://bighorn.no/restauranter/mollergata/","address":"Møllergata 10, 0179 Oslo","city":"Oslo","countryCode":"NO","latitude":59.914399657935014,"longitude":10.747041052233127},"menuSource":{"url":"https://bighorn.no/restauranter/mollergata/","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]},"minimumExpectedItems":55},"verification":{"hours":{"status":"unverified","checkedAt":"2026-10-13","note":"Offisiell prissatt meny https://bighorn.no/restauranter/mollergata/. Kartverket-koordinater. Målt kildeuttrekk 69 retter 2026-10-13; minimum 55, åtte kildebaserte prisassertasjoner. Kjøkkentider ennå ikke kontrollert."}},"actions":[],"qualityAssertions":{"requiredDishNames":["No. 1 Onion Soup","No. 94 Chicken Burger","No. 22 Tenderloin – Indrefilet 200 g","No. 30 Greater Omaha T-Bone ca. 500 g / 17 oz","No. 69 Truffle & Parmesan Fries","No. 3 Pil-Pil","No. 111 Big Horn Caesar Salad","No. 106 Buffalo Bill Grillspyd"],"requiredDishVariants":[{"name":"No. 1 Onion Soup","priceMinor":18900},{"name":"No. 94 Chicken Burger","priceMinor":28900},{"name":"No. 22 Tenderloin – Indrefilet 200 g","priceMinor":52400},{"name":"No. 30 Greater Omaha T-Bone ca. 500 g / 17 oz","priceMinor":85900},{"name":"No. 69 Truffle & Parmesan Fries","priceMinor":4900},{"name":"No. 3 Pil-Pil","priceMinor":19900},{"name":"No. 111 Big Horn Caesar Salad","priceMinor":26900},{"name":"No. 106 Buffalo Bill Grillspyd","priceMinor":17900}],"forbiddenDishNames":[]}}
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "big-horn-steakhouse-mollergata-oslo",
+    "name": "Big Horn Steakhouse Møllergata",
+    "websiteUrl": "https://bighorn.no/restauranter/mollergata/",
+    "address": "Møllergata 10, 0179 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.914399657935014,
+    "longitude": 10.747041052233127
+  },
+  "menuSource": {
+    "url": "https://bighorn.no/restauranter/mollergata/",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    },
+    "minimumExpectedItems": 55
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-13",
+      "note": "Offisiell prissatt meny https://bighorn.no/restauranter/mollergata/. Kartverket-koordinater. Målt kildeuttrekk 69 retter 2026-10-13; minimum 55, åtte kildebaserte prisassertasjoner. Kjøkkentider ennå ikke kontrollert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "No. 1 Onion Soup",
+      "No. 94 Chicken Burger",
+      "No. 22 Tenderloin- Indrefilet 200 g",
+      "No. 30 Greater Omaha T-Bone ca. 500 g / 17 oz",
+      "No. 69 Truffle & Parmesan Fries",
+      "No. 3 Pil-Pil",
+      "No. 111 Big Horn Caesar Salad",
+      "No. 106 Buffalo Bill Grillspyd"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "No. 1 Onion Soup",
+        "priceMinor": 18900
+      },
+      {
+        "name": "No. 94 Chicken Burger",
+        "priceMinor": 28900
+      },
+      {
+        "name": "No. 22 Tenderloin- Indrefilet 200 g",
+        "priceMinor": 52400
+      },
+      {
+        "name": "No. 30 Greater Omaha T-Bone ca. 500 g / 17 oz",
+        "priceMinor": 85900
+      },
+      {
+        "name": "No. 69 Truffle & Parmesan Fries",
+        "priceMinor": 4900
+      },
+      {
+        "name": "No. 3 Pil-Pil",
+        "priceMinor": 19900
+      },
+      {
+        "name": "No. 111 Big Horn Caesar Salad",
+        "priceMinor": 26900
+      },
+      {
+        "name": "No. 106 Buffalo Bill Grillspyd",
+        "priceMinor": 17900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}
