@@ -161,7 +161,7 @@ export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v16";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v12";
 export const HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION = "structured-compat-v1";
-export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v5";
+export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v6";
 
 export function shouldPreferDominantHeadingRecovery(
   headingCount: number,
@@ -322,6 +322,44 @@ function mergeMissingRecoveredItems(
   }
 
   return output.sort((a, b) => a.position - b.position);
+}
+
+/**
+ * Some first-party sites publish a detailed, priced, numbered visible menu but
+ * omit a few side dishes from their JSON-LD. Restore only explicitly priced
+ * numbered items when a substantial overlap proves both representations
+ * describe the same menu. Never change an existing structured name or price.
+ */
+export function reconcileStructuredNumberedVisibleDishes(
+  structured: readonly MenuObservedItem[],
+  visiblePriceCards: readonly MenuObservedItem[],
+): readonly MenuObservedItem[] {
+  const numberedTitle = /^No\.\s*\d{1,3}\b/iu;
+  const structuredNumbered = structured.filter((item) => numberedTitle.test(item.name));
+  if (structuredNumbered.length < 8) return structured;
+  const visibleNumbered = visiblePriceCards.filter(
+    (item) =>
+      numberedTitle.test(item.name) &&
+      item.priceMinor !== null &&
+      item.priceMinor >= 4_000 &&
+      isCanonicalHtmlMenuItem(item) &&
+      item.confidence >= 0.9,
+  );
+  if (visibleNumbered.length < 8) return structured;
+  const structuredByName = new Map(structured.map((item) => [item.normalizedName, item]));
+  const overlapping = visibleNumbered.filter((item) => {
+    const match = structuredByName.get(item.normalizedName);
+    return match && match.priceMinor === item.priceMinor;
+  });
+  if (overlapping.length < 6) return structured;
+
+  const missing = visibleNumbered
+    .filter((item) => !structuredByName.has(item.normalizedName))
+    .map((item, index) => ({
+      ...item,
+      position: structured.length + index,
+    }));
+  return mergeMissingRecoveredItems(structured, missing);
 }
 
 function reconcileSelectedItemsWithTrailingCards(
@@ -742,7 +780,10 @@ export async function extractMenuSource(
             extracted.visibleText,
             fullVisibleText,
           )
-        : canonicalItems;
+        : reconcileStructuredNumberedVisibleDishes(
+            canonicalItems,
+            recoverTrailingPriceCardHtmlItems(recoveryHtml),
+          );
     const items =
       extracted.method === "html_heuristic"
         ? reconcileImmediatelyPricedItems(
