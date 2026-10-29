@@ -47,15 +47,15 @@
     "requiredDishVariants": [
       {
         "name": "Kylling Shawarma Tallerken",
-        "priceMinor": 23900
+        "priceMinor": 24900
       },
       {
         "name": "Lamme Shawarma Tallerken",
-        "priceMinor": 23900
+        "priceMinor": 25900
       },
       {
         "name": "Sultan Spesial Kylling Shawarma Tallerken",
-        "priceMinor": 24900
+        "priceMinor": 26900
       },
       {
         "name": "Crispy Kyllingtallerken",
