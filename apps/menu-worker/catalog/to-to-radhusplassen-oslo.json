@@ -11,7 +11,7 @@
     "longitude": 10.735303
   },
   "menuSource": {
-    "url": "https://wolt.com/nb/nor/oslo/restaurant/to-to",
+    "url": "https://wolt.com/en/nor/oslo/restaurant/to-to",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
