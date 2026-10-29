@@ -13,9 +13,9 @@ const PRICE_PER_PERSON = /\bkr\.?\s*[1-9]\d{1,3}\s*(?:pp|p\.p\.|per\s+(?:person|
 const PAIR_OF_SIZES = /\b(liten|small)\s*\(\s*(\d{1,2})\s*\)\s*kr\.?\s*([1-9]\d{1,3})\s+(stor|large)\s*\(\s*(\d{1,2})\s*\)\s*kr\.?\s*([1-9]\d{1,3})\b/iu;
 const SAUCE_ONLY = /^(?:[\p{L}-]{2,20}saus|b[eé]arnaise)(?:\s*\([^)]{2,40}\))?$/iu;
 const SAUCE_SECTION = /^(?:saus(?:er)?|sauces?)$/iu;
-const OTHER_MENU_SECTION = /^(?:forretter?|starters?|hovedretter?|main(?:\\s+courses?)?|desserter?|desserts?|sideretter|tilbehør|sides?|klassiske viner|wine(?:\\s+list)?|drikke(?:meny)?|drinks?)$/iu;
-const STANDALONE_MARKED_PRICE = /^(?:kr\\.?\\s*)?([1-9]\\d{1,3})(?:\\s*(?:kr\\.?|,-))?$/iu;
-const ALLERGEN_NOTE = /^\\(?\\s*(?:inneholder|allergener?|allergens?)\\s*:/iu;
+const OTHER_MENU_SECTION = /^(?:forretter?|starters?|hovedretter?|main(?:\s+courses?)?|desserter?|desserts?|sideretter|tilbehør|sides?|klassiske viner|wine(?:\s+list)?|drikke(?:meny)?|drinks?)$/iu;
+const STANDALONE_MARKED_PRICE = /^(?:kr\.?\s*)?([1-9]\d{1,3})(?:\s*(?:kr\.?|,-))?$/iu;
+const ALLERGEN_NOTE = /^\(?\s*(?:inneholder|allergener?|allergens?)\s*:/iu;
 
 /**
  * A published side sauce can be a genuine separately priced menu option.
