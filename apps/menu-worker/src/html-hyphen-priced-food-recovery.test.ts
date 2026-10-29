@@ -57,12 +57,13 @@ describe("food lines with hyphen descriptions and source-owned NOK prices", () =
     const source = "Torskekroketter - Fylt med ris & Västerbottenost. Servert med paprikasaus 229,-";
     const recovered = recoverHyphenDescriptionPricedFoodItems(source);
     const result = mergeSourceBackedHyphenPricedFoodItems([
-      oldRow("Torskekroketter - Fylt med ris & Västerbottenost", 22900),
+      { ...oldRow("Torskekroketter - Fylt med ris & Västerbottenost", 22900), sectionName: "SMÅRETTER" },
       oldRow("Grønn salat", 9800),
     ], recovered);
     expect(result.map((item) => item.name)).toContain("Torskekroketter");
     expect(result.map((item) => item.name)).not.toContain("Torskekroketter - Fylt med ris & Västerbottenost");
     expect(result.filter((item) => item.name === "Torskekroketter")).toHaveLength(1);
+    expect(result.find((item) => item.name === "Torskekroketter")?.sectionName).toBe("SMÅRETTER");
     expect(result.find((item) => item.name === "Torskekroketter")?.priceMinor).toBe(22900);
     expect(result.find((item) => item.name === "Grønn salat")?.priceMinor).toBe(9800);
   });
