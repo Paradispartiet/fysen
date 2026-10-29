@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-13",
-      "note": "The current first-party menu page publishes a broad named and individually priced à la carte menu; kitchen hours remain separately verified."
+      "checkedAt": "2026-10-29",
+      "note": "First-party Katla menu rechecked 2026-10-29 at https://www.katlaoslo.no/meny: its a la carte lists MISO OSTEKAKE, KREM OG SYLTEDE MORELLER at NOK 205, independently of the set menu; first production snapshot extracted 17/17 but omitted that dish. Retain all eight original name/price assertions and floor 17 pending exact-head live extractor diagnosis; kitchen hours unverified."
     }
   },
   "actions": [],
