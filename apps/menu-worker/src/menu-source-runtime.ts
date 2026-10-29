@@ -3,6 +3,7 @@ import {
   normalizeDishName,
   type MenuObservedItem,
 } from "@fysen/menu-core";
+import { load } from "cheerio";
 import { BrowserMenuClient } from "./browser-client.js";
 import {
   HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION,
@@ -788,6 +789,17 @@ export async function extractMenuSource(
                 recoveredCardCount: visibleCards.length,
                 numberedCardCount: visibleCards.filter((item) => /^No\.\s*\d+/iu.test(item.name)).length,
                 sample: visibleCards.slice(0, 12).map((item) => [item.name, item.priceMinor]),
+                headingSample: (() => {
+                  const $ = load(recoveryHtml);
+                  const headings = $("h2,h3,h4,h5,h6");
+                  const target = headings.filter((_, heading) => $(heading).text().includes("No. 43 Creamed Broccoli")).first();
+                  return {
+                    totalHeadings: headings.length,
+                    matching: target.length,
+                    parentHtml: target.parent().html()?.slice(0, 4000),
+                    grandparentHtml: target.parent().parent().html()?.slice(0, 2000),
+                  };
+                })(),
               }));
             }
             return reconcileStructuredNumberedVisibleDishes(canonicalItems, visibleCards);
