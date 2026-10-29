@@ -17,6 +17,7 @@ import { HTML_TEXT_SECTION_SCOPE_VERSION } from "./html-text-section-scope.js";
 import { HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION } from "./html-visible-layout-reconciliation.js";
 import { HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION } from "./html-trailing-price-card-recovery.js";
 import { HTML_SIBLING_PRICE_CARD_RECOVERY_VERSION } from "./html-sibling-price-card-recovery.js";
+import { HTML_EXPLICIT_VOLUME_VARIANT_VERSION } from "./html-explicit-volume-variant-recovery.js";
 import { PUBLIC_MENU_API_EXTRACTOR_VERSION } from "./public-menu-api-extractor.js";
 import {
   HTML_BEVERAGE_FILTER_VERSION,
@@ -55,6 +56,7 @@ describe("HTML runtime extractor version", () => {
       HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION,
       HTML_SOURCE_PRICED_QA_VERSION,
       HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION,
+      HTML_EXPLICIT_VOLUME_VARIANT_VERSION,
       HTML_RECOVERY_SELECTION_VERSION,
     ].join("+");
 
