@@ -3,7 +3,10 @@ import {
   normalizeDishName,
   type MenuObservedItem,
 } from "@fysen/menu-core";
-import { load } from "cheerio";
+import {
+  HTML_SIBLING_PRICE_CARD_RECOVERY_VERSION,
+  recoverSiblingPricedNumberedHtmlCards,
+} from "./html-sibling-price-card-recovery.js";
 import { BrowserMenuClient } from "./browser-client.js";
 import {
   HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION,
@@ -175,7 +178,7 @@ export function shouldPreferDominantHeadingRecovery(
     headingCount >= trailingCount
   );
 }
-const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}+${HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION}+${HTML_SOURCE_PRICED_QA_VERSION}+${HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION}+${HTML_RECOVERY_SELECTION_VERSION}`;
+const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_SIBLING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}+${HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION}+${HTML_SOURCE_PRICED_QA_VERSION}+${HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION}+${HTML_RECOVERY_SELECTION_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf" | "api";
 export type MenuSourceFetchMode = "http" | "browser";
@@ -781,29 +784,10 @@ export async function extractMenuSource(
             extracted.visibleText,
             fullVisibleText,
           )
-        : (() => {
-            const visibleCards = recoverTrailingPriceCardHtmlItems(recoveryHtml);
-            if (canonicalItems.some((item) => item.name === "No. 1 Onion Soup")) {
-              console.info("[fysen-numbered-source-diagnostic]", JSON.stringify({
-                foundSideHeading: recoveryHtml.includes("No. 43 Creamed Broccoli"),
-                recoveredCardCount: visibleCards.length,
-                numberedCardCount: visibleCards.filter((item) => /^No\.\s*\d+/iu.test(item.name)).length,
-                sample: visibleCards.slice(0, 12).map((item) => [item.name, item.priceMinor]),
-                headingSample: (() => {
-                  const $ = load(recoveryHtml);
-                  const headings = $("h2,h3,h4,h5,h6");
-                  const target = headings.filter((_, heading) => $(heading).text().includes("No. 43 Creamed Broccoli")).first();
-                  return {
-                    totalHeadings: headings.length,
-                    matching: target.length,
-                    parentHtml: target.parent().html()?.slice(0, 4000),
-                    grandparentHtml: target.parent().parent().html()?.slice(0, 2000),
-                  };
-                })(),
-              }));
-            }
-            return reconcileStructuredNumberedVisibleDishes(canonicalItems, visibleCards);
-          })();
+        : reconcileStructuredNumberedVisibleDishes(
+            canonicalItems,
+            recoverSiblingPricedNumberedHtmlCards(recoveryHtml),
+          );
     const items =
       extracted.method === "html_heuristic"
         ? reconcileImmediatelyPricedItems(
