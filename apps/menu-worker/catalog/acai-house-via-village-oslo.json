@@ -28,6 +28,11 @@
       "status": "unverified",
       "checkedAt": "2026-10-18",
       "note": "8 representative rett-/prispar fra individuell offentlig Wolt-meny 2026-10-18; koordinater fra Wolt-kartlenken. Wolt-leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert."
+    },
+    "menu": {
+      "status": "unverified",
+      "checkedAt": "2026-10-29",
+      "note": "2026-10-29: Canonical full-catalog health #40853503694 observed the current public source menu with these exact names and prices. Strict exact-head live validation is required before merge. Wolt/Foodora prices are service delivery prices, not independently verified dine-in prices."
     }
   },
   "actions": [],
@@ -38,7 +43,7 @@
       "Cottage Cheese Bowl",
       "Naturell Yoghurt Bowl",
       "Chia Pudding Bowl",
-      "Belgiske protein vaffler",
+      "Tropicana Açaí Bowl 🌴",
       "Fuel Up Acai Bowl 💪🏽",
       "Nutella Overload Açaí Bowl 🍩"
     ],
@@ -53,7 +58,7 @@
       },
       {
         "name": "Cottage Cheese Bowl",
-        "priceMinor": 12900
+        "priceMinor": 7900
       },
       {
         "name": "Naturell Yoghurt Bowl",
@@ -64,8 +69,8 @@
         "priceMinor": 12900
       },
       {
-        "name": "Belgiske protein vaffler",
-        "priceMinor": 12900
+        "name": "Tropicana Açaí Bowl 🌴",
+        "priceMinor": 15500
       },
       {
         "name": "Fuel Up Acai Bowl 💪🏽",
