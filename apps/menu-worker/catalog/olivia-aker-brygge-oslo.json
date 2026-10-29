@@ -26,9 +26,9 @@
   "actions": [
     {
       "type": "booking",
-      "url": "https://oliviarestauranter.no/restauranter/aker-brygge/booking/",
-      "sourceUrl": "https://oliviarestauranter.no/restauranter/aker-brygge/booking/",
-      "provider": "Olivia"
+      "url": "https://widget.elyrasystems.com/aker-brygge",
+      "sourceUrl": "https://oliviarestauranter.no/restauranter/aker-brygge/",
+      "provider": "Elyra"
     }
   ],
   "qualityAssertions": {
