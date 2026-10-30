@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-18",
-      "note": "Navn, besøksadresse, koordinater via Wolts kartlenke og åtte representative rett-/prispar er kontrollert mot offentlig Wolt-meny 2026-10-18. Wolt-leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke attestert."
+      "checkedAt": "2026-10-30",
+      "note": "Kontrollert på nytt mot offentlig Wolt-meny 2026-10-30 med åtte representative eksakte rett-/prispar. Lasagne finnes kun blant tilvalg i publisert kildedata og er erstattet som selvstendig rettsanker med Funghi til 21900, som har original_price null. Wolt-leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke attestert."
     }
   },
   "actions": [],
@@ -35,7 +35,7 @@
     "requiredDishNames": [
       "Margherita",
       "Parma (Pizza)",
-      "Lasagne",
+      "Funghi",
       "Mortadella",
       "Chorizo Piccante",
       "Prosciutto Cotto",
@@ -52,8 +52,8 @@
         "priceMinor": 24900
       },
       {
-        "name": "Lasagne",
-        "priceMinor": 25200
+        "name": "Funghi",
+        "priceMinor": 21900
       },
       {
         "name": "Mortadella",

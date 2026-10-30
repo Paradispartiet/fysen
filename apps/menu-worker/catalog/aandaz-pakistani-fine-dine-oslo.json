@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-19",
-      "note": "Konkret Wolt-prisgrunnlag fra offentlig restaurantmeny kontrollert 2026-10-19, 9 matrett-/prispar og stedets egen Wolt-kartlenke. Vilkår om Wolt-leveringspriser; unngår midlertidige kampanjepriser fra curryretter. Dette er leveringspriser, ikke bekreftede bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+      "checkedAt": "2026-10-30",
+      "note": "Kontrollert på nytt mot offentlig Wolt-meny 2026-10-30 med ni representative eksakte rett-/prispar. Chicken Tikka har original_price 33200 og gjeldende kampanjepris 31540; Chicken Tikka beholdes som navnekrav, mens prisankeret er erstattet med Samosa med Dip til 7900, som har original_price null. Wolt-leveringspriser, ikke bekreftede bordpriser; åpningstider og produksjonsdatabase ikke attestert."
     }
   },
   "actions": [],
@@ -41,7 +41,8 @@
       "3 Stykk Kyllingvårruller",
       "Chicken Tikka",
       "Lam Tikka",
-      "Chicken Garlic Tikka"
+      "Chicken Garlic Tikka",
+      "Samosa med Dip"
     ],
     "requiredDishVariants": [
       {
@@ -69,8 +70,8 @@
         "priceMinor": 11900
       },
       {
-        "name": "Chicken Tikka",
-        "priceMinor": 33200
+        "name": "Samosa med Dip",
+        "priceMinor": 7900
       },
       {
         "name": "Lam Tikka",

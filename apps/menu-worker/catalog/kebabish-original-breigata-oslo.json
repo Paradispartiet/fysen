@@ -57,12 +57,13 @@
       },
       {
         "name": "Lamb Chops",
-        "priceMinor": 31900,
+        "priceMinor": 34900,
         "priceKind": "from"
       },
       {
         "name": "Chicken Tikka Masala",
-        "priceMinor": 32900
+        "priceMinor": 31900,
+        "priceKind": "from"
       },
       {
         "name": "Lamb Tikka Masala",

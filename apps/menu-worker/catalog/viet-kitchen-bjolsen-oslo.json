@@ -43,7 +43,7 @@
     "requiredDishNames": [
       "Spring Rolls",
       "Summer Rolls",
-      "Wonton Suppe",
+      "Gyoza",
       "BÁNH CUỐN NHÂN THỊT - Dampede rullinger av rismel",
       "Mama's Duck Rice",
       "BÁNH HỎI HEO QUAY - Tynne rismelark med ribbe",
@@ -53,16 +53,46 @@
       "MÌ XÀO - Stir-fried egg noodles"
     ],
     "requiredDishVariants": [
-      { "name": "Spring Rolls", "priceMinor": 9500 },
-      { "name": "Summer Rolls", "priceMinor": 12500 },
-      { "name": "Wonton Suppe", "priceMinor": 12500 },
-      { "name": "BÁNH CUỐN NHÂN THỊT - Dampede rullinger av rismel", "priceMinor": 27900 },
-      { "name": "Mama's Duck Rice", "priceMinor": 31900 },
-      { "name": "BÁNH HỎI HEO QUAY - Tynne rismelark med ribbe", "priceMinor": 27900 },
-      { "name": "PHỞ BIFF BÒ TÁI", "priceMinor": 24900 },
-      { "name": "PHỞ KYLLING GÀ", "priceMinor": 24900 },
-      { "name": "BÚN BÒ XÀO XẢ ỚT - Risnudler med marinert biff", "priceMinor": 24900 },
-      { "name": "MÌ XÀO - Stir-fried egg noodles", "priceMinor": 23900 }
+      {
+        "name": "Spring Rolls",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Summer Rolls",
+        "priceMinor": 12500
+      },
+      {
+        "name": "Gyoza",
+        "priceMinor": 12500
+      },
+      {
+        "name": "BÁNH CUỐN NHÂN THỊT - Dampede rullinger av rismel",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Mama's Duck Rice",
+        "priceMinor": 31900
+      },
+      {
+        "name": "BÁNH HỎI HEO QUAY - Tynne rismelark med ribbe",
+        "priceMinor": 27900
+      },
+      {
+        "name": "PHỞ BIFF BÒ TÁI",
+        "priceMinor": 24900
+      },
+      {
+        "name": "PHỞ KYLLING GÀ",
+        "priceMinor": 24900
+      },
+      {
+        "name": "BÚN BÒ XÀO XẢ ỚT - Risnudler med marinert biff",
+        "priceMinor": 24900
+      },
+      {
+        "name": "MÌ XÀO - Stir-fried egg noodles",
+        "priceMinor": 23900
+      }
     ],
     "forbiddenDishNames": [
       "Signature Milk Tea",
