@@ -2,7 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { createDatabasePool, searchDishes } from "../packages/database/dist/index.js";
 import { normalizeDishName } from "../packages/menu-core/dist/index.js";
-import { hasServerRenderedDishBrowseHeading } from "./production-pilot-proof-html.mjs";
+import { hasServerRenderedLiveDishBrowse } from "./production-pilot-proof-html.mjs";
 
 const catalogDirectory = path.resolve("apps/menu-worker/catalog");
 const acceptedWatchOutcomes = new Set(["changed", "unchanged", "not_modified"]);
@@ -348,7 +348,7 @@ async function verifyPublicSurfaces() {
   const webResponse = await fetchWithProofTimeout(webBrowseUrl);
   if (!webResponse.ok) fail("Public web browse is unavailable", { status: webResponse.status, webBrowseUrl });
   const webHtml = await webResponse.text();
-  if (!hasServerRenderedDishBrowseHeading(webHtml, "Oslo")) {
+  if (!hasServerRenderedLiveDishBrowse(webHtml, "Oslo")) {
     fail("Public web is not rendering the current live dish-browse surface", { webBrowseUrl });
   }
 

@@ -7,6 +7,7 @@ import { foodKnowledgeDishIdSet } from "../content/food-knowledge/manifest";
 import { browseDishDisplayName, sortBrowseDishesForDisplay } from "../lib/dish-browse-display";
 import {
   discoveryCoverage,
+  createDiscoveryMatcher,
   liveDishMatchesDescriptor,
   normalizeDiscoveryText,
   type DiscoveryDishDescriptor,
@@ -37,6 +38,13 @@ function knowledgeDescriptor(dish: KnowledgeDish): DiscoveryDishDescriptor {
   };
 }
 
+const matchKnowledgeDish = createDiscoveryMatcher(
+  [...foodDishCatalog]
+    .filter((dish) => foodKnowledgeDishIdSet.has(dish.id))
+    .sort((left, right) => right.explorerPriority - left.explorerPriority || left.name.localeCompare(right.name, "nb"))
+    .map((dish) => ({ ...knowledgeDescriptor(dish), dish })),
+);
+
 function suggestionDescriptor(dish: DishSuggestion): DiscoveryDishDescriptor {
   return {
     label: dish.label,
@@ -46,9 +54,7 @@ function suggestionDescriptor(dish: DishSuggestion): DiscoveryDishDescriptor {
 }
 
 function knowledgeDishForLiveItem(item: DishBrowseItem): KnowledgeDish | null {
-  return [...foodDishCatalog]
-    .filter((dish) => foodKnowledgeDishIdSet.has(dish.id) && liveDishMatchesDescriptor(item, knowledgeDescriptor(dish)))
-    .sort((left, right) => right.explorerPriority - left.explorerPriority || left.name.localeCompare(right.name, "nb"))[0] ?? null;
+  return matchKnowledgeDish(item)?.dish ?? null;
 }
 
 function matchesText(values: readonly string[], query: string): boolean {
