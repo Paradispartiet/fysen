@@ -68,6 +68,28 @@ describe("bilingual and priced platter card layout", () => {
     ]);
   });
 
+  it("keeps explicitly priced structured sushi assortments named Meny plus a number", () => {
+    const sushi = {
+      ...dish("Meny 3", 185),
+      extractionMethod: "json_ld" as const,
+      description: "18 biter. 8 laks maki, 4 laks nigiri og 2 laks sashimi",
+    };
+    const second = {
+      ...dish("Meny 2", 169),
+      extractionMethod: "json_ld" as const,
+      description: "Totalt 10 biter sushi. 6 biter assortert og 4 biter maki laks.",
+    };
+    const bundle = {
+      ...dish("Meny 1", 635),
+      extractionMethod: "json_ld" as const,
+      description: "Tre retter: forrett, hovedrett og dessert",
+    };
+    expect(reconcileUnpricedMenuDescriptionRows([sushi, second, bundle], ""))
+      .toEqual([sushi, second]);
+    expect(reconcileUnpricedMenuDescriptionRows([{ ...sushi, priceMinor: null }], ""))
+      .toEqual([]);
+  });
+
   it("uses the true all-caps dessert title, not its repeated-word description", () => {
     const visible = ["245,-", "CRÈME BRÛLÉE", "Spicy pumpkin crème brûlée", "245,-",
       "Allergens: milk, gluten, berries"].join("\n");

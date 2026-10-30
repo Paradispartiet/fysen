@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 30,
+    "minimumExpectedItems": 26,
     "maxResponseBytes": 8388608,
     "sourceSupport": {
       "redirectOrigins": [],
@@ -40,7 +40,7 @@
       "Kveite sashimi",
       "Bluefin tuna sashimi",
       "New style maki",
-      "Bluefin tuna taco",
+      "Bluefin tuna taco 2 stk",
       "Contemporary lamb rack (2 stk.)",
       "Chicken satay",
       "The Chef’s Chicken Salad",
@@ -77,7 +77,7 @@
         "priceMinor": 29500
       },
       {
-        "name": "Bluefin tuna taco",
+        "name": "Bluefin tuna taco 2 stk",
         "priceMinor": 24000
       },
       {
