@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 46,
+    "minimumExpectedItems": 40,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-17",
-      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+      "checkedAt": "2026-10-30",
+      "note": "Offentlig Wolt-leveringsmeny kildekontrollert 2026-10-30 med produksjonsuttrekker og kilde-nøkkelkanonisering: 45 prissatte katalogprodukter, kontrollert mot innebygd meny-JSON. Minstekrav 40 er 90 % av observert antall, avrundet ned, og gir buffer for normal menyvariasjon. Kilde-URL, hentemåte og forbudte rettsnavn er uendret. Antall navne- og prisassertasjoner er bevart; alle bestod lokal validering mot dette kildeuttaket. Drikke og småtilbehør under uttrekkerens eksisterende prisgrense er ikke med i produkttallet. Prisene gjelder Wolt-levering; åpningstider er ikke uavhengig bekreftet."
     }
   },
   "actions": [],

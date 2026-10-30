@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 51,
+    "minimumExpectedItems": 45,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-17",
-      "note": "Kildebaserte Wolt-rett/prisassertasjoner ble generert og bestod samlet livevalidering i PR #969 den 17. oktober 2026. Representative påstander er redaksjonelt avgrenset til matretter, uten drikke/krydder. Leveringspriser kan avvike fra bordprisene. Åpningstider er ikke uavhengig kontrollert."
+      "checkedAt": "2026-10-30",
+      "note": "Offentlig Wolt-leveringsmeny kildekontrollert 2026-10-30 med produksjonsuttrekker og kilde-nøkkelkanonisering: 50 prissatte katalogprodukter, kontrollert mot innebygd meny-JSON. Minstekrav 45 er 90 % av observert antall, avrundet ned, og gir buffer for normal menyvariasjon. Kilde-URL, hentemåte og forbudte rettsnavn er uendret. Utgått rett «Yakitori» erstattet i kvalitetsassertasjonene med publisert «25. Tempura Kylling - 8 biter» (130 NOK). Antall navne- og prisassertasjoner er bevart; alle bestod lokal validering mot dette kildeuttaket. Drikke og småtilbehør under uttrekkerens eksisterende prisgrense er ikke med i produkttallet. Prisene gjelder Wolt-levering; åpningstider er ikke uavhengig bekreftet."
     }
   },
   "actions": [],
@@ -40,7 +40,7 @@
       "Tempura Laks Maki",
       "Tunfisk Nigiri - 2 Biter",
       "Laks Nigiri - 2 Biter",
-      "Yakitori"
+      "25. Tempura Kylling - 8 biter"
     ],
     "requiredDishVariants": [
       {
@@ -72,8 +72,8 @@
         "priceMinor": 5000
       },
       {
-        "name": "Yakitori",
-        "priceMinor": 29000
+        "name": "25. Tempura Kylling - 8 biter",
+        "priceMinor": 13000
       }
     ],
     "forbiddenDishNames": []

@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 57,
+    "minimumExpectedItems": 47,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-19",
-      "note": "Offentlig Wolt-meny kontrollert 2026-10-19: navngitte retter fra Cloud Nan, Chaats, Pizza Stor, Curry, Paratha og Nan & Roti er fortsatt publisert med de angitte leveringsprisene. Produksjonsuttrekket fant 57 prissatte katalogprodukter mot tidligere gulv 58. Gulvet rebasseres kun ett trinn til 57 for denne konkrete aktuelle menyen; samtlige 7 navngitte rett-/prisassertasjoner, URL og øvrige krav beholdes. Streng livevalidering på PR-head må bevise 57 og alle assertasjoner før merge. Åpningstider er ikke uavhengig verifisert."
+      "checkedAt": "2026-10-30",
+      "note": "Offentlig Wolt-leveringsmeny kildekontrollert 2026-10-30 med produksjonsuttrekker og kilde-nøkkelkanonisering: 53 prissatte katalogprodukter, kontrollert mot innebygd meny-JSON. Minstekrav 47 er 90 % av observert antall, avrundet ned, og gir buffer for normal menyvariasjon. Kilde-URL, hentemåte og forbudte rettsnavn er uendret. Utgått rett «Chicken Tikka Masala» erstattet i kvalitetsassertasjonene med publisert «Butter Chicken» (245 NOK). Utgått rett «Veggie Paratha Rull» erstattet i kvalitetsassertasjonene med publisert «Nan Veggie Rull» (139 NOK). Antall navne- og prisassertasjoner er bevart; alle bestod lokal validering mot dette kildeuttaket. Drikke og småtilbehør under uttrekkerens eksisterende prisgrense er ikke med i produkttallet. Prisene gjelder Wolt-levering; åpningstider er ikke uavhengig bekreftet."
     }
   },
   "actions": [],
@@ -35,8 +35,8 @@
     "requiredDishNames": [
       "Kylling Cloud Nan",
       "Samosa Chat",
-      "Chicken Tikka Masala",
-      "Veggie Paratha Rull",
+      "Butter Chicken",
+      "Nan Veggie Rull",
       "Biff Cloud Nan",
       "Karachi Biff Pizza Stor",
       "Døner nanrull"
@@ -51,12 +51,12 @@
         "priceMinor": 11500
       },
       {
-        "name": "Chicken Tikka Masala",
+        "name": "Butter Chicken",
         "priceMinor": 24500
       },
       {
-        "name": "Veggie Paratha Rull",
-        "priceMinor": 16900
+        "name": "Nan Veggie Rull",
+        "priceMinor": 13900
       },
       {
         "name": "Biff Cloud Nan",

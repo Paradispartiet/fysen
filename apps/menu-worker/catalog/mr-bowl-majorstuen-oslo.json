@@ -33,22 +33,22 @@
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Fried Rice Chicken",
-      "Sesame Chicken Bowl",
+      "Scampi Noodle",
+      "Dual Fried Chicken",
       "Chicken Noodle",
-      "Marinated Beef Bowl",
+      "Salmon Salad Bowl",
       "Marinated Beef Noodle",
       "Chicken Spring Rolls 3pc",
-      "Marinated Chicken Bowl",
+      "Chicken Salad Bowl",
       "Chicken Fingers"
     ],
     "requiredDishVariants": [
       {
-        "name": "Fried Rice Chicken",
-        "priceMinor": 24900
+        "name": "Scampi Noodle",
+        "priceMinor": 26900
       },
       {
-        "name": "Sesame Chicken Bowl",
+        "name": "Dual Fried Chicken",
         "priceMinor": 25900
       },
       {
@@ -56,8 +56,8 @@
         "priceMinor": 25900
       },
       {
-        "name": "Marinated Beef Bowl",
-        "priceMinor": 28900
+        "name": "Salmon Salad Bowl",
+        "priceMinor": 23500
       },
       {
         "name": "Marinated Beef Noodle",
@@ -68,8 +68,8 @@
         "priceMinor": 15900
       },
       {
-        "name": "Marinated Chicken Bowl",
-        "priceMinor": 25500
+        "name": "Chicken Salad Bowl",
+        "priceMinor": 22900
       },
       {
         "name": "Chicken Fingers",
