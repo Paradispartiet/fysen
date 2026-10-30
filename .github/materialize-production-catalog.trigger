@@ -3,4 +3,4 @@
 # workflow_dispatch remains the preferred manual trigger. When an automation
 # client cannot call workflow_dispatch, update the nonce below in a small PR.
 # The materializer is idempotent and production reconcile runs after success.
-nonce: 2026-09-11-browser-block-origin-persistence
+nonce: 2026-10-30-production-proof-phase-diagnostics
