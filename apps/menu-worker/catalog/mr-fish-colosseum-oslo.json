@@ -33,7 +33,7 @@
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Banh Maki - TIKTOK VIRAL",
+      "Banh Maki - BANH MAKI - SUSHI BURRITO",
       "Liten Sashimi",
       "California Maki",
       "Kamskjell Maki",
@@ -44,7 +44,7 @@
     ],
     "requiredDishVariants": [
       {
-        "name": "Banh Maki - TIKTOK VIRAL",
+        "name": "Banh Maki - BANH MAKI - SUSHI BURRITO",
         "priceMinor": 21000
       },
       {
@@ -73,7 +73,7 @@
       },
       {
         "name": "Salmon lovers",
-        "priceMinor": 14900
+        "priceMinor": 15900
       }
     ],
     "forbiddenDishNames": []

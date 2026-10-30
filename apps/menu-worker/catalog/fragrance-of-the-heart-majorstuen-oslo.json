@@ -1,1 +1,81 @@
-{"version":1,"restaurant":{"slug":"fragrance-of-the-heart-majorstuen-oslo","name":"The Fragrance of the Heart Majorstuen","websiteUrl":null,"address":"Majorstuveien 33A, 0367 OSLO","city":"Oslo","countryCode":"NO","latitude":59.927445995751505,"longitude":10.715859224146493},"menuSource":{"url":"https://wolt.com/en/nor/oslo/restaurant/the-fragrance-of-the-heart-majorstuen","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":19,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},"verification":{"hours":{"status":"unverified","checkedAt":"2026-10-17","note":"Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."}},"actions":[],"qualityAssertions":{"requiredDishNames":["Bliss Burger","Raw Brownie","Fragrance of the Heart Bowl","Raw Caramel Slice","Soup of The Day Small","Black Bean Burger","Burrito Delight","Power Bowl"],"requiredDishVariants":[{"name":"Bliss Burger","priceMinor":19900},{"name":"Raw Brownie","priceMinor":7900},{"name":"Fragrance of the Heart Bowl","priceMinor":28900},{"name":"Raw Caramel Slice","priceMinor":7900},{"name":"Soup of The Day Small","priceMinor":12900},{"name":"Black Bean Burger","priceMinor":17900},{"name":"Burrito Delight","priceMinor":18900},{"name":"Power Bowl","priceMinor":24900}],"forbiddenDishNames":[]}}
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "fragrance-of-the-heart-majorstuen-oslo",
+    "name": "The Fragrance of the Heart Majorstuen",
+    "websiteUrl": null,
+    "address": "Majorstuveien 33A, 0367 OSLO",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.927445995751505,
+    "longitude": 10.715859224146493
+  },
+  "menuSource": {
+    "url": "https://wolt.com/en/nor/oslo/restaurant/the-fragrance-of-the-heart-majorstuen",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 19,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-17",
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Bliss Burger",
+      "Raw Brownie",
+      "Mexican Bowl",
+      "Raw Caramel Slice",
+      "Soup of The Day Small",
+      "Black Bean Burger",
+      "Spinat Pie + Salad",
+      "Power Bowl"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Bliss Burger",
+        "priceMinor": 19900
+      },
+      {
+        "name": "Raw Brownie",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Mexican Bowl",
+        "priceMinor": 24900
+      },
+      {
+        "name": "Raw Caramel Slice",
+        "priceMinor": 7900
+      },
+      {
+        "name": "Soup of The Day Small",
+        "priceMinor": 12900
+      },
+      {
+        "name": "Black Bean Burger",
+        "priceMinor": 17900
+      },
+      {
+        "name": "Spinat Pie + Salad",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Power Bowl",
+        "priceMinor": 24900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
+}

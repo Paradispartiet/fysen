@@ -39,9 +39,9 @@
       "Jamaican Curry 🌱",
       "Crispy Fried Gyoza (7p)🌱",
       "Spring rolls (2) 🌱",
-      "Potato Tots",
+      "Sweet potato tempura (5p)🌱",
       "Spinach Soup 🌱",
-      "Spicy Jalapeno Poppers (2pcs)",
+      "Falafel Wrap 🌱",
       "Toasted Chick'n Caesar Wrap 🌱"
     ],
     "requiredDishVariants": [
@@ -70,16 +70,16 @@
         "priceMinor": 11900
       },
       {
-        "name": "Potato Tots",
-        "priceMinor": 6500
+        "name": "Sweet potato tempura (5p)🌱",
+        "priceMinor": 10900
       },
       {
         "name": "Spinach Soup 🌱",
         "priceMinor": 14900
       },
       {
-        "name": "Spicy Jalapeno Poppers (2pcs)",
-        "priceMinor": 6900
+        "name": "Falafel Wrap 🌱",
+        "priceMinor": 15900
       },
       {
         "name": "Toasted Chick'n Caesar Wrap 🌱",

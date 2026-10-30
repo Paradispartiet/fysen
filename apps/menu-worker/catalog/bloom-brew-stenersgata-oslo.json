@@ -39,7 +39,7 @@
       "Chocolate Cookie",
       "Chicken",
       "Spicy Tuna",
-      "Sandwich & Drink",
+      "Tuna",
       "Berry Mix Symphony",
       "Mad Mozzarella",
       "Snowberry Bliss",
@@ -72,8 +72,8 @@
         "priceMinor": 11000
       },
       {
-        "name": "Sandwich & Drink",
-        "priceMinor": 14900
+        "name": "Tuna",
+        "priceMinor": 11000
       },
       {
         "name": "Berry Mix Symphony",

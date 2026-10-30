@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v27";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v28";
 
 const PRICE_LINE =
   /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
@@ -798,9 +798,16 @@ export function reconcileUnpricedMenuDescriptionRows(
 ): readonly MenuObservedItem[] {
   const lines = visibleText.split("\n").map(normalizeVisibleLine);
   return items.flatMap((item) => {
-    // A section heading or a numbered multi-course menu is not an
-    // individually-priced dish, even when the source publishes a set price.
-    if (/^(?:desserts?|main courses?|starters?|side dishes?|(?:meny|menu)\s+[1-9]\d?)$/iu.test(item.name.trim())) return [];
+    // A numbered sushi assortment is one priced platter, not a multi-course
+    // bundle. Require structured dish provenance, a price and explicit sushi
+    // piece contents before retaining an otherwise ambiguous "Meny N" label.
+    const pricedStructuredSushiPlatter =
+      item.extractionMethod === "json_ld" &&
+      item.priceMinor !== null && item.priceMinor > 0 &&
+      /\b\d+\s+biter\b/iu.test(item.description ?? "") &&
+      /\b(?:maki|nigiri|sashimi)\b/iu.test(item.description ?? "");
+    if (/^(?:desserts?|main courses?|starters?|side dishes?)$/iu.test(item.name.trim())) return [];
+    if (/^(?:meny|menu)\s+[1-9]\d?$/iu.test(item.name.trim()) && !pricedStructuredSushiPlatter) return [];
     const servingHours = item.name.match(/^(.+?)\s+(serveres|served)\s+(\d{1,2}[.:]\d{2}\s*[–-]\s*\d{1,2}[.:]\d{2})$/iu);
     if (servingHours?.[1]) {
       const name = servingHours[1].trim();

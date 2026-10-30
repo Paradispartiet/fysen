@@ -33,7 +33,7 @@
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "The Classic",
+      "RAMEN",
       "Classic Korean Toasty",
       "Cheese Doodle",
       "Ms. Choi",
@@ -42,7 +42,7 @@
     ],
     "requiredDishVariants": [
       {
-        "name": "The Classic",
+        "name": "RAMEN",
         "priceMinor": 11900
       },
       {

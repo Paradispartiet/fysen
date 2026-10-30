@@ -38,9 +38,9 @@
       "Kylling Burrito",
       "Vegansk salat 🌱",
       "Kyllingsalat",
-      "Honning",
-      "Acai",
-      "Surf shake"
+      "Vegetar Burrito 🌱",
+      "Tuna Melt Toast",
+      "Skippern"
     ],
     "requiredDishVariants": [
       {
@@ -64,15 +64,15 @@
         "priceMinor": 16500
       },
       {
-        "name": "Honning",
-        "priceMinor": 9500
+        "name": "Vegetar Burrito 🌱",
+        "priceMinor": 16500
       },
       {
-        "name": "Acai",
-        "priceMinor": 9500
+        "name": "Tuna Melt Toast",
+        "priceMinor": 14500
       },
       {
-        "name": "Surf shake",
+        "name": "Skippern",
         "priceMinor": 9500
       }
     ],

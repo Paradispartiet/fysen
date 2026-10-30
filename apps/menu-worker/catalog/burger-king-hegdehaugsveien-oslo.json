@@ -40,9 +40,9 @@
       "Crispy Chicken Meny",
       "Chili Cheese",
       "Chili Cheeseburger",
-      "Steakhouse Bacon King Meny",
+      "Steakhouse Bacon King 2.0 Meny",
       "Chicken Nuggets 9 Biter",
-      "Bacon King Meny"
+      "Bacon King 2.0 Meny"
     ],
     "requiredDishVariants": [
       {
@@ -74,7 +74,7 @@
         "priceMinor": 5900
       },
       {
-        "name": "Steakhouse Bacon King Meny",
+        "name": "Steakhouse Bacon King 2.0 Meny",
         "priceMinor": 23900
       },
       {
@@ -82,7 +82,7 @@
         "priceMinor": 11000
       },
       {
-        "name": "Bacon King Meny",
+        "name": "Bacon King 2.0 Meny",
         "priceMinor": 23900
       }
     ],
