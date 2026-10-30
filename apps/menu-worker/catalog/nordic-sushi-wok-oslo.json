@@ -3,7 +3,7 @@
   "restaurant": {
     "slug": "nordic-sushi-wok-oslo",
     "name": "Nordic Sushi & Wok",
-    "websiteUrl": null,
+    "websiteUrl": "https://nordicsushi.no/",
     "address": "Risalléen 41, 0776 Oslo",
     "city": "Oslo",
     "countryCode": "NO",
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-16",
-      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+      "checkedAt": "2026-10-30",
+      "note": "Restaurantens eget nettsted publiserer 44 individuelt prisede matretter. Åtte navn/prispar er kontrollert mot samme førstepartskilde, og erstatter tidligere Wolt-leveringspriser. Kildens JSON-LD viser bare tre prøver; komplette navngitte priskort brukes når alle tre samsvarer. Åpningstider er ikke uavhengig bekreftet."
     }
   },
   "actions": [],

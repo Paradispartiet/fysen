@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 56,
+    "minimumExpectedItems": 50,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -73,7 +73,7 @@
       },
       {
         "name": "Egg Dosa",
-        "priceMinor": 16900
+        "priceMinor": 19900
       }
     ],
     "forbiddenDishNames": []

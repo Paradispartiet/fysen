@@ -48,7 +48,7 @@
     "requiredDishVariants": [
       {
         "name": "4. Pepperoni [Medium]",
-        "priceMinor": 21900
+        "priceMinor": 24400
       },
       {
         "name": "2. Capricciosa (Medium)",
@@ -56,7 +56,7 @@
       },
       {
         "name": "5.Pastrami (Medium)",
-        "priceMinor": 24400
+        "priceMinor": 23900
       },
       {
         "name": "6. Roma [Medium]",
@@ -68,7 +68,7 @@
       },
       {
         "name": "1.Margherita (Medium)",
-        "priceMinor": 19900
+        "priceMinor": 21900
       },
       {
         "name": "7. Strichi (Medium)",
