@@ -282,12 +282,25 @@ async function verifySearchSmokes(pool) {
   return outputs;
 }
 
+async function proofPhase(phase, action) {
+  const startedAt = Date.now();
+  console.error(JSON.stringify({ phase, event: "started", at: new Date().toISOString() }));
+  try {
+    const result = await action();
+    console.error(JSON.stringify({ phase, event: "completed", durationMs: Date.now() - startedAt }));
+    return result;
+  } catch (cause) {
+    console.error(JSON.stringify({ phase, event: "failed", durationMs: Date.now() - startedAt }));
+    throw new Error(`Production proof failed during ${phase}`, { cause });
+  }
+}
+
 async function fetchWithProofTimeout(url) {
-  return fetch(url, {
+  return proofPhase(`HTTP ${url}`, () => fetch(url, {
     cache: "no-store",
     headers: { accept: "*/*", "user-agent": "FysenProductionProof/1.0" },
     signal: AbortSignal.timeout(10_000),
-  });
+  }));
 }
 
 async function verifyPublicSurfaces() {
@@ -347,10 +360,10 @@ async function verifyPublicSurfaces() {
 
 const pool = createDatabasePool({ maxConnections: 2 });
 try {
-  const manifests = await readCatalog();
-  const materialized = await verifyCatalogMaterialization(pool, manifests);
-  const searchSmokes = await verifySearchSmokes(pool);
-  const publicSurfaces = await verifyPublicSurfaces();
+  const manifests = await proofPhase("read canonical catalog", readCatalog);
+  const materialized = await proofPhase("verify production catalog and watcher", () => verifyCatalogMaterialization(pool, manifests));
+  const searchSmokes = await proofPhase("verify direct production search", () => verifySearchSmokes(pool));
+  const publicSurfaces = await proofPhase("verify public surfaces", verifyPublicSurfaces);
 
   process.stdout.write(`${JSON.stringify({
     status: "verified",
