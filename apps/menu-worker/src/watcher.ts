@@ -1,4 +1,4 @@
-import type { MenuIndexRepository, WatchOutcome } from "@fysen/database";
+import { ConcurrentMenuUpdateError, type MenuIndexRepository, type WatchOutcome } from "@fysen/database";
 import {
   assessExtraction,
   createMenuFingerprint,
@@ -80,6 +80,24 @@ export async function watchMenuSourceOnce(
   httpClient = new HttpMenuClient(),
   sourceSupport: MenuSourceSupportInput = { redirectOrigins: [], browserDataOrigins: [] },
   options: MenuWatchOptions = {},
+): Promise<MenuWatchSummary> {
+  try {
+    return await watchMenuSourceAttempt(repository, menuSourceId, httpClient, sourceSupport, options);
+  } catch (error) {
+    if (!(error instanceof ConcurrentMenuUpdateError)) throw error;
+    // A competing watcher committed after our read. Refetch current source
+    // state and content, then reassess and diff against its snapshot. Keep the
+    // atomic expected-snapshot guard and allow only one fresh attempt.
+    return watchMenuSourceAttempt(repository, menuSourceId, httpClient, sourceSupport, options);
+  }
+}
+
+async function watchMenuSourceAttempt(
+  repository: MenuIndexRepository,
+  menuSourceId: string,
+  httpClient: HttpMenuClient,
+  sourceSupport: MenuSourceSupportInput,
+  options: MenuWatchOptions,
 ): Promise<MenuWatchSummary> {
   const startedAt = new Date().toISOString();
   const source = await repository.getMenuSourceById(menuSourceId);
