@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 22,
+    "minimumExpectedItems": 12,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,20 +26,20 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-17",
-      "note": "Publisert Wolt-leveringsmeny med konkrete rett-/prisassertasjoner er kontrollert gjennom målrettet livevalidering 2026-10-17 (PR #965). Prisene gjelder levering, ikke nødvendigvis restaurantbordet. Åpningstidene er ikke uavhengig verifisert."
+      "checkedAt": "2026-10-30",
+      "note": "Dagens Wolt-meny publiserer 14 uttrekkbare retter/produkter. Serrano Toast og Italiano Toast finnes ikke lenger i kildeinnholdet; de to representative prisassertasjonene er erstattet med Vegetar Burrito og Vegetar salat, begge 165 kr. Åtte konkrete navn/prispar beholdes. Leveringspriser; åpningstider er fortsatt uverifiserte."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
       "Acai",
-      "Serrano Toast",
+      "Vegetar Burrito 🌱",
       "Honning",
       "Kyllingsalat",
       "Vegansk salat 🌱",
       "Kylling Burrito",
-      "Italiano Toast",
+      "Vegetar salat 🌱",
       "Rosa ananas"
     ],
     "requiredDishVariants": [
@@ -48,8 +48,8 @@
         "priceMinor": 9500
       },
       {
-        "name": "Serrano Toast",
-        "priceMinor": 14500
+        "name": "Vegetar Burrito 🌱",
+        "priceMinor": 16500
       },
       {
         "name": "Honning",
@@ -68,8 +68,8 @@
         "priceMinor": 16500
       },
       {
-        "name": "Italiano Toast",
-        "priceMinor": 14500
+        "name": "Vegetar salat 🌱",
+        "priceMinor": 16500
       },
       {
         "name": "Rosa ananas",
