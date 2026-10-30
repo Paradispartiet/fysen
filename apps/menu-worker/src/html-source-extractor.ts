@@ -10,8 +10,9 @@ import {
   type ExtractedHtmlMenu,
 } from "./html-extractor.js";
 import { recoverElementorPriceListHtmlItems } from "./html-elementor-price-list-recovery.js";
+import { supplementPartialStructuredMenu } from "./html-partial-structured-menu.js";
 
-export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v22";
+export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v23";
 
 const HEADING_MARKER = "__FYSEN_HEADING_LEVEL_";
 const BEVERAGE_SECTION_HEADING = /^(?:aperitif|drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|vin\s*(?:&|og)\s*musserende|wine(?:\s+(?:list|menu))?|wine\s*(?:&|and)\s*sparkling|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
@@ -826,9 +827,12 @@ function normalizeNumberedItem(item: MenuObservedItem): MenuObservedItem {
   };
 }
 
-export function extractScopedHtmlMenu(html: string): ExtractedHtmlMenu {
+export function extractScopedHtmlMenu(html: string, originalHtml = html): ExtractedHtmlMenu {
   const firstPass = extractHtmlMenu(html);
-  if (firstPass.method === "json_ld") return firstPass;
+  if (firstPass.method === "json_ld") return {
+    ...firstPass,
+    items: supplementPartialStructuredMenu(originalHtml, firstPass.items),
+  };
 
   const visibleHtml = stripExplicitlyHiddenHtmlContent(html);
   const sourceLines = annotatedVisibleLines(visibleHtml);

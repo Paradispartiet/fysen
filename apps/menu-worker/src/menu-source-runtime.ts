@@ -577,7 +577,7 @@ export async function extractMenuSource(
     const normalizedHtml = normalizeHtmlPriceNotation(
       normalizeHtmlHeadingLineBreaks(fetched.body),
     );
-    const extracted = extractScopedHtmlMenu(normalizedHtml);
+    const extracted = extractScopedHtmlMenu(normalizedHtml, fetched.body);
     const recoveryHtml =
       extracted.method === "html_heuristic"
         ? stripExplicitlyHiddenHtmlContent(normalizedHtml)
