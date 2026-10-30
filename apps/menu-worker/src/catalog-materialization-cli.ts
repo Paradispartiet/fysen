@@ -1,7 +1,9 @@
 import { materializeRestaurantCatalog } from "./catalog-materialization.js";
 
 async function main(): Promise<void> {
-  const summary = await materializeRestaurantCatalog();
+  const summary = await materializeRestaurantCatalog((event) => {
+    process.stderr.write(`${JSON.stringify({ type: "catalog_progress", at: new Date().toISOString(), ...event })}\n`);
+  });
   process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`);
   if (summary.blockingFailedCount > 0) process.exitCode = 1;
 }

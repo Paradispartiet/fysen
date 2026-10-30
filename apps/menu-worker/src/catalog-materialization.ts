@@ -27,6 +27,12 @@ const ACCEPTED_WATCH_OUTCOMES = new Set<WatchOutcome>([
   "not_modified",
 ]);
 
+export type CatalogProgressReporter = (
+  event: Readonly<Record<string, string | number | null>>,
+) => void;
+
+const ignoreProgress: CatalogProgressReporter = () => {};
+
 export interface CatalogHealthRepairResult {
   readonly slug: string;
   readonly menuSourceId: string;
@@ -115,6 +121,7 @@ async function repairUnhealthyCanonicalSources(
   entries: Awaited<ReturnType<typeof listRestaurantOnboardingManifests>>,
   results: readonly RestaurantOnboardingResult[],
   concurrency: number,
+  report: CatalogProgressReporter,
 ): Promise<readonly CatalogHealthRepairResult[]> {
   const repository = new MenuIndexRepository(pool);
   const candidates = results.flatMap((result, index) => {
@@ -130,9 +137,14 @@ async function repairUnhealthyCanonicalSources(
     async ({ entry, result }): Promise<CatalogHealthRepairResult | null> => {
       const menuSourceId = result.menuSourceId as string;
       const restaurantId = result.restaurantId as string;
+      report({ phase: "source_health", status: "start", slug: entry.manifest.restaurant.slug });
       const previousHealth = await getMenuSourceWatchHealth(pool, menuSourceId);
       const previousOutcome = previousHealth?.latestOutcome ?? null;
-      if (!shouldRepairCatalogSourceHealth(previousHealth)) return null;
+      if (!shouldRepairCatalogSourceHealth(previousHealth)) {
+        report({ phase: "source_health", status: "healthy", slug: entry.manifest.restaurant.slug });
+        return null;
+      }
+      report({ phase: "source_health", status: "repair", slug: entry.manifest.restaurant.slug });
 
       try {
         const watch = await watchMenuSourceOnce(
@@ -189,6 +201,8 @@ async function repairUnhealthyCanonicalSources(
           itemCount: null,
           error: error instanceof Error ? error.message : String(error),
         };
+      } finally {
+        report({ phase: "source_health", status: "complete", slug: entry.manifest.restaurant.slug });
       }
     },
   );
@@ -196,23 +210,41 @@ async function repairUnhealthyCanonicalSources(
   return repairs.filter((repair): repair is CatalogHealthRepairResult => repair !== null);
 }
 
-export async function materializeRestaurantCatalog(): Promise<CatalogMaterializationSummary> {
+export async function materializeRestaurantCatalog(
+  report: CatalogProgressReporter = ignoreProgress,
+): Promise<CatalogMaterializationSummary> {
+  report({ phase: "catalog_read", status: "start" });
   const entries = await listRestaurantOnboardingManifests();
   const concurrency = parseCatalogMaterializationConcurrency(
     process.env.FYSEN_CATALOG_MATERIALIZATION_CONCURRENCY,
   );
+  report({ phase: "onboarding", status: "start", manifestCount: entries.length, concurrency });
+  let completed = 0;
   const results = await mapWithBoundedConcurrency(
     entries,
     concurrency,
-    (entry) => onboardRestaurantManifest(entry.path),
+    async (entry) => {
+      const startedAt = Date.now();
+      report({ phase: "onboarding", status: "restaurant_start", slug: entry.manifest.restaurant.slug });
+      const result = await onboardRestaurantManifest(entry.path);
+      completed += 1;
+      report({
+        phase: "onboarding", status: "restaurant_complete", slug: result.slug,
+        outcome: result.outcome, completed, total: entries.length,
+        durationMs: Date.now() - startedAt,
+      });
+      return result;
+    },
   ) as readonly RestaurantOnboardingResult[];
   const onboardingBlockingFailedCount = countBlockingCatalogOnboardingFailures(results);
+  report({ phase: "onboarding", status: "complete", onboardingBlockingFailedCount });
 
   let coverageReconcile: CatalogCoverageReconcileResult | null = null;
   let healthRepairs: readonly CatalogHealthRepairResult[] = [];
   if (onboardingBlockingFailedCount === 0) {
     const maintenancePool = createDatabasePool({ maxConnections: Math.max(4, concurrency * 2) });
     try {
+      report({ phase: "coverage_reconcile", status: "start" });
       coverageReconcile = await reconcileRestaurantCatalogCoverage(
         maintenancePool,
         entries.map(({ manifest }) => ({
@@ -220,14 +252,18 @@ export async function materializeRestaurantCatalog(): Promise<CatalogMaterializa
           city: manifest.restaurant.city,
         })),
       );
+      report({ phase: "coverage_reconcile", status: "complete" });
       healthRepairs = await repairUnhealthyCanonicalSources(
         maintenancePool,
         entries,
         results,
         concurrency,
+        report,
       );
     } finally {
+      report({ phase: "maintenance_pool_close", status: "start" });
       await maintenancePool.end();
+      report({ phase: "maintenance_pool_close", status: "complete" });
     }
   }
 
