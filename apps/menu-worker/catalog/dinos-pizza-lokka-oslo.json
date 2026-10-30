@@ -11,7 +11,7 @@
     "longitude": 10.7578778
   },
   "menuSource": {
-    "url": "https://wolt.com/en/nor/oslo/restaurant/dinos-pizza",
+    "url": "https://semeny.no/sted/dinospizza",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -26,53 +26,53 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-18",
-      "note": "Navn, besøksadresse, koordinater via Wolts kartlenke og åtte representative rett-/prispar er kontrollert mot offentlig Wolt-meny 2026-10-18. Wolt-leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke attestert."
+      "checkedAt": "2026-10-30",
+      "note": "SeMeny-operatørens publiserte Dino's Pizza-meny i Seilduksgata er kontrollert mot åtte konkrete rett/prispar. Samme navn og telefon 23 32 80 80 som dinospizza.no. Kilden oppgir Seilduksgata 7B, mens eksisterende kanonisk identitet bruker 9; koordinater og stedsidentitet er bevart. Prisene gjelder denne bestillingskilden, ikke tidligere Wolt-priser. Åpningstider er ikke uavhengig verifisert."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "5. Golden Special (Stor)",
-      "12. Volcano (Stor)",
-      "10. Chicken Special (Stor)",
-      "13. Bacon House (Stor)",
-      "Hamburger tallerken",
-      "2. Pizza Original (Stor)",
-      "9. Your Choice (Stor)",
-      "5. Golden Special (Medium)"
+      "Golden Special (Stor)",
+      "Volcano (Stor)",
+      "Chicken Special (Stor)",
+      "Bacon House (Stor)",
+      "Pizza Original (Medium)",
+      "Pizza Original (Stor)",
+      "Your Choice (Stor)",
+      "Golden Special (Medium)"
     ],
     "requiredDishVariants": [
       {
-        "name": "5. Golden Special (Stor)",
-        "priceMinor": 27900
-      },
-      {
-        "name": "12. Volcano (Stor)",
-        "priceMinor": 27900
-      },
-      {
-        "name": "10. Chicken Special (Stor)",
-        "priceMinor": 29900
-      },
-      {
-        "name": "13. Bacon House (Stor)",
-        "priceMinor": 27900
-      },
-      {
-        "name": "Hamburger tallerken",
-        "priceMinor": 21900
-      },
-      {
-        "name": "2. Pizza Original (Stor)",
+        "name": "Golden Special (Stor)",
         "priceMinor": 25900
       },
       {
-        "name": "9. Your Choice (Stor)",
-        "priceMinor": 31900
+        "name": "Volcano (Stor)",
+        "priceMinor": 27900
       },
       {
-        "name": "5. Golden Special (Medium)",
+        "name": "Chicken Special (Stor)",
+        "priceMinor": 26900
+      },
+      {
+        "name": "Bacon House (Stor)",
+        "priceMinor": 27900
+      },
+      {
+        "name": "Pizza Original (Medium)",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Pizza Original (Stor)",
+        "priceMinor": 23900
+      },
+      {
+        "name": "Your Choice (Stor)",
+        "priceMinor": 29900
+      },
+      {
+        "name": "Golden Special (Medium)",
         "priceMinor": 21900
       }
     ],
