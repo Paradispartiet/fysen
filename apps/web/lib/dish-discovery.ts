@@ -37,10 +37,7 @@ function descriptorTerms(descriptor: DiscoveryDishDescriptor): readonly string[]
   return [...new Set(terms)];
 }
 
-function matchScore(item: DishBrowseItem, descriptor: DiscoveryDishDescriptor): number {
-  const values = [item.query, item.name].map(normalizeDiscoveryText).filter(Boolean);
-  const terms = descriptorTerms(descriptor);
-
+function preparedMatchScore(values: readonly string[], terms: readonly string[]): number {
   for (const term of terms) {
     if (values.some((value) => value === term)) return 3;
   }
@@ -48,6 +45,25 @@ function matchScore(item: DishBrowseItem, descriptor: DiscoveryDishDescriptor): 
     if (values.some((value) => containsPhrase(value, term))) return 2;
   }
   return 0;
+}
+
+function matchScore(item: DishBrowseItem, descriptor: DiscoveryDishDescriptor): number {
+  return preparedMatchScore(
+    [item.query, item.name].map(normalizeDiscoveryText).filter(Boolean),
+    descriptorTerms(descriptor),
+  );
+}
+
+// Descriptors are supplied in preference order. Prepare their terms once, then
+// normalize each live item once instead of once for every candidate descriptor.
+export function createDiscoveryMatcher<T extends DiscoveryDishDescriptor>(
+  descriptors: readonly T[],
+): (item: Pick<DishBrowseItem, "query" | "name">) => T | null {
+  const prepared = descriptors.map((descriptor) => ({ descriptor, terms: descriptorTerms(descriptor) }));
+  return (item) => {
+    const values = [item.query, item.name].map(normalizeDiscoveryText).filter(Boolean);
+    return prepared.find(({ terms }) => preparedMatchScore(values, terms) > 0)?.descriptor ?? null;
+  };
 }
 
 export function liveDishMatchesDescriptor(item: DishBrowseItem, descriptor: DiscoveryDishDescriptor): boolean {

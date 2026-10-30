@@ -15,3 +15,14 @@ export function hasServerRenderedDishBrowseHeading(webHtml, city) {
     renderedText(heading[1] ?? "") === `Alle retter i ${city}`
   );
 }
+
+export function hasServerRenderedLiveDishBrowse(webHtml, city) {
+  const renderedHtml = webHtml
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/giu, "")
+    .replace(/<!--[\s\S]*?-->/gu, "");
+  if (!hasServerRenderedDishBrowseHeading(renderedHtml, city)) return false;
+  const firstDish = renderedHtml.match(
+    /<div\b[^>]*\bclass=["']dishBrowseList["'][^>]*>\s*<div\b[^>]*\bclass=["']dishBrowseItem["'][^>]*>\s*<a\b[^>]*\bclass=["']dishBrowseItemMain["'][^>]*>\s*<strong\b[^>]*>([\s\S]*?)<\/strong>/iu,
+  );
+  return firstDish !== null && renderedText(firstDish[1] ?? "").length > 0;
+}
