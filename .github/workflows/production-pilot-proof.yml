@@ -2,11 +2,6 @@ name: Fysen production pilot proof
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - "scripts/production-pilot-proof*.mjs"
-      - ".github/workflows/production-pilot-proof.yml"
   workflow_call:
     inputs:
       source_sha:
