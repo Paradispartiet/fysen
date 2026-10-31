@@ -261,14 +261,33 @@ async function diagnoseBrowseReadOnly(pool) {
         const result = await client.query(sql, params);
         const durationMs = Math.round(performance.now() - start);
         const index = statements.length + 1;
-        statements.push({sql,params,index});
-        console.error(JSON.stringify({type:"browse_query_timing", index, durationMs, rowCount:result.rows.length}));
+        statements.push({sql,params,index,rows:result.rows});
+        console.error(JSON.stringify({type:"browse_query_timing", index, durationMs, rowCount:result.rows.length, columnBytes:Object.fromEntries(Object.keys(result.rows[0] || {}).map(key=>[key,result.rows.reduce((total,row)=>total+Buffer.byteLength(JSON.stringify(row[key]) || "null"),0)]))}));
         return result;
       }
     };
     const start = performance.now();
     const browse = await browseDishes(measured, {city:"Oslo"});
     console.error(JSON.stringify({type:"browse_total_timing",durationMs:Math.round(performance.now()-start),dishCount:browse.dishes.length}));
+
+    const first = statements[0];
+    const compactSql = `WITH browse_rows AS (${first.sql})
+      SELECT restaurant_id,restaurant_name,restaurant_address,
+        json_agg(json_build_array(concept_slug,concept_name,preferred_query,original_name,normalized_name,description,section_name,price_minor,confidence,position,fetched_at)) AS menu_rows
+      FROM browse_rows GROUP BY restaurant_id,restaurant_name,restaurant_address`;
+    const compactStart = performance.now();
+    const compact = await client.query(compactSql, first.params);
+    console.error(JSON.stringify({type:"browse_compact_timing",durationMs:Math.round(performance.now()-compactStart),rowCount:compact.rows.length,bytes:Buffer.byteLength(JSON.stringify(compact.rows))}));
+    const expanded = compact.rows.flatMap(r=>r.menu_rows.map(v=>({
+      restaurant_id:r.restaurant_id,restaurant_name:r.restaurant_name,restaurant_address:r.restaurant_address,
+      concept_slug:v[0],concept_name:v[1],preferred_query:v[2],original_name:v[3],normalized_name:v[4],description:v[5],section_name:v[6],price_minor:v[7],confidence:v[8],position:v[9],fetched_at:new Date(v[10])
+    })));
+    let queryIndex=0;
+    const compactBrowse=await browseDishes({query:async()=>({rows:queryIndex++===0?expanded:statements[queryIndex-1].rows})},{city:"Oslo"});
+    const identical=JSON.stringify(browse)===JSON.stringify(compactBrowse);
+    console.error(JSON.stringify({type:"browse_compact_equality",identical,dishCount:compactBrowse.dishes.length}));
+    if(!identical) throw new Error("Compact browse experiment changed the response");
+
     for (const {sql,params,index} of statements) {
       const plan = await client.query("EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) " + sql, params);
       const report = plan.rows[0]["QUERY PLAN"][0];
