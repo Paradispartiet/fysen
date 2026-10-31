@@ -26,26 +26,26 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-17",
-      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+      "checkedAt": "2026-10-31",
+      "note": "The Wolt delivery menu was rechecked on 2026-10-31: 20 extracted offers. Chettinad Chicken Biryani and Family Chettinad Chicken Biryani are no longer listed. Their two control slots now check independently listed House Special Boneless Chicken Biryani (Hot), 269 NOK, and Family Hyderabadi Chicken Biryani (Hot), 559 NOK. These are replacement coverage controls, not inferred dish renames. All six other name/price controls and the 19-item floor are unchanged. Raw Wolt item IDs and source hash are recorded in docs/research/menu-control-refresh-20261031.sources.json. Prices are delivery prices; kitchen hours remain unverified."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Chettinad Chicken Biryani",
+      "House Special Boneless Chicken Biryani (Hot)",
       "Party Chicken 65 Biryani",
       "Brinjal Gravy",
       "Family Egg Biryani",
       "Chicken 65 Biryani",
-      "Family Chettinad Chicken Biryani",
+      "Family Hyderabadi Chicken Biryani (Hot)",
       "Dindigul Mutton Biryani",
       "Party Egg Biryani"
     ],
     "requiredDishVariants": [
       {
-        "name": "Chettinad Chicken Biryani",
-        "priceMinor": 25900
+        "name": "House Special Boneless Chicken Biryani (Hot)",
+        "priceMinor": 26900
       },
       {
         "name": "Party Chicken 65 Biryani",
@@ -64,8 +64,8 @@
         "priceMinor": 24900
       },
       {
-        "name": "Family Chettinad Chicken Biryani",
-        "priceMinor": 54900
+        "name": "Family Hyderabadi Chicken Biryani (Hot)",
+        "priceMinor": 55900
       },
       {
         "name": "Dindigul Mutton Biryani",
