@@ -1,0 +1,61 @@
+{
+  "slug": "tasty-thai-gronland-oslo",
+  "url": "https://wolt.com/en/nor/oslo/restaurant/tasty-thai-gronland",
+  "sha256": "8942923590c77f60d428bf4f820d65e4b57986eac80db76dfa231550a2dcadaa",
+  "capturedAt": "2026-10-31T16:03:18.556726+00:00",
+  "extractedOfferCount": 34,
+  "minimumExpectedItems": 30,
+  "absentRetiredControls": [
+    "Satay Gai"
+  ],
+  "independentRawControls": [
+    {
+      "id": "06ca0ffcacbda809f983feda",
+      "name": "Kao Phad",
+      "priceMinor": 19900,
+      "path": "/queries/6/state/data/items/0"
+    },
+    {
+      "id": "3276b0aff3f671a73b762faa",
+      "name": "Tasty Thai",
+      "priceMinor": 24900,
+      "path": "/queries/6/state/data/items/6"
+    },
+    {
+      "id": "561224cf27f18acf1305e8ef",
+      "name": "Phad Prik",
+      "priceMinor": 24900,
+      "path": "/queries/6/state/data/items/14"
+    },
+    {
+      "id": "8558c0d5a3580f759181a9ae",
+      "name": "Phad Medd Mamuang",
+      "priceMinor": 24900,
+      "path": "/queries/6/state/data/items/24"
+    },
+    {
+      "id": "97073418d0c9ecffa2cdfa60",
+      "name": "Tom Yum Ramen",
+      "priceMinor": 29500,
+      "path": "/queries/6/state/data/items/30"
+    },
+    {
+      "id": "16c5592cf60052e098eba095",
+      "name": "Mini Vårruller",
+      "priceMinor": 11500,
+      "path": "/queries/6/state/data/items/2"
+    },
+    {
+      "id": "cca3f92ee4aa4c5d05f4160d",
+      "name": "Lab Gai",
+      "priceMinor": 28500,
+      "path": "/queries/6/state/data/items/41"
+    },
+    {
+      "id": "eb31d3546f7d6953f8aca36f",
+      "name": "Phad Phed Naw Mai",
+      "priceMinor": 24900,
+      "path": "/queries/6/state/data/items/48"
+    }
+  ]
+}

@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 36,
+    "minimumExpectedItems": 30,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-17",
-      "note": "Wolt-leveringsmeny med faktiske rett-/prisassertasjoner generert og målrettet livevalidert i PR #966 2026-10-17. Prisene er leveringspriser og åpningstider er ikke uavhengig verifisert."
+      "checkedAt": "2026-10-31",
+      "note": "The Wolt delivery menu was rechecked on 2026-10-31: 34 extracted priced offers, with all eight exact name/price controls independently matched to raw embedded records. Satay Gai is absent; its control slot now checks separately listed Mini Vårruller 115 NOK. The other seven controls are unchanged. The item floor is 30 (90% of the observed34, rounded down), allowing ordinary menu variation without changing name/price validation. This is a replacement control, not an inferred dish rename. Source hash and raw item IDs are in docs/research/production-finish-20261031.sources.json. Prices are delivery prices; kitchen hours remain unverified."
     }
   },
   "actions": [],
@@ -38,7 +38,7 @@
       "Phad Prik",
       "Phad Medd Mamuang",
       "Tom Yum Ramen",
-      "Satay Gai",
+      "Mini Vårruller",
       "Lab Gai",
       "Phad Phed Naw Mai"
     ],
@@ -64,8 +64,8 @@
         "priceMinor": 29500
       },
       {
-        "name": "Satay Gai",
-        "priceMinor": 13900
+        "name": "Mini Vårruller",
+        "priceMinor": 11500
       },
       {
         "name": "Lab Gai",

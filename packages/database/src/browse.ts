@@ -103,11 +103,23 @@ interface DishBrowseRow extends QueryResultRow {
   fetched_at: Date;
 }
 
+type CompactMenuRow = readonly [
+  string | null, string | null, string | null, string, string,
+  string | null, string | null, number | null, number, number, string,
+];
+
+interface CompactRestaurantRow extends QueryResultRow {
+  restaurant_id: string;
+  restaurant_name: string;
+  restaurant_address: string;
+  menu_rows: readonly CompactMenuRow[];
+}
+
 export async function browseDishes(
   pool: Pool,
   input: DishBrowseDatabaseInput,
 ): Promise<DishBrowseDatabaseResponse> {
-  const result = await pool.query<DishBrowseRow>(
+  const result = await pool.query<CompactRestaurantRow>(
     `
       WITH latest_snapshots AS (
         SELECT DISTINCT ON (snapshot.menu_source_id)
@@ -123,7 +135,7 @@ export async function browseDishes(
           AND now() <= source.last_checked_at
             + make_interval(mins => GREATEST(source.check_interval_minutes * 3, 1440))
         ORDER BY snapshot.menu_source_id, snapshot.fetched_at DESC, snapshot.created_at DESC
-      )
+      ), browse_rows AS (
       SELECT
           concept.slug AS concept_slug,
           concept.canonical_name AS concept_name,
@@ -160,8 +172,33 @@ export async function browseDishes(
           LIMIT 1
         ) AS preferred_query ON concept.id IS NOT NULL
         WHERE lower(restaurant.city) = lower($1)
+      )
+      SELECT restaurant_id, restaurant_name, restaurant_address,
+        json_agg(json_build_array(
+          concept_slug, concept_name, preferred_query, original_name,
+          normalized_name, description, section_name, price_minor,
+          confidence, position, fetched_at
+        )) AS menu_rows
+      FROM browse_rows
+      GROUP BY restaurant_id, restaurant_name, restaurant_address
     `,
     [input.city],
+  );
+
+  // Send restaurant metadata once instead of repeating it for every menu item.
+  // Expand before applying the existing classification and ranking rules.
+  const rows: DishBrowseRow[] = result.rows.flatMap((restaurant) =>
+    restaurant.menu_rows.map(([
+      concept_slug, concept_name, preferred_query, original_name, normalized_name,
+      description, section_name, price_minor, confidence, position, fetched_at,
+    ]) => ({
+      restaurant_id: restaurant.restaurant_id,
+      restaurant_name: restaurant.restaurant_name,
+      restaurant_address: restaurant.restaurant_address,
+      concept_slug, concept_name, preferred_query, original_name, normalized_name,
+      description, section_name, price_minor, confidence, position,
+      fetched_at: new Date(fetched_at),
+    })),
   );
 
   // Only first-time additions still in an enabled, freshly checked source are eligible.
@@ -223,7 +260,7 @@ export async function browseDishes(
   const exclusions = Object.fromEntries(discoveryExclusionCategories.map((category) => [category, 0])) as Record<DiscoveryExclusionCategory, number>;
   const groups = new Map<string, { rows: DishBrowseRow[]; restaurants: Set<string> }>();
 
-  for (const row of result.rows) {
+  for (const row of rows) {
     const category = classifyDiscoveryCandidate({
       name: row.original_name,
       normalizedName: row.normalized_name,
@@ -354,14 +391,14 @@ export async function browseDishes(
   }
 
   const excludedItemCount = Object.values(exclusions).reduce((sum, count) => sum + count, 0);
-  const validItemCount = result.rows.length - excludedItemCount;
+  const validItemCount = rows.length - excludedItemCount;
   return {
     dishes,
     recentDishes,
     popularDishes,
     quality: {
       filterVersion: "consumer-v1",
-      rawItemCount: result.rows.length,
+      rawItemCount: rows.length,
       validItemCount,
       excludedItemCount,
       deduplicatedItemCount: validItemCount - dishes.length,
