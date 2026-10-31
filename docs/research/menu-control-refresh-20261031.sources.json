@@ -1,0 +1,144 @@
+{
+  "checkedAt": "2026-10-31T09:44:37.607436+00:00",
+  "sources": [
+    {
+      "slug": "biryani-express-barcode-oslo",
+      "url": "https://wolt.com/en/nor/oslo/restaurant/biryani-express",
+      "capturedAt": "2026-10-31T09:42:56.959947+00:00",
+      "sha256": "73fb18d2b76fc69b3eddb4ee618a0aeeac895ab371773185317c8b146a6a11a7",
+      "extractedOfferCount": 20,
+      "minimumExpectedItems": 19,
+      "absentRetiredControls": [
+        "Chettinad Chicken Biryani",
+        "Family Chettinad Chicken Biryani"
+      ],
+      "independentRawControls": [
+        {
+          "id": "2d0fc0192f3ca61ddd279c53",
+          "name": "House Special Boneless Chicken Biryani (Hot)",
+          "priceMinor": 26900,
+          "path": "/queries/6/state/data/items/1"
+        },
+        {
+          "id": "30292e9ec6412e163950aea0",
+          "name": "Party Chicken 65 Biryani",
+          "priceMinor": 84900,
+          "path": "/queries/6/state/data/items/2"
+        },
+        {
+          "id": "39989cc6a8b54d93e21dfa18",
+          "name": "Brinjal Gravy",
+          "priceMinor": 5900,
+          "path": "/queries/6/state/data/items/5"
+        },
+        {
+          "id": "52ab7b14240f7d7e6ef32f3e",
+          "name": "Family Egg Biryani",
+          "priceMinor": 43900,
+          "path": "/queries/6/state/data/items/8"
+        },
+        {
+          "id": "7ea67a147c3f8019f3985dde",
+          "name": "Chicken 65 Biryani",
+          "priceMinor": 24900,
+          "path": "/queries/6/state/data/items/11"
+        },
+        {
+          "id": "a804cd66dda2595130f705c7",
+          "name": "Family Hyderabadi Chicken Biryani (Hot)",
+          "priceMinor": 55900,
+          "path": "/queries/6/state/data/items/15"
+        },
+        {
+          "id": "af1be5df4d0fe71d8daaeace",
+          "name": "Dindigul Mutton Biryani",
+          "priceMinor": 27900,
+          "path": "/queries/6/state/data/items/16"
+        },
+        {
+          "id": "fa812f84790a354465f1b651",
+          "name": "Party Egg Biryani",
+          "priceMinor": 74900,
+          "path": "/queries/6/state/data/items/20"
+        }
+      ]
+    },
+    {
+      "slug": "delicatessen-majorstuen-oslo",
+      "url": "https://favrit.com/ws/ordr-service/public/v3/locations/simple/LgEAQE59pAo?caller=GUEST_APP&language=nb",
+      "capturedAt": "2026-10-31T09:42:56.215939+00:00",
+      "sha256": "5fea69f2d9e3a8f7981fafc59750a9cb5196e446e9d30aae6c99c2d0ab5b5f8c",
+      "extractedOfferCount": 54,
+      "minimumExpectedItems": 44,
+      "absentRetiredControls": [
+        "Grillet Entrecote Txogitxu"
+      ],
+      "independentRawControls": [
+        {
+          "id": "46f7de23-ed7f-44c0-a901-f568a46c6394",
+          "name": "Manchego 6mnd",
+          "priceMinor": 13000,
+          "active": true,
+          "currency": "NOK",
+          "path": "/location/menus/0/menuSections/6/menuItems/0"
+        },
+        {
+          "id": "8fea0378-497b-4133-a065-5c19ad72d739",
+          "name": "Patatas bravas",
+          "priceMinor": 10500,
+          "active": true,
+          "currency": "NOK",
+          "path": "/location/menus/0/menuSections/9/menuItems/3"
+        },
+        {
+          "id": "bbbeb889-67e9-4385-ac37-2e8e75f4330b",
+          "name": "Lomo Ibérico de Bellota",
+          "priceMinor": 19000,
+          "active": true,
+          "currency": "NOK",
+          "path": "/location/menus/0/menuSections/7/menuItems/3"
+        },
+        {
+          "id": "ec035778-1048-45e2-a002-eb2d93b3974a",
+          "name": "Friterte artisjokker",
+          "priceMinor": 15500,
+          "active": true,
+          "currency": "NOK",
+          "path": "/location/menus/0/menuSections/9/menuItems/2"
+        },
+        {
+          "id": "cf79008c-26bf-49b9-97da-d5cd92371e4d",
+          "name": "Gambas al ajillo",
+          "priceMinor": 15500,
+          "active": true,
+          "currency": "NOK",
+          "path": "/location/menus/0/menuSections/11/menuItems/2"
+        },
+        {
+          "id": "271d63aa-7c7b-4917-833e-b3953d716f0e",
+          "name": "Blåskjell escabeche",
+          "priceMinor": 23000,
+          "active": true,
+          "currency": "NOK",
+          "path": "/location/menus/0/menuSections/14/menuItems/2"
+        },
+        {
+          "id": "e940581a-5056-4385-97d1-975e8da1b6e9",
+          "name": "Stekt blekksprut",
+          "priceMinor": 22000,
+          "active": true,
+          "currency": "NOK",
+          "path": "/location/menus/0/menuSections/13/menuItems/4"
+        },
+        {
+          "id": "19d1f3e8-02d9-4453-9d35-c631c75bcff4",
+          "name": "Presa ibérica (200g)",
+          "priceMinor": 36500,
+          "active": true,
+          "currency": "NOK",
+          "path": "/location/menus/0/menuSections/13/menuItems/0"
+        }
+      ]
+    }
+  ]
+}

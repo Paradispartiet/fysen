@@ -25,8 +25,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-29",
-      "note": "The live first-party-linked Favrit public menu API was rechecked on 2026-10-29 in the strict PR-head GitHub Actions proof: 56 individually priced food options, Friterte artisjokker 155 NOK, Grillet Entrecote Txogitxu 395 NOK. An earlier cached public menu page showed 145 NOK for artisjokker and Grillet ytrefilet 220gr at 310 NOK; that older snapshot is not the live API contract. All eight independently priced source-backed assertions retained, item floor still 44, kitchen hours remain unverified."
+      "checkedAt": "2026-10-31",
+      "note": "The live first-party-linked Favrit menu API was rechecked on 2026-10-31: 54 individually priced food options. Grillet Entrecote Txogitxu is no longer listed. Its control slot now checks independently listed Presa ibérica (200g), 365 NOK (active item, available variant). This is a replacement coverage control, not an inferred dish rename. All seven other name/price controls, including Friterte artisjokker 155 NOK, and the 44-item floor are unchanged. The Favrit item ID and source hash are recorded in docs/research/menu-control-refresh-20261031.sources.json. Kitchen hours remain unverified."
     }
   },
   "actions": [],
@@ -39,7 +39,7 @@
       "Gambas al ajillo",
       "Blåskjell escabeche",
       "Stekt blekksprut",
-      "Grillet Entrecote Txogitxu"
+      "Presa ibérica (200g)"
     ],
     "requiredDishVariants": [
       {
@@ -71,8 +71,8 @@
         "priceMinor": 22000
       },
       {
-        "name": "Grillet Entrecote Txogitxu",
-        "priceMinor": 39500
+        "name": "Presa ibérica (200g)",
+        "priceMinor": 36500
       }
     ],
     "forbiddenDishNames": []
