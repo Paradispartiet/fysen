@@ -1,0 +1,193 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-established-coverage-20261031",
+  "concurrency": 2,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "engebret-cafe-oslo",
+        "name": "Engebret Café",
+        "websiteUrl": "https://www.engebret-cafe.no/",
+        "address": "Bankplassen 1, 0151 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO",
+        "latitude": 59.9089512,
+        "longitude": 10.742127100000062
+      },
+      "menuSource": {
+        "url": "https://www.engebret-cafe.no/menymenu",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720,
+        "sourceSupport": {
+          "redirectOrigins": [],
+          "browserDataOrigins": [],
+          "browserBlockedOrigins": []
+        }
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-31",
+          "note": "Førsteparts oktobermeny kontrollert 2026-10-31: alle 20 individuelt navngitte/prisede retter samsvarer med kilden. Minimum 18 gir normal variasjonsbuffer; 12 konkrete rett-/prispar kontrolleres. Uspesifisert vegetarforrett/hovedrett og separate november-/julemenyer er ikke tolket som navngitte oktoberretter. Koordinater fra stedets eget kontaktkart. Åpningstider er ikke særskilt verifisert."
+        }
+      },
+      "actions": [],
+      "assertionCount": 12,
+      "minimumSourceItems": 20,
+      "requiredDishVariants": [
+        {
+          "name": "Kamskjell og spekeskinke fra Ask med hvitløkspuré og urtesaus",
+          "priceMinor": 29500
+        },
+        {
+          "name": "Kalix løyrom med sitt klassiske tilbehør",
+          "priceMinor": 35000
+        },
+        {
+          "name": "Diana Camembert fra Bryne med bakt sopp, rosmarin og kirsebær",
+          "priceMinor": 26500
+        },
+        {
+          "name": "Sjøkrepssuppe",
+          "priceMinor": 31500
+        },
+        {
+          "name": "Lammerull med estragon, løk, buljong og konfitert steinsopp",
+          "priceMinor": 27500
+        },
+        {
+          "name": "Fjellørret fra Blåfjell med ertepuré, brokkolini, rømmesaus og kokte poteter",
+          "priceMinor": 49500
+        },
+        {
+          "name": "Kveite med purreløk, gulbetpuré, brekkbønner, blåskjellsaus og poteter",
+          "priceMinor": 49500
+        },
+        {
+          "name": "Breiflabb med østerssopp, kremet spinat, lettrøkt smørsaus og sprø poteter",
+          "priceMinor": 51500
+        },
+        {
+          "name": "Lammecarre med gresskarpuré, glaserte gulrøtter, lammesaus og pommes anna",
+          "priceMinor": 52500
+        },
+        {
+          "name": "Reinsdyrbiff med stekte kantareller, selleripuré, rosenkål, viltsaus med reinsdyrtunge og stekte poteter",
+          "priceMinor": 54500
+        },
+        {
+          "name": "Okse indrefilet med potetpuré, panert løkring, rødvinssaus og kremet skogsopp med rosmarin",
+          "priceMinor": 54500
+        },
+        {
+          "name": "Engebrets karamellpudding med krem og hasselnøttstrø",
+          "priceMinor": 22500
+        }
+      ],
+      "forbiddenDishNames": [
+        "Langustine soup with fennel",
+        "Ost og desserter / Cheese and desserts",
+        "Vegetar / Vegan / Vegetarian"
+      ]
+    },
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "lofoten-fiskerestaurant-oslo",
+        "name": "Lofoten Fiskerestaurant",
+        "websiteUrl": "https://www.lofoten-fiskerestaurant.no/",
+        "address": "Stranden 75, 0250 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO",
+        "latitude": 59.90871809999999,
+        "longitude": 10.724512799999957
+      },
+      "menuSource": {
+        "url": "https://www.lofoten-fiskerestaurant.no/menu-eng",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720,
+        "sourceSupport": {
+          "redirectOrigins": [],
+          "browserDataOrigins": [],
+          "browserBlockedOrigins": []
+        }
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-10-31",
+          "note": "Førsteparts engelske ordinære lunsj-/middagsmeny kontrollert 2026-10-31: 23 eksplisitt prisede tilbud, med suppestørrelser, østers 2/4/6 stk og stort skalldyrfat per person/minimum 2/forhåndsbestilling. Minimum 20 gir normal variasjonsbuffer; 12 konkrete rett-/prispar beholdes. Kilo-priset fersk hummer, selskaps-/sesongmenyer og vinpakker er utelatt. Norsk kilde viser avvikende ostetallerkenpris; denne posten følger den oppgitte engelske kilden. Koordinater fra operatørens eget kart. Åpningstider er ikke særskilt verifisert."
+        }
+      },
+      "actions": [],
+      "assertionCount": 12,
+      "minimumSourceItems": 23,
+      "requiredDishVariants": [
+        {
+          "name": "LOFOTEN'S FISH SOUP (Small size (starter))",
+          "priceMinor": 19500
+        },
+        {
+          "name": "OPEN SHRIMP SANDWICH",
+          "priceMinor": 25000
+        },
+        {
+          "name": "FISH OF THE DAY",
+          "priceMinor": 35000
+        },
+        {
+          "name": "LOFOTEN'S FISH SOUP (Big size (main course))",
+          "priceMinor": 39500
+        },
+        {
+          "name": "OYSTERS (2 pcs)",
+          "priceMinor": 13000
+        },
+        {
+          "name": "OYSTERS (4 pcs)",
+          "priceMinor": 24500
+        },
+        {
+          "name": "OYSTERS (6 pcs)",
+          "priceMinor": 35000
+        },
+        {
+          "name": "LOBSTER FROM MAINE",
+          "priceMinor": 59500
+        },
+        {
+          "name": "HALIBUT",
+          "priceMinor": 49500
+        },
+        {
+          "name": "LARGE SHELLFISH PLATTER (per person, minimum 2 persons; preorder at least 1 day)",
+          "priceMinor": 130000
+        },
+        {
+          "name": "CRÈME BRÛLÉE",
+          "priceMinor": 24500
+        },
+        {
+          "name": "CHEESE PLATTER",
+          "priceMinor": 23500
+        }
+      ],
+      "forbiddenDishNames": [
+        "FRESH LOBSTER",
+        "OYSTERS",
+        "SMALL SIZE (STARTER)",
+        "BIG SIZE (MAIN COURSE)",
+        "Spicy pumpkin crème brûlée",
+        "STARTERS",
+        "DESSERTS",
+        "TODAY'S MENU",
+        "PINNEKJØTT"
+      ]
+    }
+  ]
+}

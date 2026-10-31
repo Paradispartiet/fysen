@@ -16,7 +16,7 @@ describe("strong-title price recovery", () => {
       <p><strong>Market fish</strong> ginger</p><p>310,-</p><p>—</p>
       <p><strong>Mushroom rice</strong> shallots</p><p>230,-</p>
     `);
-    expect(HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION).toBe("strong-title-price-v1");
+    expect(HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION).toBe("strong-title-price-v2");
     expect(items.map((item) => [item.name, item.priceMinor])).toEqual([
       ["Garden dumplings", 12000], ["Roasted aubergine", 18000], ["Charred cabbage", 19000],
       ["Herb chicken", 26000], ["Market fish", 31000], ["Mushroom rice", 23000],

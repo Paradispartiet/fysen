@@ -1,3 +1,4 @@
+import { load } from "cheerio";
 import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } from "@fysen/menu-core";
 
 /**
@@ -5,7 +6,80 @@ import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } fro
  * infer a serving unit or convert a per-person quote to a dish price.
  * This layer applies only after the ordinary HTML parser has finished.
  */
-export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v6";
+export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v7";
+
+/** Preserve scoop units only from a single visible title/price card. */
+export function reconcileExplicitScoopUnits(
+  items: readonly MenuObservedItem[],
+  html: string,
+): readonly MenuObservedItem[] {
+  if (!/per\s+(?:kule|scoop)\b/iu.test(html)) return items;
+  const $ = load(html);
+  $("script, style, template, [hidden], [aria-hidden='true'], .w-condition-invisible").remove();
+  $("[style]").each((_, element) => {
+    if (/(?:^|;)\s*(?:display\s*:\s*none|visibility\s*:\s*hidden)\b/iu.test($(element).attr("style") ?? "")) $(element).remove();
+  });
+  const titleSelector = ".name, .dish-name, [itemprop='name'], h3, h4";
+  const cards = new Map<string, { amount: number | null; unit: string | null; text: string }[]>();
+  const ambiguousTitles = new Set<string>();
+  $(".price, [itemprop='price']").each((_, priceElement) => {
+    const price = $(priceElement);
+    const text = price.text().normalize("NFKC").replace(/\s+/gu, " ").trim();
+    let parent = price.parent();
+    // Stop at the nearest titled container even when ambiguous. Ascending
+    // past a failed card could borrow the next card's unit.
+    for (let depth = 0; depth < 4 && parent.length; depth += 1, parent = parent.parent()) {
+      const titles = parent.find(titleSelector);
+      if (!titles.length) continue;
+      const priceCount = parent.find(".price, [itemprop='price']").length;
+      if (titles.length !== 1 || priceCount !== 1) {
+        if (/\bper\s+(?:kule|scoop)\b/iu.test(text)) {
+          titles.each((_, title) => {
+            // A detached price beside complete nested cards does not belong
+            // to those cards. Their title branch already owns another price.
+            let branch = $(title);
+            while (branch.parent().length && branch.parent()[0] !== parent[0]) branch = branch.parent();
+            if (branch.find(".price, [itemprop='price']").length === 0) {
+              ambiguousTitles.add(normalizeDishName($(title).text()));
+            }
+          });
+        }
+        break;
+      }
+      const title = titles.first().text().normalize("NFKC").replace(/\s+/gu, " ").trim();
+      const normalized = normalizeDishName(title);
+      const match = /^(?:kr\.?\s*)?([1-9]\d{0,3})(?:[.,](\d{2}))?\s*(?:kr\.?\s*)?per\s+(kule|scoop)$/iu.exec(text);
+      const amount = match ? Number(match[1]) * 100 + Number(match[2] ?? 0) : null;
+      const unitToken = /\bper\s+(kule|scoop)\b/iu.exec(text)?.[1];
+      const unit = unitToken ? "per " + unitToken.toLowerCase() : null;
+      const observations = cards.get(normalized) ?? [];
+      observations.push({ amount, unit, text });
+      cards.set(normalized, observations);
+      break;
+    }
+  });
+  return items.flatMap((item) => {
+    if (ambiguousTitles.has(item.normalizedName)) return [];
+    const observations = cards.get(item.normalizedName) ?? [];
+    if (!observations.some((o) => o.unit !== null)) return [item];
+    const signatures = new Set(observations.map((o) => o.amount + ":" + o.unit));
+    const observation = observations[0]!;
+    // Quarantine conflicting units or prices instead of presenting a scalar
+    // amount as an ordinary exact-price portion.
+    if (signatures.size !== 1 || !observation.unit || observation.amount !== item.priceMinor ||
+        (item.priceKind ?? "exact") !== "exact" || item.priceMaxMinor != null) return [];
+    const name = item.name + " (" + observation.unit + ")";
+    return [{
+      ...item,
+      name,
+      normalizedName: normalizeDishName(name),
+      sourceKey: createMenuItemSourceKey(name, item.sectionName),
+      description: [item.description, "Kildepris: " + observation.text].filter(Boolean).join(". "),
+      sourceExcerpt: [item.name + " — " + observation.text, item.sourceExcerpt]
+        .filter(Boolean).join(" — ").slice(0, 1000),
+    }];
+  });
+}
 
 const CURRENCY_PRICE = /\bkr\.?\s*([1-9]\d{1,3})\b/giu;
 const TRAILING_PRICE = /\bkr\.?\s*([1-9]\d{1,3})(?:\s*,-)?\s*$/iu;

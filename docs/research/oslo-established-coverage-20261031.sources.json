@@ -1,0 +1,294 @@
+{
+  "checkedAt": "2026-10-31",
+  "status": "source-and-parser-proof-only",
+  "restaurants": [
+    {
+      "slug": "engebret-cafe-oslo",
+      "sourceUrl": "https://www.engebret-cafe.no/menymenu",
+      "capturedOn": "2026-10-31",
+      "sha256": "cb6c4ede54d8f4baba0d4a86766923b2104f0c184af2d0fe805e041c187c7342",
+      "eligibleCount": 20,
+      "scope": "Førsteparts oktobermeny kontrollert 2026-10-31: alle 20 individuelt navngitte/prisede retter samsvarer med kilden. Minimum 18 gir normal variasjonsbuffer; 12 konkrete rett-/prispar kontrolleres. Uspesifisert vegetarforrett/hovedrett og separate november-/julemenyer er ikke tolket som navngitte oktoberretter. Koordinater fra stedets eget kontaktkart. Åpningstider er ikke særskilt verifisert.",
+      "expectedPairs": [
+        {
+          "name": "Kamskjell og spekeskinke fra Ask med hvitløkspuré og urtesaus",
+          "priceMinor": 29500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Kalix løyrom med sitt klassiske tilbehør",
+          "priceMinor": 35000,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Diana Camembert fra Bryne med bakt sopp, rosmarin og kirsebær",
+          "priceMinor": 26500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Sjøkrepssuppe",
+          "priceMinor": 31500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Gratinert kongekrabbe med kålsalat og urtesmør",
+          "priceMinor": 34500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Reinsdyrtartar med kantarellkrem, eggeplomme og rødbeter",
+          "priceMinor": 29500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Lammerull med estragon, løk, buljong og konfitert steinsopp",
+          "priceMinor": 27500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Fjellørret fra Blåfjell med ertepuré, brokkolini, rømmesaus og kokte poteter",
+          "priceMinor": 49500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Kveite med purreløk, gulbetpuré, brekkbønner, blåskjellsaus og poteter",
+          "priceMinor": 49500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Breiflabb med østerssopp, kremet spinat, lettrøkt smørsaus og sprø poteter",
+          "priceMinor": 51500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Boknatorsk med kremstuede rotgrønnsaker, bacon og poteter",
+          "priceMinor": 45500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Lutefisk fra Lofoten",
+          "priceMinor": 87500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Lammecarre med gresskarpuré, glaserte gulrøtter, lammesaus og pommes anna",
+          "priceMinor": 52500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Reinsdyrbiff med stekte kantareller, selleripuré, rosenkål, viltsaus med reinsdyrtunge og stekte poteter",
+          "priceMinor": 54500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Okse indrefilet med potetpuré, panert løkring, rødvinssaus og kremet skogsopp med rosmarin",
+          "priceMinor": 54500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Norske oster med marmelade, frukt og nøttebrød",
+          "priceMinor": 29500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Glasert sjokolade og nougatkake med peanøttfylt konfekt",
+          "priceMinor": 23500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Pæretårn med hasselnøttbunn og vaniljekrem",
+          "priceMinor": 22500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Brunostis med rømmekrem og krumkake",
+          "priceMinor": 22500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        },
+        {
+          "name": "Engebrets karamellpudding med krem og hasselnøttstrø",
+          "priceMinor": 22500,
+          "priceKind": "exact",
+          "sectionName": "Forretter / Starters"
+        }
+      ],
+      "identitySource": "https://www.engebret-cafe.no/nordbestilling",
+      "coordinates": {
+        "latitude": 59.9089512,
+        "longitude": 10.742127100000062
+      }
+    },
+    {
+      "slug": "lofoten-fiskerestaurant-oslo",
+      "sourceUrl": "https://www.lofoten-fiskerestaurant.no/menu-eng",
+      "capturedOn": "2026-10-31",
+      "sha256": "eaea76316d633325633c00fd4efaa007f6430535a7d8a35905ce324cf53ca97d",
+      "eligibleCount": 23,
+      "scope": "Førsteparts engelske ordinære lunsj-/middagsmeny kontrollert 2026-10-31: 23 eksplisitt prisede tilbud, med suppestørrelser, østers 2/4/6 stk og stort skalldyrfat per person/minimum 2/forhåndsbestilling. Minimum 20 gir normal variasjonsbuffer; 12 konkrete rett-/prispar beholdes. Kilo-priset fersk hummer, selskaps-/sesongmenyer og vinpakker er utelatt. Norsk kilde viser avvikende ostetallerkenpris; denne posten følger den oppgitte engelske kilden. Koordinater fra operatørens eget kart. Åpningstider er ikke særskilt verifisert.",
+      "expectedPairs": [
+        {
+          "name": "LOFOTEN'S FISH SOUP (Small size (starter))",
+          "priceMinor": 19500,
+          "priceKind": "exact",
+          "sectionName": "LUNCH / À la carte"
+        },
+        {
+          "name": "OPEN SHRIMP SANDWICH",
+          "priceMinor": 25000,
+          "priceKind": "exact",
+          "sectionName": "LUNCH / À la carte"
+        },
+        {
+          "name": "FISH OF THE DAY",
+          "priceMinor": 35000,
+          "priceKind": "exact",
+          "sectionName": "LUNCH / À la carte"
+        },
+        {
+          "name": "LOFOTEN'S FISH SOUP (Big size (main course))",
+          "priceMinor": 39500,
+          "priceKind": "exact",
+          "sectionName": "LUNCH / À la carte"
+        },
+        {
+          "name": "DESSERT OF THE DAY",
+          "priceMinor": 15500,
+          "priceKind": "exact",
+          "sectionName": "LUNCH / À la carte"
+        },
+        {
+          "name": "SMALL SHELLFISH PLATTER",
+          "priceMinor": 55500,
+          "priceKind": "exact",
+          "sectionName": "LUNCH / SHELLFISH"
+        },
+        {
+          "name": "OYSTERS (2 pcs)",
+          "priceMinor": 13000,
+          "priceKind": "exact",
+          "sectionName": "LUNCH / SHELLFISH"
+        },
+        {
+          "name": "OYSTERS (4 pcs)",
+          "priceMinor": 24500,
+          "priceKind": "exact",
+          "sectionName": "LUNCH / SHELLFISH"
+        },
+        {
+          "name": "OYSTERS (6 pcs)",
+          "priceMinor": 35000,
+          "priceKind": "exact",
+          "sectionName": "LUNCH / SHELLFISH"
+        },
+        {
+          "name": "LOBSTER FROM MAINE",
+          "priceMinor": 59500,
+          "priceKind": "exact",
+          "sectionName": "LUNCH / SHELLFISH"
+        },
+        {
+          "name": "SHRIMPS",
+          "priceMinor": 32500,
+          "priceKind": "exact",
+          "sectionName": "LUNCH / SHELLFISH"
+        },
+        {
+          "name": "MUSSELS",
+          "priceMinor": 29500,
+          "priceKind": "exact",
+          "sectionName": "LUNCH / SHELLFISH"
+        },
+        {
+          "name": "SEA TROUT",
+          "priceMinor": 24500,
+          "priceKind": "exact",
+          "sectionName": "DINNER / STARTERS"
+        },
+        {
+          "name": "COD",
+          "priceMinor": 27500,
+          "priceKind": "exact",
+          "sectionName": "DINNER / STARTERS"
+        },
+        {
+          "name": "RUTABAGA SOUP",
+          "priceMinor": 22000,
+          "priceKind": "exact",
+          "sectionName": "DINNER / STARTERS"
+        },
+        {
+          "name": "ARCTIC CHAR",
+          "priceMinor": 45500,
+          "priceKind": "exact",
+          "sectionName": "DINNER / MAIN COURSES"
+        },
+        {
+          "name": "HALIBUT",
+          "priceMinor": 49500,
+          "priceKind": "exact",
+          "sectionName": "DINNER / MAIN COURSES"
+        },
+        {
+          "name": "SCHNITZEL OF KING CRAB",
+          "priceMinor": 43500,
+          "priceKind": "exact",
+          "sectionName": "DINNER / MAIN COURSES"
+        },
+        {
+          "name": "REINDEER",
+          "priceMinor": 51000,
+          "priceKind": "exact",
+          "sectionName": "DINNER / MAIN COURSES"
+        },
+        {
+          "name": "LARGE SHELLFISH PLATTER (per person, minimum 2 persons; preorder at least 1 day)",
+          "priceMinor": 130000,
+          "priceKind": "exact",
+          "sectionName": "DINNER / SHELLFISH"
+        },
+        {
+          "name": "SEA BUCKTHORN MOUSSE",
+          "priceMinor": 23500,
+          "priceKind": "exact",
+          "sectionName": "DINNER / DESSERTS"
+        },
+        {
+          "name": "CRÈME BRÛLÉE",
+          "priceMinor": 24500,
+          "priceKind": "exact",
+          "sectionName": "DINNER / DESSERTS"
+        },
+        {
+          "name": "CHEESE PLATTER",
+          "priceMinor": 23500,
+          "priceKind": "exact",
+          "sectionName": "DINNER / DESSERTS"
+        }
+      ],
+      "identitySource": "https://www.lofoten-fiskerestaurant.no/",
+      "coordinates": {
+        "latitude": 59.90871809999999,
+        "longitude": 10.724512799999957
+      }
+    }
+  ]
+}
