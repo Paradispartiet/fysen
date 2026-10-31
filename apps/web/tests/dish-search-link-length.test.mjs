@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { URL } from "node:url";
 import { dishSearchQuerySchema } from "@fysen/contracts";
 import { dishSearchHref } from "../lib/public-path.ts";
 const queryFrom = (name) => new URL(dishSearchHref(name), "https://example.com").searchParams.get("q");
