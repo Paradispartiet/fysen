@@ -13,7 +13,7 @@ import {
   recoverHyphenDescriptionPricedFoodItems,
   mergeSourceBackedHyphenPricedFoodItems,
 } from "./html-hyphen-priced-food-recovery.js";
-import { HTML_SOURCE_PRICED_QA_VERSION, reconcileSourcePricedHtmlDishes } from "./html-source-priced-qa.js";
+import { HTML_SOURCE_PRICED_QA_VERSION, reconcileExplicitScoopUnits, reconcileSourcePricedHtmlDishes } from "./html-source-priced-qa.js";
 import {
   PUBLIC_MENU_API_EXTRACTOR_VERSION,
   extractPublicMenuApi,
@@ -26,6 +26,11 @@ import {
   HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION,
   recoverAdjacentHeadingPriceHtmlItems,
 } from "./html-adjacent-heading-price-recovery.js";
+import {
+  HTML_SEMANTIC_MENU_CARD_RECOVERY_VERSION,
+  recoverSemanticMenuCardHtmlItems,
+  hasPricesOutsideSemanticMenuBlocks,
+} from "./html-semantic-menu-card-recovery.js";
 import {
   HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION,
   recoverStrongTitlePriceHtmlItems,
@@ -165,7 +170,7 @@ export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v16";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v12";
 export const HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION = "structured-compat-v1";
-export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v6";
+export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v7";
 
 export function shouldPreferDominantHeadingRecovery(
   headingCount: number,
@@ -178,7 +183,7 @@ export function shouldPreferDominantHeadingRecovery(
     headingCount >= trailingCount
   );
 }
-const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_SIBLING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}+${HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION}+${HTML_SOURCE_PRICED_QA_VERSION}+${HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION}+${HTML_RECOVERY_SELECTION_VERSION}`;
+const HTML_RUNTIME_EXTRACTOR_VERSION = `${HTML_SOURCE_EXTRACTOR_VERSION}+${HTML_EXTRACTOR_VERSION}+${HTML_DESCRIPTION_TITLE_RECOVERY_VERSION}+${HTML_HEADING_NORMALIZER_VERSION}+${HTML_PRICE_NOTATION_NORMALIZER_VERSION}+${HTML_ITEM_NAME_NORMALIZER_VERSION}+${HTML_NON_DISH_FILTER_VERSION}+${HTML_BEVERAGE_FILTER_VERSION}+${HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION}+${HTML_TRAILING_PRICE_CARD_RECOVERY_VERSION}+${HTML_SIBLING_PRICE_CARD_RECOVERY_VERSION}+${HTML_PRICE_WRAPPED_RECOVERY_VERSION}+${HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION}+${HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION}+${HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION}+${HTML_EXPLICIT_FROM_PRICE_RECOVERY_VERSION}+${HTML_SECTION_FIRST_CARD_RECOVERY_VERSION}+${HTML_EMBEDDED_MENU_JSON_RECOVERY_VERSION}+${HTML_TEXT_SECTION_SCOPE_VERSION}+${HTML_OUTPUT_CANONICALIZER_VERSION}+${HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION}+${HTML_SOURCE_PRICED_QA_VERSION}+${HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION}+${HTML_RECOVERY_SELECTION_VERSION}+${HTML_SEMANTIC_MENU_CARD_RECOVERY_VERSION}`;
 
 export type ExtractableMenuSourceType = "html" | "json_ld" | "pdf" | "api";
 export type MenuSourceFetchMode = "http" | "browser";
@@ -597,6 +602,8 @@ export async function extractMenuSource(
         extractorVersion: HTML_RUNTIME_EXTRACTOR_VERSION,
       };
     }
+    const semanticMenuCardItems = extracted.method === "html_heuristic"
+      ? recoverSemanticMenuCardHtmlItems(recoveryHtml) : [];
     const recoveredItems =
       extracted.method === "html_heuristic"
         ? recoverDescriptionNamedHtmlItems(
@@ -643,6 +650,14 @@ export async function extractMenuSource(
       extracted.method === "html_heuristic"
         ? recoverFirstCardAfterPlainFoodSections(extracted.visibleText)
         : [];
+    // A component-sized recovery must not replace a larger or independently
+    // priced menu elsewhere on the page.
+    const semanticMenuCardsPreferred = semanticMenuCardItems.length >= Math.max(
+      4, recoveredItems.length,
+      headingPriceItems.length, strongTitlePriceItems.length,
+    ) && !hasPricesOutsideSemanticMenuBlocks(recoveryHtml) && strongTitlePriceItems.every((item) => semanticMenuCardItems.some((candidate) =>
+      candidate.normalizedName === item.normalizedName && candidate.priceMinor === item.priceMinor,
+    ));
     const strongTitlePricePreferred =
     strongTitlePriceItems.length >= 6 &&
     strongTitlePriceItems.length >= recoveredItems.length &&
@@ -668,6 +683,7 @@ export async function extractMenuSource(
         recoveredItems.length,
       );
     const isolatedSemanticRecoveryPreferred =
+      semanticMenuCardsPreferred ||
       isolatedTrailingRecoveryPreferred ||
       strongTitlePricePreferred ||
       broadHeadingPriceRecoveryPreferred;
@@ -686,7 +702,9 @@ export async function extractMenuSource(
         trailingPriceCardItems.length,
         recoveredItems.length,
       );
-    const preferredItems = strongTitlePricePreferred
+    const preferredItems = semanticMenuCardsPreferred
+    ? semanticMenuCardItems
+    : strongTitlePricePreferred
     ? strongTitlePriceItems
     : headingDominatesTrailingRecovery
       ? headingPriceItems
@@ -705,7 +723,7 @@ export async function extractMenuSource(
               ? priceWrappedItems
               : recoveredItems;
     const structurallyReconciledPreferredItems =
-      extracted.method === "html_heuristic" && !strongTitlePricePreferred
+      extracted.method === "html_heuristic" && !strongTitlePricePreferred && !semanticMenuCardsPreferred
         ? reconcileSelectedItemsWithTrailingCards(
             preferredItems,
             trailingPriceCardItems,
@@ -722,7 +740,7 @@ export async function extractMenuSource(
         : structurallyReconciledPreferredItems;
     const headingSupplementedItems =
       extracted.method === "html_heuristic" &&
-      !strongTitlePricePreferred
+      !strongTitlePricePreferred && !semanticMenuCardsPreferred
         ? supplementStrongHeadingRecovery(
             recoveredSupplementedItems,
             headingPriceItems,
@@ -758,11 +776,11 @@ export async function extractMenuSource(
           )
         : wrappedSupplementedItems;
     const multiPriceEnrichedItems =
-      extracted.method === "html_heuristic"
+      extracted.method === "html_heuristic" && !semanticMenuCardsPreferred
         ? mergeMissingRecoveredItems(priceEnrichedItems, inlineHeadingMultiplePriceItems)
         : priceEnrichedItems;
     const hyphenEnrichedItems =
-      extracted.method === "html_heuristic"
+      extracted.method === "html_heuristic" && !semanticMenuCardsPreferred
         ? mergeSourceBackedHyphenPricedFoodItems(
             multiPriceEnrichedItems,
             recoverHyphenDescriptionPricedFoodItems(extracted.visibleText),
@@ -794,7 +812,7 @@ export async function extractMenuSource(
             normalizedHtml,
             removeUnpricedParentMenuHeadings(
               normalizedHtml,
-              canonicalizeHtmlOutputItems(beverageScopedItems),
+              semanticMenuCardsPreferred ? beverageScopedItems : canonicalizeHtmlOutputItems(beverageScopedItems),
             ),
           )
         : reconcileVisibleSizePrices(normalizedHtml, beverageScopedItems);
@@ -807,12 +825,12 @@ export async function extractMenuSource(
         extracted.method === "html_heuristic" ? fullVisibleText : "",
       );
     return {
-      items: extracted.method === "html_heuristic"
+      items: reconcileExplicitScoopUnits(extracted.method === "html_heuristic"
         ? rejectAmbiguousMultiPriceDescriptionRows(
             reconcileSourcePricedHtmlDishes(restoredItems, fullVisibleText),
             extracted.visibleText,
           )
-        : restoredItems,
+        : restoredItems, normalizedHtml),
       method: extracted.method,
       extractorVersion: HTML_RUNTIME_EXTRACTOR_VERSION,
     };

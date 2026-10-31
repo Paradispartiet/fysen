@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-28",
-      "note": "First-party VINTER 26/27 menu has 47 individually priced food variants across starters, hot dishes, lunch, sashimi, nigiri, maki, sushi platters and desserts. The three 3-course Meny 1–3 bundles are not individual dishes and are excluded from this floor. Hours remain unverified."
+      "checkedAt": "2026-10-31",
+      "note": "Førsteparts VINTER 26/27-meny kontrollert 2026-10-31: 47 individuelt prisede matvarianter. Iskrem og sorbet koster 55 kr per kule; priseenheten bevares eksplisitt. De tre Meny 1–3-pakkene er ikke enkeltretter og er utelatt. Åpningstider er fortsatt ikke uavhengig verifisert."
     }
   },
   "actions": [],
@@ -40,7 +40,8 @@
       "Kveite med shiso, havsalt og lime | 2 stk",
       "Kveite aburi | 8 stk",
       "Dagens fangst 20 biter",
-      "Sorbet"
+      "Sorbet (per kule)",
+      "Iskrem (per kule)"
     ],
     "requiredDishVariants": [
       {
@@ -72,7 +73,11 @@
         "priceMinor": 54000
       },
       {
-        "name": "Sorbet",
+        "name": "Sorbet (per kule)",
+        "priceMinor": 5500
+      },
+      {
+        "name": "Iskrem (per kule)",
         "priceMinor": 5500
       }
     ],

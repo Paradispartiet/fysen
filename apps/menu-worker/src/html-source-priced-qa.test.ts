@@ -253,6 +253,6 @@ describe("HTML first-party price provenance", () => {
     ].join("\n");
     const input = [dish("Torsk", 249, 1), dish("Blandet iskrem / Mixed ice cream", 125, 3)];
     expect(reconcileSourcePricedHtmlDishes(input, source)).toEqual(input);
-    expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v6");
+    expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v7");
   });
 });

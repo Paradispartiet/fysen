@@ -6,7 +6,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION = "strong-title-price-v1";
+export const HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION = "strong-title-price-v2";
 
 const PRICE_LINE = /^(?:(fra|from)\s+)?(?:(?:NOK|kr\.?)\s*)?([1-9]\d{0,3})(?:([.,])(\d{1,3}))?\s*(?:,?[-–—]|,-|kr\.?|NOK)?(?:\s+per\s+(?:person|personer?|persons?))?(?:\s+minimum\s+\d+\s+(?:personer?|persons?))?$/iu;
 const SEPARATOR_LINE = /^(?:[-–—•·]\s*)+$/u;
@@ -26,7 +26,7 @@ function normalizeText(value: string): string {
 }
 
 function parsePrice(value: string): ParsedPrice | null {
-  const match = normalizeText(value).match(PRICE_LINE);
+  const match = normalizeText(value).replace(/(\d)\.\s*[-–—]$/u, "$1,-").match(PRICE_LINE);
   if (!match?.[2]) return null;
 
   const separator = match[3] ?? null;
@@ -68,6 +68,54 @@ export function recoverStrongTitlePriceHtmlItems(html: string): readonly MenuObs
     const block = $(element);
     const fullText = normalizeText(block.text());
     if (!fullText) return;
+
+    // A bold, directly priced first line is stronger title evidence than
+    // generic word-count/ingredient-list description heuristics. Preserve
+    // the BR boundary so allergens and translated titles cannot own a price.
+    const firstLineHtml = (block.html() ?? "").split(/<br\s*\/?\s*>/iu)
+      .find((fragment) => normalizeText(load(fragment).text()));
+    if (firstLineHtml) {
+      const line = load(firstLineHtml);
+      const lineText = normalizeText(line.text());
+      const inline = lineText.match(/^(.+?)\s+((?:(?:fra|from)\s+)?(?:(?:NOK|kr\.?)\s*)?[1-9]\d{0,3}(?:[.,]\d{1,3})?\s*(?:[.,]?\s*[-–—]|kr\.?|NOK)?)$/iu);
+      const rawTitle = inline?.[1] ?? "";
+      const priceText = inline?.[2] ?? "";
+      const boldText = normalizeText(line("strong").toArray().map((node) => line(node).text()).join(" "));
+      const price = /(?:\bkr\b|\bNOK\b|[.,]\s*[-–—])/iu.test(priceText) ? parsePrice(priceText) : null;
+      // An earlier amount followed by an alternative separator is another
+      // price, not part of the title. Do not fall back to a sibling's price.
+      if (price && (
+        /\b(?:kr\.?|NOK)\s*\d|\d\s*(?:kr\.?|NOK)\b|\d\s*[.,]\s*[-–—]/iu.test(rawTitle) ||
+        /\b\d+(?:[.,]\d+)?\s*(?:(?:kr\.?|NOK)\s*)?(?:[/,;|+&:–—-]|og|eller|and|or)\s*$/iu.test(rawTitle)
+      )) return;
+      const instruction = rawTitle.match(/^(.+?)\s+[-–—]\s+(.+\b(?:serveres|served)\b.+)$/iu);
+      const title = instruction?.[1] ?? rawTitle;
+      if (price && looksLikeTitle(title) && boldText.startsWith(rawTitle) &&
+          line("em, i, a").length === 0 &&
+          !/^(?:allergens?|allergener)\s*:/iu.test(title) &&
+          !/\b(?:kr\.?|NOK)\s*\d|\d\s*[.,]\s*[-–—]/iu.test(title)) {
+        const rawSectionName = normalizeText(block.prevAll("h1, h2, h3, h4, h5, h6").first().text());
+        const sectionName = rawSectionName && !ROOT_OR_UI_HEADING.test(rawSectionName) ? rawSectionName : null;
+        const description = [instruction?.[2], normalizeText(fullText.slice(lineText.length))].filter(Boolean).join(" ") || null;
+        recovered.push({
+          sourceKey: createMenuItemSourceKey(title, sectionName),
+          name: title,
+          normalizedName: normalizeDishName(title),
+          description,
+          sectionName,
+          priceMinor: price.priceMinor,
+          priceKind: price.priceKind,
+          priceMaxMinor: null,
+          currency: "NOK",
+          position,
+          extractionMethod: "html_heuristic",
+          confidence: 0.995,
+          sourceExcerpt: fullText.slice(0, 1000),
+        });
+        position += 1;
+        return;
+      }
+    }
 
     const strongTexts = block
       .find("strong")

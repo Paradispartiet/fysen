@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "engebret-cafe-oslo",
+    "name": "Engebret Café",
+    "websiteUrl": "https://www.engebret-cafe.no/",
+    "address": "Bankplassen 1, 0151 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9089512,
+    "longitude": 10.742127100000062
+  },
+  "menuSource": {
+    "url": "https://www.engebret-cafe.no/menymenu",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 18,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-31",
+      "note": "Førsteparts oktobermeny kontrollert 2026-10-31: alle 20 individuelt navngitte/prisede retter samsvarer med kilden. Minimum 18 gir normal variasjonsbuffer; 12 konkrete rett-/prispar kontrolleres. Uspesifisert vegetarforrett/hovedrett og separate november-/julemenyer er ikke tolket som navngitte oktoberretter. Koordinater fra stedets eget kontaktkart. Åpningstider er ikke særskilt verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Kamskjell og spekeskinke fra Ask med hvitløkspuré og urtesaus",
+      "Kalix løyrom med sitt klassiske tilbehør",
+      "Diana Camembert fra Bryne med bakt sopp, rosmarin og kirsebær",
+      "Sjøkrepssuppe",
+      "Lammerull med estragon, løk, buljong og konfitert steinsopp",
+      "Fjellørret fra Blåfjell med ertepuré, brokkolini, rømmesaus og kokte poteter",
+      "Kveite med purreløk, gulbetpuré, brekkbønner, blåskjellsaus og poteter",
+      "Breiflabb med østerssopp, kremet spinat, lettrøkt smørsaus og sprø poteter",
+      "Lammecarre med gresskarpuré, glaserte gulrøtter, lammesaus og pommes anna",
+      "Reinsdyrbiff med stekte kantareller, selleripuré, rosenkål, viltsaus med reinsdyrtunge og stekte poteter",
+      "Okse indrefilet med potetpuré, panert løkring, rødvinssaus og kremet skogsopp med rosmarin",
+      "Engebrets karamellpudding med krem og hasselnøttstrø"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Kamskjell og spekeskinke fra Ask med hvitløkspuré og urtesaus",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Kalix løyrom med sitt klassiske tilbehør",
+        "priceMinor": 35000
+      },
+      {
+        "name": "Diana Camembert fra Bryne med bakt sopp, rosmarin og kirsebær",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Sjøkrepssuppe",
+        "priceMinor": 31500
+      },
+      {
+        "name": "Lammerull med estragon, løk, buljong og konfitert steinsopp",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Fjellørret fra Blåfjell med ertepuré, brokkolini, rømmesaus og kokte poteter",
+        "priceMinor": 49500
+      },
+      {
+        "name": "Kveite med purreløk, gulbetpuré, brekkbønner, blåskjellsaus og poteter",
+        "priceMinor": 49500
+      },
+      {
+        "name": "Breiflabb med østerssopp, kremet spinat, lettrøkt smørsaus og sprø poteter",
+        "priceMinor": 51500
+      },
+      {
+        "name": "Lammecarre med gresskarpuré, glaserte gulrøtter, lammesaus og pommes anna",
+        "priceMinor": 52500
+      },
+      {
+        "name": "Reinsdyrbiff med stekte kantareller, selleripuré, rosenkål, viltsaus med reinsdyrtunge og stekte poteter",
+        "priceMinor": 54500
+      },
+      {
+        "name": "Okse indrefilet med potetpuré, panert løkring, rødvinssaus og kremet skogsopp med rosmarin",
+        "priceMinor": 54500
+      },
+      {
+        "name": "Engebrets karamellpudding med krem og hasselnøttstrø",
+        "priceMinor": 22500
+      }
+    ],
+    "forbiddenDishNames": [
+      "Langustine soup with fennel",
+      "Ost og desserter / Cheese and desserts",
+      "Vegetar / Vegan / Vegetarian"
+    ]
+  }
+}

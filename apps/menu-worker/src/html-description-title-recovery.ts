@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v28";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v29";
 
 const PRICE_LINE =
   /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
@@ -644,7 +644,11 @@ export function rejectAmbiguousMultiPriceDescriptionRows(
 ): readonly MenuObservedItem[] {
   const lines = visibleText.split("\n").map(normalizeVisibleLine);
   const priceTokens = /\b(?:kr\.?|nok)\s*([1-9]\d{1,3})\b/giu;
+  const alternativePrices = /(?:(?:kr\.?|NOK)\s*)?\b([1-9]\d{1,3}(?:[.,]\d{1,2})?)(?:\s*(?:kr\.?|NOK)|[.,]\s*[-–—])?\s*(?:\/|,\s+|\b(?:og|eller|and|or)\b)\s*(?:(?:kr\.?|NOK)\s*)?([1-9]\d{1,3}(?:[.,]\d{1,2})?)(?:\s*(?:kr\.?|NOK)|[.,]\s*[-–—])?/giu;
   return items.filter((item) => {
+    // A dangling amount and alternative separator is price syntax, not a
+    // complete dish title. Other recovery paths must not reintroduce it.
+    if (/\b[1-9]\d{1,3}(?:[.,]\d{1,2})?\s*(?:(?:kr\.?|NOK)\s*)?(?:[/,;|+&:–—-]|og|eller|and|or)\s*$/iu.test(item.name)) return false;
     if (item.priceMinor === null || item.priceKind === "multiple") return true;
     const directPrice = item.priceMinor;
     const name = normalizeDishName(item.name);
@@ -661,6 +665,12 @@ export function rejectAmbiguousMultiPriceDescriptionRows(
           titleRemainder.split(" ").length >= 5 &&
           normalizedLine.includes(titleRemainder));
       if (!matchesObservedDescription) return false;
+      const ambiguousAlternative = [...line.matchAll(alternativePrices)].some((match) => {
+        if (!/\b(?:kr|NOK)\b|[.,]\s*[-–—]/iu.test(match[0])) return false;
+        const amounts = [match[1], match[2]].map((value) => Math.round(Number(value!.replace(",", ".")) * 100));
+        return amounts[0] !== amounts[1] && amounts.includes(directPrice);
+      });
+      if (ambiguousAlternative) return true;
       const distinct = new Set([...line.matchAll(priceTokens)].map((match) => match[1]));
       return distinct.size > 1 && distinct.has(String(directPrice / 100));
     });
