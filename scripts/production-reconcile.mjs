@@ -1,6 +1,5 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
-import { classifyDiscoveryCandidate } from "../packages/database/dist/discovery-catalog.js";
 import { createDatabasePool } from "../packages/database/dist/index.js";
 
 const catalogDirectory = path.resolve("apps/menu-worker/catalog");
@@ -249,38 +248,8 @@ async function reconcileProduction(pool, manifests) {
   };
 }
 
-async function auditAllergenDescriptions(pool) {
-  const client = await pool.connect();
-  try {
-    await client.query("BEGIN READ ONLY");
-    await client.query("SET LOCAL statement_timeout = '15000ms'");
-    const result = await client.query(`
-      WITH latest AS (
-        SELECT DISTINCT ON (snapshot.menu_source_id) snapshot.id, snapshot.menu_source_id
-        FROM fysen.menu_snapshots snapshot
-        JOIN fysen.menu_sources source ON source.id=snapshot.menu_source_id
-        JOIN fysen.restaurants restaurant ON restaurant.id=source.restaurant_id
-        WHERE source.enabled AND restaurant.active AND restaurant.city='Oslo'
-        ORDER BY snapshot.menu_source_id,snapshot.fetched_at DESC,snapshot.created_at DESC
-      )
-      SELECT restaurant.slug, item.original_name, item.normalized_name,
-        item.description,item.section_name,item.price_minor
-      FROM latest
-      JOIN fysen.menu_sources source ON source.id=latest.menu_source_id
-      JOIN fysen.restaurants restaurant ON restaurant.id=source.restaurant_id
-      JOIN fysen.menu_items item ON item.snapshot_id=latest.id
-      WHERE item.price_minor > 0 AND item.description IS NOT NULL
-    `);
-    const normalized = value => (value || "").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("nb-NO").replace(/æ/g,"ae").replace(/ø/g,"o").replace(/å/g,"a").replace(/[^a-z0-9]+/g," ").trim();
-    const affected = result.rows.filter(row=>normalized(row.description).startsWith("allergen"))
-      .map(row=>({slug:row.slug,name:row.original_name,priceMinor:row.price_minor,category:classifyDiscoveryCandidate({name:row.original_name,normalizedName:row.normalized_name,description:row.description,sectionName:row.section_name,priceMinor:row.price_minor})}));
-    console.error(JSON.stringify({type:"allergen_description_impact",count:affected.length,rows:affected}));
-  } finally { await client.query("ROLLBACK"); client.release(); }
-}
-
 const pool = createDatabasePool({ maxConnections: 2 });
 try {
-  await auditAllergenDescriptions(pool);
   const manifests = await readCatalog();
   const reconcile = await reconcileProduction(pool, manifests);
   process.stdout.write(`${JSON.stringify(reconcile, null, 2)}\n`);

@@ -76,8 +76,9 @@ export function classifyDiscoveryCandidate(candidate: DiscoveryCandidate): Disco
   ])) {
     return "beverage";
   }
-  if (matches(section, [/\b(saus|sauce|tilbehor|sides?|extras?)\b/]) || matches(name, [
-    /^(aioli|majones|mayo|chimichurri|chiliolje|chili oil|tzatziki|dressing|saus|sauce|ris|rice|bulgur|pommes frites|fries|coleslaw|agurk|cucumber)$/,
+  const sideName = name.replace(/^(?:no\s+)?\d+\s+/, "");
+  if (matches(section, [/\b(saus|sauce|tilbehor|sides?|extras?)\b/]) || matches(sideName, [
+    /^(aioli|majones|mayo|chimichurri|chiliolje|chili oil|tzatziki|dressing|saus|sauce|ris|rice|bulgur|pommes frites|fries|coleslaw|agurk|cucumber|parmesankrem|kryddersmor|smor|hvitloksmor|rodvinsaus|peppersaus|bearnaisesaus|bbq saus|sotpotet fries|truffle parmesan fries)$/,
     /^(?:(?:mild|stark|blandad)\s+)?(?:bearnaisesas|kebabsas|currysas|rhode islandsas|vitlokssas|creme fraiche|soya sauce)\b(?:\s+\d+\s*(?:cl|ml))?$/,
     /^(?:kimbo dumpling sauce|vegetable fruit sauce)\b.*\b\d+\s*ml\b/,
   ])) {
