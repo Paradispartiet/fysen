@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { extractMenuSource } from "./menu-source-runtime.js";
 import { recoverSemanticMenuCardHtmlItems as recover } from "./html-semantic-menu-card-recovery.js";
 function card(title: string, price: string, description = "", options = "", bottom = price): string {
   return `<div class="menu-item"><span class="menu-item-price-top">${price}</span><div class="menu-item-title">${title}</div><div class="menu-item-description">${description}</div><div class="menu-item-price-bottom">${bottom}</div><div class="menu-item-options"><div class="menu-item-option">${options}</div></div></div>`;
@@ -71,7 +72,6 @@ it("rejects duplicate quantity bindings and unsupported separately printed price
 });
 
 it("retains the complete semantic menu through the production extraction pipeline", async () => {
-  const { extractMenuSource } = await import("./menu-source-runtime.js");
   const result = await extractMenuSource("html", { body: capturedRegularMenu } as never);
   expect(result.items).toHaveLength(23);
   expect(result.items.map((item) => [item.name, item.priceMinor])).toEqual(expect.arrayContaining([
@@ -86,7 +86,6 @@ it("retains the complete semantic menu through the production extraction pipelin
 });
 
 it("does not replace unrelated directly priced menu components with four semantic cards", async () => {
- const {extractMenuSource}=await import("./menu-source-runtime.js");
  const lunch=menu(panel("LUNCH",["One","Two","Three","Four"].map((n,i)=>card("Lunch "+n,`${200+i},-`)).join("")));
  const dinner=["one","two","three","four","five","six"].map((n,i)=>`<p><strong>Dinner ${n} kr ${300+i}.-</strong></p>`).join("");
  const result=await extractMenuSource("html",{body:lunch+dinner} as never);
