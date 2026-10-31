@@ -1,5 +1,12 @@
 # Oslo-restauranter — samlet arbeidsliste (13. oktober 2026)
 
+## Menykontroll og katalogavstemming 31. oktober 2026
+
+Engebret Café og Lofoten Fiskerestaurant tas inn fra de to validerte kandidatfilene uten byteendringer. Katalogen øker fra **981 til 983**. De allerede kanoniske Restaurant Schrøder, Dovrehallen og The Salmon kobles til sine eksisterende masterrader; ingen nye dublettrader opprettes. To-Tos tidligere menyidentitet er markert **ARKIVERT**, i tråd med den allerede gjennomførte katalogpensjoneringen.
+
+Etter opptaket inneholder arbeidslisten fortsatt **1198 rader**, hvor **983 JA-rader** samsvarer nøyaktig med de aktive katalogslugene. De øvrige 215 radene er ikke aktiv kanonisk dekning. Dette er katalog-/listeavstemming, ikke en komplett Oslo-census eller produksjonsattest. Menyomfang, pris-/porsjonskontroller og avgrensninger ligger i [kontrollen av de fem etablerte restaurantene](oslo-established-menu-coverage-2026-10-31.md). Materialisering og offentlig søk må bekreftes separat etter merge.
+
+
 ## Produksjonsbolk 17. oktober 2026 – PR #968
 
 **10 nye Oslo-restauranter** med dokumenterte Wolt-matretter og konkrete priser. 26 live-kilder innhentet samlet: 4 adressefeil, 11 kilder oversteg 2 MB-grensen for kildehenting, 1 kilde ga bare én unik prissatt rett, og 10 står klare for publiseringsvalidering (to tidligere godkjente kilder endret størrelse før sluttkontroll) og redaksjonell kontroll av rett-/prisassertasjoner. Det er ikke endret parser eller innhentingsgrense for å presse flere kandidater gjennom. Katalogen øker fra **827 til 837** ved merge. Wolt-leveringspriser er ikke nødvendigvis spisesalpriser, og produksjonsdatasynk er ikke særskilt attestert.
@@ -41,9 +48,9 @@ Dette er **én sammenstilt, alfabetisk liste**, ikke en parallell produksjonskat
 |---|---|
 | navn / adresse | Stedets navn og kjent adresse; tomt felt betyr uavklart |
 | bydel | Presist plassert bare når manifestets koordinater traff bydelsgrensen; ellers `IKKE_KLASSIFISERT`, `UAVKLART` eller `GRENSE_UAVKLART` |
-| tilstede_i_fysen | `JA` = bekreftet canonical; `IKKE_IDENTIFISERT` = tidligere research til vurdering; `KANDIDAT_NETT` = ferskt eksternt navn som må matches; `MULIG_ALIAS` = sannsynlig navnevariant |
-| redaksjonell_status | Egen vurderingsakse: `PUBLISERT_I_FYSEN`, `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART`, `KILDEBEKREFTET_RELEVANT`, `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART`, `MULIG_ALIAS`, `MATHALL_FLERE_MATAKTORER`, `PARAPLYNAVN_FLERE_FILIALER`, `SERVERINGSARENA_FLERE_KONSEPTER`, `KOMBINERT_OPPFORING`, `VINBAR_UTENFOR_RESTAURANTUTVALG`, `BAR_UTENFOR_RESTAURANTUTVALG`, `KAFE_BAKERI_UTENFOR_RESTAURANTUTVALG`, `UAVKLART`. Dette er ikke en teknisk publiseringsbeslutning eller driftsgaranti |
-| katalog_slug | Eksakt canonical identitet når `JA`; mulig match ved `MULIG_ALIAS` |
+| tilstede_i_fysen | `JA` = bekreftet canonical; `IKKE_IDENTIFISERT` = tidligere research til vurdering; `KANDIDAT_NETT` = ferskt eksternt navn som må matches; `MULIG_ALIAS` = sannsynlig navnevariant; `ARKIVERT` = tidligere kanonisk menyidentitet tatt ut av aktiv dekning |
+| redaksjonell_status | Egen vurderingsakse: `PUBLISERT_I_FYSEN`, `ARKIVERT`, `MICHELIN_GUIDE_RELEVANT_DRIFT_UAVKLART`, `KILDEBEKREFTET_RELEVANT`, `VISITOSLO_GUIDE_RELEVANT_DRIFT_UAVKLART`, `MULIG_ALIAS`, `MATHALL_FLERE_MATAKTORER`, `PARAPLYNAVN_FLERE_FILIALER`, `SERVERINGSARENA_FLERE_KONSEPTER`, `KOMBINERT_OPPFORING`, `VINBAR_UTENFOR_RESTAURANTUTVALG`, `BAR_UTENFOR_RESTAURANTUTVALG`, `KAFE_BAKERI_UTENFOR_RESTAURANTUTVALG`, `UAVKLART`. Dette er ikke en teknisk publiseringsbeslutning eller driftsgaranti |
+| katalog_slug | Eksakt canonical identitet når `JA`; mulig match ved `MULIG_ALIAS`; tidligere identitet ved `ARKIVERT` |
 | kilde / notat | Opphav og kontrollbehov; historiske research-data er ikke ferskt driftsbevis |
 
 **Bydeler:** Alle 15 Oslo-bydeler og Sentrum brukes som geografiske kontrollområder. Plassering er bare sikker der koordinater er tilgjengelige og passer geometri fra [offentlig tilgjengelig kartdatasett over Oslo-bydeler](https://github.com/AnalyseABO/Kart-fylker-og-kommuner-json/blob/main/Bydeler_Oslo_u_marka-S.json). **Ved det første grunnlagsuttrekket hadde bare 70 av 749 canonical rader** hentede koordinater; av disse var 3 uten entydig polygonmatch. Resten står bevisst uten klassifisert bydel, ikke i vilkårlige postnummerbaserte bydeler.

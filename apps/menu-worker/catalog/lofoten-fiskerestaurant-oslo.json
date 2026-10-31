@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "lofoten-fiskerestaurant-oslo",
+    "name": "Lofoten Fiskerestaurant",
+    "websiteUrl": "https://www.lofoten-fiskerestaurant.no/",
+    "address": "Stranden 75, 0250 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90871809999999,
+    "longitude": 10.724512799999957
+  },
+  "menuSource": {
+    "url": "https://www.lofoten-fiskerestaurant.no/menu-eng",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 20,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-31",
+      "note": "Førsteparts engelske ordinære lunsj-/middagsmeny kontrollert 2026-10-31: 23 eksplisitt prisede tilbud, med suppestørrelser, østers 2/4/6 stk og stort skalldyrfat per person/minimum 2/forhåndsbestilling. Minimum 20 gir normal variasjonsbuffer; 12 konkrete rett-/prispar beholdes. Kilo-priset fersk hummer, selskaps-/sesongmenyer og vinpakker er utelatt. Norsk kilde viser avvikende ostetallerkenpris; denne posten følger den oppgitte engelske kilden. Koordinater fra operatørens eget kart. Åpningstider er ikke særskilt verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "LOFOTEN'S FISH SOUP (Small size (starter))",
+      "OPEN SHRIMP SANDWICH",
+      "FISH OF THE DAY",
+      "LOFOTEN'S FISH SOUP (Big size (main course))",
+      "OYSTERS (2 pcs)",
+      "OYSTERS (4 pcs)",
+      "OYSTERS (6 pcs)",
+      "LOBSTER FROM MAINE",
+      "HALIBUT",
+      "LARGE SHELLFISH PLATTER (per person, minimum 2 persons; preorder at least 1 day)",
+      "CRÈME BRÛLÉE",
+      "CHEESE PLATTER"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "LOFOTEN'S FISH SOUP (Small size (starter))",
+        "priceMinor": 19500
+      },
+      {
+        "name": "OPEN SHRIMP SANDWICH",
+        "priceMinor": 25000
+      },
+      {
+        "name": "FISH OF THE DAY",
+        "priceMinor": 35000
+      },
+      {
+        "name": "LOFOTEN'S FISH SOUP (Big size (main course))",
+        "priceMinor": 39500
+      },
+      {
+        "name": "OYSTERS (2 pcs)",
+        "priceMinor": 13000
+      },
+      {
+        "name": "OYSTERS (4 pcs)",
+        "priceMinor": 24500
+      },
+      {
+        "name": "OYSTERS (6 pcs)",
+        "priceMinor": 35000
+      },
+      {
+        "name": "LOBSTER FROM MAINE",
+        "priceMinor": 59500
+      },
+      {
+        "name": "HALIBUT",
+        "priceMinor": 49500
+      },
+      {
+        "name": "LARGE SHELLFISH PLATTER (per person, minimum 2 persons; preorder at least 1 day)",
+        "priceMinor": 130000
+      },
+      {
+        "name": "CRÈME BRÛLÉE",
+        "priceMinor": 24500
+      },
+      {
+        "name": "CHEESE PLATTER",
+        "priceMinor": 23500
+      }
+    ],
+    "forbiddenDishNames": [
+      "FRESH LOBSTER",
+      "OYSTERS",
+      "SMALL SIZE (STARTER)",
+      "BIG SIZE (MAIN COURSE)",
+      "Spicy pumpkin crème brûlée",
+      "STARTERS",
+      "DESSERTS",
+      "TODAY'S MENU",
+      "PINNEKJØTT"
+    ]
+  }
+}
