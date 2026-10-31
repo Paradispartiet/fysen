@@ -10,6 +10,37 @@ const candidate = (name: string, sectionName: string | null = "Middag", priceMin
 });
 
 describe("consumer discovery catalog", () => {
+  it.each([
+    "Reinsdyrbiff med stekte kantareller, selleripuré, rosenkål, viltsaus med reinsdyrtunge og stekte poteter",
+    "Okse indrefilet med potetpuré, panert løkring, rødvinssaus og kremet skogsopp med rosmarin",
+  ])("keeps a priced dish with allergen metadata: %s", (name) => {
+    expect(classifyDiscoveryCandidate({
+      ...candidate(name, "Forretter / Starters", 54500),
+      description: "allergener: melk, selleri. English dish description follows.",
+    })).toBe("dish");
+  });
+
+  it("still excludes allergen records and unpriced informational descriptions", () => {
+    expect(classifyDiscoveryCandidate({ ...candidate("Allergener: melk", null, 54500), description: "Allergener: melk" })).toBe("allergen_or_information");
+    for (const price of [null, 0]) {
+      expect(classifyDiscoveryCandidate({ ...candidate("Melk, egg og selleri", null, price), description: "Allergener: melk, egg, selleri" })).toBe("allergen_or_information");
+    }
+  });
+
+  it("keeps beverage and side exclusions when their description lists allergens", () => {
+    expect(classifyDiscoveryCandidate({ ...candidate("Pepsi Max", "Drikke", 4500), description: "Allergener: ingen" })).toBe("beverage");
+    expect(classifyDiscoveryCandidate({ ...candidate("Aioli", "Sauser", 4500), description: "Allergener: egg" })).toBe("sauce_or_side");
+  });
+
+  it.each([
+    "No. 68 Søtpotet fries", "No. 69 Truffle & Parmesan Fries",
+    "No. 54 Parmesankrem", "No. 55 Aioli", "No. 56 Kryddersmør",
+    "No. 57 Smør", "No. 58 Hvitløksmør", "No. 59 Rødvinsaus",
+    "No. 61 Peppersaus", "No. 62 Bèarnaisesaus", "No. 63 BBQ-saus",
+  ])("keeps numbered condiments and sides out of browse: %s", (name) => {
+    expect(classifyDiscoveryCandidate({ ...candidate(name, null, 4500), description: "Allergener: melk, egg" })).toBe("sauce_or_side");
+  });
+
   it.each<[string, string | null, string]>([
     ["Ramen", "Middag", "dish"],
     ["Aperol Spritz", "Cocktails", "beverage"],
