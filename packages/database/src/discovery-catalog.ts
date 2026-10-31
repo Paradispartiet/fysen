@@ -50,7 +50,10 @@ export function classifyDiscoveryCandidate(candidate: DiscoveryCandidate): Disco
   ])) {
     return "invalid_fragment";
   }
-  if (matches(name, [/^allergen/, /^inneholder\b/, /^kan inneholde\b/, /^informasjon\b/, /^les mer\b/]) || matches(description, [/^allergen/])) {
+  // A priced dish may legitimately begin its description with allergen metadata.
+  // Informational titles remain excluded regardless of any captured price.
+  if (matches(name, [/^allergen/, /^inneholder\b/, /^kan inneholde\b/, /^informasjon\b/, /^les mer\b/])
+    || ((candidate.priceMinor === null || candidate.priceMinor <= 0) && matches(description, [/^allergen/]))) {
     return "allergen_or_information";
   }
   if (matches(name, [/^(velg|velgbar|choose|valg|ekstra|extra|tilvalg|add on)\b/, /^per stk$/, /^chefs? spesialitet$/])) {

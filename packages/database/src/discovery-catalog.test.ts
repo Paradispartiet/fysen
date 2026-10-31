@@ -10,6 +10,28 @@ const candidate = (name: string, sectionName: string | null = "Middag", priceMin
 });
 
 describe("consumer discovery catalog", () => {
+  it.each([
+    "Reinsdyrbiff med stekte kantareller, selleripuré, rosenkål, viltsaus med reinsdyrtunge og stekte poteter",
+    "Okse indrefilet med potetpuré, panert løkring, rødvinssaus og kremet skogsopp med rosmarin",
+  ])("keeps a priced dish with allergen metadata: %s", (name) => {
+    expect(classifyDiscoveryCandidate({
+      ...candidate(name, "Forretter / Starters", 54500),
+      description: "allergener: melk, selleri. English dish description follows.",
+    })).toBe("dish");
+  });
+
+  it("still excludes allergen records and unpriced informational descriptions", () => {
+    expect(classifyDiscoveryCandidate({ ...candidate("Allergener: melk", null, 54500), description: "Allergener: melk" })).toBe("allergen_or_information");
+    for (const price of [null, 0]) {
+      expect(classifyDiscoveryCandidate({ ...candidate("Melk, egg og selleri", null, price), description: "Allergener: melk, egg, selleri" })).toBe("allergen_or_information");
+    }
+  });
+
+  it("keeps beverage and side exclusions when their description lists allergens", () => {
+    expect(classifyDiscoveryCandidate({ ...candidate("Pepsi Max", "Drikke", 4500), description: "Allergener: ingen" })).toBe("beverage");
+    expect(classifyDiscoveryCandidate({ ...candidate("Aioli", "Sauser", 4500), description: "Allergener: egg" })).toBe("sauce_or_side");
+  });
+
   it.each<[string, string | null, string]>([
     ["Ramen", "Middag", "dish"],
     ["Aperol Spritz", "Cocktails", "beverage"],
