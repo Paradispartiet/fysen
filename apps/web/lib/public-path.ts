@@ -21,7 +21,18 @@ export function dishBrowseCuisineHref(city = "Oslo", cuisineName?: string): stri
 }
 
 export function dishSearchHref(query: string, city = "Oslo"): string {
-  const params = new URLSearchParams({ q: query, city });
+  // Browse labels may be longer than the search API's accepted query. A
+  // source-title prefix still finds the full dish without changing its label.
+  let searchQuery = query;
+  if (query.length > 80) {
+    searchQuery = query.slice(0, 80).replace(/[\uD800-\uDBFF]$/u, "");
+    if (!/\s/u.test(query[searchQuery.length] ?? "")) {
+      const boundary = searchQuery.search(/\s+\S*$/u);
+      if (boundary > 1) searchQuery = searchQuery.slice(0, boundary);
+    }
+    searchQuery = searchQuery.trimEnd();
+  }
+  const params = new URLSearchParams({ q: searchQuery, city });
   return `${withPublicBasePath("/search")}?${params.toString()}`;
 }
 
