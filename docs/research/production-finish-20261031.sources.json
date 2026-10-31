@@ -1,61 +1,124 @@
 {
-  "slug": "tasty-thai-gronland-oslo",
-  "url": "https://wolt.com/en/nor/oslo/restaurant/tasty-thai-gronland",
-  "sha256": "8942923590c77f60d428bf4f820d65e4b57986eac80db76dfa231550a2dcadaa",
-  "capturedAt": "2026-10-31T16:03:18.556726+00:00",
-  "extractedOfferCount": 34,
-  "minimumExpectedItems": 30,
-  "absentRetiredControls": [
-    "Satay Gai"
-  ],
-  "independentRawControls": [
+  "sources": [
     {
-      "id": "06ca0ffcacbda809f983feda",
-      "name": "Kao Phad",
-      "priceMinor": 19900,
-      "path": "/queries/6/state/data/items/0"
+      "slug": "tasty-thai-gronland-oslo",
+      "url": "https://wolt.com/en/nor/oslo/restaurant/tasty-thai-gronland",
+      "sha256": "8942923590c77f60d428bf4f820d65e4b57986eac80db76dfa231550a2dcadaa",
+      "capturedAt": "2026-10-31T16:03:18.556726+00:00",
+      "extractedOfferCount": 34,
+      "minimumExpectedItems": 30,
+      "absentRetiredControls": [
+        "Satay Gai"
+      ],
+      "independentRawControls": [
+        {
+          "id": "06ca0ffcacbda809f983feda",
+          "name": "Kao Phad",
+          "priceMinor": 19900,
+          "path": "/queries/6/state/data/items/0"
+        },
+        {
+          "id": "3276b0aff3f671a73b762faa",
+          "name": "Tasty Thai",
+          "priceMinor": 24900,
+          "path": "/queries/6/state/data/items/6"
+        },
+        {
+          "id": "561224cf27f18acf1305e8ef",
+          "name": "Phad Prik",
+          "priceMinor": 24900,
+          "path": "/queries/6/state/data/items/14"
+        },
+        {
+          "id": "8558c0d5a3580f759181a9ae",
+          "name": "Phad Medd Mamuang",
+          "priceMinor": 24900,
+          "path": "/queries/6/state/data/items/24"
+        },
+        {
+          "id": "97073418d0c9ecffa2cdfa60",
+          "name": "Tom Yum Ramen",
+          "priceMinor": 29500,
+          "path": "/queries/6/state/data/items/30"
+        },
+        {
+          "id": "16c5592cf60052e098eba095",
+          "name": "Mini Vårruller",
+          "priceMinor": 11500,
+          "path": "/queries/6/state/data/items/2"
+        },
+        {
+          "id": "cca3f92ee4aa4c5d05f4160d",
+          "name": "Lab Gai",
+          "priceMinor": 28500,
+          "path": "/queries/6/state/data/items/41"
+        },
+        {
+          "id": "eb31d3546f7d6953f8aca36f",
+          "name": "Phad Phed Naw Mai",
+          "priceMinor": 24900,
+          "path": "/queries/6/state/data/items/48"
+        }
+      ]
     },
     {
-      "id": "3276b0aff3f671a73b762faa",
-      "name": "Tasty Thai",
-      "priceMinor": 24900,
-      "path": "/queries/6/state/data/items/6"
-    },
-    {
-      "id": "561224cf27f18acf1305e8ef",
-      "name": "Phad Prik",
-      "priceMinor": 24900,
-      "path": "/queries/6/state/data/items/14"
-    },
-    {
-      "id": "8558c0d5a3580f759181a9ae",
-      "name": "Phad Medd Mamuang",
-      "priceMinor": 24900,
-      "path": "/queries/6/state/data/items/24"
-    },
-    {
-      "id": "97073418d0c9ecffa2cdfa60",
-      "name": "Tom Yum Ramen",
-      "priceMinor": 29500,
-      "path": "/queries/6/state/data/items/30"
-    },
-    {
-      "id": "16c5592cf60052e098eba095",
-      "name": "Mini Vårruller",
-      "priceMinor": 11500,
-      "path": "/queries/6/state/data/items/2"
-    },
-    {
-      "id": "cca3f92ee4aa4c5d05f4160d",
-      "name": "Lab Gai",
-      "priceMinor": 28500,
-      "path": "/queries/6/state/data/items/41"
-    },
-    {
-      "id": "eb31d3546f7d6953f8aca36f",
-      "name": "Phad Phed Naw Mai",
-      "priceMinor": 24900,
-      "path": "/queries/6/state/data/items/48"
+      "slug": "peppes-pizza-roa-oslo",
+      "url": "https://wolt.com/nb/nor/oslo/restaurant/peppes-pizza-roa",
+      "sha256": "4f602d3aed8d7ec4e66300f07ca1a7ad630f1d71262d2e0957626c1926bb9fcc",
+      "capturedAt": "2026-10-31T16:08:19.825010+00:00",
+      "extractedOfferCount": 46,
+      "minimumExpectedItems": 41,
+      "absentRetiredControls": [
+        "Italian Hot'n Sweet Pepperoni"
+      ],
+      "forbiddenDishNames": [
+        "Solo Deal",
+        "Duo Deal"
+      ],
+      "independentRawControls": [
+        {
+          "id": "33efff98441ece2c8370361b",
+          "name": "92. Ham & Pepperoni",
+          "priceMinor": 20800,
+          "path": "/queries/6/state/data/items/8"
+        },
+        {
+          "id": "1c371fa04d3305d0cbe7faa5",
+          "name": "11. Pepper Steak",
+          "priceMinor": 20800,
+          "path": "/queries/6/state/data/items/2"
+        },
+        {
+          "id": "7de0d55c6f43cb9b8659b92a",
+          "name": "90. Ham",
+          "priceMinor": 17800,
+          "path": "/queries/6/state/data/items/32"
+        },
+        {
+          "id": "8cba6406ccdc63bd0adeda29",
+          "name": "Peppes Minipizza",
+          "priceMinor": 8500,
+          "path": "/queries/6/state/data/items/35"
+        },
+        {
+          "id": "ab2c54437d379a9d4a83597e",
+          "name": "47. Green Garden",
+          "priceMinor": 23800,
+          "path": "/queries/6/state/data/items/46"
+        },
+        {
+          "id": "d4cebe222ad9f15535241679",
+          "name": "07.Make Your Own",
+          "priceMinor": 27800,
+          "path": "/queries/6/state/data/items/56"
+        },
+        {
+          "id": "91ef093029e73d1196305b0e",
+          "name": "91. Pepperoni",
+          "priceMinor": 17800,
+          "path": "/queries/6/state/data/items/38"
+        }
+      ]
     }
   ]
 }

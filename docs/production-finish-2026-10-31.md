@@ -1,10 +1,14 @@
 # Production finish — 31 October 2026
 
-The catalog has 983 materialized restaurants after PR #1074, but the exact source-health proof reports 982 healthy sources and one Tasty Thai Grønland extraction error. The public browse page also exceeds its existing 5-second API request budget. Materialization success alone is not production approval.
+The catalog has 983 materialized restaurants after PR #1074, but the exact source-health proof reports 982 healthy sources and one Tasty Thai Grønland extraction error. A later scheduled menu check introduced a second source-health failure at Peppes Pizza Røa. The public browse page also exceeds its existing 5-second API request budget. Materialization success alone is not production approval.
 
 ## Tasty Thai current menu
 
 The current Wolt delivery menu contains 34 extracted priced offers. Its minimum 36 rejects ordinary selection changes. Satay Gai is absent from the raw embedded menu; its assertion slot now checks independently listed Mini Vårruller 115 NOK. All seven other controls remain unchanged, with eight exact name/price assertions in total. The minimum becomes 30, the established 90%-of-observed buffer rounded down. No parser, source URL or forbidden-name policy changes. Raw source SHA256, capture timestamp, item IDs, paths and all eight pairs are recorded in [source evidence](research/production-finish-20261031.sources.json). Kitchen hours remain unverified; prices are Wolt delivery prices.
+
+## Peppes Pizza Røa — later scheduled failure
+
+The latest source contains 46 priced catalog offers; the August minimum 57 and retired Italian Hot'n Sweet Pepperoni control are stale. The replacement slot checks independently listed 11. Pepper Steak at 208 NOK, retaining the other six exact controls and both forbidden deal names. The minimum becomes 41, the same 90%-of-observed buffer rounded down. All seven raw-source control pairs and retired-name absence were verified. Source evidence is included with Tasty Thai.
 
 ## Browse transport latency
 
