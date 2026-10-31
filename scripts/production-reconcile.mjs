@@ -1,6 +1,6 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
-import { createDatabasePool } from "../packages/database/dist/index.js";
+import { browseDishes, createDatabasePool } from "../packages/database/dist/index.js";
 
 const catalogDirectory = path.resolve("apps/menu-worker/catalog");
 const acceptedWatchOutcomes = new Set(["changed", "unchanged", "not_modified"]);
@@ -248,8 +248,47 @@ async function reconcileProduction(pool, manifests) {
   };
 }
 
+
+async function diagnoseBrowseReadOnly(pool) {
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN READ ONLY");
+    await client.query("SET LOCAL statement_timeout = '15000ms'");
+    const statements = [];
+    const measured = {
+      query: async (sql, params) => {
+        const start = performance.now();
+        const result = await client.query(sql, params);
+        const durationMs = Math.round(performance.now() - start);
+        const index = statements.length + 1;
+        statements.push({sql,params,index});
+        console.error(JSON.stringify({type:"browse_query_timing", index, durationMs, rowCount:result.rows.length}));
+        return result;
+      }
+    };
+    const start = performance.now();
+    const browse = await browseDishes(measured, {city:"Oslo"});
+    console.error(JSON.stringify({type:"browse_total_timing",durationMs:Math.round(performance.now()-start),dishCount:browse.dishes.length}));
+    for (const {sql,params,index} of statements) {
+      const plan = await client.query("EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) " + sql, params);
+      const report = plan.rows[0]["QUERY PLAN"][0];
+      const nodes = [];
+      function visit(node) {
+        nodes.push({type:node["Node Type"],relation:node["Relation Name"],actualTotalMs:node["Actual Total Time"],rows:node["Actual Rows"],loops:node["Actual Loops"],sharedHit:node["Shared Hit Blocks"],sharedRead:node["Shared Read Blocks"]});
+        for (const child of node.Plans || []) visit(child);
+      }
+      visit(report.Plan);
+      console.error(JSON.stringify({type:"browse_query_plan",index,planningMs:report["Planning Time"],executionMs:report["Execution Time"],nodes}));
+    }
+  } finally {
+    await client.query("ROLLBACK");
+    client.release();
+  }
+}
+
 const pool = createDatabasePool({ maxConnections: 2 });
 try {
+  await diagnoseBrowseReadOnly(pool);
   const manifests = await readCatalog();
   const reconcile = await reconcileProduction(pool, manifests);
   process.stdout.write(`${JSON.stringify(reconcile, null, 2)}\n`);
