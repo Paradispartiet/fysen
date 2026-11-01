@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 14,
+    "minimumExpectedItems": 12,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-19",
-      "note": "Wolt-leveringsmenyen ble kontrollert 2026-10-19: nå 3 salater, 3 burritoer og 8 smoothies (14 unike prisede produkter uten drikke-seksjonen); de tidligere toast-rettene er ikke lenger oppført. To konkrete rett-/prisassertasjoner er erstattet med publiserte Kylling Burrito og Vegansk salat. Minimumskravet er rebassert til de 14 faktisk publiserte produktene; livevalidering på PR-head og kontroll av produksjonsdata gjenstår. Prisene gjelder levering; åpningstider er ikke verifisert."
+      "note": "Wolt-leveringsmenyen ble kontrollert 2026-10-19: nå 3 salater, 3 burritoer og 8 smoothies (14 unike prisede produkter uten drikke-seksjonen); de tidligere toast-rettene er ikke lenger oppført. To konkrete rett-/prisassertasjoner er erstattet med publiserte Kylling Burrito og Vegansk salat. Minimumskravet er rebassert til de 14 faktisk publiserte produktene; livevalidering på PR-head og kontroll av produksjonsdata gjenstår. Prisene gjelder levering; åpningstider er ikke verifisert. 2026-11-01: Full live catalog proof run 41318220389 observed 13 priced extracted offers (source fingerprint SHA-256 23ca34d5dd9ad718bf8a7b608f6e441b383860bd425b21027739e8b809b7cb2b). The prior required offer Tuna Melt Toast was absent; replaced with directly observed Rosa ananas at NOK 95.00. The expected-item floor is 12 (previously 14), a guardrail rather than a cap on extraction. No actual menu products were removed, and delivery prices are not dine-in prices. See docs/catalog-drift-seven-sources-2026-11-01.md."
     }
   },
   "actions": [],
@@ -39,7 +39,7 @@
       "Vegansk salat 🌱",
       "Kyllingsalat",
       "Vegetar Burrito 🌱",
-      "Tuna Melt Toast",
+      "Rosa ananas",
       "Skippern"
     ],
     "requiredDishVariants": [
@@ -68,8 +68,8 @@
         "priceMinor": 16500
       },
       {
-        "name": "Tuna Melt Toast",
-        "priceMinor": 14500
+        "name": "Rosa ananas",
+        "priceMinor": 9500
       },
       {
         "name": "Skippern",

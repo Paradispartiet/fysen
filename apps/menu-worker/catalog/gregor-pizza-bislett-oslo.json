@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 42,
+    "minimumExpectedItems": 34,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-17",
-      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet. 2026-11-01: Full live catalog proof run 41318220389 observed 37 priced extracted offers (source fingerprint SHA-256 e09fd66b8595e4d26a96b721bc56825928e8777bb44b9be1f3067829e27dd70b). The prior required offer Chevre was absent; replaced with directly observed Quattro Formaggi at NOK 175.00. The expected-item floor is 34 (previously 42), a guardrail rather than a cap on extraction. No actual menu products were removed, and delivery prices are not dine-in prices. See docs/catalog-drift-seven-sources-2026-11-01.md."
     }
   },
   "actions": [],
@@ -37,7 +37,7 @@
       "Salami Picante",
       "Hawaii",
       "Valentino",
-      "Chevre",
+      "Quattro Formaggi",
       "Døner Pizza #1",
       "Bianca Hot",
       "XL Mix Rullekebab"
@@ -60,8 +60,8 @@
         "priceMinor": 20000
       },
       {
-        "name": "Chevre",
-        "priceMinor": 20000
+        "name": "Quattro Formaggi",
+        "priceMinor": 17500
       },
       {
         "name": "Døner Pizza #1",
