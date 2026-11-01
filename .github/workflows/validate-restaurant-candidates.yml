@@ -27,7 +27,8 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # Full-catalog proof uses the same time budget as the nightly catalog job.
+    timeout-minutes: "${{ github.event_name == 'pull_request' && contains(github.event.pull_request.body, 'Live-proof catalog: true') && 90 || 20 }}"
     env:
       FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
     steps:

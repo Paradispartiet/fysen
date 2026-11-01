@@ -22,6 +22,6 @@ describe("strong-title runtime preference", () => {
       ["Prawn tempura", 23000], ["Padron skewer", 19000], ["Crispy oyster mushrooms", 72000],
     ]);
     expect(extracted.items.some((item) => /^(?:SPECIAL RAW|SMALL PLATES|MAINS|Sharing skewers)$/u.test(item.name))).toBe(false);
-    expect(extracted.extractorVersion).toContain("strong-title-price-v2");
+    expect(extracted.extractorVersion).toContain("strong-title-price-v3");
   });
 });

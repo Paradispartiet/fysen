@@ -76,7 +76,7 @@ describe("HTML runtime extractor version", () => {
     expect(HTML_SIBLING_PRICE_CARD_RECOVERY_VERSION).toBe("sibling-priced-card-v1");
     expect(HTML_PRICE_WRAPPED_RECOVERY_VERSION).toBe("price-wrapped-v2");
     expect(HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION).toBe(
-      "strong-title-price-v2",
+      "strong-title-price-v3",
     );
     expect(HTML_HEADING_RECOVERY_SUPPLEMENT_VERSION).toBe(
       "heading-supplement-v1",
@@ -93,7 +93,7 @@ describe("HTML runtime extractor version", () => {
     expect(HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION).toBe("visible-layout-v6");
     expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v7");
     expect(HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION).toBe("hyphen-priced-food-v1");
-    expect(HTML_RECOVERY_SELECTION_VERSION).toBe("recovery-selection-v8");
+    expect(HTML_RECOVERY_SELECTION_VERSION).toBe("recovery-selection-v9");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("api")).toBe(PUBLIC_MENU_API_EXTRACTOR_VERSION);

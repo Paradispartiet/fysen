@@ -11,12 +11,12 @@
     "longitude": 10.742127100000062
   },
   "menuSource": {
-    "url": "https://www.engebret-cafe.no/menymenu",
+    "url": "https://www.engebret-cafe.no/julemeny-i-november-og-desember",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 18,
+    "minimumExpectedItems": 13,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,80 +26,95 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-31",
-      "note": "Førsteparts oktobermeny kontrollert 2026-10-31: alle 20 individuelt navngitte/prisede retter samsvarer med kilden. Minimum 18 gir normal variasjonsbuffer; 12 konkrete rett-/prispar kontrolleres. Uspesifisert vegetarforrett/hovedrett og separate november-/julemenyer er ikke tolket som navngitte oktoberretter. Koordinater fra stedets eget kontaktkart. Åpningstider er ikke særskilt verifisert."
+      "checkedAt": "2026-11-01",
+      "note": "Offisiell julemeny 2026 gjelder uttrykkelig fra 1. november frem til jul. Alle 15 individuelt prisede mattilbud er kontrollert mot full kilde: fire forretter, syv hovedretter og fire desserter. Minimum 13 gir normal variasjonsbuffer; alle 15 navn/prispar beholdes som konkrete kontroller. Lutefisk serveres så mange ganger det er ønskelig; fire andre tradisjonsretter serveres to ganger, uten oppdiktet pris per servering. Vegetarforrett/hovedrett uten eget navn/pris og tre-retters pakke til 1345 kr er utelatt. Kilden erstatter oktober-à la carte fra 1. november. Adresse/koordinater er uendret; åpningstider er ikke særskilt verifisert."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Kamskjell og spekeskinke fra Ask med hvitløkspuré og urtesaus",
-      "Kalix løyrom med sitt klassiske tilbehør",
-      "Diana Camembert fra Bryne med bakt sopp, rosmarin og kirsebær",
-      "Sjøkrepssuppe",
-      "Lammerull med estragon, løk, buljong og konfitert steinsopp",
-      "Fjellørret fra Blåfjell med ertepuré, brokkolini, rømmesaus og kokte poteter",
-      "Kveite med purreløk, gulbetpuré, brekkbønner, blåskjellsaus og poteter",
-      "Breiflabb med østerssopp, kremet spinat, lettrøkt smørsaus og sprø poteter",
-      "Lammecarre med gresskarpuré, glaserte gulrøtter, lammesaus og pommes anna",
-      "Reinsdyrbiff med stekte kantareller, selleripuré, rosenkål, viltsaus med reinsdyrtunge og stekte poteter",
-      "Okse indrefilet med potetpuré, panert løkring, rødvinssaus og kremet skogsopp med rosmarin",
-      "Engebrets karamellpudding med krem og hasselnøttstrø"
+      "Rakørret fra Valdres. Moden rakfisk med lefse, rødbeter, rødløk, rømme",
+      "Villaks røkt på gammelmåten, serveres med potetblini, rømme og ørretrogn",
+      "Fenalår fra Nordnorsk villsau med syltede beter, rømme",
+      "Kalix Løyrom (30g) med rødløk, rømme og blini",
+      "Lutefisk fra Lofoten - Lutefisken serveres så mange ganger det er ønskelig",
+      "Juletallerken - serveres 2 ganger",
+      "Pinnekjøtt fra Østerdalen - serveres 2 ganger",
+      "Smalahove fra Voss- serveres 2 ganger",
+      "Rakørret fra Valdres - serveres 2 ganger",
+      "Stekt breiflabb med gulrotpuré, sølvløk, blomkål, honningglasert gulrot og smørsaus",
+      "Grillet reinsdyr med selleripuré, bakte rotgrønnsaker, syltet rødkål, kremet viltsaus og tyttebær",
+      "Multekrem med kransekake",
+      "Riskrem med rød saus",
+      "Engebrets karamellpudding",
+      "Krydderkokte plommer med sorbet"
     ],
     "requiredDishVariants": [
       {
-        "name": "Kamskjell og spekeskinke fra Ask med hvitløkspuré og urtesaus",
+        "name": "Rakørret fra Valdres. Moden rakfisk med lefse, rødbeter, rødløk, rømme",
+        "priceMinor": 37500
+      },
+      {
+        "name": "Villaks røkt på gammelmåten, serveres med potetblini, rømme og ørretrogn",
         "priceMinor": 29500
       },
       {
-        "name": "Kalix løyrom med sitt klassiske tilbehør",
-        "priceMinor": 35000
+        "name": "Fenalår fra Nordnorsk villsau med syltede beter, rømme",
+        "priceMinor": 29500
       },
       {
-        "name": "Diana Camembert fra Bryne med bakt sopp, rosmarin og kirsebær",
-        "priceMinor": 26500
+        "name": "Kalix Løyrom (30g) med rødløk, rømme og blini",
+        "priceMinor": 45500
       },
       {
-        "name": "Sjøkrepssuppe",
-        "priceMinor": 31500
+        "name": "Lutefisk fra Lofoten - Lutefisken serveres så mange ganger det er ønskelig",
+        "priceMinor": 87500
       },
       {
-        "name": "Lammerull med estragon, løk, buljong og konfitert steinsopp",
-        "priceMinor": 27500
+        "name": "Juletallerken - serveres 2 ganger",
+        "priceMinor": 79500
       },
       {
-        "name": "Fjellørret fra Blåfjell med ertepuré, brokkolini, rømmesaus og kokte poteter",
-        "priceMinor": 49500
+        "name": "Pinnekjøtt fra Østerdalen - serveres 2 ganger",
+        "priceMinor": 87500
       },
       {
-        "name": "Kveite med purreløk, gulbetpuré, brekkbønner, blåskjellsaus og poteter",
-        "priceMinor": 49500
+        "name": "Smalahove fra Voss- serveres 2 ganger",
+        "priceMinor": 87500
       },
       {
-        "name": "Breiflabb med østerssopp, kremet spinat, lettrøkt smørsaus og sprø poteter",
-        "priceMinor": 51500
+        "name": "Rakørret fra Valdres - serveres 2 ganger",
+        "priceMinor": 79500
       },
       {
-        "name": "Lammecarre med gresskarpuré, glaserte gulrøtter, lammesaus og pommes anna",
-        "priceMinor": 52500
+        "name": "Stekt breiflabb med gulrotpuré, sølvløk, blomkål, honningglasert gulrot og smørsaus",
+        "priceMinor": 56500
       },
       {
-        "name": "Reinsdyrbiff med stekte kantareller, selleripuré, rosenkål, viltsaus med reinsdyrtunge og stekte poteter",
-        "priceMinor": 54500
+        "name": "Grillet reinsdyr med selleripuré, bakte rotgrønnsaker, syltet rødkål, kremet viltsaus og tyttebær",
+        "priceMinor": 56500
       },
       {
-        "name": "Okse indrefilet med potetpuré, panert løkring, rødvinssaus og kremet skogsopp med rosmarin",
-        "priceMinor": 54500
+        "name": "Multekrem med kransekake",
+        "priceMinor": 28500
       },
       {
-        "name": "Engebrets karamellpudding med krem og hasselnøttstrø",
-        "priceMinor": 22500
+        "name": "Riskrem med rød saus",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Engebrets karamellpudding",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Krydderkokte plommer med sorbet",
+        "priceMinor": 24000
       }
     ],
     "forbiddenDishNames": [
-      "Langustine soup with fennel",
-      "Ost og desserter / Cheese and desserts",
-      "Vegetar / Vegan / Vegetarian"
+      "Gulløyepoteter fra Senja er fast tilbehør til julematen",
+      "Allergener",
+      "Engebrets 3 retters julemeny"
     ]
   }
 }

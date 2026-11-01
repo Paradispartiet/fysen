@@ -38,6 +38,7 @@ import {
 import {
   HTML_STRONG_TITLE_PRICE_RECOVERY_VERSION,
   recoverStrongTitlePriceHtmlItems,
+  hasCompleteStrongTitlePriceLineCoverage,
 } from "./html-strong-title-price-recovery.js";
 import {
   HTML_DESCRIPTION_TITLE_RECOVERY_VERSION,
@@ -174,7 +175,7 @@ export const HTML_ITEM_NAME_NORMALIZER_VERSION = "item-name-v8";
 export const HTML_NON_DISH_FILTER_VERSION = "non-dish-v16";
 export const HTML_BEVERAGE_FILTER_VERSION = "beverage-v12";
 export const HTML_STRUCTURED_MENU_COMPATIBILITY_VERSION = "structured-compat-v1";
-export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v8";
+export const HTML_RECOVERY_SELECTION_VERSION = "recovery-selection-v9";
 
 export function shouldPreferDominantHeadingRecovery(
   headingCount: number,
@@ -602,6 +603,17 @@ export async function extractMenuSource(
     if (embeddedItems.length >= 4) {
       return {
         items: embeddedItems,
+        method: extracted.method,
+        extractorVersion: HTML_RUNTIME_EXTRACTOR_VERSION,
+      };
+    }
+    const completeStrongLines = extracted.method === "html_heuristic"
+      && hasCompleteStrongTitlePriceLineCoverage(recoveryHtml)
+      ? recoverStrongTitlePriceHtmlItems(recoveryHtml).filter(isCanonicalHtmlMenuItem)
+      : [];
+    if (completeStrongLines.length >= 6) {
+      return {
+        items: reconcileExplicitScoopUnits(completeStrongLines, recoveryHtml),
         method: extracted.method,
         extractorVersion: HTML_RUNTIME_EXTRACTOR_VERSION,
       };
