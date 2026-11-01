@@ -13,7 +13,7 @@
   "menuSource": {
     "url": "https://www.thesalmon.com/menu/",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 47,
@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-31",
-      "note": "Førsteparts VINTER 26/27-meny kontrollert 2026-10-31: 47 individuelt prisede matvarianter. Iskrem og sorbet koster 55 kr per kule; priseenheten bevares eksplisitt. De tre Meny 1–3-pakkene er ikke enkeltretter og er utelatt. Åpningstider er fortsatt ikke uavhengig verifisert."
+      "note": "Førsteparts VINTER 26/27-meny kontrollert 2026-10-31: 47 individuelt prisede matvarianter. Iskrem og sorbet koster 55 kr per kule; priseenheten bevares eksplisitt. De tre Meny 1–3-pakkene er ikke enkeltretter og er utelatt. Åpningstider er fortsatt ikke uavhengig verifisert. 2026-11-01: Targeted HTTP proof returned status 200 but extracted zero menu offers (run 41336459220); primary website still shows VINTER 26/27 menu with checked prices, so switch to manifest-declared browser transport to recover rendered menu rather than lower 47-item quality floor. Requires targeted live proof before merge."
     }
   },
   "actions": [],
