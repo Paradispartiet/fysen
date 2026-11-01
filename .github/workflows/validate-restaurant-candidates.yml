@@ -21,13 +21,16 @@ permissions:
   contents: read
 
 concurrency:
-  group: fysen-restaurant-proof-${{ github.event.pull_request.number || github.ref }}
+  # Targeted PR proofs must not queue behind an older explicitly requested
+  # complete-catalog scan. Keep cancellation within each test scope.
+  group: "fysen-restaurant-proof-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'pull_request' && contains(github.event.pull_request.body, 'Live-proof catalog: true') && 'full' || 'targeted' }}"
   cancel-in-progress: true
 
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # Full-catalog proof uses the same time budget as the nightly catalog job.
+    timeout-minutes: "${{ github.event_name == 'pull_request' && contains(github.event.pull_request.body, 'Live-proof catalog: true') && 90 || 20 }}"
     env:
       FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "4"
     steps:
@@ -143,13 +146,24 @@ jobs:
             exit 0
           fi
 
+          failures=()
           while IFS= read -r manifest; do
             [[ -n "$manifest" ]] || continue
             echo "Strict live validation: $manifest"
-            # validate:manifest performs one direct validation; it does not hide
-            # a first-pass failure behind batch retry behavior.
-            pnpm --filter @fysen/menu-worker validate:manifest "$manifest"
+            # Run each exact-head proof even when another source fails.
+            # Do not hide first-pass errors behind batch retries.
+            if pnpm --filter @fysen/menu-worker validate:manifest "$manifest"; then
+              echo "PASS: $manifest"
+            else
+              failures+=("$manifest")
+              echo "FAIL: $manifest" >&2
+            fi
           done < "$PROOF_FILE"
+          if (( ${#failures[@]} > 0 )); then
+            printf 'Strict source proofs failed (%s):\n' "${#failures[@]}" >&2
+            printf ' - %s\n' "${failures[@]}" >&2
+            exit 1
+          fi
 
       - name: Validate requested manifest or directory
         if: github.event_name == 'workflow_dispatch'
@@ -170,3 +184,41 @@ jobs:
               pnpm --filter @fysen/menu-worker validate:batch "$MANIFEST_PATH"
               ;;
           esac
+
+      - name: Validate the complete canonical catalog when requested
+        if: "always() && github.event_name == 'pull_request' && steps.proof.outcome == 'success' && contains(github.event.pull_request.body, 'Live-proof catalog: true')"
+        working-directory: apps/menu-worker
+        shell: bash
+        env:
+          FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "12"
+          FYSEN_CANDIDATE_VALIDATION_MAX_ATTEMPTS: "3"
+          FYSEN_CANDIDATE_VALIDATION_PROGRESS: "1"
+        run: |
+          set -euo pipefail
+          mkdir -p reports/restaurant-proof
+          set +e
+          node dist/index.js validate:batch catalog > reports/restaurant-proof/catalog.json
+          status=$?
+          set -e
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          const { results, ...summary } = JSON.parse(readFileSync('reports/restaurant-proof/catalog.json', 'utf8'));
+          const failures = results.filter(result => !result.accepted).map(result => ({
+            slug: result.slug, failureFamilies: result.failureFamilies, error: result.error,
+            errors: result.validation?.errors,
+            menuError: result.validation?.menu?.error,
+            quality: result.validation?.menu?.quality,
+            actionErrors: result.validation?.actions?.filter(action => !action.accepted),
+          }));
+          console.log(JSON.stringify({ ...summary, failures }, null, 2));
+          NODE
+          exit "$status"
+
+      - name: Upload complete catalog proof
+        if: "always() && github.event_name == 'pull_request' && contains(github.event.pull_request.body, 'Live-proof catalog: true')"
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-pr-catalog-proof-${{ github.run_id }}
+          path: apps/menu-worker/reports/restaurant-proof/catalog.json
+          if-no-files-found: warn
+          retention-days: 14

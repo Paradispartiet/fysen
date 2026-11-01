@@ -1,0 +1,314 @@
+{
+  "checkedAt": "2026-11-01T11:37:19.178310+00:00",
+  "slug": "pizzeria-la-tornata-ullern-oslo",
+  "url": "https://wolt.com/en/nor/oslo/restaurant/pizzeria-la-tornata",
+  "userAgent": "FysenMenuBot/0.1",
+  "sha256": "5060bbb608bf64c07aba0cd2d223f1508630d0c94c07cfe354e0d6dbd8f4a8d4",
+  "responseBytes": 1352978,
+  "rawItemCount": 52,
+  "eligibleCategoryCounts": {
+    "Pizza": 32,
+    "Dressinger": 7
+  },
+  "excludedCategoryCounts": {
+    "Drikke": 13
+  },
+  "extractedOfferCount": 39,
+  "minimumExpectedItems": 18,
+  "requiredNameCount": 8,
+  "requiredVariantCount": 8,
+  "absentControls": [
+    "4. Parma",
+    "7. Con Carne"
+  ],
+  "replacementControls": [
+    {
+      "name": "11. Nochi Con Miele",
+      "priceMinor": 24100
+    },
+    {
+      "name": "16. Roma",
+      "priceMinor": 23700
+    }
+  ],
+  "independentRawEligiblePairs": [
+    {
+      "id": "10c22a96f4f358251de298ed",
+      "name": "34. Bianca",
+      "priceMinor": 25500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/1"
+    },
+    {
+      "id": "1c446548a8eb36b9dadbe821",
+      "name": "Bearnaise saus i begger",
+      "priceMinor": 4500,
+      "sectionName": "Dressinger",
+      "path": "/queries/6/state/data/items/3"
+    },
+    {
+      "id": "22d3a27d0d8dba44d078fd06",
+      "name": "35. Biff & Bernaise",
+      "priceMinor": 23500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/4"
+    },
+    {
+      "id": "249a0b09df05ec1df6f257ca",
+      "name": "36. Valentino",
+      "priceMinor": 23900,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/5"
+    },
+    {
+      "id": "24f95a8b6141e1e2b8bccb80",
+      "name": "Rømme dressing i begger",
+      "priceMinor": 4500,
+      "sectionName": "Dressinger",
+      "path": "/queries/6/state/data/items/6"
+    },
+    {
+      "id": "24fec9cf9d0853ee7de0bccd",
+      "name": "11. Nochi Con Miele",
+      "priceMinor": 24100,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/7"
+    },
+    {
+      "id": "27456c48329ea0095560ae5b",
+      "name": "16. Roma",
+      "priceMinor": 23700,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/8"
+    },
+    {
+      "id": "2c5f6ff9a199e0ddcafced35",
+      "name": "23. Cacciatore",
+      "priceMinor": 23000,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/9"
+    },
+    {
+      "id": "3056af5900a6a71697602ab8",
+      "name": "2. Capricciosa",
+      "priceMinor": 19900,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/10"
+    },
+    {
+      "id": "34a2c5634f5bcf61fdd80efd",
+      "name": "13. Aubergino",
+      "priceMinor": 22500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/11"
+    },
+    {
+      "id": "48056ca79a3098f778e8cce7",
+      "name": "5. Scampi",
+      "priceMinor": 22500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/13"
+    },
+    {
+      "id": "5487cbfaf901f77cb2e3b5c7",
+      "name": "3. Pepperoni",
+      "priceMinor": 19900,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/14"
+    },
+    {
+      "id": "54e7354b3c65fb2e509f4414",
+      "name": "15. Choritzo",
+      "priceMinor": 22500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/15"
+    },
+    {
+      "id": "5957ed6809d7e67d007cab59",
+      "name": "29. Diavola",
+      "priceMinor": 23500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/18"
+    },
+    {
+      "id": "5b1a583485983da13cf4d294",
+      "name": "41. Pepperoni Skinke",
+      "priceMinor": 20900,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/19"
+    },
+    {
+      "id": "5e7fa4efc26faf76b06752e3",
+      "name": "parmesan i begger",
+      "priceMinor": 4500,
+      "sectionName": "Dressinger",
+      "path": "/queries/6/state/data/items/20"
+    },
+    {
+      "id": "650810cd397e84483255395c",
+      "name": "42. Torino",
+      "priceMinor": 23000,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/21"
+    },
+    {
+      "id": "6f9ff32cd120ff8d6a551c6a",
+      "name": "tomat saus i begger",
+      "priceMinor": 3500,
+      "sectionName": "Dressinger",
+      "path": "/queries/6/state/data/items/22"
+    },
+    {
+      "id": "7877e616c51d2cbe21141b50",
+      "name": "28. Stritchi",
+      "priceMinor": 23500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/24"
+    },
+    {
+      "id": "7fce1703d4aeb4a380b0ffec",
+      "name": "10. Spinachio",
+      "priceMinor": 23400,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/26"
+    },
+    {
+      "id": "8b008b770610c0977def56b8",
+      "name": "8. Zucchini",
+      "priceMinor": 22700,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/27"
+    },
+    {
+      "id": "8d1b84244b8522224e8ce2e4",
+      "name": "12. Paganini",
+      "priceMinor": 25500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/28"
+    },
+    {
+      "id": "99c1987c673133c9892c5860",
+      "name": "Hvitløk Dressing i begger",
+      "priceMinor": 4500,
+      "sectionName": "Dressinger",
+      "path": "/queries/6/state/data/items/29"
+    },
+    {
+      "id": "a7612ab259d9ff305a7697c5",
+      "name": "jalapenos i begger",
+      "priceMinor": 3500,
+      "sectionName": "Dressinger",
+      "path": "/queries/6/state/data/items/30"
+    },
+    {
+      "id": "a8eb666f7895cff6725cbb4f",
+      "name": "27. Con Pollo",
+      "priceMinor": 23500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/31"
+    },
+    {
+      "id": "b71ecd1185ec34cc49461b14",
+      "name": "19. Papas Pizza",
+      "priceMinor": 23500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/33"
+    },
+    {
+      "id": "bbcd6bf0cd921ec3d971f14b",
+      "name": "26. Vichinga",
+      "priceMinor": 23000,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/34"
+    },
+    {
+      "id": "bf376181b3a36c619efc7706",
+      "name": "33. Napoli",
+      "priceMinor": 23500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/35"
+    },
+    {
+      "id": "ccac8981ff2b8fb1d4f282b6",
+      "name": "Hvitløk med chilli i Begger",
+      "priceMinor": 4500,
+      "sectionName": "Dressinger",
+      "path": "/queries/6/state/data/items/37"
+    },
+    {
+      "id": "ce866c1b86214ddf12a40d59",
+      "name": "21. Vegetar",
+      "priceMinor": 21500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/38"
+    },
+    {
+      "id": "d240f6e407d9584b22f62d2b",
+      "name": "6. Quatro Fromaggi",
+      "priceMinor": 22000,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/39"
+    },
+    {
+      "id": "d5feddb51698fa56704fbaed",
+      "name": "22. San Remo",
+      "priceMinor": 23500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/40"
+    },
+    {
+      "id": "d73e28108d79a7675122d402",
+      "name": "38. Al Capone",
+      "priceMinor": 23900,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/42"
+    },
+    {
+      "id": "daa8c902db3be2884a4f23c4",
+      "name": "17. Patata",
+      "priceMinor": 23500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/43"
+    },
+    {
+      "id": "e34e76d9b7cd6ac2245bae95",
+      "name": "18. Zorba The Greek",
+      "priceMinor": 23500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/45"
+    },
+    {
+      "id": "e5f580cc8be1d6a14a2c4863",
+      "name": "39. Carbonara",
+      "priceMinor": 23900,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/46"
+    },
+    {
+      "id": "f2f7f43007b4cecacdf29e7b",
+      "name": "37. Barbeque",
+      "priceMinor": 23500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/49"
+    },
+    {
+      "id": "f7ca18506e3fb04fda917a88",
+      "name": "30. Pære & Honning",
+      "priceMinor": 25500,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/50"
+    },
+    {
+      "id": "f99c7ce7f3ef80817ae283ff",
+      "name": "1. Margarita",
+      "priceMinor": 18000,
+      "sectionName": "Pizza",
+      "path": "/queries/6/state/data/items/51"
+    }
+  ],
+  "comparison": {
+    "missingEligiblePairs": [],
+    "extraExtractedPairs": []
+  },
+  "sourceDateNote": "2026-11-01 is the observation date; no effective menu change date was supplied by the source."
+}

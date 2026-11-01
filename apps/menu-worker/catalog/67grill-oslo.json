@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 28,
+    "minimumExpectedItems": 20,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-16",
-      "note": "Wolt-operatørens offentlig publiserte, individuelt prisede leveringsmeny og stedets oppgitte besøksadresse ble kildekontrollert 2026-10-16. Utvalget beviser bare leveringsmenyens retter/priser, ikke full restaurantmeny eller kjøkkentider. Produksjonsopptak krever eget korrekt liveuttak."
+      "checkedAt": "2026-11-01",
+      "note": "Wolt-leveringsmenyen kildekontrollert 2026-11-01 mot komplett innebygd meny-JSON (loading_strategy=full): 23 kvalifiserte, individuelt prisede uttrekksposter. Opprinnelig og oppdatert uttrekker gir identiske poster på samme kildeopptak. Råmenyen har 30 produkter: 24 utenfor drikkekategorien. Kildens numeriske pizzatittel «26. 67» (189 NOK; beskrivelse: «Kylling shawarma, biff, bacon, pepperoni og løk.») utelates av eksisterende numerisk navnefilter; ingen rettstittel er konstruert fra ingrediensene. 2 utgåtte kontrollretter er erstattet med uavhengige, publiserte måltidskontroller; øvrige kontroller og antall navne-/prisassertasjoner er bevart. Minstekrav 20 er 90 % av observert kvalifisert antall 23, avrundet ned, som buffer for normal menyvariasjon (tidligere 28). Se docs/research/wolt-menu-control-refresh-20261101.sources.json for kildehash, full parvis kontroll og utelatelser. Prisene gjelder Wolt-levering; åpningstider og bordpriser er ikke bekreftet."
     }
   },
   "actions": [],
@@ -36,8 +36,8 @@
       "02. Bacon Bbq Burger",
       "36. Dønner-Tallerken",
       "Løkringer (4 stk)",
-      "35. Dønner-Pita",
-      "09. Shawarma-Tallerken",
+      "34. Dønner-Rull",
+      "14. Crispy-Tallerken",
       "01. Biff Cheeseburger",
       "30. Margarita",
       "06. Løkring Burger"
@@ -56,12 +56,12 @@
         "priceMinor": 4900
       },
       {
-        "name": "35. Dønner-Pita",
-        "priceMinor": 13900
+        "name": "34. Dønner-Rull",
+        "priceMinor": 14900
       },
       {
-        "name": "09. Shawarma-Tallerken",
-        "priceMinor": 16900
+        "name": "14. Crispy-Tallerken",
+        "priceMinor": 17900
       },
       {
         "name": "01. Biff Cheeseburger",

@@ -1,0 +1,198 @@
+{
+  "checkedAt": "2026-10-31",
+  "status": "source-and-local-parser-proof-only",
+  "restaurants": [
+    {
+      "slug": "gamle-raadhus-restaurant-oslo",
+      "sourceUrl": "https://www.gamleraadhus.no/kveldsmeny",
+      "discoveryUrl": "https://www.gamleraadhus.no/",
+      "capturedOn": "2026-10-31",
+      "sha256": "e02c54928353a7f91e09a11f182b8b142fb0ede3c38d40391045e499364d50cb",
+      "extractorVersion": "html-v23+html-v12+titles-v29+heading-v4+price-notation-v3+item-name-v8+non-dish-v16+beverage-v12+structured-compat-v1+trailing-price-card-v19+sibling-priced-card-v1+price-wrapped-v2+heading-price-v11+strong-title-price-v2+heading-supplement-v1+from-price-v1+section-first-card-v2+embedded-menu-json-v3+text-section-scope-v18+output-canonical-v23+visible-layout-v6+source-priced-v7+hyphen-priced-food-v1+recovery-selection-v8+semantic-menu-card-v1+paragraph-title-price-card-v1",
+      "observedItemCount": 14,
+      "minimumExpectedItems": 12,
+      "manualPairs": [
+        {
+          "name": "Rakfisk fra Hande i Valdres",
+          "priceMinor": 39500
+        },
+        {
+          "name": "Tynne skiver av røkelaks fra Bergen",
+          "priceMinor": 39000
+        },
+        {
+          "name": "Saltbakte beter fra Hasle gård på Rygge, laget som en tartar",
+          "priceMinor": 37500
+        },
+        {
+          "name": "Vår lutefisk (WP3) - servert 2 ganger",
+          "priceMinor": 87500
+        },
+        {
+          "name": "Rakfisk fra Hande i Valdres - servert 2 ganger",
+          "priceMinor": 79500
+        },
+        {
+          "name": "Ovnsbakt villkveite fra norskekysten",
+          "priceMinor": 59000
+        },
+        {
+          "name": "Pinnekjøtt av lam fra Tynset - servert 2 ganger",
+          "priceMinor": 87500
+        },
+        {
+          "name": "Langtidsbakt kalvenakke fra Hallingdal",
+          "priceMinor": 58500
+        },
+        {
+          "name": "Byggotto på byggryn fra Sjåk med norsk hardost",
+          "priceMinor": 48500
+        },
+        {
+          "name": "Gamle Raadhus sin klassiske Crème Brûlée",
+          "priceMinor": 29500
+        },
+        {
+          "name": "Vår egen «sjokoladefløterand» laget på melkesjokolade",
+          "priceMinor": 29500
+        },
+        {
+          "name": "En smak av husets egen is og sorbet",
+          "priceMinor": 27500
+        },
+        {
+          "name": "Norske oster",
+          "priceMinor": 32000
+        },
+        {
+          "name": "Små søtsaker fra vårt dessertkjøkken",
+          "priceMinor": 23000
+        }
+      ],
+      "identitySource": "https://www.gamleraadhus.no/kontakt-oss",
+      "coordinates": {
+        "latitude": 59.90984743288299,
+        "longitude": 10.740149051831544,
+        "source": "Kartverket Adresser REST API, EPSG:4258",
+        "attribution": "© Kartverket, CC BY 4.0"
+      },
+      "scope": "Kveldsmeny gjeldende fra 29. oktober 2026: alle 14 rettnavn/prispar kontrollert mot førstepartskilden. Minimum 12 gir normal variasjonsbuffer. Servert 2 ganger er ett samlet tilbud, ikke pris per servering. Lunsj og selskapsmenyer er utenfor denne kilden. Adresse fra restauranten; koordinater fra Kartverkets adresseregister. Åpningstider er ikke særskilt verifisert."
+    },
+    {
+      "slug": "den-glade-gris-oslo",
+      "sourceUrl": "https://cdn.prod.website-files.com/5aabb3484dc7fe62cb3f222a/6ac8cb76e13fbec9575cfa95_DGG_spiralhefte_okt2026_ENKELTSIDER.pdf",
+      "discoveryUrl": "https://www.dengladegris.no/",
+      "capturedOn": "2026-10-31",
+      "sha256": "3e560bdd876dedc850284672cf68808ee9077d0f7603b2f9164a438bc680c3a5",
+      "extractorVersion": "pdf-text-v44",
+      "observedItemCount": 25,
+      "minimumExpectedItems": 22,
+      "manualPairs": [
+        {
+          "name": "Dagens lunsjsuppe",
+          "priceMinor": 17900
+        },
+        {
+          "name": "Klassisk rekesmørbrød",
+          "priceMinor": 28500
+        },
+        {
+          "name": "Smørbrød med røkt ørret",
+          "priceMinor": 27500
+        },
+        {
+          "name": "Egg B&P",
+          "priceMinor": 26900
+        },
+        {
+          "name": "Grisens lapskaus",
+          "priceMinor": 26500
+        },
+        {
+          "name": "HJEMMELAGET SVINESVOR (50g)",
+          "priceMinor": 18500
+        },
+        {
+          "name": "Beer Brulee",
+          "priceMinor": 18000
+        },
+        {
+          "name": "Grisens hvite sjokolade",
+          "priceMinor": 17500
+        },
+        {
+          "name": "Ostekake",
+          "priceMinor": 19500
+        },
+        {
+          "name": "Liten Grønn Salat",
+          "priceMinor": 14200
+        },
+        {
+          "name": "Stekte poteter",
+          "priceMinor": 10500
+        },
+        {
+          "name": "Grønnsaker",
+          "priceMinor": 10500
+        },
+        {
+          "name": "Ekstra french fries",
+          "priceMinor": 11000
+        },
+        {
+          "name": "Coleslaw",
+          "priceMinor": 7500
+        },
+        {
+          "name": "Fish & Chips / Grisens Gryte",
+          "priceMinor": 21500
+        },
+        {
+          "name": "Chevre Salat",
+          "priceMinor": 31000
+        },
+        {
+          "name": "Fish & Chips",
+          "priceMinor": 31000
+        },
+        {
+          "name": "Langgrillet svineknoke",
+          "priceMinor": 43900
+        },
+        {
+          "name": "Langtidsstekt nakke av gris",
+          "priceMinor": 41000
+        },
+        {
+          "name": "Grisens Gryte",
+          "priceMinor": 39500
+        },
+        {
+          "name": "Grisens laaangtidsstekte BBQ Spareribs",
+          "priceMinor": 42900
+        },
+        {
+          "name": "Flatbanka gris",
+          "priceMinor": 42900
+        },
+        {
+          "name": "Einerrøkt ørret",
+          "priceMinor": 24900
+        },
+        {
+          "name": "Lettrøkt hval fra Norskehavet",
+          "priceMinor": 20500
+        }
+      ],
+      "identitySource": "https://www.dengladegris.no/finn-oss",
+      "coordinates": {
+        "latitude": 59.91787602679616,
+        "longitude": 10.734076018698865,
+        "source": "Kartverket Adresser REST API, EPSG:4258",
+        "attribution": "© Kartverket, CC BY 4.0"
+      },
+      "scope": "Offisiell oktober 2026-PDF lenket fra restaurantens nettside: alle 24 prissatte matrader på side 6–7 visuelt kontrollert, hvorav 19 måltidstilbud og 5 sideretter. Uttrekket har 25 matrader fordi svinesvor gjentas på engelsk på side 8; dette er ikke 25 unike retter. Minimum 22 gir normal variasjonsbuffer; alle 19 måltidstilbud og én siderett har konkrete navne-/priskontroller. Barnemenyen er ett samlet alternativtilbud til 215 kr. Chef-meny, drikkepakker, øl og bacon-tillegg utelates. Adresse fra restauranten; koordinater fra Kartverkets adresseregister. Åpningstider er ikke særskilt verifisert."
+    }
+  ]
+}

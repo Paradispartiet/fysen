@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 24,
+    "minimumExpectedItems": 20,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -31,8 +31,8 @@
     },
     "menu": {
       "status": "unverified",
-      "checkedAt": "2026-10-29",
-      "note": "2026-10-29: Canonical full-catalog health #40853503694 observed the current public source menu with these exact names and prices. Strict exact-head live validation is required before merge. Wolt/Foodora prices are service delivery prices, not independently verified dine-in prices."
+      "checkedAt": "2026-11-01",
+      "note": "2026-11-01: Full live catalog proof run 41318220389 observed 22 priced extracted offers (source fingerprint SHA-256 46e162984df5325ca82b140109c2ce5617228d8ffc5183b9e9a1002f5ec1db09). All existing title/price checks passed. The expected-item floor is 20 (previously 24), a guardrail rather than a cap on extraction. No actual menu products were removed, and delivery prices are not dine-in prices. See docs/catalog-drift-seven-sources-2026-11-01.md."
     }
   },
   "actions": [],

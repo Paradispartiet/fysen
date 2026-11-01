@@ -1,3 +1,4 @@
+import { recoverTypographicPdfRows } from "./pdf-typographic-rows.js";
 import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
 import {
   createMenuItemSourceKey,
@@ -6,7 +7,7 @@ import {
   type MenuPriceKind,
 } from "@fysen/menu-core";
 
-export const PDF_EXTRACTOR_VERSION = "pdf-text-v18";
+export const PDF_EXTRACTOR_VERSION = "pdf-text-v19";
 
 export interface ExtractedPdfMenu {
   readonly items: readonly MenuObservedItem[];
@@ -556,6 +557,20 @@ function shouldUseVisualReadingOrder(lines: readonly VisualPdfLine[]): boolean {
 }
 
 function reconstructLines(items: readonly unknown[], page: number): readonly PdfLine[] {
+  const recovered = recoverTypographicPdfRows(items);
+  if (recovered.length) {
+    const lines: PdfLine[] = [];
+    let start = 0;
+    for (const row of recovered) {
+      lines.push(...reconstructLines(items.slice(start, row.start), page));
+      if (row.section) lines.push({ text: row.section, page });
+      lines.push({ text: `${row.name} ${row.price}`, page });
+      if (row.description) lines.push({ text: row.description, page });
+      start = row.end + 1;
+    }
+    lines.push(...reconstructLines(items.slice(start), page));
+    return lines;
+  }
   const sequential = reconstructSequentialLines(items, page);
   const positioned = positionedTextItems(items);
   if (!positioned) return sequential;
@@ -1085,6 +1100,7 @@ function descriptionForCandidate(
   for (let index = contentStart; index < Math.min(nextCandidateLine, contentStart + 6); index += 1) {
     const text = lines[index]?.text ?? "";
     if (!text || sectionHeading(text)) break;
+    if (/^(?:øl\s*\/\s*beer|vin\s*\/\s*wine|alkoholfri)\s*:/iu.test(text)) break;
     if (standalonePrice.test(text)) break;
     if (parseInlineDish(text)) break;
     if (/^(allergener|allergens|vegetariano|vegano)\b/iu.test(text)) break;

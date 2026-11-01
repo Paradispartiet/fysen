@@ -32,9 +32,9 @@
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "JIANGNAN SNACKS 江 南 四 小 碟",
+      "Snacks de luxe 小 食 拼 盘",
       "DIM SUM KURV 四 色 點 心",
-      "INNBAKT KAMSKJELL 酥 炸 帶 子 卷",
+      "Innbakt kamskjell 酥 炸 带 子 卷",
       "KAM KON POT 錦 江 煲",
       "KYLLING GONGBAO 宮 保 雞 丁",
       "GRILLET INDREFILET AV OKSE 炭 燒 牛 柳",
@@ -43,7 +43,7 @@
     ],
     "requiredDishVariants": [
       {
-        "name": "JIANGNAN SNACKS 江 南 四 小 碟",
+        "name": "Snacks de luxe 小 食 拼 盘",
         "priceMinor": 9900
       },
       {
@@ -51,16 +51,16 @@
         "priceMinor": 23900
       },
       {
-        "name": "INNBAKT KAMSKJELL 酥 炸 帶 子 卷",
+        "name": "Innbakt kamskjell 酥 炸 带 子 卷",
         "priceMinor": 19900
       },
       {
         "name": "KAM KON POT 錦 江 煲",
-        "priceMinor": 29800
+        "priceMinor": 31500
       },
       {
         "name": "KYLLING GONGBAO 宮 保 雞 丁",
-        "priceMinor": 21900
+        "priceMinor": 23400
       },
       {
         "name": "GRILLET INDREFILET AV OKSE 炭 燒 牛 柳",

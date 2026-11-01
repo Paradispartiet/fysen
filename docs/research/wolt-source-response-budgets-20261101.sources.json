@@ -1,0 +1,121 @@
+{
+  "checkedAt": "2026-11-01T11:41:09.313382+00:00",
+  "status": "captured-content-verified; fresh strict proof still required",
+  "policy": "Use existing bounded per-source HTTP override; global default, SSRF, robots, redirect and browser guards unchanged. Same 8MiB override already used by canonical Domino Nydalen/Tveita/Loren Wolt sources.",
+  "sources": [
+    {
+      "slug": "burger-king-hegdehaugsveien-oslo",
+      "sourceUrl": "https://wolt.com/nb/nor/oslo/restaurant/burger-king-hegdehaugsveien",
+      "failingProofRun": 41270052806,
+      "failingHead": "1dfa501fde57d968d96fcd0ef075787e58ee85f3",
+      "observedFailure": "Response exceeds 2097152 bytes",
+      "previousDefaultBytes": 2097152,
+      "explicitSourceBudgetBytes": 8388608,
+      "comparisonCaptureBytes": 1740239,
+      "captureSha256": "925c11efa430a26db5a3265fd5045eb767217132b483bd8d13e4d1d66bc510ff",
+      "captureScope": "Complete independently fetched current Wolt source; response sizes vary between fetch environments. This capture size is not the size of the failed GitHub response.",
+      "capturedOfferCount": 82,
+      "requiredDishVariants": [
+        {
+          "name": "Crispy Chicken",
+          "priceMinor": 6900
+        },
+        {
+          "name": "Whopper Cheese Meny",
+          "priceMinor": 19900
+        },
+        {
+          "name": "Fries",
+          "priceMinor": 6500
+        },
+        {
+          "name": "Cheeseburger",
+          "priceMinor": 4100
+        },
+        {
+          "name": "Crispy Chicken Meny",
+          "priceMinor": 12900
+        },
+        {
+          "name": "Chili Cheese",
+          "priceMinor": 6200
+        },
+        {
+          "name": "Chili Cheeseburger",
+          "priceMinor": 5900
+        },
+        {
+          "name": "Steakhouse Bacon King 2.0 Meny",
+          "priceMinor": 23900
+        },
+        {
+          "name": "Chicken Nuggets 9 Biter",
+          "priceMinor": 11000
+        },
+        {
+          "name": "Bacon King 2.0 Meny",
+          "priceMinor": 23900
+        }
+      ],
+      "controlsUnchanged": true,
+      "minimumUnchanged": 8
+    },
+    {
+      "slug": "dominos-pizza-grorud-oslo",
+      "sourceUrl": "https://wolt.com/nb/nor/oslo/restaurant/dominos-pizza-grorud",
+      "failingProofRun": 41270052806,
+      "failingHead": "1dfa501fde57d968d96fcd0ef075787e58ee85f3",
+      "observedFailure": "Response exceeds 2097152 bytes",
+      "previousDefaultBytes": 2097152,
+      "explicitSourceBudgetBytes": 8388608,
+      "comparisonCaptureBytes": 1489700,
+      "captureSha256": "4ac83e98089eacc132f175e642a7a3a048db19b74224e8814b168a21968fb754",
+      "captureScope": "Complete independently fetched current Wolt source; response sizes vary between fetch environments. This capture size is not the size of the failed GitHub response.",
+      "capturedOfferCount": 56,
+      "requiredDishVariants": [
+        {
+          "name": "Margherita 🌱",
+          "priceMinor": 8900
+        },
+        {
+          "name": "Pepperoni Passion",
+          "priceMinor": 10900
+        },
+        {
+          "name": "Ham & Cheese",
+          "priceMinor": 10500
+        },
+        {
+          "name": "Corny Chicken",
+          "priceMinor": 10500
+        },
+        {
+          "name": "Mighty Meat",
+          "priceMinor": 26500
+        },
+        {
+          "name": "Tennessee BBQ Chicken",
+          "priceMinor": 26500
+        },
+        {
+          "name": "Kebabpizza 🌶️",
+          "priceMinor": 26500
+        },
+        {
+          "name": "Hot Honey",
+          "priceMinor": 26500
+        },
+        {
+          "name": "BBQ Heaven",
+          "priceMinor": 26500
+        },
+        {
+          "name": "No Doubt",
+          "priceMinor": 10900
+        }
+      ],
+      "controlsUnchanged": true,
+      "minimumUnchanged": 8
+    }
+  ]
+}

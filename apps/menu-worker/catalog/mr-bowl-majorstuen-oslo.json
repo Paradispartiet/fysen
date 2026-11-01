@@ -26,21 +26,21 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-18",
-      "note": "Åtte konkrete matrett-/prispar hentet fra Wolts offentlige meny 2026-10-18; besøksadresse og koordinater fra restaurantens Wolt-kartlenke. Leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+      "checkedAt": "2026-11-01",
+      "note": "2026-11-01: Strict live source proof 41336459220 observed 28 Wolt priced offers (SHA-256 9fd17725567e7c0a3fba53bd358ed5fbc7b54e6491e289e0276f6a27bca819a0). Chicken Fingers (129 NOK) is no longer published; replacement Fried Rice Chicken (249 NOK) appears in the same live source. All other seven exact dish/price assertions remain, minimum 8 remains. No extraction limit, delivery prices only; hours unverified."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
       "Scampi Noodle",
-      "Dual Fried Chicken",
+      "Fried Rice Beef",
       "Chicken Noodle",
       "Salmon Salad Bowl",
       "Marinated Beef Noodle",
       "Chicken Spring Rolls 3pc",
       "Chicken Salad Bowl",
-      "Chicken Fingers"
+      "Fried Rice Chicken"
     ],
     "requiredDishVariants": [
       {
@@ -48,8 +48,8 @@
         "priceMinor": 26900
       },
       {
-        "name": "Dual Fried Chicken",
-        "priceMinor": 25900
+        "name": "Fried Rice Beef",
+        "priceMinor": 27900
       },
       {
         "name": "Chicken Noodle",
@@ -72,8 +72,8 @@
         "priceMinor": 22900
       },
       {
-        "name": "Chicken Fingers",
-        "priceMinor": 12900
+        "name": "Fried Rice Chicken",
+        "priceMinor": 24900
       }
     ],
     "forbiddenDishNames": []

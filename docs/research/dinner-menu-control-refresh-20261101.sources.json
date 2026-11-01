@@ -1,0 +1,109 @@
+{
+  "checkedAt": "2026-11-01",
+  "classification": "Current first-party title/price drift; baseline and current pre-fix extractions identical. Barcode also exposes pre-existing title-to-section rewrite.",
+  "parserRootCause": "A short mixed-case Latin preparation title with Han translation was classified as description prose; description-title recovery substituted the preceding accordion heading. Correct the title classifier generically.",
+  "sources": [
+    {
+      "slug": "dinner-barcode-oslo",
+      "url": "https://www.dinner.no/barcode/meny",
+      "sha256": "9ca6d25b439c51129a44f275c1d8d3c9d60bf7e41cd666a12d745cf73750c493",
+      "htmlBytes": 66961,
+      "floor": 42,
+      "oldCount": 47,
+      "newCount": 47,
+      "itemsExactlyEqual": true,
+      "comparison": "Same fetched full HTML through original baseline and pre-fix current runtime",
+      "driftedControls": [
+        {
+          "requiredBefore": {
+            "name": "VEGANSKE VÅRRULLER 素 春 卷",
+            "priceMinor": 15900
+          },
+          "firstPartyCurrentTitle": "VEGANSKE VÅRRULLER 素 春 卷",
+          "firstPartyCurrentPriceMinor": 16900
+        },
+        {
+          "requiredBefore": {
+            "name": "SHUI ZHU BIFF 水 煮牛 肉",
+            "priceMinor": 33900
+          },
+          "firstPartyCurrentTitle": "SHUI ZHU BIFF 水 煮牛 肉",
+          "firstPartyCurrentPriceMinor": 34900
+        },
+        {
+          "requiredBefore": {
+            "name": "DAMPET HAVABBOR 特 色 蒸 海 鱼",
+            "priceMinor": 39800
+          },
+          "firstPartyCurrentTitle": "DAMPET Seabass 特 色 蒸 海 鱼",
+          "firstPartyCurrentPriceMinor": 39800
+        },
+        {
+          "requiredBefore": {
+            "name": "VEGANSK CRISPY DUCK 豆 腐 煲",
+            "priceMinor": 33900
+          },
+          "firstPartyCurrentTitle": "VEGANSK CRISPY DUCK 豆 腐 煲",
+          "firstPartyCurrentPriceMinor": 34900
+        }
+      ],
+      "postFix": {
+        "itemCount": 47,
+        "requiredPairsPassing": 8,
+        "requiredPairsTotal": 8,
+        "floorUnchanged": 42
+      }
+    },
+    {
+      "slug": "dinner-nationaltheatret-oslo",
+      "url": "https://www.dinner.no/nationaltheatret/meny",
+      "sha256": "b3599cf04b02cf283cf18baa2b80783f6d9c5a92d02b472d3063add03c1cb748",
+      "htmlBytes": 60807,
+      "floor": 43,
+      "oldCount": 43,
+      "newCount": 43,
+      "itemsExactlyEqual": true,
+      "comparison": "Same fetched full HTML through original baseline and pre-fix current runtime",
+      "driftedControls": [
+        {
+          "requiredBefore": {
+            "name": "JIANGNAN SNACKS 江 南 四 小 碟",
+            "priceMinor": 9900
+          },
+          "firstPartyCurrentTitle": "Snacks de luxe 小 食 拼 盘",
+          "firstPartyCurrentPriceMinor": 9900
+        },
+        {
+          "requiredBefore": {
+            "name": "INNBAKT KAMSKJELL 酥 炸 帶 子 卷",
+            "priceMinor": 19900
+          },
+          "firstPartyCurrentTitle": "Innbakt kamskjell 酥 炸 带 子 卷",
+          "firstPartyCurrentPriceMinor": 19900
+        },
+        {
+          "requiredBefore": {
+            "name": "KAM KON POT 錦 江 煲",
+            "priceMinor": 29800
+          },
+          "firstPartyCurrentTitle": "KAM KON POT 錦 江 煲",
+          "firstPartyCurrentPriceMinor": 31500
+        },
+        {
+          "requiredBefore": {
+            "name": "KYLLING GONGBAO 宮 保 雞 丁",
+            "priceMinor": 21900
+          },
+          "firstPartyCurrentTitle": "KYLLING GONGBAO 宮 保 雞 丁",
+          "firstPartyCurrentPriceMinor": 23400
+        }
+      ],
+      "postFix": {
+        "itemCount": 43,
+        "requiredPairsPassing": 8,
+        "requiredPairsTotal": 8,
+        "floorUnchanged": 43
+      }
+    }
+  ]
+}

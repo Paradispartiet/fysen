@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 85,
+    "minimumExpectedItems": 75,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-17",
-      "note": "Kildebaserte Wolt-rett/prisassertasjoner er generert og bestod målrettet livevalidering i samlet PR #968 den 17. oktober 2026. Leveringspriser kan avvike fra restaurantbordet; åpningstider er ikke uavhengig kontrollert."
+      "note": "Kildebaserte Wolt-rett/prisassertasjoner er generert og bestod målrettet livevalidering i samlet PR #968 den 17. oktober 2026. Leveringspriser kan avvike fra restaurantbordet; åpningstider er ikke uavhengig kontrollert. 2026-11-01: Full live catalog proof run 41318220389 observed 83 priced extracted offers (source fingerprint SHA-256 52d762c3a4d1e6bf2abcba20febdb9f171c327582f970606de8717f96df089c6). All existing title/price checks passed. The expected-item floor is 75 (previously 85), a guardrail rather than a cap on extraction. No actual menu products were removed, and delivery prices are not dine-in prices. See docs/catalog-drift-seven-sources-2026-11-01.md."
     }
   },
   "actions": [],

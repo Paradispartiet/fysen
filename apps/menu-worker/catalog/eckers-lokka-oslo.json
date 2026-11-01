@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 14,
+    "minimumExpectedItems": 12,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-19",
-      "note": "Wolt-leveringsmenyen ble kontrollert 2026-10-19: nå 3 salater, 3 burritoer og 8 smoothies (14 unike prisede produkter uten drikke-seksjonen); de tidligere toast-rettene er ikke lenger oppført. To konkrete rett-/prisassertasjoner er erstattet med publiserte Kylling Burrito og Vegansk salat. Minimumskravet er rebassert til de 14 faktisk publiserte produktene; livevalidering på PR-head og kontroll av produksjonsdata gjenstår. Prisene gjelder levering; åpningstider er ikke verifisert."
+      "checkedAt": "2026-11-01",
+      "note": "2026-11-01: Live proof 41318220389 captured 13 priced Wolt offers (SHA-256 23ca34d5dd9ad718bf8a7b608f6e441b383860bd425b21027739e8b809b7cb2b). Tuna Melt Toast was absent, and Rosa ananas (95 NOK) replaced its name/price control. Count alert floor is 12, not a limit on extraction. Previous October evidence and provenance are retained in docs/catalog-drift-seven-sources-2026-11-01.md; note shortened to satisfy manifest schema. Prices refer to delivery; opening hours unverified."
     }
   },
   "actions": [],
@@ -39,7 +39,7 @@
       "Vegansk salat 🌱",
       "Kyllingsalat",
       "Vegetar Burrito 🌱",
-      "Tuna Melt Toast",
+      "Rosa ananas",
       "Skippern"
     ],
     "requiredDishVariants": [
@@ -68,8 +68,8 @@
         "priceMinor": 16500
       },
       {
-        "name": "Tuna Melt Toast",
-        "priceMinor": 14500
+        "name": "Rosa ananas",
+        "priceMinor": 9500
       },
       {
         "name": "Skippern",

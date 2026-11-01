@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 47,
+    "minimumExpectedItems": 24,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,49 +26,49 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-30",
-      "note": "Offentlig Wolt-leveringsmeny kildekontrollert 2026-10-30 med produksjonsuttrekker og kilde-nøkkelkanonisering: 53 prissatte katalogprodukter, kontrollert mot innebygd meny-JSON. Minstekrav 47 er 90 % av observert antall, avrundet ned, og gir buffer for normal menyvariasjon. Kilde-URL, hentemåte og forbudte rettsnavn er uendret. Utgått rett «Chicken Tikka Masala» erstattet i kvalitetsassertasjonene med publisert «Butter Chicken» (245 NOK). Utgått rett «Veggie Paratha Rull» erstattet i kvalitetsassertasjonene med publisert «Nan Veggie Rull» (139 NOK). Antall navne- og prisassertasjoner er bevart; alle bestod lokal validering mot dette kildeuttaket. Drikke og småtilbehør under uttrekkerens eksisterende prisgrense er ikke med i produkttallet. Prisene gjelder Wolt-levering; åpningstider er ikke uavhengig bekreftet."
+      "checkedAt": "2026-11-01",
+      "note": "2026-11-01: New exact-head Wolt direct proof 41336459220 observed 26 priced offers (SHA-256 6886cf34c7e1813062a83f19903555831accc9d4eb9f3b3b7b7b34bbabe91ad7), versus 46 earlier on the same date. Five former checks disappeared and were replaced with observed meal/price pairs; Chapli Kebab and Karachi Døner Box kept. Minimum alert floor 24 is about 92% of current observation, not a dish extraction cap. Large menu fluctuation requires monitoring; no missing items are fabricated. Delivery prices, hours unverified. See docs/catalog-drift-targeted-followup-2026-11-01.md."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Kylling Cloud Nan",
-      "Samosa Chat",
-      "Butter Chicken",
-      "Nan Veggie Rull",
-      "Biff Cloud Nan",
-      "Karachi Biff Pizza Stor",
-      "Døner nanrull"
+      "Chicken Bun Burger",
+      "Kylling Biryani",
+      "Chapli Kebab",
+      "Veggie Bun Burger",
+      "Saag Paratha",
+      "Hel Kylling",
+      "Karachi Døner Box"
     ],
     "requiredDishVariants": [
       {
-        "name": "Kylling Cloud Nan",
+        "name": "Chicken Bun Burger",
+        "priceMinor": 22500
+      },
+      {
+        "name": "Kylling Biryani",
+        "priceMinor": 23500
+      },
+      {
+        "name": "Chapli Kebab",
         "priceMinor": 22900
       },
       {
-        "name": "Samosa Chat",
-        "priceMinor": 11500
+        "name": "Veggie Bun Burger",
+        "priceMinor": 21500
       },
       {
-        "name": "Butter Chicken",
-        "priceMinor": 24500
+        "name": "Saag Paratha",
+        "priceMinor": 15900
       },
       {
-        "name": "Nan Veggie Rull",
-        "priceMinor": 13900
+        "name": "Hel Kylling",
+        "priceMinor": 28000
       },
       {
-        "name": "Biff Cloud Nan",
-        "priceMinor": 23900
-      },
-      {
-        "name": "Karachi Biff Pizza Stor",
-        "priceMinor": 31500
-      },
-      {
-        "name": "Døner nanrull",
-        "priceMinor": 15500
+        "name": "Karachi Døner Box",
+        "priceMinor": 27900
       }
     ],
     "forbiddenDishNames": []

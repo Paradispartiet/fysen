@@ -1,0 +1,76 @@
+{
+  "checkedAt": "2026-11-01",
+  "status": "source-and-local-parser-proof-only",
+  "slug": "engebret-cafe-oslo",
+  "sourceUrl": "https://www.engebret-cafe.no/julemeny-i-november-og-desember",
+  "replacesSourceUrl": "https://www.engebret-cafe.no/menymenu",
+  "effectiveFrom": "2026-11-01",
+  "effectiveThrough": "Christmas 2026 (source wording, no invented exact end date)",
+  "sha256": "00610be304391a1331edb824e69392deeae5bc4f3e0a5757757c75ff4cd57a31",
+  "observedItemCount": 15,
+  "minimumExpectedItems": 13,
+  "extractorVersion": "html-v23+html-v12+titles-v30+heading-v4+price-notation-v3+item-name-v8+non-dish-v16+beverage-v12+structured-compat-v1+trailing-price-card-v19+sibling-priced-card-v1+price-wrapped-v2+heading-price-v11+strong-title-price-v3+heading-supplement-v1+from-price-v1+section-first-card-v2+embedded-menu-json-v3+text-section-scope-v18+output-canonical-v23+visible-layout-v6+source-priced-v7+hyphen-priced-food-v1+recovery-selection-v10+semantic-menu-card-v1+paragraph-title-price-card-v1+explicit-menu-component-v1",
+  "manualPairs": [
+    {
+      "name": "Rakørret fra Valdres. Moden rakfisk med lefse, rødbeter, rødløk, rømme",
+      "priceMinor": 37500
+    },
+    {
+      "name": "Villaks røkt på gammelmåten, serveres med potetblini, rømme og ørretrogn",
+      "priceMinor": 29500
+    },
+    {
+      "name": "Fenalår fra Nordnorsk villsau med syltede beter, rømme",
+      "priceMinor": 29500
+    },
+    {
+      "name": "Kalix Løyrom (30g) med rødløk, rømme og blini",
+      "priceMinor": 45500
+    },
+    {
+      "name": "Lutefisk fra Lofoten - Lutefisken serveres så mange ganger det er ønskelig",
+      "priceMinor": 87500
+    },
+    {
+      "name": "Juletallerken - serveres 2 ganger",
+      "priceMinor": 79500
+    },
+    {
+      "name": "Pinnekjøtt fra Østerdalen - serveres 2 ganger",
+      "priceMinor": 87500
+    },
+    {
+      "name": "Smalahove fra Voss- serveres 2 ganger",
+      "priceMinor": 87500
+    },
+    {
+      "name": "Rakørret fra Valdres - serveres 2 ganger",
+      "priceMinor": 79500
+    },
+    {
+      "name": "Stekt breiflabb med gulrotpuré, sølvløk, blomkål, honningglasert gulrot og smørsaus",
+      "priceMinor": 56500
+    },
+    {
+      "name": "Grillet reinsdyr med selleripuré, bakte rotgrønnsaker, syltet rødkål, kremet viltsaus og tyttebær",
+      "priceMinor": 56500
+    },
+    {
+      "name": "Multekrem med kransekake",
+      "priceMinor": 28500
+    },
+    {
+      "name": "Riskrem med rød saus",
+      "priceMinor": 24000
+    },
+    {
+      "name": "Engebrets karamellpudding",
+      "priceMinor": 24000
+    },
+    {
+      "name": "Krydderkokte plommer med sorbet",
+      "priceMinor": 24000
+    }
+  ],
+  "scope": "Offisiell julemeny 2026 gjelder uttrykkelig fra 1. november frem til jul. Alle 15 individuelt prisede mattilbud er kontrollert mot full kilde: fire forretter, syv hovedretter og fire desserter. Minimum 13 gir normal variasjonsbuffer; alle 15 navn/prispar beholdes som konkrete kontroller. Lutefisk serveres så mange ganger det er ønskelig; fire andre tradisjonsretter serveres to ganger, uten oppdiktet pris per servering. Vegetarforrett/hovedrett uten eget navn/pris og tre-retters pakke til 1345 kr er utelatt. Kilden erstatter oktober-à la carte fra 1. november. Adresse/koordinater er uendret; åpningstider er ikke særskilt verifisert."
+}

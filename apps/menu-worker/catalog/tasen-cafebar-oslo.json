@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 8,
+    "minimumExpectedItems": 6,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,45 +26,40 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-18",
-      "note": "7 representative rett-/prisassertasjoner dokumentert mot Wolts offentlige meny 2026-10-18. Kartkoordinater er fra lenken «Se kart» på den individuelle Wolt-siden. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser. Åpningstider og produksjonsdatabase er ikke attestert."
+      "checkedAt": "2026-11-01",
+      "note": "2026-11-01: Strict live proof 41336459220 observed six priced Wolt items (SHA-256 c52c5a8cd12f47c8056f8619ada0e1ee151df5e38edccc8888806a2685946ae3). Previously required Mix Pita and Mix Tallerken were absent; Mix Pita control replaced with current Chili Saus (35 NOK), Mix Tallerken check retired because no independent unasserted dish remains. Six exact name/price controls now cover all six current items. Minimum count 6 is a quality alarm, not an extraction cap; side sauces are clearly side products. Menu changes rapidly; no main dishes invented. Delivery prices; hours unverified."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Mix Pita",
+      "Chili Saus",
       "Marinert Kylling",
-      "Marinert Biffkjøtt",
-      "Mix Tallerken",
+      "Pommes Frites",
       "Kylling Tallerken",
-      "Biff Tallerken",
+      "Husets Dressing",
       "Falafel 🌱"
     ],
     "requiredDishVariants": [
       {
-        "name": "Mix Pita",
-        "priceMinor": 16900
+        "name": "Chili Saus",
+        "priceMinor": 3500
       },
       {
         "name": "Marinert Kylling",
         "priceMinor": 15900
       },
       {
-        "name": "Marinert Biffkjøtt",
-        "priceMinor": 15900
-      },
-      {
-        "name": "Mix Tallerken",
-        "priceMinor": 19900
+        "name": "Pommes Frites",
+        "priceMinor": 7900
       },
       {
         "name": "Kylling Tallerken",
         "priceMinor": 18900
       },
       {
-        "name": "Biff Tallerken",
-        "priceMinor": 18900
+        "name": "Husets Dressing",
+        "priceMinor": 3500
       },
       {
         "name": "Falafel 🌱",

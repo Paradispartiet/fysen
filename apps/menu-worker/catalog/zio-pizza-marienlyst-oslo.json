@@ -27,13 +27,13 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-18",
-      "note": "Wolt-kilden ga livevaliderte og prisede retter i samlet PR #970 den 18. oktober 2026. Representative rett- og prisassertasjoner er gjennomgått redaksjonelt. Wolt-leveringspriser kan avvike fra bordpriser; åpningstider er ikke uavhengig kontrollert."
+      "note": "Wolt-kilden ga livevaliderte og prisede retter i samlet PR #970 den 18. oktober 2026. Representative rett- og prisassertasjoner er gjennomgått redaksjonelt. Wolt-leveringspriser kan avvike fra bordpriser; åpningstider er ikke uavhengig kontrollert. 2026-11-01: Full live catalog proof run 41318220389 observed 15 priced extracted offers (source fingerprint SHA-256 16a497d7b5b8637bf5dbc43609ad2057425623c85ef7cc4497e1948507df40a0). The prior required offer Coppa ham was absent; replaced with directly observed Mortadella at NOK 270.00. The expected-item floor is 15 (previously 15), a guardrail rather than a cap on extraction. No actual menu products were removed, and delivery prices are not dine-in prices. See docs/catalog-drift-seven-sources-2026-11-01.md."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Coppa ham",
+      "Mortadella",
       "Capricciosa",
       "Parma Prosciutto",
       "New Ultimate Vegetarianer",
@@ -43,8 +43,8 @@
     ],
     "requiredDishVariants": [
       {
-        "name": "Coppa ham",
-        "priceMinor": 28000
+        "name": "Mortadella",
+        "priceMinor": 27000
       },
       {
         "name": "Capricciosa",

@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 36,
+    "minimumExpectedItems": 31,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-09-15",
-      "note": "Physical identity and menu contract consolidated to the current Arte Pazza restaurant at Ullevålsveien 61; complete canonical kitchen hours are not assumed."
+      "note": "Physical identity and menu contract consolidated to the current Arte Pazza restaurant at Ullevålsveien 61; complete canonical kitchen hours are not assumed. 2026-11-01: Full live catalog proof run 41318220389 observed 34 priced extracted offers (source fingerprint SHA-256 af1da2cf6452e74fbb4160e44817dc4eff0f731588b2dd4acb1025fe62af046d). The prior required offer Tagliatelle di Scampi was absent; replaced with directly observed Gnocchi Alla Sorrentina con bocconcini di Manzo at NOK 245.00. The expected-item floor is 31 (previously 36), a guardrail rather than a cap on extraction. No actual menu products were removed, and delivery prices are not dine-in prices. See docs/catalog-drift-seven-sources-2026-11-01.md."
     }
   },
   "actions": [],
@@ -35,7 +35,7 @@
     "requiredDishNames": [
       "Carpaccio Classico",
       "🌱 Insalata del Giorno/ dagens salat liten",
-      "Tagliatelle di Scampi",
+      "Gnocchi Alla Sorrentina con bocconcini di Manzo",
       "Nduja",
       "* Arte Pazza",
       "Pizza Sud-Nord",
@@ -52,7 +52,7 @@
         "priceMinor": 6500
       },
       {
-        "name": "Tagliatelle di Scampi",
+        "name": "Gnocchi Alla Sorrentina con bocconcini di Manzo",
         "priceMinor": 24500
       },
       {

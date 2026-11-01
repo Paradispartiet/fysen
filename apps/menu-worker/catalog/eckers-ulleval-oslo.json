@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-30",
-      "note": "Dagens Wolt-meny publiserer 14 uttrekkbare retter/produkter. Serrano Toast og Italiano Toast finnes ikke lenger i kildeinnholdet; de to representative prisassertasjonene er erstattet med Vegetar Burrito og Vegetar salat, begge 165 kr. Åtte konkrete navn/prispar beholdes. Leveringspriser; åpningstider er fortsatt uverifiserte."
+      "note": "Dagens Wolt-meny publiserer 14 uttrekkbare retter/produkter. Serrano Toast og Italiano Toast finnes ikke lenger i kildeinnholdet; de to representative prisassertasjonene er erstattet med Vegetar Burrito og Vegetar salat, begge 165 kr. Åtte konkrete navn/prispar beholdes. Leveringspriser; åpningstider er fortsatt uverifiserte. 2026-11-01: Full live catalog proof run 41318220389 observed 16 priced extracted offers (source fingerprint SHA-256 a1af0a009f99bb414e909c99cf5f71cc11c401248cc27eade09883cb33e39fe6). The prior required offer Rosa ananas was absent; replaced with directly observed Mint mango at NOK 95.00. The expected-item floor is 12 (previously 12), a guardrail rather than a cap on extraction. No actual menu products were removed, and delivery prices are not dine-in prices. See docs/catalog-drift-seven-sources-2026-11-01.md."
     }
   },
   "actions": [],
@@ -40,7 +40,7 @@
       "Vegansk salat 🌱",
       "Kylling Burrito",
       "Vegetar salat 🌱",
-      "Rosa ananas"
+      "Mint mango"
     ],
     "requiredDishVariants": [
       {
@@ -72,7 +72,7 @@
         "priceMinor": 16500
       },
       {
-        "name": "Rosa ananas",
+        "name": "Mint mango",
         "priceMinor": 9500
       }
     ],
