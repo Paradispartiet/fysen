@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-11-01",
-      "note": "2026-11-01: Production materialization #41337870383 was blocked by an extractor-refresh snapshot of 36 priced items lacking the exact Gyoza (NOK 184) quality assertion. This is not evidence that the dish is discontinued: the published Wolt menu still lists Gyoza at 184 NOK, and the other seven assertion pairs were not reported missing. Preserve the original exact name/price and source. Recheck this manifest alone in a strict PR live proof before production retry; do not lower counts or remove an actual menu item. Source: https://wolt.com/nb/nor/oslo/restaurant/sabi-sushi-holtet ; production job link in docs/production-two-source-blockers-2026-11-01.md."
+      "note": "2026-11-01: First production extractor refresh #41337870383 omitted Gyoza (184 NOK) from a 36-item snapshot, but independent exact-head HTTP proofs #41345736871 and #41346809813 recovered 37 items and Gyoza at the exact checked price; all 8 assertions passed, minimum 8 preserved. No menu/source transport changes. Earlier single-source failure was transient; hours unverified, Wolt delivery prices only."
     }
   },
   "actions": [],
