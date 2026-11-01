@@ -165,6 +165,67 @@ jobs:
             exit 1
           fi
 
+      - name: Diagnose missing Viet Kitchen menu row (PR 1079 only)
+        if: "always() && github.event_name == 'pull_request' && github.event.pull_request.number == 1079"
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from "node:fs";
+          import { load } from "cheerio";
+          import { HttpMenuClient } from "./dist/http-client.js";
+          import { extractMenuSource } from "./dist/menu-source-runtime.js";
+          import { recoverEmbeddedStructuredMenuJson } from "./dist/html-embedded-menu-json-recovery.js";
+          import { extractScopedHtmlMenu } from "./dist/html-source-extractor.js";
+
+          const manifest = JSON.parse(readFileSync("catalog/viet-kitchen-bjolsen-oslo.json", "utf8"));
+          const needle = "BÚN BÒ XÀO XẢ ỚT";
+          const match = (x) => typeof x === "string" && x.normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().includes(needle.normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase());
+          const fetched = await new HttpMenuClient().fetchSource({
+            url: manifest.menuSource.url, userAgent: manifest.menuSource.userAgent,
+            etag: null, lastModified: null
+          });
+          if (fetched.kind !== "content") throw new Error("Unexpected HTTP 304");
+          const embedded = recoverEmbeddedStructuredMenuJson(fetched.body);
+          const scoped = extractScopedHtmlMenu(fetched.body);
+          const extracted = await extractMenuSource("html", fetched);
+          console.log("DIAGNOSTIC_SUMMARY", JSON.stringify({
+            httpStatus:fetched.status, rawSha256:fetched.rawSha256, rawLength:fetched.body.length,
+            rawLiteralNeedle:match(fetched.body), scopedMethod:scoped.method,
+            scopedCount:scoped.items.length, scopedNeedle:scoped.items.filter(x=>match(x.name)).map(x=>({name:x.name,priceMinor:x.priceMinor})),
+            embeddedCount:embedded.length, embeddedNeedle:embedded.filter(x=>match(x.name)).map(x=>({name:x.name,priceMinor:x.priceMinor,sectionName:x.sectionName})),
+            extractedCount:extracted.items.length, extractedNeedle:extracted.items.filter(x=>match(x.name)).map(x=>({name:x.name,priceMinor:x.priceMinor,sectionName:x.sectionName}))
+          }));
+          const $=load(fetched.body);
+          const hits=[];
+          const candidateInfo=[];
+          for (const [scriptIndex,element] of $("script").toArray().entries()) {
+            const tx=$(element).html()?.trim()??"";
+            let doc; try{doc=JSON.parse(tx)}catch{continue}
+            const seen=new Set(); let visited=0;
+            const walk=(value,path,depth)=>{
+              if (depth>19 || visited++>100000 || value===null || typeof value!=="object")return;
+              if(seen.has(value))return;seen.add(value);
+              if(Array.isArray(value)){for(let i=0;i<value.length;i++)walk(value[i],path+"["+i+"]",depth+1);return}
+              const rec=value;
+              for(const [key,val] of Object.entries(rec)){
+                if(match(val)){
+                  if(hits.length<35)hits.push({scriptIndex,path:path+"."+key,keys:Object.keys(rec).slice(0,16),name:rec.name??rec.name_no??rec.title,price:rec.price,id:rec.id,item_ids:rec.item_ids?.slice?.(0,8)});
+                }
+              }
+              if(Array.isArray(rec.categories)&&Array.isArray(rec.items)&&candidateInfo.length<30){
+                const matched=rec.items.filter(x=>x&&typeof x==="object"&&match(x.name??x.name_no??x.title));
+                const linked=matched.map(x=>({id:x.id,name:x.name??x.name_no,price:x.price,categories:rec.categories.filter(c=>c?.item_ids?.some?.(id=>String(id)===String(x.id))).map(c=>c.name)}));
+                candidateInfo.push({scriptIndex,path,categories:rec.categories.length,items:rec.items.length,matched:linked});
+              }
+              for(const [key,val] of Object.entries(rec))walk(val,path+"."+key,depth+1);
+            };
+            walk(doc,"root",0);
+          }
+          console.log("DIAGNOSTIC_SCRIPT_HITS",JSON.stringify({count:hits.length,hits}));
+          console.log("DIAGNOSTIC_MENU_CANDIDATES",JSON.stringify(candidateInfo));
+          NODE
+
       - name: Validate requested manifest or directory
         if: github.event_name == 'workflow_dispatch'
         shell: bash
