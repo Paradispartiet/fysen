@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 47,
+    "minimumExpectedItems": 41,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-17",
-      "note": "Publisert Wolt-leveringsmeny med konkrete rett-/prisassertasjoner er kontrollert gjennom målrettet livevalidering 2026-10-17 (PR #965). Prisene gjelder levering, ikke nødvendigvis restaurantbordet. Åpningstidene er ikke uavhengig verifisert."
+      "checkedAt": "2026-11-01",
+      "note": "2026-11-01: Live full-catalog proof 41332250921 observed 45 priced Wolt offers (SHA-256 f1985d4f010293eac4b163b281ba25c50bfd3704b892f58dc027cb96069683bf). All eight exact dish/price pairs passed; source count moved below old 47-offer floor. Expected-item floor 41 is an alert threshold (about 90% of observed), never a cap; all 45 eligible items remain retrievable. Prices are Wolt delivery prices; hours unverified. See docs/catalog-drift-five-sources-2026-11-01.md."
     }
   },
   "actions": [],

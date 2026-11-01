@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-18",
-      "note": "7 representative rett-/prisassertasjoner dokumentert mot Wolts offentlige meny 2026-10-18. Kartkoordinater er fra lenken «Se kart» på den individuelle Wolt-siden. Prisene er Wolt-leveringspriser, ikke nødvendigvis bordpriser. Åpningstider og produksjonsdatabase er ikke attestert."
+      "checkedAt": "2026-11-01",
+      "note": "2026-11-01: Live 983-source proof 41332250921 observed eight priced Wolt menu entries (SHA-256 290291b78a9e7613712f0c05e91060f41ae50b7af423de2f3a0deee2fc5c001d). Marinert Biffkjøtt (159 NOK) and Biff Tallerken (189 NOK) are absent. Replaced those exact checks with current Pommes Frites (79 NOK) and Husets Dressing (35 NOK), explicitly a side and dressing. Five other exact checks remain. Minimum-count alert 8 unchanged, with no extraction cap; hours unverified and prices for delivery. See docs/catalog-drift-five-sources-2026-11-01.md."
     }
   },
   "actions": [],
@@ -35,10 +35,10 @@
     "requiredDishNames": [
       "Mix Pita",
       "Marinert Kylling",
-      "Marinert Biffkjøtt",
+      "Pommes Frites",
       "Mix Tallerken",
       "Kylling Tallerken",
-      "Biff Tallerken",
+      "Husets Dressing",
       "Falafel 🌱"
     ],
     "requiredDishVariants": [
@@ -51,8 +51,8 @@
         "priceMinor": 15900
       },
       {
-        "name": "Marinert Biffkjøtt",
-        "priceMinor": 15900
+        "name": "Pommes Frites",
+        "priceMinor": 7900
       },
       {
         "name": "Mix Tallerken",
@@ -63,8 +63,8 @@
         "priceMinor": 18900
       },
       {
-        "name": "Biff Tallerken",
-        "priceMinor": 18900
+        "name": "Husets Dressing",
+        "priceMinor": 3500
       },
       {
         "name": "Falafel 🌱",

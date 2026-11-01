@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-11-01",
-      "note": "Wolt-leveringsmenyen kildekontrollert 2026-11-01 mot komplett innebygd meny-JSON (loading_strategy=full): 25 kvalifiserte, individuelt prisede uttrekksposter, samtlige navn/priser kontrollert mot råkilden. Opprinnelig og oppdatert uttrekker gir identiske poster på samme kildeopptak.  1 utgåtte kontrollretter er erstattet med uavhengige, publiserte måltidskontroller; øvrige kontroller og antall navne-/prisassertasjoner er bevart. Eksisterende minstekrav 8 er uendret. Se docs/research/wolt-menu-control-refresh-20261101.sources.json for kildehash, full parvis kontroll og utelatelser. Prisene gjelder Wolt-levering; åpningstider og bordpriser er ikke bekreftet."
+      "note": "2026-11-01: Live 983-source proof 41332250921 captured 24 priced Wolt offers (SHA-256 f986924dbbc578d76098f1f6f0297aa599bff7605e7ce652e1683fef181dc5f9). Spring rolls (2) (119 NOK) is absent; replaced its exact dish/price control with current BBQ Chick'n Wrap (189 NOK). Nine other exact controls and minimum-count alert 8 remain unchanged. All qualifying offers may be extracted; delivery prices, not dine-in prices. Hours unverified. See docs/catalog-drift-five-sources-2026-11-01.md."
     }
   },
   "actions": [],
@@ -38,7 +38,7 @@
       "Meatball Goulash",
       "Jamaican Curry 🌱",
       "Crispy Fried Gyoza (7p)🌱",
-      "Spring rolls (2) 🌱",
+      "BBQ Chick'n Wrap 🌱",
       "Sweet potato tempura (5p)🌱",
       "Creamy Pumpkin Soup",
       "Falafel Wrap 🌱",
@@ -66,8 +66,8 @@
         "priceMinor": 14900
       },
       {
-        "name": "Spring rolls (2) 🌱",
-        "priceMinor": 11900
+        "name": "BBQ Chick'n Wrap 🌱",
+        "priceMinor": 18900
       },
       {
         "name": "Sweet potato tempura (5p)🌱",
