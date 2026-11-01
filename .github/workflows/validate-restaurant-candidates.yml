@@ -144,13 +144,24 @@ jobs:
             exit 0
           fi
 
+          failures=()
           while IFS= read -r manifest; do
             [[ -n "$manifest" ]] || continue
             echo "Strict live validation: $manifest"
-            # validate:manifest performs one direct validation; it does not hide
-            # a first-pass failure behind batch retry behavior.
-            pnpm --filter @fysen/menu-worker validate:manifest "$manifest"
+            # Run each exact-head proof even when another source fails.
+            # Do not hide first-pass errors behind batch retries.
+            if pnpm --filter @fysen/menu-worker validate:manifest "$manifest"; then
+              echo "PASS: $manifest"
+            else
+              failures+=("$manifest")
+              echo "FAIL: $manifest" >&2
+            fi
           done < "$PROOF_FILE"
+          if (( ${#failures[@]} > 0 )); then
+            printf 'Strict source proofs failed (%s):\n' "${#failures[@]}" >&2
+            printf ' - %s\n' "${failures[@]}" >&2
+            exit 1
+          fi
 
       - name: Validate requested manifest or directory
         if: github.event_name == 'workflow_dispatch'
@@ -173,7 +184,7 @@ jobs:
           esac
 
       - name: Validate the complete canonical catalog when requested
-        if: "github.event_name == 'pull_request' && contains(github.event.pull_request.body, 'Live-proof catalog: true')"
+        if: "always() && github.event_name == 'pull_request' && steps.proof.outcome == 'success' && contains(github.event.pull_request.body, 'Live-proof catalog: true')"
         working-directory: apps/menu-worker
         shell: bash
         env:
