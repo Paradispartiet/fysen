@@ -13,7 +13,7 @@
   "menuSource": {
     "url": "https://wolt.com/en/nor/oslo/restaurant/viet-kitchen-oslo",
     "sourceType": "html",
-    "fetchMode": "browser",
+    "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 360,
     "minimumExpectedItems": 66
@@ -28,7 +28,7 @@
     "hours": {
       "status": "provisional",
       "checkedAt": "2026-11-01",
-      "note": "2026-11-01: Exact-head HTTP source proof #41345736871 returned 71 priced Wolt offers but omitted the still-published BÚN BÒ XÀO XẢ ỚT - Risnudler med marinert biff (NOK 249) control. The public Wolt/foodora menus still show this meal. Trial explicit browser fetching for this ONE source to recover rendered menu data; all ten exact quality controls and item floor 66 are preserved. Do not approve or merge without a successful strict live source proof on this exact mode; if browser mode cannot pass, revert it and diagnose the raw source. Venue hours are provisional, and Wolt prices are delivery prices, not confirmed dine-in prices."
+      "note": "2026-11-01: Production materialization #41337870383 and exact-head HTTP proof #41345736871 both extracted 71 Wolt offers but lacked the published BÚN BÒ XÀO XẢ ỚT - Risnudler med marinert biff (249 NOK). Public Wolt and Foodora pages still show the dish; preserve the exact quality assertion and current 66-item minimum. A source-specific browser trial (#41345918349) failed its 120-request security budget, so HTTP fetching is restored without changing global limits. Investigate the raw source and extractor rather than silently substituting a different dish. Hours remain provisional; Wolt prices are delivery prices."
     }
   },
   "actions": [
