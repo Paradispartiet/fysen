@@ -21,13 +21,14 @@
       "redirectOrigins": [],
       "browserDataOrigins": [],
       "browserBlockedOrigins": []
-    }
+    },
+    "maxResponseBytes": 8388608
   },
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-18",
-      "note": "10 representative rett-/prispar fra individuell offentlig Wolt-meny 2026-10-18; koordinater fra Wolt-kartlenken. Wolt-leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert."
+      "checkedAt": "2026-11-01",
+      "note": "10 representative rett-/prispar fra individuell offentlig Wolt-meny 2026-10-18; koordinater fra Wolt-kartlenken. Wolt-leveringspriser, ikke bordpriser. Åpningstider og produksjonsdatabase ikke attestert. 2026-11-01: Targeted live proof 41337289793 returned bounded HTTP response-size error at default 2 MiB. Per-source upper limit set to the already used 8 MiB policy (same as Domino Grorud), with unchanged restaurant identity, 10 exact price controls, source and retry policy. Require new strict live validation before merge."
     }
   },
   "actions": [],
