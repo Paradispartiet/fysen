@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 46,
+    "minimumExpectedItems": 38,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,19 +26,19 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-17",
-      "note": "Kildebaserte Wolt-rett/prisassertasjoner ble generert og bestod samlet livevalidering i PR #969 den 17. oktober 2026. Representative påstander er redaksjonelt avgrenset til matretter, uten drikke/krydder. Leveringspriser kan avvike fra bordprisene. Åpningstider er ikke uavhengig kontrollert."
+      "checkedAt": "2026-11-01",
+      "note": "2026-11-01: Direct HTTP Wolt live proof #41347694926 observed 42 priced catalog products (SHA-256 86482a59cea663f2976bb2e94de827f30a4340e6a7f6fcf7dba9df80129e058b). Old Beef Cheesesteak Sandwich and Beef Cheesesteak Sandwich Meal offers were absent from that response; four remaining exact controls still passed. Their two control slots now check directly observed Meat Lover Bbq (NOK 195) and Meat Lover Bbq Meal (NOK 285), without pretending the retired dish is available. The source-specific item-count guardrail changes from obsolete 46 to 38 (~90% of the fresh observation, for menu variation, not a limit on extraction). All six independently priced controls and source URL are preserved. Only Wolt delivery prices are attested, not complete dine-in menu or venue hours."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
       "Kyllingsnadder Platter",
-      "Beef Cheesesteak Sandwich",
+      "Meat Lover Bbq",
       "Beef Naanwich",
       "Spicy Avocado",
       "Cheese Please",
-      "Beef Cheesesteak Sandwich Meal"
+      "Meat Lover Bbq Meal"
     ],
     "requiredDishVariants": [
       {
@@ -46,7 +46,7 @@
         "priceMinor": 25000
       },
       {
-        "name": "Beef Cheesesteak Sandwich",
+        "name": "Meat Lover Bbq",
         "priceMinor": 19500
       },
       {
@@ -62,7 +62,7 @@
         "priceMinor": 19500
       },
       {
-        "name": "Beef Cheesesteak Sandwich Meal",
+        "name": "Meat Lover Bbq Meal",
         "priceMinor": 28500
       }
     ],
