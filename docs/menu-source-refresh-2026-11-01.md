@@ -33,3 +33,12 @@ Detaljerte kildebevis, rådata-IDer og avgrensninger:
 67Grills numeriske pizzatittel `26. 67` er fortsatt satt til side av det eksisterende navnefilteret; ingrediensene brukes ikke til å finne på et navn. Det er ikke påstått full dekning av alle rå matprodukter hos dette stedet. Wolt-priser er leveringspriser. Lunsj, selskapsmenyer, conditional/reduced-menyer, drikkepakker og menyer uten individuelt prisede tilbud blandes ikke inn uten kildebevis.
 
 Endelig godkjenning krever fortsatt CI og direkte livebevis på den konkrete commiten, helkatalogkontroll, separat byte-identisk kandidatopptak for de to nye restaurantene, materialisering, production reconcile og offentlig søk. Katalogstatus alene teller ikke som produksjonsbevis.
+
+## Helkatalograpport og tre siste kilder
+
+Kjøring [41270052806](https://github.com/Paradispartiet/fysen/actions/runs/41270052806) på `1dfa501` godkjente **980/983** kilder. De ni restaurantene ovenfor bestod, også de direkte enkeltkontrollene. Tre gjenværende avvik er behandlet separat:
+
+- [La Tornata](la-tornata-control-refresh-2026-11-01.md): to fjernede retter erstattes med publiserte tilbud; seks kontroller og minimum 18 beholdes. Alle 39 kvalifiserte råposter er kontrollert.
+- [Burger King Hegdehaugsveien og Domino Grorud](wolt-source-response-budgets-2026-11-01.md): eksplisitt kildebudsjett på 8 MiB gjennom eksisterende HTTP-støtte. Den globale 2 MiB-standarden er uendret; alle tjue konkrete kontroller og begge minimumskrav er bevart.
+
+Dette er kilde-/konfigurasjonsendringer. Parserkode og den beståtte 881-testers regresjonen er uendret fra `1dfa501`. Alle tre oppdaterte manifester er skjemavalidert og gjennomgått uavhengig; ny direkte livekontroll og helkatalograpport gjenstår før merge.

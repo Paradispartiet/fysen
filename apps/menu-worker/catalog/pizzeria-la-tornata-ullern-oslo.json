@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-18",
-      "note": "Navn, besøksadresse og prissatte matretter kontrollert mot offentlig Wolt-menyside 2026-10-18. Koordinater fra Wolts kartlenke for samme sted. Prisene er Wolt-leveringspriser og ikke attestert som bordpriser. Åpningstider og maskinelt liveinntak er ikke særskilt attestert."
+      "checkedAt": "2026-11-01",
+      "note": "Navn, besøksadresse og prissatte matretter kontrollert mot offentlig Wolt-menyside 2026-11-01. 39 mattilbud samsvarer med rå menydata (32 pizzaer og 7 dressinger). Parma og Con Carne finnes ikke i kilden; kontrollene er erstattet med Nochi Con Miele og Roma. Koordinater fra Wolts kartlenke for samme sted. Prisene er Wolt-leveringspriser og ikke attestert som bordpriser. Åpningstider og maskinelt liveinntak er ikke særskilt attestert."
     }
   },
   "actions": [],
@@ -36,10 +36,10 @@
       "1. Margarita",
       "2. Capricciosa",
       "3. Pepperoni",
-      "4. Parma",
+      "11. Nochi Con Miele",
       "5. Scampi",
       "6. Quatro Fromaggi",
-      "7. Con Carne",
+      "16. Roma",
       "10. Spinachio"
     ],
     "requiredDishVariants": [
@@ -56,8 +56,8 @@
         "priceMinor": 19900
       },
       {
-        "name": "4. Parma",
-        "priceMinor": 25000
+        "name": "11. Nochi Con Miele",
+        "priceMinor": 24100
       },
       {
         "name": "5. Scampi",
@@ -68,8 +68,8 @@
         "priceMinor": 22000
       },
       {
-        "name": "7. Con Carne",
-        "priceMinor": 23400
+        "name": "16. Roma",
+        "priceMinor": 23700
       },
       {
         "name": "10. Spinachio",
