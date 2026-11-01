@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-11-01",
-      "note": "2026-11-01: Live 983-source proof 41332250921 observed 30 priced Wolt offers (SHA-256 2179a99a627e0c7ea0905c29de280c1847b9376602d6749e6ced9e512a012fe3). Dual Fried Chicken (259 NOK) is absent; replaced its exact name/price control with current Fried Rice Beef (279 NOK). Seven other exact controls and the minimum-count guard remain unchanged. No extraction cap applied. Delivery prices; opening hours unverified. See docs/catalog-drift-five-sources-2026-11-01.md."
+      "note": "2026-11-01: Strict live source proof 41336459220 observed 28 Wolt priced offers (SHA-256 9fd17725567e7c0a3fba53bd358ed5fbc7b54e6491e289e0276f6a27bca819a0). Chicken Fingers (129 NOK) is no longer published; replacement Fried Rice Chicken (249 NOK) appears in the same live source. All other seven exact dish/price assertions remain, minimum 8 remains. No extraction limit, delivery prices only; hours unverified."
     }
   },
   "actions": [],
@@ -40,7 +40,7 @@
       "Marinated Beef Noodle",
       "Chicken Spring Rolls 3pc",
       "Chicken Salad Bowl",
-      "Chicken Fingers"
+      "Fried Rice Chicken"
     ],
     "requiredDishVariants": [
       {
@@ -72,8 +72,8 @@
         "priceMinor": 22900
       },
       {
-        "name": "Chicken Fingers",
-        "priceMinor": 12900
+        "name": "Fried Rice Chicken",
+        "priceMinor": 24900
       }
     ],
     "forbiddenDishNames": []

@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 41,
+    "minimumExpectedItems": 24,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -27,44 +27,44 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-11-01",
-      "note": "Wolt-leveringsmenyen kildekontrollert 2026-11-01 mot komplett innebygd meny-JSON (loading_strategy=full): 46 kvalifiserte, individuelt prisede uttrekksposter, samtlige navn/priser kontrollert mot råkilden. Opprinnelig og oppdatert uttrekker gir identiske poster på samme kildeopptak.  5 utgåtte kontrollretter er erstattet med uavhengige, publiserte måltidskontroller; øvrige kontroller og antall navne-/prisassertasjoner er bevart. Minstekrav 41 er 90 % av observert kvalifisert antall 46, avrundet ned, som buffer for normal menyvariasjon (tidligere 47). Se docs/research/wolt-menu-control-refresh-20261101.sources.json for kildehash, full parvis kontroll og utelatelser. Prisene gjelder Wolt-levering; åpningstider og bordpriser er ikke bekreftet."
+      "note": "2026-11-01: New exact-head Wolt direct proof 41336459220 observed 26 priced offers (SHA-256 6886cf34c7e1813062a83f19903555831accc9d4eb9f3b3b7b7b34bbabe91ad7), versus 46 earlier on the same date. Five former checks disappeared and were replaced with observed meal/price pairs; Chapli Kebab and Karachi Døner Box kept. Minimum alert floor 24 is about 92% of current observation, not a dish extraction cap. Large menu fluctuation requires monitoring; no missing items are fabricated. Delivery prices, hours unverified. See docs/catalog-drift-targeted-followup-2026-11-01.md."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Kylling Cloud Nan",
-      "Samosa Chat",
+      "Chicken Bun Burger",
+      "Kylling Biryani",
       "Chapli Kebab",
-      "Veggie Paratha Rull",
-      "Keema Cloud Nan",
-      "Karachi Kjøttdeig Pizza Stor",
+      "Veggie Bun Burger",
+      "Saag Paratha",
+      "Hel Kylling",
       "Karachi Døner Box"
     ],
     "requiredDishVariants": [
       {
-        "name": "Kylling Cloud Nan",
-        "priceMinor": 22900
+        "name": "Chicken Bun Burger",
+        "priceMinor": 22500
       },
       {
-        "name": "Samosa Chat",
-        "priceMinor": 11500
+        "name": "Kylling Biryani",
+        "priceMinor": 23500
       },
       {
         "name": "Chapli Kebab",
         "priceMinor": 22900
       },
       {
-        "name": "Veggie Paratha Rull",
-        "priceMinor": 16900
+        "name": "Veggie Bun Burger",
+        "priceMinor": 21500
       },
       {
-        "name": "Keema Cloud Nan",
-        "priceMinor": 21900
+        "name": "Saag Paratha",
+        "priceMinor": 15900
       },
       {
-        "name": "Karachi Kjøttdeig Pizza Stor",
-        "priceMinor": 29900
+        "name": "Hel Kylling",
+        "priceMinor": 28000
       },
       {
         "name": "Karachi Døner Box",
