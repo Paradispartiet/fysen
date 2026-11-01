@@ -21,7 +21,9 @@ permissions:
   contents: read
 
 concurrency:
-  group: fysen-restaurant-proof-${{ github.event.pull_request.number || github.ref }}
+  # Targeted PR proofs must not queue behind an older explicitly requested
+  # complete-catalog scan. Keep cancellation within each test scope.
+  group: fysen-restaurant-proof-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name == 'pull_request' && contains(github.event.pull_request.body, 'Live-proof catalog: true') && 'full' || 'targeted' }}
   cancel-in-progress: true
 
 jobs:
