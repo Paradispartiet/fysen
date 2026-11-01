@@ -9,7 +9,7 @@
   "sha256": "00610be304391a1331edb824e69392deeae5bc4f3e0a5757757c75ff4cd57a31",
   "observedItemCount": 15,
   "minimumExpectedItems": 13,
-  "extractorVersion": "html-v23+html-v12+titles-v29+heading-v4+price-notation-v3+item-name-v8+non-dish-v16+beverage-v12+structured-compat-v1+trailing-price-card-v19+sibling-priced-card-v1+price-wrapped-v2+heading-price-v11+strong-title-price-v3+heading-supplement-v1+from-price-v1+section-first-card-v2+embedded-menu-json-v3+text-section-scope-v18+output-canonical-v23+visible-layout-v6+source-priced-v7+hyphen-priced-food-v1+recovery-selection-v9+semantic-menu-card-v1+paragraph-title-price-card-v1",
+  "extractorVersion": "html-v23+html-v12+titles-v30+heading-v4+price-notation-v3+item-name-v8+non-dish-v16+beverage-v12+structured-compat-v1+trailing-price-card-v19+sibling-priced-card-v1+price-wrapped-v2+heading-price-v11+strong-title-price-v3+heading-supplement-v1+from-price-v1+section-first-card-v2+embedded-menu-json-v3+text-section-scope-v18+output-canonical-v23+visible-layout-v6+source-priced-v7+hyphen-priced-food-v1+recovery-selection-v10+semantic-menu-card-v1+paragraph-title-price-card-v1+explicit-menu-component-v1",
   "manualPairs": [
     {
       "name": "Rakørret fra Valdres. Moden rakfisk med lefse, rødbeter, rødløk, rømme",

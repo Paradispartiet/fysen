@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-19",
-      "note": "Wolt-kilde og 10 prisassertasjoner undersøkt 2026-10-19, adresse og koordinater fra individuell Wolt-profil. Wolt-leveringspriser, ikke bekreftede bordpriser. Åpningstider og live-produksjonsdatasynk ikke særskilt attestert. Eksisterende Veggie Veggie på samme gateadresse har annen meny og separat handelsidentitet; Nordvegan har egen offisiell nettside, registrert juridisk enhet og eget Wolt-sted. Streng live-Wolt-validering på forrige PR-head observerte Beyond Burger og Chickn't Burger til 195 kr (Wolt-nettvisning viste 224 kr). Prisassertasjonene er satt til 195 kr etter live-uttrekk; øvrige krav uendret."
+      "checkedAt": "2026-11-01",
+      "note": "Wolt-leveringsmenyen kildekontrollert 2026-11-01 mot komplett innebygd meny-JSON (loading_strategy=full): 25 kvalifiserte, individuelt prisede uttrekksposter, samtlige navn/priser kontrollert mot råkilden. Opprinnelig og oppdatert uttrekker gir identiske poster på samme kildeopptak.  1 utgåtte kontrollretter er erstattet med uavhengige, publiserte måltidskontroller; øvrige kontroller og antall navne-/prisassertasjoner er bevart. Eksisterende minstekrav 8 er uendret. Se docs/research/wolt-menu-control-refresh-20261101.sources.json for kildehash, full parvis kontroll og utelatelser. Prisene gjelder Wolt-levering; åpningstider og bordpriser er ikke bekreftet."
     }
   },
   "actions": [],
@@ -40,7 +40,7 @@
       "Crispy Fried Gyoza (7p)🌱",
       "Spring rolls (2) 🌱",
       "Sweet potato tempura (5p)🌱",
-      "Spinach Soup 🌱",
+      "Creamy Pumpkin Soup",
       "Falafel Wrap 🌱",
       "Toasted Chick'n Caesar Wrap 🌱"
     ],
@@ -74,7 +74,7 @@
         "priceMinor": 10900
       },
       {
-        "name": "Spinach Soup 🌱",
+        "name": "Creamy Pumpkin Soup",
         "priceMinor": 14900
       },
       {

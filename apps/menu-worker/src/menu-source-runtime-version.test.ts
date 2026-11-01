@@ -1,5 +1,5 @@
 import { HTML_PARAGRAPH_TITLE_PRICE_RECOVERY_VERSION } from "./html-paragraph-title-price-recovery.js";
-import { HTML_SEMANTIC_MENU_CARD_RECOVERY_VERSION } from "./html-semantic-menu-card-recovery.js";
+import { HTML_SEMANTIC_MENU_CARD_RECOVERY_VERSION, HTML_EXPLICIT_MENU_COMPONENT_RECOVERY_VERSION } from "./html-semantic-menu-card-recovery.js";
 import { describe, expect, it } from "vitest";
 import { HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION } from "./html-adjacent-heading-price-recovery.js";
 import { HTML_DESCRIPTION_TITLE_RECOVERY_VERSION } from "./html-description-title-recovery.js";
@@ -60,6 +60,7 @@ describe("HTML runtime extractor version", () => {
       HTML_RECOVERY_SELECTION_VERSION,
       HTML_SEMANTIC_MENU_CARD_RECOVERY_VERSION,
       HTML_PARAGRAPH_TITLE_PRICE_RECOVERY_VERSION,
+      HTML_EXPLICIT_MENU_COMPONENT_RECOVERY_VERSION,
     ].join("+");
 
     expect(HTML_EXTRACTOR_VERSION).toBe("html-v12");
@@ -93,7 +94,7 @@ describe("HTML runtime extractor version", () => {
     expect(HTML_VISIBLE_LAYOUT_RECONCILIATION_VERSION).toBe("visible-layout-v6");
     expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v7");
     expect(HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION).toBe("hyphen-priced-food-v1");
-    expect(HTML_RECOVERY_SELECTION_VERSION).toBe("recovery-selection-v9");
+    expect(HTML_RECOVERY_SELECTION_VERSION).toBe("recovery-selection-v10");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("api")).toBe(PUBLIC_MENU_API_EXTRACTOR_VERSION);

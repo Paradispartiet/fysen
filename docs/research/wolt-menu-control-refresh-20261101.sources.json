@@ -1,0 +1,1280 @@
+{
+  "checkedAt": "2026-11-01T03:11:35.678Z",
+  "scope": "Current Wolt delivery menu controls only. Complete embedded menu records checked independently against every extracted eligible pair. No parser changes; no claim that retired controls were renamed. Hours and dine-in prices remain unverified.",
+  "sources": [
+    {
+      "slug": "67grill-oslo",
+      "url": "https://wolt.com/en/nor/oslo/restaurant/67-grill",
+      "title": "67Grill | Wolt | Delivery | Oslo",
+      "captureFile": "67grill-oslo-current.html",
+      "capturedAt": "2026-11-01T03:09:01.876Z",
+      "sha256": "58b6a70cfd1a455b2957a6131847cf79cca1e4336f7d7aec594eac536c2e115c",
+      "embeddedMenuPath": "/queries/6/state/data",
+      "loadingStrategy": "full",
+      "rawProductCount": 30,
+      "baselineExtractedOfferCount": 23,
+      "currentExtractedOfferCount": 23,
+      "baselineAndCurrentItemsIdentical": true,
+      "previousMinimumExpectedItems": 28,
+      "minimumExpectedItems": 20,
+      "controlCount": 8,
+      "absentRetiredControls": [
+        {
+          "name": "35. Dønner-Pita",
+          "priceMinor": 13900
+        },
+        {
+          "name": "09. Shawarma-Tallerken",
+          "priceMinor": 16900
+        }
+      ],
+      "replacementControls": [
+        {
+          "replaces": "35. Dønner-Pita",
+          "name": "34. Dønner-Rull",
+          "priceMinor": 14900
+        },
+        {
+          "replaces": "09. Shawarma-Tallerken",
+          "name": "14. Crispy-Tallerken",
+          "priceMinor": 17900
+        }
+      ],
+      "retainedControls": [
+        {
+          "name": "02. Bacon Bbq Burger",
+          "priceMinor": 15900
+        },
+        {
+          "name": "36. Dønner-Tallerken",
+          "priceMinor": 18900
+        },
+        {
+          "name": "Løkringer (4 stk)",
+          "priceMinor": 4900
+        },
+        {
+          "name": "01. Biff Cheeseburger",
+          "priceMinor": 13900
+        },
+        {
+          "name": "30. Margarita",
+          "priceMinor": 17900
+        },
+        {
+          "name": "06. Løkring Burger",
+          "priceMinor": 13900
+        }
+      ],
+      "independentlyVerifiedEligiblePairs": [
+        {
+          "id": "020ba014ec598c1bc62eaed8",
+          "name": "02. Bacon Bbq Burger",
+          "canonicalName": "02. Bacon Bbq Burger",
+          "priceMinor": 15900,
+          "path": "/queries/6/state/data/items/0",
+          "sectionName": "Burger"
+        },
+        {
+          "id": "09b7ab07201b9cbd1e9701f6",
+          "name": "23. Maxicana",
+          "canonicalName": "23. Maxicana",
+          "priceMinor": 17900,
+          "path": "/queries/6/state/data/items/1",
+          "sectionName": "Pizza"
+        },
+        {
+          "id": "111b4299a84f2573737362b0",
+          "name": "Søtpotetfries",
+          "canonicalName": "Søtpotetfries",
+          "priceMinor": 5900,
+          "path": "/queries/6/state/data/items/2",
+          "sectionName": "Tilbehør"
+        },
+        {
+          "id": "201f41e890d328cc4d892ca4",
+          "name": "04. Crispy Kyllingburger",
+          "canonicalName": "04. Crispy Kyllingburger",
+          "priceMinor": 14900,
+          "path": "/queries/6/state/data/items/3",
+          "sectionName": "Burger"
+        },
+        {
+          "id": "34d78b48cdca5a02266d4a5f",
+          "name": "36. Dønner-Tallerken",
+          "canonicalName": "36. Dønner-Tallerken",
+          "priceMinor": 18900,
+          "path": "/queries/6/state/data/items/4",
+          "sectionName": "Dønner Kebab"
+        },
+        {
+          "id": "43de4255948246df243c26c5",
+          "name": "25. Hawaii",
+          "canonicalName": "25. Hawaii",
+          "priceMinor": 17900,
+          "path": "/queries/6/state/data/items/6",
+          "sectionName": "Pizza"
+        },
+        {
+          "id": "443d398fbf37377f13373498",
+          "name": "15. Crispy-box",
+          "canonicalName": "15. Crispy-box",
+          "priceMinor": 15900,
+          "path": "/queries/6/state/data/items/7",
+          "sectionName": "Box"
+        },
+        {
+          "id": "44c9456c520564721ee6b219",
+          "name": "Løkringer (4 stk)",
+          "canonicalName": "Løkringer (4 stk)",
+          "priceMinor": 4900,
+          "path": "/queries/6/state/data/items/8",
+          "sectionName": "Tilbehør"
+        },
+        {
+          "id": "476bebf51a31a0c9779d55d7",
+          "name": "Mozzarella sticks (4 stk)",
+          "canonicalName": "Mozzarella sticks (4 stk)",
+          "priceMinor": 6900,
+          "path": "/queries/6/state/data/items/9",
+          "sectionName": "Tilbehør"
+        },
+        {
+          "id": "57f0065ae209469f1711fe6d",
+          "name": "29. Vegetar",
+          "canonicalName": "29. Vegetar",
+          "priceMinor": 17900,
+          "path": "/queries/6/state/data/items/10",
+          "sectionName": "Pizza"
+        },
+        {
+          "id": "6a44042baed0cbec0d4698e7",
+          "name": "12. Crispy-Rull",
+          "canonicalName": "12. Crispy-Rull",
+          "priceMinor": 14900,
+          "path": "/queries/6/state/data/items/11",
+          "sectionName": "Crispy"
+        },
+        {
+          "id": "7995e9e4cd60b954a6ca117e",
+          "name": "24. Pepperoni",
+          "canonicalName": "24. Pepperoni",
+          "priceMinor": 17900,
+          "path": "/queries/6/state/data/items/12",
+          "sectionName": "Pizza"
+        },
+        {
+          "id": "86be4c4b180348b37c4f7b3e",
+          "name": "22. Biff",
+          "canonicalName": "22. Biff",
+          "priceMinor": 17900,
+          "path": "/queries/6/state/data/items/14",
+          "sectionName": "Pizza"
+        },
+        {
+          "id": "8a44b2ca669500f0f0e6497a",
+          "name": "Pommes frites",
+          "canonicalName": "Pommes frites",
+          "priceMinor": 4900,
+          "path": "/queries/6/state/data/items/15",
+          "sectionName": "Tilbehør"
+        },
+        {
+          "id": "959475016326b44e7161e6f8",
+          "name": "19. Dønnerkebab-box",
+          "canonicalName": "19. Dønnerkebab-box",
+          "priceMinor": 17900,
+          "path": "/queries/6/state/data/items/16",
+          "sectionName": "Box"
+        },
+        {
+          "id": "964c936f6e33b26dee8efdb2",
+          "name": "01. Biff Cheeseburger",
+          "canonicalName": "01. Biff Cheeseburger",
+          "priceMinor": 13900,
+          "path": "/queries/6/state/data/items/17",
+          "sectionName": "Burger"
+        },
+        {
+          "id": "97e89c84157548e891571518",
+          "name": "05. 67 Burger",
+          "canonicalName": "05. 67 Burger",
+          "priceMinor": 14900,
+          "path": "/queries/6/state/data/items/18",
+          "sectionName": "Burger"
+        },
+        {
+          "id": "a12623a3339648be4b956348",
+          "name": "27. Luksus",
+          "canonicalName": "27. Luksus",
+          "priceMinor": 18900,
+          "path": "/queries/6/state/data/items/20",
+          "sectionName": "Pizza"
+        },
+        {
+          "id": "af68798c87943f16e35b9e53",
+          "name": "Chili cheese (4 stk)",
+          "canonicalName": "Chili cheese (4 stk)",
+          "priceMinor": 5900,
+          "path": "/queries/6/state/data/items/22",
+          "sectionName": "Tilbehør"
+        },
+        {
+          "id": "b595f350fadb153e8bb7338e",
+          "name": "30. Margarita",
+          "canonicalName": "30. Margarita",
+          "priceMinor": 17900,
+          "path": "/queries/6/state/data/items/23",
+          "sectionName": "Pizza"
+        },
+        {
+          "id": "d38240e38ce194d4b957455f",
+          "name": "14. Crispy-Tallerken",
+          "canonicalName": "14. Crispy-Tallerken",
+          "priceMinor": 17900,
+          "path": "/queries/6/state/data/items/25",
+          "sectionName": "Crispy"
+        },
+        {
+          "id": "efcf304ad2ab55deadd08d66",
+          "name": "34. Dønner-Rull",
+          "canonicalName": "34. Dønner-Rull",
+          "priceMinor": 14900,
+          "path": "/queries/6/state/data/items/28",
+          "sectionName": "Dønner Kebab"
+        },
+        {
+          "id": "f291585002bdf8a85d5aeab7",
+          "name": "06. Løkring Burger",
+          "canonicalName": "06. Løkring Burger",
+          "priceMinor": 13900,
+          "path": "/queries/6/state/data/items/29",
+          "sectionName": "Burger"
+        }
+      ],
+      "rawExcludedRecords": [
+        {
+          "id": "424acc48d372750a6461536b",
+          "name": "Sprite Sitron & Lime zero| 330ml",
+          "priceMinor": 2900,
+          "description": "",
+          "path": "/queries/6/state/data/items/5",
+          "reason": "Below existing 3000-minor extraction threshold"
+        },
+        {
+          "id": "7b35e00e8f8f432d011bd6de",
+          "name": "26. 67",
+          "priceMinor": 18900,
+          "description": "Kylling shawarma, biff, bacon, pepperoni og løk.",
+          "path": "/queries/6/state/data/items/13",
+          "reason": "Existing numeric-name filter excludes under-specified numeric title in Pizza section; ingredients do not authorize inventing a dish name."
+        },
+        {
+          "id": "9b59a7ec9abc53e98a8c435a",
+          "name": "Pepsi Max Boks 330ml",
+          "priceMinor": 2900,
+          "description": "Pepsi MAX er en forfriskende cola med maksimal smak - uten sukker. Pepsi MAX er overlegen på smak, og for mange er Pepsi MAX til den udiskutable eneren blant brus",
+          "path": "/queries/6/state/data/items/19",
+          "reason": "Below existing 3000-minor extraction threshold"
+        },
+        {
+          "id": "ae6d90eb80b30f576d6ad15f",
+          "name": "Fanta Orange Zero 330ml",
+          "priceMinor": 2900,
+          "description": "Oppdag en forfriskende smak uten sukker!\nMed Fanta Orange Zero kan du nyte den herlige smaken av appelsin uten å bekymre deg for kaloriene. Dette er den perfekte tørsteslukkeren som gir en eksplosjon av fruktighet i hver slurk, helt uten sukker.\n\nInneholder 0% sukker\nFylt med sprudlende appelsinsmak\nIdeell for å nyte som en forfriskende drikke\nPerfekt for festlige anledninger eller til daglig kos\nStilrent design som passer enhver anledning.",
+          "path": "/queries/6/state/data/items/21",
+          "reason": "Below existing 3000-minor extraction threshold"
+        },
+        {
+          "id": "c38a35f64986bd0e2224c566",
+          "name": "Coca-Cola 330ml",
+          "priceMinor": 2900,
+          "description": "Coca-Cola ® ble oppfunnet av apotekeren John Stith Pemberton i 1886 og har siden vokst seg til å bli verdens mest kjente varemerke og drikke. Hele 98% av verdens befolkning kjenner Coca-Cola® logoen og konturflasken. I Norge ble Coca-Cola ® solgt for første gang i 1926 og den har vært en stor favoritt siden da.",
+          "path": "/queries/6/state/data/items/24",
+          "reason": "Below existing 3000-minor extraction threshold"
+        },
+        {
+          "id": "e8181f2616b550ed89db5f00",
+          "name": "Coca Cola Zero 330ml",
+          "priceMinor": 2900,
+          "description": "Opplev den forfriskende smaken av Coca Cola Zero!\nNå kan du nyte den klassiske Coca-Cola-smaken uten sukker! Coca Cola Zero gir deg den autentiske og elskede cola-smaken, men med null sukker. Perfekt for de som ønsker å redusere sukkerinntaket, men ikke vil gå på kompromiss med smaken.\n\nNull sukkerinnhold\nFull av den klassiske cola-smaken\nIdeell for sukkerfri nytelse\nPasser perfekt til enhver anledning\nForfriskende og tørsteslukkende.",
+          "path": "/queries/6/state/data/items/26",
+          "reason": "Below existing 3000-minor extraction threshold"
+        },
+        {
+          "id": "ed5ed2bba28d1e322eb0b8a2",
+          "name": "Solo Reg Boks 330ml",
+          "priceMinor": 2900,
+          "description": "Solo er en forfriskende appelsinbrus. Brusen inneholder hele 8% appelsinjuice som gir den naturlige friske smaken. Solo er kanskje Norges mest kjente merkevare. Solo ble etablert helt tilbake i 1934, og har vært en fast følgesvenn gjennom mange nordmenns barndom- og ungdomsår  og er det ennå.",
+          "path": "/queries/6/state/data/items/27",
+          "reason": "Below existing 3000-minor extraction threshold"
+        }
+      ],
+      "quality": {
+        "accepted": true,
+        "itemCount": 23,
+        "minimumExpectedItems": 20,
+        "missingRequiredDishes": [],
+        "forbiddenDishesPresent": []
+      }
+    },
+    {
+      "slug": "karachi-street-food-stovner-oslo",
+      "url": "https://wolt.com/en/nor/oslo/restaurant/karachi-street-food",
+      "title": "Karachi Street Food | Wolt | Delivery | Oslo",
+      "captureFile": "karachi-street-food-stovner-oslo-current.html",
+      "capturedAt": "2026-11-01T03:09:11.932Z",
+      "sha256": "85f64944fd1acb05ba259a5805bbc2fe2d1d8c46504e04efcfbc76b5cd942dfa",
+      "embeddedMenuPath": "/queries/6/state/data",
+      "loadingStrategy": "full",
+      "rawProductCount": 65,
+      "baselineExtractedOfferCount": 46,
+      "currentExtractedOfferCount": 46,
+      "baselineAndCurrentItemsIdentical": true,
+      "previousMinimumExpectedItems": 47,
+      "minimumExpectedItems": 41,
+      "controlCount": 7,
+      "absentRetiredControls": [
+        {
+          "name": "Butter Chicken",
+          "priceMinor": 24500
+        },
+        {
+          "name": "Nan Veggie Rull",
+          "priceMinor": 13900
+        },
+        {
+          "name": "Biff Cloud Nan",
+          "priceMinor": 23900
+        },
+        {
+          "name": "Karachi Biff Pizza Stor",
+          "priceMinor": 31500
+        },
+        {
+          "name": "Døner nanrull",
+          "priceMinor": 15500
+        }
+      ],
+      "replacementControls": [
+        {
+          "replaces": "Butter Chicken",
+          "name": "Chapli Kebab",
+          "priceMinor": 22900
+        },
+        {
+          "replaces": "Nan Veggie Rull",
+          "name": "Veggie Paratha Rull",
+          "priceMinor": 16900
+        },
+        {
+          "replaces": "Biff Cloud Nan",
+          "name": "Keema Cloud Nan",
+          "priceMinor": 21900
+        },
+        {
+          "replaces": "Karachi Biff Pizza Stor",
+          "name": "Karachi Kjøttdeig Pizza Stor",
+          "priceMinor": 29900
+        },
+        {
+          "replaces": "Døner nanrull",
+          "name": "Karachi Døner Box",
+          "priceMinor": 27900
+        }
+      ],
+      "retainedControls": [
+        {
+          "name": "Kylling Cloud Nan",
+          "priceMinor": 22900
+        },
+        {
+          "name": "Samosa Chat",
+          "priceMinor": 11500
+        }
+      ],
+      "independentlyVerifiedEligiblePairs": [
+        {
+          "id": "4f38c36d0a5bda7d3e0a6f79",
+          "name": "Kylling Cloud Nan",
+          "canonicalName": "Kylling Cloud Nan",
+          "priceMinor": 22900,
+          "path": "/queries/6/state/data/items/1",
+          "sectionName": "Cloud Nan"
+        },
+        {
+          "id": "58817cf2d736d95db100af1b",
+          "name": "Karachi Døner Box",
+          "canonicalName": "Karachi Døner Box",
+          "priceMinor": 27900,
+          "path": "/queries/6/state/data/items/2",
+          "sectionName": "Karachi Døner Box"
+        },
+        {
+          "id": "63d39b56f2b5ac3ef210dcd8",
+          "name": "Curlyfries",
+          "canonicalName": "Curlyfries",
+          "priceMinor": 6900,
+          "path": "/queries/6/state/data/items/3",
+          "sectionName": "Snacks"
+        },
+        {
+          "id": "63d39b5d978115eb97a33177",
+          "name": "Båtpoteter",
+          "canonicalName": "Båtpoteter",
+          "priceMinor": 7900,
+          "path": "/queries/6/state/data/items/4",
+          "sectionName": "Snacks"
+        },
+        {
+          "id": "63d39b62d76507914226c3fc",
+          "name": "Classic Long Fries",
+          "canonicalName": "Classic Long Fries",
+          "priceMinor": 7900,
+          "path": "/queries/6/state/data/items/5",
+          "sectionName": "Snacks"
+        },
+        {
+          "id": "63d39bc99f600295aba900ba",
+          "name": "Pakora",
+          "canonicalName": "Pakora",
+          "priceMinor": 22900,
+          "path": "/queries/6/state/data/items/6",
+          "sectionName": "Snacks"
+        },
+        {
+          "id": "63d39be56f426f4cc7ae038b",
+          "name": "Golgappay",
+          "canonicalName": "Golgappay",
+          "priceMinor": 11900,
+          "path": "/queries/6/state/data/items/7",
+          "sectionName": "Snacks"
+        },
+        {
+          "id": "63d39bfce7a71eaaa9086625",
+          "name": "Samosa Chat",
+          "canonicalName": "Samosa Chat",
+          "priceMinor": 11500,
+          "path": "/queries/6/state/data/items/8",
+          "sectionName": "Chaats"
+        },
+        {
+          "id": "63d39c0ff4341ff215e9ce31",
+          "name": "Tikki Chaat",
+          "canonicalName": "Tikki Chaat",
+          "priceMinor": 11500,
+          "path": "/queries/6/state/data/items/9",
+          "sectionName": "Chaats"
+        },
+        {
+          "id": "63d39c21f02ad1acd30ba850",
+          "name": "Papri Chaat",
+          "canonicalName": "Papri Chaat",
+          "priceMinor": 10500,
+          "path": "/queries/6/state/data/items/10",
+          "sectionName": "Chaats"
+        },
+        {
+          "id": "63d39c39e70e2c2e6f08cfc5",
+          "name": "Beef Bun Burger",
+          "canonicalName": "Beef Bun Burger",
+          "priceMinor": 23500,
+          "path": "/queries/6/state/data/items/11",
+          "sectionName": "Bun Burgers"
+        },
+        {
+          "id": "63d39c4b5544e42e84b6eca8",
+          "name": "Chicken Bun Burger",
+          "canonicalName": "Chicken Bun Burger",
+          "priceMinor": 22500,
+          "path": "/queries/6/state/data/items/12",
+          "sectionName": "Bun Burgers"
+        },
+        {
+          "id": "63d39c66dd58ba5a1e6f55ac",
+          "name": "Veggie Bun Burger",
+          "canonicalName": "Veggie Bun Burger",
+          "priceMinor": 21500,
+          "path": "/queries/6/state/data/items/13",
+          "sectionName": "Bun Burgers"
+        },
+        {
+          "id": "63d39c7d11c442e076b89157",
+          "name": "Andha/Shaami Burger",
+          "canonicalName": "Andha/Shaami Burger",
+          "priceMinor": 20500,
+          "path": "/queries/6/state/data/items/14",
+          "sectionName": "Bun Burgers"
+        },
+        {
+          "id": "63d39e2211d837a100f6091b",
+          "name": "Hel Kylling",
+          "canonicalName": "Hel Kylling",
+          "priceMinor": 28000,
+          "path": "/queries/6/state/data/items/15",
+          "sectionName": "Karachi Sajji"
+        },
+        {
+          "id": "63d39e3f0383a74259a348f7",
+          "name": "1/2 Kylling",
+          "canonicalName": "1/2 Kylling",
+          "priceMinor": 18500,
+          "path": "/queries/6/state/data/items/16",
+          "sectionName": "Karachi Sajji"
+        },
+        {
+          "id": "63d39edf37083f5a35450b8c",
+          "name": "Chicken Nuggets",
+          "canonicalName": "Chicken Nuggets",
+          "priceMinor": 13900,
+          "path": "/queries/6/state/data/items/17",
+          "sectionName": "Karachi Sajji"
+        },
+        {
+          "id": "63d39f177b87bc4ace3ffaec",
+          "name": "Cheese Paratha",
+          "canonicalName": "Cheese Paratha",
+          "priceMinor": 13900,
+          "path": "/queries/6/state/data/items/18",
+          "sectionName": "Paratha Rolls & Biter"
+        },
+        {
+          "id": "63d39f29564af14a899aac1d",
+          "name": "Kylling Paratha Rull",
+          "canonicalName": "Kylling Paratha Rull",
+          "priceMinor": 17900,
+          "path": "/queries/6/state/data/items/19",
+          "sectionName": "Paratha Rolls & Biter"
+        },
+        {
+          "id": "63d39f5d9f600295aba90566",
+          "name": "Keema Paratha Rull",
+          "canonicalName": "Keema Paratha Rull",
+          "priceMinor": 17900,
+          "path": "/queries/6/state/data/items/20",
+          "sectionName": "Paratha Rolls & Biter"
+        },
+        {
+          "id": "63d39f7670a0579108eb18b5",
+          "name": "Veggie Paratha Rull",
+          "canonicalName": "Veggie Paratha Rull",
+          "priceMinor": 16900,
+          "path": "/queries/6/state/data/items/21",
+          "sectionName": "Paratha Rolls & Biter"
+        },
+        {
+          "id": "63d39f7ffb83689f544ffe6e",
+          "name": "Saag Paratha",
+          "canonicalName": "Saag Paratha",
+          "priceMinor": 15900,
+          "path": "/queries/6/state/data/items/22",
+          "sectionName": "Paratha Rolls & Biter"
+        },
+        {
+          "id": "63d39f9d5ca992c40dc0e7b5",
+          "name": "Plain Nan",
+          "canonicalName": "Plain Nan",
+          "priceMinor": 4900,
+          "path": "/queries/6/state/data/items/23",
+          "sectionName": "Nan & Roti"
+        },
+        {
+          "id": "63d39fbb3e93e2156b4509cb",
+          "name": "Garlic Nan",
+          "canonicalName": "Garlic Nan",
+          "priceMinor": 5900,
+          "path": "/queries/6/state/data/items/24",
+          "sectionName": "Nan & Roti"
+        },
+        {
+          "id": "63d39fe950af1805c66861e2",
+          "name": "Roti",
+          "canonicalName": "Roti",
+          "priceMinor": 3500,
+          "path": "/queries/6/state/data/items/25",
+          "sectionName": "Nan & Roti"
+        },
+        {
+          "id": "63d3a00ae6cff7ce91945a45",
+          "name": "Nutella Nan",
+          "canonicalName": "Nutella Nan",
+          "priceMinor": 10900,
+          "path": "/queries/6/state/data/items/26",
+          "sectionName": "Nan & Roti"
+        },
+        {
+          "id": "63d3a063668a141cd6681cb5",
+          "name": "Keema Cloud Nan",
+          "canonicalName": "Keema Cloud Nan",
+          "priceMinor": 21900,
+          "path": "/queries/6/state/data/items/27",
+          "sectionName": "Cloud Nan"
+        },
+        {
+          "id": "63d3a08a7ebe68df1cad035b",
+          "name": "Chapli Kebab",
+          "canonicalName": "Chapli Kebab",
+          "priceMinor": 22900,
+          "path": "/queries/6/state/data/items/28",
+          "sectionName": "Cloud Nan"
+        },
+        {
+          "id": "63d3a0a0266afe5c1f9c151b",
+          "name": "Nan Thaali",
+          "canonicalName": "Nan Thaali",
+          "priceMinor": 23900,
+          "path": "/queries/6/state/data/items/29",
+          "sectionName": "Cloud Nan"
+        },
+        {
+          "id": "63d3df7e5d4f1d9b3f2e1c8f",
+          "name": "Ketchup",
+          "canonicalName": "Ketchup",
+          "priceMinor": 3000,
+          "path": "/queries/6/state/data/items/30",
+          "sectionName": "Dip"
+        },
+        {
+          "id": "63d3df899c7c309acb078cc8",
+          "name": "Chilimajo",
+          "canonicalName": "Chilimajo",
+          "priceMinor": 3000,
+          "path": "/queries/6/state/data/items/31",
+          "sectionName": "Dip"
+        },
+        {
+          "id": "63d3df8d635bc33d46822165",
+          "name": "Tamarind",
+          "canonicalName": "Tamarind",
+          "priceMinor": 3000,
+          "path": "/queries/6/state/data/items/32",
+          "sectionName": "Dip"
+        },
+        {
+          "id": "63d3df92ce2f53af51c4a561",
+          "name": "Mynte Chutney",
+          "canonicalName": "Mynte Chutney",
+          "priceMinor": 3000,
+          "path": "/queries/6/state/data/items/33",
+          "sectionName": "Dip"
+        },
+        {
+          "id": "63d3dfa339abfdd7515155dc",
+          "name": "Chilisaus",
+          "canonicalName": "Chilisaus",
+          "priceMinor": 3000,
+          "path": "/queries/6/state/data/items/35",
+          "sectionName": "Dip"
+        },
+        {
+          "id": "63d3dfaca9fd02b4577c56ae",
+          "name": "Raita",
+          "canonicalName": "Raita",
+          "priceMinor": 3500,
+          "path": "/queries/6/state/data/items/36",
+          "sectionName": "Dip"
+        },
+        {
+          "id": "63d3dfb54f5d98243924e34a",
+          "name": "Garlic Saus",
+          "canonicalName": "Garlic Saus",
+          "priceMinor": 3000,
+          "path": "/queries/6/state/data/items/37",
+          "sectionName": "Dip"
+        },
+        {
+          "id": "63d3dfe1a5bbb0cf91e92644",
+          "name": "Achaar",
+          "canonicalName": "Achaar",
+          "priceMinor": 3000,
+          "path": "/queries/6/state/data/items/38",
+          "sectionName": "Dip"
+        },
+        {
+          "id": "63f5d633617a2116a8f942b4",
+          "name": "Karachi Kylling Pizza (M)",
+          "canonicalName": "Karachi Kylling Pizza (M)",
+          "priceMinor": 22900,
+          "path": "/queries/6/state/data/items/47",
+          "sectionName": "Pizza"
+        },
+        {
+          "id": "63f5d635369bacb77e5b5f34",
+          "name": "Karachi veg Pizza (M)",
+          "canonicalName": "Karachi veg Pizza (M)",
+          "priceMinor": 21900,
+          "path": "/queries/6/state/data/items/48",
+          "sectionName": "Pizza"
+        },
+        {
+          "id": "63f5d635f34824bfb683ee3c",
+          "name": "Karachi Kjøttdeig Pizza (M)",
+          "canonicalName": "Karachi Kjøttdeig Pizza (M)",
+          "priceMinor": 22900,
+          "path": "/queries/6/state/data/items/49",
+          "sectionName": "Pizza"
+        },
+        {
+          "id": "63f5d6487b92713fb654205d",
+          "name": "Karachi Veg Pizza Stor",
+          "canonicalName": "Karachi Veg Pizza Stor",
+          "priceMinor": 26500,
+          "path": "/queries/6/state/data/items/50",
+          "sectionName": "Pizza Stor"
+        },
+        {
+          "id": "63f5d64a79816877541e3e40",
+          "name": "Karachi Kylling Pizza Stor",
+          "canonicalName": "Karachi Kylling Pizza Stor",
+          "priceMinor": 29900,
+          "path": "/queries/6/state/data/items/51",
+          "sectionName": "Pizza Stor"
+        },
+        {
+          "id": "63f5d64b96e653eb14c0b3da",
+          "name": "Karachi Kjøttdeig Pizza Stor",
+          "canonicalName": "Karachi Kjøttdeig Pizza Stor",
+          "priceMinor": 29900,
+          "path": "/queries/6/state/data/items/52",
+          "sectionName": "Pizza Stor"
+        },
+        {
+          "id": "65c0eb2c203196c3eb5a08ed",
+          "name": "Enkel Smash 100g",
+          "canonicalName": "Enkel Smash 100g",
+          "priceMinor": 15500,
+          "path": "/queries/6/state/data/items/54",
+          "sectionName": "Karachi SMASH BURGERS"
+        },
+        {
+          "id": "65c0eb6834a7caaaa5a4385a",
+          "name": "Dobbel smash 200g",
+          "canonicalName": "Dobbel smash 200g",
+          "priceMinor": 19900,
+          "path": "/queries/6/state/data/items/55",
+          "sectionName": "Karachi SMASH BURGERS"
+        },
+        {
+          "id": "65c0eb8e71d8db8f9c68e15f",
+          "name": "Trippel smash 300g",
+          "canonicalName": "Trippel smash 300g",
+          "priceMinor": 25500,
+          "path": "/queries/6/state/data/items/56",
+          "sectionName": "Karachi SMASH BURGERS"
+        }
+      ],
+      "rawExcludedRecords": [
+        {
+          "id": "1f2b6a0d6e289f850e946099",
+          "name": "Bestikk",
+          "priceMinor": 0,
+          "description": "Vennligst legg til denne gjenstanden hvis du trenger bestikk med bestillingen din. Restauranten vil velge passende bestikk til måltidene dine, hvis tilgjengelig.",
+          "path": "/queries/6/state/data/items/0",
+          "reason": "Zero-price cutlery"
+        },
+        {
+          "id": "63d3df97cdd053cd3a06dcbd",
+          "name": "Mango Chutney",
+          "priceMinor": 2500,
+          "description": "",
+          "path": "/queries/6/state/data/items/34",
+          "reason": "Below existing 3000-minor extraction threshold"
+        },
+        {
+          "id": "63d77d9d2fffc4c73b9c8846",
+          "name": "Coca-Cola 0,5l",
+          "priceMinor": 4800,
+          "description": "",
+          "path": "/queries/6/state/data/items/39",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "63d77da47356dbf899085ae8",
+          "name": "Coca-Cola 1,5l",
+          "priceMinor": 6500,
+          "description": "",
+          "path": "/queries/6/state/data/items/40",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "63d77dabc25e95538f82882f",
+          "name": "Coca-Cola uten Sukker 0,5l",
+          "priceMinor": 4800,
+          "description": "",
+          "path": "/queries/6/state/data/items/41",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "63d77db3420b7066497bac27",
+          "name": "Coca-Cola uten Sukker 1,5l",
+          "priceMinor": 6500,
+          "description": "",
+          "path": "/queries/6/state/data/items/42",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "63d77db9cfe9839ff238b182",
+          "name": "Fanta Appelsin 0,5l",
+          "priceMinor": 4800,
+          "description": "",
+          "path": "/queries/6/state/data/items/43",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "63d77dc836045b1cc0d8bae3",
+          "name": "Monster",
+          "priceMinor": 5500,
+          "description": "",
+          "path": "/queries/6/state/data/items/44",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "63d77dce49fdb45636e07084",
+          "name": "Battery",
+          "priceMinor": 4900,
+          "description": "",
+          "path": "/queries/6/state/data/items/45",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "63d77ddbc88c1c65e38dc80f",
+          "name": "Red Bull",
+          "priceMinor": 4500,
+          "description": "",
+          "path": "/queries/6/state/data/items/46",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "645a2b79700deb0eb8d083e1",
+          "name": "Mango lassi",
+          "priceMinor": 6000,
+          "description": "Drikke med yougurt ,mango,melk .sukker og isbiter",
+          "path": "/queries/6/state/data/items/53",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "660538e591e44237da782e3c",
+          "name": "Jarritos Pineapple",
+          "priceMinor": 6500,
+          "description": "",
+          "path": "/queries/6/state/data/items/57",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "660538ff3e2b3749fbe9205a",
+          "name": "Jarritos Guawa",
+          "priceMinor": 6500,
+          "description": "",
+          "path": "/queries/6/state/data/items/58",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "66053926036a59dc8dbc9aae",
+          "name": "Jarritos  Lime",
+          "priceMinor": 6500,
+          "description": "",
+          "path": "/queries/6/state/data/items/59",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "66053949036a59dc8dbc9ac6",
+          "name": "Jarritos Strawberry",
+          "priceMinor": 6500,
+          "description": "",
+          "path": "/queries/6/state/data/items/60",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "6605395e916a2dd6dde76cef",
+          "name": "Jarritos Mango",
+          "priceMinor": 6500,
+          "description": "",
+          "path": "/queries/6/state/data/items/61",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "66053978ec904fdc90397812",
+          "name": "Jarritos Manadrin",
+          "priceMinor": 6500,
+          "description": "",
+          "path": "/queries/6/state/data/items/62",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "6605398ebe15ef3c6b61d067",
+          "name": "Jarritos Cola",
+          "priceMinor": 6500,
+          "description": "",
+          "path": "/queries/6/state/data/items/63",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "660539b587d7f5cc910dd710",
+          "name": "Jarritos Grapefruit",
+          "priceMinor": 6500,
+          "description": "",
+          "path": "/queries/6/state/data/items/64",
+          "reason": "Beverage category excluded by existing rules"
+        }
+      ],
+      "quality": {
+        "accepted": true,
+        "itemCount": 46,
+        "minimumExpectedItems": 41,
+        "missingRequiredDishes": [],
+        "forbiddenDishesPresent": []
+      }
+    },
+    {
+      "slug": "nordvegan-oslo",
+      "url": "https://wolt.com/nb/nor/oslo/restaurant/nordvegan",
+      "title": "Nordvegan | Wolt | Levering | Oslo",
+      "captureFile": "nordvegan-oslo-current.html",
+      "capturedAt": "2026-11-01T03:09:23.027Z",
+      "sha256": "dd306640c8a837761a94027ec288d9041375ba3f16c958af740defad5b6e76e1",
+      "embeddedMenuPath": "/queries/6/state/data",
+      "loadingStrategy": "full",
+      "rawProductCount": 34,
+      "baselineExtractedOfferCount": 25,
+      "currentExtractedOfferCount": 25,
+      "baselineAndCurrentItemsIdentical": true,
+      "previousMinimumExpectedItems": 8,
+      "minimumExpectedItems": 8,
+      "controlCount": 10,
+      "absentRetiredControls": [
+        {
+          "name": "Spinach Soup 🌱",
+          "priceMinor": 14900
+        }
+      ],
+      "replacementControls": [
+        {
+          "replaces": "Spinach Soup 🌱",
+          "name": "Creamy Pumpkin Soup",
+          "priceMinor": 14900
+        }
+      ],
+      "retainedControls": [
+        {
+          "name": "Beyond Burger🌱",
+          "priceMinor": 19500
+        },
+        {
+          "name": "Chickn't Burger🌱",
+          "priceMinor": 19500
+        },
+        {
+          "name": "Meatball Goulash",
+          "priceMinor": 23900
+        },
+        {
+          "name": "Jamaican Curry 🌱",
+          "priceMinor": 24900
+        },
+        {
+          "name": "Crispy Fried Gyoza (7p)🌱",
+          "priceMinor": 14900
+        },
+        {
+          "name": "Spring rolls (2) 🌱",
+          "priceMinor": 11900
+        },
+        {
+          "name": "Sweet potato tempura (5p)🌱",
+          "priceMinor": 10900
+        },
+        {
+          "name": "Falafel Wrap 🌱",
+          "priceMinor": 15900
+        },
+        {
+          "name": "Toasted Chick'n Caesar Wrap 🌱",
+          "priceMinor": 16900
+        }
+      ],
+      "independentlyVerifiedEligiblePairs": [
+        {
+          "id": "2859c46b13896769c06d32d8",
+          "name": "Jamaican Curry 🌱",
+          "canonicalName": "Jamaican Curry 🌱",
+          "priceMinor": 24900,
+          "path": "/queries/6/state/data/items/0",
+          "sectionName": "Mains"
+        },
+        {
+          "id": "5b9e464b92b7fad461aaebd7",
+          "name": "BBQ Chick'n  Wrap 🌱",
+          "canonicalName": "BBQ Chick'n Wrap 🌱",
+          "priceMinor": 18900,
+          "path": "/queries/6/state/data/items/1",
+          "sectionName": "Wraps"
+        },
+        {
+          "id": "60ffb6cb9f6bec15481d7ee5",
+          "name": "Apple cake🌱",
+          "canonicalName": "Apple cake🌱",
+          "priceMinor": 8500,
+          "path": "/queries/6/state/data/items/2",
+          "sectionName": "Dessert"
+        },
+        {
+          "id": "60ffb70b1893542eeaed4afb",
+          "name": "Glutenfri Brownie🌱",
+          "canonicalName": "Glutenfri Brownie🌱",
+          "priceMinor": 7200,
+          "path": "/queries/6/state/data/items/3",
+          "sectionName": "Dessert"
+        },
+        {
+          "id": "61013419af11bea5bfc69d34",
+          "name": "Crispy Fried Gyoza (7p)🌱",
+          "canonicalName": "Crispy Fried Gyoza (7p)🌱",
+          "priceMinor": 14900,
+          "path": "/queries/6/state/data/items/7",
+          "sectionName": "Starters/Sides"
+        },
+        {
+          "id": "616c3abeb4dc2e6b725a52c0",
+          "name": "Chick'n Caesar Wrap 🌱",
+          "canonicalName": "Chick'n Caesar Wrap 🌱",
+          "priceMinor": 16900,
+          "path": "/queries/6/state/data/items/8",
+          "sectionName": "Wraps"
+        },
+        {
+          "id": "661efd929cfbb8dbe06f695f",
+          "name": "Sweet potato tempura (5p)🌱",
+          "canonicalName": "Sweet potato tempura (5p)🌱",
+          "priceMinor": 10900,
+          "path": "/queries/6/state/data/items/9",
+          "sectionName": "Starters/Sides"
+        },
+        {
+          "id": "661f00b15b9f59c106694054",
+          "name": "Spring rolls (2)",
+          "canonicalName": "Spring rolls (2)",
+          "priceMinor": 11900,
+          "path": "/queries/6/state/data/items/10",
+          "sectionName": "Starters/Sides"
+        },
+        {
+          "id": "661f03e0b4b8d59c03886b30",
+          "name": "Tofu makki Roll🌱",
+          "canonicalName": "Tofu makki Roll🌱",
+          "priceMinor": 14900,
+          "path": "/queries/6/state/data/items/11",
+          "sectionName": "Mains"
+        },
+        {
+          "id": "661f0488c1e5a15b2f6612cf",
+          "name": "Crispy sushi Roll🌱",
+          "canonicalName": "Crispy sushi Roll🌱",
+          "priceMinor": 15500,
+          "path": "/queries/6/state/data/items/12",
+          "sectionName": "Mains"
+        },
+        {
+          "id": "661f04ec2b2612ccf9a74b25",
+          "name": "Beyond Burger🌱",
+          "canonicalName": "Beyond Burger🌱",
+          "priceMinor": 19500,
+          "path": "/queries/6/state/data/items/13",
+          "sectionName": "Mains"
+        },
+        {
+          "id": "661f05533879f0e78aee7d1a",
+          "name": "Chickn't Burger🌱",
+          "canonicalName": "Chickn't Burger🌱",
+          "priceMinor": 19500,
+          "path": "/queries/6/state/data/items/14",
+          "sectionName": "Mains"
+        },
+        {
+          "id": "661f09f5b4b8d59c0388acfc",
+          "name": "Lasagna🌱",
+          "canonicalName": "Lasagna🌱",
+          "priceMinor": 23900,
+          "path": "/queries/6/state/data/items/15",
+          "sectionName": "Mains"
+        },
+        {
+          "id": "661f0b875b9f59c10669b0c5",
+          "name": "Buddha Bowl🌱",
+          "canonicalName": "Buddha Bowl🌱",
+          "priceMinor": 24900,
+          "path": "/queries/6/state/data/items/16",
+          "sectionName": "Salads"
+        },
+        {
+          "id": "661f0cbd0095a42c4661771f",
+          "name": "Rainbow Salad 🌱",
+          "canonicalName": "Rainbow Salad 🌱",
+          "priceMinor": 19900,
+          "path": "/queries/6/state/data/items/17",
+          "sectionName": "Salads"
+        },
+        {
+          "id": "661f1010fbb6d2000d152ff4",
+          "name": "Carrot Cake🌱",
+          "canonicalName": "Carrot Cake🌱",
+          "priceMinor": 8900,
+          "path": "/queries/6/state/data/items/18",
+          "sectionName": "Dessert"
+        },
+        {
+          "id": "661f106248696f742b81cdd7",
+          "name": "Chocolate Cake🌱",
+          "canonicalName": "Chocolate Cake🌱",
+          "priceMinor": 9500,
+          "path": "/queries/6/state/data/items/19",
+          "sectionName": "Dessert"
+        },
+        {
+          "id": "661f10a5bd7faa68d5a05386",
+          "name": "Tropical Cheesecake🌱",
+          "canonicalName": "Tropical Cheesecake🌱",
+          "priceMinor": 8900,
+          "path": "/queries/6/state/data/items/20",
+          "sectionName": "Dessert"
+        },
+        {
+          "id": "68ae55eb9b6775df337eccf8",
+          "name": "Creamy Pumpkin Soup",
+          "canonicalName": "Creamy Pumpkin Soup",
+          "priceMinor": 14900,
+          "path": "/queries/6/state/data/items/26",
+          "sectionName": "Mains"
+        },
+        {
+          "id": "6b188567b64fa1d069a2e8b0",
+          "name": "Toasted BBQ Chick'n Wrap 🌱",
+          "canonicalName": "Toasted BBQ Chick'n Wrap 🌱",
+          "priceMinor": 18900,
+          "path": "/queries/6/state/data/items/27",
+          "sectionName": "Wraps"
+        },
+        {
+          "id": "95c427be653e0c0da62d9b54",
+          "name": "Tiramisu 🌱",
+          "canonicalName": "Tiramisu 🌱",
+          "priceMinor": 9900,
+          "path": "/queries/6/state/data/items/28",
+          "sectionName": "Dessert"
+        },
+        {
+          "id": "9d1d8a6b745bfba031300103",
+          "name": "Meatball Goulash",
+          "canonicalName": "Meatball Goulash",
+          "priceMinor": 23900,
+          "path": "/queries/6/state/data/items/29",
+          "sectionName": "Mains"
+        },
+        {
+          "id": "cd63c4ac496642d6c6796110",
+          "name": "Toasted Falafel Wrap 🌱",
+          "canonicalName": "Toasted Falafel Wrap 🌱",
+          "priceMinor": 15900,
+          "path": "/queries/6/state/data/items/30",
+          "sectionName": "Wraps"
+        },
+        {
+          "id": "f7c57f5c7685b9c9d9ee698c",
+          "name": "Falafel Wrap 🌱",
+          "canonicalName": "Falafel Wrap 🌱",
+          "priceMinor": 15900,
+          "path": "/queries/6/state/data/items/32",
+          "sectionName": "Wraps"
+        },
+        {
+          "id": "f8c75d34bbf56846e7b6c60a",
+          "name": "Toasted Chick'n Caesar Wrap 🌱",
+          "canonicalName": "Toasted Chick'n Caesar Wrap 🌱",
+          "priceMinor": 16900,
+          "path": "/queries/6/state/data/items/33",
+          "sectionName": "Wraps"
+        }
+      ],
+      "rawExcludedRecords": [
+        {
+          "id": "60ffb758e7591e4096b4c7fa",
+          "name": "Aass Eplemost 0,33l",
+          "priceMinor": 7500,
+          "description": "",
+          "path": "/queries/6/state/data/items/4",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "60ffb7e8f5bc1025ef60ae42",
+          "name": "Ginger Kombucha 0,5l",
+          "priceMinor": 8900,
+          "description": "",
+          "path": "/queries/6/state/data/items/5",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "60ffb9c9f34f9d7771fef079",
+          "name": "Berryboost Kombucha 0,5l",
+          "priceMinor": 8900,
+          "description": "",
+          "path": "/queries/6/state/data/items/6",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "661f137e207a4b252e4c53ba",
+          "name": "Fentimans Ginger Beer 0,275cl",
+          "priceMinor": 7200,
+          "description": "",
+          "path": "/queries/6/state/data/items/21",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "661f140a8c831474e2ac1d59",
+          "name": "Fentimans Cola 0,275cl",
+          "priceMinor": 7200,
+          "description": "",
+          "path": "/queries/6/state/data/items/22",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "661f14c43a09181e5663a479",
+          "name": "Fentimans Rose Lemonade 0,275cl",
+          "priceMinor": 7200,
+          "description": "",
+          "path": "/queries/6/state/data/items/23",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "661f158c55bdd63af9fedf21",
+          "name": "Erdinger Non-Alcoholic Beer 0,33cl",
+          "priceMinor": 7900,
+          "description": "",
+          "path": "/queries/6/state/data/items/24",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "661f15c848696f742b828a61",
+          "name": "Rhubarb Kombucha 0,5l",
+          "priceMinor": 8900,
+          "description": "",
+          "path": "/queries/6/state/data/items/25",
+          "reason": "Beverage category excluded by existing rules"
+        },
+        {
+          "id": "f736d8c8f2e9fef291092c97",
+          "name": "Bestikk",
+          "priceMinor": 0,
+          "description": "Vennligst legg til denne gjenstanden hvis du trenger bestikk med bestillingen din. Restauranten vil velge passende bestikk til måltidene dine, hvis tilgjengelig.",
+          "path": "/queries/6/state/data/items/31",
+          "reason": "Zero-price cutlery"
+        }
+      ],
+      "quality": {
+        "accepted": true,
+        "itemCount": 25,
+        "minimumExpectedItems": 8,
+        "missingRequiredDishes": [],
+        "forbiddenDishesPresent": []
+      }
+    }
+  ]
+}

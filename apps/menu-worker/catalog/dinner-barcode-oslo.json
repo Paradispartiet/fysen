@@ -36,7 +36,7 @@
       "VÅRRULLER 特 色 春 卷",
       "VEGANSKE VÅRRULLER 素 春 卷",
       "SHUI ZHU BIFF 水 煮牛 肉",
-      "DAMPET HAVABBOR 特 色 蒸 海 鱼",
+      "DAMPET Seabass 特 色 蒸 海 鱼",
       "VEGANSK CRISPY DUCK 豆 腐 煲",
       "MANGOPUDDING",
       "TIRAMISÙ ALLA DINNER"
@@ -52,19 +52,19 @@
       },
       {
         "name": "VEGANSKE VÅRRULLER 素 春 卷",
-        "priceMinor": 15900
+        "priceMinor": 16900
       },
       {
         "name": "SHUI ZHU BIFF 水 煮牛 肉",
-        "priceMinor": 33900
+        "priceMinor": 34900
       },
       {
-        "name": "DAMPET HAVABBOR 特 色 蒸 海 鱼",
+        "name": "DAMPET Seabass 特 色 蒸 海 鱼",
         "priceMinor": 39800
       },
       {
         "name": "VEGANSK CRISPY DUCK 豆 腐 煲",
-        "priceMinor": 33900
+        "priceMinor": 34900
       },
       {
         "name": "MANGOPUDDING",

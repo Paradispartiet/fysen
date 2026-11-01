@@ -138,3 +138,79 @@ export function hasPricesOutsideSemanticMenuBlocks(html: string): boolean {
     /^\d{2,4}(?:[.,]\d{1,2})?$/u.test(text($(node).text())),
   );
 }
+
+export const HTML_EXPLICIT_MENU_COMPONENT_RECOVERY_VERSION = "explicit-menu-component-v1";
+
+/** Nonempty results certify complete visible price coverage for explicit BEM
+ * menu fields, so exact bindings may replace a larger heuristic extraction. */
+export function recoverCompleteExplicitMenuComponentHtmlItems(html: string): readonly MenuObservedItem[] {
+  const $ = load(html);
+  $("script, style, noscript, template, nav, [role=navigation], [hidden], [aria-hidden=true], .w-condition-invisible").remove();
+  $("[style]").each((_, node) => {
+    if (/(?:display\s*:\s*none|visibility\s*:\s*hidden)/iu.test($(node).attr("style") ?? "")) $(node).remove();
+  });
+  // Contact values need both semantic markup and a matching value. Neither a
+  // footer nor an address class alone exempts unrelated food-price content.
+  $("a[href^='tel:'], a[href^='mailto:']").each((_, node) => {
+    const link = $(node), value = text(link.text());
+    if ((link.attr("href")?.startsWith("tel:") && /^\+?[\d ()-]{6,25}$/u.test(value)) ||
+      (link.attr("href")?.startsWith("mailto:") && /^[^\s@]+@[^\s@]+\.[^\s@]+$/u.test(value))) link.remove();
+  });
+  $("address, [itemprop=postalCode], [class]").each((_, node) => {
+    const element = $(node);
+    const addressContext = element.is("address, [itemprop=postalCode]") || /(?:^|[\s_-])address(?:$|[\s_-])/iu.test(element.attr("class") ?? "");
+    if (!addressContext) return;
+    element.find("p, span").addBack().each((__, part) => {
+      const value = text($(part).text());
+      if (/^\d{4}\s+[\p{L} .-]+$/u.test(value) || ($(part).is("address") && /^[\p{L} .'-]+\s+\d{1,4}[a-z]?,\s*\d{4}\s+[\p{L} .-]+$/iu.test(value))) $(part).remove();
+    });
+  });
+  $("time").each((_, node) => {
+    if (/^\d{1,2}[.:]\d{2}\s*[-–]\s*\d{1,2}[.:]\d{2}$/u.test(text($(node).text()))) $(node).remove();
+  });
+  const unboundPrice = (value: string): boolean => {
+    if (/(?:\b(?:kr\.?|NOK|EUR|USD|GBP|SEK|DKK)\s*\d|\d\s*(?:kr\.?|NOK|EUR|USD|GBP|SEK|DKK)\b|[€$£]\s*\d|\d\s*[€$£])/iu.test(value)) return true;
+    // Grouped thousands are monetary ambiguity even when the leading group
+    // is a single digit (1.450,-); keep clock-like two-digit groups distinct.
+    if (/(?<!\d)\d{1,3}(?:[., '\u2019]\d{3})+(?:[,.]\d{1,2})?(?!\d)/u.test(value)) return true;
+    return [...value.matchAll(/(?<![\d.])\d{2,5}(?:[,.]\d{1,2})?(?![\p{L}\d])/gu)]
+      .some(match => Number(match[0].replace(",", ".")) >= 30);
+  };
+  const hasUnboundPrice = (fragment: Cheerio<HtmlNode>): boolean => {
+    const spaced = fragment.clone();
+    spaced.find("*").prepend(" ").append(" ");
+    return unboundPrice(text(spaced.text()));
+  };
+  const cards = $(".menu-item").toArray();
+  if (!cards.length) return [];
+  const unique = new Map<string, MenuObservedItem>();
+  for (const node of cards) {
+    const card = $(node);
+    const names = card.children(".menu-item__name");
+    const prices = card.children(".menu-item__price");
+    const descriptions = card.children(".menu-item__description");
+    if (names.length !== 1 || prices.length !== 1 || descriptions.length > 1 || card.find(".menu-item").length) return [];
+    const name = text(names.text());
+    const printedPrice = text(prices.text());
+    const priceMatch = printedPrice.match(/^(?:(?:NOK|kr\.?)\s*)?([1-9]\d{1,4})(?:[,.]00|,\s*-)?(?:\s*(?:NOK|kr\.?))?$/iu);
+    const priceMinor = Number(priceMatch?.[1]) * 100;
+    if (!name || !priceMatch || priceMinor < 3000 || priceMinor > 2_000_000 || BUNDLE_OR_DRINK.test(name)) return [];
+    const description = text(descriptions.text());
+    const residue = card.clone();
+    residue.children(".menu-item__price").remove();
+    if (hasUnboundPrice(residue)) return [];
+    const item: MenuObservedItem = {
+      name, normalizedName: normalizeDishName(name), sourceKey: createMenuItemSourceKey(name, null),
+      description: description || null, sectionName: null,
+      priceMinor, priceKind: "exact", priceMaxMinor: null, currency: "NOK", position: unique.size,
+      extractionMethod: "html_heuristic", confidence: 0.99,
+      sourceExcerpt: [name, description, printedPrice].filter(Boolean).join(" — ").slice(0, 1000),
+    };
+    const previous = unique.get(item.sourceKey);
+    if (previous && (previous.priceMinor !== item.priceMinor || previous.description !== item.description)) return [];
+    if (!previous) unique.set(item.sourceKey, item);
+  }
+  $(".menu-item").remove();
+  if (hasUnboundPrice($("body"))) return [];
+  return [...unique.values()];
+}

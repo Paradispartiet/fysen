@@ -27,11 +27,11 @@ HTML-kort krever to lokale fremhevinger: norsk tittel først, én eksplisitt NOK
 
 PDF-kort bruker typografi, posisjon og kolonnegrenser før linjerekonstruksjon. Tittel og pris må høre til samme kort. Konkurrerende lokale priser avvises. Mat-/drikkeseksjoner kan skifte på samme side; øl, drikkepakker, tre-retters anbefaling og bacon-tillegg blir ikke selvstendige måltider. Verken vertsnavn eller sidenummer brukes som parserbetingelse. Eksisterende parser er tilbakefall for andre layouttyper.
 
-Runtime-identiteter oppdateres for HTML og PDF slik at tidligere feiltolkede snapshots blir hentet på nytt. Eksisterende krav beholdes utenom det uttrykkelig daterte [kildebyttet hos Engebret fra 1. november](engebret-november-menu-2026-11-01.md), som erstatter oktoberkontrollene med alle 15 tilbud i den aktuelle menyen. Full katalogregresjon bestilles eksplisitt i PR-beskrivelsen; den strenge direkte kontrollen av endrede manifester beholdes.
+Runtime-identiteter oppdateres for HTML og PDF slik at tidligere feiltolkede snapshots blir hentet på nytt. Oppdaterte kilder og dokumenterte menyendringer ved månedsskiftet er samlet i [kontrollen 1. november](menu-source-refresh-2026-11-01.md), med egne bevis for Engebret, Lorry, Dinner og tre Wolt-menyer. Full katalogregresjon bestilles eksplisitt i PR-beskrivelsen; den strenge direkte kontrollen av endrede manifester beholdes.
 
 ## Verifikasjon og videre porter
 
-Lokal verifikasjon 1. november: 109 testfiler / 837 tester bestått, TypeScript-bygg, ESLint, YAML-parsing og `git diff --check`. Uavhengig kodegjennomgang har ingen gjenstående viktige funn.
+Lokal verifikasjon 1. november: 111 testfiler / 881 tester bestått, TypeScript-bygg, ESLint, YAML-parsing og `git diff --check`. Uavhengig kodegjennomgang har ingen gjenstående viktige funn.
 
 Lokal kildefangst gir nøyaktig 14/25 matrader og samsvar med alle 38 manuelle navn/prispar. Regresjonstestene omfatter ugyldige/konkurrerende priser, kolonnegrenser, oversettelser, skjult HTML og drikkescope. Direkte livehenting i arbeidsmiljøet feiler med DNS `EAI_AGAIN`; dette er ingen kildegodkjenning. Livebevis skal derfor kjøres fra GitHub Actions på den konkrete commiten, inkludert hele eksisterende katalog.
 

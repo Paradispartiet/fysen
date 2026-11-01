@@ -1,0 +1,76 @@
+{
+  "restaurantSlug": "lorry-restaurant-oslo",
+  "checkedAt": "2026-11-01",
+  "officialHomepage": "https://lorry.no/",
+  "homepageMenuLink": "https://lorry.no/meny/julemeny",
+  "previousSource": {
+    "url": "https://lorry.no/meny/middag",
+    "httpStatus": 404
+  },
+  "replacementSource": {
+    "url": "https://lorry.no/meny/julemeny",
+    "httpStatus": 200,
+    "sha256": "f0101f57e0f274ccfc9c1487909e9a6da462dc1341121d625a90054caaa39230",
+    "fixture": "apps/menu-worker/src/fixtures/lorry-julemeny-2026-11-01.html",
+    "scope": "Julemeny only; no asserted effective start date; lunch and conditional Sunday/quiet-day reduced menu excluded",
+    "individuallyPricedOfferCount": 9,
+    "minimumExpectedItems": 8,
+    "minimumExpectedItemsRationale": "Normal-variation buffer of one below the observed nine individually priced offers; all nine exact name/price quality controls remain mandatory."
+  },
+  "requiredDishVariants": [
+    {
+      "name": "Lutefisk",
+      "priceMinor": 87500,
+      "currency": "NOK"
+    },
+    {
+      "name": "Pinnekjøtt",
+      "priceMinor": 87500,
+      "currency": "NOK"
+    },
+    {
+      "name": "Juletallerken",
+      "priceMinor": 74500,
+      "currency": "NOK"
+    },
+    {
+      "name": "Rakørret",
+      "priceMinor": 69500,
+      "currency": "NOK"
+    },
+    {
+      "name": "Smalahove",
+      "priceMinor": 73500,
+      "currency": "NOK"
+    },
+    {
+      "name": "Vegetarisk Juletallerken",
+      "priceMinor": 43500,
+      "currency": "NOK"
+    },
+    {
+      "name": "Multekrem",
+      "priceMinor": 27500,
+      "currency": "NOK"
+    },
+    {
+      "name": "Riskrem med bringebærsaus",
+      "priceMinor": 23900,
+      "currency": "NOK"
+    },
+    {
+      "name": "Vaniljeis med bjørnebær og eggelikør",
+      "priceMinor": 23900,
+      "currency": "NOK"
+    }
+  ],
+  "servingEvidence": {
+    "Lutefisk": "2 serveringer",
+    "Pinnekjøtt": "2 serveringer"
+  },
+  "ingredientOnlyNames": [
+    "Ribbe",
+    "Vegetarisk Bratwürst"
+  ],
+  "publicationPolicy": "Keep old published source/menu until replacement source fetch, complete component extraction, minimum count and every exact name/price control pass; do not publish partial or failed extraction."
+}

@@ -4,7 +4,7 @@ import {
   type MenuObservedItem,
 } from "@fysen/menu-core";
 
-export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v29";
+export const HTML_DESCRIPTION_TITLE_RECOVERY_VERSION = "titles-v30";
 
 const PRICE_LINE =
   /^(?:(?:kr\.?\s*)?[1-9]\d{1,3}(?:[.,]\d{1,2})?(?:\s*(?:,-|kr\.?|nok))?)$/iu;
@@ -161,6 +161,11 @@ export function looksLikeHtmlDescription(value: string): boolean {
   // with the Norwegian adjective "Blandet".
   if (/^blandet\s+(?:salat|iskrem)\s*\/\s*mixed\s+(?:salad|ice\s+cream)$/iu.test(line))
     return false;
+  // A short Latin preparation title with its Han translation is a dish
+  // name even when its Latin noun retains mixed case. Keep prose connectors
+  // excluded so preparation instructions remain descriptions.
+  if (/^(?:bakt|grillet|stekt|fritert|braisert|røkt|dampet|baked|grilled|fried|braised|smoked|steamed)\s+\p{Script=Latin}+(?:\s+\p{Script=Latin}+){0,2}\s+[\p{Script=Han}\s]+$/iu.test(line) &&
+      !/\b(?:med|with|og|and)\b/iu.test(line)) return false;
   const words = line.split(/\s+/).filter(Boolean);
   // A bilingual dish title can exceed the generic description word-count
   // limit because it prints the Norwegian and English names together.

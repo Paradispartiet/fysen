@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 47,
+    "minimumExpectedItems": 41,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-30",
-      "note": "Offentlig Wolt-leveringsmeny kildekontrollert 2026-10-30 med produksjonsuttrekker og kilde-nøkkelkanonisering: 53 prissatte katalogprodukter, kontrollert mot innebygd meny-JSON. Minstekrav 47 er 90 % av observert antall, avrundet ned, og gir buffer for normal menyvariasjon. Kilde-URL, hentemåte og forbudte rettsnavn er uendret. Utgått rett «Chicken Tikka Masala» erstattet i kvalitetsassertasjonene med publisert «Butter Chicken» (245 NOK). Utgått rett «Veggie Paratha Rull» erstattet i kvalitetsassertasjonene med publisert «Nan Veggie Rull» (139 NOK). Antall navne- og prisassertasjoner er bevart; alle bestod lokal validering mot dette kildeuttaket. Drikke og småtilbehør under uttrekkerens eksisterende prisgrense er ikke med i produkttallet. Prisene gjelder Wolt-levering; åpningstider er ikke uavhengig bekreftet."
+      "checkedAt": "2026-11-01",
+      "note": "Wolt-leveringsmenyen kildekontrollert 2026-11-01 mot komplett innebygd meny-JSON (loading_strategy=full): 46 kvalifiserte, individuelt prisede uttrekksposter, samtlige navn/priser kontrollert mot råkilden. Opprinnelig og oppdatert uttrekker gir identiske poster på samme kildeopptak.  5 utgåtte kontrollretter er erstattet med uavhengige, publiserte måltidskontroller; øvrige kontroller og antall navne-/prisassertasjoner er bevart. Minstekrav 41 er 90 % av observert kvalifisert antall 46, avrundet ned, som buffer for normal menyvariasjon (tidligere 47). Se docs/research/wolt-menu-control-refresh-20261101.sources.json for kildehash, full parvis kontroll og utelatelser. Prisene gjelder Wolt-levering; åpningstider og bordpriser er ikke bekreftet."
     }
   },
   "actions": [],
@@ -35,11 +35,11 @@
     "requiredDishNames": [
       "Kylling Cloud Nan",
       "Samosa Chat",
-      "Butter Chicken",
-      "Nan Veggie Rull",
-      "Biff Cloud Nan",
-      "Karachi Biff Pizza Stor",
-      "Døner nanrull"
+      "Chapli Kebab",
+      "Veggie Paratha Rull",
+      "Keema Cloud Nan",
+      "Karachi Kjøttdeig Pizza Stor",
+      "Karachi Døner Box"
     ],
     "requiredDishVariants": [
       {
@@ -51,24 +51,24 @@
         "priceMinor": 11500
       },
       {
-        "name": "Butter Chicken",
-        "priceMinor": 24500
+        "name": "Chapli Kebab",
+        "priceMinor": 22900
       },
       {
-        "name": "Nan Veggie Rull",
-        "priceMinor": 13900
+        "name": "Veggie Paratha Rull",
+        "priceMinor": 16900
       },
       {
-        "name": "Biff Cloud Nan",
-        "priceMinor": 23900
+        "name": "Keema Cloud Nan",
+        "priceMinor": 21900
       },
       {
-        "name": "Karachi Biff Pizza Stor",
-        "priceMinor": 31500
+        "name": "Karachi Kjøttdeig Pizza Stor",
+        "priceMinor": 29900
       },
       {
-        "name": "Døner nanrull",
-        "priceMinor": 15500
+        "name": "Karachi Døner Box",
+        "priceMinor": 27900
       }
     ],
     "forbiddenDishNames": []
