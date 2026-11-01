@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-18",
-      "note": "Åtte matrett-/prispar hentet fra offentlig Wolt-meny 2026-10-18. Besøksadresse og koordinater fra Wolt-kartlenke. Leveringspriser, ikke bordpriser; åpningstider og produksjonsdatabase ikke særskilt attestert."
+      "checkedAt": "2026-11-01",
+      "note": "2026-11-01: First production extractor refresh #41337870383 omitted Gyoza (184 NOK) from a 36-item snapshot, but independent exact-head HTTP proofs #41345736871 and #41346809813 recovered 37 items and Gyoza at the exact checked price; all 8 assertions passed, minimum 8 preserved. No menu/source transport changes. Earlier single-source failure was transient; hours unverified, Wolt delivery prices only."
     }
   },
   "actions": [],

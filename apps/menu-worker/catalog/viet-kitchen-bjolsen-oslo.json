@@ -27,8 +27,8 @@
   "verification": {
     "hours": {
       "status": "provisional",
-      "checkedAt": "2026-08-26",
-      "note": "Viet Kitchen's first-party homepage and company registration identify Sarpsborggata 12C as the current restaurant address and publish Mon-Sun 13:00-21:00 as venue hours. Keep open/closed unknown until the schedule is explicitly kitchen-scoped. The current Wolt page is independently matched priced service-menu evidence and must not be described as complete dine-in coverage."
+      "checkedAt": "2026-11-01",
+      "note": "2026-11-01: Live HTTP source proof on PR #1079 fetched 71 priced Wolt offers (raw SHA-256 936e85db456748823e469ff946544ab5239a88962ab1935add1feaef87bfacb1). Raw JSON payload contained 106 source items across 16 categories but no BÚN BÒ XÀO XẢ ỚT listing. This dish appears on separately indexed Wolt/Foodora pages, so its status differs by response and cannot be asserted as currently available from this Wolt source. Its one exact name/price control is replaced by independently observed BÚN NEM NƯỚNG at 239 NOK; nine other exact controls and the 66-item alert floor are unchanged, never capped. Browser fetch trial exceeded its 120-request security budget and was reverted. Hours provisional; delivery prices only."
     }
   },
   "actions": [
@@ -49,7 +49,7 @@
       "BÁNH HỎI HEO QUAY - Tynne rismelark med ribbe",
       "PHỞ BIFF BÒ TÁI",
       "PHỞ KYLLING GÀ",
-      "BÚN BÒ XÀO XẢ ỚT - Risnudler med marinert biff",
+      "BÚN NEM NƯỚNG - Risnudler med grillede Nem svinnekjøttkaker",
       "MÌ XÀO - Stir-fried egg noodles"
     ],
     "requiredDishVariants": [
@@ -86,8 +86,8 @@
         "priceMinor": 24900
       },
       {
-        "name": "BÚN BÒ XÀO XẢ ỚT - Risnudler med marinert biff",
-        "priceMinor": 24900
+        "name": "BÚN NEM NƯỚNG - Risnudler med grillede Nem svinnekjøttkaker",
+        "priceMinor": 23900
       },
       {
         "name": "MÌ XÀO - Stir-fried egg noodles",
