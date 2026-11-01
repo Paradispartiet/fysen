@@ -5,7 +5,7 @@ import {
 } from "@fysen/menu-core";
 import { extractPdfMenu, type ExtractedPdfMenu } from "./pdf-extractor.js";
 
-export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v43";
+export const PDF_SOURCE_EXTRACTOR_VERSION = "pdf-text-v44";
 
 const LOW_PER_ITEM_PRICE =
   /^(?:(?:kr\.?|nok)\s*(3\d)|(3\d)\s*(?:kr\.?|nok))\s*(?:,-)?\s*\((?:pr\.?\s*stk\.?|per\s+(?:piece|item|stk\.?)|each)\)$/iu;
@@ -144,6 +144,7 @@ function normalizeVisibleLine(value: string): string {
 
 function isBeverageSectionHeading(value: string): boolean {
   const line = normalizeScopeLine(value);
+  if (/^(?:fatol draft|drinker(?: og sann)?|brus soda|dessertvin|portvin|vin wine|ol beer|beer ol|pale ale|double ipa|ipa|saison|porter|stout|hvete wheat|lager bayer|red ale|brown ale|fruktol|surol berliner|belgisk trippel|blonde|sider)$/u.test(line)) return true;
   return /^(?:bia va ruou(?: beer spirits)?|beer(?: and)? spirits|giai khat(?: non alcohol(?:ic)?)?|non alcoholic(?: drinks?)?|alkoholfrie? alternativ(?: non alcoholic alternative)?(?: glass bottle)?|ruou pha(?: cocktails?)?|(?:[\p{L}\p{N}]+ )?cocktails?|aperitifs?|khong con(?: mocktails?)?|mocktails?|pre ?drinks?(?: \d{2,4})?|do uong(?: drinks?)?|drikke(?:meny)?|drinks?|beverages?|soft drinks?|barnedrinker|barne drikker|kids drinks?|children s drinks?|vinkart|vin(?:kart|liste|meny)?|musserende(?: sparkling)?(?: glass bottle)?|sparkling(?: wine)?s?(?: glass bottle)?|hvitvin(?: white wines?)?(?: glass bottle)?|white wines?(?: glass bottle)?|rodvin(?: red wines?)?(?: glass bottle)?|red wines?(?: glass bottle)?|rosevin(?: rose wines?)?(?: glass bottle)?|rose wines?(?: glass bottle)?|wine(?: list| menu| by the glass)?|bubbles|champagne|ol(?: beer)?|beer(?:s)?|(?:single malt )?whisk(?:e)?y(?: bourbon)?|bourbon|brandy(?: cognac)?|cognac|bitters?|(?:various )?spirits?|brennevin|liquor|vodka|gin|rum|tequila(?: mezcal)?|mezcal|aquavit|akevitt|liqueurs?|calvados|armagnac|grappa|port(?: wine)?|sherry|vermouth|sake|coffee|kaffe|tea|te|varm drikke(?: hot beverages?)?)$/u.test(
     line,
   );
@@ -151,6 +152,7 @@ function isBeverageSectionHeading(value: string): boolean {
 
 function isFoodSectionHeading(value: string): boolean {
   const line = normalizeScopeLine(value);
+  if (/^(?:only for lunch|lunsj(?: serveres kl.*)?|apetizer|appetizers?|sideretter|barnemeny|children s menu|salat|salad|fisk|fish|retter av svin|main pork dishes)$/u.test(line)) return true;
   return /^(?:do ngot(?: dessert)?|desserts?(?: dessert)?|dolci|mat|food|all day|evening|middagsmeny(?: dinner menu)?|dinner menu(?: middagsmeny)?|fra sj[oø]matbaren|from the seafood bar|forrett(?: starter)?|forretter(?: starters?)?|starters?|mellomrett(?: middle course)?|middle course(?: mellomrett)?|smaretter|small plates?|snacks?|hovedrett(?: main course)?|hovedretter(?: main courses?)?|main courses?|mains?|sides?|burgers?|set menus?)$/u.test(
     line,
   );
@@ -336,6 +338,7 @@ function looksLikePdfBeverageItem(name: string): boolean {
   const normalized = normalizeVisibleLine(name);
   return (
     PDF_WINE_STYLE_ITEM.test(normalized) ||
+    /\d+(?:[.,]\d+)?\s*%\s+\d+[.,]\d+/u.test(normalized) ||
     (PDF_BEVERAGE_STYLE_ITEM.test(normalized) &&
       PDF_BEVERAGE_VOLUME_ITEM.test(normalized))
   );
@@ -363,6 +366,7 @@ function looksLikePricingMetadata(name: string): boolean {
     /^for \d{1,2}$/u.test(normalized) ||
     PDF_BEVERAGE_PAIRING_METADATA.test(name) ||
     PDF_FIXED_COURSE_MENU_ITEM.test(normalizeVisibleLine(name)) ||
+    /^(?:chef[’']s\s+menu\s*:|\d+\s*[- ]?retter\b|\d+\s+retter\s*\/)/iu.test(normalizeVisibleLine(name)) ||
     PDF_GENERIC_SECTION_PRICE_LABEL.test(normalizeVisibleLine(name)) ||
     PDF_BOTTLE_PRICE_LABEL.test(normalizeVisibleLine(name)) ||
     PDF_PERSON_PRICE_TIER_LABEL.test(normalizeVisibleLine(name))

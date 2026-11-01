@@ -170,3 +170,11 @@ jobs:
               pnpm --filter @fysen/menu-worker validate:batch "$MANIFEST_PATH"
               ;;
           esac
+
+      - name: Validate the complete canonical catalog when requested
+        if: "github.event_name == 'pull_request' && contains(github.event.pull_request.body, 'Live-proof catalog: true')"
+        env:
+          FYSEN_CANDIDATE_VALIDATION_CONCURRENCY: "12"
+          FYSEN_CANDIDATE_VALIDATION_MAX_ATTEMPTS: "3"
+          FYSEN_CANDIDATE_VALIDATION_PROGRESS: "1"
+        run: pnpm --filter @fysen/menu-worker validate:batch catalog

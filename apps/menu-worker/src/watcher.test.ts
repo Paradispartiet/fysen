@@ -1,3 +1,4 @@
+import { HTML_PARAGRAPH_TITLE_PRICE_RECOVERY_VERSION } from "./html-paragraph-title-price-recovery.js";
 import { HTML_SEMANTIC_MENU_CARD_RECOVERY_VERSION } from "./html-semantic-menu-card-recovery.js";
 import { describe, expect, it } from "vitest";
 import { HTML_ADJACENT_HEADING_PRICE_RECOVERY_VERSION } from "./html-adjacent-heading-price-recovery.js";
@@ -67,6 +68,7 @@ describe("menu source runtime extractor refresh policy", () => {
       HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION,
       HTML_RECOVERY_SELECTION_VERSION,
       HTML_SEMANTIC_MENU_CARD_RECOVERY_VERSION,
+      HTML_PARAGRAPH_TITLE_PRICE_RECOVERY_VERSION,
     ].join("+");
     expect(extractorVersionForSourceType("html")).toBe(runtimeVersion);
     expect(extractorVersionForSourceType("json_ld")).toBe(runtimeVersion);
