@@ -27,8 +27,8 @@
   "verification": {
     "hours": {
       "status": "provisional",
-      "checkedAt": "2026-08-26",
-      "note": "Viet Kitchen's first-party homepage and company registration identify Sarpsborggata 12C as the current restaurant address and publish Mon-Sun 13:00-21:00 as venue hours. Keep open/closed unknown until the schedule is explicitly kitchen-scoped. The current Wolt page is independently matched priced service-menu evidence and must not be described as complete dine-in coverage."
+      "checkedAt": "2026-11-01",
+      "note": "2026-11-01: Production materialization #41337870383 was blocked by extractor-refresh snapshot of 71 priced offers missing exact BÚN BÒ XÀO XẢ ỚT - Risnudler med marinert biff at NOK 249. The published Wolt page and Foodora menu still list this named dish at that price, so keep the existing name and price assertion without rebaselining. Ten exact name/price controls and 66-item floor are unchanged. Run strict live proof for this specific manifest before any production retry; avoid full catalog scans. Source: https://wolt.com/en/nor/oslo/restaurant/viet-kitchen-oslo ; production job link in docs/production-two-source-blockers-2026-11-01.md."
     }
   },
   "actions": [
