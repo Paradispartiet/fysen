@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "gamle-raadhus-restaurant-oslo",
+    "name": "Gamle Raadhus Restaurant",
+    "websiteUrl": "https://www.gamleraadhus.no/",
+    "address": "Nedre Slottsgate 1, 0157 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90984743288299,
+    "longitude": 10.740149051831544
+  },
+  "menuSource": {
+    "url": "https://www.gamleraadhus.no/kveldsmeny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 12,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-10-31",
+      "note": "Kveldsmeny gjeldende fra 29. oktober 2026: alle 14 rettnavn/prispar kontrollert mot førstepartskilden. Minimum 12 gir normal variasjonsbuffer. Servert 2 ganger er ett samlet tilbud, ikke pris per servering. Lunsj og selskapsmenyer er utenfor denne kilden. Adresse fra restauranten; koordinater fra Kartverkets adresseregister. Åpningstider er ikke særskilt verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Rakfisk fra Hande i Valdres",
+      "Tynne skiver av røkelaks fra Bergen",
+      "Saltbakte beter fra Hasle gård på Rygge, laget som en tartar",
+      "Vår lutefisk (WP3) - servert 2 ganger",
+      "Rakfisk fra Hande i Valdres - servert 2 ganger",
+      "Ovnsbakt villkveite fra norskekysten",
+      "Pinnekjøtt av lam fra Tynset - servert 2 ganger",
+      "Langtidsbakt kalvenakke fra Hallingdal",
+      "Byggotto på byggryn fra Sjåk med norsk hardost",
+      "Gamle Raadhus sin klassiske Crème Brûlée",
+      "Vår egen «sjokoladefløterand» laget på melkesjokolade",
+      "En smak av husets egen is og sorbet",
+      "Norske oster",
+      "Små søtsaker fra vårt dessertkjøkken"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Rakfisk fra Hande i Valdres",
+        "priceMinor": 39500
+      },
+      {
+        "name": "Tynne skiver av røkelaks fra Bergen",
+        "priceMinor": 39000
+      },
+      {
+        "name": "Saltbakte beter fra Hasle gård på Rygge, laget som en tartar",
+        "priceMinor": 37500
+      },
+      {
+        "name": "Vår lutefisk (WP3) - servert 2 ganger",
+        "priceMinor": 87500
+      },
+      {
+        "name": "Rakfisk fra Hande i Valdres - servert 2 ganger",
+        "priceMinor": 79500
+      },
+      {
+        "name": "Ovnsbakt villkveite fra norskekysten",
+        "priceMinor": 59000
+      },
+      {
+        "name": "Pinnekjøtt av lam fra Tynset - servert 2 ganger",
+        "priceMinor": 87500
+      },
+      {
+        "name": "Langtidsbakt kalvenakke fra Hallingdal",
+        "priceMinor": 58500
+      },
+      {
+        "name": "Byggotto på byggryn fra Sjåk med norsk hardost",
+        "priceMinor": 48500
+      },
+      {
+        "name": "Gamle Raadhus sin klassiske Crème Brûlée",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Vår egen «sjokoladefløterand» laget på melkesjokolade",
+        "priceMinor": 29500
+      },
+      {
+        "name": "En smak av husets egen is og sorbet",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Norske oster",
+        "priceMinor": 32000
+      },
+      {
+        "name": "Små søtsaker fra vårt dessertkjøkken",
+        "priceMinor": 23000
+      }
+    ],
+    "forbiddenDishNames": [
+      "Hjemmesyltede rødbeter, mandelpotetlefse og Rørosrømme"
+    ]
+  }
+}
