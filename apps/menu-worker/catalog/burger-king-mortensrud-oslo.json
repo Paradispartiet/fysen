@@ -21,13 +21,14 @@
       "redirectOrigins": [],
       "browserDataOrigins": [],
       "browserBlockedOrigins": []
-    }
+    },
+    "maxResponseBytes": 8388608
   },
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-19",
-      "note": "Wolt-menykilde observert 2026-10-19 med 14 individuelle navngitte rett-/prispar og besøksadresse. Koordinatgrunnlag: adressebasert byggpunkt fra Oslo kommunes adresseliste (ikke verifisert Wolt-kartpunkt). Filial/restaurant er separat fra andre katalogidentiteter. Wolt-leveringspriser, ikke bekreftede bordpriser; åpningstider og produksjonsdatabase ikke uavhengig kontrollert."
+      "checkedAt": "2026-11-01",
+      "note": "Wolt-menykilde observert 2026-10-19 med 14 individuelle navngitte rett-/prispar og besøksadresse. Koordinatgrunnlag: adressebasert byggpunkt fra Oslo kommunes adresseliste (ikke verifisert Wolt-kartpunkt). Filial/restaurant er separat fra andre katalogidentiteter. Wolt-leveringspriser, ikke bekreftede bordpriser; åpningstider og produksjonsdatabase ikke uavhengig kontrollert. 2026-11-01: Production materialization #41337870383 returned `Response exceeds 2097152 bytes` during extractor refresh of this Wolt page. Source-specific maximum raised to the existing approved 8 MiB response allowance used by Domino's Wolt sources; this neither overrides robot/SSRF protections nor lowers the eight-item minimum or any of fourteen exact name-price controls. Must pass targeted direct-source proof; Wolt prices are delivery prices, not confirmed dine-in prices."
     }
   },
   "actions": [],
