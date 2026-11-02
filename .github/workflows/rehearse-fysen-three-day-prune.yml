@@ -1,0 +1,195 @@
+name: Rehearse approved Fysen three-day pruning (isolated)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/rehearse-fysen-three-day-prune.yml"]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  restore:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - name: Fetch existing validated Fysen backup (no production connection)
+        uses: actions/download-artifact@v4
+        with:
+          name: fysen-menu-history-2026-11-02
+          run-id: 41507713036
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: original
+
+      - name: Fetch archived search-result provenance (no production connection)
+        uses: actions/download-artifact@v4
+        with:
+          name: fysen-search-links-before-prune-2026-11-02
+          run-id: 41518576377
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: search
+
+      - name: Verify checksum and archive table manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd original
+          sed -i 's|  export/|  |' SHA256SUMS.txt
+          sha256sum --check SHA256SUMS.txt
+          test -s fysen-menu-history.pgdump
+          file fysen-menu-history.pgdump
+          cd ../search
+          sha256sum --check SHA256SUMS.txt
+          test -s fysen-search-links-2026-11-02.pgdump
+
+      - name: Restore full archive into temporary local PostGIS PostgreSQL
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run --rm -d --name fysen-history-restore \
+            -e POSTGRES_PASSWORD=local-restore-test-only \
+            -e POSTGRES_USER=postgres \
+            postgis/postgis:17-3.5
+          trap 'docker rm -f fysen-history-restore >/dev/null 2>&1 || true' EXIT
+
+          ready=0
+          for attempt in $(seq 1 90); do
+            if docker exec fysen-history-restore pg_isready -U postgres -d postgres >/dev/null 2>&1; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+          test "$ready" -eq 1
+
+          docker exec fysen-history-restore psql -v ON_ERROR_STOP=1 -U postgres -d postgres \
+            -c 'CREATE SCHEMA IF NOT EXISTS fysen' \
+            -c 'CREATE EXTENSION IF NOT EXISTS postgis' \
+            -c 'CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public'
+          docker cp original/fysen-menu-history.pgdump fysen-history-restore:/tmp/fysen-menu-history.pgdump
+
+          docker exec fysen-history-restore pg_restore --list /tmp/fysen-menu-history.pgdump >/dev/null
+          docker exec fysen-history-restore pg_restore -U postgres -d postgres \
+            --no-owner --no-acl --exit-on-error --jobs=4 \
+            /tmp/fysen-menu-history.pgdump
+
+          echo "Restore completed; checking exact six-table counts and foreign-key integrity."
+          docker exec -i fysen-history-restore psql -v ON_ERROR_STOP=1 -At -U postgres -d postgres <<'SQL'
+          DO $$
+          DECLARE
+            r bigint;
+            ms bigint;
+            sn bigint;
+            it bigint;
+            ch bigint;
+            wr bigint;
+          BEGIN
+            SELECT count(*) INTO r FROM fysen.restaurants;
+            SELECT count(*) INTO ms FROM fysen.menu_sources;
+            SELECT count(*) INTO sn FROM fysen.menu_snapshots;
+            SELECT count(*) INTO it FROM fysen.menu_items;
+            SELECT count(*) INTO ch FROM fysen.menu_changes;
+            SELECT count(*) INTO wr FROM fysen.menu_watch_runs;
+            IF (r, ms, sn, it, ch, wr) IS DISTINCT FROM
+               (1116::bigint, 1154::bigint, 40707::bigint,
+                1997348::bigint, 100172::bigint, 111963::bigint) THEN
+              RAISE EXCEPTION 'Restored row counts differ from source database baseline';
+            END IF;
+            RAISE NOTICE 'Restore verified: restaurants %, sources %, snapshots %, items %, changes %, watch runs %',
+                         r, ms, sn, it, ch, wr;
+          END $$;
+          SQL
+
+          echo "Restoring search-reference archive alongside menus"
+          docker cp search/fysen-search-links-2026-11-02.pgdump fysen-history-restore:/tmp/fysen-search-links-2026-11-02.pgdump
+          docker exec fysen-history-restore pg_restore -U postgres -d postgres \
+            --no-owner --no-acl --exit-on-error \
+            /tmp/fysen-search-links-2026-11-02.pgdump
+
+          echo "Simulate ONLY in the isolated ephemeral database: no production connection."
+          docker exec -i fysen-history-restore psql -v ON_ERROR_STOP=1 -U postgres -d postgres <<'SQL'
+          \set ON_ERROR_STOP on
+          SET statement_timeout = '20min';
+          BEGIN;
+
+          -- Frozen cutoff from read-only production audit, November 2 2026.
+          CREATE TEMP TABLE stg_keep AS
+            WITH ranked AS (
+              SELECT s.id, s.menu_source_id, s.fetched_at, s.http_status,
+                     row_number() OVER (
+                       PARTITION BY s.menu_source_id
+                       ORDER BY s.fetched_at DESC, s.id DESC
+                     ) AS rn
+              FROM fysen.menu_snapshots AS s
+            )
+            SELECT id, menu_source_id, fetched_at, http_status
+            FROM ranked
+            WHERE rn = 1 OR fetched_at >= '2026-10-30 21:21:32+00'::timestamptz;
+          CREATE UNIQUE INDEX ON stg_keep(id);
+          ANALYZE stg_keep;
+
+          DO $$
+          DECLARE n_sources bigint; n_keep bigint; n_items bigint; n_refs bigint; n_success bigint;
+          BEGIN
+            SELECT count(DISTINCT menu_source_id), count(*),
+              count(*) FILTER (WHERE http_status BETWEEN 200 AND 299)
+              INTO n_sources, n_keep, n_success FROM stg_keep;
+            SELECT count(*) INTO n_items
+            FROM fysen.menu_items i JOIN stg_keep k ON k.id = i.snapshot_id;
+            SELECT count(*) INTO n_refs
+            FROM fysen.search_result_impressions i
+            JOIN fysen.menu_items m ON m.id=i.menu_item_id
+            WHERE NOT EXISTS (SELECT 1 FROM stg_keep k WHERE k.id=m.snapshot_id);
+            IF (n_sources, n_keep, n_items, n_refs, n_success) IS DISTINCT FROM
+               (1154::bigint, 3096::bigint, 151408::bigint, 5150::bigint, 3096::bigint) THEN
+              RAISE EXCEPTION 'Prune selection deviates from frozen production audit: sources %, kept snapshots %, items %, affected search refs %, successful snapshots %', n_sources,n_keep,n_items,n_refs,n_success;
+            END IF;
+            RAISE NOTICE 'Preflight passed: %, %, %, %, %', n_sources,n_keep,n_items,n_refs,n_success;
+          END $$;
+
+          DELETE FROM fysen.menu_snapshots s
+          WHERE NOT EXISTS (SELECT 1 FROM stg_keep k WHERE k.id=s.id);
+
+          DO $$
+          DECLARE r bigint; ms bigint; sn bigint; it bigint; ch bigint; wr bigint;
+          DECLARE e bigint; imp bigint; linked bigint; unset bigint; dangling bigint; sources_missing bigint;
+          BEGIN
+            SELECT count(*) INTO r FROM fysen.restaurants;
+            SELECT count(*) INTO ms FROM fysen.menu_sources;
+            SELECT count(*) INTO sn FROM fysen.menu_snapshots;
+            SELECT count(*) INTO it FROM fysen.menu_items;
+            SELECT count(*) INTO ch FROM fysen.menu_changes;
+            SELECT count(*) INTO wr FROM fysen.menu_watch_runs;
+            SELECT count(*) INTO e FROM fysen.search_events;
+            SELECT count(*), count(*) FILTER (WHERE menu_item_id IS NOT NULL),
+                   count(*) FILTER (WHERE menu_item_id IS NULL)
+              INTO imp, linked, unset FROM fysen.search_result_impressions;
+            SELECT count(*) INTO dangling FROM fysen.search_result_impressions i
+              LEFT JOIN fysen.menu_items m ON m.id=i.menu_item_id
+              WHERE i.menu_item_id IS NOT NULL AND m.id IS NULL;
+            SELECT count(*) INTO sources_missing FROM fysen.menu_sources src
+              WHERE NOT EXISTS(SELECT 1 FROM fysen.menu_snapshots s WHERE s.menu_source_id=src.id);
+            IF (r,ms,sn,it,ch,wr,e,imp,linked,unset,dangling,sources_missing)
+               IS DISTINCT FROM
+               (1116::bigint,1154::bigint,3096::bigint,151408::bigint,
+                2184::bigint,111963::bigint,1266::bigint,7261::bigint,
+                2111::bigint,5150::bigint,0::bigint,0::bigint)
+            THEN
+              RAISE EXCEPTION 'Post-prune staging verification failed: restaurants %, sources %, snapshots %, items %, changes %, watch_runs %, searches %, impressions %, linked %, unset %, dangling %, sources_missing %',
+                r,ms,sn,it,ch,wr,e,imp,linked,unset,dangling,sources_missing;
+            END IF;
+            RAISE NOTICE 'STAGING PRUNE PASSED: 3096 snapshots, 151408 menu items, 5150 archived links set null, 0 orphans; searches and sources preserved';
+          END $$;
+          COMMIT;
+
+          -- In staging ONLY, measure estimated size after PostgreSQL table rewrite.
+          VACUUM (FULL, ANALYZE) fysen.menu_items;
+          VACUUM (FULL, ANALYZE) fysen.menu_snapshots;
+          VACUUM (FULL, ANALYZE) fysen.menu_changes;
+          VACUUM (FULL, ANALYZE) fysen.menu_watch_runs;
+          VACUUM (FULL, ANALYZE) fysen.search_result_impressions;
+          SELECT pg_size_pretty(pg_database_size(current_database())) AS staging_compacted_database_size,
+                 pg_database_size(current_database()) AS staging_compacted_bytes;
+          SQL
