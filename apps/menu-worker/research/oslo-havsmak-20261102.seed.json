@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-havsmak-20261102",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "havsmak-opera-oslo",
+        "name": "Havsmak",
+        "websiteUrl": "https://www.havsmak.no/",
+        "address": "Kirsten Flagstads plass 1, 0150 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.havsmak.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-11-02",
+          "note": "Forskningskontroll mot offisiell à la carte og snackmeny; prissatte enkeltretter finnes, men blandede tre-/femretters pakker, østersstørrelser, tos-personers skalldyrfat og sesongvariasjon krever særskilt kilde- og semantisk QA. Adresse oppgitt av restauranten. Ingen live parser-/produksjonsgodkjenning eller åpningstidsattest på dette stadiet."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "havsmaks 3-retter / havsmaks 3-course menu",
+        "havsmaks 5-retter / havsmaks 5-course menu"
+      ]
+    }
+  ]
+}
