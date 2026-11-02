@@ -6,7 +6,7 @@ import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } fro
  * infer a serving unit or convert a per-person quote to a dish price.
  * This layer applies only after the ordinary HTML parser has finished.
  */
-export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v7";
+export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v8";
 
 /** Preserve scoop units only from a single visible title/price card. */
 export function reconcileExplicitScoopUnits(
@@ -83,7 +83,13 @@ export function reconcileExplicitScoopUnits(
 
 const CURRENCY_PRICE = /\bkr\.?\s*([1-9]\d{1,3})\b/giu;
 const TRAILING_PRICE = /\bkr\.?\s*([1-9]\d{1,3})(?:\s*,-)?\s*$/iu;
-const PRICE_PER_PERSON = /\bkr\.?\s*[1-9]\d{1,3}\s*(?:pp|p\.p\.|per\s+(?:person|pers\.?)|pr\.?\s*(?:person|pers\.?))\b/iu;
+const PRICE_PER_PERSON = /(?:\\bkr\\.?\\s*|\\bNOK\\s*)?[1-9]\\d{1,3}\\s*(?:,-)?\\s*(?:pp|p\\.p\\.|per\\s+(?:person|pers\\.?)|pr\\.?\\s*(?:person|pers\\.?))\\b/iu;
+// A detached per-person quote is a price boundary, not permission to borrow
+// the following dessert's amount. Restore it only inside a unique named card
+// that explicitly states the minimum party size.
+const DETACHED_PER_PERSON_PRICE = /^(?:(?:kr\\.?|NOK)\\s*)?([1-9]\\d{1,3})\\s*(?:,-)?\\s*(?:pp|p\\.p\\.|per\\s+(?:person|pers\\.?)|pr\\.?\\s*(?:person|pers\\.?))\\s*$/iu;
+const MINIMUM_PARTY_NOTE = /\\b(?:minimum|minst|min\\.?)\\s*\\d{1,2}\\s*(?:pers\\.?|personer?)\\b/iu;
+const DETACHED_PRICE_BOUNDARY = /^(?:(?:kr\\.?|NOK)\\s*)?[1-9]\\d{1,3}\\s*(?:,-|;-|kr\\.?)?\\s*$/iu;
 const PAIR_OF_SIZES = /\b(liten|small)\s*\(\s*(\d{1,2})\s*\)\s*kr\.?\s*([1-9]\d{1,3})\s+(stor|large)\s*\(\s*(\d{1,2})\s*\)\s*kr\.?\s*([1-9]\d{1,3})\b/iu;
 const SAUCE_ONLY = /^(?:[\p{L}-]{2,20}saus|b[eé]arnaise)(?:\s*\([^)]{2,40}\))?$/iu;
 const SAUCE_SECTION = /^(?:saus(?:er)?|sauces?)$/iu;
@@ -164,11 +170,38 @@ function withExactPrice(item: MenuObservedItem, kroner: number): MenuObservedIte
   };
 }
 
+function detachedPerPersonSourceLines(
+  item: MenuObservedItem,
+  lines: readonly string[],
+): readonly string[] {
+  const matches: string[][] = [];
+  for (let start = 0; start < lines.length; start += 1) {
+    if (normalizeDishName(lines[start] ?? "") !== item.normalizedName) continue;
+    const scope: string[] = [lines[start]!];
+    let sawMinimum = false;
+    for (let index = start + 1; index < Math.min(lines.length, start + 12); index += 1) {
+      const line = lines[index]!;
+      if (OTHER_MENU_SECTION.test(line) || /^__FYSEN_/u.test(line)) break;
+      const quote = line.match(DETACHED_PER_PERSON_PRICE);
+      if (quote) {
+        if (sawMinimum) matches.push([...scope, line]);
+        break;
+      }
+      if (DETACHED_PRICE_BOUNDARY.test(line) || PRICE_PER_PERSON.test(line)) break;
+      if (MINIMUM_PARTY_NOTE.test(line)) sawMinimum = true;
+      scope.push(line);
+    }
+  }
+  // Repeated cards or conflicting per-person prices remain ambiguous.
+  const amounts = new Set(matches.map((scope) => scope.at(-1)?.match(DETACHED_PER_PERSON_PRICE)?.[1]));
+  return matches.length > 0 && amounts.size === 1 ? matches[0]! : [];
+}
+
 function explicitlyPricedPerPerson(
   item: MenuObservedItem,
   sourceLines: readonly string[],
 ): MenuObservedItem[] {
-  const explicit = /\bkr\.?\s*([1-9]\d{1,3})\s*(?:pp|p\.p\.|per\s+(?:person|pers\.?)|pr\.?\s*(?:person|pers\.?))\b/giu;
+  const explicit = /(?:\bkr\.?\s*|\bNOK\s*)?([1-9]\d{1,3})\s*(?:,-)?\s*(?:pp|p\.p\.|per\s+(?:person|pers\.?)|pr\.?\s*(?:person|pers\.?))\b/giu;
   const kroner = new Set<number>();
   for (const line of sourceLines) {
     for (const match of line.matchAll(explicit)) {
@@ -389,6 +422,8 @@ export function reconcileSourcePricedHtmlDishes(
     if (SAUCE_ONLY.test(item.name) && item.priceMinor !== null && item.priceMinor <= 15_000 &&
         !isIndividuallyPricedSauceInSection(item, lines))
       return [];
+    const detachedScope = detachedPerPersonSourceLines(item, lines);
+    if (detachedScope.length > 0) return explicitlyPricedPerPerson(item, detachedScope);
     const source = anchoredSourceLines(item, lines);
     // Expose the unit and minimum-party requirement directly in the title;
     // a scalar NOK amount must never masquerade as the total party price.
