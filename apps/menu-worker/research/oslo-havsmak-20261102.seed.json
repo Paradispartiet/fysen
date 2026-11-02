@@ -24,14 +24,56 @@
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-11-02",
-          "note": "Forskningskontroll mot offisiell à la carte og snackmeny; prissatte enkeltretter finnes, men blandede tre-/femretters pakker, østersstørrelser, tos-personers skalldyrfat og sesongvariasjon krever særskilt kilde- og semantisk QA. Adresse oppgitt av restauranten. Ingen live parser-/produksjonsgodkjenning eller åpningstidsattest på dette stadiet."
+          "note": "Førstepartsmeny 2. november: 10 konkrete navne-/prispar kontrolleres, inkludert skalldyrfat 1095 NOK per person (minimum 2, tre dagers forhåndsbestilling). Ingen 185 NOK-rett får brukes som pris på skalldyrfatet. Tre-/femretters menyer skal ikke bli selvstendige enkeltretter. Menyen er fortsatt ikke erklært fullstendig; åpningstider ikke verifisert."
         }
       },
       "actions": [],
-      "assertionCount": 8,
+      "assertionCount": 10,
       "forbiddenDishNames": [
         "havsmaks 3-retter / havsmaks 3-course menu",
         "havsmaks 5-retter / havsmaks 5-course menu"
+      ],
+      "requiredDishVariants": [
+        {
+          "name": "fisk taco",
+          "priceMinor": 18500
+        },
+        {
+          "name": "østers",
+          "priceMinor": 19500
+        },
+        {
+          "name": "blomkål arancinis",
+          "priceMinor": 16900
+        },
+        {
+          "name": "kamskjell og gyoza av svin",
+          "priceMinor": 26500
+        },
+        {
+          "name": "krabberavioli",
+          "priceMinor": 28500
+        },
+        {
+          "name": "breiflabbkjake",
+          "priceMinor": 28500
+        },
+        {
+          "name": "skrei",
+          "priceMinor": 43500
+        },
+        {
+          "name": "skalldyrfat (per person, minst 2)",
+          "priceMinor": 109500
+        },
+        {
+          "name": "sjokolademousse",
+          "priceMinor": 18500
+        },
+        {
+          "name": "utvalg av oster",
+          "priceMinor": 25500
+        }
       ]
     }
   ]
