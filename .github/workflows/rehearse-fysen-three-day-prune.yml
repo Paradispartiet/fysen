@@ -108,6 +108,15 @@ jobs:
             --no-owner --no-acl --exit-on-error \
             /tmp/fysen-search-links-2026-11-02.pgdump
 
+          echo "Index old snapshot FK references inside the isolated DB, not in production."
+          docker exec -i fysen-history-restore psql -v ON_ERROR_STOP=1 -U postgres -d postgres <<'SQL'
+          CREATE INDEX stg_changes_current_snapshot_idx ON fysen.menu_changes(current_snapshot_id);
+          CREATE INDEX stg_changes_previous_snapshot_idx ON fysen.menu_changes(previous_snapshot_id);
+          CREATE INDEX stg_watch_snapshot_idx ON fysen.menu_watch_runs(snapshot_id);
+          ANALYZE fysen.menu_changes;
+          ANALYZE fysen.menu_watch_runs;
+          SQL
+
           echo "Simulate ONLY in the isolated ephemeral database: no production connection."
           docker exec -i fysen-history-restore psql -v ON_ERROR_STOP=1 -U postgres -d postgres <<'SQL'
           \set ON_ERROR_STOP on
