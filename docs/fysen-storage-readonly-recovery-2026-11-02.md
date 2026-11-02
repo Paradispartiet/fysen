@@ -45,7 +45,7 @@ An external historical archive must preserve and verify all relevant `menu_snaps
 
 **B. Stay on Free:** Obtain explicit user approval for a *specific* off-database archival destination/retention policy and subsequent destructive pruning. Export with resumable batches; validate counts, checksums, readable restoration, current-source integrity, and complete `menu_changes` provenance. Only after independently verified archival, an approved deletion scope, and a rollback plan may a controlled write-session override, pruning and space reclamation occur. On PostgreSQL, some reclamation requires table/index rewrite and free disk headroom; do not blindly run `VACUUM FULL` on a space-constrained production instance.
 
-No billing action, archive export, database deletion, transaction-mode override or retention change has been authorized by the user. **Do not run any of them from this document.**
+Google Drive archival was subsequently authorized and completed as verified below. No billing action, database deletion, transaction-mode override or retention change has been authorized. **Do not run any of them from this document.**
 
 ## Safe completion criteria after either approved path
 
@@ -85,3 +85,24 @@ FROM numbered;
 ```
 
 No mutation is performed by any of these three queries.
+
+## Verified archive export and physical restore (2 November 2026, later update)
+
+The user explicitly chose Google Drive for the historical archive. The backup **has now been exported** and validated:
+
+- Private [Google Drive archive folder](https://drive.google.com/drive/folders/1Ml52aXi2qr_2-smBrEXvgxGhBqgclIUW). Four ZIP files (parts 000–003) uploaded and verified present/not publicly shared using Google Drive metadata.
+- All four ZIPs were downloaded back from Google Drive, unpacked, verified by individual SHA-256 hashes and reassembled byte-for-byte. Original PostgreSQL custom-format dump: 276,269,297 bytes; SHA-256 `1fd0385d2194ff6bcb80bc10cf04f577b4c970c9524a7c38a5f1382a7fefba0e`.
+- [Isolated PostgreSQL 17 + PostGIS restore #41510938739](https://github.com/Paradispartiet/fysen/actions/runs/41510938739) **succeeded** after enabling `pg_trgm`. `pg_restore --exit-on-error` completed, including index and constraint rebuilding. Exact restored record counts matched read-only production SQL: 1,116 restaurants; 1,154 menu sources; 40,707 snapshots; 1,997,348 menu items; 100,172 changes; 111,963 menu watch runs.
+- The backup contains the six named history tables, **not an entire database/cluster or app-user backup**. No live Supabase deletion or table modification occurred. Read-only mode remains enabled on the Free project.
+
+### More conservative retention candidates (read-only analysis, not approved deletion)
+
+All 1,154 latest snapshots are nonempty and carry successful HTTP statuses in the current production data. Each source also has a last good snapshot. A read-only analysis on the frozen source data found:
+
+| Candidate retained in Supabase | Snapshots | Menu items |
+|---|---:|---:|
+| Latest successful snapshot/source plus past 1 day | 1,309 | 63,653 |
+| Latest successful snapshot/source plus past 3 days | 3,096 | 151,408 |
+| Current archive before deletion | 40,707 | 1,997,348 |
+
+These counts are *not* actual disk savings; keeping 3 days does not guarantee getting below Free's 500 MB database-content quota. Changing historical snapshots cascades changes to `fysen.menu_changes` and may remove history required by live application logic. Disk reclamation may require maintenance locks and adequate spare space. A deletion procedure and restoration/rollback plan require separate review, explicit user confirmation of a retention period, and a staging rehearsal. The archive by itself is not authorization to delete.
