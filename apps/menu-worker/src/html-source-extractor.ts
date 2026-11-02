@@ -35,12 +35,11 @@ const LEADING_QUANTITY_UNIT =
   /^\d{1,4}\s+(?:g|gram(?:s)?|kg|ml|cl|l|stk|st|pcs?|pieces?|biter|biter\s+av)\b/iu;
 
 function normalizeVisibleLine(value: string): string {
-  // A trailing zero-width formatting character after a visible price (e.g. "395,-\\u200D")
-  // is not part of the title or amount. Without this, right-anchored price parsing drops it.
-  return value.normalize("NFKC").replace(/\\s+/g, " ").trim()
-    .replace(/[\\u200B-\\u200D\\uFEFF]+$/gu, "").trim();
+  // An invisible character after a source price, e.g. "395,-\u200D", is not
+  // part of the amount. Keep the correction within visible-line parsing.
+  return value.normalize("NFKC").replace(/\s+/g, " ").trim()
+    .replace(/[\u200B-\u200D\uFEFF]+$/gu, "").trim();
 }
-
 function stripMenuNumber(value: string): string {
   const normalized = normalizeVisibleLine(value);
   if (LEADING_QUANTITY_UNIT.test(normalized)) return normalized;
