@@ -455,7 +455,7 @@ function recoverCompleteBilingualFoodSectionPrices(
     const name = cardLines[0]?.trim() ?? "";
     const context = cardLines.join(" ");
     if (name.length >= 3 && name.length <= 100 &&
-        /\p{L}/u.test(name) && cardLines.length >= 3 &&
+        /\p{L}/u.test(name) && cardLines.length >= 2 &&
         !PRICE_PER_PERSON.test(line) &&
         !OTHER_MENU_SECTION.test(name) &&
         !BILINGUAL_FOOD_SECTION.test(name)) {
