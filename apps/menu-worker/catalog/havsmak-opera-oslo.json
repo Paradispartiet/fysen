@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "havsmak-opera-oslo",
+    "name": "Havsmak",
+    "websiteUrl": "https://www.havsmak.no/",
+    "address": "Kirsten Flagstads plass 1, 0150 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.907776627658436,
+    "longitude": 10.752057850390443
+  },
+  "menuSource": {
+    "url": "https://www.havsmak.no/meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    },
+    "minimumExpectedItems": 18
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-11-02",
+      "note": "Offisiell matmeny kontrollert 2. november 2026: 21 navngitte retter og 22 prisede tilbud (dagens østers per stk eller halvt dusin). Eksakt live-proof viste 22/22, og 12 representative prispar følges videre i manifestet med minimum 18 ved normal sesongvariasjon. Skalldyrfat koster 1095 kr per person, minimum 2 personer, bestilles 3 dager før. 3-/5-retters pakkepriser blir ikke enkeltretter. Adresse og koordinater fra Kartverkets Adresser API v1 (0301; eksakt match Kirsten Flagstads plass 1, 0150 Oslo). Åpningstider ikke separat verifisert."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "potetkrokett",
+      "østers",
+      "dagens østers (per stk)",
+      "dagens østers (halvt dusin)",
+      "ørret",
+      "grillet piggvar",
+      "skrei",
+      "rødspette for 2 personer",
+      "skalldyrfat (per person, minst 2)",
+      "tindvedpai",
+      "dagens dessert",
+      "dagens is og sorbet"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "potetkrokett",
+        "priceMinor": 19500
+      },
+      {
+        "name": "østers",
+        "priceMinor": 19500
+      },
+      {
+        "name": "dagens østers (per stk)",
+        "priceMinor": 6900
+      },
+      {
+        "name": "dagens østers (halvt dusin)",
+        "priceMinor": 32500
+      },
+      {
+        "name": "ørret",
+        "priceMinor": 28500
+      },
+      {
+        "name": "grillet piggvar",
+        "priceMinor": 48500
+      },
+      {
+        "name": "skrei",
+        "priceMinor": 43500
+      },
+      {
+        "name": "rødspette for 2 personer",
+        "priceMinor": 69900
+      },
+      {
+        "name": "skalldyrfat (per person, minst 2)",
+        "priceMinor": 109500
+      },
+      {
+        "name": "tindvedpai",
+        "priceMinor": 18500
+      },
+      {
+        "name": "dagens dessert",
+        "priceMinor": 19500
+      },
+      {
+        "name": "dagens is og sorbet",
+        "priceMinor": 16500
+      }
+    ],
+    "forbiddenDishNames": [
+      "havsmaks 3-retter / havsmaks 3-course menu",
+      "havsmaks 5-retter / havsmaks 5-course menu"
+    ]
+  }
+}
