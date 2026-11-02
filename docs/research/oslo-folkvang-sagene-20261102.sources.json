@@ -1,0 +1,85 @@
+{
+  "checkedAt": "2026-11-02",
+  "status": "source-intake-and-exact-price-proof",
+  "slug": "folkvang-sagene-oslo",
+  "firstPartyWebsite": "https://folkvangsagene.no/",
+  "firstPartyMenu": "https://folkvangsagene.no/meny",
+  "address": "Maridalsveien 153 B, 0461 Oslo",
+  "coordinates": {
+    "latitude": 59.937523,
+    "longitude": 10.756499,
+    "method": "historical same-building coordinates; Kartverket addresses API returned repeated 503; not a Kartverket verification"
+  },
+  "source": {
+    "directHttpStatus": 200,
+    "sourceRawSha256": "63c27b32ee9c66cceafcd9e527522704f810b9964bafc05feee2ffcc072f1b10",
+    "sourceBytes": 292041,
+    "observedPricedEntriesBeforeUnicodeFix": 25,
+    "observedPricedEntriesAfterUnicodeFix": 26,
+    "sourceMethod": "html_heuristic",
+    "validatedManifestMin": 23,
+    "checkedPricePairs": [
+      {
+        "name": "Sopp Toast",
+        "priceMinor": 24500
+      },
+      {
+        "name": "Konfitert Laks",
+        "priceMinor": 22000
+      },
+      {
+        "name": "Biff tartar",
+        "priceMinor": 27500
+      },
+      {
+        "name": "Biff og Peppersaus",
+        "priceMinor": 39500
+      },
+      {
+        "name": "Oksekjaker",
+        "priceMinor": 33500
+      },
+      {
+        "name": "Drosjefrokost",
+        "priceMinor": 24000
+      },
+      {
+        "name": "Sopp Smærbrød",
+        "priceMinor": 26500
+      },
+      {
+        "name": "Tuna Melt",
+        "priceMinor": 26000
+      },
+      {
+        "name": "Biff Sandwich",
+        "priceMinor": 29500
+      },
+      {
+        "name": "Folkvang Burger",
+        "priceMinor": 29000
+      },
+      {
+        "name": "Skagenrøre",
+        "priceMinor": 28500
+      },
+      {
+        "name": "Fiskesuppe",
+        "priceMinor": 28000
+      }
+    ],
+    "sourceNotes": "The 26 extracted offers span lunch, dinner, sides and desserts. They are not 26 unique mains. 12 exact name/price pairs passed. Package/weekly ambiguous price not promoted as individual dish."
+  },
+  "technical": {
+    "rootCause": "Published text for Biff og Peppersaus 395,- ends with U+200D zero-width joiner, preventing right-anchored price extraction",
+    "fix": "html-source-extractor visible-line strips only terminal formatting codepoints U+200B-U+200D/U+FEFF",
+    "extractorVersion": "html-v24",
+    "firstPartyPriceExample": {
+      "name": "Biff og Peppersaus",
+      "priceMinor": 39500
+    },
+    "proofRunUrl": "https://github.com/Paradispartiet/fysen/actions/runs/41399330673",
+    "proofArtifactUrl": "https://github.com/Paradispartiet/fysen/actions/runs/41399330673/artifacts/13120114649"
+  },
+  "releasePolicy": "Only promote after strict PR live proof, main CI, normal serial production materialization/reconcile, and public search evidence. No global quality reduction or invented dishes."
+}
