@@ -1,0 +1,69 @@
+name: Verify isolated restore of Fysen search-link archive
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/verify-fysen-search-archive.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  verify-search-archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: fysen_restore
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: local-restoration-only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d fysen_restore"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    steps:
+      - name: Download existing private search history archive
+        uses: actions/download-artifact@v4
+        with:
+          repository: Paradispartiet/fysen
+          run-id: 41518576377
+          github-token: ${{ github.token }}
+          name: fysen-search-links-before-prune-2026-11-02
+          path: archive
+      - name: Verify archive integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd archive
+          sha256sum --check SHA256SUMS.txt
+          test -s fysen-search-links-2026-11-02.pgdump
+      - name: Restore both tables into isolated PostgreSQL 17
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run --rm --network host \
+            -e PGPASSWORD=local-restoration-only \
+            -v "$PWD/archive:/archive:ro" postgres:17 sh -ec '
+              psql -h 127.0.0.1 -U postgres -d fysen_restore -v ON_ERROR_STOP=1 \
+                -c "CREATE SCHEMA fysen"
+              pg_restore -h 127.0.0.1 -U postgres -d fysen_restore \
+                --no-owner --no-acl --exit-on-error \
+                --section=pre-data --section=data \
+                /archive/fysen-search-links-2026-11-02.pgdump
+              events=$(psql -h 127.0.0.1 -U postgres -d fysen_restore -Atc "SELECT count(*) FROM fysen.search_events")
+              impressions=$(psql -h 127.0.0.1 -U postgres -d fysen_restore -Atc "SELECT count(*) FROM fysen.search_result_impressions")
+              linked=$(psql -h 127.0.0.1 -U postgres -d fysen_restore -Atc "SELECT count(*) FROM fysen.search_result_impressions WHERE menu_item_id IS NOT NULL")
+              broken=$(psql -h 127.0.0.1 -U postgres -d fysen_restore -Atc "SELECT count(*) FROM fysen.search_result_impressions i LEFT JOIN fysen.search_events s ON s.id=i.search_id WHERE s.id IS NULL")
+              test "$events" -gt 0
+              test "$impressions" -gt 0
+              test "$linked" -ge 5150
+              test "$broken" -eq 0
+              echo "Verified isolated restore: $events search events, $impressions impressions, $linked linked menu items, $broken orphan search IDs"
+            '
