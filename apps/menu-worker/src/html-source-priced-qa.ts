@@ -83,13 +83,13 @@ export function reconcileExplicitScoopUnits(
 
 const CURRENCY_PRICE = /\bkr\.?\s*([1-9]\d{1,3})\b/giu;
 const TRAILING_PRICE = /\bkr\.?\s*([1-9]\d{1,3})(?:\s*,-)?\s*$/iu;
-const PRICE_PER_PERSON = /(?:\\bkr\\.?\\s*|\\bNOK\\s*)?[1-9]\\d{1,3}\\s*(?:,-)?\\s*(?:pp|p\\.p\\.|per\\s+(?:person|pers\\.?)|pr\\.?\\s*(?:person|pers\\.?))\\b/iu;
+const PRICE_PER_PERSON = /(?:\bkr\.?\s*|\bNOK\s*)?[1-9]\d{1,3}\s*(?:,-)?\s*(?:pp|p\.p\.|per\s+(?:person|pers\.?)|pr\.?\s*(?:person|pers\.?))\b/iu;
 // A detached per-person quote is a price boundary, not permission to borrow
 // the following dessert's amount. Restore it only inside a unique named card
 // that explicitly states the minimum party size.
-const DETACHED_PER_PERSON_PRICE = /^(?:(?:kr\\.?|NOK)\\s*)?([1-9]\\d{1,3})\\s*(?:,-)?\\s*(?:pp|p\\.p\\.|per\\s+(?:person|pers\\.?)|pr\\.?\\s*(?:person|pers\\.?))\\s*$/iu;
-const MINIMUM_PARTY_NOTE = /\\b(?:minimum|minst|min\\.?)\\s*\\d{1,2}\\s*(?:pers\\.?|personer?)\\b/iu;
-const DETACHED_PRICE_BOUNDARY = /^(?:(?:kr\\.?|NOK)\\s*)?[1-9]\\d{1,3}\\s*(?:,-|;-|kr\\.?)?\\s*$/iu;
+const DETACHED_PER_PERSON_PRICE = /^(?:(?:kr\.?|NOK)\s*)?([1-9]\d{1,3})\s*(?:,-)?\s*(?:pp|p\.p\.|per\s+(?:person|pers\.?)|pr\.?\s*(?:person|pers\.?))\s*$/iu;
+const MINIMUM_PARTY_NOTE = /\b(?:minimum|minst|min\.?)\s*\d{1,2}\s*(?:pers\.?|personer?)\b/iu;
+const DETACHED_PRICE_BOUNDARY = /^(?:(?:kr\.?|NOK)\s*)?[1-9]\d{1,3}\s*(?:,-|;-|kr\.?)?\s*$/iu;
 const PAIR_OF_SIZES = /\b(liten|small)\s*\(\s*(\d{1,2})\s*\)\s*kr\.?\s*([1-9]\d{1,3})\s+(stor|large)\s*\(\s*(\d{1,2})\s*\)\s*kr\.?\s*([1-9]\d{1,3})\b/iu;
 const SAUCE_ONLY = /^(?:[\p{L}-]{2,20}saus|b[eé]arnaise)(?:\s*\([^)]{2,40}\))?$/iu;
 const SAUCE_SECTION = /^(?:saus(?:er)?|sauces?)$/iu;
