@@ -1,0 +1,74 @@
+name: Export Fysen menu history (read-only)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/export-fysen-menu-history.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-menu-history-export
+  cancel-in-progress: false
+
+jobs:
+  export:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
+    steps:
+      - name: Check source configuration
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$DATABASE_URL" || { echo "Missing production DB secret"; exit 1; }
+          mkdir -p export
+
+      - name: Export Fysen history tables with Postgres 17 (read only)
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run --rm \
+            --env DATABASE_URL \
+            --env PGSSLMODE=require \
+            --volume "$PWD/export:/archive" \
+            postgres:17 \
+            sh -ec '
+              pg_dump --dbname="$DATABASE_URL" \
+                --format=custom --compress=6 --no-owner --no-acl \
+                --table=fysen.restaurants \
+                --table=fysen.menu_sources \
+                --table=fysen.menu_snapshots \
+                --table=fysen.menu_items \
+                --table=fysen.menu_changes \
+                --table=fysen.menu_watch_runs \
+                --file=/archive/fysen-menu-history.pgdump
+              pg_restore --list /archive/fysen-menu-history.pgdump > /archive/restore-contents.txt
+            '
+          test -s export/fysen-menu-history.pgdump
+          sha256sum export/fysen-menu-history.pgdump > export/SHA256SUMS.txt
+          cat > export/README.txt <<'EOF'
+          Fysen production menu-history export - 2026-11-02.
+          PostgreSQL 17 pg_dump custom format; contents verified using pg_restore --list.
+          Tables: restaurants, menu_sources, menu_snapshots, menu_items,
+          menu_changes, menu_watch_runs (schema fysen).
+          Encrypted connection to production; source database unchanged.
+          This archive may contain nonpublic data: keep Drive folder private.
+          Restore with pg_restore into a safe staging database, not directly onto production.
+          This is a table-scoped logical backup; it does not include entire
+          PostgreSQL cluster, roles, other schemas or database secrets.
+          SHA256SUMS.txt verifies the compressed pgdump.
+          EOF
+
+      - name: Upload backup for verified Drive transfer
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-menu-history-2026-11-02
+          path: export/
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
