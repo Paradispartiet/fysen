@@ -1,9 +1,36 @@
 import { describe, expect, it } from "vitest";
 import {
+  isReadOnlyCatalogDatabaseError,
   mapWithBoundedConcurrency,
   parseCatalogMaterializationConcurrency,
   shouldRepairCatalogSourceHealth,
 } from "./catalog-materialization.js";
+
+describe("production database read-only circuit breaker", () => {
+  it("recognizes the PostgreSQL write-denial family and SQLSTATE 25006", () => {
+    expect(isReadOnlyCatalogDatabaseError({
+      code: "25006", message: "read only SQL transaction",
+    })).toBe(true);
+    for (const operation of ["INSERT", "UPDATE", "DELETE", "SELECT FOR UPDATE"]) {
+      expect(isReadOnlyCatalogDatabaseError(
+        "cannot execute " + operation + " in a read-only transaction",
+      )).toBe(true);
+    }
+    expect(isReadOnlyCatalogDatabaseError(
+      "watch failed: cannot execute UPDATE in a read-only transaction; published coverage restore failed",
+    )).toBe(true);
+    expect(isReadOnlyCatalogDatabaseError("SQLSTATE 25006")).toBe(true);
+  });
+
+  it("does not abort on normal menu drift or unrelated connection errors", () => {
+    for (const value of [
+      null, undefined, "", "first-party menu missing", "connection terminated",
+      "remaining disk quota: unknown", new Error("unexpected 404"), { code: "23505" },
+    ]) {
+      expect(isReadOnlyCatalogDatabaseError(value)).toBe(false);
+    }
+  });
+});
 
 describe("catalog materialization concurrency", () => {
   it("defaults to four workers and rejects invalid bounds", () => {
