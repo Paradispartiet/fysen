@@ -24,16 +24,20 @@
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-11-02",
-          "note": "Førstepartsmeny 2. november: 10 konkrete navne-/prispar kontrolleres, inkludert skalldyrfat 1095 NOK per person (minimum 2, tre dagers forhåndsbestilling). Ingen 185 NOK-rett får brukes som pris på skalldyrfatet. Tre-/femretters menyer skal ikke bli selvstendige enkeltretter. Menyen er fortsatt ikke erklært fullstendig; åpningstider ikke verifisert."
+          "note": "Gjeldende offisielle meny 2. november 2026: 21 navngitte matretter, østers med 2 dokumenterte pris-/mengdevarianter = 22 prisede tilbud. Alle 22 kildeprispar kreves av live-intake; 3-/5-retters pakkepriser er ikke retter. Skalldyrfat er 1095 kr per person, minimum 2 personer og må bestilles 3 dager før. 195, for dagens dessert bekreftes kun innen prisavgrenset tospråklig matseksjon. Driftstider ikke verifisert."
         }
       },
       "actions": [],
-      "assertionCount": 10,
+      "assertionCount": 22,
       "forbiddenDishNames": [
         "havsmaks 3-retter / havsmaks 3-course menu",
         "havsmaks 5-retter / havsmaks 5-course menu"
       ],
       "requiredDishVariants": [
+        {
+          "name": "potetkrokett",
+          "priceMinor": 19500
+        },
         {
           "name": "fisk taco",
           "priceMinor": 18500
@@ -45,6 +49,18 @@
         {
           "name": "blomkål arancinis",
           "priceMinor": 16900
+        },
+        {
+          "name": "dagens østers (per stk)",
+          "priceMinor": 6900
+        },
+        {
+          "name": "dagens østers (halvt dusin)",
+          "priceMinor": 32500
+        },
+        {
+          "name": "ørret",
+          "priceMinor": 28500
         },
         {
           "name": "kamskjell og gyoza av svin",
@@ -59,22 +75,55 @@
           "priceMinor": 28500
         },
         {
+          "name": "grillet piggvar",
+          "priceMinor": 48500
+        },
+        {
           "name": "skrei",
           "priceMinor": 43500
+        },
+        {
+          "name": "sjøkreps 500g",
+          "priceMinor": 46500
+        },
+        {
+          "name": "dagens bifangst",
+          "priceMinor": 49500
+        },
+        {
+          "name": "rødspette for 2 personer",
+          "priceMinor": 69900
+        },
+        {
+          "name": "gnocchi",
+          "priceMinor": 36500
         },
         {
           "name": "skalldyrfat (per person, minst 2)",
           "priceMinor": 109500
         },
         {
+          "name": "tindvedpai",
+          "priceMinor": 18500
+        },
+        {
           "name": "sjokolademousse",
           "priceMinor": 18500
+        },
+        {
+          "name": "dagens dessert",
+          "priceMinor": 19500
+        },
+        {
+          "name": "dagens is og sorbet",
+          "priceMinor": 16500
         },
         {
           "name": "utvalg av oster",
           "priceMinor": 25500
         }
-      ]
+      ],
+      "minimumSourceItems": 21
     }
   ]
 }
