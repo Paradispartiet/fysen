@@ -55,7 +55,8 @@ jobs:
 
           docker exec fysen-history-restore psql -v ON_ERROR_STOP=1 -U postgres -d postgres \
             -c 'CREATE SCHEMA IF NOT EXISTS fysen' \
-            -c 'CREATE EXTENSION IF NOT EXISTS postgis'
+            -c 'CREATE EXTENSION IF NOT EXISTS postgis' \
+            -c 'CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public'
           docker cp original/fysen-menu-history.pgdump fysen-history-restore:/tmp/fysen-menu-history.pgdump
 
           docker exec fysen-history-restore pg_restore --list /tmp/fysen-menu-history.pgdump >/dev/null
