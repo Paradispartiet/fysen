@@ -33,6 +33,39 @@ export type CatalogProgressReporter = (
 
 const ignoreProgress: CatalogProgressReporter = () => {};
 
+/**
+ * PostgreSQL SQLSTATE 25006 may occur after an initially writable session
+ * becomes read-only (for example when a hosted database exhausts disk).
+ * Do not continue 987 catalog writes after this infrastructure failure.
+ */
+export function isReadOnlyCatalogDatabaseError(value: unknown): boolean {
+  if (value === null || value === undefined) return false;
+  if (typeof value === "object" && "code" in value && value.code === "25006") return true;
+  const message = value instanceof Error ? value.message : String(value);
+  return /cannot execute (?:INSERT|UPDATE|DELETE|SELECT FOR UPDATE|MERGE|TRUNCATE|CREATE|ALTER|DROP) in a read-only transaction/iu.test(message) ||
+    /read.only.sql.transaction|SQLSTATE\s*25006/iu.test(message);
+}
+
+async function assertProductionDatabaseWritable(): Promise<void> {
+  const pool = createDatabasePool({ maxConnections: 1 });
+  try {
+    const result = await pool.query<{
+      readonly transaction_read_only: string;
+      readonly in_recovery: boolean;
+    }>(
+      "SELECT current_setting('transaction_read_only') AS transaction_read_only, pg_is_in_recovery() AS in_recovery",
+    );
+    const state = result.rows[0];
+    if (!state || state.in_recovery || state.transaction_read_only === "on") {
+      throw new Error(
+        "Production database is read-only; materialization has been stopped before any restaurant writes. Check Supabase disk usage, WAL and primary/replica connection.",
+      );
+    }
+  } finally {
+    await pool.end();
+  }
+}
+
 export interface CatalogHealthRepairResult {
   readonly slug: string;
   readonly menuSourceId: string;
@@ -213,6 +246,9 @@ async function repairUnhealthyCanonicalSources(
 export async function materializeRestaurantCatalog(
   report: CatalogProgressReporter = ignoreProgress,
 ): Promise<CatalogMaterializationSummary> {
+  report({ phase: "database_preflight", status: "start" });
+  await assertProductionDatabaseWritable();
+  report({ phase: "database_preflight", status: "writable" });
   report({ phase: "catalog_read", status: "start" });
   const entries = await listRestaurantOnboardingManifests();
   const concurrency = parseCatalogMaterializationConcurrency(
@@ -227,6 +263,14 @@ export async function materializeRestaurantCatalog(
       const startedAt = Date.now();
       report({ phase: "onboarding", status: "restaurant_start", slug: entry.manifest.restaurant.slug });
       const result = await onboardRestaurantManifest(entry.path);
+      if (isReadOnlyCatalogDatabaseError(result.error)) {
+        report({ phase: "database_safety", status: "read_only_abort", slug: result.slug });
+        throw new Error(
+          "Production database became read-only while materializing " + result.slug +
+          "; aborting remaining catalog work immediately. Check Supabase disk/WAL capacity. " +
+          result.error,
+        );
+      }
       completed += 1;
       report({
         phase: "onboarding", status: "restaurant_complete", slug: result.slug,
