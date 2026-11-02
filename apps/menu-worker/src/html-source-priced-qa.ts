@@ -6,7 +6,7 @@ import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } fro
  * infer a serving unit or convert a per-person quote to a dish price.
  * This layer applies only after the ordinary HTML parser has finished.
  */
-export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v7";
+export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v9";
 
 /** Preserve scoop units only from a single visible title/price card. */
 export function reconcileExplicitScoopUnits(
@@ -83,7 +83,13 @@ export function reconcileExplicitScoopUnits(
 
 const CURRENCY_PRICE = /\bkr\.?\s*([1-9]\d{1,3})\b/giu;
 const TRAILING_PRICE = /\bkr\.?\s*([1-9]\d{1,3})(?:\s*,-)?\s*$/iu;
-const PRICE_PER_PERSON = /\bkr\.?\s*[1-9]\d{1,3}\s*(?:pp|p\.p\.|per\s+(?:person|pers\.?)|pr\.?\s*(?:person|pers\.?))\b/iu;
+const PRICE_PER_PERSON = /(?:\bkr\.?\s*|\bNOK\s*)?[1-9]\d{1,3}\s*(?:,-)?\s*(?:pp|p\.p\.|per\s+(?:person|pers\.?)|pr\.?\s*(?:person|pers\.?))\b/iu;
+// A detached per-person quote is a price boundary, not permission to borrow
+// the following dessert's amount. Restore it only inside a unique named card
+// that explicitly states the minimum party size.
+const DETACHED_PER_PERSON_PRICE = /^(?:(?:kr\.?|NOK)\s*)?([1-9]\d{1,3})\s*(?:,-)?\s*(?:pp|p\.p\.|per\s+(?:person|pers\.?)|pr\.?\s*(?:person|pers\.?))\s*$/iu;
+const MINIMUM_PARTY_NOTE = /\b(?:minimum|minst|min\.?)\s*\d{1,2}\s*(?:pers\.?|personer?)\b/iu;
+const DETACHED_PRICE_BOUNDARY = /^(?:(?:kr\.?|NOK)\s*)?[1-9]\d{1,3}\s*(?:,-|;-|kr\.?)?\s*$/iu;
 const PAIR_OF_SIZES = /\b(liten|small)\s*\(\s*(\d{1,2})\s*\)\s*kr\.?\s*([1-9]\d{1,3})\s+(stor|large)\s*\(\s*(\d{1,2})\s*\)\s*kr\.?\s*([1-9]\d{1,3})\b/iu;
 const SAUCE_ONLY = /^(?:[\p{L}-]{2,20}saus|b[eé]arnaise)(?:\s*\([^)]{2,40}\))?$/iu;
 const SAUCE_SECTION = /^(?:saus(?:er)?|sauces?)$/iu;
@@ -164,11 +170,38 @@ function withExactPrice(item: MenuObservedItem, kroner: number): MenuObservedIte
   };
 }
 
+function detachedPerPersonSourceLines(
+  item: MenuObservedItem,
+  lines: readonly string[],
+): readonly string[] {
+  const matches: string[][] = [];
+  for (let start = 0; start < lines.length; start += 1) {
+    if (normalizeDishName(lines[start] ?? "") !== item.normalizedName) continue;
+    const scope: string[] = [lines[start]!];
+    let sawMinimum = false;
+    for (let index = start + 1; index < Math.min(lines.length, start + 12); index += 1) {
+      const line = lines[index]!;
+      if (OTHER_MENU_SECTION.test(line) || /^__FYSEN_/u.test(line)) break;
+      const quote = line.match(DETACHED_PER_PERSON_PRICE);
+      if (quote) {
+        if (sawMinimum) matches.push([...scope, line]);
+        break;
+      }
+      if (DETACHED_PRICE_BOUNDARY.test(line) || PRICE_PER_PERSON.test(line)) break;
+      if (MINIMUM_PARTY_NOTE.test(line)) sawMinimum = true;
+      scope.push(line);
+    }
+  }
+  // Repeated cards or conflicting per-person prices remain ambiguous.
+  const amounts = new Set(matches.map((scope) => scope.at(-1)?.match(DETACHED_PER_PERSON_PRICE)?.[1]));
+  return matches.length > 0 && amounts.size === 1 ? matches[0]! : [];
+}
+
 function explicitlyPricedPerPerson(
   item: MenuObservedItem,
   sourceLines: readonly string[],
 ): MenuObservedItem[] {
-  const explicit = /\bkr\.?\s*([1-9]\d{1,3})\s*(?:pp|p\.p\.|per\s+(?:person|pers\.?)|pr\.?\s*(?:person|pers\.?))\b/giu;
+  const explicit = /(?:\bkr\.?\s*|\bNOK\s*)?([1-9]\d{1,3})\s*(?:,-)?\s*(?:pp|p\.p\.|per\s+(?:person|pers\.?)|pr\.?\s*(?:person|pers\.?))\b/giu;
   const kroner = new Set<number>();
   for (const line of sourceLines) {
     for (const match of line.matchAll(explicit)) {
@@ -376,6 +409,98 @@ function isSourceConfirmedAlcoholCombination(
     /\b2\s*cl\b/iu.test(nearby);
 }
 
+// Some first-party menus use four explicit bilingual food sections where each
+// dish is a Norwegian title, descriptive/translated text, then a standalone
+// printed amount. This is a source-card boundary: do not borrow prices from
+// tasting menus, from the next dish, or from a different section.
+const BILINGUAL_FOOD_SECTION =
+  /^(?:snackmeny\s*\/\s*snack\s*menu|forrett\s*\/\s*starter|hovedrett\s*\/\s*main\s*course|dessert\s*\/\s*dessert)$/iu;
+const BILINGUAL_STANDALONE_PRICE =
+  /^([1-9]\d{1,3})\s*(?:,-|;-|,)$/u;
+const BILINGUAL_TWO_QUANTITY_PRICES =
+  /^([1-9]\d{1,3})\s*,-\s*\/\s*([1-9]\d{1,3})\s*(?:;-|,-)$/u;
+
+function recoverCompleteBilingualFoodSectionPrices(
+  lines: readonly string[],
+): readonly MenuObservedItem[] {
+  // Require independently delimited food sections; a lone "menu" heading on
+  // an unrelated site is not enough evidence for this recovery.
+  if (new Set(lines.filter((line) => BILINGUAL_FOOD_SECTION.test(line)).map(
+    (line) => line.toLocaleLowerCase("nb-NO"),
+  )).size < 3) return [];
+
+  const candidates: MenuObservedItem[] = [];
+  let sectionName: string | null = null;
+  let cardLines: string[] = [];
+  let cardPosition = 0;
+  let sawBilingualCards = 0;
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = lines[i]!;
+    if (BILINGUAL_FOOD_SECTION.test(line)) {
+      sectionName = line;
+      cardLines = [];
+      cardPosition = i + 1;
+      continue;
+    }
+    if (!sectionName) continue;
+    // A trailing '195,' is only accepted inside an already proven bilingual
+    // food-card section; elsewhere a comma is not proof of a price.
+    const one = line.match(BILINGUAL_STANDALONE_PRICE);
+    const two = line.match(BILINGUAL_TWO_QUANTITY_PRICES);
+    if (!one && !two && !PRICE_PER_PERSON.test(line)) {
+      if (cardLines.length === 0) cardPosition = i;
+      cardLines.push(line);
+      continue;
+    }
+    const name = cardLines[0]?.trim() ?? "";
+    const context = cardLines.join(" ");
+    if (name.length >= 3 && name.length <= 100 &&
+        /\p{L}/u.test(name) && cardLines.length >= 2 &&
+        !PRICE_PER_PERSON.test(line) &&
+        !OTHER_MENU_SECTION.test(name) &&
+        !BILINGUAL_FOOD_SECTION.test(name)) {
+      const variants: { name: string; amount: number }[] = [];
+      if (one?.[1]) {
+        variants.push({ name, amount: Number(one[1]) });
+      } else if (two?.[1] && two[2] &&
+        /\bper\s+stk\b/iu.test(context) &&
+        /\bhalvt\s+dusin\b/iu.test(context)) {
+        // Preserve the two explicit units, rather than inventing one scalar
+        // "oyster" price from a pair printed for distinct quantities.
+        variants.push(
+          { name: name + " (per stk)", amount: Number(two[1]) },
+          { name: name + " (halvt dusin)", amount: Number(two[2]) },
+        );
+      }
+      if (variants.length > 0) sawBilingualCards += 1;
+      for (const variant of variants) {
+        const priceMinor = variant.amount * 100;
+        if (priceMinor < 4_000 || priceMinor > 1_000_000) continue;
+        candidates.push({
+          sourceKey: createMenuItemSourceKey(variant.name, sectionName),
+          name: variant.name,
+          normalizedName: normalizeDishName(variant.name),
+          description: cardLines.slice(1).join(" ").slice(0, 1000) || null,
+          sectionName,
+          priceMinor,
+          priceKind: "exact",
+          priceMaxMinor: null,
+          currency: "NOK",
+          position: cardPosition,
+          extractionMethod: "html_heuristic",
+          confidence: 0.92,
+          sourceExcerpt: [sectionName, ...cardLines, line].join(" — ").slice(0, 1000),
+        });
+      }
+    }
+    // Every printed price closes exactly one card, including a per-person
+    // package; an unsupported quote must never become the next card's price.
+    cardLines = [];
+    cardPosition = i + 1;
+  }
+  return sawBilingualCards >= 8 ? candidates : [];
+}
+
 export function reconcileSourcePricedHtmlDishes(
   items: readonly MenuObservedItem[],
   fullVisibleText: string,
@@ -389,6 +514,17 @@ export function reconcileSourcePricedHtmlDishes(
     if (SAUCE_ONLY.test(item.name) && item.priceMinor !== null && item.priceMinor <= 15_000 &&
         !isIndividuallyPricedSauceInSection(item, lines))
       return [];
+    const detachedScope = detachedPerPersonSourceLines(item, lines);
+    if (detachedScope.length > 0) {
+      // An earlier heuristic may have borrowed the next dessert price.
+      // Provenance and serving conditions must come from this named card,
+      // never from the old borrowed price/excerpt.
+      return explicitlyPricedPerPerson({
+        ...item,
+        description: detachedScope.slice(1, -1).join(" ").slice(0, 1000) || null,
+        sourceExcerpt: detachedScope.join(" — ").slice(0, 1000),
+      }, detachedScope);
+    }
     const source = anchoredSourceLines(item, lines);
     // Expose the unit and minimum-party requirement directly in the title;
     // a scalar NOK amount must never masquerade as the total party price.
@@ -404,5 +540,8 @@ export function reconcileSourcePricedHtmlDishes(
   });
   const existing = new Set(corrected.map((item) => item.normalizedName));
   const recovered = missingInlineDishes(lines, existing);
-  return [...corrected, ...recovered].sort((a, b) => a.position - b.position);
+  const seen = new Set([...existing, ...recovered.map((item) => item.normalizedName)]);
+  const bilingual = recoverCompleteBilingualFoodSectionPrices(lines)
+    .filter((item) => !seen.has(item.normalizedName));
+  return [...corrected, ...recovered, ...bilingual].sort((a, b) => a.position - b.position);
 }

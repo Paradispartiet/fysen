@@ -106,6 +106,59 @@ describe("HTML first-party price provenance", () => {
     ]);
   });
 
+  it("corrects a detached per-person platter price without borrowing the following dessert", () => {
+    const source = [
+      "hovedrett / main course",
+      "skalldyrfat",
+      "et rikt utvalg av havets delikatesser",
+      "seafood platter",
+      "a selection of shellfish with bread",
+      "minimum 2 personer",
+      "må bestilles 3 dager før",
+      "1095,- per person",
+      "dessert / dessert",
+      "sjokolademousse",
+      "med sjokolade og bær",
+      "185;-",
+    ].join("\n");
+    const out = reconcileSourcePricedHtmlDishes([
+      dish("skalldyrfat", 185, 1),
+      dish("sjokolademousse", 185, 9),
+    ], source);
+    expect(out.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["skalldyrfat (per person, minst 2)", 109500],
+      ["sjokolademousse", 18500],
+    ]);
+    expect(out[0]?.description).toContain("Kildepris kr 1095 per person");
+    expect(out[0]?.description).toContain("minimum 2 personer");
+    expect(out[0]?.description).toContain("må bestilles 3 dager før");
+    expect(out[0]?.sourceExcerpt).toContain("1095,- per person");
+    expect(out[0]?.sourceExcerpt).not.toContain("kr 185");
+  });
+
+  it("does not borrow an unqualified tasting-menu price or a neighboring person's price", () => {
+    const source = [
+      "havsmaks 3-retter",
+      "ørret",
+      "med brioche",
+      "skrei",
+      "med kål",
+      "835,- per person",
+      "hovedrett / main course",
+      "skalldyrfat",
+      "minimum 2 personer",
+      "dessert / dessert",
+      "sjokolademousse",
+      "185;-",
+    ].join("\n");
+    const result = reconcileSourcePricedHtmlDishes([
+      dish("skalldyrfat", 185, 7),
+      dish("sjokolademousse", 185, 11),
+    ], source);
+    expect(result.some((item) => item.priceMinor === 83500)).toBe(false);
+    expect(result.some((item) => item.name.startsWith("skalldyrfat (per person"))).toBe(false);
+  });
+
   it("links both size-priced steak options to their documented Biff med løk parent", () => {
     const source = [
       "HOVEDRETTER",
@@ -244,6 +297,65 @@ describe("HTML first-party price provenance", () => {
     ].join("\n"))).toEqual([]);
   });
 
+  it("recovers individually priced bilingual food cards without borrowing set-menu prices", () => {
+    const source = [
+      "havsmaks 3-retter / havsmaks 3-course menu",
+      "ørret", "med brioche", "trout", "with brioche", "835,- per person",
+      "snackmeny / snack menu",
+      "potetkrokett", "med spekeskinkeskum", "tater tots", "with foam", "195;-",
+      "fisk taco", "med purreløksmajones", "fish taco", "with leek mayo", "185;-",
+      "østers", "med kefir", "oysters", "with kefir", "195;-",
+      "blomkål arancinis", "med krem", "cauliflower", "with cream", "169;-",
+      "forrett / starter",
+      "dagens østers", "per stk eller halvt dusin", "oyster of the day",
+      "per piece or 1/2 of dozen", "69,-/325;-",
+      "ørret", "med brioche", "trout", "with brioche", "285;-",
+      "kamskjell og gyoza av svin", "med kraft", "scallop and pork", "with broth", "265;-",
+      "krabberavioli", "med sotet purre", "crab ravioli", "with leek", "285;-",
+      "breiflabbkjake", "med blåskjellsaus", "monkfish", "with sauce", "285;-",
+      "hovedrett / main course",
+      "grillet piggvar", "med pommes", "grilled turbot", "with potato", "485;-",
+      "skrei", "med potet", "cod", "with potato", "435;-",
+      "sjøkreps 500g", "med urtesmør", "langoustine 500g", "with butter", "465;-",
+      "dagens bifangst", "catch of the day", "495,-",
+      "rødspette for 2 personer", "med primører", "plaice for two", "with vegetables", "699;-",
+      "gnocchi", "med salvie", "gnocchi", "with sage", "365;-",
+      "skalldyrfat", "et rikt utvalg av havet", "seafood platter",
+      "a selection of shellfish", "minimum 2 personer", "må bestilles 3 dager før",
+      "1095,- per person",
+      "dessert / dessert",
+      "tindvedpai", "med karamellmarengs", "sea buckthorn pie", "with cream", "185;-",
+      "sjokolademousse", "med steinsopp", "chocolate mousse", "with mushroom", "185;-",
+      "dagens dessert", "todays dessert", "195,",
+      "dagens is og sorbet", "ice-cream and sorbet of the day", "165,-",
+      "utvalg av oster", "med fiken", "selection of cheese", "with figs", "255;-",
+    ].join("\n");
+    const out = reconcileSourcePricedHtmlDishes([
+      dish("skalldyrfat", 185, 10), dish("sjokolademousse", 185, 20),
+    ], source);
+    const price = (name: string) => out.find((item) => item.name === name)?.priceMinor;
+    expect(price("skalldyrfat (per person, minst 2)")).toBe(109500);
+    expect(price("potetkrokett")).toBe(19500);
+    expect(price("dagens østers (per stk)")).toBe(6900);
+    expect(price("dagens østers (halvt dusin)")).toBe(32500);
+    expect(price("ørret")).toBe(28500);
+    expect(price("grillet piggvar")).toBe(48500);
+    expect(price("tindvedpai")).toBe(18500);
+    expect(price("dagens dessert")).toBe(19500);
+    expect(price("dagens is og sorbet")).toBe(16500);
+    expect(out.every((item) => item.priceMinor !== 83500)).toBe(true);
+    expect(out.every((item) => item.priceMinor !== 115000)).toBe(true);
+  });
+
+  it("does not invent bilingual items from an unscoped, untranslated price list", () => {
+    const source = [
+      "Snacks", "Fisk taco", "med purre", "185;-",
+      "Dessert", "tindvedpai", "med eple", "195,",
+      "hovedretter", "piggvar", "med saus", "485;-",
+    ].join("\n");
+    expect(reconcileSourcePricedHtmlDishes([], source)).toEqual([]);
+  });
+
   it("fails closed on ambiguous multiple prices and keeps unrelated existing dishes unchanged", () => {
     const source = [
       "Torsk",
@@ -253,6 +365,6 @@ describe("HTML first-party price provenance", () => {
     ].join("\n");
     const input = [dish("Torsk", 249, 1), dish("Blandet iskrem / Mixed ice cream", 125, 3)];
     expect(reconcileSourcePricedHtmlDishes(input, source)).toEqual(input);
-    expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v7");
+    expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v9");
   });
 });
