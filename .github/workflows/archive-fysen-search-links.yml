@@ -1,0 +1,53 @@
+name: Archive Fysen search-link provenance before menu pruning
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/archive-fysen-search-links.yml"
+permissions:
+  contents: read
+
+jobs:
+  archive:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
+    steps:
+      - name: Verify database connection and export historical search references
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$DATABASE_URL"
+          mkdir -p archive
+          docker run --rm -e DATABASE_URL -e PGSSLMODE=require \
+            -v "$PWD/archive:/archive" postgres:17 sh -ec '
+              pg_dump --dbname="$DATABASE_URL" --format=custom --compress=6 \
+                --no-owner --no-acl \
+                --table=fysen.search_events \
+                --table=fysen.search_result_impressions \
+                --file=/archive/fysen-search-links-2026-11-02.pgdump
+              pg_restore --list /archive/fysen-search-links-2026-11-02.pgdump > /archive/restore-contents.txt
+            '
+          test -s archive/fysen-search-links-2026-11-02.pgdump
+          cd archive
+          sha256sum fysen-search-links-2026-11-02.pgdump > SHA256SUMS.txt
+          cat > README.txt <<'EOF'
+          Private companion to Fysen menu-history archive of 2026-11-02.
+          Tables: fysen.search_events and fysen.search_result_impressions.
+          Protect as confidential: contains search activity and result links.
+          SHA-256, PostgreSQL 17 custom dump.
+          This preserves provenance when historical menu_item records
+          are pruned and their search-result foreign keys become NULL.
+          Restore only into a secure staging database; no live SQL changes.
+          EOF
+      - name: Upload private provenance archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-search-links-before-prune-2026-11-02
+          path: archive/
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
