@@ -423,7 +423,16 @@ export function reconcileSourcePricedHtmlDishes(
         !isIndividuallyPricedSauceInSection(item, lines))
       return [];
     const detachedScope = detachedPerPersonSourceLines(item, lines);
-    if (detachedScope.length > 0) return explicitlyPricedPerPerson(item, detachedScope);
+    if (detachedScope.length > 0) {
+      // An earlier heuristic may have borrowed the next dessert price.
+      // Provenance and serving conditions must come from this named card,
+      // never from the old borrowed price/excerpt.
+      return explicitlyPricedPerPerson({
+        ...item,
+        description: detachedScope.slice(1, -1).join(" ").slice(0, 1000) || null,
+        sourceExcerpt: detachedScope.join(" — ").slice(0, 1000),
+      }, detachedScope);
+    }
     const source = anchoredSourceLines(item, lines);
     // Expose the unit and minimum-party requirement directly in the title;
     // a scalar NOK amount must never masquerade as the total party price.
