@@ -1,5 +1,16 @@
 # Oslo-restauranter — samlet arbeidsliste (13. oktober 2026)
 
+## Oppdatert katalogavstemming 2. november 2026
+
+Etter **PR #1081** (Gamle Raadhus Restaurant og Den Glade Gris) og **PR #1082** (Folkvang Sagene) har Oslo-katalogen **986 kanoniske restaurantmanifester**. Disse tre eksisterende researchradene er nå oppdatert til `JA` med riktig katalogslug, kilde, adresse og koordinatgrunnlag i den samme masterlisten. Listen har fortsatt **1 198 rader: 986 `JA` og 212 øvrige**. Ingen nye research- eller dublettrader ble opprettet.
+
+Dette er **avstemming mellom Git-katalogen og arbeidslisten**, ikke selvstendig bevis for at produksjonsdatabasen, source watcher og offentlig søk har fått alle tre. Folkvangs tidligere tvetydige `Ukens Husmann`-priser brukes ikke som et bekreftet rett-/prispar; det godkjente manifestet har tolv egne kildekontroller og et kildestøttet minimum. Folkvangs koordinater er dokumentert fra samme historiske bygning, ikke attestert av Kartverket etter 503-feil.
+
+Fortsatt manglende eller uavklarte restauranter i masterlisten må prioriteres individuelt. Andre `IKKE_IDENTIFISERT`-rader er ikke automatisk aktive eller publiseringsklare. Ingen helkatalogkontroll er kjørt for denne dokumentasjonsavstemmingen.
+
+- [PR #1081 – Gamle Raadhus og Den Glade Gris](https://github.com/Paradispartiet/fysen/pull/1081)
+- [PR #1082 – Folkvang Sagene](https://github.com/Paradispartiet/fysen/pull/1082)
+
 ## Menykontroll og katalogavstemming 31. oktober 2026
 
 Engebret Café og Lofoten Fiskerestaurant tas inn fra de to validerte kandidatfilene uten byteendringer. Katalogen øker fra **981 til 983**. De allerede kanoniske Restaurant Schrøder, Dovrehallen og The Salmon kobles til sine eksisterende masterrader; ingen nye dublettrader opprettes. To-Tos tidligere menyidentitet er markert **ARKIVERT**, i tråd med den allerede gjennomførte katalogpensjoneringen.
