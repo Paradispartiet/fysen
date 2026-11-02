@@ -504,6 +504,16 @@ jobs:
           console.log("FOLKVANG_SOURCE",JSON.stringify({status:fetched.status,sha:fetched.rawSha256,bodyBytes:fetched.bodyBytes.length,hasRawNeedle:fetched.body.toLocaleLowerCase("nb").includes(needle.toLocaleLowerCase("nb")),count:items.length,items}));
           const embedded = recoverEmbeddedStructuredMenuJson(fetched.body);
           console.log("FOLKVANG_EMBEDDED",JSON.stringify({count:embedded.length,items:embedded.slice(0,60).map(i=>({name:i.name,priceMinor:i.priceMinor}))}));
+          const snippets=[];
+          const text=fetched.body;
+          const key=needle.toLocaleLowerCase("nb");
+          const lower=text.toLocaleLowerCase("nb");
+          let index=0;
+          while(snippets.length<6&&(index=lower.indexOf(key,index))>=0){
+            snippets.push({offset:index,html:text.slice(Math.max(0,index-280),Math.min(text.length,index+550))});
+            index+=key.length;
+          }
+          console.log("FOLKVANG_RAW_HTML_CONTEXT",JSON.stringify(snippets));
           NODE
 
       - name: Generate candidates from live menu sources
