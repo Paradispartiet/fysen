@@ -1,0 +1,91 @@
+name: Verify Fysen history backup restoration (isolated)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/verify-fysen-menu-history-restore.yml"]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  restore:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Fetch existing validated Fysen backup (no production connection)
+        uses: actions/download-artifact@v4
+        with:
+          name: fysen-menu-history-2026-11-02
+          run-id: 41507713036
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: original
+
+      - name: Verify checksum and archive table manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd original
+          sed -i 's|  export/|  |' SHA256SUMS.txt
+          sha256sum --check SHA256SUMS.txt
+          test -s fysen-menu-history.pgdump
+          file fysen-menu-history.pgdump
+
+      - name: Restore full archive into temporary local PostGIS PostgreSQL
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run --rm -d --name fysen-history-restore \
+            -e POSTGRES_PASSWORD=local-restore-test-only \
+            -e POSTGRES_USER=postgres \
+            postgis/postgis:17-3.5
+          trap 'docker rm -f fysen-history-restore >/dev/null 2>&1 || true' EXIT
+
+          ready=0
+          for attempt in $(seq 1 90); do
+            if docker exec fysen-history-restore pg_isready -U postgres -d postgres >/dev/null 2>&1; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+          test "$ready" -eq 1
+
+          docker exec fysen-history-restore psql -v ON_ERROR_STOP=1 -U postgres -d postgres \
+            -c 'CREATE SCHEMA IF NOT EXISTS fysen' \
+            -c 'CREATE EXTENSION IF NOT EXISTS postgis'
+          docker cp original/fysen-menu-history.pgdump fysen-history-restore:/tmp/fysen-menu-history.pgdump
+
+          docker exec fysen-history-restore pg_restore --list /tmp/fysen-menu-history.pgdump >/dev/null
+          docker exec fysen-history-restore pg_restore -U postgres -d postgres \
+            --no-owner --no-acl --exit-on-error --jobs=4 \
+            /tmp/fysen-menu-history.pgdump
+
+          echo "Restore completed; checking exact six-table counts and foreign-key integrity."
+          docker exec -i fysen-history-restore psql -v ON_ERROR_STOP=1 -At -U postgres -d postgres <<'SQL'
+          DO $$
+          DECLARE
+            r bigint;
+            ms bigint;
+            sn bigint;
+            it bigint;
+            ch bigint;
+            wr bigint;
+          BEGIN
+            SELECT count(*) INTO r FROM fysen.restaurants;
+            SELECT count(*) INTO ms FROM fysen.menu_sources;
+            SELECT count(*) INTO sn FROM fysen.menu_snapshots;
+            SELECT count(*) INTO it FROM fysen.menu_items;
+            SELECT count(*) INTO ch FROM fysen.menu_changes;
+            SELECT count(*) INTO wr FROM fysen.menu_watch_runs;
+            IF (r, ms, sn, it, ch, wr) IS DISTINCT FROM
+               (1116::bigint, 1154::bigint, 40707::bigint,
+                1997348::bigint, 100172::bigint, 111963::bigint) THEN
+              RAISE EXCEPTION 'Restored row counts differ from source database baseline';
+            END IF;
+            RAISE NOTICE 'Restore verified: restaurants %, sources %, snapshots %, items %, changes %, watch runs %',
+                         r, ms, sn, it, ch, wr;
+          END $$;
+          SQL
