@@ -106,6 +106,56 @@ describe("HTML first-party price provenance", () => {
     ]);
   });
 
+  it("corrects a detached per-person platter price without borrowing the following dessert", () => {
+    const source = [
+      "hovedrett / main course",
+      "skalldyrfat",
+      "et rikt utvalg av havets delikatesser",
+      "seafood platter",
+      "a selection of shellfish with bread",
+      "minimum 2 personer",
+      "må bestilles 3 dager før",
+      "1095,- per person",
+      "dessert / dessert",
+      "sjokolademousse",
+      "med sjokolade og bær",
+      "185;-",
+    ].join("\n");
+    const out = reconcileSourcePricedHtmlDishes([
+      dish("skalldyrfat", 185, 1),
+      dish("sjokolademousse", 185, 9),
+    ], source);
+    expect(out.map((item) => [item.name, item.priceMinor])).toEqual([
+      ["skalldyrfat (per person, minst 2)", 109500],
+      ["sjokolademousse", 18500],
+    ]);
+    expect(out[0]?.description).toContain("Kildepris kr 1095 per person");
+    expect(out[0]?.description).toContain("minimum 2 personer");
+  });
+
+  it("does not borrow an unqualified tasting-menu price or a neighboring person's price", () => {
+    const source = [
+      "havsmaks 3-retter",
+      "ørret",
+      "med brioche",
+      "skrei",
+      "med kål",
+      "835,- per person",
+      "hovedrett / main course",
+      "skalldyrfat",
+      "minimum 2 personer",
+      "dessert / dessert",
+      "sjokolademousse",
+      "185;-",
+    ].join("\n");
+    const result = reconcileSourcePricedHtmlDishes([
+      dish("skalldyrfat", 185, 7),
+      dish("sjokolademousse", 185, 11),
+    ], source);
+    expect(result.some((item) => item.priceMinor === 83500)).toBe(false);
+    expect(result.some((item) => item.name.startsWith("skalldyrfat (per person"))).toBe(false);
+  });
+
   it("links both size-priced steak options to their documented Biff med løk parent", () => {
     const source = [
       "HOVEDRETTER",
@@ -253,6 +303,6 @@ describe("HTML first-party price provenance", () => {
     ].join("\n");
     const input = [dish("Torsk", 249, 1), dish("Blandet iskrem / Mixed ice cream", 125, 3)];
     expect(reconcileSourcePricedHtmlDishes(input, source)).toEqual(input);
-    expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v7");
+    expect(HTML_SOURCE_PRICED_QA_VERSION).toBe("source-priced-v8");
   });
 });
