@@ -1,0 +1,99 @@
+name: Repackage Fysen history into Drive-sized chunks
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/repackage-fysen-history-drive.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  chunk:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Download previously completed read-only backup
+        uses: actions/download-artifact@v4
+        with:
+          name: fysen-menu-history-2026-11-02
+          run-id: 41507713036
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: original
+
+      - name: Validate original and split into under-100-MB chunks
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd original
+          sha256sum --check SHA256SUMS.txt
+          test -s fysen-menu-history.pgdump
+          mkdir -p ../chunks
+          split --bytes=70M --numeric-suffixes=0 --suffix-length=3 \
+            fysen-menu-history.pgdump ../chunks/fysen-menu-history.pgdump.part-
+          cd ../chunks
+          sha256sum fysen-menu-history.pgdump.part-* > PARTS-SHA256SUMS.txt
+          cp ../original/SHA256SUMS.txt ORIGINAL-SHA256SUMS.txt
+          cp ../original/README.txt ORIGINAL-README.txt
+          cat > RESTORE.txt <<'EOF'
+          Fysen menu history archive, 2026-11-02.
+          Download all four chunk-artifact ZIPs from Google Drive.
+          Extract each ZIP into the same local directory, preserving the
+          filenames fysen-menu-history.pgdump.part-000 to part-003.
+          Verify: sha256sum -c PARTS-SHA256SUMS.txt
+          Reassemble: cat fysen-menu-history.pgdump.part-??? > fysen-menu-history.pgdump
+          Verify: sha256sum -c ORIGINAL-SHA256SUMS.txt
+          Inspect: pg_restore --list fysen-menu-history.pgdump
+          Restore ONLY to a separate secured staging PostgreSQL instance.
+          The database still has its full live history; NO deletion has happened.
+          EOF
+          echo "Chunks created:"
+          ls -lh fysen-menu-history.pgdump.part-*
+          count=$(find . -name 'fysen-menu-history.pgdump.part-*' | wc -l)
+          test "$count" -eq 4
+          max=$(stat --printf='%s\n' fysen-menu-history.pgdump.part-* | sort -nr | head -n1)
+          test "$max" -lt 100000000
+
+      - name: Upload part 000 with manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-drive-history-part-000
+          path: |
+            chunks/fysen-menu-history.pgdump.part-000
+            chunks/PARTS-SHA256SUMS.txt
+            chunks/ORIGINAL-SHA256SUMS.txt
+            chunks/ORIGINAL-README.txt
+            chunks/RESTORE.txt
+          retention-days: 30
+          compression-level: 0
+          if-no-files-found: error
+
+      - name: Upload part 001
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-drive-history-part-001
+          path: chunks/fysen-menu-history.pgdump.part-001
+          retention-days: 30
+          compression-level: 0
+          if-no-files-found: error
+
+      - name: Upload part 002
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-drive-history-part-002
+          path: chunks/fysen-menu-history.pgdump.part-002
+          retention-days: 30
+          compression-level: 0
+          if-no-files-found: error
+
+      - name: Upload part 003
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-drive-history-part-003
+          path: chunks/fysen-menu-history.pgdump.part-003
+          retention-days: 30
+          compression-level: 0
+          if-no-files-found: error
