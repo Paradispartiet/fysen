@@ -486,6 +486,26 @@ jobs:
           echo "report=$report" >> "$GITHUB_OUTPUT"
           echo "allow_partial=$(node -e 'const fs=require("node:fs");const x=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));console.log(x.allowPartialIntake===true)' "$SEED_PATH")" >> "$GITHUB_OUTPUT"
 
+      - name: Diagnose Folkvang HTML extraction (temporary PR 1082)
+        if: "github.event_name == 'pull_request' && github.event.pull_request.number == 1082"
+        working-directory: apps/menu-worker
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { HttpMenuClient } from "./dist/http-client.js";
+          import { extractMenuSource } from "./dist/menu-source-runtime.js";
+          import { recoverEmbeddedStructuredMenuJson } from "./dist/html-embedded-menu-json-recovery.js";
+          const url = "https://folkvangsagene.no/meny";
+          const fetched = await new HttpMenuClient().fetchSource({url,userAgent:"FysenMenuBot/0.1",etag:null,lastModified:null});
+          if(fetched.kind!=="content") throw new Error("Unexpected 304");
+          const extracted = await extractMenuSource("html",fetched);
+          const items = extracted.items.map(i=>({name:i.name,priceMinor:i.priceMinor,sectionName:i.sectionName,method:i.extractionMethod}));
+          const needle="Biff og Peppersaus";
+          console.log("FOLKVANG_SOURCE",JSON.stringify({status:fetched.status,sha:fetched.rawSha256,bodyBytes:fetched.bodyBytes.length,hasRawNeedle:fetched.body.toLocaleLowerCase("nb").includes(needle.toLocaleLowerCase("nb")),count:items.length,items}));
+          const embedded = recoverEmbeddedStructuredMenuJson(fetched.body);
+          console.log("FOLKVANG_EMBEDDED",JSON.stringify({count:embedded.length,items:embedded.slice(0,60).map(i=>({name:i.name,priceMinor:i.priceMinor}))}));
+          NODE
+
       - name: Generate candidates from live menu sources
         id: intake
         shell: bash
