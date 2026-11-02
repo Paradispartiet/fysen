@@ -29,6 +29,7 @@ jobs:
         run: |
           set -euo pipefail
           cd original
+          sed -i 's|^export/||' SHA256SUMS.txt
           sha256sum --check SHA256SUMS.txt
           test -s fysen-menu-history.pgdump
           mkdir -p ../chunks
