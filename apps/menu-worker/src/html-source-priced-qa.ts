@@ -6,7 +6,7 @@ import { createMenuItemSourceKey, normalizeDishName, type MenuObservedItem } fro
  * infer a serving unit or convert a per-person quote to a dish price.
  * This layer applies only after the ordinary HTML parser has finished.
  */
-export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v8";
+export const HTML_SOURCE_PRICED_QA_VERSION = "source-priced-v9";
 
 /** Preserve scoop units only from a single visible title/price card. */
 export function reconcileExplicitScoopUnits(
@@ -409,6 +409,98 @@ function isSourceConfirmedAlcoholCombination(
     /\b2\s*cl\b/iu.test(nearby);
 }
 
+// Some first-party menus use four explicit bilingual food sections where each
+// dish is a Norwegian title, descriptive/translated text, then a standalone
+// printed amount. This is a source-card boundary: do not borrow prices from
+// tasting menus, from the next dish, or from a different section.
+const BILINGUAL_FOOD_SECTION =
+  /^(?:snackmeny\s*\/\s*snack\s*menu|forrett\s*\/\s*starter|hovedrett\s*\/\s*main\s*course|dessert\s*\/\s*dessert)$/iu;
+const BILINGUAL_STANDALONE_PRICE =
+  /^([1-9]\d{1,3})\s*(?:,-|;-|,)$/u;
+const BILINGUAL_TWO_QUANTITY_PRICES =
+  /^([1-9]\d{1,3})\s*,-\s*\/\s*([1-9]\d{1,3})\s*(?:;-|,-)$/u;
+
+function recoverCompleteBilingualFoodSectionPrices(
+  lines: readonly string[],
+): readonly MenuObservedItem[] {
+  // Require independently delimited food sections; a lone "menu" heading on
+  // an unrelated site is not enough evidence for this recovery.
+  if (new Set(lines.filter((line) => BILINGUAL_FOOD_SECTION.test(line)).map(
+    (line) => line.toLocaleLowerCase("nb-NO"),
+  )).size < 3) return [];
+
+  const candidates: MenuObservedItem[] = [];
+  let sectionName: string | null = null;
+  let cardLines: string[] = [];
+  let cardPosition = 0;
+  let sawBilingualCards = 0;
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = lines[i]!;
+    if (BILINGUAL_FOOD_SECTION.test(line)) {
+      sectionName = line;
+      cardLines = [];
+      cardPosition = i + 1;
+      continue;
+    }
+    if (!sectionName) continue;
+    // A trailing '195,' is only accepted inside an already proven bilingual
+    // food-card section; elsewhere a comma is not proof of a price.
+    const one = line.match(BILINGUAL_STANDALONE_PRICE);
+    const two = line.match(BILINGUAL_TWO_QUANTITY_PRICES);
+    if (!one && !two && !PRICE_PER_PERSON.test(line)) {
+      if (cardLines.length === 0) cardPosition = i;
+      cardLines.push(line);
+      continue;
+    }
+    const name = cardLines[0]?.trim() ?? "";
+    const context = cardLines.join(" ");
+    if (name.length >= 3 && name.length <= 100 &&
+        /\p{L}/u.test(name) && cardLines.length >= 3 &&
+        !PRICE_PER_PERSON.test(line) &&
+        !OTHER_MENU_SECTION.test(name) &&
+        !BILINGUAL_FOOD_SECTION.test(name)) {
+      const variants: { name: string; amount: number }[] = [];
+      if (one?.[1]) {
+        variants.push({ name, amount: Number(one[1]) });
+      } else if (two?.[1] && two[2] &&
+        /\bper\s+stk\b/iu.test(context) &&
+        /\bhalvt\s+dusin\b/iu.test(context)) {
+        // Preserve the two explicit units, rather than inventing one scalar
+        // "oyster" price from a pair printed for distinct quantities.
+        variants.push(
+          { name: name + " (per stk)", amount: Number(two[1]) },
+          { name: name + " (halvt dusin)", amount: Number(two[2]) },
+        );
+      }
+      if (variants.length > 0) sawBilingualCards += 1;
+      for (const variant of variants) {
+        const priceMinor = variant.amount * 100;
+        if (priceMinor < 4_000 || priceMinor > 1_000_000) continue;
+        candidates.push({
+          sourceKey: createMenuItemSourceKey(variant.name, sectionName),
+          name: variant.name,
+          normalizedName: normalizeDishName(variant.name),
+          description: cardLines.slice(1).join(" ").slice(0, 1000) || null,
+          sectionName,
+          priceMinor,
+          priceKind: "exact",
+          priceMaxMinor: null,
+          currency: "NOK",
+          position: cardPosition,
+          extractionMethod: "html_heuristic",
+          confidence: 0.92,
+          sourceExcerpt: [sectionName, ...cardLines, line].join(" — ").slice(0, 1000),
+        });
+      }
+    }
+    // Every printed price closes exactly one card, including a per-person
+    // package; an unsupported quote must never become the next card's price.
+    cardLines = [];
+    cardPosition = i + 1;
+  }
+  return sawBilingualCards >= 8 ? candidates : [];
+}
+
 export function reconcileSourcePricedHtmlDishes(
   items: readonly MenuObservedItem[],
   fullVisibleText: string,
@@ -448,5 +540,8 @@ export function reconcileSourcePricedHtmlDishes(
   });
   const existing = new Set(corrected.map((item) => item.normalizedName));
   const recovered = missingInlineDishes(lines, existing);
-  return [...corrected, ...recovered].sort((a, b) => a.position - b.position);
+  const seen = new Set([...existing, ...recovered.map((item) => item.normalizedName)]);
+  const bilingual = recoverCompleteBilingualFoodSectionPrices(lines)
+    .filter((item) => !seen.has(item.normalizedName));
+  return [...corrected, ...recovered, ...bilingual].sort((a, b) => a.position - b.position);
 }
