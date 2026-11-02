@@ -1,0 +1,137 @@
+{
+  "checkedAt": "2026-11-02",
+  "restaurant": {
+    "slug": "havsmak-opera-oslo",
+    "name": "Havsmak",
+    "address": "Kirsten Flagstads plass 1, 0150 Oslo",
+    "latitude": 59.907776627658436,
+    "longitude": 10.752057850390443
+  },
+  "identityEvidence": {
+    "provider": "Kartverket Adresser API v1",
+    "matchedAddress": "Kirsten Flagstads plass 1",
+    "municipalityCode": "0301",
+    "postCode": "0150",
+    "failureCount": 0,
+    "lookupRun": "https://github.com/Paradispartiet/fysen/actions/runs/41441804167"
+  },
+  "source": {
+    "url": "https://www.havsmak.no/meny",
+    "type": "first_party_html",
+    "namedDishes": 21,
+    "pricedOffers": 22,
+    "priceChoicesVerified": [
+      {
+        "name": "potetkrokett",
+        "priceMinor": 19500
+      },
+      {
+        "name": "fisk taco",
+        "priceMinor": 18500
+      },
+      {
+        "name": "østers",
+        "priceMinor": 19500
+      },
+      {
+        "name": "blomkål arancinis",
+        "priceMinor": 16900
+      },
+      {
+        "name": "dagens østers (per stk)",
+        "priceMinor": 6900
+      },
+      {
+        "name": "dagens østers (halvt dusin)",
+        "priceMinor": 32500
+      },
+      {
+        "name": "ørret",
+        "priceMinor": 28500
+      },
+      {
+        "name": "kamskjell og gyoza av svin",
+        "priceMinor": 26500
+      },
+      {
+        "name": "krabberavioli",
+        "priceMinor": 28500
+      },
+      {
+        "name": "breiflabbkjake",
+        "priceMinor": 28500
+      },
+      {
+        "name": "grillet piggvar",
+        "priceMinor": 48500
+      },
+      {
+        "name": "skrei",
+        "priceMinor": 43500
+      },
+      {
+        "name": "sjøkreps 500g",
+        "priceMinor": 46500
+      },
+      {
+        "name": "dagens bifangst",
+        "priceMinor": 49500
+      },
+      {
+        "name": "rødspette for 2 personer",
+        "priceMinor": 69900
+      },
+      {
+        "name": "gnocchi",
+        "priceMinor": 36500
+      },
+      {
+        "name": "skalldyrfat (per person, minst 2)",
+        "priceMinor": 109500
+      },
+      {
+        "name": "tindvedpai",
+        "priceMinor": 18500
+      },
+      {
+        "name": "sjokolademousse",
+        "priceMinor": 18500
+      },
+      {
+        "name": "dagens dessert",
+        "priceMinor": 19500
+      },
+      {
+        "name": "dagens is og sorbet",
+        "priceMinor": 16500
+      },
+      {
+        "name": "utvalg av oster",
+        "priceMinor": 25500
+      }
+    ]
+  },
+  "proof": {
+    "runUrl": "https://github.com/Paradispartiet/fysen/actions/runs/41441804167",
+    "artifactUrl": "https://github.com/Paradispartiet/fysen/actions/runs/41441804167/artifacts/13140621680",
+    "observedItems": 22,
+    "acceptedCandidates": 1,
+    "failedCandidates": 0,
+    "automatedExactAssertions": 20,
+    "remainingPricesManuallyChecked": [
+      "fisk taco",
+      "sjokolademousse"
+    ]
+  },
+  "releasePolicy": {
+    "minimumExpectedItems": 18,
+    "canonicalRequiredVariants": 12,
+    "notDishPackages": [
+      "havsmaks 3-retter / havsmaks 3-course menu",
+      "havsmaks 5-retter / havsmaks 5-course menu"
+    ],
+    "perPersonNote": "Skalldyrfat 1095 kr per person, minimum two persons, preorder three days",
+    "hoursVerified": false
+  },
+  "note": "Source proof of the exact source date, not a guarantee that the dishes remain on the menu in later seasons. The canonical manifest uses a documented seasonal buffer, while the full 22-offer snapshot is preserved here."
+}
