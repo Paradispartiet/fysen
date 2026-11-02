@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-folkvang-sagene-20261102",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "folkvang-sagene-oslo",
+        "name": "Folkvang Sagene",
+        "websiteUrl": "https://folkvangsagene.no/",
+        "address": "Maridalsveien 153 B, 0461 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://folkvangsagene.no/meny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720,
+        "sourceSupport": {
+          "redirectOrigins": [],
+          "browserDataOrigins": [],
+          "browserBlockedOrigins": []
+        }
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-11-02",
+          "note": "Sagene bydelsrestaurant kontrollert mot offisiell matmeny 2. november 2026, med separat lunsj/kveld og sesongvariasjon. Tolv unike rett-/prispar er dokumentert, inkludert Folkvang Burger, Drosjefrokost og Biff og Peppersaus. Ukens Husmann (240/280), gjentatte varianter på tvers av lunsj/kveld, delemeny per person og vinpakke er ikke gjort om til oppdiktede enkeltretter. Adresse fra offisiell kontaktinformasjon; koordinater kreves kontrollert av Kartverket ved intake. Faktisk åpningstid-status ikke verifisert; kilde angir kjøkkentider."
+        }
+      },
+      "actions": [],
+      "assertionCount": 12,
+      "minimumSourceItems": 20,
+      "requiredDishVariants": [
+        {
+          "name": "Sopp Toast",
+          "priceMinor": 24500
+        },
+        {
+          "name": "Konfitert Laks",
+          "priceMinor": 22000
+        },
+        {
+          "name": "Biff tartar",
+          "priceMinor": 27500
+        },
+        {
+          "name": "Biff og Peppersaus",
+          "priceMinor": 39500
+        },
+        {
+          "name": "Oksekjaker",
+          "priceMinor": 33500
+        },
+        {
+          "name": "Drosjefrokost",
+          "priceMinor": 24000
+        },
+        {
+          "name": "Sopp Smærbrød",
+          "priceMinor": 26500
+        },
+        {
+          "name": "Tuna Melt",
+          "priceMinor": 26000
+        },
+        {
+          "name": "Biff Sandwich",
+          "priceMinor": 29500
+        },
+        {
+          "name": "Folkvang Burger",
+          "priceMinor": 29000
+        },
+        {
+          "name": "Skagenrøre",
+          "priceMinor": 28500
+        },
+        {
+          "name": "Fiskesuppe",
+          "priceMinor": 28000
+        }
+      ],
+      "forbiddenDishNames": [
+        "Kjøkkensjefens Delemeny",
+        "Vinpakke med 4 glass",
+        "Ukens Husmann er inspirert av husmannskost"
+      ]
+    }
+  ]
+}
