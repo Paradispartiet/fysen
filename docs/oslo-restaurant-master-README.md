@@ -1,5 +1,14 @@
 # Oslo-restauranter — samlet arbeidsliste (13. oktober 2026)
 
+## Havsmak – katalogavstemming 2. november 2026
+
+Etter **PR #1085** er Havsmak promotert til kanonisk restaurant med **21 navngitte retter og 22 kildeverifiserte prisede tilbud**. Restauranten er oppdatert på **sin eksisterende rad** i hovedlisten (ingen ny dublett), med kanonisk slug `havsmak-opera-oslo`, offisiell adresse og koordinater fra Kartverkets Adresser API v1. Førstepartsmenyens østersvarianter og skalldyrfat per person er kildekontrollert.
+
+**Gjeldende Git-katalog: 987 kanoniske restaurantmanifester**, samsvarende med **987 `JA`-rader** i masterlisten. Masterlisten har fortsatt **1 198 rader**, hvor **211 øvrige** er kandidater, aliaser, ikke-restauranter eller uavklart. Dette er ikke en fullstendig statistikk over Oslos aktive restauranter.
+
+Havsmaks [prøvde 22/22 prisede tilbud](https://github.com/Paradispartiet/fysen/actions/runs/41441804167) er bevart i [research-beviset](research/oslo-havsmak-20261102.sources.json). Katalogmanifestet følger 12 representative prisassertasjoner med normal variasjonsmargin. **Produksjonsdatabasen og offentlig søk må bekreftes separat etter merge**; denne dokumentasjonsoppdateringen er ikke et bevis på live-publisering. Ingen helkatalogkontroll er nødvendig for denne avstemmingen.
+
+
 ## Oppdatert katalogavstemming 2. november 2026
 
 Etter **PR #1081** (Gamle Raadhus Restaurant og Den Glade Gris) og **PR #1082** (Folkvang Sagene) har Oslo-katalogen **986 kanoniske restaurantmanifester**. Disse tre eksisterende researchradene er nå oppdatert til `JA` med riktig katalogslug, kilde, adresse og koordinatgrunnlag i den samme masterlisten. Listen har fortsatt **1 198 rader: 986 `JA` og 212 øvrige**. Ingen nye research- eller dublettrader ble opprettet.
