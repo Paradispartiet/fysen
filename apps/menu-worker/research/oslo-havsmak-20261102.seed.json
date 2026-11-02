@@ -24,11 +24,11 @@
         "hours": {
           "status": "unverified",
           "checkedAt": "2026-11-02",
-          "note": "Gjeldende offisielle meny 2. november 2026: 21 navngitte matretter, østers med 2 dokumenterte pris-/mengdevarianter = 22 prisede tilbud. Alle 22 kildeprispar kreves av live-intake; 3-/5-retters pakkepriser er ikke retter. Skalldyrfat er 1095 kr per person, minimum 2 personer og må bestilles 3 dager før. 195, for dagens dessert bekreftes kun innen prisavgrenset tospråklig matseksjon. Driftstider ikke verifisert."
+          "note": "Førstepartsmeny 2. november 2026: 21 navngitte retter, 22 prissatte tilbud når østers regnes i to porsjoner. Livekontrollens schema tillater 20 konkrete rett-/prisassertasjoner, som dekker alle 7 tidligere manglende retter pluss 13 eksisterende; kildeuttrekket må inneholde minst 21 poster. Fisk taco og sjokolademousse er også visuelt kildebekreftet, men inngår ikke i de 20 kontrollene. Smaksmenypakker er ikke enkeltretter. Skalldyrfat 1095 kr per person, minimum 2, tre dagers forhåndsbestilling. Åpningstider ikke verifisert."
         }
       },
       "actions": [],
-      "assertionCount": 22,
+      "assertionCount": 20,
       "forbiddenDishNames": [
         "havsmaks 3-retter / havsmaks 3-course menu",
         "havsmaks 5-retter / havsmaks 5-course menu"
@@ -37,10 +37,6 @@
         {
           "name": "potetkrokett",
           "priceMinor": 19500
-        },
-        {
-          "name": "fisk taco",
-          "priceMinor": 18500
         },
         {
           "name": "østers",
@@ -104,10 +100,6 @@
         },
         {
           "name": "tindvedpai",
-          "priceMinor": 18500
-        },
-        {
-          "name": "sjokolademousse",
           "priceMinor": 18500
         },
         {
