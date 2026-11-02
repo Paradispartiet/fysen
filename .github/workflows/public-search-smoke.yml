@@ -1,0 +1,39 @@
+name: Fysen public search end-to-end smoke
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/public-search-smoke.mjs"
+      - "scripts/public-search-smoke.test.mjs"
+      - ".github/workflows/public-search-smoke.yml"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/public-search-smoke.mjs"
+      - "scripts/public-search-smoke.test.mjs"
+      - ".github/workflows/public-search-smoke.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Test public search contract offline
+        run: node --test scripts/public-search-smoke.test.mjs
+      - name: Verify live public API and web search
+        run: |
+          node scripts/public-search-smoke.mjs | tee /tmp/fysen-public-search-proof.json
+          {
+            echo '## Fysen public search proof'
+            echo 'Two live production GETs; no menu writes or catalog batch. Normal search endpoints may record two synthetic query events.'
+            cat /tmp/fysen-public-search-proof.json
+          } >> "$GITHUB_STEP_SUMMARY"
