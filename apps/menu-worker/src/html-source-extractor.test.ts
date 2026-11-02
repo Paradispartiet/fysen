@@ -19,7 +19,7 @@ describe("extractScopedHtmlMenu", () => {
     `;
 
     const result = extractScopedHtmlMenu(html);
-    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v23");
+    expect(HTML_SOURCE_EXTRACTOR_VERSION).toBe("html-v24");
     expect(result.items.map((item) => item.name)).toEqual(["Falafel", "Bakalawa"]);
     expect(result.items.map((item) => item.priceMinor)).toEqual([9800, 12900]);
     expect(result.visibleText).not.toContain("Husets Cabernet");
@@ -502,6 +502,26 @@ describe("extractScopedHtmlMenu", () => {
     `;
     const result = extractScopedHtmlMenu(html);
     expect(result.items.some((entry) => entry.name === "Rykende fersk italiensk pizza fra steinovnen")).toBe(false);
+  });
+
+
+  it("accepts a Squarespace dish price with a trailing zero-width joiner without borrowing neighbors", () => {
+    const html = `
+      <html><body>
+        <h2>Hovedretter</h2>
+        <p><span><strong>Biff og Peppersaus                                 395,-\u200D</strong></span><br><em>med pommes frites og grillede grønnsaker</em></p>
+        <p><span><strong>Dagens fisk                                    345,-</strong></span><br><em>med gresskarpure og spisskål</em></p>
+        <p><span><strong>Oksekjaker                                    335,-</strong></span><br><em>med potetpure, løk og sopp</em></p>
+      </body></html>
+    `;
+    const items = extractScopedHtmlMenu(html).items;
+    expect(items.map((item) => [item.name, item.priceMinor])).toEqual(
+      expect.arrayContaining([
+        ["Biff og Peppersaus", 39500],
+        ["Dagens fisk", 34500],
+        ["Oksekjaker", 33500],
+      ]),
+    );
   });
 
 });

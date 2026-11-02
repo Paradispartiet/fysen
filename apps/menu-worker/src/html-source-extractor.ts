@@ -12,7 +12,7 @@ import {
 import { recoverElementorPriceListHtmlItems } from "./html-elementor-price-list-recovery.js";
 import { supplementPartialStructuredMenu } from "./html-partial-structured-menu.js";
 
-export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v23";
+export const HTML_SOURCE_EXTRACTOR_VERSION = "html-v24";
 
 const HEADING_MARKER = "__FYSEN_HEADING_LEVEL_";
 const BEVERAGE_SECTION_HEADING = /^(?:aperitif|drikke(?:meny)?|drinks?(?:\s+menu)?|beverages?(?:\s+menu)?|andre\s+drikker?|other\s+drinks?|bar(?:\s+menu)?|mineralvann|soft\s+drinks?|sodas?|brus|vinkart|vin(?:kart|liste|meny)?|vin\s*(?:&|og)\s*musserende|wine(?:\s+(?:list|menu))?|wine\s*(?:&|and)\s*sparkling|cocktails?|champagne(?:\s+cocktails?)?|portvin|port\s+wine|bitter|cognac|armagnac|brandy|scotch\s+whisk(?:e)?y|irish\s+whisk(?:e)?y|american\s+whisk(?:e)?y|whisk(?:e)?y|calvados|aquavit|akevitt|liquor|likør|hetvin|fortified\s+wine|campari|grappa|vodka(?:\s*,\s*gin\s*,\s*tequila)?|gin|tequila|øl(?:\s*,?\s*cider.*)?|beer(?:s)?(?:\s*,?\s*cider.*)?|alkoholfritt|non[- ]alcoholic(?:\s+drinks?)?|kaffedrinker|coffee\s+drinks?|kaffe\/te.*|coffee\/tea.*)$/iu;
@@ -35,7 +35,10 @@ const LEADING_QUANTITY_UNIT =
   /^\d{1,4}\s+(?:g|gram(?:s)?|kg|ml|cl|l|stk|st|pcs?|pieces?|biter|biter\s+av)\b/iu;
 
 function normalizeVisibleLine(value: string): string {
-  return value.normalize("NFKC").replace(/\s+/g, " ").trim();
+  // A trailing zero-width formatting character after a visible price (e.g. "395,-\\u200D")
+  // is not part of the title or amount. Without this, right-anchored price parsing drops it.
+  return value.normalize("NFKC").replace(/\\s+/g, " ").trim()
+    .replace(/[\\u200B-\\u200D\\uFEFF]+$/gu, "").trim();
 }
 
 function stripMenuNumber(value: string): string {
