@@ -131,6 +131,9 @@ describe("HTML first-party price provenance", () => {
     ]);
     expect(out[0]?.description).toContain("Kildepris kr 1095 per person");
     expect(out[0]?.description).toContain("minimum 2 personer");
+    expect(out[0]?.description).toContain("må bestilles 3 dager før");
+    expect(out[0]?.sourceExcerpt).toContain("1095,- per person");
+    expect(out[0]?.sourceExcerpt).not.toContain("kr 185");
   });
 
   it("does not borrow an unqualified tasting-menu price or a neighboring person's price", () => {
