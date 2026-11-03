@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { readFile, readdir, writeFile } from "node:fs/promises";
-import { basename, join } from "node:path";
+import { join } from "node:path";
 import { gzipSync, gunzipSync } from "node:zlib";
 import { assessExtraction } from "@fysen/menu-core";
 import { evaluateManifestMenuQuality } from "./manifest-quality.js";
@@ -130,7 +130,7 @@ async function main(): Promise<void> {
   // Even when all external providers fail, remember attempted times so a failing
   // oldest source does not starve all other restaurants on every scheduled run.
   if (accepted > 0) {
-    const output = gzipSync(Buffer.from(JSON.stringify(nextIndex), "utf8"), { level: 9, mtime: 0 });
+    const output = gzipSync(Buffer.from(JSON.stringify(nextIndex), "utf8"), { level: 9 });
     await writeFile(indexPath, output);
     manifest.bytes = output.byteLength;
     manifest.sha256 = createHash("sha256").update(output).digest("hex");
