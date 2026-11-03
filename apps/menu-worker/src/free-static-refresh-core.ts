@@ -39,7 +39,7 @@ export function replaceOneSource(
   const updated: FreeSource[] = index.sources.map((source, indexOfSource): FreeSource =>
     indexOfSource === sourceIndex ? [old[0], old[1], observedAt] : source
   );
-  const newRows: FreeMenu[] = observations.map((item) => {
+  const newRows: FreeMenu[] = observations.map((item): FreeMenu => {
     if (!item.name || !item.normalizedName || item.currency !== "NOK") {
       throw new Error("Unexpected currency or empty dish name");
     }
