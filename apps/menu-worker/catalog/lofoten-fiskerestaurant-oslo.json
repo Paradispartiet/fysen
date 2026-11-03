@@ -11,16 +11,18 @@
     "longitude": 10.724512799999957
   },
   "menuSource": {
-    "url": "https://www.lofoten-fiskerestaurant.no/menu-eng",
+    "url": "https://www.lofoten-fiskerestaurant.no/meny",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 20,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
-      "browserBlockedOrigins": []
+      "browserBlockedOrigins": [
+        "https://www.google.com"
+      ]
     }
   },
   "verification": {
