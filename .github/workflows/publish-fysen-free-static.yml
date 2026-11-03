@@ -43,7 +43,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git switch --orphan "fysen-static-build-${GITHUB_RUN_ID}"
-          git rm -rf --cached . >/dev/null
+          git rm -rf --cached . >/dev/null 2>&1 || true
           git clean -fdx >/dev/null
           cp "$RUNNER_TEMP/free-index/index.json.gz" index.json.gz
           cp "$RUNNER_TEMP/free-index/manifest.json" manifest.json
