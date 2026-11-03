@@ -20,7 +20,6 @@ jobs:
       - name: Checkout Fysen source and parser
         uses: actions/checkout@v4
         with:
-          path: fysen-code
           persist-credentials: false
       - name: Checkout isolated public data branch (no force pushes)
         uses: actions/checkout@v4
@@ -29,21 +28,18 @@ jobs:
           path: public-index
           persist-credentials: true
       - name: Setup existing Node and parser dependencies
-        uses: ./fysen-code/.github/actions/setup-node-pnpm
+        uses: ./.github/actions/setup-node-pnpm
       - name: Build reused production menu parser
-        working-directory: fysen-code
         run: pnpm --filter @fysen/menu-worker... build
       - name: Focused Free refresh tests
-        working-directory: fysen-code
         run: pnpm --filter @fysen/menu-worker exec vitest run src/free-static-refresh.test.ts
       - name: Refresh at most 12 public sources, fail closed
-        working-directory: fysen-code
         env:
           FYSEN_HTTP_TIMEOUT_MS: "12000"
           FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
         run: |
           node apps/menu-worker/dist/free-static-refresh.js \
-            ../public-index apps/menu-worker/catalog 12
+            public-index apps/menu-worker/catalog 12
       - name: Publish only audited, static menu index branch
         working-directory: public-index
         shell: bash
