@@ -6,6 +6,7 @@ on:
     paths:
       - "apps/menu-worker/research/*.seed.json"
       - "apps/menu-worker/src/**"
+      - "!apps/menu-worker/src/free-static-refresh*.ts"
       - "!apps/menu-worker/src/**/*.test.ts"
       - "packages/menu-core/src/**"
       - "!packages/menu-core/src/**/*.test.ts"
