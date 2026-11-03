@@ -28,15 +28,15 @@ describe("production menu mutation workflows", () => {
     expect(watcher).toContain("cancel-in-progress: false");
   });
 
-  it("re-materializes the exact main SHA after catalog or parser/runtime changes", () => {
-    expect(materializer).toContain('".github/workflows/materialize-production-catalog.yml"');
-    expect(materializer).toContain('"apps/menu-worker/catalog/**"');
-    expect(materializer).toContain('"apps/menu-worker/src/**"');
-    expect(materializer).toContain('"!apps/menu-worker/src/**/*.test.ts"');
-    expect(materializer).toContain('"packages/menu-core/src/**"');
-    expect(materializer).toContain('"!packages/menu-core/src/**/*.test.ts"');
+  it("requires an explicit manual trigger for legacy production materialization", () => {
+    // Fysen Free is database-independent. Catalog and parser pushes must not
+    // accidentally start the legacy Supabase materializer.
+    expect(materializer).toMatch(/^on:\s*\n  workflow_dispatch:\s*$/m);
+    expect(materializer).not.toMatch(/^  (?:push|schedule|workflow_run):/m);
+    // A deliberate manual run still builds and materializes its exact revision.
     expect(materializer).toContain('ref: ${{ github.sha }}');
     expect(materializer).not.toContain("ref: main");
+    expect(materializer).toContain("name: Materialize canonical production catalog");
   });
 
   it("keeps full catalog onboarding out of the bounded hourly watcher", () => {
