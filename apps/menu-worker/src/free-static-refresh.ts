@@ -7,7 +7,7 @@ import { evaluateManifestMenuQuality } from "./manifest-quality.js";
 import { canonicalizeUniqueMenuSourceKeys } from "./menu-source-key-canonicalizer.js";
 import { readRestaurantOnboardingManifest, type RestaurantOnboardingManifest } from "./onboarding-manifest.js";
 import { extractMenuSource, fetchMenuSource } from "./menu-source-runtime.js";
-import { findMatchingFreeSourceIndex, recordFreeSourceFailure, replaceOneSource, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
+import { findMatchingFreeSourceIndex, prioritizeUnpublishedBrowserMigrations, recordFreeSourceFailure, replaceOneSource, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
 
 async function main(): Promise<void> {
   const [archiveDir, catalogDir, countArg] = process.argv.slice(2);
@@ -67,11 +67,15 @@ async function main(): Promise<void> {
   if (!matching.size) throw new Error("No public sources matched existing catalog manifests");
   const attempts = { ...(manifest.sourceAttempts ?? {}) };
   const failures = { ...(manifest.sourceFailures ?? {}) };
-  const sorted = selectBoundedFreeRefreshEntries([...matching.entries()].sort(([i], [j]) => {
+  const oldestFirst = [...matching.entries()].sort(([i], [j]) => {
     const ageI = Date.parse(attempts[String(i)] ?? index.sources[i]![2]) || 0;
     const ageJ = Date.parse(attempts[String(j)] ?? index.sources[j]![2]) || 0;
     return ageI - ageJ || i - j;
-  }), maxAttempts);
+  });
+  const sorted = selectBoundedFreeRefreshEntries(
+    prioritizeUnpublishedBrowserMigrations(oldestFirst, index.sources),
+    maxAttempts,
+  );
   let nextIndex = index;
   const refreshed = new Set(manifest.refreshedSourceIndices ?? []);
   let accepted = 0;

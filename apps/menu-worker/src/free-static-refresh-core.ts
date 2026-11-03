@@ -70,6 +70,31 @@ export function selectBoundedFreeRefreshEntries<T extends { menuSource: { fetchM
   return selected;
 }
 
+// When a verified browser manifest points to a new URL, try it before the
+// ordinary oldest-first rotation. The priority disappears automatically as soon
+// as the public index contains the approved URL. This avoids processing the
+// rest of the catalog before a known broken link can be replaced.
+export function prioritizeUnpublishedBrowserMigrations<T extends {
+  menuSource: { fetchMode: "http" | "browser"; url: string };
+}>(
+  ordered: readonly (readonly [number, T])[],
+  publishedSources: readonly FreeSource[],
+): [number, T][] {
+  const migrations: [number, T][] = [];
+  const ordinary: [number, T][] = [];
+  for (const [sourceIndex, entry] of ordered) {
+    const publishedUrl = publishedSources[sourceIndex]?.[1];
+    if (publishedUrl !== undefined &&
+        entry.menuSource.fetchMode === "browser" &&
+        entry.menuSource.url !== publishedUrl) {
+      migrations.push([sourceIndex, entry]);
+    } else {
+      ordinary.push([sourceIndex, entry]);
+    }
+  }
+  return [...migrations, ...ordinary];
+}
+
 export interface FreeManifest {
   version: 1;
   archiveDate: string;
