@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { MenuObservedItem } from "@fysen/menu-core";
-import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, prioritizeUnpublishedBrowserMigrations, recordFreeSourceFailure, replaceOneSource, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeSourceFailure } from "./free-static-refresh-core.js";
+import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, prioritizeUnpublishedMenuMigrations, recordFreeSourceFailure, replaceOneSource, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeSourceFailure } from "./free-static-refresh-core.js";
 const baseline: FreeIndex = {
   version: 1, archiveDate: "2026-11-02",
   restaurants: [["Restaurant A", "restaurant-a", "Oslo", "Oslo", ""],
@@ -60,12 +60,12 @@ describe("Free Fysen one-source refresh", () => {
     expect(() => selectBoundedFreeRefreshEntries(candidates, 25)).toThrow();
     expect(() => selectBoundedFreeRefreshEntries(candidates, 3, 2)).toThrow();
   });
-  it("promotes unverified browser URL migrations only until publication", () => {
+  it("prioritizes both browser and HTTP URL migrations before oldest-first unchanged sources", () => {
     const candidates = [
-      [1, {menuSource: {fetchMode: "http" as const, url: "https://example.org/new-b"}}],
       [2, {menuSource: {fetchMode: "browser" as const, url: "https://example.org/c"}}],
-      [0, {menuSource: {fetchMode: "browser" as const, url: "https://menu.example.org/new-a"}}],
       [3, {menuSource: {fetchMode: "http" as const, url: "https://example.org/d"}}],
+      [1, {menuSource: {fetchMode: "http" as const, url: "https://new.example.org/b"}}],
+      [0, {menuSource: {fetchMode: "browser" as const, url: "https://menu.example.org/new-a"}}],
     ] as const;
     const sources: FreeIndex["sources"] = [
       [0, "https://old.example.org/a", "2026-11-02T09:00:00Z"],
@@ -73,18 +73,44 @@ describe("Free Fysen one-source refresh", () => {
       [2, "https://example.org/c", "2026-11-02T09:00:00Z"],
       [3, "https://example.org/d", "2026-11-02T09:00:00Z"],
     ];
-    const prioritized = prioritizeUnpublishedBrowserMigrations(candidates, sources);
+    const prioritized = prioritizeUnpublishedMenuMigrations(candidates, sources);
     expect(prioritized.map(([sourceIndex]) => sourceIndex)).toEqual([0, 1, 2, 3]);
-    expect(selectBoundedFreeRefreshEntries(prioritized, 3).map(([sourceIndex]) => sourceIndex))
-      .toEqual([0, 1, 3]); // Second browser is skipped; next HTTP source fills the batch.
-    // After approval the public URL matches the manifest; ordinary age order resumes.
+    expect(selectBoundedFreeRefreshEntries(prioritized, 2).map(([sourceIndex]) => sourceIndex))
+      .toEqual([0, 1]); // Browser + HTTP use the same two-attempt budget.
+    // After approval, exact matching URLs return to ordinary age order.
     sources[0] = [0, "https://menu.example.org/new-a", "2026-11-03T08:00:00Z"];
-    expect(prioritizeUnpublishedBrowserMigrations(candidates, sources).map(([sourceIndex]) => sourceIndex))
-      .toEqual([1, 2, 0, 3]);
-    // Unmatched source indices cannot bypass the bounded queue.
-    expect(prioritizeUnpublishedBrowserMigrations([
-      [99, {menuSource: {fetchMode: "browser", url: "https://unknown.example.org/menu"}}],
+    sources[1] = [1, "https://new.example.org/b", "2026-11-03T08:00:00Z"];
+    expect(prioritizeUnpublishedMenuMigrations(candidates, sources).map(([sourceIndex]) => sourceIndex))
+      .toEqual([2, 3, 1, 0]);
+    // An unknown index must not be treated as a new high-priority migration.
+    expect(prioritizeUnpublishedMenuMigrations([
+      [99, {menuSource: {fetchMode: "http", url: "https://unknown.example.org/menu"}}],
     ], sources).map(([sourceIndex]) => sourceIndex)).toEqual([99]);
+  });
+
+  it("backs off recently attempted URL migrations instead of retrying them every run", () => {
+    const candidates = [
+      [2, {menuSource: {fetchMode: "http" as const, url: "https://example.org/c"}}],
+      [0, {menuSource: {fetchMode: "http" as const, url: "https://example.org/new-a"}}],
+      [1, {menuSource: {fetchMode: "browser" as const, url: "https://example.org/new-b"}}],
+    ] as const;
+    const sources: FreeIndex["sources"] = [
+      [0, "https://example.org/a", "2026-11-02T09:00:00Z"],
+      [1, "https://example.org/b", "2026-11-02T09:00:00Z"],
+      [2, "https://example.org/c", "2026-11-02T09:00:00Z"],
+    ];
+    const now = Date.parse("2026-11-03T12:00:00Z");
+    expect(prioritizeUnpublishedMenuMigrations(candidates, sources, {
+      "0": "2026-11-03T11:00:00Z",
+      "1": "2026-11-03T07:00:00Z",
+    }, now).map(([i]) => i)).toEqual([2, 0, 1]);
+    // At the six-hour boundary, migration priority may resume.
+    expect(prioritizeUnpublishedMenuMigrations(candidates, sources, {
+      "0": "2026-11-03T06:00:00Z",
+      "1": "2026-11-03T05:59:59Z",
+    }, now).map(([i]) => i)).toEqual([1, 0, 2]);
+    expect(selectBoundedFreeRefreshEntries(prioritizeUnpublishedMenuMigrations(candidates, sources), 2).length)
+      .toBe(2);
   });
   it("classifies provider failures without storing raw provider responses", () => {
     expect(classifyFreeSourceFailure(new Error("Menu fetch returned HTTP 404"))).toBe("http-404");
