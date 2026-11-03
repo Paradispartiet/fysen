@@ -1,0 +1,52 @@
+name: Publish Fysen Free read-only menu search index
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/publish-fysen-free-static.yml"
+      - "scripts/build-fysen-free-static.py"
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: fysen-free-public-index
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download compact verified private archive
+        uses: actions/download-artifact@v4
+        with:
+          name: fysen-free-compact-recovery-2026-11-03
+          run-id: 41572513668
+          github-token: ${{ github.token }}
+          path: recovery
+      - name: Verify archive and build public subset
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd recovery && sha256sum -c SHA256SUMS.txt)
+          test "$(wc -l < recovery/restaurants.jsonl)" -eq 1116
+          test "$(wc -l < recovery/menu_sources.jsonl)" -eq 1154
+          test "$(wc -l < recovery/menu_snapshots.jsonl)" -eq 3096
+          test "$(wc -l < recovery/menu_items.jsonl)" -eq 151408
+          python3 scripts/build-fysen-free-static.py recovery "$RUNNER_TEMP/free-index"
+      - name: Publish only current public menu index to isolated branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch --orphan "fysen-static-build-${GITHUB_RUN_ID}"
+          git rm -rf --cached . >/dev/null
+          git clean -fdx >/dev/null
+          cp "$RUNNER_TEMP/free-index/index.json.gz" index.json.gz
+          cp "$RUNNER_TEMP/free-index/manifest.json" manifest.json
+          git add index.json.gz manifest.json
+          git commit -m 'data: static last-verified public restaurant menus'
+          git push origin HEAD:refs/heads/fysen-free-public-index --force
