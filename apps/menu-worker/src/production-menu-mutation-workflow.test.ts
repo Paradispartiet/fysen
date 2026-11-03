@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 const materializer = readFileSync(
@@ -11,6 +11,10 @@ const watcher = readFileSync(
 );
 const batchIntake = readFileSync(
   new URL("../../../.github/workflows/restaurant-batch-intake.yml", import.meta.url),
+  "utf8",
+);
+const freeRefresh = readFileSync(
+  new URL("../../../.github/workflows/refresh-fysen-free-menus.yml", import.meta.url),
   "utf8",
 );
 
@@ -41,26 +45,27 @@ describe("production menu mutation workflows", () => {
     expect(watcher).not.toContain("run: pnpm --filter @fysen/menu-worker onboard:catalog");
   });
 
-  it("maintains source-check capacity above the live catalog's scheduled demand", () => {
-    expect(watcher).toContain("timeout-minutes: 30");
-    expect(watcher).toContain('cron: "17,47 * * * *"');
+  it("keeps the broken DB watcher paused and Free updates bounded", () => {
+    // The old production DB is offline. Retain its manual watchdog entrypoint,
+    // but do not schedule futile SQL mutation attempts.
+    expect(watcher).toContain("workflow_dispatch:");
+    expect(watcher).not.toContain('cron: "17,47 * * * *"');
+    expect(watcher).not.toContain("workflow_run:");
     expect(watcher).toContain('FYSEN_MENU_WATCH_BATCH_SIZE: "100"');
 
-    const catalogUrl = new URL("../catalog/", import.meta.url);
-    const manifestFiles = readdirSync(catalogUrl).filter((name) => name.endsWith(".json"));
-    const requiredChecksPerHour = manifestFiles.reduce((total, fileName) => {
-      const manifest = JSON.parse(readFileSync(new URL(fileName, catalogUrl), "utf8")) as {
-        menuSource: { checkIntervalMinutes: number };
-      };
-      const interval = manifest.menuSource.checkIntervalMinutes;
-      expect(Number.isFinite(interval) && interval > 0).toBe(true);
-      return total + 60 / interval;
-    }, 0);
+    expect(freeRefresh).toContain('cron: "31 0,3,6,9,12,15,18,21 * * *"');
+    expect(freeRefresh).toContain("group: fysen-free-public-index");
+    expect(freeRefresh).toContain("cancel-in-progress: false");
+    expect(freeRefresh).toContain("free-static-refresh.js");
+    expect(freeRefresh).toContain("apps/menu-worker/catalog 12");
+    expect(freeRefresh).toContain("Focused Free refresh tests");
+    expect(freeRefresh).not.toContain("DATABASE_URL");
 
-    // The due-source query is capped at 100 per run. Reserve 50% headroom
-    // for delayed GitHub schedules, retries and a growing catalog.
-    const hourlyCapacity = 2 * 100;
-    expect(hourlyCapacity).toBeGreaterThan(requiredChecksPerHour * 1.5);
+    // Free checks are gradual, not a claim that all original sources keep
+    // their old 12-hour freshness requirement.
+    const maxFreeChecksPerDay = 8 * 12;
+    expect(maxFreeChecksPerDay).toBe(96);
+    expect(maxFreeChecksPerDay).toBeLessThan(973);
   });
 
   it("keeps menu test-only changes out of live restaurant intake", () => {
