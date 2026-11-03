@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { MenuObservedItem } from "@fysen/menu-core";
-import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, recordFreeSourceFailure, replaceOneSource, type FreeIndex, type FreeSourceFailure } from "./free-static-refresh-core.js";
+import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, recordFreeSourceFailure, replaceOneSource, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeSourceFailure } from "./free-static-refresh-core.js";
 const baseline: FreeIndex = {
   version: 1, archiveDate: "2026-11-02",
   restaurants: [["Restaurant A", "restaurant-a", "Oslo", "Oslo", ""],
@@ -46,6 +46,19 @@ describe("Free Fysen one-source refresh", () => {
     expect(findMatchingFreeSourceIndex(multiple, "restaurant-a", "https://example.org/a")).toBe(0);
     expect(findMatchingFreeSourceIndex(multiple, "unknown-restaurant", "https://example.org/a")).toBeNull();
     expect(() => replaceOneSource(baseline, 0, "2026-11-03T05:00:00Z", [item], "http://example.org/a2")).toThrow();
+  });
+  it("limits browsers to one per batch and fills remaining slots with HTTP sources", () => {
+    const candidates = [
+      [0, { menuSource: { fetchMode: "browser" as const } }],
+      [1, { menuSource: { fetchMode: "browser" as const } }],
+      [2, { menuSource: { fetchMode: "http" as const } }],
+      [3, { menuSource: { fetchMode: "http" as const } }],
+    ] as const;
+    expect(selectBoundedFreeRefreshEntries(candidates, 3).map(([sourceIndex]) => sourceIndex)).toEqual([0, 2, 3]);
+    expect(selectBoundedFreeRefreshEntries(candidates, 2, 0).map(([sourceIndex]) => sourceIndex)).toEqual([2, 3]);
+    expect(selectBoundedFreeRefreshEntries(candidates, 4).map(([sourceIndex]) => sourceIndex)).toEqual([0, 2, 3]);
+    expect(() => selectBoundedFreeRefreshEntries(candidates, 25)).toThrow();
+    expect(() => selectBoundedFreeRefreshEntries(candidates, 3, 2)).toThrow();
   });
   it("classifies provider failures without storing raw provider responses", () => {
     expect(classifyFreeSourceFailure(new Error("Menu fetch returned HTTP 404"))).toBe("http-404");

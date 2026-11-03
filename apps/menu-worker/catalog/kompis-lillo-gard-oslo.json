@@ -11,16 +11,18 @@
     "longitude": 10.77156085055653
   },
   "menuSource": {
-    "url": "https://wolt.com/en/nor/oslo/restaurant/kompis-lillo-grd",
+    "url": "https://meny.semeny.no/sted/393kompislillogard",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 69,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
-      "browserBlockedOrigins": []
+      "browserBlockedOrigins": [
+        "https://www.google.com"
+      ]
     }
   },
   "verification": {
@@ -34,10 +36,10 @@
   "qualityAssertions": {
     "requiredDishNames": [
       "BBQ-saus",
-      "Veggis - stor",
+      "Veggis - svær",
       "Kompis",
       "Tzatziki",
-      "No Veggie Today",
+      "No Veggie Today - svær",
       "Trøffel Fries",
       "Brooklyn Special FX",
       "Smokey"
@@ -48,8 +50,8 @@
         "priceMinor": 3600
       },
       {
-        "name": "Veggis - stor",
-        "priceMinor": 39500
+        "name": "Veggis - svær",
+        "priceMinor": 37700
       },
       {
         "name": "Kompis",
@@ -60,8 +62,8 @@
         "priceMinor": 3600
       },
       {
-        "name": "No Veggie Today",
-        "priceMinor": 25100
+        "name": "No Veggie Today - svær",
+        "priceMinor": 37700
       },
       {
         "name": "Trøffel Fries",
