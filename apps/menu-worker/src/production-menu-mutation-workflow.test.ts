@@ -68,6 +68,22 @@ describe("production menu mutation workflows", () => {
     expect(maxFreeChecksPerDay).toBeLessThan(973);
   });
 
+  it("refreshes Free on approved restaurant or parser pushes but never on test-only files", () => {
+    // Cron can be delayed. A merged menu-source correction must also trigger
+    // the bounded, fail-closed static refresh without a second trigger PR.
+    expect(freeRefresh).toContain('branches: [main]');
+    expect(freeRefresh).toContain('"apps/menu-worker/catalog/**"');
+    expect(freeRefresh).toContain('"apps/menu-worker/src/menu-source-runtime.ts"');
+    expect(freeRefresh).toContain('"apps/menu-worker/src/html-*.ts"');
+    expect(freeRefresh).toContain('"apps/menu-worker/src/manifest-quality.ts"');
+    expect(freeRefresh).toContain('"packages/menu-core/src/**"');
+    expect(freeRefresh).toContain('"!apps/menu-worker/src/**/*.test.ts"');
+    expect(freeRefresh).toContain('"!packages/menu-core/src/**/*.test.ts"');
+    expect(freeRefresh).toContain('apps/menu-worker/catalog 12');
+    expect(freeRefresh).toContain('group: fysen-free-public-index');
+    expect(freeRefresh).not.toContain('DATABASE_URL');
+  });
+
   it("keeps menu test-only changes out of live restaurant intake", () => {
     expect(batchIntake).toContain('"apps/menu-worker/src/**"');
     expect(batchIntake).toContain('"!apps/menu-worker/src/**/*.test.ts"');
