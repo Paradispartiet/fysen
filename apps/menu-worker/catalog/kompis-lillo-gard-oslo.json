@@ -20,7 +20,9 @@
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
-      "browserBlockedOrigins": []
+      "browserBlockedOrigins": [
+        "https://www.google.com"
+      ]
     }
   },
   "verification": {
