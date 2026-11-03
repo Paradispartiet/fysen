@@ -24,6 +24,14 @@ function item(name: string): MenuObservedItem {
 
 describe("generic HTML canonical item filtering", () => {
   it.each([
+    "Necessary",
+    "Preferences",
+    "Statistics",
+    "Marketing",
+    "Necessary Cookies",
+    "Preferences cookies",
+    "Statistics Cookies",
+    "Marketing cookies",
     "Brown Sugar Boba Milk",
     "Taro Milk",
     "Chocolate Milk",
@@ -107,6 +115,10 @@ describe("generic HTML canonical item filtering", () => {
   });
 
   it.each([
+    "Necessary Noodles",
+    "Marketing Day Brunch",
+    "Statistics Pie",
+    "Preference Burger",
     "Coconut Milk Curry",
     "Milk Bread",
     "Cafe de Paris Steak",
