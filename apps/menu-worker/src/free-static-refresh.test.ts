@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { MenuObservedItem } from "@fysen/menu-core";
-import { findMatchingFreeSourceIndex, replaceOneSource, type FreeIndex } from "./free-static-refresh-core.js";
+import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, recordFreeSourceFailure, replaceOneSource, type FreeIndex, type FreeSourceFailure } from "./free-static-refresh-core.js";
 const baseline: FreeIndex = {
   version: 1, archiveDate: "2026-11-02",
   restaurants: [["Restaurant A", "restaurant-a", "Oslo", "Oslo", ""],
@@ -46,6 +46,26 @@ describe("Free Fysen one-source refresh", () => {
     expect(findMatchingFreeSourceIndex(multiple, "restaurant-a", "https://example.org/a")).toBe(0);
     expect(findMatchingFreeSourceIndex(multiple, "unknown-restaurant", "https://example.org/a")).toBeNull();
     expect(() => replaceOneSource(baseline, 0, "2026-11-03T05:00:00Z", [item], "http://example.org/a2")).toThrow();
+  });
+  it("classifies provider failures without storing raw provider responses", () => {
+    expect(classifyFreeSourceFailure(new Error("Menu fetch returned HTTP 404"))).toBe("http-404");
+    expect(classifyFreeSourceFailure(new Error("HTTP 403 denied"))).toBe("http-error");
+    expect(classifyFreeSourceFailure(new Error("Quality check rejected updated menu: mandatory dishes missing"))).toBe("quality");
+    expect(classifyFreeSourceFailure(new Error("Source returned no content; old menu retained"))).toBe("no-content");
+    expect(classifyFreeSourceFailure(new Error("private token: secret"))).toBe("other");
+  });
+  it("tracks repeated failures by source and clears them after a verified success", () => {
+    const failures: Record<string, FreeSourceFailure> = {};
+    expect(recordFreeSourceFailure(failures, 4, "2026-11-03T06:00:00Z", Error("HTTP 404 token=sensitive"))).toBe("http-404");
+    expect(recordFreeSourceFailure(failures, 4, "2026-11-03T07:00:00Z", Error("HTTP 404"))).toBe("http-404");
+    expect(failures).toEqual({
+      "4": {code: "http-404", consecutive: 2, lastFailedAt: "2026-11-03T07:00:00Z"},
+    });
+    expect(JSON.stringify(failures)).not.toContain("sensitive");
+    expect(recordFreeSourceFailure(failures, 4, "2026-11-03T08:00:00Z", Error("Quality check rejected updated menu"))).toBe("quality");
+    expect(failures["4"].consecutive).toBe(1);
+    delete failures["4"];
+    expect(failures).toEqual({});
   });
   it("never publishes unsupported currency or empty names", () => {
     expect(() => replaceOneSource(baseline, 0, "2026-11-03T04:00:00Z", [{...item, currency:"USD"}])).toThrow();

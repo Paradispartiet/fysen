@@ -10,6 +10,41 @@ export interface FreeIndex {
   sources: FreeSource[];
   items: FreeMenu[];
 }
+export type FreeSourceFailureCode = "http-404" | "http-error" | "quality" | "no-content" | "other";
+export interface FreeSourceFailure {
+  code: FreeSourceFailureCode;
+  consecutive: number;
+  lastFailedAt: string;
+}
+
+// Store only bounded diagnostic codes; provider messages and response bodies
+// must never be copied into the published manifest.
+export function classifyFreeSourceFailure(error: unknown): FreeSourceFailureCode {
+  const message = error instanceof Error ? error.message : String(error);
+  if (/\bHTTP\s*404\b/i.test(message)) return "http-404";
+  if (/\bHTTP\s*[45]\d{2}\b/i.test(message)) return "http-error";
+  if (/Quality check rejected updated menu/i.test(message)) return "quality";
+  if (/Source returned no content|empty or undated menu/i.test(message)) return "no-content";
+  return "other";
+}
+
+export function recordFreeSourceFailure(
+  failures: Record<string, FreeSourceFailure>,
+  sourceIndex: number,
+  attemptedAt: string,
+  error: unknown,
+): FreeSourceFailureCode {
+  const key = String(sourceIndex);
+  const code = classifyFreeSourceFailure(error);
+  const previous = failures[key];
+  failures[key] = {
+    code,
+    consecutive: previous?.code === code ? previous.consecutive + 1 : 1,
+    lastFailedAt: attemptedAt,
+  };
+  return code;
+}
+
 export interface FreeManifest {
   version: 1;
   archiveDate: string;
@@ -21,6 +56,7 @@ export interface FreeManifest {
   disclaimer: string;
   lastRefreshAt?: string;
   sourceAttempts?: Record<string, string>;
+  sourceFailures?: Record<string, FreeSourceFailure>;
   refreshedSourceIndices?: number[];
 }
 export function findMatchingFreeSourceIndex(
