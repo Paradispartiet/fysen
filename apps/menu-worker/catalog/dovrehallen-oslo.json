@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-11",
-      "note": "First-party priced menu has 48 distinct priced variants across Christmas dishes, starters, sandwiches (three karbonade toppings), daily specials, meat, fish, omelettes and desserts. 43-item parser output is incomplete; do not promote until live exact-head output reaches the verified 48 and all variants are source-matched."
+      "checkedAt": "2026-11-03",
+      "note": "Førstepartskilden kontrollert 2026-11-03: 48 særskilt prisede retter/varianter, inkludert Lutefisk 599 kr, Juletallerken 495 kr, Pinnekjøtt 599 kr, Kalkun 455 kr og Hjort 495 kr på julemenyen. Alle tidligere kontroller og minimum 48 er beholdt; fire julemåltider er nye navn/priskontroller. Eldre live-parser ga 43/48: ingen publisering før eksakt live-validering viser minst 48 og alle kontroller består. Åpningstider fortsatt ikke uavhengig verifisert."
     }
   },
   "actions": [],
@@ -46,7 +46,11 @@
       "Blandet iskrem / Mixed ice cream",
       "Karbonade / Minced steak (med løk)",
       "Karbonade / Minced steak (med speilegg)",
-      "Karbonade / Minced steak (med speilegg og stekte poteter)"
+      "Karbonade / Minced steak (med speilegg og stekte poteter)",
+      "Juletallerken",
+      "Pinnekjøtt",
+      "Kalkun",
+      "Hjort"
     ],
     "requiredDishVariants": [
       {
@@ -104,6 +108,22 @@
       {
         "name": "Karbonade / Minced steak (med speilegg og stekte poteter)",
         "priceMinor": 17500
+      },
+      {
+        "name": "Juletallerken",
+        "priceMinor": 49500
+      },
+      {
+        "name": "Pinnekjøtt",
+        "priceMinor": 59900
+      },
+      {
+        "name": "Kalkun",
+        "priceMinor": 45500
+      },
+      {
+        "name": "Hjort",
+        "priceMinor": 49500
       }
     ],
     "forbiddenDishNames": [
