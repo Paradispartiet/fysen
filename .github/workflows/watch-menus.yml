@@ -1,12 +1,9 @@
 name: Watch Fysen menus
 
 on:
-  schedule:
-    - cron: "17,47 * * * *"
+  # Supabase production is full and restricted. Do not burn scheduled jobs
+  # until the original DB is recovered; manual run remains available.
   workflow_dispatch:
-  workflow_run:
-    workflows: ["Deploy Fysen database"]
-    types: [completed]
 
 permissions:
   contents: read
