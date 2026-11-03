@@ -1,12 +1,10 @@
 name: Fysen restaurant catalog health
 
+# The 973-source complete live crawl is a legacy diagnostic, not a Free
+# refresh gate. Run it only by explicit manual request to avoid recurring
+# high-load network checks; changed manifests have their own PR validation.
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "17 3 * * *"
-    - cron: "9 17 26 8 *"
-  # Full-catalog validation is nightly/manual. Changed restaurant
-  # manifests are validated on their PR by validate-restaurant-candidates.yml.
 
 permissions:
   contents: read
