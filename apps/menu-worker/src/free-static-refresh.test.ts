@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { MenuObservedItem } from "@fysen/menu-core";
-import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, prioritizeUnpublishedMenuMigrations, recordFreeSourceFailure, replaceOneSource, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeSourceFailure } from "./free-static-refresh-core.js";
+import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, recordFreeSourceFailure, replaceOneSource, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeSourceFailure } from "./free-static-refresh-core.js";
 const baseline: FreeIndex = {
   version: 1, archiveDate: "2026-11-02",
   restaurants: [["Restaurant A", "restaurant-a", "Oslo", "Oslo", ""],
@@ -112,6 +112,54 @@ describe("Free Fysen one-source refresh", () => {
     expect(selectBoundedFreeRefreshEntries(prioritizeUnpublishedMenuMigrations(candidates, sources), 2).length)
       .toBe(2);
   });
+  it("retries only one recently corrected quality failure, preserving the bounded budget", () => {
+    const candidates = [
+      [0, {menuSource: {fetchMode: "browser" as const}}],
+      [1, {menuSource: {fetchMode: "http" as const}}],
+      [2, {menuSource: {fetchMode: "http" as const}}],
+      [3, {menuSource: {fetchMode: "http" as const}}],
+    ] as const;
+    const now = Date.parse("2026-11-03T12:00:00Z");
+    const failures: Record<string, FreeSourceFailure> = {
+      "3": {code:"quality",consecutive:1,lastFailedAt:"2026-11-03T11:55:00Z"},
+      "2": {code:"quality",consecutive:1,lastFailedAt:"2026-11-03T11:00:00Z"},
+      "1": {code:"http-404",consecutive:1,lastFailedAt:"2026-11-02T12:00:00Z"},
+      "99": {code:"quality",consecutive:1,lastFailedAt:"2026-11-02T10:00:00Z"},
+    };
+    const prioritized = prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now);
+    expect(prioritized.map(([i]) => i)).toEqual([2,0,1,3]); // Oldest quality failure wins.
+    expect(selectBoundedFreeRefreshEntries(prioritized, 3).map(([i]) => i))
+      .toEqual([2,0,1]); // At most 3 requests and one browser.
+  });
+
+  it("backs off repeated quality failures and rejects future or invalid failure timestamps", () => {
+    const candidates = [
+      [0, {menuSource: {fetchMode: "http" as const}}],
+      [1, {menuSource: {fetchMode: "http" as const}}],
+    ] as const;
+    const now = Date.parse("2026-11-03T12:00:00Z");
+    const failures: Record<string, FreeSourceFailure> = {
+      "1": {code:"quality",consecutive:2,lastFailedAt:"2026-11-03T11:30:00Z"},
+    };
+    expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now).map(([i])=>i))
+      .toEqual([0,1]);
+    failures["1"] = {code:"quality",consecutive:2,lastFailedAt:"2026-11-03T06:00:00Z"};
+    expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now).map(([i])=>i))
+      .toEqual([1,0]);
+    failures["1"] = {code:"quality",consecutive:3,lastFailedAt:"2026-11-02T12:01:00Z"};
+    expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now).map(([i])=>i))
+      .toEqual([0,1]);
+    failures["1"] = {code:"quality",consecutive:3,lastFailedAt:"2026-11-02T12:00:00Z"};
+    expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now).map(([i])=>i))
+      .toEqual([1,0]);
+    failures["1"] = {code:"quality",consecutive:1,lastFailedAt:"2026-11-04T12:00:00Z"};
+    expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now).map(([i])=>i))
+      .toEqual([0,1]);
+    failures["1"] = {code:"quality",consecutive:1,lastFailedAt:"invalid"};
+    expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now).map(([i])=>i))
+      .toEqual([0,1]);
+  });
+
   it("classifies provider failures without storing raw provider responses", () => {
     expect(classifyFreeSourceFailure(new Error("Menu fetch returned HTTP 404"))).toBe("http-404");
     expect(classifyFreeSourceFailure(new Error("HTTP 403 denied"))).toBe("http-error");

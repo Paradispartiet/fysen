@@ -107,6 +107,39 @@ export function prioritizeUnpublishedMenuMigrations<T extends {
   return [...browserMigrations, ...httpMigrations, ...ordinary];
 }
 
+// A source rejected for missing mandatory dishes may be fixed by a precise
+// catalog correction. Retry at most ONE such source ahead of the normal bounded
+// rotation. Repeated failures back off (six hours, then one day), so a broken
+// provider cannot starve other restaurants or inflate network usage.
+export function prioritizeOneRecoverableFreeQualityFailure<T>(
+  ordered: readonly (readonly [number, T])[],
+  failures: Readonly<Record<string, FreeSourceFailure>>,
+  nowMillis = Date.now(),
+): [number, T][] {
+  let chosen: [number, T] | null = null;
+  let oldestFailedAt = Number.POSITIVE_INFINITY;
+  for (const [sourceIndex, entry] of ordered) {
+    const failure = failures[String(sourceIndex)];
+    if (failure?.code !== "quality" ||
+        !Number.isInteger(failure.consecutive) || failure.consecutive < 1) continue;
+    const failedAt = Date.parse(failure.lastFailedAt);
+    const elapsed = nowMillis - failedAt;
+    const retryAfterMillis = failure.consecutive === 1
+      ? 0
+      : failure.consecutive === 2 ? 6 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000;
+    if (!Number.isFinite(elapsed) || elapsed < retryAfterMillis) continue;
+    if (failedAt < oldestFailedAt) {
+      chosen = [sourceIndex, entry];
+      oldestFailedAt = failedAt;
+    }
+  }
+  if (chosen === null) {
+    return ordered.map(([sourceIndex, entry]): [number, T] => [sourceIndex, entry]);
+  }
+  return [chosen, ...ordered.filter(([index]) => index !== chosen[0])
+    .map(([sourceIndex, entry]): [number, T] => [sourceIndex, entry])];
+}
+
 export interface FreeManifest {
   version: 1;
   archiveDate: string;
