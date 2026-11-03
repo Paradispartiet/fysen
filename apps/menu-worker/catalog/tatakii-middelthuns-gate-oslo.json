@@ -26,14 +26,14 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-16",
-      "note": "Fresh reproof after the original Batch 01 parser returned labels rather than real dishes. The current first-party page now exposes named individually priced starters, sushi, grill, wok and desserts alongside set-menu packages."
+      "checkedAt": "2026-11-03",
+      "note": "Førsteparts meny kontrollert 2026-11-03: Julemeny er publisert til 699 kr per person (minst 2), tilgjengelig i november og desember. Jubileumsmeny er uttrykkelig utilgjengelig i november og desember, og er derfor ikke en obligatorisk kontrollrett i denne perioden. Alle syv øvrige navne- og priskontroller, minimum 34 retter og eksisterende kilde er uendret. Kontroller sesongbyttet på nytt i januar 2027; ordinære kjøkkentider er ikke uavhengig verifisert."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Jubileumsmeny",
+      "Julemeny",
       "MONEY BAG",
       "EBI TEMPURA MAKI",
       "TEMPURA SALAT",
@@ -44,7 +44,7 @@
     ],
     "requiredDishVariants": [
       {
-        "name": "Jubileumsmeny",
+        "name": "Julemeny",
         "priceMinor": 69900
       },
       {
