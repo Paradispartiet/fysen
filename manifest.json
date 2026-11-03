@@ -3,8 +3,37 @@
   "archiveDate": "2026-11-02",
   "restaurants": 973,
   "sources": 973,
-  "dishes": 47628,
-  "bytes": 2331658,
-  "sha256": "2c7973a4c059a7038970454dcd86f6ce55550427bbab5497258e875142c860d7",
-  "disclaimer": "Historiske, sist verifiserte menyer. Ikke sanntid. Sjekk restauranten for dagens pris og tilgjengelighet."
+  "dishes": 47629,
+  "bytes": 2316808,
+  "sha256": "a32b070a0de5e037bed6a3b1dcb96426c334f3f56548bee369391f34c7e18309",
+  "disclaimer": "Historiske, sist verifiserte menyer. Ikke sanntid. Sjekk restauranten for dagens pris og tilgjengelighet.",
+  "lastRefreshAt": "2026-11-03T04:54:44.995Z",
+  "refreshedSourceIndices": [
+    22,
+    31,
+    48,
+    54,
+    59,
+    103,
+    168,
+    184,
+    186,
+    214,
+    222,
+    269
+  ],
+  "sourceAttempts": {
+    "22": "2026-11-03T04:54:13.943Z",
+    "31": "2026-11-03T04:54:15.621Z",
+    "48": "2026-11-03T04:54:17.184Z",
+    "54": "2026-11-03T04:54:20.648Z",
+    "59": "2026-11-03T04:54:22.118Z",
+    "103": "2026-11-03T04:54:24.989Z",
+    "168": "2026-11-03T04:54:27.159Z",
+    "184": "2026-11-03T04:54:29.681Z",
+    "186": "2026-11-03T04:54:11.707Z",
+    "214": "2026-11-03T04:54:35.365Z",
+    "222": "2026-11-03T04:54:37.530Z",
+    "269": "2026-11-03T04:54:41.686Z"
+  }
 }
