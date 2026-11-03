@@ -7,7 +7,7 @@ import { evaluateManifestMenuQuality } from "./manifest-quality.js";
 import { canonicalizeUniqueMenuSourceKeys } from "./menu-source-key-canonicalizer.js";
 import { readRestaurantOnboardingManifest, type RestaurantOnboardingManifest } from "./onboarding-manifest.js";
 import { extractMenuSource, fetchMenuSource } from "./menu-source-runtime.js";
-import { replaceOneSource, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
+import { findMatchingFreeSourceIndex, replaceOneSource, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
 
 async function main(): Promise<void> {
   const [archiveDir, catalogDir, countArg] = process.argv.slice(2);
@@ -42,11 +42,9 @@ async function main(): Promise<void> {
   }, {} as Record<number, number>);
   const catalogFiles = (await readdir(catalogDir)).filter((name) => name.endsWith(".json"));
   const matching = new Map<number, RestaurantOnboardingManifest>();
-  const sourceBySlugAndUrl = new Map(index.sources.map((src, i) => {
-    const r = index.restaurants[src[0]];
-    if (!r) throw new Error("Corrupted restaurant reference in published index");
-    return [JSON.stringify([r[1], src[1]]), i] as const;
-  }));
+  // Detect ambiguous competing catalog entries. No one source may be silently
+  // replaced by whichever manifest happened to be read last.
+  const ambiguous = new Set<number>();
   for (const file of catalogFiles) {
     let entry: RestaurantOnboardingManifest;
     try {
@@ -55,10 +53,15 @@ async function main(): Promise<void> {
       // Historical catalog manifests may not belong to the public snapshot.
       continue;
     }
-    const sourceIndex = sourceBySlugAndUrl.get(JSON.stringify([
-      entry.restaurant.slug, entry.menuSource.url,
-    ]));
-    if (sourceIndex === undefined || entry.menuSource.fetchMode !== "http") continue;
+    const sourceIndex = findMatchingFreeSourceIndex(
+      index, entry.restaurant.slug, entry.menuSource.url,
+    );
+    if (sourceIndex === null || entry.menuSource.fetchMode !== "http" || ambiguous.has(sourceIndex)) continue;
+    if (matching.has(sourceIndex)) {
+      matching.delete(sourceIndex);
+      ambiguous.add(sourceIndex);
+      continue;
+    }
     matching.set(sourceIndex, entry);
   }
   if (!matching.size) throw new Error("No public sources matched existing catalog manifests");
@@ -117,7 +120,9 @@ async function main(): Promise<void> {
           (!assessment.accepted ? " " + assessment.code : ""),
         );
       }
-      nextIndex = replaceOneSource(nextIndex, sourceIndex, fetched.fetchedAt, observations);
+      nextIndex = replaceOneSource(
+        nextIndex, sourceIndex, fetched.fetchedAt, observations, restaurant.menuSource.url,
+      );
       refreshed.add(sourceIndex);
       accepted++;
       console.log("approved", restaurant.restaurant.slug, "items", observations.length);
