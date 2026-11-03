@@ -7,7 +7,7 @@ import { evaluateManifestMenuQuality } from "./manifest-quality.js";
 import { canonicalizeUniqueMenuSourceKeys } from "./menu-source-key-canonicalizer.js";
 import { readRestaurantOnboardingManifest, type RestaurantOnboardingManifest } from "./onboarding-manifest.js";
 import { extractMenuSource, fetchMenuSource } from "./menu-source-runtime.js";
-import { findMatchingFreeSourceIndex, replaceOneSource, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
+import { findMatchingFreeSourceIndex, recordFreeSourceFailure, replaceOneSource, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
 
 async function main(): Promise<void> {
   const [archiveDir, catalogDir, countArg] = process.argv.slice(2);
@@ -66,6 +66,7 @@ async function main(): Promise<void> {
   }
   if (!matching.size) throw new Error("No public sources matched existing catalog manifests");
   const attempts = { ...(manifest.sourceAttempts ?? {}) };
+  const failures = { ...(manifest.sourceFailures ?? {}) };
   const sorted = [...matching.entries()].sort(([i], [j]) => {
     const ageI = Date.parse(attempts[String(i)] ?? index.sources[i]![2]) || 0;
     const ageJ = Date.parse(attempts[String(j)] ?? index.sources[j]![2]) || 0;
@@ -124,11 +125,13 @@ async function main(): Promise<void> {
         nextIndex, sourceIndex, fetched.fetchedAt, observations, restaurant.menuSource.url,
       );
       refreshed.add(sourceIndex);
+      delete failures[String(sourceIndex)];
       accepted++;
       console.log("approved", restaurant.restaurant.slug, "items", observations.length);
     } catch (error) {
       rejected++;
-      console.log("preserved-old", restaurant.restaurant.slug,
+      const code = recordFreeSourceFailure(failures, sourceIndex, attempts[String(sourceIndex)]!, error);
+      console.log("preserved-old", restaurant.restaurant.slug, code,
         error instanceof Error ? error.message.slice(0, 230) : "unknown failure");
     }
   }
@@ -144,6 +147,7 @@ async function main(): Promise<void> {
   }
   manifest.refreshedSourceIndices = [...refreshed].sort((a, b) => a - b);
   manifest.sourceAttempts = attempts;
+  manifest.sourceFailures = failures;
   await writeFile(manifestPath, JSON.stringify(manifest, null, 2) + "\n", "utf8");
   console.log(JSON.stringify({
     attempted: sorted.length,
@@ -152,6 +156,7 @@ async function main(): Promise<void> {
     publicSources: nextIndex.sources.length,
     publishedDishes: nextIndex.items.length,
     cumulativeRefreshedSources: refreshed.size,
+    sourcesWithRecordedFailures: Object.keys(failures).length,
     baseArchiveDate: manifest.archiveDate,
   }));
 }
