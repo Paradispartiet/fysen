@@ -22,7 +22,8 @@
       "browserDataOrigins": [],
       "browserBlockedOrigins": [
         "https://www.google.com",
-        "https://consentcdn.cookiebot.com"
+        "https://consentcdn.cookiebot.com",
+        "https://widgetapi.purechat.com"
       ]
     }
   },
