@@ -1,5 +1,8 @@
 name: Refresh Fysen Free menus (bounded, database-independent)
 on:
+  # Eight small checks per day; at most 12 menu sources per run (UTC).
+  schedule:
+    - cron: "31 0,3,6,9,12,15,18,21 * * *"
   workflow_dispatch:
   push:
     branches: [main]
