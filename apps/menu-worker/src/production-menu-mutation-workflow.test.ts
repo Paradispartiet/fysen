@@ -31,8 +31,8 @@ describe("production menu mutation workflows", () => {
   it("requires an explicit manual trigger for legacy production materialization", () => {
     // Fysen Free is database-independent. Catalog and parser pushes must not
     // accidentally start the legacy Supabase materializer.
-    expect(materializer).toMatch(/^on:\s*\n  workflow_dispatch:\s*$/m);
-    expect(materializer).not.toMatch(/^  (?:push|schedule|workflow_run):/m);
+    expect(materializer).toMatch(/^on:\s*\n\s{2}workflow_dispatch:\s*$/m);
+    expect(materializer).not.toMatch(/^\s{2}(?:push|schedule|workflow_run):/m);
     // A deliberate manual run still builds and materializes its exact revision.
     expect(materializer).toContain('ref: ${{ github.sha }}');
     expect(materializer).not.toContain("ref: main");
