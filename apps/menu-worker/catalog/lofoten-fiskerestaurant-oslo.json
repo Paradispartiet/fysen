@@ -13,7 +13,7 @@
   "menuSource": {
     "url": "https://www.lofoten-fiskerestaurant.no/meny",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 20,
