@@ -1,0 +1,91 @@
+name: Export compact Fysen recovery data (isolated)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/export-fysen-free-recovery.yml"]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  export:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Download verified private history backup
+        uses: actions/download-artifact@v4
+        with:
+          name: fysen-menu-history-2026-11-02
+          run-id: 41507713036
+          github-token: ${{ github.token }}
+          path: original
+      - name: Restore full history in disposable local PostGIS
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd original
+          sed -i 's|  export/|  |' SHA256SUMS.txt
+          sha256sum -c SHA256SUMS.txt
+          cd ..
+          docker run --rm -d --name fysen-free-recovery -e POSTGRES_PASSWORD=temporary-local-only -e POSTGRES_USER=postgres postgis/postgis:17-3.5
+          for attempt in $(seq 1 90); do
+            if docker exec fysen-free-recovery pg_isready -U postgres >/dev/null 2>&1; then break; fi
+            sleep 2
+          done
+          docker exec fysen-free-recovery psql -U postgres -v ON_ERROR_STOP=1 -c 'CREATE SCHEMA IF NOT EXISTS fysen' -c 'CREATE EXTENSION IF NOT EXISTS postgis' -c 'CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public'
+          docker cp original/fysen-menu-history.pgdump fysen-free-recovery:/tmp/fysen-menu-history.pgdump
+          docker exec fysen-free-recovery pg_restore -U postgres -d postgres --no-owner --no-acl --exit-on-error --jobs=4 /tmp/fysen-menu-history.pgdump
+      - name: Apply approved three-day retention only in isolated copy
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker exec -i fysen-free-recovery psql -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
+          SET statement_timeout = '20min';
+          CREATE INDEX stg_free_changes_current_idx ON fysen.menu_changes(current_snapshot_id);
+          CREATE INDEX stg_free_changes_prev_idx ON fysen.menu_changes(previous_snapshot_id);
+          CREATE INDEX stg_free_watch_snapshot_idx ON fysen.menu_watch_runs(snapshot_id);
+          CREATE TABLE fysen.recovery_keep_ids AS
+            WITH ranked AS (
+              SELECT s.id, s.menu_source_id, s.fetched_at,
+                     row_number() OVER(PARTITION BY s.menu_source_id ORDER BY s.fetched_at DESC,s.id DESC) rn
+              FROM fysen.menu_snapshots s
+            )
+            SELECT id FROM ranked WHERE rn=1 OR fetched_at >= '2026-10-30 21:21:32+00'::timestamptz;
+          CREATE UNIQUE INDEX ON fysen.recovery_keep_ids(id);
+          DELETE FROM fysen.menu_snapshots s
+          WHERE NOT EXISTS(SELECT 1 FROM fysen.recovery_keep_ids k WHERE k.id=s.id);
+          DELETE FROM fysen.menu_watch_runs
+          WHERE started_at < '2026-10-30 21:21:32+00'::timestamptz;
+          DO $$
+          DECLARE src bigint; snap bigint; item bigint; r bigint;
+          BEGIN
+            SELECT count(*) INTO r FROM fysen.restaurants;
+            SELECT count(*) INTO src FROM fysen.menu_sources;
+            SELECT count(*) INTO snap FROM fysen.menu_snapshots;
+            SELECT count(*) INTO item FROM fysen.menu_items;
+            IF (r,src,snap,item) IS DISTINCT FROM
+               (1116::bigint,1154::bigint,3096::bigint,151408::bigint) THEN
+              RAISE EXCEPTION 'Retention drift: restaurants %, sources %, snapshots %, items %',r,src,snap,item;
+            END IF;
+            RAISE NOTICE 'Isolated recovery dataset verified: % restaurants, % sources, % snapshots, % items',r,src,snap,item;
+          END $$;
+          SQL
+      - name: Export six canonical tables as JSONL without row data in logs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p recovery
+          for table in restaurants menu_sources menu_snapshots menu_items menu_changes menu_watch_runs; do
+            docker exec fysen-free-recovery psql -X -U postgres -d postgres -At -c "SELECT row_to_json(t)::text FROM fysen.$table t ORDER BY id" > "recovery/$table.jsonl"
+            test -s "recovery/$table.jsonl"
+            wc -l "recovery/$table.jsonl"
+          done
+          (cd recovery && sha256sum *.jsonl > SHA256SUMS.txt)
+      - name: Upload private compact recovery export
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-free-compact-recovery-2026-11-03
+          path: recovery/
+          retention-days: 7
+          if-no-files-found: error
