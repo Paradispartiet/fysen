@@ -7,7 +7,7 @@ import { evaluateManifestMenuQuality } from "./manifest-quality.js";
 import { canonicalizeUniqueMenuSourceKeys } from "./menu-source-key-canonicalizer.js";
 import { readRestaurantOnboardingManifest, type RestaurantOnboardingManifest } from "./onboarding-manifest.js";
 import { extractMenuSource, fetchMenuSource } from "./menu-source-runtime.js";
-import { findMatchingFreeSourceIndex, recordFreeSourceFailure, replaceOneSource, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
+import { findMatchingFreeSourceIndex, recordFreeSourceFailure, replaceOneSource, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
 
 async function main(): Promise<void> {
   const [archiveDir, catalogDir, countArg] = process.argv.slice(2);
@@ -56,7 +56,7 @@ async function main(): Promise<void> {
     const sourceIndex = findMatchingFreeSourceIndex(
       index, entry.restaurant.slug, entry.menuSource.url,
     );
-    if (sourceIndex === null || entry.menuSource.fetchMode !== "http" || ambiguous.has(sourceIndex)) continue;
+    if (sourceIndex === null || ambiguous.has(sourceIndex)) continue;
     if (matching.has(sourceIndex)) {
       matching.delete(sourceIndex);
       ambiguous.add(sourceIndex);
@@ -67,11 +67,11 @@ async function main(): Promise<void> {
   if (!matching.size) throw new Error("No public sources matched existing catalog manifests");
   const attempts = { ...(manifest.sourceAttempts ?? {}) };
   const failures = { ...(manifest.sourceFailures ?? {}) };
-  const sorted = [...matching.entries()].sort(([i], [j]) => {
+  const sorted = selectBoundedFreeRefreshEntries([...matching.entries()].sort(([i], [j]) => {
     const ageI = Date.parse(attempts[String(i)] ?? index.sources[i]![2]) || 0;
     const ageJ = Date.parse(attempts[String(j)] ?? index.sources[j]![2]) || 0;
     return ageI - ageJ || i - j;
-  }).slice(0, maxAttempts);
+  }), maxAttempts);
   let nextIndex = index;
   const refreshed = new Set(manifest.refreshedSourceIndices ?? []);
   let accepted = 0;
@@ -151,6 +151,7 @@ async function main(): Promise<void> {
   await writeFile(manifestPath, JSON.stringify(manifest, null, 2) + "\n", "utf8");
   console.log(JSON.stringify({
     attempted: sorted.length,
+    browserAttempts: sorted.filter(([, entry]) => entry.menuSource.fetchMode === "browser").length,
     accepted, preservedPrevious: rejected,
     publicRestaurants: nextIndex.restaurants.length,
     publicSources: nextIndex.sources.length,
