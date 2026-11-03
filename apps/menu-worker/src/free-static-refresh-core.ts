@@ -36,7 +36,7 @@ export function replaceOneSource(
     throw new Error("Cannot replace a source with an empty or undated menu");
   }
   const old = index.sources[sourceIndex]!;
-  const updated: FreeSource[] = index.sources.map((source, indexOfSource) =>
+  const updated: FreeSource[] = index.sources.map((source, indexOfSource): FreeSource =>
     indexOfSource === sourceIndex ? [old[0], old[1], observedAt] : source
   );
   const newRows: FreeMenu[] = observations.map((item) => {
