@@ -76,7 +76,7 @@ describe("Free Fysen one-source refresh", () => {
     const prioritized = prioritizeUnpublishedBrowserMigrations(candidates, sources);
     expect(prioritized.map(([sourceIndex]) => sourceIndex)).toEqual([0, 1, 2, 3]);
     expect(selectBoundedFreeRefreshEntries(prioritized, 3).map(([sourceIndex]) => sourceIndex))
-      .toEqual([0, 1, 2]);
+      .toEqual([0, 1, 3]); // Second browser is skipped; next HTTP source fills the batch.
     // After approval the public URL matches the manifest; ordinary age order resumes.
     sources[0] = [0, "https://menu.example.org/new-a", "2026-11-03T08:00:00Z"];
     expect(prioritizeUnpublishedBrowserMigrations(candidates, sources).map(([sourceIndex]) => sourceIndex))
