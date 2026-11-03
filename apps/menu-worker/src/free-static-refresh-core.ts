@@ -45,6 +45,31 @@ export function recordFreeSourceFailure(
   return code;
 }
 
+// A browser fetch executes JavaScript and can make more network requests than a
+// simple HTTPS fetch. Bound it to one source per scheduled Free refresh, while
+// filling the remaining batch with ordinary HTTP sources in age order.
+export function selectBoundedFreeRefreshEntries<T extends { menuSource: { fetchMode: "http" | "browser" } }>(
+  ordered: readonly (readonly [number, T])[],
+  maxAttempts: number,
+  maxBrowserAttempts = 1,
+): [number, T][] {
+  if (!Number.isInteger(maxAttempts) || maxAttempts < 1 || maxAttempts > 24 ||
+      !Number.isInteger(maxBrowserAttempts) || maxBrowserAttempts < 0 || maxBrowserAttempts > 1) {
+    throw new Error("Invalid Free refresh attempt budget");
+  }
+  const selected: [number, T][] = [];
+  let browsers = 0;
+  for (const [sourceIndex, entry] of ordered) {
+    if (selected.length >= maxAttempts) break;
+    if (entry.menuSource.fetchMode === "browser") {
+      if (browsers >= maxBrowserAttempts) continue;
+      browsers++;
+    }
+    selected.push([sourceIndex, entry]);
+  }
+  return selected;
+}
+
 export interface FreeManifest {
   version: 1;
   archiveDate: string;
