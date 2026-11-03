@@ -7,7 +7,7 @@ import { evaluateManifestMenuQuality } from "./manifest-quality.js";
 import { canonicalizeUniqueMenuSourceKeys } from "./menu-source-key-canonicalizer.js";
 import { readRestaurantOnboardingManifest, type RestaurantOnboardingManifest } from "./onboarding-manifest.js";
 import { extractMenuSource, fetchMenuSource } from "./menu-source-runtime.js";
-import { findMatchingFreeSourceIndex, prioritizeUnpublishedBrowserMigrations, recordFreeSourceFailure, replaceOneSource, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
+import { findMatchingFreeSourceIndex, prioritizeUnpublishedMenuMigrations, recordFreeSourceFailure, replaceOneSource, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
 
 async function main(): Promise<void> {
   const [archiveDir, catalogDir, countArg] = process.argv.slice(2);
@@ -73,7 +73,7 @@ async function main(): Promise<void> {
     return ageI - ageJ || i - j;
   });
   const sorted = selectBoundedFreeRefreshEntries(
-    prioritizeUnpublishedBrowserMigrations(oldestFirst, index.sources),
+    prioritizeUnpublishedMenuMigrations(oldestFirst, index.sources, attempts),
     maxAttempts,
   );
   let nextIndex = index;
