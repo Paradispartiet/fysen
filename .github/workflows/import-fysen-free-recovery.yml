@@ -1,0 +1,119 @@
+name: Import compact Fysen recovery to Free via GitHub OIDC
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/import-fysen-free-recovery.yml"]
+
+permissions:
+  contents: read
+  actions: read
+  id-token: write
+
+concurrency:
+  group: fysen-free-verified-recovery-import
+  cancel-in-progress: false
+
+jobs:
+  import:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Download compact private recovery artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: fysen-free-compact-recovery-2026-11-03
+          run-id: 41572513668
+          github-token: ${{ github.token }}
+          path: recovery
+
+      - name: Verify all recovery files and exact counts
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd recovery
+          sha256sum -c SHA256SUMS.txt
+          test "$(wc -l < restaurants.jsonl)" -eq 1116
+          test "$(wc -l < menu_sources.jsonl)" -eq 1154
+          test "$(wc -l < menu_snapshots.jsonl)" -eq 3096
+          test "$(wc -l < menu_items.jsonl)" -eq 151408
+          test "$(wc -l < menu_changes.jsonl)" -eq 2184
+          test "$(wc -l < menu_watch_runs.jsonl)" -eq 6559
+          echo "Verified approved recovery dataset counts; destination is Supabase Free."
+
+      - name: Import six tables over authenticated GitHub OIDC (no database password)
+        shell: bash
+        env:
+          FYSEN_RECOVERY_ENDPOINT: https://txaopscyxjvvmwawsphk.supabase.co/functions/v1/fysen-verified-recovery-import
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os, time, urllib.request, urllib.error, sys
+          from pathlib import Path
+
+          endpoint = os.environ["FYSEN_RECOVERY_ENDPOINT"]
+          tables = ["restaurants", "menu_sources", "menu_snapshots", "menu_items", "menu_changes", "menu_watch_runs"]
+          oidc_token = ""
+          token_acquired_at = 0.0
+
+          def github_oidc():
+              global oidc_token, token_acquired_at
+              if oidc_token and time.monotonic() - token_acquired_at < 180:
+                  return oidc_token
+              request_url = os.environ["ACTIONS_ID_TOKEN_REQUEST_URL"] + "&audience=fysen-free-recovery-20261103"
+              req = urllib.request.Request(request_url, headers={
+                  "Authorization": "bearer " + os.environ["ACTIONS_ID_TOKEN_REQUEST_TOKEN"],
+              })
+              with urllib.request.urlopen(req, timeout=30) as response:
+                  oidc_token = json.loads(response.read())["value"]
+              token_acquired_at = time.monotonic()
+              return oidc_token
+
+          def send(table, rows):
+              raw = json.dumps({"table": table, "rows": rows}, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+              if len(raw) > 650000:
+                  raise RuntimeError("Batch exceeds Edge importer size limit")
+              for attempt in range(1, 5):
+                  req = urllib.request.Request(endpoint, data=raw, method="POST", headers={
+                      "Content-Type": "application/json",
+                      "Authorization": "Bearer " + github_oidc(),
+                  })
+                  try:
+                      with urllib.request.urlopen(req, timeout=60) as response:
+                          response_body = json.loads(response.read())
+                      if response_body.get("ok") is True and response_body.get("accepted") == len(rows):
+                          return
+                      raise RuntimeError("Edge importer refused batch: " + str(response_body))
+                  except urllib.error.HTTPError as exc:
+                      reason = exc.read().decode("utf-8", "replace")[:300]
+                      if exc.code in (408, 429, 500, 502, 503, 504) and attempt < 4:
+                          time.sleep(2 * attempt)
+                          continue
+                      raise RuntimeError(f"Import HTTP {exc.code} ({table}): {reason}") from exc
+                  except urllib.error.URLError as exc:
+                      if attempt == 4:
+                          raise
+                      time.sleep(2 * attempt)
+              raise RuntimeError("Unreachable exhausted retry state")
+
+          for table in tables:
+              count, batches = 0, 0
+              rows, byte_count = [], 0
+              for raw_line in (Path("recovery") / (table + ".jsonl")).open("r", encoding="utf-8"):
+                  row = json.loads(raw_line)
+                  row_size = len(raw_line.encode("utf-8"))
+                  if rows and (byte_count + row_size > 200000 or len(rows) >= 250):
+                      send(table, rows)
+                      count += len(rows)
+                      batches += 1
+                      rows, byte_count = [], 0
+                  rows.append(row)
+                  byte_count += row_size
+              if rows:
+                  send(table, rows)
+                  count += len(rows)
+                  batches += 1
+              print(f"Imported {table}: {count} records in {batches} OIDC-authorized batches", flush=True)
+          print("FREE RECOVERY DATA IMPORT COMPLETE — verify with Supabase production read-only SQL", flush=True)
+          PY
