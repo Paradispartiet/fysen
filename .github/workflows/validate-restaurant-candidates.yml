@@ -74,7 +74,7 @@ jobs:
           runtime_changed=false
           while IFS= read -r path; do
             case "$path" in
-              apps/menu-worker/src/*.test.ts|packages/menu-core/src/*.test.ts)
+              apps/menu-worker/src/*.test.ts|apps/menu-worker/src/free-static-refresh*.ts|packages/menu-core/src/*.test.ts)
                 ;;
               apps/menu-worker/src/*|packages/menu-core/src/*)
                 runtime_changed=true

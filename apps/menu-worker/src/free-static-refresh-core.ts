@@ -23,11 +23,32 @@ export interface FreeManifest {
   sourceAttempts?: Record<string, string>;
   refreshedSourceIndices?: number[];
 }
+export function findMatchingFreeSourceIndex(
+  index: FreeIndex,
+  restaurantSlug: string,
+  sourceUrl: string,
+): number | null {
+  const restaurantIndices = index.restaurants.flatMap((restaurant, indexOfRestaurant) =>
+    restaurant[1] === restaurantSlug ? [indexOfRestaurant] : []
+  );
+  if (restaurantIndices.length !== 1) return null;
+  const candidates = index.sources.flatMap((source, indexOfSource) =>
+    source[0] === restaurantIndices[0] ? [indexOfSource] : []
+  );
+  if (candidates.length === 0) return null;
+  const exact = candidates.filter((sourceIndex) => index.sources[sourceIndex]?.[1] === sourceUrl);
+  if (exact.length === 1) return exact[0]!;
+  // Permit a verified source URL migration only for a restaurant with
+  // exactly one public menu source. Never guess between multiple menus.
+  return candidates.length === 1 ? candidates[0]! : null;
+}
+
 export function replaceOneSource(
   index: FreeIndex,
   sourceIndex: number,
   observedAt: string,
   observations: readonly MenuObservedItem[],
+  approvedSourceUrl?: string,
 ): FreeIndex {
   if (!Number.isInteger(sourceIndex) || sourceIndex < 0 || sourceIndex >= index.sources.length) {
     throw new Error("Source index outside published index");
@@ -35,9 +56,15 @@ export function replaceOneSource(
   if (!observations.length || !Number.isFinite(Date.parse(observedAt))) {
     throw new Error("Cannot replace a source with an empty or undated menu");
   }
+  if (approvedSourceUrl !== undefined) {
+    const url = new URL(approvedSourceUrl);
+    if (url.protocol !== "https:" || url.username || url.password) {
+      throw new Error("Source URL migration requires a credential-free HTTPS URL");
+    }
+  }
   const old = index.sources[sourceIndex]!;
   const updated: FreeSource[] = index.sources.map((source, indexOfSource): FreeSource =>
-    indexOfSource === sourceIndex ? [old[0], old[1], observedAt] : source
+    indexOfSource === sourceIndex ? [old[0], approvedSourceUrl ?? old[1], observedAt] : source
   );
   const newRows: FreeMenu[] = observations.map((item): FreeMenu => {
     if (!item.name || !item.normalizedName || item.currency !== "NOK") {
