@@ -133,10 +133,11 @@ export function prioritizeOneRecoverableFreeQualityFailure<T>(
       oldestFailedAt = failedAt;
     }
   }
-  return chosen === null
-    ? ordered.map(([sourceIndex, entry]) => [sourceIndex, entry])
-    : [chosen, ...ordered.filter(([index]) => index !== chosen![0])
-        .map(([sourceIndex, entry]): [number, T] => [sourceIndex, entry])];
+  if (chosen === null) {
+    return ordered.map(([sourceIndex, entry]): [number, T] => [sourceIndex, entry]);
+  }
+  return [chosen, ...ordered.filter(([index]) => index !== chosen[0])
+    .map(([sourceIndex, entry]): [number, T] => [sourceIndex, entry])];
 }
 
 export interface FreeManifest {
