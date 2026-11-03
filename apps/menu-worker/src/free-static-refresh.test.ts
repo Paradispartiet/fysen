@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { MenuObservedItem } from "@fysen/menu-core";
-import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, recordFreeSourceFailure, replaceOneSource, type FreeIndex } from "./free-static-refresh-core.js";
+import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, recordFreeSourceFailure, replaceOneSource, type FreeIndex, type FreeSourceFailure } from "./free-static-refresh-core.js";
 const baseline: FreeIndex = {
   version: 1, archiveDate: "2026-11-02",
   restaurants: [["Restaurant A", "restaurant-a", "Oslo", "Oslo", ""],
@@ -55,7 +55,7 @@ describe("Free Fysen one-source refresh", () => {
     expect(classifyFreeSourceFailure(new Error("private token: secret"))).toBe("other");
   });
   it("tracks repeated failures by source and clears them after a verified success", () => {
-    const failures = {};
+    const failures: Record<string, FreeSourceFailure> = {};
     expect(recordFreeSourceFailure(failures, 4, "2026-11-03T06:00:00Z", Error("HTTP 404 token=sensitive"))).toBe("http-404");
     expect(recordFreeSourceFailure(failures, 4, "2026-11-03T07:00:00Z", Error("HTTP 404"))).toBe("http-404");
     expect(failures).toEqual({
