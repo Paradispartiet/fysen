@@ -3,6 +3,20 @@ name: Fysen batched Vercel production release
 on:
   push:
     branches: [main]
+    # The Free Fysen menu index is built by its own GitHub Actions pipeline.
+    # Only Vercel app/shared-runtime changes need a Vercel release request.
+    paths:
+      - "apps/web/**"
+      - "apps/api/**"
+      - "packages/contracts/**"
+      - "packages/database/**"
+      - "packages/menu-core/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "turbo.json"
+      - "tsconfig*.json"
+      - ".npmrc"
   workflow_dispatch:
     inputs:
       target:
