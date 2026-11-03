@@ -9,6 +9,16 @@ on:
     paths:
       - ".github/workflows/refresh-fysen-free-menus.yml"
       - "apps/menu-worker/src/free-static-refresh*.ts"
+      # Publish validated menu edits immediately rather than waiting for a delayed cron.
+      - "apps/menu-worker/catalog/**"
+      # Genuine extraction changes invalidate old source interpretation.
+      - "apps/menu-worker/src/menu-source-runtime.ts"
+      - "apps/menu-worker/src/html-*.ts"
+      - "apps/menu-worker/src/manifest-quality.ts"
+      - "packages/menu-core/src/**"
+      # Pure test changes never need a live menu refresh.
+      - "!apps/menu-worker/src/**/*.test.ts"
+      - "!packages/menu-core/src/**/*.test.ts"
 permissions:
   contents: write
 concurrency:
