@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-17",
-      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet."
+      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet. Kontroll 2026-11-04: Fysen Free har bevart den sist godkjente menyen etter tre målrettede kvalitetsavslag (manglende navn i parseruttrekket). De åtte eksisterende kontrollrettene er fortsatt synlige på leveringsmenyen; kilde og terskel endres ikke før ny eksakt livekontroll."
     }
   },
   "actions": [],
