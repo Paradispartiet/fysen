@@ -4,22 +4,11 @@ import { join } from "node:path";
 import { gzipSync, gunzipSync } from "node:zlib";
 import { assessExtraction } from "@fysen/menu-core";
 import { evaluateManifestMenuQuality } from "./manifest-quality.js";
+import { assertNoImplicitQuarantineRelease, readReviewedIdentityQuarantines, type ReviewedIdentityQuarantine } from "./free-identity-quarantine-policy.js";
 import { canonicalizeUniqueMenuSourceKeys } from "./menu-source-key-canonicalizer.js";
 import { readRestaurantOnboardingManifest, type RestaurantOnboardingManifest } from "./onboarding-manifest.js";
 import { extractMenuSource, fetchMenuSource } from "./menu-source-runtime.js";
 import { findMatchingFreeSourceIndex, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, quarantineUnverifiedFreeSource, recordFreeSourceFailure, replaceOneSource, publishedFreeObservationTime, retainPublishableFreeMenuObservations, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
-
-// Manually reviewed identity dispute: SE MENY cites the phone number of a
-// non-restaurant office tenant at this address; extracted rows are all
-// explicitly non-NOK. Do not guess a replacement restaurant or convert prices.
-// Lifting this quarantine requires a separate reviewed code change, not a
-// transient HTTP success. Issue: https://github.com/Paradispartiet/fysen/issues/1133
-const IDENTITY_QUARANTINES = [{
-  slug: "city-work-akersgata-oslo",
-  expectedSourceUrl: "https://www.meny.semeny.no/public/dk/sted/citywork1",
-  issue: "https://github.com/Paradispartiet/fysen/issues/1133",
-  quarantinedAt: "2026-11-05",
-}] as const;
 
 async function main(): Promise<void> {
   const [archiveDir, catalogDir, countArg] = process.argv.slice(2);
@@ -94,23 +83,37 @@ async function main(): Promise<void> {
   const attempts = { ...(manifest.sourceAttempts ?? {}) };
   const failures = { ...(manifest.sourceFailures ?? {}) };
   const quarantines = { ...(manifest.sourceQuarantines ?? {}) };
-  const quarantinedIndices = new Set<number>();
-  let nextIndex = index;
-  let quarantineItemsRemoved = 0;
-  for (const policy of IDENTITY_QUARANTINES) {
+  // Registry entries are added only by a reviewed PR, never inferred from
+  // transient extractor errors. All exact identities are validated first.
+  const policies = await readReviewedIdentityQuarantines(
+    join(catalogDir, "..", "free-identity-quarantines.json"),
+  );
+  const activePolicies = new Map<number, ReviewedIdentityQuarantine>();
+  for (const policy of policies) {
     const sourceIndex = findMatchingFreeSourceIndex(index, policy.slug, policy.expectedSourceUrl);
     if (sourceIndex === null ||
         index.sources[sourceIndex]?.[1] !== policy.expectedSourceUrl ||
-        matching.get(sourceIndex)?.menuSource.url !== policy.expectedSourceUrl) {
+        matching.get(sourceIndex)?.menuSource.url !== policy.expectedSourceUrl ||
+        activePolicies.has(sourceIndex)) {
       throw new Error("Quarantined source no longer matches reviewed evidence; refuse automatic publication");
     }
+    activePolicies.set(sourceIndex, policy);
+  }
+  // A registry deletion or URL change must not silently re-enable a source
+  // that was already quarantined in the public manifest.
+  assertNoImplicitQuarantineRelease(quarantines, activePolicies);
+
+  const quarantinedIndices = new Set<number>();
+  let nextIndex = index;
+  let quarantineItemsRemoved = 0;
+  for (const [sourceIndex, policy] of activePolicies) {
     const result = quarantineUnverifiedFreeSource(nextIndex, sourceIndex);
     nextIndex = result.index;
     quarantineItemsRemoved += result.hiddenDishes;
     quarantinedIndices.add(sourceIndex);
     const previous = quarantines[String(sourceIndex)];
     quarantines[String(sourceIndex)] = {
-      code: "identity-unverified",
+      code: policy.code,
       slug: policy.slug,
       issue: policy.issue,
       quarantinedAt: policy.quarantinedAt,
