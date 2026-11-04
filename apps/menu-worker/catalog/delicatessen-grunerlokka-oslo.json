@@ -26,7 +26,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-08-20",
-      "note": "The first-party location page links this Favrit service menu directly. Batch 02 tests it as a restaurant-linked secondary priced service-menu source; dine-in completeness is not assumed."
+      "note": "The first-party location page links this Favrit service menu directly. Batch 02 tests it as a restaurant-linked secondary priced service-menu source; dine-in completeness is not assumed. Audit 2026-11-04: Free refresh has preserved the previously approved menu after missing-required-dish rejection; exact-head live-source proof is required before changing the eight locked item/price pairs. Restaurant's own page still links to this Favrit location. No assumption about operating hours."
     }
   },
   "actions": [],
