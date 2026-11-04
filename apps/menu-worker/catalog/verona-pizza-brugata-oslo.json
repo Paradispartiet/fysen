@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-17",
-      "note": "Wolt-leveringsmeny, faktiske rettsnavn og åtte konkrete prisassertasjoner generert og målrettet livevalidert 2026-10-17 (PR #967). Prisene gjelder Wolt-levering, ikke nødvendigvis restaurantbordet. Åpningstider ikke uavhengig bekreftet. Kontroll 2026-11-04: Fysen Free har bevart den sist godkjente menyen etter tre målrettede kvalitetsavslag (manglende navn i parseruttrekket). De åtte eksisterende kontrollrettene er fortsatt synlige på leveringsmenyen; kilde og terskel endres ikke før ny eksakt livekontroll."
+      "note": "Wolt-leveringsmeny (ikke restaurantbordpriser). Første kildesjekk 2026-10-17. Korrigert etter eksakt-head liveuttak fra Wolt 2026-11-04: 28 eksplisitt prisede matretter, alle åtte kravretter; Margherita 169 kr, Sultan 210 kr, Hamburger Tallerken m/ Ost 100g 199 kr. De øvrige fem rett-/prisparene er uendret. Åpningstider er ikke uavhengig verifisert."
     }
   },
   "actions": [],
@@ -38,7 +38,7 @@
       "Margherita",
       "Kebab I Pita",
       "Sultan",
-      "Hamburger Tallerken m/ Ost",
+      "Hamburger Tallerken m/ Ost 100g",
       "Kyllingkebab I Pita",
       "Kylling Tikka Tallerken"
     ],
@@ -53,7 +53,7 @@
       },
       {
         "name": "Margherita",
-        "priceMinor": 14900
+        "priceMinor": 16900
       },
       {
         "name": "Kebab I Pita",
@@ -61,11 +61,11 @@
       },
       {
         "name": "Sultan",
-        "priceMinor": 18900
+        "priceMinor": 21000
       },
       {
-        "name": "Hamburger Tallerken m/ Ost",
-        "priceMinor": 18900
+        "name": "Hamburger Tallerken m/ Ost 100g",
+        "priceMinor": 19900
       },
       {
         "name": "Kyllingkebab I Pita",
