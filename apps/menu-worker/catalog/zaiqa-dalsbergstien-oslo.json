@@ -11,7 +11,7 @@
     "longitude": 10.739510876259276
   },
   "menuSource": {
-    "url": "https://www.zaiqa.no/var-meny/",
+    "url": "https://zaiqa.no/var-meny/",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-11-04",
-      "note": "2026-11-04: Official Zaiqa menu gives current NOK-anchored prices. HTTP and browser requests to zaiqa.no/var-meny/ and HTTP to zaiqa.no/ have failed in GitHub Actions, although public indexing reaches the pages. Probe www.zaiqa.no/var-meny/ with unchanged 57-item floor and eight independently checked prices. Never publish without an exact-head live proof; keep old public menu until fully accepted. Opening hours unverified."
+      "note": "2026-11-04: Restaurant's verified official menu at https://zaiqa.no/var-meny/ names eight anchor dishes with current NOK prices. Source is not reachable by GitHub Actions today (HTTP, browser, homepage and www host all failed); live validation remains RED. This PR stays draft with old source/public menu preserved. Do not merge or claim a refreshed current menu until a verified transport and complete coverage can be demonstrated. Hours unverified."
     }
   },
   "actions": [],
