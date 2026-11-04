@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { MenuObservedItem } from "@fysen/menu-core";
-import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, recordFreeSourceFailure, replaceOneSource, publishedFreeObservationTime, retainPublishableFreeMenuObservations, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeSourceFailure } from "./free-static-refresh-core.js";
+import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, quarantineUnverifiedFreeSource, recordFreeSourceFailure, replaceOneSource, publishedFreeObservationTime, retainPublishableFreeMenuObservations, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeSourceFailure } from "./free-static-refresh-core.js";
 const baseline: FreeIndex = {
   version: 1, archiveDate: "2026-11-02",
   restaurants: [["Restaurant A", "restaurant-a", "Oslo", "Oslo", ""],
@@ -24,6 +24,22 @@ describe("Free Fysen one-source refresh", () => {
     expect(next.items.filter((it) => it[0] === 1)).toEqual(baseline.items.filter((it) => it[0] === 1));
     expect(next.items.find((it) => it[0] === 0)?.[1]).toBe("Ny rett");
     expect(baseline.items[0]?.[1]).toBe("Gammel rett");
+  });
+  it("quarantines only unverified menu rows without changing stable restaurant/source IDs", () => {
+    const result = quarantineUnverifiedFreeSource(baseline, 0);
+    expect(result.hiddenDishes).toBe(1);
+    expect(result.index.restaurants).toEqual(baseline.restaurants);
+    expect(result.index.sources).toEqual(baseline.sources);
+    expect(result.index.items).toEqual([baseline.items[1]]);
+    expect(baseline.items).toHaveLength(2); // immutable input, intact Git archive.
+    const repeated = quarantineUnverifiedFreeSource(result.index, 0);
+    expect(repeated.index).toBe(result.index);
+    expect(repeated.hiddenDishes).toBe(0); // scheduled refresh is idempotent.
+    const restored = replaceOneSource(result.index, 0, "2026-11-05T08:00:00Z", [item]);
+    expect(restored.items.some((row) => row[0] === 0 && row[1] === "Ny rett")).toBe(true);
+    expect(restored.items.some((row) => row[0] === 1 && row[1] === "Bevart rett")).toBe(true);
+    expect(() => quarantineUnverifiedFreeSource(baseline, -1)).toThrow();
+    expect(() => quarantineUnverifiedFreeSource(baseline, 2)).toThrow();
   });
   it("fails closed on empty menu and invalid source index", () => {
     expect(() => replaceOneSource(baseline, 0, "2026-11-03T04:00:00Z", [])).toThrow();
