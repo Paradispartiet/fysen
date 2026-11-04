@@ -94,6 +94,9 @@ export const restaurantOnboardingManifestSchema = z
       userAgent: z.string().trim().min(1).max(300).default("FysenMenuBot/0.1"),
       checkIntervalMinutes: z.number().int().min(60).max(10080),
       minimumExpectedItems: z.number().int().min(1).max(500),
+      // A reviewed historical menu is not newly observed every time GitHub
+      // serves the same archived bytes. Keep the original observation time.
+      historicalSnapshotAt: z.string().datetime({ offset: true }).optional(),
       maxResponseBytes: z.number().int().min(MIN_HTTP_SOURCE_RESPONSE_BYTES).max(MAX_HTTP_SOURCE_RESPONSE_BYTES).optional(),
       sourceSupport: sourceSupportSchema,
     }),
@@ -157,6 +160,22 @@ export const restaurantOnboardingManifestSchema = z
         path: ["menuSource", "fetchMode"],
         message: "Browser fetch mode only supports HTML/JSON-LD sources",
       });
+    }
+
+    if (manifest.menuSource.historicalSnapshotAt !== undefined) {
+      const url = new URL(manifest.menuSource.url);
+      if (
+        url.hostname !== "raw.githubusercontent.com" ||
+        !url.pathname.includes("/source-archives/") ||
+        manifest.menuSource.sourceType !== "json_ld" ||
+        manifest.menuSource.fetchMode !== "http"
+      ) {
+        context.addIssue({
+          code: "custom",
+          path: ["menuSource", "historicalSnapshotAt"],
+          message: "Historical observation times require an auditable HTTPS GitHub raw JSON-LD source archive",
+        });
+      }
     }
 
     const sourceOrigin = new URL(manifest.menuSource.url).origin;
