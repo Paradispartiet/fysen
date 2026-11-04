@@ -26,9 +26,10 @@ export function classifyFreeSourceFailure(error: unknown): FreeSourceFailureCode
   const message = error instanceof Error ? error.message : String(error);
   if (/\bHTTP\s*404\b/i.test(message)) return "http-404";
   if (/\bHTTP\s*[45]\d{2}\b/i.test(message)) return "http-error";
-  // Only a wholly non-NOK extraction is treated as a persistent currency
-  // conflict. Store a bounded code, never the provider's text or prices.
-  // Such failures remain in normal rotation but do not starve other restaurants.
+  // A menu dominated (>=90%) by non-NOK rows is a persistent currency
+  // conflict, even if one or two rows happen to be marked NOK. Keep it
+  // fail-closed, store a bounded code (never raw provider text or prices),
+  // and leave ordinary age rotation available without quality-fast-tracking.
   const allForeign = message.match(
     /invalid extracted items exceed safe budget \(total=(\d+), invalid=(\d+), nonNok=(\d+), blank=(\d+), limit=\d+\)/,
   );
@@ -37,7 +38,8 @@ export function classifyFreeSourceFailure(error: unknown): FreeSourceFailureCode
     const invalid = Number(allForeign[2]);
     const nonNok = Number(allForeign[3]);
     const blank = Number(allForeign[4]);
-    if (total > 0 && total === invalid && total === nonNok && blank === 0)
+    if (total >= 10 && invalid === nonNok && blank === 0 &&
+        nonNok * 10 >= total * 9)
       return "currency";
   }
   if (/Quality check rejected updated menu/i.test(message)) return "quality";
