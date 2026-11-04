@@ -26,7 +26,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-08-20",
-      "note": "The first-party location page links this Favrit service menu directly. Batch 02 tests it as a restaurant-linked secondary priced service-menu source; dine-in completeness is not assumed. Audit 2026-11-04: Free refresh has preserved the previously approved menu after missing-required-dish rejection; exact-head live-source proof is required before changing the eight locked item/price pairs. Restaurant's own page still links to this Favrit location. No assumption about operating hours."
+      "note": "The first-party location page links this Favrit service menu directly. Batch 02 tests it as a restaurant-linked secondary priced service-menu source; dine-in completeness is not assumed. Audit 2026-11-04: Free refresh has preserved the previously approved menu after missing-required-dish rejection; exact-head live-source proof is required before changing the eight locked item/price pairs. Restaurant's own page still links to this Favrit location. No assumption about operating hours. Exact-head live Favrit proof 2026-11-04: HTTP 200; 50 items, original minimum 48 preserved; former Bakt sjampinjong salat absent, Kumato tomatsalat independently listed for NOK 165. Replaces one coverage control, not an inferred rename. Other seven name/price pairs unchanged. Source fingerprint: 62a502f52ec6fbc3401b3ed0851f14f30945c0d656208bde6534c2e7d7742f6b. Opening hours remain unverified."
     }
   },
   "actions": [],
@@ -36,7 +36,7 @@
       "Salte mandler",
       "Trøffelmanchego",
       "Ibéricotallerken",
-      "Bakt sjampinjong salat",
+      "Kumato tomatsalat",
       "Bikinitoast",
       "Bonito del Norte – hvit tunfisk",
       "Sorbet"
@@ -59,8 +59,8 @@
         "priceMinor": 25500
       },
       {
-        "name": "Bakt sjampinjong salat",
-        "priceMinor": 14500
+        "name": "Kumato tomatsalat",
+        "priceMinor": 16500
       },
       {
         "name": "Bikinitoast",
