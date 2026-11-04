@@ -9,6 +9,8 @@ on:
     paths:
       - ".github/workflows/refresh-fysen-free-menus.yml"
       - "apps/menu-worker/src/free-static-refresh*.ts"
+      - "apps/menu-worker/src/free-identity-quarantine-policy.ts"
+      - "apps/menu-worker/free-identity-quarantines.json"
       # Publish validated menu edits immediately rather than waiting for a delayed cron.
       - "apps/menu-worker/catalog/**"
       # Genuine extraction changes invalidate old source interpretation.
@@ -45,7 +47,7 @@ jobs:
       - name: Build reused production menu parser
         run: pnpm --filter @fysen/menu-worker... build
       - name: Focused Free refresh tests
-        run: pnpm --filter @fysen/menu-worker exec vitest run src/free-static-refresh.test.ts
+        run: pnpm --filter @fysen/menu-worker exec vitest run src/free-static-refresh.test.ts src/free-identity-quarantine-policy.test.ts
       - name: Refresh at most 12 public sources, fail closed
         env:
           FYSEN_HTTP_TIMEOUT_MS: "12000"
