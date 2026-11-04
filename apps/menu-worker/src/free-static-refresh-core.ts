@@ -10,7 +10,7 @@ export interface FreeIndex {
   sources: FreeSource[];
   items: FreeMenu[];
 }
-export type FreeSourceFailureCode = "http-404" | "http-error" | "quality" | "no-content" | "other";
+export type FreeSourceFailureCode = "http-404" | "http-error" | "quality" | "currency" | "no-content" | "other";
 export interface FreeSourceFailure {
   code: FreeSourceFailureCode;
   consecutive: number;
@@ -26,6 +26,17 @@ export function classifyFreeSourceFailure(error: unknown): FreeSourceFailureCode
   const message = error instanceof Error ? error.message : String(error);
   if (/\bHTTP\s*404\b/i.test(message)) return "http-404";
   if (/\bHTTP\s*[45]\d{2}\b/i.test(message)) return "http-error";
+  // Only a wholly non-NOK extraction is treated as a persistent currency
+  // conflict. Store a bounded code, never the provider's text or prices.
+  // Such failures remain in normal rotation but do not starve other restaurants.
+  const allForeign = message.match(
+    /invalid extracted items exceed safe budget \(total=(\d+), invalid=(\d+), nonNok=(\d+), blank=(\d+), limit=\d+\)/,
+  );
+  if (allForeign) {
+    const [total, invalid, nonNok, blank] = allForeign.slice(1).map(Number);
+    if (total > 0 && total === invalid && total === nonNok && blank === 0)
+      return "currency";
+  }
   if (/Quality check rejected updated menu/i.test(message)) return "quality";
   if (/Source returned no content|empty or undated menu/i.test(message)) return "no-content";
   return "other";
