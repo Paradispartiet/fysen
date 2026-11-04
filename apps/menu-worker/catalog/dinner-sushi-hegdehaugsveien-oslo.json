@@ -13,7 +13,7 @@
   "menuSource": {
     "url": "https://wolt.com/nb/nor/oslo/restaurant/sushi-dinner",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 170,
@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-08-26",
-      "note": "Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed. 2026-11-04: the restaurant's own site at https://sushidinner.no/ links directly to Wolt Sushi & Dinner (Norwegian prices) and confirms same Hegdehaugsveien 1, 22 59 26 00 identity. Attempt live Wolt proof on exact PR head; NO reduced floor or assertion changes until current fetched rows and price pairs are verified. The old source https://semeny.no/sted/dinnersushi1 remains in public Free until a new source is independently approved."
+      "note": "Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed. 2026-11-04: the restaurant's own site at https://sushidinner.no/ links directly to Wolt Sushi & Dinner (Norwegian prices) and confirms same Hegdehaugsveien 1, 22 59 26 00 identity. Attempt live Wolt proof on exact PR head; NO reduced floor or assertion changes until current fetched rows and price pairs are verified. The old source https://semeny.no/sted/dinnersushi1 remains in public Free until a new source is independently approved. 2026-11-04: initial HTTP source proof returned 78 distinct price-bound menu entries, below 170 historical SE MENY rows; this browser-mode probe tests whether the JS-rendered Wolt listing exposes broader coverage. Do not merge without proof."
     }
   },
   "actions": [],
