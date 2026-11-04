@@ -139,7 +139,8 @@ async function main(): Promise<void> {
       if (!quality.accepted || !assessment.accepted) {
         throw new Error(
           "Quality check rejected updated menu: " +
-          (quality.missingRequiredDishes.length ? "mandatory dishes missing" : "") +
+          (quality.missingRequiredDishes.length ? "mandatory dishes missing (" +
+            quality.missingRequiredDishes.slice(0, 3).join(" | ") + ")" : "") +
           (quality.forbiddenDishesPresent.length ? " forbidden metadata" : "") +
           (!assessment.accepted ? " " + assessment.code : ""),
         );
