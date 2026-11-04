@@ -15,6 +15,9 @@ export interface FreeSourceFailure {
   code: FreeSourceFailureCode;
   consecutive: number;
   lastFailedAt: string;
+  // SHA-256 of the public source and assertions used for this attempt.
+  // A changed proof can be retried once without waiting for the old backoff.
+  sourceProofHash?: string;
 }
 
 // Store only bounded diagnostic codes; provider messages and response bodies
@@ -33,6 +36,7 @@ export function recordFreeSourceFailure(
   sourceIndex: number,
   attemptedAt: string,
   error: unknown,
+  sourceProofHash?: string,
 ): FreeSourceFailureCode {
   const key = String(sourceIndex);
   const code = classifyFreeSourceFailure(error);
@@ -41,6 +45,7 @@ export function recordFreeSourceFailure(
     code,
     consecutive: previous?.code === code ? previous.consecutive + 1 : 1,
     lastFailedAt: attemptedAt,
+    ...(sourceProofHash ? { sourceProofHash } : {}),
   };
   return code;
 }
@@ -115,6 +120,7 @@ export function prioritizeOneRecoverableFreeQualityFailure<T>(
   ordered: readonly (readonly [number, T])[],
   failures: Readonly<Record<string, FreeSourceFailure>>,
   nowMillis = Date.now(),
+  sourceProofHashes: Readonly<Record<string, string>> = {},
 ): [number, T][] {
   let chosen: [number, T] | null = null;
   let oldestFailedAt = Number.POSITIVE_INFINITY;
@@ -127,7 +133,14 @@ export function prioritizeOneRecoverableFreeQualityFailure<T>(
     const retryAfterMillis = failure.consecutive === 1
       ? 0
       : failure.consecutive === 2 ? 6 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000;
-    if (!Number.isFinite(elapsed) || elapsed < retryAfterMillis) continue;
+    // A corrected manifest is a new proof, not an unchanged failed provider.
+    // Legacy failures without a stored hash get one bounded recheck. Every
+    // subsequent failed attempt records the current hash and honors backoff.
+    const currentProofHash = sourceProofHashes[String(sourceIndex)];
+    const correctedProof = currentProofHash !== undefined &&
+      currentProofHash !== failure.sourceProofHash;
+    if (!Number.isFinite(elapsed) || elapsed < 0 ||
+        (!correctedProof && elapsed < retryAfterMillis)) continue;
     if (failedAt < oldestFailedAt) {
       chosen = [sourceIndex, entry];
       oldestFailedAt = failedAt;

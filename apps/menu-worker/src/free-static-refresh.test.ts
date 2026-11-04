@@ -160,6 +160,43 @@ describe("Free Fysen one-source refresh", () => {
       .toEqual([0,1]);
   });
 
+  it("bypasses 24-hour backoff only once when a failed source's menu proof changes", () => {
+    const candidates = [
+      [0, {menuSource: {fetchMode: "http" as const}}],
+      [1, {menuSource: {fetchMode: "http" as const}}],
+      [2, {menuSource: {fetchMode: "http" as const}}],
+    ] as const;
+    const now = Date.parse("2026-11-04T19:40:00Z");
+    const failures: Record<string, FreeSourceFailure> = {
+      "1": {code: "quality", consecutive: 3, lastFailedAt: "2026-11-04T11:24:34Z", sourceProofHash: "old"},
+      "2": {code: "quality", consecutive: 1, lastFailedAt: "2026-11-04T19:36:35Z", sourceProofHash: "same"},
+    };
+    // Unchanged 3x failure would wait 24h; other source wins.
+    expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now, {
+      "1": "old", "2": "same",
+    }).map(([i]) => i)).toEqual([2,0,1]);
+    // A corrected proof is eligible immediately, but still ONE source.
+    expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now, {
+      "1": "new", "2": "same",
+    }).map(([i]) => i)).toEqual([1,0,2]);
+    // Existing pre-fingerprint failures get one bounded recheck.
+    delete failures["1"].sourceProofHash;
+    expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now, {
+      "1": "new", "2": "same",
+    })[0]?.[0]).toBe(1);
+    recordFreeSourceFailure(
+      failures, 1, "2026-11-04T19:40:00Z",
+      Error("Quality check rejected updated menu"), "new",
+    );
+    expect(failures["1"].sourceProofHash).toBe("new");
+    expect(failures["1"].consecutive).toBe(4);
+    // Same proof after failure respects backoff; no repeated priority attempts.
+    expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now + 60_000, {
+      "1": "new", "2": "same",
+    }).map(([i]) => i)).toEqual([2,0,1]);
+    expect(selectBoundedFreeRefreshEntries(candidates, 2).length).toBe(2);
+  });
+
   it("classifies provider failures without storing raw provider responses", () => {
     expect(classifyFreeSourceFailure(new Error("Menu fetch returned HTTP 404"))).toBe("http-404");
     expect(classifyFreeSourceFailure(new Error("HTTP 403 denied"))).toBe("http-error");
