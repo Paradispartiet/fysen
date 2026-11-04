@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { z } from "zod";
+import { findMatchingFreeSourceIndex, type FreeIndex } from "./free-static-refresh-core.js";
 
 // A quarantine is a reviewed editorial decision, never an automatic
 // consequence of a failed HTTP request or a non-NOK extractor result.
@@ -56,6 +57,30 @@ export function parseReviewedIdentityQuarantines(input: unknown): readonly Revie
 
 export async function readReviewedIdentityQuarantines(path: string): Promise<readonly ReviewedIdentityQuarantine[]> {
   return parseReviewedIdentityQuarantines(JSON.parse(await readFile(path, "utf8")) as unknown);
+}
+
+// Resolve against BOTH the last published index and the current catalog.
+// Do not quarantine a different restaurant merely because a menu URL points
+// to the same address or a catalog entry has migrated unexpectedly.
+export function resolveReviewedIdentityQuarantines(
+  index: FreeIndex,
+  catalog: ReadonlyMap<number, { readonly menuSource: { readonly url: string } }>,
+  policies: readonly ReviewedIdentityQuarantine[],
+): ReadonlyMap<number, ReviewedIdentityQuarantine> {
+  const resolved = new Map<number, ReviewedIdentityQuarantine>();
+  for (const policy of policies) {
+    const sourceIndex = findMatchingFreeSourceIndex(
+      index, policy.slug, policy.expectedSourceUrl,
+    );
+    if (sourceIndex === null ||
+        index.sources[sourceIndex]?.[1] !== policy.expectedSourceUrl ||
+        catalog.get(sourceIndex)?.menuSource.url !== policy.expectedSourceUrl ||
+        resolved.has(sourceIndex)) {
+      throw new Error("Quarantined source no longer matches reviewed evidence; refuse automatic publication");
+    }
+    resolved.set(sourceIndex, policy);
+  }
+  return resolved;
 }
 
 // Removing or silently changing a previously published quarantine must not
