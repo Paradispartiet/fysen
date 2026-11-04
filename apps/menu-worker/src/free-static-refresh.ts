@@ -7,7 +7,19 @@ import { evaluateManifestMenuQuality } from "./manifest-quality.js";
 import { canonicalizeUniqueMenuSourceKeys } from "./menu-source-key-canonicalizer.js";
 import { readRestaurantOnboardingManifest, type RestaurantOnboardingManifest } from "./onboarding-manifest.js";
 import { extractMenuSource, fetchMenuSource } from "./menu-source-runtime.js";
-import { findMatchingFreeSourceIndex, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, recordFreeSourceFailure, replaceOneSource, publishedFreeObservationTime, retainPublishableFreeMenuObservations, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
+import { findMatchingFreeSourceIndex, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, quarantineUnverifiedFreeSource, recordFreeSourceFailure, replaceOneSource, publishedFreeObservationTime, retainPublishableFreeMenuObservations, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
+
+// Manually reviewed identity dispute: SE MENY cites the phone number of a
+// non-restaurant office tenant at this address; extracted rows are all
+// explicitly non-NOK. Do not guess a replacement restaurant or convert prices.
+// Lifting this quarantine requires a separate reviewed code change, not a
+// transient HTTP success. Issue: https://github.com/Paradispartiet/fysen/issues/1133
+const IDENTITY_QUARANTINES = [{
+  slug: "city-work-akersgata-oslo",
+  expectedSourceUrl: "https://www.meny.semeny.no/public/dk/sted/citywork1",
+  issue: "https://github.com/Paradispartiet/fysen/issues/1133",
+  quarantinedAt: "2026-11-05",
+}] as const;
 
 async function main(): Promise<void> {
   const [archiveDir, catalogDir, countArg] = process.argv.slice(2);
@@ -81,7 +93,36 @@ async function main(): Promise<void> {
   }
   const attempts = { ...(manifest.sourceAttempts ?? {}) };
   const failures = { ...(manifest.sourceFailures ?? {}) };
-  const oldestFirst = [...matching.entries()].sort(([i], [j]) => {
+  const quarantines = { ...(manifest.sourceQuarantines ?? {}) };
+  const quarantinedIndices = new Set<number>();
+  let nextIndex = index;
+  let quarantineItemsRemoved = 0;
+  for (const policy of IDENTITY_QUARANTINES) {
+    const sourceIndex = findMatchingFreeSourceIndex(index, policy.slug, policy.expectedSourceUrl);
+    if (sourceIndex === null ||
+        index.sources[sourceIndex]?.[1] !== policy.expectedSourceUrl ||
+        matching.get(sourceIndex)?.menuSource.url !== policy.expectedSourceUrl) {
+      throw new Error("Quarantined source no longer matches reviewed evidence; refuse automatic publication");
+    }
+    const result = quarantineUnverifiedFreeSource(nextIndex, sourceIndex);
+    nextIndex = result.index;
+    quarantineItemsRemoved += result.hiddenDishes;
+    quarantinedIndices.add(sourceIndex);
+    const previous = quarantines[String(sourceIndex)];
+    quarantines[String(sourceIndex)] = {
+      code: "identity-unverified",
+      slug: policy.slug,
+      issue: policy.issue,
+      quarantinedAt: policy.quarantinedAt,
+      hiddenDishes: Math.max(previous?.hiddenDishes ?? 0, result.hiddenDishes),
+    };
+    delete failures[String(sourceIndex)];
+    console.log("quarantined-unverified-identity", policy.slug, "hidden-items",
+      result.hiddenDishes, "source-index", sourceIndex);
+  }
+  const oldestFirst = [...matching.entries()]
+    .filter(([sourceIndex]) => !quarantinedIndices.has(sourceIndex))
+    .sort(([i], [j]) => {
     const ageI = Date.parse(attempts[String(i)] ?? index.sources[i]![2]) || 0;
     const ageJ = Date.parse(attempts[String(j)] ?? index.sources[j]![2]) || 0;
     return ageI - ageJ || i - j;
@@ -95,7 +136,6 @@ async function main(): Promise<void> {
     ),
     maxAttempts,
   );
-  let nextIndex = index;
   const refreshed = new Set(manifest.refreshedSourceIndices ?? []);
   let accepted = 0;
   let rejected = 0;
@@ -168,7 +208,7 @@ async function main(): Promise<void> {
   }
   // Even when all external providers fail, remember attempted times so a failing
   // oldest source does not starve all other restaurants on every scheduled run.
-  if (accepted > 0) {
+  if (accepted > 0 || quarantineItemsRemoved > 0) {
     const output = gzipSync(Buffer.from(JSON.stringify(nextIndex), "utf8"), { level: 9 });
     await writeFile(indexPath, output);
     manifest.bytes = output.byteLength;
@@ -179,6 +219,7 @@ async function main(): Promise<void> {
   manifest.refreshedSourceIndices = [...refreshed].sort((a, b) => a - b);
   manifest.sourceAttempts = attempts;
   manifest.sourceFailures = failures;
+  manifest.sourceQuarantines = quarantines;
   await writeFile(manifestPath, JSON.stringify(manifest, null, 2) + "\n", "utf8");
   console.log(JSON.stringify({
     attempted: sorted.length,
@@ -189,6 +230,8 @@ async function main(): Promise<void> {
     publishedDishes: nextIndex.items.length,
     cumulativeRefreshedSources: refreshed.size,
     sourcesWithRecordedFailures: Object.keys(failures).length,
+    sourcesWithIdentityQuarantine: Object.keys(quarantines).length,
+    hiddenIdentityDisputeDishes: quarantineItemsRemoved,
     baseArchiveDate: manifest.archiveDate,
   }));
 }
