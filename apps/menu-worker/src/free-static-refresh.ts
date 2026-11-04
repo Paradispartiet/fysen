@@ -65,6 +65,19 @@ async function main(): Promise<void> {
     matching.set(sourceIndex, entry);
   }
   if (!matching.size) throw new Error("No public sources matched existing catalog manifests");
+  // Fingerprint only public source configuration and exact menu assertions.
+  // Cosmetic notes or unrelated runtime changes must not trigger retries.
+  const sourceProofHashes: Record<string, string> = {};
+  for (const [sourceIndex, entry] of matching) {
+    sourceProofHashes[String(sourceIndex)] = createHash("sha256")
+      .update(JSON.stringify({
+        url: entry.menuSource.url,
+        sourceType: entry.menuSource.sourceType,
+        fetchMode: entry.menuSource.fetchMode,
+        minimumExpectedItems: entry.menuSource.minimumExpectedItems,
+        qualityAssertions: entry.qualityAssertions,
+      })).digest("hex");
+  }
   const attempts = { ...(manifest.sourceAttempts ?? {}) };
   const failures = { ...(manifest.sourceFailures ?? {}) };
   const oldestFirst = [...matching.entries()].sort(([i], [j]) => {
@@ -76,6 +89,8 @@ async function main(): Promise<void> {
     prioritizeOneRecoverableFreeQualityFailure(
       prioritizeUnpublishedMenuMigrations(oldestFirst, index.sources, attempts),
       failures,
+      Date.now(),
+      sourceProofHashes,
     ),
     maxAttempts,
   );
@@ -137,7 +152,10 @@ async function main(): Promise<void> {
       console.log("approved", restaurant.restaurant.slug, "items", observations.length);
     } catch (error) {
       rejected++;
-      const code = recordFreeSourceFailure(failures, sourceIndex, attempts[String(sourceIndex)]!, error);
+      const code = recordFreeSourceFailure(
+        failures, sourceIndex, attempts[String(sourceIndex)]!, error,
+        sourceProofHashes[String(sourceIndex)],
+      );
       console.log("preserved-old", restaurant.restaurant.slug, code,
         error instanceof Error ? error.message.slice(0, 230) : "unknown failure");
     }
