@@ -50,6 +50,27 @@ export function recordFreeSourceFailure(
   return code;
 }
 
+// A few broken extractor fragments must not block an otherwise complete, verified
+// Norwegian menu. Never publish a foreign-currency or unnamed row; only discard
+// up to three suspect rows from a substantial extraction (at most 10%). All
+// source-specific floors, mandatory dishes and suspicious-drop checks still run
+// on the *remaining* rows. Larger anomalies fail closed and retain old data.
+export function retainPublishableFreeMenuObservations(
+  observations: readonly MenuObservedItem[],
+): { items: MenuObservedItem[]; discarded: number } {
+  const items = observations.filter((item) =>
+    item.currency === "NOK" && Boolean(item.name.trim()) && Boolean(item.normalizedName.trim()),
+  );
+  const discarded = observations.length - items.length;
+  const allowedDiscard = observations.length >= 20
+    ? Math.min(3, Math.floor(observations.length / 10))
+    : 0;
+  if (items.length === 0 || discarded > allowedDiscard) {
+    throw new Error("Quality check rejected updated menu: invalid extracted items exceed safe budget");
+  }
+  return { items, discarded };
+}
+
 // A browser fetch executes JavaScript and can make more network requests than a
 // simple HTTPS fetch. Bound it to one source per scheduled Free refresh, while
 // filling the remaining batch with ordinary HTTP sources in age order.
