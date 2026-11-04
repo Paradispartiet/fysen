@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "quarantines": [
+    {
+      "slug": "city-work-akersgata-oslo",
+      "expectedSourceUrl": "https://www.meny.semeny.no/public/dk/sted/citywork1",
+      "issue": "https://github.com/Paradispartiet/fysen/issues/1133",
+      "quarantinedAt": "2026-11-05",
+      "code": "identity-unverified"
+    }
+  ]
+}
