@@ -168,7 +168,7 @@ describe("Free Fysen one-source refresh", () => {
     ] as const;
     const now = Date.parse("2026-11-04T19:40:00Z");
     const failures: Record<string, FreeSourceFailure> = {
-      "1": {code: "quality", consecutive: 3, lastFailedAt: "2026-11-04T11:24:34Z"},
+      "1": {code: "quality", consecutive: 3, lastFailedAt: "2026-11-04T11:24:34Z", sourceProofHash: "old"},
       "2": {code: "quality", consecutive: 1, lastFailedAt: "2026-11-04T19:36:35Z", sourceProofHash: "same"},
     };
     // Unchanged 3x failure would wait 24h; other source wins.
@@ -180,6 +180,7 @@ describe("Free Fysen one-source refresh", () => {
       "1": "new", "2": "same",
     }).map(([i]) => i)).toEqual([1,0,2]);
     // Existing pre-fingerprint failures get one bounded recheck.
+    delete failures["1"].sourceProofHash;
     expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now, {
       "1": "new", "2": "same",
     })[0]?.[0]).toBe(1);
