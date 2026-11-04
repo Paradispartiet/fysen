@@ -233,6 +233,35 @@ export interface FreeManifest {
   sourceAttempts?: Record<string, string>;
   sourceFailures?: Record<string, FreeSourceFailure>;
   refreshedSourceIndices?: number[];
+  sourceQuarantines?: Record<string, {
+    code: "identity-unverified";
+    slug: string;
+    issue: string;
+    quarantinedAt: string;
+    hiddenDishes: number;
+  }>;
+}
+
+export function quarantineUnverifiedFreeSource(
+  index: FreeIndex,
+  sourceIndex: number,
+): { index: FreeIndex; hiddenDishes: number } {
+  if (!Number.isInteger(sourceIndex) || sourceIndex < 0 || sourceIndex >= index.sources.length) {
+    throw new Error("Cannot quarantine missing published source");
+  }
+  const hiddenDishes = index.items.filter((row) => row[0] === sourceIndex).length;
+  return {
+    index: hiddenDishes === 0
+      ? index
+      : {
+          ...index,
+          // Keep all restaurant/source slots and their stable positional IDs.
+          // Only search-facing menu rows are removed. Previous full contents
+          // remain recoverable from the isolated public-index Git history.
+          items: index.items.filter((row) => row[0] !== sourceIndex),
+        },
+    hiddenDishes,
+  };
 }
 export function findMatchingFreeSourceIndex(
   index: FreeIndex,
