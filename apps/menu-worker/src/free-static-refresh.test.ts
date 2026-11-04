@@ -246,7 +246,7 @@ describe("Free Fysen one-source refresh", () => {
     }).map(([i]) => i)).toEqual([2, 0, 1]);
     expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now, {
       "1": "new", "2": "same",
-    }).map(([i]) => i)).toEqual([2, 0, 1]);
+    }).map(([i]) => i)).toEqual([1, 0, 2]); // Corrected proof gets one bounded recheck.
     const code = recordFreeSourceFailure(failures, 1, "2026-11-04T22:00:00Z",
       new Error("Quality check rejected updated menu: invalid extracted items exceed safe budget (total=31, invalid=31, nonNok=31, blank=0, limit=3)"),
       "new");
