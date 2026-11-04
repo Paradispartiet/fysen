@@ -3,7 +3,7 @@
   "restaurant": {
     "slug": "zaiqa-dalsbergstien-oslo",
     "name": "Zaiqa",
-    "websiteUrl": null,
+    "websiteUrl": "https://zaiqa.no/",
     "address": "Dalsbergstien 6A, 0170 Oslo",
     "city": "Oslo",
     "countryCode": "NO",
@@ -11,7 +11,7 @@
     "longitude": 10.739510876259276
   },
   "menuSource": {
-    "url": "https://semeny.no/sted/zaiqa2",
+    "url": "https://zaiqa.no/var-meny/",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -26,54 +26,54 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-09-02",
-      "note": "Batch 34 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+      "checkedAt": "2026-11-04",
+      "note": "2026-11-04: The official restaurant menu at zaiqa.no/var-meny/ lists 8 checked dishes and prices. The previous SE MENY source is not promoted until the new official source passes exact-head live menu, coverage and Free fail-closed validation. Dining hours remain unverified."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "Samosa (2 stk)",
       "Chicken Korma",
-      "Lamb Tikka Masala",
-      "Fish Curry",
-      "Butter Paneer (V)",
-      "Raita",
-      "Chili",
-      "Ben & Jerry ́s Carame Chew Chew 465ml"
+      "Chicken Tikka Masala",
+      "Lam Korma",
+      "Lam Curry",
+      "Butter Paneer",
+      "Vegetable Biryani",
+      "Papadam",
+      "Plain Naan"
     ],
     "requiredDishVariants": [
       {
-        "name": "Samosa (2 stk)",
-        "priceMinor": 6900
-      },
-      {
         "name": "Chicken Korma",
-        "priceMinor": 16500
+        "priceMinor": 25900
       },
       {
-        "name": "Lamb Tikka Masala",
-        "priceMinor": 16500
+        "name": "Chicken Tikka Masala",
+        "priceMinor": 25900
       },
       {
-        "name": "Fish Curry",
-        "priceMinor": 17500
+        "name": "Lam Korma",
+        "priceMinor": 27900
       },
       {
-        "name": "Butter Paneer (V)",
-        "priceMinor": 15500
+        "name": "Lam Curry",
+        "priceMinor": 27900
       },
       {
-        "name": "Raita",
-        "priceMinor": 3500
+        "name": "Butter Paneer",
+        "priceMinor": 24900
       },
       {
-        "name": "Chili",
-        "priceMinor": 1200
+        "name": "Vegetable Biryani",
+        "priceMinor": 23900
       },
       {
-        "name": "Ben & Jerry ́s Carame Chew Chew 465ml",
-        "priceMinor": 8500
+        "name": "Papadam",
+        "priceMinor": 4900
+      },
+      {
+        "name": "Plain Naan",
+        "priceMinor": 4900
       }
     ],
     "forbiddenDishNames": []
