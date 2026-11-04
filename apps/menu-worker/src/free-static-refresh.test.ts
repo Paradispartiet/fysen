@@ -255,7 +255,12 @@ describe("Free Fysen one-source refresh", () => {
     }));
     const foreign = { ...item, currency: "DKK" };
     expect(() => retainPublishableFreeMenuObservations([...valid, foreign, foreign, foreign, foreign]))
-      .toThrow(/Quality check rejected/);
+      .toThrow(/total=29, invalid=4, nonNok=4, blank=0, limit=2/);
+    expect(() => retainPublishableFreeMenuObservations([
+      ...valid, { ...item, name: "", normalizedName: "", currency: "DKK" },
+      { ...item, name: "", normalizedName: "" },
+      foreign, foreign,
+    ])).toThrow(/total=29, invalid=4, nonNok=3, blank=2, limit=2/);
     expect(() => retainPublishableFreeMenuObservations([item, foreign])).toThrow(/Quality check rejected/);
     expect(() => retainPublishableFreeMenuObservations([])).toThrow(/Quality check rejected/);
   });

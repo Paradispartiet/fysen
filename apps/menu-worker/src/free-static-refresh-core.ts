@@ -66,7 +66,16 @@ export function retainPublishableFreeMenuObservations(
     ? Math.min(3, Math.floor(observations.length / 10))
     : 0;
   if (items.length === 0 || discarded > allowedDiscard) {
-    throw new Error("Quality check rejected updated menu: invalid extracted items exceed safe budget");
+    // Aggregate numeric diagnostics only; never copy item names, raw source
+    // text, provider tokens or untrusted currency labels into public logs.
+    const nonNok = observations.filter((item) => item.currency !== "NOK").length;
+    const blank = observations.filter((item) =>
+      !item.name.trim() || !item.normalizedName.trim(),
+    ).length;
+    throw new Error(
+      "Quality check rejected updated menu: invalid extracted items exceed safe budget" +
+      ` (total=${observations.length}, invalid=${discarded}, nonNok=${nonNok}, blank=${blank}, limit=${allowedDiscard})`,
+    );
   }
   return { items, discarded };
 }
