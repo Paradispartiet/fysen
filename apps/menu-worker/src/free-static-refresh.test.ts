@@ -223,8 +223,17 @@ describe("Free Fysen one-source refresh", () => {
       "Quality check rejected updated menu: invalid extracted items exceed safe budget (total=31, invalid=31, nonNok=31, blank=0, limit=3)",
     ))).toBe("currency");
     expect(classifyFreeSourceFailure(new Error(
+      "Quality check rejected updated menu: invalid extracted items exceed safe budget (total=57, invalid=55, nonNok=55, blank=0, limit=3)",
+    ))).toBe("currency"); // Zaiqa: 55/57
+    expect(classifyFreeSourceFailure(new Error(
       "Quality check rejected updated menu: invalid extracted items exceed safe budget (total=31, invalid=4, nonNok=3, blank=1, limit=3)",
     ))).toBe("quality");
+    expect(classifyFreeSourceFailure(new Error(
+      "Quality check rejected updated menu: invalid extracted items exceed safe budget (total=20, invalid=17, nonNok=17, blank=0, limit=2)",
+    ))).toBe("quality"); // 85%: do not overclassify.
+    expect(classifyFreeSourceFailure(new Error(
+      "Quality check rejected updated menu: invalid extracted items exceed safe budget (total=9, invalid=9, nonNok=9, blank=0, limit=0)",
+    ))).toBe("quality"); // Too small for persistent classification.
     expect(classifyFreeSourceFailure(new Error("Source returned no content; old menu retained"))).toBe("no-content");
     expect(classifyFreeSourceFailure(new Error("private token: secret"))).toBe("other");
   });
