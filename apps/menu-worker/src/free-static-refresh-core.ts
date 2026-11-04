@@ -133,10 +133,10 @@ export function prioritizeUnpublishedMenuMigrations<T extends {
   return [...browserMigrations, ...httpMigrations, ...ordinary];
 }
 
-// A source rejected for missing mandatory dishes may be fixed by a precise
-// catalog correction. Retry at most ONE such source ahead of the normal bounded
-// rotation. Repeated failures back off (six hours, then one day), so a broken
-// provider cannot starve other restaurants or inflate network usage.
+// A source rejected for missing mandatory dishes or an extraction anomaly may
+// recover after a precise catalog/parser fix. Retry at most ONE such source
+// ahead of the normal bounded rotation. Repeated failures back off (six hours,
+// then one day); HTTP and empty-response failures are never fast-tracked.
 export function prioritizeOneRecoverableFreeQualityFailure<T>(
   ordered: readonly (readonly [number, T])[],
   failures: Readonly<Record<string, FreeSourceFailure>>,
@@ -147,7 +147,7 @@ export function prioritizeOneRecoverableFreeQualityFailure<T>(
   let oldestFailedAt = Number.POSITIVE_INFINITY;
   for (const [sourceIndex, entry] of ordered) {
     const failure = failures[String(sourceIndex)];
-    if (failure?.code !== "quality" ||
+    if ((failure?.code !== "quality" && failure?.code !== "other") ||
         !Number.isInteger(failure.consecutive) || failure.consecutive < 1) continue;
     const failedAt = Date.parse(failure.lastFailedAt);
     const elapsed = nowMillis - failedAt;
