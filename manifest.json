@@ -3,11 +3,11 @@
   "archiveDate": "2026-11-02",
   "restaurants": 973,
   "sources": 973,
-  "dishes": 47532,
-  "bytes": 1959893,
-  "sha256": "45e824b708b0cfc5316ac851ca3943351d1a447f31edc8b954f0e5e9bd49807f",
+  "dishes": 47466,
+  "bytes": 1947530,
+  "sha256": "4dea2a87c68612e28eb16ff544d7b0621c5457d5b94eeff7a7a4b903e0ff06c4",
   "disclaimer": "Historiske, sist verifiserte menyer. Ikke sanntid. Sjekk restauranten for dagens pris og tilgjengelighet.",
-  "lastRefreshAt": "2026-11-04T23:48:15.887Z",
+  "lastRefreshAt": "2026-11-04T23:55:06.001Z",
   "refreshedSourceIndices": [
     22,
     31,
@@ -157,7 +157,16 @@
     284,
     285,
     287,
+    289,
     290,
+    293,
+    294,
+    295,
+    296,
+    297,
+    298,
+    299,
+    300,
     492,
     653,
     656,
@@ -458,7 +467,19 @@
     "285": "2026-11-04T23:48:09.417Z",
     "286": "2026-11-04T23:48:10.788Z",
     "287": "2026-11-04T23:48:12.887Z",
+    "288": "2026-11-04T23:54:40.114Z",
+    "289": "2026-11-04T23:54:42.647Z",
     "290": "2026-11-03T05:01:39.245Z",
+    "291": "2026-11-04T23:54:45.732Z",
+    "292": "2026-11-04T23:54:47.476Z",
+    "293": "2026-11-04T23:54:49.442Z",
+    "294": "2026-11-04T23:54:50.832Z",
+    "295": "2026-11-04T23:54:52.812Z",
+    "296": "2026-11-04T23:54:54.201Z",
+    "297": "2026-11-04T23:54:57.256Z",
+    "298": "2026-11-04T23:54:58.795Z",
+    "299": "2026-11-04T23:55:00.790Z",
+    "300": "2026-11-04T23:55:02.729Z",
     "492": "2026-11-03T07:11:00.549Z",
     "653": "2026-11-03T05:01:43.485Z",
     "656": "2026-11-03T05:01:44.726Z",
@@ -609,11 +630,23 @@
     "972": "2026-11-04T19:36:29.828Z"
   },
   "sourceFailures": {
-    "286": {
+    "288": {
       "code": "currency",
       "consecutive": 1,
-      "lastFailedAt": "2026-11-04T23:48:10.788Z",
-      "sourceProofHash": "a825f7a89ddff2152e66072331de87dfa122c7d84fa05c05d9f26af6c88aacb0"
+      "lastFailedAt": "2026-11-04T23:54:40.114Z",
+      "sourceProofHash": "167d20b663836b7039dd62282cd4dd9103701efe52d0b2d946a83947c5f19b50"
+    },
+    "291": {
+      "code": "currency",
+      "consecutive": 1,
+      "lastFailedAt": "2026-11-04T23:54:45.732Z",
+      "sourceProofHash": "0cfd4829fe4580830e0e1213e1f9b7f48fec4823a2c8f50e963bf155ff6420a6"
+    },
+    "292": {
+      "code": "quality",
+      "consecutive": 1,
+      "lastFailedAt": "2026-11-04T23:54:47.476Z",
+      "sourceProofHash": "94d1aa3a093ac5c74e7d2f3fde92cade8af8c713ad0b92eac0b460c4e3408855"
     }
   },
   "sourceQuarantines": {
@@ -623,6 +656,13 @@
       "issue": "https://github.com/Paradispartiet/fysen/issues/1133",
       "quarantinedAt": "2026-11-05",
       "hiddenDishes": 31
+    },
+    "286": {
+      "code": "identity-unverified",
+      "slug": "falafel-station-brugata-oslo",
+      "issue": "https://github.com/Paradispartiet/fysen/issues/1139",
+      "quarantinedAt": "2026-11-05",
+      "hiddenDishes": 66
     }
   }
 }
