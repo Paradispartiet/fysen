@@ -219,8 +219,42 @@ describe("Free Fysen one-source refresh", () => {
     expect(classifyFreeSourceFailure(new Error("Menu fetch returned HTTP 404"))).toBe("http-404");
     expect(classifyFreeSourceFailure(new Error("HTTP 403 denied"))).toBe("http-error");
     expect(classifyFreeSourceFailure(new Error("Quality check rejected updated menu: mandatory dishes missing"))).toBe("quality");
+    expect(classifyFreeSourceFailure(new Error(
+      "Quality check rejected updated menu: invalid extracted items exceed safe budget (total=31, invalid=31, nonNok=31, blank=0, limit=3)",
+    ))).toBe("currency");
+    expect(classifyFreeSourceFailure(new Error(
+      "Quality check rejected updated menu: invalid extracted items exceed safe budget (total=31, invalid=4, nonNok=3, blank=1, limit=3)",
+    ))).toBe("quality");
     expect(classifyFreeSourceFailure(new Error("Source returned no content; old menu retained"))).toBe("no-content");
     expect(classifyFreeSourceFailure(new Error("private token: secret"))).toBe("other");
+  });
+  it("keeps wholly foreign-currency failures in ordinary rotation, never ahead of recoverable quality", () => {
+    const now = Date.parse("2026-11-04T22:00:00Z");
+    const candidates = [
+      [0, { menuSource: { fetchMode: "http" as const } }],
+      [1, { menuSource: { fetchMode: "http" as const } }],
+      [2, { menuSource: { fetchMode: "http" as const } }],
+    ] as const;
+    const failures: Record<string, FreeSourceFailure> = {
+      "1": { code: "currency", consecutive: 1,
+        lastFailedAt: "2026-11-04T21:00:00Z", sourceProofHash: "old" },
+      "2": { code: "quality", consecutive: 1,
+        lastFailedAt: "2026-11-04T21:30:00Z", sourceProofHash: "same" },
+    };
+    expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now, {
+      "1": "old", "2": "same",
+    }).map(([i]) => i)).toEqual([2, 0, 1]);
+    expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now, {
+      "1": "new", "2": "same",
+    }).map(([i]) => i)).toEqual([1, 0, 2]); // Corrected proof gets one bounded recheck.
+    const code = recordFreeSourceFailure(failures, 1, "2026-11-04T22:00:00Z",
+      new Error("Quality check rejected updated menu: invalid extracted items exceed safe budget (total=31, invalid=31, nonNok=31, blank=0, limit=3)"),
+      "new");
+    expect(code).toBe("currency");
+    expect(failures["1"]).toEqual({
+      code: "currency", consecutive: 2, lastFailedAt: "2026-11-04T22:00:00Z",
+      sourceProofHash: "new",
+    });
   });
   it("tracks repeated failures by source and clears them after a verified success", () => {
     const failures: Record<string, FreeSourceFailure> = {};

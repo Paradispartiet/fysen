@@ -10,7 +10,7 @@ export interface FreeIndex {
   sources: FreeSource[];
   items: FreeMenu[];
 }
-export type FreeSourceFailureCode = "http-404" | "http-error" | "quality" | "no-content" | "other";
+export type FreeSourceFailureCode = "http-404" | "http-error" | "quality" | "currency" | "no-content" | "other";
 export interface FreeSourceFailure {
   code: FreeSourceFailureCode;
   consecutive: number;
@@ -26,6 +26,20 @@ export function classifyFreeSourceFailure(error: unknown): FreeSourceFailureCode
   const message = error instanceof Error ? error.message : String(error);
   if (/\bHTTP\s*404\b/i.test(message)) return "http-404";
   if (/\bHTTP\s*[45]\d{2}\b/i.test(message)) return "http-error";
+  // Only a wholly non-NOK extraction is treated as a persistent currency
+  // conflict. Store a bounded code, never the provider's text or prices.
+  // Such failures remain in normal rotation but do not starve other restaurants.
+  const allForeign = message.match(
+    /invalid extracted items exceed safe budget \(total=(\d+), invalid=(\d+), nonNok=(\d+), blank=(\d+), limit=\d+\)/,
+  );
+  if (allForeign) {
+    const total = Number(allForeign[1]);
+    const invalid = Number(allForeign[2]);
+    const nonNok = Number(allForeign[3]);
+    const blank = Number(allForeign[4]);
+    if (total > 0 && total === invalid && total === nonNok && blank === 0)
+      return "currency";
+  }
   if (/Quality check rejected updated menu/i.test(message)) return "quality";
   if (/Source returned no content|empty or undated menu/i.test(message)) return "no-content";
   return "other";
@@ -156,8 +170,15 @@ export function prioritizeOneRecoverableFreeQualityFailure<T>(
   let oldestFailedAt = Number.POSITIVE_INFINITY;
   for (const [sourceIndex, entry] of ordered) {
     const failure = failures[String(sourceIndex)];
-    if ((failure?.code !== "quality" && failure?.code !== "other") ||
-        !Number.isInteger(failure.consecutive) || failure.consecutive < 1) continue;
+    if (!failure || !Number.isInteger(failure.consecutive) || failure.consecutive < 1)
+      continue;
+    const currentProofHash = sourceProofHashes[String(sourceIndex)];
+    const correctedProof = currentProofHash !== undefined &&
+      currentProofHash !== failure.sourceProofHash;
+    // A persistent non-NOK menu can be fast-tracked only for a changed,
+    // explicitly verifiable source proof, never for the same rejected data.
+    if (failure.code !== "quality" && failure.code !== "other" &&
+        !(failure.code === "currency" && correctedProof)) continue;
     const failedAt = Date.parse(failure.lastFailedAt);
     const elapsed = nowMillis - failedAt;
     const retryAfterMillis = failure.consecutive === 1
@@ -166,9 +187,6 @@ export function prioritizeOneRecoverableFreeQualityFailure<T>(
     // A corrected manifest is a new proof, not an unchanged failed provider.
     // Legacy failures without a stored hash get one bounded recheck. Every
     // subsequent failed attempt records the current hash and honors backoff.
-    const currentProofHash = sourceProofHashes[String(sourceIndex)];
-    const correctedProof = currentProofHash !== undefined &&
-      currentProofHash !== failure.sourceProofHash;
     if (!Number.isFinite(elapsed) || elapsed < 0 ||
         (!correctedProof && elapsed < retryAfterMillis)) continue;
     if (failedAt < oldestFailedAt) {
