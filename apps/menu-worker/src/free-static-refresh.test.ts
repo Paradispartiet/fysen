@@ -132,6 +132,24 @@ describe("Free Fysen one-source refresh", () => {
       .toEqual([2,0,1]); // At most 3 requests and one browser.
   });
 
+  it("retries one extraction anomaly without fast-tracking transport failures", () => {
+    const candidates = [
+      [0, { menuSource: { fetchMode: "http" as const } }],
+      [1, { menuSource: { fetchMode: "http" as const } }],
+      [2, { menuSource: { fetchMode: "http" as const } }],
+    ] as const;
+    const now = Date.parse("2026-11-04T21:00:00Z");
+    const failures: Record<string, FreeSourceFailure> = {
+      "1": { code: "other", consecutive: 1, lastFailedAt: "2026-11-04T20:00:00Z" },
+      "2": { code: "http-error", consecutive: 1, lastFailedAt: "2026-11-04T19:00:00Z" },
+    };
+    expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now).map(([i]) => i))
+      .toEqual([1, 0, 2]);
+    failures["1"] = { code: "other", consecutive: 3, lastFailedAt: "2026-11-04T20:00:00Z", sourceProofHash: "same" };
+    expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now, { "1": "same" }).map(([i]) => i))
+      .toEqual([0, 1, 2]);
+    expect(selectBoundedFreeRefreshEntries(candidates, 2)).toHaveLength(2);
+  });
   it("backs off repeated quality failures and rejects future or invalid failure timestamps", () => {
     const candidates = [
       [0, {menuSource: {fetchMode: "http" as const}}],
