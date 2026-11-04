@@ -13,7 +13,7 @@
   "menuSource": {
     "url": "https://zaiqa.no/var-meny/",
     "sourceType": "html",
-    "fetchMode": "http",
+    "fetchMode": "browser",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 57,
@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-11-04",
-      "note": "2026-11-04: The official restaurant menu at zaiqa.no/var-meny/ lists 8 checked dishes and prices. The previous SE MENY source is not promoted until the new official source passes exact-head live menu, coverage and Free fail-closed validation. Dining hours remain unverified."
+      "note": "2026-11-04: The official restaurant menu at zaiqa.no/var-meny/ lists 8 checked dishes and prices. The previous SE MENY source is not promoted until the new official source passes exact-head live menu, coverage and Free fail-closed validation. Dining hours remain unverified. One bounded browser fetch is now being tested after direct HTTP networking failed."
     }
   },
   "actions": [],
