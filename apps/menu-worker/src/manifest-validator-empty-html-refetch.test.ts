@@ -128,6 +128,73 @@ describe("manifest empty HTML refetch policy", () => {
     expect(robotsCalls).toBe(1);
   });
 
+  it.each([
+    ["DKK", false],
+    ["NOK", true],
+  ] as const)("uses the public publication currency rule for JSON-LD %s", async (currency, expected) => {
+    const client = new HttpMenuClient({
+      fetchImpl: asFetch(async (input) => {
+        if (input.pathname === "/robots.txt") {
+          return new Response("User-agent: *\\nAllow: /\\n", { status: 200 });
+        }
+        const schema = {
+          "@context": "https://schema.org",
+          "@type": "MenuItem",
+          name: "Falafel",
+          offers: { "@type": "Offer", price: "98", priceCurrency: currency },
+        };
+        return new Response(
+          `<html><body><script type="application/ld+json">${JSON.stringify(schema)}</script></body></html>`,
+          { status: 200, headers: { "Content-Type": "text/html" } },
+        );
+      }),
+      resolver: publicResolver,
+      minHostDelayMs: 1,
+      timeoutMs: 1000,
+    });
+
+    const result = await validateRestaurantManifest(manifest(1, ["Falafel"]), client);
+    expect(result.menu.httpStatus).toBe(200);
+    expect(result.menu.method).toBe("json_ld");
+    expect(result.accepted).toBe(expected);
+    expect(result.menu.quality?.accepted).toBe(expected);
+    expect(result.menu.quality?.itemCount).toBe(1);
+    if (!expected) {
+      expect(result.menu.error).toContain("nonNok=1");
+      expect(result.menu.error).toContain("limit=0");
+    } else {
+      expect(result.menu.error).toBeNull();
+    }
+  });
+
+  it("checks mandatory dishes after omitting at most two invalid fragments", async () => {
+    const client = new HttpMenuClient({
+      fetchImpl: asFetch(async (input) => {
+        if (input.pathname === "/robots.txt") {
+          return new Response("User-agent: *\\nAllow: /\\n", { status: 200 });
+        }
+        const dishes = Array.from({ length: 28 }, (_, index) => ({
+          "@type": "MenuItem",
+          name: index === 0 ? "Falafel" : `Rettnavn ${index}`,
+          offers: { "@type": "Offer", price: "98", priceCurrency: index > 25 ? "DKK" : "NOK" },
+        }));
+        const schema = { "@context": "https://schema.org", "@type": "Menu", hasMenuItem: dishes };
+        return new Response(
+          `<html><body><script type="application/ld+json">${JSON.stringify(schema)}</script></body></html>`,
+          { status: 200, headers: { "Content-Type": "text/html" } },
+        );
+      }),
+      resolver: publicResolver,
+      minHostDelayMs: 1,
+      timeoutMs: 1000,
+    });
+
+    const result = await validateRestaurantManifest(manifest(26, ["Falafel"]), client);
+    expect(result.accepted).toBe(true);
+    expect(result.menu.quality?.itemCount).toBe(26);
+    expect(result.menu.observedDishNames).toHaveLength(28); // raw audit remains available
+  });
+
   it("keeps the retry predicate limited to the exact empty HTTP HTML condition", () => {
     expect(
       shouldRetryEmptyHtmlHeuristic({
