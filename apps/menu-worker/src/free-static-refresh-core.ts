@@ -50,6 +50,27 @@ export function recordFreeSourceFailure(
   return code;
 }
 
+// A few broken extractor fragments must not block an otherwise complete, verified
+// Norwegian menu. Never publish a foreign-currency or unnamed row; only discard
+// up to three suspect rows from a substantial extraction (at most 10%). All
+// source-specific floors, mandatory dishes and suspicious-drop checks still run
+// on the *remaining* rows. Larger anomalies fail closed and retain old data.
+export function retainPublishableFreeMenuObservations(
+  observations: readonly MenuObservedItem[],
+): { items: MenuObservedItem[]; discarded: number } {
+  const items = observations.filter((item) =>
+    item.currency === "NOK" && Boolean(item.name.trim()) && Boolean(item.normalizedName.trim()),
+  );
+  const discarded = observations.length - items.length;
+  const allowedDiscard = observations.length >= 20
+    ? Math.min(3, Math.floor(observations.length / 10))
+    : 0;
+  if (items.length === 0 || discarded > allowedDiscard) {
+    throw new Error("Quality check rejected updated menu: invalid extracted items exceed safe budget");
+  }
+  return { items, discarded };
+}
+
 // A browser fetch executes JavaScript and can make more network requests than a
 // simple HTTPS fetch. Bound it to one source per scheduled Free refresh, while
 // filling the remaining batch with ordinary HTTP sources in age order.
@@ -112,10 +133,10 @@ export function prioritizeUnpublishedMenuMigrations<T extends {
   return [...browserMigrations, ...httpMigrations, ...ordinary];
 }
 
-// A source rejected for missing mandatory dishes may be fixed by a precise
-// catalog correction. Retry at most ONE such source ahead of the normal bounded
-// rotation. Repeated failures back off (six hours, then one day), so a broken
-// provider cannot starve other restaurants or inflate network usage.
+// A source rejected for missing mandatory dishes or an extraction anomaly may
+// recover after a precise catalog/parser fix. Retry at most ONE such source
+// ahead of the normal bounded rotation. Repeated failures back off (six hours,
+// then one day); HTTP and empty-response failures are never fast-tracked.
 export function prioritizeOneRecoverableFreeQualityFailure<T>(
   ordered: readonly (readonly [number, T])[],
   failures: Readonly<Record<string, FreeSourceFailure>>,
@@ -126,7 +147,7 @@ export function prioritizeOneRecoverableFreeQualityFailure<T>(
   let oldestFailedAt = Number.POSITIVE_INFINITY;
   for (const [sourceIndex, entry] of ordered) {
     const failure = failures[String(sourceIndex)];
-    if (failure?.code !== "quality" ||
+    if ((failure?.code !== "quality" && failure?.code !== "other") ||
         !Number.isInteger(failure.consecutive) || failure.consecutive < 1) continue;
     const failedAt = Date.parse(failure.lastFailedAt);
     const elapsed = nowMillis - failedAt;

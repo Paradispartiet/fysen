@@ -7,7 +7,7 @@ import { evaluateManifestMenuQuality } from "./manifest-quality.js";
 import { canonicalizeUniqueMenuSourceKeys } from "./menu-source-key-canonicalizer.js";
 import { readRestaurantOnboardingManifest, type RestaurantOnboardingManifest } from "./onboarding-manifest.js";
 import { extractMenuSource, fetchMenuSource } from "./menu-source-runtime.js";
-import { findMatchingFreeSourceIndex, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, recordFreeSourceFailure, replaceOneSource, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
+import { findMatchingFreeSourceIndex, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, recordFreeSourceFailure, replaceOneSource, retainPublishableFreeMenuObservations, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
 
 async function main(): Promise<void> {
   const [archiveDir, catalogDir, countArg] = process.argv.slice(2);
@@ -115,6 +115,7 @@ async function main(): Promise<void> {
       }
       const extracted = await extractMenuSource(restaurant.menuSource.sourceType, fetched);
       const observations = canonicalizeUniqueMenuSourceKeys(extracted.items);
+      const { items: publishable, discarded } = retainPublishableFreeMenuObservations(observations);
       // Source-backed prices are allowed to change. Do not require historical prices
       // to remain identical, but preserve mandatory names/variants, food filters,
       // source-specific item floor, and the original suspicious-drop safeguard.
@@ -130,26 +131,28 @@ async function main(): Promise<void> {
           ),
         },
       };
-      const quality = evaluateManifestMenuQuality(unchangedPriceAssertions, observations);
+      const quality = evaluateManifestMenuQuality(unchangedPriceAssertions, publishable);
       const assessment = assessExtraction(
-        counts[sourceIndex] ?? 0, observations.length,
+        counts[sourceIndex] ?? 0, publishable.length,
         restaurant.menuSource.minimumExpectedItems,
       );
       if (!quality.accepted || !assessment.accepted) {
         throw new Error(
           "Quality check rejected updated menu: " +
-          (quality.missingRequiredDishes.length ? "mandatory dishes missing" : "") +
+          (quality.missingRequiredDishes.length ? "mandatory dishes missing (" +
+            quality.missingRequiredDishes.slice(0, 3).join(" | ") + ")" : "") +
           (quality.forbiddenDishesPresent.length ? " forbidden metadata" : "") +
           (!assessment.accepted ? " " + assessment.code : ""),
         );
       }
       nextIndex = replaceOneSource(
-        nextIndex, sourceIndex, fetched.fetchedAt, observations, restaurant.menuSource.url,
+        nextIndex, sourceIndex, fetched.fetchedAt, publishable, restaurant.menuSource.url,
       );
       refreshed.add(sourceIndex);
       delete failures[String(sourceIndex)];
       accepted++;
-      console.log("approved", restaurant.restaurant.slug, "items", observations.length);
+      console.log("approved", restaurant.restaurant.slug, "items", publishable.length,
+        ...(discarded ? ["discarded-invalid", discarded] : []));
     } catch (error) {
       rejected++;
       const code = recordFreeSourceFailure(

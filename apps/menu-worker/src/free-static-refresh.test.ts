@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { MenuObservedItem } from "@fysen/menu-core";
-import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, recordFreeSourceFailure, replaceOneSource, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeSourceFailure } from "./free-static-refresh-core.js";
+import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, recordFreeSourceFailure, replaceOneSource, retainPublishableFreeMenuObservations, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeSourceFailure } from "./free-static-refresh-core.js";
 const baseline: FreeIndex = {
   version: 1, archiveDate: "2026-11-02",
   restaurants: [["Restaurant A", "restaurant-a", "Oslo", "Oslo", ""],
@@ -132,6 +132,24 @@ describe("Free Fysen one-source refresh", () => {
       .toEqual([2,0,1]); // At most 3 requests and one browser.
   });
 
+  it("retries one extraction anomaly without fast-tracking transport failures", () => {
+    const candidates = [
+      [0, { menuSource: { fetchMode: "http" as const } }],
+      [1, { menuSource: { fetchMode: "http" as const } }],
+      [2, { menuSource: { fetchMode: "http" as const } }],
+    ] as const;
+    const now = Date.parse("2026-11-04T21:00:00Z");
+    const failures: Record<string, FreeSourceFailure> = {
+      "1": { code: "other", consecutive: 1, lastFailedAt: "2026-11-04T20:00:00Z" },
+      "2": { code: "http-error", consecutive: 1, lastFailedAt: "2026-11-04T19:00:00Z" },
+    };
+    expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now).map(([i]) => i))
+      .toEqual([1, 0, 2]);
+    failures["1"] = { code: "other", consecutive: 3, lastFailedAt: "2026-11-04T20:00:00Z", sourceProofHash: "same" };
+    expect(prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now, { "1": "same" }).map(([i]) => i))
+      .toEqual([0, 1, 2]);
+    expect(selectBoundedFreeRefreshEntries(candidates, 2)).toHaveLength(2);
+  });
   it("backs off repeated quality failures and rejects future or invalid failure timestamps", () => {
     const candidates = [
       [0, {menuSource: {fetchMode: "http" as const}}],
@@ -216,6 +234,30 @@ describe("Free Fysen one-source refresh", () => {
     expect(failures["4"].consecutive).toBe(1);
     delete failures["4"];
     expect(failures).toEqual({});
+  });
+  it("discards only a few invalid extractor fragments from a substantial menu", () => {
+    const valid = Array.from({ length: 32 }, (_, i) => ({
+      ...item, name: `Rett ${i}`, normalizedName: `rett ${i}`, sourceKey: `item-${i}`,
+    }));
+    const foreign = { ...item, name: "Ukjent valuta", normalizedName: "ukjent valuta", currency: "DKK" };
+    const unnamed = { ...item, name: "", normalizedName: "" };
+    const selected = retainPublishableFreeMenuObservations([...valid, foreign, unnamed]);
+    expect(selected.discarded).toBe(2);
+    expect(selected.items).toHaveLength(32);
+    expect(selected.items.every((entry) => entry.currency === "NOK" && entry.name.length > 0)).toBe(true);
+    const next = replaceOneSource(baseline, 0, "2026-11-04T21:00:00Z", selected.items);
+    expect(next.items.filter((entry) => entry[0] === 0)).toHaveLength(32);
+    expect(next.items.some((entry) => entry[1] === "Ukjent valuta")).toBe(false);
+  });
+  it("fails closed for broad corruption or a small low-confidence extraction", () => {
+    const valid = Array.from({ length: 25 }, (_, i) => ({
+      ...item, name: `Rett ${i}`, normalizedName: `rett ${i}`, sourceKey: `item-${i}`,
+    }));
+    const foreign = { ...item, currency: "DKK" };
+    expect(() => retainPublishableFreeMenuObservations([...valid, foreign, foreign, foreign, foreign]))
+      .toThrow(/Quality check rejected/);
+    expect(() => retainPublishableFreeMenuObservations([item, foreign])).toThrow(/Quality check rejected/);
+    expect(() => retainPublishableFreeMenuObservations([])).toThrow(/Quality check rejected/);
   });
   it("never publishes unsupported currency or empty names", () => {
     expect(() => replaceOneSource(baseline, 0, "2026-11-03T04:00:00Z", [{...item, currency:"USD"}])).toThrow();
