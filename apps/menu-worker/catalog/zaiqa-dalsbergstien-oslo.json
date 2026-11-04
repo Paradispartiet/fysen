@@ -11,9 +11,9 @@
     "longitude": 10.739510876259276
   },
   "menuSource": {
-    "url": "https://zaiqa.no/var-meny/",
+    "url": "https://zaiqa.no/",
     "sourceType": "html",
-    "fetchMode": "browser",
+    "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 57,
@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-11-04",
-      "note": "2026-11-04: The official restaurant menu at zaiqa.no/var-meny/ lists 8 checked dishes and prices. The previous SE MENY source is not promoted until the new official source passes exact-head live menu, coverage and Free fail-closed validation. Dining hours remain unverified. One bounded browser fetch is now being tested after direct HTTP networking failed."
+      "note": "2026-11-04: The official restaurant menu at zaiqa.no/var-meny/ lists 8 checked dishes and prices. The previous SE MENY source is not promoted until the new official source passes exact-head live menu, coverage and Free fail-closed validation. Dining hours remain unverified. One bounded browser fetch is now being tested after direct HTTP networking failed. 2026-11-04 probe: try the restaurant's official homepage over HTTP (same verified origin) because the /var-meny/ subpage failed both HTTP and browser. Preserve 57 floor and all eight source-backed prices until successful proof. No change to public source."
     }
   },
   "actions": [],
