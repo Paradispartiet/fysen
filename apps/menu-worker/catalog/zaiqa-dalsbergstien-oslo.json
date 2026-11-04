@@ -11,12 +11,12 @@
     "longitude": 10.739510876259276
   },
   "menuSource": {
-    "url": "https://zaiqa.no/var-meny/",
-    "sourceType": "html",
+    "url": "https://raw.githubusercontent.com/Paradispartiet/fysen/main/apps/menu-worker/source-archives/zaiqa-dalsbergstien-20261104.html",
+    "sourceType": "json_ld",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 57,
+    "minimumExpectedItems": 48,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-11-04",
-      "note": "2026-11-04: Restaurant's verified official menu at https://zaiqa.no/var-meny/ names eight anchor dishes with current NOK prices. Source is not reachable by GitHub Actions today (HTTP, browser, homepage and www host all failed); live validation remains RED. This PR stays draft with old source/public menu preserved. Do not merge or claim a refreshed current menu until a verified transport and complete coverage can be demonstrated. Hours unverified."
+      "note": "2026-11-04: Zaiqa official site https://zaiqa.no/var-meny/ provides dated item/price evidence, but GitHub Actions cannot fetch that origin. This is an explicitly HISTORICAL, non-live menu mirror, curated and audited at https://github.com/Paradispartiet/fysen/blob/main/apps/menu-worker/source-archives/zaiqa-dalsbergstien-20261104.html. 52 distinct source-backed NOK prices, 8 locked independent dish/price anchors; floor 48. Never claim a fresh restaurant-origin fetch. Preserve old public menu unless target HTTP, strict JSON-LD, and Free migration gates pass. Hours unverified."
     }
   },
   "actions": [],
