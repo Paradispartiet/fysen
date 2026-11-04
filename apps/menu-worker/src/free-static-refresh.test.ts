@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { MenuObservedItem } from "@fysen/menu-core";
-import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, recordFreeSourceFailure, replaceOneSource, retainPublishableFreeMenuObservations, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeSourceFailure } from "./free-static-refresh-core.js";
+import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, recordFreeSourceFailure, replaceOneSource, publishedFreeObservationTime, retainPublishableFreeMenuObservations, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeSourceFailure } from "./free-static-refresh-core.js";
 const baseline: FreeIndex = {
   version: 1, archiveDate: "2026-11-02",
   restaurants: [["Restaurant A", "restaurant-a", "Oslo", "Oslo", ""],
@@ -306,6 +306,16 @@ describe("Free Fysen one-source refresh", () => {
     ])).toThrow(/total=29, invalid=4, nonNok=3, blank=2, limit=2/);
     expect(() => retainPublishableFreeMenuObservations([item, foreign])).toThrow(/Quality check rejected/);
     expect(() => retainPublishableFreeMenuObservations([])).toThrow(/Quality check rejected/);
+  });
+  it("never stamps a historical source archive with a newer GitHub fetch time", () => {
+    const archive = "2026-11-04T22:38:36Z";
+    const nextDay = "2026-11-05T08:00:00Z";
+    expect(publishedFreeObservationTime(nextDay, archive)).toBe(archive);
+    expect(publishedFreeObservationTime(nextDay)).toBe(nextDay);
+    expect(() => publishedFreeObservationTime(archive, "2026-11-05T08:00:00Z"))
+      .toThrow(/future-dated historical/);
+    expect(() => publishedFreeObservationTime(nextDay, "not-a-date"))
+      .toThrow(/historical menu observation/);
   });
   it("never publishes unsupported currency or empty names", () => {
     expect(() => replaceOneSource(baseline, 0, "2026-11-03T04:00:00Z", [{...item, currency:"USD"}])).toThrow();
