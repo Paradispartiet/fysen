@@ -23,3 +23,7 @@ Lag et separat PR-vedtak med dokumentert rett restaurantidentitet, korrekte pris
 ## Vedtak 2026-11-05
 
 City Work, Akersgata 34: [issue #1133](https://github.com/Paradispartiet/fysen/issues/1133). Både dansk og norsk SE MENY-variant ga 31/31 ikke-NOK-rader. Telefon og adresse peker også til en annen virksomhet. [PR #1137](https://github.com/Paradispartiet/fysen/pull/1137) skjulte 31 aktive menyposter uten å fjerne kildehistorikken. Ingen annen restaurant berøres av vedtaket.
+
+## Vedtak 2026-11-05 – Falafel Station
+
+[Falafel Station-sak #1139](https://github.com/Paradispartiet/fysen/issues/1139): SE MENY-kilden oppgav en dansk kyllingmeny med **66/66 fremmedvaluta-merkede** retter og kontaktinformasjon for King Falafel. [Brønnøysundregistrene](https://virksomhet.brreg.no/nb/oppslag/underenheter/823399332) registrerer King Falafel AS på Brugata 1, og [King Falafels egen kontakt](https://kingfalafel.no/contact) bekrefter samme telefon. Fysen har allerede en separat, kildekontrollert King Falafel-oppføring. Vi skjuler kun Falafel Stations uverifiserte menyposter fra aktivt søk; King Falafel, kildehistorikken og de andre restaurantene skal ikke endres. Dette avgjør ikke om navnet Falafel Station historisk har vært i drift. Gjenåpning krever selvstendig identitet og norsk menybevis.
