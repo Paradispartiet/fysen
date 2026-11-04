@@ -167,8 +167,15 @@ export function prioritizeOneRecoverableFreeQualityFailure<T>(
   let oldestFailedAt = Number.POSITIVE_INFINITY;
   for (const [sourceIndex, entry] of ordered) {
     const failure = failures[String(sourceIndex)];
-    if ((failure?.code !== "quality" && failure?.code !== "other") ||
-        !Number.isInteger(failure.consecutive) || failure.consecutive < 1) continue;
+    if (!failure || !Number.isInteger(failure.consecutive) || failure.consecutive < 1)
+      continue;
+    const currentProofHash = sourceProofHashes[String(sourceIndex)];
+    const correctedProof = currentProofHash !== undefined &&
+      currentProofHash !== failure.sourceProofHash;
+    // A persistent non-NOK menu can be fast-tracked only for a changed,
+    // explicitly verifiable source proof, never for the same rejected data.
+    if (failure.code !== "quality" && failure.code !== "other" &&
+        !(failure.code === "currency" && correctedProof)) continue;
     const failedAt = Date.parse(failure.lastFailedAt);
     const elapsed = nowMillis - failedAt;
     const retryAfterMillis = failure.consecutive === 1
@@ -177,9 +184,6 @@ export function prioritizeOneRecoverableFreeQualityFailure<T>(
     // A corrected manifest is a new proof, not an unchanged failed provider.
     // Legacy failures without a stored hash get one bounded recheck. Every
     // subsequent failed attempt records the current hash and honors backoff.
-    const currentProofHash = sourceProofHashes[String(sourceIndex)];
-    const correctedProof = currentProofHash !== undefined &&
-      currentProofHash !== failure.sourceProofHash;
     if (!Number.isFinite(elapsed) || elapsed < 0 ||
         (!correctedProof && elapsed < retryAfterMillis)) continue;
     if (failedAt < oldestFailedAt) {
