@@ -71,6 +71,23 @@ export function recordFreeSourceFailure(
 // up to three suspect rows from a substantial extraction (at most 10%). All
 // source-specific floors, mandatory dishes and suspicious-drop checks still run
 // on the *remaining* rows. Larger anomalies fail closed and retain old data.
+// Snapshot bytes may be re-fetched today, but the underlying restaurant
+// menu was verified only at its recorded archive time. Never stamp today's
+// fetch as a fresh restaurant observation.
+export function publishedFreeObservationTime(
+  fetchedAt: string,
+  historicalSnapshotAt?: string,
+): string {
+  if (!historicalSnapshotAt) return fetchedAt;
+  const archivedAtMs = Date.parse(historicalSnapshotAt);
+  const fetchedAtMs = Date.parse(fetchedAt);
+  if (!Number.isFinite(archivedAtMs) || !Number.isFinite(fetchedAtMs) ||
+      archivedAtMs > fetchedAtMs) {
+    throw new Error("Invalid or future-dated historical menu observation");
+  }
+  return historicalSnapshotAt;
+}
+
 export function retainPublishableFreeMenuObservations(
   observations: readonly MenuObservedItem[],
 ): { items: MenuObservedItem[]; discarded: number } {
