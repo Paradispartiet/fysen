@@ -1,7 +1,81 @@
 {
   "version": 1,
-  "restaurant": {"slug":"dinner-sushi-hegdehaugsveien-oslo","name":"Dinner Sushi","websiteUrl":null,"address":"Hegdehaugsveien 1, 0352 Oslo","city":"Oslo","countryCode":"NO","latitude":59.9204273658018,"longitude":10.732797673147669},
-  "menuSource": {"url":"https://semeny.no/sted/dinnersushi1","sourceType":"html","fetchMode":"http","userAgent":"FysenMenuBot/0.1","checkIntervalMinutes":720,"minimumExpectedItems":170,"sourceSupport":{"redirectOrigins":[],"browserDataOrigins":[],"browserBlockedOrigins":[]}},
-  "verification":{"hours":{"status":"unverified","checkedAt":"2026-08-26","note":"Batch 08 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."}},"actions":[],
-  "qualityAssertions":{"requiredDishNames":["Laksetatar","201.Dinner Box 2 (14 stk)","Iki Ginger Beer 5.5% 0,33 l","046.Hell's Laks Roll","084.Futomaki Tun Big","122.Nigiri Avocado","Ingefær","Mango Chokolade Cake /K"],"requiredDishVariants":[{"name":"Laksetatar","priceMinor":9900},{"name":"201.Dinner Box 2 (14 stk)","priceMinor":16500},{"name":"Iki Ginger Beer 5.5% 0,33 l","priceMinor":5800},{"name":"046.Hell's Laks Roll","priceMinor":13800},{"name":"084.Futomaki Tun Big","priceMinor":7500},{"name":"122.Nigiri Avocado","priceMinor":2000},{"name":"Ingefær","priceMinor":500},{"name":"Mango Chokolade Cake /K","priceMinor":4000}],"forbiddenDishNames":[]}
+  "restaurant": {
+    "slug": "dinner-sushi-hegdehaugsveien-oslo",
+    "name": "Dinner Sushi",
+    "websiteUrl": "https://sushidinner.no/",
+    "address": "Hegdehaugsveien 1, 0352 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.9204273658018,
+    "longitude": 10.732797673147669
+  },
+  "menuSource": {
+    "url": "https://semeny.no/public/sted/sushidinner",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 80,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-08-26",
+      "note": "2026-11-04: Source migration probe. The Norwegian SE MENY page https://semeny.no/public/sted/sushidinner matches the restaurant's Hegdehaugsveien 1 identity. Exact-head HTTP200/json_ld source proof: 89 NOK-publishable priced items, fingerprint 55102408e32912a220ad7efd6e662d5934b487a7d7c2c7cb58f9294c72cbf0d3. Eight new cross-section name/price pairs are all directly observed. New floor 80 (~90% of source-backed 89, not historic unrelated 170). Old public source must be preserved unless full Free quality and suspicious-drop checks pass; hours not verified. Wolt source gave only 78 priced items over HTTP; browser exceeded 120-request cap."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "Dagens Sushi 1",
+      "Familiemeny 1",
+      "Thai Suppe",
+      "Vårruller m/Kylling",
+      "🌱 7b. Vegetar Kimchi",
+      "Tempura Hummer (Futo Maki)",
+      "Stekte Nudler m/kylling og scampi",
+      "Panang Karri 🌶"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "Dagens Sushi 1",
+        "priceMinor": 18900
+      },
+      {
+        "name": "Familiemeny 1",
+        "priceMinor": 66900
+      },
+      {
+        "name": "Thai Suppe",
+        "priceMinor": 6400
+      },
+      {
+        "name": "Vårruller m/Kylling",
+        "priceMinor": 7900
+      },
+      {
+        "name": "🌱 7b. Vegetar Kimchi",
+        "priceMinor": 9500
+      },
+      {
+        "name": "Tempura Hummer (Futo Maki)",
+        "priceMinor": 14900
+      },
+      {
+        "name": "Stekte Nudler m/kylling og scampi",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Panang Karri 🌶",
+        "priceMinor": 17900
+      }
+    ],
+    "forbiddenDishNames": []
+  }
 }
