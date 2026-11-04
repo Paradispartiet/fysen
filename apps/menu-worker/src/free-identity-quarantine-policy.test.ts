@@ -14,12 +14,20 @@ const cityWork = {
   quarantinedAt: "2026-11-05",
 } as const;
 
+const falafelStation = {
+  code: "identity-unverified",
+  slug: "falafel-station-brugata-oslo",
+  expectedSourceUrl: "https://semeny.no/sted/falafelstation",
+  issue: "https://github.com/Paradispartiet/fysen/issues/1139",
+  quarantinedAt: "2026-11-05",
+} as const;
+
 describe("manually reviewed Free identity quarantines", () => {
   it("loads the committed City Work policy, rather than an implicit error-code rule", async () => {
     const policies = await readReviewedIdentityQuarantines(
       fileURLToPath(new URL("../free-identity-quarantines.json", import.meta.url)),
     );
-    expect(policies).toEqual([cityWork]);
+    expect(policies).toEqual([cityWork, falafelStation]);
   });
 
   it("accepts two independent, separately reviewed entries", () => {

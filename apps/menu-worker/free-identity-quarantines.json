@@ -7,6 +7,13 @@
       "issue": "https://github.com/Paradispartiet/fysen/issues/1133",
       "quarantinedAt": "2026-11-05",
       "code": "identity-unverified"
+    },
+    {
+      "code": "identity-unverified",
+      "slug": "falafel-station-brugata-oslo",
+      "expectedSourceUrl": "https://semeny.no/sted/falafelstation",
+      "issue": "https://github.com/Paradispartiet/fysen/issues/1139",
+      "quarantinedAt": "2026-11-05"
     }
   ]
 }
