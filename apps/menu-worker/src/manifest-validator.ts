@@ -7,6 +7,7 @@ import {
   type ManifestMenuQualityResult,
 } from "./manifest-quality.js";
 import { canonicalizeUniqueMenuSourceKeys } from "./menu-source-key-canonicalizer.js";
+import { retainPublishableFreeMenuObservations } from "./free-static-refresh-core.js";
 import {
   getHoursVerificationStatus,
   isHoursVerificationBlocking,
@@ -178,7 +179,20 @@ async function validateMenu(
 
     const { fetched, extracted, canonicalItems } = attempt;
     const fingerprint = createMenuFingerprint(canonicalItems);
-    const quality = evaluateManifestMenuQuality(manifest, canonicalItems);
+    // Restaurant live proofs must agree with the public Free gate. Otherwise an
+    // entire source can pass its eight menu/price assertions but fail publication
+    // because the source labels every item with a non-NOK currency.
+    let publishableItems = canonicalItems;
+    let currencyError: string | null = null;
+    try {
+      publishableItems = retainPublishableFreeMenuObservations(canonicalItems).items;
+    } catch (error) {
+      currencyError = errorMessage(error);
+    }
+    const checkedQuality = evaluateManifestMenuQuality(manifest, publishableItems);
+    const quality = currencyError
+      ? { ...checkedQuality, accepted: false }
+      : checkedQuality;
     return {
       accepted: quality.accepted,
       url: manifest.menuSource.url,
@@ -192,9 +206,9 @@ async function validateMenu(
         name: item.name,
         priceMinor: item.priceMinor,
       })),
-      error: quality.accepted
+      error: currencyError ?? (quality.accepted
         ? null
-        : `Menu assertions failed: items=${quality.itemCount}/${quality.minimumExpectedItems}, missing=${quality.missingRequiredDishes.join(",") || "none"}, forbidden=${quality.forbiddenDishesPresent.join(",") || "none"}`,
+        : `Menu assertions failed: items=${quality.itemCount}/${quality.minimumExpectedItems}, missing=${quality.missingRequiredDishes.join(",") || "none"}, forbidden=${quality.forbiddenDishesPresent.join(",") || "none"}`),
     };
   } catch (error) {
     return {
