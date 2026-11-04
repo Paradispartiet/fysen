@@ -33,7 +33,10 @@ export function classifyFreeSourceFailure(error: unknown): FreeSourceFailureCode
     /invalid extracted items exceed safe budget \(total=(\d+), invalid=(\d+), nonNok=(\d+), blank=(\d+), limit=\d+\)/,
   );
   if (allForeign) {
-    const [total, invalid, nonNok, blank] = allForeign.slice(1).map(Number);
+    const total = Number(allForeign[1]);
+    const invalid = Number(allForeign[2]);
+    const nonNok = Number(allForeign[3]);
+    const blank = Number(allForeign[4]);
     if (total > 0 && total === invalid && total === nonNok && blank === 0)
       return "currency";
   }
