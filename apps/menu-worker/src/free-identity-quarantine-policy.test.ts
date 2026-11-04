@@ -2,8 +2,9 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import {
   assertNoImplicitQuarantineRelease, parseReviewedIdentityQuarantines,
-  readReviewedIdentityQuarantines,
+  readReviewedIdentityQuarantines, resolveReviewedIdentityQuarantines,
 } from "./free-identity-quarantine-policy.js";
+import type { FreeIndex } from "./free-static-refresh-core.js";
 
 const cityWork = {
   code: "identity-unverified",
@@ -49,6 +50,39 @@ describe("manually reviewed Free identity quarantines", () => {
     expect(() => parse({ version: 1, quarantines: Array.from({ length: 26 }, (_, i) => ({
       ...cityWork, slug: `restaurant-${i}`, expectedSourceUrl: `https://example.org/${i}`,
     })) })).toThrow();
+  });
+
+  it("matches the exact published source and catalog record, never a coincident address", () => {
+    const index: FreeIndex = {
+      version: 1, archiveDate: "2026-11-02",
+      restaurants: [
+        ["City Work", cityWork.slug, "Akersgata 34", "Oslo", ""],
+        ["Other", "other-restaurant", "Akersgata 34", "Oslo", ""],
+      ],
+      sources: [
+        [0, cityWork.expectedSourceUrl, "2026-11-02T12:00:00Z"],
+        [1, "https://example.org/safe", "2026-11-02T12:00:00Z"],
+      ],
+      items: [],
+    };
+    const matching = new Map([
+      [0, { menuSource: { url: cityWork.expectedSourceUrl } }],
+      [1, { menuSource: { url: "https://example.org/safe" } }],
+    ]);
+    expect([...resolveReviewedIdentityQuarantines(index, matching, [cityWork]).keys()]).toEqual([0]);
+    expect(() => resolveReviewedIdentityQuarantines(index, new Map(), [cityWork])).toThrow();
+    expect(() => resolveReviewedIdentityQuarantines(index, new Map([
+      [0, { menuSource: { url: "https://example.org/replaced" } }],
+    ]), [cityWork])).toThrow();
+    expect(() => resolveReviewedIdentityQuarantines({
+      ...index, sources: [[0, "https://example.org/replaced", index.sources[0]![2]], index.sources[1]!],
+    }, matching, [cityWork])).toThrow();
+    expect(() => resolveReviewedIdentityQuarantines(index, matching, [{
+      ...cityWork, slug: "other-restaurant",
+    }])).toThrow();
+    expect(() => resolveReviewedIdentityQuarantines(index, matching, [
+      cityWork, cityWork,
+    ])).toThrow();
   });
 
   it("does not silently release an already published quarantine", () => {
