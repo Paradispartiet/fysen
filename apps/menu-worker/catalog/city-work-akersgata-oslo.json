@@ -11,7 +11,7 @@
     "longitude": 10.743209318144071
   },
   "menuSource": {
-    "url": "https://www.meny.semeny.no/public/dk/sted/citywork1",
+    "url": "https://www.meny.semeny.no/public/sted/citywork1",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
@@ -27,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-09-02",
-      "note": "Batch 34 tests the current public priced service menu as secondary evidence; dine-in completeness and kitchen hours are not assumed."
+      "note": "2026-11-04: Existing SE MENY /public/dk/ source returns 31/31 non-NOK rows (currency quality failure); old public menu retained. Probe /public/sted/ (the default Norwegian canonical path used by other Oslo SE MENY sources) against unchanged 31-item floor and eight names/prices. Do not infer NOK from Danish kr or publish until actual source currency and physical restaurant identity are independently verified. Opening hours not verified."
     }
   },
   "actions": [],
