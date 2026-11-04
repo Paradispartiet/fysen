@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { gzipSync, gunzipSync } from "node:zlib";
 import { assessExtraction } from "@fysen/menu-core";
 import { evaluateManifestMenuQuality } from "./manifest-quality.js";
-import { assertNoImplicitQuarantineRelease, readReviewedIdentityQuarantines, type ReviewedIdentityQuarantine } from "./free-identity-quarantine-policy.js";
+import { assertNoImplicitQuarantineRelease, readReviewedIdentityQuarantines, resolveReviewedIdentityQuarantines } from "./free-identity-quarantine-policy.js";
 import { canonicalizeUniqueMenuSourceKeys } from "./menu-source-key-canonicalizer.js";
 import { readRestaurantOnboardingManifest, type RestaurantOnboardingManifest } from "./onboarding-manifest.js";
 import { extractMenuSource, fetchMenuSource } from "./menu-source-runtime.js";
@@ -88,17 +88,7 @@ async function main(): Promise<void> {
   const policies = await readReviewedIdentityQuarantines(
     join(catalogDir, "..", "free-identity-quarantines.json"),
   );
-  const activePolicies = new Map<number, ReviewedIdentityQuarantine>();
-  for (const policy of policies) {
-    const sourceIndex = findMatchingFreeSourceIndex(index, policy.slug, policy.expectedSourceUrl);
-    if (sourceIndex === null ||
-        index.sources[sourceIndex]?.[1] !== policy.expectedSourceUrl ||
-        matching.get(sourceIndex)?.menuSource.url !== policy.expectedSourceUrl ||
-        activePolicies.has(sourceIndex)) {
-      throw new Error("Quarantined source no longer matches reviewed evidence; refuse automatic publication");
-    }
-    activePolicies.set(sourceIndex, policy);
-  }
+  const activePolicies = resolveReviewedIdentityQuarantines(index, matching, policies);
   // A registry deletion or URL change must not silently re-enable a source
   // that was already quarantined in the public manifest.
   assertNoImplicitQuarantineRelease(quarantines, activePolicies);
