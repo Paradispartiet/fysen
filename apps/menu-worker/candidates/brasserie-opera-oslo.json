@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "restaurant": {
+    "slug": "brasserie-opera-oslo",
+    "name": "Brasserie Opera",
+    "websiteUrl": "https://www.brasserieopera.no/",
+    "address": "Kirsten Flagstads plass 1, 0150 Oslo",
+    "city": "Oslo",
+    "countryCode": "NO",
+    "latitude": 59.90777660297918,
+    "longitude": 10.752057851974856
+  },
+  "menuSource": {
+    "url": "https://www.brasserieopera.no/meny",
+    "sourceType": "html",
+    "fetchMode": "http",
+    "userAgent": "FysenMenuBot/0.1",
+    "checkIntervalMinutes": 720,
+    "minimumExpectedItems": 24,
+    "sourceSupport": {
+      "redirectOrigins": [],
+      "browserDataOrigins": [],
+      "browserBlockedOrigins": []
+    }
+  },
+  "verification": {
+    "hours": {
+      "status": "unverified",
+      "checkedAt": "2026-09-29",
+      "note": "Research reproof of tabbed first-party menu; inspect all named dishes, prices, bilingual rows, package labels and allergens against the live source before promotion."
+    }
+  },
+  "actions": [],
+  "qualityAssertions": {
+    "requiredDishNames": [
+      "3 stk østers fin de claire",
+      "OKSEHALEKROKETT",
+      "Røstipotet & løyrom",
+      "Parmaskinke (24 mnd)",
+      "FISKE- OG SKALLDYRSUPPE",
+      "Tartar av storfe 60 g.",
+      "TORSK",
+      "SJOKOLADEMOUSSE",
+      "Gelato, GELATO!",
+      "Pølser og pommes frites"
+    ],
+    "requiredDishVariants": [
+      {
+        "name": "3 stk østers fin de claire",
+        "priceMinor": 16900
+      },
+      {
+        "name": "OKSEHALEKROKETT",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Røstipotet & løyrom",
+        "priceMinor": 20900
+      },
+      {
+        "name": "Parmaskinke (24 mnd)",
+        "priceMinor": 26900
+      },
+      {
+        "name": "FISKE- OG SKALLDYRSUPPE",
+        "priceMinor": 31900
+      },
+      {
+        "name": "Tartar av storfe 60 g.",
+        "priceMinor": 27500
+      },
+      {
+        "name": "TORSK",
+        "priceMinor": 43500
+      },
+      {
+        "name": "SJOKOLADEMOUSSE",
+        "priceMinor": 18500
+      },
+      {
+        "name": "Gelato, GELATO!",
+        "priceMinor": 16500
+      },
+      {
+        "name": "Pølser og pommes frites",
+        "priceMinor": 11900
+      }
+    ],
+    "forbiddenDishNames": [
+      "Allergenes: wheat, milk, egg",
+      "Allergenes: wheat, fish, egg",
+      "Allergener: melk, egg, sulfitter, selleri",
+      "DAGENS LUNSJPAKKE",
+      "DAGENS BRUNSJPAKKE",
+      "Dagens 3-retters meny",
+      "Dagens vinpakke",
+      "Dagens hovedrett",
+      "FORRETTER",
+      "HOVEDRETTER",
+      "DESSERTER"
+    ]
+  }
+}
