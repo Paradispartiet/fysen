@@ -8,6 +8,7 @@ import {
   recoverSiblingPricedNumberedHtmlCards,
 } from "./html-sibling-price-card-recovery.js";
 import { BrowserMenuClient } from "./browser-client.js";
+import { FESTNINGEN_BILINGUAL_VERSION, recoverFestningenBilingualDinner } from "./html-festningen-bilingual-dinner.js";
 import {
   HTML_HYPHEN_PRICED_FOOD_RECOVERY_VERSION,
   recoverHyphenDescriptionPricedFoodItems,
@@ -600,6 +601,17 @@ export async function extractMenuSource(
         : normalizedHtml;
     const fullVisibleText = extractHtmlVisibleText(recoveryHtml);
     assertExtractionMethodForSourceType(sourceType, extracted.method);
+    const highConfidenceFestningenItems =
+      extracted.method === "html_heuristic"
+        ? recoverFestningenBilingualDinner(recoveryHtml)
+        : null;
+    if (highConfidenceFestningenItems !== null) {
+      return {
+        items: highConfidenceFestningenItems,
+        method: extracted.method,
+        extractorVersion: HTML_RUNTIME_EXTRACTOR_VERSION,
+      };
+    }
     const embeddedItems =
       extracted.method === "html_heuristic"
         ? recoverEmbeddedStructuredMenuJson(recoveryHtml).filter(
