@@ -17,7 +17,7 @@ test("Fysen can be added to iPhone and iPad Home Screen without Apple signing", 
   assert.equal(manifest.theme_color, "#090b09");
   assert.equal(manifest.background_color, "#090b09");
   assert.deepEqual(manifest.icons, [
-    { src: "/fysen-app-icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
+    { src: "/fysen-app-icon.webp", sizes: "320x320", type: "image/webp", purpose: "any" },
   ]);
 });
 
@@ -30,6 +30,6 @@ test("Fysen iOS web app reuses its native brand icon and declares Apple metadata
   assert.match(page, /appleWebApp:\s*\{/);
   assert.match(page, /capable: true/);
   assert.match(page, /title: "Fysen"/);
-  assert.match(page, /apple: "\/brand\/fysen-mark-exact.png"/);
+  assert.match(page, /apple: "\/fysen-app-icon.webp"/);
   assert.match(page, /themeColor: "#090b09"/);
 });

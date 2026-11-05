@@ -11,9 +11,9 @@
   "lang": "nb",
   "icons": [
     {
-      "src": "/fysen-app-icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "/fysen-app-icon.webp",
+      "sizes": "320x320",
+      "type": "image/webp",
       "purpose": "any"
     }
   ]
