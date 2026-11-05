@@ -1,0 +1,154 @@
+name: Fysen production connection preflight (read-only)
+
+# One bounded observation after merge; never deploys, migrates, or writes to a database.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/fysen-production-connection-preflight.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      PROOF_DATABASE_URL: ${{ secrets.FYSEN_PRODUCTION_DATABASE_URL }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - name: Diagnose configured endpoints without printing secret values
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { appendFileSync } from "node:fs";
+
+          const legacyRef = "voglczxxtbwcxjrbffbt";
+          const recoveryRef = "txaopscyxjvvmwawsphk";
+          const teamId = "team_mV3NpMYd5l7yGmuZkbTf46y8";
+          const projectIds = {
+            web: "prj_G0Vm4jhCg3hWRvVBSEIt5klHO6sS",
+            api: "prj_sSNtWlPc13Lgr2ws6DdhCfPFtr4E",
+          };
+
+          function classifyDatabaseUrl(raw) {
+            if (typeof raw !== "string" || !raw.trim()) return "missing-or-unavailable";
+            try {
+              const url = new URL(raw.trim());
+              if (!["postgres:", "postgresql:"].includes(url.protocol)) return "not-postgres";
+              const host = url.hostname.toLowerCase();
+              const username = decodeURIComponent(url.username).toLowerCase();
+              // Supabase can use a project-specific direct host OR a shared pooler
+              // with the project ref in the username. Never print either credential.
+              if (host.includes(legacyRef) || username.includes(legacyRef)) return "legacy-full-disk";
+              if (host.includes(recoveryRef) || username.includes(recoveryRef)) return "recovery-free";
+              return "other-unverified";
+            } catch {
+              return "invalid-or-opaque";
+            }
+          }
+
+          function classifyApiBase(raw) {
+            if (typeof raw !== "string" || !raw.trim()) return "missing-or-unavailable";
+            try {
+              const parsed = new URL(raw.trim());
+              return parsed.protocol === "https:" && parsed.hostname === "fysen-api.vercel.app"
+                ? "expected-api"
+                : "other-unverified";
+            } catch {
+              return "invalid-or-opaque";
+            }
+          }
+
+          function productionVariable(envs, key) {
+            const choices = envs.filter((env) =>
+              env?.key === key &&
+              (env.target === "production" ||
+                (Array.isArray(env.target) && env.target.includes("production")))
+            );
+            // Ambiguous duplicate production variables cannot be confidently classified.
+            if (choices.length !== 1) return { state: choices.length === 0 ? "not-found" : "ambiguous" };
+            return { state: "found", value: choices[0].value };
+          }
+
+          async function checkVercelProject(projectId) {
+            if (!process.env.VERCEL_TOKEN) return { state: "token-unavailable" };
+            try {
+              const query = new URLSearchParams({ teamId, decrypt: "true" });
+              const response = await fetch(
+                "https://api.vercel.com/v10/projects/" + encodeURIComponent(projectId) + "/env?" + query,
+                {
+                  headers: { authorization: "Bearer " + process.env.VERCEL_TOKEN },
+                  signal: AbortSignal.timeout(12_000),
+                },
+              );
+              if (!response.ok) return { state: "api-http-" + response.status };
+              const data = await response.json();
+              if (!Array.isArray(data.envs)) return { state: "api-response-unverified" };
+              const db = productionVariable(data.envs, "DATABASE_URL");
+              const apiBase = productionVariable(data.envs, "FYSEN_API_BASE_URL");
+              return {
+                state: "configuration-only-not-deployed-proof",
+                database: db.state === "found" ? classifyDatabaseUrl(db.value) : db.state,
+                apiBase: apiBase.state === "found" ? classifyApiBase(apiBase.value) : apiBase.state,
+              };
+            } catch {
+              return { state: "api-unreachable" };
+            }
+          }
+
+          async function checkPublic(url, kind) {
+            try {
+              const response = await fetch(url, {
+                cache: "no-store",
+                headers: { "user-agent": "FysenReadOnlyConnectionPreflight/1" },
+                signal: AbortSignal.timeout(12_000),
+              });
+              if (!response.ok) return { httpStatus: response.status, verified: false };
+              if (kind === "browse") {
+                const body = await response.json();
+                return {
+                  httpStatus: response.status,
+                  verified: Array.isArray(body.dishes) && typeof body.count === "number",
+                  dishNameGroups: Array.isArray(body.dishes) ? body.dishes.length : null,
+                };
+              }
+              const html = await response.text();
+              return {
+                httpStatus: response.status,
+                matlystMarkers: html.includes("Ramen") &&
+                  html.includes("Production-backed canonical Matlyst-retter"),
+              };
+            } catch {
+              return { verified: false, state: "unreachable-or-timeout" };
+            }
+          }
+
+          const result = {
+            githubProductionProofDatabase: classifyDatabaseUrl(process.env.PROOF_DATABASE_URL),
+            vercelApiProductionConfiguration: await checkVercelProject(projectIds.api),
+            vercelWebProductionConfiguration: await checkVercelProject(projectIds.web),
+            publicDishBrowse: await checkPublic(
+              "https://fysen-api.vercel.app/v1/dishes/browse?city=Oslo", "browse"
+            ),
+            publicMatlystPage: await checkPublic(
+              "https://fysen.vercel.app/search?city=Oslo&cuisine=Japansk", "html"
+            ),
+          };
+
+          // The summary contains only fixed labels, status codes and small counts.
+          // Never stringify Vercel API responses, database URLs, tokens, or errors.
+          const safeReport = JSON.stringify(result, null, 2);
+          console.log(safeReport);
+          if (process.env.GITHUB_STEP_SUMMARY) {
+            appendFileSync(
+              process.env.GITHUB_STEP_SUMMARY,
+              "## Read-only Fysen production connection diagnostic\n\n" +
+              "This is **not** a deploy, a recovery cutover, or release approval. " +
+              "Vercel project variables may differ from existing deployment settings.\n\n" +
+              "~~~json\n" + safeReport + "\n~~~\n",
+            );
+          }
+          NODE
