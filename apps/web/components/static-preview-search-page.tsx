@@ -9,7 +9,7 @@ import { useEffect, useMemo, useState } from "react";
 import { browseDishesClient, clientPreviewApiBaseUrl } from "../lib/client-dish-search";
 import { DishBrowse } from "./dish-browse";
 import { DishKnowledgeNote } from "./dish-knowledge-note";
-import { DishResult } from "./dish-result";
+import { SearchResults } from "./search-results";
 import { DishSearch } from "./dish-search";
 import { GlobalHeader } from "./global-header";
 import { SearchState } from "./search-state";
@@ -127,7 +127,7 @@ export function StaticPreviewSearchPage() {
   const city = query?.city ?? "Oslo";
   const countLabel = data
     ? primaryResults.length > 0
-      ? `${primaryResults.length} menytreff`
+      ? `${primaryResults.length} sikre menytreff${data.results.length === 20 ? " blant de 20 viste" : ""}`
       : nearResults.length > 0
         ? "Ingen sikre treff"
         : "Ingen ferske menytreff"
@@ -188,22 +188,13 @@ export function StaticPreviewSearchPage() {
                 />
               ) : null}
 
-              {!loading && primaryResults.length > 0 ? (
-                <div className="resultList">
-                  {primaryResults.map((result) => <DishResult result={result} key={result.menuItemId} />)}
-                </div>
-              ) : null}
-
-              {!loading && nearResults.length > 0 ? (
-                <section className="nearResults" aria-labelledby="near-results-title">
-                  {primaryResults.length === 0 ? (
-                    <p className="nearResultsLead">Vi fant ikke et sikkert rettetreff, men disse menyoppføringene ligner.</p>
-                  ) : null}
-                  <h2 id="near-results-title">Nære treff</h2>
-                  <div className="resultList">
-                    {nearResults.map((result) => <DishResult result={result} key={result.menuItemId} />)}
-                  </div>
-                </section>
+              {!loading && data && data.results.length > 0 ? (
+                <SearchResults
+                  primaryResults={primaryResults}
+                  nearResults={nearResults}
+                  hasLocation={false}
+                  searchLimitReached={data.results.length === 20}
+                />
               ) : null}
             </>
           )}

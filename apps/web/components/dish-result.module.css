@@ -84,3 +84,27 @@
     max-width: 108px;
   }
 }
+
+.mapAction {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 0 4px;
+  border: 0;
+  background: transparent;
+  color: var(--color-brand);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.mapAction:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.mapAction:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}

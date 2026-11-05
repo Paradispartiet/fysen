@@ -62,3 +62,16 @@ Målrettet livevalidering på eksakt PR-commit er obligatorisk før merge. Kvali
 - Sikre menytreff og lignende navnetreff forblir egne lister også etter filtrering. Lignende retter fremstilles aldri som sikre.
 - Et valgfritt kart viser besøkskoordinatene for valgt restaurant. Kart fra OpenStreetMap lastes først ved eksplisitt åpning, viser én markør av gangen og gir lenker til større kart og veibeskrivelse.
 - Brukerflyten skal verifiseres i produksjon på 320–390 px mobil; en vellykket TypeScript/CI-kjøring er ikke tilstrekkelig lanseringsbevis.
+
+## Forbrukeropplevelse etter Brasserie-reparasjonen (PR #1000)
+
+- Brasserie France: streng livevalidering av 28/26 kanoniske retter med samtlige åtte prisassertasjoner bestått. Parserrettelsen er publisert på main som `1bd814b987fca72ee0d404aed0e6d5c1281981b8`; produksjonsmaterialisering må fremdeles avstemmes separat.
+- Nordic Sushi & Wok: tidligere gyldig snapshot beholdes. Ingen omgåelse av tilgangskontroll eller kravsenking; kilden blir egen feil-/kildekø.
+
+## Mobilflyt: direkte restaurantkort → kart og forhåndsvisningsparitet
+
+- Hvert konkret rett-/restaurantkort kan nå velge sin egen restaurantmarkør og åpne kartpanelet i én handling, også fra listen over lignende retter.
+- Kartpanelet har returlenke til det valgte rettetreffet; 44 px målflate og tastaturfokus er definert for kartknappen.
+- Den statiske søkeforhåndsvisningen gjenbruker samme SearchResults-komponent som hovedappen, med samme lokale filtre, kart og skille mellom sikre/lignende treff.
+- En målrettet automatisk mobilproof er utvidet til 320 og 390 px og til å kontrollere markeringsvalg og returlenke. Den er en testspesifikasjon frem til den faktisk er kjørt på tilgjengelig produksjons- eller previewmiljø.
+- Endelig lanseringsgodkjenning krever fremdeles én praktisk ende-til-ende-test på ekte mobil, faktisk produksjonsavstemming og synliggjøring av reelle katalogavvik.
