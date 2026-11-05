@@ -27,3 +27,11 @@ City Work, Akersgata 34: [issue #1133](https://github.com/Paradispartiet/fysen/i
 ## Vedtak 2026-11-05 – Falafel Station
 
 [Falafel Station-sak #1139](https://github.com/Paradispartiet/fysen/issues/1139): SE MENY-kilden oppgav en dansk kyllingmeny med **66/66 fremmedvaluta-merkede** retter og kontaktinformasjon for King Falafel. [Brønnøysundregistrene](https://virksomhet.brreg.no/nb/oppslag/underenheter/823399332) registrerer King Falafel AS på Brugata 1, og [King Falafels egen kontakt](https://kingfalafel.no/contact) bekrefter samme telefon. Fysen har allerede en separat, kildekontrollert King Falafel-oppføring. Vi skjuler kun Falafel Stations uverifiserte menyposter fra aktivt søk; King Falafel, kildehistorikken og de andre restaurantene skal ikke endres. Dette avgjør ikke om navnet Falafel Station historisk har vært i drift. Gjenåpning krever selvstendig identitet og norsk menybevis.
+
+## Vedtak 2026-11-05 – Fancii og Ferry's Pizzeria
+
+**Fancii:** [sak #1141](https://github.com/Paradispartiet/fysen/issues/1141). Dansk SE MENY-materiale påstås å være norsk restaurant i Myntfunnveien 2. [Brønnøysundregistrene](https://virksomhet.brreg.no/nb/oppslag/enheter/951050326) har Ullern Idrettsforening på adressen, mens [Fancii Sushi sin egen danske nettside](https://www.fanciisushi.dk/) oppgir Ølstykke i Danmark. Den målrettede gratisprøven avviste 143 av 144 fremmedvalutamerkede rader. Ingen norsk restaurantidentitet eller gyldig NOK-meny er dokumentert.
+
+**Ferry's Pizzeria:** [sak #1142](https://github.com/Paradispartiet/fysen/issues/1142). Svensk SE MENY oppgir pizzeria i Filipstadveien 25 med telefon 22 94 42 00, som [Color Line selv](https://www.colorline.no/kundeservice) oppgir for sitt kundesenter. Adressen er Color Line-terminalen. Hele det uttrekkede menymaterialet (63 av 63) ble avvist på fremmed valuta. Dette er ikke tilstrekkelig bevis for en Oslo-pizzeria.
+
+Begge vedtak er **kildespesifikke**, uten omregning av utenlandsk valuta, uten endring av andre restauranter og uten sletting av historikken. Vi kan ikke konkludere at virksomhetene aldri har eksistert; karantenen kan bare oppheves etter selvstendig identitets- og NOK-menykontroll.

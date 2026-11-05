@@ -14,6 +14,20 @@
       "expectedSourceUrl": "https://semeny.no/sted/falafelstation",
       "issue": "https://github.com/Paradispartiet/fysen/issues/1139",
       "quarantinedAt": "2026-11-05"
+    },
+    {
+      "code": "identity-unverified",
+      "slug": "fancii-oslo",
+      "expectedSourceUrl": "https://www.meny.semeny.no/public/dk/sted/fancii",
+      "issue": "https://github.com/Paradispartiet/fysen/issues/1141",
+      "quarantinedAt": "2026-11-05"
+    },
+    {
+      "code": "identity-unverified",
+      "slug": "ferrys-pizzeria-filipstad-oslo",
+      "expectedSourceUrl": "https://semeny.no/sted/ferryspizzeria",
+      "issue": "https://github.com/Paradispartiet/fysen/issues/1142",
+      "quarantinedAt": "2026-11-05"
     }
   ]
 }
