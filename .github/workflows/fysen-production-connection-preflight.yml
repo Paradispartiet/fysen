@@ -70,7 +70,34 @@ jobs:
             );
             // Ambiguous duplicate production variables cannot be confidently classified.
             if (choices.length !== 1) return { state: choices.length === 0 ? "not-found" : "ambiguous" };
-            return { state: "found", value: choices[0].value };
+            return { state: "found", value: choices[0].value, id: choices[0].id };
+          }
+
+          async function resolveProjectVariableValue(projectId, variable) {
+            if (variable.state !== "found") return null;
+            if (typeof variable.value === "string" && variable.value.trim()) {
+              return variable.value;
+            }
+            if (typeof variable.id !== "string" || !/^env_[A-Za-z0-9]+$/.test(variable.id)) {
+              return null;
+            }
+            try {
+              // Vercel may intentionally omit sensitive values from the project list.
+              // The existing access token can request just this one variable by ID.
+              const url = "https://api.vercel.com/v1/projects/" +
+                encodeURIComponent(projectId) + "/env/" +
+                encodeURIComponent(variable.id) + "?teamId=" + encodeURIComponent(teamId);
+              const response = await fetch(url, {
+                headers: { authorization: "Bearer " + process.env.VERCEL_TOKEN },
+                signal: AbortSignal.timeout(10_000),
+              });
+              if (!response.ok) return null;
+              const body = await response.json();
+              // Never log the individual value, full API payload, or thrown errors.
+              return typeof body.value === "string" ? body.value : null;
+            } catch {
+              return null;
+            }
           }
 
           async function checkVercelProject(projectId) {
@@ -91,8 +118,10 @@ jobs:
               const apiBase = productionVariable(data.envs, "FYSEN_API_BASE_URL");
               return {
                 state: "configuration-only-not-deployed-proof",
-                database: db.state === "found" ? classifyDatabaseUrl(db.value) : db.state,
-                apiBase: apiBase.state === "found" ? classifyApiBase(apiBase.value) : apiBase.state,
+                database: db.state === "found"
+                  ? classifyDatabaseUrl(await resolveProjectVariableValue(projectId, db)) : db.state,
+                apiBase: apiBase.state === "found"
+                  ? classifyApiBase(await resolveProjectVariableValue(projectId, apiBase)) : apiBase.state,
               };
             } catch {
               return { state: "api-unreachable" };
