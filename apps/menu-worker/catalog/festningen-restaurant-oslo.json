@@ -27,44 +27,44 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-09-19",
-      "note": "Exact-head live reproof for generic interleaved bilingual dish-card canonicalization. No parser exception, source substitution, item-floor weakening, or canonical promotion."
+      "note": "2026-11-05: Official https://www.festningenrestaurant.no/middag lists seasonal November dishes including BEEF TARTARE 275, RISOTTO 295, GRILLED VENISON 445, COD 455, GRILLED REINDEER 465, MOCHA CREAM 185 and SELECTION OF CHEESE 245 NOK. Previous anchors for TRUFFLE AND MUSHROOM RISOTTO and HAZELNUT PRALINE refer to superseded seasonal menu. Keep exact first-party source, 7-item floor and seven current exact NOK checks; no extractor or currency exceptions. Hours unverified."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
-      "SPEKEMAT",
       "BEEF TARTARE",
-      "TRUFFLE AND MUSHROOM RISOTTO",
-      "CHEESECAKE",
-      "BROWNED BUTTER ICE CREAM AND HAZELNUT PRALINE",
-      "PETITS FOURS",
+      "RISOTTO",
+      "GRILLED VENISON",
+      "COD",
+      "GRILLED REINDEER",
+      "MOCHA CREAM",
       "SELECTION OF CHEESE"
     ],
     "requiredDishVariants": [
-      {
-        "name": "SPEKEMAT",
-        "priceMinor": 15000
-      },
       {
         "name": "BEEF TARTARE",
         "priceMinor": 27500
       },
       {
-        "name": "TRUFFLE AND MUSHROOM RISOTTO",
+        "name": "RISOTTO",
         "priceMinor": 29500
       },
       {
-        "name": "CHEESECAKE",
+        "name": "GRILLED VENISON",
+        "priceMinor": 44500
+      },
+      {
+        "name": "COD",
+        "priceMinor": 45500
+      },
+      {
+        "name": "GRILLED REINDEER",
+        "priceMinor": 46500
+      },
+      {
+        "name": "MOCHA CREAM",
         "priceMinor": 18500
-      },
-      {
-        "name": "BROWNED BUTTER ICE CREAM AND HAZELNUT PRALINE",
-        "priceMinor": 19500
-      },
-      {
-        "name": "PETITS FOURS",
-        "priceMinor": 8500
       },
       {
         "name": "SELECTION OF CHEESE",
