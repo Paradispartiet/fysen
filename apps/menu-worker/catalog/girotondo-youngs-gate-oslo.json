@@ -26,8 +26,8 @@
   "verification": {
     "hours": {
       "status": "unverified",
-      "checkedAt": "2026-10-16",
-      "note": "Operatørens egen gjeldende prisede pizza-, antipasti- og dessertmeny kontrollert 2026-10-16. 44 maskinelt innhentede pristekster, hvorav 2 beskrivelser/tillegg som må filtreres; minst 42 reelle prisede matretter generert fra kilde på research-PR #961; nøyaktig adresse og representasjonspunkt fra Kartverket Adresser API v1, kommunenummer 0301, postnummer 0181. Full menysemantikk og kildeparitet må bestå livevalidering i denne PR; åpningstider ikke uavhengig kontrollert."
+      "checkedAt": "2026-11-05",
+      "note": "2026-11-05: Restaurantens egen publiserte meny på https://www.girotondo.no/meny viser ikke lenger COPPA E BURRATA AL TARTUFO. SCAMORZA AFFUMICATA TARTUFO E PARMA (280 kr) brukes som nytt eksakt antipasti-anker. Tre tidligere prisankre er endret på offisiell kilde: PRINCIPESSA 290 kr, PICCANTE 290 kr, TIRAMISU 155 kr. Behold 42 som minimum og alle øvrige 4 kjente pris- og navneankre; krev eksakt-head livevalidering før merge. Åpningstider ikke uavhengig kontrollert."
     }
   },
   "actions": [],
@@ -39,7 +39,7 @@
       "PRINCIPESSA",
       "PICCANTE",
       "FOCACCIA ROSMARINO",
-      "COPPA E BURRATA AL TARTUFO",
+      "SCAMORZA AFFUMICATA TARTUFO E PARMA",
       "TIRAMISU"
     ],
     "requiredDishVariants": [
@@ -57,23 +57,23 @@
       },
       {
         "name": "PRINCIPESSA",
-        "priceMinor": 28500
+        "priceMinor": 29000
       },
       {
         "name": "PICCANTE",
-        "priceMinor": 28000
+        "priceMinor": 29000
       },
       {
         "name": "FOCACCIA ROSMARINO",
         "priceMinor": 13000
       },
       {
-        "name": "COPPA E BURRATA AL TARTUFO",
-        "priceMinor": 29500
+        "name": "SCAMORZA AFFUMICATA TARTUFO E PARMA",
+        "priceMinor": 28000
       },
       {
         "name": "TIRAMISU",
-        "priceMinor": 15000
+        "priceMinor": 15500
       }
     ],
     "forbiddenDishNames": [
