@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 7,
+    "minimumExpectedItems": 14,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -27,17 +27,21 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-09-19",
-      "note": "Exact-head live reproof for generic interleaved bilingual dish-card canonicalization. No parser exception, source substitution, item-floor weakening, or canonical promotion."
+      "note": "2026-11-05: Official https://www.festningenrestaurant.no/middag currently returns 16 complete NOK-priced dish cards using branded bilingual section recovery. Preserve actual seasonal menu names. Minimum 14 (observed 16) and 11 exact first-party name/price assertions across snacks, starters, mains and dessert. Forbid fragment labels 30g/kr and trailing dessert-description price text, which earlier extractor incorrectly promoted to dishes. No source substitution, currency exceptions or fabricated prices. Opening hours not verified."
     }
   },
   "actions": [],
   "qualityAssertions": {
     "requiredDishNames": [
       "SPEKEMAT",
+      "ANNA DUTCH CAVIAR",
       "BEEF TARTARE",
-      "TRUFFLE AND MUSHROOM RISOTTO",
+      "RISOTTO",
+      "GRILLED VENISON",
+      "COD",
+      "GRILLED REINDEER",
+      "MOCHA CREAM",
       "CHEESECAKE",
-      "BROWNED BUTTER ICE CREAM AND HAZELNUT PRALINE",
       "PETITS FOURS",
       "SELECTION OF CHEESE"
     ],
@@ -47,20 +51,36 @@
         "priceMinor": 15000
       },
       {
+        "name": "ANNA DUTCH CAVIAR",
+        "priceMinor": 75000
+      },
+      {
         "name": "BEEF TARTARE",
         "priceMinor": 27500
       },
       {
-        "name": "TRUFFLE AND MUSHROOM RISOTTO",
+        "name": "RISOTTO",
         "priceMinor": 29500
+      },
+      {
+        "name": "GRILLED VENISON",
+        "priceMinor": 44500
+      },
+      {
+        "name": "COD",
+        "priceMinor": 45500
+      },
+      {
+        "name": "GRILLED REINDEER",
+        "priceMinor": 46500
+      },
+      {
+        "name": "MOCHA CREAM",
+        "priceMinor": 18500
       },
       {
         "name": "CHEESECAKE",
         "priceMinor": 18500
-      },
-      {
-        "name": "BROWNED BUTTER ICE CREAM AND HAZELNUT PRALINE",
-        "priceMinor": 19500
       },
       {
         "name": "PETITS FOURS",
@@ -78,7 +98,9 @@
       "DESSERT OG OST // DESSERT & CHEESE",
       "DAGENS RETT",
       "CURED MEAT",
-      "TRUFFLE AND MUSHROOM RISOTTO (milk, sulfitte)"
+      "TRUFFLE AND MUSHROOM RISOTTO (milk, sulfitte)",
+      "30g/kr",
+      "butterscotch sauce and lemon thyme (milk, egg, fish)+Kr"
     ]
   }
 }
