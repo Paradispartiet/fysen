@@ -3,11 +3,11 @@
   "archiveDate": "2026-11-02",
   "restaurants": 973,
   "sources": 973,
-  "dishes": 47466,
-  "bytes": 1947530,
-  "sha256": "4dea2a87c68612e28eb16ff544d7b0621c5457d5b94eeff7a7a4b903e0ff06c4",
+  "dishes": 47259,
+  "bytes": 1925633,
+  "sha256": "17e6a15290edf55c9c7545ea8425a788d9d2ed59787668f41aab92eacd3968bb",
   "disclaimer": "Historiske, sist verifiserte menyer. Ikke sanntid. Sjekk restauranten for dagens pris og tilgjengelighet.",
-  "lastRefreshAt": "2026-11-04T23:55:06.001Z",
+  "lastRefreshAt": "2026-11-05T00:11:15.830Z",
   "refreshedSourceIndices": [
     22,
     31,
@@ -167,6 +167,17 @@
     298,
     299,
     300,
+    301,
+    302,
+    303,
+    304,
+    305,
+    306,
+    307,
+    308,
+    309,
+    310,
+    311,
     492,
     653,
     656,
@@ -471,7 +482,7 @@
     "289": "2026-11-04T23:54:42.647Z",
     "290": "2026-11-03T05:01:39.245Z",
     "291": "2026-11-04T23:54:45.732Z",
-    "292": "2026-11-04T23:54:47.476Z",
+    "292": "2026-11-05T00:10:51.637Z",
     "293": "2026-11-04T23:54:49.442Z",
     "294": "2026-11-04T23:54:50.832Z",
     "295": "2026-11-04T23:54:52.812Z",
@@ -480,6 +491,17 @@
     "298": "2026-11-04T23:54:58.795Z",
     "299": "2026-11-04T23:55:00.790Z",
     "300": "2026-11-04T23:55:02.729Z",
+    "301": "2026-11-05T00:10:53.663Z",
+    "302": "2026-11-05T00:10:55.653Z",
+    "303": "2026-11-05T00:10:57.462Z",
+    "304": "2026-11-05T00:10:59.490Z",
+    "305": "2026-11-05T00:11:01.481Z",
+    "306": "2026-11-05T00:11:03.448Z",
+    "307": "2026-11-05T00:11:05.421Z",
+    "308": "2026-11-05T00:11:07.429Z",
+    "309": "2026-11-05T00:11:09.338Z",
+    "310": "2026-11-05T00:11:11.335Z",
+    "311": "2026-11-05T00:11:14.210Z",
     "492": "2026-11-03T07:11:00.549Z",
     "653": "2026-11-03T05:01:43.485Z",
     "656": "2026-11-03T05:01:44.726Z",
@@ -630,22 +652,10 @@
     "972": "2026-11-04T19:36:29.828Z"
   },
   "sourceFailures": {
-    "288": {
-      "code": "currency",
-      "consecutive": 1,
-      "lastFailedAt": "2026-11-04T23:54:40.114Z",
-      "sourceProofHash": "167d20b663836b7039dd62282cd4dd9103701efe52d0b2d946a83947c5f19b50"
-    },
-    "291": {
-      "code": "currency",
-      "consecutive": 1,
-      "lastFailedAt": "2026-11-04T23:54:45.732Z",
-      "sourceProofHash": "0cfd4829fe4580830e0e1213e1f9b7f48fec4823a2c8f50e963bf155ff6420a6"
-    },
     "292": {
       "code": "quality",
-      "consecutive": 1,
-      "lastFailedAt": "2026-11-04T23:54:47.476Z",
+      "consecutive": 2,
+      "lastFailedAt": "2026-11-05T00:10:51.637Z",
       "sourceProofHash": "94d1aa3a093ac5c74e7d2f3fde92cade8af8c713ad0b92eac0b460c4e3408855"
     }
   },
@@ -663,6 +673,20 @@
       "issue": "https://github.com/Paradispartiet/fysen/issues/1139",
       "quarantinedAt": "2026-11-05",
       "hiddenDishes": 66
+    },
+    "288": {
+      "code": "identity-unverified",
+      "slug": "fancii-oslo",
+      "issue": "https://github.com/Paradispartiet/fysen/issues/1141",
+      "quarantinedAt": "2026-11-05",
+      "hiddenDishes": 144
+    },
+    "291": {
+      "code": "identity-unverified",
+      "slug": "ferrys-pizzeria-filipstad-oslo",
+      "issue": "https://github.com/Paradispartiet/fysen/issues/1142",
+      "quarantinedAt": "2026-11-05",
+      "hiddenDishes": 63
     }
   }
 }
