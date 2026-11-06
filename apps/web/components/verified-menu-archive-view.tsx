@@ -10,11 +10,17 @@ function confirmedDate(value: string): string {
   }).format(new Date(value));
 }
 
-function priceLabel(priceMinor: number | null, kind: string): string {
+function priceLabel(priceMinor: number | null, priceMaxMinor: number | null, kind: string): string {
   if (priceMinor === null) return "Pris ikke oppgitt";
   const price = new Intl.NumberFormat("nb-NO", {
     style: "currency", currency: "NOK", maximumFractionDigits: 2,
   }).format(priceMinor / 100);
+  if (kind === "multiple") {
+    const max = priceMaxMinor === null ? null : new Intl.NumberFormat("nb-NO", {
+      style: "currency", currency: "NOK", maximumFractionDigits: 2,
+    }).format(priceMaxMinor / 100);
+    return max ? price + " – " + max : "Flere priser fra " + price;
+  }
   return kind === "from" ? "Fra " + price : price;
 }
 
@@ -59,7 +65,7 @@ export function ArchivedMenuResults({
             <article className={styles.result} key={result.restaurantSlug + ":" + result.name + ":" + index}>
               <div className={styles.resultHeading}>
                 <h4>{result.name}</h4>
-                <strong>{priceLabel(result.priceMinor, result.priceKind)}</strong>
+                <strong>{priceLabel(result.priceMinor, result.priceMaxMinor, result.priceKind)}</strong>
               </div>
               <p className={styles.restaurant}>{result.restaurantName}</p>
               <p>{result.address}, {city}</p>
