@@ -78,3 +78,18 @@ test("archive query filtering does not fabricate matches in another city", () =>
   assert.deepEqual(archiveModule.searchPublicMenuArchive(archive, "ramen", "Bergen"), []);
   assert.equal(archiveModule.normalizeArchiveQuery("  RåMEN!!! "), "råmen");
 });
+
+test("the current public Free archive passes integrity and quarantine checks", {
+  skip: process.env.FYSEN_ARCHIVE_LIVE_PROOF !== "1",
+}, async () => {
+  const archive = await archiveModule.getPublicMenuArchive();
+  assert.ok(archive.restaurants.length > 900);
+  assert.ok(archive.items.length > 40_000);
+  assert.ok(archive.quarantinedSourceIndices.size >= 4);
+  const matches = archiveModule.searchPublicMenuArchive(archive, "ramen", "Oslo");
+  assert.ok(matches.length > 0);
+  for (const result of matches) {
+    assert.ok(!archive.quarantinedSlugs.has(result.restaurantSlug));
+    assert.ok(result.observedAt.startsWith("2026-"));
+  }
+});
