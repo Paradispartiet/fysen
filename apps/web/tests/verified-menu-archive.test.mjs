@@ -60,7 +60,7 @@ test("archive fallback excludes quarantined identities but preserves King Falafe
 });
 
 test("archive keeps the second source price for multiple-price dishes", () => {
-  const withVariants = structuredClone(index);
+  const withVariants = JSON.parse(JSON.stringify(index));
   withVariants.items[1][4] = "multiple";
   withVariants.items[1][5] = 30000;
   const archive = archiveModule.parsePublicMenuArchive(metadata, withVariants);
