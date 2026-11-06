@@ -59,6 +59,18 @@ test("archive fallback excludes quarantined identities but preserves King Falafe
   assert.equal(archive.archiveDate, "2026-11-02");
 });
 
+test("archive keeps the second source price for multiple-price dishes", () => {
+  const withVariants = structuredClone(index);
+  withVariants.items[1][4] = "multiple";
+  withVariants.items[1][5] = 30000;
+  const archive = archiveModule.parsePublicMenuArchive(metadata, withVariants);
+  const item = archiveModule.searchPublicMenuArchive(archive, "ramen")
+    .find((result) => result.restaurantSlug === "king-falafel-brugata-oslo");
+  assert.equal(item?.priceMinor, 20000);
+  assert.equal(item?.priceMaxMinor, 30000);
+  assert.equal(item?.priceKind, "multiple");
+});
+
 test("quarantine metadata is mandatory", () => {
   assert.throws(
     () => archiveModule.parsePublicMenuArchive({ ...metadata, sourceQuarantines: {} }, index),
