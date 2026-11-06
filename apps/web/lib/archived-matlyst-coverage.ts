@@ -99,7 +99,7 @@ export function summarizeArchivedMatlyst(
     }
   }
 
-  const byDish: Record<string, ArchivedMatlystDishCoverage> = Object.create(null);
+  const byDish: Record<string, ArchivedMatlystDishCoverage> = {};
   for (const id of unique.keys()) {
     const restaurants = buckets.get(id);
     byDish[id] = {

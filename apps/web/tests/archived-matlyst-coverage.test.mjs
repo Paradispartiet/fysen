@@ -56,6 +56,7 @@ const fixture = {
 test("Matlyst counts distinct restaurants from verified menu rows, not menu variants", () => {
   const result = summarizeArchivedMatlyst(fixture, descriptors);
   assert.equal(result.archiveDate, "2026-11-02");
+  assert.equal(Object.getPrototypeOf(result.byDish), Object.prototype, "React Server Components require a plain serializable object");
   assert.equal(result.byDish.ramen.restaurantCount, 2);
   assert.deepEqual(
     result.byDish.ramen.restaurantExamples.map((item) => item.id),
