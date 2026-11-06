@@ -26,6 +26,7 @@ export interface ArchivedMenuMatch {
   readonly restaurantSlug: string;
   readonly address: string;
   readonly priceMinor: number | null;
+  readonly priceMaxMinor: number | null;
   readonly priceKind: string;
   readonly sourceUrl: string;
   readonly observedAt: string;
@@ -94,8 +95,9 @@ export function parsePublicMenuArchive(manifestValue: unknown, indexValue: unkno
     Number.isInteger(row[0]) && row[0] >= 0 && row[0] < sourceRows.length &&
     typeof row[1] === "string" && row[1].trim().length > 0 &&
     typeof row[2] === "string" && row[2].trim().length > 0 &&
-    (row[3] === null || Number.isSafeInteger(row[3])) &&
-    typeof row[4] === "string"
+    (row[3] === null || (Number.isSafeInteger(row[3]) && row[3] >= 0)) &&
+    (row[5] === null || (Number.isSafeInteger(row[5]) && row[5] >= 0)) &&
+    ["exact", "from", "multiple"].includes(row[4])
   )) {
     throw new Error("Invalid archived menu items");
   }
@@ -165,6 +167,7 @@ export function searchPublicMenuArchive(
         restaurantSlug: restaurant[1],
         address: restaurant[2],
         priceMinor: row[3],
+        priceMaxMinor: row[5],
         priceKind: row[4],
         sourceUrl: source[1],
         observedAt: source[2],
