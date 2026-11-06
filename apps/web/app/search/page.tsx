@@ -1,6 +1,8 @@
 import type { DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import type { DishSearchResponse, DishSearchSort } from "@fysen/contracts";
 import { DishBrowse } from "../../components/dish-browse";
+import { ArchivedMenuBrowse, ArchivedMenuResults } from "../../components/verified-menu-archive-view";
+import { getPublicMenuArchive, searchPublicMenuArchive, type ArchivedMenuMatch, type PublicMenuArchive } from "../../lib/verified-menu-archive";
 import { DishKnowledgeNote } from "../../components/dish-knowledge-note";
 import { SearchResults } from "../../components/search-results";
 import { DishSearch } from "../../components/dish-search";
@@ -90,10 +92,24 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
     : await loadResults(q, city, latitude, longitude, sort);
   const data = searchState.data;
   const error = searchState.error;
+  let archive: PublicMenuArchive | null = null;
+  let archiveMatches: ArchivedMenuMatch[] = [];
+  const primaryUnavailable = q.length === 0 ? Boolean(browseState.error) : q.length >= 2 && Boolean(error);
+  if (primaryUnavailable && city.toLocaleLowerCase("nb-NO") === "oslo") {
+    try {
+      archive = await getPublicMenuArchive();
+      if (q.length >= 2) archiveMatches = searchPublicMenuArchive(archive, q, city);
+    } catch {
+      // Preserve the existing clear unavailable state, never invent menu data.
+      archive = null;
+    }
+  }
   const primaryResults = data?.results.filter((result) => result.match.type !== "fuzzy") ?? [];
   const nearResults = data?.results.filter((result) => result.match.type === "fuzzy") ?? [];
 
-  const countLabel = data
+  const countLabel = archive && q.length >= 2
+    ? archiveMatches.length + " arkivtreff (ikke sanntid)"
+    : data
     ? primaryResults.length > 0
       ? `${primaryResults.length} sikre menytreff${data.results.length === 20 ? " blant de 20 viste" : ""}`
       : nearResults.length > 0
@@ -118,12 +134,16 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
       <main className="resultsMain">
         <section className="resultsContent" aria-live="polite">
           {q.length === 0 ? (
-            <DishBrowse
-              city={city}
-              data={browseState.data}
-              error={browseState.error}
-              initialCuisineName={first(params.cuisine)}
-            />
+            archive ? (
+              <ArchivedMenuBrowse archive={archive} city={city} initialCuisineName={first(params.cuisine)} />
+            ) : (
+              <DishBrowse
+                city={city}
+                data={browseState.data}
+                error={browseState.error}
+                initialCuisineName={first(params.cuisine)}
+              />
+            )
           ) : (
             <>
               <div className="resultsIntro">
@@ -135,7 +155,11 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
 
               <DishKnowledgeNote query={q} />
 
-              {error ? (
+              {archive ? (
+                <ArchivedMenuResults archive={archive} results={archiveMatches} query={q} city={city} />
+              ) : null}
+
+              {error && !archive ? (
                 <SearchState
                   title={error}
                   body={q.length === 1 ? undefined : "Prøv igjen om litt."}
