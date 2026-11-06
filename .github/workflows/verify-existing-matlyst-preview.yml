@@ -55,7 +55,7 @@ jobs:
                   "Sist bekreftede menyer", "cuisineRestaurantNames",
               )),
               "Ramen search": ("preview-ramen.html", (
-                  "Menyarkiv mens ferske søk er utilgjengelige",
+                  "arkivtreff på",
                   "Meny sist kontrollert", "ramen",
               )),
               "Japanese Matlyst": ("preview-japanese.html", (
