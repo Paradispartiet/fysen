@@ -1,0 +1,200 @@
+name: Fysen promote verified staged production (explicit manual approval)
+
+on:
+  workflow_dispatch:
+    inputs:
+      staged_url:
+        description: Exact staged production URL from the green stage-and-verify run
+        required: true
+        type: string
+      proof_run_id:
+        description: GitHub Actions run ID of the successful staged-production proof
+        required: true
+        type: string
+      confirmation:
+        description: Type PROMOTE_FYSEN to approve changing the public production domain
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: fysen-vercel-production-release
+  cancel-in-progress: false
+
+env:
+  VERCEL_ORG_ID: team_mV3NpMYd5l7yGmuZkbTf46y8
+  VERCEL_PROJECT_ID: prj_G0Vm4jhCg3hWRvVBSEIt5klHO6sS
+  VERIFIED_PREVIEW_SHA: 0ee36c489f1578ad4a5c63d5adb899f4f3ca8053
+  KNOWN_HEALTHY_DEPLOYMENT: https://fysen-6j4oborch-matsgran-8572s-projects.vercel.app
+  STAGED_URL: ${{ inputs.staged_url }}
+  PROOF_RUN_ID: ${{ inputs.proof_run_id }}
+  CONFIRMATION: ${{ inputs.confirmation }}
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      GH_API_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout current main history
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Verify explicit approval, Vercel deployment and successful staging proof
+        id: gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$CONFIRMATION" = "PROMOTE_FYSEN"
+          test -n "$VERCEL_TOKEN"
+          [[ "$STAGED_URL" =~ ^https://fysen-[a-z0-9-]+\.vercel\.app$ ]]
+          [[ "$PROOF_RUN_ID" =~ ^[0-9]{6,18}$ ]]
+          host="$(printf '%s' "$STAGED_URL" | sed 's#^https://##')"
+          deployment="$(curl --fail --silent --show-error --get \
+            "https://api.vercel.com/v13/deployments/$host" \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
+            --data-urlencode "teamId=$VERCEL_ORG_ID")"
+          source_sha="$(printf '%s' "$deployment" | jq -r '.meta.fysenSourceSha // ""')"
+          if ! printf '%s' "$deployment" | jq -e \
+            --arg project "$VERCEL_PROJECT_ID" \
+            --arg source "$source_sha" \
+            --arg host "$host" \
+            '.projectId == $project and .url == $host and
+             .target == "production" and (.state == "READY" or .readyState == "READY") and
+             .readySubstate == "STAGED" and
+             .meta.fysenVerification == "matlyst-staged-prod" and
+             .meta.fysenSourceSha == $source and ($source | test("^[a-f0-9]{40}$"))' >/dev/null; then
+            echo "::error::This URL is not our READY, STAGED Matlyst production build; promotion refused."
+            exit 1
+          fi
+          git cat-file -e "$source_sha^{commit}"
+          git merge-base --is-ancestor "$VERIFIED_PREVIEW_SHA" "$source_sha"
+          if ! git diff --quiet "$VERIFIED_PREVIEW_SHA" "$source_sha" -- \
+             apps/web packages/contracts package.json pnpm-lock.yaml \
+             pnpm-workspace.yaml turbo.json tsconfig.json .npmrc; then
+            echo "::error::Candidate app differs from the independently verified preview."
+            exit 1
+          fi
+
+          proof="$(curl --fail --silent --show-error \
+            -H "Authorization: Bearer $GH_API_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/runs/$PROOF_RUN_ID")"
+          if ! printf '%s' "$proof" | jq -e --arg sha "$source_sha" \
+            '.head_sha == $sha and .status == "completed" and .conclusion == "success" and
+             .path == ".github/workflows/stage-fysen-matlyst-production.yml"' >/dev/null; then
+            echo "::error::Stage proof run is not the successful run for this exact source SHA."
+            exit 1
+          fi
+          jobs="$(curl --fail --silent --show-error \
+            -H "Authorization: Bearer $GH_API_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/runs/$PROOF_RUN_ID/jobs?per_page=100")"
+          if ! printf '%s' "$jobs" | jq -e '
+            [.jobs[]? | select(.name == "stage-and-verify") | .steps[]? |
+             select((.name == "Verify three staged production journeys" or
+                     .name == "Prove public Fysen was not replaced")
+                    and .conclusion == "success")] | length == 2' >/dev/null; then
+            echo "::error::The exact staged candidate never passed all three production-configured routes."
+            exit 1
+          fi
+          echo "source_sha=$source_sha" >> "$GITHUB_OUTPUT"
+          {
+            echo "## Exact Matlyst staged promotion"
+            echo
+            echo "- Approved candidate: $STAGED_URL"
+            echo "- Candidate source: $source_sha"
+            echo "- Full staging proof: $PROOF_RUN_ID (two green steps)"
+            echo "- Verified preview source parity: yes"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Set up authenticated Vercel CLI
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Recheck the candidate and current public domain before promotion
+        shell: bash
+        run: |
+          set -euo pipefail
+          pnpm dlx vercel@latest curl / --deployment "$STAGED_URL" \
+            --fail --silent --show-error > "$RUNNER_TEMP/stage-home.html"
+          pnpm dlx vercel@latest curl '/search?city=Oslo&q=ramen' --deployment "$STAGED_URL" \
+            --fail --silent --show-error > "$RUNNER_TEMP/stage-ramen.html"
+          pnpm dlx vercel@latest curl '/search?city=Oslo&cuisine=Japansk' --deployment "$STAGED_URL" \
+            --fail --silent --show-error > "$RUNNER_TEMP/stage-matlyst.html"
+          python3 - <<'PY'
+          import html
+          import os
+          from pathlib import Path
+          root = Path(os.environ["RUNNER_TEMP"])
+          for filename, markers in {
+            "stage-home.html": ("Hva har du lyst på?", "Matlyst",
+                                "Sist bekreftede menyer", "cuisineRestaurantNames"),
+            "stage-ramen.html": ("arkivtreff på", "Meny sist kontrollert", "ramen"),
+            "stage-matlyst.html": ("Matlyst", "Japansk", "Søk i menyarkivet", "Ramen"),
+          }.items():
+            data = (root / filename).read_bytes()
+            if len(data) > 4 * 1024 * 1024:
+              raise AssertionError("Oversized response: " + filename)
+            value = html.unescape(data.decode("utf8", errors="replace"))
+            for marker in markers:
+              if marker not in value:
+                raise AssertionError(f"Staging SSR missing {marker} in {filename}")
+          print("All 3/3 staged journeys still valid before promotion.")
+          PY
+          curl --fail --silent --show-error --location --max-time 20 \
+            https://fysen.vercel.app/ > "$RUNNER_TEMP/previous-public.html"
+          grep -q 'Hva har du lyst på?' "$RUNNER_TEMP/previous-public.html"
+
+      - name: Promote exactly the proven production build, or attempt safe rollback on health failure
+        shell: bash
+        run: |
+          set -euo pipefail
+          promoted=false
+          rollback_after_failure() {
+            if [[ "$promoted" == true ]]; then
+              echo "::error::New Matlyst public proof failed; restoring the last known healthy web."
+              pnpm dlx vercel@latest rollback "$KNOWN_HEALTHY_DEPLOYMENT" \
+                --token="$VERCEL_TOKEN" || true
+            fi
+          }
+          trap rollback_after_failure ERR
+          pnpm dlx vercel@latest promote "$STAGED_URL" --token="$VERCEL_TOKEN"
+          promoted=true
+          verified=false
+          for attempt in 1 2 3 4 5 6 7 8 9 10; do
+            home="$(curl --fail --silent --show-error --location --max-time 20 \
+              https://fysen.vercel.app/ || true)"
+            ramen="$(curl --fail --silent --show-error --location --max-time 20 \
+              'https://fysen.vercel.app/search?city=Oslo&q=ramen' || true)"
+            japanese="$(curl --fail --silent --show-error --location --max-time 20 \
+              'https://fysen.vercel.app/search?city=Oslo&cuisine=Japansk' || true)"
+            if [[ "$home" == *'Sist bekreftede menyer'* \
+              && "$home" == *'cuisineRestaurantNames'* \
+              && "$ramen" == *'Meny sist kontrollert'* \
+              && "$japanese" == *'Søk i menyarkivet'* ]]; then
+              verified=true
+              break
+            fi
+            sleep 5
+          done
+          if [[ "$verified" != true ]]; then
+            echo "::error::Production is not verified after promotion."
+            false
+          fi
+          trap - ERR
+          {
+            echo
+            echo "### Public Fysen Matlyst promoted and verified"
+            echo "- Exact staged build: $STAGED_URL"
+            echo "- Three real public pages verified after promotion."
+            echo "- No additional build was used for promotion."
+            echo "- Live database-based API remains a separate outstanding issue."
+          } >> "$GITHUB_STEP_SUMMARY"
