@@ -1,4 +1,5 @@
 import type { Pool, QueryResultRow } from "pg";
+import { publicIdentityQuarantineSlugs } from "./identity-quarantines.js";
 
 export type DishSearchMatchType = "exact" | "canonical" | "prefix" | "contains" | "fuzzy";
 export type DishSearchSort = "relevance" | "distance";
@@ -205,6 +206,7 @@ export async function searchDishes(
         JOIN fysen.restaurants AS restaurant ON restaurant.id = source.restaurant_id
         WHERE source.enabled = true
           AND restaurant.active = true
+          AND restaurant.slug <> ALL($7::text[])
           AND source.last_checked_at IS NOT NULL
           AND now() <= source.last_checked_at
             + make_interval(mins => GREATEST(source.check_interval_minutes * 3, 1440))
@@ -376,6 +378,7 @@ export async function searchDishes(
        AND order_action.enabled = true
        AND order_action.expires_at > now()
       WHERE lower(restaurant.city) = lower($2)
+        AND restaurant.slug <> ALL($7::text[])
         AND (
           item.normalized_name = $1
           OR canonical.concept_id IS NOT NULL
@@ -411,7 +414,7 @@ export async function searchDishes(
         item.position ASC
       LIMIT $3
     `,
-    [input.normalizedQuery, input.city, input.limit, input.latitude, input.longitude, input.sort],
+    [input.normalizedQuery, input.city, input.limit, input.latitude, input.longitude, input.sort, [...publicIdentityQuarantineSlugs]],
   );
 
   return result.rows.map(mapRow);
