@@ -6,6 +6,11 @@ on:
     paths:
       - ".github/workflows/stage-fysen-matlyst-production.yml"
   workflow_dispatch:
+  # One-time overnight attempt after the Oslo daily release budget resets.
+  # GitHub's cron uses UTC: Nov 6 23:25 UTC = Nov 7 00:25 CET.
+  # The strict date guard below prevents another run in future years.
+  schedule:
+    - cron: "25 23 6 11 *"
 
 permissions:
   contents: read
@@ -40,6 +45,15 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          if [[ "$GITHUB_EVENT_NAME" == "schedule" ]]; then
+            oslo_day="$(TZ=Europe/Oslo date +%F)"
+            if [[ "$oslo_day" != "2026-11-07" ]]; then
+              echo "allowed=false" >> "$GITHUB_OUTPUT"
+              echo "Scheduled one-time staging window expired; no deployment created." >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            echo "One-time Fysen stage check triggered on 2026-11-07 Europe/Oslo."
+          fi
           if [[ "$GITHUB_REF" != "refs/heads/main" ]]; then
             echo "::error::Staged production verification must be started from main."
             exit 1
