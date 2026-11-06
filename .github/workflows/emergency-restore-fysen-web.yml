@@ -1,0 +1,82 @@
+name: Emergency restore previous verified Fysen web deployment
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/emergency-restore-fysen-web.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-emergency-web-restore
+  cancel-in-progress: false
+
+jobs:
+  restore-previous-known-good:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    env:
+      CI: "1"
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: team_mV3NpMYd5l7yGmuZkbTf46y8
+      VERCEL_PROJECT_ID: prj_G0Vm4jhCg3hWRvVBSEIt5klHO6sS
+      LAST_VERIFIED_DEPLOYMENT: https://fysen-6j4oborch-matsgran-8572s-projects.vercel.app
+    steps:
+      - name: Verify expected restore configuration
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$VERCEL_TOKEN"
+          test "$VERCEL_PROJECT_ID" = "prj_G0Vm4jhCg3hWRvVBSEIt5klHO6sS"
+          test "$LAST_VERIFIED_DEPLOYMENT" = "https://fysen-6j4oborch-matsgran-8572s-projects.vercel.app"
+
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-node-pnpm
+
+      - name: Restore prior verified production web only if current home is broken
+        shell: bash
+        run: |
+          set -euo pipefail
+          status="$(curl --silent --show-error --location --max-time 18 \
+            -o /dev/null -w '%{http_code}' https://fysen.vercel.app/ || true)"
+          if [[ "$status" == "200" ]]; then
+            echo "Homepage already healthy; no Vercel rollback requested."
+            echo "rollback_skipped=true" >> "$GITHUB_ENV"
+            exit 0
+          fi
+          echo "Production homepage unhealthy (HTTP ${status:-unreachable}); restoring preceding verified deployment without a rebuild."
+          pnpm dlx vercel@latest rollback "$LAST_VERIFIED_DEPLOYMENT" --token="$VERCEL_TOKEN"
+          echo "rollback_skipped=false" >> "$GITHUB_ENV"
+
+      - name: Verify real homepage and archived menu search after restore
+        shell: bash
+        run: |
+          set -euo pipefail
+          verified=false
+          for attempt in 1 2 3 4 5; do
+            home="$(curl --fail --silent --show-error --location --max-time 20 \
+              https://fysen.vercel.app/ || true)"
+            ramen="$(curl --fail --silent --show-error --location --max-time 20 \
+              'https://fysen.vercel.app/search?city=Oslo&q=ramen' || true)"
+            if [[ "$home" == *'Hva har du lyst på?'* && "$home" == *'Matlyst'* \
+              && "$ramen" == *'Meny sist kontrollert'* ]]; then
+              verified=true
+              break
+            fi
+            sleep 4
+          done
+          if [[ "$verified" != true ]]; then
+            echo "::error::Homepage or archive search not healthy after rollback attempt."
+            exit 1
+          fi
+          {
+            echo "## Fysen homepage restored"
+            echo
+            echo "- Homepage and archival ramen search responded with expected content."
+            echo "- Previous verified deployment: $LAST_VERIFIED_DEPLOYMENT"
+            echo "- Requested rollback: ${rollback_skipped:-unknown}"
+            echo "- The existing API/database outage remains; this is not live-API approval."
+            echo "- Vercel instant rollback pauses automatic production-domain assignment; a controlled promote is required before the repaired release can go live."
+          } >> "$GITHUB_STEP_SUMMARY"
