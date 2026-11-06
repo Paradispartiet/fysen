@@ -80,7 +80,7 @@ jobs:
               },
               "ramen search": {
                   "file": root / "fysen-ramen.html",
-                  "markers": ("Menyarkiv mens ferske søk er utilgjengelige",
+                  "markers": ("arkivtreff på",
                               "Meny sist kontrollert", "ramen"),
               },
               "Japanese Matlyst": {
