@@ -1,4 +1,5 @@
 import type { Pool, QueryResultRow } from "pg";
+import { publicIdentityQuarantineSlugs } from "./identity-quarantines.js";
 import {
   canonicalMenuDishIdentity,
   canonicalMenuDishName,
@@ -131,6 +132,7 @@ export async function browseDishes(
         JOIN fysen.restaurants AS restaurant ON restaurant.id = source.restaurant_id
         WHERE source.enabled = true
           AND restaurant.active = true
+          AND restaurant.slug <> ALL($2::text[])
           AND source.last_checked_at IS NOT NULL
           AND now() <= source.last_checked_at
             + make_interval(mins => GREATEST(source.check_interval_minutes * 3, 1440))
@@ -182,7 +184,7 @@ export async function browseDishes(
       FROM browse_rows
       GROUP BY restaurant_id, restaurant_name, restaurant_address
     `,
-    [input.city],
+    [input.city, [...publicIdentityQuarantineSlugs]],
   );
 
   // Send restaurant metadata once instead of repeating it for every menu item.
@@ -215,6 +217,7 @@ export async function browseDishes(
           AND changes.detected_at BETWEEN now() - interval '14 days' AND now()
           AND source.enabled = true
           AND restaurant.active = true
+          AND restaurant.slug <> ALL($2::text[])
           AND lower(restaurant.city) = lower($1)
           AND source.last_checked_at IS NOT NULL
           AND now() <= source.last_checked_at
@@ -254,7 +257,7 @@ export async function browseDishes(
       ORDER BY candidates.detected_at DESC, restaurant.name, item.original_name
       LIMIT 300
     `,
-    [input.city],
+    [input.city, [...publicIdentityQuarantineSlugs]],
   );
 
   const exclusions = Object.fromEntries(discoveryExclusionCategories.map((category) => [category, 0])) as Record<DiscoveryExclusionCategory, number>;
