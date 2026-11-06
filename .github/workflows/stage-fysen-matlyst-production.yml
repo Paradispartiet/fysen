@@ -7,10 +7,11 @@ on:
       - ".github/workflows/stage-fysen-matlyst-production.yml"
   workflow_dispatch:
   # One-time overnight attempt after the Oslo daily release budget resets.
-  # GitHub's cron uses UTC: Nov 6 23:25 UTC = Nov 7 00:25 CET.
+  # GitHub's cron uses UTC: Nov 7 00:15 UTC = Nov 7 01:15 CET.
+  # Wait for BOTH UTC and Europe/Oslo daily release windows to reset.
   # The strict date guard below prevents another run in future years.
   schedule:
-    - cron: "25 23 6 11 *"
+    - cron: "15 0 7 11 *"
 
 permissions:
   contents: read
