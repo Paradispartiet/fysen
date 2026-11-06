@@ -71,23 +71,27 @@ export function parsePublicMenuArchive(manifestValue: unknown, indexValue: unkno
     throw new Error("Public menu archive manifest mismatch");
   }
 
-  if (!index.restaurants.every((row: unknown) =>
+  const restaurantRows = index.restaurants as unknown[];
+  const sourceRows = index.sources as unknown[];
+  const itemRows = index.items as unknown[];
+
+  if (!restaurantRows.every((row: unknown) =>
     Array.isArray(row) && row.length >= 4 &&
     typeof row[0] === "string" && typeof row[1] === "string" &&
     typeof row[2] === "string" && typeof row[3] === "string"
   )) {
     throw new Error("Invalid archived restaurants");
   }
-  if (!index.sources.every((row: unknown) =>
+  if (!sourceRows.every((row: unknown) =>
     Array.isArray(row) && row.length >= 3 &&
-    Number.isInteger(row[0]) && row[0] >= 0 && row[0] < index.restaurants.length &&
+    Number.isInteger(row[0]) && row[0] >= 0 && row[0] < restaurantRows.length &&
     validHttpUrl(row[1]) && validDate(row[2])
   )) {
     throw new Error("Invalid archived source provenance");
   }
-  if (!index.items.every((row: unknown) =>
+  if (!itemRows.every((row: unknown) =>
     Array.isArray(row) && row.length >= 7 &&
-    Number.isInteger(row[0]) && row[0] >= 0 && row[0] < index.sources.length &&
+    Number.isInteger(row[0]) && row[0] >= 0 && row[0] < sourceRows.length &&
     typeof row[1] === "string" && row[1].trim().length > 0 &&
     typeof row[2] === "string" && row[2].trim().length > 0 &&
     (row[3] === null || Number.isSafeInteger(row[3])) &&
@@ -108,7 +112,7 @@ export function parsePublicMenuArchive(manifestValue: unknown, indexValue: unkno
     const record = dictionary(rawRecord);
     const indexNumber = Number(sourceIndex);
     if (!Number.isInteger(indexNumber) || indexNumber < 0 ||
-        indexNumber >= index.sources.length ||
+        indexNumber >= sourceRows.length ||
         record.code !== "identity-unverified" ||
         typeof record.slug !== "string" || record.slug.trim() === "") {
       throw new Error("Invalid public archive quarantine");
@@ -120,9 +124,9 @@ export function parsePublicMenuArchive(manifestValue: unknown, indexValue: unkno
   return {
     archiveDate: manifest.archiveDate,
     lastRefreshAt: validDate(manifest.lastRefreshAt) ? manifest.lastRefreshAt : null,
-    restaurants: index.restaurants as RestaurantRow[],
-    sources: index.sources as SourceRow[],
-    items: index.items as ItemRow[],
+    restaurants: restaurantRows as RestaurantRow[],
+    sources: sourceRows as SourceRow[],
+    items: itemRows as ItemRow[],
     quarantinedSourceIndices: indices,
     quarantinedSlugs: slugs,
   };
