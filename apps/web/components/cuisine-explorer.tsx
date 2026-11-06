@@ -10,6 +10,7 @@ import { browseDishesClient } from "../lib/client-dish-search";
 import { RecentDishes } from "./recent-dishes";
 import { PopularDishes } from "./popular-dishes";
 import { discoveryCoverage } from "../lib/dish-discovery";
+import type { ArchivedMatlystCoverage } from "../lib/archived-matlyst-coverage";
 import { dishSearchHref } from "../lib/public-path";
 import {
   homeCuisines,
@@ -45,8 +46,14 @@ function cuisinePreviewDishes(cuisine: Cuisine): readonly DishSuggestion[] {
   return cuisineCandidates(cuisine).slice(0, 4);
 }
 
-function coverageForDish(dishes: readonly DishBrowseItem[], dish: DishSuggestion): DishCoverage {
-  const coverage = discoveryCoverage(dishes, dish);
+function coverageForDish(
+  dishes: readonly DishBrowseItem[],
+  dish: DishSuggestion,
+  archiveCoverage: ArchivedMatlystCoverage | null,
+): DishCoverage {
+  const coverage = archiveCoverage
+    ? archiveCoverage.byDish[dish.id] ?? { restaurantCount: 0, restaurantExamples: [] }
+    : discoveryCoverage(dishes, dish);
   return {
     dish,
     restaurantCount: coverage.restaurantCount,
@@ -67,16 +74,24 @@ function rankDishCoverage(coverage: readonly DishCoverage[]): DishCoverage[] {
   });
 }
 
-function featuredCoverage(dishesToCheck: readonly DishSuggestion[], dishes: readonly DishBrowseItem[]): DishCoverage | null {
-  return rankDishCoverage(uniqueCandidates(dishesToCheck).map((dish) => coverageForDish(dishes, dish)))[0] ?? null;
+function featuredCoverage(
+  dishesToCheck: readonly DishSuggestion[],
+  dishes: readonly DishBrowseItem[],
+  archiveCoverage: ArchivedMatlystCoverage | null,
+): DishCoverage | null {
+  return rankDishCoverage(uniqueCandidates(dishesToCheck).map((dish) =>
+    coverageForDish(dishes, dish, archiveCoverage)
+  ))[0] ?? null;
 }
 
 function DiscoveryDishList({
   coverage,
   onOpenKnowledge,
+  archived,
 }: {
   readonly coverage: readonly DishCoverage[];
   readonly onOpenKnowledge: (dishId: string) => void;
+  readonly archived: boolean;
 }) {
   return (
     <div className="cuisineExploreDishList">
@@ -109,9 +124,10 @@ function DiscoveryDishList({
               ))}
             </ul>
           ) : restaurantCount > 0 ? (
-            <p>På fersk meny hos minst {restaurantCount} {restaurantCount === 1 ? "restaurant" : "restauranter"} i Oslo.</p>
+            <p>{archived ? "Registrert i siste godkjente menyarkiv hos " : "På fersk meny hos minst "}
+              {restaurantCount} {restaurantCount === 1 ? "restaurant" : "restauranter"} i Oslo.</p>
           ) : (
-            <p>Ingen ferske menytreff på denne retten i Oslo akkurat nå.</p>
+            <p>{archived ? "Ingen dokumenterte treff i siste menyarkiv." : "Ingen ferske menytreff på denne retten i Oslo akkurat nå."}</p>
           )}
         </article>
       ))}
@@ -119,7 +135,13 @@ function DiscoveryDishList({
   );
 }
 
-export function CuisineExplorer({ browseData }: { readonly browseData: DishBrowseResponse | null }) {
+export function CuisineExplorer({
+  browseData,
+  archiveCoverage,
+}: {
+  readonly browseData: DishBrowseResponse | null;
+  readonly archiveCoverage: ArchivedMatlystCoverage | null;
+}) {
   const [previewBrowseData, setPreviewBrowseData] = useState<DishBrowseResponse | null>(null);
   const [previewBrowseFailed, setPreviewBrowseFailed] = useState(false);
   const [selectedCuisine, setSelectedCuisine] = useState<Cuisine | null>(null);
@@ -128,9 +150,11 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const effectiveBrowseData = browseData ?? previewBrowseData;
   const liveDishes = effectiveBrowseData?.dishes ?? [];
+  const isArchived = archiveCoverage !== null && effectiveBrowseData === null;
+  const coverageReady = effectiveBrowseData !== null || isArchived;
 
   useEffect(() => {
-    if (browseData) return;
+    if (browseData || archiveCoverage) return;
 
     const controller = new AbortController();
     void browseDishesClient("Oslo", { signal: controller.signal })
@@ -146,7 +170,7 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
       });
 
     return () => controller.abort();
-  }, [browseData]);
+  }, [browseData, archiveCoverage]);
 
   const selectedArea = useMemo<CuisineArea | null>(() => {
     if (!selectedCuisine) return null;
@@ -155,12 +179,16 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
 
   const selectedDishCoverage = useMemo(() => {
     if (!selectedArea) return [];
-    return rankDishCoverage(selectedArea.dishes.map((dish) => coverageForDish(liveDishes, dish)));
-  }, [liveDishes, selectedArea]);
+    return rankDishCoverage(selectedArea.dishes.map((dish) =>
+      coverageForDish(liveDishes, dish, isArchived ? archiveCoverage : null)
+    ));
+  }, [liveDishes, selectedArea, archiveCoverage, isArchived]);
 
   const featured = useMemo(() => {
-    return new Map(homeCuisines.map((cuisine) => [cuisine.name, featuredCoverage(cuisineCandidates(cuisine), liveDishes)]));
-  }, [liveDishes]);
+    return new Map(homeCuisines.map((cuisine) => [
+      cuisine.name, featuredCoverage(cuisineCandidates(cuisine), liveDishes, isArchived ? archiveCoverage : null)
+    ]));
+  }, [liveDishes, archiveCoverage, isArchived]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -200,7 +228,9 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
         <div>
           <p className="foodSectionEyebrow">Matlyst</p>
         </div>
-        <p>Velg et kjøkken eller en region, oppdag relevante retter, og se hvem som faktisk har dem på en fersk meny.</p>
+        <p>{isArchived
+          ? "Velg kjøkken eller region og se hvilke restauranter som er dokumentert i sist kontrollerte menyer. Sjekk kildedato og pris før du bestiller."
+          : "Velg et kjøkken eller en region, oppdag relevante retter, og se hvem som faktisk har dem på en fersk meny."}</p>
       </div>
 
       <RecentDishes dishes={effectiveBrowseData?.recentDishes ?? []} />
@@ -230,14 +260,14 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
                 </span>
 
                 <span className="cuisineRestaurantPreview">
-                  <span className="cuisineRestaurantPreviewLabel">På menyen nå</span>
-                  {!effectiveBrowseData && !previewBrowseFailed ? (
+                  <span className="cuisineRestaurantPreviewLabel">{isArchived ? "Sist bekreftede menyer" : "På menyen nå"}</span>
+                  {!coverageReady && !previewBrowseFailed ? (
                     <span className="cuisineRestaurantLoading">Henter ferske restauranttreff …</span>
                   ) : null}
-                  {previewBrowseFailed ? (
+                  {!coverageReady && previewBrowseFailed ? (
                     <span className="cuisineRestaurantLoading">Kunne ikke hente ferske restauranttreff akkurat nå.</span>
                   ) : null}
-                  {effectiveBrowseData && preview && preview.restaurantExamples.length > 0 ? (
+                  {coverageReady && preview && preview.restaurantExamples.length > 0 ? (
                     <span className="cuisineRestaurantNames">
                       {preview.restaurantExamples.map((restaurant) => (
                         <span key={restaurant.id}>
@@ -247,13 +277,13 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
                       ))}
                     </span>
                   ) : null}
-                  {effectiveBrowseData && preview && preview.restaurantCount > 0 && preview.restaurantExamples.length === 0 ? (
+                  {coverageReady && preview && preview.restaurantCount > 0 && preview.restaurantExamples.length === 0 ? (
                     <span className="cuisineRestaurantLoading">
-                      {preview.dish.label} · minst {preview.restaurantCount} {preview.restaurantCount === 1 ? "sted" : "steder"} nå
+                      {preview.dish.label} · minst {preview.restaurantCount} {preview.restaurantCount === 1 ? "sted" : "steder"} {isArchived ? "i arkivet" : "nå"}
                     </span>
                   ) : null}
-                  {effectiveBrowseData && (!preview || preview.restaurantCount === 0) ? (
-                    <span className="cuisineRestaurantLoading">Ingen prioriterte ferske treff akkurat nå.</span>
+                  {coverageReady && (!preview || preview.restaurantCount === 0) ? (
+                    <span className="cuisineRestaurantLoading">{isArchived ? "Ingen dokumenterte treff i siste menyarkiv." : "Ingen prioriterte ferske treff akkurat nå."}</span>
                   ) : null}
                 </span>
               </button>
@@ -323,14 +353,16 @@ export function CuisineExplorer({ browseData }: { readonly browseData: DishBrows
                   <p>{selectedArea.name}</p>
                   <h3>Retter og hvor du kan få dem</h3>
                 </div>
-                <span>Ferske menytreff først · Oslo</span>
+                <span>{isArchived ? "Sist bekreftede menyer · Oslo" : "Ferske menytreff først · Oslo"}</span>
               </div>
 
-              <DiscoveryDishList coverage={selectedDishCoverage} onOpenKnowledge={openFoodKnowledge} />
+              <DiscoveryDishList coverage={selectedDishCoverage} onOpenKnowledge={openFoodKnowledge} archived={isArchived} />
             </section>
 
             <footer className="cuisineExploreDialogFooter">
-              Retter med sikre, ferske Oslo-treff vises først. Innen samme dekningsnivå brukes redaksjonell relevans. Restaurantene kommer fra den samme ferske browse-indeksen som «Alle retter».
+              {isArchived
+                ? "Restaurantene kommer fra Fysens sist godkjente menyarkiv, ikke fra sanntidssøk. Kontroller dato og pris hos restauranten. Innen samme dekningsnivå brukes redaksjonell relevans."
+                : "Retter med sikre, ferske Oslo-treff vises først. Innen samme dekningsnivå brukes redaksjonell relevans. Restaurantene kommer fra den samme ferske browse-indeksen som «Alle retter»."}
             </footer>
           </div>
         ) : null}
