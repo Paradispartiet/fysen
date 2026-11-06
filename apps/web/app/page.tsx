@@ -5,6 +5,8 @@ import { DishSearch } from "../components/dish-search";
 import { GlobalHeader } from "../components/global-header";
 import { browseDishes } from "../lib/fysen-api";
 import { getPublicMenuArchive } from "../lib/verified-menu-archive";
+import { summarizeArchivedMatlyst, type ArchivedMatlystCoverage } from "../lib/archived-matlyst-coverage";
+import { homeCuisines } from "../components/cuisine-explorer-data";
 import { dishBrowseHref } from "../lib/public-path";
 
 export default async function HomePage() {
@@ -15,11 +17,12 @@ export default async function HomePage() {
     browseData = null;
   }
 
-  let archiveReady = false;
+  let archiveCoverage: ArchivedMatlystCoverage | null = null;
   if (!browseData) {
     try {
-      await getPublicMenuArchive();
-      archiveReady = true;
+      const archive = await getPublicMenuArchive();
+      const dishes = homeCuisines.flatMap((cuisine) => cuisine.areas.flatMap((area) => area.dishes));
+      archiveCoverage = summarizeArchivedMatlyst(archive, dishes);
     } catch {
       // Show normal unavailable state when even the verified archive is down.
     }
@@ -43,12 +46,12 @@ export default async function HomePage() {
             </p>
             <DishSearch />
             <a className="homeDishBrowseLink" href={dishBrowseHref("Oslo")}>
-              {archiveReady ? "Utforsk sist bekreftede menyer (ikke sanntid)" : "Se alle retter i Oslo"}
+              {archiveCoverage ? "Utforsk sist bekreftede menyer" : "Se alle retter i Oslo"}
               <span aria-hidden="true">→</span>
             </a>
           </div>
         </section>
-        <CuisineExplorer browseData={browseData} />
+        <CuisineExplorer browseData={browseData} archiveCoverage={archiveCoverage} />
         <DishLearningSection />
       </main>
     </div>
