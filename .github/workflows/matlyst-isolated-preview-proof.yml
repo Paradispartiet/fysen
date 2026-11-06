@@ -3,10 +3,6 @@ name: Fysen corrected Matlyst isolated preview proof
 # Deliberately no production deployment, promotion, or domain assignment.
 # The source is main after the reviewed RSC serialisation fix.
 on:
-  push:
-    branches: [main]
-    paths:
-      - ".github/workflows/matlyst-isolated-preview-proof.yml"
   workflow_dispatch:
 
 permissions:
@@ -65,11 +61,11 @@ jobs:
           # Vercel CLI authenticates protected preview routes without weakening
           # deployment protection or printing any bypass secret.
           pnpm dlx vercel@latest curl / --deployment "$PREVIEW_URL" \
-            --token="$VERCEL_TOKEN" --silent --show-error --fail > "$RUNNER_TEMP/fysen-home.html"
+            --silent --show-error --fail > "$RUNNER_TEMP/fysen-home.html"
           pnpm dlx vercel@latest curl '/search?city=Oslo&q=ramen' --deployment "$PREVIEW_URL" \
-            --token="$VERCEL_TOKEN" --silent --show-error --fail > "$RUNNER_TEMP/fysen-ramen.html"
+            --silent --show-error --fail > "$RUNNER_TEMP/fysen-ramen.html"
           pnpm dlx vercel@latest curl '/search?city=Oslo&cuisine=Japansk' --deployment "$PREVIEW_URL" \
-            --token="$VERCEL_TOKEN" --silent --show-error --fail > "$RUNNER_TEMP/fysen-matlyst.html"
+            --silent --show-error --fail > "$RUNNER_TEMP/fysen-matlyst.html"
           python3 - <<'PY'
           import html
           import os
