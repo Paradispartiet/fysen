@@ -1,0 +1,112 @@
+.surface {
+  color: #f7f7f7;
+  background: #08090a;
+  border: 1px solid #323639;
+  border-radius: 18px;
+  padding: clamp(16px, 3vw, 30px);
+  margin: 12px 0 40px;
+}
+.intro {
+  border-bottom: 1px solid #34383a;
+  margin-bottom: 22px;
+  padding-bottom: 16px;
+}
+.intro h2 {
+  font-size: clamp(1.3rem, 2.8vw, 2rem);
+  font-weight: 650;
+  margin: 7px 0;
+}
+.intro p {
+  color: #d2d4d5;
+  max-width: 75ch;
+  line-height: 1.5;
+}
+.eyebrow {
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  font-size: .75rem;
+  color: #e9c980 !important;
+}
+.meta, .sourceDate {
+  color: #afb5b8;
+  font-size: .87rem;
+  line-height: 1.4;
+}
+.results, .dishList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 265px), 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.result, .suggestion {
+  background: #141618;
+  border: 1px solid #3b3e40;
+  border-radius: 12px;
+  padding: 16px;
+}
+.resultHeading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.resultHeading h4 {
+  margin: 0;
+  font-size: 1.08rem;
+  font-weight: 650;
+}
+.resultHeading strong {
+  font-size: 1rem;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.result p, .suggestion p {
+  margin: 6px 0;
+  font-size: .90rem;
+}
+.restaurant {
+  color: #fff;
+  font-weight: 700;
+}
+.result a, .suggestion a {
+  color: #f6d38f;
+  text-underline-offset: 3px;
+  display: inline-block;
+  margin-top: 10px;
+}
+.browseHeading h1 {
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  margin-bottom: 6px;
+}
+.cuisineList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0;
+}
+.cuisineList a {
+  border: 1px solid #44494b;
+  background: #171a1b;
+  border-radius: 100px;
+  color: #f6f6f6;
+  font-size: .9rem;
+  padding: 8px 13px;
+  text-decoration: none;
+}
+.cuisineList a[aria-current="page"] {
+  border-color: #f6d38f;
+  color: #f6d38f;
+}
+.suggestion h3 {
+  font-size: 1.05rem;
+  margin: 8px 0;
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 18px;
+}
+@media (max-width: 580px) {
+  .surface { padding: 14px; border-radius: 12px; }
+  .resultHeading { flex-wrap: wrap; gap: 6px; }
+}
