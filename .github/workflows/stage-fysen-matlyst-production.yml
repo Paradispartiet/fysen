@@ -1,0 +1,192 @@
+name: Fysen Matlyst staged production proof (no alias change)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/stage-fysen-matlyst-production.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-vercel-production-release
+  cancel-in-progress: false
+
+env:
+  VERCEL_ORG_ID: team_mV3NpMYd5l7yGmuZkbTf46y8
+  FYSEN_WEB_PROJECT_ID: prj_G0Vm4jhCg3hWRvVBSEIt5klHO6sS
+  FYSEN_API_PROJECT_ID: prj_sSNtWlPc13Lgr2ws6DdhCfPFtr4E
+  VERIFIED_PREVIEW_SHA: 0ee36c489f1578ad4a5c63d5adb899f4f3ca8053
+
+jobs:
+  stage-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CI: "1"
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_PROJECT_ID: prj_G0Vm4jhCg3hWRvVBSEIt5klHO6sS
+    steps:
+      - name: Checkout exact main source
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Guard verified source and free release capacity
+        id: safety
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_REF" != "refs/heads/main" ]]; then
+            echo "::error::Staged production verification must be started from main."
+            exit 1
+          fi
+          test -n "$VERCEL_TOKEN"
+          test "$VERCEL_PROJECT_ID" = "$FYSEN_WEB_PROJECT_ID"
+          source_sha="$(git rev-parse HEAD)"
+          git merge-base --is-ancestor "$VERIFIED_PREVIEW_SHA" "$source_sha"
+          if ! git diff --quiet "$VERIFIED_PREVIEW_SHA" "$source_sha" -- \
+             apps/web packages/contracts package.json pnpm-lock.yaml \
+             pnpm-workspace.yaml turbo.json tsconfig.json .npmrc; then
+            echo "::error::App build inputs differ from approved preview; rerun preview proof first."
+            exit 1
+          fi
+          production_deployments() {
+            curl --fail --silent --show-error --get \
+              'https://api.vercel.com/v7/deployments' \
+              -H "Authorization: Bearer $VERCEL_TOKEN" \
+              --data-urlencode "projectId=$1" \
+              --data-urlencode "teamId=$VERCEL_ORG_ID" \
+              --data-urlencode 'target=production' \
+              --data-urlencode 'state=READY' \
+              --data-urlencode 'limit=100'
+          }
+          web_json="$(production_deployments "$FYSEN_WEB_PROJECT_ID")"
+          api_json="$(production_deployments "$FYSEN_API_PROJECT_ID")"
+          oslo_day_start="$(TZ=Europe/Oslo date -d "$(TZ=Europe/Oslo date +%F) 00:00:00" +%s)"
+          since_ms="$(( oslo_day_start * 1000 ))"
+          batches_today="$(jq -n \
+            --argjson web "$web_json" \
+            --argjson api "$api_json" \
+            --argjson since "$since_ms" '
+              [($web.deployments + $api.deployments)[]
+                | select((.createdAt // 0) >= $since)
+                | (.meta.fysenReleaseBatch // .meta.fysenSourceSha // .meta.githubCommitSha // .uid)]
+              | unique | length')"
+          echo "source_sha=$source_sha" >> "$GITHUB_OUTPUT"
+          {
+            echo "## Fysen staged production release gate"
+            echo
+            echo "- Candidate source: $source_sha"
+            echo "- Verified preview source: $VERIFIED_PREVIEW_SHA"
+            echo "- App/build source parity: verified"
+            echo "- Production batches today (Oslo): $batches_today/3"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if (( batches_today >= 3 )); then
+            echo "allowed=false" >> "$GITHUB_OUTPUT"
+            {
+              echo
+              echo "**No deployment created.** The daily three-batch budget is exhausted."
+              echo "Run this workflow manually on a later Oslo day. Public Fysen remains unchanged."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          echo "allowed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Fysen cached Node/pnpm workspace
+        if: steps.safety.outputs.allowed == 'true'
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build contract package
+        if: steps.safety.outputs.allowed == 'true'
+        run: pnpm --filter @fysen/contracts build
+
+      - name: Deploy a production build with no production domain
+        if: steps.safety.outputs.allowed == 'true'
+        id: stage
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ steps.safety.outputs.source_sha }}
+        run: |
+          set -euo pipefail
+          rm -rf .vercel
+          pnpm dlx vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
+          pnpm dlx vercel@latest build --prod --token="$VERCEL_TOKEN"
+          staged_url="$(pnpm dlx vercel@latest deploy --prebuilt --prod --skip-domain \
+            --token="$VERCEL_TOKEN" \
+            --meta "fysenSourceSha=$SOURCE_SHA" \
+            --meta "fysenVerification=matlyst-staged-prod" \
+            --meta "fysenReleaseBatch=$GITHUB_RUN_ID")"
+          if [[ ! "$staged_url" =~ ^https://[a-zA-Z0-9-]+\.vercel\.app$ ]]; then
+            echo "::error::Unexpected Vercel staged URL."
+            exit 1
+          fi
+          echo "url=$staged_url" >> "$GITHUB_OUTPUT"
+          echo "Staged production deployment built without assigning the public domain."
+
+      - name: Verify three staged production journeys
+        if: steps.safety.outputs.allowed == 'true'
+        shell: bash
+        env:
+          STAGED_URL: ${{ steps.stage.outputs.url }}
+        run: |
+          set -euo pipefail
+          # Vercel CLI auto authenticates from VERCEL_TOKEN. Never forward --token
+          # as a curl subcommand argument (it goes to system curl).
+          pnpm dlx vercel@latest curl / --deployment "$STAGED_URL" \
+            --fail --silent --show-error > "$RUNNER_TEMP/stage-home.html"
+          pnpm dlx vercel@latest curl '/search?city=Oslo&q=ramen' --deployment "$STAGED_URL" \
+            --fail --silent --show-error > "$RUNNER_TEMP/stage-ramen.html"
+          pnpm dlx vercel@latest curl '/search?city=Oslo&cuisine=Japansk' --deployment "$STAGED_URL" \
+            --fail --silent --show-error > "$RUNNER_TEMP/stage-matlyst.html"
+          python3 - <<'PY'
+          import html
+          import os
+          from pathlib import Path
+
+          root = Path(os.environ["RUNNER_TEMP"])
+          checks = {
+            "home": ("stage-home.html", (
+              "Hva har du lyst på?", "Matlyst",
+              "Sist bekreftede menyer", "cuisineRestaurantNames")),
+            "ramen": ("stage-ramen.html", (
+              "arkivtreff på", "Meny sist kontrollert", "ramen")),
+            "Japanese Matlyst": ("stage-matlyst.html", (
+              "Matlyst", "Japansk", "Søk i menyarkivet", "Ramen")),
+          }
+          for label, (filename, markers) in checks.items():
+            payload = (root / filename).read_bytes()
+            if len(payload) > 4 * 1024 * 1024:
+              raise AssertionError(f"{label}: oversized HTML")
+            page = html.unescape(payload.decode("utf8", errors="replace"))
+            missing = [m for m in markers if m not in page]
+            if missing:
+              raise AssertionError(f"{label}: missing {missing}")
+            print(f"{label}: {len(markers)}/{len(markers)} content assertions passed")
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf8") as summary:
+            summary.write("\n### Staged production pages: 3/3 verified\n")
+          PY
+
+      - name: Prove public Fysen was not replaced
+        if: steps.safety.outputs.allowed == 'true'
+        shell: bash
+        env:
+          STAGED_URL: ${{ steps.stage.outputs.url }}
+          SOURCE_SHA: ${{ steps.safety.outputs.source_sha }}
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --max-time 20 \
+            https://fysen.vercel.app/ > "$RUNNER_TEMP/fysen-current-public.html"
+          grep -q 'Hva har du lyst på?' "$RUNNER_TEMP/fysen-current-public.html"
+          {
+            echo
+            echo "### Staged production candidate – ready for a SEPARATE promote decision"
+            echo "- Exact staged URL: $STAGED_URL"
+            echo "- Source SHA: $SOURCE_SHA"
+            echo "- Public Fysen domain was NOT moved."
+            echo "- Live database API is STILL not recovered."
+            echo "- Only this exact staged production build may later be promoted."
+          } >> "$GITHUB_STEP_SUMMARY"
