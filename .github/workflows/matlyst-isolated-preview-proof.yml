@@ -1,0 +1,128 @@
+name: Fysen corrected Matlyst isolated preview proof
+
+# Deliberately no production deployment, promotion, or domain assignment.
+# The source is main after the reviewed RSC serialisation fix.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/matlyst-isolated-preview-proof.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-isolated-matlyst-preview
+  cancel-in-progress: false
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      VERCEL_ORG_ID: team_mV3NpMYd5l7yGmuZkbTf46y8
+      VERCEL_PROJECT_ID: prj_G0Vm4jhCg3hWRvVBSEIt5klHO6sS
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      CI: "1"
+    steps:
+      - name: Checkout tested main source
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Set up existing Fysen build tools
+        uses: ./.github/actions/setup-node-pnpm
+      - name: Build web package dependencies
+        run: pnpm --filter @fysen/contracts build
+      - name: Build and deploy isolated preview only
+        id: stage
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$VERCEL_TOKEN"
+          test "$VERCEL_PROJECT_ID" = "prj_G0Vm4jhCg3hWRvVBSEIt5klHO6sS"
+          rm -rf .vercel
+          pnpm dlx vercel@latest pull --yes --environment=preview --token="$VERCEL_TOKEN"
+          pnpm dlx vercel@latest build --token="$VERCEL_TOKEN"
+          source_sha="$(git rev-parse HEAD)"
+          preview_url="$(pnpm dlx vercel@latest deploy --prebuilt --token="$VERCEL_TOKEN" \
+            --meta "fysenSourceSha=$source_sha" \
+            --meta "fysenVerification=matlyst-isolated-preview")"
+          if [[ ! "$preview_url" =~ ^https://[a-zA-Z0-9-]+\.vercel\.app$ ]]; then
+            echo "::error::Preview deployment URL did not match Vercel's expected domain."
+            exit 1
+          fi
+          echo "preview_url=$preview_url" >> "$GITHUB_OUTPUT"
+          echo "source_sha=$source_sha" >> "$GITHUB_OUTPUT"
+          echo "Preview deployed without assigning the production alias."
+
+      - name: Check SSR homepage and both public search journeys in preview
+        shell: bash
+        env:
+          PREVIEW_URL: ${{ steps.stage.outputs.preview_url }}
+        run: |
+          set -euo pipefail
+          # Vercel CLI authenticates protected preview routes without weakening
+          # deployment protection or printing any bypass secret.
+          pnpm dlx vercel@latest curl / --deployment "$PREVIEW_URL" \
+            --token="$VERCEL_TOKEN" --silent --show-error --fail > "$RUNNER_TEMP/fysen-home.html"
+          pnpm dlx vercel@latest curl '/search?city=Oslo&q=ramen' --deployment "$PREVIEW_URL" \
+            --token="$VERCEL_TOKEN" --silent --show-error --fail > "$RUNNER_TEMP/fysen-ramen.html"
+          pnpm dlx vercel@latest curl '/search?city=Oslo&cuisine=Japansk' --deployment "$PREVIEW_URL" \
+            --token="$VERCEL_TOKEN" --silent --show-error --fail > "$RUNNER_TEMP/fysen-matlyst.html"
+          python3 - <<'PY'
+          import html
+          import os
+          from pathlib import Path
+
+          root = Path(os.environ["RUNNER_TEMP"])
+          checks = {
+              "homepage": {
+                  "file": root / "fysen-home.html",
+                  "markers": ("Hva har du lyst på?", "Matlyst",
+                              "Sist bekreftede menyer", "cuisineRestaurantNames"),
+              },
+              "ramen search": {
+                  "file": root / "fysen-ramen.html",
+                  "markers": ("Menyarkiv mens ferske søk er utilgjengelige",
+                              "Meny sist kontrollert", "ramen"),
+              },
+              "Japanese Matlyst": {
+                  "file": root / "fysen-matlyst.html",
+                  "markers": ("Matlyst", "Japansk", "Søk i menyarkivet", "Ramen"),
+              },
+          }
+          summary_lines = ["## Verified isolated Fysen Matlyst preview", ""]
+          for label, check in checks.items():
+              raw = check["file"].read_bytes()
+              if len(raw) > 4 * 1024 * 1024:
+                  raise AssertionError(f"{label}: unexpectedly large HTML")
+              page = html.unescape(raw.decode("utf8", errors="replace"))
+              missing = [marker for marker in check["markers"] if marker not in page]
+              if missing:
+                  raise AssertionError(f"{label}: missing required SSR content: {missing}")
+              summary_lines.append(f"- {label}: all {len(check['markers'])} content checks passed")
+          summary_lines.extend([
+              "",
+              "- **No production deploy, promotion, database write or domain change.**",
+              "- All menu coverage is from the real quality-gated Free archive.",
+          ])
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf8") as stream:
+              stream.write("\n".join(summary_lines) + "\n")
+          print("Three isolated preview routes passed SSR content verification.")
+          PY
+
+      - name: Confirm existing public Fysen was not broken
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --max-time 20 \
+            https://fysen.vercel.app/ > "$RUNNER_TEMP/fysen-public.html"
+          grep -q "Hva har du lyst på?" "$RUNNER_TEMP/fysen-public.html"
+          echo "Public Fysen homepage remains available and unchanged by preview verification."
+          {
+            echo
+            echo "- Isolated preview URL: ${{ steps.stage.outputs.preview_url }}"
+            echo "- Source: ${{ steps.stage.outputs.source_sha }}"
+            echo "- Existing production homepage still responds correctly."
+          } >> "$GITHUB_STEP_SUMMARY"
