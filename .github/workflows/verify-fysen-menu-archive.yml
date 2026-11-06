@@ -1,0 +1,31 @@
+name: Verify Fysen read-only public menu archive
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "apps/web/lib/verified-menu-archive.ts"
+      - "apps/web/components/verified-menu-archive-view.tsx"
+      - "apps/web/tests/verified-menu-archive.test.mjs"
+      - ".github/workflows/verify-fysen-menu-archive.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-readonly-archive-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  prove-current-archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout Fysen
+        uses: actions/checkout@v4
+      - name: Setup existing Node and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+      - name: Verify current published archive fingerprint and quarantine
+        env:
+          FYSEN_ARCHIVE_LIVE_PROOF: "1"
+        run: pnpm --filter @fysen/web exec node --test tests/verified-menu-archive.test.mjs
