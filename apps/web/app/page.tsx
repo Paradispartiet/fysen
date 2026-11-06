@@ -4,6 +4,7 @@ import { DishLearningSection } from "../components/dish-learning-section";
 import { DishSearch } from "../components/dish-search";
 import { GlobalHeader } from "../components/global-header";
 import { browseDishes } from "../lib/fysen-api";
+import { getPublicMenuArchive } from "../lib/verified-menu-archive";
 import { dishBrowseHref } from "../lib/public-path";
 
 export default async function HomePage() {
@@ -12,6 +13,16 @@ export default async function HomePage() {
     browseData = await browseDishes({ city: "Oslo" });
   } catch {
     browseData = null;
+  }
+
+  let archiveReady = false;
+  if (!browseData) {
+    try {
+      await getPublicMenuArchive();
+      archiveReady = true;
+    } catch {
+      // Show normal unavailable state when even the verified archive is down.
+    }
   }
 
   return (
@@ -25,10 +36,15 @@ export default async function HomePage() {
             </div>
           </div>
           <div className="homeSearchWrap">
-            <p className="searchProof">Søk etter en rett og se hvilke restauranter som har den på menyen nå.</p>
+            <p className="searchProof">
+              {browseData
+                ? "Søk etter en rett og se hvilke restauranter som har den på menyen nå."
+                : "Ferske søk er midlertidig utilgjengelige. Du kan fortsatt utforske rettene og matkunnskapen."}
+            </p>
             <DishSearch />
             <a className="homeDishBrowseLink" href={dishBrowseHref("Oslo")}>
-              Se alle retter i Oslo <span aria-hidden="true">→</span>
+              {archiveReady ? "Utforsk sist bekreftede menyer (ikke sanntid)" : "Se alle retter i Oslo"}
+              <span aria-hidden="true">→</span>
             </a>
           </div>
         </section>
