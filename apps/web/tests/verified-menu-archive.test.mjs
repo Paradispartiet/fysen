@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { Buffer } from "node:buffer";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
+import process from "node:process";
 import { URL } from "node:url";
 import ts from "typescript";
 
