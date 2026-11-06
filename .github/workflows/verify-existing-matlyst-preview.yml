@@ -1,0 +1,92 @@
+name: Verify already-built corrected Matlyst preview (no rebuild)
+
+# One-off verification of the immutable preview created by GH run 42219698313.
+# The existing production URL is never moved.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/verify-existing-matlyst-preview.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-existing-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: team_mV3NpMYd5l7yGmuZkbTf46y8
+      VERCEL_PROJECT_ID: prj_G0Vm4jhCg3hWRvVBSEIt5klHO6sS
+      PREVIEW_URL: https://fysen-gb4y7gqwj-matsgran-8572s-projects.vercel.app
+      PREVIEW_SOURCE: 0ee36c489f1578ad4a5c63d5adb899f4f3ca8053
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-node-pnpm
+      - name: Fetch only the three protected preview pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$VERCEL_TOKEN"
+          test "$VERCEL_PROJECT_ID" = "prj_G0Vm4jhCg3hWRvVBSEIt5klHO6sS"
+          test "$PREVIEW_URL" = "https://fysen-gb4y7gqwj-matsgran-8572s-projects.vercel.app"
+          # VERCEL_TOKEN is already in the environment. The Vercel curl
+          # subcommand passes additional flags to the underlying system curl:
+          # NEVER pass --token after the subcommand; system curl rejects it.
+          pnpm dlx vercel@latest curl / --deployment "$PREVIEW_URL" \
+            --fail --silent --show-error > "$RUNNER_TEMP/preview-home.html"
+          pnpm dlx vercel@latest curl '/search?city=Oslo&q=ramen' --deployment "$PREVIEW_URL" \
+            --fail --silent --show-error > "$RUNNER_TEMP/preview-ramen.html"
+          pnpm dlx vercel@latest curl '/search?city=Oslo&cuisine=Japansk' --deployment "$PREVIEW_URL" \
+            --fail --silent --show-error > "$RUNNER_TEMP/preview-japanese.html"
+      - name: Assert real server-rendered archive coverage and Matlyst
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import html
+          import os
+          from pathlib import Path
+          temp = Path(os.environ["RUNNER_TEMP"])
+          checks = {
+              "Matlyst homepage": ("preview-home.html", (
+                  "Hva har du lyst på?", "Matlyst",
+                  "Sist bekreftede menyer", "cuisineRestaurantNames",
+              )),
+              "Ramen search": ("preview-ramen.html", (
+                  "Menyarkiv mens ferske søk er utilgjengelige",
+                  "Meny sist kontrollert", "ramen",
+              )),
+              "Japanese Matlyst": ("preview-japanese.html", (
+                  "Matlyst", "Japansk", "Søk i menyarkivet", "Ramen",
+              )),
+          }
+          summary = ["## Corrected Matlyst preview (without rebuilding)", ""]
+          for title, (filename, markers) in checks.items():
+              payload = (temp / filename).read_bytes()
+              if len(payload) > 4 * 1024 * 1024:
+                  raise AssertionError(f"{title}: output exceeded size limit")
+              page = html.unescape(payload.decode("utf-8", errors="replace"))
+              missing = [marker for marker in markers if marker not in page]
+              if missing:
+                  raise AssertionError(f"{title}: missing required markers {missing}")
+              summary.append(f"- {title}: {len(markers)}/{len(markers)} content assertions passed")
+          summary.extend([
+              "",
+              "- Tested immutable preview: " + os.environ["PREVIEW_URL"],
+              "- Source: " + os.environ["PREVIEW_SOURCE"],
+              "- Production alias unchanged; no preview rebuild or paid services.",
+          ])
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as output:
+              output.write("\n".join(summary) + "\n")
+          print("3/3 isolated preview routes verified")
+          PY
+      - name: Ensure rolled-back public Fysen still works
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --max-time 20 \
+            https://fysen.vercel.app/ > "$RUNNER_TEMP/fysen-public.html"
+          grep -q 'Hva har du lyst på?' "$RUNNER_TEMP/fysen-public.html"
+          echo "Public Fysen homepage remains healthy."
