@@ -7,6 +7,10 @@ on:
       - "apps/web/lib/verified-menu-archive.ts"
       - "apps/web/components/verified-menu-archive-view.tsx"
       - "apps/web/tests/verified-menu-archive.test.mjs"
+      - "apps/web/lib/archived-matlyst-coverage.ts"
+      - "apps/web/tests/archived-matlyst-coverage.test.mjs"
+      - "apps/web/components/cuisine-explorer.tsx"
+      - "apps/web/app/page.tsx"
       - ".github/workflows/verify-fysen-menu-archive.yml"
 
 permissions:
@@ -28,4 +32,4 @@ jobs:
       - name: Verify current published archive fingerprint and quarantine
         env:
           FYSEN_ARCHIVE_LIVE_PROOF: "1"
-        run: pnpm --filter @fysen/web exec node --test tests/verified-menu-archive.test.mjs
+        run: pnpm --filter @fysen/web exec node --test tests/verified-menu-archive.test.mjs tests/archived-matlyst-coverage.test.mjs
