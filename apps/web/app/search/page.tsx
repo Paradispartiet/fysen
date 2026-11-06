@@ -135,7 +135,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
         <section className="resultsContent" aria-live="polite">
           {q.length === 0 ? (
             archive ? (
-              <ArchivedMenuBrowse archive={archive} city={city} initialCuisineName={first(params.cuisine)} />
+              <ArchivedMenuBrowse city={city} initialCuisineName={first(params.cuisine)} />
             ) : (
               <DishBrowse
                 city={city}
@@ -156,7 +156,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
               <DishKnowledgeNote query={q} />
 
               {archive ? (
-                <ArchivedMenuResults archive={archive} results={archiveMatches} query={q} city={city} />
+                <ArchivedMenuResults results={archiveMatches} query={q} city={city} />
               ) : null}
 
               {error && !archive ? (

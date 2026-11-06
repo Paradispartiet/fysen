@@ -1,6 +1,6 @@
 import { cuisines, discoveryDishesForCuisine } from "./cuisine-explorer-data";
 import { dishSearchHref, foodKnowledgeHref, withPublicBasePath } from "../lib/public-path";
-import type { ArchivedMenuMatch, PublicMenuArchive } from "../lib/verified-menu-archive";
+import type { ArchivedMenuMatch } from "../lib/verified-menu-archive";
 import styles from "./verified-menu-archive-view.module.css";
 
 function confirmedDate(value: string): string {
@@ -24,38 +24,15 @@ function priceLabel(priceMinor: number | null, priceMaxMinor: number | null, kin
   return kind === "from" ? "Fra " + price : price;
 }
 
-function ArchiveIntro({ archive, city }: {
-  readonly archive: PublicMenuArchive;
-  readonly city: string;
-}) {
-  return (
-    <header className={styles.intro}>
-      <p className={styles.eyebrow}>Dokumenterte menyer · {city}</p>
-      <h2>Menyarkiv mens ferske søk er utilgjengelige</h2>
-      <p>
-        Dette er historiske, sist kontrollerte menyer, ikke sanntidsinformasjon.
-        Åpningstider, pris og tilgjengelighet kan ha endret seg.
-        Kontroller opplysningene hos restauranten.
-      </p>
-      <p className={styles.meta}>
-        Opprinnelig arkivdato: {archive.archiveDate}
-        {archive.lastRefreshAt ? " · Siste katalogoppdatering: " + confirmedDate(archive.lastRefreshAt) : ""}
-      </p>
-    </header>
-  );
-}
-
 export function ArchivedMenuResults({
-  archive, results, query, city,
+  results, query, city,
 }: {
-  readonly archive: PublicMenuArchive;
   readonly results: readonly ArchivedMenuMatch[];
   readonly query: string;
   readonly city: string;
 }) {
   return (
     <section className={styles.surface} aria-label="Historiske menytreff">
-      <ArchiveIntro archive={archive} city={city} />
       <h3>{results.length} arkivtreff på «{query}»</h3>
       {results.length === 0 ? (
         <p>Ingen treff i det sist godkjente menyarkivet. Dette sier ikke noe om dagens menyer.</p>
@@ -82,9 +59,8 @@ export function ArchivedMenuResults({
 }
 
 export function ArchivedMenuBrowse({
-  archive, city, initialCuisineName,
+  city, initialCuisineName,
 }: {
-  readonly archive: PublicMenuArchive;
   readonly city: string;
   readonly initialCuisineName: string;
 }) {
@@ -98,7 +74,6 @@ export function ArchivedMenuBrowse({
 
   return (
     <section className={styles.surface} aria-label="Matlyst og historiske menyer">
-      <ArchiveIntro archive={archive} city={city} />
       <div className={styles.browseHeading}>
         <h1>Matlyst</h1>
         <p>Utforsk kjøkken, tradisjoner og retter. Menytreff åpnes i det sist kontrollerte arkivet.</p>

@@ -673,3 +673,160 @@ a {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Site-wide navigation: discreet menu in the header. */
+.globalHeaderActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(12px, 2vw, 22px);
+  flex-shrink: 0;
+}
+
+.siteMenu {
+  position: relative;
+  z-index: 60;
+}
+
+.siteMenuButton {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+  color: var(--color-ink);
+  font-size: 13px;
+  font-weight: 650;
+  list-style: none;
+  user-select: none;
+  cursor: pointer;
+  border: 1px solid var(--color-line);
+  border-radius: 11px;
+  background: rgba(16, 21, 16, 0.78);
+}
+
+.siteMenuButton::-webkit-details-marker { display: none; }
+.siteMenuButton::marker { content: ""; }
+
+.siteMenuButton svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+}
+
+.siteMenu[open] .siteMenuButton,
+.siteMenuButton:hover {
+  border-color: var(--color-line-strong);
+}
+
+.siteMenuButton:focus-visible,
+.siteMenuPanel a:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+.siteMenuPanel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 70;
+  width: min(230px, calc(100vw - 40px));
+  padding: 7px;
+  background: var(--color-paper);
+  border: 1px solid var(--color-line-strong);
+  border-radius: 14px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.5);
+}
+
+.siteMenuPanel a {
+  display: block;
+  padding: 12px 13px;
+  color: var(--color-ink);
+  font-size: 14px;
+  line-height: 1.35;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+.siteMenuPanel a:hover {
+  background: var(--color-surface-3);
+  color: var(--color-brand);
+}
+
+/* About Fysen is the unobtrusive home for archive transparency. */
+.aboutMain {
+  width: min(780px, calc(100% - 80px));
+  margin: 0 auto;
+  padding: clamp(48px, 7vw, 84px) 0 100px;
+}
+
+.aboutEyebrow {
+  margin: 0 0 12px;
+  color: var(--color-brand);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.aboutMain h1 {
+  margin: 0;
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 650;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+}
+
+.aboutLead {
+  max-width: 62ch;
+  margin: 20px 0 44px;
+  color: var(--color-muted);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.aboutSection {
+  padding: 26px 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.aboutSection h2 {
+  margin: 0 0 12px;
+  font-size: 22px;
+  font-weight: 650;
+}
+
+.aboutSection p {
+  margin: 10px 0 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.aboutArchiveDates {
+  font-size: 13px;
+}
+
+.aboutHomeLink {
+  display: inline-flex;
+  margin-top: 26px;
+  padding: 12px 0;
+  color: var(--color-brand);
+  font-weight: 650;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 767px) {
+  .aboutMain {
+    width: calc(100% - 40px);
+    padding-top: 46px;
+  }
+}
+
+@media (max-width: 380px) {
+  .globalHeaderActions { gap: 8px; }
+  .siteMenuButton { padding-inline: 10px; }
+  .siteMenuButton span { display: none; }
+}
