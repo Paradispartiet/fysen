@@ -1,0 +1,68 @@
+name: Fysen public archive fallback live proof
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/verify-fysen-archive-live.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check real archive fallback on published Fysen web
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import html
+          import json
+          import urllib.request
+          from pathlib import Path
+
+          base = "https://fysen.vercel.app"
+          expected = (
+              ("ramen", "/search?city=Oslo&q=ramen", (
+                  "Menyarkiv mens ferske søk er utilgjengelige",
+                  "Meny sist kontrollert",
+                  "ramen",
+              )),
+              ("matlyst", "/search?city=Oslo&cuisine=Japansk", (
+                  "Menyarkiv mens ferske søk er utilgjengelige",
+                  "Matlyst",
+                  "Japansk",
+                  "Søk i menyarkivet",
+                  "Ramen",
+              )),
+          )
+
+          report = []
+          for name, path, required in expected:
+              request = urllib.request.Request(
+                  base + path,
+                  headers={"User-Agent": "FysenReadOnlyArchiveLiveProof/1", "Accept": "text/html"},
+              )
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  if response.status != 200:
+                      raise AssertionError(f"{name}: unexpected HTTP {response.status}")
+                  payload = response.read(4 * 1024 * 1024 + 1)
+              if len(payload) > 4 * 1024 * 1024:
+                  raise AssertionError(f"{name}: unexpectedly large response")
+              body = html.unescape(payload.decode("utf-8", errors="replace")).replace("<!-- -->", "")
+              missing = [marker for marker in required if marker not in body]
+              if missing:
+                  raise AssertionError(f"{name}: required archive content absent: {', '.join(missing)}")
+              report.append({"surface": name, "http": 200, "required_markers": len(required)})
+          print(json.dumps({"status": "verified", "surfaces": report}, ensure_ascii=False))
+          summary = Path(__import__("os").environ["GITHUB_STEP_SUMMARY"])
+          summary.write_text(
+              "## Fysen public archive fallback verified\n\n"
+              "Two public web routes rendered genuine archive fallback while the live API is unavailable.\n\n"
+              + "~~~json\n" + json.dumps(report, ensure_ascii=False, indent=2) + "\n~~~\n",
+              encoding="utf-8",
+          )
+          PY
