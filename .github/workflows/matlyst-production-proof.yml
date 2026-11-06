@@ -46,7 +46,9 @@ jobs:
           deployed="$(jq -r '[.jobs[] | select(.name == "web" or .name == "api") | select(.conclusion == "success")] | length > 0' <<< "$jobs")"
           echo "deployed=$deployed" >> "$GITHUB_OUTPUT"
           if [[ "$deployed" == false ]]; then
-            echo 'Upstream release deployed neither web nor API; Matlyst production proof is deferred.' >> "$GITHUB_STEP_SUMMARY"
+            echo 'Upstream release deployed neither web nor API; Matlyst production proof is NOT verified.' >> "$GITHUB_STEP_SUMMARY"
+            echo '::error::Neither the API nor the web release passed deployment verification. Matlyst production proof cannot be green without running its public journeys.'
+            exit 1
           fi
 
       - name: Checkout browser proof
