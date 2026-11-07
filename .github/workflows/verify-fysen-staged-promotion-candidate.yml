@@ -1,0 +1,107 @@
+name: Verify existing Fysen staged Matlyst promotion candidate (read only)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/verify-fysen-staged-promotion-candidate.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    env:
+      VERCEL_ORG_ID: team_mV3NpMYd5l7yGmuZkbTf46y8
+      VERCEL_PROJECT_ID: prj_G0Vm4jhCg3hWRvVBSEIt5klHO6sS
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      GH_API_TOKEN: ${{ github.token }}
+      CANDIDATE: https://fysen-25sqb6pug-matsgran-8572s-projects.vercel.app
+      SOURCE_SHA: 691f15f8150845ea1019b86cfef95a79d593317d
+      PROOF_ID: "42344474571"
+    steps:
+      - name: Validate exact Vercel staged candidate identity, not a replacement build
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$VERCEL_TOKEN"
+          host="fysen-25sqb6pug-matsgran-8572s-projects.vercel.app"
+          candidate_json="$(curl --fail --silent --show-error --get \
+            "https://api.vercel.com/v13/deployments/$host" \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
+            --data-urlencode "teamId=$VERCEL_ORG_ID")"
+          if ! printf '%s' "$candidate_json" | jq -e \
+            --arg project "$VERCEL_PROJECT_ID" \
+            --arg source "$SOURCE_SHA" \
+            --arg host "$host" '
+              .projectId == $project and
+              .url == $host and
+              .target == "production" and
+              (.state == "READY" or .readyState == "READY") and
+              .readySubstate == "STAGED" and
+              .meta.fysenVerification == "matlyst-staged-prod" and
+              .meta.fysenSourceSha == $source
+            ' >/dev/null; then
+            echo "::error::Vercel deployment metadata does not meet the current strict promotion gate."
+            printf '%s' "$candidate_json" | jq '{
+              projectId, url, target, state, readyState, readySubstate,
+              metadata: {fysenVerification: .meta.fysenVerification, fysenSourceSha: .meta.fysenSourceSha}
+            }'
+            exit 1
+          fi
+          echo "Existing staged candidate passes exact Vercel project, URL, source, state, and metadata identity."
+          {
+            echo "## Matlyst staged candidate – read-only preflight"
+            echo
+            echo "- Staged URL: $CANDIDATE"
+            echo "- Source SHA: $SOURCE_SHA"
+            echo "- Vercel deployment: READY / STAGED / production build"
+            echo "- Vercel project and guarded source metadata: match"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Verify exact original GitHub Actions success and mandatory steps
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_json="$(curl --fail --silent --show-error \
+            -H "Authorization: Bearer $GH_API_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/runs/$PROOF_ID")"
+          if ! printf '%s' "$run_json" | jq -e --arg sha "$SOURCE_SHA" '
+            .head_sha == $sha and .status == "completed" and .conclusion == "success"
+              and .path == ".github/workflows/stage-fysen-matlyst-production.yml"
+          ' >/dev/null; then
+            echo "::error::Original stage proof did not succeed for the exact candidate SHA."
+            exit 1
+          fi
+          jobs="$(curl --fail --silent --show-error \
+            -H "Authorization: Bearer $GH_API_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/runs/$PROOF_ID/jobs?per_page=100")"
+          if ! printf '%s' "$jobs" | jq -e '
+            [.jobs[]? | select(.name == "stage-and-verify") | .steps[]? |
+              select(
+                (.name == "Deploy a production build with no production domain" or
+                 .name == "Verify three staged production journeys" or
+                 .name == "Prove public Fysen was not replaced")
+                and .conclusion == "success"
+              )] | length == 3
+          ' >/dev/null; then
+            echo "::error::Candidate is missing one of the three actual successful stage proof steps."
+            exit 1
+          fi
+          echo "Original staging run verified: build, three real routes, and unchanged public domain."
+          echo "- Original staging build and all three mandatory proof steps: passed" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Confirm public homepage still healthy without changing it
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --max-time 20 \
+            'https://fysen.vercel.app/' > "$RUNNER_TEMP/live-home.html"
+          grep -q 'Hva har du lyst på?' "$RUNNER_TEMP/live-home.html"
+          echo "- Existing public Fysen: healthy; no changes made" >> "$GITHUB_STEP_SUMMARY"
+          echo "- The staged build was NOT promoted. Any domain move requires the separate approval-gated workflow." >> "$GITHUB_STEP_SUMMARY"
