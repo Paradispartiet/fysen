@@ -1,0 +1,129 @@
+name: Fysen one-shot user-approved Matlyst promotion dispatch
+
+# Exact approval was given in the ChatGPT conversation 2026-11-08.
+# This workflow only dispatches the existing independently gated workflow.
+# Promotion, validation, public smoke test and rollback live in that workflow.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/approved-fysen-matlyst-promotion.yml"
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: fysen-vercel-approved-promotion-dispatch
+  cancel-in-progress: false
+
+jobs:
+  dispatch-approved-exact-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      GH_API_TOKEN: ${{ github.token }}
+      STAGED_URL: https://fysen-25sqb6pug-matsgran-8572s-projects.vercel.app
+      STAGED_PROOF_RUN: "42344474571"
+      STAGED_SOURCE_SHA: 691f15f8150845ea1019b86cfef95a79d593317d
+      PREVIEW_SHA: 0ee36c489f1578ad4a5c63d5adb899f4f3ca8053
+    steps:
+      - name: Checkout complete main history
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Verify approved candidate and original successful staging proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$GITHUB_REPOSITORY" = "Paradispartiet/fysen"
+          test "$STAGED_URL" = "https://fysen-25sqb6pug-matsgran-8572s-projects.vercel.app"
+          test "$STAGED_PROOF_RUN" = "42344474571"
+          test -n "$GH_API_TOKEN"
+          git merge-base --is-ancestor "$STAGED_SOURCE_SHA" HEAD
+          git merge-base --is-ancestor "$PREVIEW_SHA" "$STAGED_SOURCE_SHA"
+          # The code, lockfile and app build inputs must remain identical to
+          # the verified preview and staging build; workflow-only changes pass.
+          if ! git diff --quiet "$PREVIEW_SHA" HEAD -- \
+              apps/web packages/contracts package.json pnpm-lock.yaml \
+              pnpm-workspace.yaml turbo.json tsconfig.json .npmrc; then
+            echo "::error::Public web code changed since staging; refuse promotion."
+            exit 1
+          fi
+
+          run_data="$(curl --fail --silent --show-error --retry 2 \
+            -H "Authorization: Bearer $GH_API_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/runs/$STAGED_PROOF_RUN")"
+          if ! printf '%s' "$run_data" | jq -e --arg sha "$STAGED_SOURCE_SHA" '
+            .head_sha == $sha and
+            .status == "completed" and
+            .conclusion == "success" and
+            .path == ".github/workflows/stage-fysen-matlyst-production.yml"
+          ' >/dev/null; then
+            echo "::error::Original production stage run is not a success for this SHA."
+            exit 1
+          fi
+          jobs="$(curl --fail --silent --show-error --retry 2 \
+            -H "Authorization: Bearer $GH_API_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/runs/$STAGED_PROOF_RUN/jobs?per_page=100")"
+          if ! printf '%s' "$jobs" | jq -e '
+            [.jobs[]? | select(.name == "stage-and-verify") | .steps[]? |
+              select((.name == "Deploy a production build with no production domain" or
+                      .name == "Verify three staged production journeys" or
+                      .name == "Prove public Fysen was not replaced") and
+                     .conclusion == "success")] | length == 3
+          ' >/dev/null; then
+            echo "::error::Missing successful build, staged SSR proof or existing-public health step."
+            exit 1
+          fi
+          echo "Exact source and all three mandatory staging steps confirmed."
+          {
+            echo "## Explicitly approved Fysen Matlyst promotion"
+            echo
+            echo "- Staged source: $STAGED_SOURCE_SHA"
+            echo "- Staging proof: $STAGED_PROOF_RUN"
+            echo "- Exact candidate: $STAGED_URL"
+            echo "- User approval phrase: PROMOTE_FYSEN"
+            echo "- App/source parity since the passed staging test: confirmed"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Dispatch EXISTING guarded promotion workflow with exact approved inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Do NOT promote directly. The existing workflow independently
+          # re-verifies Vercel READY/STAGED metadata, checks all three routes,
+          # promotes the exact deployed build, checks 3 public routes, and
+          # rolls back to the prior known-good deployment if verification fails.
+          payload="$(jq -nc \
+            --arg staged "$STAGED_URL" \
+            --arg proof "$STAGED_PROOF_RUN" \
+            '{ref:"main",inputs:{staged_url:$staged,proof_run_id:$proof,confirmation:"PROMOTE_FYSEN"}}')"
+          http_code="$(curl --silent --show-error \
+            -o "$RUNNER_TEMP/github-dispatch-response.txt" \
+            -w '%{http_code}' \
+            --request POST \
+            -H "Authorization: Bearer $GH_API_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            -H 'Content-Type: application/json' \
+            --data "$payload" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/promote-fysen-matlyst-staged.yml/dispatches")"
+          if [[ "$http_code" != "204" ]]; then
+            echo "::error::GitHub workflow dispatch was refused (HTTP $http_code). No promotion was initiated."
+            # Do not print any potentially sensitive response body.
+            exit 1
+          fi
+          echo "GitHub accepted the exact promotion dispatch. This is NOT a production success claim."
+          {
+            echo
+            echo "- Promotion workflow dispatch accepted (HTTP 204)."
+            echo "- **Completion is only confirmed by the separate promotion run's public 3-route proof.**"
+            echo "- This dispatch workflow performs no Vercel changes itself."
+          } >> "$GITHUB_STEP_SUMMARY"
