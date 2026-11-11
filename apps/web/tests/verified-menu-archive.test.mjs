@@ -112,6 +112,7 @@ test("archive browse offers historical dishes without quarantined restaurants", 
   const dishes = archiveModule.browseArchivedMenuDishes(archive, "Oslo");
   assert.equal(dishes[0]?.query, "ramen");
   assert.equal(dishes[0]?.restaurantCount, 2);
+  assert.equal(dishes[0]?.newestObservedAt, "2026-11-04T12:00:00Z");
   assert.equal(dishes[1]?.query, "spicy ramen");
   assert.equal(dishes[1]?.restaurantCount, 1);
   assert.deepEqual(archiveModule.browseArchivedMenuDishes(archive, "Bergen"), []);
@@ -130,5 +131,6 @@ test("a successful empty live API response still exposes the historical menu rou
   assert.match(preview, /response\.browse\?\.dishes\.length === 0/u);
   assert.match(preview, /response\.search\?\.results\.length === 0/u);
   assert.match(archivedView, /browseArchivedMenuDishes\(archive, city, 48\)/u);
-  assert.match(archivedView, /Dette er ikke en bekreftelse på hva som serveres nå/u);
+  assert.match(archivedView, /Nyeste kildekontroll/u);
+  assert.match(archivedView, /ikke siste kontroll av hver enkelt meny/u);
 });
