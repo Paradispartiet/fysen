@@ -12,17 +12,22 @@ const layout = readFileSync(path.join(web, "app/layout.tsx"), "utf8");
 const browse = readFileSync(path.join(web, "components/dish-browse.tsx"), "utf8");
 const css = readFileSync(path.join(web, "styles/dish-photos.css"), "utf8");
 const atlas = readFileSync(path.join(web, "public/dish-images/collection.avif"));
+const series04 = readFileSync(path.join(web, "public/dish-images/series-04.avif"));
+const manifest = JSON.parse(readFileSync(path.join(web, "public/dish-images/manifest.json"), "utf8"));
 const catalog = readFileSync(path.join(web, "content/food-knowledge/catalog.ts"), "utf8");
 
-test("Matlyst has exactly twenty-four distinct, curated dish illustrations", () => {
+test("Matlyst has exactly thirty-three distinct, curated dish illustrations", () => {
   const entries = [...gallery.matchAll(/\{ id: "([^"]+)", label: "([^"]+)", query: "([^"]+)" \}/gu)];
-  assert.equal(entries.length, 24);
-  assert.equal(new Set(entries.map((match) => match[1])).size, 24);
+  assert.equal(entries.length, 33);
+  assert.equal(new Set(entries.map((match) => match[1])).size, 33);
   assert.ok(entries.every((match) => match[2].length > 0 && match[3].length > 0));
   assert.match(gallery, /index % 6/u);
   assert.match(gallery, /Math\.floor\(index \/ 6\)/u);
   assert.match(gallery, /column \* 20/u);
   assert.match(gallery, /row \* 100\) \/ 3/u);
+  assert.match(gallery, /index >= 24/u);
+  assert.match(gallery, /column \* 50/u);
+  assert.match(gallery, /row \* 50/u);
 });
 
 test("Dish illustrations are available and explicitly not restaurant photographs", () => {
@@ -36,6 +41,14 @@ test("Dish illustrations are available and explicitly not restaurant photographs
   assert.ok(ispeIndex > 0, "AVIF image spatial extents box must exist");
   assert.equal(atlas.readUInt32BE(ispeIndex + 8), 768);
   assert.equal(atlas.readUInt32BE(ispeIndex + 12), 512);
+  assert.equal(series04.toString("ascii", 4, 12), "ftypavif");
+  assert.ok(statSync(path.join(web, "public/dish-images/series-04.avif")).size > 6500);
+  const series04ExtentIndex = series04.indexOf(Buffer.from("ispe"));
+  assert.ok(series04ExtentIndex > 0);
+  assert.equal(series04.readUInt32BE(series04ExtentIndex + 8), 384);
+  assert.equal(series04.readUInt32BE(series04ExtentIndex + 12), 384);
+  assert.match(css, /dishPhotoThumb\.dishPhotoSeries04/u);
+  assert.match(css, /300% 300%/u);
   assert.match(layout, /dish-photos\.css/u);
   assert.match(explorer, /<DishPhotoGallery \/>/u);
 });
@@ -68,6 +81,33 @@ test("Every exact editorial image maps to a genuine food knowledge dish", () => 
   const mappingBlock = gallery.slice(gallery.indexOf("const editorialPhotoIndex"), gallery.indexOf("export function DishPhotoThumbnail"));
   const mappedIds = [...mappingBlock.matchAll(/^\s*(?:"([^"]+)"|([a-z][a-z0-9-]*)):\s*\d+,/gmu)].map((match) => match[1] || match[2]);
   assert.equal(new Set(mappedIds).size, mappedIds.length, "Duplicate editorial image IDs");
-  assert.ok(mappedIds.length >= 13);
+  assert.equal(mappedIds.length, 22);
   for (const id of mappedIds) assert.ok(catalogIds.has(id), `Editorial image has no catalog dish: ${id}`);
+});
+
+test("Every generated and approved image is represented in the published Matlyst gallery", () => {
+  const entries = [...gallery.matchAll(/\{ id: "([^"]+)", label: "([^"]+)", query: "([^"]+)" \}/gu)];
+  assert.equal(manifest.version, 1);
+  assert.equal(manifest.images.length, 33);
+  assert.deepEqual(manifest.images.map((entry) => entry.id), entries.map((match) => match[1]));
+  for (const [index, image] of manifest.images.entries()) {
+    assert.equal(image.index, index);
+    assert.equal(image.atlas, index < 24 ? "collection.avif" : "series-04.avif");
+    assert.equal(image.surface, "Matlyst");
+    assert.equal(image.kind, "AI-illustrasjon");
+  }
+  assert.match(explorer, /<DishPhotoGallery \/>/u);
+  assert.match(gallery, /dishSearchHref\(dish\.query\)/u);
+  assert.match(gallery, /dishPhotoSeries04/u);
+});
+
+test("The nine newly produced dishes are visible and maintain variant-specific alt text", () => {
+  for (const id of ["katsu", "yakitori", "udon", "bao", "dumplings",
+    "mapo-tofu", "peking-duck", "dan-dan-noodles", "green-curry"]) {
+    assert.ok(gallery.includes(`id: "${id}"`));
+    assert.match(gallery, new RegExp(`\\b${id}\\b`, "u"));
+  }
+  assert.match(gallery, /illustratedVariants/u);
+  assert.match(gallery, /restaurantfoto/u);
+  assert.match(css, /series-04\.avif/u);
 });

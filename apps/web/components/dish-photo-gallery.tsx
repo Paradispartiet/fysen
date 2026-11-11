@@ -25,11 +25,21 @@ const illustratedDishes = [
   { id: "tacos-al-pastor", label: "Tacos al pastor", query: "tacos al pastor" },
   { id: "chana-masala", label: "Chana masala", query: "chana masala" },
   { id: "dosa", label: "Masala dosa", query: "dosa" },
+  { id: "katsu", label: "Chicken katsu", query: "chicken katsu" },
+  { id: "yakitori", label: "Yakitori – kyllingspyd", query: "yakitori" },
+  { id: "udon", label: "Udon med tempura", query: "udon" },
+  { id: "bao", label: "Bao med braisert kjøtt", query: "bao" },
+  { id: "dumplings", label: "Dumplings", query: "dumplings" },
+  { id: "mapo-tofu", label: "Mapo tofu med kjøtt", query: "mapo tofu" },
+  { id: "peking-duck", label: "Pekingand", query: "peking duck" },
+  { id: "dan-dan-noodles", label: "Dan dan-nudler med kjøtt", query: "dan dan noodles" },
+  { id: "green-curry", label: "Grønn curry med kylling", query: "green curry" },
 ] as const;
 
-// The background sprite contains exactly 6 columns and 4 rows, in this order.
-// Photographs are representative AI illustrations, never evidence of a
-// restaurant's menu item or preparation; keep them out of restaurant listings.
+// The first atlas holds 24 illustrations in 6 columns × 4 rows.
+// The second atlas (series 04) holds nine in 3 × 3, at indices 24–32.
+// All are representative AI illustrations, not restaurant photographs.
+// Keep individual restaurant listings separate from these editorial images.
 export function DishPhotoGallery() {
   return (
     <section className="dishPhotos" aria-labelledby="dish-photos-title">
@@ -42,14 +52,19 @@ export function DishPhotoGallery() {
       </div>
       <div className="dishPhotosGrid">
         {illustratedDishes.map((dish, index) => {
-          const column = index % 6;
-          const row = Math.floor(index / 6);
+          const isSeries04 = index >= 24;
+          const localIndex = isSeries04 ? index - 24 : index;
+          const column = isSeries04 ? localIndex % 3 : index % 6;
+          const row = isSeries04 ? Math.floor(localIndex / 3) : Math.floor(index / 6);
+          const position = isSeries04
+            ? `${column * 50}% ${row * 50}%`
+            : `${column * 20}% ${(row * 100) / 3}%`;
           return (
             <a href={dishSearchHref(dish.query)} key={dish.id} className="dishPhotoCard">
               <span
-                className="dishPhotoThumb"
+                className={isSeries04 ? "dishPhotoThumb dishPhotoSeries04" : "dishPhotoThumb"}
                 aria-hidden="true"
-                style={{ backgroundPosition: `${column * 20}% ${(row * 100) / 3}%` }}
+                style={{ backgroundPosition: position }}
               />
               <strong>{dish.label}</strong>
               <span className="dishPhotoAction">Se menytreff <span aria-hidden="true">→</span></span>
@@ -79,17 +94,46 @@ const editorialPhotoIndex: Readonly<Record<string, number>> = {
   "tacos-al-pastor": 21,
   "chana-masala": 22,
   dosa: 23,
+  katsu: 24,
+  yakitori: 25,
+  udon: 26,
+  bao: 27,
+  dumplings: 28,
+  "mapo-tofu": 29,
+  "peking-duck": 30,
+  "dan-dan-noodles": 31,
+  "green-curry": 32,
+};
+
+// Specify visible variants for general catalog IDs: the illustrations are
+// examples of each dish family, never proof of a restaurant's ingredients.
+const illustratedVariants: Readonly<Record<string, string>> = {
+  katsu: "chicken katsu, med kylling",
+  yakitori: "yakitori med kylling",
+  udon: "udon med reketempura",
+  bao: "bao med braisert kjøtt",
+  dumplings: "dumplings med uspesifisert fyll",
+  "mapo-tofu": "mapo tofu med kjøtt",
+  "peking-duck": "pekingand",
+  "dan-dan-noodles": "dan dan-nudler med kjøtt og peanøtter",
+  "green-curry": "grønn curry med kylling",
 };
 
 export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: string }) {
   const index = editorialPhotoIndex[dishId];
   if (index === undefined) return null;
+  const isSeries04 = index >= 24;
+  const localIndex = isSeries04 ? index - 24 : index;
+  const position = isSeries04
+    ? `${(localIndex % 3) * 50}% ${Math.floor(localIndex / 3) * 50}%`
+    : `${(index % 6) * 20}% ${(Math.floor(index / 6) * 100) / 3}%`;
+  const illustratedVariant = illustratedVariants[dishId] ?? label;
   return (
     <span
       role="img"
-      aria-label={`KI-illustrasjon av ${label}, ikke restaurantfoto`}
-      className="dishPhotoSmall"
-      style={{ backgroundPosition: `${(index % 6) * 20}% ${(Math.floor(index / 6) * 100) / 3}%` }}
+      aria-label={`KI-illustrasjon av ${illustratedVariant}, ikke restaurantfoto`}
+      className={isSeries04 ? "dishPhotoSmall dishPhotoSeries04" : "dishPhotoSmall"}
+      style={{ backgroundPosition: position }}
     />
   );
 }

@@ -37,3 +37,11 @@
   border-radius: 10px;
   background: #000 url("/dish-images/collection.avif") center / 600% 400% no-repeat;
 }
+
+
+/* Series 04: its own 3×3 atlas, without changing the first 24 images. */
+.dishPhotoThumb.dishPhotoSeries04,
+.dishPhotoSmall.dishPhotoSeries04 {
+  background-image: url("/dish-images/series-04.avif");
+  background-size: 300% 300%;
+}
