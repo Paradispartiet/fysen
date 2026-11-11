@@ -11,6 +11,7 @@ const layout = readFileSync(path.join(web, "app/layout.tsx"), "utf8");
 const browse = readFileSync(path.join(web, "components/dish-browse.tsx"), "utf8");
 const css = readFileSync(path.join(web, "styles/dish-photos.css"), "utf8");
 const atlas = readFileSync(path.join(web, "public/dish-images/collection.avif"));
+const catalog = readFileSync(path.join(web, "content/food-knowledge/catalog.ts"), "utf8");
 
 test("Matlyst has exactly twenty-four distinct, curated dish illustrations", () => {
   const entries = [...gallery.matchAll(/\{ id: "([^"]+)", label: "([^"]+)", query: "([^"]+)" \}/gu)];
@@ -59,4 +60,13 @@ test("New editorial imagery maps only real catalog dishes, not non-catalog bibim
     assert.ok(mapped.includes(id), `Missing exact editorial mapping for ${id}`);
   }
   assert.doesNotMatch(mapped, /bibimbap/u);
+});
+
+test("Every exact editorial image maps to a genuine food knowledge dish", () => {
+  const catalogIds = new Set([...catalog.matchAll(/\\bid:\\s*"([^"]+)"/gu)].map((match) => match[1]));
+  const mappingBlock = gallery.slice(gallery.indexOf("const editorialPhotoIndex"), gallery.indexOf("export function DishPhotoThumbnail"));
+  const mappedIds = [...mappingBlock.matchAll(/^\\s*(?:"([^"]+)"|([a-z][a-z0-9-]*)):\\s*\\d+,/gmu)].map((match) => match[1] || match[2]);
+  assert.equal(new Set(mappedIds).size, mappedIds.length, "Duplicate editorial image IDs");
+  assert.ok(mappedIds.length >= 13);
+  for (const id of mappedIds) assert.ok(catalogIds.has(id), `Editorial image has no catalog dish: ${id}`);
 });
