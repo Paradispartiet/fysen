@@ -13,6 +13,8 @@ export default async function HomePage() {
   let browseData: DishBrowseResponse | null = null;
   try {
     browseData = await browseDishes({ city: "Oslo" });
+    // A successful but empty live index should still expose the verified archive.
+    if (browseData.dishes.length === 0) browseData = null;
   } catch {
     browseData = null;
   }

@@ -94,7 +94,11 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   const error = searchState.error;
   let archive: PublicMenuArchive | null = null;
   let archiveMatches: ArchivedMenuMatch[] = [];
-  const primaryUnavailable = q.length === 0 ? Boolean(browseState.error) : q.length >= 2 && Boolean(error);
+  // An HTTP 200 with zero fresh dishes is not proof that Oslo has no menus.
+  // Offer the checksum-verified archive when either live endpoint is empty or down.
+  const primaryUnavailable = q.length === 0
+    ? Boolean(browseState.error) || browseState.data?.dishes.length === 0
+    : q.length >= 2 && (Boolean(error) || data?.results.length === 0);
   if (primaryUnavailable && city.toLocaleLowerCase("nb-NO") === "oslo") {
     try {
       archive = await getPublicMenuArchive();
@@ -135,7 +139,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
         <section className="resultsContent" aria-live="polite">
           {q.length === 0 ? (
             archive ? (
-              <ArchivedMenuBrowse city={city} initialCuisineName={first(params.cuisine)} />
+              <ArchivedMenuBrowse city={city} initialCuisineName={first(params.cuisine)} archive={archive} />
             ) : (
               <DishBrowse
                 city={city}
@@ -172,7 +176,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
                 />
               ) : null}
 
-              {!error && data && data.results.length === 0 ? (
+              {!error && data && data.results.length === 0 && !archive ? (
                 <SearchState
                   title={`Ingen ferske treff på «${q}»`}
                   body={`Vi finner ikke retten på en fersk meny i ${city} akkurat nå.`}

@@ -106,3 +106,31 @@ test("the current public Free archive passes integrity and quarantine checks", {
     assert.ok(result.observedAt.startsWith("2026-"));
   }
 });
+
+test("archive browse offers historical dishes without quarantined restaurants", () => {
+  const archive = archiveModule.parsePublicMenuArchive(metadata, index);
+  const dishes = archiveModule.browseArchivedMenuDishes(archive, "Oslo");
+  assert.equal(dishes[0]?.query, "ramen");
+  assert.equal(dishes[0]?.restaurantCount, 2);
+  assert.equal(dishes[0]?.newestObservedAt, "2026-11-04T12:00:00Z");
+  assert.equal(dishes[1]?.query, "spicy ramen");
+  assert.equal(dishes[1]?.restaurantCount, 1);
+  assert.deepEqual(archiveModule.browseArchivedMenuDishes(archive, "Bergen"), []);
+  assert.deepEqual(archiveModule.browseArchivedMenuDishes(archive, "Oslo", 0), []);
+});
+
+test("a successful empty live API response still exposes the historical menu route", () => {
+  const search = readFileSync(new URL("../app/search/page.tsx", import.meta.url), "utf8");
+  const home = readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
+  const preview = readFileSync(new URL("../components/static-preview-search-page.tsx", import.meta.url), "utf8");
+  const archivedView = readFileSync(new URL("../components/verified-menu-archive-view.tsx", import.meta.url), "utf8");
+  assert.match(search, /browseState\.data\?\.dishes\.length === 0/u);
+  assert.match(search, /data\?\.results\.length === 0/u);
+  assert.match(search, /archive=\{archive\}/u);
+  assert.match(home, /browseData\.dishes\.length === 0/u);
+  assert.match(preview, /response\.browse\?\.dishes\.length === 0/u);
+  assert.match(preview, /response\.search\?\.results\.length === 0/u);
+  assert.match(archivedView, /browseArchivedMenuDishes\(archive, city, 48\)/u);
+  assert.match(archivedView, /Nyeste kildekontroll/u);
+  assert.match(archivedView, /ikke siste kontroll av hver enkelt meny/u);
+});
