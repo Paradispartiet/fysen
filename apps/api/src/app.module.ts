@@ -9,6 +9,7 @@ import { FunnelService } from "./funnel.service.js";
 import { FysenProController } from "./fysen-pro.controller.js";
 import { FysenProService } from "./fysen-pro.service.js";
 import { HealthController } from "./health.controller.js";
+import { VerifiedPublicArchiveController } from "./verified-public-menu-archive.controller.js";
 import { RestaurantClaimsController } from "./restaurant-claims.controller.js";
 import { RestaurantClaimsService } from "./restaurant-claims.service.js";
 
@@ -16,6 +17,7 @@ import { RestaurantClaimsService } from "./restaurant-claims.service.js";
   controllers: [
     HealthController,
     DishSearchController,
+    VerifiedPublicArchiveController,
     FunnelController,
     RestaurantClaimsController,
     FysenProController,

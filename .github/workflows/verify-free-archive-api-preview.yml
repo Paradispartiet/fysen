@@ -1,0 +1,124 @@
+name: Verify Fysen free archived API on isolated Vercel preview
+
+on:
+  pull_request:
+    paths:
+      - "apps/api/src/verified-public-menu-archive*"
+      - "apps/api/src/app.module.ts"
+      - ".github/workflows/verify-free-archive-api-preview.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-free-archive-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  proof:
+    if: ${{ github.event.pull_request.head.repo.full_name }} == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      CI: "1"
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: team_mV3NpMYd5l7yGmuZkbTf46y8
+      VERCEL_PROJECT_ID: prj_sSNtWlPc13Lgr2ws6DdhCfPFtr4E
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: ./.github/actions/setup-node-pnpm
+      - name: Build API dependencies only
+        run: |
+          pnpm --filter @fysen/contracts build
+          pnpm --filter @fysen/menu-core build
+          pnpm --filter @fysen/database build
+      - name: Build and deploy API preview without changing production
+        id: stage
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$VERCEL_TOKEN"
+          rm -rf .vercel
+          pnpm dlx vercel@latest pull --yes --environment=preview --token="$VERCEL_TOKEN"
+          pnpm dlx vercel@latest build --token="$VERCEL_TOKEN"
+          candidate="$(pnpm dlx vercel@latest deploy --prebuilt --token="$VERCEL_TOKEN" \
+            --meta "fysenVerification=free-archive-api-preview" \
+            --meta "fysenSourceSha=${{ github.event.pull_request.head.sha }}")"
+          [[ "$candidate" =~ ^https://[a-zA-Z0-9-]+\.vercel\.app$ ]]
+          echo "url=$candidate" >> "$GITHUB_OUTPUT"
+      - name: Check actual checksum-verified API routes and archive provenance
+        shell: bash
+        env:
+          PREVIEW_URL: ${{ steps.stage.outputs.url }}
+        run: |
+          set -euo pipefail
+          # Check the independent health route before testing archived dishes.
+          # The previous preview returned a non-JSON response despite a
+          # successful build. Log only status/selected headers/body size,
+          # never authorization headers, response bodies or bypass secrets.
+          probe_json() {
+            local name="$1" route="$2" status
+            local body="$RUNNER_TEMP/${name}.json"
+            local headers="$RUNNER_TEMP/${name}.headers"
+            if ! status="$(pnpm dlx vercel@latest curl "$route" --deployment "$PREVIEW_URL" \
+                --silent --show-error --max-time 60 \
+                --dump-header "$headers" --output "$body" --write-out '%{http_code}')"; then
+              echo "::error::${name}: Vercel preview request failed before response validation"
+              return 1
+            fi
+            echo "${name}: HTTP ${status}, body bytes $(wc -c < "$body")"
+            if [[ "$status" != "200" ]] || ! grep -iq '^content-type:.*application/json' "$headers"; then
+              echo "::error::${name}: expected HTTP 200 application/json"
+              grep -iE '^(content-type|x-vercel-error):' "$headers" || true
+              return 1
+            fi
+            if ! python3 -m json.tool "$body" > /dev/null; then
+              echo "::error::${name}: malformed JSON (body redacted)"
+              return 1
+            fi
+          }
+          probe_json health /v1/health
+          probe_json status /v1/dishes/archive/status
+          probe_json search '/v1/dishes/archive/search?q=ramen&city=Oslo&limit=10'
+          probe_json browse '/v1/dishes/archive/browse?city=Oslo'
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          root = Path(os.environ["RUNNER_TEMP"])
+          docs = {}
+          for kind in ("status", "search", "browse"):
+              raw = (root / (kind + ".json")).read_bytes()
+              assert len(raw) <= 1000000, kind
+              doc = json.loads(raw)
+              assert doc["source"] == "verified-menu-archive", kind
+              assert doc["realtime"] is False, kind
+              assert doc["archiveDate"].startswith("2026-"), kind
+              docs[kind] = doc
+          status, search, browse = docs["status"], docs["search"], docs["browse"]
+          assert status["restaurants"] >= 900
+          assert status["menuItems"] >= 40000
+          assert status["identityQuarantines"] >= 4
+          assert 0 < len(search["results"]) <= 10
+          assert 0 < len(browse["dishes"]) <= 60
+          hidden = {"city-work-akersgata-oslo", "falafel-station-brugata-oslo",
+                    "fancii-oslo", "ferrys-pizzeria-filipstad-oslo"}
+          for item in search["results"]:
+              assert item["restaurant"]["slug"] not in hidden
+              assert item["menu"]["observedAt"].startswith("2026-")
+              assert item["menu"]["sourceUrl"].startswith(("https://", "http://"))
+              assert "freshUntil" not in item["menu"]
+              assert "latitude" not in item["restaurant"]
+              assert "longitude" not in item["restaurant"]
+          for group in browse["dishes"]:
+              assert group["restaurantCount"] >= 1
+              assert all(x["slug"] not in hidden for x in group["restaurantExamples"])
+          print("PASS: 3 public archive routes, real source dates, checksum and identity quarantine")
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf8") as f:
+              f.write("## Free Fysen API preview: 3/3 passed\n")
+              f.write("- Source: checksum-verified menu archive, NOT realtime\n")
+              f.write("- All four identity quarantines enforced\n")
+              f.write("- No fake restaurant location, freshness or menu timestamps\n")
+              f.write("- No production deployment or database writes\n")
+          PY
