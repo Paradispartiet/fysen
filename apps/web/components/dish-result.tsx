@@ -4,7 +4,6 @@ import { formatDishPrice } from "../lib/dish-price";
 import { priceProvenanceLabel } from "../lib/price-provenance";
 import { restaurantClaimHref } from "../lib/public-path";
 import { DishComposition } from "./dish-composition";
-import { FreshnessStatus } from "./freshness-status";
 import { SaveMinMatButton } from "./save-min-mat-button";
 import styles from "./dish-result.module.css";
 import { TrackedExternalLink } from "./tracked-external-link";
@@ -83,7 +82,6 @@ export function DishResult({ result }: { result: DishSearchResult }) {
 
       <div className="dishResultBottomline">
         <div className="dishResultSignals">
-          <FreshnessStatus checkedAt={result.menu.lastCheckedAt} freshUntil={result.menu.freshUntil} />
           <span className="openingStatus" data-state={result.opening.state}>{openingLabel(result)}</span>
         </div>
         <div className={actionsClassName}>

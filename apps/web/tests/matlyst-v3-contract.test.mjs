@@ -115,8 +115,8 @@ test("Matlyst-forsiden er gjenopprettet til de seks opprinnelige kortene", () =>
   assert.doesNotMatch(explorerSource, /matlystMoodBlock/u);
 });
 
-test("Matlyst viser ferskt restaurantbevis også i Pages-preview", () => {
-  assert.match(explorerSource, /På menyen nå/u);
+test("Matlyst shows restaurant listings in Pages preview without status banners", () => {
+  assert.match(explorerSource, /Restauranter og retter/u);
   assert.match(explorerSource, /restaurantExamples/u);
   assert.match(explorerSource, /browseDishesClient/u);
   assert.match(clientBrowseSource, /NEXT_PUBLIC_FYSEN_API_BASE_URL/u);
@@ -126,7 +126,8 @@ test("Matlyst viser ferskt restaurantbevis også i Pages-preview", () => {
   assert.match(previewSearchSource, /clientPreviewApiBaseUrl/u);
   assert.doesNotMatch(previewSearchSource, /const previewApiBaseUrl/u);
   assert.doesNotMatch(previewSearchSource, /function previewBrowseUrl/u);
-  assert.match(explorerSource, /Kunne ikke hente ferske restauranttreff akkurat nå/u);
+  assert.match(explorerSource, /Kunne ikke hente restaurantene akkurat nå/u);
+  assert.doesNotMatch(explorerSource, /Ferske menytreff først|Sist bekreftede menyer|siste menyarkiv/u);
 
   const coverage = dishDiscovery.discoveryCoverage(
     [

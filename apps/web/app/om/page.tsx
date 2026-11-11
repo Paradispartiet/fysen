@@ -5,7 +5,7 @@ import { withPublicBasePath } from "../../lib/public-path";
 
 export const metadata: Metadata = {
   title: "Om Fysen",
-  description: "Hvordan Fysen finner retter, og hva historiske menytreff betyr.",
+  description: "Hvordan Fysen finner restaurantretter og håndterer menydata.",
 };
 
 function displayDate(value: string): string {
@@ -46,21 +46,24 @@ export default async function AboutPage() {
           </p>
         </section>
 
-        <section className="aboutSection">
-          <h2>Menyarkiv mens ferske søk er utilgjengelige</h2>
+        <section className="aboutSection" id="menydata">
+          <h2>Om menydata</h2>
           <p>
-            Når ferske søk er utilgjengelige, kan Fysen vise historiske, sist
-            kontrollerte menyer i stedet. Disse er merket som arkivtreff og er
-            ikke sanntidsinformasjon.
+            Fysen samler retter og priser fra offentlige restaurantmenyer. Vi
+            kontrollerer og oppdaterer menyene fortløpende. Når den vanlige
+            søketjenesten ikke har tilgjengelige resultater, bruker Fysen også
+            sitt kvalitetskontrollerte menydatagrunnlag.
           </p>
           <p>
-            Åpningstider, pris og tilgjengelighet kan ha endret seg.
-            Kontroller opplysningene hos restauranten.
+            Et menytreff er ikke en sanntidsbekreftelse på at retten serveres
+            akkurat nå. Restauranter kan endre utvalg, pris og åpningstider
+            mellom våre kontroller. Sjekk derfor menyen hos restauranten.
           </p>
           {archiveDate ? (
             <p className="aboutArchiveDates">
-              Opprinnelig arkivdato: {archiveDate}
-              {lastRefreshAt ? " · Siste katalogoppdatering: " + displayDate(lastRefreshAt) : ""}
+              Grunnlag etablert: {displayDate(archiveDate)}
+              {lastRefreshAt ? " · Siste indeksoppdatering: " + displayDate(lastRefreshAt) : ""}
+              . Hver menykilde kan ha en annen kontrolldato enn indeksen.
             </p>
           ) : null}
         </section>

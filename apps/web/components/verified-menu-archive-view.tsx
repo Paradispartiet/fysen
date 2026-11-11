@@ -3,13 +3,6 @@ import { dishSearchHref, foodKnowledgeHref, withPublicBasePath } from "../lib/pu
 import { browseArchivedMenuDishes, type ArchivedMenuMatch, type PublicMenuArchive } from "../lib/verified-menu-archive";
 import styles from "./verified-menu-archive-view.module.css";
 
-function confirmedDate(value: string): string {
-  if (!Number.isFinite(Date.parse(value))) return value;
-  return new Intl.DateTimeFormat("nb-NO", {
-    day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Oslo",
-  }).format(new Date(value));
-}
-
 function priceLabel(priceMinor: number | null, priceMaxMinor: number | null, kind: string): string {
   if (priceMinor === null) return "Pris ikke oppgitt";
   const price = new Intl.NumberFormat("nb-NO", {
@@ -32,11 +25,10 @@ export function ArchivedMenuResults({
   readonly city: string;
 }) {
   return (
-    <section className={styles.surface} aria-label="Dokumenterte menytreff">
-      <h3>{results.length} arkivtreff på «{query}»</h3>
-      <p className={styles.meta}>Dokumenterte menyer med individuelle kontrolldatoer. Ikke sanntid – kontroller restaurantens meny før du bestiller.</p>
+    <section className={styles.surface} aria-label="Menytreff">
+      <h3>{results.length} treff på «{query}»</h3>
       {results.length === 0 ? (
-        <p>Ingen treff i det sist godkjente menyarkivet. Dette sier ikke noe om dagens menyer.</p>
+        <p>Ingen treff på denne retten. Prøv et annet søkeord.</p>
       ) : (
         <div className={styles.results}>
           {results.map((result, index) => (
@@ -47,9 +39,8 @@ export function ArchivedMenuResults({
               </div>
               <p className={styles.restaurant}>{result.restaurantName}</p>
               <p>{result.address}, {city}</p>
-              <p className={styles.sourceDate}>Meny sist kontrollert {confirmedDate(result.observedAt)}</p>
               <a href={result.sourceUrl} target="_blank" rel="noopener noreferrer">
-                Kontroller restaurantens meny <span aria-hidden="true">↗</span>
+                Se meny <span aria-hidden="true">↗</span>
               </a>
             </article>
           ))}
@@ -76,11 +67,10 @@ export function ArchivedMenuBrowse({
   }
 
   return (
-    <section className={styles.surface} aria-label="Matlyst og dokumenterte menyer">
+    <section className={styles.surface} aria-label="Matlyst og retter">
       <div className={styles.browseHeading}>
-        <h1>Dokumenterte retter i {city}</h1>
-        <p>Fersksøket har ingen treff akkurat nå, men Fysen har mange dokumenterte restaurantmenyer. Se rettene og datoen hver menykilde sist ble kontrollert. Utvalg og priser må bekreftes hos restauranten.</p>
-        <p className={styles.meta}>Menyindeks sist oppdatert {archive.lastRefreshAt ? confirmedDate(archive.lastRefreshAt) : "ukjent dato"}. Dette er tidspunktet for indeksen, ikke siste kontroll av hver enkelt meny. Grunnarkiv fra {confirmedDate(archive.archiveDate)}.</p>
+        <h1>Alle retter i {city}</h1>
+        <p>Utforsk restauranter og retter, velg kjøkken eller søk etter akkurat det du har lyst på.</p>
       </div>
       <nav className={styles.cuisineList} aria-label="Velg kjøkken i Matlyst">
         <a href={withPublicBasePath("/search") + "?city=" + encodeURIComponent(city)}
@@ -103,7 +93,7 @@ export function ArchivedMenuBrowse({
                 <p className={styles.meta}>{areaName}</p>
                 <h3>{dish.label}</h3>
                 <div className={styles.links}>
-                  <a href={dishSearchHref(dish.query, city)}>Søk i menyarkivet</a>
+                  <a href={dishSearchHref(dish.query, city)}>Finn retten</a>
                   {dish.hasKnowledge ? (
                     <a href={foodKnowledgeHref(dish.id)}>Lær om retten</a>
                   ) : null}
@@ -113,16 +103,15 @@ export function ArchivedMenuBrowse({
           </div>
         </section>
       ) : (
-        <section aria-label="Retter fra menyarkivet">
-          <h2>Et utvalg dokumenterte retter</h2>
-          <p className={styles.meta}>Sortert etter antall restauranter med dokumentert menytreff. Kildedatoene kan variere mellom restauranter. Bruk søkefeltet for å finne flere retter.</p>
+        <section aria-label="Utvalgte retter">
+          <h2>Utforsk retter</h2>
+          <p className={styles.meta}>Se hvor du finner rettene, eller bruk søkefeltet for å finne flere.</p>
           <div className={styles.dishList}>
             {archivedDishes.map((dish) => (
               <article className={styles.suggestion} key={dish.query}>
                 <h3>{dish.name}</h3>
-                <p className={styles.meta}>Dokumentert hos {dish.restaurantCount} {dish.restaurantCount === 1 ? "restaurant" : "restauranter"}.</p>
-                <p className={styles.sourceDate}>Nyeste kildekontroll: {confirmedDate(dish.newestObservedAt)}. Datoene kan variere mellom restaurantene.</p>
-                <a href={dishSearchHref(dish.query, city)}>Finn i menyarkivet</a>
+                <p className={styles.meta}>{dish.restaurantCount} {dish.restaurantCount === 1 ? "restaurant" : "restauranter"}</p>
+                <a href={dishSearchHref(dish.query, city)}>Finn retten</a>
               </article>
             ))}
           </div>

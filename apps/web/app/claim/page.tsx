@@ -59,7 +59,7 @@ export default async function ClaimPage({ searchParams }: { searchParams: Search
 
                 <div className="claimPrinciples">
                   <p>Vi verifiserer tilknytningen manuelt før tilgang gis.</p>
-                  <p>Claiming kan senere gi kontroll over restauranteide kontakt- og profilfelt. Det gir aldri rett til å omskrive Fysens kildebevis, historiske menydata eller organiske rangering.</p>
+                  <p>Claiming kan senere gi kontroll over restauranteide kontakt- og profilfelt. Det gir aldri rett til å omskrive Fysens kildebevis, menykilder eller organiske rangering.</p>
                 </div>
                 <RestaurantClaimForm restaurantSlug={context.restaurant.slug} />
               </>

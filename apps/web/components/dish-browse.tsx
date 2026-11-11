@@ -170,11 +170,11 @@ export function DishBrowse({
         <p className="eyebrow">{city}</p>
         <h1 id="dish-browse-title">Alle retter i {city}</h1>
         <p>
-          Utforsk den samme ferske rettindeksen som Fysen søker i. Filtrer direkte på kjøkken eller søk etter en konkret rett.
+          Utforsk rettene fra restauranter i byen. Filtrer på kjøkken eller søk etter en konkret rett.
         </p>
       </header>
 
-      {loading ? <p className="dishBrowseStatus">Henter retter fra ferske menyer …</p> : null}
+      {loading ? <p className="dishBrowseStatus">Henter retter …</p> : null}
 
       {!loading && error ? (
         <SearchState title="Kunne ikke hente rettene akkurat nå." body={error} />
@@ -182,8 +182,8 @@ export function DishBrowse({
 
       {!loading && !error && data && data.dishes.length === 0 ? (
         <SearchState
-          title={`Ingen ferske retter i ${city} akkurat nå.`}
-          body="Når Fysen har ferske menydata i byen, vises rettene her."
+          title={`Ingen retter funnet i ${city}.`}
+          body="Prøv et annet kjøkken eller søk etter en rett."
         />
       ) : null}
 
@@ -260,7 +260,7 @@ export function DishBrowse({
                   <p className="eyebrow">Kjøkken</p>
                   <h2 id="dish-browse-editorial-title">{selectedCuisineArea ?? selectedCuisine.name}</h2>
                 </div>
-                <p>Production-backed canonical Matlyst-retter med fersk Oslo-dekning først. «Lær om retten» vises bare der Food Knowledge finnes.</p>
+                <p>Utforsk retter fra dette kjøkkenet. Velg «Lær om retten» for mer matkunnskap.</p>
               </div>
 
               {editorialDishes.length > 0 ? (
@@ -272,8 +272,8 @@ export function DishBrowse({
                         <h3>{dish.label}</h3>
                         <p>
                           {restaurantCount > 0
-                            ? `På fersk meny hos minst ${restaurantCount} ${restaurantCount === 1 ? "restaurant" : "restauranter"}.`
-                            : "Ingen ferske Oslo-treff akkurat nå."}
+                            ? `Finnes hos ${restaurantCount} ${restaurantCount === 1 ? "restaurant" : "restauranter"}.`
+                            : "Ingen treff på denne retten."}
                         </p>
                       </div>
                       <div className="dishBrowseEditorialActions">
@@ -286,7 +286,7 @@ export function DishBrowse({
                   ))}
                 </div>
               ) : (
-                <p className="dishBrowseEmptyFilter">Ingen canonicale retter matcher dette filteret.</p>
+                <p className="dishBrowseEmptyFilter">Ingen retter matcher dette filteret.</p>
               )}
             </section>
           ) : null}
@@ -294,12 +294,11 @@ export function DishBrowse({
           <section className="dishBrowseLive" aria-labelledby="dish-browse-live-title">
             <div className="dishBrowseSectionHeading dishBrowseLiveHeading">
               <div>
-                <p className="eyebrow">Ferske menyer</p>
-                <h2 id="dish-browse-live-title">På menyen nå</h2>
+                <p className="eyebrow">Retter</p>
+                <h2 id="dish-browse-live-title">Finn en rett</h2>
               </div>
               <div className="dishBrowseMeta">
-                <p>{visibleLiveDishes.length} av {data.count} canonicale retter</p>
-                <p>{data.quality.rawItemCount} rå oppføringer · {data.quality.excludedItemCount} skjult · {data.quality.deduplicatedItemCount} slått sammen</p>
+                <p>{visibleLiveDishes.length} av {data.count} retter</p>
               </div>
             </div>
 

@@ -62,7 +62,7 @@ export function DishKnowledgeDialog({
         }
       })
       .catch(() => {
-        if (!controller.signal.aborted) setRestaurantError("Kunne ikke hente ferske restauranttreff akkurat nå.");
+        if (!controller.signal.aborted) setRestaurantError("Kunne ikke hente restaurantene akkurat nå.");
       })
       .finally(() => {
         if (!controller.signal.aborted) setRestaurantLoading(false);
@@ -208,7 +208,7 @@ export function DishKnowledgeDialog({
           <section className="dishKnowledgeRestaurants" aria-labelledby="dish-knowledge-restaurants-title">
             <div className="dishKnowledgeRestaurantsHeading">
               <div>
-                <p className="dishKnowledgeMiniEyebrow">Ferske menytreff</p>
+                <p className="dishKnowledgeMiniEyebrow">Restauranter</p>
                 <h3 id="dish-knowledge-restaurants-title">Hvor får du {dish.name.toLocaleLowerCase("nb-NO")} i Oslo?</h3>
               </div>
               <a href={dishSearchHref(dish.query)}>Se alle treff <span aria-hidden="true">→</span></a>
@@ -217,7 +217,7 @@ export function DishKnowledgeDialog({
             {restaurantLoading ? <p className="dishKnowledgeRestaurantStatus">Henter restauranter …</p> : null}
             {!restaurantLoading && restaurantError ? <p className="dishKnowledgeRestaurantStatus">{restaurantError}</p> : null}
             {!restaurantLoading && !restaurantError && restaurantResults.length === 0 ? (
-              <p className="dishKnowledgeRestaurantStatus">Ingen ferske, sikre menytreff på denne retten i Oslo akkurat nå.</p>
+              <p className="dishKnowledgeRestaurantStatus">Ingen treff på denne retten i Oslo akkurat nå.</p>
             ) : null}
             {!restaurantLoading && !restaurantError && restaurantResults.length > 0 ? (
               <div className="dishKnowledgeRestaurantGrid">
@@ -233,7 +233,7 @@ export function DishKnowledgeDialog({
                 ))}
               </div>
             ) : null}
-            <small className="dishKnowledgeRestaurantProof">Pris vises bare når den finnes i samme ferske menybevis. Restaurantene vises bare fra ikke-fuzzy treff.</small>
+            <small className="dishKnowledgeRestaurantProof">Pris vises bare når den er oppgitt i restaurantens menykilde.</small>
           </section>
 
           {dish.sources.length > 0 ? (

@@ -31,6 +31,7 @@ export function GlobalHeader({
                 <a href={dishBrowseHref(city)}>Finn retter</a>
                 {ahaMinMatPilotEnabled ? <a href={withPublicBasePath("/min-mat")}>Min mat</a> : null}
                 <a href={withPublicBasePath("/om")}>Om Fysen</a>
+                <a href={withPublicBasePath("/om") + "#menydata"}>Om menydata</a>
               </nav>
             </details>
           </div>

@@ -112,13 +112,13 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   const nearResults = data?.results.filter((result) => result.match.type === "fuzzy") ?? [];
 
   const countLabel = archive && q.length >= 2
-    ? archiveMatches.length + " arkivtreff (ikke sanntid)"
+    ? `${archiveMatches.length} menytreff`
     : data
     ? primaryResults.length > 0
-      ? `${primaryResults.length} sikre menytreff${data.results.length === 20 ? " blant de 20 viste" : ""}`
+      ? `${primaryResults.length} menytreff${data.results.length === 20 ? " blant de 20 viste" : ""}`
       : nearResults.length > 0
-        ? "Ingen sikre treff"
-        : "Ingen ferske menytreff"
+        ? "Ingen eksakte treff"
+        : "Ingen treff"
     : "Søk på retten du har lyst på.";
 
   return (
@@ -178,8 +178,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
 
               {!error && data && data.results.length === 0 && !archive ? (
                 <SearchState
-                  title={`Ingen ferske treff på «${q}»`}
-                  body={`Vi finner ikke retten på en fersk meny i ${city} akkurat nå.`}
+                  title={`Ingen treff på «${q}»`}
+                  body="Prøv et annet rettnavn eller se alle retter."
                 />
               ) : null}
 

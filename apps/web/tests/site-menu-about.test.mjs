@@ -12,13 +12,25 @@ test("the site menu offers an About Fysen page", () => {
   const about = read("../app/om/page.tsx");
   assert.match(header, /<details className="siteMenu">/u);
   assert.match(header, /withPublicBasePath\("\/om"\)/u);
-  assert.match(about, /Menyarkiv mens ferske søk er utilgjengelige/u);
-  assert.match(about, /ikke sanntidsinformasjon/u);
+  assert.match(about, /id="menydata"/u);
+  assert.match(header, /#menydata/u);
+  assert.match(about, /ikke en sanntidsbekreftelse/u);
 });
 
-test("archive result and browse views do not show the large archive information box", () => {
+test("ordinary pages keep status details exclusively behind the menu", () => {
   const archive = read("../components/verified-menu-archive-view.tsx");
   const search = read("../app/search/page.tsx");
-  assert.doesNotMatch(archive, /ArchiveIntro/u);
-  assert.match(search, /arkivtreff \(ikke sanntid\)/u);
+  const home = read("../app/page.tsx");
+  const browse = read("../components/dish-browse.tsx");
+  const explorer = read("../components/cuisine-explorer.tsx");
+  const preview = read("../components/static-preview-search-page.tsx");
+  const knowledge = read("../components/dish-knowledge-dialog.tsx");
+  const result = read("../components/dish-result.tsx");
+  const visibleCopy = /Ingen ferske|ferske menyer|ferske menytreff|menyarkiv|arkivtreff|ikke sanntid|sist bekreftede menyer/iu;
+  for (const [name, source] of Object.entries({ archive, home, browse, explorer, preview, knowledge, result })) {
+    assert.doesNotMatch(source, visibleCopy, name);
+  }
+  assert.doesNotMatch(search, /" arkivtreff \(ikke sanntid\)"|title=\{`Ingen ferske/u);
+  assert.doesNotMatch(result, /<FreshnessStatus/u);
+  assert.match(archive, /Alle retter i \{city\}/u);
 });
