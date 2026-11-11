@@ -62,7 +62,10 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
 
       - name: Verify all approved food images are published and visible in Matlyst
-        if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
+        # A PR cannot yet be live. Check imagery after a real release or on demand.
+        if: >-
+          github.event_name == 'workflow_dispatch' ||
+          (github.event_name == 'workflow_run' && steps.upstream.outputs.deployed == 'true')
         run: node apps/web/tests/matlyst-live-image-proof.mjs
 
       - name: Verify Matlyst v3 public consumer journeys
