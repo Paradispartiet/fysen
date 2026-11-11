@@ -51,3 +51,28 @@ export function DishPhotoGallery() {
     </section>
   );
 }
+
+
+// Only exact editorial dish identifiers are allowed in existing Matlyst
+// catalog cards. Generic menu searches and restaurant-specific items never
+// receive an illustrative photo through fuzzy matching.
+const editorialPhotoIndex: Readonly<Record<string, number>> = {
+  "pizza-margherita": 0,
+  sushi: 5,
+  ramen: 6,
+  carbonara: 10,
+  "butter-chicken": 11,
+};
+
+export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: string }) {
+  const index = editorialPhotoIndex[dishId];
+  if (index === undefined) return null;
+  return (
+    <span
+      role="img"
+      aria-label={`KI-illustrasjon av ${label}, ikke restaurantfoto`}
+      className="dishPhotoSmall"
+      style={{ backgroundPosition: `${(index % 5) * 25}% ${Math.floor(index / 5) * 50}%` }}
+    />
+  );
+}
