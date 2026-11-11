@@ -87,11 +87,9 @@ function featuredCoverage(
 function DiscoveryDishList({
   coverage,
   onOpenKnowledge,
-  archived,
 }: {
   readonly coverage: readonly DishCoverage[];
   readonly onOpenKnowledge: (dishId: string) => void;
-  readonly archived: boolean;
 }) {
   return (
     <div className="cuisineExploreDishList">
@@ -124,10 +122,9 @@ function DiscoveryDishList({
               ))}
             </ul>
           ) : restaurantCount > 0 ? (
-            <p>{archived ? "Registrert i siste godkjente menyarkiv hos " : "På fersk meny hos minst "}
-              {restaurantCount} {restaurantCount === 1 ? "restaurant" : "restauranter"} i Oslo.</p>
+            <p>Finnes hos {restaurantCount} {restaurantCount === 1 ? "restaurant" : "restauranter"} i Oslo.</p>
           ) : (
-            <p>{archived ? "Ingen dokumenterte treff i siste menyarkiv." : "Ingen ferske menytreff på denne retten i Oslo akkurat nå."}</p>
+            <p>Ingen treff på denne retten akkurat nå.</p>
           )}
         </article>
       ))}
@@ -228,9 +225,7 @@ export function CuisineExplorer({
         <div>
           <p className="foodSectionEyebrow">Matlyst</p>
         </div>
-        <p>{isArchived
-          ? "Velg kjøkken eller region og se hvilke restauranter som er dokumentert i sist kontrollerte menyer. Sjekk kildedato og pris før du bestiller."
-          : "Velg et kjøkken eller en region, oppdag relevante retter, og se hvem som faktisk har dem på en fersk meny."}</p>
+        <p>Velg et kjøkken eller en region, oppdag retter og finn restauranter som tilbyr dem.</p>
       </div>
 
       <RecentDishes dishes={effectiveBrowseData?.recentDishes ?? []} />
@@ -260,12 +255,12 @@ export function CuisineExplorer({
                 </span>
 
                 <span className="cuisineRestaurantPreview">
-                  <span className="cuisineRestaurantPreviewLabel">{isArchived ? "Sist bekreftede menyer" : "På menyen nå"}</span>
+                  <span className="cuisineRestaurantPreviewLabel">Restauranter og retter</span>
                   {!coverageReady && !previewBrowseFailed ? (
-                    <span className="cuisineRestaurantLoading">Henter ferske restauranttreff …</span>
+                    <span className="cuisineRestaurantLoading">Henter restauranter …</span>
                   ) : null}
                   {!coverageReady && previewBrowseFailed ? (
-                    <span className="cuisineRestaurantLoading">Kunne ikke hente ferske restauranttreff akkurat nå.</span>
+                    <span className="cuisineRestaurantLoading">Kunne ikke hente restaurantene akkurat nå.</span>
                   ) : null}
                   {coverageReady && preview && preview.restaurantExamples.length > 0 ? (
                     <span className="cuisineRestaurantNames">
@@ -279,11 +274,11 @@ export function CuisineExplorer({
                   ) : null}
                   {coverageReady && preview && preview.restaurantCount > 0 && preview.restaurantExamples.length === 0 ? (
                     <span className="cuisineRestaurantLoading">
-                      {preview.dish.label} · minst {preview.restaurantCount} {preview.restaurantCount === 1 ? "sted" : "steder"} {isArchived ? "i arkivet" : "nå"}
+                      {preview.dish.label} · {preview.restaurantCount} {preview.restaurantCount === 1 ? "sted" : "steder"}
                     </span>
                   ) : null}
                   {coverageReady && (!preview || preview.restaurantCount === 0) ? (
-                    <span className="cuisineRestaurantLoading">{isArchived ? "Ingen dokumenterte treff i siste menyarkiv." : "Ingen prioriterte ferske treff akkurat nå."}</span>
+                    <span className="cuisineRestaurantLoading">Ingen treff i dette utvalget.</span>
                   ) : null}
                 </span>
               </button>
@@ -353,16 +348,14 @@ export function CuisineExplorer({
                   <p>{selectedArea.name}</p>
                   <h3>Retter og hvor du kan få dem</h3>
                 </div>
-                <span>{isArchived ? "Sist bekreftede menyer · Oslo" : "Ferske menytreff først · Oslo"}</span>
+                <span>Restauranter i Oslo</span>
               </div>
 
-              <DiscoveryDishList coverage={selectedDishCoverage} onOpenKnowledge={openFoodKnowledge} archived={isArchived} />
+              <DiscoveryDishList coverage={selectedDishCoverage} onOpenKnowledge={openFoodKnowledge} />
             </section>
 
             <footer className="cuisineExploreDialogFooter">
-              {isArchived
-                ? "Restaurantene kommer fra Fysens sist godkjente menyarkiv, ikke fra sanntidssøk. Kontroller dato og pris hos restauranten. Innen samme dekningsnivå brukes redaksjonell relevans."
-                : "Retter med sikre, ferske Oslo-treff vises først. Innen samme dekningsnivå brukes redaksjonell relevans. Restaurantene kommer fra den samme ferske browse-indeksen som «Alle retter»."}
+              Utforsk flere retter eller åpne restaurantens meny for nærmere informasjon.
             </footer>
           </div>
         ) : null}
