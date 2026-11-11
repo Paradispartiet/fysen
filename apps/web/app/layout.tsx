@@ -28,7 +28,7 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: "Fysen — finn retten du har lyst på",
-  description: "Søk etter en rett og finn restauranter som har den på en fersk, sporbar meny.",
+  description: "Søk etter en rett og finn restauranter som tilbyr den.",
   applicationName: "Fysen",
   manifest: "/manifest.webmanifest",
   icons: {
