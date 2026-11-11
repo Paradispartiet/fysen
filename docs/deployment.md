@@ -73,6 +73,6 @@ If a migration fails, the transaction is rolled back and the GitHub job becomes 
 
 ## Production project
 
-Current Fysen Supabase project ref: `voglczzxtbwcxjrbffbt`.
+Current original Fysen Supabase project ref: `voglczxxtbwcxjrbffbt` (verified in the November 2 production-storage incident record and PR #1165). The similar-looking ref `voglczzxtbwcxjrbffbt` was a documentation typo and must not be used. See [Supabase project inventory](supabase-project-inventory.md) before changing any deployment secrets.
 
 The project ref is an identifier, not a credential. Database passwords and connection strings remain secrets.
