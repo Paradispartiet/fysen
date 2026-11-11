@@ -54,12 +54,35 @@ jobs:
           PREVIEW_URL: ${{ steps.stage.outputs.url }}
         run: |
           set -euo pipefail
-          pnpm dlx vercel@latest curl /v1/dishes/archive/status --deployment "$PREVIEW_URL" \
-            --fail --silent --show-error > "$RUNNER_TEMP/status.json"
-          pnpm dlx vercel@latest curl '/v1/dishes/archive/search?q=ramen&city=Oslo&limit=10' \
-            --deployment "$PREVIEW_URL" --fail --silent --show-error > "$RUNNER_TEMP/search.json"
-          pnpm dlx vercel@latest curl '/v1/dishes/archive/browse?city=Oslo' \
-            --deployment "$PREVIEW_URL" --fail --silent --show-error > "$RUNNER_TEMP/browse.json"
+          # Check the independent health route before testing archived dishes.
+          # The previous preview returned a non-JSON response despite a
+          # successful build. Log only status/selected headers/body size,
+          # never authorization headers, response bodies or bypass secrets.
+          probe_json() {
+            local name="$1" route="$2" status
+            local body="$RUNNER_TEMP/${name}.json"
+            local headers="$RUNNER_TEMP/${name}.headers"
+            if ! status="$(pnpm dlx vercel@latest curl "$route" --deployment "$PREVIEW_URL" \
+                --silent --show-error --max-time 60 \
+                --dump-header "$headers" --output "$body" --write-out '%{http_code}')"; then
+              echo "::error::${name}: Vercel preview request failed before response validation"
+              return 1
+            fi
+            echo "${name}: HTTP ${status}, body bytes $(wc -c < "$body")"
+            if [[ "$status" != "200" ]] || ! grep -iq '^content-type:.*application/json' "$headers"; then
+              echo "::error::${name}: expected HTTP 200 application/json"
+              grep -iE '^(content-type|x-vercel-error):' "$headers" || true
+              return 1
+            fi
+            if ! python3 -m json.tool "$body" > /dev/null; then
+              echo "::error::${name}: malformed JSON (body redacted)"
+              return 1
+            fi
+          }
+          probe_json health /v1/health
+          probe_json status /v1/dishes/archive/status
+          probe_json search '/v1/dishes/archive/search?q=ramen&city=Oslo&limit=10'
+          probe_json browse '/v1/dishes/archive/browse?city=Oslo'
           python3 - <<'PY'
           import json, os
           from pathlib import Path
