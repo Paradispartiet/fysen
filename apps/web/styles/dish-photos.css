@@ -14,7 +14,7 @@
 .dishPhotoCard { min-width: 0; display: flex; flex-direction: column; padding: 10px; color: var(--color-ink); text-decoration: none; background: #0b0c0b; border: 1px solid rgba(121,201,135,.16); border-radius: 11px; transition: border-color .15s ease; }
 .dishPhotoCard:hover { border-color: rgba(121,201,135,.6); }
 .dishPhotoCard:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 3px; }
-.dishPhotoThumb { display: block; width: 100%; aspect-ratio: 1; margin: 0 0 10px; background: #000 url("/dish-images/collection.webp") center / 500% 300% no-repeat; border-radius: 8px; }
+.dishPhotoThumb { display: block; width: 100%; aspect-ratio: 1; margin: 0 0 10px; background: #000 url("/dish-images/collection.avif") center / 500% 300% no-repeat; border-radius: 8px; }
 .dishPhotoCard strong { font-size: 12px; line-height: 1.3; font-weight: 660; overflow-wrap: anywhere; }
 .dishPhotoAction { color: var(--color-brand); font-size: 10px; margin-top: auto; padding-top: 8px; }
 @media(max-width:950px) { .dishPhotosGrid { grid-template-columns: repeat(3,minmax(0,1fr)); } }
