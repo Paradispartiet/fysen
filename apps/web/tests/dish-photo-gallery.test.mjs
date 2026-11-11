@@ -96,7 +96,7 @@ test("Every generated and approved image is represented in the published Matlyst
     assert.equal(image.surface, "Matlyst");
     assert.equal(image.kind, "AI-illustrasjon");
   }
-  assert.match(gallery, /<DishPhotoGallery/u);
+  assert.match(explorer, /<DishPhotoGallery \/>/u);
   assert.match(gallery, /dishSearchHref\(dish\.query\)/u);
   assert.match(gallery, /dishPhotoSeries04/u);
 });
