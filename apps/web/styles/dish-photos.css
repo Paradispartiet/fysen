@@ -26,3 +26,14 @@
   .dishPhotoCard { padding: 8px; }
   .dishPhotoCard strong { font-size: 12px; }
 }
+
+/* Small images on exact-match Matlyst editorial dish cards. */
+.dishPhotoSmall {
+  display: block;
+  flex: 0 0 72px;
+  width: 72px;
+  height: 72px;
+  margin: 12px 0 6px;
+  border-radius: 10px;
+  background: #000 url("/dish-images/collection.avif") center / 500% 300% no-repeat;
+}
