@@ -1,0 +1,347 @@
+{
+  "version": 1,
+  "purpose": "Alle ferdige og godkjente AI-matillustrasjoner skal være integrert i Fysen, vises der motivet er relevant og følges til offentlig publisering.",
+  "background": "#000000",
+  "sourceType": "Generert illustrasjon, ikke restaurantfotografi",
+  "images": [
+    {
+      "id": "pizza-margherita",
+      "label": "Pizza margherita",
+      "query": "pizza margherita",
+      "index": 0,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "pizza-margherita"
+    },
+    {
+      "id": "cheeseburger",
+      "label": "Cheeseburger med bacon",
+      "query": "bacon cheeseburger",
+      "index": 1,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "cheeseburger"
+    },
+    {
+      "id": "grillet-laks",
+      "label": "Grillet laks",
+      "query": "grillet laks",
+      "index": 2,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": null
+    },
+    {
+      "id": "grillet-biff",
+      "label": "Grillet biff",
+      "query": "grillet biff",
+      "index": 3,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": null
+    },
+    {
+      "id": "rekesmorbrod",
+      "label": "Rekesmørbrød",
+      "query": "rekesmørbrød",
+      "index": 4,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": null
+    },
+    {
+      "id": "sushi",
+      "label": "Sushi assortert",
+      "query": "sushi",
+      "index": 5,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "sushi"
+    },
+    {
+      "id": "ramen",
+      "label": "Ramen med svin og egg",
+      "query": "ramen",
+      "index": 6,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "ramen"
+    },
+    {
+      "id": "pasta-bolognese",
+      "label": "Tagliatelle bolognese",
+      "query": "bolognese",
+      "index": 7,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": null
+    },
+    {
+      "id": "pizza-prosciutto",
+      "label": "Pizza med prosciutto",
+      "query": "pizza prosciutto",
+      "index": 8,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": null
+    },
+    {
+      "id": "kebab-pita",
+      "label": "Kebab i pita",
+      "query": "kebab pita",
+      "index": 9,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": null
+    },
+    {
+      "id": "pasta-carbonara",
+      "label": "Pasta carbonara",
+      "query": "carbonara",
+      "index": 10,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": null
+    },
+    {
+      "id": "butter-chicken",
+      "label": "Butter chicken",
+      "query": "butter chicken",
+      "index": 11,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "butter-chicken"
+    },
+    {
+      "id": "pad-thai-reker",
+      "label": "Pad thai med reker",
+      "query": "pad thai",
+      "index": 12,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": null
+    },
+    {
+      "id": "stekt-hvit-fisk",
+      "label": "Stekt hvit fisk",
+      "query": "stekt fisk",
+      "index": 13,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": null
+    },
+    {
+      "id": "tiramisu",
+      "label": "Tiramisu",
+      "query": "tiramisu",
+      "index": 14,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": null
+    },
+    {
+      "id": "pizza-marinara",
+      "label": "Pizza marinara",
+      "query": "pizza marinara",
+      "index": 15,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "pizza-marinara"
+    },
+    {
+      "id": "cacio-e-pepe",
+      "label": "Cacio e pepe",
+      "query": "cacio e pepe",
+      "index": 16,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "cacio-e-pepe"
+    },
+    {
+      "id": "gyoza",
+      "label": "Gyoza",
+      "query": "gyoza",
+      "index": 17,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "gyoza"
+    },
+    {
+      "id": "pho",
+      "label": "Phở bò",
+      "query": "pho",
+      "index": 18,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "pho"
+    },
+    {
+      "id": "bibimbap",
+      "label": "Bibimbap",
+      "query": "bibimbap",
+      "index": 19,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": null
+    },
+    {
+      "id": "falafel",
+      "label": "Falafel med hummus",
+      "query": "falafel",
+      "index": 20,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "falafel"
+    },
+    {
+      "id": "tacos-al-pastor",
+      "label": "Tacos al pastor",
+      "query": "tacos al pastor",
+      "index": 21,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "tacos-al-pastor"
+    },
+    {
+      "id": "chana-masala",
+      "label": "Chana masala",
+      "query": "chana masala",
+      "index": 22,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "chana-masala"
+    },
+    {
+      "id": "dosa",
+      "label": "Masala dosa",
+      "query": "dosa",
+      "index": 23,
+      "atlas": "collection.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "dosa"
+    },
+    {
+      "id": "katsu",
+      "label": "Chicken katsu",
+      "query": "chicken katsu",
+      "index": 24,
+      "atlas": "series-04.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "katsu",
+      "variantCaution": "Kylling – ikke svine-tonkatsu"
+    },
+    {
+      "id": "yakitori",
+      "label": "Yakitori – kyllingspyd",
+      "query": "yakitori",
+      "index": 25,
+      "atlas": "series-04.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "yakitori",
+      "variantCaution": "Kyllingspyd – ikke vegetarspyd"
+    },
+    {
+      "id": "udon",
+      "label": "Udon med tempura",
+      "query": "udon",
+      "index": 26,
+      "atlas": "series-04.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "udon",
+      "variantCaution": "Med reketempura – ikke vegansk udon"
+    },
+    {
+      "id": "bao",
+      "label": "Bao med braisert kjøtt",
+      "query": "bao",
+      "index": 27,
+      "atlas": "series-04.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "bao",
+      "variantCaution": "Med braisert kjøtt – ikke vegetarbao"
+    },
+    {
+      "id": "dumplings",
+      "label": "Dumplings",
+      "query": "dumplings",
+      "index": 28,
+      "atlas": "series-04.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "dumplings",
+      "variantCaution": "Blandet fyll – vegetarstatus ikke dokumentert"
+    },
+    {
+      "id": "mapo-tofu",
+      "label": "Mapo tofu med kjøtt",
+      "query": "mapo tofu",
+      "index": 29,
+      "atlas": "series-04.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "mapo-tofu",
+      "variantCaution": "Med kjøtt – ikke vegetarvarianten"
+    },
+    {
+      "id": "peking-duck",
+      "label": "Pekingand",
+      "query": "peking duck",
+      "index": 30,
+      "atlas": "series-04.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "peking-duck",
+      "variantCaution": "And med pannekaker – ikke annet kjøtt"
+    },
+    {
+      "id": "dan-dan-noodles",
+      "label": "Dan dan-nudler med kjøtt",
+      "query": "dan dan noodles",
+      "index": 31,
+      "atlas": "series-04.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "dan-dan-noodles",
+      "variantCaution": "Med kjøtt og peanøtter – ikke vegetar eller nøttefri"
+    },
+    {
+      "id": "green-curry",
+      "label": "Grønn curry med kylling",
+      "query": "green curry",
+      "index": 32,
+      "atlas": "series-04.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "green-curry",
+      "variantCaution": "Med kylling – ikke vegetarcurry"
+    }
+  ]
+}
