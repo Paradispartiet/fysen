@@ -21,6 +21,7 @@ import {
   type DishSuggestion,
 } from "./cuisine-explorer-data";
 import { SearchState } from "./search-state";
+import { DishPhotoThumbnail } from "./dish-photo-gallery";
 
 type KnowledgeDish = (typeof foodDishCatalog)[number];
 
@@ -276,6 +277,7 @@ export function DishBrowse({
                             : "Ingen treff på denne retten."}
                         </p>
                       </div>
+                      <DishPhotoThumbnail dishId={dish.id} label={dish.label} />
                       <div className="dishBrowseEditorialActions">
                         <a href={dishSearchHref(dish.query, data.city)}>Se treff <span aria-hidden="true">→</span></a>
                         {dish.hasKnowledge ? (
