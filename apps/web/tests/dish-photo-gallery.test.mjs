@@ -1,8 +1,9 @@
 import assert from "node:assert/strict";
+import { Buffer } from "node:buffer";
 import { readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, URL } from "node:url";
 
 const web = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const gallery = readFileSync(path.join(web, "components/dish-photo-gallery.tsx"), "utf8");
