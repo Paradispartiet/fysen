@@ -95,6 +95,12 @@ export function StaticPreviewSearchPage() {
     void request
       .then((response) => {
         if (disposed) return;
+        // GitHub Pages should not strand users on an empty live API response.
+        // The canonical site has checksum-verified historical menu fallback.
+        if (response.browse?.dishes.length === 0 || response.search?.results.length === 0) {
+          window.location.replace(productionSearchUrl(query));
+          return;
+        }
         setBrowseData(response.browse);
         setData(response.search);
       })
