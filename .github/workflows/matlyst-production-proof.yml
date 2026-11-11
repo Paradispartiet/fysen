@@ -116,10 +116,10 @@ jobs:
           requireText(
             home,
             "Hva har du lyst på?",
-            "Søk etter en rett og se hvilke restauranter som har den på menyen nå.",
+            "Søk etter en rett og finn restauranter som har den på menyen.",
             "Se alle retter i Oslo",
             "Matlyst",
-            "På menyen nå",
+            "Restauranter og retter",
             ...homeCuisines,
           );
           requireOccurrences(home, "cuisineCard cuisineCardInteractive", homeCuisines.length);
@@ -143,7 +143,7 @@ jobs:
               "Alle retter i Oslo",
               cuisine,
               representativeDish,
-              "Production-backed canonical Matlyst-retter",
+              "Finn retten",
             );
             verified.push({ cuisine, representativeDish, url: surface.url });
           }
