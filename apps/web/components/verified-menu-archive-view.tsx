@@ -104,7 +104,7 @@ export function ArchivedMenuBrowse({
         </section>
       ) : (
         <section aria-label="Utvalgte retter">
-          <h2>Populære retter å utforske</h2>
+          <h2>Utforsk retter</h2>
           <p className={styles.meta}>Se hvor du finner rettene, eller bruk søkefeltet for å finne flere.</p>
           <div className={styles.dishList}>
             {archivedDishes.map((dish) => (
