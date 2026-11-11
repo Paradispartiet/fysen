@@ -12,7 +12,7 @@ export function RecentDishes({ dishes }: { readonly dishes: readonly RecentlyAdd
       <div className="matlystFeaturedHeading">
         <div>
           <h3 id="matlyst-recent-title">Nye retter i Fysen</h3>
-          <p>Registrert i Fysen de siste 14 dagene – ikke nødvendigvis nytt på restaurantens meny.</p>
+          <p>Nye retter å oppdage hos restauranter i Oslo.</p>
         </div>
       </div>
       <div className="matlystFeaturedGrid">
