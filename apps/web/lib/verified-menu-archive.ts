@@ -244,12 +244,14 @@ export function getPublicMenuArchive(): Promise<PublicMenuArchive> {
 /**
  * A limited, deduplicated selection for the Oslo archive browse landing page.
  * Counts distinct restaurants from archived source evidence, never current stock.
- * A historical menu row never becomes a fresh result through this function.
+ * Index recency is not confused with per-menu source observation dates.
  */
 export interface ArchivedBrowseDish {
   readonly name: string;
   readonly query: string;
   readonly restaurantCount: number;
+  /** Most recently observed source among the restaurants in this group, not all sources. */
+  readonly newestObservedAt: string;
 }
 
 export function browseArchivedMenuDishes(
@@ -258,7 +260,7 @@ export function browseArchivedMenuDishes(
   limit = 48,
 ): ArchivedBrowseDish[] {
   if (city.trim().toLocaleLowerCase("nb-NO") !== "oslo") return [];
-  const groups = new Map<string, { name: string; restaurants: Set<number> }>();
+  const groups = new Map<string, { name: string; restaurants: Set<number>; newestObservedAt: string }>();
 
   for (const row of archive.items) {
     const sourceIndex = row[0];
@@ -275,10 +277,11 @@ export function browseArchivedMenuDishes(
 
     let group = groups.get(query);
     if (!group) {
-      group = { name, restaurants: new Set<number>() };
+      group = { name, restaurants: new Set<number>(), newestObservedAt: source[2] };
       groups.set(query, group);
     }
     group.restaurants.add(source[0]);
+    if (source[2] > group.newestObservedAt) group.newestObservedAt = source[2];
   }
 
   return [...groups.entries()]
@@ -286,6 +289,7 @@ export function browseArchivedMenuDishes(
       name: group.name,
       query,
       restaurantCount: group.restaurants.size,
+      newestObservedAt: group.newestObservedAt,
     }))
     .sort((left, right) =>
       right.restaurantCount - left.restaurantCount ||
