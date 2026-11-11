@@ -16,9 +16,18 @@ const illustratedDishes = [
   { id: "pad-thai-reker", label: "Pad thai med reker", query: "pad thai" },
   { id: "stekt-hvit-fisk", label: "Stekt hvit fisk", query: "stekt fisk" },
   { id: "tiramisu", label: "Tiramisu", query: "tiramisu" },
+  { id: "pizza-marinara", label: "Pizza marinara", query: "pizza marinara" },
+  { id: "cacio-e-pepe", label: "Cacio e pepe", query: "cacio e pepe" },
+  { id: "gyoza", label: "Gyoza", query: "gyoza" },
+  { id: "pho", label: "Phở bò", query: "pho" },
+  { id: "bibimbap", label: "Bibimbap", query: "bibimbap" },
+  { id: "falafel", label: "Falafel med hummus", query: "falafel" },
+  { id: "tacos-al-pastor", label: "Tacos al pastor", query: "tacos al pastor" },
+  { id: "chana-masala", label: "Chana masala", query: "chana masala" },
+  { id: "dosa", label: "Masala dosa", query: "dosa" },
 ] as const;
 
-// The background sprite contains exactly 5 columns and 3 rows, in this order.
+// The background sprite contains exactly 6 columns and 4 rows, in this order.
 // Photographs are representative AI illustrations, never evidence of a
 // restaurant's menu item or preparation; keep them out of restaurant listings.
 export function DishPhotoGallery() {
@@ -33,14 +42,14 @@ export function DishPhotoGallery() {
       </div>
       <div className="dishPhotosGrid">
         {illustratedDishes.map((dish, index) => {
-          const column = index % 5;
-          const row = Math.floor(index / 5);
+          const column = index % 6;
+          const row = Math.floor(index / 6);
           return (
             <a href={dishSearchHref(dish.query)} key={dish.id} className="dishPhotoCard">
               <span
                 className="dishPhotoThumb"
                 aria-hidden="true"
-                style={{ backgroundPosition: `${column * 25}% ${row * 50}%` }}
+                style={{ backgroundPosition: `${column * 20}% ${(row * 100) / 3}%` }}
               />
               <strong>{dish.label}</strong>
               <span className="dishPhotoAction">Se menytreff <span aria-hidden="true">→</span></span>
@@ -62,6 +71,14 @@ const editorialPhotoIndex: Readonly<Record<string, number>> = {
   ramen: 6,
   carbonara: 10,
   "butter-chicken": 11,
+  "pizza-marinara": 15,
+  "cacio-e-pepe": 16,
+  gyoza: 17,
+  pho: 18,
+  falafel: 20,
+  "tacos-al-pastor": 21,
+  "chana-masala": 22,
+  dosa: 23,
 };
 
 export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: string }) {
@@ -72,7 +89,7 @@ export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: s
       role="img"
       aria-label={`KI-illustrasjon av ${label}, ikke restaurantfoto`}
       className="dishPhotoSmall"
-      style={{ backgroundPosition: `${(index % 5) * 25}% ${Math.floor(index / 5) * 50}%` }}
+      style={{ backgroundPosition: `${(index % 6) * 20}% ${(Math.floor(index / 6) * 100) / 3}%` }}
     />
   );
 }
