@@ -135,8 +135,8 @@ export function StaticPreviewSearchPage() {
     ? primaryResults.length > 0
       ? `${primaryResults.length} menytreff`
       : nearResults.length > 0
-        ? "Ingen sikre treff"
-        : "Ingen ferske menytreff"
+        ? "Ingen eksakte treff"
+        : "Ingen treff"
     : "Søk på retten du har lyst på.";
 
   return (
@@ -165,7 +165,7 @@ export function StaticPreviewSearchPage() {
               <div className="resultsIntro">
                 <p className="eyebrow">{city}</p>
                 <h1>{q}</h1>
-                <p className="resultsCount">{loading ? "Søker i ferske menyer …" : countLabel}</p>
+                <p className="resultsCount">{loading ? "Søker etter retter …" : countLabel}</p>
               </div>
 
               <DishKnowledgeNote query={q} />
@@ -189,8 +189,8 @@ export function StaticPreviewSearchPage() {
 
               {!loading && !error && data && data.results.length === 0 ? (
                 <SearchState
-                  title={`Ingen ferske treff på «${q}»`}
-                  body={`Vi finner ikke retten på en fersk meny i ${city} akkurat nå.`}
+                  title={`Ingen treff på «${q}»`}
+                  body="Prøv et annet rettnavn eller se alle retter."
                 />
               ) : null}
 
