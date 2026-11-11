@@ -11,7 +11,9 @@ Status: 11. november 2026. **Dette er et identifikasjonsregister, ikke bekreftet
 | **AHA / EchoNet** | `AHA`, frontend Supabase Auth / valgfri MVP-sync | `wshmybqyksrwkawqleiz` | **EchoNet**, org `kepuwrsiqhqwfgijzpev` | Prosjekt og org bekreftet i Supabase-varsler; AHA frontend-konfigurasjon bruker prosjektet. Tidligere pausevarsel. |
 | **AHA / EchoNet** | `AHA Staging` | `sstuzwppsheivczyqrim` | **EchoNet**, org `kepuwrsiqhqwfgijzpev` | Tidligere pausevarsel. Ikke forveksle med dedikert Azure production PostgreSQL. |
 
-**En annen dokumentert Supabase-organisasjon:** `Aha EchoNet`, org ID `conidfhuuaueyoxwklae`, har tidligere fått kvote-/egressbegrensninger. **Vi har ennå ikke prosjektlisten for denne organisasjonen.** Det er ikke bekreftet om den inneholder Fysen eller brukes fra en separat innloggingskonto. Én innloggingskonto kan være medlem av flere organisasjoner; to organisasjoner er ikke bevis på to kontoer.
+**Organisasjonsobservasjon 11. november 2026 (brukerens Dashboard-skjermbilde):** Innlogget Supabase-visning med organisasjonsnavnet `Aha EchoNet` viser de to prosjektnavnene **`fysen`** og **`fysen-recovery-free`** (begge `eu-west-1`, `NANO`). Samme visning varsler **`Services restricted`** og viser samlet `Database size` **1 682 / 500 MB** i inneværende fakturaperiode. **Dette bekrefter tilgang til disse prosjektnavnene fra den viste innloggingen**, men bildet viser *ikke* deres project ref eller organisasjonens ID. Først når prosjektets Dashboard URL / General Settings er sjekket, kan man koble navnene sikkert til `voglczxxtbwcxjrbffbt` og `txaopscyxjvvmwawsphk`.
+
+**Dokumenterte organisasjoner:** `Aha EchoNet` har tidligere vært knyttet til org ID `conidfhuuaueyoxwklae` med kvote-/egressbegrensninger; `EchoNet` er knyttet til org ID `kepuwrsiqhqwfgijzpev`. Organisasjons-ID-en til den **nå viste** `Aha EchoNet`-visningen er fremdeles ubekreftet fra bildet. Én innloggingskonto kan være medlem av flere organisasjoner; to organisasjoner er ikke bevis på to kontoer. **Ikke forveksle Fair Use-tjenestesperre (organisasjonskvote) med PostgreSQL read-only som kan utløses av fysisk diskbruk.**
 
 ## Hvor finner vi Fysen?
 
