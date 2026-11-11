@@ -17,7 +17,8 @@ test("Matlyst production proof følger den gjenopprettede sekskorts-forsiden", (
   }
   assert.match(proofSource, /cuisineCard cuisineCardInteractive/u);
   assert.match(proofSource, /matlyst-live-browser-proof\.mjs/u);
-  assert.match(proofSource, /På menyen nå/u);
+  assert.match(proofSource, /Restauranter og retter/u);
+  assert.doesNotMatch(proofSource, /"På menyen nå"/u);
 });
 
 test("Matlyst production proof bruker dagens direkte kjøkken-deep links", () => {
@@ -26,7 +27,8 @@ test("Matlyst production proof bruker dagens direkte kjøkken-deep links", () =>
   }
   assert.doesNotMatch(proofSource, /[?&]world=/u);
   assert.doesNotMatch(proofSource, /[?&]region=/u);
-  assert.match(proofSource, /Production-backed canonical Matlyst-retter/u);
+  assert.match(proofSource, /"Finn retten"/u);
+  assert.doesNotMatch(proofSource, /Production-backed canonical Matlyst-retter/u);
 });
 
 test("Matlyst production proof normaliserer bare Reacts tomme SSR-separator", () => {
