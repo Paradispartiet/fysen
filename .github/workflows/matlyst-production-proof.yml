@@ -61,6 +61,10 @@ jobs:
         if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
         uses: ./.github/actions/setup-node-pnpm
 
+      - name: Verify all approved food images are published and visible in Matlyst
+        if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
+        run: node apps/web/tests/matlyst-live-image-proof.mjs
+
       - name: Verify Matlyst v3 public consumer journeys
         if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
         shell: bash
