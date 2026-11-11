@@ -63,9 +63,9 @@ test("New editorial imagery maps only real catalog dishes, not non-catalog bibim
 });
 
 test("Every exact editorial image maps to a genuine food knowledge dish", () => {
-  const catalogIds = new Set([...catalog.matchAll(/\\bid:\\s*"([^"]+)"/gu)].map((match) => match[1]));
+  const catalogIds = new Set([...catalog.matchAll(/\bid:\s*"([^"]+)"/gu)].map((match) => match[1]));
   const mappingBlock = gallery.slice(gallery.indexOf("const editorialPhotoIndex"), gallery.indexOf("export function DishPhotoThumbnail"));
-  const mappedIds = [...mappingBlock.matchAll(/^\\s*(?:"([^"]+)"|([a-z][a-z0-9-]*)):\\s*\\d+,/gmu)].map((match) => match[1] || match[2]);
+  const mappedIds = [...mappingBlock.matchAll(/^\s*(?:"([^"]+)"|([a-z][a-z0-9-]*)):\s*\d+,/gmu)].map((match) => match[1] || match[2]);
   assert.equal(new Set(mappedIds).size, mappedIds.length, "Duplicate editorial image IDs");
   assert.ok(mappedIds.length >= 13);
   for (const id of mappedIds) assert.ok(catalogIds.has(id), `Editorial image has no catalog dish: ${id}`);
