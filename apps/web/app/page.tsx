@@ -42,13 +42,11 @@ export default async function HomePage() {
           </div>
           <div className="homeSearchWrap">
             <p className="searchProof">
-              {browseData
-                ? "Søk etter en rett og se hvilke restauranter som har den på menyen nå."
-                : "Ferske søk er midlertidig utilgjengelige. Du kan fortsatt utforske rettene og matkunnskapen."}
+              Søk etter en rett og finn restauranter som har den på menyen.
             </p>
             <DishSearch />
             <a className="homeDishBrowseLink" href={dishBrowseHref("Oslo")}>
-              {archiveCoverage ? "Utforsk sist bekreftede menyer" : "Se alle retter i Oslo"}
+              Se alle retter i Oslo
               <span aria-hidden="true">→</span>
             </a>
           </div>
