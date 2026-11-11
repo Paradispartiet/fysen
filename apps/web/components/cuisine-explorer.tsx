@@ -9,6 +9,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { browseDishesClient } from "../lib/client-dish-search";
 import { RecentDishes } from "./recent-dishes";
 import { PopularDishes } from "./popular-dishes";
+import { DishPhotoGallery, DishPhotoThumbnail } from "./dish-photo-gallery";
 import { discoveryCoverage } from "../lib/dish-discovery";
 import type { ArchivedMatlystCoverage } from "../lib/archived-matlyst-coverage";
 import { dishSearchHref } from "../lib/public-path";
@@ -108,6 +109,7 @@ function DiscoveryDishList({
               </a>
             </div>
           </div>
+          <DishPhotoThumbnail dishId={dish.id} label={dish.label} />
 
           {restaurantExamples.length > 0 ? (
             <ul>
@@ -230,6 +232,7 @@ export function CuisineExplorer({
 
       <RecentDishes dishes={effectiveBrowseData?.recentDishes ?? []} />
       <PopularDishes dishes={effectiveBrowseData?.popularDishes ?? []} />
+      <DishPhotoGallery />
 
       <div className="cuisineGrid">
         {homeCuisines.map((cuisine) => {
