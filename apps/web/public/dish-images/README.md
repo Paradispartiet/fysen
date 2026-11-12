@@ -7,6 +7,8 @@ faktiske serveringen på en bestemt restaurant**.
 ## Visning
 
 - `collection.avif` har de første 24 motivene i 6 kolonner × 4 rader.
+- `pizza-margherita-512.avif` er et selvstendig 512 × 512-bilde som nå erstatter atlasrute 0 i visningen (tomat, mozzarella, basilikum, ikke restaurantfoto).
+- `cheeseburger-bacon-512.avif` er et selvstendig 512 × 512-bilde som nå erstatter atlasrute 1 i det åpnbare galleriet (bacon/storfekjøtt, ikke vegetar- eller restaurantfoto).
 - `series-04.avif` har de neste 9 motivene i 3 kolonner × 3 rader.
 - `tom-yum-512.avif` er ett separat, skarpt 512 × 512-bilde på svart bakgrunn, med reker.
 - `pad-kra-pao-384.avif` er et separat 384 × 384-bilde av pad kra pao med kjøtt, ris, thaibasilikum og speilegg.
@@ -35,6 +37,7 @@ begge offentlige bildefiler med eksakt SHA-256 fra kildefilene etter deploy.
 
 De godkjente originalene er fra serien levert som
 `fysen_rettebilder_24_bibliotek.zip` og `fysen_rettebilder_serie_04.zip`.
+Pizza margherita og bacon-cheeseburger er oppgradert med egne kildeoriginaler. De gamle motivene blir liggende i atlasfilen fordi de øvrige rettene fortsatt bruker den.
 Noen bilder fra serie 02–03 er fortsatt utsnitt fra komposittbilder,
 og bør senere erstattes med enkeltstående, opprinnelig høyoppløselige
 motiver. Flere kildeoriginaler er ikke 320/384px i reell motivdetalj
