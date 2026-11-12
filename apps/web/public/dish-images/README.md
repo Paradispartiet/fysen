@@ -46,6 +46,14 @@ begge offentlige bildefiler med eksakt SHA-256 fra kildefilene etter deploy.
 De godkjente originalene er fra serien levert som
 `fysen_rettebilder_24_bibliotek.zip` og `fysen_rettebilder_serie_04.zip`.
 Pizza margherita og bacon-cheeseburger er oppgradert med egne kildeoriginaler. De gamle motivene blir liggende i atlasfilen fordi de øvrige rettene fortsatt bruker den.
+
+Fire nye separate 768 × 768 AVIF-illustrasjoner er lagt til for
+`sushi`, `ramen`, `pasta-carbonara` og `butter-chicken`.
+Motivene viser laks/tunfisk, ramen med svin og egg, carbonara med
+speket svinekjøtt og kremet kyllingcurry med naan. Dette er
+rettetypeillustrasjoner, ikke restaurantfoto. Eksisterende `pho-512.avif`
+beholdes. Et nytt kyllingtaco-motiv er ikke brukt til
+`tacos-al-pastor` fordi det viser feil variant.
 Noen bilder fra serie 02–03 er fortsatt utsnitt fra komposittbilder,
 og bør senere erstattes med enkeltstående, opprinnelig høyoppløselige
 motiver. Flere kildeoriginaler er ikke 320/384px i reell motivdetalj

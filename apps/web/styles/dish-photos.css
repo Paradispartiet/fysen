@@ -194,3 +194,14 @@
 .dishPhotoSmall.dishPhotoVada {
   background: #000 url("/dish-images/medu-vada-768.avif") center / cover no-repeat;
 }
+
+
+/* Separate 768px AI dish-type illustrations, never a restaurant photo. */
+.dishPhotoThumb.dishPhotoSushi,
+.dishPhotoSmall.dishPhotoSushi { background: #000 url("/dish-images/sushi-768.avif") center / cover no-repeat; }
+.dishPhotoThumb.dishPhotoRamen,
+.dishPhotoSmall.dishPhotoRamen { background: #000 url("/dish-images/ramen-768.avif") center / cover no-repeat; }
+.dishPhotoThumb.dishPhotoCarbonara,
+.dishPhotoSmall.dishPhotoCarbonara { background: #000 url("/dish-images/carbonara-768.avif") center / cover no-repeat; }
+.dishPhotoThumb.dishPhotoButterChicken,
+.dishPhotoSmall.dishPhotoButterChicken { background: #000 url("/dish-images/butter-chicken-768.avif") center / cover no-repeat; }

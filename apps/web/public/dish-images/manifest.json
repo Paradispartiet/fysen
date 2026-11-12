@@ -64,20 +64,22 @@
       "label": "Sushi assortert",
       "query": "sushi",
       "index": 5,
-      "atlas": "collection.avif",
+      "atlas": "sushi-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "sushi"
+      "catalogId": "sushi",
+      "variantCaution": "KI-illustrasjon av sushi med laks, tunfisk, ris, nori og avokado. Ikke restaurantfoto; sammensetningen på restaurantens meny må sjekkes separat."
     },
     {
       "id": "ramen",
       "label": "Ramen med svin og egg",
       "query": "ramen",
       "index": 6,
-      "atlas": "collection.avif",
+      "atlas": "ramen-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "ramen"
+      "catalogId": "ramen",
+      "variantCaution": "KI-illustrasjon av ramen med chashu-svinekjøtt, egg, nudler, vårløk og nori. Ikke vegetarisk og ikke restaurantfoto."
     },
     {
       "id": "pasta-bolognese",
@@ -114,20 +116,22 @@
       "label": "Pasta carbonara",
       "query": "carbonara",
       "index": 10,
-      "atlas": "collection.avif",
+      "atlas": "carbonara-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av spaghetti carbonara med speket svinekjøtt, egg, ost og pepper. Ikke restaurantfoto; ingrediensene kan variere."
     },
     {
       "id": "butter-chicken",
       "label": "Butter chicken",
       "query": "butter chicken",
       "index": 11,
-      "atlas": "collection.avif",
+      "atlas": "butter-chicken-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "butter-chicken"
+      "catalogId": "butter-chicken",
+      "variantCaution": "KI-illustrasjon av butter chicken i kremet tomatsaus med naan. Ikke restaurantfoto eller bekreftet tilbehør på en bestemt meny."
     },
     {
       "id": "pad-thai-reker",

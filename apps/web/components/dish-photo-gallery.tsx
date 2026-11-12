@@ -49,7 +49,7 @@ const illustratedDishes = [
 
 // The first atlas holds 24 illustrations in 6 columns × 4 rows.
 // The second atlas (series 04) holds nine in 3 × 3, at indices 24–32.
-// Pizza margherita (0), Cheeseburger (1), Tom yum (33), Pad kra pao (34), Bánh mì (35), Bún chả (36), Gỏi cuốn (37), Tandoorikylling (38), Naan (39), Dal makhani (40), Idli (41), Sambar (42), and Medu vada (43) use separate sharp AVIF files.
+// Pizza margherita (0), Cheeseburger (1), Sushi (5), Ramen (6), Carbonara (10), Butter chicken (11), Tom yum (33), Pad kra pao (34), Bánh mì (35), Bún chả (36), Gỏi cuốn (37), Tandoorikylling (38), Naan (39), Dal makhani (40), Idli (41), Sambar (42), and Medu vada (43) use separate sharp AVIF files.
 // All are representative AI illustrations, not restaurant photographs.
 // Keep individual restaurant listings separate from these editorial images.
 export function DishPhotoGallery() {
@@ -88,6 +88,10 @@ export function DishPhotoGallery() {
           const isGrilledSalmon = index === 2;
           const isGrilledSteak = index === 3;
           const isShrimpOpenSandwich = index === 4;
+          const isSushi = index === 5;
+          const isRamen = index === 6;
+          const isCarbonara = index === 10;
+          const isButterChicken = index === 11;
           const isTomYum = index === 33;
           const isPadKraPao = index === 34;
           const isBanhMi = index === 35;
@@ -103,7 +107,7 @@ export function DishPhotoGallery() {
           const localIndex = isSeries04 ? index - 24 : index;
           const column = isSeries04 ? localIndex % 3 : index % 6;
           const row = isSeries04 ? Math.floor(localIndex / 3) : Math.floor(index / 6);
-          const position = (isPizzaMargherita || isCheeseburger || isGrilledSalmon || isGrilledSteak || isShrimpOpenSandwich || isPho || isTomYum || isPadKraPao || isBanhMi || isBunCha || isGoiCuon || isTandoori || isNaan || isDalMakhani || isIdli || isSambar || isVada)
+          const position = (isPizzaMargherita || isCheeseburger || isGrilledSalmon || isGrilledSteak || isShrimpOpenSandwich || isSushi || isRamen || isCarbonara || isButterChicken || isPho || isTomYum || isPadKraPao || isBanhMi || isBunCha || isGoiCuon || isTandoori || isNaan || isDalMakhani || isIdli || isSambar || isVada)
             ? "center"
             : isSeries04
               ? `${column * 50}% ${row * 50}%`
@@ -111,7 +115,7 @@ export function DishPhotoGallery() {
           return (
             <a href={dishSearchHref(dish.query)} key={dish.id} className="dishPhotoCard">
               <span
-                className={isPizzaMargherita ? "dishPhotoThumb dishPhotoPizzaMargherita" : isCheeseburger ? "dishPhotoThumb dishPhotoCheeseburger" : isGrilledSalmon ? "dishPhotoThumb dishPhotoGrilledSalmon" : isGrilledSteak ? "dishPhotoThumb dishPhotoGrilledSteak" : isShrimpOpenSandwich ? "dishPhotoThumb dishPhotoShrimpOpenSandwich" : isPho ? "dishPhotoThumb dishPhotoPho" : isBunCha ? "dishPhotoThumb dishPhotoBunCha" : isGoiCuon ? "dishPhotoThumb dishPhotoGoiCuon" : isTandoori ? "dishPhotoThumb dishPhotoTandoori" : isNaan ? "dishPhotoThumb dishPhotoNaan" : isDalMakhani ? "dishPhotoThumb dishPhotoDalMakhani" : isIdli ? "dishPhotoThumb dishPhotoIdli" : isSambar ? "dishPhotoThumb dishPhotoSambar" : isVada ? "dishPhotoThumb dishPhotoVada" : isBanhMi ? "dishPhotoThumb dishPhotoBanhMi" : isPadKraPao ? "dishPhotoThumb dishPhotoPadKraPao" : isTomYum ? "dishPhotoThumb dishPhotoTomYum" : isSeries04 ? "dishPhotoThumb dishPhotoSeries04" : "dishPhotoThumb"}
+                className={isPizzaMargherita ? "dishPhotoThumb dishPhotoPizzaMargherita" : isCheeseburger ? "dishPhotoThumb dishPhotoCheeseburger" : isGrilledSalmon ? "dishPhotoThumb dishPhotoGrilledSalmon" : isGrilledSteak ? "dishPhotoThumb dishPhotoGrilledSteak" : isShrimpOpenSandwich ? "dishPhotoThumb dishPhotoShrimpOpenSandwich" : isSushi ? "dishPhotoThumb dishPhotoSushi" : isRamen ? "dishPhotoThumb dishPhotoRamen" : isCarbonara ? "dishPhotoThumb dishPhotoCarbonara" : isButterChicken ? "dishPhotoThumb dishPhotoButterChicken" : isPho ? "dishPhotoThumb dishPhotoPho" : isBunCha ? "dishPhotoThumb dishPhotoBunCha" : isGoiCuon ? "dishPhotoThumb dishPhotoGoiCuon" : isTandoori ? "dishPhotoThumb dishPhotoTandoori" : isNaan ? "dishPhotoThumb dishPhotoNaan" : isDalMakhani ? "dishPhotoThumb dishPhotoDalMakhani" : isIdli ? "dishPhotoThumb dishPhotoIdli" : isSambar ? "dishPhotoThumb dishPhotoSambar" : isVada ? "dishPhotoThumb dishPhotoVada" : isBanhMi ? "dishPhotoThumb dishPhotoBanhMi" : isPadKraPao ? "dishPhotoThumb dishPhotoPadKraPao" : isTomYum ? "dishPhotoThumb dishPhotoTomYum" : isSeries04 ? "dishPhotoThumb dishPhotoSeries04" : "dishPhotoThumb"}
                 aria-hidden="true"
                 style={{ backgroundPosition: position }}
               />
@@ -179,6 +183,10 @@ const illustratedVariants: Readonly<Record<string, string>> = {
   "peking-duck": "pekingand",
   "dan-dan-noodles": "dan dan-nudler med kjøtt og peanøtter",
   "green-curry": "grønn curry med kylling",
+  sushi: "assortert sushi med laks, tunfisk, ris, nori og avokado",
+  ramen: "ramen med chashu-svinekjøtt, egg, nudler, nori og vårløk",
+  carbonara: "spaghetti carbonara med speket svinekjøtt, ost, egg og pepper",
+  "butter-chicken": "butter chicken i kremet tomatsaus med naanbrød",
   pho: "phở bò med storfekjøtt, risnudler, urter og lime",
   "pad-thai": "pad thai med reker",
   "tom-yum": "tom yum med reker, sopp og sitrongress",
@@ -198,6 +206,10 @@ export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: s
   const index = editorialPhotoIndex[dishId];
   if (index === undefined) return null;
   const isPizzaMargherita = index === 0;
+  const isSushi = index === 5;
+  const isRamen = index === 6;
+  const isCarbonara = index === 10;
+  const isButterChicken = index === 11;
   const isPho = index === 18;
   const isTomYum = index === 33;
   const isPadKraPao = index === 34;
@@ -212,7 +224,7 @@ export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: s
   const isVada = index === 43;
   const isSeries04 = index >= 24 && index < 33;
   const localIndex = isSeries04 ? index - 24 : index;
-  const position = (isPizzaMargherita || isPho || isTomYum || isPadKraPao || isBanhMi || isBunCha || isGoiCuon || isTandoori || isNaan || isDalMakhani || isIdli || isSambar || isVada)
+  const position = (isPizzaMargherita || isSushi || isRamen || isCarbonara || isButterChicken || isPho || isTomYum || isPadKraPao || isBanhMi || isBunCha || isGoiCuon || isTandoori || isNaan || isDalMakhani || isIdli || isSambar || isVada)
     ? "center"
     : isSeries04
       ? `${(localIndex % 3) * 50}% ${Math.floor(localIndex / 3) * 50}%`
@@ -222,7 +234,7 @@ export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: s
     <span
       role="img"
       aria-label={`KI-illustrasjon av ${illustratedVariant}, ikke restaurantfoto`}
-      className={isPizzaMargherita ? "dishPhotoSmall dishPhotoPizzaMargherita" : isPho ? "dishPhotoSmall dishPhotoPho" : isBunCha ? "dishPhotoSmall dishPhotoBunCha" : isGoiCuon ? "dishPhotoSmall dishPhotoGoiCuon" : isTandoori ? "dishPhotoSmall dishPhotoTandoori" : isNaan ? "dishPhotoSmall dishPhotoNaan" : isDalMakhani ? "dishPhotoSmall dishPhotoDalMakhani" : isIdli ? "dishPhotoSmall dishPhotoIdli" : isSambar ? "dishPhotoSmall dishPhotoSambar" : isVada ? "dishPhotoSmall dishPhotoVada" : isBanhMi ? "dishPhotoSmall dishPhotoBanhMi" : isPadKraPao ? "dishPhotoSmall dishPhotoPadKraPao" : isTomYum ? "dishPhotoSmall dishPhotoTomYum" : isSeries04 ? "dishPhotoSmall dishPhotoSeries04" : "dishPhotoSmall"}
+      className={isPizzaMargherita ? "dishPhotoSmall dishPhotoPizzaMargherita" : isSushi ? "dishPhotoSmall dishPhotoSushi" : isRamen ? "dishPhotoSmall dishPhotoRamen" : isCarbonara ? "dishPhotoSmall dishPhotoCarbonara" : isButterChicken ? "dishPhotoSmall dishPhotoButterChicken" : isPho ? "dishPhotoSmall dishPhotoPho" : isBunCha ? "dishPhotoSmall dishPhotoBunCha" : isGoiCuon ? "dishPhotoSmall dishPhotoGoiCuon" : isTandoori ? "dishPhotoSmall dishPhotoTandoori" : isNaan ? "dishPhotoSmall dishPhotoNaan" : isDalMakhani ? "dishPhotoSmall dishPhotoDalMakhani" : isIdli ? "dishPhotoSmall dishPhotoIdli" : isSambar ? "dishPhotoSmall dishPhotoSambar" : isVada ? "dishPhotoSmall dishPhotoVada" : isBanhMi ? "dishPhotoSmall dishPhotoBanhMi" : isPadKraPao ? "dishPhotoSmall dishPhotoPadKraPao" : isTomYum ? "dishPhotoSmall dishPhotoTomYum" : isSeries04 ? "dishPhotoSmall dishPhotoSeries04" : "dishPhotoSmall"}
       style={{ backgroundPosition: position }}
     />
   );
