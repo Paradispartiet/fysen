@@ -13,6 +13,8 @@ const browse = readFileSync(path.join(web, "components/dish-browse.tsx"), "utf8"
 const browseStyles = readFileSync(path.join(web, "styles/dish-browse.css"), "utf8");
 const css = readFileSync(path.join(web, "styles/dish-photos.css"), "utf8");
 const atlas = readFileSync(path.join(web, "public/dish-images/collection.avif"));
+const pizzaMargherita = readFileSync(path.join(web, "public/dish-images/pizza-margherita-512.avif"));
+const cheeseburger = readFileSync(path.join(web, "public/dish-images/cheeseburger-bacon-512.avif"));
 const series04 = readFileSync(path.join(web, "public/dish-images/series-04.avif"));
 const tomYum = readFileSync(path.join(web, "public/dish-images/tom-yum-512.avif"));
 const padKraPao = readFileSync(path.join(web, "public/dish-images/pad-kra-pao-384.avif"));
@@ -97,7 +99,7 @@ test("Every generated and approved image is represented in the published Matlyst
   assert.deepEqual(manifest.images.map((entry) => entry.id), entries.map((match) => match[1]));
   for (const [index, image] of manifest.images.entries()) {
     assert.equal(image.index, index);
-    assert.equal(image.atlas, index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : "bun-cha-512.avif");
+    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : "bun-cha-512.avif");
     assert.equal(image.surface, "Matlyst");
     assert.equal(image.kind, "AI-illustrasjon");
   }
@@ -211,4 +213,41 @@ test("Bún chả has its own sharp 512px image with correct editorial identity",
   assert.ok(manifest.images.some((entry) =>
     entry.id === "bun-cha" && entry.catalogId === "bun-cha"
     && entry.variantCaution.includes("svinekjøtt")));
+});
+
+
+test("Pizza margherita uses its own sharp 512px source instead of atlas slot zero", () => {
+  assert.equal(pizzaMargherita.toString("ascii", 4, 12), "ftypavif");
+  assert.ok(pizzaMargherita.length > 8500);
+  const marker = pizzaMargherita.indexOf(Buffer.from("ispe"));
+  assert.ok(marker > 0, "Dedicated AVIF requires its own spatial size metadata");
+  assert.equal(pizzaMargherita.readUInt32BE(marker + 8), 512);
+  assert.equal(pizzaMargherita.readUInt32BE(marker + 12), 512);
+  assert.equal(manifest.images[0].id, "pizza-margherita");
+  assert.equal(manifest.images[0].atlas, "pizza-margherita-512.avif");
+  assert.match(manifest.images[0].variantCaution, /ikke faktisk restaurantfoto/u);
+  assert.match(gallery, /isPizzaMargherita = index === 0/u);
+  assert.match(gallery, /dishPhotoThumb dishPhotoPizzaMargherita/u);
+  assert.match(gallery, /dishPhotoSmall dishPhotoPizzaMargherita/u);
+  assert.match(css, /dishPhotoThumb\.dishPhotoPizzaMargherita/u);
+  assert.match(css, /dishPhotoSmall\.dishPhotoPizzaMargherita/u);
+  assert.match(css, /pizza-margherita-512\.avif/u);
+});
+
+test("Bacon cheeseburger has a dedicated sharp source without a fabricated catalog/restaurant photo mapping", () => {
+  assert.equal(cheeseburger.toString("ascii", 4, 12), "ftypavif");
+  assert.ok(cheeseburger.length > 8000);
+  const marker = cheeseburger.indexOf(Buffer.from("ispe"));
+  assert.ok(marker > 0);
+  assert.equal(cheeseburger.readUInt32BE(marker + 8), 512);
+  assert.equal(cheeseburger.readUInt32BE(marker + 12), 512);
+  assert.equal(manifest.images[1].id, "cheeseburger");
+  assert.equal(manifest.images[1].atlas, "cheeseburger-bacon-512.avif");
+  assert.match(manifest.images[1].variantCaution, /ikke et faktisk restaurantfoto/u);
+  assert.match(gallery, /isCheeseburger = index === 1/u);
+  assert.match(gallery, /dishPhotoThumb dishPhotoCheeseburger/u);
+  assert.match(css, /dishPhotoThumb\.dishPhotoCheeseburger/u);
+  assert.match(css, /cheeseburger-bacon-512\.avif/u);
+  const mapping = gallery.slice(gallery.indexOf("const editorialPhotoIndex"), gallery.indexOf("const illustratedVariants"));
+  assert.doesNotMatch(mapping, /^\s*cheeseburger:/mu);
 });

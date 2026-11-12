@@ -9,20 +9,22 @@
       "label": "Pizza margherita",
       "query": "pizza margherita",
       "index": 0,
-      "atlas": "collection.avif",
+      "atlas": "pizza-margherita-512.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "pizza-margherita"
+      "catalogId": "pizza-margherita",
+      "variantCaution": "Selvstendig KI-illustrasjon av pizza margherita med tomat, mozzarella og basilikum; ikke faktisk restaurantfoto. Skal ikke brukes for andre pizzavarianter."
     },
     {
       "id": "cheeseburger",
       "label": "Cheeseburger med bacon",
       "query": "bacon cheeseburger",
       "index": 1,
-      "atlas": "collection.avif",
+      "atlas": "cheeseburger-bacon-512.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "cheeseburger"
+      "catalogId": "cheeseburger",
+      "variantCaution": "KI-illustrasjon av bacon cheeseburger med storfekjøtt, smeltet ost og pommes frites. Ikke vegetarrett og ikke et faktisk restaurantfoto."
     },
     {
       "id": "grillet-laks",

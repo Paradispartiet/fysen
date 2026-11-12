@@ -42,7 +42,7 @@ const illustratedDishes = [
 
 // The first atlas holds 24 illustrations in 6 columns × 4 rows.
 // The second atlas (series 04) holds nine in 3 × 3, at indices 24–32.
-// Tom yum (33), Pad kra pao (34), Bánh mì (35), and Bún chả (36) use separate sharp AVIF files.
+// Pizza margherita (0), Cheeseburger (1), Tom yum (33), Pad kra pao (34), Bánh mì (35), and Bún chả (36) use separate sharp AVIF files.
 // All are representative AI illustrations, not restaurant photographs.
 // Keep individual restaurant listings separate from these editorial images.
 export function DishPhotoGallery() {
@@ -75,6 +75,8 @@ export function DishPhotoGallery() {
         </div>
         <div className="dishPhotosGrid">
           {illustratedDishes.map((dish, index) => {
+          const isPizzaMargherita = index === 0;
+          const isCheeseburger = index === 1;
           const isTomYum = index === 33;
           const isPadKraPao = index === 34;
           const isBanhMi = index === 35;
@@ -83,7 +85,7 @@ export function DishPhotoGallery() {
           const localIndex = isSeries04 ? index - 24 : index;
           const column = isSeries04 ? localIndex % 3 : index % 6;
           const row = isSeries04 ? Math.floor(localIndex / 3) : Math.floor(index / 6);
-          const position = (isTomYum || isPadKraPao || isBanhMi || isBunCha)
+          const position = (isPizzaMargherita || isCheeseburger || isTomYum || isPadKraPao || isBanhMi || isBunCha)
             ? "center"
             : isSeries04
               ? `${column * 50}% ${row * 50}%`
@@ -91,7 +93,7 @@ export function DishPhotoGallery() {
           return (
             <a href={dishSearchHref(dish.query)} key={dish.id} className="dishPhotoCard">
               <span
-                className={isBunCha ? "dishPhotoThumb dishPhotoBunCha" : isBanhMi ? "dishPhotoThumb dishPhotoBanhMi" : isPadKraPao ? "dishPhotoThumb dishPhotoPadKraPao" : isTomYum ? "dishPhotoThumb dishPhotoTomYum" : isSeries04 ? "dishPhotoThumb dishPhotoSeries04" : "dishPhotoThumb"}
+                className={isPizzaMargherita ? "dishPhotoThumb dishPhotoPizzaMargherita" : isCheeseburger ? "dishPhotoThumb dishPhotoCheeseburger" : isBunCha ? "dishPhotoThumb dishPhotoBunCha" : isBanhMi ? "dishPhotoThumb dishPhotoBanhMi" : isPadKraPao ? "dishPhotoThumb dishPhotoPadKraPao" : isTomYum ? "dishPhotoThumb dishPhotoTomYum" : isSeries04 ? "dishPhotoThumb dishPhotoSeries04" : "dishPhotoThumb"}
                 aria-hidden="true"
                 style={{ backgroundPosition: position }}
               />
@@ -162,13 +164,14 @@ const illustratedVariants: Readonly<Record<string, string>> = {
 export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: string }) {
   const index = editorialPhotoIndex[dishId];
   if (index === undefined) return null;
+  const isPizzaMargherita = index === 0;
   const isTomYum = index === 33;
   const isPadKraPao = index === 34;
   const isBanhMi = index === 35;
-          const isBunCha = index === 36;
+  const isBunCha = index === 36;
   const isSeries04 = index >= 24 && index < 33;
   const localIndex = isSeries04 ? index - 24 : index;
-  const position = (isTomYum || isPadKraPao || isBanhMi || isBunCha)
+  const position = (isPizzaMargherita || isTomYum || isPadKraPao || isBanhMi || isBunCha)
     ? "center"
     : isSeries04
       ? `${(localIndex % 3) * 50}% ${Math.floor(localIndex / 3) * 50}%`
@@ -178,7 +181,7 @@ export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: s
     <span
       role="img"
       aria-label={`KI-illustrasjon av ${illustratedVariant}, ikke restaurantfoto`}
-      className={isBunCha ? "dishPhotoSmall dishPhotoBunCha" : isBanhMi ? "dishPhotoSmall dishPhotoBanhMi" : isPadKraPao ? "dishPhotoSmall dishPhotoPadKraPao" : isTomYum ? "dishPhotoSmall dishPhotoTomYum" : isSeries04 ? "dishPhotoSmall dishPhotoSeries04" : "dishPhotoSmall"}
+      className={isPizzaMargherita ? "dishPhotoSmall dishPhotoPizzaMargherita" : isBunCha ? "dishPhotoSmall dishPhotoBunCha" : isBanhMi ? "dishPhotoSmall dishPhotoBanhMi" : isPadKraPao ? "dishPhotoSmall dishPhotoPadKraPao" : isTomYum ? "dishPhotoSmall dishPhotoTomYum" : isSeries04 ? "dishPhotoSmall dishPhotoSeries04" : "dishPhotoSmall"}
       style={{ backgroundPosition: position }}
     />
   );
