@@ -131,8 +131,8 @@ test("Pad Thai has its own verified image, not a mismatched seafood variant", ()
   assert.ok(ispeIndex > 0);
   assert.equal(padThai.readUInt32BE(ispeIndex + 8), 192);
   assert.equal(padThai.readUInt32BE(ispeIndex + 12), 192);
-  assert.match(css, /dishPhotoThumb\\.dishPhotoPadThai/u);
-  assert.match(css, /pad-thai\\.avif/u);
+  assert.match(css, /dishPhotoThumb\.dishPhotoPadThai/u);
+  assert.match(css, /pad-thai\.avif/u);
   assert.match(gallery, /"pad-thai": 33/u);
   assert.match(gallery, /index === 33/u);
   assert.ok(manifest.images.some((image) => image.id === "pad-thai" && image.catalogId === "pad-thai"));
