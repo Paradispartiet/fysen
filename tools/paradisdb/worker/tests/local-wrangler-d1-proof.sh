@@ -29,6 +29,12 @@ cat > "$config" <<'JSON'
   "name": "paradisdb-local-only-verification",
   "main": "worker.mjs",
   "compatibility_date": "2026-11-12",
+  "vars": {"PARADISDB_PUBLIC_ENABLED": "true"},
+  "ratelimits": [{
+    "name": "PUBLIC_RATE_LIMITER",
+    "namespace_id": "100001",
+    "simple": {"limit": 20, "period": 60}
+  }],
   "d1_databases": [{
     "binding": "PUBLIC_DB",
     "database_name": "paradisdb-local-only-verification",
@@ -138,6 +144,7 @@ assert all(x["restaurant"]["city"] == "Oslo" and
 attack = urllib.parse.quote("ramen' OR 1=1--")
 injection_status, injection = request("/v1/dishes/archive/search?q=" + attack)
 assert injection_status == 200 and injection["count"] == 0
+assert request("/v1/dishes/archive/search?q=ol")[0] == 400
 assert request("/api/aha/documents")[0] == 404
 assert request("/v1/private")[0] == 404
 assert request(query, method="POST")[0] == 405
