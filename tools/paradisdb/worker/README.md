@@ -32,6 +32,14 @@ Det går også an å åpne SQL-filen med lokal SQLite uten Cloudflare:
 
 GitHub Actions gjør den samme import- og SQL-kontrollen med Python uten å installere Wrangler.
 
+## Test med faktisk lokal Cloudflare D1 (ingen konto)
+
+En egen CI-prøve kjører `tools/paradisdb/worker/tests/local-wrangler-d1-proof.sh` med en **syntetisk** database-ID, isolert persistensmappe og eksplisitte `--local`-flagg. Den bruker Wrangler **4.161.0** og importerer kun verifisert offentlig SQL. Den starter også Worker-runtime på `127.0.0.1` og kontrollerer status, dokumenterte søkeresultater, SQL-injeksjonsvern og at private/write-endepunkter er stengt. Testen trenger ingen Cloudflare-konto eller API-token.
+
+Dette er en **ytterligere kompatibilitetsport**, ikke en driftssetting: bruk av `wrangler d1 execute --remote`, `wrangler deploy` eller en ekte Cloudflare database-ID er ikke del av denne prøven. `wrangler dev` og `d1 execute --local` bruker samme, midlertidige lokale lagringsmappe. Alt slettes automatisk når GitHub-runneren fjernes.
+
+Eldre Wrangler **4.45.0** utløste en intern `workerd`-feil i SQL statement-cache under den første reelle lokale D1-importprøven. Derfor testes en nyere, eksplisitt pinnet versjon. Den tidligere SQLite-adapterprøven er grønn, men **beviser ikke at D1-importen fungerer**. En ny D1-prøve må være grønn før kompatibilitet anses verifisert.
+
 ## Framtidig, kun etter uttrykkelig godkjenning
 
 Cloudflare D1 kan importere SQLite-SQL via \`wrangler d1 execute <db> --file=... --local\` for lokal database eller med \`--remote\` for en virkelig konto. Disse kommandoene kjøres **ikke** i denne PR-en. \`wrangler.jsonc.example\` er en mal uten ekte database-ID og må ikke bli en automatisk produksjonsdeploy.
