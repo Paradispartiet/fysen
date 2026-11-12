@@ -375,6 +375,17 @@
       "kind": "AI-illustrasjon",
       "catalogId": "banh-mi",
       "variantCaution": "Viser kjøtt, pâté, syltede grønnsaker, agurk, chili og koriander. Ikke bruk som vegetarisk bánh mì eller som autentisk restaurantfoto."
+    },
+    {
+      "id": "bun-cha",
+      "label": "Bún chả med grillet svinekjøtt",
+      "query": "bun cha",
+      "index": 36,
+      "atlas": "bun-cha-512.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "bun-cha",
+      "variantCaution": "Illustrasjon med grillet svinekjøtt, risvermicelli, urter og søt-syrlig dipsaus; ikke et faktisk restaurantfoto. Ikke bruk for vegetarvariant."
     }
   ]
 }
