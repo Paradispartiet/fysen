@@ -276,12 +276,36 @@
 .dishBrowseItemMain {
   display: flex;
   min-width: 0;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 18px;
   padding: 15px 2px 16px;
   color: var(--color-ink);
   text-decoration: none;
+}
+
+.dishBrowseItemMain > .dishPhotoSmall {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  margin: 0;
+  background-color: #000;
+}
+
+.dishBrowseItemContent {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dishBrowseItemContent > span {
+  flex: 0 0 auto;
+  color: var(--color-muted);
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .dishBrowseItemMain strong {
