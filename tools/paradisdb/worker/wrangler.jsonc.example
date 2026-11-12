@@ -4,7 +4,17 @@
   "name": "paradisdb-fysen-public-preview",
   "main": "worker.mjs",
   "compatibility_date": "2026-11-12",
-  "workers_dev": true,
+  "workers_dev": false,
+  // Intentionally OFF. A production deployment with this example returns 503.
+  // Only activate after preview cost/security gates and explicit approval.
+  "vars": { "PARADISDB_PUBLIC_ENABLED": "false" },
+  // Approximate per-location limit, NOT a strict worldwide daily billing cap.
+  // Use a namespace_id unique to the selected account before deployment.
+  "ratelimits": [{
+    "name": "PUBLIC_RATE_LIMITER",
+    "namespace_id": "100001",
+    "simple": { "limit": 20, "period": 60 }
+  }],
   "d1_databases": [
     {
       "binding": "PUBLIC_DB",
