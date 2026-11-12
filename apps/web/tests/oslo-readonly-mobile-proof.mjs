@@ -40,9 +40,9 @@ async function mobileWidth(page, label) {
     label + " overflows the mobile viewport: " + documentWidth + " > " + viewport);
 }
 
-const statusResponse = await fetch(apiBase + "/v1/dishes/archive/status", {
+const statusResponse = await globalThis.fetch(apiBase + "/v1/dishes/archive/status", {
   headers: { accept: "application/json" },
-  signal: AbortSignal.timeout(20_000),
+  signal: globalThis.AbortSignal.timeout(20_000),
 });
 assert.equal(statusResponse.status, 200, "The independent archive API must be public");
 const status = await statusResponse.json();
