@@ -1,3 +1,4 @@
+/* global URL, process, document, Node, getComputedStyle */
 import assert from "node:assert/strict";
 import { mkdirSync, readFileSync } from "node:fs";
 import path from "node:path";
