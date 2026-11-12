@@ -14,13 +14,14 @@ const browseStyles = readFileSync(path.join(web, "styles/dish-browse.css"), "utf
 const css = readFileSync(path.join(web, "styles/dish-photos.css"), "utf8");
 const atlas = readFileSync(path.join(web, "public/dish-images/collection.avif"));
 const series04 = readFileSync(path.join(web, "public/dish-images/series-04.avif"));
+const tomYum = readFileSync(path.join(web, "public/dish-images/tom-yum-512.avif"));
 const manifest = JSON.parse(readFileSync(path.join(web, "public/dish-images/manifest.json"), "utf8"));
 const catalog = readFileSync(path.join(web, "content/food-knowledge/catalog.ts"), "utf8");
 
-test("Matlyst has exactly thirty-three distinct, curated dish illustrations", () => {
+test("Matlyst has exactly thirty-four distinct, curated dish illustrations", () => {
   const entries = [...gallery.matchAll(/\{ id: "([^"]+)", label: "([^"]+)", query: "([^"]+)" \}/gu)];
-  assert.equal(entries.length, 33);
-  assert.equal(new Set(entries.map((match) => match[1])).size, 33);
+  assert.equal(entries.length, 34);
+  assert.equal(new Set(entries.map((match) => match[1])).size, 34);
   assert.ok(entries.every((match) => match[2].length > 0 && match[3].length > 0));
   assert.match(gallery, /index % 6/u);
   assert.match(gallery, /Math\.floor\(index \/ 6\)/u);
@@ -82,18 +83,18 @@ test("Every exact editorial image maps to a genuine food knowledge dish", () => 
   const mappingBlock = gallery.slice(gallery.indexOf("const editorialPhotoIndex"), gallery.indexOf("export function DishPhotoThumbnail"));
   const mappedIds = [...mappingBlock.matchAll(/^\s*(?:"([^"]+)"|([a-z][a-z0-9-]*)):\s*\d+,/gmu)].map((match) => match[1] || match[2]);
   assert.equal(new Set(mappedIds).size, mappedIds.length, "Duplicate editorial image IDs");
-  assert.equal(mappedIds.length, 23);
+  assert.equal(mappedIds.length, 24);
   for (const id of mappedIds) assert.ok(catalogIds.has(id), `Editorial image has no catalog dish: ${id}`);
 });
 
 test("Every generated and approved image is represented in the published Matlyst gallery", () => {
   const entries = [...gallery.matchAll(/\{ id: "([^"]+)", label: "([^"]+)", query: "([^"]+)" \}/gu)];
   assert.equal(manifest.version, 1);
-  assert.equal(manifest.images.length, 33);
+  assert.equal(manifest.images.length, 34);
   assert.deepEqual(manifest.images.map((entry) => entry.id), entries.map((match) => match[1]));
   for (const [index, image] of manifest.images.entries()) {
     assert.equal(image.index, index);
-    assert.equal(image.atlas, index < 24 ? "collection.avif" : "series-04.avif");
+    assert.equal(image.atlas, index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : "tom-yum-512.avif");
     assert.equal(image.surface, "Matlyst");
     assert.equal(image.kind, "AI-illustrasjon");
   }
@@ -141,4 +142,20 @@ test("High-resolution food photos remain sharp on phones and iPads", () => {
   assert.match(css, /\.dishPhotoCard \.dishPhotoThumb/u);
   assert.doesNotMatch(css, /grid-template-columns:\s*64px\s+minmax/u);
   assert.doesNotMatch(css, /image-rendering:\s*pixelated/u);
+});
+
+test("Tom yum is a dedicated, sharp 512px image with precise editorial placement", () => {
+  assert.equal(tomYum.toString("ascii", 4, 12), "ftypavif");
+  assert.ok(tomYum.length > 15000);
+  const marker = tomYum.indexOf(Buffer.from("ispe"));
+  assert.ok(marker > 0, "AVIF image size marker is required");
+  assert.equal(tomYum.readUInt32BE(marker + 8), 512);
+  assert.equal(tomYum.readUInt32BE(marker + 12), 512);
+  assert.match(gallery, /id: "tom-yum", label: "Tom yum med reker"/u);
+  assert.match(gallery, /"tom-yum": 33/u);
+  assert.match(gallery, /index === 33/u);
+  assert.match(css, /dishPhotoThumb\.dishPhotoTomYum/u);
+  assert.match(css, /tom-yum-512\.avif/u);
+  assert.ok(manifest.images.some((image) =>
+    image.id === "tom-yum" && image.catalogId === "tom-yum" && image.variantCaution.includes("reker")));
 });
