@@ -33,21 +33,21 @@ test("Matlyst has exactly thirty-three distinct, curated dish illustrations", ()
 
 test("Dish illustrations are available and explicitly not restaurant photographs", () => {
   assert.equal(atlas.toString("ascii", 4, 12), "ftypavif");
-  assert.ok(statSync(path.join(web, "public/dish-images/collection.avif")).size > 18000);
+  assert.ok(statSync(path.join(web, "public/dish-images/collection.avif")).size > 80000);
   assert.match(gallery, /Illustrasjoner av rettetyper, ikke restaurantbilder/u);
   assert.doesNotMatch(gallery, /restaurantName|restaurantId|sourceUrl/u);
-  assert.match(css, /background:\s*#000 url\("\/dish-images\/collection\.avif"\)/u);
+  assert.match(css, /background:\s*#000 url\("\/dish-images\/collection\.avif\?v=7a428369"\)/u);
   assert.match(css, /600% 400%/u);
   const ispeIndex = atlas.indexOf(Buffer.from("ispe"));
   assert.ok(ispeIndex > 0, "AVIF image spatial extents box must exist");
-  assert.equal(atlas.readUInt32BE(ispeIndex + 8), 768);
-  assert.equal(atlas.readUInt32BE(ispeIndex + 12), 512);
+  assert.equal(atlas.readUInt32BE(ispeIndex + 8), 1920);
+  assert.equal(atlas.readUInt32BE(ispeIndex + 12), 1280);
   assert.equal(series04.toString("ascii", 4, 12), "ftypavif");
-  assert.ok(statSync(path.join(web, "public/dish-images/series-04.avif")).size > 6500);
+  assert.ok(statSync(path.join(web, "public/dish-images/series-04.avif")).size > 45000);
   const series04ExtentIndex = series04.indexOf(Buffer.from("ispe"));
   assert.ok(series04ExtentIndex > 0);
-  assert.equal(series04.readUInt32BE(series04ExtentIndex + 8), 384);
-  assert.equal(series04.readUInt32BE(series04ExtentIndex + 12), 384);
+  assert.equal(series04.readUInt32BE(series04ExtentIndex + 8), 1152);
+  assert.equal(series04.readUInt32BE(series04ExtentIndex + 12), 1152);
   assert.match(css, /dishPhotoThumb\.dishPhotoSeries04/u);
   assert.match(css, /300% 300%/u);
   assert.match(layout, /dish-photos\.css/u);
@@ -131,10 +131,14 @@ test("Pad Thai uses only the known shrimp illustration, not a blurry new crop", 
 });
 
 
-test("Legacy 128px food-atlas tiles never stretch beyond their 2x sharp display size", () => {
-  assert.match(css, /grid-template-columns:\s*64px\s+minmax\(0,\s*1fr\)/u);
-  assert.match(css, /\.dishPhotoCard \.dishPhotoThumb\s*\{[^}]*width:\s*64px;[^}]*height:\s*64px;/su);
-  assert.match(css, /\.dishPhotoSmall\s*\{[^}]*width:\s*64px;[^}]*height:\s*64px;/su);
-  assert.match(css, /@media\(max-width:600px\)[\s\S]*?\.dishPhotoCard \.dishPhotoThumb\s*\{[^}]*width:\s*56px;[^}]*height:\s*56px;/u);
+test("High-resolution food photos remain sharp on phones and iPads", () => {
+  assert.equal(atlas.readUInt32BE(atlas.indexOf(Buffer.from("ispe")) + 8) / 6, 320);
+  assert.equal(series04.readUInt32BE(series04.indexOf(Buffer.from("ispe")) + 8) / 3, 384);
+  assert.match(css, /max-width:\s*150px/u);
+  assert.match(css, /max-width:\s*144px/u);
+  assert.match(css, /collection\\.avif\\?v=7a428369/u);
+  assert.match(css, /series-04\\.avif\\?v=ae60b6f1/u);
+  assert.match(css, /\\.dishPhotoCard \\.dishPhotoThumb/u);
+  assert.doesNotMatch(css, /grid-template-columns:\s*64px\s+minmax/u);
   assert.doesNotMatch(css, /image-rendering:\s*pixelated/u);
 });
