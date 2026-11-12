@@ -162,3 +162,10 @@
 .dishPhotoSmall.dishPhotoTandoori {
   background: #000 url("/dish-images/tandoori-chicken-768.avif") center / cover no-repeat;
 }
+
+
+/* Naan: individual 768px image; never substitute a tandoori meal photo. */
+.dishPhotoThumb.dishPhotoNaan,
+.dishPhotoSmall.dishPhotoNaan {
+  background: #000 url("/dish-images/naan-768.avif") center / cover no-repeat;
+}

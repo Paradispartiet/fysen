@@ -3,16 +3,16 @@
 Kontroll 12. november 2026, basert på den redaksjonelle matkatalogen i `apps/web/content/food-knowledge/catalog.ts`.
 
 - **84 redaksjonelle rettetyper** totalt.
-- **29 rettetyper** med eksakt ID-koblet illustrasjon i Matlyst-kortene.
-- **55 rettetyper** uten slik kobling.
-- Det frittstående galleriet viser 39 illustrative motiv, hvorav flere ikke er entydige katalog-ID-er.
+- **30 rettetyper** med eksakt ID-koblet illustrasjon i Matlyst-kortene.
+- **54 rettetyper** uten slik kobling.
+- Det frittstående galleriet viser 40 illustrative motiv, hvorav flere ikke er entydige katalog-ID-er.
 - **Dette er ikke 84 restaurantretter**: restaurantmenyer og varianter er egne data og får ikke automatisk slike KI-bilder.
 
 ## Motiver som mangler eksakt katalogkobling
 
-### Indisk (9)
+### Indisk (8)
 
-`naan` · `dal-makhani` · `idli` · `sambar` · `vada` · `biryani` · `haleem` · `kebab-india` · `mirchi-ka-salan`
+`dal-makhani` · `idli` · `sambar` · `vada` · `biryani` · `haleem` · `kebab-india` · `mirchi-ka-salan`
 
 ### Fast food (11)
 
