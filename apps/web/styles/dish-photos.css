@@ -14,7 +14,7 @@
 .dishPhotoCard { min-width: 0; display: flex; flex-direction: column; padding: 10px; color: var(--color-ink); text-decoration: none; background: #0b0c0b; border: 1px solid rgba(121,201,135,.16); border-radius: 11px; transition: border-color .15s ease; }
 .dishPhotoCard:hover { border-color: rgba(121,201,135,.6); }
 .dishPhotoCard:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 3px; }
-.dishPhotoThumb { display: block; width: 100%; aspect-ratio: 1; margin: 0 0 10px; background: #000 url("/dish-images/collection.avif") center / 600% 400% no-repeat; border-radius: 8px; }
+.dishPhotoThumb { display: block; width: 100%; aspect-ratio: 1; margin: 0 0 10px; background: #000 url("/dish-images/collection.avif?v=7a428369") center / 600% 400% no-repeat; border-radius: 8px; }
 .dishPhotoCard strong { font-size: 12px; line-height: 1.3; font-weight: 660; overflow-wrap: anywhere; }
 .dishPhotoAction { color: var(--color-brand); font-size: 10px; margin-top: auto; padding-top: 8px; }
 @media(max-width:950px) { .dishPhotosGrid { grid-template-columns: repeat(3,minmax(0,1fr)); } }
@@ -35,66 +35,55 @@
   height: 72px;
   margin: 12px 0 6px;
   border-radius: 10px;
-  background: #000 url("/dish-images/collection.avif") center / 600% 400% no-repeat;
+  background: #000 url("/dish-images/collection.avif?v=7a428369") center / 600% 400% no-repeat;
 }
 
 
 /* Series 04: its own 3×3 atlas, without changing the first 24 images. */
 .dishPhotoThumb.dishPhotoSeries04,
 .dishPhotoSmall.dishPhotoSeries04 {
-  background-image: url("/dish-images/series-04.avif");
+  background-image: url("/dish-images/series-04.avif?v=ae60b6f1");
   background-size: 300% 300%;
 }
 
 
-/* Image clarity: current older atlas tiles contain only 128×128 source pixels.
-   Show them at no more than 64 CSS pixels so 2× iPad/mobile screens do not
-   magnify pixels. Larger cards require the original higher-resolution assets. */
+/* High-density source atlases: 24×320px and 9×384px.
+   Each card shows at most 150 CSS px to retain >=2 source pixels
+   per CSS pixel on high-DPI phones and tablets. */
 .dishPhotoCard {
-  display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
-  grid-template-rows: auto auto;
-  align-content: center;
-  align-items: center;
-  column-gap: 12px;
-  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 5px;
+  min-width: 0;
 }
 .dishPhotoCard .dishPhotoThumb {
-  width: 64px;
-  height: 64px;
+  display: block;
+  width: 100%;
+  max-width: 150px;
+  height: auto;
   aspect-ratio: 1;
-  margin: 0;
-  grid-row: 1 / span 2;
-  grid-column: 1;
+  margin: 0 auto 8px;
 }
 .dishPhotoCard strong {
-  grid-column: 2;
-  grid-row: 1;
-  align-self: end;
+  font-size: 13px;
+  line-height: 1.3;
 }
 .dishPhotoCard .dishPhotoAction {
-  grid-column: 2;
-  grid-row: 2;
-  align-self: start;
-  margin-top: 2px;
-  padding-top: 3px;
+  margin-top: auto;
+  padding-top: 5px;
 }
 .dishPhotoSmall {
-  width: 64px;
-  height: 64px;
-  flex-basis: 64px;
+  width: 72px;
+  height: 72px;
+  flex-basis: 72px;
 }
 @media(max-width:600px) {
-  .dishPhotoCard {
-    grid-template-columns: 56px minmax(0,1fr);
-    column-gap: 8px;
-    min-height: 76px;
-  }
+  .dishPhotoCard { gap: 5px; }
   .dishPhotoCard .dishPhotoThumb {
-    width: 56px;
-    height: 56px;
+    max-width: 144px;
+    margin-bottom: 6px;
   }
-  .dishPhotoCard .dishPhotoAction {
-    overflow-wrap: anywhere;
-  }
+  .dishPhotoCard .dishPhotoAction { overflow-wrap: anywhere; }
 }

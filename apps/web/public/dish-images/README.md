@@ -18,12 +18,23 @@ faktiske serveringen på en bestemt restaurant**.
 
 ## Kvalitet og videre produksjon
 
-Dette er lette forhåndsvisningsbilder (128 × 128 piksler per motiv) for
-små kort. Ved senere publisering av større produktbilder bør hvert
-godkjente motiv erstattes av sin originale WebP-fil. Originalene og
-bildemanifestet ble levert i samtalen som `fysen_rettebilder_24_bibliotek.zip`.
-Flere motiver fra serie 02–03 er utsnitt av bildekollasjer og bør senere byttes mot separate høyoppløselige illustrasjoner.
-Første bildeatlas er 768 × 512 piksler (ca. 20,5 KB), det andre er 384 × 384 piksler (ca. 7,1 KB). Hvert miniatyrbilde er 128 × 128 piksler. Disse er ikke fulloppløselige originaler.
+Bildeatlasene ble oppgradert fra 128 × 128 piksler per rett til **320 × 320** for
+de første 24 motivene og **384 × 384** for de siste 9. Atlasene har
+henholdsvis 1920 × 1280 piksler (ca. 89,6 KiB) og 1152 × 1152
+piksler (ca. 50,8 KiB), kodet som AVIF. Kortbildene holdes til høyst
+150 CSS-piksler på store skjermer og 144 CSS-piksler på mobil, slik at
+bildene beholder minst 2 × kildetetthet, også på retina-skjermer.
+
+Bilde-URL-ene har versjonsnøkler for å unngå at nettlesere beholder de
+gamle 128px-filene i mellomlageret. Produksjonsbeviset sammenligner
+begge offentlige bildefiler med eksakt SHA-256 fra kildefilene etter deploy.
+
+De godkjente originalene er fra serien levert som
+`fysen_rettebilder_24_bibliotek.zip` og `fysen_rettebilder_serie_04.zip`.
+Noen bilder fra serie 02–03 er fortsatt utsnitt fra komposittbilder,
+og bør senere erstattes med enkeltstående, opprinnelig høyoppløselige
+motiver. Flere kildeoriginaler er ikke 320/384px i reell motivdetalj
+selv om bildeflaten nå har denne oppløsningen.
 
 Bildesekvensen er:
 1. Pizza margherita
