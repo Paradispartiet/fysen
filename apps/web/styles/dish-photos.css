@@ -107,3 +107,10 @@
 .dishPhotoSmall.dishPhotoBanhMi {
   background: #000 url("/dish-images/banh-mi-512.avif?v=ba2f55f4") center / cover no-repeat;
 }
+
+
+/* Single-dish 512px Bun cha illustration, retained at retina-quality resolution. */
+.dishPhotoThumb.dishPhotoBunCha,
+.dishPhotoSmall.dishPhotoBunCha {
+  background: #000 url("/dish-images/bun-cha-512.avif") center / cover no-repeat;
+}
