@@ -1,0 +1,83 @@
+name: Fysen mobile public search resilience proof
+
+on:
+  pull_request:
+    paths:
+      - "apps/web/tests/oslo-readonly-mobile-proof.mjs"
+      - ".github/workflows/verify-fysen-mobile-readonly.yml"
+  push:
+    branches: [main]
+    paths:
+      - "apps/web/tests/oslo-readonly-mobile-proof.mjs"
+      - ".github/workflows/verify-fysen-mobile-readonly.yml"
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Fysen batched Vercel production release"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: fysen-mobile-readonly-${{ github.event.pull_request.number || github.event.workflow_run.id || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  proof:
+    if: >-
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Verify upstream API or web was really released
+        if: github.event_name == 'workflow_run'
+        id: upstream
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          UPSTREAM_ID: ${{ github.event.workflow_run.id }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          jobs="$(curl --fail --silent --show-error \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            "https://api.github.com/repos/$REPOSITORY/actions/runs/$UPSTREAM_ID/jobs?per_page=100")"
+          deployed="$(jq -r 'any(.jobs[]?; (.name == "web" or .name == "api") and .conclusion == "success")' <<< "$jobs")"
+          echo "deployed=$deployed" >> "$GITHUB_OUTPUT"
+          if [[ "$deployed" != "true" ]]; then
+            echo "No public app was released; skip the mobile live proof (do not report a pass)." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Checkout
+        if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Setup Fysen test workspace
+        if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Verify mobile search and all-dishes results with public archive API
+        if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
+        env:
+          FYSEN_PUBLIC_WEB_URL: https://fysen.vercel.app
+          FYSEN_PUBLIC_API_URL: https://fysen-api.vercel.app
+        run: pnpm --filter @fysen/web exec node tests/oslo-readonly-mobile-proof.mjs
+
+      - name: Explain the limited proof scope
+        if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
+        shell: bash
+        run: |
+          {
+            echo '## Public mobile search resilience'
+            echo
+            echo '- Verifies a usable mobile ramen search and browse-to-search journey'
+            echo '- Validates archived source URLs when archive fallback is active'
+            echo '- Independently validates the public, verified non-realtime archive API'
+            echo '- DOES NOT certify live PostgreSQL, current menu freshness, or booking availability'
+            echo '- The stricter production pilot and full live/booking proofs remain separate'
+          } >> "$GITHUB_STEP_SUMMARY"
