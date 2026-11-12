@@ -1,6 +1,6 @@
 # Matlyst – rettetypeillustrasjoner
 
-Dette er et lite, kuratert bildebibliotek med 40 KI-genererte motiver.
+Dette er et lite, kuratert bildebibliotek med 41 KI-genererte motiver.
 Motivene har helt svart bakgrunn. De viser rettetyper, **ikke den
 faktiske serveringen på en bestemt restaurant**.
 
@@ -21,6 +21,7 @@ faktiske serveringen på en bestemt restaurant**.
 - `goi-cuon-768.avif` er et eget skarpt 768 × 768-bilde av ferske vietnamesiske rispapirruller med reker, risnudler, urter og peanøttsaus. Ikke et restaurantfoto, og ikke egnet for vegetariske eller nøttefrie varianter.
 - `tandoori-chicken-768.avif` viser tandoorigrillet kylling på svart bakgrunn (768 × 768), og skal ikke brukes for vegetariske tandooriretter eller andre kjøttsorter.
 - `naan-768.avif` er en egen 768 × 768-illustrasjon av naanbrød med smør og urter, på helsvart bakgrunn. Den representerer ikke vegan- eller allergivennlig naan.
+- `dal-makhani-768.avif` er et separat skarpt 768 × 768-bilde av svarte linser i kremet saus med smør og fløte på svart bakgrunn. Det er ikke vegansk eller melkefritt og viser ikke en konkret restaurants servering.
 - `manifest.json` angir nøyaktig hva hvert felt i bildekartet viser, og hvor det brukes.
 - `DishPhotoGallery` bruker den faste rekkefølgen fra manifestet i Matlyst.
 - Et trykk på et bilde åpner Fysens eksisterende rettsøk, uten å
@@ -91,6 +92,7 @@ Bildesekvensen er:
 38. Gỏi cuốn med reker, risnudler, urter og peanøttsaus
 39. Tandoorikylling med kryddermarinade, løk og sitron
 40. Naan med smør og friske urter
+41. Dal makhani av svarte linser med smør og fløte
 
 Ved utvidelse må motiv, rettnavn og eventuell ingrediensvariant være
 entydig; for eksempel må vegetarramen ikke få bilde av ramen med svin.
