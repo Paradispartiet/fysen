@@ -3,16 +3,16 @@
 Kontroll 12. november 2026, basert på den redaksjonelle matkatalogen i `apps/web/content/food-knowledge/catalog.ts`.
 
 - **84 redaksjonelle rettetyper** totalt.
-- **25 rettetyper** med eksakt ID-koblet illustrasjon i Matlyst-kortene.
-- **59 rettetyper** uten slik kobling.
-- Det frittstående galleriet viser 35 illustrative motiv, hvorav flere ikke er entydige katalog-ID-er.
+- **26 rettetyper** med eksakt ID-koblet illustrasjon i Matlyst-kortene.
+- **58 rettetyper** uten slik kobling.
+- Det frittstående galleriet viser 36 illustrative motiv, hvorav flere ikke er entydige katalog-ID-er.
 - **Dette er ikke 84 restaurantretter**: restaurantmenyer og varianter er egne data og får ikke automatisk slike KI-bilder.
 
 ## Motiver som mangler eksakt katalogkobling
 
-### Asiatisk (3)
+### Asiatisk (2)
 
-`banh-mi` · `bun-cha` · `vietnamese-spring-rolls`
+`bun-cha` · `vietnamese-spring-rolls`
 
 ### Indisk (10)
 
