@@ -1,6 +1,6 @@
 # Matlyst – rettetypeillustrasjoner
 
-Dette er et lite, kuratert bildebibliotek med 35 KI-genererte motiver.
+Dette er et lite, kuratert bildebibliotek med 36 KI-genererte motiver.
 Motivene har helt svart bakgrunn. De viser rettetyper, **ikke den
 faktiske serveringen på en bestemt restaurant**.
 
@@ -10,6 +10,7 @@ faktiske serveringen på en bestemt restaurant**.
 - `series-04.avif` har de neste 9 motivene i 3 kolonner × 3 rader.
 - `tom-yum-512.avif` er ett separat, skarpt 512 × 512-bilde på svart bakgrunn, med reker.
 - `pad-kra-pao-384.avif` er et separat 384 × 384-bilde av pad kra pao med kjøtt, ris, thaibasilikum og speilegg.
+- `banh-mi-512.avif` er et separat skarpt 512 × 512-bilde av vietnamesisk baguette med kjøtt, pâté og syltede grønnsaker.
 - `manifest.json` angir nøyaktig hva hvert felt i bildekartet viser, og hvor det brukes.
 - `DishPhotoGallery` bruker den faste rekkefølgen fra manifestet i Matlyst.
 - Et trykk på et bilde åpner Fysens eksisterende rettsøk, uten å
@@ -74,6 +75,7 @@ Bildesekvensen er:
 33. Grønn curry med kylling
 34. Tom yum med reker, sopp og lime
 35. Pad kra pao med kjøtt, thaibasilikum, ris og speilegg
+36. Bánh mì med kjøtt, pâté, syltede grønnsaker, agurk og koriander
 
 Ved utvidelse må motiv, rettnavn og eventuell ingrediensvariant være
 entydig; for eksempel må vegetarramen ikke få bilde av ramen med svin.
