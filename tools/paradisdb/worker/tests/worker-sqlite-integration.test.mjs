@@ -32,6 +32,8 @@ function d1() {
   const sqls = [];
   return {
     sqls,
+    PARADISDB_PUBLIC_ENABLED: "true",
+    PUBLIC_RATE_LIMITER: { async limit() { return { success: true }; } },
     PUBLIC_DB: {
       prepare(sql) {
         if (!/^\s*SELECT\b/i.test(sql)) throw new Error("Attempt to write in readonly adapter");
@@ -78,6 +80,12 @@ test("real 47k public records: query returns verifiable restaurant, date and men
   assert.ok([...perRestaurant.values()].every(count => count <= 2));
   assert.ok(env.sqls.every(q => /^\s*SELECT\b/i.test(q)));
   assert.ok(env.sqls.some(q => q.includes("fysen_public_trigrams")));
+});
+test("real archive: short unindexed searches are rejected with no D1 read", { skip: !enabled }, async () => {
+  const env = d1();
+  const response = await worker.fetch(new Request(url("/v1/dishes/archive/search?q=%C3%B8l")), env);
+  assert.equal(response.status, 400);
+  assert.equal(env.sqls.length, 0);
 });
 test("real archive: malicious search stays inside parameterized SELECT", { skip: !enabled }, async () => {
   const env = d1();
