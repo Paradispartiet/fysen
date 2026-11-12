@@ -1,0 +1,15 @@
+{
+  // EXAMPLE ONLY. No Cloudflare project or D1 database has been created.
+  // Copy this into wrangler.jsonc only after you authorize a local preview.
+  "name": "paradisdb-fysen-public-preview",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-11-12",
+  "workers_dev": true,
+  "d1_databases": [
+    {
+      "binding": "PUBLIC_DB",
+      "database_name": "paradisdb-fysen-public-preview",
+      "database_id": "REPLACE_WITH_ISOLATED_D1_ID"
+    }
+  ]
+}
