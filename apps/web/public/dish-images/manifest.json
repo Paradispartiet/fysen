@@ -436,6 +436,17 @@
       "kind": "AI-illustrasjon",
       "catalogId": "dal-makhani",
       "variantCaution": "Illustrasjonen viser dal makhani av svarte linser med smør og fløte. Den er ikke vegansk eller egnet ved melkeallergi og er ikke et fotografi fra en restaurant."
+    },
+    {
+      "id": "idli",
+      "label": "Idli med sambar og chutney",
+      "query": "idli",
+      "index": 41,
+      "atlas": "idli-512.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "idli",
+      "variantCaution": "Illustrasjon av dampede ris- og linsekaker med sambar, kokoschutney og rød chutney. Tilbehøret kan variere; bildet er ikke et faktisk restaurantfoto."
     }
   ]
 }
