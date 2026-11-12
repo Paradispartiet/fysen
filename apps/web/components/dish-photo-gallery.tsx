@@ -34,10 +34,12 @@ const illustratedDishes = [
   { id: "peking-duck", label: "Pekingand", query: "peking duck" },
   { id: "dan-dan-noodles", label: "Dan dan-nudler med kjøtt", query: "dan dan noodles" },
   { id: "green-curry", label: "Grønn curry med kylling", query: "green curry" },
+  { id: "pad-thai", label: "Pad thai", query: "pad thai" },
 ] as const;
 
 // The first atlas holds 24 illustrations in 6 columns × 4 rows.
 // The second atlas (series 04) holds nine in 3 × 3, at indices 24–32.
+// A third, single-dish image holds Pad thai at index 33.
 // All are representative AI illustrations, not restaurant photographs.
 // Keep individual restaurant listings separate from these editorial images.
 export function DishPhotoGallery() {
@@ -52,17 +54,20 @@ export function DishPhotoGallery() {
       </div>
       <div className="dishPhotosGrid">
         {illustratedDishes.map((dish, index) => {
-          const isSeries04 = index >= 24;
+          const isPadThai = index === 33;
+          const isSeries04 = index >= 24 && index < 33;
           const localIndex = isSeries04 ? index - 24 : index;
           const column = isSeries04 ? localIndex % 3 : index % 6;
           const row = isSeries04 ? Math.floor(localIndex / 3) : Math.floor(index / 6);
-          const position = isSeries04
-            ? `${column * 50}% ${row * 50}%`
-            : `${column * 20}% ${(row * 100) / 3}%`;
+          const position = isPadThai
+            ? "center"
+            : isSeries04
+              ? `${column * 50}% ${row * 50}%`
+              : `${column * 20}% ${(row * 100) / 3}%`;
           return (
             <a href={dishSearchHref(dish.query)} key={dish.id} className="dishPhotoCard">
               <span
-                className={isSeries04 ? "dishPhotoThumb dishPhotoSeries04" : "dishPhotoThumb"}
+                className={isPadThai ? "dishPhotoThumb dishPhotoPadThai" : isSeries04 ? "dishPhotoThumb dishPhotoSeries04" : "dishPhotoThumb"}
                 aria-hidden="true"
                 style={{ backgroundPosition: position }}
               />
@@ -103,6 +108,7 @@ const editorialPhotoIndex: Readonly<Record<string, number>> = {
   "peking-duck": 30,
   "dan-dan-noodles": 31,
   "green-curry": 32,
+  "pad-thai": 33,
 };
 
 // Specify visible variants for general catalog IDs: the illustrations are
@@ -117,22 +123,26 @@ const illustratedVariants: Readonly<Record<string, string>> = {
   "peking-duck": "pekingand",
   "dan-dan-noodles": "dan dan-nudler med kjøtt og peanøtter",
   "green-curry": "grønn curry med kylling",
+  "pad-thai": "pad thai med nudler og lime",
 };
 
 export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: string }) {
   const index = editorialPhotoIndex[dishId];
   if (index === undefined) return null;
-  const isSeries04 = index >= 24;
+  const isPadThai = index === 33;
+  const isSeries04 = index >= 24 && index < 33;
   const localIndex = isSeries04 ? index - 24 : index;
-  const position = isSeries04
-    ? `${(localIndex % 3) * 50}% ${Math.floor(localIndex / 3) * 50}%`
-    : `${(index % 6) * 20}% ${(Math.floor(index / 6) * 100) / 3}%`;
+  const position = isPadThai
+    ? "center"
+    : isSeries04
+      ? `${(localIndex % 3) * 50}% ${Math.floor(localIndex / 3) * 50}%`
+      : `${(index % 6) * 20}% ${(Math.floor(index / 6) * 100) / 3}%`;
   const illustratedVariant = illustratedVariants[dishId] ?? label;
   return (
     <span
       role="img"
       aria-label={`KI-illustrasjon av ${illustratedVariant}, ikke restaurantfoto`}
-      className={isSeries04 ? "dishPhotoSmall dishPhotoSeries04" : "dishPhotoSmall"}
+      className={isPadThai ? "dishPhotoSmall dishPhotoPadThai" : isSeries04 ? "dishPhotoSmall dishPhotoSeries04" : "dishPhotoSmall"}
       style={{ backgroundPosition: position }}
     />
   );
