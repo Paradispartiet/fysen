@@ -175,3 +175,9 @@
 .dishPhotoSmall.dishPhotoDalMakhani {
   background: #000 url("/dish-images/dal-makhani-768.avif") center / cover no-repeat;
 }
+
+/* Idli: fluffy steamed rice-and-lentil cakes, sambar and chutneys, black background. */
+.dishPhotoThumb.dishPhotoIdli,
+.dishPhotoSmall.dishPhotoIdli {
+  background: #000 url("/dish-images/idli-512.avif") center / cover no-repeat;
+}
