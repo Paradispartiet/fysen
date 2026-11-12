@@ -112,6 +112,42 @@ class ExportTests(unittest.TestCase):
             exporter.export_public(self.sqlite, self.sql)
         self.assertEqual(self.sql.read_bytes(), old)
 
+    def test_batches_large_archives_without_oversized_d1_statements(self):
+        # Real archive has 47k records; this small multirow fixture verifies
+        # D1-size bounds and exact row content without a network service.
+        rows = [PUBLIC_ROW]
+        for index in range(5, 155):
+            row = list(PUBLIC_ROW)
+            row[0] = index
+            row[5] = f"Rett {index} med 'sitron'"
+            row[6] = f"rett {index} med sitron"
+            rows.append(tuple(row))
+        con = sqlite3.connect(self.sqlite)
+        with con:
+            con.executemany("INSERT INTO fysen_public_items VALUES (" + ",".join(["?"] * 12) + ")",
+                            rows[1:])
+            con.execute("UPDATE metadata SET value=? WHERE key='fysen_publicItems'",
+                        (json.dumps(len(rows)),))
+            con.execute("UPDATE metadata SET value=? WHERE key='fysen_publicRowsSha256'",
+                        (json.dumps(db.hash_public_rows(rows)),))
+        con.close()
+        export = exporter.export_public(self.sqlite, self.sql)
+        self.assertEqual(export["menuItems"], len(rows))
+        content = self.sql.read_text(encoding="utf8")
+        statements = [s.strip() for s in content.splitlines()
+                      if s.startswith("INSERT INTO fysen_public_items VALUES ")]
+        self.assertEqual(len(statements), 4)  # 50 + 50 + 50 + 1
+        self.assertTrue(all(len(s.encode("utf8")) <= exporter.MAX_STATEMENT_BYTES
+                            for s in statements))
+        target = sqlite3.connect(":memory:")
+        target.executescript(content)
+        restored = target.execute(
+            "SELECT item_index,dish_name FROM fysen_public_items ORDER BY item_index"
+        ).fetchall()
+        self.assertEqual(len(restored), len(rows))
+        self.assertEqual(restored[-1], (154, "Rett 154 med 'sitron'"))
+        target.close()
+
     def test_quote_is_sql_safe_for_untrusted_public_source_labels(self):
         self.assertEqual(exporter.quote("A'B"), "'A''B'")
         self.assertEqual(exporter.quote(None), "NULL")
