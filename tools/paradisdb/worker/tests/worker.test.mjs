@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 import worker from "../worker.mjs";
 
 const URL_BASE = "https://paradisdb-worker.example";
-function makeDb({ ready = true, error = false, rows = [] } = {}) {
-  const sql = [], params = [];
+function makeDb({ ready = true, error = false, rows = [], rateAllowed = true } = {}) {
+  const sql = [], params = [], rateCalls = [];
   const manifest = {
     public_ready: ready, archiveDate: "2026-11-02",
     lastRefreshAt: "2026-11-12T11:40:54.434Z",
@@ -31,7 +31,13 @@ function makeDb({ ready = true, error = false, rows = [] } = {}) {
       return entry;
     }
   };
-  return { PUBLIC_DB: db, sql, params };
+  return {
+    PUBLIC_DB: db, PARADISDB_PUBLIC_ENABLED: "true",
+    PUBLIC_RATE_LIMITER: {
+      async limit({ key }) { rateCalls.push(key); return { success: rateAllowed }; }
+    },
+    sql, params, rateCalls
+  };
 }
 function request(path, method = "GET") {
   return new Request(URL_BASE + path, { method });
@@ -58,6 +64,7 @@ test("public status exposes verifiable archive counts and no private documents",
   assert.match(doc.sha256, /^[0-9a-f]{64}$/);
   assert.match(doc.publicRowsSha256, /^[0-9a-f]{64}$/);
   assert.equal(env.sql.length, 1);
+  assert.deepEqual(env.rateCalls, ["public-status"]);
   assert.match(env.sql[0], /^SELECT /);
   assert.doesNotMatch(JSON.stringify(doc), /auth|token|userId|private|password/i);
 });
@@ -79,15 +86,14 @@ test("public search preserves source provenance and max-two per restaurant", asy
   assert.deepEqual(env.params[0], ["oslo", "%ramen%", "ramen", "ramen", "ramen"]);
   assert.match(env.sql[1], /fysen_public_trigrams/);
   assert.match(env.sql[1], /tr\.normalized_name LIKE \?/);
+  assert.deepEqual(env.rateCalls, ["public-search"]);
 });
-test("two-character searches preserve their original bounded fallback", async () => {
+test("short searches refuse unindexed full scans before touching D1", async () => {
   const env = makeDb({ rows: [row("a", "Øl")] });
   const response = await worker.fetch(request("/v1/dishes/archive/search?q=%C3%B8l"), env);
-  assert.equal(response.status, 200);
-  assert.equal((await response.json()).count, 1);
-  assert.match(env.sql[1], /instr\(normalized_name, \?\)/);
-  assert.doesNotMatch(env.sql[1], /fysen_public_trigrams/);
-  assert.deepEqual(env.params[0], ["oslo", "øl", "øl", "øl", "øl"]);
+  assert.equal(response.status, 400);
+  assert.equal(env.sql.length, 0);
+  assert.equal(env.rateCalls.length, 0);
 });
 
 test("malicious input is passed via bound parameter, never interpolated into SQL", async () => {
@@ -103,6 +109,7 @@ test("malicious input is passed via bound parameter, never interpolated into SQL
 test("rejects invalid search parameters and disallows large reads", async () => {
   for (const path of [
     "/v1/dishes/archive/search?q=x",
+    "/v1/dishes/archive/search?q=%C3%B8l",
     "/v1/dishes/archive/search?q=ramen&limit=51",
     "/v1/dishes/archive/search?q=ramen&limit=-1",
     "/v1/dishes/archive/search?q=ramen&limit=1.2",
@@ -126,6 +133,24 @@ test("not-ready and missing D1 bindings fail closed without leaking SQL diagnost
   assert.equal(result.status, 503);
   assert.doesNotMatch(await result.text(), /SECRET INTERNAL/i);
 });
+test("production activation requires explicit switch and rate limiter", async () => {
+  const missingSwitch = makeDb();
+  delete missingSwitch.PARADISDB_PUBLIC_ENABLED;
+  assert.equal((await worker.fetch(request("/v1/dishes/archive/status"), missingSwitch)).status, 503);
+  assert.equal(missingSwitch.sql.length, 0);
+  assert.equal(missingSwitch.rateCalls.length, 0);
+  const missingLimiter = makeDb();
+  delete missingLimiter.PUBLIC_RATE_LIMITER;
+  assert.equal((await worker.fetch(request("/v1/dishes/archive/search?q=ramen"), missingLimiter)).status, 503);
+  assert.equal(missingLimiter.sql.length, 0);
+  const limited = makeDb({ rateAllowed: false });
+  const blocked = await worker.fetch(request("/v1/dishes/archive/search?q=ramen"), limited);
+  assert.equal(blocked.status, 429);
+  assert.equal((await blocked.json()).code, "RATE_LIMITED");
+  assert.deepEqual(limited.rateCalls, ["public-search"]);
+  assert.equal(limited.sql.length, 0);
+});
+
 test("all private, admin, write and unknown HTTP routes are unreachable", async () => {
   for (const path of [
     "/api/aha/documents", "/v1/private/reading-library",
