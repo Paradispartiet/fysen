@@ -11,6 +11,7 @@ function makeDb({ ready = true, error = false, rows = [] } = {}) {
     restaurants: 973, sources: 973, originalItems: 47265,
     publicItems: 47265, quarantinedSources: 4,
     sha256: "42fe1c9b1df7b9aab48fef5965870b580b2d9e7da0a3000f25495d21287a8cbc",
+    publicRowsSha256: "b".repeat(64),
   };
   const db = {
     prepare(query) {
@@ -55,6 +56,7 @@ test("public status exposes verifiable archive counts and no private documents",
   assert.equal(doc.realtime, false);
   assert.equal(doc.source, "verified-menu-archive");
   assert.match(doc.sha256, /^[0-9a-f]{64}$/);
+  assert.match(doc.publicRowsSha256, /^[0-9a-f]{64}$/);
   assert.equal(env.sql.length, 1);
   assert.match(env.sql[0], /^SELECT /);
   assert.doesNotMatch(JSON.stringify(doc), /auth|token|userId|private|password/i);
