@@ -316,13 +316,6 @@
   line-height: 1.3;
 }
 
-.dishBrowseItemMain > span {
-  flex: 0 0 auto;
-  color: var(--color-muted);
-  font-size: 12px;
-  white-space: nowrap;
-}
-
 .dishBrowseKnowledgeLink {
   padding: 15px 2px 16px 8px;
   color: var(--color-brand);
