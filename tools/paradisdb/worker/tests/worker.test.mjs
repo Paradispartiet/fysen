@@ -76,9 +76,20 @@ test("public search preserves source provenance and max-two per restaurant", asy
   assert.equal(data.results[0].menu.sourceUrl, "https://restaurant.example/menu");
   assert.equal(data.results[0].currency, "NOK");
   assert.equal(data.realtime, false);
-  assert.deepEqual(env.params[0], ["oslo", "ramen", "ramen", "ramen", "ramen"]);
-  assert.match(env.sql[1], /\? .*instr\(normalized_name, \?\)/);
+  assert.deepEqual(env.params[0], ["oslo", "%ramen%", "ramen", "ramen", "ramen"]);
+  assert.match(env.sql[1], /fysen_public_trigrams/);
+  assert.match(env.sql[1], /tr\.normalized_name LIKE \?/);
 });
+test("two-character searches preserve their original bounded fallback", async () => {
+  const env = makeDb({ rows: [row("a", "Øl")] });
+  const response = await worker.fetch(request("/v1/dishes/archive/search?q=%C3%B8l"), env);
+  assert.equal(response.status, 200);
+  assert.equal((await response.json()).count, 1);
+  assert.match(env.sql[1], /instr\(normalized_name, \?\)/);
+  assert.doesNotMatch(env.sql[1], /fysen_public_trigrams/);
+  assert.deepEqual(env.params[0], ["oslo", "øl", "øl", "øl", "øl"]);
+});
+
 test("malicious input is passed via bound parameter, never interpolated into SQL", async () => {
   const env = makeDb();
   const value = "ramen%27%20OR%201%3D1--";
