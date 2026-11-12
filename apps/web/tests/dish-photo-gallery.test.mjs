@@ -21,6 +21,7 @@ const tomYum = readFileSync(path.join(web, "public/dish-images/tom-yum-512.avif"
 const padKraPao = readFileSync(path.join(web, "public/dish-images/pad-kra-pao-384.avif"));
 const banhMi = readFileSync(path.join(web, "public/dish-images/banh-mi-512.avif"));
 const bunCha = readFileSync(path.join(web, "public/dish-images/bun-cha-512.avif"));
+const pho = readFileSync(path.join(web, "public/dish-images/pho-512.avif"));
 const manifest = JSON.parse(readFileSync(path.join(web, "public/dish-images/manifest.json"), "utf8"));
 const catalog = readFileSync(path.join(web, "content/food-knowledge/catalog.ts"), "utf8");
 
@@ -100,7 +101,7 @@ test("Every generated and approved image is represented in the published Matlyst
   assert.deepEqual(manifest.images.map((entry) => entry.id), entries.map((match) => match[1]));
   for (const [index, image] of manifest.images.entries()) {
     assert.equal(image.index, index);
-    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index === 2 ? "grillet-laks-512.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : "bun-cha-512.avif");
+    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index === 2 ? "grillet-laks-512.avif" : index === 18 ? "pho-512.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : "bun-cha-512.avif");
     assert.equal(image.surface, "Matlyst");
     assert.equal(image.kind, "AI-illustrasjon");
   }
@@ -197,6 +198,22 @@ test("Banh mi is a sharp 512px illustration with exact catalog ID and variant ca
   assert.match(css, /banh-mi-512\.avif/u);
   assert.ok(manifest.images.some((image) => image.id === "banh-mi" &&
     image.catalogId === "banh-mi" && image.variantCaution.includes("pâté")));
+});
+
+test("Phở bò uses dedicated sharp 512px art without adding a false gallery entry", () => {
+  assert.equal(pho.toString("ascii", 4, 12), "ftypavif");
+  assert.ok(pho.length > 20000);
+  const marker = pho.indexOf(Buffer.from("ispe"));
+  assert.ok(marker > 0);
+  assert.equal(pho.readUInt32BE(marker + 8), 512);
+  assert.equal(pho.readUInt32BE(marker + 12), 512);
+  assert.match(gallery, /isPho = index === 18/u);
+  assert.match(gallery, /dishPhotoThumb dishPhotoPho/u);
+  assert.match(gallery, /dishPhotoSmall dishPhotoPho/u);
+  assert.match(css, /pho-512\.avif/u);
+  const photo = manifest.images.find((entry) => entry.id === "pho");
+  assert.equal(photo.atlas, "pho-512.avif");
+  assert.match(photo.variantCaution, /storfekjøtt/u);
 });
 
 test("Bún chả has its own sharp 512px image with correct editorial identity", () => {

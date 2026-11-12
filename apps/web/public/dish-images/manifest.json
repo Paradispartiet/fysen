@@ -192,10 +192,11 @@
       "label": "Phở bò",
       "query": "pho",
       "index": 18,
-      "atlas": "collection.avif",
+      "atlas": "pho-512.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "pho"
+      "catalogId": "pho",
+      "variantCaution": "Phở bò med storfekjøtt, risnudler og urter; ikke bruk som bilde av vegetar- eller kyllingphở eller som dokumentasjon av restaurantservering."
     },
     {
       "id": "bibimbap",

@@ -134,3 +134,9 @@
 .dishPhotoThumb.dishPhotoGrilledSalmon {
   background: #000 url("/dish-images/grillet-laks-512.avif") center / cover no-repeat;
 }
+
+/* Dedicated sharp Phở bò image: exact catalog ID only. */
+.dishPhotoThumb.dishPhotoPho,
+.dishPhotoSmall.dishPhotoPho {
+  background: #000 url("/dish-images/pho-512.avif") center / cover no-repeat;
+}
