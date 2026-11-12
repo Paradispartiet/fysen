@@ -342,6 +342,17 @@
       "kind": "AI-illustrasjon",
       "catalogId": "green-curry",
       "variantCaution": "Med kylling – ikke vegetarcurry"
+    },
+    {
+      "id": "tom-yum",
+      "label": "Tom yum med reker",
+      "query": "tom yum",
+      "index": 33,
+      "atlas": "tom-yum-512.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "tom-yum",
+      "variantCaution": "Illustrasjonen viser tom yum med reker, sopp, sitrongress og lime; ikke bruk som bildebevis for en annen variant eller et restaurantspecifikt produkt."
     }
   ]
 }
