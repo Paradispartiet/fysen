@@ -303,7 +303,7 @@ test("Gỏi cuốn uses a dedicated 768px image and only the exact shrimp varian
   assert.match(gallery, /id: "vietnamese-spring-rolls", label: "Gỏi cuốn med reker"/u);
   assert.match(gallery, /"vietnamese-spring-rolls": 37/u);
   assert.match(gallery, /isGoiCuon = index === 37/u);
-  assert.match(gallery, /Utforsk 39 retter/u);
+  assert.match(gallery, /Utforsk 40 retter/u);
   assert.match(gallery, /dishPhotoThumb dishPhotoGoiCuon/u);
   assert.match(gallery, /dishPhotoSmall dishPhotoGoiCuon/u);
   assert.match(css, /goi-cuon-768\.avif/u);
