@@ -1,6 +1,6 @@
 # Matlyst – rettetypeillustrasjoner
 
-Dette er et lite, kuratert bildebibliotek med 37 KI-genererte motiver.
+Dette er et lite, kuratert bildebibliotek med 38 KI-genererte motiver.
 Motivene har helt svart bakgrunn. De viser rettetyper, **ikke den
 faktiske serveringen på en bestemt restaurant**.
 
@@ -16,6 +16,7 @@ faktiske serveringen på en bestemt restaurant**.
 - `pad-kra-pao-384.avif` er et separat 384 × 384-bilde av pad kra pao med kjøtt, ris, thaibasilikum og speilegg.
 - `banh-mi-512.avif` er et separat skarpt 512 × 512-bilde av vietnamesisk baguette med kjøtt, pâté og syltede grønnsaker.
 - `bun-cha-512.avif` er et separat 512 × 512-bilde av vietnamesisk bún chả med grillet svinekjøtt, risnudler, friske urter og dipping-saus.
+- `goi-cuon-768.avif` er et eget skarpt 768 × 768-bilde av ferske vietnamesiske rispapirruller med reker, risnudler, urter og peanøttsaus. Ikke et restaurantfoto, og ikke egnet for vegetariske eller nøttefrie varianter.
 - `manifest.json` angir nøyaktig hva hvert felt i bildekartet viser, og hvor det brukes.
 - `DishPhotoGallery` bruker den faste rekkefølgen fra manifestet i Matlyst.
 - Et trykk på et bilde åpner Fysens eksisterende rettsøk, uten å
@@ -83,6 +84,7 @@ Bildesekvensen er:
 35. Pad kra pao med kjøtt, thaibasilikum, ris og speilegg
 36. Bánh mì med kjøtt, pâté, syltede grønnsaker, agurk og koriander
 37. Bún chả med grillet svinekjøtt, risnudler, urter og dipping-saus
+38. Gỏi cuốn med reker, risnudler, urter og peanøttsaus
 
 Ved utvidelse må motiv, rettnavn og eventuell ingrediensvariant være
 entydig; for eksempel må vegetarramen ikke få bilde av ramen med svin.
