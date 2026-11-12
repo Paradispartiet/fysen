@@ -266,7 +266,7 @@ test("Grilled salmon has a standalone 512px image and no invented restaurant or 
   assert.match(manifest.images[2].variantCaution, /ikke faktisk restaurantfoto/iu);
   assert.match(gallery, /isGrilledSalmon = index === 2/u);
   assert.match(gallery, /dishPhotoThumb dishPhotoGrilledSalmon/u);
-  assert.match(css, /grillet-laks-512\\.avif/u);
+  assert.match(css, /grillet-laks-512\.avif/u);
   const mapping = gallery.slice(gallery.indexOf("const editorialPhotoIndex"), gallery.indexOf("export function DishPhotoThumbnail"));
-  assert.doesNotMatch(mapping, /^\\s*"?grillet-laks"?:/mu);
+  assert.doesNotMatch(mapping, /^\s*"?grillet-laks"?:/mu);
 });
