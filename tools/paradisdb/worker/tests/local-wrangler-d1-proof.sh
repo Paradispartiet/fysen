@@ -64,6 +64,34 @@ assert counts == [47265], counts
 print("PASS: actual local Cloudflare D1 stores 47,265 public menu records")
 PY
 
+# Compare index and full-scan read budgets in real local D1 before
+# serving traffic. Read metrics are indicative, not a production billing proof.
+timeout 60s "${wrangler[@]}" d1 execute paradisdb-local-only-verification \
+  --local --config "$config" --persist-to "$persist" --json \
+  --command="SELECT COUNT(*) AS matches FROM fysen_public_items WHERE instr(normalized_name, 'ramen') > 0" \
+  > "$RUNNER_TEMP/paradisdb-d1-fullscan-metrics.json"
+timeout 60s "${wrangler[@]}" d1 execute paradisdb-local-only-verification \
+  --local --config "$config" --persist-to "$persist" --json \
+  --command="SELECT COUNT(*) AS matches FROM fysen_public_trigrams WHERE normalized_name LIKE '%ramen%'" \
+  > "$RUNNER_TEMP/paradisdb-d1-fts5-metrics.json"
+
+python3 - <<'PY'
+import json, os, pathlib
+root = pathlib.Path(os.environ["RUNNER_TEMP"])
+def record(name):
+    doc = json.loads((root / name).read_text())
+    doc = doc[0] if isinstance(doc,list) else doc
+    return doc["results"][0]["matches"], doc.get("meta", {}).get("rows_read")
+baseline = record("paradisdb-d1-fullscan-metrics.json")
+indexed = record("paradisdb-d1-fts5-metrics.json")
+assert baseline[0] == indexed[0] and baseline[0] > 0, (baseline,indexed)
+if isinstance(baseline[1], int) and isinstance(indexed[1], int) and baseline[1] > 0:
+    assert indexed[1] < baseline[1], (baseline,indexed)
+    print(f"PASS: D1 search exact-match parity; rows read full scan={baseline[1]}, FTS5={indexed[1]}")
+else:
+    print("PASS: D1 FTS5 search parity; local D1 billing metrics unavailable, index plan is verified separately")
+PY
+
 timeout 120s "${wrangler[@]}" dev --local --config "$config" \
   --persist-to "$persist" --ip 127.0.0.1 --port "$port" \
   > "$log" 2>&1 &
