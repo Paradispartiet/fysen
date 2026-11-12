@@ -395,7 +395,7 @@ jobs:
               {
                 echo '## Public Fysen archive API proof'
                 echo
-                echo "- Deployed source: `$SOURCE_SHA`"
+                printf -- '- Deployed source: %s\n' "$SOURCE_SHA"
                 echo '- PASS: public health and 3 archived menu endpoints'
                 echo '- Archive results are historical, not realtime'
                 echo '- Legacy PostgreSQL search must pass separate production proof before full service is claimed'
