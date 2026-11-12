@@ -1,0 +1,81 @@
+name: Fysen responsive homepage proof (local, no deploy)
+
+# Browser and screenshot evidence on real Chrome viewports without connecting to
+# Supabase, spending Vercel production batches, or changing the public domain.
+on:
+  pull_request:
+    paths:
+      - "apps/web/**"
+      - ".github/workflows/fysen-home-responsive-proof.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fysen-responsive-proof-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  responsive:
+    name: Mobile and iPad visual browser proof
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    env:
+      CI: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Fysen workspace
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build local Next.js app and contracts
+        run: |
+          pnpm --filter @fysen/contracts build
+          pnpm --filter @fysen/web build
+
+      - name: Launch local app and check mobile/iPad journeys
+        shell: bash
+        env:
+          FYSEN_QA_BASE: http://127.0.0.1:3000
+          FYSEN_QA_OUTPUT_DIR: ${{ runner.temp }}/fysen-home-qa
+        run: |
+          set -euo pipefail
+          pnpm --filter @fysen/web start --hostname 127.0.0.1 --port 3000 > "$RUNNER_TEMP/fysen-qa-next.log" 2>&1 &
+          app_pid=$!
+          trap 'kill "$app_pid" 2>/dev/null || true' EXIT
+          ready=0
+          for _ in $(seq 1 90); do
+            if curl --silent --show-error --fail --max-time 5 "$FYSEN_QA_BASE/" >/dev/null 2>&1; then
+              ready=1
+              break
+            fi
+            if ! kill -0 "$app_pid" 2>/dev/null; then
+              cat "$RUNNER_TEMP/fysen-qa-next.log"
+              exit 1
+            fi
+            sleep 2
+          done
+          if [[ "$ready" != 1 ]]; then
+            cat "$RUNNER_TEMP/fysen-qa-next.log"
+            echo "::error::Local Fysen app failed to become ready."
+            exit 1
+          fi
+          pnpm --filter @fysen/web exec node tests/home-mobile-tablet-proof.mjs
+          {
+            echo "## Fysen local pre-deploy responsive proof"
+            echo
+            echo "- PASS: 390px mobile, 820px iPad portrait, 1180px iPad landscape"
+            echo "- Search visible, image gallery closed initially, cuisine choices before gallery"
+            echo "- Open/close interaction, gallery count from current manifest, five dedicated AVIF image assets and no overflow"
+            echo "- **No Vercel production deployment or database access**; screenshots are from local Next."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Retain local mobile and tablet screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-responsive-home-local-screenshots
+          path: ${{ runner.temp }}/fysen-home-qa/*.png
+          retention-days: 7
+          if-no-files-found: ignore
