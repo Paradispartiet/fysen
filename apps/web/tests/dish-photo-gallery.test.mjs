@@ -303,7 +303,7 @@ test("Gỏi cuốn uses a dedicated 768px image and only the exact shrimp varian
   assert.match(gallery, /id: "vietnamese-spring-rolls", label: "Gỏi cuốn med reker"/u);
   assert.match(gallery, /"vietnamese-spring-rolls": 37/u);
   assert.match(gallery, /isGoiCuon = index === 37/u);
-  assert.match(gallery, /Utforsk 40 retter/u);
+  assert.ok(gallery.includes(`Utforsk ${manifest.images.length} retter`), "Gallery teaser must match the image manifest");
   assert.match(gallery, /dishPhotoThumb dishPhotoGoiCuon/u);
   assert.match(gallery, /dishPhotoSmall dishPhotoGoiCuon/u);
   assert.match(css, /goi-cuon-768\.avif/u);
@@ -370,7 +370,7 @@ test("Naan has a dedicated 768px food image on black with a precise catalog ID",
   assert.match(gallery, /id: "naan", label: "Naan med smør og urter"/u);
   assert.match(gallery, /naan: 39/u);
   assert.match(gallery, /isNaan = index === 39/u);
-  assert.match(gallery, /Utforsk 40 retter/u);
+  assert.ok(gallery.includes(`Utforsk ${manifest.images.length} retter`), "Gallery teaser must match the image manifest");
   assert.match(gallery, /dishPhotoThumb dishPhotoNaan/u);
   assert.match(gallery, /dishPhotoSmall dishPhotoNaan/u);
   assert.match(css, /naan-768\.avif/u);
