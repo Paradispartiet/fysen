@@ -54,7 +54,7 @@ export function DishPhotoGallery() {
             Oppdag retter i ditt eget tempo. Hele bildegalleriet er her når du vil se mer.
           </span>
           <span className="dishPhotosOpen">
-            Utforsk 34 retter <span aria-hidden="true">↗</span>
+            Utforsk 35 retter <span aria-hidden="true">↗</span>
           </span>
         </span>
         <span
@@ -72,7 +72,7 @@ export function DishPhotoGallery() {
           <span>Illustrasjoner av rettetyper, ikke restaurantbilder.</span>
         </div>
         <div className="dishPhotosGrid">
-        {illustratedDishes.map((dish, index) => {
+          {illustratedDishes.map((dish, index) => {
           const isTomYum = index === 33;
           const isPadKraPao = index === 34;
           const isSeries04 = index >= 24 && index < 33;
@@ -95,7 +95,7 @@ export function DishPhotoGallery() {
               <span className="dishPhotoAction">Se menytreff <span aria-hidden="true">→</span></span>
             </a>
           );
-        })}
+          })}
         </div>
       </div>
     </details>
