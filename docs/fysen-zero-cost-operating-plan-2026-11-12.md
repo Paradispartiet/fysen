@@ -22,7 +22,7 @@
 2. **Begrenset menykildeoppdatering:** Fortsett eksisterende GitHub Actions-jobb `Refresh Fysen Free menus (bounded, database-independent)` med gitt kildebudsjett. Ikke gjør nattlig full dump/import på Supabase. Ikke lov automatisk at alle 973 er oppdatert selv om indeksen ble regenerert.
 3. **Liten offentlig indeks, ikke historisk database:** Det offentlige indekset holder bare et kvalitetssikret, deduplisert utvalg. Det inneholder ikke brukerhistorikk, søkelogger, private kilder eller alle tidligere menyversjoner.
 4. **Historien bevares privat:** Historisk dump fra 2. november er lagret i fire private deler i Google Drive og re-verifisert med SHA-256, og seks historietabeller ble gjenopprettet i isolert PostgreSQL 17 (se dokumentert run #41510938739). Søkereferanser har også separat arkivbevis. GitHub Actions-artifakter alene er ikke langtidsbackup.
-5. **Egen kvalitetssperre:** Tester skal kontrollere API, indekser, identitetskarantener, mobilreise og kildebevis. Streng produksjonskontroll for live-DB, boarding/booking og priser beholdes separat, selv om gratis arkivsøk er grønt.
+5. **Egen kvalitetssperre:** Tester skal kontrollere API, indekser, identitetskarantener, mobilreise og kildebevis. Streng produksjonskontroll for live-DB, bordbestilling/booking og priser beholdes separat, selv om gratis arkivsøk er grønt.
 
 ## Hvorfor vi ikke straks kan ta original Postgres tilbake på Free
 
