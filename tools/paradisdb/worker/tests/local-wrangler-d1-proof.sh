@@ -37,7 +37,7 @@ cat > "$config" <<'JSON'
 }
 JSON
 
-wrangler=(npx --yes wrangler@4.45.0)
+wrangler=(npx --yes wrangler@4.161.0)
 "${wrangler[@]}" --version
 
 # These commands must always include --local. No Cloudflare token is passed.
