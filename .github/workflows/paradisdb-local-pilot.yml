@@ -52,7 +52,9 @@ jobs:
           assert report["restaurants"] == 973, report
           assert report["originalItems"] == 47265, report
           assert report["quarantinedSources"] >= 4, report
-          assert 0 < report["publicItems"] < report["originalItems"], report
+          # Four identity-quarantined source records are empty in this
+          # verified public snapshot; therefore no menu-item count drops.
+          assert report["publicItems"] == 47265, report
           print("PASS: public restaurants", report["restaurants"], "verified public items", report["publicItems"], "quarantined sources", report["quarantinedSources"])
           PY
           python3 tools/paradisdb/paradisdb.py search "$path" ramen | python3 -c 'import json,sys; v=json.load(sys.stdin); assert v["realtime"] is False; assert v["count"] > 0; assert all(x["menu"]["sourceUrl"].startswith(("http://","https://")) for x in v["results"])'
