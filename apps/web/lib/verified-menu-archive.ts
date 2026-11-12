@@ -113,11 +113,19 @@ export function parsePublicMenuArchive(manifestValue: unknown, indexValue: unkno
   for (const [sourceIndex, rawRecord] of Object.entries(quarantines)) {
     const record = dictionary(rawRecord);
     const indexNumber = Number(sourceIndex);
-    if (!Number.isInteger(indexNumber) || indexNumber < 0 ||
-        indexNumber >= sourceRows.length ||
+    if (!Number.isInteger(indexNumber) || String(indexNumber) !== sourceIndex ||
+        indexNumber < 0 || indexNumber >= sourceRows.length ||
         record.code !== "identity-unverified" ||
         typeof record.slug !== "string" || record.slug.trim() === "") {
       throw new Error("Invalid public archive quarantine");
+    }
+    // Quarantine entries are source-indexed. An index that points to a
+    // different restaurant would otherwise allow the disputed identity
+    // through on the public web, despite a checksum-valid archive.
+    const source = sourceRows[indexNumber] as SourceRow;
+    const restaurant = restaurantRows[source[0]] as RestaurantRow;
+    if (restaurant[1] !== record.slug) {
+      throw new Error("Public archive quarantine does not match restaurant identity");
     }
     indices.add(indexNumber);
     slugs.add(record.slug);

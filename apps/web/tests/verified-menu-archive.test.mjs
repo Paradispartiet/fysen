@@ -78,6 +78,38 @@ test("quarantine metadata is mandatory", () => {
   );
 });
 
+test("quarantine must identify the restaurant at its exact source index", () => {
+  const misidentified = {
+    ...metadata,
+    sourceQuarantines: {
+      0: { slug: "king-falafel-brugata-oslo", code: "identity-unverified" },
+    },
+  };
+  assert.throws(
+    () => archiveModule.parsePublicMenuArchive(misidentified, index),
+    /quarantine.*identity/u,
+  );
+
+  const movedSource = JSON.parse(JSON.stringify(index));
+  movedSource.sources[0][0] = 1;
+  assert.throws(
+    () => archiveModule.parsePublicMenuArchive(metadata, movedSource),
+    /quarantine.*identity/u,
+  );
+
+  // Numeric spellings such as "00" must not create ambiguous references.
+  const malformedIndex = {
+    ...metadata,
+    sourceQuarantines: {
+      "00": { slug: "falafel-station-brugata-oslo", code: "identity-unverified" },
+    },
+  };
+  assert.throws(
+    () => archiveModule.parsePublicMenuArchive(malformedIndex, index),
+    /Invalid public archive quarantine/u,
+  );
+});
+
 test("manifest and archive counts must match", () => {
   assert.throws(
     () => archiveModule.parsePublicMenuArchive({ ...metadata, dishes: 5 }, index),
