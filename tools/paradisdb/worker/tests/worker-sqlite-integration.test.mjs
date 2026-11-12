@@ -77,6 +77,7 @@ test("real 47k public records: query returns verifiable restaurant, date and men
   }
   assert.ok([...perRestaurant.values()].every(count => count <= 2));
   assert.ok(env.sqls.every(q => /^\s*SELECT\b/i.test(q)));
+  assert.ok(env.sqls.some(q => q.includes("fysen_public_trigrams")));
 });
 test("real archive: malicious search stays inside parameterized SELECT", { skip: !enabled }, async () => {
   const env = d1();
@@ -97,5 +98,11 @@ test("real public DB cannot expose private documents or accept writes", { skip: 
   assert.equal(r.status, 405);
   assert.equal(env.sqls.length, 0);
   const tables = readQuery("SELECT name FROM sqlite_master WHERE type='table'").results.map(x=>x.name);
-  assert.deepEqual(tables.sort(), ["fysen_public_items","public_archive_meta"].sort());
+  assert.ok(tables.includes("fysen_public_items"));
+  assert.ok(tables.includes("public_archive_meta"));
+  assert.ok(tables.includes("fysen_public_trigrams"));
+  assert.ok(tables.every(name =>
+    name === "fysen_public_items" || name === "public_archive_meta" ||
+    name.startsWith("fysen_public_trigrams_") || name === "fysen_public_trigrams"
+  ), "Only the public archive and its FTS5 tables may exist");
 });
