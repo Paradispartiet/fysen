@@ -12,6 +12,7 @@ faktiske serveringen på en bestemt restaurant**.
 - `DishPhotoGallery` bruker den faste rekkefølgen fra manifestet i Matlyst.
 - Et trykk på et bilde åpner Fysens eksisterende rettsøk, uten å
   opprette menytreff eller påstå at retten finnes hos en restaurant.
+- I «Alle retter»-listen vises en liten illustrasjon bare når det levende rettnavnet har eksakt samsvar med katalogens kanoniske navn eller søkefrase. Vage/fuzzy søketreff får ingen illustrasjon.
 - Bildene er ikke knyttet til individuelle restaurantmenyer.
 - Andre retter får ikke et tilfeldig bilde fra en annen rett.
 
