@@ -87,7 +87,7 @@ def export_public(source: Path, destination: Path) -> dict:
         try:
             with destination.open("x", encoding="utf-8", newline="\n") as out:
                 out.write("-- ParadisDB public-only Fysen export; empty target required.\n")
-                out.write("-- No private documents, auth sessions or user data.\n")
+                out.write("-- Contains only verified public menu records.\n")
                 out.write(PUBLIC_SCHEMA + "\n")
                 for key in METADATA:
                     out.write("INSERT INTO public_archive_meta(key,value) VALUES (" +
