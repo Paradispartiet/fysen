@@ -9,17 +9,8 @@ const ALLOWED_PATHS = new Set([
   "/v1/dishes/archive/search",
 ]);
 
-// FTS5 trigram LIKE is indexed for three or more normalized characters.
-// Very short searches retain the original bounded query for compatibility;
-// those can still scan broadly and must be considered in the cost budget.
-const PUBLIC_SELECT =
-  "SELECT restaurant_name,restaurant_slug,address,city,dish_name,normalized_name," +
-  " price_minor,price_kind,price_max_minor,source_url,observed_at" +
-  " FROM fysen_public_items WHERE lower(city) = ? AND instr(normalized_name, ?) > 0" +
-  " ORDER BY CASE WHEN normalized_name = ? THEN 3" +
-  " WHEN substr(normalized_name, 1, length(?)) = ? THEN 2 ELSE 1 END DESC," +
-  " observed_at DESC, restaurant_name ASC, dish_name ASC LIMIT " + MAX_MATCH_ROWS;
-
+// Free-plan API: only indexed searches with three or more characters are
+// allowed. 2-character scans would read the 47k-row menu table repeatedly.
 const PUBLIC_FTS_SELECT =
   "SELECT i.restaurant_name,i.restaurant_slug,i.address,i.city,i.dish_name,i.normalized_name," +
   " i.price_minor,i.price_kind,i.price_max_minor,i.source_url,i.observed_at" +
@@ -84,7 +75,7 @@ function parseSearch(searchParams) {
   const literalLimit = searchParams.get("limit") || "20";
   if (!/^[1-9]\d{0,1}$/.test(literalLimit)) return null;
   const limit = Number(literalLimit);
-  if (normalized.length < 2 || normalized.length > 80 || q.length > 160
+  if (normalized.length < 3 || normalized.length > 80 || q.length > 160
       || city.length > 80 || !city.trim() || limit > MAX_RESULTS) return null;
   return { q, normalized, city, limit };
 }
@@ -127,15 +118,26 @@ export default {
       res.headers.set("allow", "GET");
       return res;
     }
-    if (!env || typeof env.PUBLIC_DB?.prepare !== "function") return unavailable();
+    // Explicit release gate: a copied example or accidental deployment is
+    // disabled unless the operator enables it and binds a rate limiter.
+    if (env?.PARADISDB_PUBLIC_ENABLED !== "true" ||
+        typeof env.PUBLIC_DB?.prepare !== "function" ||
+        typeof env.PUBLIC_RATE_LIMITER?.limit !== "function") return unavailable();
     try {
       const parsed = url.pathname.endsWith("/search") ? parseSearch(url.searchParams) : null;
       if (url.pathname.endsWith("/search") && !parsed) {
-        return invalid("Expected q (2–80 characters), optional city and limit (1–50).");
+        return invalid("Expected indexed q (3–80 characters), optional city and limit (1–50).");
       }
       if (url.pathname.endsWith("/status") && [...url.searchParams.keys()].length) {
         return invalid("Status endpoint accepts no query parameters.");
       }
+      // The binding is approximate and per Cloudflare location: it is a
+      // traffic guard, NOT a strict global cap or billing guarantee.
+      // Use one shared key per route to prevent anonymous key rotation
+      // from bypassing the local quota. Reject before any D1 query.
+      const key = url.pathname.endsWith("/search") ? "public-search" : "public-status";
+      const { success } = await env.PUBLIC_RATE_LIMITER.limit({ key });
+      if (!success) return response({ code: "RATE_LIMITED", message: "Public archive temporarily busy." }, 429);
       const meta = await publicManifest(env.PUBLIC_DB);
       if (!meta) return unavailable(); // Partial/unsigned imports are never served.
       if (url.pathname.endsWith("/status")) {
@@ -147,10 +149,9 @@ export default {
           sha256: meta.sha256, publicRowsSha256: meta.publicRowsSha256,
         });
       }
-      const indexed = parsed.normalized.length >= 3;
-      const { results } = await env.PUBLIC_DB.prepare(indexed ? PUBLIC_FTS_SELECT : PUBLIC_SELECT)
+      const { results } = await env.PUBLIC_DB.prepare(PUBLIC_FTS_SELECT)
         .bind(parsed.city.trim().toLowerCase(),
-          indexed ? "%" + parsed.normalized + "%" : parsed.normalized,
+          "%" + parsed.normalized + "%",
           parsed.normalized, parsed.normalized, parsed.normalized)
         .all();
       return response(formatSearch(meta, parsed, results || []));
