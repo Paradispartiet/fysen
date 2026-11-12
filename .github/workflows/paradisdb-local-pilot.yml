@@ -5,9 +5,6 @@ on:
     paths:
       - "tools/paradisdb/**"
       - ".github/workflows/paradisdb-local-pilot.yml"
-  push:
-    branches:
-      - feature/paradisdb-local-pilot-v1
   workflow_dispatch:
 
 permissions:
@@ -21,7 +18,7 @@ jobs:
   local-proof:
     name: SQLite, archive, backup and loopback-only API tests
     runs-on: ubuntu-latest
-    timeout-minutes: 7
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -103,6 +100,11 @@ jobs:
           set -euo pipefail
           test -f "$PARADISDB_PUBLIC_SQLITE_PATH"
           node --test tools/paradisdb/worker/tests/worker-sqlite-integration.test.mjs
+      - name: Real local Cloudflare D1 and workerd with all public menu records (no account)
+        shell: bash
+        env:
+          PARADISDB_PUBLIC_SQL: ${{ runner.temp }}/paradisdb-public.sql
+        run: bash tools/paradisdb/worker/tests/local-wrangler-d1-proof.sh
       - name: CLI smoke and backup restore
         shell: bash
         run: |
