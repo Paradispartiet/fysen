@@ -31,6 +31,34 @@ jobs:
         run: python3 -m py_compile tools/paradisdb/paradisdb.py tools/paradisdb/tests/test_paradisdb.py
       - name: Run isolated safety and restore tests
         run: python3 -m unittest discover -s tools/paradisdb/tests -p "test_*.py" -v
+      - name: Checkout independently verified PUBLIC Fysen menu-index branch
+        uses: actions/checkout@v4
+        with:
+          ref: fysen-free-public-index
+          path: verified-index
+          persist-credentials: false
+      - name: Import real 47k Fysen public archive into isolated SQLite
+        shell: bash
+        run: |
+          set -euo pipefail
+          path="$RUNNER_TEMP/paradisdb-real-index.sqlite"
+          python3 tools/paradisdb/paradisdb.py init "$path"
+          python3 tools/paradisdb/paradisdb.py import-fysen "$path" verified-index/manifest.json verified-index/index.json.gz > "$RUNNER_TEMP/paradisdb-real-index-report.json"
+          python3 - <<'PY'
+          import json, os, pathlib
+          report = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) / "paradisdb-real-index-report.json").read_text())
+          assert report["ok"] is True and report["source"] == "verified-menu-archive"
+          assert report["realtime"] is False
+          assert report["restaurants"] == 973, report
+          assert report["originalItems"] == 47265, report
+          assert report["quarantinedSources"] >= 4, report
+          assert 0 < report["publicItems"] < report["originalItems"], report
+          print("PASS: public restaurants", report["restaurants"], "verified public items", report["publicItems"], "quarantined sources", report["quarantinedSources"])
+          PY
+          python3 tools/paradisdb/paradisdb.py search "$path" ramen | python3 -c 'import json,sys; v=json.load(sys.stdin); assert v["realtime"] is False; assert v["count"] > 0; assert all(x["menu"]["sourceUrl"].startswith(("http://","https://")) for x in v["results"])'
+          python3 tools/paradisdb/paradisdb.py backup "$path" "$RUNNER_TEMP/paradisdb-real-backup.sqlite"
+          python3 tools/paradisdb/paradisdb.py verify-backup "$RUNNER_TEMP/paradisdb-real-backup.sqlite" "$RUNNER_TEMP/paradisdb-real-backup.sqlite.sha256.json"
+          echo "PASS: real verified archive import/search/backup, no production writes"
       - name: CLI smoke and backup restore
         shell: bash
         run: |
