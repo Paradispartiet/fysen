@@ -202,3 +202,45 @@ jobs:
           SELECT pg_size_pretty(pg_database_size(current_database())) AS staging_compacted_database_size,
                  pg_database_size(current_database()) AS staging_compacted_bytes;
           SQL
+
+          # Report physical size only after the isolated VACUUM FULL has finished.
+          # This container is removed at the end of this step. No Supabase
+          # credentials, production network connection or persisted row data.
+          compacted_bytes="$(docker exec fysen-history-restore psql -v ON_ERROR_STOP=1 -At \
+            -U postgres -d postgres -c 'SELECT pg_database_size(current_database())')"
+          test "$compacted_bytes" -gt 0
+
+          table_sizes="$(docker exec fysen-history-restore psql -v ON_ERROR_STOP=1 -At -F '|' \
+            -U postgres -d postgres -c "
+            SELECT names.name, pg_total_relation_size(format('fysen.%I', names.name)::regclass)
+            FROM (VALUES ('restaurants'), ('menu_sources'), ('menu_snapshots'),
+                         ('menu_items'), ('menu_changes'), ('menu_watch_runs'),
+                         ('search_events'), ('search_result_impressions')) AS names(name)
+            ORDER BY pg_total_relation_size(format('fysen.%I', names.name)::regclass) DESC
+          ")"
+
+          {
+            echo "## Fysen Free: isolated 3-day rehearsal"
+            echo
+            echo "Restored historical snapshot of 2 November 2026. This job pruned **only the temporary Docker Postgres** and then compacted tables. Historical Google Drive backup and original Supabase remain untouched."
+            echo
+            echo "- Exact retained items: 151,408 (asserted in SQL)"
+            echo "- Physical database size after VACUUM FULL: **${compacted_bytes} bytes**"
+            echo "- Free comparison threshold (500 MB decimal): **500,000,000 bytes**"
+            echo "- Conservative planning budget (20% headroom): **400,000,000 bytes**"
+            if [ "$compacted_bytes" -le 400000000 ]; then
+              echo "- **Preliminary size gate: BELOW planning budget.** Live operation, growth, index completeness, WAL and organizational fair-use restrictions remain unverified."
+            elif [ "$compacted_bytes" -le 500000000 ]; then
+              echo "- **Preliminary size gate: WITHIN nominal quota but WITHOUT planned growth headroom.** Not approved for migration."
+            else
+              echo "- **Preliminary size gate: EXCEEDS 500 MB Free quota.** Do not migrate this candidate."
+            fi
+            echo
+            echo "| Isolated table | Total table and index bytes |"
+            echo "| --- | ---: |"
+          } >> "$GITHUB_STEP_SUMMARY"
+          while IFS='|' read -r table_name table_bytes; do
+            printf '| `%s` | %s |\n' "$table_name" "$table_bytes" >> "$GITHUB_STEP_SUMMARY"
+          done <<< "$table_sizes"
+
+          echo "Measured compacted staging database: $compacted_bytes bytes (not production approval)"
