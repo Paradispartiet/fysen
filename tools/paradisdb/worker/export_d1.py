@@ -7,6 +7,7 @@ The generated SQL is for an EMPTY isolated D1 database, not for live overwrite.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sqlite3
@@ -37,7 +38,7 @@ CREATE INDEX IF NOT EXISTS idx_fysen_public_city_name
 COLUMNS = ("item_index", "restaurant_name", "restaurant_slug", "address", "city",
            "dish_name", "normalized_name", "price_minor", "price_kind", "price_max_minor",
            "source_url", "observed_at")
-METADATA = ("archiveDate", "lastRefreshAt", "sha256", "restaurants", "sources",
+METADATA = ("archiveDate", "lastRefreshAt", "sha256", "publicRowsSha256", "restaurants", "sources",
             "originalItems", "publicItems", "quarantinedSources")
 MAX_STATEMENT_BYTES = 64000
 
@@ -82,6 +83,18 @@ def export_public(source: Path, destination: Path) -> dict:
             type(meta["quarantinedSources"]) is not int or
             meta["quarantinedSources"] < 4 or count < 1):
             raise ValueError("Public export is not backed by matching verified archive counts")
+        # Recompute the actual canonical public row digest before writing any
+        # export. A matching row count is not enough: a modified dish, price,
+        # source date or restaurant can otherwise acquire a stale source hash.
+        if not re.fullmatch("[a-f0-9]{64}", str(meta["publicRowsSha256"])):
+            raise ValueError("Missing or invalid canonical public row digest")
+        query = "SELECT " + ",".join(COLUMNS) + " FROM fysen_public_items ORDER BY item_index"
+        digest = hashlib.sha256()
+        for row in con.execute(query):
+            digest.update(json.dumps(list(row), ensure_ascii=False, separators=(",", ":")).encode("utf-8"))
+            digest.update(b"\n")
+        if digest.hexdigest() != meta["publicRowsSha256"]:
+            raise ValueError("Public row digest mismatch: local SQLite archive was modified after verification")
         destination.parent.mkdir(parents=True, exist_ok=True)
         # Write exclusively to a new path. An incomplete file is removed.
         try:
@@ -92,7 +105,6 @@ def export_public(source: Path, destination: Path) -> dict:
                 for key in METADATA:
                     out.write("INSERT INTO public_archive_meta(key,value) VALUES (" +
                               quote(key) + "," + quote(json.dumps(meta[key], ensure_ascii=False)) + ");\n")
-                query = "SELECT " + ",".join(COLUMNS) + " FROM fysen_public_items ORDER BY item_index"
                 for row in con.execute(query):
                     values = ",".join(quote(row[k]) for k in COLUMNS)
                     statement = "INSERT INTO fysen_public_items VALUES (" + values + ");\n"
@@ -110,6 +122,7 @@ def export_public(source: Path, destination: Path) -> dict:
             "restaurants": meta["restaurants"], "menuItems": count,
             "quarantinedSources": meta["quarantinedSources"],
             "realtime": False, "archiveSha256": meta["sha256"],
+            "publicRowsSha256": meta["publicRowsSha256"],
             "bytes": destination.stat().st_size,
         }
     finally:
