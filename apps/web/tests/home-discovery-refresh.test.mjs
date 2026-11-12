@@ -33,8 +33,8 @@ test("Matlyst gallery is closed by default and shows all approved images only on
   assert.match(gallery, /<summary className="dishPhotosPreview">/u);
   assert.match(gallery, /className="dishPhotosInside"/u);
   assert.ok(gallery.indexOf('className="dishPhotosInside"') < gallery.indexOf("illustratedDishes.map"));
-  assert.match(gallery, /Utforsk 35 retter/u);
-  assert.equal(manifest.images.length, 35);
+  assert.ok(manifest.images.length >= 36, "Approved image count must not regress");
+  assert.match(gallery, new RegExp(`Utforsk ${manifest.images.length} retter`, "u"));
 });
 
 test("gallery previews use one sharp standalone image and never enlarge old atlas thumbnails", () => {
