@@ -43,15 +43,23 @@ def main(path: Path) -> dict:
                 "EXPLAIN QUERY PLAN SELECT item_index FROM fysen_public_items"
                 " WHERE instr(normalized_name, 'ramen') > 0"
             ).fetchall()
-            con.execute(
-                "CREATE VIRTUAL TABLE fysen_public_trigrams USING fts5("
-                "normalized_name, content='fysen_public_items',"
-                "content_rowid='item_index', tokenize='trigram')"
-            )
-            con.execute(
-                "INSERT INTO fysen_public_trigrams(fysen_public_trigrams) VALUES('rebuild')"
-            )
-            con.commit()
+            # Before the indexed Worker change this test built the FTS table
+            # on an isolated copy. Once the exporter builds it, verify the
+            # existing index instead of rebuilding or double-counting writes.
+            indexed_already = con.execute(
+                "SELECT COUNT(*) FROM sqlite_master"
+                " WHERE type='table' AND name='fysen_public_trigrams'"
+            ).fetchone()[0] == 1
+            if not indexed_already:
+                con.execute(
+                    "CREATE VIRTUAL TABLE fysen_public_trigrams USING fts5("
+                    "normalized_name, content='fysen_public_items',"
+                    "content_rowid='item_index', tokenize='trigram')"
+                )
+                con.execute(
+                    "INSERT INTO fysen_public_trigrams(fysen_public_trigrams) VALUES('rebuild')"
+                )
+                con.commit()
             indexed_plan = con.execute(
                 "EXPLAIN QUERY PLAN SELECT rowid FROM fysen_public_trigrams"
                 " WHERE normalized_name LIKE '%ramen%'"
