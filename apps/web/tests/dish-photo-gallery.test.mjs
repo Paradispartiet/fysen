@@ -136,9 +136,9 @@ test("High-resolution food photos remain sharp on phones and iPads", () => {
   assert.equal(series04.readUInt32BE(series04.indexOf(Buffer.from("ispe")) + 8) / 3, 384);
   assert.match(css, /max-width:\s*150px/u);
   assert.match(css, /max-width:\s*144px/u);
-  assert.match(css, /collection\\.avif\\?v=7a428369/u);
-  assert.match(css, /series-04\\.avif\\?v=ae60b6f1/u);
-  assert.match(css, /\\.dishPhotoCard \\.dishPhotoThumb/u);
+  assert.match(css, /collection\.avif\?v=7a428369/u);
+  assert.match(css, /series-04\.avif\?v=ae60b6f1/u);
+  assert.match(css, /\.dishPhotoCard \.dishPhotoThumb/u);
   assert.doesNotMatch(css, /grid-template-columns:\s*64px\s+minmax/u);
   assert.doesNotMatch(css, /image-rendering:\s*pixelated/u);
 });
