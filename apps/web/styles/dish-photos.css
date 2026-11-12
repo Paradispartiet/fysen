@@ -45,3 +45,13 @@
   background-image: url("/dish-images/series-04.avif");
   background-size: 300% 300%;
 }
+
+
+/* Pad thai has an individually reviewed black-background image. */
+.dishPhotoThumb.dishPhotoPadThai,
+.dishPhotoSmall.dishPhotoPadThai {
+  background-image: url("/dish-images/pad-thai.avif");
+  background-position: center;
+  background-size: cover;
+  background-color: #000;
+}
