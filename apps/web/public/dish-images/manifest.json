@@ -425,6 +425,17 @@
       "kind": "AI-illustrasjon",
       "catalogId": "naan",
       "variantCaution": "Illustrasjonen viser naan med smør og friske urter; ikke nødvendigvis vegansk eller egnet ved melkeallergi. Ikke autentisk bilde fra en restaurant."
+    },
+    {
+      "id": "dal-makhani",
+      "label": "Dal makhani med smør og fløte",
+      "query": "dal makhani",
+      "index": 40,
+      "atlas": "dal-makhani-768.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "dal-makhani",
+      "variantCaution": "Illustrasjonen viser dal makhani av svarte linser med smør og fløte. Den er ikke vegansk eller egnet ved melkeallergi og er ikke et fotografi fra en restaurant."
     }
   ]
 }
