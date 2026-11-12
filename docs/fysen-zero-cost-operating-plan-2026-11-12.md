@@ -41,6 +41,44 @@
 
 **Trinn D – organisasjonens sperre:** Selv en virkelig mindre DB fjerner ikke nødvendigvis 402 før tilstrekkelig tid under kvoten eller ny fakturaperiode. Kontroller org-totalen, ikke bare prosjektets diskprosent. Ikke opprett flere freeprosjekter for å omgå en gjeldende organisasjonssperre.
 
+## Verifisert måleresultat: isolert kompakt database, 12. november 2026
+
+**Resultat: PASS i [GitHub Actions #43174708909](https://github.com/Paradispartiet/fysen/actions/runs/43174708909)** etter PR #1182–#1184. Kjøringen brukte en *midlertidig lokal* PostgreSQL 17 + PostGIS-container, en SHA-256-verifisert menyhistorikkdump fra 2. november og separat arkiv av gamle søkeresultatreferanser. Ingen Supabase-forbindelse, driftsendring, betalplan eller produksjonssletting ble brukt.
+
+| Kontroll i isolert restaurering | Faktisk resultat |
+|---|---:|
+| Gjenopprettede restauranter | 1 116 |
+| Gjenopprettede kilder | 1 154 |
+| Gjenopprettede snapshots før hypotetisk reduksjon | 40 707 |
+| Gjenopprettede menyposter før reduksjon | 1 997 348 |
+| Snapshots bevart i prøvemodellen (siste per kilde + datert 3-dagersutvalg) | 3 096 |
+| Menyposter bevart i prøvemodellen | 151 408 |
+| Søkeresultatreferanser med brutt historisk kobling og `ON DELETE SET NULL` i prøvemodellen | 5 150 |
+| Foreldreløse søkereferanser etter simuleringen | 0 |
+| Fysisk `pg_database_size()` etter staging-`VACUUM FULL` og etterfølgende sjekk | **163 212 435 byte (~163,2 MB)** |
+| Konservativ planleggingsgrense | 400 000 000 byte |
+| Supabase Free databaseinnholdsgrense brukt i vurderingen | 500 000 000 byte |
+
+Kjøringen rapporterte også 163 589 267 byte i den første størrelsesspørringen rett etter `VACUUM FULL` i samme steg. Etterfølgende måling ga 163 212 435 byte; begge er under 400 MB. Bruk derfor **omtrent 163 MB**, ikke et absolutt størrelsesløfte for produksjon. Forskjellen er liten, men vi dokumenterer begge målingene for etterprøvbarhet.
+
+### Hva dette beviser – og hva som fortsatt er blokkert
+
+**Bevist:** Denne *avgrensede* restore- og prøvebeholdningen får plass i nominell 500 MB-grense med margin. Gjenopprettingen kontrollerte eksakte antall, de definerte fremmednøkkelvirkningene og fravær av foreldreløse søkereferanser. Den komplette historiske sikkerhetskopien i Google Drive skal fortsatt bevares separat; prøvemodellen er ikke et alternativ til arkivet.
+
+**Ikke bevist:** At alle applikasjonstabeller, brukere, autentisering, indekser, utvidelser, RLS, skrivemønster og framtidig vekst får plass, eller at Fysen kan skrive til et faktisk Free-prosjekt under organisasjonens nåværende Fair Use-sperre. Prøven gjenopprettet seks historikk-/menytabeller og et separat utdrag med søkereferanser, ikke et komplett produksjonskluster. En *database på 163 MB i staging* er ikke en friskmelding av original Supabase eller en godkjenning for migrering.
+
+**Viktig tap i prøvemodellen:** 5 150 gamle `search_result_impressions.menu_item_id`-koblinger ble satt til `NULL` i den midlertidige databasen. SQL-integritet bestod, men eldre direkte referanser ville forsvinne ved tilsvarende sletting i produksjon. Historiske koblinger må derfor først bevares i en verifiserbar, privat og reverserbar avbildning/arkiv. Ikke tolk «0 foreldreløse» som «0 informasjonstap».
+
+### Neste testporter – uten produksjonsinngrep
+
+1. **Fullt applikasjonsskjema i isolasjon:** Inventer tabeller, indekser, utvidelser og API-avhengigheter uten å kopiere eller eksponere private data. Beregn fysisk totalstørrelse inkludert ikke-arkiverte produksjonstabeller, WAL-/vedlikeholdsmargin og forventet vekst.
+2. **Historikk og sporbarhet:** Verifiser privat arkiv for *alle* kilder og bevar en reverserbar mapping for de 5 150 søkereferansene før en annen modell i det hele tatt vurderes. Ingen live-sletting eller kassering av originaldata.
+3. **Faktiske funksjonstester:** Kjør søk, kilder, oppdateringsløp, mobile visninger og nødvendige appforespørsler mot en isolert, migrert **fullskjema**-kandidat. Ikke åpne booking-/betalingsfunksjoner kun fordi arkivsøket fungerer.
+4. **Org- og Free-port:** Bekreft tilgjengelig Free-kvote, organisasjonens Fair Use-status og reell skriverettighet *uten* å endre plan, Spend Cap eller produksjonspekere.
+5. **Utrulling og godkjenning:** Hold den verifiserte offentlige, databaseuavhengige menyindeksen i drift. Krev ny separat beslutning før eventuell databaseflytting, datareduksjon eller avvikling av et gammelt prosjekt. Ikke baser langtidsbevaring på GitHub Actions-artefakter, som utløper.
+
+---
+
 ## Release- og kvalitetsporter
 
 | Kontroll | Krav |
