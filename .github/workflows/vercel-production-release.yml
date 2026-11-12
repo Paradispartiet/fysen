@@ -6,6 +6,7 @@ on:
     # The Free Fysen menu index is built by its own GitHub Actions pipeline.
     # Only Vercel app/shared-runtime changes need a Vercel release request.
     paths:
+      - ".github/workflows/vercel-production-release.yml"
       - "apps/web/**"
       - "apps/api/**"
       - "packages/contracts/**"
@@ -353,21 +354,58 @@ jobs:
             --meta "fysenReleaseBatch=$GITHUB_RUN_ID")"
           echo "deployment_url=$deployment_url" >> "$GITHUB_OUTPUT"
           echo "API production deployment: $deployment_url"
-      - name: Verify public API
+      - name: Verify public archive API independently of blocked PostgreSQL
         shell: bash
         run: |
           set -euo pipefail
+          api='https://fysen-api.vercel.app'
+          get_json() {
+            curl --fail --silent --show-error --location --max-time 20 \
+              -H 'Accept: application/json' "$api$1" 2>/dev/null || true
+          }
           for attempt in $(seq 1 18); do
-            health="$(curl --fail --silent --show-error --location --max-time 20 'https://fysen-api.vercel.app/v1/health' 2>/dev/null || true)"
-            browse="$(curl --fail --silent --show-error --location --max-time 20 'https://fysen-api.vercel.app/v1/dishes/browse?city=Oslo' 2>/dev/null || true)"
+            health="$(get_json '/v1/health')"
+            status="$(get_json '/v1/dishes/archive/status')"
+            search="$(get_json '/v1/dishes/archive/search?q=ramen&city=Oslo&limit=10')"
+            browse="$(get_json '/v1/dishes/archive/browse?city=Oslo')"
+
             if printf '%s' "$health" | jq -e '.service == "fysen-api" and .status == "ok"' >/dev/null 2>&1 \
-              && printf '%s' "$browse" | jq -e '.city == "Oslo" and (.dishes | type == "array")' >/dev/null 2>&1; then
-              echo "Fysen API is live with browse support after release of $SOURCE_SHA"
+              && printf '%s' "$status" | jq -e '
+                .source == "verified-menu-archive" and .realtime == false and
+                (.restaurants >= 900) and (.menuItems >= 40000) and
+                (.identityQuarantines >= 4) and (.archiveDate | type == "string")
+              ' >/dev/null 2>&1 \
+              && printf '%s' "$search" | jq -e '
+                .source == "verified-menu-archive" and .realtime == false and
+                (.results | type == "array" and length > 0) and
+                all(.results[]; (.menu.observedAt | type == "string") and
+                  (.menu.sourceUrl | startswith("http")))
+              ' >/dev/null 2>&1 \
+              && printf '%s' "$browse" | jq -e '
+                .source == "verified-menu-archive" and .realtime == false and
+                (.dishes | type == "array" and length > 0)
+              ' >/dev/null 2>&1; then
+              echo "PASS: public Fysen archive endpoints are serving verified, non-realtime menu evidence."
+              legacy="$(get_json '/v1/dishes/browse?city=Oslo')"
+              if printf '%s' "$legacy" | jq -e '.city == "Oslo" and (.dishes | type == "array")' >/dev/null 2>&1; then
+                echo "Legacy database-backed browse also returned valid JSON."
+              else
+                echo "::warning::Legacy database-backed browse is NOT verified. Archive-only API is operational; full Fysen production is not restored."
+              fi
+              {
+                echo '## Public Fysen archive API proof'
+                echo
+                echo "- Deployed source: `$SOURCE_SHA`"
+                echo '- PASS: public health and 3 archived menu endpoints'
+                echo '- Archive results are historical, not realtime'
+                echo '- Legacy PostgreSQL search must pass separate production proof before full service is claimed'
+              } >> "$GITHUB_STEP_SUMMARY"
               exit 0
             fi
-            echo "Waiting for Fysen API production alias ($attempt/18)"
+            echo "Waiting for verified public archive API on production alias ($attempt/18)"
             sleep 5
           done
+          echo "::error::Public archive API could not be verified on production alias."
           exit 1
       - name: Summarize API release
         shell: bash
