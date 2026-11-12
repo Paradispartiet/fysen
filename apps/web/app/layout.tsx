@@ -20,6 +20,7 @@ import "../styles/dish-photos.css";
 import "../styles/restaurant-claim.css";
 import "../styles/fysen-pro.css";
 import "../styles/min-mat.css";
+import "../styles/home-discovery-refresh.css";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
