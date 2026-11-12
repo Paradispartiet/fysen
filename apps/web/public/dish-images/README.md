@@ -88,3 +88,5 @@ Følgende skal være del av den samme produksjonsbolken, og må fullføres:
 
 Eksempelbilder kan aldri presenteres som dokumentasjon på hvordan en restaurant serverer sin rett.
 En variant med svin, kylling, sjømat, peanøtter eller annet særskilt innhold skal heller ikke brukes ukritisk om andre varianter.
+
+Pad thai har eksakt katalogkobling til det allerede godkjente 128px-miniatyrbildet «Pad thai med reker» (galleriindeks 12). Nye uklare utsnitt erstatter ikke godkjente bilder. Bildet er kun en representativ rekevariant, og skal ikke brukes som vegetar- eller kyllingversjon.

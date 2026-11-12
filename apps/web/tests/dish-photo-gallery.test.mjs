@@ -82,7 +82,7 @@ test("Every exact editorial image maps to a genuine food knowledge dish", () => 
   const mappingBlock = gallery.slice(gallery.indexOf("const editorialPhotoIndex"), gallery.indexOf("export function DishPhotoThumbnail"));
   const mappedIds = [...mappingBlock.matchAll(/^\s*(?:"([^"]+)"|([a-z][a-z0-9-]*)):\s*\d+,/gmu)].map((match) => match[1] || match[2]);
   assert.equal(new Set(mappedIds).size, mappedIds.length, "Duplicate editorial image IDs");
-  assert.equal(mappedIds.length, 22);
+  assert.equal(mappedIds.length, 23);
   for (const id of mappedIds) assert.ok(catalogIds.has(id), `Editorial image has no catalog dish: ${id}`);
 });
 
@@ -121,4 +121,20 @@ test("Live All Dishes lists display photos only for exact canonical dish names",
   assert.match(browseStyles, /\.dishBrowseItemMain > \.dishPhotoSmall/u);
   assert.match(browseStyles, /background-color:\s*#000/u);
   assert.doesNotMatch(browse, /includes\(dish\.name\).*DishPhotoThumbnail/u);
+});
+
+test("Pad Thai uses only the known shrimp illustration, not a blurry new crop", () => {
+  assert.match(gallery, /"pad-thai": 12/u);
+  assert.match(gallery, /"pad-thai": "pad thai med reker"/u);
+  assert.doesNotMatch(gallery, /dishPhotoPadThai/u);
+  assert.doesNotMatch(css, /pad-thai\\.avif/u);
+});
+
+
+test("Legacy 128px food-atlas tiles never stretch beyond their 2x sharp display size", () => {
+  assert.match(css, /grid-template-columns:\s*64px\s+minmax\(0,\s*1fr\)/u);
+  assert.match(css, /\.dishPhotoCard \.dishPhotoThumb\s*\{[^}]*width:\s*64px;[^}]*height:\s*64px;/su);
+  assert.match(css, /\.dishPhotoSmall\s*\{[^}]*width:\s*64px;[^}]*height:\s*64px;/su);
+  assert.match(css, /@media\(max-width:600px\)[\s\S]*?\.dishPhotoCard \.dishPhotoThumb\s*\{[^}]*width:\s*56px;[^}]*height:\s*56px;/u);
+  assert.doesNotMatch(css, /image-rendering:\s*pixelated/u);
 });

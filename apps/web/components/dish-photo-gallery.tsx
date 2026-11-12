@@ -86,6 +86,7 @@ const editorialPhotoIndex: Readonly<Record<string, number>> = {
   ramen: 6,
   carbonara: 10,
   "butter-chicken": 11,
+  "pad-thai": 12,
   "pizza-marinara": 15,
   "cacio-e-pepe": 16,
   gyoza: 17,
@@ -117,6 +118,7 @@ const illustratedVariants: Readonly<Record<string, string>> = {
   "peking-duck": "pekingand",
   "dan-dan-noodles": "dan dan-nudler med kjøtt og peanøtter",
   "green-curry": "grønn curry med kylling",
+  "pad-thai": "pad thai med reker",
 };
 
 export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: string }) {
