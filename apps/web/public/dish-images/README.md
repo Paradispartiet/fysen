@@ -1,6 +1,6 @@
 # Matlyst – rettetypeillustrasjoner
 
-Dette er et lite, kuratert bildebibliotek med 34 KI-genererte motiver.
+Dette er et lite, kuratert bildebibliotek med 33 KI-genererte motiver.
 Motivene har helt svart bakgrunn. De viser rettetyper, **ikke den
 faktiske serveringen på en bestemt restaurant**.
 
@@ -8,7 +8,6 @@ faktiske serveringen på en bestemt restaurant**.
 
 - `collection.avif` har de første 24 motivene i 6 kolonner × 4 rader.
 - `series-04.avif` har de neste 9 motivene i 3 kolonner × 3 rader.
-- `pad-thai.avif` er en separat 192 × 192-illustrasjon av pad thai på helsvart bakgrunn.
 - `manifest.json` angir nøyaktig hva hvert felt i bildekartet viser, og hvor det brukes.
 - `DishPhotoGallery` bruker den faste rekkefølgen fra manifestet i Matlyst.
 - Et trykk på et bilde åpner Fysens eksisterende rettsøk, uten å
@@ -60,7 +59,6 @@ Bildesekvensen er:
 31. Pekingand
 32. Dan dan-nudler med kjøtt og peanøtter
 33. Grønn curry med kylling
-34. Pad thai (nudler med lime; ingrediensvariant ikke verifisert)
 
 Ved utvidelse må motiv, rettnavn og eventuell ingrediensvariant være
 entydig; for eksempel må vegetarramen ikke få bilde av ramen med svin.
@@ -90,3 +88,5 @@ Følgende skal være del av den samme produksjonsbolken, og må fullføres:
 
 Eksempelbilder kan aldri presenteres som dokumentasjon på hvordan en restaurant serverer sin rett.
 En variant med svin, kylling, sjømat, peanøtter eller annet særskilt innhold skal heller ikke brukes ukritisk om andre varianter.
+
+Pad thai har eksakt katalogkobling til det allerede godkjente 128px-miniatyrbildet «Pad thai med reker» (galleriindeks 12). Nye uklare utsnitt erstatter ikke godkjente bilder. Bildet er kun en representativ rekevariant, og skal ikke brukes som vegetar- eller kyllingversjon.
