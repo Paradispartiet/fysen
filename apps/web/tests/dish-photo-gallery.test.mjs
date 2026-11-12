@@ -27,6 +27,7 @@ const goiCuon = readFileSync(path.join(web, "public/dish-images/goi-cuon-768.avi
 const tandoori = readFileSync(path.join(web, "public/dish-images/tandoori-chicken-768.avif"));
 const naan = readFileSync(path.join(web, "public/dish-images/naan-768.avif"));
 const dalMakhani = readFileSync(path.join(web, "public/dish-images/dal-makhani-768.avif"));
+const idli = readFileSync(path.join(web, "public/dish-images/idli-512.avif"));
 const pho = readFileSync(path.join(web, "public/dish-images/pho-512.avif"));
 const manifest = JSON.parse(readFileSync(path.join(web, "public/dish-images/manifest.json"), "utf8"));
 const catalog = readFileSync(path.join(web, "content/food-knowledge/catalog.ts"), "utf8");
@@ -96,18 +97,18 @@ test("Every exact editorial image maps to a genuine food knowledge dish", () => 
   const mappingBlock = gallery.slice(gallery.indexOf("const editorialPhotoIndex"), gallery.indexOf("export function DishPhotoThumbnail"));
   const mappedIds = [...mappingBlock.matchAll(/^\s*(?:"([^"]+)"|([a-z][a-z0-9-]*)):\s*\d+,/gmu)].map((match) => match[1] || match[2]);
   assert.equal(new Set(mappedIds).size, mappedIds.length, "Duplicate editorial image IDs");
-  assert.equal(mappedIds.length, 31);
+  assert.equal(mappedIds.length, 32);
   for (const id of mappedIds) assert.ok(catalogIds.has(id), `Editorial image has no catalog dish: ${id}`);
 });
 
 test("Every generated and approved image is represented in the published Matlyst gallery", () => {
   const entries = [...gallery.matchAll(/\{ id: "([^"]+)", label: "([^"]+)", query: "([^"]+)" \}/gu)];
   assert.equal(manifest.version, 1);
-  assert.equal(manifest.images.length, 41);
+  assert.equal(manifest.images.length, 42);
   assert.deepEqual(manifest.images.map((entry) => entry.id), entries.map((match) => match[1]));
   for (const [index, image] of manifest.images.entries()) {
     assert.equal(image.index, index);
-    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index === 2 ? "grillet-laks-512.avif" : index === 3 ? "grillet-biff-512.avif" : index === 4 ? "rekesmorbrod-512.avif" : index === 18 ? "pho-512.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : "dal-makhani-768.avif");
+    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index === 2 ? "grillet-laks-512.avif" : index === 3 ? "grillet-biff-512.avif" : index === 4 ? "rekesmorbrod-512.avif" : index === 18 ? "pho-512.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : "idli-512.avif");
     assert.equal(image.surface, "Matlyst");
     assert.equal(image.kind, "AI-illustrasjon");
   }
@@ -404,4 +405,23 @@ test("Dal makhani has its own 768px image with precise catalog ID and dairy caut
   assert.match(image.variantCaution, /smør/u);
   assert.match(image.variantCaution, /fløte/u);
   assert.match(image.variantCaution, /melkeallergi/u);
+});
+
+test("Idli is a high-density black-background image with correct variant ID", () => {
+  assert.equal(idli.toString("ascii", 4, 12), "ftypavif");
+  assert.ok(idli.length > 6000, "Image must contain an actual illustration, not a placeholder");
+  const marker = idli.indexOf(Buffer.from("ispe"));
+  assert.ok(marker > 0);
+  assert.equal(idli.readUInt32BE(marker + 8), 512);
+  assert.equal(idli.readUInt32BE(marker + 12), 512);
+  assert.match(gallery, /id: "idli", label: "Idli med sambar og chutney"/u);
+  assert.match(gallery, /idli: 41/u);
+  assert.match(gallery, /isIdli = index === 41/u);
+  assert.match(css, /idli-512\.avif/u);
+  const image = manifest.images[41];
+  assert.equal(image.id, "idli");
+  assert.equal(image.catalogId, "idli");
+  assert.equal(image.atlas, "idli-512.avif");
+  assert.match(image.variantCaution, /sambar/u);
+  assert.match(image.variantCaution, /restaurantfoto/u);
 });
