@@ -226,6 +226,10 @@ jobs:
             *) echo "Unknown release target: $REQUESTED_TARGET" >&2; exit 1 ;;
           esac
 
+          # Keep the initial diff result separate from the deploy decision.
+          # When the daily cap blocks a deploy, it is still pending—not a no-op.
+          web_pending="$web_needed"
+          api_pending="$api_needed"
           if [[ "$release_capacity_available" == "false" && ("$web_needed" == "true" || "$api_needed" == "true") ]]; then
             web_needed=false
             api_needed=false
@@ -249,13 +253,17 @@ jobs:
             echo "- Web currently released from: \`${web_production_sha:-unknown}\`"
             echo "- API currently released from: \`${api_production_sha:-unknown}\`"
             echo "- Production batches today (Europe/Oslo): \`$releases_today/3\`"
+            echo "- Pending web changes: \`$web_pending\`"
+            echo "- Pending API changes: \`$api_pending\`"
             echo "- Deploy web: \`$web_needed\`"
             echo "- Deploy API: \`$api_needed\`"
-            if [[ "$release_capacity_available" == "false" ]]; then
+            if [[ "$release_capacity_available" == "false" && ("$web_pending" == "true" || "$api_pending" == "true") ]]; then
               echo
-              echo 'The daily limit of three production batches has been reached; pending changes remain queued for the next Oslo day.'
+              echo 'The daily limit of three production batches has been reached; pending changes are not automatically retried.'
+              echo 'After the next Oslo midnight, manually run **Actions → Fysen batched Vercel production release → Run workflow** from **main**, target **auto**, to recheck the quota and the current diff.'
+              echo 'Until a web/API job succeeds and public proof passes, the new code is NOT verified in production.'
             fi
-            if [[ "$web_needed" == "false" && "$api_needed" == "false" ]]; then
+            if [[ "$web_pending" == "false" && "$api_pending" == "false" ]]; then
               echo
               echo 'No production-relevant changes have accumulated; this request creates no Vercel deployment and no production proof.'
             fi
