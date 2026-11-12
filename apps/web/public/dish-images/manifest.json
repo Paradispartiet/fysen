@@ -364,6 +364,17 @@
       "kind": "AI-illustrasjon",
       "catalogId": "pad-kra-pao",
       "variantCaution": "Illustrasjonen viser woket kjøtt, thaibasilikum, ris og speilegg. Kjøttsort og faktisk restaurantservering er ikke verifisert."
+    },
+    {
+      "id": "banh-mi",
+      "label": "Bánh mì med kjøtt og syltede grønnsaker",
+      "query": "banh mi",
+      "index": 35,
+      "atlas": "banh-mi-512.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "banh-mi",
+      "variantCaution": "Viser kjøtt, pâté, syltede grønnsaker, agurk, chili og koriander. Ikke bruk som vegetarisk bánh mì eller som autentisk restaurantfoto."
     }
   ]
 }
