@@ -28,9 +28,13 @@ jobs:
         with:
           python-version: "3.12"
       - name: Python syntax check (no dependencies)
-        run: python3 -m py_compile tools/paradisdb/paradisdb.py tools/paradisdb/tests/test_paradisdb.py
+        run: python3 -m py_compile tools/paradisdb/paradisdb.py tools/paradisdb/worker/export_d1.py tools/paradisdb/tests/*.py
       - name: Run isolated safety and restore tests
         run: python3 -m unittest discover -s tools/paradisdb/tests -p "test_*.py" -v
+      - name: Verify public-only Cloudflare Worker (Node built-ins only)
+        run: |
+          node --check tools/paradisdb/worker/worker.mjs
+          node --test tools/paradisdb/worker/tests/worker.test.mjs
       - name: Checkout independently verified PUBLIC Fysen menu-index branch
         uses: actions/checkout@v4
         with:
@@ -61,6 +65,32 @@ jobs:
           python3 tools/paradisdb/paradisdb.py backup "$path" "$RUNNER_TEMP/paradisdb-real-backup.sqlite"
           python3 tools/paradisdb/paradisdb.py verify-backup "$RUNNER_TEMP/paradisdb-real-backup.sqlite" "$RUNNER_TEMP/paradisdb-real-backup.sqlite.sha256.json"
           echo "PASS: real verified archive import/search/backup, no production writes"
+      - name: Export real public Fysen archive to portable D1 SQL and verify local restore
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/paradisdb/worker/export_d1.py "$RUNNER_TEMP/paradisdb-real-index.sqlite" "$RUNNER_TEMP/paradisdb-public.sql" > "$RUNNER_TEMP/paradisdb-d1-export-report.json"
+          python3 - <<'PY'
+          import json, os, pathlib, sqlite3
+          root = pathlib.Path(os.environ["RUNNER_TEMP"])
+          report = json.loads((root / "paradisdb-d1-export-report.json").read_text())
+          sql = (root / "paradisdb-public.sql").read_text(encoding="utf-8")
+          assert report["ok"] is True and report["publicOnly"] is True, report
+          assert report["menuItems"] == 47265, report
+          assert "CREATE TABLE IF NOT EXISTS documents" not in sql
+          assert "CREATE TABLE IF NOT EXISTS public_archive_meta" in sql
+          assert "INSERT INTO public_archive_meta(key,value) VALUES ('public_ready','true');" in sql
+          assert len(sql.encode("utf-8")) < 32*1024*1024
+          con = sqlite3.connect(":memory:")
+          con.executescript(sql)
+          assert con.execute("SELECT COUNT(*) FROM fysen_public_items").fetchone()[0] == 47265
+          assert con.execute("SELECT value FROM public_archive_meta WHERE key='public_ready'").fetchone()[0] == "true"
+          assert con.execute("SELECT value FROM public_archive_meta WHERE key='sha256'").fetchone()[0].startswith('"42fe1c')
+          assert con.execute("SELECT COUNT(*) FROM fysen_public_items WHERE source_url LIKE 'https://%' OR source_url LIKE 'http://%'").fetchone()[0] == 47265
+          assert con.execute("SELECT COUNT(*) FROM sqlite_master WHERE name='documents'").fetchone()[0] == 0
+          con.close()
+          print("PASS: 47265 verifiable, public-only rows in standalone D1 SQL; no private schema")
+          PY
       - name: CLI smoke and backup restore
         shell: bash
         run: |
