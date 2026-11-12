@@ -32,10 +32,10 @@ const pho = readFileSync(path.join(web, "public/dish-images/pho-512.avif"));
 const manifest = JSON.parse(readFileSync(path.join(web, "public/dish-images/manifest.json"), "utf8"));
 const catalog = readFileSync(path.join(web, "content/food-knowledge/catalog.ts"), "utf8");
 
-test("Matlyst has exactly forty distinct, curated dish illustrations", () => {
+test("Matlyst has exactly forty-two distinct, curated dish illustrations", () => {
   const entries = [...gallery.matchAll(/\{ id: "([^"]+)", label: "([^"]+)", query: "([^"]+)" \}/gu)];
-  assert.equal(entries.length, 41);
-  assert.equal(new Set(entries.map((match) => match[1])).size, 41);
+  assert.equal(entries.length, 42);
+  assert.equal(new Set(entries.map((match) => match[1])).size, 42);
   assert.ok(entries.every((match) => match[2].length > 0 && match[3].length > 0));
   assert.match(gallery, /index % 6/u);
   assert.match(gallery, /Math\.floor\(index \/ 6\)/u);
