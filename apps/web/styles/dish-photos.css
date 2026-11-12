@@ -101,3 +101,9 @@
 .dishPhotoSmall.dishPhotoPadKraPao {
   background: #000 url("/dish-images/pad-kra-pao-384.avif") center / cover no-repeat;
 }
+
+/* Dedicated 512px meat-filled banh mi, never a restaurant photo or vegetarian variant. */
+.dishPhotoThumb.dishPhotoBanhMi,
+.dishPhotoSmall.dishPhotoBanhMi {
+  background: #000 url("/dish-images/banh-mi-512.avif?v=ba2f55f4") center / cover no-repeat;
+}
