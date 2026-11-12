@@ -414,6 +414,17 @@
       "kind": "AI-illustrasjon",
       "catalogId": "tandoori",
       "variantCaution": "Illustrasjonen viser tandoorigrillet kylling med rødlig kryddermarinade, løk, koriander og sitron. Ikke bruk for vegetarisk tandoori, andre kjøttsorter eller som fotografi av en bestemt restaurants rett."
+    },
+    {
+      "id": "naan",
+      "label": "Naan med smør og urter",
+      "query": "naan",
+      "index": 39,
+      "atlas": "naan-768.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "naan",
+      "variantCaution": "Illustrasjonen viser naan med smør og friske urter; ikke nødvendigvis vegansk eller egnet ved melkeallergi. Ikke autentisk bilde fra en restaurant."
     }
   ]
 }
