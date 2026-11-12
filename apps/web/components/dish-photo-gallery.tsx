@@ -35,11 +35,12 @@ const illustratedDishes = [
   { id: "dan-dan-noodles", label: "Dan dan-nudler med kjøtt", query: "dan dan noodles" },
   { id: "green-curry", label: "Grønn curry med kylling", query: "green curry" },
   { id: "tom-yum", label: "Tom yum med reker", query: "tom yum" },
+  { id: "pad-kra-pao", label: "Pad kra pao med speilegg", query: "pad kra pao" },
 ] as const;
 
 // The first atlas holds 24 illustrations in 6 columns × 4 rows.
 // The second atlas (series 04) holds nine in 3 × 3, at indices 24–32.
-// The new Tom yum image at index 33 is a dedicated sharp 512px square AVIF.
+// Tom yum (33) and Pad kra pao (34) are standalone high-density AVIF illustrations.
 // All are representative AI illustrations, not restaurant photographs.
 // Keep individual restaurant listings separate from these editorial images.
 export function DishPhotoGallery() {
@@ -55,11 +56,12 @@ export function DishPhotoGallery() {
       <div className="dishPhotosGrid">
         {illustratedDishes.map((dish, index) => {
           const isTomYum = index === 33;
+          const isPadKraPao = index === 34;
           const isSeries04 = index >= 24 && index < 33;
           const localIndex = isSeries04 ? index - 24 : index;
           const column = isSeries04 ? localIndex % 3 : index % 6;
           const row = isSeries04 ? Math.floor(localIndex / 3) : Math.floor(index / 6);
-          const position = isTomYum
+          const position = (isTomYum || isPadKraPao)
             ? "center"
             : isSeries04
               ? `${column * 50}% ${row * 50}%`
@@ -67,7 +69,7 @@ export function DishPhotoGallery() {
           return (
             <a href={dishSearchHref(dish.query)} key={dish.id} className="dishPhotoCard">
               <span
-                className={isTomYum ? "dishPhotoThumb dishPhotoTomYum" : isSeries04 ? "dishPhotoThumb dishPhotoSeries04" : "dishPhotoThumb"}
+                className={isPadKraPao ? "dishPhotoThumb dishPhotoPadKraPao" : isTomYum ? "dishPhotoThumb dishPhotoTomYum" : isSeries04 ? "dishPhotoThumb dishPhotoSeries04" : "dishPhotoThumb"}
                 aria-hidden="true"
                 style={{ backgroundPosition: position }}
               />
@@ -110,6 +112,7 @@ const editorialPhotoIndex: Readonly<Record<string, number>> = {
   "dan-dan-noodles": 31,
   "green-curry": 32,
   "tom-yum": 33,
+  "pad-kra-pao": 34,
 };
 
 // Specify visible variants for general catalog IDs: the illustrations are
@@ -126,15 +129,17 @@ const illustratedVariants: Readonly<Record<string, string>> = {
   "green-curry": "grønn curry med kylling",
   "pad-thai": "pad thai med reker",
   "tom-yum": "tom yum med reker, sopp og sitrongress",
+  "pad-kra-pao": "pad kra pao med woket kjøtt, thaibasilikum, ris og speilegg",
 };
 
 export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: string }) {
   const index = editorialPhotoIndex[dishId];
   if (index === undefined) return null;
   const isTomYum = index === 33;
+  const isPadKraPao = index === 34;
   const isSeries04 = index >= 24 && index < 33;
   const localIndex = isSeries04 ? index - 24 : index;
-  const position = isTomYum
+  const position = (isTomYum || isPadKraPao)
     ? "center"
     : isSeries04
       ? `${(localIndex % 3) * 50}% ${Math.floor(localIndex / 3) * 50}%`
@@ -144,7 +149,7 @@ export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: s
     <span
       role="img"
       aria-label={`KI-illustrasjon av ${illustratedVariant}, ikke restaurantfoto`}
-      className={isTomYum ? "dishPhotoSmall dishPhotoTomYum" : isSeries04 ? "dishPhotoSmall dishPhotoSeries04" : "dishPhotoSmall"}
+      className={isPadKraPao ? "dishPhotoSmall dishPhotoPadKraPao" : isTomYum ? "dishPhotoSmall dishPhotoTomYum" : isSeries04 ? "dishPhotoSmall dishPhotoSeries04" : "dishPhotoSmall"}
       style={{ backgroundPosition: position }}
     />
   );
