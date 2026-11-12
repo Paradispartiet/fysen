@@ -1,6 +1,6 @@
 # Matlyst – rettetypeillustrasjoner
 
-Dette er et lite, kuratert bildebibliotek med 42 KI-genererte motiver.
+Dette er et lite, kuratert bildebibliotek med 43 KI-genererte motiver.
 Motivene har helt svart bakgrunn. De viser rettetyper, **ikke den
 faktiske serveringen på en bestemt restaurant**.
 
@@ -94,6 +94,7 @@ Bildesekvensen er:
 40. Naan med smør og friske urter
 41. Dal makhani av svarte linser med smør og fløte
 42. Idli med sambar, kokoschutney og rød chutney
+43. Sambar med linser og grønnsaker, tamarind, karriblader og chili
 
 Ved utvidelse må motiv, rettnavn og eventuell ingrediensvariant være
 entydig; for eksempel må vegetarramen ikke få bilde av ramen med svin.
@@ -127,3 +128,5 @@ En variant med svin, kylling, sjømat, peanøtter eller annet særskilt innhold 
 Pad thai har eksakt katalogkobling til det allerede godkjente 128px-miniatyrbildet «Pad thai med reker» (galleriindeks 12). Nye uklare utsnitt erstatter ikke godkjente bilder. Bildet er kun en representativ rekevariant, og skal ikke brukes som vegetar- eller kyllingversjon.
 
 - `idli-512.avif` er et separat 512 × 512-bilde av dampede ris- og linsekaker med sambar og chutney. Serveringsvariant, ikke restaurantfoto.
+
+- `sambar-768.avif` er et separat skarpt 768 × 768-bilde av sørindisk sambar, og viser ikke idli som hovedrett. Oppskrifter og ingredienser varierer; KI-illustrasjonen er ikke et restaurantfotografi.

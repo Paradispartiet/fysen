@@ -447,6 +447,17 @@
       "kind": "AI-illustrasjon",
       "catalogId": "idli",
       "variantCaution": "Illustrasjon av dampede ris- og linsekaker med sambar, kokoschutney og rød chutney. Tilbehøret kan variere; bildet er ikke et faktisk restaurantfoto."
+    },
+    {
+      "id": "sambar",
+      "label": "Sambar med linser og grønnsaker",
+      "query": "sambar",
+      "index": 42,
+      "atlas": "sambar-768.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "sambar",
+      "variantCaution": "Sørindisk linse- og grønnsaksgryte med tamarind, karriblader, sennepsfrø og chili. Tilberedning og ingredienser varierer; ikke autentisk restaurantfoto."
     }
   ]
 }
