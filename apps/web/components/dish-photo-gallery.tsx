@@ -80,6 +80,8 @@ export function DishPhotoGallery() {
           const isCheeseburger = index === 1;
           const isPho = index === 18;
           const isGrilledSalmon = index === 2;
+          const isGrilledSteak = index === 3;
+          const isShrimpOpenSandwich = index === 4;
           const isTomYum = index === 33;
           const isPadKraPao = index === 34;
           const isBanhMi = index === 35;
@@ -89,7 +91,7 @@ export function DishPhotoGallery() {
           const localIndex = isSeries04 ? index - 24 : index;
           const column = isSeries04 ? localIndex % 3 : index % 6;
           const row = isSeries04 ? Math.floor(localIndex / 3) : Math.floor(index / 6);
-          const position = (isPizzaMargherita || isCheeseburger || isGrilledSalmon || isPho || isTomYum || isPadKraPao || isBanhMi || isBunCha || isGoiCuon)
+          const position = (isPizzaMargherita || isCheeseburger || isGrilledSalmon || isGrilledSteak || isShrimpOpenSandwich || isPho || isTomYum || isPadKraPao || isBanhMi || isBunCha || isGoiCuon)
             ? "center"
             : isSeries04
               ? `${column * 50}% ${row * 50}%`
@@ -97,7 +99,7 @@ export function DishPhotoGallery() {
           return (
             <a href={dishSearchHref(dish.query)} key={dish.id} className="dishPhotoCard">
               <span
-                className={isPizzaMargherita ? "dishPhotoThumb dishPhotoPizzaMargherita" : isCheeseburger ? "dishPhotoThumb dishPhotoCheeseburger" : isGrilledSalmon ? "dishPhotoThumb dishPhotoGrilledSalmon" : isPho ? "dishPhotoThumb dishPhotoPho" : isBunCha ? "dishPhotoThumb dishPhotoBunCha" : isGoiCuon ? "dishPhotoThumb dishPhotoGoiCuon" : isBanhMi ? "dishPhotoThumb dishPhotoBanhMi" : isPadKraPao ? "dishPhotoThumb dishPhotoPadKraPao" : isTomYum ? "dishPhotoThumb dishPhotoTomYum" : isSeries04 ? "dishPhotoThumb dishPhotoSeries04" : "dishPhotoThumb"}
+                className={isPizzaMargherita ? "dishPhotoThumb dishPhotoPizzaMargherita" : isCheeseburger ? "dishPhotoThumb dishPhotoCheeseburger" : isGrilledSalmon ? "dishPhotoThumb dishPhotoGrilledSalmon" : isGrilledSteak ? "dishPhotoThumb dishPhotoGrilledSteak" : isShrimpOpenSandwich ? "dishPhotoThumb dishPhotoShrimpOpenSandwich" : isPho ? "dishPhotoThumb dishPhotoPho" : isBunCha ? "dishPhotoThumb dishPhotoBunCha" : isGoiCuon ? "dishPhotoThumb dishPhotoGoiCuon" : isBanhMi ? "dishPhotoThumb dishPhotoBanhMi" : isPadKraPao ? "dishPhotoThumb dishPhotoPadKraPao" : isTomYum ? "dishPhotoThumb dishPhotoTomYum" : isSeries04 ? "dishPhotoThumb dishPhotoSeries04" : "dishPhotoThumb"}
                 aria-hidden="true"
                 style={{ backgroundPosition: position }}
               />

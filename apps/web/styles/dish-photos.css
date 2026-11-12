@@ -147,3 +147,11 @@
 .dishPhotoSmall.dishPhotoGoiCuon {
   background: #000 url("/dish-images/goi-cuon-768.avif") center / cover no-repeat;
 }
+
+/* Standalone, non-restaurant, high-density dish illustrations. */
+.dishPhotoThumb.dishPhotoGrilledSteak {
+  background: #000 url("/dish-images/grillet-biff-512.avif") center / cover no-repeat;
+}
+.dishPhotoThumb.dishPhotoShrimpOpenSandwich {
+  background: #000 url("/dish-images/rekesmorbrod-512.avif") center / cover no-repeat;
+}
