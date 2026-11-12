@@ -47,15 +47,6 @@
 }
 
 
-/* Pad thai has an individually reviewed black-background image. */
-.dishPhotoThumb.dishPhotoPadThai,
-.dishPhotoSmall.dishPhotoPadThai {
-  background-image: url("/dish-images/pad-thai.avif");
-  background-position: center;
-  background-size: cover;
-  background-color: #000;
-}
-
 /* Image clarity: current older atlas tiles contain only 128×128 source pixels.
    Show them at no more than 64 CSS pixels so 2× iPad/mobile screens do not
    magnify pixels. Larger cards require the original higher-resolution assets. */
