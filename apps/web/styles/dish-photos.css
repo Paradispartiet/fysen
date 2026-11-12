@@ -140,3 +140,10 @@
 .dishPhotoSmall.dishPhotoPho {
   background: #000 url("/dish-images/pho-512.avif") center / cover no-repeat;
 }
+
+/* Sharp gỏi cuốn with visible shrimp and peanut dipping sauce.
+   Illustrative variant only: do not use for vegetarian dishes or restaurant photos. */
+.dishPhotoThumb.dishPhotoGoiCuon,
+.dishPhotoSmall.dishPhotoGoiCuon {
+  background: #000 url("/dish-images/goi-cuon-768.avif") center / cover no-repeat;
+}

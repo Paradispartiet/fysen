@@ -390,6 +390,17 @@
       "kind": "AI-illustrasjon",
       "catalogId": "bun-cha",
       "variantCaution": "Illustrasjon med grillet svinekjøtt, risvermicelli, urter og søt-syrlig dipsaus; ikke et faktisk restaurantfoto. Ikke bruk for vegetarvariant."
+    },
+    {
+      "id": "vietnamese-spring-rolls",
+      "label": "Gỏi cuốn med reker",
+      "query": "vietnamese spring rolls",
+      "index": 37,
+      "atlas": "goi-cuon-768.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "vietnamese-spring-rolls",
+      "variantCaution": "Illustrasjon av ferske rispapirruller med reker, risnudler, urter og peanøttsaus. Ikke bruk for vegetariske eller nøttefrie varianter eller som faktisk restaurantfoto."
     }
   ]
 }
