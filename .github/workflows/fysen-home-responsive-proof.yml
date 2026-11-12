@@ -67,7 +67,7 @@ jobs:
             echo
             echo "- PASS: 390px mobile, 820px iPad portrait, 1180px iPad landscape"
             echo "- Search visible, image gallery closed initially, cuisine choices before gallery"
-            echo "- Open/close interaction, 37 gallery links, five dedicated AVIF image assets and no overflow"
+            echo "- Open/close interaction, gallery count from current manifest, five dedicated AVIF image assets and no overflow"
             echo "- **No Vercel production deployment or database access**; screenshots are from local Next."
           } >> "$GITHUB_STEP_SUMMARY"
 
