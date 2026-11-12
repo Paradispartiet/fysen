@@ -42,20 +42,22 @@
       "label": "Grillet biff",
       "query": "grillet biff",
       "index": 3,
-      "atlas": "collection.avif",
+      "atlas": "grillet-biff-512.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av grillet medium-rare storfebiff med bakte småpoteter, tomater og urter. Ikke fotografi eller dokumentasjon av en bestemt restaurants biffrett."
     },
     {
       "id": "rekesmorbrod",
       "label": "Rekesmørbrød",
       "query": "rekesmørbrød",
       "index": 4,
-      "atlas": "collection.avif",
+      "atlas": "rekesmorbrod-512.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av norsk rekesmørbrød på grovbrød med majones, sitron, dill og rødløk. Ikke faktisk restaurantfoto, og serveringen kan variere."
     },
     {
       "id": "sushi",
