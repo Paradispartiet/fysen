@@ -342,6 +342,17 @@
       "kind": "AI-illustrasjon",
       "catalogId": "green-curry",
       "variantCaution": "Med kylling – ikke vegetarcurry"
+    },
+    {
+      "id": "pad-thai",
+      "label": "Pad thai",
+      "query": "pad thai",
+      "index": 33,
+      "atlas": "pad-thai.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "pad-thai",
+      "variantCaution": "Viser pad thai med nudler, lime og urter. Proteininnholdet er ikke dokumentert; bruk ikke som autentisk restaurantfoto."
     }
   ]
 }
