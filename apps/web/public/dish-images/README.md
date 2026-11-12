@@ -1,6 +1,6 @@
 # Matlyst – rettetypeillustrasjoner
 
-Dette er et lite, kuratert bildebibliotek med 38 KI-genererte motiver.
+Dette er et lite, kuratert bildebibliotek med 39 KI-genererte motiver.
 Motivene har helt svart bakgrunn. De viser rettetyper, **ikke den
 faktiske serveringen på en bestemt restaurant**.
 
@@ -19,6 +19,7 @@ faktiske serveringen på en bestemt restaurant**.
 - `banh-mi-512.avif` er et separat skarpt 512 × 512-bilde av vietnamesisk baguette med kjøtt, pâté og syltede grønnsaker.
 - `bun-cha-512.avif` er et separat 512 × 512-bilde av vietnamesisk bún chả med grillet svinekjøtt, risnudler, friske urter og dipping-saus.
 - `goi-cuon-768.avif` er et eget skarpt 768 × 768-bilde av ferske vietnamesiske rispapirruller med reker, risnudler, urter og peanøttsaus. Ikke et restaurantfoto, og ikke egnet for vegetariske eller nøttefrie varianter.
+- `tandoori-chicken-768.avif` viser tandoorigrillet kylling på svart bakgrunn (768 × 768), og skal ikke brukes for vegetariske tandooriretter eller andre kjøttsorter.
 - `manifest.json` angir nøyaktig hva hvert felt i bildekartet viser, og hvor det brukes.
 - `DishPhotoGallery` bruker den faste rekkefølgen fra manifestet i Matlyst.
 - Et trykk på et bilde åpner Fysens eksisterende rettsøk, uten å
@@ -87,6 +88,7 @@ Bildesekvensen er:
 36. Bánh mì med kjøtt, pâté, syltede grønnsaker, agurk og koriander
 37. Bún chả med grillet svinekjøtt, risnudler, urter og dipping-saus
 38. Gỏi cuốn med reker, risnudler, urter og peanøttsaus
+39. Tandoorikylling med kryddermarinade, løk og sitron
 
 Ved utvidelse må motiv, rettnavn og eventuell ingrediensvariant være
 entydig; for eksempel må vegetarramen ikke få bilde av ramen med svin.

@@ -403,6 +403,17 @@
       "kind": "AI-illustrasjon",
       "catalogId": "vietnamese-spring-rolls",
       "variantCaution": "Illustrasjon av ferske rispapirruller med reker, risnudler, urter og peanøttsaus. Ikke bruk for vegetariske eller nøttefrie varianter eller som faktisk restaurantfoto."
+    },
+    {
+      "id": "tandoori",
+      "label": "Tandoorikylling",
+      "query": "tandoori chicken",
+      "index": 38,
+      "atlas": "tandoori-chicken-768.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "tandoori",
+      "variantCaution": "Illustrasjonen viser tandoorigrillet kylling med rødlig kryddermarinade, løk, koriander og sitron. Ikke bruk for vegetarisk tandoori, andre kjøttsorter eller som fotografi av en bestemt restaurants rett."
     }
   ]
 }
