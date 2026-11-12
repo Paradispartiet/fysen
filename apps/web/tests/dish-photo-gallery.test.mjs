@@ -15,6 +15,7 @@ const css = readFileSync(path.join(web, "styles/dish-photos.css"), "utf8");
 const atlas = readFileSync(path.join(web, "public/dish-images/collection.avif"));
 const pizzaMargherita = readFileSync(path.join(web, "public/dish-images/pizza-margherita-512.avif"));
 const cheeseburger = readFileSync(path.join(web, "public/dish-images/cheeseburger-bacon-512.avif"));
+const grilledSalmon = readFileSync(path.join(web, "public/dish-images/grillet-laks-512.avif"));
 const series04 = readFileSync(path.join(web, "public/dish-images/series-04.avif"));
 const tomYum = readFileSync(path.join(web, "public/dish-images/tom-yum-512.avif"));
 const padKraPao = readFileSync(path.join(web, "public/dish-images/pad-kra-pao-384.avif"));
@@ -99,7 +100,7 @@ test("Every generated and approved image is represented in the published Matlyst
   assert.deepEqual(manifest.images.map((entry) => entry.id), entries.map((match) => match[1]));
   for (const [index, image] of manifest.images.entries()) {
     assert.equal(image.index, index);
-    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : "bun-cha-512.avif");
+    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index === 2 ? "grillet-laks-512.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : "bun-cha-512.avif");
     assert.equal(image.surface, "Matlyst");
     assert.equal(image.kind, "AI-illustrasjon");
   }
@@ -250,4 +251,22 @@ test("Bacon cheeseburger has a dedicated sharp source without a fabricated catal
   assert.match(css, /cheeseburger-bacon-512\.avif/u);
   const mapping = gallery.slice(gallery.indexOf("const editorialPhotoIndex"), gallery.indexOf("const illustratedVariants"));
   assert.doesNotMatch(mapping, /^\s*cheeseburger:/mu);
+});
+
+test("Grilled salmon has a standalone 512px image and no invented restaurant or editorial-catalog identity", () => {
+  assert.equal(grilledSalmon.toString("ascii", 4, 12), "ftypavif");
+  assert.ok(grilledSalmon.length > 8000);
+  const marker = grilledSalmon.indexOf(Buffer.from("ispe"));
+  assert.ok(marker > 0);
+  assert.equal(grilledSalmon.readUInt32BE(marker + 8), 512);
+  assert.equal(grilledSalmon.readUInt32BE(marker + 12), 512);
+  assert.equal(manifest.images[2].id, "grillet-laks");
+  assert.equal(manifest.images[2].atlas, "grillet-laks-512.avif");
+  assert.equal(manifest.images[2].catalogId, null);
+  assert.match(manifest.images[2].variantCaution, /ikke faktisk restaurantfoto/iu);
+  assert.match(gallery, /isGrilledSalmon = index === 2/u);
+  assert.match(gallery, /dishPhotoThumb dishPhotoGrilledSalmon/u);
+  assert.match(css, /grillet-laks-512\\.avif/u);
+  const mapping = gallery.slice(gallery.indexOf("const editorialPhotoIndex"), gallery.indexOf("export function DishPhotoThumbnail"));
+  assert.doesNotMatch(mapping, /^\\s*"?grillet-laks"?:/mu);
 });
