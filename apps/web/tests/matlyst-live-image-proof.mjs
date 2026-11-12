@@ -43,10 +43,19 @@ for (const atlas of atlases) {
 await fetchWithRetry(`${base}/`, async (response) => {
   const html = (await response.text()).replaceAll("<!-- -->", "");
   assert.ok(html.includes("Hva frister?"), "The Matlyst gallery heading is missing");
-  const visibleCards = html.split('class="dishPhotoCard"').length - 1;
-  assert.equal(visibleCards, manifest.images.length, "Not all approved images are rendered in Matlyst");
+  // The full catalog is available in the DOM, but intentionally not shown
+  // until the user opens the native details control. A home-page image wall
+  // is a design regression even if all original files are still served.
+  const disclosure = html.match(/<details[^>]*class="dishPhotos"[^>]*>/u);
+  assert.ok(disclosure, "Matlyst gallery must use an opt-in details control");
+  assert.doesNotMatch(disclosure[0], /\sopen(?:\s|>)/u, "Gallery must be closed by default");
+  assert.ok(html.includes('class="dishPhotosPreview"'), "Small gallery teaser is missing");
+  assert.ok(html.includes("Utforsk " + manifest.images.length + " retter"), "Gallery count is out of sync");
+  assert.ok(html.indexOf('class="cuisineGrid"') < html.indexOf('class="dishPhotos"'), "Cuisine choices must precede imagery");
+  const availableCards = html.split('class="dishPhotoCard"').length - 1;
+  assert.equal(availableCards, manifest.images.length, "Not all approved images remain available in the opt-in Matlyst gallery");
   for (const entry of manifest.images) {
     assert.ok(html.includes(entry.label), `Missing dish image card: ${entry.id}`);
   }
 });
-console.log(`Verified ${manifest.images.length} rendered Matlyst images and ${atlases.length} public atlases at ${base}`);
+console.log(`Verified ${manifest.images.length} Matlyst images in a closed-by-default gallery and ${atlases.length} public atlases at ${base}`);
