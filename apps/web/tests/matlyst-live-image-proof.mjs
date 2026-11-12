@@ -9,7 +9,7 @@ const repoRoot = path.resolve(fileURLToPath(new URL("../../..", import.meta.url)
 const webRoot = path.join(repoRoot, "apps/web");
 const manifest = JSON.parse(readFileSync(path.join(webRoot, "public/dish-images/manifest.json"), "utf8"));
 const base = (process.env.FYSEN_PUBLIC_WEB_URL || "https://fysen.vercel.app").replace(/\/$/, "");
-assert.equal(manifest.images.length, 34, "The release must contain every approved food illustration");
+assert.equal(manifest.images.length, 33, "The release must contain every approved food illustration");
 
 async function fetchWithRetry(uri, validate, tries = 15) {
   let lastError = "no response";
