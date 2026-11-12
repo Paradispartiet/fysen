@@ -196,12 +196,12 @@ jobs:
           CREATE UNIQUE INDEX staging_archived_search_item_refs_impression_idx
             ON fysen.staging_archived_search_item_refs(impression_id);
 
-          DO $
+          DO $archive_map_check$
           BEGIN
             IF (SELECT count(*) FROM fysen.staging_archived_search_item_refs) <> 5150 THEN
               RAISE EXCEPTION 'Isolated archive-reference map must preserve exactly 5150 old impression links';
             END IF;
-          END $;
+          END $archive_map_check$;
 
           DELETE FROM fysen.menu_snapshots s
           WHERE NOT EXISTS (SELECT 1 FROM stg_keep k WHERE k.id=s.id);
