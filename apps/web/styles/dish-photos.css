@@ -188,3 +188,9 @@
 .dishPhotoSmall.dishPhotoSambar {
   background: #000 url("/dish-images/sambar-768.avif") center / cover no-repeat;
 }
+
+/* Medu vada: separate sharp 768px illustration on pure black, not restaurant photography. */
+.dishPhotoThumb.dishPhotoVada,
+.dishPhotoSmall.dishPhotoVada {
+  background: #000 url("/dish-images/medu-vada-768.avif") center / cover no-repeat;
+}

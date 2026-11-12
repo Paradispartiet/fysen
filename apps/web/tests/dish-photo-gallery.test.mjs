@@ -29,14 +29,15 @@ const naan = readFileSync(path.join(web, "public/dish-images/naan-768.avif"));
 const dalMakhani = readFileSync(path.join(web, "public/dish-images/dal-makhani-768.avif"));
 const idli = readFileSync(path.join(web, "public/dish-images/idli-512.avif"));
 const sambar = readFileSync(path.join(web, "public/dish-images/sambar-768.avif"));
+const vada = readFileSync(path.join(web, "public/dish-images/medu-vada-768.avif"));
 const pho = readFileSync(path.join(web, "public/dish-images/pho-512.avif"));
 const manifest = JSON.parse(readFileSync(path.join(web, "public/dish-images/manifest.json"), "utf8"));
 const catalog = readFileSync(path.join(web, "content/food-knowledge/catalog.ts"), "utf8");
 
-test("Matlyst has exactly forty-three distinct, curated dish illustrations", () => {
+test("Matlyst has exactly forty-four distinct, curated dish illustrations", () => {
   const entries = [...gallery.matchAll(/\{ id: "([^"]+)", label: "([^"]+)", query: "([^"]+)" \}/gu)];
-  assert.equal(entries.length, 43);
-  assert.equal(new Set(entries.map((match) => match[1])).size, 43);
+  assert.equal(entries.length, 44);
+  assert.equal(new Set(entries.map((match) => match[1])).size, 44);
   assert.ok(entries.every((match) => match[2].length > 0 && match[3].length > 0));
   assert.match(gallery, /index % 6/u);
   assert.match(gallery, /Math\.floor\(index \/ 6\)/u);
@@ -98,18 +99,18 @@ test("Every exact editorial image maps to a genuine food knowledge dish", () => 
   const mappingBlock = gallery.slice(gallery.indexOf("const editorialPhotoIndex"), gallery.indexOf("export function DishPhotoThumbnail"));
   const mappedIds = [...mappingBlock.matchAll(/^\s*(?:"([^"]+)"|([a-z][a-z0-9-]*)):\s*\d+,/gmu)].map((match) => match[1] || match[2]);
   assert.equal(new Set(mappedIds).size, mappedIds.length, "Duplicate editorial image IDs");
-  assert.equal(mappedIds.length, 33);
+  assert.equal(mappedIds.length, 34);
   for (const id of mappedIds) assert.ok(catalogIds.has(id), `Editorial image has no catalog dish: ${id}`);
 });
 
 test("Every generated and approved image is represented in the published Matlyst gallery", () => {
   const entries = [...gallery.matchAll(/\{ id: "([^"]+)", label: "([^"]+)", query: "([^"]+)" \}/gu)];
   assert.equal(manifest.version, 1);
-  assert.equal(manifest.images.length, 43);
+  assert.equal(manifest.images.length, 44);
   assert.deepEqual(manifest.images.map((entry) => entry.id), entries.map((match) => match[1]));
   for (const [index, image] of manifest.images.entries()) {
     assert.equal(image.index, index);
-    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index === 2 ? "grillet-laks-512.avif" : index === 3 ? "grillet-biff-512.avif" : index === 4 ? "rekesmorbrod-512.avif" : index === 18 ? "pho-512.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : "sambar-768.avif");
+    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index === 2 ? "grillet-laks-512.avif" : index === 3 ? "grillet-biff-512.avif" : index === 4 ? "rekesmorbrod-512.avif" : index === 18 ? "pho-512.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-768.avif");
     assert.equal(image.surface, "Matlyst");
     assert.equal(image.kind, "AI-illustrasjon");
   }
@@ -447,4 +448,25 @@ test("Sambar has its own accurate 768px illustration with exact catalog ID", () 
   assert.equal(image.atlas, "sambar-768.avif");
   assert.match(image.variantCaution, /linse/u);
   assert.match(image.variantCaution, /restaurantfoto/u);
+});
+
+test("Medu vada is its own sharp 768px dish photo with exact catalog ID", () => {
+  assert.equal(vada.toString("ascii", 4, 12), "ftypavif");
+  assert.ok(vada.length > 25000, "Vada should contain a real image, not a placeholder");
+  const marker = vada.indexOf(Buffer.from("ispe"));
+  assert.ok(marker > 0);
+  assert.equal(vada.readUInt32BE(marker + 8), 768);
+  assert.equal(vada.readUInt32BE(marker + 12), 768);
+  assert.match(gallery, /id: "vada", label: "Medu vada med sambar og chutney"/u);
+  assert.match(gallery, /vada: 43/u);
+  assert.match(gallery, /isVada = index === 43/u);
+  assert.match(gallery, /dishPhotoThumb dishPhotoVada/u);
+  assert.match(gallery, /dishPhotoSmall dishPhotoVada/u);
+  assert.match(css, /medu-vada-768\.avif/u);
+  const entry = manifest.images[43];
+  assert.equal(entry.id, "vada");
+  assert.equal(entry.catalogId, "vada");
+  assert.equal(entry.atlas, "medu-vada-768.avif");
+  assert.match(entry.variantCaution, /Medu vada/u);
+  assert.match(entry.variantCaution, /restaurant/u);
 });

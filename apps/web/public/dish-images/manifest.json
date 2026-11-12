@@ -458,6 +458,17 @@
       "kind": "AI-illustrasjon",
       "catalogId": "sambar",
       "variantCaution": "Sørindisk linse- og grønnsaksgryte med tamarind, karriblader, sennepsfrø og chili. Tilberedning og ingredienser varierer; ikke autentisk restaurantfoto."
+    },
+    {
+      "id": "vada",
+      "label": "Medu vada med sambar og chutney",
+      "query": "vada",
+      "index": 43,
+      "atlas": "medu-vada-768.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "vada",
+      "variantCaution": "Medu vada, frityrstekte linsekaker med sambar og chutney. Avbildet variant er ikke en garanti for ingredienser eller allergener på noen bestemt restaurant, og bildet er ikke et restaurantfoto."
     }
   ]
 }
