@@ -130,6 +130,19 @@ def valid_http_url(value: object) -> bool:
     except ValueError:
         return False
 
+def hash_public_rows(rows) -> str:
+    """Canonical SHA-256 of the ordered 12-column PUBLIC row stream.
+
+    This fingerprints the imported, filtered data, not the compressed source.
+    It detects accidental or unauthorized changes after archive verification.
+    """
+    digest = hashlib.sha256()
+    for row in rows:
+        digest.update(json.dumps(list(row), ensure_ascii=False, separators=(",", ":")).encode("utf-8"))
+        digest.update(b"\n")
+    return digest.hexdigest()
+
+
 def verified_fysen_rows(manifest_path: Path, compressed_path: Path) -> tuple[dict, list[tuple]]:
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     if not isinstance(manifest, dict) or manifest.get("version") != 1:
@@ -201,6 +214,7 @@ def verified_fysen_rows(manifest_path: Path, compressed_path: Path) -> tuple[dic
         "lastRefreshAt": manifest.get("lastRefreshAt"),
         "restaurants": len(restaurants), "sources": len(sources),
         "originalItems": len(items), "publicItems": len(selected),
+        "publicRowsSha256": hash_public_rows(selected),
         "quarantinedSources": len(hidden_sources),
     }
     return info, selected
