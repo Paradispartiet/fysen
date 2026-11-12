@@ -20,10 +20,11 @@
       "label": "Cheeseburger med bacon",
       "query": "bacon cheeseburger",
       "index": 1,
-      "atlas": "collection.avif",
+      "atlas": "cheeseburger-bacon-512.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "cheeseburger"
+      "catalogId": "cheeseburger",
+      "variantCaution": "KI-illustrasjon av bacon cheeseburger med storfekjøtt, smeltet ost og pommes frites. Ikke vegetarrett og ikke et faktisk restaurantfoto."
     },
     {
       "id": "grillet-laks",
