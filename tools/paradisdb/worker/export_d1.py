@@ -41,6 +41,7 @@ COLUMNS = ("item_index", "restaurant_name", "restaurant_slug", "address", "city"
 METADATA = ("archiveDate", "lastRefreshAt", "sha256", "publicRowsSha256", "restaurants", "sources",
             "originalItems", "publicItems", "quarantinedSources")
 MAX_STATEMENT_BYTES = 64000
+MAX_ROWS_PER_INSERT = 50
 
 def quote(value: object) -> str:
     if value is None:
@@ -105,12 +106,27 @@ def export_public(source: Path, destination: Path) -> dict:
                 for key in METADATA:
                     out.write("INSERT INTO public_archive_meta(key,value) VALUES (" +
                               quote(key) + "," + quote(json.dumps(meta[key], ensure_ascii=False)) + ");\n")
+                # Batch bounded INSERT statements for real D1 imports. This
+                # avoids tens of thousands of separate SQL statements while
+                # preserving deterministic row order and safe SQL quoting.
+                prefix = "INSERT INTO fysen_public_items VALUES "
+                pending: list[str] = []
+                pending_bytes = len(prefix.encode("utf-8")) + 2
                 for row in con.execute(query):
-                    values = ",".join(quote(row[k]) for k in COLUMNS)
-                    statement = "INSERT INTO fysen_public_items VALUES (" + values + ");\n"
-                    if len(statement.encode("utf-8")) > MAX_STATEMENT_BYTES:
+                    values = "(" + ",".join(quote(row[k]) for k in COLUMNS) + ")"
+                    next_bytes = len(values.encode("utf-8")) + (1 if pending else 0)
+                    if next_bytes + len(prefix.encode("utf-8")) + 2 > MAX_STATEMENT_BYTES:
                         raise ValueError("One public row is too large for the D1 export")
-                    out.write(statement)
+                    if pending and (len(pending) >= MAX_ROWS_PER_INSERT or
+                                    pending_bytes + next_bytes > MAX_STATEMENT_BYTES):
+                        out.write(prefix + ",".join(pending) + ";\n")
+                        pending = []
+                        pending_bytes = len(prefix.encode("utf-8")) + 2
+                        next_bytes = len(values.encode("utf-8"))
+                    pending.append(values)
+                    pending_bytes += next_bytes
+                if pending:
+                    out.write(prefix + ",".join(pending) + ";\n")
                 # This is the final statement: a partial D1 import remains
                 # unservable (503), rather than quietly exposing incomplete data.
                 out.write("INSERT INTO public_archive_meta(key,value) VALUES ('public_ready','true');\n")
