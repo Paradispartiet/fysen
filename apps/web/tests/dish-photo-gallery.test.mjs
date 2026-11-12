@@ -138,3 +138,11 @@ test("Pad Thai has its own verified image, not a mismatched seafood variant", ()
   assert.ok(manifest.images.some((image) => image.id === "pad-thai" && image.catalogId === "pad-thai"));
 });
 
+
+test("Legacy 128px food-atlas tiles never stretch beyond their 2x sharp display size", () => {
+  assert.match(css, /grid-template-columns:\s*64px\s+minmax\(0,\s*1fr\)/u);
+  assert.match(css, /\.dishPhotoCard \.dishPhotoThumb\s*\{[^}]*width:\s*64px;[^}]*height:\s*64px;/su);
+  assert.match(css, /\.dishPhotoSmall\s*\{[^}]*width:\s*64px;[^}]*height:\s*64px;/su);
+  assert.match(css, /@media\(max-width:600px\)[\s\S]*?\.dishPhotoCard \.dishPhotoThumb\s*\{[^}]*width:\s*56px;[^}]*height:\s*56px;/u);
+  assert.doesNotMatch(css, /image-rendering:\s*pixelated/u);
+});
