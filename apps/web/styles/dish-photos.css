@@ -114,3 +114,11 @@
 .dishPhotoSmall.dishPhotoBunCha {
   background: #000 url("/dish-images/bun-cha-512.avif") center / cover no-repeat;
 }
+
+
+/* Dedicated 512px pizza illustration; no enlargement of atlas slot 0.
+   Applies only to exact pizza-margherita editorial ID, never a restaurant dish photo. */
+.dishPhotoThumb.dishPhotoPizzaMargherita,
+.dishPhotoSmall.dishPhotoPizzaMargherita {
+  background: #000 url("/dish-images/pizza-margherita-512.avif") center / cover no-repeat;
+}
