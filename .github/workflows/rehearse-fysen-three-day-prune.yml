@@ -177,12 +177,39 @@ jobs:
             RAISE NOTICE 'Preflight passed: %, %, %, %, %', n_sources,n_keep,n_items,n_refs,n_success;
           END $$;
 
+          -- Preserve stable identifiers for every search impression whose
+          -- historical menu item would be removed by this *isolated* rehearsal.
+          -- Mapping is stored ONLY in the short-lived staging database.
+          -- The private full-history dump is needed to resolve these IDs.
+          CREATE TABLE fysen.staging_archived_search_item_refs AS
+            SELECT imp.id AS impression_id,
+                   imp.menu_item_id AS historical_menu_item_id,
+                   item.snapshot_id AS historical_snapshot_id,
+                   snap.menu_source_id AS historical_menu_source_id,
+                   snap.fetched_at AS historical_observed_at
+            FROM fysen.search_result_impressions AS imp
+            JOIN fysen.menu_items AS item ON item.id = imp.menu_item_id
+            JOIN fysen.menu_snapshots AS snap ON snap.id = item.snapshot_id
+            WHERE NOT EXISTS (
+              SELECT 1 FROM stg_keep AS keep WHERE keep.id = item.snapshot_id
+            );
+          CREATE UNIQUE INDEX staging_archived_search_item_refs_impression_idx
+            ON fysen.staging_archived_search_item_refs(impression_id);
+
+          DO $
+          BEGIN
+            IF (SELECT count(*) FROM fysen.staging_archived_search_item_refs) <> 5150 THEN
+              RAISE EXCEPTION 'Isolated archive-reference map must preserve exactly 5150 old impression links';
+            END IF;
+          END $;
+
           DELETE FROM fysen.menu_snapshots s
           WHERE NOT EXISTS (SELECT 1 FROM stg_keep k WHERE k.id=s.id);
 
           DO $$
           DECLARE r bigint; ms bigint; sn bigint; it bigint; ch bigint; wr bigint;
           DECLARE e bigint; imp bigint; linked bigint; unset bigint; dangling bigint; sources_missing bigint;
+          DECLARE archived_links bigint; preserved_null_links bigint;
           BEGIN
             SELECT count(*) INTO r FROM fysen.restaurants;
             SELECT count(*) INTO ms FROM fysen.menu_sources;
@@ -199,6 +226,15 @@ jobs:
               WHERE i.menu_item_id IS NOT NULL AND m.id IS NULL;
             SELECT count(*) INTO sources_missing FROM fysen.menu_sources src
               WHERE NOT EXISTS(SELECT 1 FROM fysen.menu_snapshots s WHERE s.menu_source_id=src.id);
+            SELECT count(*) INTO archived_links
+              FROM fysen.staging_archived_search_item_refs;
+            SELECT count(*) INTO preserved_null_links
+              FROM fysen.staging_archived_search_item_refs a
+              JOIN fysen.search_result_impressions i ON i.id = a.impression_id
+              WHERE i.menu_item_id IS NULL
+                AND a.historical_menu_item_id IS NOT NULL
+                AND a.historical_snapshot_id IS NOT NULL
+                AND a.historical_menu_source_id IS NOT NULL;
             IF (r,ms,sn,it,ch,wr,e,imp,linked,unset,dangling,sources_missing)
                IS DISTINCT FROM
                (1116::bigint,1154::bigint,3096::bigint,151408::bigint,
@@ -208,7 +244,10 @@ jobs:
               RAISE EXCEPTION 'Post-prune staging verification failed: restaurants %, sources %, snapshots %, items %, changes %, watch_runs %, searches %, impressions %, linked %, unset %, dangling %, sources_missing %',
                 r,ms,sn,it,ch,wr,e,imp,linked,unset,dangling,sources_missing;
             END IF;
-            RAISE NOTICE 'STAGING PRUNE PASSED: 3096 snapshots, 151408 menu items, 5150 archived links set null, 0 orphans; searches and sources preserved';
+            IF archived_links <> 5150 OR preserved_null_links <> 5150 THEN
+              RAISE EXCEPTION 'Historic search links not fully mapped: mapped %, null-and-preserved %', archived_links, preserved_null_links;
+            END IF;
+            RAISE NOTICE 'STAGING PRUNE PASSED: 3096 snapshots, 151408 menu items, 5150 former links set null AND preserved in isolated historical reference map, 0 orphans';
           END $$;
           COMMIT;
 
@@ -234,7 +273,8 @@ jobs:
             SELECT names.name, pg_total_relation_size(format('fysen.%I', names.name)::regclass)
             FROM (VALUES ('restaurants'), ('menu_sources'), ('menu_snapshots'),
                          ('menu_items'), ('menu_changes'), ('menu_watch_runs'),
-                         ('search_events'), ('search_result_impressions')) AS names(name)
+                         ('search_events'), ('search_result_impressions'),
+                         ('staging_archived_search_item_refs')) AS names(name)
             ORDER BY pg_total_relation_size(format('fysen.%I', names.name)::regclass) DESC
           ")"
 
@@ -244,6 +284,7 @@ jobs:
             echo "Restored historical snapshot of 2 November 2026. This job pruned **only the temporary Docker Postgres** and then compacted tables. Historical Google Drive backup and original Supabase remain untouched."
             echo
             echo "- Exact retained items: 151,408 (asserted in SQL)"
+            echo "- Historical search-impression item references preserved in staging map: 5,150 (asserted in SQL)"
             echo "- Physical database size after VACUUM FULL: **${compacted_bytes} bytes**"
             echo "- Free comparison threshold (500 MB decimal): **500,000,000 bytes**"
             echo "- Conservative planning budget (20% headroom): **400,000,000 bytes**"
