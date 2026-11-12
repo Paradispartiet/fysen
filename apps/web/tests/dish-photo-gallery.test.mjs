@@ -10,6 +10,7 @@ const gallery = readFileSync(path.join(web, "components/dish-photo-gallery.tsx")
 const explorer = readFileSync(path.join(web, "components/cuisine-explorer.tsx"), "utf8");
 const layout = readFileSync(path.join(web, "app/layout.tsx"), "utf8");
 const browse = readFileSync(path.join(web, "components/dish-browse.tsx"), "utf8");
+const browseStyles = readFileSync(path.join(web, "styles/dish-browse.css"), "utf8");
 const css = readFileSync(path.join(web, "styles/dish-photos.css"), "utf8");
 const atlas = readFileSync(path.join(web, "public/dish-images/collection.avif"));
 const series04 = readFileSync(path.join(web, "public/dish-images/series-04.avif"));
@@ -110,4 +111,14 @@ test("The nine newly produced dishes are visible and maintain variant-specific a
   assert.match(gallery, /illustratedVariants/u);
   assert.match(gallery, /restaurantfoto/u);
   assert.match(css, /series-04\.avif/u);
+});
+
+test("Live All Dishes lists display photos only for exact canonical dish names", () => {
+  assert.match(browse, /const exactPhotoDish = knowledgeDish/u);
+  assert.match(browse, /normalizeDiscoveryText\(candidate\) === normalizeDiscoveryText\(dish\.name\)/u);
+  assert.match(browse, /<DishPhotoThumbnail dishId=\{exactPhotoDish\.id\} label=\{exactPhotoDish\.name\} \/>/u);
+  assert.match(browse, /<div className="dishBrowseItemContent">/u);
+  assert.match(browseStyles, /\.dishBrowseItemMain > \.dishPhotoSmall/u);
+  assert.match(browseStyles, /background-color:\s*#000/u);
+  assert.doesNotMatch(browse, /includes\(dish\.name\).*DishPhotoThumbnail/u);
 });

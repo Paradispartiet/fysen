@@ -308,11 +308,20 @@ export function DishBrowse({
               <div className="dishBrowseList">
                 {visibleLiveDishes.map((dish) => {
                   const knowledgeDish = knowledgeDishForLiveItem(dish);
+                  // The matcher may recognize a family from variants or aliases.
+                  // A photo is safe here only if the visible live name exactly
+                  // equals the canonical name or query, never by substring.
+                  const exactPhotoDish = knowledgeDish && [knowledgeDish.name, knowledgeDish.query].some(
+                    (candidate) => normalizeDiscoveryText(candidate) === normalizeDiscoveryText(dish.name),
+                  ) ? knowledgeDish : null;
                   return (
                     <div className="dishBrowseItem" key={dish.id}>
                       <a className="dishBrowseItemMain" href={dishSearchHref(dish.query, data.city)}>
-                        <strong>{browseDishDisplayName(dish.name)}</strong>
-                        <span>{dish.restaurantCount} {dish.restaurantCount === 1 ? "restaurant" : "restauranter"}</span>
+                        {exactPhotoDish ? <DishPhotoThumbnail dishId={exactPhotoDish.id} label={exactPhotoDish.name} /> : null}
+                        <div className="dishBrowseItemContent">
+                          <strong>{browseDishDisplayName(dish.name)}</strong>
+                          <span>{dish.restaurantCount} {dish.restaurantCount === 1 ? "restaurant" : "restauranter"}</span>
+                        </div>
                       </a>
                       {knowledgeDish ? (
                         <a className="dishBrowseKnowledgeLink" href={foodKnowledgeHref(knowledgeDish.id)} aria-label={`Om ${knowledgeDish.name}`}>
