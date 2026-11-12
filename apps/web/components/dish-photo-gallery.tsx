@@ -45,16 +45,34 @@ const illustratedDishes = [
 // Keep individual restaurant listings separate from these editorial images.
 export function DishPhotoGallery() {
   return (
-    <section className="dishPhotos" aria-labelledby="dish-photos-title">
-      <div className="dishPhotosHeading">
-        <div>
-          <p>Matlyst · Bildegalleri</p>
-          <h3 id="dish-photos-title">Hva frister?</h3>
+    <details className="dishPhotos" aria-labelledby="dish-photos-title">
+      <summary className="dishPhotosPreview">
+        <span className="dishPhotosIntro">
+          <span className="dishPhotosKicker">Matlyst · Litt inspirasjon</span>
+          <span className="dishPhotosTitle" id="dish-photos-title">Hva frister?</span>
+          <span className="dishPhotosDescription">
+            Oppdag retter i ditt eget tempo. Hele bildegalleriet er her når du vil se mer.
+          </span>
+          <span className="dishPhotosOpen">
+            Utforsk 35 retter <span aria-hidden="true">↗</span>
+          </span>
+        </span>
+        <span
+          className="dishPhotosCover"
+          role="img"
+          aria-label="KI-illustrasjon av tom yum med reker, ikke restaurantfoto"
+        />
+      </summary>
+      <div className="dishPhotosInside">
+        <div className="dishPhotosHeading">
+          <div>
+            <p>Matlyst · Bildegalleri</p>
+            <h3>Finn noe godt</h3>
+          </div>
+          <span>Illustrasjoner av rettetyper, ikke restaurantbilder.</span>
         </div>
-        <span>Illustrasjoner av rettetyper, ikke restaurantbilder.</span>
-      </div>
-      <div className="dishPhotosGrid">
-        {illustratedDishes.map((dish, index) => {
+        <div className="dishPhotosGrid">
+          {illustratedDishes.map((dish, index) => {
           const isTomYum = index === 33;
           const isPadKraPao = index === 34;
           const isSeries04 = index >= 24 && index < 33;
@@ -77,9 +95,10 @@ export function DishPhotoGallery() {
               <span className="dishPhotoAction">Se menytreff <span aria-hidden="true">→</span></span>
             </a>
           );
-        })}
+          })}
+        </div>
       </div>
-    </section>
+    </details>
   );
 }
 

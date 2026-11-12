@@ -226,14 +226,13 @@ export function CuisineExplorer({
       <div className="foodSectionHeading">
         <div>
           <p className="foodSectionEyebrow">Matlyst</p>
+          <h2>Utforsk kjøkken og retter</h2>
         </div>
-        <p>Velg et kjøkken eller en region, oppdag retter og finn restauranter som tilbyr dem.</p>
+        <p>Velg det du har lyst på. Finn retter og se hvilke restauranter som tilbyr dem.</p>
       </div>
 
       <RecentDishes dishes={effectiveBrowseData?.recentDishes ?? []} />
       <PopularDishes dishes={effectiveBrowseData?.popularDishes ?? []} />
-      <DishPhotoGallery />
-
       <div className="cuisineGrid">
         {homeCuisines.map((cuisine) => {
           const firstArea = cuisine.areas[0];
@@ -301,6 +300,8 @@ export function CuisineExplorer({
           );
         })}
       </div>
+
+      <DishPhotoGallery />
 
       <dialog
         ref={dialogRef}

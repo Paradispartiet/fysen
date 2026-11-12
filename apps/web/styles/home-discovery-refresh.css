@@ -1,0 +1,286 @@
+/* Fysen home: search first, calm discovery, image gallery only on request.
+   Keep older dish-image atlas rules for deep catalog cards; never enlarge them on the home page. */
+
+.homePage .homeHero {
+  min-height: 0;
+  padding-top: clamp(36px, 5vw, 68px);
+  padding-bottom: clamp(60px, 8vw, 90px);
+}
+.homePage .homeHero h1 {
+  margin-left: 0;
+  transform: none;
+  font-size: clamp(43px, 5.5vw, 72px);
+  line-height: 1.06;
+  white-space: normal;
+  letter-spacing: -0.045em;
+}
+.homePage .homeSearchWrap {
+  margin-top: clamp(25px, 3.4vw, 38px);
+}
+
+.cuisineExplorer .foodSectionHeading {
+  margin-bottom: 26px;
+}
+.cuisineExplorer .foodSectionEyebrow {
+  margin-bottom: 9px;
+  letter-spacing: 0.14em;
+}
+.cuisineExplorer .foodSectionHeading h2 {
+  font-size: clamp(27px, 3.4vw, 39px);
+  font-weight: 610;
+  letter-spacing: -0.036em;
+}
+.cuisineExplorer .foodSectionHeading > p {
+  margin-top: 9px;
+  max-width: 58ch;
+}
+
+.cuisineExplorer .cuisineGrid {
+  gap: 13px;
+}
+.cuisineExplorer .cuisineCardInteractive {
+  min-height: 0;
+  border-color: rgba(121, 201, 135, .15);
+  background: #0d100d;
+  border-radius: 17px;
+}
+.cuisineExplorer .cuisineCardTrigger {
+  min-height: 215px;
+  padding: 20px 21px 18px;
+}
+.cuisineExplorer .cuisineCardHeading strong {
+  font-size: 23px;
+  font-weight: 660;
+}
+.cuisineExplorer .cuisineDishPreview {
+  margin-top: 16px;
+  gap: 6px;
+}
+.cuisineExplorer .cuisineDishPreview > span {
+  min-height: 28px;
+  padding: 0 9px;
+  font-size: 11px;
+  color: #d4ddd4;
+  border-color: rgba(121, 201, 135, .16);
+}
+.cuisineExplorer .cuisineRestaurantPreview {
+  margin-top: 16px;
+  padding-top: 13px;
+  border-top-color: rgba(121, 201, 135, .12);
+}
+.cuisineExplorer .cuisineAreaList {
+  padding: 12px 15px 14px;
+}
+
+.cuisineExplorer .dishPhotos {
+  margin: clamp(36px, 5vw, 64px) 0 0;
+  padding: 0;
+  overflow: hidden;
+  background: linear-gradient(112deg, #121812 0%, #0a0d0a 72%);
+  border: 1px solid rgba(121, 201, 135, .18);
+  border-radius: 18px;
+}
+.dishPhotosPreview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 132px;
+  align-items: center;
+  gap: 16px 28px;
+  min-height: 174px;
+  padding: 24px 30px;
+  list-style: none;
+  cursor: pointer;
+}
+.dishPhotosPreview::-webkit-details-marker {
+  display: none;
+}
+.dishPhotosPreview::marker {
+  content: "";
+}
+.dishPhotosPreview:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: -5px;
+  border-radius: 18px;
+}
+.dishPhotosPreview:hover {
+  background: rgba(121, 201, 135, .035);
+}
+.dishPhotosIntro {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  min-width: 0;
+}
+.dishPhotosKicker {
+  color: var(--color-brand);
+  font-size: 11px;
+  font-weight: 730;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.dishPhotosTitle {
+  color: var(--color-ink);
+  font-size: clamp(26px, 3.3vw, 37px);
+  font-weight: 620;
+  line-height: 1.06;
+  letter-spacing: -.038em;
+}
+.dishPhotosDescription {
+  max-width: 58ch;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.dishPhotosOpen {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  margin-top: 3px;
+  color: var(--color-brand);
+  font-size: 13px;
+  font-weight: 710;
+}
+.dishPhotosOpen > span {
+  display: inline-block;
+  transition: transform 180ms ease;
+}
+.dishPhotos[open] .dishPhotosOpen > span {
+  transform: rotate(45deg);
+}
+.dishPhotosCover {
+  display: block;
+  width: 132px;
+  height: 132px;
+  justify-self: end;
+  background: #000 url("/dish-images/tom-yum-512.avif") center / cover no-repeat;
+  border-radius: 16px;
+}
+.dishPhotosInside {
+  padding: 26px 30px 30px;
+  border-top: 1px solid rgba(121, 201, 135, .13);
+}
+.dishPhotosInside .dishPhotosHeading {
+  margin-bottom: 18px;
+}
+.dishPhotosInside .dishPhotosHeading h3 {
+  font-size: 22px;
+  font-weight: 610;
+}
+.dishPhotosNote {
+  color: var(--color-muted);
+}
+.dishPhotos .dishPhotosGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+.dishPhotos .dishPhotoCard {
+  align-items: flex-start;
+  gap: 3px;
+  padding: 12px;
+  border-radius: 12px;
+  border-color: rgba(121, 201, 135, .12);
+  background: #0a0e0a;
+}
+.dishPhotos .dishPhotoCard .dishPhotoThumb {
+  width: 100%;
+  max-width: 100px;
+  max-height: 100px;
+  margin: 0 auto 9px;
+}
+.dishPhotos .dishPhotoCard strong {
+  font-size: 12px;
+  line-height: 1.28;
+}
+.dishPhotos .dishPhotoAction {
+  font-size: 11px;
+}
+
+@media (max-width: 1050px) {
+  .dishPhotos .dishPhotosGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 767px) {
+  .homePage .homeHero {
+    padding-top: 44px;
+    padding-bottom: 58px;
+  }
+  .homePage .homeHero h1 {
+    font-size: clamp(37px, 8.7vw, 57px);
+    line-height: 1.08;
+  }
+  .cuisineExplorer .foodSectionHeading {
+    margin-bottom: 20px;
+  }
+  .cuisineExplorer .cuisineGrid {
+    gap: 10px;
+  }
+  .cuisineExplorer .cuisineCardInteractive {
+    min-width: min(255px, 80vw);
+    min-height: 0;
+  }
+  .cuisineExplorer .cuisineCardTrigger {
+    min-height: 215px;
+    padding: 17px;
+  }
+  .cuisineExplorer .dishPhotos {
+    margin-top: 34px;
+  }
+  .dishPhotosPreview {
+    grid-template-columns: minmax(0, 1fr) 104px;
+    gap: 10px;
+    min-height: 152px;
+    padding: 19px 17px 20px;
+  }
+  .dishPhotosCover {
+    width: 104px;
+    height: 104px;
+    border-radius: 12px;
+  }
+  .dishPhotosTitle {
+    font-size: 27px;
+  }
+  .dishPhotosDescription {
+    font-size: 12px;
+  }
+  .dishPhotosInside {
+    padding: 20px 15px;
+  }
+  .dishPhotosInside .dishPhotosHeading {
+    display: block;
+  }
+  .dishPhotosInside .dishPhotosHeading > span {
+    display: block;
+    margin-top: 7px;
+    text-align: left;
+  }
+  .dishPhotos .dishPhotosGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .dishPhotos .dishPhotoCard {
+    padding: 8px;
+  }
+  .dishPhotos .dishPhotoCard .dishPhotoThumb {
+    max-width: 90px;
+    max-height: 90px;
+  }
+}
+@media (max-width: 520px) {
+  .dishPhotosPreview {
+    grid-template-columns: minmax(0, 1fr) 80px;
+    padding: 18px 14px;
+  }
+  .dishPhotosCover {
+    width: 80px;
+    height: 80px;
+  }
+  .dishPhotosTitle { font-size: 25px; }
+  .dishPhotosDescription { font-size: 11px; }
+  .dishPhotos .dishPhotosGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dishPhotosOpen > span { transition: none; }
+}
