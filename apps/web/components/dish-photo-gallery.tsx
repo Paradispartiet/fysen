@@ -77,6 +77,7 @@ export function DishPhotoGallery() {
           {illustratedDishes.map((dish, index) => {
           const isPizzaMargherita = index === 0;
           const isCheeseburger = index === 1;
+          const isPho = index === 18;
           const isGrilledSalmon = index === 2;
           const isTomYum = index === 33;
           const isPadKraPao = index === 34;
@@ -86,7 +87,7 @@ export function DishPhotoGallery() {
           const localIndex = isSeries04 ? index - 24 : index;
           const column = isSeries04 ? localIndex % 3 : index % 6;
           const row = isSeries04 ? Math.floor(localIndex / 3) : Math.floor(index / 6);
-          const position = (isPizzaMargherita || isCheeseburger || isGrilledSalmon || isTomYum || isPadKraPao || isBanhMi || isBunCha)
+          const position = (isPizzaMargherita || isCheeseburger || isGrilledSalmon || isPho || isTomYum || isPadKraPao || isBanhMi || isBunCha)
             ? "center"
             : isSeries04
               ? `${column * 50}% ${row * 50}%`
@@ -94,7 +95,7 @@ export function DishPhotoGallery() {
           return (
             <a href={dishSearchHref(dish.query)} key={dish.id} className="dishPhotoCard">
               <span
-                className={isPizzaMargherita ? "dishPhotoThumb dishPhotoPizzaMargherita" : isCheeseburger ? "dishPhotoThumb dishPhotoCheeseburger" : isGrilledSalmon ? "dishPhotoThumb dishPhotoGrilledSalmon" : isBunCha ? "dishPhotoThumb dishPhotoBunCha" : isBanhMi ? "dishPhotoThumb dishPhotoBanhMi" : isPadKraPao ? "dishPhotoThumb dishPhotoPadKraPao" : isTomYum ? "dishPhotoThumb dishPhotoTomYum" : isSeries04 ? "dishPhotoThumb dishPhotoSeries04" : "dishPhotoThumb"}
+                className={isPizzaMargherita ? "dishPhotoThumb dishPhotoPizzaMargherita" : isCheeseburger ? "dishPhotoThumb dishPhotoCheeseburger" : isGrilledSalmon ? "dishPhotoThumb dishPhotoGrilledSalmon" : isPho ? "dishPhotoThumb dishPhotoPho" : isBunCha ? "dishPhotoThumb dishPhotoBunCha" : isBanhMi ? "dishPhotoThumb dishPhotoBanhMi" : isPadKraPao ? "dishPhotoThumb dishPhotoPadKraPao" : isTomYum ? "dishPhotoThumb dishPhotoTomYum" : isSeries04 ? "dishPhotoThumb dishPhotoSeries04" : "dishPhotoThumb"}
                 aria-hidden="true"
                 style={{ backgroundPosition: position }}
               />
@@ -155,6 +156,7 @@ const illustratedVariants: Readonly<Record<string, string>> = {
   "peking-duck": "pekingand",
   "dan-dan-noodles": "dan dan-nudler med kjøtt og peanøtter",
   "green-curry": "grønn curry med kylling",
+  pho: "phở bò med storfekjøtt, risnudler, urter og lime",
   "pad-thai": "pad thai med reker",
   "tom-yum": "tom yum med reker, sopp og sitrongress",
   "pad-kra-pao": "pad kra pao med woket kjøtt, thaibasilikum, ris og speilegg",
@@ -166,13 +168,14 @@ export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: s
   const index = editorialPhotoIndex[dishId];
   if (index === undefined) return null;
   const isPizzaMargherita = index === 0;
+  const isPho = index === 18;
   const isTomYum = index === 33;
   const isPadKraPao = index === 34;
   const isBanhMi = index === 35;
   const isBunCha = index === 36;
   const isSeries04 = index >= 24 && index < 33;
   const localIndex = isSeries04 ? index - 24 : index;
-  const position = (isPizzaMargherita || isTomYum || isPadKraPao || isBanhMi || isBunCha)
+  const position = (isPizzaMargherita || isPho || isTomYum || isPadKraPao || isBanhMi || isBunCha)
     ? "center"
     : isSeries04
       ? `${(localIndex % 3) * 50}% ${Math.floor(localIndex / 3) * 50}%`
@@ -182,7 +185,7 @@ export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: s
     <span
       role="img"
       aria-label={`KI-illustrasjon av ${illustratedVariant}, ikke restaurantfoto`}
-      className={isPizzaMargherita ? "dishPhotoSmall dishPhotoPizzaMargherita" : isBunCha ? "dishPhotoSmall dishPhotoBunCha" : isBanhMi ? "dishPhotoSmall dishPhotoBanhMi" : isPadKraPao ? "dishPhotoSmall dishPhotoPadKraPao" : isTomYum ? "dishPhotoSmall dishPhotoTomYum" : isSeries04 ? "dishPhotoSmall dishPhotoSeries04" : "dishPhotoSmall"}
+      className={isPizzaMargherita ? "dishPhotoSmall dishPhotoPizzaMargherita" : isPho ? "dishPhotoSmall dishPhotoPho" : isBunCha ? "dishPhotoSmall dishPhotoBunCha" : isBanhMi ? "dishPhotoSmall dishPhotoBanhMi" : isPadKraPao ? "dishPhotoSmall dishPhotoPadKraPao" : isTomYum ? "dishPhotoSmall dishPhotoTomYum" : isSeries04 ? "dishPhotoSmall dishPhotoSeries04" : "dishPhotoSmall"}
       style={{ backgroundPosition: position }}
     />
   );
