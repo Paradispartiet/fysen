@@ -1,0 +1,48 @@
+name: ParadisDB local-only SQLite pilot
+
+on:
+  pull_request:
+    paths:
+      - "tools/paradisdb/**"
+      - ".github/workflows/paradisdb-local-pilot.yml"
+  push:
+    branches:
+      - feature/paradisdb-local-pilot-v1
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: paradisdb-local-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  local-proof:
+    name: SQLite, archive, backup and loopback-only API tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Python syntax check (no dependencies)
+        run: python3 -m py_compile tools/paradisdb/paradisdb.py tools/paradisdb/tests/test_paradisdb.py
+      - name: Run isolated safety and restore tests
+        run: python3 -m unittest discover -s tools/paradisdb/tests -p "test_*.py" -v
+      - name: CLI smoke and backup restore
+        shell: bash
+        run: |
+          set -euo pipefail
+          db="$RUNNER_TEMP/paradisdb-test.sqlite"
+          tmp="$RUNNER_TEMP/paradisdb-test-payload.json"
+          echo '{"hello":"from local SQLite","subscription_cost_nok":0}' > "$tmp"
+          python3 tools/paradisdb/paradisdb.py init "$db"
+          python3 tools/paradisdb/paradisdb.py put "$db" fysen pilot "$tmp"
+          python3 tools/paradisdb/paradisdb.py get "$db" fysen pilot | python3 -c 'import json,sys; assert json.load(sys.stdin)["subscription_cost_nok"] == 0'
+          python3 tools/paradisdb/paradisdb.py backup "$db" "$RUNNER_TEMP/paradisdb-backup.sqlite"
+          python3 tools/paradisdb/paradisdb.py verify-backup "$RUNNER_TEMP/paradisdb-backup.sqlite" "$RUNNER_TEMP/paradisdb-backup.sqlite.sha256.json"
+          python3 tools/paradisdb/paradisdb.py restore "$RUNNER_TEMP/paradisdb-backup.sqlite" "$RUNNER_TEMP/paradisdb-backup.sqlite.sha256.json" "$RUNNER_TEMP/paradisdb-restored.sqlite"
+          python3 tools/paradisdb/paradisdb.py get "$RUNNER_TEMP/paradisdb-restored.sqlite" fysen pilot | python3 -c 'import json,sys; assert json.load(sys.stdin)["hello"] == "from local SQLite"'
+          echo "PASS: local database writes, readback, sha-verified backup and restore"
