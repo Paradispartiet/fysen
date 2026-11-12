@@ -5,7 +5,7 @@ Kontroll 12. november 2026, basert på den redaksjonelle matkatalogen i `apps/we
 - **84 redaksjonelle rettetyper** totalt.
 - **23 rettetyper** med eksakt ID-koblet illustrasjon i Matlyst-kortene.
 - **61 rettetyper** uten slik kobling.
-- Det frittstående galleriet viser 34 illustrative motiv, hvorav flere ikke er entydige katalog-ID-er.
+- Det frittstående galleriet viser 33 illustrative motiv, hvorav flere ikke er entydige katalog-ID-er.
 - **Dette er ikke 84 restaurantretter**: restaurantmenyer og varianter er egne data og får ikke automatisk slike KI-bilder.
 
 ## Motiver som mangler eksakt katalogkobling
