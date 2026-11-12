@@ -27,7 +27,9 @@ PUBLIC_ROW = (
 META = {
     "archiveDate": "2026-11-02", "lastRefreshAt": "2026-11-12T11:40:54.434Z",
     "sha256": "a" * 64, "restaurants": 973, "sources": 973,
-    "originalItems": 47265, "publicItems": 1, "quarantinedSources": 4,
+    "originalItems": 47265, "publicItems": 1,
+    "publicRowsSha256": db.hash_public_rows([PUBLIC_ROW]),
+    "quarantinedSources": 4,
 }
 
 class ExportTests(unittest.TestCase):
@@ -72,6 +74,27 @@ class ExportTests(unittest.TestCase):
         target.close()
         self.assertLess(text.index("INSERT INTO fysen_public_items"),
                         text.index("VALUES ('public_ready','true')"))
+
+    def test_same_count_tampered_public_row_refuses_d1_export(self):
+        """Keep row count constant while tampering with a dish price."""
+        con = sqlite3.connect(self.sqlite)
+        with con:
+            con.execute("UPDATE fysen_public_items SET price_minor = 99999 WHERE item_index = 4")
+        con.close()
+        with self.assertRaisesRegex(ValueError, "digest mismatch"):
+            exporter.export_public(self.sqlite, self.sql)
+        self.assertFalse(self.sql.exists())
+
+    def test_same_count_tampered_source_date_refuses_d1_export(self):
+        """The imported observation date is part of the public digest."""
+        con = sqlite3.connect(self.sqlite)
+        with con:
+            con.execute("UPDATE fysen_public_items SET observed_at = ? WHERE item_index = 4",
+                        ("2099-01-01T00:00:00Z",))
+        con.close()
+        with self.assertRaisesRegex(ValueError, "digest mismatch"):
+            exporter.export_public(self.sqlite, self.sql)
+        self.assertFalse(self.sql.exists())
 
     def test_incomplete_or_wrong_checksum_metadata_refuses_export(self):
         con = sqlite3.connect(self.sqlite)
