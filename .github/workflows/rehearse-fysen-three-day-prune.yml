@@ -68,15 +68,20 @@ jobs:
           }
           trap cleanup EXIT
 
+          # PostGIS's entrypoint starts a *temporary* PostgreSQL server to
+          # install extensions, then shuts it down before the final startup.
+          # pg_isready alone races with that temporary server (run #43174156331).
           ready=0
           for attempt in $(seq 1 90); do
-            if docker exec fysen-history-restore pg_isready -U postgres -d postgres >/dev/null 2>&1; then
+            if docker logs fysen-history-restore 2>&1 | grep -Fq 'PostgreSQL init process complete; ready for start up.' &&
+               docker exec fysen-history-restore pg_isready -U postgres -d postgres >/dev/null 2>&1; then
               ready=1
               break
             fi
             sleep 2
           done
           test "$ready" -eq 1
+          echo "Final PostGIS PostgreSQL startup confirmed before restore."
 
           docker exec fysen-history-restore psql -v ON_ERROR_STOP=1 -U postgres -d postgres \
             -c 'CREATE SCHEMA IF NOT EXISTS fysen' \
