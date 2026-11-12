@@ -44,9 +44,15 @@ Eldre Wrangler **4.45.0** utløste en intern `workerd`-feil i SQL statement-cach
 
 Den tidligere spørringen brukte `instr(normalized_name, ?)` over hele menylisten, noe som kan gi en full tabellskanning. **D1 måler skannede rader**, ikke bare treffene, og dette kan raskt bruke opp gratiskvoten på **5 millioner leste rader per dag**. Gratisplanen har også **100 000 skrevne rader per dag**, **500 MB per database** og **5 GB samlet lagring**, med grenser på blant annet søke- og SQL-operasjoner. [Cloudflare D1-priser](https://developers.cloudflare.com/d1/platform/pricing/) og [D1-grenser](https://developers.cloudflare.com/d1/platform/limits/).
 
-For uttrykk på minst tre normaliserte tegn bruker v0.2 en **FTS5 trigram-indeks**, bygd etter importen og før `public_ready`. Den er ikke et nytt privat datalager. Søkeuttrykk på to tegn beholder den gamle bounded fallback-spørringen for kompatibilitet, men kan fortsatt skanne mange rader. En isolert kontroll av de 47 265 offentlige menypostene fant samme treffmengde for åtte testuttrykk og en fysisk SQLite-størrelse på omtrent **15,1 MB** med FTS-indeks. Dette er **ikke** et kostnadsbevis fra Cloudflare i produksjon.
+For uttrykk på minst tre normaliserte tegn bruker v0.2 en **FTS5 trigram-indeks**, bygd etter importen og før `public_ready`. Den er ikke et nytt privat datalager. Den tidligere to-tegns fallback-spørringen er nå **deaktivert i det offentlige API-et**: slike søk avvises før D1, fordi de kan utløse mange leste rader. En isolert kontroll av de 47 265 offentlige menypostene fant samme treffmengde for åtte testuttrykk og en fysisk SQLite-størrelse på omtrent **15,1 MB** med FTS-indeks. Dette er **ikke** et kostnadsbevis fra Cloudflare i produksjon.
 
 **Merk:** Opprettelse og rebuild av FTS-indekser medfører ekstra rader skrevet og kan gjøre at en full førstegangsimport overskrider Free-planens daglige skrivekvote. Derfor må `rows_read`/`rows_written` fra reell D1 observeres og et **faktisk** Free-prosjekt kontrolleres før en eventuell remote-import. Testene i denne PR-en bruker kun lokal D1 uten fakturering. Ingen automatisk betalt oppgradering, ingen fjernimport og ingen bytting av produksjonspekere.
+
+## Kostnadssperrer og release-gate (v0.3)
+
+**Hele den offentlige nettadapteren er av som standard.** `PARADISDB_PUBLIC_ENABLED` må være `"true"`, og bindingen `PUBLIC_RATE_LIMITER` må finnes. Ingen av delene kan erstattes av private Aha-kontoer eller gamle Supabase-variabler. En manglende bryter eller limiter gir 503 **uten D1-lesing**; en overskredet lokal rate limit gir 429. Eksempelkonfigurasjonen har `workers_dev=false` og `PARADISDB_PUBLIC_ENABLED=false`.
+
+Cloudflares rate limiting er *omtrentlig per datasenter*, og det finnes ingen streng global gratisgrense i denne adapteren. Før enhver fjernpreview må reelle eksterne målinger vurderes med `free_budget_gate.py`; verktøyet nekter `null`, manglende målinger eller for høyt forventet forbruk. Se [FREE_PLAN_RELEASE_GATE.md](./FREE_PLAN_RELEASE_GATE.md) for mål, kvoter, kildekrav, manuelle kontroller og tilbakeføring.
 
 ## Framtidig, kun etter uttrykkelig godkjenning
 
