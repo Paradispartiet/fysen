@@ -9,6 +9,9 @@ const ALLOWED_PATHS = new Set([
   "/v1/dishes/archive/search",
 ]);
 
+// FTS5 trigram LIKE is indexed for three or more normalized characters.
+// Very short searches retain the original bounded query for compatibility;
+// those can still scan broadly and must be considered in the cost budget.
 const PUBLIC_SELECT =
   "SELECT restaurant_name,restaurant_slug,address,city,dish_name,normalized_name," +
   " price_minor,price_kind,price_max_minor,source_url,observed_at" +
@@ -16,6 +19,16 @@ const PUBLIC_SELECT =
   " ORDER BY CASE WHEN normalized_name = ? THEN 3" +
   " WHEN substr(normalized_name, 1, length(?)) = ? THEN 2 ELSE 1 END DESC," +
   " observed_at DESC, restaurant_name ASC, dish_name ASC LIMIT " + MAX_MATCH_ROWS;
+
+const PUBLIC_FTS_SELECT =
+  "SELECT i.restaurant_name,i.restaurant_slug,i.address,i.city,i.dish_name,i.normalized_name," +
+  " i.price_minor,i.price_kind,i.price_max_minor,i.source_url,i.observed_at" +
+  " FROM fysen_public_trigrams AS tr" +
+  " JOIN fysen_public_items AS i ON i.item_index = tr.rowid" +
+  " WHERE lower(i.city) = ? AND tr.normalized_name LIKE ?" +
+  " ORDER BY CASE WHEN i.normalized_name = ? THEN 3" +
+  " WHEN substr(i.normalized_name, 1, length(?)) = ? THEN 2 ELSE 1 END DESC," +
+  " i.observed_at DESC, i.restaurant_name ASC, i.dish_name ASC LIMIT " + MAX_MATCH_ROWS;
 
 function response(payload, status = 200) {
   return new Response(JSON.stringify(payload), {
@@ -134,8 +147,10 @@ export default {
           sha256: meta.sha256, publicRowsSha256: meta.publicRowsSha256,
         });
       }
-      const { results } = await env.PUBLIC_DB.prepare(PUBLIC_SELECT)
-        .bind(parsed.city.trim().toLowerCase(), parsed.normalized,
+      const indexed = parsed.normalized.length >= 3;
+      const { results } = await env.PUBLIC_DB.prepare(indexed ? PUBLIC_FTS_SELECT : PUBLIC_SELECT)
+        .bind(parsed.city.trim().toLowerCase(),
+          indexed ? "%" + parsed.normalized + "%" : parsed.normalized,
           parsed.normalized, parsed.normalized, parsed.normalized)
         .all();
       return response(formatSearch(meta, parsed, results || []));
