@@ -44,13 +44,14 @@ async function publicManifest(db) {
   const data = await db.prepare(
     "SELECT key,value FROM public_archive_meta" +
     " WHERE key IN ('public_ready','archiveDate','lastRefreshAt','sha256'," +
-    "'restaurants','sources','originalItems','publicItems','quarantinedSources')"
+    "'restaurants','sources','originalItems','publicItems','quarantinedSources','publicRowsSha256')"
   ).all();
   const meta = Object.fromEntries((data.results || []).map(({ key, value }) => {
     try { return [key, JSON.parse(value)]; } catch { return [key, null]; }
   }));
   if (meta.public_ready !== true || typeof meta.sha256 !== "string"
       || !/^[a-f0-9]{64}$/.test(meta.sha256)
+      || !/^[a-f0-9]{64}$/.test(String(meta.publicRowsSha256 || ""))
       || !Number.isInteger(meta.publicItems) || meta.publicItems < 1
       || !Number.isInteger(meta.quarantinedSources) || meta.quarantinedSources < 4
       || typeof meta.archiveDate !== "string") {
@@ -130,7 +131,7 @@ export default {
           archiveDate: meta.archiveDate, lastRefreshAt: meta.lastRefreshAt,
           restaurants: meta.restaurants, menuSources: meta.sources,
           menuItems: meta.publicItems, identityQuarantines: meta.quarantinedSources,
-          sha256: meta.sha256,
+          sha256: meta.sha256, publicRowsSha256: meta.publicRowsSha256,
         });
       }
       const { results } = await env.PUBLIC_DB.prepare(PUBLIC_SELECT)
