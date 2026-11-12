@@ -31,10 +31,11 @@
       "label": "Grillet laks",
       "query": "grillet laks",
       "index": 2,
-      "atlas": "collection.avif",
+      "atlas": "grillet-laks-512.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av grillet laks med asparges, potetmos, tomat, dill og sitron. Ikke faktisk restaurantfoto, og tilbehøret er ikke bekreftet på noen bestemt meny."
     },
     {
       "id": "grillet-biff",

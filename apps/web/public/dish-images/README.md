@@ -9,6 +9,7 @@ faktiske serveringen på en bestemt restaurant**.
 - `collection.avif` har de første 24 motivene i 6 kolonner × 4 rader.
 - `pizza-margherita-512.avif` er et selvstendig 512 × 512-bilde som nå erstatter atlasrute 0 i visningen (tomat, mozzarella, basilikum, ikke restaurantfoto).
 - `cheeseburger-bacon-512.avif` er et selvstendig 512 × 512-bilde som nå erstatter atlasrute 1 i det åpnbare galleriet (bacon/storfekjøtt, ikke vegetar- eller restaurantfoto).
+- `grillet-laks-512.avif` er en selvstendig 512 × 512-illustrasjon av grillet laks med asparges, potetmos, sitron, dill og tomat som erstatter atlasrute 2 i det åpnbare galleriet. Det er ikke et restaurantfoto.
 - `series-04.avif` har de neste 9 motivene i 3 kolonner × 3 rader.
 - `tom-yum-512.avif` er ett separat, skarpt 512 × 512-bilde på svart bakgrunn, med reker.
 - `pad-kra-pao-384.avif` er et separat 384 × 384-bilde av pad kra pao med kjøtt, ris, thaibasilikum og speilegg.
