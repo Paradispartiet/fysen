@@ -69,6 +69,14 @@ Kjøringen rapporterte også 163 589 267 byte i den første størrelsesspørring
 
 **Viktig tap i prøvemodellen:** 5 150 gamle `search_result_impressions.menu_item_id`-koblinger ble satt til `NULL` i den midlertidige databasen. SQL-integritet bestod, men eldre direkte referanser ville forsvinne ved tilsvarende sletting i produksjon. Historiske koblinger må derfor først bevares i en verifiserbar, privat og reverserbar avbildning/arkiv. Ikke tolk «0 foreldreløse» som «0 informasjonstap».
 
+### Tilleggsprøve: 5 150 historiske koblinger beholdt i referansekart
+
+**PASS: [isolert Actions-kjøring #43176519320](https://github.com/Paradispartiet/fysen/actions/runs/43176519320), 12. november 2026.** Før en hypotetisk 3-dagersreduksjon ble alle 5 150 berørte søkerinntrykk kartlagt med impression-ID, historisk menu-item-ID, snapshot-ID, kildereferanse og observasjonstid. Etter reduksjonen bekreftet SQL at **5 150 av 5 150** berørte koblinger fortsatt kan spores i den *midlertidige* referansetabellen. Fremmednøkkelkontroll fant 0 foreldreløse koblinger. Den fysiske testdatabasen, **inkludert denne ekstra referansetabellen**, målte **163 875 987 byte (~163,9 MB)** etter komprimering og en etterfølgende spørring. Første størrelsesmåling i samme kjøring var 164 252 819 byte. Begge ligger godt under 400 MB-planleggingsrammen.
+
+**Avgrensning:** Referansekartet ble bare opprettet i engangs-PostgreSQL og forsvant når containeren ble fjernet. Testen beviser **teknisk sporbarhet**, ikke at den nye mappingen allerede er skrevet som en varig, privat arkivkopi. Den eksisterende historikk-backupen og søkerreferansedumpen må fortsatt beholdes; varig ny mapping kan ikke publiseres som ukryptert GitHub-artefakt. Fullt appskjema, andre tabellers faktiske produksjonsdata, RLS, auth og løpende skriverett er fortsatt uprøvd.
+
+**Ny isolert testport:** Workflowen må også kontrollere et komplett *tomt* appskjema med ordinære migreringer, måle dette separat og liste tabeller uten radbackup i de åtte eksporterte tabellene. En tom skjemamåling må **ikke legges mekanisk til** 163,9 MB fordi felles strukturer da dobbeltelles; den gir ikke svar på størrelsen til manglende live-data.
+
 ### Neste testporter – uten produksjonsinngrep
 
 1. **Fullt applikasjonsskjema i isolasjon:** Inventer tabeller, indekser, utvidelser og API-avhengigheter uten å kopiere eller eksponere private data. Beregn fysisk totalstørrelse inkludert ikke-arkiverte produksjonstabeller, WAL-/vedlikeholdsmargin og forventet vekst.
