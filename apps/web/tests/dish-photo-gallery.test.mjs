@@ -14,14 +14,13 @@ const browseStyles = readFileSync(path.join(web, "styles/dish-browse.css"), "utf
 const css = readFileSync(path.join(web, "styles/dish-photos.css"), "utf8");
 const atlas = readFileSync(path.join(web, "public/dish-images/collection.avif"));
 const series04 = readFileSync(path.join(web, "public/dish-images/series-04.avif"));
-const padThai = readFileSync(path.join(web, "public/dish-images/pad-thai.avif"));
 const manifest = JSON.parse(readFileSync(path.join(web, "public/dish-images/manifest.json"), "utf8"));
 const catalog = readFileSync(path.join(web, "content/food-knowledge/catalog.ts"), "utf8");
 
-test("Matlyst has exactly thirty-four distinct, curated dish illustrations", () => {
+test("Matlyst has exactly thirty-three distinct, curated dish illustrations", () => {
   const entries = [...gallery.matchAll(/\{ id: "([^"]+)", label: "([^"]+)", query: "([^"]+)" \}/gu)];
-  assert.equal(entries.length, 34);
-  assert.equal(new Set(entries.map((match) => match[1])).size, 34);
+  assert.equal(entries.length, 33);
+  assert.equal(new Set(entries.map((match) => match[1])).size, 33);
   assert.ok(entries.every((match) => match[2].length > 0 && match[3].length > 0));
   assert.match(gallery, /index % 6/u);
   assert.match(gallery, /Math\.floor\(index \/ 6\)/u);
@@ -90,11 +89,11 @@ test("Every exact editorial image maps to a genuine food knowledge dish", () => 
 test("Every generated and approved image is represented in the published Matlyst gallery", () => {
   const entries = [...gallery.matchAll(/\{ id: "([^"]+)", label: "([^"]+)", query: "([^"]+)" \}/gu)];
   assert.equal(manifest.version, 1);
-  assert.equal(manifest.images.length, 34);
+  assert.equal(manifest.images.length, 33);
   assert.deepEqual(manifest.images.map((entry) => entry.id), entries.map((match) => match[1]));
   for (const [index, image] of manifest.images.entries()) {
     assert.equal(image.index, index);
-    assert.equal(image.atlas, index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : "pad-thai.avif");
+    assert.equal(image.atlas, index < 24 ? "collection.avif" : "series-04.avif");
     assert.equal(image.surface, "Matlyst");
     assert.equal(image.kind, "AI-illustrasjon");
   }
@@ -124,18 +123,11 @@ test("Live All Dishes lists display photos only for exact canonical dish names",
   assert.doesNotMatch(browse, /includes\(dish\.name\).*DishPhotoThumbnail/u);
 });
 
-test("Pad Thai has its own verified image, not a mismatched seafood variant", () => {
-  assert.equal(padThai.toString("ascii", 4, 12), "ftypavif");
-  assert.ok(padThai.length > 2000);
-  const ispeIndex = padThai.indexOf(Buffer.from("ispe"));
-  assert.ok(ispeIndex > 0);
-  assert.equal(padThai.readUInt32BE(ispeIndex + 8), 192);
-  assert.equal(padThai.readUInt32BE(ispeIndex + 12), 192);
-  assert.match(css, /dishPhotoThumb\.dishPhotoPadThai/u);
-  assert.match(css, /pad-thai\.avif/u);
-  assert.match(gallery, /"pad-thai": 33/u);
-  assert.match(gallery, /index === 33/u);
-  assert.ok(manifest.images.some((image) => image.id === "pad-thai" && image.catalogId === "pad-thai"));
+test("Pad Thai uses only the known shrimp illustration, not a blurry new crop", () => {
+  assert.match(gallery, /"pad-thai": 12/u);
+  assert.match(gallery, /"pad-thai": "pad thai med reker"/u);
+  assert.doesNotMatch(gallery, /dishPhotoPadThai/u);
+  assert.doesNotMatch(css, /pad-thai\\.avif/u);
 });
 
 
