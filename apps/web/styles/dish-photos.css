@@ -155,3 +155,10 @@
 .dishPhotoThumb.dishPhotoShrimpOpenSandwich {
   background: #000 url("/dish-images/rekesmorbrod-512.avif") center / cover no-repeat;
 }
+
+/* Sharp chicken tandoori, with roast marks and lemon on pure black.
+   Representative chicken variant only; not a specific restaurant dish. */
+.dishPhotoThumb.dishPhotoTandoori,
+.dishPhotoSmall.dishPhotoTandoori {
+  background: #000 url("/dish-images/tandoori-chicken-768.avif") center / cover no-repeat;
+}
