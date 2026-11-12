@@ -10,7 +10,7 @@ const apiBase = (process.env.FYSEN_PUBLIC_API_URL || "https://fysen-api.vercel.a
 
 async function visibleResult(page) {
   await page.waitForFunction(() => Boolean(
-    document.querySelector('section[aria-label="Menytreff"] article, .resultList .dishResult'),
+    globalThis.document.querySelector('section[aria-label="Menytreff"] article, .resultList .dishResult'),
   ), null, { timeout: 30_000 });
   const archived = page.locator('section[aria-label="Menytreff"] article');
   if (await archived.count()) {
@@ -33,8 +33,8 @@ async function visibleResult(page) {
 
 async function mobileWidth(page, label) {
   const { viewport, documentWidth } = await page.evaluate(() => ({
-    viewport: window.innerWidth,
-    documentWidth: document.documentElement.scrollWidth,
+    viewport: globalThis.innerWidth,
+    documentWidth: globalThis.document.documentElement.scrollWidth,
   }));
   assert.ok(documentWidth <= viewport + 2,
     label + " overflows the mobile viewport: " + documentWidth + " > " + viewport);
@@ -71,7 +71,7 @@ try {
   await page.goto(webBase, { waitUntil: "domcontentloaded", timeout: 30_000 });
   await page.getByRole("link", { name: "Se alle retter i Oslo" }).click();
   await page.waitForFunction(() => Boolean(
-    document.querySelector('.dishBrowseItemMain, section[aria-label="Utvalgte retter"] article a'),
+    globalThis.document.querySelector('.dishBrowseItemMain, section[aria-label="Utvalgte retter"] article a'),
   ), null, { timeout: 30_000 });
 
   const archivedLinks = page.locator('section[aria-label="Utvalgte retter"] article a');
