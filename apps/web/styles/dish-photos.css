@@ -95,3 +95,9 @@
 .dishPhotoSmall.dishPhotoTomYum {
   background: #000 url("/dish-images/tom-yum-512.avif") center / cover no-repeat;
 }
+
+/* Dedicated 384px Pad kra pao illustration, sharp at 150 CSS px. */
+.dishPhotoThumb.dishPhotoPadKraPao,
+.dishPhotoSmall.dishPhotoPadKraPao {
+  background: #000 url("/dish-images/pad-kra-pao-384.avif") center / cover no-repeat;
+}

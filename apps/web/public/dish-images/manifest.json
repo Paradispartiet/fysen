@@ -353,6 +353,17 @@
       "kind": "AI-illustrasjon",
       "catalogId": "tom-yum",
       "variantCaution": "Illustrasjonen viser tom yum med reker, sopp, sitrongress og lime; ikke bruk som bildebevis for en annen variant eller et restaurantspecifikt produkt."
+    },
+    {
+      "id": "pad-kra-pao",
+      "label": "Pad kra pao med speilegg",
+      "query": "pad kra pao",
+      "index": 34,
+      "atlas": "pad-kra-pao-384.avif",
+      "surface": "Matlyst",
+      "kind": "AI-illustrasjon",
+      "catalogId": "pad-kra-pao",
+      "variantCaution": "Illustrasjonen viser woket kjøtt, thaibasilikum, ris og speilegg. Kjøttsort og faktisk restaurantservering er ikke verifisert."
     }
   ]
 }
