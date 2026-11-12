@@ -169,3 +169,9 @@
 .dishPhotoSmall.dishPhotoNaan {
   background: #000 url("/dish-images/naan-768.avif") center / cover no-repeat;
 }
+
+/* Dal makhani: sharp 768px black-lentil curry, rich dairy variant, pure black background. */
+.dishPhotoThumb.dishPhotoDalMakhani,
+.dishPhotoSmall.dishPhotoDalMakhani {
+  background: #000 url("/dish-images/dal-makhani-768.avif") center / cover no-repeat;
+}
