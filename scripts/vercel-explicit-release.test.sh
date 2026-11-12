@@ -53,6 +53,11 @@ grep -F 'No production-relevant changes have accumulated; this request creates n
 grep -F 'releases_today < 3' "$workflow" >/dev/null
 grep -F 'fysenReleaseBatch // .meta.fysenSourceSha' "$workflow" >/dev/null
 grep -F 'The daily limit of three production batches has been reached' "$workflow" >/dev/null
+grep -F 'web_pending="$web_needed"' "$workflow" >/dev/null
+grep -F 'api_pending="$api_needed"' "$workflow" >/dev/null
+grep -F 'if [[ "$web_pending" == "false" && "$api_pending" == "false" ]]; then' "$workflow" >/dev/null
+grep -F 'pending changes are not automatically retried' "$workflow" >/dev/null
+grep -F 'Run workflow** from **main**, target **auto**' "$workflow" >/dev/null
 grep -F -- '--meta "fysenSourceSha=$SOURCE_SHA"' "$workflow" >/dev/null
 grep -F -- '--meta "fysenReleaseBatch=$GITHUB_RUN_ID"' "$workflow" >/dev/null
 grep -F 'deploy --prebuilt --prod' "$workflow" >/dev/null
