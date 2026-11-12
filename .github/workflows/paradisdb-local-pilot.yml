@@ -100,6 +100,11 @@ jobs:
           set -euo pipefail
           test -f "$PARADISDB_PUBLIC_SQLITE_PATH"
           node --test tools/paradisdb/worker/tests/worker-sqlite-integration.test.mjs
+      - name: Benchmark zero-subscription FTS5 indexed search (isolated, real public rows)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/paradisdb/worker/tests/fts5-trigram-candidate.py "$RUNNER_TEMP/paradisdb-worker-d1.sqlite"
       - name: Real local Cloudflare D1 and workerd with all public menu records (no account)
         shell: bash
         env:
