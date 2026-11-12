@@ -87,3 +87,11 @@
   }
   .dishPhotoCard .dishPhotoAction { overflow-wrap: anywhere; }
 }
+
+
+/* Dedicated, sharp 512px Tom yum image on pure black.
+   No enlargement from the earlier 128px sprite. */
+.dishPhotoThumb.dishPhotoTomYum,
+.dishPhotoSmall.dishPhotoTomYum {
+  background: #000 url("/dish-images/tom-yum-512.avif") center / cover no-repeat;
+}
