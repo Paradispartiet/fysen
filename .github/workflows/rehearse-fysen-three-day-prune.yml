@@ -48,11 +48,25 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          docker run --rm -d --name fysen-history-restore \
+          # Keep the ephemeral container inspectable if Postgres stops unexpectedly.
+          # The exit trap removes it even when restoration fails.
+          docker run -d --name fysen-history-restore --shm-size=256m \
             -e POSTGRES_PASSWORD=local-restore-test-only \
             -e POSTGRES_USER=postgres \
             postgis/postgis:17-3.5
-          trap 'docker rm -f fysen-history-restore >/dev/null 2>&1 || true' EXIT
+          cleanup() {
+            exit_code=$?
+            if [ "$exit_code" -ne 0 ]; then
+              echo "::group::Isolated PostgreSQL failure diagnostics"
+              docker inspect --format '{{json .State}}' fysen-history-restore || true
+              docker logs --tail 100 fysen-history-restore || true
+              df -h || true
+              free -m || true
+              echo "::endgroup::"
+            fi
+            docker rm -f fysen-history-restore >/dev/null 2>&1 || true
+          }
+          trap cleanup EXIT
 
           ready=0
           for attempt in $(seq 1 90); do
@@ -72,7 +86,7 @@ jobs:
 
           docker exec fysen-history-restore pg_restore --list /tmp/fysen-menu-history.pgdump >/dev/null
           docker exec fysen-history-restore pg_restore -U postgres -d postgres \
-            --no-owner --no-acl --exit-on-error --jobs=4 \
+            --no-owner --no-acl --exit-on-error --jobs=2 \
             /tmp/fysen-menu-history.pgdump
 
           echo "Restore completed; checking exact six-table counts and foreign-key integrity."
