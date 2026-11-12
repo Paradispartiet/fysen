@@ -122,3 +122,9 @@
 .dishPhotoSmall.dishPhotoPizzaMargherita {
   background: #000 url("/dish-images/pizza-margherita-512.avif") center / cover no-repeat;
 }
+
+/* Dedicated bacon cheeseburger image. Display only in the generic dish gallery;
+   not a claim about any restaurant's ingredients or presentation. */
+.dishPhotoThumb.dishPhotoCheeseburger {
+  background: #000 url("/dish-images/cheeseburger-bacon-512.avif") center / cover no-repeat;
+}
