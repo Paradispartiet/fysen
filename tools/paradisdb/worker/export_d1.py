@@ -127,6 +127,18 @@ def export_public(source: Path, destination: Path) -> dict:
                     pending_bytes += next_bytes
                 if pending:
                     out.write(prefix + ",".join(pending) + ";\n")
+                # D1's FTS5/trigram tokenizer avoids scanning every menu
+                # row for substring search. Build it only after all public
+                # rows exist, and before the final public-ready flag.
+                out.write(
+                    "CREATE VIRTUAL TABLE fysen_public_trigrams USING fts5("
+                    "normalized_name, content='fysen_public_items',"
+                    " content_rowid='item_index', tokenize='trigram');\n"
+                )
+                out.write(
+                    "INSERT INTO fysen_public_trigrams(fysen_public_trigrams)"
+                    " VALUES('rebuild');\n"
+                )
                 # This is the final statement: a partial D1 import remains
                 # unservable (503), rather than quietly exposing incomplete data.
                 out.write("INSERT INTO public_archive_meta(key,value) VALUES ('public_ready','true');\n")
