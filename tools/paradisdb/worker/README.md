@@ -54,6 +54,23 @@ For uttrykk på minst tre normaliserte tegn bruker v0.2 en **FTS5 trigram-indeks
 
 Cloudflares rate limiting er *omtrentlig per datasenter*, og det finnes ingen streng global gratisgrense i denne adapteren. Før enhver fjernpreview må reelle eksterne målinger vurderes med `free_budget_gate.py`; verktøyet nekter `null`, manglende målinger eller for høyt forventet forbruk. Se [FREE_PLAN_RELEASE_GATE.md](./FREE_PLAN_RELEASE_GATE.md) for mål, kvoter, kildekrav, manuelle kontroller og tilbakeføring.
 
+## Fysen først: reserver én fast offentlig D1-database (november 2026)
+
+**Planlagt databasenavn:** `paradisdb-fysen-public` (Fysens offentlige menyer, ikke privat brukerinnhold). Dette er et forslag til permanent navn, men **ingen database er opprettet** av GitHub-koden.
+
+Opprettelse i Cloudflare-kontoeierens dashboard, etter at **Workers Free** og kontoens øvrige D1-forbruk er bekreftet:
+
+1. Åpne [Cloudflare Dashboard](https://dash.cloudflare.com/) → D1 SQL Database → Create Database.
+2. Navngi databasen nøyaktig `paradisdb-fysen-public`.
+3. Under **Data location**, velg om mulig `EU` som **jurisdiction** (ikke bare en frivillig `Western Europe` location hint). Jurisdiction kan ikke endres etterpå. Valget er særlig nyttig hvis det senere skal lagres EU-personopplysninger, men denne databasen er foreløpig bare for offentlige menyposter.
+4. Klikk Create bare dersom kontoen fremdeles er Free og under grensen for antall databaser og lagring.
+5. Behold databasen **helt tom**. Ikke opprett demotabeller eller importer hele menyarkivet ennå. SQL-eksporten i denne PR-en krever en tom D1.
+6. Noter kun navn, database-ID, kontoplan og antall D1-databaser. **Aldri legg inn API-token eller Cloudflare-passord i GitHub, issue-kommentarer eller chat.**
+
+`wrangler.jsonc.example` viser det valgte navnet, men har ingen virkelig database-ID, `workers_dev=false` og `PARADISDB_PUBLIC_ENABLED=false`. Ingen produksjonsruting, Supabase-innlogging, eksisterende Fysen-menyvisning eller annen app skal endres ved denne opprettelsen.
+
+**Videre før produksjon:** En godkjent kontrollert import- og måleplan, verifisert konto og reelle D1 `rows_read`/`rows_written`-målinger er fortsatt nødvendig. Gratisplanen garanterer ikke ubegrenset kapasitet. Om kontoen ikke har Free-plan/kapasitet, stopp heller enn å aktivere betaling.
+
 ## Framtidig, kun etter uttrykkelig godkjenning
 
 Cloudflare D1 kan importere SQLite-SQL via `wrangler d1 execute <db> --file=... --local` for lokal database eller med `--remote` for en virkelig konto. Disse kommandoene kjøres **ikke** i denne PR-en. `wrangler.jsonc.example` er en mal uten ekte database-ID og må ikke bli en automatisk produksjonsdeploy.
