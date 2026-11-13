@@ -19,6 +19,8 @@ const grilledSalmon = readFileSync(path.join(web, "public/dish-images/grillet-la
 const sushiImage = readFileSync(path.join(web, "public/dish-images/sushi-768.avif"));
 const ramenImage = readFileSync(path.join(web, "public/dish-images/ramen-768.avif"));
 const gyozaImage = readFileSync(path.join(web, "public/dish-images/gyoza-768.avif"));
+const marinaraImage = readFileSync(path.join(web, "public/dish-images/pizza-marinara-768.avif"));
+const falafelImage = readFileSync(path.join(web, "public/dish-images/falafel-768.avif"));
 const shrimpPadThaiImage = readFileSync(path.join(web, "public/dish-images/pad-thai-reker-768.avif"));
 const tiramisuImage = readFileSync(path.join(web, "public/dish-images/tiramisu-768.avif"));
 const carbonaraImage = readFileSync(path.join(web, "public/dish-images/carbonara-768.avif"));
@@ -117,7 +119,7 @@ test("Every generated and approved image is represented in the published Matlyst
   assert.deepEqual(manifest.images.map((entry) => entry.id), entries.map((match) => match[1]));
   for (const [index, image] of manifest.images.entries()) {
     assert.equal(image.index, index);
-    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index === 2 ? "grillet-laks-512.avif" : index === 3 ? "grillet-biff-512.avif" : index === 4 ? "rekesmorbrod-512.avif" : index === 5 ? "sushi-768.avif" : index === 6 ? "ramen-768.avif" : index === 10 ? "carbonara-768.avif" : index === 11 ? "butter-chicken-768.avif" : index === 12 ? "pad-thai-reker-768.avif" : index === 14 ? "tiramisu-768.avif" : index === 17 ? "gyoza-768.avif" : index === 18 ? "pho-512.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-768.avif");
+    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index === 2 ? "grillet-laks-512.avif" : index === 3 ? "grillet-biff-512.avif" : index === 4 ? "rekesmorbrod-512.avif" : index === 5 ? "sushi-768.avif" : index === 6 ? "ramen-768.avif" : index === 10 ? "carbonara-768.avif" : index === 11 ? "butter-chicken-768.avif" : index === 12 ? "pad-thai-reker-768.avif" : index === 14 ? "tiramisu-768.avif" : index === 15 ? "pizza-marinara-768.avif" : index === 17 ? "gyoza-768.avif" : index === 18 ? "pho-512.avif" : index === 20 ? "falafel-768.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-768.avif");
     assert.equal(image.surface, "Matlyst");
     assert.equal(image.kind, "AI-illustrasjon");
   }
@@ -552,4 +554,34 @@ test("Shrimp pad thai and tiramisu are dedicated Retina-safe gallery images with
   assert.match(gallery, /isShrimpPadThai = index === 12/u);
   assert.match(gallery, /isTiramisu = index === 14/u);
   assert.doesNotMatch(css, /\.dishPhotoSmall\.dishPhotoShrimpPadThai/u);
+});
+
+test("Pizza marinara and falafel use exact dedicated 768px illustration assets", () => {
+  for (const { index, id, file, bytes, className } of [
+    { index: 15, id: "pizza-marinara", file: "pizza-marinara-768.avif", bytes: marinaraImage, className: "dishPhotoPizzaMarinara" },
+    { index: 20, id: "falafel", file: "falafel-768.avif", bytes: falafelImage, className: "dishPhotoFalafel" },
+  ]) {
+    assert.equal(bytes.toString("ascii", 4, 12), "ftypavif");
+    assert.ok(bytes.length > 30000, id + " image is unexpectedly tiny");
+    const marker = bytes.indexOf(Buffer.from("ispe"));
+    assert.ok(marker > 0);
+    assert.equal(bytes.readUInt32BE(marker + 8), 768);
+    assert.equal(bytes.readUInt32BE(marker + 12), 768);
+    const item = manifest.images[index];
+    assert.equal(item.id, id);
+    assert.equal(item.catalogId, id);
+    assert.equal(item.atlas, file);
+    assert.match(item.variantCaution, /ikke restaurantfoto/iu);
+    assert.ok(gallery.includes("index === " + index));
+    assert.ok(gallery.includes("dishPhotoThumb " + className));
+    assert.ok(gallery.includes("dishPhotoSmall " + className));
+    assert.ok(css.includes(".dishPhotoThumb." + className));
+    assert.ok(css.includes(".dishPhotoSmall." + className));
+    assert.ok(css.includes(file));
+  }
+  assert.match(manifest.images[15].variantCaution, /uten ost/iu);
+  assert.match(manifest.images[15].variantCaution, /ikke bruk som pizza margherita/iu);
+  assert.match(gallery, /pizza marinara uten ost/u);
+  assert.match(manifest.images[20].variantCaution, /hummus/u);
+  assert.match(gallery, /falafel med kikerter/u);
 });
