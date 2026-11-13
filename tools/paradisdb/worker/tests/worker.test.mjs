@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import worker from "../worker.mjs";
 
 const URL_BASE = "https://paradisdb-worker.example";
@@ -176,4 +177,19 @@ test("successful operations issue only SELECT statements", async () => {
   assert.equal(env.sql.length, 3);
   assert.ok(env.sql.every(q => /^\s*SELECT\b/i.test(q)));
   assert.ok(env.sql.every(q => !/\b(?:INSERT|UPDATE|DELETE|DROP|ALTER|CREATE)\b/i.test(q)));
+});
+
+
+test("Fysen Cloudflare D1 example stays bound to the isolated public database and disabled", () => {
+  // Do not allow configuration examples to accidentally enable remote serving.
+  const raw = readFileSync(new URL("../wrangler.jsonc.example", import.meta.url), "utf8");
+  const config = JSON.parse(raw.split("\n")
+    .filter(line => !line.trimStart().startsWith("//")).join("\n"));
+  assert.equal(config.workers_dev, false);
+  assert.equal(config.vars.PARADISDB_PUBLIC_ENABLED, "false");
+  assert.equal(config.d1_databases.length, 1);
+  assert.equal(config.d1_databases[0].binding, "PUBLIC_DB");
+  assert.equal(config.d1_databases[0].database_name, "paradisdb-fysen-public");
+  assert.equal(config.d1_databases[0].database_id, "882a3393-71c3-43f9-9dec-efc2bbcab409");
+  assert.ok(config.ratelimits.some(x => x.name === "PUBLIC_RATE_LIMITER"));
 });
