@@ -147,3 +147,9 @@ Ny separat **768 × 768 AVIF** for `gyoza` (atlasplass 17): pannestekte gyoza me
 To ekstra separate **768 × 768 AVIF** i PR #1212:
 - `pad-thai-reker-768.avif` erstatter bildekartplass 12 bare i Matlyst-galleriet og viser pad thai **med reker og egg**. Den må ikke kobles generisk til vegetarisk eller uspesifisert pad thai i restaurantmenyer.
 - `tiramisu-768.avif` erstatter bildekartplass 14 bare i Matlyst-galleriet; illustrert tiramisu med kakao og mascarpone. Ikke dokumentasjon av en bestemt restaurants dessert.
+
+To nye **768 × 768 AVIF-bilder** i PR #1212:
+- `pizza-marinara-768.avif` viser napolitansk pizza marinara med tomat, hvitløk, olivenolje og oregano, **uten ost**. Brukes kun for eksakt `pizza-marinara`-ID (indeks 15), aldri som margherita.
+- `falafel-768.avif` viser falafel med hummus og grønnsaker, kun for eksakt `falafel`-ID (indeks 20). Retten kan ha andre tilbehør hos restauranter.
+
+Begge er redaksjonelle KI-illustrasjoner, ikke restaurantfotografier. Originale bildekart bevares for andre retter. Ingen deploy eller databaseendringer gjøres som del av PR-arbeidet.
