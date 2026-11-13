@@ -59,6 +59,8 @@ class BudgetGateTests(unittest.TestCase):
         self.report["forecastToday"]["searches"] = 42000
         self.report["measurements"]["searchRowsRead"] = 1
         self.report["databaseBytesAfterImport"] = 350000000
+        # Account total must include the database under test.
+        self.report["accountDatabaseBytesAfterImport"] = 350000000
         result = gate.check(self.report, now=self.now)
         self.assertFalse(result["admitted"])
         self.assertIn("workerRequests", result["overSoftBudget"])
