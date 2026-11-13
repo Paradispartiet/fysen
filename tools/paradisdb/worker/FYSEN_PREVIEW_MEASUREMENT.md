@@ -1,6 +1,6 @@
 # ParadisDB for Fysen – isolert Cloudflare Free-måleprøve
 
-**Status: første eksterne skrive- og lesetest BESTÅTT (4 syntetiske retter), FTS5-indeks og forbruksmåling gjenstår.** De neste handlingene må gjøres manuelt av Cloudflare-kontoeieren. GitHub-PR-en inneholder ingen Cloudflare-token og starter ingen D1-operasjoner mot kontoens database.
+**Status: ekstern skrive-/lesetest og FTS5 trigram-søk BESTÅTT (4 syntetiske retter, 2 riktige ramen-treff). Reelle etter-målinger av D1-forbruk gjenstår.** De neste handlingene må gjøres manuelt av Cloudflare-kontoeieren. GitHub-PR-en inneholder ingen Cloudflare-token og starter ingen D1-operasjoner mot kontoens database.
 
 ## Hvorfor to databaser?
 
@@ -69,7 +69,7 @@ SELECT COUNT(*) AS hits FROM fysen_probe_trigrams
 WHERE normalized_name LIKE '%ramen%';
 ```
 
-**Forventet:** `hits = 2`. Oppsettet er verifisert lokalt med SQLite/FTS5, men **ikke** forhåndsgodkjent mot den eksterne Cloudflare-kontoen. Stopp ved feilmelding, og ikke kjør `INSERT`/rebuild om igjen før resultatet er undersøkt: det kan legge til skriverader eller feile på eksisterende indeks.
+**Forventet og eksternt bekreftet 13. november:** `hits = 2`. FTS5-søket mot den virkelige Cloudflare D1-previewen er nå bestått. **Ikke** kjør `CREATE VIRTUAL TABLE`, `INSERT ... rebuild` eller de tidligere testinnsettingene på nytt. Slike handlinger kan gi feil og ekstra skriverader.
 
 ### Registrert fjernprøve – 13. november 2026 kl. 23.54 CET
 
@@ -80,6 +80,16 @@ Cloudflare Console for **`paradisdb-fysen-preview`** viste:
 - `SELECT COUNT(*) AS antall_retter FROM fysen_probe_items` — **4** forventet og observert
 
 Dette beviser at den isolerte Free-previewen kan opprette en egendefinert tabell, skrive noen rader og lese dem. Det er **ikke** en test av FTS5, og det finnes ennå ingen dokumenterte etter-målinger av `Rows read` eller `Rows written`. Før neste steg: **ikke kjør CREATE TABLE eller INSERT med de fire retter på nytt**, ellers får vi uryddig testtilstand. Fortsett bare med de tre FTS5-kommandoene ovenfor, én av gangen, og stopp hvis en feiler.
+
+### Registrert FTS5-fjernprøve – 13. november 2026 kl. 23.57 CET
+
+Eierens Cloudflare Console viste at alle følgende kommandoer ble utført **uten feil** i **`paradisdb-fysen-preview`**:
+
+- `CREATE VIRTUAL TABLE fysen_probe_trigrams USING fts5(... tokenize='trigram')` — **success**
+- `INSERT INTO fysen_probe_trigrams(fysen_probe_trigrams) VALUES('rebuild')` — **success**
+- `SELECT COUNT(*) AS treff FROM fysen_probe_trigrams WHERE normalized_name LIKE '%ramen%'` — **2 treff**, som forventet for `ramen shoyu` og `ramen tofu`
+
+**PASS:** ekte ekstern D1 / FTS5-trigramindeks / riktig søketreff. **IKKE MÅLT ENNÅ:** endelig `rows_read`, `rows_written`, antall queries og plassforbruk etter testen. Disse må hentes fra **previewens** Cloudflare Overview, ikke estimeres ut fra fire logiske dataelementer. En test med fire retter sier ikke nok om full import av 47 270 offentlige menyer eller ressursforbruk for en typisk søkebruker.
 
 ## 4. Les reelle Cloudflare-målinger etter test
 
