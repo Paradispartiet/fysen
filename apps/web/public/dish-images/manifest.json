@@ -170,10 +170,11 @@
       "label": "Pizza marinara",
       "query": "pizza marinara",
       "index": 15,
-      "atlas": "collection.avif",
+      "atlas": "pizza-marinara-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "pizza-marinara"
+      "catalogId": "pizza-marinara",
+      "variantCaution": "KI-illustrasjon av napolitansk pizza marinara uten ost, med tomat, hvitløk, oregano og olivenolje. Ikke restaurantfoto; ikke bruk som pizza margherita."
     },
     {
       "id": "cacio-e-pepe",
@@ -222,10 +223,11 @@
       "label": "Falafel med hummus",
       "query": "falafel",
       "index": 20,
-      "atlas": "collection.avif",
+      "atlas": "falafel-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "falafel"
+      "catalogId": "falafel",
+      "variantCaution": "KI-illustrasjon av falafel med hummus, grønnsaker, urter og korn. Ikke restaurantfoto; oppskrift, tilbehør og allergener varierer."
     },
     {
       "id": "tacos-al-pastor",
