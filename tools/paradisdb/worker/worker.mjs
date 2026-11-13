@@ -4,6 +4,8 @@
 const SOURCE = "verified-menu-archive";
 const MAX_RESULTS = 50;
 const MAX_MATCH_ROWS = 500;
+// D1 limits LIKE/GLOB patterns to 50 UTF-8 bytes, including both wildcards.
+const MAX_LIKE_PATTERN_BYTES = 50;
 const ALLOWED_PATHS = new Set([
   "/v1/dishes/archive/status",
   "/v1/dishes/archive/search",
@@ -76,6 +78,7 @@ function parseSearch(searchParams) {
   if (!/^[1-9]\d{0,1}$/.test(literalLimit)) return null;
   const limit = Number(literalLimit);
   if (normalized.length < 3 || normalized.length > 80 || q.length > 160
+      || new TextEncoder().encode(normalized).length + 2 > MAX_LIKE_PATTERN_BYTES
       || city.length > 80 || !city.trim() || limit > MAX_RESULTS) return null;
   return { q, normalized, city, limit };
 }
@@ -126,7 +129,7 @@ export default {
     try {
       const parsed = url.pathname.endsWith("/search") ? parseSearch(url.searchParams) : null;
       if (url.pathname.endsWith("/search") && !parsed) {
-        return invalid("Expected indexed q (3–80 characters), optional city and limit (1–50).");
+        return invalid("Expected indexed q (at least 3 characters, max 48 UTF-8 bytes), optional city and limit (1–50).");
       }
       if (url.pathname.endsWith("/status") && [...url.searchParams.keys()].length) {
         return invalid("Status endpoint accepts no query parameters.");
