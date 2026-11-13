@@ -138,10 +138,11 @@
       "label": "Pad thai med reker",
       "query": "pad thai",
       "index": 12,
-      "atlas": "collection.avif",
+      "atlas": "pad-thai-reker-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av pad thai med reker, egg, peanøtter og lime. Inneholder skalldyr og egg; ikke et generelt bilde av vegetarisk pad thai og ikke restaurantfoto."
     },
     {
       "id": "stekt-hvit-fisk",
@@ -158,10 +159,11 @@
       "label": "Tiramisu",
       "query": "tiramisu",
       "index": 14,
-      "atlas": "collection.avif",
+      "atlas": "tiramisu-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av tiramisu med mascarponekrem, kjekslag og kakaopulver. Ikke restaurantfoto; oppskrift og presentasjon varierer."
     },
     {
       "id": "pizza-marinara",
