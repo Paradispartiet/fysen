@@ -12,8 +12,10 @@ Cloudflare D1 Free (kontrollert mot offisiell dokumentasjon 12. november 2026):
 | D1-rader skrevet | 100 000 per dag | 50 000 per dag |
 | Workers-forespørsler | 100 000 per dag | 40 000 per dag |
 | Lagring per D1-database | 500 MB | 300 MB |
+| Lagring på hele D1-kontoen | 5 GB | 3 GB |
+| D1-databaser på hele kontoen | 10 | 8 |
 
-Kildene er [D1-priser](https://developers.cloudflare.com/d1/platform/pricing/) og [Workers-grenser](https://developers.cloudflare.com/workers/platform/limits/). D1 har også en **samlet** gratis lagringsgrense på 5 GB for kontoens databaser, som må undersøkes på konto-nivå separat.
+Kildene er [D1-priser](https://developers.cloudflare.com/d1/platform/pricing/), [D1-grenser](https://developers.cloudflare.com/d1/platform/limits/) og [Workers-grenser](https://developers.cloudflare.com/workers/platform/limits/). Kravene for kontolagring og databaseantall er nå del av selve beregningsporten, ikke bare en manuell fotnote. Tallene må fortsatt kontrolleres mot den faktiske Cloudflare-kontoen.
 
 Overskrides D1 Free-grensene, blir forespørsler avvist. Det er likevel feil å kalle denne løsningen «garantert gratis» uten å kjenne kontoplan og faktisk bruk. **Ikke** aktiver Workers Paid, betalende R2 eller annen betalt backend for å løse en blokkert import automatisk.
 
@@ -57,11 +59,13 @@ For D1-målinger bruker man `meta.rows_read` og `meta.rows_written` fra faktiske
     "statusRequests": null,
     "initialImports": null
   },
-  "databaseBytesAfterImport": null
+  "databaseBytesAfterImport": null,
+  "accountDatabaseBytesAfterImport": null,
+  "accountDatabasesAfterImport": null
 }
 ```
 
-`null` er med hensikt: **verktøyet nekter å godkjenne uten målinger**. `measuredAt` må være en reell, tidssonebasert ISO-dato fra de siste syv dagene. `initialImportRowsWritten` må inkludere FTS5-oppbyggingen. Prognosene må regne med samtlige apper på samme Cloudflare-konto, ikke bare Fysen; den lokale programmets prognose er ikke en fakturagaranti.
+`null` er med hensikt: **verktøyet nekter å godkjenne uten målinger**. `measuredAt` må være en reell, tidssonebasert ISO-dato fra de siste syv dagene. `initialImportRowsWritten` må inkludere FTS5-oppbyggingen; hvis man planlegger import, kan ikke denne målingen være null eller 0. `accountDatabaseBytesAfterImport` betyr kontoens samlede D1-lagring etter planlagt import, og `accountDatabasesAfterImport` teller alle D1-databaser etter at previewen er opprettet. Disse feltene er påkrevde; kontoens lagring kan ikke være mindre enn størrelsen på testdatabasen. Prognosene må regne med samtlige apper på samme Cloudflare-konto, ikke bare Fysen. Oppgitte kildemerker er ikke kryptografisk bevis for fjernmålinger, så operatøren må kontrollere tallene i kontoen før godkjenning. En positiv prognose er ikke en fakturagaranti.
 
 Kjør offline:
 
@@ -76,7 +80,7 @@ Avviste eller manglende målinger gir exitkode 2. Bestått prognose gir exitkode
 1. Hele CI for siste PR-HEAD skal være grønn, inkludert ekte lokal Wrangler D1.
 2. Cloudflare-kontoens prisplan må være verifisert til Free, uten uønskede betalinger.
 3. Import og lagring under Free-grensene skal være målt i en egen fjern-preview; FTS5 kan gjøre første import dyrere enn 47 265 rader skrevet.
-4. Ekte kontotall skal bestå `free_budget_gate.py`, med rom for andre apper og misbruk.
+4. Ekte kontotall skal bestå `free_budget_gate.py`, inkludert **alle databaser**, samlet lagring, rader og Workers-forespørsler, med rom for andre apper og misbruk.
 5. Rate-limiter, av/på-bryter, offentlig schema, ingen private data og beredskap for `503`/kvotebrudd kontrolleres.
 6. Først etter eksplisitt publiseringsgodkjenning kan produksjonspekere eventuelt endres. Den eksisterende statiske menyindeksen skal være enkel å rulle tilbake til.
 
