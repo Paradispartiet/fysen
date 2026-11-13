@@ -188,10 +188,11 @@
       "label": "Gyoza",
       "query": "gyoza",
       "index": 17,
-      "atlas": "collection.avif",
+      "atlas": "gyoza-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "gyoza"
+      "catalogId": "gyoza",
+      "variantCaution": "KI-illustrasjon av pannestekte gyoza med vårløk, sesam og soyadipp. Fyllet er ikke dokumentert: må ikke regnes som vegetarisk eller restaurantfoto."
     },
     {
       "id": "pho",
