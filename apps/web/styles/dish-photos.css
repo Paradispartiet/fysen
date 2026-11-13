@@ -253,3 +253,17 @@
 .dishPhotoThumb.dishPhotoTacosAlPastor,
 .dishPhotoSmall.dishPhotoTacosAlPastor { background: #000 url("/dish-images/tacos-al-pastor-768.avif") center / cover no-repeat; }
 
+/* Separate 768px AI illustrations for exact Japanese dish IDs only.
+   Not photographs of a restaurant serving or proof of menu ingredients. */
+.dishPhotoThumb.dishPhotoChickenKatsu,
+.dishPhotoSmall.dishPhotoChickenKatsu {
+  background: #000 url("/dish-images/chicken-katsu-768.avif") center / cover no-repeat;
+}
+.dishPhotoThumb.dishPhotoYakitori,
+.dishPhotoSmall.dishPhotoYakitori {
+  background: #000 url("/dish-images/yakitori-768.avif") center / cover no-repeat;
+}
+.dishPhotoThumb.dishPhotoUdonTempura,
+.dishPhotoSmall.dishPhotoUdonTempura {
+  background: #000 url("/dish-images/udon-tempura-768.avif") center / cover no-repeat;
+}
