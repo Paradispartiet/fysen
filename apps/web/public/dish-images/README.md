@@ -141,3 +141,5 @@ Pad thai har eksakt katalogkobling til det allerede godkjente 128px-miniatyrbild
 - `sambar-768.avif` er et separat skarpt 768 × 768-bilde av sørindisk sambar, og viser ikke idli som hovedrett. Oppskrifter og ingredienser varierer; KI-illustrasjonen er ikke et restaurantfotografi.
 
 - `medu-vada-768.avif` er et separat 768 × 768-bilde av medu vada med sambar og chutney. Det viser varianten med sprøstekte linsekaker og er ikke et restaurantfoto.
+
+Ny separat **768 × 768 AVIF** for `gyoza` (atlasplass 17): pannestekte gyoza med soyadipp og vårløk. Variant/fyll er ikke kjent fra bildet; dette er KI-illustrasjon, ikke et restaurantfoto. Bilde er lagt til i PR #1212 før samlet utrulling.
