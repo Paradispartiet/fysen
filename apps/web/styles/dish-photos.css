@@ -211,3 +211,13 @@
 .dishPhotoSmall.dishPhotoGyoza {
   background: #000 url("/dish-images/gyoza-768.avif") center / cover no-repeat;
 }
+
+/* Gallery-only shrimp pad thai; never use for unknown-variant pad thai restaurant dishes. */
+.dishPhotoThumb.dishPhotoShrimpPadThai {
+  background: #000 url("/dish-images/pad-thai-reker-768.avif") center / cover no-repeat;
+}
+
+/* Dedicated 768px tiramisu gallery image. Not a restaurant photograph. */
+.dishPhotoThumb.dishPhotoTiramisu {
+  background: #000 url("/dish-images/tiramisu-768.avif") center / cover no-repeat;
+}
