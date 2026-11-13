@@ -37,8 +37,14 @@ def main(path: Path) -> dict:
         try:
             con.execute("PRAGMA busy_timeout=10000")
             initial = con.execute("SELECT COUNT(*) FROM fysen_public_items").fetchone()[0]
-            if initial != 47265:
-                raise ValueError("Expected exactly 47,265 real public rows")
+            # The verified public archive is refreshed over time. Its
+            # exported metadata must match the actual count, and the pilot
+            # must retain a substantial representative menu corpus.
+            expected = json.loads(con.execute(
+                "SELECT value FROM public_archive_meta WHERE key='publicItems'"
+            ).fetchone()[0])
+            if initial != expected or initial < 45000:
+                raise ValueError("Public FTS5 fixture count differs from verified export metadata")
             baseline_plan = con.execute(
                 "EXPLAIN QUERY PLAN SELECT item_index FROM fysen_public_items"
                 " WHERE instr(normalized_name, 'ramen') > 0"
