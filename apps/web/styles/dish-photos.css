@@ -221,3 +221,14 @@
 .dishPhotoThumb.dishPhotoTiramisu {
   background: #000 url("/dish-images/tiramisu-768.avif") center / cover no-repeat;
 }
+  
+/* Individuelle 768px illustrasjoner med eksakt rett-ID: marinara uten ost,
+   falafel med hummus. Aldri fremstill som bilder av en bestemt restaurant. */
+.dishPhotoThumb.dishPhotoPizzaMarinara,
+.dishPhotoSmall.dishPhotoPizzaMarinara {
+  background: #000 url("/dish-images/pizza-marinara-768.avif") center / cover no-repeat;
+}
+.dishPhotoThumb.dishPhotoFalafel,
+.dishPhotoSmall.dishPhotoFalafel {
+  background: #000 url("/dish-images/falafel-768.avif") center / cover no-repeat;
+}
