@@ -18,12 +18,23 @@ Opplysningene om Free og plassering stammer fra manuell dashboard-kontroll. GitH
 2. Kjør **kun** denne SQL-spørringen:
 
 ```sql
-SELECT COUNT(*) AS user_tables
+SELECT name, type
 FROM sqlite_master
-WHERE type = 'table' AND name NOT LIKE 'sqlite_%';
+WHERE type = 'table'
+ORDER BY name;
 ```
 
-3. **Forventet resultat: `user_tables = 0`.** Hvis resultatet er noe annet enn 0, stopp og undersøk. Ikke importer noe i en database som allerede har tabeller.
+3. En ny D1-database kan vise **`_cf_KV`** selv om ingen brukerdata er lagret. Cloudflare opplyser at dette er en intern, reservert D1-tabell som ikke kan leses direkte og ikke belastes som vanlige radoperasjoner. Hvis kun `_cf_KV` (og eventuelt SQLite-systemtabeller) vises, er dette forventet. Hvis andre tabeller vises, stopp og undersøk navnene; ikke importer noe i en database som allerede har brukertabeller. Kilde: [Cloudflare D1 import/export](https://developers.cloudflare.com/d1/best-practices/import-export-data/).
+
+   For å telle **kun reelle brukertabeller** uten å regne med D1s interne tabell, kan du også kjøre:
+
+```sql
+SELECT COUNT(*) AS user_tables
+FROM sqlite_master
+WHERE type = 'table'
+  AND name NOT LIKE 'sqlite_%'
+  AND name <> '_cf_KV';
+```
 4. Gå tilbake til **Overview** og velg **Last 24 hours**. Noter *Total queries*, *Rows read*, *Rows written* og *Storage used*. SQL-console-spørringen kan registreres med null skannede rader selv om antall spørringer øker. Målingene kan være forsinket.
 5. Dokumenter tall og tidspunkt, men del aldri API-token, passord, betaling eller andre hemmeligheter.
 
