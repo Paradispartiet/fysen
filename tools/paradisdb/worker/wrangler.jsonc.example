@@ -1,7 +1,7 @@
 {
-  // EXAMPLE ONLY. Cloudflare account and database must be created in Dashboard.
+  // EXAMPLE ONLY. The public Fysen D1 was created manually under Workers Free.
   // Public Fysen archive only; keep the D1 EMPTY until measured release approval.
-  // Copy this into wrangler.jsonc only after you authorize a local preview.
+  // This is a template only; do not deploy or import until remote Free-plan release checks pass.
   "name": "paradisdb-fysen-public-preview",
   "main": "worker.mjs",
   "compatibility_date": "2026-11-12",
@@ -20,7 +20,7 @@
     {
       "binding": "PUBLIC_DB",
       "database_name": "paradisdb-fysen-public",
-      "database_id": "REPLACE_WITH_YOUR_NEW_FYSEN_PUBLIC_D1_ID"
+      "database_id": "882a3393-71c3-43f9-9dec-efc2bbcab409"
     }
   ]
 }
