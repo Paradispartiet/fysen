@@ -163,3 +163,9 @@ Alle tre stammer fra nye, separat utskårne motiver i én høyoppløselig KI-gen
 Tre separate 768 × 768 AVIF-bilder i PR #1212: `pasta-bolognese-768.avif`, `pizza-prosciutto-768.avif` og `kebab-pita-768.avif`. Erstattet galleriindeks 7–9; ingen automatisk kobling til restaurantretter. Bolognese inneholder kjøttsaus og ost; prosciutto inneholder svinekjøtt og mozzarella; kebabfyllets kjøttype er ikke kjent. Nye KI-genererte enkeltmotiver fra en trepanelskomposisjon (~724 × 724 faktiske kildepiksler per motiv før 768-eksport), ikke eldre lavoppløselige bildekart. Ingen deploy eller databaseendring.
 
 Bilder med lavere effektiv kildeoppløsning enn eksportformatet skal beskrives med begge tall; 768 × 768 filformat betyr ikke 768 uavhengige kildedetaljpiksler. Kontroll av fotorealistisk kvalitet erstatter ikke verifikasjon av rett-ID, ingredienser eller allergener.
+
+Tre separate **768 × 768 AVIF** KI-illustrasjoner i PR #1212 (ingen merge/deploy):
+- `stekt-hvit-fisk-768.avif`: Kun galleriindeks 13; hvit fisk, poteter, brokkolini, tomater og sitron. Fiskeart er ikke bekreftet. Ikke redaksjonell generisk restaurantkobling.
+- `bibimbap-768.avif`: Kun galleriindeks 19; kjøttvariant med storfekjøtt, egg, ris, grønnsaker og sesam. Ikke vegetarvariant eller restaurantfoto.
+- `tacos-al-pastor-768.avif`: Galleriindeks 21 og redaksjonelt kort med nøyaktig ID `tacos-al-pastor`; marinert svinekjøtt, ananas, løk, koriander og maislefser. Ikke for kylling/vegetar.
+Motivene er tre enkeltutsnitt fra en ny høyoppløselig KI-generert triptyk med omtrent 715 × 717 bildepiksler per motiv før 768-eksport, aldri fra gamle atlasfiler. Ingen endring i Supabase, menyhistorikk, kostnader eller produksjon.

@@ -21,6 +21,9 @@ const ramenImage = readFileSync(path.join(web, "public/dish-images/ramen-768.avi
 const isBologneseImage = readFileSync(path.join(web, "public/dish-images/pasta-bolognese-768.avif"));
 const isProsciuttoImage = readFileSync(path.join(web, "public/dish-images/pizza-prosciutto-768.avif"));
 const isKebabPitaImage = readFileSync(path.join(web, "public/dish-images/kebab-pita-768.avif"));
+const whiteFishImage = readFileSync(path.join(web, "public/dish-images/stekt-hvit-fisk-768.avif"));
+const bibimbapImage = readFileSync(path.join(web, "public/dish-images/bibimbap-768.avif"));
+const tacosAlPastorImage = readFileSync(path.join(web, "public/dish-images/tacos-al-pastor-768.avif"));
 const gyozaImage = readFileSync(path.join(web, "public/dish-images/gyoza-768.avif"));
 const marinaraImage = readFileSync(path.join(web, "public/dish-images/pizza-marinara-768.avif"));
 const falafelImage = readFileSync(path.join(web, "public/dish-images/falafel-768.avif"));
@@ -125,7 +128,7 @@ test("Every generated and approved image is represented in the published Matlyst
   assert.deepEqual(manifest.images.map((entry) => entry.id), entries.map((match) => match[1]));
   for (const [index, image] of manifest.images.entries()) {
     assert.equal(image.index, index);
-    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index === 2 ? "grillet-laks-512.avif" : index === 3 ? "grillet-biff-512.avif" : index === 4 ? "rekesmorbrod-512.avif" : index === 5 ? "sushi-768.avif" : index === 6 ? "ramen-768.avif" : index === 7 ? "pasta-bolognese-768.avif" : index === 8 ? "pizza-prosciutto-768.avif" : index === 9 ? "kebab-pita-768.avif" : index === 10 ? "carbonara-768.avif" : index === 11 ? "butter-chicken-768.avif" : index === 12 ? "pad-thai-reker-768.avif" : index === 14 ? "tiramisu-768.avif" : index === 15 ? "pizza-marinara-768.avif" : index === 16 ? "cacio-e-pepe-768.avif" : index === 17 ? "gyoza-768.avif" : index === 18 ? "pho-512.avif" : index === 20 ? "falafel-768.avif" : index === 22 ? "chana-masala-768.avif" : index === 23 ? "masala-dosa-768.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-768.avif");
+    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index === 2 ? "grillet-laks-512.avif" : index === 3 ? "grillet-biff-512.avif" : index === 4 ? "rekesmorbrod-512.avif" : index === 5 ? "sushi-768.avif" : index === 6 ? "ramen-768.avif" : index === 7 ? "pasta-bolognese-768.avif" : index === 8 ? "pizza-prosciutto-768.avif" : index === 9 ? "kebab-pita-768.avif" : index === 10 ? "carbonara-768.avif" : index === 11 ? "butter-chicken-768.avif" : index === 12 ? "pad-thai-reker-768.avif" : index === 13 ? "stekt-hvit-fisk-768.avif" : index === 14 ? "tiramisu-768.avif" : index === 15 ? "pizza-marinara-768.avif" : index === 16 ? "cacio-e-pepe-768.avif" : index === 17 ? "gyoza-768.avif" : index === 18 ? "pho-512.avif" : index === 19 ? "bibimbap-768.avif" : index === 20 ? "falafel-768.avif" : index === 21 ? "tacos-al-pastor-768.avif" : index === 22 ? "chana-masala-768.avif" : index === 23 ? "masala-dosa-768.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-768.avif");
     assert.equal(image.surface, "Matlyst");
     assert.equal(image.kind, "AI-illustrasjon");
   }
@@ -645,4 +648,40 @@ test("Bolognese, prosciutto and kebab have accurate 768px gallery-only AVIF imag
   }
   const catalog = gallery.slice(gallery.indexOf("const editorialPhotoIndex"), gallery.indexOf("const illustratedVariants"));
   assert.doesNotMatch(catalog, /"pasta-bolognese"|"pizza-prosciutto"|"kebab-pita"/u);
+});
+
+
+test("White fish, beef bibimbap and pork tacos al pastor have real 768px dish-specific assets", () => {
+  for (const { index, id, file, bytes, thumb, catalogId, ingredient } of [
+    { index: 13, id: "stekt-hvit-fisk", file: "stekt-hvit-fisk-768.avif", bytes: whiteFishImage, thumb: "WhiteFish", catalogId: null, ingredient: /fisk/u },
+    { index: 19, id: "bibimbap", file: "bibimbap-768.avif", bytes: bibimbapImage, thumb: "Bibimbap", catalogId: null, ingredient: /storfekjøtt/u },
+    { index: 21, id: "tacos-al-pastor", file: "tacos-al-pastor-768.avif", bytes: tacosAlPastorImage, thumb: "TacosAlPastor", catalogId: "tacos-al-pastor", ingredient: /svinekjøtt/u },
+  ]) {
+    assert.equal(bytes.toString("ascii", 4, 12), "ftypavif");
+    assert.ok(bytes.length > 20000, id + " must contain meaningful picture data");
+    const marker = bytes.indexOf(Buffer.from("ispe"));
+    assert.ok(marker > 0);
+    assert.equal(bytes.readUInt32BE(marker + 8), 768);
+    assert.equal(bytes.readUInt32BE(marker + 12), 768);
+    const item = manifest.images[index];
+    assert.equal(item.id, id);
+    assert.equal(item.atlas, file);
+    assert.equal(item.catalogId, catalogId);
+    assert.match(item.variantCaution, ingredient);
+    assert.match(item.variantCaution, /ikke restaurantfoto/iu);
+    assert.ok(gallery.includes("is" + thumb + " = index === " + index));
+    assert.ok(gallery.includes("dishPhotoThumb dishPhoto" + thumb));
+    assert.ok(css.includes(".dishPhotoThumb.dishPhoto" + thumb));
+    assert.ok(css.includes(file));
+  }
+  assert.match(manifest.images[13].variantCaution, /fiskeart.*ikke bekreftet/iu);
+  assert.match(manifest.images[19].variantCaution, /ikke vegetarisk/iu);
+  assert.match(manifest.images[21].variantCaution, /ananas/iu);
+  assert.ok(gallery.includes("dishPhotoSmall dishPhotoTacosAlPastor"));
+  assert.ok(css.includes(".dishPhotoSmall.dishPhotoTacosAlPastor"));
+  assert.match(gallery, /"tacos-al-pastor": "tacos al pastor med marinert svinekjøtt/u);
+  assert.doesNotMatch(css, /\.dishPhotoSmall\.dishPhotoWhiteFish/u);
+  assert.doesNotMatch(css, /\.dishPhotoSmall\.dishPhotoBibimbap/u);
+  const mapped = gallery.slice(gallery.indexOf("const editorialPhotoIndex:"), gallery.indexOf("const illustratedVariants"));
+  assert.doesNotMatch(mapped, /bibimbap|stekt-hvit-fisk/u);
 });

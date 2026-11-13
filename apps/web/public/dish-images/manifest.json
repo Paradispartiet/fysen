@@ -152,10 +152,11 @@
       "label": "Stekt hvit fisk",
       "query": "stekt fisk",
       "index": 13,
-      "atlas": "collection.avif",
+      "atlas": "stekt-hvit-fisk-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av stekt hvit fisk med poteter, brokkolini, tomater og sitron. Fiskeart og øvrige ingredienser er ikke bekreftet. Ikke restaurantfoto."
     },
     {
       "id": "tiramisu",
@@ -217,10 +218,11 @@
       "label": "Bibimbap",
       "query": "bibimbap",
       "index": 19,
-      "atlas": "collection.avif",
+      "atlas": "bibimbap-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av bibimbap med storfekjøtt, ris, grønnsaker, stekt egg, sesam og chilisaus. Dette er en kjøttvariant, ikke vegetarisk og ikke restaurantfoto."
     },
     {
       "id": "falafel",
@@ -238,10 +240,11 @@
       "label": "Tacos al pastor",
       "query": "tacos al pastor",
       "index": 21,
-      "atlas": "collection.avif",
+      "atlas": "tacos-al-pastor-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "tacos-al-pastor"
+      "catalogId": "tacos-al-pastor",
+      "variantCaution": "KI-illustrasjon av tacos al pastor med marinert svinekjøtt, ananas, løk, koriander og maislefser. Ikke bruk for kylling eller vegetariske varianter. Ikke restaurantfoto."
     },
     {
       "id": "chana-masala",
