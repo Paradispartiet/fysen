@@ -50,12 +50,16 @@ jobs:
           report = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) / "paradisdb-real-index-report.json").read_text())
           assert report["ok"] is True and report["source"] == "verified-menu-archive"
           assert report["realtime"] is False
-          assert report["restaurants"] == 973, report
-          assert report["originalItems"] == 47265, report
+          manifest = json.loads(pathlib.Path("verified-index/manifest.json").read_text())
+          # The public branch is refreshed regularly. Compare against its
+          # checksum-verified manifest, never yesterday's frozen row count.
+          assert report["restaurants"] == manifest["restaurants"] >= 900, report
+          assert report["originalItems"] == manifest["dishes"] >= 45000, report
+          assert report["sha256"] == manifest["sha256"], report
+          assert report["archiveDate"] == manifest["archiveDate"], report
+          assert report["lastRefreshAt"] == manifest["lastRefreshAt"], report
+          assert 0 < report["publicItems"] <= report["originalItems"], report
           assert report["quarantinedSources"] >= 4, report
-          # Four identity-quarantined source records are empty in this
-          # verified public snapshot; therefore no menu-item count drops.
-          assert report["publicItems"] == 47265, report
           print("PASS: public restaurants", report["restaurants"], "verified public items", report["publicItems"], "quarantined sources", report["quarantinedSources"])
           PY
           python3 tools/paradisdb/paradisdb.py search "$path" ramen | python3 -c 'import json,sys; v=json.load(sys.stdin); assert v["realtime"] is False; assert v["count"] > 0; assert all(x["menu"]["sourceUrl"].startswith(("http://","https://")) for x in v["results"])'
@@ -71,9 +75,12 @@ jobs:
           import json, os, pathlib, sqlite3
           root = pathlib.Path(os.environ["RUNNER_TEMP"])
           report = json.loads((root / "paradisdb-d1-export-report.json").read_text())
+          imported = json.loads((root / "paradisdb-real-index-report.json").read_text())
           sql = (root / "paradisdb-public.sql").read_text(encoding="utf-8")
           assert report["ok"] is True and report["publicOnly"] is True, report
-          assert report["menuItems"] == 47265, report
+          assert report["menuItems"] == imported["publicItems"], report
+          assert report["archiveSha256"] == imported["sha256"], report
+          assert report["publicRowsSha256"] == imported["publicRowsSha256"], report
           assert "CREATE TABLE IF NOT EXISTS documents" not in sql
           assert "CREATE TABLE IF NOT EXISTS public_archive_meta" in sql
           assert "INSERT INTO public_archive_meta(key,value) VALUES ('public_ready','true');" in sql
@@ -83,22 +90,24 @@ jobs:
           local = root / "paradisdb-worker-d1.sqlite"
           con = sqlite3.connect(local)
           con.executescript(sql)
-          assert con.execute("SELECT COUNT(*) FROM fysen_public_items").fetchone()[0] == 47265
+          assert con.execute("SELECT COUNT(*) FROM fysen_public_items").fetchone()[0] == imported["publicItems"]
           assert con.execute("SELECT value FROM public_archive_meta WHERE key='public_ready'").fetchone()[0] == "true"
-          assert con.execute("SELECT value FROM public_archive_meta WHERE key='sha256'").fetchone()[0].startswith('"42fe1c')
-          assert len(json.loads(con.execute("SELECT value FROM public_archive_meta WHERE key='publicRowsSha256'").fetchone()[0])) == 64
-          assert con.execute("SELECT COUNT(*) FROM fysen_public_items WHERE source_url LIKE 'https://%' OR source_url LIKE 'http://%'").fetchone()[0] == 47265
+          assert json.loads(con.execute("SELECT value FROM public_archive_meta WHERE key='sha256'").fetchone()[0]) == imported["sha256"]
+          assert json.loads(con.execute("SELECT value FROM public_archive_meta WHERE key='publicRowsSha256'").fetchone()[0]) == imported["publicRowsSha256"]
+          assert con.execute("SELECT COUNT(*) FROM fysen_public_items WHERE source_url LIKE 'https://%' OR source_url LIKE 'http://%'").fetchone()[0] == imported["publicItems"]
           assert con.execute("SELECT COUNT(*) FROM sqlite_master WHERE name='documents'").fetchone()[0] == 0
           con.close()
-          print("PASS: 47265 verifiable, public-only rows in standalone D1 SQL; no private schema")
+          print(f"PASS: {imported['publicItems']} verifiable, public-only rows in standalone D1 SQL; no private schema")
           PY
       - name: Exercise real Worker API over D1-compatible public SQLite rows
         shell: bash
         env:
           PARADISDB_PUBLIC_SQLITE_PATH: ${{ runner.temp }}/paradisdb-worker-d1.sqlite
+          PARADISDB_PUBLIC_REPORT_PATH: ${{ runner.temp }}/paradisdb-real-index-report.json
         run: |
           set -euo pipefail
           test -f "$PARADISDB_PUBLIC_SQLITE_PATH"
+          test -f "$PARADISDB_PUBLIC_REPORT_PATH"
           node --test tools/paradisdb/worker/tests/worker-sqlite-integration.test.mjs
       - name: Benchmark zero-subscription FTS5 indexed search (isolated, real public rows)
         shell: bash
@@ -109,6 +118,7 @@ jobs:
         shell: bash
         env:
           PARADISDB_PUBLIC_SQL: ${{ runner.temp }}/paradisdb-public.sql
+          PARADISDB_PUBLIC_REPORT: ${{ runner.temp }}/paradisdb-real-index-report.json
         run: bash tools/paradisdb/worker/tests/local-wrangler-d1-proof.sh
       - name: CLI smoke and backup restore
         shell: bash
