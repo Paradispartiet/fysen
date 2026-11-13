@@ -1,5 +1,6 @@
 {
-  // EXAMPLE ONLY. No Cloudflare project or D1 database has been created.
+  // EXAMPLE ONLY. Cloudflare account and database must be created in Dashboard.
+  // Public Fysen archive only; keep the D1 EMPTY until measured release approval.
   // Copy this into wrangler.jsonc only after you authorize a local preview.
   "name": "paradisdb-fysen-public-preview",
   "main": "worker.mjs",
@@ -18,8 +19,8 @@
   "d1_databases": [
     {
       "binding": "PUBLIC_DB",
-      "database_name": "paradisdb-fysen-public-preview",
-      "database_id": "REPLACE_WITH_ISOLATED_D1_ID"
+      "database_name": "paradisdb-fysen-public",
+      "database_id": "REPLACE_WITH_YOUR_NEW_FYSEN_PUBLIC_D1_ID"
     }
   ]
 }
