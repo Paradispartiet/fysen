@@ -18,6 +18,7 @@ const cheeseburger = readFileSync(path.join(web, "public/dish-images/cheeseburge
 const grilledSalmon = readFileSync(path.join(web, "public/dish-images/grillet-laks-512.avif"));
 const sushiImage = readFileSync(path.join(web, "public/dish-images/sushi-768.avif"));
 const ramenImage = readFileSync(path.join(web, "public/dish-images/ramen-768.avif"));
+const gyozaImage = readFileSync(path.join(web, "public/dish-images/gyoza-768.avif"));
 const carbonaraImage = readFileSync(path.join(web, "public/dish-images/carbonara-768.avif"));
 const butterChickenImage = readFileSync(path.join(web, "public/dish-images/butter-chicken-768.avif"));
 const grilledSteak = readFileSync(path.join(web, "public/dish-images/grillet-biff-512.avif"));
@@ -114,7 +115,7 @@ test("Every generated and approved image is represented in the published Matlyst
   assert.deepEqual(manifest.images.map((entry) => entry.id), entries.map((match) => match[1]));
   for (const [index, image] of manifest.images.entries()) {
     assert.equal(image.index, index);
-    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index === 2 ? "grillet-laks-512.avif" : index === 3 ? "grillet-biff-512.avif" : index === 4 ? "rekesmorbrod-512.avif" : index === 5 ? "sushi-768.avif" : index === 6 ? "ramen-768.avif" : index === 10 ? "carbonara-768.avif" : index === 11 ? "butter-chicken-768.avif" : index === 18 ? "pho-512.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-768.avif");
+    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index === 2 ? "grillet-laks-512.avif" : index === 3 ? "grillet-biff-512.avif" : index === 4 ? "rekesmorbrod-512.avif" : index === 5 ? "sushi-768.avif" : index === 6 ? "ramen-768.avif" : index === 10 ? "carbonara-768.avif" : index === 11 ? "butter-chicken-768.avif" : index === 17 ? "gyoza-768.avif" : index === 18 ? "pho-512.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-768.avif");
     assert.equal(image.surface, "Matlyst");
     assert.equal(image.kind, "AI-illustrasjon");
   }
@@ -502,4 +503,23 @@ test("Four standalone 768px images preserve exact dish variants and source quali
   }
   assert.match(gallery, /chashu-svinekjøtt/u);
   assert.match(gallery, /spaghetti carbonara med speket svinekjøtt/u);
+});
+
+test("Gyoza illustration is a full standalone 768px image with exact dish ID and no invented filling", () => {
+  assert.equal(gyozaImage.toString("ascii", 4, 12), "ftypavif");
+  assert.ok(gyozaImage.length > 18000);
+  const ispe = gyozaImage.indexOf(Buffer.from("ispe"));
+  assert.ok(ispe > 0);
+  assert.equal(gyozaImage.readUInt32BE(ispe + 8), 768);
+  assert.equal(gyozaImage.readUInt32BE(ispe + 12), 768);
+  const item = manifest.images[17];
+  assert.equal(item.id, "gyoza");
+  assert.equal(item.catalogId, "gyoza");
+  assert.equal(item.atlas, "gyoza-768.avif");
+  assert.match(item.variantCaution, /fyllet er ikke dokumentert/iu);
+  assert.match(item.variantCaution, /ikke.*restaurantfoto/iu);
+  assert.match(gallery, /isGyoza = index === 17/u);
+  assert.match(gallery, /dishPhotoThumb dishPhotoGyoza/u);
+  assert.match(css, /dishPhotoThumb\\.dishPhotoGyoza/u);
+  assert.match(css, /gyoza-768\\.avif/u);
 });
