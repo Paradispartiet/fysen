@@ -31,6 +31,8 @@ class BudgetGateTests(unittest.TestCase):
                 "searches": 1000, "statusRequests": 200, "initialImports": 0
             },
             "databaseBytesAfterImport": 16000000,
+            "accountDatabaseBytesAfterImport": 16000000,
+            "accountDatabasesAfterImport": 1,
         }
 
     def test_small_remote_projection_fits_conservative_budgets(self):
@@ -90,6 +92,41 @@ class BudgetGateTests(unittest.TestCase):
 
     def test_zero_unmeasured_reads_rejected(self):
         self.report["measurements"]["statusRowsRead"] = 0
+        with self.assertRaises(ValueError):
+            gate.check(self.report, now=self.now)
+
+
+    def test_account_wide_database_count_and_storage_budgets(self):
+        self.report["accountDatabasesAfterImport"] = 9
+        self.report["accountDatabaseBytesAfterImport"] = 3100000000
+        result = gate.check(self.report, now=self.now)
+        self.assertFalse(result["admitted"])
+        self.assertIn("accountDatabases", result["overSoftBudget"])
+        self.assertIn("accountDatabaseBytes", result["overSoftBudget"])
+        self.assertNotIn("accountDatabases", result["overHardLimit"])
+        self.report["accountDatabasesAfterImport"] = 11
+        self.report["accountDatabaseBytesAfterImport"] = 5100000000
+        hard = gate.check(self.report, now=self.now)
+        self.assertIn("accountDatabases", hard["overHardLimit"])
+        self.assertIn("accountDatabaseBytes", hard["overHardLimit"])
+
+    def test_account_metrics_required_and_consistent(self):
+        for field in ("accountDatabasesAfterImport", "accountDatabaseBytesAfterImport"):
+            original = self.report.pop(field)
+            with self.assertRaises(ValueError):
+                gate.check(self.report, now=self.now)
+            self.report[field] = original
+        self.report["accountDatabaseBytesAfterImport"] = 1
+        with self.assertRaises(ValueError):
+            gate.check(self.report, now=self.now)
+        self.report["accountDatabaseBytesAfterImport"] = 16000000
+        self.report["accountDatabasesAfterImport"] = 0
+        with self.assertRaises(ValueError):
+            gate.check(self.report, now=self.now)
+
+    def test_import_forecast_needs_measured_writes(self):
+        self.report["forecastToday"]["initialImports"] = 1
+        self.report["measurements"]["initialImportRowsWritten"] = 0
         with self.assertRaises(ValueError):
             gate.check(self.report, now=self.now)
 
