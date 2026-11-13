@@ -520,6 +520,6 @@ test("Gyoza illustration is a full standalone 768px image with exact dish ID and
   assert.match(item.variantCaution, /ikke.*restaurantfoto/iu);
   assert.match(gallery, /isGyoza = index === 17/u);
   assert.match(gallery, /dishPhotoThumb dishPhotoGyoza/u);
-  assert.match(css, /dishPhotoThumb\\.dishPhotoGyoza/u);
-  assert.match(css, /gyoza-768\\.avif/u);
+  assert.ok(css.includes(".dishPhotoThumb.dishPhotoGyoza"));
+  assert.ok(css.includes("gyoza-768.avif"));
 });
