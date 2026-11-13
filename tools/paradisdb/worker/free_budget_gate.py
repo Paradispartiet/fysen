@@ -18,6 +18,8 @@ FREE_LIMITS = {
     "rowsWritten": 100_000,
     "workerRequests": 100_000,
     "databaseBytes": 500_000_000,
+    "accountDatabaseBytes": 5_000_000_000,
+    "accountDatabases": 10,
 }
 # Leave headroom for other apps, surprise traffic and query variation.
 SOFT_BUDGETS = {
@@ -25,6 +27,8 @@ SOFT_BUDGETS = {
     "rowsWritten": 50_000,
     "workerRequests": 40_000,
     "databaseBytes": 300_000_000,
+    "accountDatabaseBytes": 3_000_000_000,
+    "accountDatabases": 8,
 }
 METRIC_FIELDS = (
     "searchRowsRead", "statusRowsRead", "searchRowsWritten",
@@ -70,6 +74,14 @@ def check(report: dict, now: datetime | None = None) -> dict:
     f = {key: unsigned_int(forecast.get(key), "forecastToday." + key)
          for key in ("searches", "statusRequests", "initialImports")}
     storage = unsigned_int(report.get("databaseBytesAfterImport"), "databaseBytesAfterImport")
+    account_storage = unsigned_int(report.get("accountDatabaseBytesAfterImport"), "accountDatabaseBytesAfterImport")
+    account_databases = unsigned_int(report.get("accountDatabasesAfterImport"), "accountDatabasesAfterImport")
+    if account_storage < storage:
+        raise ValueError("Account storage cannot be smaller than the target database")
+    if account_databases < 1:
+        raise ValueError("Account must include the target database")
+    if f["initialImports"] and m["initialImportRowsWritten"] == 0:
+        raise ValueError("Initial import forecast requires a nonzero measured write sample including FTS5")
     if m["searchRowsRead"] == 0 or m["statusRowsRead"] == 0:
         raise ValueError("Remote read samples must have nonzero measured rows")
     projected = {
@@ -85,6 +97,8 @@ def check(report: dict, now: datetime | None = None) -> dict:
         ),
         "workerRequests": b["workerRequests"] + f["searches"] + f["statusRequests"],
         "databaseBytes": storage,
+        "accountDatabaseBytes": account_storage,
+        "accountDatabases": account_databases,
     }
     over = {field: {"projected":value,"softLimit":SOFT_BUDGETS[field]}
             for field, value in projected.items() if value > SOFT_BUDGETS[field]}
@@ -101,8 +115,9 @@ def check(report: dict, now: datetime | None = None) -> dict:
         "overHardLimit": hard,
         "disclaimer": (
             "Estimate only; approximate per-location rate limiting is not a "
-            "global daily cap. Check actual dashboard account totals and "
-            "Free-plan activation before any remote deployment."
+            "global daily cap. Account storage and database count are also "
+            "operator-supplied: independently verify all dashboard account "
+            "totals and Free-plan activation before any remote deployment."
         )
     }
 
