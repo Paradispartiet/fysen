@@ -24,7 +24,7 @@ Overskrides D1 Free-grensene, blir forespørsler avvist. Det er likevel feil å 
 - `PARADISDB_PUBLIC_ENABLED` må være strengen `"true"` for at Worker i det hele tatt skal spørre D1. Eksempelkonfigurasjonen har den satt til `"false"`.
 - En binding `PUBLIC_RATE_LIMITER` med `limit()` **må** finnes. Ellers blir resultatet **503 uten noen D1-spørring**.
 - Enheten `PUBLIC_RATE_LIMITER` er konfigurert for **20 kall per 60 sekunder per Cloudflare-lokasjon**, med en felles nøkkel for søk. Rate limiting er **ikke global, ikke helt nøyaktig og ikke en faktureringsgrense**: Cloudflare kan slippe gjennom flere kall under synkronisering mellom lokasjoner.
-- Søk på færre enn **tre** normaliserte tegn avvises med HTTP 400 før D1. Lengre søk bruker FTS5 trigram-indeks. Dermed unngår vi det kjente fullscan-sporet for to tegn.
+- Søk på færre enn **tre** normaliserte tegn avvises med HTTP 400 før D1. Lengre søk bruker FTS5 trigram-indeks. Normaliserte søk over **48 UTF-8 bytes** avvises også før D1, siden wildcard-mønsteret med to prosenttegn må holde seg innen D1s 50-byte `LIKE`-grense. Dermed unngår vi både det kjente fullscan-sporet for to tegn og unødvendige D1-feil for lange søk.
 - Alle private ruter og HTTP-skrivemetoder er stengt. D1-bindingen kan bare peke mot en **separat offentlig** testdatabase. Ingen privat Aha-, History GO- eller Fysen-informasjon følger med.
 - Skytjenesten serverer ingenting før en fullført, verifisert arkivimport har satt `public_ready` som siste SQL-setning.
 
