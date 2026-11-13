@@ -110,6 +110,8 @@ test("rejects invalid search parameters and disallows large reads", async () => 
   for (const path of [
     "/v1/dishes/archive/search?q=x",
     "/v1/dishes/archive/search?q=%C3%B8l",
+    "/v1/dishes/archive/search?q=" + "x".repeat(49),
+    "/v1/dishes/archive/search?q=" + encodeURIComponent("ø".repeat(25)),
     "/v1/dishes/archive/search?q=ramen&limit=51",
     "/v1/dishes/archive/search?q=ramen&limit=-1",
     "/v1/dishes/archive/search?q=ramen&limit=1.2",
