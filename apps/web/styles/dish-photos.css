@@ -205,3 +205,9 @@
 .dishPhotoSmall.dishPhotoCarbonara { background: #000 url("/dish-images/carbonara-768.avif") center / cover no-repeat; }
 .dishPhotoThumb.dishPhotoButterChicken,
 .dishPhotoSmall.dishPhotoButterChicken { background: #000 url("/dish-images/butter-chicken-768.avif") center / cover no-repeat; }
+
+/* Gyoza: sharp single-dish illustration for its exact editorial ID only. */
+.dishPhotoThumb.dishPhotoGyoza,
+.dishPhotoSmall.dishPhotoGyoza {
+  background: #000 url("/dish-images/gyoza-768.avif") center / cover no-repeat;
+}
