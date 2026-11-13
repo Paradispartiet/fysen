@@ -71,6 +71,12 @@ Opprettelse i Cloudflare-kontoeierens dashboard, etter at **Workers Free** og ko
 
 **Videre før produksjon:** En godkjent kontrollert import- og måleplan, verifisert konto og reelle D1 `rows_read`/`rows_written`-målinger er fortsatt nødvendig. Gratisplanen garanterer ikke ubegrenset kapasitet. Om kontoen ikke har Free-plan/kapasitet, stopp heller enn å aktivere betaling.
 
+## Første sikre fjernkontroll på den opprettede Fysen-databasen
+
+Cloudflare-databasen `paradisdb-fysen-public` er opprettet manuelt på bekreftet Workers Free med EU-jurisdiksjon. Vi har klargjort en **skrivebeskyttet** kontroll for kontoeieren som kan gjennomføres i Cloudflare Console uten API-nøkler og uten å legge inn testtabeller eller menyposter.
+
+Se [FYSEN_FIRST_REMOTE_CHECK.md](./FYSEN_FIRST_REMOTE_CHECK.md). Den første kontrollen bekrefter at databasen fortsatt er tom og gir et første bilde av dashboard-metrikkene. En separat senere preview med målte lese- og skrivekostnader er fortsatt nødvendig før Fysens offentlige API kan aktiveres.
+
 ## Framtidig, kun etter uttrykkelig godkjenning
 
 Cloudflare D1 kan importere SQLite-SQL via `wrangler d1 execute <db> --file=... --local` for lokal database eller med `--remote` for en virkelig konto. Disse kommandoene kjøres **ikke** i denne PR-en. `wrangler.jsonc.example` er en mal uten ekte database-ID og må ikke bli en automatisk produksjonsdeploy.
