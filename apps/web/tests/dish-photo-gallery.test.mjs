@@ -19,6 +19,8 @@ const grilledSalmon = readFileSync(path.join(web, "public/dish-images/grillet-la
 const sushiImage = readFileSync(path.join(web, "public/dish-images/sushi-768.avif"));
 const ramenImage = readFileSync(path.join(web, "public/dish-images/ramen-768.avif"));
 const gyozaImage = readFileSync(path.join(web, "public/dish-images/gyoza-768.avif"));
+const shrimpPadThaiImage = readFileSync(path.join(web, "public/dish-images/pad-thai-reker-768.avif"));
+const tiramisuImage = readFileSync(path.join(web, "public/dish-images/tiramisu-768.avif"));
 const carbonaraImage = readFileSync(path.join(web, "public/dish-images/carbonara-768.avif"));
 const butterChickenImage = readFileSync(path.join(web, "public/dish-images/butter-chicken-768.avif"));
 const grilledSteak = readFileSync(path.join(web, "public/dish-images/grillet-biff-512.avif"));
@@ -115,7 +117,7 @@ test("Every generated and approved image is represented in the published Matlyst
   assert.deepEqual(manifest.images.map((entry) => entry.id), entries.map((match) => match[1]));
   for (const [index, image] of manifest.images.entries()) {
     assert.equal(image.index, index);
-    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index === 2 ? "grillet-laks-512.avif" : index === 3 ? "grillet-biff-512.avif" : index === 4 ? "rekesmorbrod-512.avif" : index === 5 ? "sushi-768.avif" : index === 6 ? "ramen-768.avif" : index === 10 ? "carbonara-768.avif" : index === 11 ? "butter-chicken-768.avif" : index === 17 ? "gyoza-768.avif" : index === 18 ? "pho-512.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-768.avif");
+    assert.equal(image.atlas, index === 0 ? "pizza-margherita-512.avif" : index === 1 ? "cheeseburger-bacon-512.avif" : index === 2 ? "grillet-laks-512.avif" : index === 3 ? "grillet-biff-512.avif" : index === 4 ? "rekesmorbrod-512.avif" : index === 5 ? "sushi-768.avif" : index === 6 ? "ramen-768.avif" : index === 10 ? "carbonara-768.avif" : index === 11 ? "butter-chicken-768.avif" : index === 12 ? "pad-thai-reker-768.avif" : index === 14 ? "tiramisu-768.avif" : index === 17 ? "gyoza-768.avif" : index === 18 ? "pho-512.avif" : index < 24 ? "collection.avif" : index < 33 ? "series-04.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-768.avif");
     assert.equal(image.surface, "Matlyst");
     assert.equal(image.kind, "AI-illustrasjon");
   }
@@ -522,4 +524,32 @@ test("Gyoza illustration is a full standalone 768px image with exact dish ID and
   assert.match(gallery, /dishPhotoThumb dishPhotoGyoza/u);
   assert.ok(css.includes(".dishPhotoThumb.dishPhotoGyoza"));
   assert.ok(css.includes("gyoza-768.avif"));
+});
+
+test("Shrimp pad thai and tiramisu are dedicated Retina-safe gallery images with accurate variants", () => {
+  for (const { index, id, file, image, cssClass } of [
+    { index: 12, id: "pad-thai-reker", file: "pad-thai-reker-768.avif", image: shrimpPadThaiImage, cssClass: "dishPhotoShrimpPadThai" },
+    { index: 14, id: "tiramisu", file: "tiramisu-768.avif", image: tiramisuImage, cssClass: "dishPhotoTiramisu" },
+  ]) {
+    assert.equal(image.toString("ascii", 4, 12), "ftypavif");
+    assert.ok(image.length > 18000, id + " unexpectedly small");
+    const ispe = image.indexOf(Buffer.from("ispe"));
+    assert.ok(ispe > 0);
+    assert.equal(image.readUInt32BE(ispe + 8), 768);
+    assert.equal(image.readUInt32BE(ispe + 12), 768);
+    const item = manifest.images[index];
+    assert.equal(item.id, id);
+    assert.equal(item.atlas, file);
+    assert.equal(item.catalogId, null, "Generic restaurant dishes must not inherit an unverified image variant");
+    assert.ok(item.variantCaution.includes("ikke restaurantfoto"));
+    assert.ok(gallery.includes(cssClass));
+    assert.ok(css.includes(".dishPhotoThumb." + cssClass));
+    assert.ok(css.includes(file));
+  }
+  assert.match(manifest.images[12].variantCaution, /reker|skalldyr/iu);
+  assert.match(manifest.images[12].variantCaution, /ikke et generelt bilde/iu);
+  assert.match(manifest.images[14].variantCaution, /mascarpone/iu);
+  assert.match(gallery, /isShrimpPadThai = index === 12/u);
+  assert.match(gallery, /isTiramisu = index === 14/u);
+  assert.doesNotMatch(css, /\.dishPhotoSmall\.dishPhotoShrimpPadThai/u);
 });
