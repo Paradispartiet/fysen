@@ -273,33 +273,33 @@
       "label": "Chicken katsu",
       "query": "chicken katsu",
       "index": 24,
-      "atlas": "series-04.avif",
+      "atlas": "chicken-katsu-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "katsu",
-      "variantCaution": "Kylling – ikke svine-tonkatsu"
+      "variantCaution": "KI-illustrasjon av kyllingkatsu av panert kylling med ris, strimlet kål og saus. Ikke svin eller vegetar, ikke restaurantfoto; tilbehør og allergener kan variere."
     },
     {
       "id": "yakitori",
       "label": "Yakitori – kyllingspyd",
       "query": "yakitori",
       "index": 25,
-      "atlas": "series-04.avif",
+      "atlas": "yakitori-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "yakitori",
-      "variantCaution": "Kyllingspyd – ikke vegetarspyd"
+      "variantCaution": "KI-illustrasjon av grillede kyllingspyd med glasert saus og vårløk. Ikke vegetarspyd eller restaurantfoto; soyasaus og sesam kan forekomme."
     },
     {
       "id": "udon",
       "label": "Udon med tempura",
       "query": "udon",
       "index": 26,
-      "atlas": "series-04.avif",
+      "atlas": "udon-tempura-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "udon",
-      "variantCaution": "Med reketempura – ikke vegansk udon"
+      "variantCaution": "KI-illustrasjon av udonnudler med reketempura, sjøgress og vårløk. Inneholder skalldyr i illustrert variant; ikke vegansk udon eller restaurantfoto."
     },
     {
       "id": "bao",
