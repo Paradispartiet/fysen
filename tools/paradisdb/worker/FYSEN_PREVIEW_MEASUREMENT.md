@@ -1,6 +1,6 @@
 # ParadisDB for Fysen – isolert Cloudflare Free-måleprøve
 
-**Status: preview opprettet og baseline kontrollert, men SQL-skrive-/søketesten er IKKE utført.** De neste handlingene må gjøres manuelt av Cloudflare-kontoeieren. GitHub-PR-en inneholder ingen Cloudflare-token og starter ingen D1-operasjoner mot kontoens database.
+**Status: første eksterne skrive- og lesetest BESTÅTT (4 syntetiske retter), FTS5-indeks og forbruksmåling gjenstår.** De neste handlingene må gjøres manuelt av Cloudflare-kontoeieren. GitHub-PR-en inneholder ingen Cloudflare-token og starter ingen D1-operasjoner mot kontoens database.
 
 ## Hvorfor to databaser?
 
@@ -70,6 +70,16 @@ WHERE normalized_name LIKE '%ramen%';
 ```
 
 **Forventet:** `hits = 2`. Oppsettet er verifisert lokalt med SQLite/FTS5, men **ikke** forhåndsgodkjent mot den eksterne Cloudflare-kontoen. Stopp ved feilmelding, og ikke kjør `INSERT`/rebuild om igjen før resultatet er undersøkt: det kan legge til skriverader eller feile på eksisterende indeks.
+
+### Registrert fjernprøve – 13. november 2026 kl. 23.54 CET
+
+Cloudflare Console for **`paradisdb-fysen-preview`** viste:
+
+- `CREATE TABLE fysen_probe_items (...)` — **success**
+- `INSERT INTO fysen_probe_items ... VALUES` — **success** for fire syntetiske retter
+- `SELECT COUNT(*) AS antall_retter FROM fysen_probe_items` — **4** forventet og observert
+
+Dette beviser at den isolerte Free-previewen kan opprette en egendefinert tabell, skrive noen rader og lese dem. Det er **ikke** en test av FTS5, og det finnes ennå ingen dokumenterte etter-målinger av `Rows read` eller `Rows written`. Før neste steg: **ikke kjør CREATE TABLE eller INSERT med de fire retter på nytt**, ellers får vi uryddig testtilstand. Fortsett bare med de tre FTS5-kommandoene ovenfor, én av gangen, og stopp hvis en feiler.
 
 ## 4. Les reelle Cloudflare-målinger etter test
 
