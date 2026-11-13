@@ -541,7 +541,7 @@ test("Shrimp pad thai and tiramisu are dedicated Retina-safe gallery images with
     assert.equal(item.id, id);
     assert.equal(item.atlas, file);
     assert.equal(item.catalogId, null, "Generic restaurant dishes must not inherit an unverified image variant");
-    assert.ok(item.variantCaution.includes("ikke restaurantfoto"));
+    assert.match(item.variantCaution, /ikke restaurantfoto/iu);
     assert.ok(gallery.includes(cssClass));
     assert.ok(css.includes(".dishPhotoThumb." + cssClass));
     assert.ok(css.includes(file));
