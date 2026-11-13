@@ -40,6 +40,22 @@ WHERE type = 'table'
 
 Det er **ikke** nødvendig å opprette en prøve-tabell. Det er viktig at den varige Fysen-databasen forblir tom til vi har en kontrollert importplan.
 
+## Registrert fjernresultat – 13. november 2026 kl. 23.37 CET
+
+Cloudflare-kontoeieren har vist en faktisk D1 **Overview → Last 24 hours** fra `paradisdb-fysen-public`. Verdiene er målt på den virkelige Workers Free-kontoen, ikke lokal simulering:
+
+| D1-måling | Verdi |
+| --- | ---: |
+| Total queries | **2** |
+| Rows read | **3** |
+| Rows written | **0** |
+| Storage used (current) | **12,29 kB** |
+| Number of Tables (Dashboard) | **0** |
+
+En tidligere manuell `sqlite_master`-spørring viste kun `_cf_KV`, Cloudflares interne systemtabell. Dermed er **0 egendefinerte tabeller** bekreftet. At D1-oversikten viser 2 spørringer og 3 leste rader dokumenterer en liten **reell fjernavlesning**. Tallene er ikke et mål på søk i menyer, FTS5-oppbygging, import, Worker-forespørsler eller annet kontoforbruk. Skjermbildet gjelder *denne databasen* og en rullerende 24-timersperiode; en daglig konto-sperre må verifiseres separat.
+
+**Beslutning:** PASS for *metadata-lesetest og tom offentlig database*. **BLOCKED** for Fysen API-aktivering og import frem til at separat preview gir reelle representative lese- og skrivemålinger.
+
 ## Trinn 2 – hva denne prøven **ikke** beviser
 
 En enkel metadata-spørring tester tilgang til virkelig D1, men sier **ikke** hvor mange rader et Fysen-søk leser eller hvor mye FTS5-indeksbygging skriver. Den kan ikke alene oppfylle kravene i `FREE_PLAN_RELEASE_GATE.md` eller slå på `PARADISDB_PUBLIC_ENABLED`.
