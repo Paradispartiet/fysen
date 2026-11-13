@@ -181,10 +181,11 @@
       "label": "Cacio e pepe",
       "query": "cacio e pepe",
       "index": 16,
-      "atlas": "collection.avif",
+      "atlas": "cacio-e-pepe-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "cacio-e-pepe"
+      "catalogId": "cacio-e-pepe",
+      "variantCaution": "KI-illustrasjon av cacio e pepe med pecorino-ost, pasta og sort pepper. Inneholder melk. Ikke restaurantfoto; tilberedning og ingredienser hos den enkelte restaurant kan variere."
     },
     {
       "id": "gyoza",
@@ -244,20 +245,22 @@
       "label": "Chana masala",
       "query": "chana masala",
       "index": 22,
-      "atlas": "collection.avif",
+      "atlas": "chana-masala-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "chana-masala"
+      "catalogId": "chana-masala",
+      "variantCaution": "KI-illustrasjon av chana masala med kikerter, tomat, krydder og koriander. Ikke restaurantfoto; alle ingredienser på den enkelte restaurant må kontrolleres separat."
     },
     {
       "id": "dosa",
       "label": "Masala dosa",
       "query": "dosa",
       "index": 23,
-      "atlas": "collection.avif",
+      "atlas": "masala-dosa-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "dosa"
+      "catalogId": "dosa",
+      "variantCaution": "KI-illustrasjon av masala dosa med potetfyll, sambar og kokoschutney. Tilbehør kan inneholde kokos og varierende allergener. Ikke restaurantfoto eller bekreftelse på en bestemt restaurants variant."
     },
     {
       "id": "katsu",

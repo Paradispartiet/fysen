@@ -153,3 +153,9 @@ To nye **768 × 768 AVIF-bilder** i PR #1212:
 - `falafel-768.avif` viser falafel med hummus og grønnsaker, kun for eksakt `falafel`-ID (indeks 20). Retten kan ha andre tilbehør hos restauranter.
 
 Begge er redaksjonelle KI-illustrasjoner, ikke restaurantfotografier. Originale bildekart bevares for andre retter. Ingen deploy eller databaseendringer gjøres som del av PR-arbeidet.
+
+Tre ekstra separate **768 × 768 AVIF**-rettbilder i PR #1212 (før eventuell samlet deploy):
+- `cacio-e-pepe-768.avif` erstatter kun bildeplass 16 for eksakt `cacio-e-pepe`. KI-illustrasjon av cacio e pepe med pecorino-ost, pasta og sort pepper. Inneholder melk. Ikke restaurantfoto; tilberedning og ingredienser hos den enkelte restaurant kan variere.
+- `chana-masala-768.avif` erstatter kun bildeplass 22 for eksakt `chana-masala`. KI-illustrasjon av chana masala med kikerter, tomat, krydder og koriander. Ikke restaurantfoto; alle ingredienser på den enkelte restaurant må kontrolleres separat.
+- `masala-dosa-768.avif` erstatter kun bildeplass 23 for eksakt `dosa`. KI-illustrasjon av masala dosa med potetfyll, sambar og kokoschutney. Tilbehør kan inneholde kokos og varierende allergener. Ikke restaurantfoto eller bekreftelse på en bestemt restaurants variant.
+Alle tre stammer fra nye, separat utskårne motiver i én høyoppløselig KI-generert triptyk (ca. 700 × 700 kildeskarpe piksler før 768-eksport), ikke fra gamle atlasfiler. Gammelt bildekart bevares for øvrige retter. Ingen Vercel-deploy eller databaseendringer.

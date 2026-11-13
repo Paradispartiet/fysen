@@ -232,3 +232,11 @@
 .dishPhotoSmall.dishPhotoFalafel {
   background: #000 url("/dish-images/falafel-768.avif") center / cover no-repeat;
 }
+
+/* New 768px standalone editorial illustrations. Exact dish IDs only; never restaurant photos. */
+.dishPhotoThumb.dishPhotoCacioEPepe,
+.dishPhotoSmall.dishPhotoCacioEPepe { background: #000 url("/dish-images/cacio-e-pepe-768.avif") center / cover no-repeat; }
+.dishPhotoThumb.dishPhotoChanaMasala,
+.dishPhotoSmall.dishPhotoChanaMasala { background: #000 url("/dish-images/chana-masala-768.avif") center / cover no-repeat; }
+.dishPhotoThumb.dishPhotoMasalaDosa,
+.dishPhotoSmall.dishPhotoMasalaDosa { background: #000 url("/dish-images/masala-dosa-768.avif") center / cover no-repeat; }
