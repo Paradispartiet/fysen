@@ -718,6 +718,6 @@ test("Chicken katsu, yakitori and shrimp tempura udon each use their own 768px A
     }
     assert.ok(css.includes(entry.file));
   }
-  assert.match(manifest.images[24].variantCaution, /ikke svin|ikke vegetar/u);
+  assert.match(manifest.images[24].variantCaution, /ikke svin|ikke vegetar/iu);
   assert.match(manifest.images[26].variantCaution, /ikke vegansk/u);
 });
