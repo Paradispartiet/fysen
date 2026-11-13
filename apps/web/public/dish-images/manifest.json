@@ -288,7 +288,7 @@
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "yakitori",
-      "variantCaution": "KI-illustrasjon av grillede kyllingspyd med glasert saus og vårløk. Ikke vegetarspyd eller restaurantfoto; soyasaus og sesam kan forekomme."
+      "variantCaution": "KI-illustrasjon av grillede kyllingspyd med glasert saus og vårløk. Ikke vegetarspyd. Ikke restaurantfoto; soyasaus og sesam kan forekomme."
     },
     {
       "id": "udon",
@@ -299,7 +299,7 @@
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "udon",
-      "variantCaution": "KI-illustrasjon av udonnudler med reketempura, sjøgress og vårløk. Inneholder skalldyr i illustrert variant; ikke vegansk udon eller restaurantfoto."
+      "variantCaution": "KI-illustrasjon av udonnudler med reketempura, sjøgress og vårløk. Inneholder skalldyr i illustrert variant; ikke vegansk udon. Ikke restaurantfoto."
     },
     {
       "id": "bao",
