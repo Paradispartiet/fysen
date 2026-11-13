@@ -169,3 +169,5 @@ Tre separate **768 × 768 AVIF** KI-illustrasjoner i PR #1212 (ingen merge/deplo
 - `bibimbap-768.avif`: Kun galleriindeks 19; kjøttvariant med storfekjøtt, egg, ris, grønnsaker og sesam. Ikke vegetarvariant eller restaurantfoto.
 - `tacos-al-pastor-768.avif`: Galleriindeks 21 og redaksjonelt kort med nøyaktig ID `tacos-al-pastor`; marinert svinekjøtt, ananas, løk, koriander og maislefser. Ikke for kylling/vegetar.
 Motivene er tre enkeltutsnitt fra en ny høyoppløselig KI-generert triptyk med omtrent 715 × 717 bildepiksler per motiv før 768-eksport, aldri fra gamle atlasfiler. Ingen endring i Supabase, menyhistorikk, kostnader eller produksjon.
+
+**Kontrollpunkt for denne bildegruppen:** Alle tre filer må være direkte tilgjengelige under `/dish-images/` fra en bygget testversjon før senere produksjonspublisering; 768 × 768 er eksportformat, ikke et løfte om mer enn de opprinnelige ca. 715 × 717 kildepikslene.
