@@ -3,7 +3,9 @@
 set -euo pipefail
 : "${RUNNER_TEMP:?RUNNER_TEMP must point to isolated CI temp files}"
 : "${PARADISDB_PUBLIC_SQL:?Set path to existing local verified public SQL export}"
+: "${PARADISDB_PUBLIC_REPORT:?Set path to verified public import receipt}"
 test -f "$PARADISDB_PUBLIC_SQL"
+test -f "$PARADISDB_PUBLIC_REPORT"
 unset CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID CF_API_TOKEN CF_ACCOUNT_ID
 export WRANGLER_SEND_METRICS=false
 export NO_COLOR=1
@@ -66,8 +68,9 @@ import json, os, pathlib
 report = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) / "paradisdb-real-d1-count.json").read_text())
 items = report if isinstance(report, list) else [report]
 counts = [row["total"] for item in items for row in item.get("results", []) if "total" in row]
-assert counts == [47265], counts
-print("PASS: actual local Cloudflare D1 stores 47,265 public menu records")
+expected = json.loads(pathlib.Path(os.environ["PARADISDB_PUBLIC_REPORT"]).read_text())
+assert counts == [expected["publicItems"]], (counts, expected["publicItems"])
+print(f"PASS: actual local Cloudflare D1 stores {expected['publicItems']} public menu records")
 PY
 
 # Compare index and full-scan read budgets in real local D1 before
@@ -118,7 +121,8 @@ done
 test -s "$RUNNER_TEMP/paradisdb-real-d1-status.json"
 
 python3 - "$port" <<'PY'
-import json, sys, urllib.request, urllib.parse, urllib.error
+import json, os, pathlib, sys, urllib.request, urllib.parse, urllib.error
+proof = json.loads(pathlib.Path(os.environ["PARADISDB_PUBLIC_REPORT"]).read_text())
 port = int(sys.argv[1])
 base = "http://127.0.0.1:" + str(port)
 def request(path, method="GET"):
@@ -131,9 +135,10 @@ def request(path, method="GET"):
 status, meta = request("/v1/dishes/archive/status")
 assert status == 200, (status, meta)
 assert meta["source"] == "verified-menu-archive" and meta["realtime"] is False
-assert meta["restaurants"] == 973 and meta["menuItems"] == 47265
-assert meta["identityQuarantines"] == 4
-assert len(meta["sha256"]) == 64 and len(meta["publicRowsSha256"]) == 64
+assert meta["restaurants"] == proof["restaurants"] and meta["menuItems"] == proof["publicItems"]
+assert meta["identityQuarantines"] == proof["quarantinedSources"]
+assert meta["sha256"] == proof["sha256"]
+assert meta["publicRowsSha256"] == proof["publicRowsSha256"]
 query = "/v1/dishes/archive/search?q=ramen&city=Oslo&limit=20"
 search_status, search = request(query)
 assert search_status == 200 and 0 < search["count"] <= 20, (search_status,search)
