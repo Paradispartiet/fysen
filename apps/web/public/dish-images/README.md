@@ -171,3 +171,10 @@ Tre separate **768 × 768 AVIF** KI-illustrasjoner i PR #1212 (ingen merge/deplo
 Motivene er tre enkeltutsnitt fra en ny høyoppløselig KI-generert triptyk med omtrent 715 × 717 bildepiksler per motiv før 768-eksport, aldri fra gamle atlasfiler. Ingen endring i Supabase, menyhistorikk, kostnader eller produksjon.
 
 **Kontrollpunkt for denne bildegruppen:** Alle tre filer må være direkte tilgjengelige under `/dish-images/` fra en bygget testversjon før senere produksjonspublisering; 768 × 768 er eksportformat, ikke et løfte om mer enn de opprinnelige ca. 715 × 717 kildepikslene.
+
+Tre nye separate **768 × 768 AVIF**-illustrasjoner for eksakte japanske retter (PR #1212):
+- `chicken-katsu-768.avif`: Chicken katsu (indeks 24), panert kylling med ris, kål og saus – ikke tonkatsu av svin.
+- `yakitori-768.avif`: Yakitori (indeks 25), grillede kyllingspyd med saus og vårløk – ikke vegetarspyd.
+- `udon-tempura-768.avif`: Udon med reketempura (indeks 26), nudler, reketempura, sjøgress og vårløk – ikke vegansk eller skalldyrfri variant.
+
+Hvert motiv er et eget utsnitt fra en ny KI-generert trepanelskomposisjon på svart bakgrunn, omtrent 694–696 piksler bredt i kildemotivet før eksport til 768 × 768. Ikke bruk disse som restaurantfoto eller bevis for ingredienser hos en bestemt restaurant. Gammelt `series-04.avif` bevares for de øvrige seks rettene. Ingen deploy, databaseendring eller endring av menyhistorikken.
