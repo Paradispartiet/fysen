@@ -9,7 +9,7 @@
   - `/v1/dishes/archive/search?q=ramen&city=Oslo&limit=20`: rettsøk med observasjonsdato/kildelenke. Aldri sanntidspåstand.
 - Alle HTTP `POST`, `PUT`, `PATCH` og `DELETE` mot kjente ruter får 405. Private Aha-/History GO-/Fysen-brukerdokumenter har **ingen** HTTP-rute.
 - `PUBLIC_DB` er en **separat offentlig D1-binding**. Ikke bind denne Workeren til Aha/Supabase, private historikkbackuper eller produksjonsdatabasen.
-- Søkeord og resultatantall valideres, SQL-parametere bindes og spørringen henter høyst 500 kandidat-rader per kall. Ingen offentlig feilmelding inneholder SQL-internt innhold.
+- Søkeord og resultatantall valideres, SQL-parametere bindes og spørringen henter høyst 500 kandidat-rader per kall. D1 tillater maks **50 UTF-8 bytes i et LIKE-mønster**; derfor avvises normaliserte søk over 48 bytes før databasekall (to bytes brukes av jokertegnene `%`). Dette gjelder også norske bokstaver som bruker flere UTF-8 bytes. Ingen offentlig feilmelding inneholder SQL-internt innhold.
 - Et uferdig D1-importforsøk avvises (503), fordi `public_ready` skrives som **siste SQL-setning** i eksporten.
 - Dette er *ikke* autentisering eller kryptering. Datakilden er bare offentlig. En framtidig privat API krever separat identitetsløsning, tilgangskontroll, misbrukskontroll, audit og isolerte sikkerhetstester.
 
