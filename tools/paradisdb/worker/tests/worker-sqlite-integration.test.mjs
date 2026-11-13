@@ -5,11 +5,14 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import worker from "../worker.mjs";
 
 const path = process.env.PARADISDB_PUBLIC_SQLITE_PATH || "";
-const enabled = path && existsSync(path);
+const reportPath = process.env.PARADISDB_PUBLIC_REPORT_PATH || "";
+const proof = reportPath && existsSync(reportPath)
+  ? JSON.parse(readFileSync(reportPath, "utf8")) : null;
+const enabled = path && existsSync(path) && proof;
 const python = String.raw`import json, pathlib, sqlite3, sys
 p=pathlib.Path(sys.argv[1]).resolve()
 query=sys.argv[2]
@@ -54,10 +57,11 @@ test("real 47k public records: status reflects imported source SHA and row hash"
   const payload = await response.json();
   assert.equal(payload.source, "verified-menu-archive");
   assert.equal(payload.realtime, false);
-  assert.equal(payload.restaurants, 973);
-  assert.equal(payload.menuItems, 47265);
-  assert.equal(payload.identityQuarantines, 4);
-  assert.equal(payload.sha256, "42fe1c9b1df7b9aab48fef5965870b580b2d9e7da0a3000f25495d21287a8cbc");
+  assert.equal(payload.restaurants, proof.restaurants);
+  assert.equal(payload.menuItems, proof.publicItems);
+  assert.equal(payload.identityQuarantines, proof.quarantinedSources);
+  assert.equal(payload.sha256, proof.sha256);
+  assert.equal(payload.publicRowsSha256, proof.publicRowsSha256);
   assert.match(payload.publicRowsSha256, /^[a-f0-9]{64}$/);
   assert.equal(env.sqls.length, 1);
 });
@@ -68,7 +72,7 @@ test("real 47k public records: query returns verifiable restaurant, date and men
   const payload = await result.json();
   assert.ok(payload.count > 0 && payload.count <= 20);
   assert.equal(payload.realtime, false);
-  assert.equal(payload.archiveDate, "2026-11-02");
+  assert.equal(payload.archiveDate, proof.archiveDate);
   const perRestaurant = new Map();
   for (const r of payload.results) {
     assert.equal(r.restaurant.city, "Oslo");
