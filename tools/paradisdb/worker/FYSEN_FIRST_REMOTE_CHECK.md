@@ -60,7 +60,7 @@ En tidligere manuell `sqlite_master`-spørring viste kun `_cf_KV`, Cloudflares i
 
 En enkel metadata-spørring tester tilgang til virkelig D1, men sier **ikke** hvor mange rader et Fysen-søk leser eller hvor mye FTS5-indeksbygging skriver. Den kan ikke alene oppfylle kravene i `FREE_PLAN_RELEASE_GATE.md` eller slå på `PARADISDB_PUBLIC_ENABLED`.
 
-For faktisk prøving av skrive- og søkekostnad anbefales etter egen godkjenning en **separat, midlertidig D1-preview** på samme Free-konto, f.eks. `paradisdb-fysen-preview`. Den varige databasen skal ikke brukes til eksperimenter med delvise importer. Previewen må ha eget database-ID/binding, ingen private data, strengt begrensede søk og ingen automatisk deploy.
+For faktisk prøving av skrive- og søkekostnad anbefales en **separat, midlertidig D1-preview** på samme Free-konto, kalt `paradisdb-fysen-preview`. Se [FYSEN_PREVIEW_MEASUREMENT.md](./FYSEN_PREVIEW_MEASUREMENT.md) for en trinnvis, ufarlig mini-prøve med syntetiske data. Den varige databasen skal ikke brukes til eksperimenter med delvise importer. Previewen må ha egen database-ID, ingen private data, strengt begrensede søk og ingen automatisk deploy.
 
 Før vi vurderer den ferdige offentlige importen må vi måle *rows_read* og *rows_written* (også FTS5-rebuild), sørge for plass til andre databasers forbruk og kjøre `free_budget_gate.py` med faktisk fjerntelemetri og dokumentert opprinnelse. Cloudflares rate limiter er per lokasjon og garanterer ikke global daglig kvote.
 
