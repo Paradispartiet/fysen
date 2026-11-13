@@ -143,3 +143,7 @@ Pad thai har eksakt katalogkobling til det allerede godkjente 128px-miniatyrbild
 - `medu-vada-768.avif` er et separat 768 × 768-bilde av medu vada med sambar og chutney. Det viser varianten med sprøstekte linsekaker og er ikke et restaurantfoto.
 
 Ny separat **768 × 768 AVIF** for `gyoza` (atlasplass 17): pannestekte gyoza med soyadipp og vårløk. Variant/fyll er ikke kjent fra bildet; dette er KI-illustrasjon, ikke et restaurantfoto. Bilde er lagt til i PR #1212 før samlet utrulling.
+
+To ekstra separate **768 × 768 AVIF** i PR #1212:
+- `pad-thai-reker-768.avif` erstatter bildekartplass 12 bare i Matlyst-galleriet og viser pad thai **med reker og egg**. Den må ikke kobles generisk til vegetarisk eller uspesifisert pad thai i restaurantmenyer.
+- `tiramisu-768.avif` erstatter bildekartplass 14 bare i Matlyst-galleriet; illustrert tiramisu med kakao og mascarpone. Ikke dokumentasjon av en bestemt restaurants dessert.
