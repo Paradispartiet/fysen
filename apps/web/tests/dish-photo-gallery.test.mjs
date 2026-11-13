@@ -33,6 +33,12 @@ const masalaDosaImage = readFileSync(path.join(web, "public/dish-images/masala-d
 const chickenKatsuImage = readFileSync(path.join(web, "public/dish-images/chicken-katsu-768.avif"));
 const yakitoriImage = readFileSync(path.join(web, "public/dish-images/yakitori-768.avif"));
 const udonTempuraImage = readFileSync(path.join(web, "public/dish-images/udon-tempura-768.avif"));
+const baoImage = readFileSync(path.join(web, "public/dish-images/bao-768.avif"));
+const dumplingsImage = readFileSync(path.join(web, "public/dish-images/dumplings-768.avif"));
+const mapoTofuImage = readFileSync(path.join(web, "public/dish-images/mapo-tofu-768.avif"));
+const pekingDuckImage = readFileSync(path.join(web, "public/dish-images/peking-duck-768.avif"));
+const danDanNoodlesImage = readFileSync(path.join(web, "public/dish-images/dan-dan-noodles-768.avif"));
+const greenCurryImage = readFileSync(path.join(web, "public/dish-images/green-curry-768.avif"));
 const shrimpPadThaiImage = readFileSync(path.join(web, "public/dish-images/pad-thai-reker-768.avif"));
 const tiramisuImage = readFileSync(path.join(web, "public/dish-images/tiramisu-768.avif"));
 const carbonaraImage = readFileSync(path.join(web, "public/dish-images/carbonara-768.avif"));
@@ -720,4 +726,37 @@ test("Chicken katsu, yakitori and shrimp tempura udon each use their own 768px A
   }
   assert.match(manifest.images[24].variantCaution, /ikke svin|ikke vegetar/iu);
   assert.match(manifest.images[26].variantCaution, /ikke vegansk/u);
+});
+
+test("Remaining six Asian dishes use their own AVIF images and matching catalog IDs", () => {
+  const cases = [
+    { index: 27, id: "bao", file: "bao-768.avif", bytes: baoImage, cls: "Bao", ingredient: /svinekjøtt/iu },
+    { index: 28, id: "dumplings", file: "dumplings-768.avif", bytes: dumplingsImage, cls: "Dumplings", ingredient: /fyllet/iu },
+    { index: 29, id: "mapo-tofu", file: "mapo-tofu-768.avif", bytes: mapoTofuImage, cls: "MapoTofu", ingredient: /kjøttdeig/iu },
+    { index: 30, id: "peking-duck", file: "peking-duck-768.avif", bytes: pekingDuckImage, cls: "PekingDuck", ingredient: /andekjøtt/iu },
+    { index: 31, id: "dan-dan-noodles", file: "dan-dan-noodles-768.avif", bytes: danDanNoodlesImage, cls: "DanDanNoodles", ingredient: /peanøtter/iu },
+    { index: 32, id: "green-curry", file: "green-curry-768.avif", bytes: greenCurryImage, cls: "GreenCurry", ingredient: /kylling/iu },
+  ];
+  for (const entry of cases) {
+    const item = manifest.images[entry.index];
+    assert.equal(item.id, entry.id);
+    assert.equal(item.catalogId, entry.id);
+    assert.equal(item.atlas, entry.file);
+    assert.match(item.variantCaution, /ikke restaurantfoto/iu);
+    assert.match(item.variantCaution, entry.ingredient);
+    assert.equal(entry.bytes.toString("ascii", 4, 12), "ftypavif");
+    assert.ok(entry.bytes.length > 20000, entry.file + " is unexpectedly small");
+    const marker = entry.bytes.indexOf(Buffer.from("ispe"));
+    assert.ok(marker > 0);
+    assert.equal(entry.bytes.readUInt32BE(marker + 8), 768);
+    assert.equal(entry.bytes.readUInt32BE(marker + 12), 768);
+    assert.match(gallery, new RegExp("is" + entry.cls + " = index === " + entry.index));
+    assert.ok(gallery.includes("dishPhotoThumb dishPhoto" + entry.cls));
+    assert.ok(gallery.includes("dishPhotoSmall dishPhoto" + entry.cls));
+    assert.ok(css.includes(".dishPhotoThumb.dishPhoto" + entry.cls));
+    assert.ok(css.includes(".dishPhotoSmall.dishPhoto" + entry.cls));
+    assert.ok(css.includes(entry.file));
+  }
+  assert.equal(manifest.images.length, 44);
+  assert.equal(manifest.images.filter((row) => ["series-04.avif", "collection.avif"].includes(row.atlas)).length, 0);
 });

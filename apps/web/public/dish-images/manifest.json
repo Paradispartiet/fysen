@@ -306,66 +306,66 @@
       "label": "Bao med braisert kjøtt",
       "query": "bao",
       "index": 27,
-      "atlas": "series-04.avif",
+      "atlas": "bao-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "bao",
-      "variantCaution": "Med braisert kjøtt – ikke vegetarbao"
+      "variantCaution": "KI-illustrasjon av bao med braisert svinekjøtt, agurk og syltet rødløk. Inneholder kjøtt og er ikke vegetarisk; ikke restaurantfoto."
     },
     {
       "id": "dumplings",
       "label": "Dumplings",
       "query": "dumplings",
       "index": 28,
-      "atlas": "series-04.avif",
+      "atlas": "dumplings-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "dumplings",
-      "variantCaution": "Blandet fyll – vegetarstatus ikke dokumentert"
+      "variantCaution": "KI-illustrasjon av dumplings med chili- og soyadipp. Fyllet er ikke dokumentert; vegetarstatus og allergener må bekreftes separat. Ikke restaurantfoto."
     },
     {
       "id": "mapo-tofu",
       "label": "Mapo tofu med kjøtt",
       "query": "mapo tofu",
       "index": 29,
-      "atlas": "series-04.avif",
+      "atlas": "mapo-tofu-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "mapo-tofu",
-      "variantCaution": "Med kjøtt – ikke vegetarvarianten"
+      "variantCaution": "KI-illustrasjon av mapo tofu med tofu, kjøttdeig, chili og vårløk. Dette er ikke vegetarvarianten og ikke restaurantfoto."
     },
     {
       "id": "peking-duck",
       "label": "Pekingand",
       "query": "peking duck",
       "index": 30,
-      "atlas": "series-04.avif",
+      "atlas": "peking-duck-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "peking-duck",
-      "variantCaution": "And med pannekaker – ikke annet kjøtt"
+      "variantCaution": "KI-illustrasjon av pekingand med andekjøtt, tynne pannekaker, agurk, vårløk og hoisinsaus. Ikke restaurantfoto."
     },
     {
       "id": "dan-dan-noodles",
       "label": "Dan dan-nudler med kjøtt",
       "query": "dan dan noodles",
       "index": 31,
-      "atlas": "series-04.avif",
+      "atlas": "dan-dan-noodles-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "dan-dan-noodles",
-      "variantCaution": "Med kjøtt og peanøtter – ikke vegetar eller nøttefri"
+      "variantCaution": "KI-illustrasjon av dan dan-nudler med kjøttdeig, chiliolje, grønnsaker og peanøtter. Ikke vegetarisk eller nøttefri, og ikke restaurantfoto."
     },
     {
       "id": "green-curry",
       "label": "Grønn curry med kylling",
       "query": "green curry",
       "index": 32,
-      "atlas": "series-04.avif",
+      "atlas": "green-curry-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "green-curry",
-      "variantCaution": "Med kylling – ikke vegetarcurry"
+      "variantCaution": "KI-illustrasjon av grønn thaicurry med kylling, kokosmelk, grønnsaker, thaibasilikum og ris. Ikke vegetarcurry eller restaurantfoto."
     },
     {
       "id": "tom-yum",

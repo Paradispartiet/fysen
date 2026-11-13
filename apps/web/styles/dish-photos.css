@@ -267,3 +267,18 @@
 .dishPhotoSmall.dishPhotoUdonTempura {
   background: #000 url("/dish-images/udon-tempura-768.avif") center / cover no-repeat;
 }
+
+/* Six remaining Matlyst dishes; editorial illustrations, never restaurant photos. */
+.dishPhotoThumb.dishPhotoBao,
+.dishPhotoSmall.dishPhotoBao { background: #000 url("/dish-images/bao-768.avif") center / cover no-repeat; }
+.dishPhotoThumb.dishPhotoDumplings,
+.dishPhotoSmall.dishPhotoDumplings { background: #000 url("/dish-images/dumplings-768.avif") center / cover no-repeat; }
+.dishPhotoThumb.dishPhotoMapoTofu,
+.dishPhotoSmall.dishPhotoMapoTofu { background: #000 url("/dish-images/mapo-tofu-768.avif") center / cover no-repeat; }
+.dishPhotoThumb.dishPhotoPekingDuck,
+.dishPhotoSmall.dishPhotoPekingDuck { background: #000 url("/dish-images/peking-duck-768.avif") center / cover no-repeat; }
+.dishPhotoThumb.dishPhotoDanDanNoodles,
+.dishPhotoSmall.dishPhotoDanDanNoodles { background: #000 url("/dish-images/dan-dan-noodles-768.avif") center / cover no-repeat; }
+.dishPhotoThumb.dishPhotoGreenCurry,
+.dishPhotoSmall.dishPhotoGreenCurry { background: #000 url("/dish-images/green-curry-768.avif") center / cover no-repeat; }
+

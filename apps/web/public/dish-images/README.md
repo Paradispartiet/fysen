@@ -178,3 +178,14 @@ Tre nye separate **768 × 768 AVIF**-illustrasjoner for eksakte japanske retter 
 - `udon-tempura-768.avif`: Udon med reketempura (indeks 26), nudler, reketempura, sjøgress og vårløk – ikke vegansk eller skalldyrfri variant.
 
 Hvert motiv er et eget utsnitt fra en ny KI-generert trepanelskomposisjon på svart bakgrunn, omtrent 694–696 piksler bredt i kildemotivet før eksport til 768 × 768. Ikke bruk disse som restaurantfoto eller bevis for ingredienser hos en bestemt restaurant. Gammelt `series-04.avif` bevares for de øvrige seks rettene. Ingen deploy, databaseendring eller endring av menyhistorikken.
+
+## De siste seks bildene – PR #1212
+
+- `bao-768.avif` (galleriindeks 27, `bao`): KI-illustrasjon av bao med braisert svinekjøtt, agurk og syltet rødløk. Inneholder kjøtt og er ikke vegetarisk; ikke restaurantfoto.
+- `dumplings-768.avif` (galleriindeks 28, `dumplings`): KI-illustrasjon av dumplings med chili- og soyadipp. Fyllet er ikke dokumentert; vegetarstatus og allergener må bekreftes separat. Ikke restaurantfoto.
+- `mapo-tofu-768.avif` (galleriindeks 29, `mapo-tofu`): KI-illustrasjon av mapo tofu med tofu, kjøttdeig, chili og vårløk. Dette er ikke vegetarvarianten og ikke restaurantfoto.
+- `peking-duck-768.avif` (galleriindeks 30, `peking-duck`): KI-illustrasjon av pekingand med andekjøtt, tynne pannekaker, agurk, vårløk og hoisinsaus. Ikke restaurantfoto.
+- `dan-dan-noodles-768.avif` (galleriindeks 31, `dan-dan-noodles`): KI-illustrasjon av dan dan-nudler med kjøttdeig, chiliolje, grønnsaker og peanøtter. Ikke vegetarisk eller nøttefri, og ikke restaurantfoto.
+- `green-curry-768.avif` (galleriindeks 32, `green-curry`): KI-illustrasjon av grønn thaicurry med kylling, kokosmelk, grønnsaker, thaibasilikum og ris. Ikke vegetarcurry eller restaurantfoto.
+
+Alle 44 registrerte rettillustrasjoner har nå separate filer i bilderegisteret. De tre siste motivene er utsnitt fra en seksdelt KI-komposisjon med lavere effektiv kildedetalj enn eksportfilens 768 × 768; for å bevare serveringen er motivene plassert på svart kvadratisk bakgrunn. Det gamle bildekartet beholdes for sikker tilbakerulling. Ingen deploy, databaseendring eller betaling.
