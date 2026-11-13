@@ -1,11 +1,11 @@
 # ParadisDB for Fysen – isolert Cloudflare Free-måleprøve
 
-**Status: oppskrift, IKKE utført.** Testen under krever manuelle handlinger fra Cloudflare-kontoeieren. GitHub-PR-en inneholder ingen Cloudflare-token og starter ingen D1-operasjoner mot kontoens database.
+**Status: preview opprettet og baseline kontrollert, men SQL-skrive-/søketesten er IKKE utført.** De neste handlingene må gjøres manuelt av Cloudflare-kontoeieren. GitHub-PR-en inneholder ingen Cloudflare-token og starter ingen D1-operasjoner mot kontoens database.
 
 ## Hvorfor to databaser?
 
 - **Permanent, ikke endre:** `paradisdb-fysen-public` (`882a3393-71c3-43f9-9dec-efc2bbcab409`). Bekreftet tom for egendefinerte tabeller. 13. nov. 2026 kl. 23.37 CET: siste 24 timer **2 queries**, **3 rows read**, **0 rows written**, **12,29 kB lagring**.
-- **Ny og midlertidig:** `paradisdb-fysen-preview` (må opprettes manuelt med **EU-jurisdiksjon** på den samme Workers Free-kontoen). **Ikke** gjenbruk den permanente database-ID-en som testdatabase.
+- **Ny og midlertidig:** `paradisdb-fysen-preview` er manuelt **opprettet** på den samme Workers Free-kontoen, med **EU-jurisdiksjon**, region Eastern Europe og read replication Disabled. Previewens database-ID er ikke verifisert i GitHub. **Ikke** gjenbruk den permanente database-ID-en som testdatabase.
 
 En tom D1 kan inneholde `_cf_KV`, som er Cloudflares reserverte interne systemtabell. Den må ikke slettes.
 
@@ -14,6 +14,10 @@ En tom D1 kan inneholde `_cf_KV`, som er Cloudflares reserverte interne systemta
 I Cloudflare Dashboard → **D1 SQL Database**, kontroller at Workers fortsatt er **Free**, at ikke-betalende plan er aktiv, og at det er rom for database nr. 2 (Free: 10 databaser, 500 MB per database, 5 GB samlet). Ikke trykk Upgrade eller registrer betaling. Opprett **kun** `paradisdb-fysen-preview`, med jurisdiksjon **The European Union**, og la read replication være Disabled.
 
 På previewens **Overview → Last 24 hours**: noter tidspunkt, Total queries, Rows read, Rows written, Storage used. Ta også et baseline-bilde av **kontoens totale D1-forbruk** i D1-oversikten/Billing → Billable Usage. Merk at rullerende 24-timers grafer og daglige Free-kvoter ikke er identiske.
+
+### Registrert startmåling – 13. november 2026 kl. 23.51 CET
+
+Eierens Cloudflare Overview → Last 24 hours for **`paradisdb-fysen-preview`** viser **0 SQL-spørringer**, **0 leste rader**, **0 skrevne rader**, **0 brukertabeller** og **12,29 kB grunnlagring**. Settings bekrefter The European Union / Eastern Europe og read replication Disabled. Dette er en **førmåling**, ikke en vellykket fjern-FTS5-skriveprøve. Kontototalene etter opprettelsen er ikke dokumentert i samme skjermbilde.
 
 ## 2. Bekreft at preview ikke har brukerdata
 
