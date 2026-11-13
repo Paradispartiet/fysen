@@ -240,3 +240,8 @@
 .dishPhotoSmall.dishPhotoChanaMasala { background: #000 url("/dish-images/chana-masala-768.avif") center / cover no-repeat; }
 .dishPhotoThumb.dishPhotoMasalaDosa,
 .dishPhotoSmall.dishPhotoMasalaDosa { background: #000 url("/dish-images/masala-dosa-768.avif") center / cover no-repeat; }
+
+/* New gallery-only dish-type artwork (never restaurant photography or generic catalog evidence). */
+.dishPhotoThumb.dishPhotoBolognese { background: #000 url("/dish-images/pasta-bolognese-768.avif") center / cover no-repeat; }
+.dishPhotoThumb.dishPhotoProsciutto { background: #000 url("/dish-images/pizza-prosciutto-768.avif") center / cover no-repeat; }
+.dishPhotoThumb.dishPhotoKebabPita { background: #000 url("/dish-images/kebab-pita-768.avif") center / cover no-repeat; }

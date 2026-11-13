@@ -86,30 +86,33 @@
       "label": "Tagliatelle bolognese",
       "query": "bolognese",
       "index": 7,
-      "atlas": "collection.avif",
+      "atlas": "pasta-bolognese-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av tagliatelle med bolognesesaus av kjøtt, tomat og revet ost. Ikke restaurantfoto; ingredienser og kjøttype må bekreftes per restaurant."
     },
     {
       "id": "pizza-prosciutto",
       "label": "Pizza med prosciutto",
       "query": "pizza prosciutto",
       "index": 8,
-      "atlas": "collection.avif",
+      "atlas": "pizza-prosciutto-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av pizza med prosciutto (svinekjøtt), mozzarella og ruccola. Ikke restaurantfoto; varianten inneholder melk og svin og er ikke vegetarisk."
     },
     {
       "id": "kebab-pita",
       "label": "Kebab i pita",
       "query": "kebab pita",
       "index": 9,
-      "atlas": "collection.avif",
+      "atlas": "kebab-pita-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av kebab i pita med grillet kjøtt, salat, tomat, løk og hvit dressing. Ikke restaurantfoto; kjøttype, saus og allergener varierer."
     },
     {
       "id": "pasta-carbonara",
