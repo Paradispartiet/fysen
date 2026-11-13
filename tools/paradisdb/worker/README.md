@@ -75,7 +75,7 @@ Opprettelse i Cloudflare-kontoeierens dashboard, etter at **Workers Free** og ko
 
 Cloudflare-databasen `paradisdb-fysen-public` er opprettet manuelt på bekreftet Workers Free med EU-jurisdiksjon. Vi har klargjort en **skrivebeskyttet** kontroll for kontoeieren som kan gjennomføres i Cloudflare Console uten API-nøkler og uten å legge inn testtabeller eller menyposter.
 
-Se [FYSEN_FIRST_REMOTE_CHECK.md](./FYSEN_FIRST_REMOTE_CHECK.md). Den første kontrollen bekrefter at databasen fortsatt er tom og gir et første bilde av dashboard-metrikkene. En separat senere preview med målte lese- og skrivekostnader er fortsatt nødvendig før Fysens offentlige API kan aktiveres.
+Se [FYSEN_FIRST_REMOTE_CHECK.md](./FYSEN_FIRST_REMOTE_CHECK.md). Den første kontrollen er nå dokumentert med **2 eksterne D1-spørringer, 3 leste rader, 0 skrevne rader og 12,29 kB lagring** (13. nov. 2026). Ingen Fysen-tabeller er opprettet. En separat måleprøve med en **ny, midlertidig** EU-D1 er beskrevet i [FYSEN_PREVIEW_MEASUREMENT.md](./FYSEN_PREVIEW_MEASUREMENT.md). Denne prøven er ennå **ikke gjennomført**, og Fysens offentlige API forblir deaktivert.
 
 ## Framtidig, kun etter uttrykkelig godkjenning
 
