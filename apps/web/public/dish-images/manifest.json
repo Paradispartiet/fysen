@@ -64,130 +64,143 @@
       "label": "Sushi assortert",
       "query": "sushi",
       "index": 5,
-      "atlas": "collection.avif",
+      "atlas": "sushi-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "sushi"
+      "catalogId": "sushi",
+      "variantCaution": "KI-illustrasjon av sushi med laks, tunfisk, ris, nori og avokado. Ikke restaurantfoto; sammensetningen på restaurantens meny må sjekkes separat."
     },
     {
       "id": "ramen",
       "label": "Ramen med svin og egg",
       "query": "ramen",
       "index": 6,
-      "atlas": "collection.avif",
+      "atlas": "ramen-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "ramen"
+      "catalogId": "ramen",
+      "variantCaution": "KI-illustrasjon av ramen med chashu-svinekjøtt, egg, nudler, vårløk og nori. Ikke vegetarisk og ikke restaurantfoto."
     },
     {
       "id": "pasta-bolognese",
       "label": "Tagliatelle bolognese",
       "query": "bolognese",
       "index": 7,
-      "atlas": "collection.avif",
+      "atlas": "pasta-bolognese-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av tagliatelle med bolognesesaus av kjøtt, tomat og revet ost. Ikke restaurantfoto; ingredienser og kjøttype må bekreftes per restaurant."
     },
     {
       "id": "pizza-prosciutto",
       "label": "Pizza med prosciutto",
       "query": "pizza prosciutto",
       "index": 8,
-      "atlas": "collection.avif",
+      "atlas": "pizza-prosciutto-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av pizza med prosciutto (svinekjøtt), mozzarella og ruccola. Ikke restaurantfoto; varianten inneholder melk og svin og er ikke vegetarisk."
     },
     {
       "id": "kebab-pita",
       "label": "Kebab i pita",
       "query": "kebab pita",
       "index": 9,
-      "atlas": "collection.avif",
+      "atlas": "kebab-pita-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av kebab i pita med grillet kjøtt, salat, tomat, løk og hvit dressing. Ikke restaurantfoto; kjøttype, saus og allergener varierer."
     },
     {
       "id": "pasta-carbonara",
       "label": "Pasta carbonara",
       "query": "carbonara",
       "index": 10,
-      "atlas": "collection.avif",
+      "atlas": "carbonara-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av spaghetti carbonara med speket svinekjøtt, egg, ost og pepper. Ikke restaurantfoto; ingrediensene kan variere."
     },
     {
       "id": "butter-chicken",
       "label": "Butter chicken",
       "query": "butter chicken",
       "index": 11,
-      "atlas": "collection.avif",
+      "atlas": "butter-chicken-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "butter-chicken"
+      "catalogId": "butter-chicken",
+      "variantCaution": "KI-illustrasjon av butter chicken i kremet tomatsaus med naan. Ikke restaurantfoto eller bekreftet tilbehør på en bestemt meny."
     },
     {
       "id": "pad-thai-reker",
       "label": "Pad thai med reker",
       "query": "pad thai",
       "index": 12,
-      "atlas": "collection.avif",
+      "atlas": "pad-thai-reker-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av pad thai med reker, egg, peanøtter og lime. Inneholder skalldyr og egg; ikke et generelt bilde av vegetarisk pad thai og ikke restaurantfoto."
     },
     {
       "id": "stekt-hvit-fisk",
       "label": "Stekt hvit fisk",
       "query": "stekt fisk",
       "index": 13,
-      "atlas": "collection.avif",
+      "atlas": "stekt-hvit-fisk-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av stekt hvit fisk med poteter, brokkolini, tomater og sitron. Fiskeart og øvrige ingredienser er ikke bekreftet. Ikke restaurantfoto."
     },
     {
       "id": "tiramisu",
       "label": "Tiramisu",
       "query": "tiramisu",
       "index": 14,
-      "atlas": "collection.avif",
+      "atlas": "tiramisu-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av tiramisu med mascarponekrem, kjekslag og kakaopulver. Ikke restaurantfoto; oppskrift og presentasjon varierer."
     },
     {
       "id": "pizza-marinara",
       "label": "Pizza marinara",
       "query": "pizza marinara",
       "index": 15,
-      "atlas": "collection.avif",
+      "atlas": "pizza-marinara-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "pizza-marinara"
+      "catalogId": "pizza-marinara",
+      "variantCaution": "KI-illustrasjon av napolitansk pizza marinara uten ost, med tomat, hvitløk, oregano og olivenolje. Ikke restaurantfoto; ikke bruk som pizza margherita."
     },
     {
       "id": "cacio-e-pepe",
       "label": "Cacio e pepe",
       "query": "cacio e pepe",
       "index": 16,
-      "atlas": "collection.avif",
+      "atlas": "cacio-e-pepe-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "cacio-e-pepe"
+      "catalogId": "cacio-e-pepe",
+      "variantCaution": "KI-illustrasjon av cacio e pepe med pecorino-ost, pasta og sort pepper. Inneholder melk. Ikke restaurantfoto; tilberedning og ingredienser hos den enkelte restaurant kan variere."
     },
     {
       "id": "gyoza",
       "label": "Gyoza",
       "query": "gyoza",
       "index": 17,
-      "atlas": "collection.avif",
+      "atlas": "gyoza-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "gyoza"
+      "catalogId": "gyoza",
+      "variantCaution": "KI-illustrasjon av pannestekte gyoza med vårløk, sesam og soyadipp. Fyllet er ikke dokumentert: må ikke regnes som vegetarisk eller restaurantfoto."
     },
     {
       "id": "pho",
@@ -205,149 +218,154 @@
       "label": "Bibimbap",
       "query": "bibimbap",
       "index": 19,
-      "atlas": "collection.avif",
+      "atlas": "bibimbap-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": null
+      "catalogId": null,
+      "variantCaution": "KI-illustrasjon av bibimbap med storfekjøtt, ris, grønnsaker, stekt egg, sesam og chilisaus. Dette er en kjøttvariant, ikke vegetarisk og ikke restaurantfoto."
     },
     {
       "id": "falafel",
       "label": "Falafel med hummus",
       "query": "falafel",
       "index": 20,
-      "atlas": "collection.avif",
+      "atlas": "falafel-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "falafel"
+      "catalogId": "falafel",
+      "variantCaution": "KI-illustrasjon av falafel med hummus, grønnsaker, urter og korn. Ikke restaurantfoto; oppskrift, tilbehør og allergener varierer."
     },
     {
       "id": "tacos-al-pastor",
       "label": "Tacos al pastor",
       "query": "tacos al pastor",
       "index": 21,
-      "atlas": "collection.avif",
+      "atlas": "tacos-al-pastor-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "tacos-al-pastor"
+      "catalogId": "tacos-al-pastor",
+      "variantCaution": "KI-illustrasjon av tacos al pastor med marinert svinekjøtt, ananas, løk, koriander og maislefser. Ikke bruk for kylling eller vegetariske varianter. Ikke restaurantfoto."
     },
     {
       "id": "chana-masala",
       "label": "Chana masala",
       "query": "chana masala",
       "index": 22,
-      "atlas": "collection.avif",
+      "atlas": "chana-masala-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "chana-masala"
+      "catalogId": "chana-masala",
+      "variantCaution": "KI-illustrasjon av chana masala med kikerter, tomat, krydder og koriander. Ikke restaurantfoto; alle ingredienser på den enkelte restaurant må kontrolleres separat."
     },
     {
       "id": "dosa",
       "label": "Masala dosa",
       "query": "dosa",
       "index": 23,
-      "atlas": "collection.avif",
+      "atlas": "masala-dosa-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
-      "catalogId": "dosa"
+      "catalogId": "dosa",
+      "variantCaution": "KI-illustrasjon av masala dosa med potetfyll, sambar og kokoschutney. Tilbehør kan inneholde kokos og varierende allergener. Ikke restaurantfoto eller bekreftelse på en bestemt restaurants variant."
     },
     {
       "id": "katsu",
       "label": "Chicken katsu",
       "query": "chicken katsu",
       "index": 24,
-      "atlas": "series-04.avif",
+      "atlas": "chicken-katsu-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "katsu",
-      "variantCaution": "Kylling – ikke svine-tonkatsu"
+      "variantCaution": "KI-illustrasjon av kyllingkatsu av panert kylling med ris, strimlet kål og saus. Ikke svin eller vegetar, ikke restaurantfoto; tilbehør og allergener kan variere."
     },
     {
       "id": "yakitori",
       "label": "Yakitori – kyllingspyd",
       "query": "yakitori",
       "index": 25,
-      "atlas": "series-04.avif",
+      "atlas": "yakitori-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "yakitori",
-      "variantCaution": "Kyllingspyd – ikke vegetarspyd"
+      "variantCaution": "KI-illustrasjon av grillede kyllingspyd med glasert saus og vårløk. Ikke vegetarspyd. Ikke restaurantfoto; soyasaus og sesam kan forekomme."
     },
     {
       "id": "udon",
       "label": "Udon med tempura",
       "query": "udon",
       "index": 26,
-      "atlas": "series-04.avif",
+      "atlas": "udon-tempura-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "udon",
-      "variantCaution": "Med reketempura – ikke vegansk udon"
+      "variantCaution": "KI-illustrasjon av udonnudler med reketempura, sjøgress og vårløk. Inneholder skalldyr i illustrert variant; ikke vegansk udon. Ikke restaurantfoto."
     },
     {
       "id": "bao",
       "label": "Bao med braisert kjøtt",
       "query": "bao",
       "index": 27,
-      "atlas": "series-04.avif",
+      "atlas": "bao-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "bao",
-      "variantCaution": "Med braisert kjøtt – ikke vegetarbao"
+      "variantCaution": "KI-illustrasjon av bao med braisert svinekjøtt, agurk og syltet rødløk. Inneholder kjøtt og er ikke vegetarisk; ikke restaurantfoto."
     },
     {
       "id": "dumplings",
       "label": "Dumplings",
       "query": "dumplings",
       "index": 28,
-      "atlas": "series-04.avif",
+      "atlas": "dumplings-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "dumplings",
-      "variantCaution": "Blandet fyll – vegetarstatus ikke dokumentert"
+      "variantCaution": "KI-illustrasjon av dumplings med chili- og soyadipp. Fyllet er ikke dokumentert; vegetarstatus og allergener må bekreftes separat. Ikke restaurantfoto."
     },
     {
       "id": "mapo-tofu",
       "label": "Mapo tofu med kjøtt",
       "query": "mapo tofu",
       "index": 29,
-      "atlas": "series-04.avif",
+      "atlas": "mapo-tofu-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "mapo-tofu",
-      "variantCaution": "Med kjøtt – ikke vegetarvarianten"
+      "variantCaution": "KI-illustrasjon av mapo tofu med tofu, kjøttdeig, chili og vårløk. Dette er ikke vegetarvarianten og ikke restaurantfoto."
     },
     {
       "id": "peking-duck",
       "label": "Pekingand",
       "query": "peking duck",
       "index": 30,
-      "atlas": "series-04.avif",
+      "atlas": "peking-duck-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "peking-duck",
-      "variantCaution": "And med pannekaker – ikke annet kjøtt"
+      "variantCaution": "KI-illustrasjon av pekingand med andekjøtt, tynne pannekaker, agurk, vårløk og hoisinsaus. Ikke restaurantfoto."
     },
     {
       "id": "dan-dan-noodles",
       "label": "Dan dan-nudler med kjøtt",
       "query": "dan dan noodles",
       "index": 31,
-      "atlas": "series-04.avif",
+      "atlas": "dan-dan-noodles-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "dan-dan-noodles",
-      "variantCaution": "Med kjøtt og peanøtter – ikke vegetar eller nøttefri"
+      "variantCaution": "KI-illustrasjon av dan dan-nudler med kjøttdeig, chiliolje, grønnsaker og peanøtter. Ikke vegetarisk eller nøttefri, og ikke restaurantfoto."
     },
     {
       "id": "green-curry",
       "label": "Grønn curry med kylling",
       "query": "green curry",
       "index": 32,
-      "atlas": "series-04.avif",
+      "atlas": "green-curry-768.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "green-curry",
-      "variantCaution": "Med kylling – ikke vegetarcurry"
+      "variantCaution": "KI-illustrasjon av grønn thaicurry med kylling, kokosmelk, grønnsaker, thaibasilikum og ris. Ikke vegetarcurry. Ikke restaurantfoto."
     },
     {
       "id": "tom-yum",
