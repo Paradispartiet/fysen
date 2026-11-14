@@ -103,7 +103,7 @@ class SampleExportTests(unittest.TestCase):
             "true"
         )
         self.assertEqual(
-            con.execute("SELECT value FROM fysen_sample_meta WHERE key='sample_rows_sha256'").fetchone()[0][0],
+            con.execute("SELECT value FROM fysen_sample_meta WHERE key='sample_rows_sha256'").fetchone()[0],
             receipt["sampleRowsSha256"]
         )
         for name in ("ramen", "pizza", "ost", "med"):
