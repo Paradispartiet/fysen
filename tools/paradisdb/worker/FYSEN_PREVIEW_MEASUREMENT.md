@@ -1,6 +1,6 @@
 # ParadisDB for Fysen – isolert Cloudflare Free-måleprøve
 
-**Status: ekstern skrive-/lesetest og FTS5 trigram-søk BESTÅTT (4 syntetiske retter, 2 riktige ramen-treff). Reelle etter-målinger av D1-forbruk gjenstår.** De neste handlingene må gjøres manuelt av Cloudflare-kontoeieren. GitHub-PR-en inneholder ingen Cloudflare-token og starter ingen D1-operasjoner mot kontoens database.
+**Status: ekstern skrive-/lesetest, FTS5 trigram-søk og første faktiske D1-forbruksmåling BESTÅTT (4 syntetiske retter, 2 riktige ramen-treff). Representative fullskalamålinger av Fysens menyarkiv og Worker-trafikk GJENSTÅR.** De neste handlingene må gjøres manuelt av Cloudflare-kontoeieren. GitHub-PR-en inneholder ingen Cloudflare-token og starter ingen D1-operasjoner mot kontoens database.
 
 ## Hvorfor to databaser?
 
@@ -90,6 +90,22 @@ Eierens Cloudflare Console viste at alle følgende kommandoer ble utført **uten
 - `SELECT COUNT(*) AS treff FROM fysen_probe_trigrams WHERE normalized_name LIKE '%ramen%'` — **2 treff**, som forventet for `ramen shoyu` og `ramen tofu`
 
 **PASS:** ekte ekstern D1 / FTS5-trigramindeks / riktig søketreff. **IKKE MÅLT ENNÅ:** endelig `rows_read`, `rows_written`, antall queries og plassforbruk etter testen. Disse må hentes fra **previewens** Cloudflare Overview, ikke estimeres ut fra fire logiske dataelementer. En test med fire retter sier ikke nok om full import av 47 270 offentlige menyer eller ressursforbruk for en typisk søkebruker.
+
+### Målt etter test – 14. november 2026 kl. 04.10 CET
+
+Cloudflare **Overview → Last 24 hours** for den *midlertidige* `paradisdb-fysen-preview` viste etter SQL/FTS5-prøven:
+
+| Måling | Før, 13. nov. 23.51 | Etter, 14. nov. 04.10 |
+| --- | ---: | ---: |
+| Total queries | 0 | **6** |
+| Rows read | 0 | **12** |
+| Rows written | 0 | **9** |
+| Storage used (current) | 12,29 kB | **32,77 kB** |
+| Number of Tables (Dashboard) | 0 | **6** |
+
+Dette er en forskjell på **20,48 kB** i lagring. FTS5 oppretter flere skyggetabeller, så seks tabeller betyr ikke seks egendefinerte appdomener. Merk at dette er en **samlet rullerende 24-timersmåling for én testdatabase**; skjermbildet viser ikke separate rows-read/rows-written-tall per SQL-statement, og sier ikke noe om full importkostnad, Workers-forespørsler eller samlet konto-forbruk. Tidsrommet krysser midnatt, og 24-timersdata må ikke forveksles med én bestemt Free-kvotedag.
+
+**Beslutning:** PASS for *første ekstern Free-preview skrive-/lese-/FTS5-funksjon og samlet testforbruk*. **FORTSATT BLOCKED** for reell menymigrering, fullarkivimport og aktivering av `PARADISDB_PUBLIC_ENABLED`; det krever kontrollerte fullskala-prognoser og faktisk fjerntelemetri på en representativ prøve. Ikke gjenta oppretting/innsetting/rebuild på denne eksisterende testdatabasen for å måle det samme en gang til.
 
 ## 4. Les reelle Cloudflare-målinger etter test
 
