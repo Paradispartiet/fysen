@@ -107,6 +107,21 @@ Dette er en forskjell på **20,48 kB** i lagring. FTS5 oppretter flere skyggetab
 
 **Beslutning:** PASS for *første ekstern Free-preview skrive-/lese-/FTS5-funksjon og samlet testforbruk*. **FORTSATT BLOCKED** for reell menymigrering, fullarkivimport og aktivering av `PARADISDB_PUBLIC_ENABLED`; det krever kontrollerte fullskala-prognoser og faktisk fjerntelemetri på en representativ prøve. Ikke gjenta oppretting/innsetting/rebuild på denne eksisterende testdatabasen for å måle det samme en gang til.
 
+### Kontroll av kontoens samlede D1 Free-forbruk – 14. november 2026 kl. 05.02 CET
+
+Cloudflare **D1 Database → Daily** for datoen **14. november** viser:
+
+| Konto-måling | Faktisk dashboard-verdi | Free-grense |
+| --- | ---: | ---: |
+| Databaser | **2** | 10 |
+| Rows read, kalenderdagen | **0** | 5 000 000 |
+| Rows written, kalenderdagen | **0** | 100 000 |
+| Samlet D1-lagring | **45,06 kB** | 5 GB |
+
+Listen viser begge databasene: `paradisdb-fysen-public` og `paradisdb-fysen-preview`. Den samlede lagringen stemmer med tidligere individuelle tall (12,29 + 32,77 = **45,06 kB**). De to SQL-testene i den permanente databasen og seks i previewen ble gjort sent **13. november**. Derfor er **0/0 på dagsvisningen 14. november** forenlig med at previewens **Last 24 hours** kl. 04.10 viste **12 leste / 9 skrevne rader**. Dette må ikke tolkes som at tidligere målt forbruk er forsvunnet, eller som at en framtidig full import er gratis.
+
+**Kontonivå-baseline dokumentert: PASS for antall databaser og samlet lagring på Free.** Det gjenstår fremdeles å måle Worker-forespørsler, representativt søk, fullverdige arkivrader og skrivekostnad for FTS5 ved større import. **Ikke importer ~47 270 menyposter eller aktiver API basert på denne 4-raders prøven.**
+
 ## 4. Les reelle Cloudflare-målinger etter test
 
 Gå tilbake til previewens **Overview** og noter tidspunkt, `Total queries`, `Rows read`, `Rows written`, `Storage used`. Vent til tallene er oppdatert. Sammenlign med baseline; SQL-konsollspørringene kan gi ulikt antall leste/skrevne rader, og FTS5 oppretter egne interne indekstabeller. Ikke bruk `INSERT` på nytt bare for å få flere målinger. Ta skjermbilde og registrer *kontoens* D1-forbruk etterpå.
