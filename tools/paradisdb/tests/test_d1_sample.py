@@ -100,7 +100,7 @@ class SampleExportTests(unittest.TestCase):
         )
         self.assertEqual(
             con.execute("SELECT value FROM fysen_sample_meta WHERE key='sample_ready'").fetchone()[0],
-            ("true",)
+            "true"
         )
         self.assertEqual(
             con.execute("SELECT value FROM fysen_sample_meta WHERE key='sample_rows_sha256'").fetchone()[0][0],
