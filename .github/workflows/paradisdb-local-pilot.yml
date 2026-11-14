@@ -1,0 +1,178 @@
+name: ParadisDB local-only SQLite pilot
+
+on:
+  pull_request:
+    paths:
+      - "tools/paradisdb/**"
+      - ".github/workflows/paradisdb-local-pilot.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: paradisdb-local-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  local-proof:
+    name: SQLite, archive, backup and loopback-only API tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Python syntax check (no dependencies)
+        run: python3 -m py_compile tools/paradisdb/paradisdb.py tools/paradisdb/worker/*.py tools/paradisdb/tests/*.py
+      - name: Run isolated safety and restore tests
+        run: python3 -m unittest discover -s tools/paradisdb/tests -p "test_*.py" -v
+      - name: Verify public-only Cloudflare Worker (Node built-ins only)
+        run: |
+          node --check tools/paradisdb/worker/worker.mjs
+          node --test tools/paradisdb/worker/tests/worker.test.mjs
+      - name: Checkout independently verified PUBLIC Fysen menu-index branch
+        uses: actions/checkout@v4
+        with:
+          ref: fysen-free-public-index
+          path: verified-index
+          persist-credentials: false
+      - name: Import real 47k Fysen public archive into isolated SQLite
+        shell: bash
+        run: |
+          set -euo pipefail
+          path="$RUNNER_TEMP/paradisdb-real-index.sqlite"
+          python3 tools/paradisdb/paradisdb.py init "$path"
+          python3 tools/paradisdb/paradisdb.py import-fysen "$path" verified-index/manifest.json verified-index/index.json.gz > "$RUNNER_TEMP/paradisdb-real-index-report.json"
+          python3 - <<'PY'
+          import json, os, pathlib
+          report = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) / "paradisdb-real-index-report.json").read_text())
+          assert report["ok"] is True and report["source"] == "verified-menu-archive"
+          assert report["realtime"] is False
+          manifest = json.loads(pathlib.Path("verified-index/manifest.json").read_text())
+          # The public branch is refreshed regularly. Compare against its
+          # checksum-verified manifest, never yesterday's frozen row count.
+          assert report["restaurants"] == manifest["restaurants"] >= 900, report
+          assert report["originalItems"] == manifest["dishes"] >= 45000, report
+          assert report["sha256"] == manifest["sha256"], report
+          assert report["archiveDate"] == manifest["archiveDate"], report
+          assert report["lastRefreshAt"] == manifest["lastRefreshAt"], report
+          assert 0 < report["publicItems"] <= report["originalItems"], report
+          assert report["quarantinedSources"] >= 4, report
+          print("PASS: public restaurants", report["restaurants"], "verified public items", report["publicItems"], "quarantined sources", report["quarantinedSources"])
+          PY
+          python3 tools/paradisdb/paradisdb.py search "$path" ramen | python3 -c 'import json,sys; v=json.load(sys.stdin); assert v["realtime"] is False; assert v["count"] > 0; assert all(x["menu"]["sourceUrl"].startswith(("http://","https://")) for x in v["results"])'
+          python3 tools/paradisdb/paradisdb.py backup "$path" "$RUNNER_TEMP/paradisdb-real-backup.sqlite"
+          python3 tools/paradisdb/paradisdb.py verify-backup "$RUNNER_TEMP/paradisdb-real-backup.sqlite" "$RUNNER_TEMP/paradisdb-real-backup.sqlite.sha256.json"
+          echo "PASS: real verified archive import/search/backup, no production writes"
+      - name: Prove deterministic 500-row verified PUBLIC Fysen sample entirely offline
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/paradisdb/worker/export_sample_d1.py \
+            verified-index/manifest.json verified-index/index.json.gz \
+            "$RUNNER_TEMP/paradisdb-500-preview.sql" --rows 500 \
+            > "$RUNNER_TEMP/paradisdb-500-preview-report.json"
+          python3 - <<'PY'
+          import json, os, pathlib, sqlite3
+          root = pathlib.Path(os.environ["RUNNER_TEMP"])
+          report = json.loads((root / "paradisdb-500-preview-report.json").read_text())
+          sql = (root / "paradisdb-500-preview.sql").read_text(encoding="utf-8")
+          archive = json.loads(pathlib.Path("verified-index/manifest.json").read_text())
+          assert report["ok"] is True and report["mode"] == "offline-only"
+          assert report["remoteWrites"] is False and report["sampleRows"] == 500, report
+          assert report["sourcePublicRows"] >= 45000
+          assert report["archiveSha256"] == archive["sha256"]
+          assert report["sampleRestaurants"] > 2
+          assert len(sql.encode("utf-8")) <= 1000000
+          assert "public_ready" not in sql
+          assert "DROP TABLE" not in sql and "DELETE FROM" not in sql
+          assert "documents" not in sql
+          con = sqlite3.connect(":memory:")
+          con.executescript("CREATE TABLE fysen_probe_items(item_index INTEGER PRIMARY KEY);"
+                            "INSERT INTO fysen_probe_items VALUES(1);")
+          con.executescript(sql)
+          assert con.execute("SELECT COUNT(*) FROM fysen_sample_items").fetchone()[0] == 500
+          assert con.execute("SELECT value FROM fysen_sample_meta WHERE key='sample_ready'").fetchone()[0] == "true"
+          assert con.execute("SELECT value FROM fysen_sample_meta WHERE key='sample_rows_sha256'").fetchone()[0] == report["sampleRowsSha256"]
+          for term in ("ramen", "pizza", "sushi", "pasta"):
+              baseline = con.execute(
+                  "SELECT COUNT(*) FROM fysen_sample_items WHERE instr(normalized_name, ?) > 0", (term,)
+              ).fetchone()[0]
+              fts = con.execute(
+                  "SELECT COUNT(*) FROM fysen_sample_trigrams WHERE normalized_name LIKE ?", (f"%{term}%",)
+              ).fetchone()[0]
+              assert baseline == fts, (term, baseline, fts)
+          print("PASS: 500 verified PUBLIC Fysen rows, local FTS5 parity, no remote D1 writes")
+          con.close()
+          PY
+      - name: Export real public Fysen archive to portable D1 SQL and verify local restore
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/paradisdb/worker/export_d1.py "$RUNNER_TEMP/paradisdb-real-index.sqlite" "$RUNNER_TEMP/paradisdb-public.sql" > "$RUNNER_TEMP/paradisdb-d1-export-report.json"
+          python3 - <<'PY'
+          import json, os, pathlib, sqlite3
+          root = pathlib.Path(os.environ["RUNNER_TEMP"])
+          report = json.loads((root / "paradisdb-d1-export-report.json").read_text())
+          imported = json.loads((root / "paradisdb-real-index-report.json").read_text())
+          sql = (root / "paradisdb-public.sql").read_text(encoding="utf-8")
+          assert report["ok"] is True and report["publicOnly"] is True, report
+          assert report["menuItems"] == imported["publicItems"], report
+          assert report["archiveSha256"] == imported["sha256"], report
+          assert report["publicRowsSha256"] == imported["publicRowsSha256"], report
+          assert "CREATE TABLE IF NOT EXISTS documents" not in sql
+          assert "CREATE TABLE IF NOT EXISTS public_archive_meta" in sql
+          assert "INSERT INTO public_archive_meta(key,value) VALUES ('public_ready','true');" in sql
+          assert len(sql.encode("utf-8")) < 32*1024*1024
+          # Materialize D1-exported public SQL in a real local SQLite file.
+          # The Node Worker tests use a read-only adapter against these rows.
+          local = root / "paradisdb-worker-d1.sqlite"
+          con = sqlite3.connect(local)
+          con.executescript(sql)
+          assert con.execute("SELECT COUNT(*) FROM fysen_public_items").fetchone()[0] == imported["publicItems"]
+          assert con.execute("SELECT value FROM public_archive_meta WHERE key='public_ready'").fetchone()[0] == "true"
+          assert json.loads(con.execute("SELECT value FROM public_archive_meta WHERE key='sha256'").fetchone()[0]) == imported["sha256"]
+          assert json.loads(con.execute("SELECT value FROM public_archive_meta WHERE key='publicRowsSha256'").fetchone()[0]) == imported["publicRowsSha256"]
+          assert con.execute("SELECT COUNT(*) FROM fysen_public_items WHERE source_url LIKE 'https://%' OR source_url LIKE 'http://%'").fetchone()[0] == imported["publicItems"]
+          assert con.execute("SELECT COUNT(*) FROM sqlite_master WHERE name='documents'").fetchone()[0] == 0
+          con.close()
+          print(f"PASS: {imported['publicItems']} verifiable, public-only rows in standalone D1 SQL; no private schema")
+          PY
+      - name: Exercise real Worker API over D1-compatible public SQLite rows
+        shell: bash
+        env:
+          PARADISDB_PUBLIC_SQLITE_PATH: ${{ runner.temp }}/paradisdb-worker-d1.sqlite
+          PARADISDB_PUBLIC_REPORT_PATH: ${{ runner.temp }}/paradisdb-real-index-report.json
+        run: |
+          set -euo pipefail
+          test -f "$PARADISDB_PUBLIC_SQLITE_PATH"
+          test -f "$PARADISDB_PUBLIC_REPORT_PATH"
+          node --test tools/paradisdb/worker/tests/worker-sqlite-integration.test.mjs
+      - name: Benchmark zero-subscription FTS5 indexed search (isolated, real public rows)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/paradisdb/worker/tests/fts5-trigram-candidate.py "$RUNNER_TEMP/paradisdb-worker-d1.sqlite"
+      - name: Real local Cloudflare D1 and workerd with all public menu records (no account)
+        shell: bash
+        env:
+          PARADISDB_PUBLIC_SQL: ${{ runner.temp }}/paradisdb-public.sql
+          PARADISDB_PUBLIC_REPORT: ${{ runner.temp }}/paradisdb-real-index-report.json
+        run: bash tools/paradisdb/worker/tests/local-wrangler-d1-proof.sh
+      - name: CLI smoke and backup restore
+        shell: bash
+        run: |
+          set -euo pipefail
+          db="$RUNNER_TEMP/paradisdb-test.sqlite"
+          tmp="$RUNNER_TEMP/paradisdb-test-payload.json"
+          echo '{"hello":"from local SQLite","subscription_cost_nok":0}' > "$tmp"
+          python3 tools/paradisdb/paradisdb.py init "$db"
+          python3 tools/paradisdb/paradisdb.py put "$db" fysen pilot "$tmp"
+          python3 tools/paradisdb/paradisdb.py get "$db" fysen pilot | python3 -c 'import json,sys; assert json.load(sys.stdin)["subscription_cost_nok"] == 0'
+          python3 tools/paradisdb/paradisdb.py backup "$db" "$RUNNER_TEMP/paradisdb-backup.sqlite"
+          python3 tools/paradisdb/paradisdb.py verify-backup "$RUNNER_TEMP/paradisdb-backup.sqlite" "$RUNNER_TEMP/paradisdb-backup.sqlite.sha256.json"
+          python3 tools/paradisdb/paradisdb.py restore "$RUNNER_TEMP/paradisdb-backup.sqlite" "$RUNNER_TEMP/paradisdb-backup.sqlite.sha256.json" "$RUNNER_TEMP/paradisdb-restored.sqlite"
+          python3 tools/paradisdb/paradisdb.py get "$RUNNER_TEMP/paradisdb-restored.sqlite" fysen pilot | python3 -c 'import json,sys; assert json.load(sys.stdin)["hello"] == "from local SQLite"'
+          echo "PASS: local database writes, readback, sha-verified backup and restore"

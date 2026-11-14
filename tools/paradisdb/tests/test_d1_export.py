@@ -1,0 +1,161 @@
+"""Public-only D1 exporter contract; no cloud account or network access needed."""
+from __future__ import annotations
+
+import importlib.util
+import json
+import sqlite3
+import tempfile
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+def load(path: Path, module_name: str):
+    spec = importlib.util.spec_from_file_location(module_name, path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+db = load(ROOT / "paradisdb.py", "paradisdb_local")
+exporter = load(ROOT / "worker" / "export_d1.py", "paradisdb_export_d1")
+
+PUBLIC_ROW = (
+    4, "Mat & Mat", "mat-og-mat", "Løkka 3", "Oslo",
+    "Ramen med løk og 'saus'", "ramen med løk og saus",
+    19900, "exact", None,
+    "https://example.org/menu?dish=4", "2026-11-11T11:00:00Z"
+)
+META = {
+    "archiveDate": "2026-11-02", "lastRefreshAt": "2026-11-12T11:40:54.434Z",
+    "sha256": "a" * 64, "restaurants": 973, "sources": 973,
+    "originalItems": 47265, "publicItems": 1,
+    "publicRowsSha256": db.hash_public_rows([PUBLIC_ROW]),
+    "quarantinedSources": 4,
+}
+
+class ExportTests(unittest.TestCase):
+    def setUp(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        self.path = Path(tmp.name)
+        self.sqlite = self.path / "local.sqlite"
+        self.sql = self.path / "public-export.sql"
+        db.initialize(self.sqlite)
+        con = sqlite3.connect(self.sqlite)
+        with con:
+            for key, value in META.items():
+                con.execute("INSERT INTO metadata(key,value) VALUES (?,?)",
+                            ("fysen_" + key, json.dumps(value, ensure_ascii=False)))
+            con.execute("INSERT INTO fysen_public_items VALUES (" + ",".join(["?"] * 12) + ")", PUBLIC_ROW)
+        con.close()
+
+    def test_public_export_contains_zero_private_documents(self):
+        db.put(self.sqlite, "aha", "private", {"secret": "DO_NOT_EXPORT"})
+        db.put(self.sqlite, "footballmanager", "private", {"secret": "PRIVATE_PLAYER_STATE"})
+        result = exporter.export_public(self.sqlite, self.sql)
+        self.assertTrue(result["ok"])
+        self.assertEqual(result["menuItems"], 1)
+        self.assertFalse(result["realtime"])
+        text = self.sql.read_text(encoding="utf8")
+        self.assertNotIn("DO_NOT_EXPORT", text)
+        self.assertNotIn("PRIVATE_PLAYER_STATE", text)
+        self.assertNotIn("documents", text)
+        self.assertNotIn("aha", text)
+        self.assertNotIn("footballmanager", text)
+        self.assertNotIn("user", text)
+        self.assertNotIn("auth", text)
+        self.assertIn("Mat & Mat", text)
+        self.assertIn("løk", text)
+        target = sqlite3.connect(":memory:")
+        target.executescript(text)
+        self.assertEqual(target.execute("SELECT COUNT(*) FROM fysen_public_items").fetchone()[0], 1)
+        self.assertEqual(target.execute("SELECT value FROM public_archive_meta WHERE key='public_ready'").fetchone()[0], "true")
+        self.assertEqual(target.execute("SELECT dish_name FROM fysen_public_items").fetchone()[0], PUBLIC_ROW[5])
+        self.assertFalse(any(r[0] == "documents" for r in target.execute("SELECT name FROM sqlite_master WHERE type='table'")))
+        target.close()
+        self.assertLess(text.index("INSERT INTO fysen_public_items"),
+                        text.index("VALUES ('public_ready','true')"))
+
+    def test_same_count_tampered_public_row_refuses_d1_export(self):
+        """Keep row count constant while tampering with a dish price."""
+        con = sqlite3.connect(self.sqlite)
+        with con:
+            con.execute("UPDATE fysen_public_items SET price_minor = 99999 WHERE item_index = 4")
+        con.close()
+        with self.assertRaisesRegex(ValueError, "digest mismatch"):
+            exporter.export_public(self.sqlite, self.sql)
+        self.assertFalse(self.sql.exists())
+
+    def test_same_count_tampered_source_date_refuses_d1_export(self):
+        """The imported observation date is part of the public digest."""
+        con = sqlite3.connect(self.sqlite)
+        with con:
+            con.execute("UPDATE fysen_public_items SET observed_at = ? WHERE item_index = 4",
+                        ("2099-01-01T00:00:00Z",))
+        con.close()
+        with self.assertRaisesRegex(ValueError, "digest mismatch"):
+            exporter.export_public(self.sqlite, self.sql)
+        self.assertFalse(self.sql.exists())
+
+    def test_incomplete_or_wrong_checksum_metadata_refuses_export(self):
+        con = sqlite3.connect(self.sqlite)
+        with con:
+            con.execute("UPDATE metadata SET value=? WHERE key='fysen_publicItems'", ("2",))
+        con.close()
+        with self.assertRaises(ValueError):
+            exporter.export_public(self.sqlite, self.sql)
+        self.assertFalse(self.sql.exists())
+
+    def test_cannot_overwrite_existing_sql_export(self):
+        exporter.export_public(self.sqlite, self.sql)
+        old = self.sql.read_bytes()
+        with self.assertRaises(FileExistsError):
+            exporter.export_public(self.sqlite, self.sql)
+        self.assertEqual(self.sql.read_bytes(), old)
+
+    def test_batches_large_archives_without_oversized_d1_statements(self):
+        # Real archive has 47k records; this small multirow fixture verifies
+        # D1-size bounds and exact row content without a network service.
+        rows = [PUBLIC_ROW]
+        for index in range(5, 155):
+            row = list(PUBLIC_ROW)
+            row[0] = index
+            row[5] = f"Rett {index} med 'sitron'"
+            row[6] = f"rett {index} med sitron"
+            rows.append(tuple(row))
+        con = sqlite3.connect(self.sqlite)
+        with con:
+            con.executemany("INSERT INTO fysen_public_items VALUES (" + ",".join(["?"] * 12) + ")",
+                            rows[1:])
+            con.execute("UPDATE metadata SET value=? WHERE key='fysen_publicItems'",
+                        (json.dumps(len(rows)),))
+            con.execute("UPDATE metadata SET value=? WHERE key='fysen_publicRowsSha256'",
+                        (json.dumps(db.hash_public_rows(rows)),))
+        con.close()
+        export = exporter.export_public(self.sqlite, self.sql)
+        self.assertEqual(export["menuItems"], len(rows))
+        content = self.sql.read_text(encoding="utf8")
+        statements = [s.strip() for s in content.splitlines()
+                      if s.startswith("INSERT INTO fysen_public_items VALUES ")]
+        self.assertEqual(len(statements), 4)  # 50 + 50 + 50 + 1
+        self.assertTrue(all(len(s.encode("utf8")) <= exporter.MAX_STATEMENT_BYTES
+                            for s in statements))
+        target = sqlite3.connect(":memory:")
+        target.executescript(content)
+        restored = target.execute(
+            "SELECT item_index,dish_name FROM fysen_public_items ORDER BY item_index"
+        ).fetchall()
+        self.assertEqual(len(restored), len(rows))
+        self.assertEqual(restored[-1], (154, "Rett 154 med 'sitron'"))
+        target.close()
+
+    def test_quote_is_sql_safe_for_untrusted_public_source_labels(self):
+        self.assertEqual(exporter.quote("A'B"), "'A''B'")
+        self.assertEqual(exporter.quote(None), "NULL")
+        self.assertEqual(exporter.quote(100), "100")
+        with self.assertRaises(ValueError):
+            exporter.quote("bad\0value")
+        with self.assertRaises(ValueError):
+            exporter.quote({"bad": "object"})
+
+if __name__ == "__main__":
+    unittest.main()
