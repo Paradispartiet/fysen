@@ -66,6 +66,47 @@ jobs:
           python3 tools/paradisdb/paradisdb.py backup "$path" "$RUNNER_TEMP/paradisdb-real-backup.sqlite"
           python3 tools/paradisdb/paradisdb.py verify-backup "$RUNNER_TEMP/paradisdb-real-backup.sqlite" "$RUNNER_TEMP/paradisdb-real-backup.sqlite.sha256.json"
           echo "PASS: real verified archive import/search/backup, no production writes"
+      - name: Prove deterministic 500-row verified PUBLIC Fysen sample entirely offline
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/paradisdb/worker/export_sample_d1.py \
+            verified-index/manifest.json verified-index/index.json.gz \
+            "$RUNNER_TEMP/paradisdb-500-preview.sql" --rows 500 \
+            > "$RUNNER_TEMP/paradisdb-500-preview-report.json"
+          python3 - <<'PY'
+          import json, os, pathlib, sqlite3
+          root = pathlib.Path(os.environ["RUNNER_TEMP"])
+          report = json.loads((root / "paradisdb-500-preview-report.json").read_text())
+          sql = (root / "paradisdb-500-preview.sql").read_text(encoding="utf-8")
+          archive = json.loads(pathlib.Path("verified-index/manifest.json").read_text())
+          assert report["ok"] is True and report["mode"] == "offline-only"
+          assert report["remoteWrites"] is False and report["sampleRows"] == 500, report
+          assert report["sourcePublicRows"] >= 45000
+          assert report["archiveSha256"] == archive["sha256"]
+          assert report["sampleRestaurants"] > 2
+          assert len(sql.encode("utf-8")) <= 1000000
+          assert "public_ready" not in sql
+          assert "DROP TABLE" not in sql and "DELETE FROM" not in sql
+          assert "documents" not in sql
+          con = sqlite3.connect(":memory:")
+          con.executescript("CREATE TABLE fysen_probe_items(item_index INTEGER PRIMARY KEY);"
+                            "INSERT INTO fysen_probe_items VALUES(1);")
+          con.executescript(sql)
+          assert con.execute("SELECT COUNT(*) FROM fysen_sample_items").fetchone()[0] == 500
+          assert con.execute("SELECT value FROM fysen_sample_meta WHERE key='sample_ready'").fetchone()[0][0] == "true"
+          assert con.execute("SELECT value FROM fysen_sample_meta WHERE key='sample_rows_sha256'").fetchone()[0][0] == report["sampleRowsSha256"]
+          for term in ("ramen", "pizza", "sushi", "pasta"):
+              baseline = con.execute(
+                  "SELECT COUNT(*) FROM fysen_sample_items WHERE instr(normalized_name, ?) > 0", (term,)
+              ).fetchone()[0]
+              fts = con.execute(
+                  "SELECT COUNT(*) FROM fysen_sample_trigrams WHERE normalized_name LIKE ?", (f"%{term}%",)
+              ).fetchone()[0]
+              assert baseline == fts, (term, baseline, fts)
+          print("PASS: 500 verified PUBLIC Fysen rows, local FTS5 parity, no remote D1 writes")
+          con.close()
+          PY
       - name: Export real public Fysen archive to portable D1 SQL and verify local restore
         shell: bash
         run: |
