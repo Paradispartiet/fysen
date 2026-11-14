@@ -106,11 +106,7 @@ class SampleExportTests(unittest.TestCase):
             con.execute("SELECT value FROM fysen_sample_meta WHERE key='sample_rows_sha256'").fetchone()[0][0],
             receipt["sampleRowsSha256"]
         )
-        for name in ("ramen", "pizza", "lø", "ost"):
-            # Three-character minimum for production searches; here compare
-            # baseline with indexed FTS5 for actual expected terms.
-            if len(name.encode("utf-8")) < 3:
-                continue
+        for name in ("ramen", "pizza", "ost", "med"):
             base = con.execute(
                 "SELECT COUNT(*) FROM fysen_sample_items WHERE instr(normalized_name, ?) > 0",
                 (name,)
