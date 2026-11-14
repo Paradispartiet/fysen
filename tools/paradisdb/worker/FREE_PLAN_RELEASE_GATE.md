@@ -1,6 +1,6 @@
 # ParadisDB – utgivelsesport for 0-kroners drift (D1 Free)
 
-**Status: utkast. Faktisk Cloudflare Workers Free-konto er bekreftet og den permanente D1-databasen `paradisdb-fysen-public` er opprettet med EU-jurisdiksjon.** To reelle metadata-spørringer ga 3 leste rader, 0 skrevne og 12,29 kB lagring (13. nov. 2026, siste 24 timer). Dette er **ikke** en full fjernimport- eller API-kostnadstest. Dette dokumentet viser hva som fortsatt må være målt og godkjent før vi kan aktivere `PARADISDB_PUBLIC_ENABLED=true`. Den offentlige Fysen-indeksen forblir tilgjengelig via dagens statiske gratisløsning.
+**Status: utkast. Faktisk Cloudflare Workers Free-konto er bekreftet og den permanente D1-databasen `paradisdb-fysen-public` er opprettet med EU-jurisdiksjon.** To reelle metadata-spørringer ga 3 leste rader, 0 skrevne og 12,29 kB lagring (13. nov. 2026, siste 24 timer). Den separate `paradisdb-fysen-preview` har deretter bestått en fire-raders FTS5-prøve; ettertesten (14. nov. 2026) viste **6 queries, 12 rows read, 9 rows written og 32,77 kB lagring**. Dette er **ikke** en full fjernimport- eller API-kostnadstest. Dette dokumentet viser hva som fortsatt må være målt og godkjent før vi kan aktivere `PARADISDB_PUBLIC_ENABLED=true`. Den offentlige Fysen-indeksen forblir tilgjengelig via dagens statiske gratisløsning.
 
 ## Hvorfor må dette være en sperre?
 
@@ -30,7 +30,7 @@ Overskrides D1 Free-grensene, blir forespørsler avvist. Det er likevel feil å 
 
 ## Mål for en senere fjernprøve
 
-**Oppfylt:** Konto-eier har bekreftet Workers Free og opprettet en separat **permanent** offentlig, ennå tom D1-database med EU-jurisdiksjon. En reell skrivebeskyttet metadata-test er dokumentert i [FYSEN_FIRST_REMOTE_CHECK.md](./FYSEN_FIRST_REMOTE_CHECK.md). **Ikke oppfylt:** Representative skrive- og FTS5-søkemålinger. Før disse må en egen *midlertidig preview-database* opprettes etter uttrykkelig godkjenning. Vår kode oppretter den ikke selv.
+**Oppfylt:** Konto-eier har bekreftet Workers Free og opprettet en separat **permanent** offentlig, ennå tom D1-database med EU-jurisdiksjon. En reell skrivebeskyttet metadata-test er dokumentert i [FYSEN_FIRST_REMOTE_CHECK.md](./FYSEN_FIRST_REMOTE_CHECK.md). **Oppfylt:** En separat *midlertidig* EU-preview er opprettet manuelt. Fire syntetiske rader, én FTS5 trigram-indeks, én rebuild og søk med to korrekte ramen-treff er bestått på ekte Cloudflare D1. Overordnet forbruk er målt i Dashboard (6 queries / 12 read / 9 written / 32,77 kB), se [FYSEN_PREVIEW_MEASUREMENT.md](./FYSEN_PREVIEW_MEASUREMENT.md). **Ikke oppfylt:** Representativ fjernimport/FTS5-skrivekostnad for 47 270 menyposter, målte ressurser per Worker-søk og oppdatert **samlet konto**-forbruk. Ingen av disse målene kan utledes direkte fra prøve med fire retter.
 
 For D1-målinger bruker man `meta.rows_read` og `meta.rows_written` fra faktiske Worker-spørringer (inkludert manifestoppslag) eller Cloudflare Analytics, sammen med dagens konto-totaler. Mål flere typiske søk og bruk konservative verdier, ikke gjennomsnitt fra den lokale SQL-simulatoren. [D1 observability](https://developers.cloudflare.com/d1/observability/find-expensive-queries/).
 
