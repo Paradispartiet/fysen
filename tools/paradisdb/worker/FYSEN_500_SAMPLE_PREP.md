@@ -29,7 +29,7 @@ python3 tools/paradisdb/worker/export_sample_d1.py \
   /tmp/paradisdb-fysen-500-preview.sql --rows 500
 ```
 
-GitHub Actions jobben `ParadisDB local-only SQLite pilot` kjører denne eksporten mot de verifiserte offentlige filene og importerer resultatet **kun til isolert lokal SQLite**. Den kontrollerer 500 rader og FTS5-søkeparitet. Den publiserer ikke SQL-filen som en tilgjengelig Cloudflare-kommando eller bruker hemmelige tokens.
+GitHub Actions jobben `ParadisDB local-only SQLite pilot` kjører denne eksporten mot de verifiserte offentlige filene og importerer resultatet **kun til isolert lokal SQLite**. Den kontrollerer 500 rader og FTS5-søkeparitet. Etter at **hele** jobben er bestått, laster den opp et **GitHub Actions-artifact for manuell gjennomgang**, med navnet `fysen-500-preview-offline-only`: SQL-filen, eksportkvitteringen (JSON) og begge filenes SHA-256 (`.sha256`). Artifactet beholdes i 7 dager og kan åpnes fra den **beståtte** kjøringen under *Artifacts*. Dette er **ikke** en Cloudflare-import, ikke et deploy-script og bruker ingen Cloudflare-token. **Ikke lim inn hele SQL-filen i Cloudflare Console** før en særskilt, mål-ID-verifisert importplan er godkjent.
 
 ## Verifiserte Cloudflare-mål (16. november 2026)
 
@@ -40,6 +40,27 @@ Permanent `paradisdb-fysen-public` har **en annen** ID: `882a3393-71c3-43f9-9dec
 ID-ene står i [FYSEN_PREVIEW_TARGET.json](./FYSEN_PREVIEW_TARGET.json), som **ikke er en Wrangler-deploykonfigurasjon**. `remote_import_approved=false` betyr at ingen ekstern import er godkjent. Den offentlige Worker-eksempelkonfigurasjonen skal fortsatt binde til den *permanente* databasen, men er deaktivert.
 
 Den 16. november kl. 09.24 CET viste previewens **Last 24 hours** 0 queries, 0 rows read, 0 rows written, **32,77 kB** lagring og **6 tabeller**. Dette er ingen ny kapasitetsmåling for 500-radersprøven, og 24-timers null betyr ikke at prøveinnholdet er slettet.
+
+### Bekreftet kontobaseline før prøven – 16. november 2026 kl. 10.38 CET
+
+Cloudflare **D1 Database → Daily (Nov 16)** for Fysen-kontoen viser:
+
+| Måling | Faktisk brukt | Gratisgrense |
+| --- | ---: | ---: |
+| Databaser | **2** | 10 |
+| Leste D1-rader, dagens konto | **15** | 5 000 000 |
+| Skrevne D1-rader, dagens konto | **0** | 100 000 |
+| Samlet D1-lagring | **45,06 kB** | 5 GB |
+
+Tabelloversikten viste **2 queries / 15 read / 0 written** i preview, **0 / 0 / 0** i permanent database. Tallene bekrefter at **denne målingen** er langt under Free-grensene, men er **ikke** en forhåndsgodkjenning av 500-radersimport eller framtidig trafikk. Sjekk ferskt konto-forbruk igjen før enhver fjernimport; Cloudflares målinger kan oppdateres med forsinkelse.
+
+Kontoeieren kjørte 16. november kl. 09.50 CET:
+```sql
+SELECT name,type FROM sqlite_master
+WHERE name IN ('fysen_sample_items','fysen_sample_meta','fysen_sample_trigrams')
+ORDER BY name;
+```
+Cloudflare svarte **`This query returned no data.`** Ingen av prøveimportens tre tabeller fantes på målet. Dette var en skrivebeskyttet kontroll – ingen 500-radersimport er utført.
 
 ## Neste trygge kontroll på Cloudflare-previewen (kun lesing)
 
