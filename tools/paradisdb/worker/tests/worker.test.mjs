@@ -208,6 +208,7 @@ test("Fysen preview D1 identity stays isolated and remote importing remains expl
   assert.equal(target.permanent_database.jurisdiction, "EU");
   assert.equal(target.remote_import_approved, false);
   assert.equal(target.worker_api_enabled, false);
+  assert.equal(config.name, "paradisdb-fysen-public-disabled");
   assert.equal(config.d1_databases[0].database_id, target.permanent_database.id);
   assert.notEqual(config.d1_databases[0].database_id, target.preview_database.id);
   assert.equal(config.vars.PARADISDB_PUBLIC_ENABLED, "false");
