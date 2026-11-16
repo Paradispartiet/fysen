@@ -5,7 +5,7 @@
 ## Hvorfor to databaser?
 
 - **Permanent, ikke endre:** `paradisdb-fysen-public` (`882a3393-71c3-43f9-9dec-efc2bbcab409`). Bekreftet tom for egendefinerte tabeller. 13. nov. 2026 kl. 23.37 CET: siste 24 timer **2 queries**, **3 rows read**, **0 rows written**, **12,29 kB lagring**.
-- **Ny og midlertidig:** `paradisdb-fysen-preview` er manuelt **opprettet** på den samme Workers Free-kontoen, med **EU-jurisdiksjon**, region Eastern Europe og read replication Disabled. Previewens database-ID er ikke verifisert i GitHub. **Ikke** gjenbruk den permanente database-ID-en som testdatabase.
+- **Ny og midlertidig:** `paradisdb-fysen-preview` er manuelt **opprettet** på den samme Workers Free-kontoen, med **EU-jurisdiksjon**, region Eastern Europe og read replication Disabled. Database-ID `8b6616b4-11df-4ddc-9817-378f51ee0b69` ble oppgitt i kontoeierens Cloudflare Settings-lenke 16. november 2026 og er nå registrert i [FYSEN_PREVIEW_TARGET.json](./FYSEN_PREVIEW_TARGET.json). **Ikke** gjenbruk den permanente database-ID-en som testdatabase.
 
 En tom D1 kan inneholde `_cf_KV`, som er Cloudflares reserverte interne systemtabell. Den må ikke slettes.
 
@@ -121,6 +121,10 @@ Cloudflare **D1 Database → Daily** for datoen **14. november** viser:
 Listen viser begge databasene: `paradisdb-fysen-public` og `paradisdb-fysen-preview`. Den samlede lagringen stemmer med tidligere individuelle tall (12,29 + 32,77 = **45,06 kB**). De to SQL-testene i den permanente databasen og seks i previewen ble gjort sent **13. november**. Derfor er **0/0 på dagsvisningen 14. november** forenlig med at previewens **Last 24 hours** kl. 04.10 viste **12 leste / 9 skrevne rader**. Dette må ikke tolkes som at tidligere målt forbruk er forsvunnet, eller som at en framtidig full import er gratis.
 
 **Kontonivå-baseline dokumentert: PASS for antall databaser og samlet lagring på Free.** Det gjenstår fremdeles å måle Worker-forespørsler, representativt søk, fullverdige arkivrader og skrivekostnad for FTS5 ved større import. **Ikke importer ~47 270 menyposter eller aktiver API basert på denne 4-raders prøven.**
+
+### Ny kontroll av testdatabasens tilstand – 16. november 2026 kl. 09.24 CET
+
+Cloudflare **Overview → Last 24 hours** for `paradisdb-fysen-preview` viser **0 queries, 0 rows read og 0 rows written**, sammen med **6 tabeller og 32,77 kB lagring**. De tidligere syntetiske prøvepostene og FTS5-skyggetabellene fremstår fortsatt opprettet. Tallene gjelder en ny rullerende 24-timersperiode og må ikke tolkes som at importforbruket fra 13. november er nullstilt bakover i tid. Den permanente databasen har ikke blitt skrevet til i denne arbeidsflyten.
 
 ## 4. Les reelle Cloudflare-målinger etter test
 
