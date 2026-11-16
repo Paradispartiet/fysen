@@ -1,8 +1,9 @@
 {
   // EXAMPLE ONLY. The public Fysen D1 was created manually under Workers Free.
   // Public Fysen archive only; keep the D1 EMPTY until measured release approval.
+  // This is a PERMANENT D1 binding example, not the preview target.
   // This is a template only; do not deploy or import until remote Free-plan release checks pass.
-  "name": "paradisdb-fysen-public-preview",
+  "name": "paradisdb-fysen-public-disabled",
   "main": "worker.mjs",
   "compatibility_date": "2026-11-12",
   "workers_dev": false,
