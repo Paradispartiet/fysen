@@ -31,10 +31,20 @@ python3 tools/paradisdb/worker/export_sample_d1.py \
 
 GitHub Actions jobben `ParadisDB local-only SQLite pilot` kjører denne eksporten mot de verifiserte offentlige filene og importerer resultatet **kun til isolert lokal SQLite**. Den kontrollerer 500 rader og FTS5-søkeparitet. Den publiserer ikke SQL-filen som en tilgjengelig Cloudflare-kommando eller bruker hemmelige tokens.
 
+## Verifiserte Cloudflare-mål (16. november 2026)
+
+**Kun `paradisdb-fysen-preview` er testmålet.** Database-ID: `8b6616b4-11df-4ddc-9817-378f51ee0b69`.
+
+Permanent `paradisdb-fysen-public` har **en annen** ID: `882a3393-71c3-43f9-9dec-efc2bbcab409`, og skal aldri motta prøveimport. Begge ID-er er kontrollert fra kontoeierens Cloudflare Dashboard-lenker; behold dem adskilt. Ikke lagre Cloudflare API-token i repoet.
+
+ID-ene står i [FYSEN_PREVIEW_TARGET.json](./FYSEN_PREVIEW_TARGET.json), som **ikke er en Wrangler-deploykonfigurasjon**. `remote_import_approved=false` betyr at ingen ekstern import er godkjent. Den offentlige Worker-eksempelkonfigurasjonen skal fortsatt binde til den *permanente* databasen, men er deaktivert.
+
+Den 16. november kl. 09.24 CET viste previewens **Last 24 hours** 0 queries, 0 rows read, 0 rows written, **32,77 kB** lagring og **6 tabeller**. Dette er ingen ny kapasitetsmåling for 500-radersprøven, og 24-timers null betyr ikke at prøveinnholdet er slettet.
+
 ## Før ekstern kjøring må følgende bekreftes
 
 - **STOPP** dersom kontoen ikke lenger har Workers Free, kapasitet eller uventet annet D1-forbruk.
-- Kontroller previewens eksakte database-ID og at den er **forskjellig** fra den permanente `882a3393-71c3-43f9-9dec-efc2bbcab409`.
+- Kontroller før hver eventuell fjernkommando at **previewens** database-ID er `8b6616b4-11df-4ddc-9817-378f51ee0b69`; **stopp** ved enhver annen ID, spesielt den permanente `882a3393-71c3-43f9-9dec-efc2bbcab409`.
 - Ta fersk baseline av **kontoens daglige** D1-rader lest/skrevet og **previewens** lagring.
 - Bekreft SQL-filens SHA-256, maksimumsgrenser, kildekvittering og at alle tre `fysen_sample_*`-tabeller mangler i previewen.
 - Lag en eksplisitt import-/måleprosedyre som kan stoppe mellom trinnene, og test at søk bare bruker den **nye** FTS5-indeksen. For hver spørring trengs faktisk `rows_read` og `rows_written` fra D1-metadata/Cloudflare Analytics.
