@@ -193,3 +193,23 @@ test("Fysen Cloudflare D1 example stays bound to the isolated public database an
   assert.equal(config.d1_databases[0].database_id, "882a3393-71c3-43f9-9dec-efc2bbcab409");
   assert.ok(config.ratelimits.some(x => x.name === "PUBLIC_RATE_LIMITER"));
 });
+
+test("Fysen preview D1 identity stays isolated and remote importing remains explicitly disallowed", () => {
+  const target = JSON.parse(readFileSync(new URL("../FYSEN_PREVIEW_TARGET.json", import.meta.url), "utf8"));
+  const raw = readFileSync(new URL("../wrangler.jsonc.example", import.meta.url), "utf8");
+  const config = JSON.parse(raw.split("\n")
+    .filter(line => !line.trimStart().startsWith("//")).join("\n"));
+  assert.equal(target.preview_database.name, "paradisdb-fysen-preview");
+  assert.equal(target.preview_database.id, "8b6616b4-11df-4ddc-9817-378f51ee0b69");
+  assert.equal(target.permanent_database.name, "paradisdb-fysen-public");
+  assert.equal(target.permanent_database.id, "882a3393-71c3-43f9-9dec-efc2bbcab409");
+  assert.notEqual(target.preview_database.id, target.permanent_database.id);
+  assert.equal(target.preview_database.jurisdiction, "EU");
+  assert.equal(target.permanent_database.jurisdiction, "EU");
+  assert.equal(target.remote_import_approved, false);
+  assert.equal(target.worker_api_enabled, false);
+  assert.equal(config.d1_databases[0].database_id, target.permanent_database.id);
+  assert.notEqual(config.d1_databases[0].database_id, target.preview_database.id);
+  assert.equal(config.vars.PARADISDB_PUBLIC_ENABLED, "false");
+  assert.equal(config.workers_dev, false);
+});
