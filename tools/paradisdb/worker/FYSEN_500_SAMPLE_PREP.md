@@ -41,6 +41,19 @@ ID-ene står i [FYSEN_PREVIEW_TARGET.json](./FYSEN_PREVIEW_TARGET.json), som **i
 
 Den 16. november kl. 09.24 CET viste previewens **Last 24 hours** 0 queries, 0 rows read, 0 rows written, **32,77 kB** lagring og **6 tabeller**. Dette er ingen ny kapasitetsmåling for 500-radersprøven, og 24-timers null betyr ikke at prøveinnholdet er slettet.
 
+## Neste trygge kontroll på Cloudflare-previewen (kun lesing)
+
+Før en eventuell 500-raders import, åpne **`paradisdb-fysen-preview` → Console** i Cloudflare. Bekreft at database-ID-en i URL-en er `8b6616b4-11df-4ddc-9817-378f51ee0b69`. Kjør bare:
+
+```sql
+SELECT name, type
+FROM sqlite_master
+WHERE name IN ('fysen_sample_items', 'fysen_sample_meta', 'fysen_sample_trigrams')
+ORDER BY name;
+```
+
+**Forventet: ingen rader.** Hvis noen av disse tabellene allerede finnes, **stopp**. De fire tidligere syntetiske prøveradene og FTS5-indeksen deres kan ligge der; de skal ikke slettes. Denne SQL-en er skrivebeskyttet og starter ingen import.
+
 ## Før ekstern kjøring må følgende bekreftes
 
 - **STOPP** dersom kontoen ikke lenger har Workers Free, kapasitet eller uventet annet D1-forbruk.
