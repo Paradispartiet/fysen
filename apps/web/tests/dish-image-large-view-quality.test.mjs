@@ -8,6 +8,7 @@ import { fileURLToPath, URL } from "node:url";
 
 const web = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const imageRoot = path.join(web, "public", "dish-images");
+const repoRoot = path.resolve(web, "../..");
 const manifest = JSON.parse(readFileSync(path.join(imageRoot, "manifest.json"), "utf8"));
 
 // Large viewing means up to 800 CSS px on a 2x iPad screen. Files sized for
@@ -71,11 +72,34 @@ test("Matlyst must not publish gallery originals as sharp in large view without 
         image.largeSourceNativeHeight < minimumNativePixels) {
       failures.push(`${image.id}: source-native detail >= ${minimumNativePixels}px not documented`);
     }
+    if (Number.isInteger(image.largeSourceNativeWidth) && Number.isInteger(image.largeSourceNativeHeight) &&
+        (dimensions.width !== image.largeSourceNativeWidth || dimensions.height !== image.largeSourceNativeHeight)) {
+      failures.push(`${image.id}: AVIF dimensions differ from independently documented native source size`);
+    }
     if (!["independent-original", "high-resolution-redraw"].includes(image.largeSourceMethod)) {
       failures.push(`${image.id}: dedicated source method/review is missing; upscale and collage crops do not qualify`);
     }
     if (typeof image.largeSourceSha256 !== "string" || image.largeSourceSha256 !== dimensions.sha256) {
       failures.push(`${image.id}: reviewed large-source SHA-256 missing or does not match the actual AVIF bytes`);
+    }
+    if (typeof image.largeSourceOriginalSha256 !== "string" || !/^[a-f0-9]{64}$/u.test(image.largeSourceOriginalSha256)) {
+      failures.push(`${image.id}: original source SHA-256 missing`);
+    }
+    const expectedReview = `docs/fysen-image-reviews/${image.id}.md`;
+    if (image.largeSourceReview !== expectedReview) {
+      failures.push(`${image.id}: exact dish review document is missing`);
+    } else {
+      try {
+        const review = readFileSync(path.join(repoRoot, expectedReview), "utf8");
+        if (!review.includes(image.largeSourceOriginalSha256) ||
+            !/^Reviewed for full-size display:\s*yes\s*$/imu.test(review) ||
+            !/^No collage crop or upscale:\s*yes\s*$/imu.test(review) ||
+            !/^Correct dish and black background:\s*yes\s*$/imu.test(review)) {
+          failures.push(`${image.id}: source review or no-upscale verification is incomplete`);
+        }
+      } catch (error) {
+        failures.push(`${image.id}: cannot read review evidence (${error.code ?? error.message})`);
+      }
     }
     if (failures.length === failuresBeforeDish) acceptedCount += 1;
   }
