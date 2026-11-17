@@ -32,12 +32,12 @@ test("Matlyst must not publish gallery originals as sharp in large view without 
 
   for (const image of manifest.images) {
     const master = image.largeSource;
-    if (typeof master !== "string" || !/^[a-z0-9-]+\\.avif$/u.test(master)) {
+    if (typeof master !== "string" || !/^[a-z0-9-]+\.avif$/u.test(master)) {
       failures.push(`${image.id}: missing largeSource AVIF master (>= ${minimumNativePixels}px)`);
       continue;
     }
 
-    if (master === image.atlas || /^(collection|series-04)\\.avif$/u.test(master)) {
+    if (master === image.atlas || /^(collection|series-04)\.avif$/u.test(master)) {
       failures.push(`${image.id}: largeSource must be a distinct full-size image, never an atlas or thumbnail`);
       continue;
     }
@@ -72,5 +72,5 @@ test("Matlyst must not publish gallery originals as sharp in large view without 
     }
   }
 
-  assert.deepEqual(failures, [], `Large-view release blocked for ${failures.length} issues across ${manifest.images.length} dishes.\\n${failures.join("\\n")}`);
+  assert.deepEqual(failures, [], `Large-view release blocked for ${failures.length} issues across ${manifest.images.length} dishes.\n${failures.join("\n")}`);
 });
