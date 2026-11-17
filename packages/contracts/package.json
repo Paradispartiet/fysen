@@ -26,6 +26,10 @@
       "types": "./dist/fysen-pro.d.ts",
       "default": "./dist/fysen-pro.js"
     },
+    "./grocery": {
+      "types": "./dist/grocery.d.ts",
+      "default": "./dist/grocery.js"
+    },
     "./aha-min-mat": {
       "types": "./dist/aha-min-mat.d.ts",
       "default": "./dist/aha-min-mat.js"
