@@ -169,31 +169,50 @@
 .dishPhotosNote {
   color: var(--color-muted);
 }
+/* Compact thumbnail rows: the image should identify the dish, not dominate its card. */
 .dishPhotos .dishPhotosGrid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
 }
 .dishPhotos .dishPhotoCard {
-  align-items: flex-start;
-  gap: 3px;
-  padding: 12px;
-  border-radius: 12px;
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: center;
+  align-content: center;
+  column-gap: 10px;
+  row-gap: 4px;
+  min-height: 88px;
+  padding: 9px;
+  border-radius: 11px;
   border-color: rgba(121, 201, 135, .12);
   background: #0a0e0a;
 }
 .dishPhotos .dishPhotoCard .dishPhotoThumb {
-  width: 100%;
-  max-width: 100px;
-  max-height: 100px;
-  margin: 0 auto 9px;
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  align-self: center;
+  width: 68px;
+  height: 68px;
+  max-width: 68px;
+  max-height: 68px;
+  margin: 0;
+  border-radius: 8px;
 }
 .dishPhotos .dishPhotoCard strong {
+  grid-column: 2;
+  align-self: end;
   font-size: 12px;
-  line-height: 1.28;
+  line-height: 1.25;
 }
-.dishPhotos .dishPhotoAction {
-  font-size: 11px;
+.dishPhotos .dishPhotoCard .dishPhotoAction {
+  grid-column: 2;
+  align-self: start;
+  margin: 0;
+  padding: 0;
+  font-size: 10px;
+  line-height: 1.2;
 }
 
 @media (max-width: 1050px) {
@@ -259,11 +278,17 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .dishPhotos .dishPhotoCard {
+    grid-template-columns: 60px minmax(0, 1fr);
+    column-gap: 8px;
+    row-gap: 3px;
+    min-height: 78px;
     padding: 8px;
   }
   .dishPhotos .dishPhotoCard .dishPhotoThumb {
-    max-width: 90px;
-    max-height: 90px;
+    width: 60px;
+    height: 60px;
+    max-width: 60px;
+    max-height: 60px;
   }
 }
 @media (max-width: 520px) {
@@ -279,6 +304,18 @@
   .dishPhotosDescription { font-size: 11px; }
   .dishPhotos .dishPhotosGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .dishPhotos .dishPhotoCard {
+    grid-template-columns: 50px minmax(0, 1fr);
+    column-gap: 7px;
+    min-height: 72px;
+    padding: 7px;
+  }
+  .dishPhotos .dishPhotoCard .dishPhotoThumb {
+    width: 50px;
+    height: 50px;
+    max-width: 50px;
+    max-height: 50px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
