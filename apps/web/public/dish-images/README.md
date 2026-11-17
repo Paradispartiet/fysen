@@ -72,6 +72,40 @@ storvisningsoriginaler er godkjent etter den nye porten. Eksisterende
 768px-komposisjonsutsnitt må produseres på nytt i tilstrekkelig detalj.
 
 
+### Innlesing av ekte stororiginal
+
+Når det foreligger en kontrollert, **selvstendig** kilde i minst
+1600 × 1600 ekte piksler:
+
+1. Oppbevar originalen som PNG. Lag en AVIF av **samme pikselmål**,
+   uten å skalere eller forstørre originalen.
+2. Skriv en kort gjennomgang i `review.md` med kildeopphav og konkret
+   vurdering av tekstur, konturer og riktig rett i 800px storvisning.
+   Gjennomgangen må inneholde SHA-256 fra **original-PNG** og linjene
+   `Reviewed for full-size display: yes`,
+   `No collage crop or upscale: yes` og
+   `Correct dish and black background: yes`.
+3. Kjør fra repo-roten:
+
+   ```bash
+   node scripts/import-dish-large-master.mjs pizza-margherita \
+     /sti/til/pizza-original.png /sti/til/pizza-master.avif \
+     /sti/til/review.md independent-original
+   ```
+
+4. Importeren avviser for små PNG-kilder, AVIF-er med andre
+   dimensjoner, manglende visuell gjennomgang og gjenbruk av samme
+   storfil for flere rett-ID-er. Den legger storfilen og dokumentert
+   gjennomgang i PR-en og oppdaterer kun riktig manifestoppføring.
+5. Til slutt må både filkontroll, storvisning i nettleser og offentlig
+   publiseringskontroll bestås. **Godkjenn aldri bare fordi et 2048-tall
+   står i filnavnet eller metadata.**
+
+Den nye importeren **genererer ikke** høyoppløselige originaler og
+hevder ikke å kontrollere optisk skarphet automatisk. Det krever
+godkjent originalkilde og visuell fagkontroll.
+
+
 Bildeatlasene ble oppgradert fra 128 × 128 piksler per rett til **320 × 320** for
 de første 24 motivene og **384 × 384** for de siste 9. Atlasene har
 henholdsvis 1920 × 1280 piksler (ca. 89,6 KiB) og 1152 × 1152
