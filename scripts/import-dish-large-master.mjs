@@ -2,6 +2,8 @@
 // Import a reviewed native-resolution master for an exact Matlyst dish.
 // Does NOT upscale, invent source dimensions, or approve image aesthetics.
 import assert from "node:assert/strict";
+import { Buffer } from "node:buffer";
+import process from "node:process";
 import { createHash } from "node:crypto";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
