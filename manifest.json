@@ -3,11 +3,11 @@
   "archiveDate": "2026-11-02",
   "restaurants": 973,
   "sources": 973,
-  "dishes": 47337,
-  "bytes": 1440219,
-  "sha256": "a14fbcfc94b8c54ed46b8ede6e6823261335bf7f3b27663e7e316fc86d86c41e",
+  "dishes": 47342,
+  "bytes": 1435418,
+  "sha256": "ac685a906f1df6824e1c7363c9fbb28c176d9a3268c8389bf8a3744d4d40340b",
   "disclaimer": "Historiske, sist verifiserte menyer. Ikke sanntid. Sjekk restauranten for dagens pris og tilgjengelighet.",
-  "lastRefreshAt": "2026-11-17T04:06:05.221Z",
+  "lastRefreshAt": "2026-11-17T16:22:58.697Z",
   "refreshedSourceIndices": [
     22,
     31,
@@ -575,6 +575,11 @@
     739,
     740,
     741,
+    742,
+    743,
+    745,
+    747,
+    751,
     835,
     836,
     837,
@@ -1168,7 +1173,7 @@
     "588": "2026-11-12T20:17:10.896Z",
     "589": "2026-11-12T20:17:12.617Z",
     "590": "2026-11-13T02:01:31.127Z",
-    "591": "2026-11-13T02:01:33.999Z",
+    "591": "2026-11-17T16:22:33.185Z",
     "592": "2026-11-13T02:01:35.464Z",
     "593": "2026-11-13T02:01:40.280Z",
     "594": "2026-11-13T02:01:42.654Z",
@@ -1319,6 +1324,17 @@
     "739": "2026-11-17T04:05:57.602Z",
     "740": "2026-11-17T04:05:59.300Z",
     "741": "2026-11-17T04:06:00.793Z",
+    "742": "2026-11-17T16:22:34.763Z",
+    "743": "2026-11-17T16:22:38.230Z",
+    "744": "2026-11-17T16:22:41.401Z",
+    "745": "2026-11-17T16:22:42.788Z",
+    "746": "2026-11-17T16:22:45.321Z",
+    "747": "2026-11-17T16:22:46.534Z",
+    "748": "2026-11-17T16:22:49.618Z",
+    "749": "2026-11-17T16:22:50.815Z",
+    "750": "2026-11-17T16:22:52.816Z",
+    "751": "2026-11-17T16:22:54.815Z",
+    "752": "2026-11-17T16:22:57.306Z",
     "835": "2026-11-03T05:02:01.092Z",
     "836": "2026-11-03T05:43:18.558Z",
     "837": "2026-11-03T05:43:20.599Z",
@@ -1533,8 +1549,8 @@
     },
     "591": {
       "code": "quality",
-      "consecutive": 1,
-      "lastFailedAt": "2026-11-13T02:01:33.999Z",
+      "consecutive": 2,
+      "lastFailedAt": "2026-11-17T16:22:33.185Z",
       "sourceProofHash": "c5381dd7c3f859fafc866df9968ef4ec014e64ce63991c8296ad035f0f662b57"
     },
     "642": {
@@ -1662,6 +1678,42 @@
       "consecutive": 1,
       "lastFailedAt": "2026-11-17T04:05:42.346Z",
       "sourceProofHash": "a57654406da48928eb6061768e6d118b731b86933b8cc9b01e1326c2a2662314"
+    },
+    "744": {
+      "code": "quality",
+      "consecutive": 1,
+      "lastFailedAt": "2026-11-17T16:22:41.401Z",
+      "sourceProofHash": "a6f95d1e79833185dbabe77c762e4f7e9d90b5a3fe436fdf55c2ff247be2d1a9"
+    },
+    "746": {
+      "code": "quality",
+      "consecutive": 1,
+      "lastFailedAt": "2026-11-17T16:22:45.321Z",
+      "sourceProofHash": "b665bca4f90e03f3b978dc3fead95ec0c2f87a2efe37d662dde73a3d3b2b5ffc"
+    },
+    "748": {
+      "code": "quality",
+      "consecutive": 1,
+      "lastFailedAt": "2026-11-17T16:22:49.618Z",
+      "sourceProofHash": "8e1405d8bb17364bc8319d98aa5dfc9db45bf3a8e4b7c6cfdb9e4d0243c7d654"
+    },
+    "749": {
+      "code": "quality",
+      "consecutive": 1,
+      "lastFailedAt": "2026-11-17T16:22:50.815Z",
+      "sourceProofHash": "af973583af52b47f31ac1623cbe51ee254b0db407674bc578e8f188648dd8afa"
+    },
+    "750": {
+      "code": "quality",
+      "consecutive": 1,
+      "lastFailedAt": "2026-11-17T16:22:52.816Z",
+      "sourceProofHash": "9544c7f4b90898e612733abb46e3ff26e287d30ffa35668b8ea4e2669a376e0e"
+    },
+    "752": {
+      "code": "quality",
+      "consecutive": 1,
+      "lastFailedAt": "2026-11-17T16:22:57.306Z",
+      "sourceProofHash": "7d81dfebde33324dacf88667a608b08140bf2be023594c8b359e30280976c0c1"
     }
   },
   "sourceQuarantines": {
