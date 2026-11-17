@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import { Buffer } from "node:buffer";
+import process from "node:process";
 import { createHash } from "node:crypto";
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
