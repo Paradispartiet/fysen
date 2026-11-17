@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { Buffer } from "node:buffer";
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
@@ -23,14 +24,17 @@ function avifDimensions(filename) {
   return {
     width: bytes.readUInt32BE(index + 8),
     height: bytes.readUInt32BE(index + 12),
+    sha256: createHash("sha256").update(bytes).digest("hex"),
   };
 }
 
 test("Matlyst must not publish gallery originals as sharp in large view without 1600px verified masters", () => {
   const failures = [];
   const seenMasters = new Set();
+  let acceptedCount = 0;
 
   for (const image of manifest.images) {
+    const failuresBeforeDish = failures.length;
     const master = image.largeSource;
     if (typeof master !== "string" || !/^[a-z0-9-]+\.avif$/u.test(master)) {
       failures.push(`${image.id}: missing largeSource AVIF master (>= ${minimumNativePixels}px)`);
@@ -70,7 +74,11 @@ test("Matlyst must not publish gallery originals as sharp in large view without 
     if (!["independent-original", "high-resolution-redraw"].includes(image.largeSourceMethod)) {
       failures.push(`${image.id}: dedicated source method/review is missing; upscale and collage crops do not qualify`);
     }
+    if (typeof image.largeSourceSha256 !== "string" || image.largeSourceSha256 !== dimensions.sha256) {
+      failures.push(`${image.id}: reviewed large-source SHA-256 missing or does not match the actual AVIF bytes`);
+    }
+    if (failures.length === failuresBeforeDish) acceptedCount += 1;
   }
 
-  assert.deepEqual(failures, [], `Large-view release blocked for ${failures.length} issues across ${manifest.images.length} dishes.\n${failures.join("\n")}`);
+  assert.deepEqual(failures, [], `Large-view release blocked: ${acceptedCount}/${manifest.images.length} images meet the structural quality gate.\n${failures.join("\n")}`);
 });
