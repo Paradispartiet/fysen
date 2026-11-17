@@ -22,11 +22,11 @@ function fakePng(width, height) {
 }
 function fakeAvif(width, height) {
   // This fixture only exercises rejecting dimensions, not AVIF decoding.
-  const bytes = Buffer.alloc(28);
+  const bytes = Buffer.alloc(32);
   Buffer.from("ftypavif").copy(bytes, 4);
-  Buffer.from("ispe").copy(bytes, 8);
-  bytes.writeUInt32BE(width, 16);
-  bytes.writeUInt32BE(height, 20);
+  Buffer.from("ispe").copy(bytes, 12);
+  bytes.writeUInt32BE(width, 20);
+  bytes.writeUInt32BE(height, 24);
   return bytes;
 }
 function tryImport(sourceSize, deliverySize, reviewed) {
