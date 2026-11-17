@@ -51,9 +51,12 @@ som **draft** og skal ikke publiseres før denne porten er oppfylt.
   filer lastes bare når en stor bildevisning faktisk trengs. Ikke la
   miniatyrens lavere filoppløsning erstatte originalen i storvisning.
 - Legg inn en egen `largeSource`-AVIF for hvert manifest-ID, med
-  `largeSourceNativeWidth`, `largeSourceNativeHeight` og
+  `largeSourceNativeWidth`, `largeSourceNativeHeight`,
   `largeSourceMethod` (`independent-original` eller
-  `high-resolution-redraw`), basert på dokumentert kildeproduksjon.
+  `high-resolution-redraw`) og `largeSourceSha256` (SHA-256 av den
+  faktiske AVIF-filen), basert på dokumentert kildeproduksjon.
+  Hashkontrollen låser godkjent kildefil, men er ikke i seg selv
+  bevis på visuell skarphet.
   Den automatiske kontrollen
   `apps/web/tests/dish-image-large-view-quality.test.mjs` må være grønn.
 - I tillegg kreves manuell kontroll i **stor visning på iPad og mobil**:
