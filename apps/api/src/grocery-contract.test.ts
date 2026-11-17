@@ -32,6 +32,7 @@ describe("grocery evidence contract", () => {
       stores: [{
         id: "store-1", retailerId: "retailer-1", name: "Eksempelbutikk",
         address: "Eksempelveien 1, Oslo, Norge", latitude: 59.91, longitude: 10.75,
+        locationEvidence: evidence,
       }],
       listings: [listing],
     });
@@ -71,4 +72,27 @@ describe("grocery evidence contract", () => {
       priceMinor: null, stockState: "unknown",
     });
   });
+  it("hides price and stock when the underlying product listing has expired", () => {
+    const oldListing = groceryProductListingSchema.parse({
+      ...listing,
+      listingEvidence: { ...evidence, validUntil: "2026-11-17T10:00:00+01:00" },
+      stockState: "confirmed_available", stockEvidence: evidence,
+    });
+    expect(publicGroceryStatus(oldListing, new Date("2026-11-17T11:00:00Z"))).toEqual({
+      priceMinor: null, stockState: "unknown",
+    });
+  });
+
+  it("rejects a store address without location evidence", () => {
+    const missingLocationSource = groceryDirectoryResponseSchema.safeParse({
+      version: "grocery-directory-v1", city: "Oslo",
+      stores: [{
+        id: "store-1", retailerId: "retailer-1", name: "Eksempelbutikk",
+        address: "Eksempelveien 1, Oslo, Norge", latitude: 59.91, longitude: 10.75,
+      }],
+      listings: [],
+    });
+    expect(missingLocationSource.success).toBe(false);
+  });
+
 });
