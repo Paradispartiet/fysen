@@ -25,6 +25,7 @@ export const groceryStoreSchema = z.object({
   address: z.string().trim().min(1).max(500),
   latitude: z.number().finite().min(-90).max(90),
   longitude: z.number().finite().min(-180).max(180),
+  locationEvidence: groceryEvidenceSchema,
 });
 
 export const groceryProductListingSchema = z.object({
@@ -74,8 +75,8 @@ export function publicGroceryStatus(
       && Date.parse(evidence.checkedAt) <= now.getTime()
       && Date.parse(evidence.validUntil) > now.getTime());
   return {
-    priceMinor: fresh(listing.priceEvidence) ? listing.priceMinor : null,
-    stockState: fresh(listing.stockEvidence) ? listing.stockState : "unknown",
+    priceMinor: fresh(listing.listingEvidence) && fresh(listing.priceEvidence) ? listing.priceMinor : null,
+    stockState: fresh(listing.listingEvidence) && fresh(listing.stockEvidence) ? listing.stockState : "unknown",
   };
 }
 
