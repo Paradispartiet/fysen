@@ -21,7 +21,12 @@ const manifest = JSON.parse(readFileSync(path.join(repo, "apps/web/public/dish-i
 assert.ok(manifest.images.some((image) => image.id === dishId), "Unknown dish ID (use manifest ID)");
 const urlText = process.env.RUNWAY_IMAGE_URL;
 assert.ok(urlText, "Set RUNWAY_IMAGE_URL from the completed Runway task; do not commit or log it.");
-const sourceUrl = new URL(urlText);
+let sourceUrl;
+try {
+  sourceUrl = new URL(urlText);
+} catch {
+  throw new Error("RUNWAY_IMAGE_URL must be a valid signed HTTPS PNG URL.");
+}
 assert.ok(
   sourceUrl.protocol === "https:" &&
   sourceUrl.hostname === "dnznrvs05pmza.cloudfront.net" &&
