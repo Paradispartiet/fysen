@@ -341,7 +341,7 @@ function dishesForIds(ids: readonly string[]): readonly DishSuggestion[] {
 }
 
 function areaSlug(value: string): string {
-  return value.normalize("NFKD").replace(/\\p{M}+/gu, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return value.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
 function buildCuisines(specs: readonly CuisineSpec[]): readonly Cuisine[] {
