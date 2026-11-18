@@ -1,5 +1,6 @@
 import { matlystDiscoveryCatalog } from "../content/food-knowledge/matlyst-discovery-catalog";
 import { foodKnowledgeDishIdSet } from "../content/food-knowledge/manifest";
+import { cuisineAtlasAreas } from "./cuisine-explorer-taxonomy";
 
 export type DishSuggestion = {
   readonly id: string;
@@ -13,6 +14,10 @@ export type DishSuggestion = {
 export type CuisineArea = {
   readonly name: string;
   readonly dishes: readonly DishSuggestion[];
+  readonly flag?: string;
+  readonly flagFile?: string;
+  readonly flagRegion?: string;
+  readonly symbol?: string;
 };
 
 export type Cuisine = {
@@ -61,45 +66,45 @@ export const featuredCuisineNames = [
 const homeCuisineSpecs: readonly CuisineSpec[] = [
   {
     name: "Asiatisk",
-    context: "Japan · Kina · Thailand · Vietnam",
-    areasLabel: "Land og kjøkkentradisjoner",
+    context: "Tolv nasjonale kjøkken i Asia",
+    areasLabel: "Nasjonale kjøkken",
     sourceCuisine: "Asiatisk",
-    regions: ["Japan", "Kina", "Thailand", "Vietnam"],
+    regions: [],
   },
   {
     name: "Indisk",
-    context: "Nord-India · Sør-India · Hyderabad",
-    areasLabel: "Regioner og tradisjoner",
+    context: "Nord, sør og særpregede regionale tradisjoner",
+    areasLabel: "Regionale kjøkken",
     sourceCuisine: "Indisk",
-    regions: ["Nord-India", "Sør-India", "Hyderabad"],
+    regions: [],
   },
   {
     name: "Fast food",
-    context: "Burger · fried chicken · hot dog",
-    areasLabel: "Typer",
+    context: "Burger, kylling, wraps og andre mattyper",
+    areasLabel: "Mattyper",
     sourceCuisine: "Fast food",
-    regions: ["Burger", "Fried chicken", "Hot dog"],
+    regions: [],
   },
   {
     name: "Italiensk",
-    context: "Roma · Napoli · Sicilia",
-    areasLabel: "Regioner og bytradisjoner",
+    context: "Utforsk både regioner, pizza, pasta og mer",
+    areasLabel: "Regionale kjøkken",
     sourceCuisine: "Italiensk",
-    regions: ["Roma", "Napoli", "Sicilia"],
+    regions: [],
   },
   {
     name: "Midtøsten",
-    context: "Levanten · Egypt · Tyrkia",
-    areasLabel: "Regioner og tradisjoner",
+    context: "Nasjonale kjøkken og delte tradisjoner",
+    areasLabel: "Nasjonale kjøkken",
     sourceCuisine: "Midtøsten",
-    regions: ["Levanten", "Egypt", "Tyrkia"],
+    regions: [],
   },
   {
     name: "Mexicansk",
-    context: "Sentral-Mexico · Jalisco · Yucatán · Baja",
-    areasLabel: "Regioner og tradisjoner",
+    context: "Regioner med særegne mattradisjoner",
+    areasLabel: "Regionale kjøkken",
     sourceCuisine: "Mexicansk",
-    regions: ["Sentral-Mexico", "Jalisco", "Yucatán", "Baja"],
+    regions: [],
   },
 ];
 
@@ -335,17 +340,48 @@ function dishesForIds(ids: readonly string[]): readonly DishSuggestion[] {
   });
 }
 
+function areaSlug(value: string): string {
+  return value.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
 function buildCuisines(specs: readonly CuisineSpec[]): readonly Cuisine[] {
-  return specs.map((spec) => ({
-    name: spec.name,
-    context: spec.context,
-    areasLabel: spec.areasLabel,
-    areas: spec.regions.map((region) => {
-      const dishes = dishesForArea(spec.sourceCuisine, region);
-      if (dishes.length === 0) throw new Error(`Cuisine explorer area has no canonical dishes: ${spec.name} / ${region}`);
-      return { name: region, dishes };
-    }),
-  }));
+  return specs.map((spec) => {
+    const configuredAreas = cuisineAtlasAreas[spec.name];
+    const areas: readonly CuisineArea[] = configuredAreas
+      ? configuredAreas.map((area) => {
+          const canonical = dishesForArea(area.sourceCuisine ?? spec.sourceCuisine, area.sourceRegion ?? area.name);
+          const known = new Set(canonical.map((dish) => dish.label.toLocaleLowerCase("nb")));
+          const examples: DishSuggestion[] = area.examples
+            .filter((label) => !known.has(label.toLocaleLowerCase("nb")))
+            .map((label, index) => ({
+              id: `atlas-${areaSlug(spec.name)}-${areaSlug(area.name)}-${areaSlug(label)}`,
+              label,
+              query: label,
+              aliases: [],
+              hasKnowledge: false,
+              explorerPriority: 40 - index,
+            }));
+          return {
+            name: area.name,
+            dishes: [...canonical, ...examples],
+            flag: area.flag,
+            flagFile: area.flagFile,
+            flagRegion: area.flagRegion,
+            symbol: area.symbol,
+          };
+        })
+      : spec.regions.map((region) => {
+          const dishes = dishesForArea(spec.sourceCuisine, region);
+          if (dishes.length === 0) throw new Error(`Cuisine explorer area has no canonical dishes: ${spec.name} / ${region}`);
+          return { name: region, dishes };
+        });
+    return {
+      name: spec.name,
+      context: spec.context,
+      areasLabel: spec.areasLabel,
+      areas,
+    };
+  });
 }
 
 export function discoveryDishesForCuisine(cuisineName: string): readonly CuisineDiscoveryDish[] {

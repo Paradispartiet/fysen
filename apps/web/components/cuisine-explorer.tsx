@@ -5,7 +5,7 @@ import type {
   DishBrowseResponse,
   DishBrowseRestaurantExample,
 } from "@fysen/contracts/dish-browse";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import { browseDishesClient } from "../lib/client-dish-search";
 import { RecentDishes } from "./recent-dishes";
 import { PopularDishes } from "./popular-dishes";
@@ -19,6 +19,7 @@ import {
   type CuisineArea,
   type DishSuggestion,
 } from "./cuisine-explorer-data";
+import { italianFoodTypes, regionalFlagUrl } from "./cuisine-explorer-taxonomy";
 
 type DishCoverage = {
   readonly dish: DishSuggestion;
@@ -43,8 +44,49 @@ function cuisineCandidates(cuisine: Cuisine): readonly DishSuggestion[] {
   );
 }
 
-function cuisinePreviewDishes(cuisine: Cuisine): readonly DishSuggestion[] {
-  return cuisineCandidates(cuisine).slice(0, 4);
+function CuisineAreaSymbol({ area }: { readonly area: CuisineArea }) {
+  if (area.flagFile) {
+    return (
+      <img
+        className="cuisineAreaFlag"
+        src={regionalFlagUrl(area.flagFile)}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        width="52"
+        height="36"
+      />
+    );
+  }
+  return (
+    <span className="cuisineAreaEmoji" aria-hidden="true">
+      {area.flag ?? area.symbol ?? "🍽️"}
+    </span>
+  );
+}
+
+function CuisineAreaTile({
+  area,
+  onClick,
+  active = false,
+}: {
+  readonly area: CuisineArea;
+  readonly onClick: (event: MouseEvent<HTMLButtonElement>) => void;
+  readonly active?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      className={`cuisineAreaTile${active ? " isActive" : ""}`}
+      onClick={onClick}
+      aria-pressed={active}
+      title={area.flagRegion ? `${area.name} · regionsflagg for ${area.flagRegion}` : area.name}
+    >
+      <CuisineAreaSymbol area={area} />
+      <span>{area.name}</span>
+    </button>
+  );
 }
 
 function coverageForDish(
@@ -145,6 +187,7 @@ export function CuisineExplorer({
   const [previewBrowseFailed, setPreviewBrowseFailed] = useState(false);
   const [selectedCuisine, setSelectedCuisine] = useState<Cuisine | null>(null);
   const [selectedAreaName, setSelectedAreaName] = useState<string>("");
+  const [selectedTypeName, setSelectedTypeName] = useState<string>("");
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const effectiveBrowseData = browseData ?? previewBrowseData;
@@ -176,16 +219,30 @@ export function CuisineExplorer({
     return selectedCuisine.areas.find((area) => area.name === selectedAreaName) ?? selectedCuisine.areas[0] ?? null;
   }, [selectedAreaName, selectedCuisine]);
 
+  const selectedItalianType = selectedCuisine?.name === "Italiensk"
+    ? italianFoodTypes.find((type) => type.name === selectedTypeName) ?? null
+    : null;
+
   const selectedDishCoverage = useMemo(() => {
-    if (!selectedArea) return [];
-    return rankDishCoverage(selectedArea.dishes.map((dish) =>
+    if (!selectedArea || !selectedCuisine) return [];
+    const matchingDishes = selectedItalianType
+      ? cuisineCandidates(selectedCuisine).filter((dish) =>
+          selectedItalianType.dishNames.some((name) => name.toLocaleLowerCase("nb") === dish.label.toLocaleLowerCase("nb"))
+        )
+      : selectedArea.dishes;
+    return rankDishCoverage(matchingDishes.map((dish) =>
       coverageForDish(liveDishes, dish, isArchived ? archiveCoverage : null)
     ));
-  }, [liveDishes, selectedArea, archiveCoverage, isArchived]);
+  }, [liveDishes, selectedArea, selectedCuisine, selectedItalianType, archiveCoverage, isArchived]);
 
   const featured = useMemo(() => {
     return new Map(homeCuisines.map((cuisine) => [
-      cuisine.name, featuredCoverage(cuisineCandidates(cuisine), liveDishes, isArchived ? archiveCoverage : null)
+      cuisine.name, featuredCoverage(
+        // Generic kebab matches should not mislabel a kebab house as an Indian restaurant.
+        cuisineCandidates(cuisine).filter((dish) => dish.id !== "kebab-india"),
+        liveDishes,
+        isArchived ? archiveCoverage : null,
+      )
     ]));
   }, [liveDishes, archiveCoverage, isArchived]);
 
@@ -197,6 +254,7 @@ export function CuisineExplorer({
   function openCuisine(cuisine: Cuisine, area: CuisineArea, trigger: HTMLButtonElement): void {
     triggerRef.current = trigger;
     setSelectedAreaName(area.name);
+    setSelectedTypeName("");
     setSelectedCuisine(cuisine);
   }
 
@@ -204,6 +262,7 @@ export function CuisineExplorer({
     const dialog = dialogRef.current;
     if (dialog?.open) dialog.close();
     setSelectedCuisine(null);
+    setSelectedTypeName("");
   }
 
   function openFoodKnowledge(dishId: string): void {
@@ -211,6 +270,7 @@ export function CuisineExplorer({
     const dialog = dialogRef.current;
     if (dialog?.open) dialog.close();
     setSelectedCuisine(null);
+    setSelectedTypeName("");
     window.location.hash = `learn-${encodeURIComponent(dishId)}`;
   }
 
@@ -252,9 +312,7 @@ export function CuisineExplorer({
                   <span>{cuisine.context}</span>
                 </span>
 
-                <span className="cuisineDishPreview" aria-label={`Eksempler på retter i ${cuisine.name}`}>
-                  {cuisinePreviewDishes(cuisine).map((dish) => <span key={dish.id}>{dish.label}</span>)}
-                </span>
+                <span className="cuisineCardBrowseLabel">Velg et underkjøkken nedenfor</span>
 
                 <span className="cuisineRestaurantPreview">
                   <span className="cuisineRestaurantPreviewLabel">Restauranter og retter</span>
@@ -286,15 +344,22 @@ export function CuisineExplorer({
               </button>
 
               <div className="cuisineAreaList" aria-label={`${cuisine.areasLabel} i ${cuisine.name}`}>
-                {cuisine.areas.map((area) => (
+                {cuisine.areas.slice(0, 6).map((area) => (
+                  <CuisineAreaTile
+                    key={area.name}
+                    area={area}
+                    onClick={(event) => openCuisine(cuisine, area, event.currentTarget)}
+                  />
+                ))}
+                {cuisine.areas.length > 6 ? (
                   <button
                     type="button"
-                    key={area.name}
-                    onClick={(event) => openCuisine(cuisine, area, event.currentTarget)}
+                    className="cuisineAreaSeeMore"
+                    onClick={(event) => openCuisine(cuisine, firstArea, event.currentTarget)}
                   >
-                    {area.name}
+                    Se alle {cuisine.areas.length}
                   </button>
-                ))}
+                ) : null}
               </div>
             </article>
           );
@@ -331,25 +396,45 @@ export function CuisineExplorer({
 
             <section className="cuisineExploreAreas" aria-labelledby="cuisine-area-title">
               <h3 id="cuisine-area-title">{selectedCuisine.areasLabel}</h3>
-              <div>
+              <div className="cuisineExploreAreaGrid">
                 {selectedCuisine.areas.map((area) => (
-                  <button
-                    type="button"
-                    className={area.name === selectedArea.name ? "isActive" : undefined}
-                    aria-pressed={area.name === selectedArea.name}
+                  <CuisineAreaTile
                     key={area.name}
-                    onClick={() => setSelectedAreaName(area.name)}
-                  >
-                    {area.name}
-                  </button>
+                    area={area}
+                    active={!selectedItalianType && area.name === selectedArea.name}
+                    onClick={() => {
+                      setSelectedTypeName("");
+                      setSelectedAreaName(area.name);
+                    }}
+                  />
                 ))}
               </div>
             </section>
 
+            {selectedCuisine.name === "Italiensk" ? (
+              <section className="cuisineExploreFoodTypes" aria-labelledby="italian-types-title">
+                <h3 id="italian-types-title">Eller utforsk italienske mattyper</h3>
+                <div className="cuisineExploreTypeGrid">
+                  {italianFoodTypes.map((type) => (
+                    <button
+                      type="button"
+                      key={type.name}
+                      className={selectedTypeName === type.name ? "isActive" : undefined}
+                      aria-pressed={selectedTypeName === type.name}
+                      onClick={() => setSelectedTypeName(type.name)}
+                    >
+                      <span aria-hidden="true">{type.symbol}</span>
+                      <strong>{type.name}</strong>
+                    </button>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+
             <section className="cuisineExploreResults" aria-live="polite">
               <div className="cuisineExploreResultsHeading">
                 <div>
-                  <p>{selectedArea.name}</p>
+                  <p>{selectedItalianType?.name ?? selectedArea.name}</p>
                   <h3>Retter og hvor du kan få dem</h3>
                 </div>
                 <span>Restauranter i Oslo</span>
