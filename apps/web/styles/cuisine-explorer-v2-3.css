@@ -675,3 +675,31 @@
 .cuisineExploreDialogFooter a:hover {
   color: var(--color-brand);
 }
+
+/* Fysen miniature food art: original transparent SVGs, not emoji or stock photos. */
+.cuisineAreaArtwork,
+.cuisineItalianArtwork,
+.foodIllustration {
+  display: block;
+  flex: none;
+  width: 48px;
+  height: 42px;
+  object-fit: contain;
+  pointer-events: none;
+}
+.cuisineItalianArtwork {
+  width: 38px;
+  height: 38px;
+}
+.cuisineAreaTile:has(.cuisineAreaArtwork) {
+  min-height: 85px;
+}
+.cuisineExploreTypeGrid button:has(.cuisineItalianArtwork) {
+  min-height: 88px;
+}
+@media (max-width: 420px) {
+  .cuisineAreaArtwork {
+    width: 46px;
+    height: 40px;
+  }
+}
