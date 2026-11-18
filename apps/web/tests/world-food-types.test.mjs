@@ -70,5 +70,5 @@ test("UI preserves country/region-only flag tiles and renders standalone food-ty
   assert.match(source, /availableFoodTypes\.map/u);
   assert.match(source, /selectedArea\.flagFile && !selectedFoodType/u);
   assert.match(source, /<FoodIllustration name=\{type\.illustration\}/u);
-  assert.match(source, /ingen/u.test(source) ? /ingen/ : /retter/u);
+  assert.match(source, /Mattyper går på tvers av regioner og land/u);
 });
