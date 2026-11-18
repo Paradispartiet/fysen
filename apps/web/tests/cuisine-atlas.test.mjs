@@ -1,8 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import path from "node:path";
+import { URL, fileURLToPath } from "node:url";
 import { foodIllustrationNames } from "../components/food-illustration-data.ts";
 import { cuisineAtlasAreas, italianFoodTypes, regionalFlagUrl } from "../components/cuisine-explorer-taxonomy.ts";
 
