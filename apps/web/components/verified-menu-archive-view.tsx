@@ -38,7 +38,7 @@ export function ArchivedMenuResults({
               <div className={styles.resultHeading}>
                 <div className={styles.dishNameWithArtwork}>
                   {illustrationForDishName(result.name) ? (
-                    <FoodIllustration name={illustrationForDishName(result.name)!} className={styles.dishArtwork} size={42} />
+                    <FoodIllustration name={illustrationForDishName(result.name)!} className={styles.dishArtwork ?? ""} size={42} />
                   ) : null}
                   <h4>{result.name}</h4>
                 </div>
@@ -100,7 +100,7 @@ export function ArchivedMenuBrowse({
                 <p className={styles.meta}>{areaName}</p>
                 <div className={styles.dishNameWithArtwork}>
                   {illustrationForDishName(dish.label) ? (
-                    <FoodIllustration name={illustrationForDishName(dish.label)!} className={styles.dishArtwork} size={42} />
+                    <FoodIllustration name={illustrationForDishName(dish.label)!} className={styles.dishArtwork ?? ""} size={42} />
                   ) : null}
                   <h3>{dish.label}</h3>
                 </div>
@@ -123,7 +123,7 @@ export function ArchivedMenuBrowse({
               <article className={styles.suggestion} key={dish.query}>
                 <div className={styles.dishNameWithArtwork}>
                   {illustrationForDishName(dish.name) ? (
-                    <FoodIllustration name={illustrationForDishName(dish.name)!} className={styles.dishArtwork} size={42} />
+                    <FoodIllustration name={illustrationForDishName(dish.name)!} className={styles.dishArtwork ?? ""} size={42} />
                   ) : null}
                   <h3>{dish.name}</h3>
                 </div>
