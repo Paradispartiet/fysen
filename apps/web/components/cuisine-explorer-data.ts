@@ -17,7 +17,7 @@ export type CuisineArea = {
   readonly flag?: string;
   readonly flagFile?: string;
   readonly flagRegion?: string;
-  readonly symbol?: string;
+  readonly illustration?: import("./food-illustration-data").FoodIllustrationName;
 };
 
 export type Cuisine = {
@@ -409,7 +409,7 @@ function buildCuisines(specs: readonly CuisineSpec[]): readonly Cuisine[] {
             flag: area.flag,
             flagFile: area.flagFile,
             flagRegion: area.flagRegion,
-            symbol: area.symbol,
+            illustration: area.illustration,
           };
         })
       : spec.regions.map((region) => {
