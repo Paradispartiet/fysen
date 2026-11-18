@@ -444,7 +444,16 @@ export function CuisineExplorer({
             </section>
 
             <footer className="cuisineExploreDialogFooter">
-              Utforsk flere retter eller åpne restaurantens meny for nærmere informasjon.
+              <span>Utforsk flere retter eller åpne restaurantens meny for nærmere informasjon.</span>
+              {selectedArea.flagFile && !selectedItalianType ? (
+                <a
+                  href={`https://commons.wikimedia.org/wiki/File:${encodeURIComponent(selectedArea.flagFile)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Regionsflagg: kilde, opphav og lisens (Wikimedia Commons)
+                </a>
+              ) : null}
             </footer>
           </div>
         ) : null}

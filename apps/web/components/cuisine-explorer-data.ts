@@ -106,6 +106,48 @@ const homeCuisineSpecs: readonly CuisineSpec[] = [
     sourceCuisine: "Mexicansk",
     regions: [],
   },
+  {
+    name: "Afrikansk",
+    context: "Fra Nord-Afrika til Afrikas horn og Vest-Afrika",
+    areasLabel: "Nasjonale kjøkken",
+    sourceCuisine: "Afrikansk",
+    regions: [],
+  },
+  {
+    name: "Fransk",
+    context: "Bretagne, Provence, Alsace og flere",
+    areasLabel: "Regionale kjøkken",
+    sourceCuisine: "Fransk",
+    regions: [],
+  },
+  {
+    name: "Spansk",
+    context: "Baskerland, Catalonia, Galicia og flere",
+    areasLabel: "Regionale kjøkken",
+    sourceCuisine: "Spansk",
+    regions: [],
+  },
+  {
+    name: "Gresk",
+    context: "Kreta, Kykladene og lokale mattradisjoner",
+    areasLabel: "Regionale kjøkken",
+    sourceCuisine: "Gresk",
+    regions: [],
+  },
+  {
+    name: "Amerikansk",
+    context: "Louisiana, Texas, Hawaii og flere",
+    areasLabel: "Regionale kjøkken",
+    sourceCuisine: "Amerikansk",
+    regions: [],
+  },
+  {
+    name: "Nordisk",
+    context: "Norge, Sverige, Danmark, Finland og Nord-Atlanteren",
+    areasLabel: "Nasjonale kjøkken",
+    sourceCuisine: "Nordisk",
+    regions: [],
+  },
 ];
 
 const cuisineSpecs: readonly CuisineSpec[] = [
