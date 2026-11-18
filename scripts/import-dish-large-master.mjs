@@ -13,6 +13,7 @@ const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const imagesRoot = path.join(repo, "apps/web/public/dish-images");
 const manifestPath = path.join(imagesRoot, "manifest.json");
 const reviewDir = path.join(repo, "docs/fysen-image-reviews");
+const originalDir = path.join(repo, "assets/fysen-dish-originals");
 const minSize = 1600;
 const [dishId, originalPngPath, masterAvifPath, reviewPath, method] = process.argv.slice(2);
 
@@ -71,14 +72,22 @@ const filename = dishId + "-master-" + sourceSize.width + ".avif";
 const outputPath = path.join(imagesRoot, filename);
 const reviewName = dishId + ".md";
 const outputReview = path.join(reviewDir, reviewName);
+const originalName = dishId + ".png";
+const outputOriginal = path.join(originalDir, originalName);
 assert.ok(!existsSync(outputPath), "Master path already exists: " + filename);
+assert.ok(!existsSync(outputOriginal), "Original PNG already exists; do not overwrite reviewed source");
 assert.ok(!existsSync(outputReview), "Review exists; avoid accidentally overwriting prior evidence");
 assert.ok(manifest.images.every((image) => image.largeSource !== filename),
   "Large source already belongs to another dish");
 
 mkdirSync(reviewDir, { recursive: true });
+mkdirSync(originalDir, { recursive: true });
+// Retain the actual native pixels so CI can verify the original hash, dimensions,
+// and prove this is not merely a 700px crop upscaled in a 1600px AVIF wrapper.
+copyFileSync(originalPngPath, outputOriginal);
 copyFileSync(masterAvifPath, outputPath);
 writeFileSync(outputReview, review, "utf8");
+entry.largeSourceOriginalPath = "assets/fysen-dish-originals/" + originalName;
 entry.largeSource = filename;
 entry.largeSourceNativeWidth = sourceSize.width;
 entry.largeSourceNativeHeight = sourceSize.height;
