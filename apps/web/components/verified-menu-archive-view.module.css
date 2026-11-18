@@ -132,3 +132,94 @@
 @media (max-width: 430px) {
   .dishArtwork { width: 34px; height: 34px; flex-basis: 34px; }
 }
+
+/* Italy: genuine regional flags are separate from original food-type illustrations. */
+.italianAtlasSections {
+  display: grid;
+  gap: 21px;
+  padding: 18px 0 22px;
+}
+.italianAtlasSections section {
+  min-width: 0;
+}
+.italianAtlasSections h3 {
+  margin: 0 0 5px;
+  font-size: 1rem;
+  font-weight: 680;
+  color: #f7f7f7;
+}
+.italianAtlasTiles {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px 0 0;
+}
+.italianAtlasTile {
+  display: flex !important;
+  min-width: 0;
+  min-height: 86px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+  margin: 0 !important;
+  padding: 9px 5px;
+  color: #f7f7f7 !important;
+  background: #151b17;
+  border: 1px solid #33503b;
+  border-radius: 11px;
+  text-align: center;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  line-height: 1.25;
+  font-size: 0.72rem;
+  font-weight: 590;
+}
+.italianAtlasTile:hover,
+.italianAtlasTile[aria-current="page"] {
+  background: #1b2920;
+  border-color: #84bd8b;
+}
+.italianAtlasTile:focus-visible {
+  outline: 2px solid #84bd8b;
+  outline-offset: 3px;
+}
+.italianRegionFlag {
+  display: block;
+  width: 46px;
+  height: 32px;
+  object-fit: contain;
+}
+.italianTypeIllustration {
+  display: block;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+.italianFlagSource {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: #acd5b4 !important;
+}
+.italianAtlasStatus {
+  margin: 8px 0 20px;
+  color: #b6cabd;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+@media (max-width: 850px) {
+  .italianAtlasTiles {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 580px) {
+  .italianAtlasTiles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 380px) {
+  .italianAtlasTiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
