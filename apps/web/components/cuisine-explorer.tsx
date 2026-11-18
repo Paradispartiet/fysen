@@ -5,7 +5,7 @@ import type {
   DishBrowseResponse,
   DishBrowseRestaurantExample,
 } from "@fysen/contracts/dish-browse";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import { browseDishesClient } from "../lib/client-dish-search";
 import { RecentDishes } from "./recent-dishes";
 import { PopularDishes } from "./popular-dishes";
@@ -72,7 +72,7 @@ function CuisineAreaTile({
   active = false,
 }: {
   readonly area: CuisineArea;
-  readonly onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  readonly onClick: (event: MouseEvent<HTMLButtonElement>) => void;
   readonly active?: boolean;
 }) {
   return (
