@@ -28,7 +28,7 @@ function validHttpUrl(value: unknown): value is string {
 }
 
 function validPrice(value: unknown): value is number | null {
-  return value === null || (Number.isSafeInteger(value) && (value as number) >= 0);
+  return value === null || (typeof value === "number" && Number.isSafeInteger(value) && value >= 0);
 }
 
 async function requestArchive(
