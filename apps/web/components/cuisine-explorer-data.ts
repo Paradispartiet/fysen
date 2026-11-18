@@ -363,7 +363,7 @@ function toDishSuggestion(dish: (typeof matlystDiscoveryCatalog)[number]): DishS
     label: dish.name,
     query: dish.query,
     aliases: dish.aliases,
-    matchLabel: dish.matchLabel,
+    matchLabel: dish.matchLabel ?? true,
     hasKnowledge: foodKnowledgeDishIdSet.has(dish.id),
     explorerPriority: dish.explorerPriority,
   };
