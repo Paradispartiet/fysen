@@ -1,6 +1,8 @@
 import type { PopularDishItem } from "@fysen/contracts/dish-browse";
 import { browseDishDisplayName } from "../lib/dish-browse-display";
 import { dishSearchHref } from "../lib/public-path";
+import { FoodIllustration } from "./food-illustration";
+import { illustrationForDishName } from "./food-illustration-match";
 
 export function PopularDishes({ dishes }: { readonly dishes: readonly PopularDishItem[] }) {
   if (dishes.length === 0) return null;
@@ -17,6 +19,13 @@ export function PopularDishes({ dishes }: { readonly dishes: readonly PopularDis
         {dishes.map((dish, index) => (
           <a className="matlystPopularCard" href={dishSearchHref(dish.query)} key={dish.id}>
             <span className="matlystPopularRank">{index + 1}</span>
+            {illustrationForDishName(dish.name) ? (
+              <FoodIllustration
+                name={illustrationForDishName(dish.name)!}
+                className="matlystPopularMiniature"
+                size={36}
+              />
+            ) : null}
             <span className="matlystPopularIdentity">
               <strong>{browseDishDisplayName(dish.name) || dish.name}</strong>
               <small>{dish.restaurantCount} {dish.restaurantCount === 1 ? "restaurant" : "restauranter"}</small>

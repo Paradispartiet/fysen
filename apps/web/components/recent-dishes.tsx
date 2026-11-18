@@ -3,6 +3,8 @@ import { browseDishDisplayName } from "../lib/dish-browse-display";
 import { formatDishPrice } from "../lib/dish-price";
 import { priceProvenanceLabel } from "../lib/price-provenance";
 import { dishSearchHref } from "../lib/public-path";
+import { FoodIllustration } from "./food-illustration";
+import { illustrationForDishName } from "./food-illustration-match";
 
 export function RecentDishes({ dishes }: { readonly dishes: readonly RecentlyAddedDishItem[] }) {
   if (dishes.length === 0) return null;
@@ -24,7 +26,16 @@ export function RecentDishes({ dishes }: { readonly dishes: readonly RecentlyAdd
                 {new Intl.DateTimeFormat("nb-NO", { day: "numeric", month: "short", timeZone: "Europe/Oslo" }).format(new Date(dish.detectedAt))}
               </time>
             </div>
-            <h4>{browseDishDisplayName(dish.name) || dish.name}</h4>
+            <div className="matlystFeaturedDishIdentity">
+              {illustrationForDishName(dish.name) ? (
+                <FoodIllustration
+                  name={illustrationForDishName(dish.name)!}
+                  className="matlystFeaturedMiniature"
+                  size={42}
+                />
+              ) : null}
+              <h4>{browseDishDisplayName(dish.name) || dish.name}</h4>
+            </div>
             <p className="matlystFeaturedRestaurant">{dish.restaurantName}</p>
             <p className="matlystFeaturedMuted">{dish.restaurantAddress}</p>
             <p className="matlystFeaturedPrice">{formatDishPrice(dish)}</p>

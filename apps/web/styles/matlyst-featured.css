@@ -127,3 +127,30 @@
   .matlystPopularGrid { grid-template-columns: 1fr; }
   .matlystPopularCard { min-height: 70px; }
 }
+
+/* Editorial miniatures label dish families without pretending to be menu photos. */
+.matlystFeaturedDishIdentity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0 8px;
+}
+.matlystFeaturedDishIdentity h4 {
+  min-width: 0;
+  margin: 0;
+}
+.matlystFeaturedMiniature,
+.matlystPopularMiniature {
+  display: block;
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+.matlystPopularMiniature {
+  width: 36px;
+  height: 36px;
+}
+@media (max-width: 480px) {
+  .matlystPopularMiniature { width: 32px; height: 32px; }
+}
