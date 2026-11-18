@@ -84,3 +84,29 @@
     max-width: 108px;
   }
 }
+
+
+.dishNameWithArtwork {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 12px;
+}
+.dishNameWithArtwork h2 {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.dishArtwork {
+  display: block;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  object-fit: contain;
+}
+@media (max-width: 480px) {
+  .dishArtwork {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+}
