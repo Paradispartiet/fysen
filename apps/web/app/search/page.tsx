@@ -142,8 +142,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
               <ArchivedMenuBrowse
                 city={city}
                 initialCuisineName={first(params.cuisine)}
-                initialItalianTypeName={first(params.mat)}
-                initialItalianRegionName={first(params.region)}
+                initialFoodTypeName={first(params.mat)}
+                initialAreaName={first(params.region)}
                 archive={archive}
               />
             ) : (
