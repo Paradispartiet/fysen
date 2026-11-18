@@ -1,4 +1,5 @@
 import { foodIllustrationSrc, type FoodIllustrationName } from "./food-illustration-data";
+import { withPublicBasePath } from "../lib/public-path";
 
 export function FoodIllustration({
   name,
@@ -11,7 +12,7 @@ export function FoodIllustration({
 }) {
   return (
     <img
-      src={foodIllustrationSrc(name)}
+      src={withPublicBasePath(foodIllustrationSrc(name))}
       alt=""
       aria-hidden="true"
       className={className ?? "foodIllustration"}
