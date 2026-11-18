@@ -54,7 +54,7 @@ test("Matlyst gallery uses compact side thumbnails across desktop, iPad and phon
 });
 
 test("disclosure uses semantic HTML with no Javascript dependency or fake availability", () => {
-  assert.match(gallery, /Illustrasjoner av rettetyper, ikke restaurantbilder/u);
+  assert.match(gallery, /Illustrasjoner og foto av rettetyper, ikke restaurantbilder/u);
   assert.match(gallery, /dishSearchHref\(dish\.query\)/u);
   assert.doesNotMatch(gallery, /Tilgjengelig nå|Åpent nå/u);
 });

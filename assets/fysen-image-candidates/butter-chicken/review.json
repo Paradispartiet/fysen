@@ -1,0 +1,31 @@
+{
+  "dish_id": "butter-chicken",
+  "photo_id": 9609844,
+  "source_page": "https://www.pexels.com/photo/stainless-steel-bowl-with-chicken-dish-9609844/",
+  "photographer": "Prabal Pratap Singh",
+  "expected_native_size": [
+    4608,
+    3456
+  ],
+  "variant_note": "Butter chicken curry with visible chicken, cream and herbs; verify black presentation, not tikka masala or paneer.",
+  "original_url": "https://images.pexels.com/photos/9609844/pexels-photo-9609844.jpeg",
+  "license": "Pexels License",
+  "license_url": "https://www.pexels.com/legal-pages/license/",
+  "actual_native_size": [
+    4608,
+    3456
+  ],
+  "original_source_sha256": "7533da15eaae84a18e6cab3fd5257cd24ae7b5196ad88526edecca818251abdf",
+  "retained_png_sha256": "83c074e6de2a07cd9dc98b7f03d761bb140fcbd47604d7c1f3d4a6898b93831e",
+  "file_names": [
+    "source.jpeg",
+    "butter-chicken.png",
+    "butter-chicken-master-4608.avif",
+    "butter-chicken-thumb-256.avif"
+  ],
+  "source_verified": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "notice": "Representative editorial dish photo, not any named restaurant's serving."
+}

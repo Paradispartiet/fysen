@@ -1,0 +1,28 @@
+{
+  "dish_id": "pasta-carbonara",
+  "photo_id": 12116165,
+  "source_page": "https://www.pexels.com/photo/spaghetti-carbonara-on-plate-12116165/",
+  "original_url": "https://images.pexels.com/photos/12116165/pexels-photo-12116165.png?cs=srgb&fm=jpg",
+  "photographer": "Froimar Andrea Rodriguez",
+  "expected_native_size": null,
+  "variant_note": "Pasta carbonara with bacon and cheese; verify before publishing.",
+  "license": "Pexels License",
+  "license_url": "https://www.pexels.com/legal-pages/license/",
+  "actual_native_size": [
+    2768,
+    3460
+  ],
+  "original_source_sha256": "109eb4523f27aa3131f91ddd7397678a50e2e3b0378b83802930f3670740f384",
+  "retained_png_sha256": "134e497a40f16b30ba1abaddec6e9bd909b02a72e6dd62d1fbb2378ac64cc5fa",
+  "file_names": [
+    "source.jpeg",
+    "pasta-carbonara.png",
+    "pasta-carbonara-master-2768.avif",
+    "pasta-carbonara-thumb-256.avif"
+  ],
+  "source_verified": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "notice": "Representative editorial dish photo, not any named restaurant's serving."
+}

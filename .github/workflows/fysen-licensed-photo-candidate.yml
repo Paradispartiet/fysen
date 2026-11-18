@@ -1,0 +1,68 @@
+name: Fysen licensed hi-res food photo candidates
+
+on:
+  push:
+    branches:
+      - art/fysen-sharp-sushi-ramen-carbonara-butter-chicken-20261112
+    paths:
+      - ".github/workflows/fysen-licensed-photo-candidate.yml"
+      - "scripts/stage-licensed-food-photo.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  stage-food-originals:
+    if: "!contains(github.event.head_commit.message, '[photo-candidate-bot]')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install image codecs
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0 pillow-avif-plugin==1.5.2
+      - name: Stage independent licensed high-resolution food originals
+        run: python scripts/stage-licensed-food-photo.py
+      - name: Verify unapproved candidate is not published
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          roots = list(Path("assets/fysen-image-candidates").glob("*/review.json"))
+          assert roots, "No candidates"
+          for p in roots:
+              a = json.loads(p.read_text())
+              assert min(a["actual_native_size"]) >= 1600
+              assert a["source_verified"] is True
+              assert a["visual_review_completed"] is False
+              assert a["published"] is False
+              assert not Path("apps/web/public/dish-images/" + a["dish_id"] + "-master-" + str(a["actual_native_size"][0]) + ".avif").exists()
+          print("CANDIDATES ONLY:", len(roots), "safely staged, none publicly referenced")
+          PY
+      - name: Bundle candidate originals for visual QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-photo-candidates-visual-qa
+          path: |
+            assets/fysen-image-candidates/*/source.jpeg
+            assets/fysen-image-candidates/*/source.png
+            assets/fysen-image-candidates/*/review.json
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 6
+      - name: Commit staged files to the same draft PR
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-image-candidates
+          if git diff --cached --quiet; then
+            echo "No image candidate updates"
+            exit 0
+          fi
+          git commit -m "[photo-candidate-bot] Stage licensed full-resolution photo candidates for visual review"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
