@@ -2,7 +2,7 @@ import type { DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import type { DishSearchResponse, DishSearchSort } from "@fysen/contracts";
 import { DishBrowse } from "../../components/dish-browse";
 import { ArchivedMenuBrowse, ArchivedMenuResults } from "../../components/verified-menu-archive-view";
-import { getPublicMenuArchive, searchPublicMenuArchive, type ArchivedMenuMatch, type PublicMenuArchive } from "../../lib/verified-menu-archive";
+import { browseArchivedMenuDishes, getPublicMenuArchive, searchPublicMenuArchive, type ArchivedMenuMatch, type PublicMenuArchive } from "../../lib/verified-menu-archive";
 import { DishKnowledgeNote } from "../../components/dish-knowledge-note";
 import { SearchResults } from "../../components/search-results";
 import { DishSearch } from "../../components/dish-search";
@@ -147,7 +147,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
         <section className="resultsContent" aria-live="polite">
           {q.length === 0 ? (
             archive ? (
-              <ArchivedMenuBrowse city={city} initialCuisineName={first(params.cuisine)} archive={archive} />
+              <ArchivedMenuBrowse city={city} initialCuisineName={first(params.cuisine)} dishes={browseArchivedMenuDishes(archive, city, 48)} />
             ) : (
               <DishBrowse
                 city={city}
