@@ -77,6 +77,30 @@ Kjøringen rapporterte også 163 589 267 byte i den første størrelsesspørring
 4. **Org- og Free-port:** Bekreft tilgjengelig Free-kvote, organisasjonens Fair Use-status og reell skriverettighet *uten* å endre plan, Spend Cap eller produksjonspekere.
 5. **Utrulling og godkjenning:** Hold den verifiserte offentlige, databaseuavhengige menyindeksen i drift. Krev ny separat beslutning før eventuell databaseflytting, datareduksjon eller avvikling av et gammelt prosjekt. Ikke baser langtidsbevaring på GitHub Actions-artefakter, som utløper.
 
+## Verifisert status 18. november 2026
+
+Den isolerte prøven ble gjentatt med de verifiserte meny- og søkekopiene fra 2. november. Kompaktdataene ble importert i PostgreSQL 17 med PostGIS etter alle 23 Fysen-migrasjonene. De 30 applikasjonstabellene, 151 408 menypostene og den private koblingstabellen for 5 150 gamle søketreff tok **180 221 619 byte**. Ingen direkte søkereferanser pekte til manglende menyposter, og alle 39 databaseintegrasjonstestene bestod. Lokale testdata og søkereferanser ligger utenfor repositoryet.
+
+| Kontroll | Original Supabase | Gjenopprettingsprosjekt |
+|---|---:|---:|
+| Fysisk databasestørrelse | 1 667 296 403 byte | 62 543 539 byte |
+| Restauranter / menykilder | 1 116 / 1 154 | 1 116 / 1 154 |
+| Menyposter / menyversjoner | 1 709 517 / 34 447 | 42 000 / 3 096 |
+| Menyendringer / menykontroller | 54 472 / 111 963 | 0 / 0 |
+| Søkehendelser / søketreff | 1 327 / 7 261 | 0 / 0 |
+| Åpningstidsintervaller / -kontroller | 729 / 12 111 | 0 / 0 |
+| Restaurantlenker / lenkekontroller | 41 / 213 | 0 / 0 |
+| Registrerte brukere i Supabase Auth / Storage-objekter | 0 / 0 | 0 / 0 |
+
+Gjenopprettingsprosjektet dekker alle 983 aktive menykilder med minst én menypost. En skriveprøve på én rad bestod og ble rullet tilbake. I begge prosjekter mangler `anon` og `authenticated` tilgang til Fysen-skjemaet og tabellene. Gjenopprettingsprosjektet mangler migrasjonsregisteret selv om de fleste appskjemaobjektene finnes.
+
+### Overgang til den kompakte databasen
+
+1. **Ta en oppdatert, privat eksport.** Behold det verifiserte historiearkivet fra 2. november. Ta med tabellene som lå utenfor den første kompakte eksporten, inkludert åpningstider, restaurantlenker og støtteopphav for menykilder. Disse og øvrige applikasjonstabeller utenfor den første meny- og søkekopien utgjorde samlet ca. 5,5 MB i originalen. Fang også nye søke- og konverteringshendelser. Det var 61 søkehendelser etter sikkerhetskopien ved kontrollen 18. november. Ta et siste differanseuttrekk ved en eventuell overgang, siden originalen fortsatt får søkehendelser.
+2. **Verifiser deretter en komplett kandidat.** Bygg databaseskjemaet via Fysens migrasjoner og last inn de verifiserte dataene med opprinnelige nøkler. Kontroller eksakte antall, kildedatoer og søkekoblinger. Oppdater et avgrenset utvalg menykilder i testdatabasen og test søk, åpningstider og restaurantlenker gjennom API-et. Arkivsøk holdes tilgjengelig under prøven; begge Supabase-prosjektene hadde siste menyversjon fra 2. november.
+3. **Kontroller gratiskvoten før et fullt innlastings- eller produksjonsløp.** Begge prosjektene ligger i samme Free-organisasjon. Originalen alene overstiger 500 MB. Supabase måler også gjennomsnittlig bruk gjennom fakturaperioden, så en mindre aktiv database gir først grunnlag for ny verifisering etter at målt bruk har falt. Gjenopprettingsskrivingen på én rad dokumenterer nåværende SQL-tilgang, mens organisasjonens framtidige kapasitet avhenger av kvoten. Se [Supabase sin forklaring av Fair Use](https://supabase.com/docs/guides/platform/database-size#fair-use-database-size-restriction).
+4. **Gjør en reverserbar produksjonsovergang etter godkjent kvote og verifisert eksport.** Pek API-et og GitHub-jobbene mot samme godkjente database. Kjør tilkoblingskontroll, en manuell menyoppdatering og offentlig søkebevis før planlagte jobber aktiveres. Behold den tidligere tilkoblingskonfigurasjonen for tilbakeføring. Avgjørelse om plassering eller avvikling av originalprosjektet tas separat, etter at den private eksporten er verifisert gjenopprettbar.
+
 ---
 
 ## Release- og kvalitetsporter
