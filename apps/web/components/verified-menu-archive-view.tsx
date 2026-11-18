@@ -4,8 +4,8 @@ import { browseArchivedMenuDishes, type ArchivedMenuMatch, type PublicMenuArchiv
 import styles from "./verified-menu-archive-view.module.css";
 import { FoodIllustration } from "./food-illustration";
 import { illustrationForDishName } from "./food-illustration-match";
-import { italianFoodTypes, regionalFlagUrl } from "./cuisine-explorer-taxonomy";
-import { italianFoodTypeByName, matchesItalianFoodType } from "./italian-food-type-filter";
+import { regionalFlagUrl } from "./cuisine-explorer-taxonomy";
+import { foodTypesForCuisine, matchingCuisineFoodType } from "./cuisine-food-type-data";
 
 function priceLabel(priceMinor: number | null, priceMaxMinor: number | null, kind: string): string {
   if (priceMinor === null) return "Pris ikke oppgitt";
@@ -60,43 +60,56 @@ export function ArchivedMenuResults({
 }
 
 export function ArchivedMenuBrowse({
-  city, initialCuisineName, initialItalianTypeName = "", initialItalianRegionName = "", archive,
+  city, initialCuisineName, initialFoodTypeName = "", initialAreaName = "", archive,
 }: {
   readonly city: string;
   readonly initialCuisineName: string;
-  readonly initialItalianTypeName?: string;
-  readonly initialItalianRegionName?: string;
+  readonly initialFoodTypeName?: string;
+  readonly initialAreaName?: string;
   readonly archive: PublicMenuArchive;
 }) {
-  const selectedCuisine = cuisines.find((item) => item.name === initialCuisineName) ?? null;
-  const italianAtlas = homeCuisines.find((cuisine) => cuisine.name === "Italiensk") ?? null;
-  const italianActive = selectedCuisine?.name === "Italiensk";
-  // Query parameters are accepted only when they match a known food type or region.
-  // Choosing a food type supersedes a regional selection, never both at once.
-  const selectedItalianType = italianActive ? italianFoodTypeByName(initialItalianTypeName) : null;
-  const selectedItalianRegion = italianActive && italianAtlas && !selectedItalianType
-    ? italianAtlas.areas.find((area) => area.name === initialItalianRegionName) ?? null
+  // The twelve main kitchen families and their 101 undercategories are
+  // discoverable in archive fallback as well as the live-API homepage.
+  // The original 19 smaller traditions remain selectable for compatibility.
+  const selectedAtlas = homeCuisines.find((cuisine) => cuisine.name === initialCuisineName) ?? null;
+  const selectedCuisine = selectedAtlas ??
+    cuisines.find((item) => item.name === initialCuisineName) ?? null;
+
+  // URL values may only select registered areas or food families.
+  // Areas and food types are alternative dimensions, never simultaneous filters.
+  const availableFoodTypes = selectedAtlas ? foodTypesForCuisine(selectedAtlas.name) : [];
+  const selectedFoodType = availableFoodTypes.find((item) => item.name === initialFoodTypeName) ?? null;
+  const selectedArea = selectedAtlas && !selectedFoodType
+    ? selectedAtlas.areas.find((area) => area.name === initialAreaName) ?? null
     : null;
-  const suggestions = selectedCuisine
-    ? italianActive && italianAtlas
-      ? italianAtlas.areas
-          .filter((area) => !selectedItalianRegion || area.name === selectedItalianRegion.name)
-          .flatMap((area) => area.dishes.map((dish) => ({ areaName: area.name, dish })))
-          .filter(({ dish }) => !selectedItalianType || matchesItalianFoodType(dish.label, selectedItalianType))
-      : discoveryDishesForCuisine(selectedCuisine.name)
-    : [];
-  // Regional traditions do not necessarily list every Italian food family.
-  // Add bounded, labeled food-type suggestions without claiming restaurant availability
-  // or attributing the dish to a specific Italian region.
-  const supplementalItalianTypeDishes = selectedItalianType
-    ? selectedItalianType.dishNames
-        .filter((label) => !suggestions.some(({ dish }) =>
-          dish.label.toLocaleLowerCase("nb") === label.toLocaleLowerCase("nb")
-        ))
+
+  const rawSuggestions = selectedAtlas
+    ? selectedAtlas.areas
+        .filter((area) => !selectedArea || area.name === selectedArea.name)
+        .flatMap((area) => area.dishes.map((dish) => ({ areaName: area.name, dish })))
+        .filter(({ dish }) => !selectedFoodType ||
+          matchingCuisineFoodType(selectedAtlas.name, dish.label, selectedFoodType))
+    : selectedCuisine ? discoveryDishesForCuisine(selectedCuisine.name) : [];
+
+  // Shared dishes such as Maqluba may appear in multiple national traditions;
+  // show a dish once rather than implying one exclusive place of origin.
+  const seenSuggestionNames = new Set<string>();
+  const suggestions = rawSuggestions.filter(({ dish }) => {
+    const key = dish.label.normalize("NFKD").toLocaleLowerCase("nb");
+    if (seenSuggestionNames.has(key)) return false;
+    seenSuggestionNames.add(key);
+    return true;
+  });
+
+  // Editorial recommendations are not historical menu matches. Add missing
+  // food-family seeds only as links to the actual menu search endpoint.
+  const supplementalFoodTypeDishes = selectedAtlas && selectedFoodType
+    ? selectedFoodType.dishNames
+        .filter((label) => !seenSuggestionNames.has(label.normalize("NFKD").toLocaleLowerCase("nb")))
         .map((label, index) => ({
-          areaName: "Italiensk mattype",
+          areaName: `${selectedAtlas.name} · mattype`,
           dish: {
-            id: `archived-italian-${selectedItalianType.name.toLowerCase().replace(/[^a-z]+/gu, "-")}-${index}`,
+            id: `atlas-food-type-${selectedAtlas.name}-${selectedFoodType.name}-${index}`,
             label,
             query: label,
             aliases: [] as readonly string[],
@@ -105,7 +118,7 @@ export function ArchivedMenuBrowse({
           },
         }))
     : [];
-  const visibleSuggestions = [...suggestions, ...supplementalItalianTypeDishes];
+  const visibleSuggestions = [...suggestions, ...supplementalFoodTypeDishes];
   const archivedDishes = selectedCuisine ? [] : browseArchivedMenuDishes(archive, city, 48);
 
   function cuisineHref(name: string, option?: { readonly region?: string; readonly mat?: string }): string {
@@ -121,10 +134,20 @@ export function ArchivedMenuBrowse({
         <h1>Alle retter i {city}</h1>
         <p>Utforsk restauranter og retter, velg kjøkken eller søk etter akkurat det du har lyst på.</p>
       </div>
-      <nav className={styles.cuisineList} aria-label="Velg kjøkken i Matlyst">
+      <nav className={styles.cuisineList} aria-label="Utforsk verdens kjøkken">
         <a href={withPublicBasePath("/search") + "?city=" + encodeURIComponent(city)}
           aria-current={!selectedCuisine ? "page" : undefined}>Alle kjøkken</a>
-        {cuisines.map((cuisine) => (
+        {homeCuisines.map((cuisine) => (
+          <a href={cuisineHref(cuisine.name)} key={cuisine.name}
+            aria-current={selectedCuisine?.name === cuisine.name ? "page" : undefined}>
+            {cuisine.name}
+          </a>
+        ))}
+      </nav>
+      <nav className={styles.cuisineList} aria-label="Flere nasjonale kjøkken og mattradisjoner">
+        {cuisines.filter((cuisine) =>
+          !homeCuisines.some((main) => main.name === cuisine.name)
+        ).map((cuisine) => (
           <a href={cuisineHref(cuisine.name)} key={cuisine.name}
             aria-current={selectedCuisine?.name === cuisine.name ? "page" : undefined}>
             {cuisine.name}
@@ -136,24 +159,24 @@ export function ArchivedMenuBrowse({
         <section aria-label={"Retter fra " + selectedCuisine.name}>
           <h2>{selectedCuisine.name}</h2>
           <p>{selectedCuisine.context}</p>
-          {italianActive && italianAtlas ? (
+          {selectedAtlas ? (
             <div className={styles.italianAtlasSections}>
-              <section aria-labelledby="archive-italian-regions">
-                <h3 id="archive-italian-regions">Regionale kjøkken</h3>
-                <p className={styles.meta}>Velg en mattradisjon med tydelig geografisk tilknytning.</p>
-                <nav className={styles.italianAtlasTiles} aria-label="Italienske regioner">
+              <section aria-labelledby="archive-atlas-areas">
+                <h3 id="archive-atlas-areas">{selectedAtlas.areasLabel}</h3>
+                <p className={styles.meta}>Velg en nasjonal eller regional mattradisjon, eller en type hurtigmat.</p>
+                <nav className={styles.italianAtlasTiles} aria-label={`Underkategorier i ${selectedAtlas.name}`}>
                   <a
                     className={styles.italianAtlasTile}
-                    href={cuisineHref("Italiensk")}
-                    aria-current={!selectedItalianRegion && !selectedItalianType ? "page" : undefined}
+                    href={cuisineHref(selectedAtlas.name)}
+                    aria-current={!selectedArea && !selectedFoodType ? "page" : undefined}
                   >
-                    <span>Alle regioner</span>
+                    <span>Alle underkategorier</span>
                   </a>
-                  {italianAtlas.areas.map((area) => (
+                  {selectedAtlas.areas.map((area) => (
                     <a
                       className={styles.italianAtlasTile}
-                      href={cuisineHref("Italiensk", { region: area.name })}
-                      aria-current={selectedItalianRegion?.name === area.name ? "page" : undefined}
+                      href={cuisineHref(selectedAtlas.name, { region: area.name })}
+                      aria-current={selectedArea?.name === area.name ? "page" : undefined}
                       key={area.name}
                     >
                       {area.flagFile ? (
@@ -166,15 +189,20 @@ export function ArchivedMenuBrowse({
                           width="46"
                           height="32"
                         />
+                      ) : area.flag ? (
+                        <span className={styles.atlasCountryFlag} aria-hidden="true">{area.flag}</span>
+                      ) : area.illustration ? (
+                        <FoodIllustration name={area.illustration}
+                          className={styles.italianTypeIllustration ?? ""} size={40} />
                       ) : null}
                       <span>{area.name}</span>
                     </a>
                   ))}
                 </nav>
-                {selectedItalianRegion?.flagFile ? (
+                {selectedArea?.flagFile ? (
                   <a
                     className={styles.italianFlagSource}
-                    href={`https://commons.wikimedia.org/wiki/File:${encodeURIComponent(selectedItalianRegion.flagFile)}`}
+                    href={`https://commons.wikimedia.org/wiki/File:${encodeURIComponent(selectedArea.flagFile)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -182,32 +210,36 @@ export function ArchivedMenuBrowse({
                   </a>
                 ) : null}
               </section>
-              <section aria-labelledby="archive-italian-types">
-                <h3 id="archive-italian-types">Eller utforsk mattyper</h3>
-                <p className={styles.meta}>Pizza, pasta og andre retter – uavhengig av region.</p>
-                <nav className={styles.italianAtlasTiles} aria-label="Italienske mattyper">
-                  {italianFoodTypes.map((type) => (
-                    <a
-                      className={styles.italianAtlasTile}
-                      key={type.name}
-                      href={cuisineHref("Italiensk", { mat: type.name })}
-                      aria-current={selectedItalianType?.name === type.name ? "page" : undefined}
-                    >
-                      <FoodIllustration name={type.illustration} className={styles.italianTypeIllustration ?? ""} size={40} />
-                      <span>{type.name}</span>
-                    </a>
-                  ))}
-                </nav>
-              </section>
+              {availableFoodTypes.length > 0 ? (
+                <section aria-labelledby="archive-atlas-types">
+                  <h3 id="archive-atlas-types">Eller utforsk mattyper</h3>
+                  <p className={styles.meta}>Mattyper går på tvers av land og regioner.</p>
+                  <nav className={styles.italianAtlasTiles}
+                    aria-label={`Mattyper i ${selectedAtlas.name}`}>
+                    {availableFoodTypes.map((type) => (
+                      <a
+                        className={styles.italianAtlasTile}
+                        key={type.name}
+                        href={cuisineHref(selectedAtlas.name, { mat: type.name })}
+                        aria-current={selectedFoodType?.name === type.name ? "page" : undefined}
+                      >
+                        <FoodIllustration name={type.illustration}
+                          className={styles.italianTypeIllustration ?? ""} size={40} />
+                        <span>{type.name}</span>
+                      </a>
+                    ))}
+                  </nav>
+                </section>
+              ) : null}
             </div>
           ) : null}
-          {italianActive ? (
+          {selectedAtlas ? (
             <p className={styles.italianAtlasStatus} role="status">
-              {selectedItalianType
-                ? `Mattyper: ${selectedItalianType.name}`
-                : selectedItalianRegion
-                  ? `Region: ${selectedItalianRegion.name}`
-                  : "Alle de ti italienske regionene"}
+              {selectedFoodType
+                ? `Mattype: ${selectedFoodType.name}`
+                : selectedArea
+                  ? `Underkategori: ${selectedArea.name}`
+                  : `Alle underkategorier i ${selectedAtlas.name}`}
               {" · "}Rettene er forslag til utforskning, ikke bekreftede menytreff.
             </p>
           ) : null}
