@@ -438,3 +438,48 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* World cuisine atlas: a single flag OR one illustration per geographic tile. */
+.dishBrowseRegionFilters button.atlasRegionTile {
+  display: flex;
+  min-height: 79px;
+  min-width: 98px;
+  max-width: 155px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px;
+  border-radius: 11px;
+  text-align: center;
+}
+.dishBrowseRegionFilters .atlasRegionTile > span:last-child {
+  overflow-wrap: anywhere;
+  font-size: 11px;
+  line-height: 1.25;
+}
+.dishBrowseRegionFlag {
+  width: 46px;
+  height: 31px;
+  object-fit: contain;
+  flex: 0 0 31px;
+}
+.dishBrowseCountryFlag {
+  min-height: 31px;
+  display: inline-grid;
+  place-items: center;
+  font-size: 28px;
+  line-height: 1;
+}
+.dishBrowseAreaArtwork {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+@media (max-width: 480px) {
+  .dishBrowseRegionFilters button.atlasRegionTile {
+    flex: 1 1 90px;
+    min-width: 0;
+    max-width: 135px;
+  }
+}

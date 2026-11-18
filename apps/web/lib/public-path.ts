@@ -14,9 +14,18 @@ export function dishBrowseHref(city = "Oslo"): string {
   return `${withPublicBasePath("/search")}?${params.toString()}`;
 }
 
-export function dishBrowseCuisineHref(city = "Oslo", cuisineName?: string): string {
+export function dishBrowseCuisineHref(
+  city = "Oslo",
+  cuisineName?: string,
+  selection?: { readonly region?: string; readonly mat?: string },
+): string {
   const params = new URLSearchParams({ city });
-  if (cuisineName) params.set("cuisine", cuisineName);
+  if (cuisineName) {
+    params.set("cuisine", cuisineName);
+    // Geography and food type are alternate discovery facets, not cumulative.
+    if (selection?.mat) params.set("mat", selection.mat);
+    else if (selection?.region) params.set("region", selection.region);
+  }
   return `${withPublicBasePath("/search")}?${params.toString()}`;
 }
 

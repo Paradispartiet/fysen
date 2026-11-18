@@ -38,12 +38,13 @@ test("Italian dish families match common menu names and specific specialties", (
 
 test("Alle retter retains region navigation alongside independent illustrated food types", async () => {
   const browse = await readFile(new URL("../components/dish-browse.tsx", import.meta.url), "utf8");
-  assert.match(browse, /setSelectedCuisineArea\(areaName\)/u);
-  assert.match(browse, /setSelectedItalianTypeName\(type\.name\)/u);
+  assert.ok(browse.includes("chooseArea(areaName)"));
+  assert.ok(browse.includes("chooseFoodType(type.name)"));
   assert.match(browse, /setSelectedCuisineArea\(null\)/u);
   assert.match(browse, /className="dishBrowseItalianTypes"/u);
   assert.match(browse, /FoodIllustration name=\{type\.illustration\}/u);
-  assert.match(browse, /matchesItalianFoodType\(dish\.name, selectedItalianType\)/u);
+  assert.ok(browse.includes('matchingCuisineFoodType('));
+  assert.ok(browse.includes('selectedCuisine.name, dish.name, selectedFoodType'));
   const explorer = await readFile(new URL("../components/cuisine-explorer.tsx", import.meta.url), "utf8");
   assert.ok(explorer.includes('matchingCuisineFoodType(selectedCuisine.name, dish.label, selectedFoodType)'));
 });
