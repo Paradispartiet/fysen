@@ -11,3 +11,5 @@ test-results/
 !.env.example
 .DS_Store
 *.log
+# Transient Runway candidate originals (unreviewed; never commit automatically)
+.fysen-candidates/
