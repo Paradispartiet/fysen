@@ -106,7 +106,9 @@ test("Matlyst-forsiden er gjenopprettet til de seks opprinnelige kortene", () =>
   assert.match(explorerSource, /homeCuisines\.map/u);
   assert.match(explorerSource, /className="cuisineGrid"/u);
   assert.match(explorerSource, /className="cuisineCard cuisineCardInteractive"/u);
-  assert.match(explorerSource, /className="cuisineDishPreview"/u);
+  assert.match(explorerSource, /className="cuisineCardBrowseLabel"/u);
+  assert.match(explorerSource, /<CuisineAreaTile/u);
+  assert.doesNotMatch(explorerSource, /className="cuisineDishPreview"/u);
   assert.match(explorerSource, /className="cuisineAreaList"/u);
   assert.match(explorerSource, /Retter og hvor du kan få dem/u);
   assert.doesNotMatch(explorerSource, /matlystCuisineDirectory/u);
