@@ -198,7 +198,7 @@
 
 /* Separate 768px AI dish-type illustrations, never a restaurant photo. */
 .dishPhotoThumb.dishPhotoSushi,
-.dishPhotoSmall.dishPhotoSushi { background: #000 url("/dish-images/sushi-768.avif") center / cover no-repeat; }
+.dishPhotoSmall.dishPhotoSushi { background: #000 url("/dish-images/sushi-thumb-512.avif") center / cover no-repeat; }
 .dishPhotoThumb.dishPhotoRamen,
 .dishPhotoSmall.dishPhotoRamen { background: #000 url("/dish-images/ramen-768.avif") center / cover no-repeat; }
 .dishPhotoThumb.dishPhotoCarbonara,

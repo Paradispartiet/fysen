@@ -84,6 +84,7 @@ def main() -> None:
     manifest = json.loads(MANIFEST.read_text(encoding="utf8"))
     dish = next(x for x in manifest["images"] if x["id"] == DISH)
     dish["atlas"] = "sushi-thumb-512.avif"
+    dish["largeViewEnabled"] = True
     dish["kind"] = "Redaksjonelt rettfoto"
     dish["photoCredit"] = "Mony Cruz / Pexels"
     dish["photoSource"] = metadata["source_page"]

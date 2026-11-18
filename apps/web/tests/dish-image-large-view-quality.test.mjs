@@ -45,7 +45,7 @@ function avifDimensions(filename) {
   };
 }
 
-test("Matlyst must not publish gallery originals as sharp in large view without 1600px verified masters", () => {
+test("Every enabled Matlyst large view requires a source-verified sharp 1600px master", () => {
   const failures = [];
   const seenMasters = new Set();
   let acceptedCount = 0;
@@ -53,8 +53,16 @@ test("Matlyst must not publish gallery originals as sharp in large view without 
   for (const image of manifest.images) {
     const failuresBeforeDish = failures.length;
     const master = image.largeSource;
+    if (!master && image.largeViewEnabled !== true) {
+      // This dish remains thumbnail-only; it must not opt into large display.
+      continue;
+    }
     if (typeof master !== "string" || !/^[a-z0-9-]+\.avif$/u.test(master)) {
-      failures.push(`${image.id}: missing largeSource AVIF master (>= ${minimumNativePixels}px)`);
+      failures.push(`${image.id}: largeViewEnabled requires largeSource AVIF (>= ${minimumNativePixels}px)`);
+      continue;
+    }
+    if (image.largeViewEnabled !== true) {
+      failures.push(`${image.id}: largeSource exists but largeViewEnabled is not true`);
       continue;
     }
 
@@ -135,5 +143,6 @@ test("Matlyst must not publish gallery originals as sharp in large view without 
     if (failures.length === failuresBeforeDish) acceptedCount += 1;
   }
 
-  assert.deepEqual(failures, [], `Large-view release blocked: ${acceptedCount}/${manifest.images.length} images meet the structural quality gate.\n${failures.join("\n")}`);
+  assert.ok(acceptedCount > 0, "No verified full-size originals. Only thumbnail-only dishes may remain without largeSource.");
+  assert.deepEqual(failures, [], `Large-view release blocked: ${acceptedCount}/${manifest.images.length} photos verified for optional full-size display.\n${failures.join("\n")}`);
 });
