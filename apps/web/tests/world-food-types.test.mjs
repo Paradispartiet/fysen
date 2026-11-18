@@ -12,9 +12,16 @@ const expectedCounts = {
   "Italiensk": 7,
   "Midtøsten": 4,
   "Mexicansk": 6,
+  "Afrikansk": 5,
+  "Fransk": 5,
+  "Spansk": 5,
+  "Gresk": 4,
+  "Amerikansk": 4,
+  "Nordisk": 6,
 };
 
-test("four new kitchens plus Italian have independent illustrated food-type families", () => {
+test("all geographical main cuisines have independent illustrated food-type families", () => {
+  assert.equal(Object.keys(cuisineFoodTypeCatalog).length, 11);
   for (const [cuisine, count] of Object.entries(expectedCounts)) {
     const types = foodTypesForCuisine(cuisine);
     assert.equal(types.length, count, cuisine);
