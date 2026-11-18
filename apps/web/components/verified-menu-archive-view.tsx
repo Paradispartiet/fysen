@@ -70,15 +70,15 @@ export function ArchivedMenuBrowse({
 }) {
   const selectedCuisine = cuisines.find((item) => item.name === initialCuisineName) ?? null;
   const italianAtlas = homeCuisines.find((cuisine) => cuisine.name === "Italiensk") ?? null;
-  const italianActive = selectedCuisine?.name === "Italiensk" && italianAtlas !== null;
+  const italianActive = selectedCuisine?.name === "Italiensk";
   // Query parameters are accepted only when they match a known food type or region.
   // Choosing a food type supersedes a regional selection, never both at once.
   const selectedItalianType = italianActive ? italianFoodTypeByName(initialItalianTypeName) : null;
-  const selectedItalianRegion = italianActive && !selectedItalianType
+  const selectedItalianRegion = italianActive && italianAtlas && !selectedItalianType
     ? italianAtlas.areas.find((area) => area.name === initialItalianRegionName) ?? null
     : null;
   const suggestions = selectedCuisine
-    ? italianActive
+    ? italianActive && italianAtlas
       ? italianAtlas.areas
           .filter((area) => !selectedItalianRegion || area.name === selectedItalianRegion.name)
           .flatMap((area) => area.dishes.map((dish) => ({ areaName: area.name, dish })))
@@ -136,7 +136,7 @@ export function ArchivedMenuBrowse({
         <section aria-label={"Retter fra " + selectedCuisine.name}>
           <h2>{selectedCuisine.name}</h2>
           <p>{selectedCuisine.context}</p>
-          {italianActive ? (
+          {italianActive && italianAtlas ? (
             <div className={styles.italianAtlasSections}>
               <section aria-labelledby="archive-italian-regions">
                 <h3 id="archive-italian-regions">Regionale kjøkken</h3>
