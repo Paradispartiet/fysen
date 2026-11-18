@@ -146,3 +146,20 @@ test("Every enabled Matlyst large view requires a source-verified sharp 1600px m
   assert.ok(acceptedCount > 0, "No verified full-size originals. Only thumbnail-only dishes may remain without largeSource.");
   assert.deepEqual(failures, [], `Large-view release blocked: ${acceptedCount}/${manifest.images.length} photos verified for optional full-size display.\n${failures.join("\n")}`);
 });
+
+
+test("Editorial food photos are only large-view enabled with real provenance and separate thumbnails", () => {
+  const photos = manifest.images.filter((image) => image.kind === "Redaksjonelt rettfoto");
+  assert.ok(photos.length >= 2, "Both sushi and butter chicken need separate full-size masters");
+  assert.ok(photos.some((photo) => photo.id === "sushi"));
+  assert.ok(photos.some((photo) => photo.id === "butter-chicken"));
+  for (const photo of photos) {
+    assert.equal(photo.largeViewEnabled, true, photo.id + " must pass full-size gate");
+    assert.match(photo.atlas, /-thumb-\d+\.avif$/u);
+    assert.match(photo.largeSource, /-master-\d+\.avif$/u);
+    assert.notEqual(photo.atlas, photo.largeSource);
+    assert.match(photo.photoSource, /^https:\/\/www\.pexels\.com\/photo\//u);
+    assert.match(photo.photoCredit, /Pexels/u);
+    assert.match(photo.photoLicense, /^https:\/\//u);
+  }
+});

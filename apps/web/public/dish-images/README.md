@@ -367,3 +367,9 @@ Hvert motiv er et eget utsnitt fra en ny KI-generert trepanelskomposisjon på sv
 - `green-curry-768.avif` (galleriindeks 32, `green-curry`): KI-illustrasjon av grønn thaicurry med kylling, kokosmelk, grønnsaker, thaibasilikum og ris. Ikke vegetarcurry eller restaurantfoto.
 
 Alle 44 registrerte rettillustrasjoner har nå separate filer i bilderegisteret. De tre siste motivene er utsnitt fra en seksdelt KI-komposisjon med lavere effektiv kildedetalj enn eksportfilens 768 × 768; for å bevare serveringen er motivene plassert på svart kvadratisk bakgrunn. Det gamle bildekartet beholdes for sikker tilbakerulling. Ingen deploy, databaseendring eller betaling.
+
+### Butter chicken – 3000px foto med svart bakgrunn
+
+Originalt lisensiert Pexels-foto av Prabal Pratap Singh (ID 9609844) i 4608 × 3456. Retten er et kyllinglår med kremet saus, ikke en benfri variant. Et 3000 × 3000 utsnitt i opprinnelig detaljoppløsning maskerer bort duk, bakgrunn og tilbehør rundt skålen. Stor AVIF og en separat 512px miniatyr produseres uten oppskalering. Kilde og visuell vurdering ligger i `docs/fysen-image-reviews/butter-chicken.md`.
+
+**Godkjent etter importkontroll:** Sushi 2100 × 2100 og butter chicken 3000 × 3000 har hver sin verifiserte, ikke-oppskalerte original og separate 512px miniatyrer. Totalt 2/44 godkjente stororiginaler. Ramen og carbonara er fortsatt kun bildekandidater.
