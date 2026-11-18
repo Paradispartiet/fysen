@@ -139,7 +139,13 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
         <section className="resultsContent" aria-live="polite">
           {q.length === 0 ? (
             archive ? (
-              <ArchivedMenuBrowse city={city} initialCuisineName={first(params.cuisine)} archive={archive} />
+              <ArchivedMenuBrowse
+                city={city}
+                initialCuisineName={first(params.cuisine)}
+                initialItalianTypeName={first(params.mat)}
+                initialItalianRegionName={first(params.region)}
+                archive={archive}
+              />
             ) : (
               <DishBrowse
                 city={city}
