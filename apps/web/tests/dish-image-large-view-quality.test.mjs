@@ -17,6 +17,22 @@ const largeViewCssPixels = 800;
 const largeViewDevicePixelRatio = 2;
 const minimumNativePixels = largeViewCssPixels * largeViewDevicePixelRatio;
 
+// Retain source PNGs outside public/ so a full-size asset can be audited
+// without shipping an uncompressed multi-megabyte master to every visitor.
+function originalPngEvidence(imageId, originalPath) {
+  const expectedPath = `assets/fysen-dish-originals/${imageId}.png`;
+  assert.equal(originalPath, expectedPath, `${imageId}: original source must use the canonical per-dish path`);
+  const bytes = readFileSync(path.join(repoRoot, expectedPath));
+  assert.equal(bytes.subarray(0, 8).toString("hex"), "89504e470d0a1a0a",
+    `${imageId}: original source must be a real PNG, not an AVIF re-export or a collage filename`);
+  assert.equal(bytes.toString("ascii", 12, 16), "IHDR", `${imageId}: missing PNG dimensions`);
+  return {
+    width: bytes.readUInt32BE(16),
+    height: bytes.readUInt32BE(20),
+    sha256: createHash("sha256").update(bytes).digest("hex"),
+  };
+}
+
 function avifDimensions(filename) {
   const bytes = readFileSync(path.join(imageRoot, filename));
   assert.equal(bytes.toString("ascii", 4, 12), "ftypavif", `${filename}: invalid AVIF format`);
@@ -73,8 +89,23 @@ test("Matlyst must not publish gallery originals as sharp in large view without 
       failures.push(`${image.id}: source-native detail >= ${minimumNativePixels}px not documented`);
     }
     if (Number.isInteger(image.largeSourceNativeWidth) && Number.isInteger(image.largeSourceNativeHeight) &&
-        (dimensions.width !== image.largeSourceNativeWidth || dimensions.height !== image.largeSourceNativeHeight)) {
-      failures.push(`${image.id}: AVIF dimensions differ from independently documented native source size`);
+        (dimensions.width > image.largeSourceNativeWidth || dimensions.height > image.largeSourceNativeHeight)) {
+      failures.push(`${image.id}: AVIF is larger than native original; apparent resolution may be upscaled`);
+    }
+    // Verify the original bytes, not merely an unsubstantiated field in the manifest.
+    try {
+      const original = originalPngEvidence(image.id, image.largeSourceOriginalPath);
+      if (original.width !== image.largeSourceNativeWidth || original.height !== image.largeSourceNativeHeight) {
+        failures.push(`${image.id}: claimed native dimensions do not match retained PNG source`);
+      }
+      if (original.width < minimumNativePixels || original.height < minimumNativePixels) {
+        failures.push(`${image.id}: original PNG is only ${original.width}x${original.height}`);
+      }
+      if (original.sha256 !== image.largeSourceOriginalSha256) {
+        failures.push(`${image.id}: original source SHA-256 does not match retained source bytes`);
+      }
+    } catch (error) {
+      failures.push(`${image.id}: original source evidence missing or invalid (${error.code ?? error.message})`);
     }
     if (!["independent-original", "high-resolution-redraw"].includes(image.largeSourceMethod)) {
       failures.push(`${image.id}: dedicated source method/review is missing; upscale and collage crops do not qualify`);
