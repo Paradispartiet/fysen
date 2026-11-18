@@ -76,6 +76,27 @@ storvisningsoriginaler er godkjent etter den nye porten. Eksisterende
 768px-komposisjonsutsnitt må produseres på nytt i tilstrekkelig detalj.
 
 
+### Før du konverterer en ny bildefil
+
+Kontroller **PNG-originalen først**. Dermed kan vi stoppe uegnede
+kandidater uten å bruke tid på eksport, review-tekst og Git-opplasting:
+
+```bash
+node scripts/check-dish-image-source.mjs /sti/til/nytt-rettbilde.png
+```
+
+Den raske kontrollen skriver kildens pikselmål og største sikre
+visningsbredde ved 2× pikseltetthet. Eksempel: En original på
+1254 × 1254 piksler har bare nok piksler til omtrent 627 CSS-piksler
+ved 2×. Det er **ikke nok** til målet på 800 CSS-piksler, og den avvises
+som storvisningsmaster.
+
+Dette er bare en **forhåndskontroll av filtype og dimensjoner**.
+Den kan ikke avgjøre om et bilde egentlig ble oppskalert fra et lite
+utsnitt, om filen dekodes korrekt, eller om teksturene er skarpe.
+Originalens opphav, avkodbarhet og visuell kvalitet må bekreftes
+separat før `scripts/import-dish-large-master.mjs` brukes.
+
 ### Innlesing av ekte stororiginal
 
 Når det foreligger en kontrollert, **selvstendig** kilde i minst
