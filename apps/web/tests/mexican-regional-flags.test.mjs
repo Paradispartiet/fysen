@@ -2,21 +2,27 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { cuisineAtlasAreas, regionalFlagUrl } from "../components/cuisine-explorer-taxonomy.ts";
 
-const documentedStateFlags = new Map([
-  ["Oaxacansk", ["Oaxaca", "Flag of Oaxaca.svg"]],
+const adoptedStateFlags = new Map([
   ["Yucatansk", ["Yucatán", "Flag of Yucatan.svg"]],
   ["Jaliscansk", ["Jalisco", "Flag of Jalisco.svg"]],
-  ["Pueblansk", ["Puebla", "Flag of Puebla.svg"]],
-  ["Veracruzansk", ["Veracruz", "Flag of Veracruz.svg"]],
-  ["Baja California", ["Baja California", "Flag of Baja California.svg"]],
-  ["Michoacánsk", ["Michoacán", "Flag of Michoacan.svg"]],
 ]);
 
-test("only geographically specific Mexican cuisines show genuine state-flag files", () => {
+const unverifiedOrUnofficialFlagAreas = new Map([
+  ["Sentralmeksikansk", "taco"],
+  ["Oaxacansk", "chili"],
+  ["Pueblansk", "chili"],
+  ["Veracruzansk", "fish"],
+  ["Baja California", "fish"],
+  ["Nordmeksikansk", "steak"],
+  ["Michoacánsk", "taco"],
+]);
+
+test("Mexican tiles use only the two confirmed official flags", () => {
   const areas = cuisineAtlasAreas.Mexicansk;
   assert.equal(areas.length, 9);
-  assert.equal(areas.filter((area) => area.flagFile).length, 7);
-  for (const [name, [region, filename]] of documentedStateFlags) {
+  assert.equal(areas.filter((area) => area.flagFile).length, 2);
+
+  for (const [name, [region, filename]] of adoptedStateFlags) {
     const area = areas.find((entry) => entry.name === name);
     assert.ok(area, name);
     assert.equal(area.flagRegion, region);
@@ -27,17 +33,19 @@ test("only geographically specific Mexican cuisines show genuine state-flag file
   }
 });
 
-test("broader Mexican culinary areas retain one illustration instead of borrowing a state flag", () => {
-  const areas = cuisineAtlasAreas.Mexicansk;
-  const wider = ["Sentralmeksikansk", "Nordmeksikansk"];
-  for (const name of wider) {
-    const area = areas.find((entry) => entry.name === name);
-    assert.ok(area?.illustration, name);
-    assert.equal(area.flag, undefined);
-    assert.equal(area.flagFile, undefined);
-    assert.equal(area.flagRegion, undefined);
+test("unofficial or legally uncertain flags are not silently presented as state flags", () => {
+  for (const [name, illustration] of unverifiedOrUnofficialFlagAreas) {
+    const area = cuisineAtlasAreas.Mexicansk.find((entry) => entry.name === name);
+    assert.ok(area, name);
+    assert.equal(area.illustration, illustration, name);
+    assert.equal(area.flag, undefined, name);
+    assert.equal(area.flagFile, undefined, name);
+    assert.equal(area.flagRegion, undefined, name);
   }
-  for (const area of areas) {
+});
+
+test("exactly one identity per Mexican tile and real food tradition examples", () => {
+  for (const area of cuisineAtlasAreas.Mexicansk) {
     assert.equal([area.flag, area.flagFile, area.illustration].filter(Boolean).length, 1);
     assert.ok(area.examples.length > 0);
   }
