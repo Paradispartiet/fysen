@@ -1,6 +1,6 @@
 import { cuisines, discoveryDishesForCuisine } from "./cuisine-explorer-data";
 import { dishSearchHref, foodKnowledgeHref, withPublicBasePath } from "../lib/public-path";
-import { browseArchivedMenuDishes, type ArchivedMenuMatch, type PublicMenuArchive } from "../lib/verified-menu-archive";
+import type { ArchivedMenuMatch } from "../lib/verified-menu-archive";
 import styles from "./verified-menu-archive-view.module.css";
 
 function priceLabel(priceMinor: number | null, priceMaxMinor: number | null, kind: string): string {
@@ -50,16 +50,22 @@ export function ArchivedMenuResults({
   );
 }
 
+// Rendering is browser-safe: both the server page and the static preview supply
+// already validated archive data. Archive decoding never enters the client bundle.
 export function ArchivedMenuBrowse({
-  city, initialCuisineName, archive,
+  city, initialCuisineName, dishes,
 }: {
   readonly city: string;
   readonly initialCuisineName: string;
-  readonly archive: PublicMenuArchive;
+  readonly dishes: readonly {
+    readonly name: string;
+    readonly query: string;
+    readonly restaurantCount: number;
+  }[];
 }) {
   const selectedCuisine = cuisines.find((item) => item.name === initialCuisineName) ?? null;
   const suggestions = selectedCuisine ? discoveryDishesForCuisine(selectedCuisine.name) : [];
-  const archivedDishes = selectedCuisine ? [] : browseArchivedMenuDishes(archive, city, 48);
+  const archivedDishes = selectedCuisine ? [] : dishes;
 
   function cuisineHref(name: string): string {
     const params = new URLSearchParams({ city, cuisine: name });
