@@ -39,7 +39,7 @@ async function requestArchive(
   if (!clientPreviewApiBaseUrl) throw new Error("Fysen archive API is not configured");
   const response = await fetch(
     `${clientPreviewApiBaseUrl}/v1/dishes/archive/${endpoint}?${params.toString()}`,
-    { headers: { accept: "application/json" }, signal },
+    { headers: { accept: "application/json" }, ...(signal ? { signal } : {}) },
   );
   if (!response.ok) throw new Error(`Fysen archive API returned HTTP ${response.status}`);
   const body: unknown = await response.json();
