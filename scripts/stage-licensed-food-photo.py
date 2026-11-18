@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-"""Stage licensed high-resolution food photos for editorial review, without Runway.
+"""Stage externally licensed native high-resolution photos for Fysen review.
 
-Never writes to apps/web/public or silently approves the image.
-A photo must pass visual review before integration into Fysen.
+No Runway, no large-view approval by metadata alone, and no public deployment.
 """
 from __future__ import annotations
 
@@ -12,85 +11,122 @@ import json
 from pathlib import Path
 from urllib.request import Request, urlopen
 from PIL import Image
-import pillow_avif  # noqa: F401 -- register AVIF codec
+import pillow_avif  # noqa: F401 -- registers AVIF codec
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = {
-    "dish_id": "sushi",
-    "photo_id": 36292343,
-    "original_url": "https://images.pexels.com/photos/36292343/pexels-photo-36292343.jpeg",
-    "source_page": "https://www.pexels.com/photo/delicious-assorted-sushi-platter-on-black-background-36292343/",
-    "photographer": "Mony Cruz",
-    "license": "Pexels License",
-    "license_url": "https://www.pexels.com/legal-pages/license/",
-    "advertised_native_size": [3000, 3000],
-}
-DISH = SOURCE["dish_id"]
-OUTPUT = ROOT / "assets" / "fysen-image-candidates" / DISH
+SOURCES = [
+    {
+        "dish_id": "sushi",
+        "photo_id": 36292343,
+        "source_page": "https://www.pexels.com/photo/delicious-assorted-sushi-platter-on-black-background-36292343/",
+        "photographer": "Mony Cruz",
+        "expected_native_size": [3000, 3000],
+        "variant_note": "Representative assorted sushi; verify nigiri and maki in review.",
+    },
+    {
+        "dish_id": "ramen",
+        "photo_id": 19555232,
+        "source_page": "https://www.pexels.com/photo/bowl-of-soup-19555232/",
+        "photographer": "Su La Pyae",
+        "expected_native_size": None,
+        "variant_note": "Ramen with pork, egg, and scallions; verify non-vegetarian variant.",
+    },
+    {
+        "dish_id": "pasta-carbonara",
+        "photo_id": 12116165,
+        "source_page": "https://www.pexels.com/photo/spaghetti-carbonara-on-plate-12116165/",
+        "photographer": "Froimar Andrea Rodriguez",
+        "expected_native_size": None,
+        "variant_note": "Pasta carbonara with bacon and cheese; verify before publishing.",
+    },
+]
+LICENSE = "Pexels License"
+LICENSE_URL = "https://www.pexels.com/legal-pages/license/"
 MAX_BYTES = 30 * 1024 * 1024
 
 def sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
-def main() -> None:
-    req = Request(SOURCE["original_url"], headers={
+def stage(source: dict) -> bool:
+    dish_id = source["dish_id"]
+    output = ROOT / "assets" / "fysen-image-candidates" / dish_id
+    if (output / "review.json").exists():
+        existing = json.loads((output / "review.json").read_text())
+        if existing.get("photo_id") == source["photo_id"] and existing.get("source_verified"):
+            print(f"EXISTING {dish_id}: previously staged, not overwriting")
+            return True
+        raise RuntimeError(f"{dish_id}: existing candidate differs; manual review is required")
+
+    photo_id = source["photo_id"]
+    image_url = f"https://images.pexels.com/photos/{photo_id}/pexels-photo-{photo_id}.jpeg"
+    request = Request(image_url, headers={
         "User-Agent": "FysenEditorialImageReview/1.0 (https://github.com/Paradispartiet/fysen)",
         "Accept": "image/jpeg,image/*;q=0.9",
     })
-    with urlopen(req, timeout=35) as response:
+    with urlopen(request, timeout=35) as response:
         content_type = response.headers.get("Content-Type", "")
         if not content_type.lower().startswith("image/"):
-            raise RuntimeError(f"Expected image content, received {content_type}")
+            raise RuntimeError(f"{dish_id}: expected image, got {content_type}")
         blob = response.read(MAX_BYTES + 1)
-    if len(blob) > MAX_BYTES:
-        raise RuntimeError("Source exceeds 30 MB limit")
-    if not blob.startswith(bytes.fromhex("ffd8ff")):
-        raise RuntimeError("Invalid JPEG header")
+    if len(blob) > MAX_BYTES or not blob.startswith(bytes.fromhex("ffd8ff")):
+        raise RuntimeError(f"{dish_id}: invalid JPEG or source exceeds 30 MB")
 
     original = Image.open(io.BytesIO(blob))
     original.load()
     original = original.convert("RGB")
     width, height = original.size
     if width < 1600 or height < 1600:
-        raise RuntimeError(f"Under-sized original {width}x{height}; required >= 1600x1600")
-    if [width, height] != SOURCE["advertised_native_size"]:
-        raise RuntimeError(f"Source size differs from licensed page: {width}x{height}")
+        raise RuntimeError(f"{dish_id}: source {width}x{height} below 1600x1600 minimum")
+    expected = source["expected_native_size"]
+    if expected and [width, height] != expected:
+        raise RuntimeError(f"{dish_id}: {width}x{height} does not match licensed page {expected}")
 
-    # Avoid mislabeled 'black background' images in source collection.
-    sample_points = [(5,5),(width-6,5),(5,height-6),(width-6,height-6)]
-    corners = [original.getpixel(point) for point in sample_points]
-    median_brightness = sorted(sum(rgb) / 3 for rgb in corners)[len(corners)//2]
-    if median_brightness > 68:
-        raise RuntimeError(f"Background needs review; corner median brightness={median_brightness:.1f}")
+    points = [(5,5),(width-6,5),(5,height-6),(width-6,height-6)]
+    corners = [original.getpixel(point) for point in points]
+    corner_median = sorted(sum(rgb) / 3 for rgb in corners)[len(corners)//2]
+    if corner_median > 68:
+        raise RuntimeError(f"{dish_id}: corners not sufficiently dark ({corner_median:.1f}); review source")
 
-    OUTPUT.mkdir(parents=True, exist_ok=True)
-    (OUTPUT / "source.jpeg").write_bytes(blob)
-    # Convert without spatial enlargement. PNG retained for Fysen native
-    # pixel provenance; AVIF is transport only.
-    buffer = io.BytesIO()
-    original.save(buffer, format="PNG", optimize=True)
-    png = buffer.getvalue()
-    (OUTPUT / f"{DISH}.png").write_bytes(png)
-    original.save(OUTPUT / f"{DISH}-master-{width}.avif", format="AVIF", quality=88)
+    output.mkdir(parents=True, exist_ok=True)
+    (output / "source.jpeg").write_bytes(blob)
+    png_buffer = io.BytesIO()
+    original.save(png_buffer, format="PNG", optimize=True)
+    png = png_buffer.getvalue()
+    (output / f"{dish_id}.png").write_bytes(png)
+    original.save(output / f"{dish_id}-master-{width}.avif", format="AVIF", quality=88)
     original.thumbnail((256,256), Image.Resampling.LANCZOS)
-    original.save(OUTPUT / f"{DISH}-thumb-256.avif", format="AVIF", quality=83)
+    original.save(output / f"{dish_id}-thumb-256.avif", format="AVIF", quality=83)
 
-    manifest = {
-        **SOURCE,
+    metadata = {
+        **source,
+        "original_url": image_url,
+        "license": LICENSE,
+        "license_url": LICENSE_URL,
         "actual_native_size": [width, height],
         "original_jpeg_sha256": sha256(blob),
         "retained_png_sha256": sha256(png),
         "file_names": [
-            "source.jpeg", f"{DISH}.png", f"{DISH}-master-{width}.avif", f"{DISH}-thumb-256.avif"
+            "source.jpeg", f"{dish_id}.png",
+            f"{dish_id}-master-{width}.avif", f"{dish_id}-thumb-256.avif"
         ],
         "source_verified": True,
         "visual_review_completed": False,
         "approved_for_fysen": False,
         "published": False,
-        "notice": "Generic editorial dish photograph, not an individual restaurant's serving.",
+        "notice": "Representative editorial dish photo, not any named restaurant's serving.",
     }
-    (OUTPUT / "review.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2)+"\n")
-    print(f"STAGED {DISH}: {width}x{height}; originals and AVIFs retained; NOT APPROVED / NOT PUBLISHED")
+    (output / "review.json").write_text(json.dumps(metadata, ensure_ascii=False, indent=2)+"\n")
+    print(f"STAGED {dish_id}: {width}x{height}; not approved / not published")
+    return True
 
 if __name__ == "__main__":
-    main()
+    successful = 0
+    for source in SOURCES:
+        try:
+            if stage(source):
+                successful += 1
+        except Exception as exc:
+            print(f"UNAPPROVED {source['dish_id']}: {type(exc).__name__}: {exc}")
+    if not successful:
+        raise SystemExit("No qualified candidates staged")
+    print(f"Staged or retained {successful}/{len(SOURCES)} candidates; none are approved automatically.")
