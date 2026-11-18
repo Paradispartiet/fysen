@@ -74,8 +74,8 @@ export const cuisineAtlasAreas: Readonly<Record<string, readonly CuisineAreaIden
   "Mexicansk": [
     { name: "Sentralmeksikansk", illustration: "taco", sourceRegion: "Sentral-Mexico", examples: ["Tacos al pastor","Tlacoyo"] },
     { name: "Oaxacansk", illustration: "chili", examples: ["Mole negro","Tlayuda"] },
-    { name: "Yucatansk", illustration: "orange", sourceRegion: "Yucatán", examples: ["Cochinita pibil","Sopa de lima"] },
-    { name: "Jaliscansk", illustration: "curry", sourceRegion: "Jalisco", examples: ["Birria","Torta ahogada"] },
+    { name: "Yucatansk", flagFile: "Flag of Yucatan.svg", flagRegion: "Yucatán", sourceRegion: "Yucatán", examples: ["Cochinita pibil","Sopa de lima"] },
+    { name: "Jaliscansk", flagFile: "Flag of Jalisco.svg", flagRegion: "Jalisco", sourceRegion: "Jalisco", examples: ["Birria","Torta ahogada"] },
     { name: "Pueblansk", illustration: "chili", examples: ["Mole poblano","Chiles en nogada"] },
     { name: "Veracruzansk", illustration: "fish", examples: ["Pescado a la veracruzana"] },
     { name: "Baja California", illustration: "fish", sourceRegion: "Baja", examples: ["Fish taco","Shrimp taco"] },
