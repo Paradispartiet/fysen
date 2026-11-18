@@ -1,6 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { createDatabasePool } from "../packages/database/dist/index.js";
+import { getProductionMenuFreshnessIssue } from "./production-menu-freshness.mjs";
 
 const catalogDirectory = path.resolve("apps/menu-worker/catalog");
 const acceptedWatchOutcomes = new Set(["changed", "unchanged", "not_modified"]);
@@ -158,19 +159,11 @@ async function reconcileProduction(pool, manifests) {
     if (rows.length !== 1) continue;
     const row = rows[0];
     const reasons = [];
-    const lastCheckedAt = row.last_checked_at ? new Date(row.last_checked_at) : null;
-    const checkIntervalMinutes = Number(row.check_interval_minutes ?? 0);
     const itemCount = Number(row.item_count ?? 0);
-
-    if (!lastCheckedAt || Number.isNaN(lastCheckedAt.getTime())) {
-      reasons.push("canonical menu source has never been checked");
-    } else if (!Number.isFinite(checkIntervalMinutes) || checkIntervalMinutes <= 0) {
-      reasons.push("canonical menu source has an invalid check interval");
-    } else {
-      const freshForMinutes = Math.max(checkIntervalMinutes * 3, 1_440);
-      const freshUntil = lastCheckedAt.getTime() + freshForMinutes * 60_000;
-      if (now > freshUntil) reasons.push(`canonical menu source is stale since ${new Date(freshUntil).toISOString()}`);
-    }
+    const freshnessIssue = getProductionMenuFreshnessIssue(
+      row.last_checked_at, row.check_interval_minutes, now,
+    );
+    if (freshnessIssue) reasons.push(freshnessIssue);
 
     if (!row.snapshot_id) reasons.push("canonical menu source has no published snapshot");
     if (itemCount < manifest.minimumExpectedItems) {

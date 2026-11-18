@@ -3,6 +3,7 @@ import path from "node:path";
 import { createDatabasePool, searchDishes } from "../packages/database/dist/index.js";
 import { normalizeDishName } from "../packages/menu-core/dist/index.js";
 import { hasServerRenderedLiveDishBrowse } from "./production-pilot-proof-html.mjs";
+import { getProductionMenuFreshnessIssue } from "./production-menu-freshness.mjs";
 
 const catalogDirectory = path.resolve("apps/menu-worker/catalog");
 const acceptedWatchOutcomes = new Set(["changed", "unchanged", "not_modified"]);
@@ -122,17 +123,10 @@ async function verifyCatalogMaterialization(pool, manifests) {
     if (!row.menu_source_id) reasons.push("canonical menu source is not materialized");
     if (row.menu_source_enabled !== true) reasons.push("canonical menu source is disabled");
 
-    const lastCheckedAt = row.last_checked_at ? new Date(row.last_checked_at) : null;
-    const checkIntervalMinutes = Number(row.check_interval_minutes ?? 0);
-    if (!lastCheckedAt || Number.isNaN(lastCheckedAt.getTime())) {
-      reasons.push("canonical menu source has never been checked");
-    } else if (!Number.isFinite(checkIntervalMinutes) || checkIntervalMinutes <= 0) {
-      reasons.push("canonical menu source has an invalid check interval");
-    } else {
-      const freshForMinutes = Math.max(checkIntervalMinutes * 3, 1_440);
-      const freshUntil = lastCheckedAt.getTime() + freshForMinutes * 60_000;
-      if (now > freshUntil) reasons.push(`canonical menu source is stale since ${new Date(freshUntil).toISOString()}`);
-    }
+    const freshnessIssue = getProductionMenuFreshnessIssue(
+      row.last_checked_at, row.check_interval_minutes, now,
+    );
+    if (freshnessIssue) reasons.push(freshnessIssue);
 
     if (!row.snapshot_id) reasons.push("canonical menu source has no published snapshot");
     const itemCount = Number(row.item_count ?? 0);
@@ -153,7 +147,7 @@ async function verifyCatalogMaterialization(pool, manifests) {
       name: row.restaurant_name,
       sourceUrl: manifest.sourceUrl,
       itemCount,
-      lastCheckedAt: lastCheckedAt.toISOString(),
+      lastCheckedAt: new Date(row.last_checked_at).toISOString(),
       snapshotFetchedAt: new Date(row.snapshot_fetched_at).toISOString(),
       latestWatchOutcome: row.latest_watch_outcome,
       latestWatchStartedAt: new Date(row.latest_watch_started_at).toISOString(),
