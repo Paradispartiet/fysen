@@ -73,7 +73,7 @@ test("UI preserves country/region-only flag tiles and renders standalone food-ty
   assert.match(source, /foodTypesForCuisine\(selectedCuisine\.name\)/u);
   assert.match(source, /matchingCuisineFoodType\(selectedCuisine\.name, dish\.label, selectedFoodType\)/u);
   assert.match(source, /setSelectedTypeName\(type\.name\)/u);
-  assert.match(source, /setSelectedTypeName\("")/u);
+  assert.ok(source.includes('setSelectedTypeName("")'));
   assert.match(source, /availableFoodTypes\.map/u);
   assert.match(source, /selectedArea\.flagFile && !selectedFoodType/u);
   assert.match(source, /<FoodIllustration name=\{type\.illustration\}/u);
