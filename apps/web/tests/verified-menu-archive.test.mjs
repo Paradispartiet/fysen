@@ -151,17 +151,28 @@ test("archive browse offers historical dishes without quarantined restaurants", 
   assert.deepEqual(archiveModule.browseArchivedMenuDishes(archive, "Oslo", 0), []);
 });
 
-test("a successful empty live API response still exposes the historical menu route", () => {
+test("public Oslo discovery reads the verified archive before any database-backed API", () => {
   const search = readFileSync(new URL("../app/search/page.tsx", import.meta.url), "utf8");
   const home = readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
-  const preview = readFileSync(new URL("../components/static-preview-search-page.tsx", import.meta.url), "utf8");
+  const explorer = readFileSync(new URL("../components/cuisine-explorer.tsx", import.meta.url), "utf8");
   const archivedView = readFileSync(new URL("../components/verified-menu-archive-view.tsx", import.meta.url), "utf8");
-  assert.match(search, /browseState\.data\?\.dishes\.length === 0/u);
-  assert.match(search, /data\?\.results\.length === 0/u);
+
+  // Relevance search in Oslo and no-query browse use the checked public archive.
+  // A real zero-match response does NOT trigger an old-DB fallback.
+  assert.match(search, /const archivePreferred = city\.toLocaleLowerCase\("nb-NO"\) === "oslo" && sort === "relevance"/u);
+  assert.match(search, /archive = await getPublicMenuArchive\(\)/u);
+  assert.match(search, /archivePreferred \? \{ data: null, error: archiveError \} : await loadBrowse\(city\)/u);
+  assert.match(search, /: archivePreferred\s*\? \{ data: null, error: archiveError \}\s*: await loadResults/u);
+  assert.doesNotMatch(search, /primaryUnavailable/u);
   assert.match(search, /archive=\{archive\}/u);
-  assert.match(home, /browseData\.dishes\.length === 0/u);
-  assert.match(preview, /response\.browse\?\.dishes\.length === 0/u);
-  assert.match(preview, /response\.search\?\.results\.length === 0/u);
+
+  // The homepage no longer calls the old read API, including on archive errors.
+  assert.doesNotMatch(home, /await browseDishes\(/u);
+  assert.match(home, /<CuisineExplorer browseData=\{null\} archiveCoverage=\{archiveCoverage\} archiveOnly \/>/u);
+  assert.match(explorer, /if \(archiveOnly \|\| browseData \|\| archiveCoverage\) return;/u);
+  assert.match(explorer, /previewBrowseFailed \|\| archiveUnavailable/u);
+
+  // Keep a real dish-and-restaurant view and source links for archived results.
   assert.match(archivedView, /browseArchivedMenuDishes\(archive, city, 48\)/u);
   assert.match(archivedView, /Alle retter i \{city\}/u);
   assert.match(archivedView, /Finn retten/u);
