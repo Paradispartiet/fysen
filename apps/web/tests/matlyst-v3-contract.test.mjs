@@ -89,9 +89,10 @@ test("Alle retter beholder den flate 19-kjøkkenkatalogen", () => {
   assert.ok(activeNames.includes("Levantinsk"));
 });
 
-test("Midtøsten er bare en opprinnelig Matlyst-gruppe, ikke et aggregert Alle retter-kjøkken", () => {
+test("Midtøsten ligger i hovedatlaset, mens den eldre 19-kjøkkenkatalogen bevares", () => {
   assert.ok(!explorerData.cuisines.some((cuisine) => cuisine.name === "Midtøsten"));
   assert.ok(explorerData.homeCuisines.some((cuisine) => cuisine.name === "Midtøsten"));
+  assert.equal(explorerData.cuisines.length, 19);
 });
 
 test("Matlyst-forsiden beholder de seks opprinnelige kortene foran seks nye", () => {
