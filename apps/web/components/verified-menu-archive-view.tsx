@@ -2,6 +2,8 @@ import { cuisines, discoveryDishesForCuisine } from "./cuisine-explorer-data";
 import { dishSearchHref, foodKnowledgeHref, withPublicBasePath } from "../lib/public-path";
 import { browseArchivedMenuDishes, type ArchivedMenuMatch, type PublicMenuArchive } from "../lib/verified-menu-archive";
 import styles from "./verified-menu-archive-view.module.css";
+import { FoodIllustration } from "./food-illustration";
+import { illustrationForDishName } from "./food-illustration-match";
 
 function priceLabel(priceMinor: number | null, priceMaxMinor: number | null, kind: string): string {
   if (priceMinor === null) return "Pris ikke oppgitt";
@@ -34,7 +36,12 @@ export function ArchivedMenuResults({
           {results.map((result, index) => (
             <article className={styles.result} key={result.restaurantSlug + ":" + result.name + ":" + index}>
               <div className={styles.resultHeading}>
-                <h4>{result.name}</h4>
+                <div className={styles.dishNameWithArtwork}>
+                  {illustrationForDishName(result.name) ? (
+                    <FoodIllustration name={illustrationForDishName(result.name)!} className={styles.dishArtwork ?? ""} size={42} />
+                  ) : null}
+                  <h4>{result.name}</h4>
+                </div>
                 <strong>{priceLabel(result.priceMinor, result.priceMaxMinor, result.priceKind)}</strong>
               </div>
               <p className={styles.restaurant}>{result.restaurantName}</p>
@@ -91,7 +98,12 @@ export function ArchivedMenuBrowse({
             {suggestions.map(({ areaName, dish }) => (
               <article className={styles.suggestion} key={dish.id}>
                 <p className={styles.meta}>{areaName}</p>
-                <h3>{dish.label}</h3>
+                <div className={styles.dishNameWithArtwork}>
+                  {illustrationForDishName(dish.label) ? (
+                    <FoodIllustration name={illustrationForDishName(dish.label)!} className={styles.dishArtwork ?? ""} size={42} />
+                  ) : null}
+                  <h3>{dish.label}</h3>
+                </div>
                 <div className={styles.links}>
                   <a href={dishSearchHref(dish.query, city)}>Finn retten</a>
                   {dish.hasKnowledge ? (
@@ -109,7 +121,12 @@ export function ArchivedMenuBrowse({
           <div className={styles.dishList}>
             {archivedDishes.map((dish) => (
               <article className={styles.suggestion} key={dish.query}>
-                <h3>{dish.name}</h3>
+                <div className={styles.dishNameWithArtwork}>
+                  {illustrationForDishName(dish.name) ? (
+                    <FoodIllustration name={illustrationForDishName(dish.name)!} className={styles.dishArtwork ?? ""} size={42} />
+                  ) : null}
+                  <h3>{dish.name}</h3>
+                </div>
                 <p className={styles.meta}>{dish.restaurantCount} {dish.restaurantCount === 1 ? "restaurant" : "restauranter"}</p>
                 <a href={dishSearchHref(dish.query, city)}>Finn retten</a>
               </article>
