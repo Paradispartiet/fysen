@@ -34,7 +34,7 @@
   "qualityAssertions": {
     "requiredDishNames": [
       "Kremost 100 G",
-      "Eple",
+      "Syltetøy",
       "Bagel 6-Pakk",
       "Bagel Combo",
       "Kremost Combo",
@@ -48,7 +48,7 @@
         "priceMinor": 7500
       },
       {
-        "name": "Eple",
+        "name": "Syltetøy",
         "priceMinor": 11000
       },
       {

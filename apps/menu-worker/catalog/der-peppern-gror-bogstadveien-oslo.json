@@ -11,16 +11,14 @@
     "longitude": 10.72481
   },
   "menuSource": {
-    "url": "https://akerbrygge.derpepperngror.no/meny-norsk/",
+    "url": "https://derpepperngror.no/aker-brygge/meny/",
     "sourceType": "html",
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
     "minimumExpectedItems": 30,
     "sourceSupport": {
-      "redirectOrigins": [
-        "https://derpepperngror.no"
-      ],
+      "redirectOrigins": [],
       "browserDataOrigins": [],
       "browserBlockedOrigins": []
     }
@@ -29,7 +27,7 @@
     "hours": {
       "status": "unverified",
       "checkedAt": "2026-10-13",
-      "note": "2026-10-13: Operator confirms Bogstadveien location closed/moved to Der Peppern Gror Aker Brygge, Bryggetorget 6. Official Aker Brygge HTML dine-in menu is the canonical source, distinct from Wolt delivery prices. Minimum 30 food items and eight source-priced representative dishes require exact live extraction proof. Coordinates 59.90954,10.72481 approximate map point, not surveyed entrance. Hours not verified. https://akerbrygge.derpepperngror.no/stengt/ ; https://akerbrygge.derpepperngror.no/meny-norsk/ ; https://mapcarta.com/N14125728410"
+      "note": "2026-10-13: Operator confirms Bogstadveien location closed/moved to Der Peppern Gror Aker Brygge, Bryggetorget 6. Official Aker Brygge HTML dine-in menu is the canonical source, distinct from Wolt delivery prices. Minimum 30 food items and eight source-priced representative dishes require exact live extraction proof. Coordinates 59.90954,10.72481 approximate map point, not surveyed entrance. Hours not verified. https://akerbrygge.derpepperngror.no/stengt/ ; https://derpepperngror.no/aker-brygge/meny/ ; https://mapcarta.com/N14125728410"
     }
   },
   "actions": [],
