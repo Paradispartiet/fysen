@@ -35,6 +35,7 @@ SOURCES = [
         "dish_id": "pasta-carbonara",
         "photo_id": 12116165,
         "source_page": "https://www.pexels.com/photo/spaghetti-carbonara-on-plate-12116165/",
+        "original_url": "https://images.pexels.com/photos/12116165/pexels-photo-12116165.png?cs=srgb&fm=jpg",
         "photographer": "Froimar Andrea Rodriguez",
         "expected_native_size": None,
         "variant_note": "Pasta carbonara with bacon and cheese; verify before publishing.",
@@ -58,7 +59,7 @@ def stage(source: dict) -> bool:
         raise RuntimeError(f"{dish_id}: existing candidate differs; manual review is required")
 
     photo_id = source["photo_id"]
-    image_url = f"https://images.pexels.com/photos/{photo_id}/pexels-photo-{photo_id}.jpeg"
+    image_url = source.get("original_url") or f"https://images.pexels.com/photos/{photo_id}/pexels-photo-{photo_id}.jpeg"
     request = Request(image_url, headers={
         "User-Agent": "FysenEditorialImageReview/1.0 (https://github.com/Paradispartiet/fysen)",
         "Accept": "image/jpeg,image/*;q=0.9",
@@ -68,8 +69,14 @@ def stage(source: dict) -> bool:
         if not content_type.lower().startswith("image/"):
             raise RuntimeError(f"{dish_id}: expected image, got {content_type}")
         blob = response.read(MAX_BYTES + 1)
-    if len(blob) > MAX_BYTES or not blob.startswith(bytes.fromhex("ffd8ff")):
-        raise RuntimeError(f"{dish_id}: invalid JPEG or source exceeds 30 MB")
+    if len(blob) > MAX_BYTES:
+        raise RuntimeError(f"{dish_id}: source exceeds 30 MB")
+    if blob.startswith(bytes.fromhex("ffd8ff")):
+        source_name = "source.jpeg"
+    elif blob.startswith(bytes.fromhex("89504e470d0a1a0a")):
+        source_name = "source.png"
+    else:
+        raise RuntimeError(f"{dish_id}: invalid JPEG/PNG bytes")
 
     original = Image.open(io.BytesIO(blob))
     original.load()
@@ -88,7 +95,7 @@ def stage(source: dict) -> bool:
         raise RuntimeError(f"{dish_id}: corners not sufficiently dark ({corner_median:.1f}); review source")
 
     output.mkdir(parents=True, exist_ok=True)
-    (output / "source.jpeg").write_bytes(blob)
+    (output / source_name).write_bytes(blob)
     png_buffer = io.BytesIO()
     original.save(png_buffer, format="PNG", optimize=True)
     png = png_buffer.getvalue()
@@ -103,10 +110,10 @@ def stage(source: dict) -> bool:
         "license": LICENSE,
         "license_url": LICENSE_URL,
         "actual_native_size": [width, height],
-        "original_jpeg_sha256": sha256(blob),
+        "original_source_sha256": sha256(blob),
         "retained_png_sha256": sha256(png),
         "file_names": [
-            "source.jpeg", f"{dish_id}.png",
+            source_name, f"{dish_id}.png",
             f"{dish_id}-master-{width}.avif", f"{dish_id}-thumb-256.avif"
         ],
         "source_verified": True,
