@@ -76,6 +76,30 @@ storvisningsoriginaler er godkjent etter den nye porten. Eksisterende
 768px-komposisjonsutsnitt må produseres på nytt i tilstrekkelig detalj.
 
 
+### Runway 2K-kandidater – 18. november 2026
+
+Fire separate kvadratiske 2K-bilder er **generert i Runway** og ligger i
+Runway-arbeidsområdet. Dette er **kandidater**, ikke godkjente originaler,
+fordi original-PNG-bytene foreløpig ikke er hentet inn for inspeksjon,
+signering, AVIF-eksport eller GitHub-import.
+
+| Rett-ID | Runway oppgave-ID | Produksjon | Kvalitetsstatus |
+| --- | --- | --- | --- |
+| `sushi` | `e1d7351c-4a37-4128-8b85-4e677038e573` | 2K ferdig | Ikke godkjent |
+| `ramen` | `222648db-5176-4a06-a4d6-0a953c904cf6` | 2K ferdig | Ikke godkjent |
+| `pasta-carbonara` | `0377dcbe-bfcc-402b-8660-5df178ca1d27` | 2K ferdig | Ikke godkjent |
+| `butter-chicken` | `25b56078-95c1-4316-b604-881ea5c0d17d` | 2K ferdig | Ikke godkjent |
+
+Neste obligatoriske kontroll er å hente original-PNG fra Runway og
+verifisere **faktisk bildeoppløsning ved dekoding** (minst 1600 × 1600),
+hel svart bakgrunn, riktig rett, synlig naturlig detalj i stor størrelse
+og ingen utilsiktet oppskalering. Bare godkjente originaler kan
+konverteres til AVIF, arkiveres med originalhash og føres inn med
+`scripts/import-dish-large-master.mjs`.
+
+**Ingen bilder er merget til `main` eller publisert på grunnlag av
+disse oppgavene.** Ingen signerte Runway-URL-er lagres i GitHub.
+
 ### Før du konverterer en ny bildefil
 
 Kontroller **PNG-originalen først**. Dermed kan vi stoppe uegnede
