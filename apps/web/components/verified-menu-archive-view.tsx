@@ -85,6 +85,27 @@ export function ArchivedMenuBrowse({
           .filter(({ dish }) => !selectedItalianType || matchesItalianFoodType(dish.label, selectedItalianType))
       : discoveryDishesForCuisine(selectedCuisine.name)
     : [];
+  // Regional traditions do not necessarily list every Italian food family.
+  // Add bounded, labeled food-type suggestions without claiming restaurant availability
+  // or attributing the dish to a specific Italian region.
+  const supplementalItalianTypeDishes = selectedItalianType
+    ? selectedItalianType.dishNames
+        .filter((label) => !suggestions.some(({ dish }) =>
+          dish.label.toLocaleLowerCase("nb") === label.toLocaleLowerCase("nb")
+        ))
+        .map((label, index) => ({
+          areaName: "Italiensk mattype",
+          dish: {
+            id: `archived-italian-${selectedItalianType.name.toLowerCase().replace(/[^a-z]+/gu, "-")}-${index}`,
+            label,
+            query: label,
+            aliases: [] as readonly string[],
+            hasKnowledge: false,
+            explorerPriority: 0,
+          },
+        }))
+    : [];
+  const visibleSuggestions = [...suggestions, ...supplementalItalianTypeDishes];
   const archivedDishes = selectedCuisine ? [] : browseArchivedMenuDishes(archive, city, 48);
 
   function cuisineHref(name: string, option?: { readonly region?: string; readonly mat?: string }): string {
@@ -191,7 +212,7 @@ export function ArchivedMenuBrowse({
             </p>
           ) : null}
           <div className={styles.dishList}>
-            {suggestions.map(({ areaName, dish }) => (
+            {visibleSuggestions.map(({ areaName, dish }) => (
               <article className={styles.suggestion} key={dish.id}>
                 <p className={styles.meta}>{areaName}</p>
                 <div className={styles.dishNameWithArtwork}>
