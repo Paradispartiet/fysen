@@ -4,6 +4,8 @@ import { formatDishPrice } from "../lib/dish-price";
 import { priceProvenanceLabel } from "../lib/price-provenance";
 import { restaurantClaimHref } from "../lib/public-path";
 import { DishComposition } from "./dish-composition";
+import { FoodIllustration } from "./food-illustration";
+import { illustrationForDishName } from "./food-illustration-match";
 import { SaveMinMatButton } from "./save-min-mat-button";
 import styles from "./dish-result.module.css";
 import { TrackedExternalLink } from "./tracked-external-link";
@@ -37,7 +39,16 @@ export function DishResult({ result }: { result: DishSearchResult }) {
     <article className="dishResult">
       <div className="dishResultTopline">
         <div className="dishResultIdentity">
-          <h2>{result.dish.name}</h2>
+          <div className={styles.dishNameWithArtwork}>
+            {illustrationForDishName(result.dish.name) ? (
+              <FoodIllustration
+                name={illustrationForDishName(result.dish.name)!}
+                className={styles.dishArtwork}
+                size={48}
+              />
+            ) : null}
+            <h2>{result.dish.name}</h2>
+          </div>
           {result.match.type === "fuzzy" ? (
             <p className={styles.fuzzyNotice ?? ""}>Lignende rett – kontroller menyen</p>
           ) : null}
