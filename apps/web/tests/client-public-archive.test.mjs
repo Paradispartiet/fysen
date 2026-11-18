@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { Buffer } from "node:buffer";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
+import { URL } from "node:url";
 import ts from "typescript";
 
 const source = readFileSync(new URL("../lib/client-public-archive.ts", import.meta.url), "utf8")
