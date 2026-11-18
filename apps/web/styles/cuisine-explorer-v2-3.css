@@ -664,3 +664,14 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+.cuisineExploreDialogFooter a {
+  display: block;
+  width: fit-content;
+  margin-top: 8px;
+  color: var(--color-soft);
+  text-underline-offset: 2px;
+}
+.cuisineExploreDialogFooter a:hover {
+  color: var(--color-brand);
+}
