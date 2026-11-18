@@ -1,0 +1,34 @@
+name: Fysen promote butter chicken full-size master
+on:
+  push:
+    branches: [art/approved-butter-chicken-black-master-20261118]
+    paths: [".github/workflows/fysen-promote-butter-chicken.yml"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  promote:
+    if: "!contains(github.event.head_commit.message, '[photo-promote-bot]')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install photo codecs
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0 pillow-avif-plugin==1.5.2
+      - name: Produce reviewed source, AVIF and 512px thumb
+        run: python scripts/promote-reviewed-butter-chicken.py
+      - name: Verify native-size and gallery
+        run: node --test apps/web/tests/dish-image-large-view-quality.test.mjs apps/web/tests/dish-photo-gallery.test.mjs apps/web/tests/home-discovery-refresh.test.mjs
+      - name: Commit reviewed asset to branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-dish-originals/butter-chicken.png apps/web/public/dish-images/butter-chicken-master-3000.avif apps/web/public/dish-images/butter-chicken-thumb-512.avif apps/web/public/dish-images/manifest.json docs/fysen-image-reviews/butter-chicken.md
+          git diff --cached --quiet && exit 0
+          git commit -m "[photo-promote-bot] Integrate native butter chicken full-size photo"
+          git push origin HEAD:"$GITHUB_REF_NAME"
