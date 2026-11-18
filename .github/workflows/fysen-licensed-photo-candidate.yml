@@ -44,6 +44,17 @@ jobs:
               assert not Path("apps/web/public/dish-images/" + a["dish_id"] + "-master-" + str(a["actual_native_size"][0]) + ".avif").exists()
           print("CANDIDATES ONLY:", len(roots), "safely staged, none publicly referenced")
           PY
+      - name: Bundle candidate originals for visual QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-photo-candidates-visual-qa
+          path: |
+            assets/fysen-image-candidates/*/source.jpeg
+            assets/fysen-image-candidates/*/source.png
+            assets/fysen-image-candidates/*/review.json
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 6
       - name: Commit staged files to the same draft PR
         run: |
           git config user.name "github-actions[bot]"
