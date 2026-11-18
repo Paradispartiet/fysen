@@ -231,6 +231,26 @@ describe("Free Fysen one-source refresh", () => {
     expect(selectBoundedFreeRefreshEntries(candidates, 2).length).toBe(2);
   });
 
+  it("tries a revised menu proof before older unchanged and unhashed failures", () => {
+    const candidates = [
+      [0, { menuSource: { fetchMode: "http" as const } }],
+      [1, { menuSource: { fetchMode: "http" as const } }],
+      [2, { menuSource: { fetchMode: "http" as const } }],
+    ] as const;
+    const now = Date.parse("2026-11-18T10:00:00Z");
+    const failures: Record<string, FreeSourceFailure> = {
+      "0": { code: "quality", consecutive: 2, lastFailedAt: "2026-11-16T10:00:00Z", sourceProofHash: "same" },
+      "1": { code: "quality", consecutive: 1, lastFailedAt: "2026-11-17T01:00:00Z" },
+      "2": { code: "quality", consecutive: 2, lastFailedAt: "2026-11-18T09:00:00Z", sourceProofHash: "old" },
+    };
+    const ordered = prioritizeOneRecoverableFreeQualityFailure(candidates, failures, now, {
+      "0": "same", "1": "legacy", "2": "new",
+    });
+
+    expect(ordered.map(([i]) => i)).toEqual([2, 0, 1]);
+    expect(selectBoundedFreeRefreshEntries(ordered, 1)).toEqual([candidates[2]]);
+  });
+
   it("classifies provider failures without storing raw provider responses", () => {
     expect(classifyFreeSourceFailure(new Error("Menu fetch returned HTTP 404"))).toBe("http-404");
     expect(classifyFreeSourceFailure(new Error("HTTP 403 denied"))).toBe("http-error");
