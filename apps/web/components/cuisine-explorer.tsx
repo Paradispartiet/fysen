@@ -21,6 +21,7 @@ import {
 } from "./cuisine-explorer-data";
 import { italianFoodTypes, regionalFlagUrl } from "./cuisine-explorer-taxonomy";
 import { FoodIllustration } from "./food-illustration";
+import { matchesItalianFoodType } from "./italian-food-type-filter";
 
 type DishCoverage = {
   readonly dish: DishSuggestion;
@@ -230,7 +231,7 @@ export function CuisineExplorer({
     if (!selectedArea || !selectedCuisine) return [];
     const matchingDishes = selectedItalianType
       ? cuisineCandidates(selectedCuisine).filter((dish) =>
-          selectedItalianType.dishNames.some((name) => name.toLocaleLowerCase("nb") === dish.label.toLocaleLowerCase("nb"))
+          matchesItalianFoodType(dish.label, selectedItalianType)
         )
       : selectedArea.dishes;
     return rankDishCoverage(matchingDishes.map((dish) =>
