@@ -32,6 +32,14 @@ SOURCES = [
         "variant_note": "Ramen with pork, egg, and scallions; verify non-vegetarian variant.",
     },
     {
+        "dish_id": "butter-chicken",
+        "photo_id": 9609844,
+        "source_page": "https://www.pexels.com/photo/stainless-steel-bowl-with-chicken-dish-9609844/",
+        "photographer": "Prabal Pratap Singh",
+        "expected_native_size": [4608, 3456],
+        "variant_note": "Butter chicken curry with visible chicken, cream and herbs; verify black presentation, not tikka masala or paneer.",
+    },
+    {
         "dish_id": "pasta-carbonara",
         "photo_id": 12116165,
         "source_page": "https://www.pexels.com/photo/spaghetti-carbonara-on-plate-12116165/",
