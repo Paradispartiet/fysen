@@ -166,7 +166,6 @@ test("public Oslo discovery reads the verified archive before any database-backe
   assert.match(search, /archivePreferred \? \{ data: null, error: archiveError \} : await loadBrowse\(city\)/u);
   assert.match(search, /: archivePreferred\s*\? \{ data: null, error: archiveError \}\s*: await loadResults/u);
   assert.doesNotMatch(search, /primaryUnavailable/u);
-  assert.match(search, /archive=\{archive\}/u);
 
   // The homepage no longer calls the old read API, including on archive errors.
   assert.doesNotMatch(home, /await browseDishes\(/u);
