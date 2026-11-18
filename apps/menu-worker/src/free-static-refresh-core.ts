@@ -186,6 +186,7 @@ export function prioritizeOneRecoverableFreeQualityFailure<T>(
   sourceProofHashes: Readonly<Record<string, string>> = {},
 ): [number, T][] {
   let chosen: [number, T] | null = null;
+  let chosenHasRevisedProof = false;
   let oldestFailedAt = Number.POSITIVE_INFINITY;
   for (const [sourceIndex, entry] of ordered) {
     const failure = failures[String(sourceIndex)];
@@ -208,8 +209,14 @@ export function prioritizeOneRecoverableFreeQualityFailure<T>(
     // subsequent failed attempt records the current hash and honors backoff.
     if (!Number.isFinite(elapsed) || elapsed < 0 ||
         (!correctedProof && elapsed < retryAfterMillis)) continue;
-    if (failedAt < oldestFailedAt) {
+    // Give an explicitly revised proof the one retry slot before an unchanged
+    // failure whose backoff has elapsed. Older unhashed failures still get
+    // their legacy retry, with the same priority as unchanged proofs.
+    const revisedProof = correctedProof && failure.sourceProofHash !== undefined;
+    if ((revisedProof && !chosenHasRevisedProof) ||
+        (revisedProof === chosenHasRevisedProof && failedAt < oldestFailedAt)) {
       chosen = [sourceIndex, entry];
+      chosenHasRevisedProof = revisedProof;
       oldestFailedAt = failedAt;
     }
   }
