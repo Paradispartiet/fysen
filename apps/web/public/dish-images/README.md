@@ -76,6 +76,30 @@ storvisningsoriginaler er godkjent etter den nye porten. Eksisterende
 768px-komposisjonsutsnitt må produseres på nytt i tilstrekkelig detalj.
 
 
+### Lisensierte fotografier – ny godkjent original (18. november 2026)
+
+**Sushi assortert** er første fullstendig innleste stororiginal uten Runway.
+Den opprinnelige Pexels-kilden fra Mony Cruz er 3000 × 3000 piksler.
+Et visuelt kontrollert, ikke-oppskalert **2100 × 2100-utsnitt** er
+arkivert i `assets/fysen-dish-originals/sushi.png`, og
+`sushi-master-2100.avif` ligger i appens bildemappe. Den kompakte
+oversikten bruker separat `sushi-thumb-512.avif`. Kilde, lisens og
+sjekksummer er dokumentert i `docs/fysen-image-reviews/sushi.md`
+og `manifest.json`.
+
+**Storvisningsregelen er nå selektiv, ikke svekket:** Bare retter med
+`largeViewEnabled: true` og en dokumentert original på minst 1600
+kildepiksler kan vises store. De øvrige 43 rettene forblir
+**miniatyrbilder** og må ikke forstørres til storvisning. CI
+kontrollerer alle retter som er aktivert for stor visning og blokkerer
+manglende original, falsk oppløsning, feil SHA og manglende kildevurdering.
+
+**Sushi:** 1/44 kvalifisert. **Ramen, pasta carbonara, butter chicken:**
+lisensierte kandidater i `assets/fysen-image-candidates/`, men ikke
+visuelt godkjent. Ramen har en brun/grå bakgrunn og mykt fokus,
+carbonara trenger en mer presis rett-/teksturvurdering, og butter chicken
+viser et bordmiljø som ikke er helsvart. Ingen av disse tre er promotert.
+
 ### Runway 2K-kandidater – 18. november 2026
 
 Fire separate kvadratiske 2K-bilder er **generert i Runway** og ligger i
