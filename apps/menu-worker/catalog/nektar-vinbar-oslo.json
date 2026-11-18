@@ -35,11 +35,11 @@
     "requiredDishNames": [
       "Ansjostoast",
       "Hallomø fra Skarrbo gård",
-      "Bakt blomkål med blomkål hummus og grønnkål",
+      "Gulrøtter, feta-krem, blodappelsin",
       "Sellerirot-pakora, rødbetedip",
-      "Gresskar fra Bergsmyrene gård, labneh, jalapeno, macadamia",
+      "Gresskar, labneh, jalapeno, macadamia",
       "Steinbit med karri-beurre blanc",
-      "Kylling fra Hovelsrud med sopp, sesongens blad-grønnsaker",
+      "Reinsdyr fra Finnmark, rødbeter, brunostsaus",
       "Sticky toffee pudding"
     ],
     "requiredDishVariants": [
@@ -52,7 +52,7 @@
         "priceMinor": 26500
       },
       {
-        "name": "Bakt blomkål med blomkål hummus og grønnkål",
+        "name": "Gulrøtter, feta-krem, blodappelsin",
         "priceMinor": 20500
       },
       {
@@ -60,7 +60,7 @@
         "priceMinor": 20500
       },
       {
-        "name": "Gresskar fra Bergsmyrene gård, labneh, jalapeno, macadamia",
+        "name": "Gresskar, labneh, jalapeno, macadamia",
         "priceMinor": 20500
       },
       {
@@ -68,8 +68,8 @@
         "priceMinor": 35000
       },
       {
-        "name": "Kylling fra Hovelsrud med sopp, sesongens blad-grønnsaker",
-        "priceMinor": 30500
+        "name": "Reinsdyr fra Finnmark, rødbeter, brunostsaus",
+        "priceMinor": 37500
       },
       {
         "name": "Sticky toffee pudding",
