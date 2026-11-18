@@ -58,7 +58,7 @@ export async function browsePublicArchiveClient(
   if (!Array.isArray(body.dishes) || !body.dishes.every((value: unknown) => {
     const dish = object(value);
     return validText(dish.name) && validText(dish.query) &&
-      Number.isInteger(dish.restaurantCount) && (dish.restaurantCount as number) >= 0;
+      typeof dish.restaurantCount === "number" && Number.isInteger(dish.restaurantCount) && dish.restaurantCount >= 0;
   })) {
     throw new Error("Invalid Fysen archive browse data");
   }
