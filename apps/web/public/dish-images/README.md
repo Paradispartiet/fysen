@@ -100,6 +100,36 @@ konverteres til AVIF, arkiveres med originalhash og føres inn med
 **Ingen bilder er merget til `main` eller publisert på grunnlag av
 disse oppgavene.** Ingen signerte Runway-URL-er lagres i GitHub.
 
+### Hente ferdige Runway-originaler (uten å publisere)
+
+Runway har fullført fire 2K-bildeoppgaver (se tabellen ovenfor).
+Bilde-URL-ene er signerte og skal ikke lagres i repo, issuekommentarer
+eller testlogger. For å hente en original i et utviklingsmiljø med
+nettverkstilgang: åpne den relevante Runway-oppgaven, kopier bildets
+signerte fil-URL, og kjør følgende i Bash:
+
+```bash
+read -rs RUNWAY_IMAGE_URL
+export RUNWAY_IMAGE_URL
+node scripts/stage-runway-dish-image.mjs sushi
+unset RUNWAY_IMAGE_URL
+```
+
+Lim inn den signerte URL-en i den usynlige `read`-prompten og trykk Enter.
+Bytt `sushi` mot manifestets eksakte rett-ID for neste bilde.
+Hentede kandidater lagres i **ignorerte** `.fysen-candidates/`,
+ikke i `public/` eller bildebiblioteket, og blir aldri automatisk
+godkjent. Skriptet avviser uventede verter, manglende PNG-signatur,
+ugyldige dimensjoner og større filer. Det oppgir SHA-256 og
+**faktiske pikselmål fra PNG-headeren**.
+
+Skriptet krever nettilgang og en gyldig signert fil-URL. ChatGPTs
+nåværende kontrollmiljø får ikke overført de signerte Runway-filene;
+disse fire bildekandidatene er derfor fortsatt **ikke** kontrollert
+eller integrert. Ikke marker dem som godkjent før originalfilen er
+hentet, avkodet, inspisert i stor visning og ført gjennom den vanlige
+importeren `scripts/import-dish-large-master.mjs`.
+
 ### Før du konverterer en ny bildefil
 
 Kontroller **PNG-originalen først**. Dermed kan vi stoppe uegnede
