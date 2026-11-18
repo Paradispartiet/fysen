@@ -152,6 +152,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
                 data={browseState.data}
                 error={browseState.error}
                 initialCuisineName={first(params.cuisine)}
+                initialAreaName={first(params.region)}
+                initialFoodTypeName={first(params.mat)}
               />
             )
           ) : (
