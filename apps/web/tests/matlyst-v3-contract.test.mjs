@@ -106,7 +106,7 @@ test("Matlyst-forsiden beholder de seks opprinnelige kortene foran seks nye", ()
   assert.deepEqual(explorerData.homeCuisines.slice(6).map((cuisine) => cuisine.name), [
     "Afrikansk", "Fransk", "Spansk", "Gresk", "Amerikansk", "Nordisk",
   ]);
-  assert.match(explorerSource, /homeCuisines\\.map/u);
+  assert.match(explorerSource, /homeCuisines\.map/u);
   assert.match(explorerSource, /className="cuisineGrid"/u);
   assert.match(explorerSource, /className="cuisineCard cuisineCardInteractive"/u);
   assert.match(explorerSource, /className="cuisineCardBrowseLabel"/u);
