@@ -94,8 +94,8 @@ test("Midtøsten er bare en opprinnelig Matlyst-gruppe, ikke et aggregert Alle r
   assert.ok(explorerData.homeCuisines.some((cuisine) => cuisine.name === "Midtøsten"));
 });
 
-test("Matlyst-forsiden er gjenopprettet til de seks opprinnelige kortene", () => {
-  assert.deepEqual(explorerData.homeCuisines.map((cuisine) => cuisine.name), [
+test("Matlyst-forsiden beholder de seks opprinnelige kortene foran seks nye", () => {
+  assert.deepEqual(explorerData.homeCuisines.slice(0, 6).map((cuisine) => cuisine.name), [
     "Asiatisk",
     "Indisk",
     "Fast food",
@@ -103,7 +103,10 @@ test("Matlyst-forsiden er gjenopprettet til de seks opprinnelige kortene", () =>
     "Midtøsten",
     "Mexicansk",
   ]);
-  assert.match(explorerSource, /homeCuisines\.map/u);
+  assert.deepEqual(explorerData.homeCuisines.slice(6).map((cuisine) => cuisine.name), [
+    "Afrikansk", "Fransk", "Spansk", "Gresk", "Amerikansk", "Nordisk",
+  ]);
+  assert.match(explorerSource, /homeCuisines\\.map/u);
   assert.match(explorerSource, /className="cuisineGrid"/u);
   assert.match(explorerSource, /className="cuisineCard cuisineCardInteractive"/u);
   assert.match(explorerSource, /className="cuisineCardBrowseLabel"/u);
