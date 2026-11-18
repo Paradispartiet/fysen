@@ -124,7 +124,7 @@ export function DishBrowse({
       .filter(({ dish }) => matchesText([dish.label, dish.query, ...dish.aliases], normalizedFilter))
       .map((entry) => ({
         ...entry,
-        restaurantCount: discoveryCoverage(data.dishes, suggestionDescriptor(entry.dish)).restaurantCount,
+        restaurantCount: discoveryCoverage(data.dishes, entry.dish).restaurantCount,
       }))
       .sort((left, right) => {
         const leftCovered = left.restaurantCount > 0 ? 1 : 0;
