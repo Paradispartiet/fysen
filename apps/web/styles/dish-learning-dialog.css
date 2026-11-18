@@ -351,3 +351,47 @@
     justify-content: center;
   }
 }
+
+/* Food knowledge miniatures use the same original transparent artwork as the atlas. */
+.dishKnowledgeTitleWithArtwork {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.dishKnowledgeTitleWithArtwork h2 {
+  min-width: 0;
+}
+.dishKnowledgeTitleArtwork {
+  display: block;
+  width: 68px;
+  height: 68px;
+  flex: 0 0 68px;
+  object-fit: contain;
+}
+.dishKnowledgeIngredientWithArt {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-left: -20px;
+}
+.dishKnowledgeIngredientArtwork {
+  display: block;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+@media (max-width: 500px) {
+  .dishKnowledgeTitleArtwork {
+    width: 52px;
+    height: 52px;
+    flex-basis: 52px;
+  }
+  .dishKnowledgeIngredientArtwork {
+    width: 24px;
+    height: 24px;
+    flex-basis: 24px;
+  }
+}
