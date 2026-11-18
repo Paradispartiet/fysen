@@ -237,7 +237,12 @@ export function CuisineExplorer({
 
   const featured = useMemo(() => {
     return new Map(homeCuisines.map((cuisine) => [
-      cuisine.name, featuredCoverage(cuisineCandidates(cuisine), liveDishes, isArchived ? archiveCoverage : null)
+      cuisine.name, featuredCoverage(
+        // Generic kebab matches should not mislabel a kebab house as an Indian restaurant.
+        cuisineCandidates(cuisine).filter((dish) => dish.id !== "kebab-india"),
+        liveDishes,
+        isArchived ? archiveCoverage : null,
+      )
     ]));
   }, [liveDishes, archiveCoverage, isArchived]);
 
