@@ -507,3 +507,160 @@
     scroll-snap-align: start;
   }
 }
+
+
+/* Cuisine atlas: one visual cue per country, region or food family. */
+.cuisineCardBrowseLabel {
+  display: block;
+  margin-top: 20px;
+  color: var(--color-soft);
+  font-size: 12px;
+  font-weight: 560;
+}
+
+.cuisineAreaList {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-content: start;
+  gap: 8px;
+  padding: 14px;
+}
+
+.cuisineAreaList button.cuisineAreaTile,
+.cuisineExploreAreas button.cuisineAreaTile {
+  display: flex;
+  min-width: 0;
+  min-height: 78px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 5px;
+  color: var(--color-ink);
+  background: rgba(121, 201, 135, 0.035);
+  border: 1px solid rgba(121, 201, 135, 0.19);
+  border-radius: 11px;
+  cursor: pointer;
+}
+
+.cuisineAreaTile > span:last-child {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-size: 11px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.cuisineAreaEmoji {
+  display: inline-grid;
+  min-height: 31px;
+  place-items: center;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.cuisineAreaFlag {
+  display: block;
+  width: 46px;
+  height: 31px;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
+.cuisineAreaList button.cuisineAreaTile:hover,
+.cuisineExploreAreas button.cuisineAreaTile:hover,
+.cuisineExploreAreas button.cuisineAreaTile.isActive {
+  color: #f3fff2;
+  border-color: rgba(121, 201, 135, 0.65);
+}
+
+.cuisineAreaList button.cuisineAreaSeeMore {
+  min-height: 78px;
+  padding: 9px 6px;
+  color: var(--color-brand);
+  border: 1px dashed rgba(121, 201, 135, 0.37);
+  border-radius: 11px;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 650;
+  background: transparent;
+  cursor: pointer;
+}
+
+.cuisineExploreAreas > .cuisineExploreAreaGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.cuisineExploreFoodTypes {
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(121, 201, 135, 0.16);
+}
+
+.cuisineExploreFoodTypes h3 {
+  margin: 0 0 12px;
+  color: var(--color-soft);
+  font-size: 11px;
+  font-weight: 620;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.cuisineExploreTypeGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.cuisineExploreTypeGrid button {
+  display: flex;
+  min-height: 74px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 6px;
+  color: var(--color-ink);
+  font: inherit;
+  background: rgba(121, 201, 135, 0.035);
+  border: 1px solid rgba(121, 201, 135, 0.19);
+  border-radius: 11px;
+  cursor: pointer;
+}
+
+.cuisineExploreTypeGrid button > span {
+  font-size: 27px;
+  line-height: 1;
+}
+
+.cuisineExploreTypeGrid button > strong {
+  font-size: 11px;
+  font-weight: 590;
+  text-align: center;
+}
+
+.cuisineExploreTypeGrid button:hover,
+.cuisineExploreTypeGrid button.isActive {
+  border-color: rgba(121, 201, 135, 0.65);
+  color: #f3fff2;
+}
+
+.cuisineAreaList button:focus-visible,
+.cuisineExploreTypeGrid button:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+@media (max-width: 767px) {
+  .cuisineExploreAreas > .cuisineExploreAreaGrid,
+  .cuisineExploreTypeGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 420px) {
+  .cuisineExploreAreas > .cuisineExploreAreaGrid,
+  .cuisineExploreTypeGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
