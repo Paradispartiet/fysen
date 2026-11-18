@@ -27,7 +27,7 @@ test("public menu archive uses only decorative local illustrations and retains s
 test("live menu results show original art without altering restaurant and price data", async () => {
   const source = await readFile(new URL("../components/dish-result.tsx", import.meta.url), "utf8");
   assert.match(source, /illustrationForDishName\(result\.dish\.name\)/u);
-  assert.match(source, /className=\{styles\.dishArtwork\}/u);
+  assert.match(source, /className=\{styles\.dishArtwork \?\? ""\}/u);
   assert.match(source, /result\.restaurant\.name/u);
   assert.match(source, /formatDishPrice\(result\.dish\)/u);
   assert.match(source, /result\.menu\.sourceUrl/u);
