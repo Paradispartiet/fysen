@@ -10,6 +10,8 @@ import {
 import { searchDishesClient } from "../lib/client-dish-search";
 import { formatDishPrice } from "../lib/dish-price";
 import { dishSearchHref } from "../lib/public-path";
+import { FoodIllustration } from "./food-illustration";
+import { illustrationForDishName, illustrationForIngredient } from "./food-illustration-match";
 
 function primaryRestaurantResults(results: readonly DishSearchResult[], limit: number): DishSearchResult[] {
   const seen = new Set<string>();
@@ -102,7 +104,16 @@ export function DishKnowledgeDialog({
 
           <header className="dishKnowledgeDialogHeader">
             <p className="dishKnowledgeDialogEyebrow">Fysen matleksikon · {dish.region}</p>
-            <h2 id="dish-knowledge-title">{dish.name}</h2>
+            <div className="dishKnowledgeTitleWithArtwork">
+              <h2 id="dish-knowledge-title">{dish.name}</h2>
+              {illustrationForDishName(dish.name) ? (
+                <FoodIllustration
+                  name={illustrationForDishName(dish.name)!}
+                  className="dishKnowledgeTitleArtwork"
+                  size={68}
+                />
+              ) : null}
+            </div>
             <p id="dish-knowledge-summary">{dish.summary}</p>
             <div className="dishKnowledgeRecipeMeta" aria-label="Oppskriftsinformasjon">
               <span>{dish.recipe.yield}</span>
@@ -154,7 +165,20 @@ export function DishKnowledgeDialog({
               <div>
                 <h4>Ingredienser</h4>
                 <ul className="dishKnowledgeList">
-                  {dish.recipe.ingredients.map((ingredient) => <li key={ingredient}>{ingredient}</li>)}
+                  {dish.recipe.ingredients.map((ingredient) => {
+                    const illustration = illustrationForIngredient(ingredient);
+                    return (
+                      <li
+                        key={ingredient}
+                        className={illustration ? "dishKnowledgeIngredientWithArt" : undefined}
+                      >
+                        {illustration ? (
+                          <FoodIllustration name={illustration} className="dishKnowledgeIngredientArtwork" size={28} />
+                        ) : null}
+                        <span>{ingredient}</span>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
               <div>
