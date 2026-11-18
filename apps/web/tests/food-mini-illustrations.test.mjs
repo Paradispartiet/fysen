@@ -35,3 +35,8 @@ test("known dishes get appropriate miniatures without treating imagery as menu p
   assert.equal(illustrationForDishName("Ramen"), "soup");
   assert.equal(illustrationForDishName("Doro wat"), null);
 });
+
+test("food artwork URLs respect the public base path in deployed previews", async () => {
+  const source = await readFile(new URL("../components/food-illustration.tsx", import.meta.url), "utf8");
+  assert.match(source, /withPublicBasePath\(foodIllustrationSrc\(name\)\)/u);
+});
