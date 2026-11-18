@@ -125,7 +125,7 @@ export function StaticPreviewSearchPage() {
             ) : loading || query === null ? (
               <p className="dishBrowseStatus">Henter retter …</p>
             ) : (
-              <SearchState title="Kunne ikke hente menyarkivet akkurat nå." />
+              <SearchState title="Kunne ikke hente rettene akkurat nå." />
             )
           ) : (
             <>
