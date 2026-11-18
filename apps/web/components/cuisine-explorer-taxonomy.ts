@@ -1,17 +1,19 @@
 /**
  * Fysen cuisine atlas. One identity per undercategory: national flag,
- * authentic regional flag, OR food symbol. Never combine them on a tile.
+ * authentic regional flag, OR original food illustration. Never combine them on a tile.
  *
  * The examples describe culinary traditions, not verified restaurant menu items.
  * Restaurant availability is calculated exclusively from the menu index.
  * Regional flag sources: Wikimedia Commons (see each file page for its license).
  */
+import type { FoodIllustrationName } from "./food-illustration-data";
+
 export type CuisineAreaIdentity = {
   readonly name: string;
   readonly flag?: string;
   readonly flagFile?: string;
   readonly flagRegion?: string;
-  readonly symbol?: string;
+  readonly illustration?: FoodIllustrationName;
   readonly sourceCuisine?: string;
   readonly sourceRegion?: string;
   readonly examples: readonly string[];
@@ -33,17 +35,17 @@ export const cuisineAtlasAreas: Readonly<Record<string, readonly CuisineAreaIden
     { name: "Myanmarsk", flag: "🇲🇲", examples: ["Mohinga","Lahpet thoke"] },
   ],
   "Indisk": [
-    { name: "Nordindisk", symbol: "🥘", sourceRegion: "Nord-India", examples: ["Butter chicken","Naan"] },
-    { name: "Sørindisk", symbol: "🥥", sourceRegion: "Sør-India", examples: ["Dosa","Idli"] },
-    { name: "Punjabi", symbol: "🫓", examples: ["Chole bhature","Dal makhani"] },
-    { name: "Hyderabadi", symbol: "🍚", sourceRegion: "Hyderabad", examples: ["Biryani","Haleem"] },
-    { name: "Goansk", symbol: "🐟", examples: ["Vindaloo","Goansk fiskecurry"] },
-    { name: "Keralisk", symbol: "🥥", examples: ["Appam","Keralisk fiskecurry"] },
-    { name: "Gujarati", symbol: "🥬", examples: ["Dhokla","Undhiyu"] },
-    { name: "Bengalsk", symbol: "🍛", examples: ["Shorshe ilish","Mishti doi"] },
-    { name: "Rajasthani", symbol: "🫓", examples: ["Dal baati churma"] },
-    { name: "Tamilsk", symbol: "🍛", examples: ["Pongal","Kothu parotta"] },
-    { name: "Kashmiri", symbol: "🍲", examples: ["Rogan josh"] },
+    { name: "Nordindisk", illustration: "curry", sourceRegion: "Nord-India", examples: ["Butter chicken","Naan"] },
+    { name: "Sørindisk", illustration: "coconut", sourceRegion: "Sør-India", examples: ["Dosa","Idli"] },
+    { name: "Punjabi", illustration: "flatbread", examples: ["Chole bhature","Dal makhani"] },
+    { name: "Hyderabadi", illustration: "rice", sourceRegion: "Hyderabad", examples: ["Biryani","Haleem"] },
+    { name: "Goansk", illustration: "fish", examples: ["Vindaloo","Goansk fiskecurry"] },
+    { name: "Keralisk", illustration: "coconut", examples: ["Appam","Keralisk fiskecurry"] },
+    { name: "Gujarati", illustration: "greens", examples: ["Dhokla","Undhiyu"] },
+    { name: "Bengalsk", illustration: "curry", examples: ["Shorshe ilish","Mishti doi"] },
+    { name: "Rajasthani", illustration: "flatbread", examples: ["Dal baati churma"] },
+    { name: "Tamilsk", illustration: "curry", examples: ["Pongal","Kothu parotta"] },
+    { name: "Kashmiri", illustration: "soup", examples: ["Rogan josh"] },
   ],
   "Italiensk": [
     { name: "Romersk", flagFile: "Flag of Lazio.svg", flagRegion: "Lazio", sourceRegion: "Roma", examples: ["Pizza al taglio"] },
@@ -70,26 +72,26 @@ export const cuisineAtlasAreas: Readonly<Record<string, readonly CuisineAreaIden
     { name: "Israelsk", flag: "🇮🇱", examples: ["Sabich","Jerusalem mixed grill"] },
   ],
   "Mexicansk": [
-    { name: "Sentralmeksikansk", symbol: "🌮", sourceRegion: "Sentral-Mexico", examples: ["Tacos al pastor","Tlacoyo"] },
-    { name: "Oaxacansk", symbol: "🌶️", examples: ["Mole negro","Tlayuda"] },
-    { name: "Yucatansk", symbol: "🍊", sourceRegion: "Yucatán", examples: ["Cochinita pibil","Sopa de lima"] },
-    { name: "Jaliscansk", symbol: "🥘", sourceRegion: "Jalisco", examples: ["Birria","Torta ahogada"] },
-    { name: "Pueblansk", symbol: "🌶️", examples: ["Mole poblano","Chiles en nogada"] },
-    { name: "Veracruzansk", symbol: "🐟", examples: ["Pescado a la veracruzana"] },
-    { name: "Baja California", symbol: "🐟", sourceRegion: "Baja", examples: ["Fish taco","Shrimp taco"] },
-    { name: "Nordmeksikansk", symbol: "🥩", examples: ["Carne asada","Burrito norteño"] },
-    { name: "Michoacánsk", symbol: "🌮", examples: ["Carnitas","Corundas"] },
+    { name: "Sentralmeksikansk", illustration: "taco", sourceRegion: "Sentral-Mexico", examples: ["Tacos al pastor","Tlacoyo"] },
+    { name: "Oaxacansk", illustration: "chili", examples: ["Mole negro","Tlayuda"] },
+    { name: "Yucatansk", illustration: "orange", sourceRegion: "Yucatán", examples: ["Cochinita pibil","Sopa de lima"] },
+    { name: "Jaliscansk", illustration: "curry", sourceRegion: "Jalisco", examples: ["Birria","Torta ahogada"] },
+    { name: "Pueblansk", illustration: "chili", examples: ["Mole poblano","Chiles en nogada"] },
+    { name: "Veracruzansk", illustration: "fish", examples: ["Pescado a la veracruzana"] },
+    { name: "Baja California", illustration: "fish", sourceRegion: "Baja", examples: ["Fish taco","Shrimp taco"] },
+    { name: "Nordmeksikansk", illustration: "steak", examples: ["Carne asada","Burrito norteño"] },
+    { name: "Michoacánsk", illustration: "taco", examples: ["Carnitas","Corundas"] },
   ],
   "Fast food": [
-    { name: "Burger", symbol: "🍔", sourceRegion: "Burger", examples: ["Cheeseburger","Smashburger"] },
-    { name: "Fritert kylling", symbol: "🍗", sourceRegion: "Fried chicken", examples: ["Fried chicken","Chicken wings"] },
-    { name: "Pølser", symbol: "🌭", sourceRegion: "Hot dog", examples: ["Hot dog","Chili dog"] },
-    { name: "Sandwich", symbol: "🥪", examples: ["Sandwich","Club sandwich"] },
-    { name: "Wraps", symbol: "🌯", examples: ["Kyllingwrap","Falafelwrap"] },
-    { name: "Fish & chips", symbol: "🐟", examples: ["Fish & chips"] },
-    { name: "Kebab", symbol: "🥙", examples: ["Döner","Shawarma"] },
-    { name: "Hurtigpizza", symbol: "🍕", examples: ["Pizzastykke","Pizza margherita"] },
-    { name: "Snacks", symbol: "🥨", examples: ["Pommes frites","Løkringer"] },
+    { name: "Burger", illustration: "burger", sourceRegion: "Burger", examples: ["Cheeseburger","Smashburger"] },
+    { name: "Fritert kylling", illustration: "chicken", sourceRegion: "Fried chicken", examples: ["Fried chicken","Chicken wings"] },
+    { name: "Pølser", illustration: "hotdog", sourceRegion: "Hot dog", examples: ["Hot dog","Chili dog"] },
+    { name: "Sandwich", illustration: "sandwich", examples: ["Sandwich","Club sandwich"] },
+    { name: "Wraps", illustration: "wrap", examples: ["Kyllingwrap","Falafelwrap"] },
+    { name: "Fish & chips", illustration: "fish", examples: ["Fish & chips"] },
+    { name: "Kebab", illustration: "kebab", examples: ["Döner","Shawarma"] },
+    { name: "Hurtigpizza", illustration: "pizza", examples: ["Pizzastykke","Pizza margherita"] },
+    { name: "Snacks", illustration: "pretzel", examples: ["Pommes frites","Løkringer"] },
   ],
   "Afrikansk": [
     {"name": "Marokkansk","flag": "🇲🇦","examples": ["Tajine","Harira","Couscous tfaya"]},
@@ -105,12 +107,12 @@ export const cuisineAtlasAreas: Readonly<Record<string, readonly CuisineAreaIden
   ],
   "Fransk": [
     {"name": "Bretonsk","flagFile": "Flag of Brittany.svg","flagRegion": "Bretagne","examples": ["Galette bretonne","Kouign-amann"]},
-    {"name": "Alsasisk","symbol": "🥨","examples": ["Flammekueche","Choucroute garnie"]},
-    {"name": "Provençalsk","symbol": "🫒","examples": ["Bouillabaisse","Ratatouille"]},
-    {"name": "Normannisk","symbol": "🧀","examples": ["Moules à la crème","Tarte normande"]},
-    {"name": "Burgundisk","symbol": "🥩","examples": ["Bœuf bourguignon","Œufs en meurette"]},
-    {"name": "Lyonnais","symbol": "🥗","examples": ["Salade lyonnaise","Quenelles de brochet"]},
-    {"name": "Savoyard","symbol": "🧀","examples": ["Tartiflette","Fondue savoyarde"]},
+    {"name": "Alsasisk","illustration": "pretzel","examples": ["Flammekueche","Choucroute garnie"]},
+    {"name": "Provençalsk","illustration": "olive","examples": ["Bouillabaisse","Ratatouille"]},
+    {"name": "Normannisk","illustration": "cheese","examples": ["Moules à la crème","Tarte normande"]},
+    {"name": "Burgundisk","illustration": "steak","examples": ["Bœuf bourguignon","Œufs en meurette"]},
+    {"name": "Lyonnais","illustration": "salad","examples": ["Salade lyonnaise","Quenelles de brochet"]},
+    {"name": "Savoyard","illustration": "cheese","examples": ["Tartiflette","Fondue savoyarde"]},
   ],
   "Spansk": [
     {"name": "Baskisk","flagFile": "Flag of the Basque Country.svg","flagRegion": "Baskerland","examples": ["Pintxos","Bacalao al pil-pil"]},
@@ -120,19 +122,19 @@ export const cuisineAtlasAreas: Readonly<Record<string, readonly CuisineAreaIden
     {"name": "Asturiansk","flagFile": "Flag of Asturias.svg","flagRegion": "Asturias","examples": ["Fabada asturiana","Cachopo"]},
   ],
   "Gresk": [
-    {"name": "Kretisk","symbol": "🫒","examples": ["Dakos","Kalitsounia"]},
-    {"name": "Kykladisk","symbol": "🍅","examples": ["Tomatokeftedes","Fava Santorinis"]},
-    {"name": "Korfiotisk","symbol": "🍝","examples": ["Pastitsada","Sofrito korfiotiko"]},
-    {"name": "Epirotisk","symbol": "🥧","examples": ["Blatsaria","Epirotiki pita"]},
-    {"name": "Thessalonikisk","symbol": "🥐","examples": ["Bougatsa","Koulouri Thessalonikis"]},
+    {"name": "Kretisk","illustration": "olive","examples": ["Dakos","Kalitsounia"]},
+    {"name": "Kykladisk","illustration": "tomato","examples": ["Tomatokeftedes","Fava Santorinis"]},
+    {"name": "Korfiotisk","illustration": "pasta","examples": ["Pastitsada","Sofrito korfiotiko"]},
+    {"name": "Epirotisk","illustration": "pie","examples": ["Blatsaria","Epirotiki pita"]},
+    {"name": "Thessalonikisk","illustration": "croissant","examples": ["Bougatsa","Koulouri Thessalonikis"]},
   ],
   "Amerikansk": [
     {"name": "Louisiana – cajun og kreolsk","flagFile": "Flag of Louisiana.svg","flagRegion": "Louisiana","examples": ["Gumbo","Jambalaya","Étouffée"]},
     {"name": "Texansk","flagFile": "Flag of Texas.svg","flagRegion": "Texas","examples": ["Texas brisket","Chili con carne"]},
     {"name": "Hawaiisk","flagFile": "Flag of Hawaii.svg","flagRegion": "Hawaii","examples": ["Poke bowl","Loco moco"]},
-    {"name": "New England","symbol": "🦞","examples": ["New England clam chowder","Lobster roll"]},
-    {"name": "Sørstats-BBQ","symbol": "🍖","examples": ["Pulled pork","Carolina barbecue"]},
-    {"name": "New York","symbol": "🥯","examples": ["New York bagel","New York-style pizza"]},
+    {"name": "New England","illustration": "lobster","examples": ["New England clam chowder","Lobster roll"]},
+    {"name": "Sørstats-BBQ","illustration": "barbecue","examples": ["Pulled pork","Carolina barbecue"]},
+    {"name": "New York","illustration": "bagel","examples": ["New York bagel","New York-style pizza"]},
   ],
   "Nordisk": [
     {"name": "Norsk","flag": "🇳🇴","examples": ["Fårikål","Raspeballer","Fiskesuppe"]},
@@ -152,44 +154,44 @@ export function regionalFlagUrl(filename: string): string {
 
 export type ItalianFoodType = {
   readonly name: string;
-  readonly symbol: string;
+  readonly illustration: FoodIllustrationName;
   readonly dishNames: readonly string[];
 };
 
 export const italianFoodTypes: readonly ItalianFoodType[] = [
   {
     name: "Pizza",
-    symbol: "🍕",
+    illustration: "pizza",
     dishNames: ["Pizza margherita", "Pizza marinara", "Pizza napoletana", "Pizza al taglio"],
   },
   {
     name: "Pasta",
-    symbol: "🍝",
+    illustration: "pasta",
     dishNames: ["Carbonara", "Cacio e pepe", "Amatriciana", "Pasta alla Norma", "Lasagne alla bolognese", "Tortellini", "Pesto alla genovese", "Agnolotti", "Orecchiette alle cime di rapa", "Fileja"],
   },
   {
     name: "Risotto og ris",
-    symbol: "🍚",
+    illustration: "rice",
     dishNames: ["Arancini", "Risi e bisi"],
   },
   {
     name: "Forretter",
-    symbol: "🫒",
+    illustration: "olive",
     dishNames: ["Caponata", "Frittatina", "Focaccia", "Vitello tonnato", "'Nduja"],
   },
   {
     name: "Kjøtt og fisk",
-    symbol: "🐟",
+    illustration: "fish",
     dishNames: ["Saltimbocca", "Bistecca alla fiorentina", "Sarde in saor"],
   },
   {
     name: "Supper og gryter",
-    symbol: "🥣",
+    illustration: "soup",
     dishNames: ["Ribollita"],
   },
   {
     name: "Bakverk og dessert",
-    symbol: "🍰",
+    illustration: "cake",
     dishNames: ["Cannoli", "Sfogliatella"],
   },
 ];
