@@ -20,6 +20,7 @@ import {
   type DishSuggestion,
 } from "./cuisine-explorer-data";
 import { italianFoodTypes, regionalFlagUrl } from "./cuisine-explorer-taxonomy";
+import { FoodIllustration } from "./food-illustration";
 
 type DishCoverage = {
   readonly dish: DishSuggestion;
@@ -59,11 +60,13 @@ function CuisineAreaSymbol({ area }: { readonly area: CuisineArea }) {
       />
     );
   }
-  return (
-    <span className="cuisineAreaEmoji" aria-hidden="true">
-      {area.flag ?? area.symbol ?? "🍽️"}
-    </span>
-  );
+  if (area.flag) {
+    return <span className="cuisineAreaEmoji" aria-hidden="true">{area.flag}</span>;
+  }
+  if (area.illustration) {
+    return <FoodIllustration name={area.illustration} className="cuisineAreaArtwork" size={48} />;
+  }
+  return null;
 }
 
 function CuisineAreaTile({
@@ -423,7 +426,7 @@ export function CuisineExplorer({
                       aria-pressed={selectedTypeName === type.name}
                       onClick={() => setSelectedTypeName(type.name)}
                     >
-                      <span aria-hidden="true">{type.symbol}</span>
+                      <FoodIllustration name={type.illustration} className="cuisineItalianArtwork" size={38} />
                       <strong>{type.name}</strong>
                     </button>
                   ))}
