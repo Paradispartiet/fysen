@@ -97,19 +97,30 @@ export function DishBrowse({
   loading = false,
   error = null,
   initialCuisineName = "",
+  initialAreaName = "",
+  initialFoodTypeName = "",
 }: {
   city: string;
   data: DishBrowseResponse | null;
   loading?: boolean;
   error?: string | null;
   initialCuisineName?: string;
+  initialAreaName?: string;
+  initialFoodTypeName?: string;
 }) {
   const initialCuisine = cuisineByName.get(initialCuisineName) ?? null;
+  const initialAtlas = homeCuisines.find((cuisine) => cuisine.name === initialCuisine?.name) ?? null;
+  const initialType = initialAtlas
+    ? foodTypesForCuisine(initialAtlas.name).find((type) => type.name === initialFoodTypeName) ?? null
+    : null;
+  const initialArea = initialAtlas && !initialType
+    ? initialAtlas.areas.find((area) => area.name === initialAreaName) ?? null
+    : null;
 
   const [filter, setFilter] = useState("");
   const [selectedCuisineName, setSelectedCuisineName] = useState<string | null>(initialCuisine?.name ?? null);
-  const [selectedCuisineArea, setSelectedCuisineArea] = useState<string | null>(null);
-  const [selectedFoodTypeName, setSelectedFoodTypeName] = useState<string | null>(null);
+  const [selectedCuisineArea, setSelectedCuisineArea] = useState<string | null>(initialArea?.name ?? null);
+  const [selectedFoodTypeName, setSelectedFoodTypeName] = useState<string | null>(initialType?.name ?? null);
   const normalizedFilter = normalizeDiscoveryText(filter);
 
   const selectedCuisine = useMemo(
@@ -201,12 +212,11 @@ export function DishBrowse({
   const cuisinePath = [selectedCuisine?.name, selectedCuisineArea, selectedFoodType?.name]
     .filter((value): value is string => Boolean(value));
 
-  function replaceBrowseUrl(cuisineName?: string): void {
-    window.history.replaceState(
-      null,
-      "",
-      dishBrowseCuisineHref(city, cuisineName),
-    );
+  function replaceBrowseUrl(
+    cuisineName?: string,
+    selection?: { readonly region?: string; readonly mat?: string },
+  ): void {
+    window.history.replaceState(null, "", dishBrowseCuisineHref(city, cuisineName, selection));
   }
 
   function chooseCuisine(cuisine: Cuisine | null): void {
@@ -214,6 +224,18 @@ export function DishBrowse({
     setSelectedCuisineArea(null);
     setSelectedFoodTypeName(null);
     replaceBrowseUrl(cuisine?.name);
+  }
+
+  function chooseArea(name: string | null): void {
+    setSelectedCuisineArea(name);
+    setSelectedFoodTypeName(null);
+    replaceBrowseUrl(selectedCuisine?.name, name ? { region: name } : undefined);
+  }
+
+  function chooseFoodType(name: string | null): void {
+    setSelectedCuisineArea(null);
+    setSelectedFoodTypeName(name);
+    replaceBrowseUrl(selectedCuisine?.name, name ? { mat: name } : undefined);
   }
 
   return (
@@ -281,10 +303,7 @@ export function DishBrowse({
                     type="button"
                     className={!selectedCuisineArea ? "isActive" : undefined}
                     aria-pressed={!selectedCuisineArea}
-                    onClick={() => {
-                      setSelectedCuisineArea(null);
-                      setSelectedFoodTypeName(null);
-                    }}
+                    onClick={() => chooseArea(null)}
                   >
                     Hele {selectedCuisine.name.toLocaleLowerCase("nb-NO")}
                   </button>
@@ -299,10 +318,7 @@ export function DishBrowse({
                           selectedCuisineArea === areaName ? "isActive" : "",
                         ].filter(Boolean).join(" ")}
                         aria-pressed={selectedCuisineArea === areaName}
-                        onClick={() => {
-                          setSelectedCuisineArea(areaName);
-                          setSelectedFoodTypeName(null);
-                        }}
+                        onClick={() => chooseArea(areaName)}
                       >
                         {area?.flagFile ? (
                           <img src={regionalFlagUrl(area.flagFile)}
@@ -330,7 +346,7 @@ export function DishBrowse({
                     type="button"
                     className={!selectedFoodType ? "isActive" : undefined}
                     aria-pressed={!selectedFoodType}
-                    onClick={() => setSelectedFoodTypeName(null)}
+                    onClick={() => chooseFoodType(null)}
                   >
                     Alle mattyper
                   </button>
@@ -340,10 +356,7 @@ export function DishBrowse({
                       key={type.name}
                       className={selectedFoodTypeName === type.name ? "isActive" : undefined}
                       aria-pressed={selectedFoodTypeName === type.name}
-                      onClick={() => {
-                        setSelectedCuisineArea(null);
-                        setSelectedFoodTypeName(type.name);
-                      }}
+                      onClick={() => chooseFoodType(type.name)}
                     >
                       <FoodIllustration name={type.illustration} className="dishBrowseTypeArtwork" size={30} />
                       <span>{type.name}</span>
