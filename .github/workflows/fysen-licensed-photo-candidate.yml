@@ -6,6 +6,7 @@ on:
       - art/fysen-sharp-sushi-ramen-carbonara-butter-chicken-20261112
     paths:
       - ".github/workflows/fysen-licensed-photo-candidate.yml"
+      - "scripts/stage-licensed-food-photo.py"
   workflow_dispatch:
 
 permissions:
