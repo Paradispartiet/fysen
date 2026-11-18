@@ -51,7 +51,7 @@ test("live browse supports 57 illustrated food types without duplicating fast fo
   assert.ok(source.includes("foodTypesForCuisine(selectedAtlas.name)"));
   assert.ok(source.includes("availableFoodTypes.map((type)"));
   assert.ok(source.includes("matchingCuisineFoodType("));
-  assert.ok(source.includes("setSelectedFoodTypeName(type.name)"));
+  assert.ok(source.includes("chooseFoodType(type.name)"));
   assert.ok(source.includes("setSelectedCuisineArea(null)"));
 });
 
