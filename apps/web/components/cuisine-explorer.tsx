@@ -429,7 +429,7 @@ export function CuisineExplorer({
                   ))}
                 </div>
               </section>
-            ) : null>
+            ) : null}
 
             <section className="cuisineExploreResults" aria-live="polite">
               <div className="cuisineExploreResultsHeading">
