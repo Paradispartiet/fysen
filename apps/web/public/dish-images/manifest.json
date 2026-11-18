@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "purpose": "Alle ferdige og godkjente AI-matillustrasjoner skal være integrert i Fysen, vises der motivet er relevant og følges til offentlig publisering.",
+  "purpose": "Representative, lisensierte rettfotografier og KI-illustrasjoner med korrekt rett-ID, kildestatus og sporbar publisering.",
   "background": "#000000",
-  "sourceType": "Generert illustrasjon, ikke restaurantfotografi",
+  "sourceType": "Blanding av lisensierte redaksjonelle rettfoto og KI-illustrasjoner; ikke bilder av konkrete restaurantserveringer.",
   "images": [
     {
       "id": "pizza-margherita",
@@ -64,11 +64,23 @@
       "label": "Sushi assortert",
       "query": "sushi",
       "index": 5,
-      "atlas": "sushi-768.avif",
+      "atlas": "sushi-thumb-512.avif",
       "surface": "Matlyst",
-      "kind": "AI-illustrasjon",
+      "kind": "Redaksjonelt rettfoto",
       "catalogId": "sushi",
-      "variantCaution": "KI-illustrasjon av sushi med laks, tunfisk, ris, nori og avokado. Ikke restaurantfoto; sammensetningen på restaurantens meny må sjekkes separat."
+      "variantCaution": "Lisensiert redaksjonelt fotografi av sushi assortert med laksefisk, maki, nori og ris. Ikke restaurantfoto; det dokumenterer ikke ingrediensene hos en konkret restaurant.",
+      "largeSourceOriginalPath": "assets/fysen-dish-originals/sushi.png",
+      "largeSource": "sushi-master-2100.avif",
+      "largeSourceNativeWidth": 2100,
+      "largeSourceNativeHeight": 2100,
+      "largeSourceMethod": "independent-original",
+      "largeSourceSha256": "3823cf00d6292b00a4e46a4b77cab2e40c27b892deb26bd1d7a74de39f8cb3b2",
+      "largeSourceOriginalSha256": "c8aeee2a57cfc70380aa80bd4d0758a963d30c003444673d293934c06f4c2f0b",
+      "largeSourceReview": "docs/fysen-image-reviews/sushi.md",
+      "largeViewEnabled": true,
+      "photoCredit": "Mony Cruz / Pexels",
+      "photoSource": "https://www.pexels.com/photo/delicious-assorted-sushi-platter-on-black-background-36292343/",
+      "photoLicense": "https://www.pexels.com/legal-pages/license/"
     },
     {
       "id": "ramen",
