@@ -19,9 +19,9 @@ import {
   type CuisineArea,
   type DishSuggestion,
 } from "./cuisine-explorer-data";
-import { italianFoodTypes, regionalFlagUrl } from "./cuisine-explorer-taxonomy";
+import { regionalFlagUrl } from "./cuisine-explorer-taxonomy";
+import { foodTypesForCuisine, matchingCuisineFoodType } from "./cuisine-food-type-data";
 import { FoodIllustration } from "./food-illustration";
-import { matchesItalianFoodType } from "./italian-food-type-filter";
 
 type DishCoverage = {
   readonly dish: DishSuggestion;
@@ -223,21 +223,37 @@ export function CuisineExplorer({
     return selectedCuisine.areas.find((area) => area.name === selectedAreaName) ?? selectedCuisine.areas[0] ?? null;
   }, [selectedAreaName, selectedCuisine]);
 
-  const selectedItalianType = selectedCuisine?.name === "Italiensk"
-    ? italianFoodTypes.find((type) => type.name === selectedTypeName) ?? null
-    : null;
+  const availableFoodTypes = selectedCuisine ? foodTypesForCuisine(selectedCuisine.name) : [];
+  const selectedFoodType = availableFoodTypes.find((type) => type.name === selectedTypeName) ?? null;
 
   const selectedDishCoverage = useMemo(() => {
     if (!selectedArea || !selectedCuisine) return [];
-    const matchingDishes = selectedItalianType
+    const matchingDishes = selectedFoodType
       ? cuisineCandidates(selectedCuisine).filter((dish) =>
-          matchesItalianFoodType(dish.label, selectedItalianType)
+          matchingCuisineFoodType(selectedCuisine.name, dish.label, selectedFoodType)
         )
       : selectedArea.dishes;
-    return rankDishCoverage(matchingDishes.map((dish) =>
+    // A mat-type selection can span several geographical regions.
+    // When an example is not in a region's seed catalog, it remains a search
+    // suggestion, never a claim that a restaurant serves it.
+    const supplementalDishes: DishSuggestion[] = selectedFoodType
+      ? selectedFoodType.dishNames
+          .filter((label) => !matchingDishes.some((dish) =>
+            dish.label.toLocaleLowerCase("nb") === label.toLocaleLowerCase("nb")
+          ))
+          .map((label, index) => ({
+            id: `food-type-${selectedCuisine.name}-${selectedFoodType.name}-${index}`,
+            label,
+            query: label,
+            aliases: [],
+            hasKnowledge: false,
+            explorerPriority: 10 - index,
+          }))
+      : [];
+    return rankDishCoverage([...matchingDishes, ...supplementalDishes].map((dish) =>
       coverageForDish(liveDishes, dish, isArchived ? archiveCoverage : null)
     ));
-  }, [liveDishes, selectedArea, selectedCuisine, selectedItalianType, archiveCoverage, isArchived]);
+  }, [liveDishes, selectedArea, selectedCuisine, selectedFoodType, archiveCoverage, isArchived]);
 
   const featured = useMemo(() => {
     return new Map(homeCuisines.map((cuisine) => [
@@ -405,7 +421,7 @@ export function CuisineExplorer({
                   <CuisineAreaTile
                     key={area.name}
                     area={area}
-                    active={!selectedItalianType && area.name === selectedArea.name}
+                    active={!selectedFoodType && area.name === selectedArea.name}
                     onClick={() => {
                       setSelectedTypeName("");
                       setSelectedAreaName(area.name);
@@ -415,11 +431,14 @@ export function CuisineExplorer({
               </div>
             </section>
 
-            {selectedCuisine.name === "Italiensk" ? (
-              <section className="cuisineExploreFoodTypes" aria-labelledby="italian-types-title">
-                <h3 id="italian-types-title">Eller utforsk italienske mattyper</h3>
+            {availableFoodTypes.length > 0 ? (
+              <section className="cuisineExploreFoodTypes" aria-labelledby="cuisine-types-title">
+                <h3 id="cuisine-types-title">
+                  {selectedCuisine.name === "Italiensk" ? "Eller utforsk italienske mattyper" : "Eller utforsk mattyper"}
+                </h3>
+                <p className="cuisineExploreTypeHint">Mattyper går på tvers av regioner og land. Velg én mattype eller et underkjøkken.</p>
                 <div className="cuisineExploreTypeGrid">
-                  {italianFoodTypes.map((type) => (
+                  {availableFoodTypes.map((type) => (
                     <button
                       type="button"
                       key={type.name}
@@ -438,7 +457,7 @@ export function CuisineExplorer({
             <section className="cuisineExploreResults" aria-live="polite">
               <div className="cuisineExploreResultsHeading">
                 <div>
-                  <p>{selectedItalianType?.name ?? selectedArea.name}</p>
+                  <p>{selectedFoodType?.name ?? selectedArea.name}</p>
                   <h3>Retter og hvor du kan få dem</h3>
                 </div>
                 <span>Restauranter i Oslo</span>
@@ -449,7 +468,7 @@ export function CuisineExplorer({
 
             <footer className="cuisineExploreDialogFooter">
               <span>Utforsk flere retter eller åpne restaurantens meny for nærmere informasjon.</span>
-              {selectedArea.flagFile && !selectedItalianType ? (
+              {selectedArea.flagFile && !selectedFoodType ? (
                 <a
                   href={`https://commons.wikimedia.org/wiki/File:${encodeURIComponent(selectedArea.flagFile)}`}
                   target="_blank"
