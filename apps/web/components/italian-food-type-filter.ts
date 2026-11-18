@@ -1,4 +1,4 @@
-import { italianFoodTypes, type ItalianFoodType } from "./cuisine-explorer-taxonomy";
+import { italianFoodTypes, type ItalianFoodType } from "./cuisine-explorer-taxonomy.ts";
 
 /**
  * Broad Italian dish families are a browsing convenience, not a geographic
