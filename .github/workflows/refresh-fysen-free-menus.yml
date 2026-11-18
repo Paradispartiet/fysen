@@ -11,7 +11,7 @@ on:
       - "apps/menu-worker/src/free-static-refresh*.ts"
       - "apps/menu-worker/src/free-identity-quarantine-policy.ts"
       - "apps/menu-worker/free-identity-quarantines.json"
-      # Publish validated menu edits immediately rather than waiting for a delayed cron.
+      # Queue validated menu edits for the next bounded refresh.
       - "apps/menu-worker/catalog/**"
       # Genuine extraction changes invalidate old source interpretation.
       - "apps/menu-worker/src/menu-source-runtime.ts"
@@ -35,6 +35,7 @@ jobs:
       - name: Checkout Fysen source and parser
         uses: actions/checkout@v4
         with:
+          fetch-depth: 25
           persist-credentials: false
       - name: Checkout isolated public data branch (no force pushes)
         uses: actions/checkout@v4
@@ -52,9 +53,15 @@ jobs:
         env:
           FYSEN_HTTP_TIMEOUT_MS: "12000"
           FYSEN_MENU_BOT_USER_AGENT: "FysenMenuBot/0.1"
+        shell: bash
         run: |
+          set -euo pipefail
+          changes="$RUNNER_TEMP/fysen-catalog-changes.txt"
+          git -c log.showRoot=false log --first-parent --diff-merges=first-parent \
+            --since="72 hours ago" --format="commit %ct" --name-only \
+            --diff-filter=AM -- 'apps/menu-worker/catalog/*.json' > "$changes"
           node apps/menu-worker/dist/free-static-refresh.js \
-            public-index apps/menu-worker/catalog 12
+            public-index apps/menu-worker/catalog 12 "$changes"
       - name: Publish only audited, static menu index branch
         working-directory: public-index
         shell: bash

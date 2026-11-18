@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { MenuObservedItem } from "@fysen/menu-core";
-import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, quarantineUnverifiedFreeSource, recordFreeSourceFailure, replaceOneSource, publishedFreeObservationTime, retainPublishableFreeMenuObservations, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeSourceFailure } from "./free-static-refresh-core.js";
+import { classifyFreeSourceFailure, findMatchingFreeSourceIndex, prioritizeEditedFreeSources, readRecentCatalogEdits, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, quarantineUnverifiedFreeSource, recordFreeSourceFailure, replaceOneSource, publishedFreeObservationTime, retainPublishableFreeMenuObservations, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeSourceFailure } from "./free-static-refresh-core.js";
 const baseline: FreeIndex = {
   version: 1, archiveDate: "2026-11-02",
   restaurants: [["Restaurant A", "restaurant-a", "Oslo", "Oslo", ""],
@@ -16,6 +16,28 @@ const item: MenuObservedItem = {
   position: 0, extractionMethod: "html_heuristic", confidence: 0.9, sourceExcerpt: null,
 };
 describe("Free Fysen one-source refresh", () => {
+  it("prioritizes a changed catalog source once while preserving the refresh budget", () => {
+    const edits = readRecentCatalogEdits([
+      "commit 1793692800",
+      "",
+      "apps/menu-worker/catalog/restaurant-b.json",
+      "apps/menu-worker/candidates/restaurant-a.json",
+      "commit 1793606400",
+      "apps/menu-worker/catalog/restaurant-b.json",
+    ].join("\n"));
+    expect([...edits]).toEqual([["restaurant-b.json", 1_793_692_800_000]]);
+    const sourceEdits = new Map([[1, edits.get("restaurant-b.json")!]]);
+    const queue = [
+      [0, { menuSource: { fetchMode: "http" as const } }],
+      [1, { menuSource: { fetchMode: "http" as const } }],
+    ] as const;
+
+    const prioritized = prioritizeEditedFreeSources(queue, sourceEdits, baseline.sources, {});
+    expect(selectBoundedFreeRefreshEntries(prioritized, 1)).toEqual([queue[1]]);
+    const tried = { "1": new Date(1_793_692_800_000 + 1).toISOString() };
+    expect(prioritizeEditedFreeSources(queue, sourceEdits, baseline.sources, tried)).toEqual(queue);
+  });
+
   it("keeps the other restaurant and source unchanged", () => {
     const next = replaceOneSource(baseline, 0, "2026-11-03T04:00:00Z", [item]);
     expect(next.restaurants).toEqual(baseline.restaurants);

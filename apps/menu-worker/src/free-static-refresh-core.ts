@@ -175,6 +175,42 @@ export function prioritizeUnpublishedMenuMigrations<T extends {
   return [...browserMigrations, ...httpMigrations, ...ordinary];
 }
 
+export function readRecentCatalogEdits(log: string): Map<string, number> {
+  const edits = new Map<string, number>();
+  let editedAt = 0;
+  for (const line of log.split(/\r?\n/)) {
+    if (line.startsWith("commit ")) {
+      editedAt = Number(line.slice(7)) * 1_000;
+      continue;
+    }
+    const name = /^apps\/menu-worker\/catalog\/([^/]+\.json)$/.exec(line)?.[1];
+    if (name && Number.isSafeInteger(editedAt) && editedAt > 0 && !edits.has(name)) {
+      edits.set(name, editedAt);
+    }
+  }
+  return edits;
+}
+
+// An attempt after the catalog edit returns the source to the normal queue,
+// including failures, so a failing edit cannot keep taking a priority slot.
+export function prioritizeEditedFreeSources<T>(
+  ordered: readonly (readonly [number, T])[],
+  sourceEdits: ReadonlyMap<number, number>,
+  publishedSources: readonly FreeSource[],
+  attempts: Readonly<Record<string, string>>,
+  nowMillis = Date.now(),
+): [number, T][] {
+  const edited: [number, T][] = [];
+  const ordinary: [number, T][] = [];
+  for (const [sourceIndex, source] of ordered) {
+    const lastAttempt = Date.parse(attempts[String(sourceIndex)] ?? publishedSources[sourceIndex]?.[2] ?? "") || 0;
+    const editedAt = sourceEdits.get(sourceIndex) ?? 0;
+    const queue = editedAt > lastAttempt && editedAt <= nowMillis ? edited : ordinary;
+    queue.push([sourceIndex, source]);
+  }
+  return [...edited, ...ordinary];
+}
+
 // A source rejected for missing mandatory dishes or an extraction anomaly may
 // recover after a precise catalog/parser fix. Retry at most ONE such source
 // ahead of the normal bounded rotation. Repeated failures back off (six hours,

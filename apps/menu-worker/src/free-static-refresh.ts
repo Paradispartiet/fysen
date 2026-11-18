@@ -8,12 +8,12 @@ import { assertNoImplicitQuarantineRelease, readReviewedIdentityQuarantines, res
 import { canonicalizeUniqueMenuSourceKeys } from "./menu-source-key-canonicalizer.js";
 import { readRestaurantOnboardingManifest, type RestaurantOnboardingManifest } from "./onboarding-manifest.js";
 import { extractMenuSource, fetchMenuSource } from "./menu-source-runtime.js";
-import { findMatchingFreeSourceIndex, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, quarantineUnverifiedFreeSource, recordFreeSourceFailure, replaceOneSource, publishedFreeObservationTime, retainPublishableFreeMenuObservations, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
+import { findMatchingFreeSourceIndex, prioritizeEditedFreeSources, readRecentCatalogEdits, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, quarantineUnverifiedFreeSource, recordFreeSourceFailure, replaceOneSource, publishedFreeObservationTime, retainPublishableFreeMenuObservations, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
 
 async function main(): Promise<void> {
-  const [archiveDir, catalogDir, countArg] = process.argv.slice(2);
+  const [archiveDir, catalogDir, countArg, changeLogPath] = process.argv.slice(2);
   if (!archiveDir || !catalogDir) {
-    throw new Error("Usage: node free-static-refresh.js <public-index-dir> <catalog-dir> [max-attempts]");
+    throw new Error("Usage: node free-static-refresh.js <public-index-dir> <catalog-dir> [max-attempts] [catalog-change-log]");
   }
   const maxAttempts = Number(countArg ?? "12");
   if (!Number.isInteger(maxAttempts) || maxAttempts < 1 || maxAttempts > 24) {
@@ -43,6 +43,8 @@ async function main(): Promise<void> {
   }, {} as Record<number, number>);
   const catalogFiles = (await readdir(catalogDir)).filter((name) => name.endsWith(".json"));
   const matching = new Map<number, RestaurantOnboardingManifest>();
+  const catalogEdits = changeLogPath ? readRecentCatalogEdits(await readFile(changeLogPath, "utf8")) : new Map();
+  const sourceEdits = new Map<number, number>();
   // Detect ambiguous competing catalog entries. No one source may be silently
   // replaced by whichever manifest happened to be read last.
   const ambiguous = new Set<number>();
@@ -64,6 +66,8 @@ async function main(): Promise<void> {
       continue;
     }
     matching.set(sourceIndex, entry);
+    const editedAt = catalogEdits.get(file);
+    if (editedAt !== undefined) sourceEdits.set(sourceIndex, editedAt);
   }
   if (!matching.size) throw new Error("No public sources matched existing catalog manifests");
   // Fingerprint only public source configuration and exact menu assertions.
@@ -120,13 +124,14 @@ async function main(): Promise<void> {
     const ageJ = Date.parse(attempts[String(j)] ?? index.sources[j]![2]) || 0;
     return ageI - ageJ || i - j;
   });
+  const scheduled = prioritizeOneRecoverableFreeQualityFailure(
+    prioritizeUnpublishedMenuMigrations(oldestFirst, index.sources, attempts),
+    failures,
+    Date.now(),
+    sourceProofHashes,
+  );
   const sorted = selectBoundedFreeRefreshEntries(
-    prioritizeOneRecoverableFreeQualityFailure(
-      prioritizeUnpublishedMenuMigrations(oldestFirst, index.sources, attempts),
-      failures,
-      Date.now(),
-      sourceProofHashes,
-    ),
+    prioritizeEditedFreeSources(scheduled, sourceEdits, index.sources, attempts),
     maxAttempts,
   );
   const refreshed = new Set(manifest.refreshedSourceIndices ?? []);
