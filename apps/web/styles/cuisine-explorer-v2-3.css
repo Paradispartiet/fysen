@@ -703,3 +703,12 @@
     height: 40px;
   }
 }
+
+/* Mattyper are a separate visual layer; never paired with a cuisine flag. */
+.cuisineExploreTypeHint {
+  margin: -4px 0 12px;
+  max-width: 65ch;
+  color: var(--color-soft);
+  font-size: 12px;
+  line-height: 1.5;
+}
