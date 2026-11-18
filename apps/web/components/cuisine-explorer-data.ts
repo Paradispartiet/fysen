@@ -1,5 +1,6 @@
 import { matlystDiscoveryCatalog } from "../content/food-knowledge/matlyst-discovery-catalog";
 import { foodKnowledgeDishIdSet } from "../content/food-knowledge/manifest";
+import type { FoodIllustrationName } from "./food-illustration-data";
 import { cuisineAtlasAreas } from "./cuisine-explorer-taxonomy";
 
 export type DishSuggestion = {
@@ -17,7 +18,7 @@ export type CuisineArea = {
   readonly flag?: string;
   readonly flagFile?: string;
   readonly flagRegion?: string;
-  readonly illustration?: import("./food-illustration-data").FoodIllustrationName;
+  readonly illustration?: FoodIllustrationName;
 };
 
 export type Cuisine = {
