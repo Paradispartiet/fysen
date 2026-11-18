@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
+import { URL } from "node:url";
 import { foodIllustrationNames, foodIllustrationSrc } from "../components/food-illustration-data.ts";
 import { illustrationForDishName, illustrationForIngredient } from "../components/food-illustration-match.ts";
 
