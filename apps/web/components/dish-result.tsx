@@ -43,7 +43,7 @@ export function DishResult({ result }: { result: DishSearchResult }) {
             {illustrationForDishName(result.dish.name) ? (
               <FoodIllustration
                 name={illustrationForDishName(result.dish.name)!}
-                className={styles.dishArtwork}
+                className={styles.dishArtwork ?? ""}
                 size={48}
               />
             ) : null}
