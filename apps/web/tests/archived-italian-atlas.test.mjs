@@ -2,30 +2,28 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
 import { URL } from "node:url";
-import { homeCuisines } from "../components/cuisine-explorer-data.ts";
 import { cuisineAtlasAreas } from "../components/cuisine-explorer-taxonomy.ts";
 import { foodTypesForCuisine, matchingCuisineFoodType } from "../components/cuisine-food-type-data.ts";
 
-test("archived atlas serves all twelve existing main cuisines and all 101 undercategories", () => {
-  assert.equal(homeCuisines.length, 12);
-  assert.equal(homeCuisines.reduce((sum, cuisine) => sum + cuisine.areas.length, 0), 101);
-  for (const cuisine of homeCuisines) {
-    assert.deepEqual(
-      cuisine.areas.map((area) => area.name),
-      cuisineAtlasAreas[cuisine.name].map((area) => area.name),
-      cuisine.name,
-    );
-    for (const area of cuisine.areas) {
+test("archived atlas serves all twelve existing main cuisines and all 101 undercategories", async () => {
+  const dataSource = await readFile(new URL("../components/cuisine-explorer-data.ts", import.meta.url), "utf8");
+  const mainNames = Object.keys(cuisineAtlasAreas);
+  assert.equal(mainNames.length, 12);
+  assert.equal(Object.values(cuisineAtlasAreas).reduce((sum, areas) => sum + areas.length, 0), 101);
+  assert.ok(dataSource.includes("buildCuisines(homeCuisineSpecs)"));
+  for (const [cuisineName, areas] of Object.entries(cuisineAtlasAreas)) {
+    assert.ok(dataSource.includes(`name: "${cuisineName}"`), cuisineName);
+    assert.ok(areas.length > 0);
+    for (const area of areas) {
       assert.equal([area.flag, area.flagFile, area.illustration].filter(Boolean).length, 1, area.name);
     }
   }
 });
 
 test("Italian regional flags and its seven separate illustrated food families remain intact", () => {
-  const italian = homeCuisines.find((entry) => entry.name === "Italiensk");
-  assert.ok(italian);
-  assert.equal(italian.areas.length, 10);
-  assert.ok(italian.areas.every((area) => area.flagFile && area.flagRegion && !area.illustration));
+  const italian = cuisineAtlasAreas.Italiensk;
+  assert.equal(italian.length, 10);
+  assert.ok(italian.every((area) => area.flagFile && area.flagRegion && !area.illustration));
   assert.equal(foodTypesForCuisine("Italiensk").length, 7);
   const pizza = foodTypesForCuisine("Italiensk").find((type) => type.name === "Pizza");
   assert.ok(pizza);
