@@ -17,6 +17,9 @@ import { SearchState } from "./search-state";
 type QueryState = {
   q: string;
   city: string;
+  cuisine: string;
+  region: string;
+  mat: string;
 };
 
 function queryFromLocation(): QueryState {
@@ -24,6 +27,9 @@ function queryFromLocation(): QueryState {
   return {
     q: (params.get("q") ?? "").trim(),
     city: (params.get("city") ?? "Oslo").trim() || "Oslo",
+    cuisine: (params.get("cuisine") ?? "").trim(),
+    region: (params.get("region") ?? "").trim(),
+    mat: (params.get("mat") ?? "").trim(),
   };
 }
 
@@ -40,6 +46,9 @@ function previewSearchUrl(query: QueryState): string {
 function productionSearchUrl(query: QueryState): string {
   const params = new URLSearchParams({ city: query.city });
   if (query.q) params.set("q", query.q);
+  if (query.cuisine) params.set("cuisine", query.cuisine);
+  if (query.mat) params.set("mat", query.mat);
+  else if (query.region) params.set("region", query.region);
   return `https://fysen.vercel.app/search?${params.toString()}`;
 }
 
@@ -155,10 +164,14 @@ export function StaticPreviewSearchPage() {
         <section className="resultsContent" aria-live="polite">
           {q.length === 0 ? (
             <DishBrowse
+              key={`${query?.city}-${query?.cuisine}-${query?.region}-${query?.mat}`}
               city={city}
               data={browseData}
               loading={query === null || loading}
               error={error}
+              initialCuisineName={query?.cuisine ?? ""}
+              initialAreaName={query?.region ?? ""}
+              initialFoodTypeName={query?.mat ?? ""}
             />
           ) : (
             <>
