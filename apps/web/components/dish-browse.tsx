@@ -22,6 +22,9 @@ import {
 } from "./cuisine-explorer-data";
 import { SearchState } from "./search-state";
 import { DishPhotoThumbnail } from "./dish-photo-gallery";
+import { FoodIllustration } from "./food-illustration";
+import { italianFoodTypes } from "./cuisine-explorer-taxonomy";
+import { italianFoodTypeByName, matchesItalianFoodType } from "./italian-food-type-filter";
 
 type KnowledgeDish = (typeof foodDishCatalog)[number];
 
@@ -97,12 +100,17 @@ export function DishBrowse({
   const [filter, setFilter] = useState("");
   const [selectedCuisineName, setSelectedCuisineName] = useState<string | null>(initialCuisine?.name ?? null);
   const [selectedCuisineArea, setSelectedCuisineArea] = useState<string | null>(null);
+  const [selectedItalianTypeName, setSelectedItalianTypeName] = useState<string | null>(null);
   const normalizedFilter = normalizeDiscoveryText(filter);
 
   const selectedCuisine = useMemo(
     () => selectedCuisineName ? cuisineByName.get(selectedCuisineName) ?? null : null,
     [selectedCuisineName],
   );
+
+  const selectedItalianType = selectedCuisine?.name === "Italiensk"
+    ? italianFoodTypeByName(selectedItalianTypeName)
+    : null;
 
   const cuisineAreas = useMemo(() => {
     if (!selectedCuisine) return [];
@@ -112,13 +120,16 @@ export function DishBrowse({
 
   const cuisineDiscoveryScope = useMemo(() => {
     const scope = selectedCuisine ? discoveryScopeForCuisines([selectedCuisine]) : [];
-    return selectedCuisineArea ? scope.filter((entry) => entry.areaName === selectedCuisineArea) : scope;
-  }, [selectedCuisine, selectedCuisineArea]);
+    return scope
+      .filter((entry) => !selectedCuisineArea || entry.areaName === selectedCuisineArea)
+      .filter((entry) => !selectedItalianType || matchesItalianFoodType(entry.dish.label, selectedItalianType));
+  }, [selectedCuisine, selectedCuisineArea, selectedItalianType]);
 
   const editorialDishes = useMemo<EditorialCoverage[]>(() => {
     if (!data || !selectedCuisine) return [];
     return discoveryDishesForCuisine(selectedCuisine.name)
       .filter((entry) => !selectedCuisineArea || entry.areaName === selectedCuisineArea)
+      .filter(({ dish }) => !selectedItalianType || matchesItalianFoodType(dish.label, selectedItalianType))
       .filter(({ dish }) => matchesText([dish.label, dish.query, ...dish.aliases], normalizedFilter))
       .map((entry) => ({
         ...entry,
@@ -134,7 +145,7 @@ export function DishBrowse({
         }
         return left.dish.label.localeCompare(right.dish.label, "nb");
       });
-  }, [data, normalizedFilter, selectedCuisine, selectedCuisineArea]);
+  }, [data, normalizedFilter, selectedCuisine, selectedCuisineArea, selectedItalianType]);
 
   const visibleLiveDishes = useMemo(() => {
     if (!data) return [];
@@ -145,10 +156,14 @@ export function DishBrowse({
       dishes = dishes.filter((dish) => scopedIds.has(dish.id));
     }
 
-    return sortBrowseDishesForDisplay(dishes);
-  }, [cuisineDiscoveryScope, data, normalizedFilter, selectedCuisine]);
+    if (selectedItalianType) {
+      dishes = dishes.filter((dish) => matchesItalianFoodType(dish.name, selectedItalianType));
+    }
 
-  const cuisinePath = [selectedCuisine?.name, selectedCuisineArea]
+    return sortBrowseDishesForDisplay(dishes);
+  }, [cuisineDiscoveryScope, data, normalizedFilter, selectedCuisine, selectedItalianType]);
+
+  const cuisinePath = [selectedCuisine?.name, selectedCuisineArea, selectedItalianType?.name]
     .filter((value): value is string => Boolean(value));
 
   function replaceBrowseUrl(cuisineName?: string): void {
@@ -162,6 +177,7 @@ export function DishBrowse({
   function chooseCuisine(cuisine: Cuisine | null): void {
     setSelectedCuisineName(cuisine?.name ?? null);
     setSelectedCuisineArea(null);
+    setSelectedItalianTypeName(null);
     replaceBrowseUrl(cuisine?.name);
   }
 
@@ -240,9 +256,43 @@ export function DishBrowse({
                       key={areaName}
                       className={selectedCuisineArea === areaName ? "isActive" : undefined}
                       aria-pressed={selectedCuisineArea === areaName}
-                      onClick={() => setSelectedCuisineArea(areaName)}
+                      onClick={() => {
+                      setSelectedCuisineArea(areaName);
+                      setSelectedItalianTypeName(null);
+                    }}
                     >
                       {areaName}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
+            {selectedCuisine?.name === "Italiensk" ? (
+              <div className="dishBrowseTaxonomyLevel">
+                <span>Velg italiensk mattype</span>
+                <div className="dishBrowseItalianTypes" aria-label="Filtrer italienske retter etter mattype">
+                  <button
+                    type="button"
+                    className={!selectedItalianType ? "isActive" : undefined}
+                    aria-pressed={!selectedItalianType}
+                    onClick={() => setSelectedItalianTypeName(null)}
+                  >
+                    Alle mattyper
+                  </button>
+                  {italianFoodTypes.map((type) => (
+                    <button
+                      type="button"
+                      key={type.name}
+                      className={selectedItalianTypeName === type.name ? "isActive" : undefined}
+                      aria-pressed={selectedItalianTypeName === type.name}
+                      onClick={() => {
+                        setSelectedCuisineArea(null);
+                        setSelectedItalianTypeName(type.name);
+                      }}
+                    >
+                      <FoodIllustration name={type.illustration} className="dishBrowseTypeArtwork" size={30} />
+                      <span>{type.name}</span>
                     </button>
                   ))}
                 </div>
