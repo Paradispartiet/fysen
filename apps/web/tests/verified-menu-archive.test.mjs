@@ -156,6 +156,8 @@ test("public Oslo discovery reads the verified archive before any database-backe
   const home = readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
   const explorer = readFileSync(new URL("../components/cuisine-explorer.tsx", import.meta.url), "utf8");
   const archivedView = readFileSync(new URL("../components/verified-menu-archive-view.tsx", import.meta.url), "utf8");
+  const preview = readFileSync(new URL("../components/static-preview-search-page.tsx", import.meta.url), "utf8");
+  const previewClient = readFileSync(new URL("../lib/client-public-archive.ts", import.meta.url), "utf8");
 
   // Relevance search in Oslo and no-query browse use the checked public archive.
   // A real zero-match response does NOT trigger an old-DB fallback.
@@ -173,8 +175,14 @@ test("public Oslo discovery reads the verified archive before any database-backe
   assert.match(explorer, /previewBrowseFailed \|\| archiveUnavailable/u);
 
   // Keep a real dish-and-restaurant view and source links for archived results.
-  assert.match(archivedView, /browseArchivedMenuDishes\(archive, city, 48\)/u);
+  assert.match(search, /browseArchivedMenuDishes\(archive, city, 48\)/u);
+  assert.match(archivedView, /readonly dishes: readonly/u);
+  assert.doesNotMatch(archivedView, /import \{.*browseArchivedMenuDishes/u);
   assert.match(archivedView, /Alle retter i \{city\}/u);
   assert.match(archivedView, /Finn retten/u);
   assert.doesNotMatch(archivedView, /arkivtreff|Meny sist kontrollert|Fersksøket har ingen treff/u);
+  assert.match(preview, /browsePublicArchiveClient\(query.city, controller.signal\)/u);
+  assert.match(preview, /searchPublicArchiveClient\(query.q, query.city, controller.signal\)/u);
+  assert.doesNotMatch(preview, /dishSearchResponseSchema|browseDishesClient|\/v1\/dishes\/search/u);
+  assert.match(previewClient, /\/v1\/dishes\/archive\/\$\{endpoint\}/u);
 });
