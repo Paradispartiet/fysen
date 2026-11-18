@@ -55,8 +55,12 @@ som **draft** og skal ikke publiseres før denne porten er oppfylt.
   `largeSourceMethod` (`independent-original` eller
   `high-resolution-redraw`) og `largeSourceSha256` (SHA-256 av den
   faktiske AVIF-filen), basert på dokumentert kildeproduksjon.
-  Hashkontrollen låser godkjent kildefil, men er ikke i seg selv
-  bevis på visuell skarphet.
+  Den faktiske **PNG-originalen** lagres i `assets/fysen-dish-originals/<rett-id>.png`,
+  utenfor appens public-mappe. Importeren oppdaterer `largeSourceOriginalPath`
+  og `largeSourceOriginalSha256` i manifestet. CI åpner den beholdte PNG-filen
+  og sammenligner faktiske kildepiksler og sjekksum mot metadataene.
+  Slik kan ingen få godkjent et oppskalert lite utsnitt bare med 1600px i navnet.
+  Hashkontrollen er likevel ikke i seg selv bevis på visuell skarphet.
   Den automatiske kontrollen
   `apps/web/tests/dish-image-large-view-quality.test.mjs` må være grønn.
 - I tillegg kreves manuell kontroll i **stor visning på iPad og mobil**:
@@ -78,7 +82,8 @@ Når det foreligger en kontrollert, **selvstendig** kilde i minst
 1600 × 1600 ekte piksler:
 
 1. Oppbevar originalen som PNG. Lag en AVIF av **samme pikselmål**,
-   uten å skalere eller forstørre originalen.
+   uten å skalere eller forstørre originalen. Importeren beholder også
+   originalen i `assets/fysen-dish-originals/<rett-id>.png`.
 2. Skriv en kort gjennomgang i `review.md` med kildeopphav og konkret
    vurdering av tekstur, konturer og riktig rett i 800px storvisning.
    Gjennomgangen må inneholde SHA-256 fra **original-PNG** og linjene
