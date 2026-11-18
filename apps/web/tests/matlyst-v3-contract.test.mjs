@@ -127,7 +127,9 @@ test("Matlyst shows restaurant listings in Pages preview without status banners"
   assert.match(clientBrowseSource, /NEXT_PUBLIC_FYSEN_API_BASE_URL/u);
   assert.match(clientBrowseSource, /https:\/\/fysen-api\.vercel\.app/u);
   assert.match(clientBrowseSource, /configuredBasePath \? defaultPreviewApiBaseUrl/u);
-  assert.match(previewSearchSource, /browseDishesClient/u);
+  assert.match(previewSearchSource, /browsePublicArchiveClient/u);
+  assert.match(previewSearchSource, /searchPublicArchiveClient/u);
+  assert.doesNotMatch(previewSearchSource, /browseDishesClient/u);
   assert.match(previewSearchSource, /clientPreviewApiBaseUrl/u);
   assert.doesNotMatch(previewSearchSource, /const previewApiBaseUrl/u);
   assert.doesNotMatch(previewSearchSource, /function previewBrowseUrl/u);
