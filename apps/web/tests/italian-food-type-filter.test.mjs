@@ -45,7 +45,7 @@ test("Alle retter retains region navigation alongside independent illustrated fo
   assert.match(browse, /FoodIllustration name=\{type\.illustration\}/u);
   assert.match(browse, /matchesItalianFoodType\(dish\.name, selectedItalianType\)/u);
   const explorer = await readFile(new URL("../components/cuisine-explorer.tsx", import.meta.url), "utf8");
-  assert.match(explorer, /matchesItalianFoodType\(dish\.label, selectedItalianType\)/u);
+  assert.ok(explorer.includes('matchingCuisineFoodType(selectedCuisine.name, dish.label, selectedFoodType)'));
 });
 
 test("recent and popular dishes show only locally matched editorial artwork", async () => {
