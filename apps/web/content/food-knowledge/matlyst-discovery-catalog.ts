@@ -68,8 +68,10 @@ const ethiopianMatlystDishes: readonly FoodDishCatalogEntry[] = [
   {
     id: "shiro",
     name: "Shiro",
-    query: "shiro",
-    aliases: ["shiro w salad", "shiro meser"],
+    query: "shiro w salad",
+    aliases: ["shiro meser", "shiro v"],
+    // Bare "Shiro" also names a sushi dish in the Oslo menus.
+    matchLabel: false,
     cuisine: "Etiopisk",
     region: "Etiopia",
     explorerPriority: 80,

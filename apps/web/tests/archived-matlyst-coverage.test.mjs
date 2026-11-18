@@ -21,6 +21,9 @@ const descriptors = [
   { id: "spicy-ramen", label: "Spicy ramen", query: "spicy ramen", aliases: [] },
   { id: "falafel", label: "Falafel", query: "falafel", aliases: [] },
 ];
+const shiro = {
+  id: "shiro", label: "Shiro", query: "shiro w salad", aliases: ["shiro meser", "shiro v"], matchLabel: false,
+};
 
 const fixture = {
   archiveDate: "2026-11-02",
@@ -83,15 +86,32 @@ test("Matlyst does not treat substring matches as proof of an unrelated dish", (
   assert.equal(result.byDish.ramen.restaurantCount, 2);
 });
 
+test("Matlyst only counts qualified menu names for the Ethiopian Shiro", () => {
+  const archive = {
+    ...fixture,
+    items: [
+      [1, "Shiro", "shiro", 17000, "exact", null, "NOK", ""],
+      [2, "Shiro w/salad", "shiro w salad", 18000, "exact", null, "NOK", ""],
+    ],
+  };
+  const result = summarizeArchivedMatlyst(archive, [shiro]);
+  assert.equal(result.byDish.shiro.restaurantCount, 1);
+  assert.deepEqual(result.byDish.shiro.restaurantExamples.map((restaurant) => restaurant.id), ["ramen-corner-oslo"]);
+});
+
 test("the published public menu archive powers actual homepage restaurant coverage", {
   skip: process.env.FYSEN_ARCHIVE_LIVE_PROOF !== "1",
 }, async () => {
   const { getPublicMenuArchive } = await importTypescript("../lib/verified-menu-archive.ts");
   const archive = await getPublicMenuArchive();
-  const result = summarizeArchivedMatlyst(archive, descriptors);
+  const result = summarizeArchivedMatlyst(archive, [...descriptors, shiro]);
   assert.ok(archive.items.length > 40_000);
   assert.ok(result.byDish.ramen.restaurantCount > 0);
   assert.ok(result.byDish.ramen.restaurantExamples.length > 0);
+  assert.ok(result.byDish.shiro.restaurantExamples.some((example) =>
+    /Habesha Restaurant|Hakuna Matata/.test(example.name)));
+  assert.ok(result.byDish.shiro.restaurantExamples.every((example) =>
+    !example.name.startsWith("Sabi Sushi")));
   for (const entry of Object.values(result.byDish)) {
     assert.ok(entry.restaurantExamples.every((example) =>
       !archive.quarantinedSlugs.has(example.id)));

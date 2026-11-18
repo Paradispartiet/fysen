@@ -4,6 +4,7 @@ export type DiscoveryDishDescriptor = {
   readonly label: string;
   readonly query: string;
   readonly aliases?: readonly string[];
+  readonly matchLabel?: boolean;
 };
 
 export type DiscoveryCoverage = {
@@ -31,7 +32,7 @@ function containsPhrase(value: string, phrase: string): boolean {
 }
 
 function descriptorTerms(descriptor: DiscoveryDishDescriptor): readonly string[] {
-  const terms = [descriptor.query, descriptor.label, ...(descriptor.aliases ?? [])]
+  const terms = [descriptor.query, descriptor.matchLabel === false ? "" : descriptor.label, ...(descriptor.aliases ?? [])]
     .map(normalizeDiscoveryText)
     .filter(Boolean);
   return [...new Set(terms)];
