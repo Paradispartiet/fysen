@@ -63,7 +63,7 @@ def main():
         "photoCredit": "Prabal Pratap Singh / Pexels",
         "photoSource": meta["source_page"],
         "photoLicense": meta["license_url"],
-        "variantCaution": "Redaksjonelt foto av butter chicken med et kyllinglår i kremet tomat- og kryddersaus, isolert på helsvart bakgrunn. Ikke foto fra en restaurant, og ikke en benfri variant.",
+        "variantCaution": "Redaksjonelt foto av butter chicken med et kyllinglår i kremet tomat- og kryddersaus, isolert på helsvart bakgrunn. Ikke restaurantfoto og ikke en benfri variant.",
     })
     MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
     print("INTEGRATED: butter chicken 3000px native-detail master and 512px thumbnail")

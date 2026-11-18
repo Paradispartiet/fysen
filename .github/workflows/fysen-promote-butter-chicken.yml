@@ -2,7 +2,9 @@ name: Fysen promote butter chicken full-size master
 on:
   push:
     branches: [art/approved-butter-chicken-black-master-20261118]
-    paths: [".github/workflows/fysen-promote-butter-chicken.yml"]
+    paths:
+      - ".github/workflows/fysen-promote-butter-chicken.yml"
+      - "scripts/promote-reviewed-butter-chicken.py"
   workflow_dispatch:
 permissions:
   contents: write
