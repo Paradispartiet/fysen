@@ -135,8 +135,8 @@ export function DishBrowse({
     const all = selectedCuisine ? discoveryScopeForCuisines([selectedCuisine]) : [];
     const scoped = all
       .filter((entry) => !selectedCuisineArea || entry.areaName === selectedCuisineArea)
-      .filter(({ dish }) => !selectedFoodType || matchingCuisineFoodType(
-        selectedCuisine!.name, dish.label, selectedFoodType,
+      .filter(({ dish }) => !selectedFoodType || !selectedCuisine || matchingCuisineFoodType(
+        selectedCuisine.name, dish.label, selectedFoodType,
       ));
 
     // Food types can span several geographic origins. Show missing catalog
@@ -288,20 +288,36 @@ export function DishBrowse({
                   >
                     Hele {selectedCuisine.name.toLocaleLowerCase("nb-NO")}
                   </button>
-                  {cuisineAreas.map((areaName) => (
-                    <button
-                      type="button"
-                      key={areaName}
-                      className={selectedCuisineArea === areaName ? "isActive" : undefined}
-                      aria-pressed={selectedCuisineArea === areaName}
-                      onClick={() => {
-                      setSelectedCuisineArea(areaName);
-                      setSelectedFoodTypeName(null);
-                    }}
-                    >
-                      {areaName}
-                    </button>
-                  ))}
+                  {cuisineAreas.map((areaName) => {
+                    const area = selectedAtlas?.areas.find((item) => item.name === areaName);
+                    return (
+                      <button
+                        type="button"
+                        key={areaName}
+                        className={[
+                          selectedAtlas ? "atlasRegionTile" : "",
+                          selectedCuisineArea === areaName ? "isActive" : "",
+                        ].filter(Boolean).join(" ")}
+                        aria-pressed={selectedCuisineArea === areaName}
+                        onClick={() => {
+                          setSelectedCuisineArea(areaName);
+                          setSelectedFoodTypeName(null);
+                        }}
+                      >
+                        {area?.flagFile ? (
+                          <img src={regionalFlagUrl(area.flagFile)}
+                            className="dishBrowseRegionFlag" alt="" aria-hidden="true"
+                            loading="lazy" width="46" height="31" />
+                        ) : area?.flag ? (
+                          <span className="dishBrowseCountryFlag" aria-hidden="true">{area.flag}</span>
+                        ) : area?.illustration ? (
+                          <FoodIllustration name={area.illustration}
+                            className="dishBrowseAreaArtwork" size={38} />
+                        ) : null}
+                        <span>{areaName}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             ) : null}
