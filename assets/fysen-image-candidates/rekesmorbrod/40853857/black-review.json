@@ -13,7 +13,7 @@
     3950,
     3340
   ],
-  "review_native_sha256": "2261ff9c0408edf3698040e8e6a2f6793e00a76342941ec9f3dca23295afac3d",
+  "review_native_sha256": "303102694fdb4b8025a1cd35d28086be865af0d13fbf6b16cb3879b07e879466",
   "method": "Native pixel crop and hand-drawn foreground/plate alpha matte; only mask scaled, not food",
   "description": "Open-faced shrimp sandwich with peeled prawns, lemon, dill, pickled red onion on visible bread; turquoise serving plate",
   "visual_review_completed": false,
