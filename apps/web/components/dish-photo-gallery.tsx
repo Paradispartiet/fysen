@@ -154,6 +154,9 @@ export function DishPhotoGallery() {
           <a href="/dish-images/sushi-master-2100.avif" target="_blank" rel="noopener noreferrer">
             Sushi assortert <span aria-hidden="true">↗</span>
           </a>
+          <a href="/dish-images/ramen-master-7364.avif" target="_blank" rel="noopener noreferrer">
+            Ramen med svin og egg <span aria-hidden="true">↗</span>
+          </a>
           <a href="/dish-images/pasta-carbonara-master-2600.avif" target="_blank" rel="noopener noreferrer">
             Pasta carbonara <span aria-hidden="true">↗</span>
           </a>
@@ -290,7 +293,7 @@ export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: s
   return (
     <span
       role="img"
-      aria-label={isSushi ? "Redaksjonelt foto av sushi assortert, ikke restaurantfoto" : isCarbonara ? "Redaksjonelt foto av carbonara med bacon og ost, ikke restaurantfoto" : isButterChicken ? "Redaksjonelt foto av butter chicken med kyllinglår i kremet saus, ikke restaurantfoto" : `KI-illustrasjon av ${illustratedVariant}, ikke restaurantfoto`}
+      aria-label={isSushi ? "Redaksjonelt foto av sushi assortert, ikke restaurantfoto" : isRamen ? "Redaksjonelt foto av ramen med svin og egg, ikke restaurantfoto" : isCarbonara ? "Redaksjonelt foto av carbonara med bacon og ost, ikke restaurantfoto" : isButterChicken ? "Redaksjonelt foto av butter chicken med kyllinglår i kremet saus, ikke restaurantfoto" : `KI-illustrasjon av ${illustratedVariant}, ikke restaurantfoto`}
       className={isPizzaMargherita ? "dishPhotoSmall dishPhotoPizzaMargherita" : isSushi ? "dishPhotoSmall dishPhotoSushi" : isRamen ? "dishPhotoSmall dishPhotoRamen" : isCarbonara ? "dishPhotoSmall dishPhotoCarbonara" : isButterChicken ? "dishPhotoSmall dishPhotoButterChicken" : isPizzaMarinara ? "dishPhotoSmall dishPhotoPizzaMarinara" : isFalafel ? "dishPhotoSmall dishPhotoFalafel" : isTacosAlPastor ? "dishPhotoSmall dishPhotoTacosAlPastor" : isCacioEPepe ? "dishPhotoSmall dishPhotoCacioEPepe" : isChanaMasala ? "dishPhotoSmall dishPhotoChanaMasala" : isMasalaDosa ? "dishPhotoSmall dishPhotoMasalaDosa" : isChickenKatsu ? "dishPhotoSmall dishPhotoChickenKatsu" : isYakitori ? "dishPhotoSmall dishPhotoYakitori" : isUdonTempura ? "dishPhotoSmall dishPhotoUdonTempura" : isBao ? "dishPhotoSmall dishPhotoBao" : isDumplings ? "dishPhotoSmall dishPhotoDumplings" : isMapoTofu ? "dishPhotoSmall dishPhotoMapoTofu" : isPekingDuck ? "dishPhotoSmall dishPhotoPekingDuck" : isDanDanNoodles ? "dishPhotoSmall dishPhotoDanDanNoodles" : isGreenCurry ? "dishPhotoSmall dishPhotoGreenCurry" : isPho ? "dishPhotoSmall dishPhotoPho" : isBunCha ? "dishPhotoSmall dishPhotoBunCha" : isGoiCuon ? "dishPhotoSmall dishPhotoGoiCuon" : isTandoori ? "dishPhotoSmall dishPhotoTandoori" : isNaan ? "dishPhotoSmall dishPhotoNaan" : isDalMakhani ? "dishPhotoSmall dishPhotoDalMakhani" : isIdli ? "dishPhotoSmall dishPhotoIdli" : isSambar ? "dishPhotoSmall dishPhotoSambar" : isVada ? "dishPhotoSmall dishPhotoVada" : isBanhMi ? "dishPhotoSmall dishPhotoBanhMi" : isPadKraPao ? "dishPhotoSmall dishPhotoPadKraPao" : isTomYum ? "dishPhotoSmall dishPhotoTomYum" : isSeries04 ? "dishPhotoSmall dishPhotoSeries04" : "dishPhotoSmall"}
       style={{ backgroundPosition: position }}
     />

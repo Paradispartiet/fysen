@@ -200,7 +200,7 @@
 .dishPhotoThumb.dishPhotoSushi,
 .dishPhotoSmall.dishPhotoSushi { background: #000 url("/dish-images/sushi-thumb-512.avif") center / cover no-repeat; }
 .dishPhotoThumb.dishPhotoRamen,
-.dishPhotoSmall.dishPhotoRamen { background: #000 url("/dish-images/ramen-768.avif") center / cover no-repeat; }
+.dishPhotoSmall.dishPhotoRamen { background: #000 url("/dish-images/ramen-thumb-512.avif") center / cover no-repeat; }
 .dishPhotoThumb.dishPhotoCarbonara,
 .dishPhotoSmall.dishPhotoCarbonara { background: #000 url("/dish-images/carbonara-thumb-512.avif") center / cover no-repeat; }
 .dishPhotoThumb.dishPhotoButterChicken,
