@@ -384,3 +384,5 @@ mattekstur. Egen AVIF-master og 512px miniatyr. Kilde- og bildebevis
 lagres i `docs/fysen-image-reviews/pasta-carbonara.md`.
 
 Ny fullstørrelseslenke åpner originalen først når brukeren velger den.
+
+**Godkjent etter importkontroll:** Sushi (2100×2100), pasta carbonara (2600×2600) og butter chicken (3000×3000). Alle har kildebevarte originaler og separate 512px miniatyrer. Totalt 3 av 44 godkjente stororiginaler. Resten har bare miniatyrvisning.
