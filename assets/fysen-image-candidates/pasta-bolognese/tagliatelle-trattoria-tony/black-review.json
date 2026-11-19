@@ -14,7 +14,7 @@
     4000,
     3000
   ],
-  "review_native_sha256": "37c4a1110a264092b5735884bc29a89fbde8de569cf74878b051353310d3b4cd",
+  "review_native_sha256": "2ba8af25055fc323a799674eb7d4d102e598e50ec9021e432fe9bde74ec9f055",
   "method": "Native photo pixels retained; separate traced mask excluding table/glassware is enlarged to source dimensions only",
   "original_pixels_upscaled": false,
   "visual_review_completed": false,
