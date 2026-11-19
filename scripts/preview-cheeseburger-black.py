@@ -79,13 +79,22 @@ fries_region=(xx<412)&(yy>332)
 potato=(r.astype(np.int16)>145)&(g.astype(np.int16)>96)&(r.astype(np.int16)>g.astype(np.int16))&(b.astype(np.int16)<170)
 fries_foreground=fries_region&potato&(binary>0)
 fries_foreground=cv2.morphologyEx(np.uint8(fries_foreground)*255,cv2.MORPH_CLOSE,cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(15,15)))
+# Fill only small internal shadow pinholes, never large open spaces between
+# different fries, which must remain pure black.
+contours,hierarchy=cv2.findContours(fries_foreground,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_SIMPLE)
+if hierarchy is not None:
+    for i,contour in enumerate(contours):
+        if hierarchy[0][i][3]>=0 and cv2.contourArea(contour)<500:
+            cv2.drawContours(fries_foreground,[contour],-1,255,thickness=cv2.FILLED)
 # Separate burger candidate on right. Manual outer rim still limits spillover
 # without enlarging the food photograph.
 burger_region=(xx>=370)
 burger_foreground=np.uint8(burger_region & (binary>0))*255
 # Brown horizontal table has low saturation/value compared with iceberg lettuce
 # on the far-left loose-leaf area. Remove this small disconnected region only.
-table_spill=(xx<528)&(yy>325)&(yy<485)&(g<112)&(b<95)
+# Brown tabletop just left of bacon; do not hard-clip the bun above it.
+# Preserve pale lettuce (green/white) and all meat layers.
+table_spill=(xx<525)&(yy>370)&(yy<470)&(r<145)&(g<105)&(b<95)
 burger_foreground[table_spill]=0
 combined=np.maximum(burger_foreground,fries_foreground)
 combined=cv2.morphologyEx(combined,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8))
