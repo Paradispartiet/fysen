@@ -546,7 +546,7 @@ test("Four standalone dish photos preserve exact variants and suitable native th
     assert.ok(gallery.includes(cssClass));
   }
   assert.match(gallery, /chashu-svinekjøtt/u);
-  assert.match(gallery, /spaghetti carbonara med speket svinekjøtt/u);
+  assert.match(gallery, /spaghetti carbonara med bacon, egg, ost og pepper/u);
 });
 
 test("Gyoza illustration is a full standalone 768px image with exact dish ID and no invented filling", () => {

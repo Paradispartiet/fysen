@@ -2,7 +2,7 @@ name: Fysen promote carbonara native 2600px
 on:
   push:
     branches: [art/matlyst-carbonara-native-2600-20261119]
-    paths: [".github/workflows/fysen-promote-carbonara.yml", "scripts/promote-reviewed-carbonara.py"]
+    paths: [".github/workflows/fysen-promote-carbonara.yml", "scripts/promote-reviewed-carbonara.py", "apps/web/tests/dish-photo-gallery.test.mjs"]
   workflow_dispatch:
 permissions:
   contents: write
