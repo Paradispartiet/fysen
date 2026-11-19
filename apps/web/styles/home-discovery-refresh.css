@@ -169,6 +169,38 @@
 .dishPhotosNote {
   color: var(--color-muted);
 }
+/* Link directly to approved native-size AVIFs. No large image is fetched until clicked. */
+.dishPhotosLargeLinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(121, 201, 135, .13);
+}
+.dishPhotosLargeLinks > span {
+  color: var(--color-muted);
+  font-size: 11px;
+}
+.dishPhotosLargeLinks a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 7px 10px;
+  border: 1px solid rgba(121, 201, 135, .25);
+  border-radius: 9px;
+  background: #0a0e0a;
+  color: var(--color-brand);
+  font-size: 11px;
+  font-weight: 630;
+  text-decoration: none;
+}
+.dishPhotosLargeLinks a:hover,
+.dishPhotosLargeLinks a:focus-visible {
+  border-color: var(--color-brand);
+  text-decoration: underline;
+}
 /* Compact thumbnail rows: the image should identify the dish, not dominate its card. */
 .dishPhotos .dishPhotosGrid {
   display: grid;
