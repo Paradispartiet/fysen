@@ -52,7 +52,7 @@ draw.ellipse((137,87,1065,752),fill=255)
 # backdrop, not the white plate or food. Clear only that isolated wedge (review v4).
 # A wood sliver sits ABOVE the actual upper-left diagonal plate rim.
 # Trace just that rim with a smooth diagonal: no holes within the plate.
-draw.polygon([(0,0),(438,0),(438,107),(414,122),(351,159),(0,196)],fill=0)
+draw.polygon([(0,0),(451,0),(451,110),(426,123),(312,179),(0,213)],fill=0)
 mask=mask.filter(ImageFilter.GaussianBlur(1.3))
 alpha=mask.resize(DIMS,Image.Resampling.BILINEAR)
 black=Image.composite(native,Image.new("RGB",DIMS,(0,0,0)),alpha)
