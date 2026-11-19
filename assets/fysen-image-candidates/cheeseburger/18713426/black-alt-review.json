@@ -16,8 +16,10 @@
   "native_black_sha256": "47def19fdd584410a304a7acb0ae19129b110b0afd23c42bc5502f91d2d998e4",
   "method": "native-pixel crop + low-light background black-key, no upscaling",
   "variant": "bacon cheeseburger with beef and melted cheese, no fries in this photo",
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
-  "note": "Review whole burger in black background and actual sharp 1400px detail; don't claim french fries are depicted."
+  "note": "Review whole burger in black background and actual sharp 1400px detail; don't claim french fries are depicted.",
+  "final_native_png_sha256": "47def19fdd584410a304a7acb0ae19129b110b0afd23c42bc5502f91d2d998e4",
+  "final_master_sha256": "e46daafaba5a53a08fd5adba780a61c16d6cd4a3d83d04780204585bf8f88343"
 }
