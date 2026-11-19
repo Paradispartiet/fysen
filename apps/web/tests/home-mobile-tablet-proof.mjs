@@ -39,22 +39,22 @@ try {
       await kitchenMenu.waitFor({ state: "visible" });
       assert.equal(await kitchenMenu.getAttribute("open"), null,
         "Utforsk matretter must be closed on first paint");
-      assert.equal(await page.locator(".cuisineGrid").isVisible(), false,
-        "Kitchen cards must not clutter the homepage until explicitly expanded");
+      assert.equal(await page.locator(".cuisineBrowseList").isVisible(), false,
+        "Kitchen choices must not clutter the homepage until explicitly expanded");
 
       await kitchenMenu.locator("summary").click();
       assert.notEqual(await kitchenMenu.getAttribute("open"), null,
         "Clicking the kitchen summary must expand its contents");
-      assert.equal(await page.locator(".cuisineGrid").isVisible(), true);
-      assert.equal(await page.locator(".cuisineCardInteractive").count(), 12,
+      assert.equal(await page.locator(".cuisineBrowseList").isVisible(), true);
+      assert.equal(await page.locator(".cuisineBrowseChoice").count(), 12,
         "Opening the accordion must preserve all twelve cuisines");
-      await kitchenMenu.locator(".cuisineCardTrigger").first().click();
+      await kitchenMenu.locator(".cuisineBrowseChoice").first().click();
       await page.locator(".cuisineExploreDialog").waitFor({ state: "visible" });
       await page.locator(".cuisineExploreDialogClose").click();
       await kitchenMenu.locator("summary").click();
       assert.equal(await kitchenMenu.getAttribute("open"), null,
         "The user can fold kitchen exploration closed again");
-      assert.equal(await page.locator(".cuisineGrid").isVisible(), false);
+      assert.equal(await page.locator(".cuisineBrowseList").isVisible(), false);
 
       const details = page.locator("details.dishPhotos");
       await details.waitFor({ state: "visible", timeout: 30_000 });
@@ -63,7 +63,7 @@ try {
         "Gallery grid must not overwhelm the front page before explicit opening");
 
       const ordering = await page.evaluate(() => {
-        const cuisines = document.querySelector(".cuisineGrid");
+        const cuisines = document.querySelector(".cuisineBrowseList");
         const gallery = document.querySelector(".dishPhotos");
         if (!cuisines || !gallery) return false;
         return Boolean(cuisines.compareDocumentPosition(gallery) & Node.DOCUMENT_POSITION_FOLLOWING);
