@@ -1,0 +1,18 @@
+{
+  "dish_id": "pizza-prosciutto",
+  "photo_id": 16677744,
+  "photographer": "Valeria Boltneva",
+  "source_page": "https://www.pexels.com/photo/pizza-with-dry-cured-ham-and-rucola-on-a-wooden-table-16677744/",
+  "source_url": "https://images.pexels.com/photos/16677744/pexels-photo-16677744.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "source_sha256": "eeb441247a554716a8be7b3378c875d0db7cc2e3a895d00a1ff83915f977a82d",
+  "source_width": 8192,
+  "source_height": 5464,
+  "source_verified": true,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "target": "Entire pizza with visible prosciutto, mozzarella and greens; real sharp source pixels and pure black surrounding background without artifacts.",
+  "review_criteria": "Do not approve close-ups with cut-off pizza, weak source detail, unsightly isolation, invented ingredients, or incorrect photo rights. No upscaling and no restaurant-specific claims."
+}
