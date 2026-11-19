@@ -167,6 +167,14 @@ test("Editorial food photos are only large-view enabled with real provenance and
       const notice = readFileSync(path.join(imageRoot, "rekesmorbrod-LICENSE.txt"), "utf8");
       assert.match(notice, /Foto: Susanne Nilsson/u);
       assert.match(notice, /CC BY-SA 2\.0/u);
+    } else if (photo.id === "pasta-bolognese") {
+      assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
+      assert.match(photo.photoCredit, /Alex Sirac.*CC BY 4\.0/u);
+      assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by/4.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/pasta-bolognese-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "pasta-bolognese-LICENSE.txt"), "utf8");
+      assert.match(notice, /Fotograf: Alex Sirac/u);
+      assert.match(notice, /CC BY 4\.0/u);
     } else {
       assert.match(photo.photoSource, /^https:\/\/www\.pexels\.com\/photo\//u);
       assert.match(photo.photoCredit, /Pexels/u);
