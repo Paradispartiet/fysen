@@ -18,7 +18,16 @@
   "pixel_upscaled": false,
   "ingredients_generated": false,
   "published": false,
-  "visual_review_completed": false,
+  "visual_review_completed": true,
   "approved_for_fysen": false,
-  "review": "Entire actual stuffed pita? Branded wrapper, paper, dish and fingers must be absent. Correct meat/vegetable variant and true 1:1 sharpness; no clipped bread, no dangling isolated food. Reject if poor."
+  "review": "Entire actual stuffed pita? Branded wrapper, paper, dish and fingers must be absent. Correct meat/vegetable variant and true 1:1 sharpness; no clipped bread, no dangling isolated food. Reject if poor.",
+  "photographer_verified": true,
+  "license_verified": true,
+  "license_url": "https://www.pexels.com/license/",
+  "review_decision": "REJECT",
+  "rejection_reasons": [
+    "The food is hanging out of the pita with no visible bottom bread; the entire serving is not preserved.",
+    "Logo-paper/packaging remains at the top and behind the pita after masking.",
+    "A straight, unnatural lower crop removes necessary food/bread support; the result is not a natural isolated whole kebab."
+  ]
 }
