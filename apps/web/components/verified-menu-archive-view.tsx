@@ -3,6 +3,7 @@ import { dishSearchHref, foodKnowledgeHref, withPublicBasePath } from "../lib/pu
 import { browseArchivedMenuDishes, type ArchivedMenuMatch, type PublicMenuArchive } from "../lib/verified-menu-archive";
 import styles from "./verified-menu-archive-view.module.css";
 import { FoodIllustration } from "./food-illustration";
+import { CuisineCountryFlag } from "./cuisine-country-flag";
 import { illustrationForDishName } from "./food-illustration-match";
 import { regionalFlagUrl } from "./cuisine-explorer-taxonomy";
 import { foodTypesForCuisine, matchingCuisineFoodType } from "./cuisine-food-type-data";
@@ -190,7 +191,7 @@ export function ArchivedMenuBrowse({
                           height="32"
                         />
                       ) : area.flag ? (
-                        <span className={styles.atlasCountryFlag} aria-hidden="true">{area.flag}</span>
+                        <CuisineCountryFlag emoji={area.flag} className={styles.atlasCountryFlag ?? ""} />
                       ) : area.illustration ? (
                         <FoodIllustration name={area.illustration}
                           className={styles.italianTypeIllustration ?? ""} size={40} />
