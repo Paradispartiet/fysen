@@ -144,7 +144,7 @@ function SearchScreen({
   favoritesReady: boolean;
   onFavorite: (dish: FavoriteDish) => void;
 }) {
-  const [results, setResults] = useState<ArchivedDish[]>([]);
+  const [results, setResults] = useState<readonly ArchivedDish[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [error, setError] = useState<string | null>(null);
