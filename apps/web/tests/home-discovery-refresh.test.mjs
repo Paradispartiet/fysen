@@ -36,6 +36,18 @@ test("Utforsk matretter is a closed-by-default accordion before the optional pho
   assert.match(css, /\.cuisineBrowsePreview:focus-visible/u);
 });
 
+test("kitchen dialog keeps regions and illustrated food types behind separate closed accordions", () => {
+  assert.match(explorer, /<details className="cuisineExploreFilter cuisineExploreAreas" name="cuisine-discovery-filter">/u);
+  assert.match(explorer, /<details className="cuisineExploreFilter cuisineExploreFoodTypes" name="cuisine-discovery-filter">/u);
+  assert.doesNotMatch(explorer, /<details className="cuisineExploreFilter[^>]*\sopen(?:\s|>)/u);
+  assert.ok(explorer.indexOf('className="cuisineExploreFilterGroup"') < explorer.indexOf('className="cuisineExploreResults"'));
+  assert.match(explorer, /setSelectedAreaName\(area.name\)/u);
+  assert.match(explorer, /setSelectedTypeName\(type.name\)/u);
+  const compactStyles = read("styles/cuisine-explorer-v2-3.css");
+  assert.match(compactStyles, /\.cuisineExploreFilterSummary/u);
+  assert.match(compactStyles, /\.cuisineExploreFilterGroup/u);
+});
+
 test("Matlyst gallery is closed by default and shows all approved images only on request", () => {
   assert.match(gallery, /<details className="dishPhotos" aria-labelledby="dish-photos-title">/u);
   assert.doesNotMatch(gallery, /<details[^>]+\sopen(?:\s|>)/u);

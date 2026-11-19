@@ -862,3 +862,186 @@
     gap: 4px;
   }
 }
+
+
+/* Second level of Matlyst: the selected kitchen remains text-first.
+ * Reveal nation/region and food-family selectors only when requested.
+ * All country flags / original illustrations stay small and never cropped.
+ */
+.cuisineExploreDialog {
+  width: min(760px, calc(100vw - 26px));
+  max-height: min(90vh, 900px);
+  border-color: rgba(255,255,255,.13);
+  border-radius: 12px;
+}
+.cuisineExploreDialogShell {
+  max-height: min(90vh, 900px);
+  padding: 21px 21px 24px;
+}
+.cuisineExploreDialogHeader > p {
+  color: var(--color-muted);
+}
+.cuisineExploreDialogHeader h2 {
+  margin-top: 4px;
+  font-size: clamp(25px, 3.5vw, 34px);
+  font-weight: 620;
+}
+.cuisineExploreDialogHeader > span {
+  max-width: 57ch;
+  margin-top: 5px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.cuisineExploreDialogClose {
+  width: 32px;
+  height: 32px;
+  margin: 0 0 0 10px;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 8px;
+  font-size: 22px;
+  background: transparent;
+}
+.cuisineExploreFilterGroup {
+  display: grid;
+  gap: 6px;
+  margin-top: 16px;
+}
+.cuisineExploreFilterGroup .cuisineExploreFilter {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  background: #0d100d;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 8px;
+}
+.cuisineExploreFilterSummary {
+  display: flex;
+  min-height: 49px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 13px;
+  list-style: none;
+  cursor: pointer;
+}
+.cuisineExploreFilterSummary::-webkit-details-marker { display: none; }
+.cuisineExploreFilterSummary::marker { content: ""; }
+.cuisineExploreFilterSummary > span {
+  color: var(--color-muted);
+  font-size: 11px;
+  font-weight: 570;
+}
+.cuisineExploreFilterSummary > strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--color-ink);
+  font-size: 12px;
+  font-weight: 590;
+  text-align: right;
+}
+.cuisineExploreFilterSummary > strong::after {
+  display: inline-block;
+  margin-left: 8px;
+  color: var(--color-muted);
+  content: "⌄";
+}
+.cuisineExploreFilter[open] .cuisineExploreFilterSummary > strong::after {
+  transform: rotate(180deg);
+}
+.cuisineExploreFilterSummary:hover { background: rgba(255,255,255,.025); }
+.cuisineExploreFilterSummary:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: -2px;
+}
+.cuisineExploreFilterGroup .cuisineExploreAreaGrid,
+.cuisineExploreFilterGroup .cuisineExploreTypeGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  padding: 7px 10px 11px;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.cuisineExploreFilterGroup .cuisineAreaTile,
+.cuisineExploreFilterGroup .cuisineExploreTypeGrid button {
+  min-height: 53px;
+  gap: 4px;
+  padding: 6px 4px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  box-shadow: none;
+}
+.cuisineExploreFilterGroup .cuisineAreaTile:hover,
+.cuisineExploreFilterGroup .cuisineExploreTypeGrid button:hover,
+.cuisineExploreFilterGroup .cuisineAreaTile.isActive,
+.cuisineExploreFilterGroup .cuisineExploreTypeGrid button.isActive {
+  background: rgba(255,255,255,.035);
+  border-color: rgba(255,255,255,.11);
+}
+.cuisineExploreFilterGroup .cuisineAreaFlag {
+  width: 27px;
+  height: 19px;
+  object-fit: contain;
+}
+.cuisineExploreFilterGroup .cuisineAreaArtwork,
+.cuisineExploreFilterGroup .cuisineItalianArtwork {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  opacity: .80;
+}
+.cuisineExploreFilterGroup .cuisineAreaTile > span:last-child,
+.cuisineExploreFilterGroup .cuisineExploreTypeGrid button > strong {
+  font-size: 11px;
+  font-weight: 560;
+}
+.cuisineExploreResults { margin-top: 20px; }
+.cuisineExploreResultsHeading { gap: 8px; }
+.cuisineExploreResultsHeading h3 {
+  margin-top: 4px;
+  font-size: clamp(18px, 2.6vw, 22px);
+  font-weight: 610;
+}
+.cuisineExploreDishList {
+  gap: 7px;
+  margin-top: 12px;
+}
+.cuisineExploreDish {
+  padding: 12px 13px;
+  background: #0b0d0b;
+  border-color: rgba(255,255,255,.09);
+  border-radius: 9px;
+}
+.cuisineExploreDishHeading h4 { font-size: 16px; }
+.cuisineExploreDish li a {
+  min-height: 75px;
+  padding: 9px;
+  border-color: rgba(255,255,255,.09);
+}
+.cuisineExploreDialogFooter {
+  margin-top: 18px;
+  padding-top: 10px;
+  border-color: rgba(255,255,255,.08);
+}
+@media (max-width: 767px) {
+  .cuisineExploreDialog {
+    width: calc(100vw - 18px);
+    max-height: 92vh;
+    border-radius: 10px;
+  }
+  .cuisineExploreDialogShell {
+    max-height: 92vh;
+    padding: 16px 13px 18px;
+  }
+  .cuisineExploreFilterGroup .cuisineExploreAreaGrid,
+  .cuisineExploreFilterGroup .cuisineExploreTypeGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 420px) {
+  .cuisineExploreFilterGroup .cuisineExploreAreaGrid,
+  .cuisineExploreFilterGroup .cuisineExploreTypeGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cuisineExploreFilterSummary { padding: 9px 10px; }
+}
