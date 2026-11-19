@@ -20,11 +20,17 @@ test("home page keeps dish search as the primary action", () => {
   assert.match(css, /\.homePage \.homeHero/u);
 });
 
-test("Matlyst cuisine selection comes before the optional photo gallery", () => {
-  assert.match(explorer, /Utforsk kjøkken og retter/u);
+test("Utforsk matretter is a closed-by-default accordion before the optional photo gallery", () => {
+  assert.match(explorer, /<details className="cuisineBrowseDisclosure" aria-labelledby="cuisine-browse-title">/u);
+  assert.match(explorer, /<summary className="cuisineBrowsePreview">/u);
+  assert.match(explorer, /Utforsk matretter/u);
+  assert.doesNotMatch(explorer, /<details className="cuisineBrowseDisclosure"[^>]*\sopen(?:\s|>)/u);
+  assert.ok(explorer.indexOf('className="cuisineBrowseDisclosure"') < explorer.indexOf('className="cuisineGrid"'));
   assert.ok(explorer.indexOf('className="cuisineGrid"') < explorer.indexOf("<DishPhotoGallery />"));
-  assert.match(explorer, /<RecentDishes/u);
-  assert.match(explorer, /<PopularDishes/u);
+  assert.ok(explorer.indexOf("<RecentDishes") < explorer.indexOf('className="cuisineBrowseDisclosure"'));
+  assert.ok(explorer.indexOf("<PopularDishes") < explorer.indexOf('className="cuisineBrowseDisclosure"'));
+  assert.match(css, /\.cuisineBrowseDisclosure\[open\] \.cuisineBrowsePreviewChevron/u);
+  assert.match(css, /\.cuisineBrowsePreview:focus-visible/u);
 });
 
 test("Matlyst gallery is closed by default and shows all approved images only on request", () => {
