@@ -50,7 +50,9 @@ small=np.asarray(original.resize((825,1100),Image.Resampling.LANCZOS),dtype=np.f
 r,g,b=small[:,:,0],small[:,:,1],small[:,:,2]
 green=(g>r*1.08)&(g>b*1.06)&(g>37)
 lemon=(r>160)&(g>123)&(b<g*0.82)&(r>=g*0.95)
-shrimp_onion=(r>108)&(r>g*1.17)&(b>g*0.90)&(b>73)
+# Pink onion is blue-rich while cooked peeled shrimp is very light.
+# Brown wall/window trim must not be treated as either food color.
+shrimp_onion=((r>155)&(r>g*1.18)&(b>g*1.13)&(b>98)) | ((r>198)&(g>127)&(b>127)&(r>g*1.09))
 lemon_light=(r>210)&(g>190)&(b>118)&(r>b*1.16)
 subject=np.uint8(green|lemon|shrimp_onion|lemon_light)*255
 subject=Image.fromarray(subject,"L").filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.MinFilter(5)).filter(ImageFilter.GaussianBlur(1.15))
@@ -62,9 +64,9 @@ color_alpha=np.asarray(subject,dtype=np.float32)/255.0
 protected=Image.new("L",(825,1100),0)
 protect_draw=ImageDraw.Draw(protected)
 protect_draw.polygon([
-    (353,609),(366,567),(393,544),(430,533),(466,529),
-    (503,537),(527,559),(548,592),(558,631),
-    (533,658),(390,664),(348,649)
+    (365,619),(380,577),(403,554),(425,540),(464,537),
+    (493,554),(515,588),(525,633),(501,649),
+    (399,652),(366,641)
 ],fill=255)
 protect_alpha=np.asarray(protected.filter(ImageFilter.GaussianBlur(3.0)),dtype=np.float32)/255.0
 color_alpha=np.maximum(color_alpha,protect_alpha)
