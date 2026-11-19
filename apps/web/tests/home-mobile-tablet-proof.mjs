@@ -35,6 +35,27 @@ try {
       await page.getByRole("heading", { name: "Hva har du lyst på?" }).waitFor({ state: "visible" });
       await page.getByRole("searchbox", { name: "Retten du vil spise" }).waitFor({ state: "visible" });
 
+      const kitchenMenu = page.locator("details.cuisineBrowseDisclosure");
+      await kitchenMenu.waitFor({ state: "visible" });
+      assert.equal(await kitchenMenu.getAttribute("open"), null,
+        "Utforsk matretter must be closed on first paint");
+      assert.equal(await page.locator(".cuisineGrid").isVisible(), false,
+        "Kitchen cards must not clutter the homepage until explicitly expanded");
+
+      await kitchenMenu.locator("summary").click();
+      assert.notEqual(await kitchenMenu.getAttribute("open"), null,
+        "Clicking the kitchen summary must expand its contents");
+      assert.equal(await page.locator(".cuisineGrid").isVisible(), true);
+      assert.equal(await page.locator(".cuisineCardInteractive").count(), 12,
+        "Opening the accordion must preserve all twelve cuisines");
+      await kitchenMenu.locator(".cuisineCardTrigger").first().click();
+      await page.locator(".cuisineExploreDialog").waitFor({ state: "visible" });
+      await page.locator(".cuisineExploreDialogClose").click();
+      await kitchenMenu.locator("summary").click();
+      assert.equal(await kitchenMenu.getAttribute("open"), null,
+        "The user can fold kitchen exploration closed again");
+      assert.equal(await page.locator(".cuisineGrid").isVisible(), false);
+
       const details = page.locator("details.dishPhotos");
       await details.waitFor({ state: "visible", timeout: 30_000 });
       assert.equal(await details.getAttribute("open"), null, "Image gallery must be closed on first paint");
