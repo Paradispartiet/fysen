@@ -12,7 +12,7 @@
     3950,
     3340
   ],
-  "output_sha256": "c37a106244b064010511d2aa230c48f99cddbe2ab83a46a3895006948da89b66",
+  "output_sha256": "1d65c51ba3ccf5837aae3c137567b1c69de4afa533ed46ecc7b8813f03d19419",
   "method": "Non-generative GrabCut foreground with hand-annotated foreground/background seeds, protected plate, and resized alpha mask only",
   "visual_review_completed": false,
   "approved_for_fysen": false,
