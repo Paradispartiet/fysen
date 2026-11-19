@@ -68,17 +68,28 @@ cv2.grabCut(bgr,mask,None,np.zeros((1,65),np.float64),
            np.zeros((1,65),np.float64),7,cv2.GC_INIT_WITH_MASK)
 
 binary=(np.isin(mask,[cv2.GC_PR_FGD,cv2.GC_FGD]).astype(np.uint8)*255)
-# Keep the largest burger and fries masks; fill non-food holes caused by dark
-# bacon/patty so no physical part disappears when shown against black.
-n,labels,stats,_=cv2.connectedComponentsWithStats(binary,connectivity=8)
-kept=np.zeros_like(binary)
-for i in range(1,n):
-    if stats[i,cv2.CC_STAT_AREA]>=300:
-        kept[labels==i]=255
-contours,_=cv2.findContours(kept,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
-filled=np.zeros_like(kept)
-cv2.drawContours(filled,contours,-1,255,thickness=cv2.FILLED)
-filled=cv2.GaussianBlur(filled,(3,3),0.65)
+# Never fill the whole bounding contour: that turned gaps between individual
+# fries into visible dark-blue table and the open lettuce/bacon area brown.
+# Instead retain the actual segmented food pixels and close only tiny pinholes.
+yy,xx=np.mgrid[0:h,0:w]
+hsv=cv2.cvtColor(bgr,cv2.COLOR_BGR2HSV)
+r,g,b=preview[:,:,0],preview[:,:,1],preview[:,:,2]
+fries_region=(xx<412)&(yy>332)
+# Potato gold: reject dark table and orange wall even when GrabCut calls it food.
+potato=(r.astype(np.int16)>145)&(g.astype(np.int16)>96)&(r.astype(np.int16)>g.astype(np.int16))&(b.astype(np.int16)<170)
+fries_foreground=fries_region&potato&(binary>0)
+fries_foreground=cv2.morphologyEx(np.uint8(fries_foreground)*255,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8))
+# Separate burger candidate on right. Manual outer rim still limits spillover
+# without enlarging the food photograph.
+burger_region=(xx>=370)
+burger_foreground=np.uint8(burger_region & (binary>0))*255
+# Brown horizontal table has low saturation/value compared with iceberg lettuce
+# on the far-left loose-leaf area. Remove this small disconnected region only.
+table_spill=(xx<528)&(yy>398)&(yy<485)&(g<90)&(b<65)
+burger_foreground[table_spill]=0
+combined=np.maximum(burger_foreground,fries_foreground)
+combined=cv2.morphologyEx(combined,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8))
+filled=cv2.GaussianBlur(combined,(3,3),0.6)
 alpha=Image.fromarray(filled,"L").resize(im.size,Image.Resampling.BILINEAR)
 black=Image.composite(im,Image.new("RGB",im.size,(0,0,0)),alpha)
 
