@@ -48,6 +48,18 @@ test("kitchen dialog keeps regions and illustrated food types behind separate cl
   assert.match(compactStyles, /\.cuisineExploreFilterGroup/u);
 });
 
+test("kitchens open with all geography and only twelve proposals before opt-in expansion", () => {
+  assert.match(explorer, /selectedArea\s*\?\s*selectedArea\.dishes\s*:\s*cuisineCandidates\(selectedCuisine\)/u);
+  assert.match(explorer, /setSelectedAreaName\(""\)/u);
+  assert.match(explorer, /"Alle land"/u);
+  assert.match(explorer, /"Alle mattyper"/u);
+  assert.match(explorer, /"Alle regioner"/u);
+  assert.match(explorer, /selectedDishCoverage\.slice\(0, 12\)/u);
+  assert.match(explorer, /className="cuisineExploreShowMore"/u);
+  assert.match(explorer, /className="cuisineExploreResetChoice"/u);
+  assert.match(explorer, /seenNames\.has\(name\)/u);
+});
+
 test("Matlyst gallery is closed by default and shows all approved images only on request", () => {
   assert.match(gallery, /<details className="dishPhotos" aria-labelledby="dish-photos-title">/u);
   assert.doesNotMatch(gallery, /<details[^>]+\sopen(?:\s|>)/u);

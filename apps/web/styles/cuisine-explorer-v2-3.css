@@ -1045,3 +1045,53 @@
   }
   .cuisineExploreFilterSummary { padding: 9px 10px; }
 }
+
+
+/* Cuisine overview should show every region before any filter is chosen.
+   Deep dish lists stay short until the reader explicitly expands them. */
+.cuisineExploreFilterGroup .cuisineExploreResetChoice {
+  display: flex;
+  min-height: 53px;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 5px;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 590;
+  line-height: 1.25;
+  text-align: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.cuisineExploreFilterGroup .cuisineExploreResetChoice:hover,
+.cuisineExploreFilterGroup .cuisineExploreResetChoice[aria-pressed="true"] {
+  background: rgba(255,255,255,.04);
+  border-color: rgba(255,255,255,.13);
+}
+.cuisineExploreFilterGroup .cuisineExploreResetChoice:focus-visible,
+.cuisineExploreShowMore:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+.cuisineExploreShowMore {
+  display: block;
+  width: fit-content;
+  min-height: 36px;
+  margin: 13px auto 4px;
+  padding: 7px 13px;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 590;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 7px;
+  cursor: pointer;
+}
+.cuisineExploreShowMore:hover {
+  background: rgba(255,255,255,.04);
+  border-color: rgba(255,255,255,.23);
+}
