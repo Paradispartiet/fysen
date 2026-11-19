@@ -23,13 +23,6 @@ SOURCES={
   "page":"https://www.pexels.com/photo/gourmet-salmon-dish-with-fresh-vegetables-29149758/",
   "variant":"Grilled salmon with tomato, bell pepper, green herbs and sauce, on dark ceramic plate",
  },
- 31043029:{
-  "source_size":(5054,3370),
-  "source_sha":"b8971c42a872381f8c5ab6edcdfd1fec78f5ae9ed5ab85b062858f010578f723",
-  "photographer":"Giovanna Kamimura",
-  "page":"https://www.pexels.com/photo/delicious-grilled-salmon-fillets-on-plate-31043029/",
-  "variant":"Two seared/grilled salmon fillets on a white oval ceramic plate; no herbs or side dish",
- },
 }
 def create(photo_id:int,src_data:dict):
     url=f"https://images.pexels.com/photos/{photo_id}/pexels-photo-{photo_id}.jpeg"
@@ -49,8 +42,19 @@ def create(photo_id:int,src_data:dict):
         yy,xx=np.ogrid[:height,:width]
         radial=((xx-1770.0)/1920.0)**2+((yy-1800.0)/1640.0)**2
         alpha=np.clip((1.18-radial)/0.24,0.0,1.0)
-        # Brown background is darkened gradually outside the matte plate,
-        # but plate/food detail is preserved where the alpha is 1.
+        # The dark ceramic plate is near neutral grey, but the wood table is
+        # brown (red/orange). Black-key only background-colored pixels OUTSIDE
+        # the salmon and colorful vegetables, preserving all native food.
+        rgb=np.asarray(img,dtype=np.float32)
+        r,g,b=rgb[:,:,0],rgb[:,:,1],rgb[:,:,2]
+        wood=(r>g*1.22)&(g>b*1.07)&(r>45)
+        protected=(xx>510)&(xx<2900)&(yy>380)&(yy<2550)
+        alpha=np.where(wood & ~protected,alpha*0.08,alpha)
+        # Fade the remaining wooden tabletop below the dark plate.
+        lower_fade=np.clip((3120.0-yy)/580.0,0.0,1.0)
+        alpha*=lower_fade
+        # Plate and foreground stay full-source-pixel detail; only the
+        # non-food background is matted darker.
     else:
         img=original
         width,height=img.size
