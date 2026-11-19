@@ -386,3 +386,17 @@ lagres i `docs/fysen-image-reviews/pasta-carbonara.md`.
 Ny fullstørrelseslenke åpner originalen først når brukeren velger den.
 
 **Godkjent etter importkontroll:** Sushi (2100×2100), pasta carbonara (2600×2600) og butter chicken (3000×3000). Alle har kildebevarte originaler og separate 512px miniatyrer. Totalt 3 av 44 godkjente stororiginaler. Resten har bare miniatyrvisning.
+
+### Ramen med svin og egg – godkjent fotokandidat for import (19. november 2026)
+
+Fotograf Connor Scott McManus / Pexels, kilde-ID 35773142, original 7364 × 4909.
+Det eldre, mykfokuserte ramen-bildet ble ikke godkjent for storvisning.
+Ny original viser chashu-svin, to halve egg, nori, vårløk og kraft i en
+hvit skål. Bildet er visuelt vurdert i faktisk kildeoppløsning.
+Omgivelsene utenfor mat og skål blir selektivt maskert til ren svart;
+matens detaljer forblir originale kildepiksler, uten oppskalering.
+En separat kvadratisk 512px AVIF brukes i kompakt visning, mens
+`ramen-master-7364.avif` åpnes ved brukerklikk. Kilde, SHA og vurdering
+føres i `docs/fysen-image-reviews/ramen.md`.
+
+Når importkontrollen består, er 4/44 stororiginaler godkjent.
