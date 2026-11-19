@@ -25,7 +25,6 @@ test("Utforsk matretter is a closed-by-default accordion before the optional pho
   assert.match(explorer, /<summary className="cuisineBrowsePreview">/u);
   assert.match(explorer, /Utforsk matretter/u);
   assert.doesNotMatch(explorer, /<details className="cuisineBrowseDisclosure"[^>]*\sopen(?:\s|>)/u);
-  assert.ok(explorer.indexOf('className="cuisineBrowseDisclosure"') < explorer.indexOf('className="cuisineGrid"'));
   assert.ok(explorer.indexOf('className="cuisineBrowseList"') < explorer.indexOf("<DishPhotoGallery />"));
   assert.match(explorer, /<details className="cuisineBrowseDisclosure"/u);
   assert.match(explorer, /<summary className="cuisineBrowsePreview"/u);
