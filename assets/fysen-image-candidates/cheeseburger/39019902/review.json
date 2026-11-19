@@ -1,0 +1,18 @@
+{
+  "dish_id": "cheeseburger",
+  "photo_id": 39019902,
+  "photographer": "DΛVΞ GΛRCIΛ",
+  "source_page": "https://www.pexels.com/photo/juicy-cheeseburger-with-bacon-and-fries-close-up-39019902/",
+  "original_url": "https://images.pexels.com/photos/39019902/pexels-photo-39019902.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "source_verified": true,
+  "source_original_width": 4000,
+  "source_original_height": 6000,
+  "source_sha256": "00e3e16053a0ff76b5476288fcbad7d1a803b8a7dc5ac3ee803fc380295a7720",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "required_variant": "beef cheeseburger with melted cheese, visible bacon and french fries",
+  "visual_criteria": "Whole burger and fries preserved, realistic sharp texture at 1:1, solid black background, no unrelated toppings, no hands, no crop pretending to be a large native original.",
+  "note": "Representational editorial dish image, never a photograph of any named restaurant's serving."
+}
