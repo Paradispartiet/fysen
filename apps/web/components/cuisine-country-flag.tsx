@@ -1,4 +1,4 @@
-import { countryFlagUrl } from "./cuisine-country-flag";
+import { countryFlagUrl } from "./country-flag-artwork-url";
 
 export function CuisineCountryFlag({
   emoji,
