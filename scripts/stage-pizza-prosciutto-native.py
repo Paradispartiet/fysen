@@ -20,6 +20,10 @@ CANDIDATES=[
  (4748451,"Regina Ferraz","https://www.pexels.com/photo/prosciutto-pizza-on-wooden-chopping-board-4748451/"),
  (5903268,"ROMAN ODINTSOV","https://www.pexels.com/photo/close-up-shot-of-pizza-5903268/"),
  (32764492,"Alexey Demidov","https://www.pexels.com/photo/authentic-italian-pizza-with-prosciutto-and-arugula-32764492/"),
+ (16677744,"Valeria Boltneva","https://www.pexels.com/photo/pizza-with-dry-cured-ham-and-rucola-on-a-wooden-table-16677744/"),
+ (16677733,"Valeria Boltneva","https://www.pexels.com/photo/pizza-with-arugula-ham-and-black-olives-16677733/"),
+ (4748439,"Regina Ferraz","https://www.pexels.com/photo/prosciutto-pizza-on-wooden-chopping-board-4748439/"),
+ (18285316,"Valeria Boltneva","https://www.pexels.com/photo/delicious-pizza-on-board-on-wooden-table-18285316/"),
 ]
 def stage(photo_id:int,photographer:str,page:str):
     url=f"https://images.pexels.com/photos/{photo_id}/pexels-photo-{photo_id}.jpeg"
