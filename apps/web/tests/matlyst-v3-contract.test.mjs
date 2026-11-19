@@ -95,7 +95,7 @@ test("Midtøsten ligger i hovedatlaset, mens den eldre 19-kjøkkenkatalogen beva
   assert.equal(explorerData.cuisines.length, 19);
 });
 
-test("Matlyst-forsiden beholder de seks opprinnelige kortene foran seks nye", () => {
+test("Matlyst beholder alle tolv kjøkkenene i samme rekkefølge inne i utbrettmenyen", () => {
   assert.deepEqual(explorerData.homeCuisines.slice(0, 6).map((cuisine) => cuisine.name), [
     "Asiatisk",
     "Indisk",
