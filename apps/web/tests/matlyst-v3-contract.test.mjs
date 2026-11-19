@@ -124,8 +124,9 @@ test("Matlyst beholder alle tolv kjøkkenene i samme rekkefølge inne i utbrettm
   assert.doesNotMatch(explorerSource, /matlystMoodBlock/u);
 });
 
-test("Matlyst shows restaurant listings in Pages preview without status banners", () => {
-  assert.match(explorerSource, /Restauranter og retter/u);
+test("Matlyst keeps restaurant coverage behind cuisine selection without status banners", () => {
+  assert.match(explorerSource, /Retter og hvor du kan få dem/u);
+  assert.match(explorerSource, /<DiscoveryDishList/u);
   assert.match(explorerSource, /restaurantExamples/u);
   assert.match(explorerSource, /browseDishesClient/u);
   assert.match(clientBrowseSource, /NEXT_PUBLIC_FYSEN_API_BASE_URL/u);
@@ -135,7 +136,7 @@ test("Matlyst shows restaurant listings in Pages preview without status banners"
   assert.match(previewSearchSource, /clientPreviewApiBaseUrl/u);
   assert.doesNotMatch(previewSearchSource, /const previewApiBaseUrl/u);
   assert.doesNotMatch(previewSearchSource, /function previewBrowseUrl/u);
-  assert.match(explorerSource, /Kunne ikke hente restaurantene akkurat nå/u);
+  assert.doesNotMatch(explorerSource, /Kunne ikke hente restaurantene akkurat nå/u);
   assert.doesNotMatch(explorerSource, /Ferske menytreff først|Sist bekreftede menyer|siste menyarkiv/u);
 
   const coverage = dishDiscovery.discoveryCoverage(
