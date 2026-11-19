@@ -1,6 +1,14 @@
 import { createHash, randomBytes } from "node:crypto";
 import type { Pool } from "pg";
-import type { MinMatArchiveSaveInput } from "@fysen/contracts/aha-min-mat";
+export interface VerifiedArchiveMenuEvidence {
+  readonly restaurantSlug: string;
+  readonly sourceUrl: string;
+  readonly observedAt: string;
+  readonly normalizedName: string;
+  readonly priceMinor: number | null;
+  readonly priceKind: "exact" | "from" | "multiple";
+  readonly priceMaxMinor: number | null;
+}
 
 const SESSION_TTL_DAYS = 30;
 const HANDOFF_TTL_MINUTES = 5;
@@ -225,7 +233,7 @@ export async function listMinMatItems(pool: Pool, sessionToken: string): Promise
  */
 export async function resolveVerifiedArchiveMenuItem(
   pool: Pool,
-  evidence: MinMatArchiveSaveInput,
+  evidence: VerifiedArchiveMenuEvidence,
 ): Promise<string | null> {
   const result = await pool.query<{ id: string }>(
     `SELECT item.id
