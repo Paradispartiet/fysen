@@ -110,7 +110,8 @@ test("Matlyst-forsiden beholder de seks opprinnelige kortene foran seks nye", ()
   assert.match(explorerSource, /homeCuisines\.map/u);
   assert.match(explorerSource, /className="cuisineGrid"/u);
   assert.match(explorerSource, /className="cuisineCard cuisineCardInteractive"/u);
-  assert.match(explorerSource, /className="cuisineCardBrowseLabel"/u);
+  assert.doesNotMatch(explorerSource, /className="cuisineCardBrowseLabel"/u);
+  assert.match(explorerSource, /<CuisineCountryFlag/u);
   assert.match(explorerSource, /<CuisineAreaTile/u);
   assert.doesNotMatch(explorerSource, /className="cuisineDishPreview"/u);
   assert.match(explorerSource, /className="cuisineAreaList"/u);
