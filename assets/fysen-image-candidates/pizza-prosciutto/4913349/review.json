@@ -1,0 +1,18 @@
+{
+  "dish_id": "pizza-prosciutto",
+  "photo_id": 4913349,
+  "photographer": "Maria Orlova",
+  "source_page": "https://www.pexels.com/photo/delicious-pizza-with-prosciutto-and-mozzarella-cheese-served-on-table-4913349/",
+  "source_url": "https://images.pexels.com/photos/4913349/pexels-photo-4913349.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "source_sha256": "3ec1a8ae1b224b9cb3b63315451cf6b79133e5c5a58c1ee92fae30306c77b8c5",
+  "source_width": 3000,
+  "source_height": 2000,
+  "source_verified": true,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "target": "Entire pizza with visible prosciutto, mozzarella and greens; real sharp source pixels and pure black surrounding background without artifacts.",
+  "review_criteria": "Do not approve close-ups with cut-off pizza, weak source detail, unsightly isolation, invented ingredients, or incorrect photo rights. No upscaling and no restaurant-specific claims."
+}
