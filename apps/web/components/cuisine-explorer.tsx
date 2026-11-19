@@ -182,6 +182,7 @@ export function CuisineExplorer({
   const [selectedCuisine, setSelectedCuisine] = useState<Cuisine | null>(null);
   const [selectedAreaName, setSelectedAreaName] = useState<string>("");
   const [selectedTypeName, setSelectedTypeName] = useState<string>("");
+  const [showAllDishes, setShowAllDishes] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const effectiveBrowseData = browseData ?? previewBrowseData;
@@ -207,19 +208,21 @@ export function CuisineExplorer({
 
   const selectedArea = useMemo<CuisineArea | null>(() => {
     if (!selectedCuisine) return null;
-    return selectedCuisine.areas.find((area) => area.name === selectedAreaName) ?? selectedCuisine.areas[0] ?? null;
+    return selectedCuisine.areas.find((area) => area.name === selectedAreaName) ?? null;
   }, [selectedAreaName, selectedCuisine]);
 
   const availableFoodTypes = selectedCuisine ? foodTypesForCuisine(selectedCuisine.name) : [];
   const selectedFoodType = availableFoodTypes.find((type) => type.name === selectedTypeName) ?? null;
 
   const selectedDishCoverage = useMemo(() => {
-    if (!selectedArea || !selectedCuisine) return [];
+    if (!selectedCuisine) return [];
     const matchingDishes = selectedFoodType
       ? cuisineCandidates(selectedCuisine).filter((dish) =>
           matchingCuisineFoodType(selectedCuisine.name, dish.label, selectedFoodType)
         )
-      : selectedArea.dishes;
+      : selectedArea
+        ? selectedArea.dishes
+        : cuisineCandidates(selectedCuisine);
     // A mat-type selection can span several geographical regions.
     // When an example is not in a region's seed catalog, it remains a search
     // suggestion, never a claim that a restaurant serves it.
@@ -247,10 +250,11 @@ export function CuisineExplorer({
     if (selectedCuisine && dialog && !dialog.open) dialog.showModal();
   }, [selectedCuisine]);
 
-  function openCuisine(cuisine: Cuisine, area: CuisineArea, trigger: HTMLButtonElement): void {
+  function openCuisine(cuisine: Cuisine, trigger: HTMLButtonElement): void {
     triggerRef.current = trigger;
-    setSelectedAreaName(area.name);
+    setSelectedAreaName("");
     setSelectedTypeName("");
+    setShowAllDishes(false);
     setSelectedCuisine(cuisine);
   }
 
@@ -259,6 +263,8 @@ export function CuisineExplorer({
     if (dialog?.open) dialog.close();
     setSelectedCuisine(null);
     setSelectedTypeName("");
+    setSelectedAreaName("");
+    setShowAllDishes(false);
   }
 
   function openFoodKnowledge(dishId: string): void {
@@ -293,16 +299,13 @@ export function CuisineExplorer({
         </summary>
         <div className="cuisineBrowseInside">
           <ul className="cuisineBrowseList" aria-label="Velg kjøkken">
-            {homeCuisines.map((cuisine) => {
-              const firstArea = cuisine.areas[0];
-              if (!firstArea) return null;
-              return (
+            {homeCuisines.map((cuisine) => (
                 <li key={cuisine.name}>
                   <button
                     type="button"
                     className="cuisineBrowseChoice"
                     aria-haspopup="dialog"
-                    onClick={(event) => openCuisine(cuisine, firstArea, event.currentTarget)}
+                    onClick={(event) => openCuisine(cuisine, event.currentTarget)}
                   >
                     <span className="cuisineBrowseChoiceName">{cuisine.name}</span>
                     <span className="cuisineBrowseChoiceCount">
@@ -310,8 +313,7 @@ export function CuisineExplorer({
                     </span>
                   </button>
                 </li>
-              );
-            })}
+            ))}
           </ul>
         </div>
       </details>
@@ -327,7 +329,7 @@ export function CuisineExplorer({
           if (event.target === event.currentTarget) closeCuisine();
         }}
       >
-        {selectedCuisine && selectedArea ? (
+        {selectedCuisine ? (
           <div className="cuisineExploreDialogShell">
             <button
               type="button"
@@ -348,17 +350,30 @@ export function CuisineExplorer({
               <details className="cuisineExploreFilter cuisineExploreAreas" name="cuisine-discovery-filter">
                 <summary className="cuisineExploreFilterSummary">
                   <span>{selectedCuisine.areasLabel}</span>
-                  <strong>{selectedFoodType ? "Velg land eller region" : selectedArea.name}</strong>
+                  <strong>{selectedFoodType ? "Velg land eller region" : selectedArea?.name ?? "Alle regioner"}</strong>
                 </summary>
                 <div className="cuisineExploreAreaGrid" aria-label={selectedCuisine.areasLabel}>
+                <button
+                  type="button"
+                  className="cuisineExploreResetChoice"
+                  aria-pressed={!selectedFoodType && !selectedArea}
+                  onClick={(event) => {
+                    setSelectedAreaName("");
+                    setSelectedTypeName("");
+                    setShowAllDishes(false);
+                    event.currentTarget.closest("details")?.removeAttribute("open");
+                  }}
+                >Alle regioner</button>
                 {selectedCuisine.areas.map((area) => (
                   <CuisineAreaTile
                     key={area.name}
                     area={area}
-                    active={!selectedFoodType && area.name === selectedArea.name}
-                    onClick={() => {
+                    active={!selectedFoodType && area.name === selectedArea?.name}
+                    onClick={(event) => {
                       setSelectedTypeName("");
                       setSelectedAreaName(area.name);
+                      setShowAllDishes(false);
+                      event.currentTarget.closest("details")?.removeAttribute("open");
                     }}
                   />
                 ))}
@@ -372,13 +387,29 @@ export function CuisineExplorer({
                     <strong>{selectedFoodType?.name ?? "Velg mattype"}</strong>
                   </summary>
                   <div className="cuisineExploreTypeGrid" aria-label={`Mattyper i ${selectedCuisine.name}`}>
+                  <button
+                    type="button"
+                    className="cuisineExploreResetChoice"
+                    aria-pressed={!selectedFoodType}
+                    onClick={(event) => {
+                      setSelectedTypeName("");
+                      setSelectedAreaName("");
+                      setShowAllDishes(false);
+                      event.currentTarget.closest("details")?.removeAttribute("open");
+                    }}
+                  >Alle mattyper</button>
                   {availableFoodTypes.map((type) => (
                     <button
                       type="button"
                       key={type.name}
                       className={selectedTypeName === type.name ? "isActive" : undefined}
                       aria-pressed={selectedTypeName === type.name}
-                      onClick={() => setSelectedTypeName(type.name)}
+                      onClick={(event) => {
+                        setSelectedTypeName(type.name);
+                        setSelectedAreaName("");
+                        setShowAllDishes(false);
+                        event.currentTarget.closest("details")?.removeAttribute("open");
+                      }}
                     >
                       <FoodIllustration name={type.illustration} className="cuisineItalianArtwork" size={38} />
                       <strong>{type.name}</strong>
@@ -392,18 +423,31 @@ export function CuisineExplorer({
             <section className="cuisineExploreResults" aria-live="polite">
               <div className="cuisineExploreResultsHeading">
                 <div>
-                  <p>{selectedFoodType?.name ?? selectedArea.name}</p>
+                  <p>{selectedFoodType?.name ?? selectedArea?.name ?? "Alle regioner"}</p>
                   <h3>Retter og hvor du kan få dem</h3>
                 </div>
-                <span>Restauranter i Oslo</span>
+                <span>{selectedDishCoverage.length} rettforslag · Oslo</span>
               </div>
 
-              <DiscoveryDishList coverage={selectedDishCoverage} onOpenKnowledge={openFoodKnowledge} />
+              <DiscoveryDishList
+                coverage={showAllDishes ? selectedDishCoverage : selectedDishCoverage.slice(0, 12)}
+                onOpenKnowledge={openFoodKnowledge}
+              />
+              {selectedDishCoverage.length > 12 ? (
+                <button
+                  type="button"
+                  className="cuisineExploreShowMore"
+                  aria-expanded={showAllDishes}
+                  onClick={() => setShowAllDishes((value) => !value)}
+                >
+                  {showAllDishes ? "Vis færre retter" : `Vis alle ${selectedDishCoverage.length} rettforslag`}
+                </button>
+              ) : null}
             </section>
 
             <footer className="cuisineExploreDialogFooter">
               <span>Utforsk flere retter eller åpne restaurantens meny for nærmere informasjon.</span>
-              {selectedArea.flagFile && !selectedFoodType ? (
+              {selectedArea?.flagFile && !selectedFoodType ? (
                 <a
                   href={`https://commons.wikimedia.org/wiki/File:${encodeURIComponent(selectedArea.flagFile)}`}
                   target="_blank"
