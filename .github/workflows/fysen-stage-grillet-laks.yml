@@ -1,0 +1,68 @@
+name: Fysen stage native grilled-salmon photo candidates
+
+on:
+  push:
+    branches: [art/grillet-laks-native-photo-20261119]
+    paths:
+      - ".github/workflows/fysen-stage-grillet-laks.yml"
+      - "scripts/stage-grillet-laks-candidates.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+concurrency:
+  group: fysen-grillet-laks-native-review
+  cancel-in-progress: false
+
+jobs:
+  sources:
+    if: "!contains(github.event.head_commit.message, '[salmon-source-bot]')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install image reader
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0
+      - name: Stage original Pexels food photos and true native details
+        run: python scripts/stage-grillet-laks-candidates.py
+      - name: Confirm original pixels and unapproved evidence
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          items=list(Path("assets/fysen-image-candidates/grillet-laks").glob("*/review.json"))
+          assert items
+          for path in items:
+              data=json.loads(path.read_text())
+              assert data["source_verified"] is True
+              assert data["visual_review_completed"] is False
+              assert data["approved_for_fysen"] is False
+              assert data["published"] is False
+              assert min(data["source_native_width"],data["source_native_height"])>=2500
+              assert (path.parent/"native-detail-1400.jpg").exists()
+          print(f"Staged {len(items)} native candidates. No public files changed.")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fysen-grillet-laks-native-candidates
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            assets/fysen-image-candidates/grillet-laks/*/source.jpeg
+            assets/fysen-image-candidates/grillet-laks/*/preview.jpg
+            assets/fysen-image-candidates/grillet-laks/*/native-detail-1400.jpg
+            assets/fysen-image-candidates/grillet-laks/*/review.json
+      - name: Commit only review previews, not originals or public media
+        run: |
+          find assets/fysen-image-candidates/grillet-laks -name source.jpeg -delete
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-image-candidates/grillet-laks
+          git diff --cached --quiet && exit 0
+          git commit -m "[salmon-source-bot] Review original salmon photo alternatives"
+          git push origin HEAD:"$GITHUB_REF_NAME"
