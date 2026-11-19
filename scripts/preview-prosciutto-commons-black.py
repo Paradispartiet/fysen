@@ -17,8 +17,12 @@ F=Path("assets/fysen-image-candidates/pizza-prosciutto/commons/parma-ham-pizza-b
 review=json.loads((F/"review.json").read_text(encoding="utf-8"))
 EXPECTED="073df3775ede40db4cffb30413023f5ae5616d28f6e68ee8317ec95ed76b8efc"
 assert review["source_sha256"]==EXPECTED
-with urlopen(Request(review["source_url"],headers={"User-Agent":"FysenEditorialPhotoReview/1.0 (github.com/Paradispartiet/fysen)"}),timeout=65) as response:
-    payload=response.read(36*1024*1024+1)
+# Reuse the exact source bytes from the successful prior Actions staging run.
+# This avoids Wikimedia 429 rate-limits and preserves the already verified SHA.
+originals=list(Path("/tmp/fysen-commons-originals").rglob("source.bytes"))
+sources=[p for p in originals if p.parent.name=="parma-ham-pizza-bangkok"]
+assert len(sources)==1,f"Expected one saved Commons original, found: {originals}"
+payload=sources[0].read_bytes()
 assert sha256(payload).hexdigest()==EXPECTED,"Original source changed; halt"
 with Image.open(BytesIO(payload)) as src:
     src.load()
