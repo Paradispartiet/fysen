@@ -61,6 +61,7 @@ jobs:
           git add apps/web/styles/dish-photos.css
           git add apps/web/components/dish-photo-gallery.tsx
           git add apps/web/tests/dish-photo-gallery.test.mjs
+          git add apps/web/tests/dish-image-large-view-quality.test.mjs
           git add docs/fysen-image-reviews/rekesmorbrod.md
           git diff --cached --quiet && exit 0
           git commit -m "[shrimp-promote-bot] Add verified CC BY-SA shrimp original, 512px mini and visible credit"
