@@ -1,0 +1,18 @@
+{
+  "dish_id": "pizza-prosciutto",
+  "photo_id": 5903308,
+  "photographer": "Pexels contributor – verify",
+  "source_page": "https://www.pexels.com/photo/close-up-shot-of-pizza-on-wooden-table-5903308/",
+  "source_url": "https://images.pexels.com/photos/5903308/pexels-photo-5903308.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "source_sha256": "f8ac67eef5919f6324200e3c3f1d3c773880ec221239272e8388fc5943b7e25b",
+  "source_width": 4480,
+  "source_height": 6720,
+  "source_verified": true,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "target": "Entire pizza with visible prosciutto, mozzarella and greens; real sharp source pixels and pure black surrounding background without artifacts.",
+  "review_criteria": "Do not approve close-ups with cut-off pizza, weak source detail, unsightly isolation, invented ingredients, or incorrect photo rights. No upscaling and no restaurant-specific claims."
+}

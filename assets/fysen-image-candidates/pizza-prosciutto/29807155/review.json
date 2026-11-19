@@ -1,0 +1,18 @@
+{
+  "dish_id": "pizza-prosciutto",
+  "photo_id": 29807155,
+  "photographer": "Valeria Boltneva",
+  "source_page": "https://www.pexels.com/photo/delicious-italian-pizza-with-prosciutto-and-arugula-29807155/",
+  "source_url": "https://images.pexels.com/photos/29807155/pexels-photo-29807155.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "source_sha256": "678a3c5615f681553c6c63b9fe56fd4ec00b65c84618aa6fbadf1afeddb8d716",
+  "source_width": 5464,
+  "source_height": 8192,
+  "source_verified": true,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "target": "Entire pizza with visible prosciutto, mozzarella and greens; real sharp source pixels and pure black surrounding background without artifacts.",
+  "review_criteria": "Do not approve close-ups with cut-off pizza, weak source detail, unsightly isolation, invented ingredients, or incorrect photo rights. No upscaling and no restaurant-specific claims."
+}
