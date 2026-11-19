@@ -154,3 +154,37 @@
 @media (max-width: 480px) {
   .matlystPopularMiniature { width: 32px; height: 32px; }
 }
+
+
+/* Editorial thumbnails are quiet visual annotations, not lead artwork. */
+.matlystFeaturedDishIdentity {
+  gap: 8px;
+  margin: 12px 0 7px;
+}
+.matlystFeaturedMiniature {
+  width: 25px;
+  height: 25px;
+  opacity: .76;
+  filter: saturate(.59) contrast(.94);
+}
+.matlystPopularMiniature {
+  width: 21px;
+  height: 21px;
+  opacity: .76;
+  filter: saturate(.59) contrast(.94);
+}
+.matlystFeaturedCard {
+  padding: 15px;
+  border-color: rgba(255,255,255,.09);
+  border-radius: 10px;
+}
+.matlystPopularCard {
+  min-height: 64px;
+  gap: 9px;
+  padding: 11px 13px;
+  border-color: rgba(255,255,255,.09);
+  border-radius: 9px;
+}
+@media (max-width: 480px) {
+  .matlystPopularMiniature { width: 20px; height: 20px; }
+}

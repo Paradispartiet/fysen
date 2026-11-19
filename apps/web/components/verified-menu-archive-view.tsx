@@ -3,6 +3,7 @@ import { dishSearchHref, foodKnowledgeHref, withPublicBasePath } from "../lib/pu
 import type { ArchivedMenuMatch } from "../lib/verified-menu-archive";
 import styles from "./verified-menu-archive-view.module.css";
 import { FoodIllustration } from "./food-illustration";
+import { CuisineCountryFlag } from "./cuisine-country-flag";
 import { SaveArchivedMinMatButton } from "./save-archived-min-mat-button";
 import { ahaMinMatPilotEnabled } from "../lib/aha-min-mat-pilot";
 
@@ -211,7 +212,7 @@ export function ArchivedMenuBrowse({
                           height="32"
                         />
                       ) : area.flag ? (
-                        <span className={styles.atlasCountryFlag} aria-hidden="true">{area.flag}</span>
+                        <CuisineCountryFlag emoji={area.flag} className={styles.atlasCountryFlag ?? ""} />
                       ) : area.illustration ? (
                         <FoodIllustration name={area.illustration}
                           className={styles.italianTypeIllustration ?? ""} size={40} />

@@ -22,6 +22,7 @@ import {
 import { regionalFlagUrl } from "./cuisine-explorer-taxonomy";
 import { foodTypesForCuisine, matchingCuisineFoodType } from "./cuisine-food-type-data";
 import { FoodIllustration } from "./food-illustration";
+import { CuisineCountryFlag } from "./cuisine-country-flag";
 
 type DishCoverage = {
   readonly dish: DishSuggestion;
@@ -62,7 +63,7 @@ function CuisineAreaSymbol({ area }: { readonly area: CuisineArea }) {
     );
   }
   if (area.flag) {
-    return <span className="cuisineAreaEmoji" aria-hidden="true">{area.flag}</span>;
+    return <CuisineCountryFlag emoji={area.flag} className="cuisineAreaFlag" />;
   }
   if (area.illustration) {
     return <FoodIllustration name={area.illustration} className="cuisineAreaArtwork" size={48} />;
@@ -119,16 +120,6 @@ function rankDishCoverage(coverage: readonly DishCoverage[]): DishCoverage[] {
     }
     return left.dish.label.localeCompare(right.dish.label, "nb");
   });
-}
-
-function featuredCoverage(
-  dishesToCheck: readonly DishSuggestion[],
-  dishes: readonly DishBrowseItem[],
-  archiveCoverage: ArchivedMatlystCoverage | null,
-): DishCoverage | null {
-  return rankDishCoverage(uniqueCandidates(dishesToCheck).map((dish) =>
-    coverageForDish(dishes, dish, archiveCoverage)
-  ))[0] ?? null;
 }
 
 function DiscoveryDishList({
@@ -190,7 +181,6 @@ export function CuisineExplorer({
   readonly archiveOnly?: boolean;
 }) {
   const [previewBrowseData, setPreviewBrowseData] = useState<DishBrowseResponse | null>(null);
-  const [previewBrowseFailed, setPreviewBrowseFailed] = useState(false);
   const [selectedCuisine, setSelectedCuisine] = useState<Cuisine | null>(null);
   const [selectedAreaName, setSelectedAreaName] = useState<string>("");
   const [selectedTypeName, setSelectedTypeName] = useState<string>("");
@@ -199,8 +189,6 @@ export function CuisineExplorer({
   const effectiveBrowseData = browseData ?? previewBrowseData;
   const liveDishes = effectiveBrowseData?.dishes ?? [];
   const isArchived = archiveCoverage !== null && effectiveBrowseData === null;
-  const archiveUnavailable = archiveOnly && archiveCoverage === null;
-  const coverageReady = effectiveBrowseData !== null || isArchived;
 
   useEffect(() => {
     if (archiveOnly || browseData || archiveCoverage) return;
@@ -209,12 +197,10 @@ export function CuisineExplorer({
     void browseDishesClient("Oslo", { signal: controller.signal })
       .then((data) => {
         setPreviewBrowseData(data);
-        setPreviewBrowseFailed(false);
       })
       .catch(() => {
         if (!controller.signal.aborted) {
           setPreviewBrowseData(null);
-          setPreviewBrowseFailed(true);
         }
       });
 
@@ -258,17 +244,6 @@ export function CuisineExplorer({
     ));
   }, [liveDishes, selectedArea, selectedCuisine, selectedFoodType, archiveCoverage, isArchived]);
 
-  const featured = useMemo(() => {
-    return new Map(homeCuisines.map((cuisine) => [
-      cuisine.name, featuredCoverage(
-        // Generic kebab matches should not mislabel a kebab house as an Indian restaurant.
-        cuisineCandidates(cuisine).filter((dish) => dish.id !== "kebab-india"),
-        liveDishes,
-        isArchived ? archiveCoverage : null,
-      )
-    ]));
-  }, [liveDishes, archiveCoverage, isArchived]);
-
   useEffect(() => {
     const dialog = dialogRef.current;
     if (selectedCuisine && dialog && !dialog.open) dialog.showModal();
@@ -306,88 +281,42 @@ export function CuisineExplorer({
 
   return (
     <section className="cuisineExplorer" aria-label="Matlyst">
-      <div className="foodSectionHeading">
-        <div>
-          <p className="foodSectionEyebrow">Matlyst</p>
-          <h2>Utforsk kjøkken og retter</h2>
-        </div>
-        <p>Velg det du har lyst på. Finn retter og se hvilke restauranter som tilbyr dem.</p>
-      </div>
-
       <RecentDishes dishes={effectiveBrowseData?.recentDishes ?? []} />
       <PopularDishes dishes={effectiveBrowseData?.popularDishes ?? []} />
-      <div className="cuisineGrid">
-        {homeCuisines.map((cuisine) => {
-          const firstArea = cuisine.areas[0];
-          const preview = featured.get(cuisine.name) ?? null;
-          if (!firstArea) return null;
 
-          return (
-            <article className="cuisineCard cuisineCardInteractive" key={cuisine.name}>
-              <button
-                type="button"
-                className="cuisineCardTrigger"
-                aria-haspopup="dialog"
-                onClick={(event) => openCuisine(cuisine, firstArea, event.currentTarget)}
-              >
-                <span className="cuisineCardHeading">
-                  <strong>{cuisine.name}</strong>
-                  <span>{cuisine.context}</span>
-                </span>
-
-                <span className="cuisineCardBrowseLabel">Velg et underkjøkken nedenfor</span>
-
-                <span className="cuisineRestaurantPreview">
-                  <span className="cuisineRestaurantPreviewLabel">Restauranter og retter</span>
-                  {!coverageReady && !previewBrowseFailed && !archiveUnavailable ? (
-                    <span className="cuisineRestaurantLoading">Henter restauranter …</span>
-                  ) : null}
-                  {!coverageReady && (previewBrowseFailed || archiveUnavailable) ? (
-                    <span className="cuisineRestaurantLoading">Kunne ikke hente restaurantene akkurat nå.</span>
-                  ) : null}
-                  {coverageReady && preview && preview.restaurantExamples.length > 0 ? (
-                    <span className="cuisineRestaurantNames">
-                      {preview.restaurantExamples.map((restaurant) => (
-                        <span key={restaurant.id}>
-                          <strong>{restaurant.name}</strong>
-                          <small>{preview.dish.label} · {restaurant.address}</small>
-                        </span>
-                      ))}
-                    </span>
-                  ) : null}
-                  {coverageReady && preview && preview.restaurantCount > 0 && preview.restaurantExamples.length === 0 ? (
-                    <span className="cuisineRestaurantLoading">
-                      {preview.dish.label} · {preview.restaurantCount} {preview.restaurantCount === 1 ? "sted" : "steder"}
-                    </span>
-                  ) : null}
-                  {coverageReady && (!preview || preview.restaurantCount === 0) ? (
-                    <span className="cuisineRestaurantLoading">Ingen treff i dette utvalget.</span>
-                  ) : null}
-                </span>
-              </button>
-
-              <div className="cuisineAreaList" aria-label={`${cuisine.areasLabel} i ${cuisine.name}`}>
-                {cuisine.areas.slice(0, 6).map((area) => (
-                  <CuisineAreaTile
-                    key={area.name}
-                    area={area}
-                    onClick={(event) => openCuisine(cuisine, area, event.currentTarget)}
-                  />
-                ))}
-                {cuisine.areas.length > 6 ? (
+      <details className="cuisineBrowseDisclosure" aria-labelledby="cuisine-browse-title">
+        <summary className="cuisineBrowsePreview">
+          <span className="cuisineBrowsePreviewCopy">
+            <span className="foodSectionEyebrow">Matlyst</span>
+            <span className="cuisineBrowsePreviewTitle" id="cuisine-browse-title">Utforsk matretter</span>
+            <span className="cuisineBrowsePreviewHint">Kjøkken, regioner og mattyper</span>
+          </span>
+          <span className="cuisineBrowsePreviewChevron" aria-hidden="true">⌄</span>
+        </summary>
+        <div className="cuisineBrowseInside">
+          <ul className="cuisineBrowseList" aria-label="Velg kjøkken">
+            {homeCuisines.map((cuisine) => {
+              const firstArea = cuisine.areas[0];
+              if (!firstArea) return null;
+              return (
+                <li key={cuisine.name}>
                   <button
                     type="button"
-                    className="cuisineAreaSeeMore"
+                    className="cuisineBrowseChoice"
+                    aria-haspopup="dialog"
                     onClick={(event) => openCuisine(cuisine, firstArea, event.currentTarget)}
                   >
-                    Se alle {cuisine.areas.length}
+                    <span className="cuisineBrowseChoiceName">{cuisine.name}</span>
+                    <span className="cuisineBrowseChoiceCount">
+                      {cuisine.areas.length} {cuisine.areas.length === 1 ? "underkategori" : "underkategorier"}
+                    </span>
                   </button>
-                ) : null}
-              </div>
-            </article>
-          );
-        })}
-      </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </details>
 
       <DishPhotoGallery />
 

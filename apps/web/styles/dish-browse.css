@@ -483,3 +483,105 @@
     max-width: 135px;
   }
 }
+
+
+/* Quiet kitchen atlas: text-first filters and real miniature flag artwork. */
+.dishBrowseControls {
+  gap: 14px;
+  margin-bottom: 30px;
+  padding: 19px 0 23px;
+  border-color: rgba(255, 255, 255, .08);
+}
+.dishBrowseCuisineFilters,
+.dishBrowseRegionFilters {
+  gap: 5px;
+}
+.dishBrowseCuisineFilters button,
+.dishBrowseRegionFilters button {
+  min-height: 34px;
+  padding: 6px 11px;
+  border-color: rgba(255, 255, 255, .09);
+  font-weight: 560;
+}
+.dishBrowseCuisineFilters button:hover,
+.dishBrowseRegionFilters button:hover,
+.dishBrowseCuisineFilters button.isActive,
+.dishBrowseRegionFilters button.isActive {
+  color: var(--color-ink);
+  background: rgba(255, 255, 255, .035);
+  border-color: rgba(255, 255, 255, .17);
+}
+.dishBrowseRegionFilters button.atlasRegionTile {
+  min-width: 76px;
+  max-width: 130px;
+  min-height: 59px;
+  gap: 5px;
+  padding: 7px 6px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+}
+.dishBrowseRegionFilters .atlasRegionTile > span:last-child {
+  color: var(--color-ink);
+  font-size: 11px;
+  font-weight: 570;
+}
+.dishBrowseRegionFlag,
+.dishBrowseCountryFlag {
+  display: block;
+  flex: none;
+  width: 28px;
+  height: 19px;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 1px;
+  box-shadow: none;
+}
+.dishBrowseAreaArtwork,
+.dishBrowseTypeArtwork {
+  display: block;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  opacity: .78;
+  filter: saturate(.59) contrast(.94);
+}
+.dishBrowseItalianTypes {
+  gap: 5px;
+}
+.dishBrowseItalianTypes button {
+  min-height: 60px;
+  gap: 5px;
+  padding: 7px 6px;
+  border-color: transparent;
+  background: transparent;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 570;
+}
+.dishBrowseItalianTypes button:hover,
+.dishBrowseItalianTypes button.isActive {
+  color: var(--color-ink);
+  background: rgba(255, 255, 255, .035);
+  border-color: rgba(255, 255, 255, .13);
+}
+.dishBrowseEditorialDish {
+  min-height: 145px;
+  gap: 12px;
+  padding: 16px;
+  border-color: rgba(255, 255, 255, .09);
+  border-radius: 10px;
+}
+.dishBrowseEditorialDish[data-has-coverage="true"] {
+  border-color: rgba(141, 184, 141, .20);
+}
+.dishBrowseEditorialDish h3 {
+  font-size: 18px;
+}
+@media (max-width: 480px) {
+  .dishBrowseRegionFilters button.atlasRegionTile {
+    flex: 0 1 86px;
+    min-width: 72px;
+    max-width: 120px;
+  }
+}

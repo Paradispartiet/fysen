@@ -16,7 +16,7 @@ test("new and most searched dishes are part of Matlyst rather than a separate he
   assert.doesNotMatch(home, /<PopularDishes/u);
   assert.match(explorer, /<RecentDishes dishes=\{effectiveBrowseData\?\.recentDishes \?\? \[\]\}/u);
   assert.match(explorer, /<PopularDishes dishes=\{effectiveBrowseData\?\.popularDishes \?\? \[\]\}/u);
-  assert.ok(explorer.indexOf("<RecentDishes") < explorer.indexOf('className="cuisineGrid"'));
+  assert.ok(explorer.indexOf("<RecentDishes") < explorer.indexOf('className="cuisineBrowseDisclosure"'));
   assert.match(recent, /if \(dishes\.length === 0\) return null/u);
   assert.match(recent, /Nye retter å oppdage hos restauranter i Oslo/u);
   assert.doesNotMatch(recent, /ikke nødvendigvis nytt på restaurantens meny/u);

@@ -50,7 +50,7 @@ const illustratedDishes = [
 // The first atlas holds 24 illustrations in 6 columns × 4 rows.
 // The second atlas (series 04) holds nine in 3 × 3, at indices 24–32.
 // Pizza margherita (0), Cheeseburger (1), Sushi (5), Ramen (6), Carbonara (10), Butter chicken (11), Pad thai med reker (12), Tiramisu (14), Gyoza (17), Tom yum (33), Pad kra pao (34), Bánh mì (35), Bún chả (36), Gỏi cuốn (37), Tandoorikylling (38), Naan (39), Dal makhani (40), Idli (41), Sambar (42), and Medu vada (43) use separate sharp AVIF files.
-// All are representative AI illustrations, not restaurant photographs.
+// Editorial photos are clearly labelled; all other images are representative AI illustrations, never restaurant photographs.
 // Keep individual restaurant listings separate from these editorial images.
 export function DishPhotoGallery() {
   return (
@@ -154,6 +154,12 @@ export function DishPhotoGallery() {
           <a href="/dish-images/sushi-master-2100.avif" target="_blank" rel="noopener noreferrer">
             Sushi assortert <span aria-hidden="true">↗</span>
           </a>
+          <a href="/dish-images/ramen-master-7364.avif" target="_blank" rel="noopener noreferrer">
+            Ramen med svin og egg <span aria-hidden="true">↗</span>
+          </a>
+          <a href="/dish-images/pasta-carbonara-master-2600.avif" target="_blank" rel="noopener noreferrer">
+            Pasta carbonara <span aria-hidden="true">↗</span>
+          </a>
           <a href="/dish-images/butter-chicken-master-3000.avif" target="_blank" rel="noopener noreferrer">
             Butter chicken <span aria-hidden="true">↗</span>
           </a>
@@ -218,7 +224,7 @@ const illustratedVariants: Readonly<Record<string, string>> = {
   "green-curry": "grønn curry med kylling",
   sushi: "assortert sushi med laks, tunfisk, ris, nori og avokado",
   ramen: "ramen med chashu-svinekjøtt, egg, nudler, nori og vårløk",
-  carbonara: "spaghetti carbonara med speket svinekjøtt, ost, egg og pepper",
+  carbonara: "spaghetti carbonara med bacon, egg, ost og pepper",
   "cacio-e-pepe": "cacio e pepe med pecorino og sort pepper",
   "chana-masala": "chana masala med kikerter og tomat",
   dosa: "masala dosa med potetfyll, sambar og kokoschutney",
@@ -287,7 +293,7 @@ export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: s
   return (
     <span
       role="img"
-      aria-label={isSushi ? "Redaksjonelt foto av sushi assortert, ikke restaurantfoto" : isButterChicken ? "Redaksjonelt foto av butter chicken med kyllinglår i kremet saus, ikke restaurantfoto" : `KI-illustrasjon av ${illustratedVariant}, ikke restaurantfoto`}
+      aria-label={isSushi ? "Redaksjonelt foto av sushi assortert, ikke restaurantfoto" : isRamen ? "Redaksjonelt foto av ramen med svin og egg, ikke restaurantfoto" : isCarbonara ? "Redaksjonelt foto av carbonara med bacon og ost, ikke restaurantfoto" : isButterChicken ? "Redaksjonelt foto av butter chicken med kyllinglår i kremet saus, ikke restaurantfoto" : `KI-illustrasjon av ${illustratedVariant}, ikke restaurantfoto`}
       className={isPizzaMargherita ? "dishPhotoSmall dishPhotoPizzaMargherita" : isSushi ? "dishPhotoSmall dishPhotoSushi" : isRamen ? "dishPhotoSmall dishPhotoRamen" : isCarbonara ? "dishPhotoSmall dishPhotoCarbonara" : isButterChicken ? "dishPhotoSmall dishPhotoButterChicken" : isPizzaMarinara ? "dishPhotoSmall dishPhotoPizzaMarinara" : isFalafel ? "dishPhotoSmall dishPhotoFalafel" : isTacosAlPastor ? "dishPhotoSmall dishPhotoTacosAlPastor" : isCacioEPepe ? "dishPhotoSmall dishPhotoCacioEPepe" : isChanaMasala ? "dishPhotoSmall dishPhotoChanaMasala" : isMasalaDosa ? "dishPhotoSmall dishPhotoMasalaDosa" : isChickenKatsu ? "dishPhotoSmall dishPhotoChickenKatsu" : isYakitori ? "dishPhotoSmall dishPhotoYakitori" : isUdonTempura ? "dishPhotoSmall dishPhotoUdonTempura" : isBao ? "dishPhotoSmall dishPhotoBao" : isDumplings ? "dishPhotoSmall dishPhotoDumplings" : isMapoTofu ? "dishPhotoSmall dishPhotoMapoTofu" : isPekingDuck ? "dishPhotoSmall dishPhotoPekingDuck" : isDanDanNoodles ? "dishPhotoSmall dishPhotoDanDanNoodles" : isGreenCurry ? "dishPhotoSmall dishPhotoGreenCurry" : isPho ? "dishPhotoSmall dishPhotoPho" : isBunCha ? "dishPhotoSmall dishPhotoBunCha" : isGoiCuon ? "dishPhotoSmall dishPhotoGoiCuon" : isTandoori ? "dishPhotoSmall dishPhotoTandoori" : isNaan ? "dishPhotoSmall dishPhotoNaan" : isDalMakhani ? "dishPhotoSmall dishPhotoDalMakhani" : isIdli ? "dishPhotoSmall dishPhotoIdli" : isSambar ? "dishPhotoSmall dishPhotoSambar" : isVada ? "dishPhotoSmall dishPhotoVada" : isBanhMi ? "dishPhotoSmall dishPhotoBanhMi" : isPadKraPao ? "dishPhotoSmall dishPhotoPadKraPao" : isTomYum ? "dishPhotoSmall dishPhotoTomYum" : isSeries04 ? "dishPhotoSmall dishPhotoSeries04" : "dishPhotoSmall"}
       style={{ backgroundPosition: position }}
     />
