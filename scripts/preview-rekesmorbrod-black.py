@@ -40,7 +40,7 @@ draw.polygon([
     (521,536),(548,573),(573,623),(590,681),(569,732),
     (287,739)
 ],fill=255)
-mask_small=mask_small.filter(ImageFilter.GaussianBlur(radius=3.0))
+mask_small=mask_small.filter(ImageFilter.GaussianBlur(radius=2.2))
 alpha_native=mask_small.resize(SRC_DIMS,Image.Resampling.BILINEAR)
 # Crop only original source pixels (not enlargement) to make a wide black frame.
 crop=(150,2180,4100,5520)
