@@ -151,6 +151,9 @@ export function DishPhotoGallery() {
         {/* Only reviewed largeSource assets are linked here. Cards stay compact and keep their menu-search action. */}
         <nav className="dishPhotosLargeLinks" aria-label="Godkjente rettbilder i full størrelse">
           <span>Se skarpe originalbilder:</span>
+          <a href="/dish-images/pizza-margherita-master-3000.avif" target="_blank" rel="noopener noreferrer">
+            Pizza margherita <span aria-hidden="true">↗</span>
+          </a>
           <a href="/dish-images/sushi-master-2100.avif" target="_blank" rel="noopener noreferrer">
             Sushi assortert <span aria-hidden="true">↗</span>
           </a>

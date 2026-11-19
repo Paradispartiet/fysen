@@ -15,8 +15,10 @@
   "source_page": "https://www.pexels.com/photo/delicious-margherita-pizza-with-fresh-basil-31136887/",
   "photographer": "KI Lee",
   "license": "https://www.pexels.com/license/",
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
-  "review_required": "Inspect entire black-background silhouette, native 1400px detail and food variant on iPad/mobile; fix edge artifacts before promotion"
+  "review_required": "Inspect entire black-background silhouette, native 1400px detail and food variant on iPad/mobile; fix edge artifacts before promotion",
+  "final_native_png_sha256": "4b1b3a490557b6bca232c962009f36b245442134038c8e2142b1b55efbc88494",
+  "final_large_avif_sha256": "08e6cf43d9541b41edb4344484c52abff22d6bf93f14033394d1d9ed0de4750a"
 }
