@@ -29,6 +29,10 @@ CANDIDATES=[
  (16677736,"Valeria Boltneva","https://www.pexels.com/photo/delicious-pizza-with-ham-and-cheese-16677736/"),
  (29807155,"Valeria Boltneva","https://www.pexels.com/photo/delicious-italian-pizza-with-prosciutto-and-arugula-29807155/"),
  (5903308,"Pexels contributor – verify","https://www.pexels.com/photo/close-up-shot-of-pizza-on-wooden-table-5903308/"),
+ (4913349,"Maria Orlova","https://www.pexels.com/photo/delicious-pizza-with-prosciutto-and-mozzarella-cheese-served-on-table-4913349/"),
+ (19260942,"Giona Mason","https://www.pexels.com/photo/table-with-pizza-19260942/"),
+ (19260842,"Giona Mason","https://www.pexels.com/photo/ham-and-cheese-on-pizza-19260842/"),
+ (10875206,"Valeria Boltneva","https://www.pexels.com/photo/prosciutto-ham-toppings-on-pizza-10875206/"),
 
 ]
 def stage(photo_id:int,photographer:str,page:str):
