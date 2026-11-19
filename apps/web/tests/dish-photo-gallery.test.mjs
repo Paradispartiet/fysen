@@ -114,7 +114,7 @@ test("Ramen photo is a true 7364x4909 master with a separate compact thumbnail a
   assert.equal(ramen.atlas, "ramen-thumb-512.avif");
   assert.equal(ramen.largeSourceNativeWidth, 7364);
   assert.equal(ramen.largeSourceNativeHeight, 4909);
-  assert.match(ramen.photoSource, /35773142\/u);
+  assert.match(ramen.photoSource, /35773142/u);
   assert.match(ramen.photoCredit, /Connor Scott McManus.*Pexels/u);
   assert.match(gallery, /href="\/dish-images\/ramen-master-7364\.avif"/u);
   assert.match(css, /ramen-thumb-512\.avif/u);
