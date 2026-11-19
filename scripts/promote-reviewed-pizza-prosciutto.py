@@ -68,7 +68,7 @@ def main():
     photo.update({
       "atlas":thumb.name,
       "kind":"Redaksjonelt rettfoto",
-      "variantCaution":"Lisensiert redaksjonelt foto av prosciutto crudo-pizza med burrata, ruccola og små tomater, fotografert i Bangkok. Ikke et faktisk Fysen-restaurantfoto eller garanti for en bestemt menyrett; denne foto-varianten er ikke nødvendigvis den samme som restaurantens prosciuttopizza.",
+      "variantCaution":"Lisensiert redaksjonelt foto av prosciutto crudo-pizza med burrata, ruccola og små tomater, fotografert i Bangkok. Ikke restaurantfoto fra Fysen eller garanti for en bestemt menyrett; denne foto-varianten kan avvike fra restaurantens prosciuttopizza.",
       "largeSourceOriginalPath":"assets/fysen-dish-originals/pizza-prosciutto.png",
       "largeSource":master.name,
       "largeSourceNativeWidth":3949,"largeSourceNativeHeight":2920,
