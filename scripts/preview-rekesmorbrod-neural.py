@@ -56,11 +56,36 @@ draw.polygon([
 coarse=np.asarray(region.filter(ImageFilter.GaussianBlur(1.8)),dtype=np.float32)/255.0
 fore_alpha=foreground*coarse
 
+# U2Net keeps some neutral wall and a transparent wineglass behind the
+# delicate dill. Remove only NEUTRAL background in the upper garnish area:
+# color-gated matting keeps real green dill, yellow lemon and pink onion
+# including their native photographic detail. Never apply this to the plate,
+# shrimp or bread below the garnish.
+rgb=np.asarray(small,dtype=np.float32)
+red,green,blue=rgb[:,:,0],rgb[:,:,1],rgb[:,:,2]
+ygrid,xgrid=np.mgrid[0:SMALL[1],0:SMALL[0]]
+plant=(green>red*1.035)&(green>blue*1.06)&(green>38)
+plant_shadow=(green>red*0.92)&(green>blue*1.22)&(green<135)
+citrus=(red>150)&(green>114)&(blue<green*0.87)&(red>green*0.95)
+onion=(red>110)&(red>green*1.19)&(blue>green*0.91)&(blue>72)
+pale_lemon=(red>210)&(green>184)&(blue>108)&(blue<green*0.93)
+color_mask=np.uint8(plant|plant_shadow|citrus|onion|pale_lemon)*255
+color_mask=Image.fromarray(color_mask,"L").filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.GaussianBlur(1.3))
+color_protect=np.asarray(color_mask,dtype=np.float32)/255.0
+neutral_upper=(ygrid<643)
+# Preserve just a very faint antialias border around dill; neutral wall
+# and clear glass are forced transparent.
+fore_alpha=np.where(neutral_upper,fore_alpha*color_protect,fore_alpha)
+# The wine stem is left of the food. This one crop is outside the dish,
+# and must not be allowed back by the subsequent plate-protection matte.
+glass=(xgrid<334)&(ygrid<650)
+fore_alpha=np.where(glass,0.0,fore_alpha)
+
 # Guaranteed untouched plate and food foreground. These are native pixels
 # of the image, not artificial recolouring, and protect ALL loose shrimp.
 plate=Image.new("L",SMALL,0)
 pdraw=ImageDraw.Draw(plate)
-pdraw.ellipse((49,618,757,1035),fill=255)
+pdraw.ellipse((49,628,757,1035),fill=255)
 pdraw.polygon([
  (246,674),(278,609),(314,559),(354,526),(383,523),
  (433,525),(472,537),(506,568),(549,606),(573,653),
@@ -68,7 +93,7 @@ pdraw.polygon([
 ],fill=255)
 plate_a=np.asarray(plate.filter(ImageFilter.GaussianBlur(2.0)),dtype=np.float32)/255.0
 yy=np.arange(SMALL[1],dtype=np.float32)[:,None]
-plate_blend=np.clip((yy-632.0)/40.0,0.0,1.0)
+plate_blend=np.clip((yy-648.0)/32.0,0.0,1.0)
 # Model is entrusted ONLY with complex dill/lemon garnish above the plate.
 # Do not allow protected plate to reintroduce the window or wine glass above it.
 final=np.clip(np.maximum(fore_alpha*(1.0-plate_blend),
