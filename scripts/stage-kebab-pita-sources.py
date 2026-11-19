@@ -32,12 +32,19 @@ SOURCES=[
  ("pexels",28897047,"shawarma-wraps-vegetables","ahmed kh. jami","Pexels License"),
  ("pexels",34318137,"beef-shawarma-wood-board","Bia Metidieri","Pexels License"),
  ("pexels",5779364,"shawarma-halved-closeup","RDNE Stock project","Pexels License"),
+ ("wikimedia-upload","https://upload.wikimedia.org/wikipedia/commons/d/d8/Doener_auf_die_hand.JPG","commons-doner-hand","Mediatrotter / Raphael Markert","CC BY-SA 4.0"),
+ ("wikimedia-upload","https://upload.wikimedia.org/wikipedia/commons/9/94/Doener_Kebab_%289682662957%29.jpg","commons-doner-plate","Lauren Travis","CC BY 2.0"),
+ ("wikimedia-upload","https://upload.wikimedia.org/wikipedia/commons/c/c7/Bolsillo-Cordero.jpg","commons-lamb-pocket","Tamorlan","CC BY-SA 3.0"),
 ]
 def download(kind,src):
     if kind=="commons":
         enc=quote(src.replace(" ","_"),safe="()")
         url="https://commons.wikimedia.org/wiki/Special:FilePath/"+enc
         page="https://commons.wikimedia.org/wiki/File:"+enc
+    elif kind=="wikimedia-upload":
+        url=src
+        filename=src.rsplit("/",1)[-1]
+        page="https://commons.wikimedia.org/wiki/File:"+filename
     else:
         url=f"https://images.pexels.com/photos/{src}/pexels-photo-{src}.jpeg"
         page=f"https://www.pexels.com/photo/{src}/"
