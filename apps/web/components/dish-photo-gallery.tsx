@@ -154,6 +154,9 @@ export function DishPhotoGallery() {
           <a href="/dish-images/pizza-margherita-master-3000.avif" target="_blank" rel="noopener noreferrer">
             Pizza margherita <span aria-hidden="true">↗</span>
           </a>
+          <a href="/dish-images/cheeseburger-master-2185.avif" target="_blank" rel="noopener noreferrer">
+            Cheeseburger med bacon <span aria-hidden="true">↗</span>
+          </a>
           <a href="/dish-images/sushi-master-2100.avif" target="_blank" rel="noopener noreferrer">
             Sushi assortert <span aria-hidden="true">↗</span>
           </a>

@@ -125,8 +125,9 @@
 
 /* Dedicated bacon cheeseburger image. Display only in the generic dish gallery;
    not a claim about any restaurant's ingredients or presentation. */
-.dishPhotoThumb.dishPhotoCheeseburger {
-  background: #000 url("/dish-images/cheeseburger-bacon-512.avif") center / cover no-repeat;
+.dishPhotoThumb.dishPhotoCheeseburger,
+.dishPhotoSmall.dishPhotoCheeseburger {
+  background: #000 url("/dish-images/cheeseburger-thumb-512.avif") center / cover no-repeat;
 }
 
 /* Dedicated sharp grilled-salmon editorial illustration. Only the generic

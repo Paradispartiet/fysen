@@ -1,0 +1,18 @@
+{
+  "dish_id": "cheeseburger",
+  "photo_id": 11812583,
+  "photographer": "MARIANNE RIXHON",
+  "source_page": "https://www.pexels.com/photo/close-up-shot-of-burger-and-fries-11812583/",
+  "original_url": "https://images.pexels.com/photos/11812583/pexels-photo-11812583.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "source_verified": true,
+  "source_original_width": 6000,
+  "source_original_height": 4000,
+  "source_sha256": "c006decbc146c4edcc44ecdf27c5b0837f5afb57e727fe5fb613888ce01bbf78",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "required_variant": "beef cheeseburger with melted cheese, visible bacon and french fries",
+  "visual_criteria": "Whole burger and fries preserved, realistic sharp texture at 1:1, solid black background, no unrelated toppings, no hands, no crop pretending to be a large native original.",
+  "note": "Representational editorial dish image, never a photograph of any named restaurant's serving."
+}
