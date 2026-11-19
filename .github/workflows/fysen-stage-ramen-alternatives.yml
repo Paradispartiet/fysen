@@ -47,6 +47,7 @@ jobs:
         with:
           name: fysen-ramen-source-review
           path: |
+            assets/fysen-image-candidates/ramen-alternatives/*/source.jpeg
             assets/fysen-image-candidates/ramen-alternatives/*/preview.jpg
             assets/fysen-image-candidates/ramen-alternatives/*/native-detail-1400.jpg
             assets/fysen-image-candidates/ramen-alternatives/*/review.json
