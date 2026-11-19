@@ -48,6 +48,11 @@ try {
       assert.equal(await page.locator(".cuisineBrowseList").isVisible(), true);
       assert.equal(await page.locator(".cuisineBrowseChoice").count(), 12,
         "Opening the accordion must preserve all twelve cuisines");
+      const kitchenHorizontalOverflow = await page.evaluate(() =>
+        document.documentElement.scrollWidth > document.documentElement.clientWidth + 2
+      );
+      assert.equal(kitchenHorizontalOverflow, false,
+        "Expanded cuisine menu must not overflow on phones or iPads");
       await kitchenMenu.locator(".cuisineBrowseChoice").first().click();
       await page.locator(".cuisineExploreDialog").waitFor({ state: "visible" });
       await page.locator(".cuisineExploreDialogClose").click();
