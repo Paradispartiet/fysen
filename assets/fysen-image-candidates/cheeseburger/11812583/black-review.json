@@ -13,7 +13,7 @@
     6000,
     4000
   ],
-  "native_black_sha256": "28fbfc4bbf4e01458b9fcde0d70c996acafc3c2ef51aa47493dde2f087d2d431",
+  "native_black_sha256": "6844aa10695ea16c7a4e73494c42f91213d86cb8c54480225a41c1fe7c7568da",
   "method": "Pexels native pixels preserved; only foreground segmentation mask scaled",
   "variant": "beef cheeseburger with bacon, melted cheese, lettuce/tomato and fries",
   "visual_review_completed": false,
