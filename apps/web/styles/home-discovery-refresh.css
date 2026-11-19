@@ -548,11 +548,21 @@
 }
 @media (max-width: 520px) {
   .cuisineBrowseInside .cuisineBrowseList {
-    grid-template-columns: 1fr;
-    gap: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 8px;
   }
   .cuisineBrowseChoice {
-    min-height: 49px;
-    padding: 8px 6px;
+    min-height: 58px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 3px;
+    padding: 8px 5px;
+  }
+  .cuisineBrowseChoiceName {
+    font-size: 12px;
+  }
+  .cuisineBrowseChoiceCount {
+    font-size: 10px;
   }
 }
