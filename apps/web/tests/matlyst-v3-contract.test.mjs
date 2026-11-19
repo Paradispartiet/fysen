@@ -108,13 +108,15 @@ test("Matlyst-forsiden beholder de seks opprinnelige kortene foran seks nye", ()
     "Afrikansk", "Fransk", "Spansk", "Gresk", "Amerikansk", "Nordisk",
   ]);
   assert.match(explorerSource, /homeCuisines\.map/u);
-  assert.match(explorerSource, /className="cuisineGrid"/u);
-  assert.match(explorerSource, /className="cuisineCard cuisineCardInteractive"/u);
+  assert.match(explorerSource, /className="cuisineBrowseDisclosure"/u);
+  assert.match(explorerSource, /className="cuisineBrowseList"/u);
+  assert.match(explorerSource, /className="cuisineBrowseChoice"/u);
+  assert.doesNotMatch(explorerSource, /className="cuisineCard cuisineCardInteractive"/u);
   assert.doesNotMatch(explorerSource, /className="cuisineCardBrowseLabel"/u);
   assert.match(explorerSource, /<CuisineCountryFlag/u);
   assert.match(explorerSource, /<CuisineAreaTile/u);
   assert.doesNotMatch(explorerSource, /className="cuisineDishPreview"/u);
-  assert.match(explorerSource, /className="cuisineAreaList"/u);
+  assert.doesNotMatch(explorerSource, /className="cuisineAreaList"/u);
   assert.match(explorerSource, /Retter og hvor du kan få dem/u);
   assert.doesNotMatch(explorerSource, /matlystCuisineDirectory/u);
   assert.doesNotMatch(explorerSource, /matlyst-cuisine-filter/u);
