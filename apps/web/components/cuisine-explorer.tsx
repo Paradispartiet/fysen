@@ -345,7 +345,7 @@ export function CuisineExplorer({
             </header>
 
             <div className="cuisineExploreFilterGroup" aria-label="Velg hvordan du vil utforske">
-              <details className="cuisineExploreFilter cuisineExploreAreas">
+              <details className="cuisineExploreFilter cuisineExploreAreas" name="cuisine-discovery-filter">
                 <summary className="cuisineExploreFilterSummary">
                   <span>{selectedCuisine.areasLabel}</span>
                   <strong>{selectedFoodType ? "Velg land eller region" : selectedArea.name}</strong>
@@ -366,7 +366,7 @@ export function CuisineExplorer({
               </details>
 
               {availableFoodTypes.length > 0 ? (
-                <details className="cuisineExploreFilter cuisineExploreFoodTypes">
+                <details className="cuisineExploreFilter cuisineExploreFoodTypes" name="cuisine-discovery-filter">
                   <summary className="cuisineExploreFilterSummary">
                     <span>Mattype</span>
                     <strong>{selectedFoodType?.name ?? "Velg mattype"}</strong>
