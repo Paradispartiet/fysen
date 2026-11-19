@@ -12,6 +12,7 @@ const layout = readFileSync(path.join(web, "app/layout.tsx"), "utf8");
 const browse = readFileSync(path.join(web, "components/dish-browse.tsx"), "utf8");
 const browseStyles = readFileSync(path.join(web, "styles/dish-browse.css"), "utf8");
 const css = readFileSync(path.join(web, "styles/dish-photos.css"), "utf8");
+const homeGalleryCss = readFileSync(path.join(web, "styles/home-discovery-refresh.css"), "utf8");
 const atlas = readFileSync(path.join(web, "public/dish-images/collection.avif"));
 const pizzaMargherita = readFileSync(path.join(web, "public/dish-images/pizza-margherita-512.avif"));
 const cheeseburger = readFileSync(path.join(web, "public/dish-images/cheeseburger-bacon-512.avif"));
@@ -102,6 +103,27 @@ test("Image cards link to dish search rather than inventing restaurant availabil
   assert.match(gallery, /dishSearchHref\(dish\.query\)/u);
   assert.match(gallery, /Se menytreff/u);
   assert.doesNotMatch(gallery, /Åpent nå|Tilgjengelig nå/u);
+});
+
+test("Only approved full-size dish masters can be opened separately without enlarging thumbnails", () => {
+  const approved = manifest.images.filter((image) => image.largeViewEnabled === true);
+  const linkedMasters = [...gallery.matchAll(/href="\\/dish-images\\/([^"]+-master-\\d+\\.avif)"/gu)]
+    .map((match) => match[1]);
+  assert.equal(approved.length, 2, "Currently only two editorial photos have reviewed masters");
+  assert.deepEqual(linkedMasters, approved.map((image) => image.largeSource));
+  assert.match(gallery, /dishPhotosLargeLinks/u);
+  assert.match(gallery, /target="_blank" rel="noopener noreferrer"/u);
+  assert.match(gallery, /Se menytreff/u, "Do not replace menu-search links with image links");
+  assert.match(homeGalleryCss, /\\.dishPhotosLargeLinks/u);
+  assert.match(homeGalleryCss, /grid-template-columns:\\s*68px\\s+minmax\\(0,\\s*1fr\\)/u);
+  for (const photo of approved) {
+    assert.notEqual(photo.atlas, photo.largeSource, "Small thumbnails and full-size masters must be distinct");
+    const fullSize = readFileSync(path.join(web, "public/dish-images", photo.largeSource));
+    const header = fullSize.indexOf(Buffer.from("ispe"));
+    assert.ok(header > 0, photo.id + ": valid AVIF spatial dimensions");
+    assert.ok(fullSize.readUInt32BE(header + 8) >= 1600);
+    assert.ok(fullSize.readUInt32BE(header + 12) >= 1600);
+  }
 });
 
 test("Existing Matlyst editorial cards use only explicitly mapped illustration IDs", () => {
