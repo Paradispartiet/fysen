@@ -11,6 +11,7 @@ from io import BytesIO
 from pathlib import Path
 from urllib.request import Request,urlopen
 import json
+import numpy as np
 from PIL import Image, ImageOps, ImageDraw, ImageFilter
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -40,7 +41,27 @@ draw.polygon([
     (521,536),(548,573),(573,623),(590,681),(569,732),
     (287,739)
 ],fill=255)
+# In the upper garnish area a hand-drawn silhouette alone retains a tan
+# window/wall triangle and the wine-glass stem. Key only natural GREEN, lemon
+# YELLOW and shrimp/onion PINK colors there, and never key the plate or bread.
+# This uses original photographic colors; it does not modify a food pixel.
 mask_small=mask_small.filter(ImageFilter.GaussianBlur(radius=2.2))
+small=np.asarray(original.resize((825,1100),Image.Resampling.LANCZOS),dtype=np.float32)
+r,g,b=small[:,:,0],small[:,:,1],small[:,:,2]
+green=(g>r*1.08)&(g>b*1.06)&(g>37)
+lemon=(r>160)&(g>123)&(b<g*0.82)&(r>=g*0.95)
+shrimp_onion=(r>108)&(r>g*1.17)&(b>g*0.90)&(b>73)
+lemon_light=(r>210)&(g>190)&(b>118)&(r>b*1.16)
+subject=np.uint8(green|lemon|shrimp_onion|lemon_light)*255
+subject=Image.fromarray(subject,"L").filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.MinFilter(5)).filter(ImageFilter.GaussianBlur(1.15))
+base=np.asarray(mask_small,dtype=np.float32)
+color_alpha=np.asarray(subject,dtype=np.float32)/255.0
+ys=np.arange(1100,dtype=np.float32)[:,None]
+# The pure-color matte applies above the plate. Blend smoothly back to the
+# hand-drawn plate outline at y=615..645, with no hard horizontal edge.
+plate_blend=np.clip((ys-615.0)/30.0,0.0,1.0)
+alpha_small=np.uint8(np.clip(base*(color_alpha*(1.0-plate_blend)+plate_blend),0,255))
+mask_small=Image.fromarray(alpha_small,"L")
 alpha_native=mask_small.resize(SRC_DIMS,Image.Resampling.BILINEAR)
 # Crop only original source pixels (not enlargement) to make a wide black frame.
 crop=(150,2180,4100,5520)
