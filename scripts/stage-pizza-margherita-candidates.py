@@ -17,7 +17,7 @@ from PIL import Image, ImageOps
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "assets" / "fysen-image-candidates" / "pizza-margherita"
 MAX_BYTES = 35 * 1024 * 1024
-MIN_NATIVE_EDGE = 2400
+MIN_NATIVE_EDGE = 3000
 PHOTOS = [
     (19102880, "Rene Strgar",
      "https://www.pexels.com/photo/cut-margherita-pizza-19102880/"),
