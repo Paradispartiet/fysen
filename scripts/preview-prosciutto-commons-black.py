@@ -82,6 +82,14 @@ flood=inv.copy();fmask=np.zeros((ch+2,cw+2),np.uint8)
 cv2.floodFill(flood,fmask,(0,0),0)
 seg=cv2.bitwise_or(seg,flood)
 seg=cv2.resize(seg,(W,H),interpolation=cv2.INTER_LINEAR)
+# Reject any connected wood pixels extending beyond the hand-traced crust.
+seg=cv2.bitwise_and(seg,outline)
+# A narrow wooden-board spur to the right of the upper crust survived GrabCut.
+# Remove only its exterior area; do not inpaint or alter food pixels.
+spur=np.array([(747,327),(780,327),(783,398),(748,389)],np.float32)
+spur[:,0]*=W/1100
+spur[:,1]*=H/813
+cv2.fillPoly(seg,[spur.astype(np.int32)],0)
 frac2=export("black-grabcut",seg)
 meta={
  "original_page":review["source_page"],
