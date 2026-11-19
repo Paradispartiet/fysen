@@ -1,0 +1,20 @@
+{
+  "dish_id": "pizza-prosciutto",
+  "source_file": "Prosciutto pizza (509128121).jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Prosciutto_pizza_(509128121).jpg",
+  "source_url": "https://upload.wikimedia.org/wikipedia/commons/9/97/Prosciutto_pizza_%28509128121%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+  "author_claim": "Simon Law",
+  "license_claim": "CC BY-SA 2.0",
+  "source_dimensions": [
+    3504,
+    2336
+  ],
+  "source_sha256": "7b1826be38967d631c34a8241f26747db0d03c9b8a999b832a31b5a8462201db",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "required": "Photographic pizza with prosciutto crudo, intact whole serving, good native 1:1 sharpness, black background feasible without masking the food, licensing verified."
+}

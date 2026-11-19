@@ -1,0 +1,20 @@
+{
+  "dish_id": "pizza-prosciutto",
+  "source_file": "Apple prosciutto pizza (3037559314).jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Apple_prosciutto_pizza_(3037559314).jpg",
+  "source_url": "https://upload.wikimedia.org/wikipedia/commons/6/65/Apple_prosciutto_pizza_%283037559314%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+  "author_claim": "license/author to verify",
+  "license_claim": "license to verify",
+  "source_dimensions": [
+    3008,
+    2000
+  ],
+  "source_sha256": "d5d2dfafc6e219aa1f42cde671c829c767cd1bdba3b75d4e70707969713892eb",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "required": "Photographic pizza with prosciutto crudo, intact whole serving, good native 1:1 sharpness, black background feasible without masking the food, licensing verified."
+}
