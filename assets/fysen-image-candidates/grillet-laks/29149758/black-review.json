@@ -1,0 +1,22 @@
+{
+  "dish_id": "grillet-laks",
+  "photo_id": 29149758,
+  "photographer": "Nano Erdozain",
+  "source_page": "https://www.pexels.com/photo/gourmet-salmon-dish-with-fresh-vegetables-29149758/",
+  "license": "https://www.pexels.com/license/",
+  "source_size": [
+    3489,
+    5234
+  ],
+  "source_sha256": "9a5c7a4d24b3d43a3b8efe25f1912a872489ee630563c28957304de8bc52a3ab",
+  "review_native_size": [
+    3489,
+    3450
+  ],
+  "review_native_sha256": "f7ac96e2e238b7041d32f5599ed1afed46b10d352225b72bfb4e63e23044c30e",
+  "variant": "Grilled salmon with tomato, bell pepper, green herbs and sauce, on dark ceramic plate",
+  "method": "native source-pixel crop (when needed) and black background matte; no upscaling",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false
+}
