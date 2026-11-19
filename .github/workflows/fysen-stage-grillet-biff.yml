@@ -1,0 +1,61 @@
+name: Fysen stage native grilled-steak images
+on:
+  push:
+    branches: [art/grillet-biff-native-photo-20261119]
+    paths: [".github/workflows/fysen-stage-grillet-biff.yml","scripts/stage-grillet-biff-candidates.py"]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: fysen-stage-grillet-biff
+  cancel-in-progress: false
+jobs:
+  review-candidates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install original image reader
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0
+      - name: Fetch licensed native steak photo candidates
+        run: python scripts/stage-grillet-biff-candidates.py
+      - name: Check original resolutions and approval guard
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          reviews=list(Path("assets/fysen-image-candidates/grillet-biff").glob("*/review.json"))
+          assert len(reviews)>=2
+          for path in reviews:
+              x=json.loads(path.read_text())
+              assert x["source_verified"] is True
+              assert x["visual_review_completed"] is False and x["approved_for_fysen"] is False
+              assert x["published"] is False
+              assert min(x["source_width"],x["source_height"])>=2400
+              assert (path.parent/"native-detail-1400.jpg").exists()
+          print(f"{len(reviews)} verified original sources; none approved")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fysen-biff-licensed-native-candidates
+          if-no-files-found: error
+          retention-days: 7
+          path: |
+            assets/fysen-image-candidates/grillet-biff/*/source.jpeg
+            assets/fysen-image-candidates/grillet-biff/*/preview.jpg
+            assets/fysen-image-candidates/grillet-biff/*/native-detail-1400.jpg
+            assets/fysen-image-candidates/grillet-biff/*/review.json
+      - name: Commit only small previews to existing PR
+        run: |
+          find assets/fysen-image-candidates/grillet-biff -name source.jpeg -delete
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-image-candidates/grillet-biff
+          git diff --cached --quiet && exit 0
+          git commit -m "[steak-source-bot] Stage native review previews"
+          git push origin HEAD:"$GITHUB_REF_NAME"
