@@ -31,16 +31,16 @@ test("a lengthy menu description is clipped only for the mobile preview", () => 
   assert.equal(full.includes("\n"), false);
 });
 
-test("native search cards put the displayed price and its provenance before menu description", async () => {
+test("native archived cards place price, provenance and actual observation before actions", async () => {
   const fs = await import("node:fs");
   const source = fs.readFileSync(new URL("../App.tsx", import.meta.url), "utf8");
   const start = source.indexOf("function SearchResultCard(");
   const end = source.indexOf("function SearchScreen(", start);
   const card = source.slice(start, end);
-  const price = card.indexOf("{formatPrice(result.dish)}");
-  const sourceLabel = card.indexOf("{priceProvenanceLabel(result.menu.sourceUrl)}");
-  const description = card.indexOf("{descriptionExpanded ? description : preview}");
-  assert.ok(price >= 0 && sourceLabel > price && description > sourceLabel);
-  assert.match(card, /Vis mer/);
-  assert.match(card, /Vis mindre/);
+  const price = card.indexOf("{formatPrice(result)}");
+  const provenance = card.indexOf("{priceProvenanceLabel(result.menu.sourceUrl)}");
+  const observed = card.indexOf("{observedText}");
+  const link = card.indexOf('label="Se meny ↗"');
+  assert.ok(price >= 0 && provenance > price && observed > provenance && link > observed);
+  assert.doesNotMatch(card, /descriptionExpanded|result\.dish|result\.menuItemId/u);
 });
