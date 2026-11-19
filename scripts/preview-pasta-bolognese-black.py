@@ -46,7 +46,11 @@ mask=Image.new("L",(1100,825),0)
 # The plate is a single smooth ellipse photographed from an oblique angle.
 # Restrict the mask to its real rim; the previous polygon kept grey table
 # triangles on the lower sides. All food remains deep within the ellipse.
-ImageDraw.Draw(mask).ellipse((137,87,1065,752),fill=255)
+draw=ImageDraw.Draw(mask)
+draw.ellipse((137,87,1065,752),fill=255)
+# A small wood corner overlaps the ellipse at its upper-left edge; this is
+# backdrop, not the white plate or food. Clear only that isolated wedge.
+draw.polygon([(323,91),(405,83),(407,112),(360,147),(332,141)],fill=0)
 mask=mask.filter(ImageFilter.GaussianBlur(1.4))
 alpha=mask.resize(DIMS,Image.Resampling.BILINEAR)
 black=Image.composite(native,Image.new("RGB",DIMS,(0,0,0)),alpha)
