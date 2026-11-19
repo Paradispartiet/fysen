@@ -171,7 +171,10 @@ test("public Oslo discovery reads the verified archive before any database-backe
   assert.doesNotMatch(home, /await browseDishes\(/u);
   assert.match(home, /<CuisineExplorer browseData=\{null\} archiveCoverage=\{archiveCoverage\} archiveOnly \/>/u);
   assert.match(explorer, /if \(archiveOnly \|\| browseData \|\| archiveCoverage\) return;/u);
-  assert.match(explorer, /previewBrowseFailed \|\| archiveUnavailable/u);
+  // The newer Matlyst surface is a single collapsible menu. It must retain
+  // archive-only read isolation without restoring old status banners or cards.
+  assert.match(explorer, /className="cuisineBrowseDisclosure"/u);
+  assert.doesNotMatch(explorer, /previewBrowseFailed|archiveUnavailable/u);
 
   // Keep a real dish-and-restaurant view and source links for archived results.
   assert.match(search, /browseArchivedMenuDishes\(archive, city, 48\)/u);
