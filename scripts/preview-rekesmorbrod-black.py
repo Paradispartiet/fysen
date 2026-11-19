@@ -56,10 +56,22 @@ subject=np.uint8(green|lemon|shrimp_onion|lemon_light)*255
 subject=Image.fromarray(subject,"L").filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.MinFilter(5)).filter(ImageFilter.GaussianBlur(1.15))
 base=np.asarray(mask_small,dtype=np.float32)
 color_alpha=np.asarray(subject,dtype=np.float32)/255.0
+# The lime, yellow lemon and pickled onion share highlights with the original
+# window. Protect only their tightly bounded physical area, not the wall or
+# the glass to the left. Green dill needles above remain color-keyed.
+protected=Image.new("L",(825,1100),0)
+protect_draw=ImageDraw.Draw(protected)
+protect_draw.polygon([
+    (353,609),(366,567),(393,544),(430,533),(466,529),
+    (503,537),(527,559),(548,592),(558,631),
+    (533,658),(390,664),(348,649)
+],fill=255)
+protect_alpha=np.asarray(protected.filter(ImageFilter.GaussianBlur(3.0)),dtype=np.float32)/255.0
+color_alpha=np.maximum(color_alpha,protect_alpha)
 ys=np.arange(1100,dtype=np.float32)[:,None]
-# The pure-color matte applies above the plate. Blend smoothly back to the
-# hand-drawn plate outline at y=615..645, with no hard horizontal edge.
-plate_blend=np.clip((ys-615.0)/30.0,0.0,1.0)
+# Keep wine stem masked until the upper lip of the plate, where the full
+# original-pixel plate matte takes over without changing food details.
+plate_blend=np.clip((ys-646.0)/22.0,0.0,1.0)
 alpha_small=np.uint8(np.clip(base*(color_alpha*(1.0-plate_blend)+plate_blend),0,255))
 mask_small=Image.fromarray(alpha_small,"L")
 alpha_native=mask_small.resize(SRC_DIMS,Image.Resampling.BILINEAR)
