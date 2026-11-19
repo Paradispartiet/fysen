@@ -17,6 +17,8 @@ DEST = ROOT / "assets" / "fysen-image-candidates" / "ramen-alternatives"
 CANDIDATES = [
     (4224213, "https://www.pexels.com/photo/ramen-in-close-up-4224213/"),
     (4224210, "https://www.pexels.com/photo/bowl-of-ramen-4224210/"),
+    (35773142, "https://www.pexels.com/photo/delicious-bowl-of-traditional-japanese-ramen-35773142/"),
+    (20954901, "https://www.pexels.com/photo/pork-with-noodles-and-egg-20954901/"),
 ]
 MAX_BYTES = 30 * 1024 * 1024
 
@@ -57,7 +59,7 @@ def stage(photo_id: int, source_page: str) -> None:
     info = {
         "dish_id": "ramen",
         "photo_id": photo_id,
-        "photographer": "alleksana",
+        "photographer": "alleksana" if photo_id in (4224210, 4224213) else "Connor Scott McManus" if photo_id == 35773142 else "Nadin Sh",
         "license": "Pexels License",
         "license_url": "https://www.pexels.com/license/",
         "source_page": source_page,
