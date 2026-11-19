@@ -154,7 +154,7 @@
   background: #000 url("/dish-images/grillet-biff-thumb-512.avif") center / contain no-repeat;
 }
 .dishPhotoThumb.dishPhotoShrimpOpenSandwich {
-  background: #000 url("/dish-images/rekesmorbrod-512.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/rekesmorbrod-thumb-512.avif") center / contain no-repeat;
 }
 
 /* Sharp chicken tandoori, with roast marks and lemon on pure black.
