@@ -1,33 +1,22 @@
-import type { DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import { CuisineExplorer } from "../components/cuisine-explorer";
 import { DishLearningSection } from "../components/dish-learning-section";
 import { DishSearch } from "../components/dish-search";
 import { GlobalHeader } from "../components/global-header";
-import { browseDishes } from "../lib/fysen-api";
 import { getPublicMenuArchive } from "../lib/verified-menu-archive";
 import { summarizeArchivedMatlyst, type ArchivedMatlystCoverage } from "../lib/archived-matlyst-coverage";
 import { homeCuisines } from "../components/cuisine-explorer-data";
 import { dishBrowseHref } from "../lib/public-path";
 
 export default async function HomePage() {
-  let browseData: DishBrowseResponse | null = null;
-  try {
-    browseData = await browseDishes({ city: "Oslo" });
-    // A successful but empty live index should still expose the verified archive.
-    if (browseData.dishes.length === 0) browseData = null;
-  } catch {
-    browseData = null;
-  }
-
+  // The public homepage never needs to read menu rows from PostgreSQL.
+  // Archive provenance and quarantine checks are enforced by this loader.
   let archiveCoverage: ArchivedMatlystCoverage | null = null;
-  if (!browseData) {
-    try {
-      const archive = await getPublicMenuArchive();
-      const dishes = homeCuisines.flatMap((cuisine) => cuisine.areas.flatMap((area) => area.dishes));
-      archiveCoverage = summarizeArchivedMatlyst(archive, dishes);
-    } catch {
-      // Show normal unavailable state when even the verified archive is down.
-    }
+  try {
+    const archive = await getPublicMenuArchive();
+    const dishes = homeCuisines.flatMap((cuisine) => cuisine.areas.flatMap((area) => area.dishes));
+    archiveCoverage = summarizeArchivedMatlyst(archive, dishes);
+  } catch {
+    // Fail closed rather than presenting old database rows as verified menus.
   }
 
   return (
@@ -51,7 +40,7 @@ export default async function HomePage() {
             </a>
           </div>
         </section>
-        <CuisineExplorer browseData={browseData} archiveCoverage={archiveCoverage} />
+        <CuisineExplorer browseData={null} archiveCoverage={archiveCoverage} archiveOnly />
         <DishLearningSection />
       </main>
     </div>

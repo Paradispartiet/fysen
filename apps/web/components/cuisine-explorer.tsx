@@ -183,9 +183,11 @@ function DiscoveryDishList({
 export function CuisineExplorer({
   browseData,
   archiveCoverage,
+  archiveOnly = false,
 }: {
   readonly browseData: DishBrowseResponse | null;
   readonly archiveCoverage: ArchivedMatlystCoverage | null;
+  readonly archiveOnly?: boolean;
 }) {
   const [previewBrowseData, setPreviewBrowseData] = useState<DishBrowseResponse | null>(null);
   const [previewBrowseFailed, setPreviewBrowseFailed] = useState(false);
@@ -197,10 +199,11 @@ export function CuisineExplorer({
   const effectiveBrowseData = browseData ?? previewBrowseData;
   const liveDishes = effectiveBrowseData?.dishes ?? [];
   const isArchived = archiveCoverage !== null && effectiveBrowseData === null;
+  const archiveUnavailable = archiveOnly && archiveCoverage === null;
   const coverageReady = effectiveBrowseData !== null || isArchived;
 
   useEffect(() => {
-    if (browseData || archiveCoverage) return;
+    if (archiveOnly || browseData || archiveCoverage) return;
 
     const controller = new AbortController();
     void browseDishesClient("Oslo", { signal: controller.signal })
@@ -216,7 +219,7 @@ export function CuisineExplorer({
       });
 
     return () => controller.abort();
-  }, [browseData, archiveCoverage]);
+  }, [archiveOnly, browseData, archiveCoverage]);
 
   const selectedArea = useMemo<CuisineArea | null>(() => {
     if (!selectedCuisine) return null;
@@ -336,10 +339,10 @@ export function CuisineExplorer({
 
                 <span className="cuisineRestaurantPreview">
                   <span className="cuisineRestaurantPreviewLabel">Restauranter og retter</span>
-                  {!coverageReady && !previewBrowseFailed ? (
+                  {!coverageReady && !previewBrowseFailed && !archiveUnavailable ? (
                     <span className="cuisineRestaurantLoading">Henter restauranter …</span>
                   ) : null}
-                  {!coverageReady && previewBrowseFailed ? (
+                  {!coverageReady && (previewBrowseFailed || archiveUnavailable) ? (
                     <span className="cuisineRestaurantLoading">Kunne ikke hente restaurantene akkurat nå.</span>
                   ) : null}
                   {coverageReady && preview && preview.restaurantExamples.length > 0 ? (

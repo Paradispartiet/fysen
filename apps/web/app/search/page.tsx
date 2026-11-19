@@ -2,7 +2,7 @@ import type { DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import type { DishSearchResponse, DishSearchSort } from "@fysen/contracts";
 import { DishBrowse } from "../../components/dish-browse";
 import { ArchivedMenuBrowse, ArchivedMenuResults } from "../../components/verified-menu-archive-view";
-import { getPublicMenuArchive, searchPublicMenuArchive, type ArchivedMenuMatch, type PublicMenuArchive } from "../../lib/verified-menu-archive";
+import { browseArchivedMenuDishes, getPublicMenuArchive, searchPublicMenuArchive, type ArchivedMenuMatch, type PublicMenuArchive } from "../../lib/verified-menu-archive";
 import { DishKnowledgeNote } from "../../components/dish-knowledge-note";
 import { SearchResults } from "../../components/search-results";
 import { DishSearch } from "../../components/dish-search";
@@ -86,28 +86,36 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   const hasLocation = latitude !== null && longitude !== null;
   const requestedSort = first(params.sort);
   const sort: DishSearchSort = requestedSort === "distance" && hasLocation ? "distance" : "relevance";
-  const browseState = q.length === 0 ? await loadBrowse(city) : { data: null, error: null };
-  const searchState = q.length === 0
-    ? { data: null, error: null }
-    : await loadResults(q, city, latitude, longitude, sort);
-  const data = searchState.data;
-  const error = searchState.error;
+  // Public Oslo discovery is read-only and uses the checksum-verified menu
+  // archive. A valid empty archive result is not a reason to query the old DB.
+  // Explicit distance sorting still uses the existing DB-backed endpoint,
+  // because the public archive has no verified restaurant coordinates.
+  const archivePreferred = city.toLocaleLowerCase("nb-NO") === "oslo" && sort === "relevance";
   let archive: PublicMenuArchive | null = null;
   let archiveMatches: ArchivedMenuMatch[] = [];
-  // An HTTP 200 with zero fresh dishes is not proof that Oslo has no menus.
-  // Offer the checksum-verified archive when either live endpoint is empty or down.
-  const primaryUnavailable = q.length === 0
-    ? Boolean(browseState.error) || browseState.data?.dishes.length === 0
-    : q.length >= 2 && (Boolean(error) || data?.results.length === 0);
-  if (primaryUnavailable && city.toLocaleLowerCase("nb-NO") === "oslo") {
+  let archiveError: string | null = null;
+  if (archivePreferred && (q.length === 0 || q.length >= 2)) {
     try {
       archive = await getPublicMenuArchive();
       if (q.length >= 2) archiveMatches = searchPublicMenuArchive(archive, q, city);
     } catch {
-      // Preserve the existing clear unavailable state, never invent menu data.
-      archive = null;
+      // Fail closed: do not silently serve stale or unverified DB menu rows.
+      archiveError = "Menyarkivet er midlertidig utilgjengelig.";
     }
   }
+
+  const browseState = q.length === 0
+    ? archivePreferred ? { data: null, error: archiveError } : await loadBrowse(city)
+    : { data: null, error: null };
+  const searchState = q.length === 0
+    ? { data: null, error: null }
+    : q.length < 2
+      ? { data: null, error: "Skriv minst to tegn for å søke." }
+      : archivePreferred
+        ? { data: null, error: archiveError }
+        : await loadResults(q, city, latitude, longitude, sort);
+  const data = searchState.data;
+  const error = searchState.error;
   const primaryResults = data?.results.filter((result) => result.match.type !== "fuzzy") ?? [];
   const nearResults = data?.results.filter((result) => result.match.type === "fuzzy") ?? [];
 
@@ -144,7 +152,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
                 initialCuisineName={first(params.cuisine)}
                 initialFoodTypeName={first(params.mat)}
                 initialAreaName={first(params.region)}
-                archive={archive}
+                dishes={browseArchivedMenuDishes(archive, city, 48)}
               />
             ) : (
               <DishBrowse
