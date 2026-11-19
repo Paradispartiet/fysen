@@ -1,0 +1,20 @@
+{
+  "dish_id": "kebab-pita",
+  "slug": "pita-tacos-fries",
+  "source_kind": "pexels",
+  "source_file": 10839496,
+  "source_page": "https://www.pexels.com/photo/10839496/",
+  "source_download_url": "https://images.pexels.com/photos/10839496/pexels-photo-10839496.jpeg",
+  "author_claim": "Pexels, verify",
+  "license_claim": "Pexels License",
+  "native_width": 3448,
+  "native_height": 3448,
+  "source_sha256": "10a8502075555cb27cca1cfafce9bffbd29c1cc7c0e22ec0a19dac23cca84af1",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "reject_if": "Not a single stuffed pita / no identifiable kebab meat / wrong variant, cut-off pita, blurry native detail, intrusive hands, cannot isolate a natural whole serving on black."
+}

@@ -1,0 +1,20 @@
+{
+  "dish_id": "kebab-pita",
+  "slug": "pita-sandwich-juice",
+  "source_kind": "pexels",
+  "source_file": 17429554,
+  "source_page": "https://www.pexels.com/photo/17429554/",
+  "source_download_url": "https://images.pexels.com/photos/17429554/pexels-photo-17429554.jpeg",
+  "author_claim": "Jonathan Reynaga",
+  "license_claim": "Pexels License",
+  "native_width": 3840,
+  "native_height": 5760,
+  "source_sha256": "c141f451a473373bf8f7fd8f6f4544b0f1171f042f5c747be6c921fa0833ece1",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "reject_if": "Not a single stuffed pita / no identifiable kebab meat / wrong variant, cut-off pita, blurry native detail, intrusive hands, cannot isolate a natural whole serving on black."
+}

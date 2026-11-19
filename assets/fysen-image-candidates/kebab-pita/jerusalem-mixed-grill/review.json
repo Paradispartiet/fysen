@@ -1,0 +1,20 @@
+{
+  "dish_id": "kebab-pita",
+  "slug": "jerusalem-mixed-grill",
+  "source_kind": "pexels",
+  "source_file": 6419697,
+  "source_page": "https://www.pexels.com/photo/6419697/",
+  "source_download_url": "https://images.pexels.com/photos/6419697/pexels-photo-6419697.jpeg",
+  "author_claim": "Polina Tankilevitch",
+  "license_claim": "Pexels License",
+  "native_width": 2000,
+  "native_height": 3000,
+  "source_sha256": "bb3470fd0addcc8889ca8244d415c4dc1fea566c43895492ea5ac77b7322a041",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "reject_if": "Not a single stuffed pita / no identifiable kebab meat / wrong variant, cut-off pita, blurry native detail, intrusive hands, cannot isolate a natural whole serving on black."
+}
