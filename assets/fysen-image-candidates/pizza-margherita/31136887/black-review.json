@@ -1,0 +1,22 @@
+{
+  "dish_id": "pizza-margherita",
+  "photo_id": 31136887,
+  "original_source_sha256": "15e2da86648369d75eab1814524e2967b39bbe8ffb9588a53b9a3bfd15461eed",
+  "original_source_size": [
+    5346,
+    3840
+  ],
+  "processed_native_size": [
+    3000,
+    3000
+  ],
+  "processed_native_sha256": "ad1ab48bb12cd2db59bd356c7c603188566eb4a78c95a91b7c2ea11caa25d21a",
+  "method": "native-pixel black-background segmentation; resized only mask; no photo upscale",
+  "source_page": "https://www.pexels.com/photo/delicious-margherita-pizza-with-fresh-basil-31136887/",
+  "photographer": "KI Lee",
+  "license": "https://www.pexels.com/license/",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "review_required": "Inspect entire black-background silhouette, native 1400px detail and food variant on iPad/mobile; fix edge artifacts before promotion"
+}
