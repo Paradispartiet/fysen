@@ -130,10 +130,10 @@
   background: #000 url("/dish-images/cheeseburger-thumb-512.avif") center / cover no-repeat;
 }
 
-/* Dedicated sharp grilled-salmon editorial illustration. Only the generic
+/* Dedicated licensed grilled-salmon photo. Only the generic
    Matlyst gallery receives it; it is not an actual restaurant dish photo. */
 .dishPhotoThumb.dishPhotoGrilledSalmon {
-  background: #000 url("/dish-images/grillet-laks-512.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/grillet-laks-thumb-512.avif") center / contain no-repeat;
 }
 
 /* Dedicated sharp Phở bò image: exact catalog ID only. */
