@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
 import { URL } from "node:url";
-import { countryFlagUrl } from "../components/cuisine-country-flag.ts";
+import { countryFlagUrl } from "../components/country-flag-artwork-url.ts";
 
 const source = (file) => readFile(new URL(file, import.meta.url), "utf8");
 
