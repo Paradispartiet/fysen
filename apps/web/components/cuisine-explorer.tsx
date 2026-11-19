@@ -22,6 +22,7 @@ import {
 import { regionalFlagUrl } from "./cuisine-explorer-taxonomy";
 import { foodTypesForCuisine, matchingCuisineFoodType } from "./cuisine-food-type-data";
 import { FoodIllustration } from "./food-illustration";
+import { CuisineCountryFlag } from "./cuisine-country-flag";
 
 type DishCoverage = {
   readonly dish: DishSuggestion;
@@ -62,7 +63,7 @@ function CuisineAreaSymbol({ area }: { readonly area: CuisineArea }) {
     );
   }
   if (area.flag) {
-    return <span className="cuisineAreaEmoji" aria-hidden="true">{area.flag}</span>;
+    return <CuisineCountryFlag emoji={area.flag} className="cuisineAreaFlag" />;
   }
   if (area.illustration) {
     return <FoodIllustration name={area.illustration} className="cuisineAreaArtwork" size={48} />;
