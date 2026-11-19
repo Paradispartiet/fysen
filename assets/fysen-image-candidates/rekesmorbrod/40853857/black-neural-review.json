@@ -10,7 +10,7 @@
     3950,
     3340
   ],
-  "output_sha256": "53314406964a6eeb1b4aacf00db8d4bab2c4a1164318dd93130add85f84a1aa7",
+  "output_sha256": "6cdc77e642dd99b8a4c55c7040807ceb8fa7336745979191a98b218c5a870eb7",
   "mask_method": "U2Net foreground segmentation on thumbnail + hand-protected plate and sandwich alpha; only alpha mask was resized",
   "native_food_pixels_resized": false,
   "visual_review_completed": false,
