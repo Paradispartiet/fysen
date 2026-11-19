@@ -62,10 +62,10 @@ try {
         "Region choices should be hidden on first kitchen selection");
       assert.equal(await typeFilter.getAttribute("open"), null,
         "Food-type choices should be hidden on first kitchen selection");
-      assert.equal((await regionFilter.locator("summary strong").textContent())?.trim(), "Alle regioner",
-        "Opening a kitchen must show the entire cuisine rather than the first region");
+      assert.equal((await regionFilter.locator("summary strong").textContent())?.trim(), "Alle land",
+        "Opening an Asian kitchen must show all countries rather than the first country");
       assert.equal((await kitchenDialog.locator(".cuisineExploreResultsHeading p").textContent())?.trim(),
-        "Alle regioner");
+        "Alle land");
       const initialDishCount = await kitchenDialog.locator(".cuisineExploreDish").count();
       assert.ok(initialDishCount > 0 && initialDishCount <= 12,
         "Overview should start with up to twelve suggestions");
@@ -99,8 +99,8 @@ try {
       await regionFilter.locator("summary").click();
       await regionFilter.locator(".cuisineExploreResetChoice").click();
       assert.equal((await kitchenDialog.locator(".cuisineExploreResultsHeading p").textContent())?.trim(),
-        "Alle regioner",
-        "The all-regions action must restore the full kitchen overview");
+        "Alle land",
+        "The all-countries action must restore the full kitchen overview");
       const dialogSizes = await kitchenDialog.evaluate((dialog) => ({
         viewportWidth: document.documentElement.clientWidth,
         scrollWidth: dialog.scrollWidth,
