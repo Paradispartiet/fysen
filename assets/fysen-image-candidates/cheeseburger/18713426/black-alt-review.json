@@ -1,0 +1,23 @@
+{
+  "dish_id": "cheeseburger",
+  "source_photo_id": 18713426,
+  "photographer": "Jonathan Borba / Pexels",
+  "photoSource": "https://www.pexels.com/photo/cheeseburger-on-black-background-18713426/",
+  "license": "https://www.pexels.com/license/",
+  "source_size": [
+    2185,
+    3277
+  ],
+  "source_sha256": "ef35fee12f8adf8c34ac46c48dde19d6e57b714a1defd2a194fe7a2dc62dd198",
+  "native_black_size": [
+    2185,
+    1800
+  ],
+  "native_black_sha256": "5c80aeb6164f427362c1bd63959cadf33dae88218016675564cce53bdc9201a4",
+  "method": "native-pixel crop + low-light background black-key, no upscaling",
+  "variant": "bacon cheeseburger with beef and melted cheese, no fries in this photo",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "note": "Review whole burger in black background and actual sharp 1400px detail; don't claim french fries are depicted."
+}
