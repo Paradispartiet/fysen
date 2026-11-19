@@ -33,7 +33,7 @@ def main():
     assert evidence["review_native_size"]==[3489,3450]
     assert evidence["review_native_sha256"]==APPROVED_SHA,"Unreviewed salmon image"
     assert evidence["approved_for_fysen"] is False
-    runpy.run_path(str(ROOT/"scripts/preview-grillet-laks-black.py"))
+    runpy.run_path(str(ROOT/"scripts/preview-grillet-laks-black.py"),run_name="__main__")
     native=CANDIDATE/"black-native-master.png"
     assert digest(native)==APPROVED_SHA,"Reproduction does not match approved image"
 
