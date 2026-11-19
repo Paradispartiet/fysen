@@ -7,6 +7,7 @@ import {
   getVerifiedPublicArchive,
   normalizeArchiveDishName,
   parseVerifiedPublicArchive,
+  matchesVerifiedPublicArchiveItem,
   resetVerifiedPublicArchiveCacheForTest,
 } from "./verified-public-menu-archive.js";
 import { VerifiedPublicArchiveController } from "./verified-public-menu-archive.controller.js";
@@ -106,6 +107,28 @@ describe("Fysen verified public archive read API", () => {
     })).toThrow(/sources/u);
     expect(() => parseVerifiedPublicArchive({ ...metadata, dishes: 999 }, rawIndex))
       .toThrow(/counts/u);
+  });
+
+  it("accepts only a unique, non-quarantined source row as Min mat evidence", () => {
+    const archive = parseVerifiedPublicArchive(metadata, rawIndex);
+    const reference = {
+      restaurantSlug: "ramenhuset-oslo",
+      sourceUrl: "https://example.org/ramen",
+      observedAt: "2026-11-02T12:00:00Z",
+      normalizedName: "ramen",
+      priceMinor: 19000,
+      priceKind: "exact" as const,
+      priceMaxMinor: null,
+    };
+    expect(matchesVerifiedPublicArchiveItem(archive, reference)).toBe(true);
+    expect(matchesVerifiedPublicArchiveItem(archive, { ...reference, priceMinor: 18000 })).toBe(false);
+    expect(matchesVerifiedPublicArchiveItem(archive, { ...reference, sourceUrl: "https://example.org/other" })).toBe(false);
+    expect(matchesVerifiedPublicArchiveItem(archive, { ...reference, normalizedName: "RAMEN" })).toBe(false);
+    expect(matchesVerifiedPublicArchiveItem(archive, {
+      ...reference, restaurantSlug: quarantinedSlugs[0],
+      sourceUrl: "https://example.org/quarantine0", priceMinor: 12000,
+      observedAt: "2026-11-05T10:00:00Z",
+    })).toBe(false);
   });
 
   it("rejects a corrupted compressed blob even if metadata looks valid", async () => {
