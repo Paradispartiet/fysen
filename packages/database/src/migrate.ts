@@ -23,6 +23,27 @@ export async function runMigrations(pool: Pool): Promise<readonly string[]> {
   const appliedNow: string[] = [];
 
   try {
+    // A restored database may have canonical Fysen tables without our
+    // application migration ledger. Replaying 0001.. on such a schema is NOT
+    // a valid ledger repair: fail before even CREATE SCHEMA/TABLE.
+    const existing = await client.query<{
+      has_ledger: boolean;
+      has_application_tables: boolean;
+    }>(`
+      SELECT to_regclass('fysen.schema_migrations') IS NOT NULL AS has_ledger,
+             EXISTS (
+               SELECT 1 FROM pg_catalog.pg_tables
+                WHERE schemaname = 'fysen'
+                  AND tablename <> 'schema_migrations'
+             ) AS has_application_tables
+    `);
+    if (existing.rows[0]?.has_application_tables && !existing.rows[0].has_ledger) {
+      throw new Error(
+        "FYSEN_UNVERIFIED_MIGRATION_HISTORY: existing Fysen tables have no " +
+        "schema_migrations ledger. Reconcile schema in an isolated copy; " +
+        "do not automatically stamp or replay migrations.",
+      );
+    }
     await client.query("CREATE SCHEMA IF NOT EXISTS fysen");
     await client.query(`
       CREATE TABLE IF NOT EXISTS fysen.schema_migrations (
