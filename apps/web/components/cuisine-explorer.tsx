@@ -333,8 +333,6 @@ export function CuisineExplorer({
                   <span>{cuisine.context}</span>
                 </span>
 
-                <span className="cuisineCardBrowseLabel">Velg et underkjøkken nedenfor</span>
-
                 <span className="cuisineRestaurantPreview">
                   <span className="cuisineRestaurantPreviewLabel">Restauranter og retter</span>
                   {!coverageReady && !previewBrowseFailed ? (
