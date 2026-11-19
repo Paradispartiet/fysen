@@ -304,17 +304,20 @@ export function CuisineExplorer({
 
   return (
     <section className="cuisineExplorer" aria-label="Matlyst">
-      <div className="foodSectionHeading">
-        <div>
-          <p className="foodSectionEyebrow">Matlyst</p>
-          <h2>Utforsk kjøkken og retter</h2>
-        </div>
-        <p>Velg det du har lyst på. Finn retter og se hvilke restauranter som tilbyr dem.</p>
-      </div>
-
       <RecentDishes dishes={effectiveBrowseData?.recentDishes ?? []} />
       <PopularDishes dishes={effectiveBrowseData?.popularDishes ?? []} />
-      <div className="cuisineGrid">
+
+      <details className="cuisineBrowseDisclosure" aria-labelledby="cuisine-browse-title">
+        <summary className="cuisineBrowsePreview">
+          <span className="cuisineBrowsePreviewCopy">
+            <span className="foodSectionEyebrow">Matlyst</span>
+            <span className="cuisineBrowsePreviewTitle" id="cuisine-browse-title">Utforsk matretter</span>
+            <span className="cuisineBrowsePreviewHint">Kjøkken, regioner og mattyper</span>
+          </span>
+          <span className="cuisineBrowsePreviewChevron" aria-hidden="true">⌄</span>
+        </summary>
+        <div className="cuisineBrowseInside">
+          <div className="cuisineGrid">
         {homeCuisines.map((cuisine) => {
           const firstArea = cuisine.areas[0];
           const preview = featured.get(cuisine.name) ?? null;
@@ -383,7 +386,9 @@ export function CuisineExplorer({
             </article>
           );
         })}
-      </div>
+          </div>
+        </div>
+      </details>
 
       <DishPhotoGallery />
 
