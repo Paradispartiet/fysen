@@ -13,6 +13,8 @@ from urllib.parse import quote
 from urllib.request import Request, urlopen
 import json
 from PIL import Image, ImageDraw, ImageFilter, ImageOps
+import cv2
+import numpy as np
 
 OUT=Path("assets/fysen-image-candidates/pasta-bolognese/tagliatelle-trattoria-tony")
 FILENAME="Tagliatelle al ragù Trattoria Tony.jpg"
@@ -30,30 +32,31 @@ with Image.open(BytesIO(content)) as source:
     native=ImageOps.exif_transpose(source).convert("RGB")
 assert native.size==DIMS
 
-# Source image preview is 1100x825. Measured contour encloses the WHOLE
-# white oval serving plate without including the table/glassware behind it.
-# Use no interior holes: all beef ragù, pasta and plate remain original.
-contour=[
-  (652,120),(734,126),(822,151),(893,193),(965,252),
-  (1013,316),(1055,389),(1064,470),(1053,541),(1021,607),
-  (964,655),(900,693),(818,720),(723,740),
-  (610,752),(495,743),(383,724),(292,690),
-  (218,647),(174,617),(142,552),(136,477),
-  (149,408),(177,336),(222,273),(279,221),
-  (355,180),(451,149),(546,130)
-]
-mask=Image.new("L",(1100,825),0)
-# The plate is a single smooth ellipse photographed from an oblique angle.
-# Restrict the mask to its real rim; the previous polygon kept grey table
-# triangles on the lower sides. All food remains deep within the ellipse.
-draw=ImageDraw.Draw(mask)
-draw.ellipse((137,87,1065,752),fill=255)
-# A small wood corner overlaps the ellipse at its upper-left edge; this is
-# backdrop, not the white plate or food. Clear only that isolated wedge (review v4).
-# A wood sliver sits ABOVE the actual upper-left diagonal plate rim.
-# Trace just that rim with a smooth diagonal: no holes within the plate.
-draw.polygon([(0,0),(451,0),(451,110),(426,123),(312,179),(0,213)],fill=0)
-mask=mask.filter(ImageFilter.GaussianBlur(1.3))
+# Segment the ORIGINAL plate edge at review resolution, rather than
+# manually guessing its white, angled outline. GrabCut works on the
+# segmentation mask ONLY; original pasta/plate pixels are never resized.
+# The confidence core is deep inside the white plate, keeping all food.
+small=np.asarray(native.resize((1100,825),Image.Resampling.LANCZOS))
+h,w=small.shape[:2]
+yy,xx=np.mgrid[0:h,0:w]
+radial=np.sqrt(((xx-605.0)/461.0)**2+((yy-420.0)/331.0)**2)
+mask_codes=np.where(radial>1.085,cv2.GC_BGD,cv2.GC_PR_BGD).astype(np.uint8)
+mask_codes[radial<1.025]=cv2.GC_PR_FGD
+mask_codes[radial<0.88]=cv2.GC_FGD
+cv2.grabCut(cv2.cvtColor(small,cv2.COLOR_RGB2BGR),mask_codes,None,
+            np.zeros((1,65),np.float64),np.zeros((1,65),np.float64),
+            6,cv2.GC_INIT_WITH_MASK)
+binary=np.uint8(np.isin(mask_codes,[cv2.GC_FGD,cv2.GC_PR_FGD]))*255
+# The contour must remain single and include the entire food/plate.
+n,labels,stats,centroids=cv2.connectedComponentsWithStats(binary,8)
+assert n>=2
+big=1+int(np.argmax(stats[1:,cv2.CC_STAT_AREA]))
+component=np.uint8(labels==big)*255
+contours,_=cv2.findContours(component,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+filled=np.zeros_like(component)
+cv2.drawContours(filled,contours,-1,255,thickness=cv2.FILLED)
+filled=cv2.GaussianBlur(filled,(5,5),0.9)
+mask=Image.fromarray(filled,"L")
 alpha=mask.resize(DIMS,Image.Resampling.BILINEAR)
 black=Image.composite(native,Image.new("RGB",DIMS,(0,0,0)),alpha)
 assert all(black.getpixel(q)==(0,0,0) for q in [(0,0),(3999,0),(0,2999),(3999,2999)])
