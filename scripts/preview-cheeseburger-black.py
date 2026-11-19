@@ -96,6 +96,15 @@ burger_foreground=np.uint8(burger_region & (binary>0))*255
 # Preserve pale lettuce (green/white) and all meat layers.
 table_spill=(xx<520)&(yy>356)&(yy<470)&(r.astype(np.int16)>g.astype(np.int16)*1.52)&(g.astype(np.int16)>b.astype(np.int16)*1.35)&(r<180)
 burger_foreground[table_spill]=0
+# The left protrusion below the bun was identified as mostly background with
+# a couple of floating fragments. Remove it outside the actual burger body,
+# feathering horizontally so no hard rectangular cut remains.
+overhang_zone=(yy>=352)&(yy<=466)&(xx>405)&(xx<535)
+feather=np.uint8(np.clip((xx-504.0)/17.0,0.0,1.0)*255)
+burger_foreground[overhang_zone]=(
+    burger_foreground[overhang_zone].astype(np.uint16) *
+    feather[overhang_zone].astype(np.uint16)//255
+).astype(np.uint8)
 combined=np.maximum(burger_foreground,fries_foreground)
 combined=cv2.morphologyEx(combined,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8))
 filled=cv2.GaussianBlur(combined,(7,7),1.2)
