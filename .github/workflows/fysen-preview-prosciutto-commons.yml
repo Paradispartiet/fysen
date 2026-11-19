@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  actions: read
 concurrency:
   group: fysen-prosciutto-commons-black-review
   cancel-in-progress: false
@@ -24,6 +25,13 @@ jobs:
           python-version: "3.11"
       - name: Install exact image libraries
         run: python -m pip install --disable-pip-version-check Pillow==11.3.0 numpy==2.2.6 opencv-python-headless==4.11.0.86
+      - name: Reuse verified source from completed staging run (no new Wikimedia request)
+        uses: actions/download-artifact@v4
+        with:
+          name: fysen-prosciutto-commons-originals
+          run-id: 44607744351
+          github-token: ${{ github.token }}
+          path: /tmp/fysen-commons-originals
       - name: Preserve full-native pizza pixels, generate two black-preview masks
         run: python scripts/preview-prosciutto-commons-black.py
       - name: Confirm no food generation or publication
