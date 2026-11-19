@@ -110,3 +110,22 @@
     flex-basis: 38px;
   }
 }
+
+
+/* Results: the title and price matter more than the decorative miniature. */
+.dishNameWithArtwork { gap: 8px; }
+.dishArtwork {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  object-fit: contain;
+  opacity: .72;
+  filter: saturate(.56) contrast(.94);
+}
+@media (max-width: 480px) {
+  .dishArtwork {
+    width: 20px;
+    height: 20px;
+    flex-basis: 20px;
+  }
+}
