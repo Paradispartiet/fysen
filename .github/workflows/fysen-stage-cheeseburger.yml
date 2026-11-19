@@ -1,0 +1,66 @@
+name: Fysen stage cheeseburger native photo candidates
+
+on:
+  push:
+    branches: [art/cheeseburger-native-photo-20261119]
+    paths:
+      - ".github/workflows/fysen-stage-cheeseburger.yml"
+      - "scripts/stage-cheeseburger-candidates.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+concurrency:
+  group: fysen-cheeseburger-native-sources
+  cancel-in-progress: false
+jobs:
+  source-review:
+    if: "!contains(github.event.head_commit.message, '[cheeseburger-source-bot]')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install --disable-pip-version-check Pillow==11.3.0
+      - name: Retrieve exact Pexels source pixels and create native review samples
+        run: python scripts/stage-cheeseburger-candidates.py
+      - name: Ensure no source photo is incorrectly approved or published
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files = list(Path("assets/fysen-image-candidates/cheeseburger").glob("*/review.json"))
+          assert files, "Missing sources"
+          for file in files:
+              record=json.loads(file.read_text())
+              assert record["source_verified"] is True
+              assert record["approved_for_fysen"] is False
+              assert record["visual_review_completed"] is False
+              assert record["published"] is False
+              assert min(record["source_original_width"],record["source_original_height"])>=2000
+              assert (file.parent/"native-detail-1400.jpg").is_file()
+          print("Sources staged for human visual selection:",len(files))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fysen-cheeseburger-native-sources
+          if-no-files-found: error
+          retention-days: 7
+          path: |
+            assets/fysen-image-candidates/cheeseburger/*/source.jpeg
+            assets/fysen-image-candidates/cheeseburger/*/review.json
+            assets/fysen-image-candidates/cheeseburger/*/preview.jpg
+            assets/fysen-image-candidates/cheeseburger/*/native-detail-1400.jpg
+      - name: Commit only review previews and provenance to PR
+        run: |
+          find assets/fysen-image-candidates/cheeseburger -name source.jpeg -delete
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-image-candidates/cheeseburger
+          git diff --cached --quiet && exit 0
+          git commit -m "[cheeseburger-source-bot] Stage native cheeseburger candidate previews"
+          git push origin HEAD:"$GITHUB_REF_NAME"
