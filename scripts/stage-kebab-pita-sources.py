@@ -29,6 +29,9 @@ SOURCES=[
  ("pexels",10839496,"pita-tacos-fries","Pexels, verify","Pexels License"),
  ("pexels",17429554,"pita-sandwich-juice","Jonathan Reynaga","Pexels License"),
  ("pexels",6419697,"jerusalem-mixed-grill","Polina Tankilevitch","Pexels License"),
+ ("pexels",28897047,"shawarma-wraps-vegetables","ahmed kh. jami","Pexels License"),
+ ("pexels",34318137,"beef-shawarma-wood-board","Bia Metidieri","Pexels License"),
+ ("pexels",5779364,"shawarma-halved-closeup","RDNE Stock project","Pexels License"),
 ]
 def download(kind,src):
     if kind=="commons":
