@@ -54,7 +54,10 @@ test("archive keeps country flags, regional flags, and original food drawings se
   assert.ok(browse.includes("supplementalFoodTypeDishes"));
   assert.ok(browse.includes("visibleSuggestions.map"));
   assert.ok(browse.includes("ikke bekreftede menytreff"));
-  assert.ok(browse.includes("browseArchivedMenuDishes(archive, city, 48)"));
+  // Archive decoding remains on the server. The browser-safe atlas receives
+  // pre-validated dishes and retains the full region/food-type navigation.
+  assert.ok(browse.includes("const archivedDishes = selectedCuisine ? [] : dishes;"));
+  assert.doesNotMatch(browse, /browseArchivedMenuDishes\(/u);
   assert.ok(browse.includes("seenSuggestionNames"));
   assert.match(css, /\.italianAtlasTiles/u);
   assert.match(css, /\.atlasCountryFlag/u);
