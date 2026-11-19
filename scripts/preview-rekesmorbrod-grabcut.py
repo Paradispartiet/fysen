@@ -72,6 +72,22 @@ cv2.grabCut(image_bgr,mask,None,np.zeros((1,65),np.float64),
 cut=np.uint8(np.isin(mask,[cv2.GC_FGD,cv2.GC_PR_FGD]))*255
 cut=cv2.morphologyEx(cut,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8))
 cut=cv2.GaussianBlur(cut,(3,3),0.65)
+# The source has a straight tan window edge behind dill and lemon. A
+# foreground GMM can retain that distinct rectangle despite foreground
+# markers. In only this small right-upper region, retain green needles and
+# yellow lemon pixels but discard neutral tan/white window pixels.
+top_right=(x>480)&(x<548)&(y<638)&(y>444)
+is_green=(g>r*1.03)&(g>blue*1.10)&(g>42)
+is_yellow=(r>150)&(g>119)&(blue<g*0.89)&(r>g*0.95)
+is_pink=(r>115)&(r>g*1.2)&(blue>g*0.91)&(blue>74)
+food_colors=np.uint8(is_green|is_yellow|is_pink)*255
+food_colors=cv2.GaussianBlur(cv2.dilate(food_colors,np.ones((3,3),np.uint8)),(3,3),0.65)
+cut[top_right]=(cut[top_right].astype(np.uint16)*food_colors[top_right].astype(np.uint16)//255).astype(np.uint8)
+# Remove the small brown table wedge *outside the plate*, at its upper-left
+# edge. Its warm dark brown is unlike the cyan plate; keep green lettuce.
+wood=(r>g*1.22)&(g>blue*1.07)&(r>65)
+edge_wood=(x<340)&(y>628)&(y<667)&wood
+cut[edge_wood]=0
 # Plate and food remain untouched in lower half, including scattered shrimp.
 plate=Image.new("L",SMALL,0)
 draw=ImageDraw.Draw(plate)
