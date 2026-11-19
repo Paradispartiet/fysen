@@ -73,7 +73,7 @@ def main() -> None:
     entry.update({
         "atlas": thumb.name,
         "kind": "Redaksjonelt rettfoto",
-        "variantCaution": "Lisensiert redaksjonelt foto av hel pizza margherita med tomat, mozzarella og basilikum på svart bakgrunn. Ikke fotografi av en konkret restaurants servering.",
+        "variantCaution": "Lisensiert redaksjonelt foto av hel pizza margherita med tomat, mozzarella og basilikum på svart bakgrunn. Dette er ikke faktisk restaurantfoto eller dokumentasjon av serveringen hos en konkret restaurant.",
         "largeSourceOriginalPath": "assets/fysen-dish-originals/pizza-margherita.png",
         "largeSource": master.name,
         "largeSourceNativeWidth": 3000,
@@ -143,6 +143,8 @@ def main() -> None:
         "Pizza margherita, sushi, ramen, carbonara and butter chicken need approved full-size masters",
         1
     )
+    assert "[5,6,10,11].includes(index)" in new
+    new = new.replace("[5,6,10,11].includes(index)", "[0,5,6,10,11].includes(index)", 1)
     tests.write_text(new, encoding="utf8")
 
     evidence = SOURCE_DIR / "black-review.json"
