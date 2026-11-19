@@ -1,0 +1,67 @@
+name: Fysen review native black pizza candidate
+
+on:
+  push:
+    branches: [art/pizza-margherita-native-candidates-20261119]
+    paths:
+      - ".github/workflows/fysen-review-pizza-isolation.yml"
+      - "scripts/preview-pizza-margherita-black.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fysen-pizza-isolation-review
+  cancel-in-progress: false
+
+jobs:
+  review-black-background:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install segmentation and image codecs
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0 opencv-python-headless==4.11.0.86
+      - name: Isolate verified Pexels pizza without source-pixel upscaling
+        run: python scripts/preview-pizza-margherita-black.py
+      - name: Verify isolation review stays separate from release
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          path = Path("assets/fysen-image-candidates/pizza-margherita/31136887")
+          evidence = json.loads((path / "black-review.json").read_text())
+          assert evidence["processed_native_size"] == [3000, 3000]
+          assert evidence["visual_review_completed"] is False
+          assert evidence["approved_for_fysen"] is False
+          assert evidence["published"] is False
+          assert (path / "black-preview.jpg").exists()
+          assert (path / "black-native-detail-1400.jpg").exists()
+          print("Black pizza preview ready, requires visual review before promotion")
+          PY
+      - name: Preserve non-public native original for further review
+        uses: actions/upload-artifact@v4
+        with:
+          name: fysen-pizza-black-native-review
+          path: |
+            assets/fysen-image-candidates/pizza-margherita/31136887/black-native-master-3000.png
+            assets/fysen-image-candidates/pizza-margherita/31136887/black-preview.jpg
+            assets/fysen-image-candidates/pizza-margherita/31136887/black-native-detail-1400.jpg
+            assets/fysen-image-candidates/pizza-margherita/31136887/black-review.json
+          retention-days: 7
+          if-no-files-found: error
+      - name: Commit review previews only, not public media
+        run: |
+          rm -f assets/fysen-image-candidates/pizza-margherita/31136887/black-native-master-3000.png
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-image-candidates/pizza-margherita/31136887/black-preview.jpg assets/fysen-image-candidates/pizza-margherita/31136887/black-native-detail-1400.jpg assets/fysen-image-candidates/pizza-margherita/31136887/black-review.json
+          git diff --cached --quiet && exit 0
+          git commit -m "[pizza-isolation-bot] Review black-background native pizza candidate"
+          git push origin HEAD:"$GITHUB_REF_NAME"
