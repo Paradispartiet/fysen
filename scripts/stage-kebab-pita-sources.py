@@ -1,0 +1,80 @@
+#!/usr/bin/env python3
+"""Stage real native photographs of kebab-in-pita for editorial inspection.
+
+Do not publish or mark any candidate approved. No AI-generated food, no upscaling,
+no changes to the catalogue or to public assets.
+"""
+from __future__ import annotations
+import hashlib, json
+from io import BytesIO
+from pathlib import Path
+from urllib.parse import quote
+from urllib.request import Request,urlopen
+from PIL import Image,ImageOps
+
+ROOT=Path("assets/fysen-image-candidates/kebab-pita")
+MAX_BYTES=35*1024*1024
+SOURCES=[
+ ("commons","Doner kebab shawarma pita.jpg","doner-kebab-shawarma-pita","Amin","CC BY-SA 4.0"),
+ ("commons","Gyros pita.jpg","gyros-pita-budapest","Christo","CC BY-SA 4.0"),
+ ("commons","An Arab kebab.jpg","arab-kebab-sandwich","License to verify","License to verify"),
+ ("commons","Kebab-french-fries.jpg","kebab-fries","TGCGG","CC0 1.0"),
+ ("commons","20120628 pita-kebap.jpg","pita-gyros","License to verify","CC BY-SA 3.0"),
+ ("commons","Beef and Chicken Kebab and Pita.jpg","beef-chicken-kebab-pita","License to verify","CC BY-SA 4.0"),
+ ("pexels",29306504,"doner-fresh-vegetables","Pexels, verify","Pexels License"),
+ ("pexels",29306499,"doner-fries-drink","Pexels, verify","Pexels License"),
+ ("pexels",29306496,"chicken-kebab-fries","Pexels, verify","Pexels License"),
+]
+def download(kind,src):
+    if kind=="commons":
+        enc=quote(src.replace(" ","_"),safe="()")
+        url="https://commons.wikimedia.org/wiki/Special:FilePath/"+enc
+        page="https://commons.wikimedia.org/wiki/File:"+enc
+    else:
+        url=f"https://images.pexels.com/photos/{src}/pexels-photo-{src}.jpeg"
+        page=f"https://www.pexels.com/photo/{src}/"
+    req=Request(url,headers={"User-Agent":"FysenPhotoReview/1.0 (GitHub: Paradispartiet/fysen; educational editorial photo evaluation)","Accept":"image/jpeg,image/png,*/*"})
+    with urlopen(req,timeout=65) as res:
+        raw=res.read(MAX_BYTES+1)
+        resolved=res.url
+        ct=res.headers.get("Content-Type","")
+    if len(raw)>MAX_BYTES or not ct.lower().startswith("image/"):
+        raise ValueError(f"Not a valid <= {MAX_BYTES} byte photo: {ct}")
+    with Image.open(BytesIO(raw)) as im:
+        im.load()
+        img=ImageOps.exif_transpose(im).convert("RGB")
+    return raw,img,page,resolved
+def stage(kind,src,slug,author,license):
+    raw,img,page,resolved=download(kind,src)
+    w,h=img.size
+    if min(w,h)<1800: raise ValueError(f"Native size {w}x{h} below required 1800px")
+    target=ROOT/slug
+    target.mkdir(parents=True,exist_ok=True)
+    (target/"native-source.bytes").write_bytes(raw)
+    preview=img.copy()
+    preview.thumbnail((1100,1100),Image.Resampling.LANCZOS)
+    preview.save(target/"preview.jpg",quality=90,optimize=True)
+    cx,cy=w//2,h//2
+    img.crop((cx-700,cy-700,cx+700,cy+700)).save(target/"native-detail-1400.jpg",quality=91,optimize=True)
+    data={
+      "dish_id":"kebab-pita",
+      "slug":slug,"source_kind":kind,"source_file":src,
+      "source_page":page,"source_download_url":resolved,
+      "author_claim":author,"license_claim":license,
+      "native_width":w,"native_height":h,
+      "source_sha256":hashlib.sha256(raw).hexdigest(),
+      "source_verified":True,"photographer_verified":False,"license_verified":False,
+      "visual_review_completed":False,"approved_for_fysen":False,"published":False,
+      "reject_if":"Not a single stuffed pita / no identifiable kebab meat / wrong variant, cut-off pita, blurry native detail, intrusive hands, cannot isolate a natural whole serving on black."
+    }
+    (target/"review.json").write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
+    print(f"STAGED {slug} {w}x{h}, SHA256={data['source_sha256']}; NOT APPROVED")
+def main():
+    count=0
+    for row in SOURCES:
+        try: stage(*row);count+=1
+        except Exception as error:
+            print("REJECTED",row[2],type(error).__name__,str(error))
+    if count<2: raise SystemExit(f"Only {count} sources retrieved; at least two required")
+    print(f"{count} original photos saved to 7-day Actions artifact for visual inspection, none approved")
+if __name__=="__main__":main()
