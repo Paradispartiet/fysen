@@ -173,6 +173,10 @@ export function DishPhotoGallery() {
           <a href="/dish-images/ramen-master-7364.avif" target="_blank" rel="noopener noreferrer">
             Ramen med svin og egg <span aria-hidden="true">↗</span>
           </a>
+          <a href="/dish-images/pasta-bolognese-master-4000.avif" target="_blank" rel="noopener noreferrer">
+            Tagliatelle bolognese <span aria-hidden="true">↗</span>
+          </a>
+          <small>Tagliatelle-foto: Alex Sirac, <a href="/dish-images/pasta-bolognese-LICENSE.txt" target="_blank" rel="noopener noreferrer">CC BY 4.0 (bearbeidet, kilde og lisens)</a>.</small>
           <a href="/dish-images/pasta-carbonara-master-2600.avif" target="_blank" rel="noopener noreferrer">
             Pasta carbonara <span aria-hidden="true">↗</span>
           </a>

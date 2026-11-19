@@ -17,8 +17,12 @@
   "review_native_sha256": "ffb735fd218a6607bee6515b1a770a8bc56402403730fbf01288824ef8688d80",
   "method": "Native photo pixels retained; separate traced mask excluding table/glassware is enlarged to source dimensions only",
   "original_pixels_upscaled": false,
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
-  "review_required": "All pasta/plate preserved and in sharp focus, true black surrounding, no visible table arc, no white rim cut, no restaurant-specific menu claims"
+  "review_required": "All pasta/plate preserved and in sharp focus, true black surrounding, no visible table arc, no white rim cut, no restaurant-specific menu claims",
+  "license_verified": true,
+  "photographer_verified": true,
+  "full_avif_sha256": "6b5d6aaeace71d075262d7fdc664846518d7b4c5ca58da531474300aa280c678",
+  "license_notice": "apps/web/public/dish-images/pasta-bolognese-LICENSE.txt"
 }
