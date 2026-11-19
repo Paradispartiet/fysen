@@ -346,9 +346,13 @@ export function CuisineExplorer({
               <span>{selectedCuisine.context}</span>
             </header>
 
-            <section className="cuisineExploreAreas" aria-labelledby="cuisine-area-title">
-              <h3 id="cuisine-area-title">{selectedCuisine.areasLabel}</h3>
-              <div className="cuisineExploreAreaGrid">
+            <div className="cuisineExploreFilterGroup" aria-label="Velg hvordan du vil utforske">
+              <details className="cuisineExploreFilter cuisineExploreAreas" name="cuisine-discovery-filter">
+                <summary className="cuisineExploreFilterSummary">
+                  <span>{selectedCuisine.areasLabel}</span>
+                  <strong>{selectedFoodType ? "Velg land eller region" : selectedArea.name}</strong>
+                </summary>
+                <div className="cuisineExploreAreaGrid" aria-label={selectedCuisine.areasLabel}>
                 {selectedCuisine.areas.map((area) => (
                   <CuisineAreaTile
                     key={area.name}
@@ -360,16 +364,16 @@ export function CuisineExplorer({
                     }}
                   />
                 ))}
-              </div>
-            </section>
+                </div>
+              </details>
 
-            {availableFoodTypes.length > 0 ? (
-              <section className="cuisineExploreFoodTypes" aria-labelledby="cuisine-types-title">
-                <h3 id="cuisine-types-title">
-                  {selectedCuisine.name === "Italiensk" ? "Eller utforsk italienske mattyper" : "Eller utforsk mattyper"}
-                </h3>
-                <p className="cuisineExploreTypeHint">Mattyper går på tvers av regioner og land. Velg én mattype eller et underkjøkken.</p>
-                <div className="cuisineExploreTypeGrid">
+              {availableFoodTypes.length > 0 ? (
+                <details className="cuisineExploreFilter cuisineExploreFoodTypes" name="cuisine-discovery-filter">
+                  <summary className="cuisineExploreFilterSummary">
+                    <span>Mattype</span>
+                    <strong>{selectedFoodType?.name ?? "Velg mattype"}</strong>
+                  </summary>
+                  <div className="cuisineExploreTypeGrid" aria-label={`Mattyper i ${selectedCuisine.name}`}>
                   {availableFoodTypes.map((type) => (
                     <button
                       type="button"
@@ -382,9 +386,10 @@ export function CuisineExplorer({
                       <strong>{type.name}</strong>
                     </button>
                   ))}
-                </div>
-              </section>
-            ) : null}
+                  </div>
+                </details>
+              ) : null}
+            </div>
 
             <section className="cuisineExploreResults" aria-live="polite">
               <div className="cuisineExploreResultsHeading">

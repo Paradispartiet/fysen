@@ -54,7 +54,37 @@ try {
       assert.equal(kitchenHorizontalOverflow, false,
         "Expanded cuisine menu must not overflow on phones or iPads");
       await kitchenMenu.locator(".cuisineBrowseChoice").first().click();
-      await page.locator(".cuisineExploreDialog").waitFor({ state: "visible" });
+      const kitchenDialog = page.locator(".cuisineExploreDialog");
+      await kitchenDialog.waitFor({ state: "visible" });
+      const regionFilter = kitchenDialog.locator("details.cuisineExploreAreas");
+      const typeFilter = kitchenDialog.locator("details.cuisineExploreFoodTypes");
+      assert.equal(await regionFilter.getAttribute("open"), null,
+        "Region choices should be hidden on first kitchen selection");
+      assert.equal(await typeFilter.getAttribute("open"), null,
+        "Food-type choices should be hidden on first kitchen selection");
+      await regionFilter.locator("summary").click();
+      assert.notEqual(await regionFilter.getAttribute("open"), null);
+      const region = regionFilter.locator("button.cuisineAreaTile").nth(1);
+      const regionName = (await region.locator("span").last().textContent())?.trim();
+      assert.ok(regionName);
+      await region.click();
+      assert.equal((await regionFilter.locator("summary strong").textContent())?.trim(), regionName);
+      await typeFilter.locator("summary").click();
+      assert.equal(await regionFilter.getAttribute("open"), null,
+        "Opening food types should close the other filter group");
+      const foodType = typeFilter.locator("button").first();
+      const typeName = (await foodType.locator("strong").textContent())?.trim();
+      assert.ok(typeName);
+      await foodType.click();
+      assert.equal((await typeFilter.locator("summary strong").textContent())?.trim(), typeName);
+      assert.equal((await kitchenDialog.locator(".cuisineExploreResultsHeading p").textContent())?.trim(), typeName);
+      const dialogSizes = await kitchenDialog.evaluate((dialog) => ({
+        viewportWidth: document.documentElement.clientWidth,
+        scrollWidth: dialog.scrollWidth,
+        clientWidth: dialog.clientWidth,
+      }));
+      assert.ok(dialogSizes.scrollWidth <= dialogSizes.clientWidth + 2,
+        `Kitchen dialog must not overflow: ${JSON.stringify(dialogSizes)}`);
       await page.locator(".cuisineExploreDialogClose").click();
       await kitchenMenu.locator("summary").click();
       assert.equal(await kitchenMenu.getAttribute("open"), null,
