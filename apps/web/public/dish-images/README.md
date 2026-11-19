@@ -373,3 +373,14 @@ Alle 44 registrerte rettillustrasjoner har nå separate filer i bilderegisteret.
 Originalt lisensiert Pexels-foto av Prabal Pratap Singh (ID 9609844) i 4608 × 3456. Retten er et kyllinglår med kremet saus, ikke en benfri variant. Et 3000 × 3000 utsnitt i opprinnelig detaljoppløsning maskerer bort duk, bakgrunn og tilbehør rundt skålen. Stor AVIF og en separat 512px miniatyr produseres uten oppskalering. Kilde og visuell vurdering ligger i `docs/fysen-image-reviews/butter-chicken.md`.
 
 **Godkjent etter importkontroll:** Sushi 2100 × 2100 og butter chicken 3000 × 3000 har hver sin verifiserte, ikke-oppskalerte original og separate 512px miniatyrer. Totalt 2/44 godkjente stororiginaler. Ramen og carbonara er fortsatt kun bildekandidater.
+
+### Pasta carbonara – 2600px redaksjonelt foto (19. november 2026)
+
+Skarpt lisensiert foto fra Froimar Andrea Rodriguez / Pexels (foto 12116165).
+Original 2768 × 3460, kontrollert som carbonara med bacon, ost, eggesaus
+og sort pepper. Et 2600 × 2600 utsnitt i ekte kildedetaljer med mørk
+tallerken og helsvart ytterbakgrunn; ingen oppskalering eller KI-tilført
+mattekstur. Egen AVIF-master og 512px miniatyr. Kilde- og bildebevis
+lagres i `docs/fysen-image-reviews/pasta-carbonara.md`.
+
+Ny fullstørrelseslenke åpner originalen først når brukeren velger den.
