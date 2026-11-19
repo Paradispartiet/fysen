@@ -1,0 +1,18 @@
+{
+  "dish_id": "pizza-prosciutto",
+  "photo_id": 4748451,
+  "photographer": "Regina Ferraz",
+  "source_page": "https://www.pexels.com/photo/prosciutto-pizza-on-wooden-chopping-board-4748451/",
+  "source_url": "https://images.pexels.com/photos/4748451/pexels-photo-4748451.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "source_sha256": "97a61edd37481e9edd4b5a1c3c77766ecf48502096a3b20bfd6de06161107073",
+  "source_width": 4766,
+  "source_height": 3136,
+  "source_verified": true,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "target": "Entire pizza with visible prosciutto, mozzarella and greens; real sharp source pixels and pure black surrounding background without artifacts.",
+  "review_criteria": "Do not approve close-ups with cut-off pizza, weak source detail, unsightly isolation, invented ingredients, or incorrect photo rights. No upscaling and no restaurant-specific claims."
+}

@@ -1,0 +1,18 @@
+{
+  "dish_id": "pizza-prosciutto",
+  "photo_id": 16677739,
+  "photographer": "Valeria Boltneva",
+  "source_page": "https://www.pexels.com/photo/pizza-with-prosciutto-and-arugula-16677739/",
+  "source_url": "https://images.pexels.com/photos/16677739/pexels-photo-16677739.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "source_sha256": "847b05af0a5ca1888e384d99144d750d98a0d94c4f8a5d11a01baecfba7c8517",
+  "source_width": 8192,
+  "source_height": 5464,
+  "source_verified": true,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "target": "Entire pizza with visible prosciutto, mozzarella and greens; real sharp source pixels and pure black surrounding background without artifacts.",
+  "review_criteria": "Do not approve close-ups with cut-off pizza, weak source detail, unsightly isolation, invented ingredients, or incorrect photo rights. No upscaling and no restaurant-specific claims."
+}

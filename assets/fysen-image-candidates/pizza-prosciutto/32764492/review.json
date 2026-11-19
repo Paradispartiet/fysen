@@ -1,0 +1,18 @@
+{
+  "dish_id": "pizza-prosciutto",
+  "photo_id": 32764492,
+  "photographer": "Alexey Demidov",
+  "source_page": "https://www.pexels.com/photo/authentic-italian-pizza-with-prosciutto-and-arugula-32764492/",
+  "source_url": "https://images.pexels.com/photos/32764492/pexels-photo-32764492.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "source_sha256": "a9a452b9b5782a6432aff9f6622c3e8612bd90547ebeaec3337cf10a65cb6e21",
+  "source_width": 4000,
+  "source_height": 6000,
+  "source_verified": true,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "target": "Entire pizza with visible prosciutto, mozzarella and greens; real sharp source pixels and pure black surrounding background without artifacts.",
+  "review_criteria": "Do not approve close-ups with cut-off pizza, weak source detail, unsightly isolation, invented ingredients, or incorrect photo rights. No upscaling and no restaurant-specific claims."
+}
