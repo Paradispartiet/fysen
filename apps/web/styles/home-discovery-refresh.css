@@ -353,3 +353,41 @@
 @media (prefers-reduced-motion: reduce) {
   .dishPhotosOpen > span { transition: none; }
 }
+
+
+/* Final homepage override: keep the food atlas as a quiet index, not icon cards. */
+.cuisineExplorer .cuisineGrid {
+  gap: 10px;
+}
+.cuisineExplorer .cuisineCardInteractive {
+  min-height: 275px;
+  border-color: rgba(255, 255, 255, .09);
+  background: #0c0f0d;
+  border-radius: 11px;
+}
+.cuisineExplorer .cuisineCardTrigger {
+  min-height: 158px;
+  padding: 16px 17px 12px;
+}
+.cuisineExplorer .cuisineCardHeading strong {
+  font-size: 21px;
+  font-weight: 620;
+}
+.cuisineExplorer .cuisineRestaurantPreview {
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top-color: rgba(255, 255, 255, .06);
+}
+.cuisineExplorer .cuisineAreaList {
+  padding: 8px 11px 11px;
+}
+@media (max-width: 767px) {
+  .cuisineExplorer .cuisineCardInteractive {
+    min-width: min(255px, 80vw);
+    min-height: 265px;
+  }
+  .cuisineExplorer .cuisineCardTrigger {
+    min-height: 155px;
+    padding: 14px;
+  }
+}
