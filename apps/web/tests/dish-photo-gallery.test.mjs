@@ -105,6 +105,26 @@ test("Image cards link to dish search rather than inventing restaurant availabil
   assert.doesNotMatch(gallery, /Åpent nå|Tilgjengelig nå/u);
 });
 
+test("Ramen photo is a true 7364x4909 master with a separate compact thumbnail and exact license", () => {
+  const ramen = manifest.images.find((item) => item.id === "ramen");
+  assert.ok(ramen, "Ramen entry is required");
+  assert.equal(ramen.kind, "Redaksjonelt rettfoto");
+  assert.equal(ramen.largeViewEnabled, true);
+  assert.equal(ramen.largeSource, "ramen-master-7364.avif");
+  assert.equal(ramen.atlas, "ramen-thumb-512.avif");
+  assert.equal(ramen.largeSourceNativeWidth, 7364);
+  assert.equal(ramen.largeSourceNativeHeight, 4909);
+  assert.match(ramen.photoSource, /35773142/u);
+  assert.match(ramen.photoCredit, /Connor Scott McManus.*Pexels/u);
+  assert.match(gallery, /href="\/dish-images\/ramen-master-7364\.avif"/u);
+  assert.match(css, /ramen-thumb-512\.avif/u);
+  const original = readFileSync(path.join(web, "public/dish-images", ramen.largeSource));
+  const index = original.indexOf(Buffer.from("ispe"));
+  assert.ok(index > 0, "Ramen large AVIF must expose a valid ispe header");
+  assert.equal(original.readUInt32BE(index + 8), 7364);
+  assert.equal(original.readUInt32BE(index + 12), 4909);
+});
+
 test("Only approved full-size dish masters can be opened separately without enlarging thumbnails", () => {
   const approved = manifest.images.filter((image) => image.largeViewEnabled === true);
   const linkedMasters = [...gallery.matchAll(/href="\/dish-images\/([^"]+-master-\d+\.avif)"/gu)]

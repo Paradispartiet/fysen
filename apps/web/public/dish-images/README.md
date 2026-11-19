@@ -399,4 +399,4 @@ En separat kvadratisk 512px AVIF brukes i kompakt visning, mens
 `ramen-master-7364.avif` åpnes ved brukerklikk. Kilde, SHA og vurdering
 føres i `docs/fysen-image-reviews/ramen.md`.
 
-Når importkontrollen består, er 4/44 stororiginaler godkjent.
+**Oppdatert status:** Importen og kildekontrollen er bestått. Ramen ligger nå i `main` med original på 7364 × 4909 og separat 512px miniatyr. Samlet **4 av 44 godkjente stororiginaler**, hvorav alle fire kan åpnes fra bildegalleriet.
