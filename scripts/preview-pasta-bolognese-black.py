@@ -43,8 +43,11 @@ contour=[
   (355,180),(451,149),(546,130)
 ]
 mask=Image.new("L",(1100,825),0)
-ImageDraw.Draw(mask).polygon(contour,fill=255)
-mask=mask.filter(ImageFilter.GaussianBlur(1.8))
+# The plate is a single smooth ellipse photographed from an oblique angle.
+# Restrict the mask to its real rim; the previous polygon kept grey table
+# triangles on the lower sides. All food remains deep within the ellipse.
+ImageDraw.Draw(mask).ellipse((137,87,1065,752),fill=255)
+mask=mask.filter(ImageFilter.GaussianBlur(1.4))
 alpha=mask.resize(DIMS,Image.Resampling.BILINEAR)
 black=Image.composite(native,Image.new("RGB",DIMS,(0,0,0)),alpha)
 assert all(black.getpixel(q)==(0,0,0) for q in [(0,0),(3999,0),(0,2999),(3999,2999)])
