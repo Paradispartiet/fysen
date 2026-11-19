@@ -62,6 +62,20 @@ try {
         "Region choices should be hidden on first kitchen selection");
       assert.equal(await typeFilter.getAttribute("open"), null,
         "Food-type choices should be hidden on first kitchen selection");
+      assert.equal((await regionFilter.locator("summary strong").textContent())?.trim(), "Alle regioner",
+        "Opening a kitchen must show the entire cuisine rather than the first region");
+      assert.equal((await kitchenDialog.locator(".cuisineExploreResultsHeading p").textContent())?.trim(),
+        "Alle regioner");
+      const initialDishCount = await kitchenDialog.locator(".cuisineExploreDish").count();
+      assert.ok(initialDishCount > 0 && initialDishCount <= 12,
+        "Overview should start with up to twelve suggestions");
+      const expandDishes = kitchenDialog.locator(".cuisineExploreShowMore");
+      if (await expandDishes.count()) {
+        await expandDishes.click();
+        assert.ok((await kitchenDialog.locator(".cuisineExploreDish").count()) > initialDishCount);
+        await expandDishes.click();
+        assert.equal(await kitchenDialog.locator(".cuisineExploreDish").count(), initialDishCount);
+      }
       await regionFilter.locator("summary").click();
       assert.notEqual(await regionFilter.getAttribute("open"), null);
       const region = regionFilter.locator("button.cuisineAreaTile").nth(1);
@@ -69,15 +83,24 @@ try {
       assert.ok(regionName);
       await region.click();
       assert.equal((await regionFilter.locator("summary strong").textContent())?.trim(), regionName);
+      assert.equal(await regionFilter.getAttribute("open"), null,
+        "Region choices should collapse after selecting a region");
       await typeFilter.locator("summary").click();
       assert.equal(await regionFilter.getAttribute("open"), null,
         "Opening food types should close the other filter group");
-      const foodType = typeFilter.locator("button").first();
+      const foodType = typeFilter.locator("button:not(.cuisineExploreResetChoice)").first();
       const typeName = (await foodType.locator("strong").textContent())?.trim();
       assert.ok(typeName);
       await foodType.click();
       assert.equal((await typeFilter.locator("summary strong").textContent())?.trim(), typeName);
       assert.equal((await kitchenDialog.locator(".cuisineExploreResultsHeading p").textContent())?.trim(), typeName);
+      assert.equal(await typeFilter.getAttribute("open"), null,
+        "Type choices should collapse after selecting a food type");
+      await regionFilter.locator("summary").click();
+      await regionFilter.locator(".cuisineExploreResetChoice").click();
+      assert.equal((await kitchenDialog.locator(".cuisineExploreResultsHeading p").textContent())?.trim(),
+        "Alle regioner",
+        "The all-regions action must restore the full kitchen overview");
       const dialogSizes = await kitchenDialog.evaluate((dialog) => ({
         viewportWidth: document.documentElement.clientWidth,
         scrollWidth: dialog.scrollWidth,
