@@ -151,7 +151,7 @@
 
 /* Standalone, non-restaurant, high-density dish illustrations. */
 .dishPhotoThumb.dishPhotoGrilledSteak {
-  background: #000 url("/dish-images/grillet-biff-512.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/grillet-biff-thumb-512.avif") center / contain no-repeat;
 }
 .dishPhotoThumb.dishPhotoShrimpOpenSandwich {
   background: #000 url("/dish-images/rekesmorbrod-512.avif") center / cover no-repeat;
