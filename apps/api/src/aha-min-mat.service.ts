@@ -3,6 +3,7 @@ import {
   Inject,
   Injectable,
   NotFoundException,
+  ServiceUnavailableException,
   UnauthorizedException,
 } from "@nestjs/common";
 import {
@@ -20,6 +21,7 @@ import {
   type FysenFoodCollectionV1,
   type MinMatItem,
   type MinMatList,
+  type MinMatArchiveSaveInput,
 } from "@fysen/contracts/aha-min-mat";
 import {
   createAhaConsumerSession,
@@ -29,8 +31,10 @@ import {
   removeMinMatItem,
   revokeAhaConsumerSession,
   saveMinMatItem,
+  resolveVerifiedArchiveMenuItem,
 } from "@fysen/database";
 import { DatabaseService } from "./database.service.js";
+import { getVerifiedPublicArchive, matchesVerifiedPublicArchiveItem } from "./verified-public-menu-archive.js";
 
 export const AHA_FYSEN_EXCHANGE_URL = process.env.AHA_FYSEN_EXCHANGE_URL?.trim()
   || "https://aha-canonical-api-production.redground-9c6e20c2.northeurope.azurecontainerapps.io/v1/integrations/fysen/exchange";
@@ -106,6 +110,38 @@ export class AhaMinMatService {
       throw new NotFoundException({ code: "MENU_ITEM_NOT_FOUND", message: "The menu item is not available for Min mat." });
     }
     return minMatItemSchema.parse(item);
+  }
+
+  async saveArchived(sessionToken: string, evidence: MinMatArchiveSaveInput): Promise<MinMatItem> {
+    // AHA bearer verification comes before fetching a public archive or touching
+    // canonical lookup. Never expose private collection data to unauthenticated callers.
+    const pool = this.database.pool();
+    if (!await listMinMatItems(pool, sessionToken)) throw invalidSession();
+    let archive;
+    try {
+      archive = await getVerifiedPublicArchive();
+    } catch {
+      throw new ServiceUnavailableException({
+        code: "VERIFIED_MENU_ARCHIVE_UNAVAILABLE",
+        message: "Verified menu evidence could not be checked.",
+      });
+    }
+    if (!matchesVerifiedPublicArchiveItem(archive, evidence)) {
+      throw new NotFoundException({
+        code: "ARCHIVED_MENU_EVIDENCE_UNVERIFIED",
+        message: "The requested archived menu evidence is unavailable.",
+      });
+    }
+    const menuItemId = await resolveVerifiedArchiveMenuItem(pool, evidence);
+    if (!menuItemId) {
+      throw new NotFoundException({
+        code: "ARCHIVED_MENU_NOT_CANONICAL",
+        message: "This archived dish has no unambiguous active database match.",
+      });
+    }
+    // The existing AHA save path revalidates the session and canonical row,
+    // then records the private snapshot. No archive identifier is invented.
+    return this.save(sessionToken, menuItemId);
   }
 
   async remove(sessionToken: string, savedItemId: string): Promise<AhaConsumerLogoutReceipt> {
