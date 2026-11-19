@@ -78,14 +78,14 @@ fries_region=(xx<412)&(yy>332)
 # Potato gold: reject dark table and orange wall even when GrabCut calls it food.
 potato=(r.astype(np.int16)>145)&(g.astype(np.int16)>96)&(r.astype(np.int16)>g.astype(np.int16))&(b.astype(np.int16)<170)
 fries_foreground=fries_region&potato&(binary>0)
-fries_foreground=cv2.morphologyEx(np.uint8(fries_foreground)*255,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8))
+fries_foreground=cv2.morphologyEx(np.uint8(fries_foreground)*255,cv2.MORPH_CLOSE,cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(15,15)))
 # Separate burger candidate on right. Manual outer rim still limits spillover
 # without enlarging the food photograph.
 burger_region=(xx>=370)
 burger_foreground=np.uint8(burger_region & (binary>0))*255
 # Brown horizontal table has low saturation/value compared with iceberg lettuce
 # on the far-left loose-leaf area. Remove this small disconnected region only.
-table_spill=(xx<528)&(yy>398)&(yy<485)&(g<90)&(b<65)
+table_spill=(xx<528)&(yy>325)&(yy<485)&(g<112)&(b<95)
 burger_foreground[table_spill]=0
 combined=np.maximum(burger_foreground,fries_foreground)
 combined=cv2.morphologyEx(combined,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8))
