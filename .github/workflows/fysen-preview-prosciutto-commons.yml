@@ -68,4 +68,5 @@ jobs:
           git add assets/fysen-image-candidates/pizza-prosciutto/commons/parma-ham-pizza-bangkok/black-alternatives-review.json
           git diff --cached --quiet && exit 0
           git commit -m "[prosciutto-commons-preview-bot] Stage black source alternatives without approval"
+          git pull --rebase origin "$GITHUB_REF_NAME"
           git push origin HEAD:"$GITHUB_REF_NAME"
