@@ -147,6 +147,24 @@ def main():
       "Pizza margherita, cheeseburger, grilled salmon, grilled steak, shrimp sandwich, sushi, ramen, carbonara and butter chicken need approved full-size masters",
       1)
     tests.write_text(code,encoding="utf-8")
+    quality=WEB/"tests/dish-image-large-view-quality.test.mjs"
+    replace_once(quality,
+      r'''    assert.match(photo.photoSource, /^https:\/\/www\.pexels\.com\/photo\//u);
+    assert.match(photo.photoCredit, /Pexels/u);
+    assert.match(photo.photoLicense, /^https:\/\//u);''',
+      r'''    assert.match(photo.photoLicense, /^https:\/\//u);
+    if (photo.id === "rekesmorbrod") {
+      assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
+      assert.match(photo.photoCredit, /Susanne Nilsson.*CC BY-SA 2\.0/u);
+      assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by-sa/2.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/rekesmorbrod-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "rekesmorbrod-LICENSE.txt"), "utf8");
+      assert.match(notice, /Foto: Susanne Nilsson/u);
+      assert.match(notice, /CC BY-SA 2\.0/u);
+    } else {
+      assert.match(photo.photoSource, /^https:\/\/www\.pexels\.com\/photo\//u);
+      assert.match(photo.photoCredit, /Pexels/u);
+    }''')
     evidence_data=json.loads(evidence_path.read_text(encoding="utf-8"))
     evidence_data["visual_review_completed"]=True
     evidence_data["approved_for_fysen"]=True
