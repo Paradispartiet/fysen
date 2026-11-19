@@ -39,6 +39,11 @@ brightness=np.max(arr,axis=2).astype(np.float32)
 # to true #000, with a gentle feather; food colors stay at native resolution.
 alpha=np.clip((brightness-28.0)/30.0,0.0,1.0)
 black=np.uint8(arr.astype(np.float32)*alpha[...,None])
+# Remove the low floor reflection without touching the complete burger.
+# A native-pixel opacity fade starts just below the bottom bun.
+rows=np.arange(black.shape[0],dtype=np.float32)
+floor_fade=np.clip((1650.0-rows)/110.0,0.0,1.0)
+black=np.uint8(black.astype(np.float32)*floor_fade[:,None,None])
 out=Image.fromarray(black,"RGB")
 OUT.mkdir(parents=True,exist_ok=True)
 master=OUT/"black-native-2185x1800.png"
