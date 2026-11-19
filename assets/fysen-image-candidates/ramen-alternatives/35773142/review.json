@@ -1,0 +1,19 @@
+{
+  "dish_id": "ramen",
+  "photo_id": 35773142,
+  "photographer": "Connor Scott McManus",
+  "license": "Pexels License",
+  "license_url": "https://www.pexels.com/license/",
+  "source_page": "https://www.pexels.com/photo/delicious-bowl-of-traditional-japanese-ramen-35773142/",
+  "original_url": "https://images.pexels.com/photos/35773142/pexels-photo-35773142.jpeg",
+  "actual_native_size": [
+    7364,
+    4909
+  ],
+  "source_sha256": "4ff72f7137e0a5027e89b7f9dd583de76728738034fdd677152986eacf40be50",
+  "source_verified": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "note": "Candidate for ramen with pork, egg and noodles; full-size sharpness, exact ingredient variant, background isolation and dish edges must be inspected before promotion."
+}

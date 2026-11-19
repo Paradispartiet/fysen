@@ -1,0 +1,19 @@
+{
+  "dish_id": "ramen",
+  "photo_id": 20954901,
+  "photographer": "Nadin Sh",
+  "license": "Pexels License",
+  "license_url": "https://www.pexels.com/license/",
+  "source_page": "https://www.pexels.com/photo/pork-with-noodles-and-egg-20954901/",
+  "original_url": "https://images.pexels.com/photos/20954901/pexels-photo-20954901.jpeg",
+  "actual_native_size": [
+    4160,
+    5552
+  ],
+  "source_sha256": "2d7c0aa05d1ff1c58a009525ff39cfa36158579997bee7dc1c2e684e0b7845a3",
+  "source_verified": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "note": "Candidate for ramen with pork, egg and noodles; full-size sharpness, exact ingredient variant, background isolation and dish edges must be inspected before promotion."
+}
