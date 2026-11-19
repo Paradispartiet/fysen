@@ -24,6 +24,11 @@ SOURCES=[
  ("pexels",29306504,"doner-fresh-vegetables","Pexels, verify","Pexels License"),
  ("pexels",29306499,"doner-fries-drink","Pexels, verify","Pexels License"),
  ("pexels",29306496,"chicken-kebab-fries","Pexels, verify","Pexels License"),
+ ("pexels",18330027,"doner-closeup","Valeria Boltneva","Pexels License"),
+ ("pexels",18330009,"doner-meat-vegetables","Valeria Boltneva","Pexels License"),
+ ("pexels",10839496,"pita-tacos-fries","Pexels, verify","Pexels License"),
+ ("pexels",17429554,"pita-sandwich-juice","Jonathan Reynaga","Pexels License"),
+ ("pexels",6419697,"jerusalem-mixed-grill","Polina Tankilevitch","Pexels License"),
 ]
 def download(kind,src):
     if kind=="commons":
@@ -45,6 +50,9 @@ def download(kind,src):
         img=ImageOps.exif_transpose(im).convert("RGB")
     return raw,img,page,resolved
 def stage(kind,src,slug,author,license):
+    if (ROOT/slug/"review.json").exists():
+        print("PREVIOUSLY STAGED",slug,"already available; no refetch")
+        return
     raw,img,page,resolved=download(kind,src)
     w,h=img.size
     if min(w,h)<1800: raise ValueError(f"Native size {w}x{h} below required 1800px")
@@ -72,6 +80,8 @@ def stage(kind,src,slug,author,license):
 def main():
     count=0
     for row in SOURCES:
+        if row[0]=="commons":
+            print("SKIP Wikimedia until existing HTTP 429 rate limit clears:",row[2]);continue
         try: stage(*row);count+=1
         except Exception as error:
             print("REJECTED",row[2],type(error).__name__,str(error))
