@@ -40,21 +40,16 @@ def create(photo_id:int,src_data:dict):
         img=original.crop((0,1100,3489,4550))
         width,height=img.size
         yy,xx=np.ogrid[:height,:width]
-        radial=((xx-1770.0)/1920.0)**2+((yy-1800.0)/1640.0)**2
-        alpha=np.clip((1.18-radial)/0.24,0.0,1.0)
-        # The dark ceramic plate is near neutral grey, but the wood table is
-        # brown (red/orange). Black-key only background-colored pixels OUTSIDE
-        # the salmon and colorful vegetables, preserving all native food.
-        rgb=np.asarray(img,dtype=np.float32)
-        r,g,b=rgb[:,:,0],rgb[:,:,1],rgb[:,:,2]
-        wood=(r>g*1.22)&(g>b*1.07)&(r>45)
-        protected=(xx>510)&(xx<2900)&(yy>380)&(yy<2550)
-        alpha=np.where(wood & ~protected,alpha*0.08,alpha)
-        # Fade the remaining wooden tabletop below the dark plate.
-        lower_fade=np.clip((3120.0-yy)/580.0,0.0,1.0)
-        alpha*=lower_fade
-        # Plate and foreground stay full-source-pixel detail; only the
-        # non-food background is matted darker.
+        # Two smooth contiguous mattes preserve ALL food, leafy garnish,
+        # sauce and the dark serving plate. No color-key holes and no object
+        # pixels are added, removed or enlarged.
+        plate_q=((xx-1744.0)/2150.0)**2+((yy-2060.0)/780.0)**2
+        food_q=((xx-1700.0)/1370.0)**2+((yy-1260.0)/1100.0)**2
+        plate_alpha=np.clip((1.10-plate_q)/0.30,0.0,1.0)
+        food_alpha=np.clip((1.08-food_q)/0.24,0.0,1.0)
+        alpha=np.maximum(plate_alpha,food_alpha)
+        # Gentle fade of only the bottom area outside the actual plate.
+        alpha*=np.clip((3100.0-yy)/320.0,0.0,1.0)
     else:
         img=original
         width,height=img.size
