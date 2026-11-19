@@ -11,10 +11,14 @@
   ],
   "source_sha256": "073df3775ede40db4cffb30413023f5ae5616d28f6e68ee8317ec95ed76b8efc",
   "source_verified": true,
-  "photographer_verified": false,
-  "license_verified": false,
+  "photographer_verified": true,
+  "license_verified": true,
   "visual_review_completed": false,
   "approved_for_fysen": false,
   "published": false,
-  "required": "Photographic pizza with prosciutto crudo, intact whole serving, good native 1:1 sharpness, black background feasible without masking the food, licensing verified."
+  "required": "Photographic pizza with prosciutto crudo, intact whole serving, good native 1:1 sharpness, black background feasible without masking the food, licensing verified.",
+  "author_verified_from": "https://commons.wikimedia.org/wiki/File:Parma_ham_pizza_Prosciutto_crudo_laliva_restaurant_bangkok.jpg",
+  "author_name": "Amin",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
 }
