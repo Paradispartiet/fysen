@@ -67,6 +67,17 @@ filled = np.zeros_like(selected)
 cv2.drawContours(filled, contours, -1, 255, thickness=cv2.FILLED)
 filled = cv2.GaussianBlur(filled, (3, 3), 0.6)
 
+# Clip the remaining wooden peel/paper outside the pizza's actual rim.
+# The fitted ellipse is based on the original native photograph, not the
+# output pixel dimensions. It also removes the top/right/bottom artifacts
+# left by GrabCut without making any enlargement of the food photograph.
+rim_distance = np.sqrt(
+    ((xx - 0.494 * review_width) / (0.253 * review_width)) ** 2
+    + ((yy - 0.532 * review_height) / (0.340 * review_height)) ** 2
+)
+rim_guard = np.uint8(np.clip((1.012 - rim_distance) / 0.012, 0.0, 1.0) * 255)
+filled = np.minimum(filled, rim_guard)
+
 # Upscale ONLY the segmentation alpha. Original native food pixels are preserved.
 alpha = Image.fromarray(filled, "L").resize((width, height), Image.Resampling.BILINEAR)
 raw_pixels = np.array(source)
