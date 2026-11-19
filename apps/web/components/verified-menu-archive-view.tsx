@@ -5,10 +5,15 @@ import styles from "./verified-menu-archive-view.module.css";
 import { FoodIllustration } from "./food-illustration";
 import { SaveArchivedMinMatButton } from "./save-archived-min-mat-button";
 import { ahaMinMatPilotEnabled } from "../lib/aha-min-mat-pilot";
-import { normalizeArchiveQuery } from "../lib/verified-menu-archive";
+
 import { illustrationForDishName } from "./food-illustration-match";
 import { regionalFlagUrl } from "./cuisine-explorer-taxonomy";
 import { foodTypesForCuisine, matchingCuisineFoodType } from "./cuisine-food-type-data";
+
+function normalizeSavedArchiveName(value: string): string {
+  return value.normalize("NFKC").toLocaleLowerCase("nb-NO")
+    .replace(/[^\\p{L}\\p{N}]+/gu, " ").trim().replace(/\\s+/gu, " ");
+}
 
 function priceLabel(priceMinor: number | null, priceMaxMinor: number | null, kind: string): string {
   if (priceMinor === null) return "Pris ikke oppgitt";
@@ -58,7 +63,7 @@ export function ArchivedMenuResults({
                 restaurantSlug: result.restaurantSlug,
                 sourceUrl: result.sourceUrl,
                 observedAt: result.observedAt,
-                normalizedName: normalizeArchiveQuery(result.name),
+                normalizedName: normalizeSavedArchiveName(result.name),
                 priceMinor: result.priceMinor,
                 priceKind: result.priceKind as "exact" | "from" | "multiple",
                 priceMaxMinor: result.priceMaxMinor,
