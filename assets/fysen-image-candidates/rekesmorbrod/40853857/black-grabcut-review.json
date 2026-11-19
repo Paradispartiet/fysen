@@ -1,0 +1,21 @@
+{
+  "dish_id": "rekesmorbrod",
+  "photo_id": 40853857,
+  "photo_source": "https://www.pexels.com/photo/elegant-shrimp-sandwich-with-white-wine-40853857/",
+  "license_url": "https://www.pexels.com/license/",
+  "source_native_size": [
+    4284,
+    5712
+  ],
+  "source_sha256": "de9b42bd81dafda2cabc3551db63162f29119fdb4af61469b9a601cdc289fdf7",
+  "output_native_size": [
+    3950,
+    3340
+  ],
+  "output_sha256": "1d65c51ba3ccf5837aae3c137567b1c69de4afa533ed46ecc7b8813f03d19419",
+  "method": "Non-generative GrabCut foreground with hand-annotated foreground/background seeds, protected plate, and resized alpha mask only",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "check": "No wine glass, wall, black holes, clipped lemon or garnish, or nonblack surrounding background"
+}

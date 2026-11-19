@@ -1,0 +1,23 @@
+{
+  "dish_id": "rekesmorbrod",
+  "photo_id": 40853857,
+  "photographer": "Ida Jigfelt / Pexels",
+  "source_page": "https://www.pexels.com/photo/elegant-shrimp-sandwich-with-white-wine-40853857/",
+  "license_url": "https://www.pexels.com/license/",
+  "source_original_size": [
+    4284,
+    5712
+  ],
+  "source_sha256": "de9b42bd81dafda2cabc3551db63162f29119fdb4af61469b9a601cdc289fdf7",
+  "review_native_size": [
+    3950,
+    3340
+  ],
+  "review_native_sha256": "303102694fdb4b8025a1cd35d28086be865af0d13fbf6b16cb3879b07e879466",
+  "method": "Native pixel crop and hand-drawn foreground/plate alpha matte; only mask scaled, not food",
+  "description": "Open-faced shrimp sandwich with peeled prawns, lemon, dill, pickled red onion on visible bread; turquoise serving plate",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "visual_review_required": "Inspect all loose shrimp, dill and lemon for intact edges, plate outline for table leftovers, and native 1:1 detail before promotion."
+}

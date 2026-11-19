@@ -1,0 +1,28 @@
+{
+  "dish_id": "rekesmorbrod",
+  "original_filename": "Shrimp sandwich (29796272404).jpg",
+  "photographer": "Susanne Nilsson",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Shrimp_sandwich_(29796272404).jpg",
+  "source_sha256": "070eca986e5cd10cb4b3a91e139e01d2183f4002b370406b0d6c839c378c7612",
+  "source_dimensions": [
+    5899,
+    4000
+  ],
+  "derivative_dimensions": [
+    5899,
+    4000
+  ],
+  "derivative_sha256": "8c9c449a9a000631fdffe6b229c0f75bc603f5e7952f792529cb0d639bdb3197",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+  "source_license_verified": true,
+  "source_author_verified": true,
+  "derivative_requires_attribution_and_sharealike": true,
+  "method": "Source pixel-preserving plate matte, pure black exterior; only mask resized",
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
+  "published": false,
+  "visual_check": "Whole white plate and toast preserved; no visible dark desk edge, mask clipping, or halo.",
+  "final_native_png_sha256": "8c9c449a9a000631fdffe6b229c0f75bc603f5e7952f792529cb0d639bdb3197",
+  "final_master_avif_sha256": "fc49fb81d6a833a7ff2ff484bc54f0aee2b21c0ca01cc2a02e16b9b27dc9c042"
+}

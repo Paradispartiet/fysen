@@ -163,6 +163,10 @@ export function DishPhotoGallery() {
           <a href="/dish-images/grillet-biff-master-6000.avif" target="_blank" rel="noopener noreferrer">
             Grillet biff <span aria-hidden="true">↗</span>
           </a>
+          <a href="/dish-images/rekesmorbrod-master-5899.avif" target="_blank" rel="noopener noreferrer">
+            Rekesmørbrød <span aria-hidden="true">↗</span>
+          </a>
+          <small>Rekesmørbrød-foto: Susanne Nilsson, <a href="/dish-images/rekesmorbrod-LICENSE.txt" target="_blank" rel="noopener noreferrer">CC BY-SA 2.0 (bearbeidet, kilde og lisens)</a>.</small>
           <a href="/dish-images/sushi-master-2100.avif" target="_blank" rel="noopener noreferrer">
             Sushi assortert <span aria-hidden="true">↗</span>
           </a>
