@@ -107,15 +107,15 @@ test("Image cards link to dish search rather than inventing restaurant availabil
 
 test("Only approved full-size dish masters can be opened separately without enlarging thumbnails", () => {
   const approved = manifest.images.filter((image) => image.largeViewEnabled === true);
-  const linkedMasters = [...gallery.matchAll(/href="\\/dish-images\\/([^"]+-master-\\d+\\.avif)"/gu)]
+  const linkedMasters = [...gallery.matchAll(/href="\/dish-images\/([^"]+-master-\d+\.avif)"/gu)]
     .map((match) => match[1]);
   assert.equal(approved.length, 2, "Currently only two editorial photos have reviewed masters");
   assert.deepEqual(linkedMasters, approved.map((image) => image.largeSource));
   assert.match(gallery, /dishPhotosLargeLinks/u);
   assert.match(gallery, /target="_blank" rel="noopener noreferrer"/u);
   assert.match(gallery, /Se menytreff/u, "Do not replace menu-search links with image links");
-  assert.match(homeGalleryCss, /\\.dishPhotosLargeLinks/u);
-  assert.match(homeGalleryCss, /grid-template-columns:\\s*68px\\s+minmax\\(0,\\s*1fr\\)/u);
+  assert.match(homeGalleryCss, /\.dishPhotosLargeLinks/u);
+  assert.match(homeGalleryCss, /grid-template-columns:\s*68px\s+minmax\(0,\s*1fr\)/u);
   for (const photo of approved) {
     assert.notEqual(photo.atlas, photo.largeSource, "Small thumbnails and full-size masters must be distinct");
     const fullSize = readFileSync(path.join(web, "public/dish-images", photo.largeSource));
