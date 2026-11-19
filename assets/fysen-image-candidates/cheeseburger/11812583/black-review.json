@@ -1,0 +1,23 @@
+{
+  "dish_id": "cheeseburger",
+  "source_photo_id": 11812583,
+  "photographer": "MARIANNE RIXHON / Pexels",
+  "source_page": "https://www.pexels.com/photo/close-up-shot-of-burger-and-fries-11812583/",
+  "license": "https://www.pexels.com/license/",
+  "source_original_size": [
+    6000,
+    4000
+  ],
+  "source_original_sha256": "c006decbc146c4edcc44ecdf27c5b0837f5afb57e727fe5fb613888ce01bbf78",
+  "native_black_size": [
+    6000,
+    4000
+  ],
+  "native_black_sha256": "6a6688acea32cc6ca008bcf9d23353aa1048bb416bb23d53e210fdea005162f9",
+  "method": "Pexels native pixels preserved; only foreground segmentation mask scaled",
+  "variant": "beef cheeseburger with bacon, melted cheese, lettuce/tomato and fries",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "review_note": "Check complete burger, fries, sharpness and no brown background along the edges before approval."
+}
