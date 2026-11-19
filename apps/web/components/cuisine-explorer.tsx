@@ -31,10 +31,15 @@ type DishCoverage = {
 };
 
 function uniqueCandidates(dishes: readonly DishSuggestion[]): readonly DishSuggestion[] {
-  const seen = new Set<string>();
+  const seenIds = new Set<string>();
+  const seenNames = new Set<string>();
   return dishes.filter((dish) => {
-    if (seen.has(dish.id)) return false;
-    seen.add(dish.id);
+    // Neighboring traditions can share a dish name without sharing catalog ids.
+    // Preserve the highest-ranked suggestion, not duplicate cards.
+    const name = dish.label.normalize("NFKD").toLocaleLowerCase("nb").trim();
+    if (seenIds.has(dish.id) || seenNames.has(name)) return false;
+    seenIds.add(dish.id);
+    seenNames.add(name);
     return true;
   });
 }
@@ -213,6 +218,11 @@ export function CuisineExplorer({
 
   const availableFoodTypes = selectedCuisine ? foodTypesForCuisine(selectedCuisine.name) : [];
   const selectedFoodType = availableFoodTypes.find((type) => type.name === selectedTypeName) ?? null;
+  const allAreasLabel = selectedCuisine?.areasLabel === "Nasjonale kjøkken"
+    ? "Alle land"
+    : selectedCuisine?.areasLabel === "Mattyper"
+      ? "Alle mattyper"
+      : "Alle regioner";
 
   const selectedDishCoverage = useMemo(() => {
     if (!selectedCuisine) return [];
@@ -350,7 +360,7 @@ export function CuisineExplorer({
               <details className="cuisineExploreFilter cuisineExploreAreas" name="cuisine-discovery-filter">
                 <summary className="cuisineExploreFilterSummary">
                   <span>{selectedCuisine.areasLabel}</span>
-                  <strong>{selectedFoodType ? "Velg land eller region" : selectedArea?.name ?? "Alle regioner"}</strong>
+                  <strong>{selectedFoodType ? "Velg land eller region" : selectedArea?.name ?? allAreasLabel}</strong>
                 </summary>
                 <div className="cuisineExploreAreaGrid" aria-label={selectedCuisine.areasLabel}>
                 <button
@@ -363,7 +373,7 @@ export function CuisineExplorer({
                     setShowAllDishes(false);
                     event.currentTarget.closest("details")?.removeAttribute("open");
                   }}
-                >Alle regioner</button>
+                >{allAreasLabel}</button>
                 {selectedCuisine.areas.map((area) => (
                   <CuisineAreaTile
                     key={area.name}
@@ -423,7 +433,7 @@ export function CuisineExplorer({
             <section className="cuisineExploreResults" aria-live="polite">
               <div className="cuisineExploreResultsHeading">
                 <div>
-                  <p>{selectedFoodType?.name ?? selectedArea?.name ?? "Alle regioner"}</p>
+                  <p>{selectedFoodType?.name ?? selectedArea?.name ?? allAreasLabel}</p>
                   <h3>Retter og hvor du kan få dem</h3>
                 </div>
                 <span>{selectedDishCoverage.length} rettforslag · Oslo</span>
