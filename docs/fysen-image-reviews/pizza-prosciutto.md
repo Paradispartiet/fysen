@@ -19,7 +19,13 @@ Kandidatvurderinger av faktisk bildemateriale:
 - **18285316** – **Valeria Boltneva, Pexels**, 5464 × 8192, SHA-256 `ff1d08bd7b5b665ae15139a39c80dd0473a0d342338c89b95147df385278003d`.
   Originalen har godt bevarte prosciutto-/ruccola-detaljer i 1:1 utsnitt. Første maskeforsøk produserte svart bakgrunn, men beholdt papir, skjærefjøl, en hånd og uønskede kantrester. **Avvist som sluttbilde**, selv om GitHub Actions-jobben bestod teknisk.
   Kilde: https://www.pexels.com/photo/delicious-pizza-on-board-on-wooden-table-18285316/
-- **34413630, 16677741, 16677736, 29807155 og 5903308** – ytterligere kilder legges til for alternativ visuell gjennomgang. Ingen automatisk godkjenning.
+- **34413630** – pizzaen er avkuttet og den sentrale retten er svært uskarp ved 1:1. Avvist.
+- **16677741** – delvis avkuttet pizza. Avvist.
+- **16677736** – hel pizza, men midtpartiet er for mykt ved 1:1 og bakgrunnen krever stor maskering. Foreløpig ikke godkjent.
+- **29807155** – prosciuttoen synlig og skarpere i noe av bildet, men pizzaen er avkuttet ved høyre bildekant og 1:1 sentrum er ikke jevnt skarpt. Avvist.
+- **5903308** – pizzaen går ut av bildekanten. Avvist.
+
+**Konklusjon etter 14 faktiske originalfotografier:** Ingen sluttkandidat oppfyller ennå alle kravene samtidig (hele pizzaen, skarp i storvisning, ren helsvart bakgrunn uten mat-/bord-/håndfeil). Arbeidet skal ikke fremstilles som ferdig ved hjelp av en teknisk vellykket bildebehandlingsjobb. Ingen ny master eller miniatyr er publisert.
 
 ## Sperrer før produksjon
 
