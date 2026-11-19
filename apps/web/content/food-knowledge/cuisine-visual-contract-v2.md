@@ -66,3 +66,19 @@ illustrasjoner bruker `object-fit: contain`, uten zoom og uten beskåret motiv.
 Kategorier må oppfylle nøyaktig én av `flag`, `flagFile` og
 `illustration`. Fysiske menydata og restauranttreff skal aldri
 konstrueres fra dekorative assets.
+
+
+## Hjemmesidens «Utforsk matretter»
+
+- Hele funksjonen ligger i **én** native `<details>`-utbrettmeny som
+  **alltid starter lukket**. Bare overskrift og kort hjelpetekst vises.
+- Når den åpnes, vises **12 enkle, tekstbaserte kjøkkenvalg** – ikke de gamle
+  store kjøkken- og restaurantkortene. Antall underkategorier vises lite.
+- På telefon bruker listen to kolonner (seks korte rader); på nettbrett to,
+  på desktop tre. Resten av forsiden ligger utenfor og vises som før.
+- Ett trykk på et kjøkken åpner eksisterende valg av region og mattype,
+  med ekte menydekning. Ingen rett er fjernet.
+- Menyen lukkes ved trykk på samme overskrift; tastatur og skjermleser
+  støttes av native `summary` og synlig fokusmarkering.
+- «Nye retter», «Mest søkt» og bildegalleriet er egne seksjoner. Ingen
+  av dem dupliseres inne i denne menyen.
