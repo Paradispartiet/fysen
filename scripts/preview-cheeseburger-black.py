@@ -84,7 +84,7 @@ fries_foreground=cv2.morphologyEx(np.uint8(fries_foreground)*255,cv2.MORPH_CLOSE
 contours,hierarchy=cv2.findContours(fries_foreground,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_SIMPLE)
 if hierarchy is not None:
     for i,contour in enumerate(contours):
-        if hierarchy[0][i][3]>=0 and cv2.contourArea(contour)<500:
+        if hierarchy[0][i][3]>=0 and cv2.contourArea(contour)<1500:
             cv2.drawContours(fries_foreground,[contour],-1,255,thickness=cv2.FILLED)
 # Separate burger candidate on right. Manual outer rim still limits spillover
 # without enlarging the food photograph.
@@ -94,11 +94,11 @@ burger_foreground=np.uint8(burger_region & (binary>0))*255
 # on the far-left loose-leaf area. Remove this small disconnected region only.
 # Brown tabletop just left of bacon; do not hard-clip the bun above it.
 # Preserve pale lettuce (green/white) and all meat layers.
-table_spill=(xx<525)&(yy>370)&(yy<470)&(r<145)&(g<105)&(b<95)
+table_spill=(xx<520)&(yy>356)&(yy<470)&(r.astype(np.int16)>g.astype(np.int16)*1.52)&(g.astype(np.int16)>b.astype(np.int16)*1.35)&(r<180)
 burger_foreground[table_spill]=0
 combined=np.maximum(burger_foreground,fries_foreground)
 combined=cv2.morphologyEx(combined,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8))
-filled=cv2.GaussianBlur(combined,(3,3),0.6)
+filled=cv2.GaussianBlur(combined,(7,7),1.2)
 alpha=Image.fromarray(filled,"L").resize(im.size,Image.Resampling.BILINEAR)
 black=Image.composite(im,Image.new("RGB",im.size,(0,0,0)),alpha)
 
