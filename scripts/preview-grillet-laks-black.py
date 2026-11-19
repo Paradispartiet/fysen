@@ -48,6 +48,15 @@ def create(photo_id:int,src_data:dict):
         plate_alpha=np.clip((1.10-plate_q)/0.30,0.0,1.0)
         food_alpha=np.clip((1.08-food_q)/0.24,0.0,1.0)
         alpha=np.maximum(plate_alpha,food_alpha)
+        # Suppress brown wood in the UPPER background only. Keep the entire
+        # lower plate, tomatoes, peppers and sauce untouched. Protect the
+        # orange salmon core explicitly; this avoids holes in edible items.
+        pixels=np.asarray(img,dtype=np.float32)
+        red,green,blue=pixels[:,:,0],pixels[:,:,1],pixels[:,:,2]
+        wood=(red>green*1.23)&(green>blue*1.08)&(red>55)
+        fish_core=((xx-1830.0)/960.0)**2+((yy-1390.0)/890.0)**2 < 1.0
+        upper_back=(yy<1430)
+        alpha=np.where(wood & upper_back & ~fish_core,alpha*0.02,alpha)
         # Gentle fade of only the bottom area outside the actual plate.
         alpha*=np.clip((3100.0-yy)/320.0,0.0,1.0)
     else:
