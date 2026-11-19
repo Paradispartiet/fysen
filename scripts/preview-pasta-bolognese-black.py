@@ -50,7 +50,15 @@ draw=ImageDraw.Draw(mask)
 draw.ellipse((137,87,1065,752),fill=255)
 # A small wood corner overlaps the ellipse at its upper-left edge; this is
 # backdrop, not the white plate or food. Clear only that isolated wedge (review v4).
-draw.polygon([(323,91),(405,83),(407,112),(360,147),(332,141)],fill=0)
+# An upper-left brown wood fragment lies just under the white lip.
+# Reject only warm brown SOURCE pixels inside that small non-food area.
+# Bright neutral plate pixels are retained, so the rim stays intact.
+sample=native.resize((1100,825),Image.Resampling.LANCZOS).load()
+for yy in range(86,170):
+    for xx in range(315,440):
+        red,green,blue=sample[xx,yy]
+        if red<195 and red>green*1.15 and green>blue*1.10:
+            mask.putpixel((xx,yy),0)
 mask=mask.filter(ImageFilter.GaussianBlur(1.4))
 alpha=mask.resize(DIMS,Image.Resampling.BILINEAR)
 black=Image.composite(native,Image.new("RGB",DIMS,(0,0,0)),alpha)
