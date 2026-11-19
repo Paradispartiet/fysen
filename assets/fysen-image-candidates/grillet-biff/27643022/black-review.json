@@ -1,0 +1,23 @@
+{
+  "dish_id": "grillet-biff",
+  "photo_id": 27643022,
+  "photographer": "Nano Erdozain / Pexels",
+  "source_page": "https://www.pexels.com/photo/a-steak-and-fries-on-a-plate-with-a-fork-27643022/",
+  "license_url": "https://www.pexels.com/license/",
+  "source_size": [
+    6000,
+    4000
+  ],
+  "source_sha256": "5be970f862fb8a62e3abc9ca4337d41498385968297d61119cb9a832ab6fa3c6",
+  "native_review_size": [
+    6000,
+    4000
+  ],
+  "native_review_sha256": "b23c2d7dddf03342278b7f2474f912ce96af1709995723f71dfe87c220dbad10",
+  "description": "Grilled steak with french fries, small green peppers and dark serving platter; no tomatoes or sliced medium-rare claim",
+  "method": "Black-background editorial matte; original food pixels unchanged; only matte scaled",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "review_required": "Inspect entire platter silhouette, fries, peppers and steak rim at full view; verify no wooden board remnants, clipping or artificial softening."
+}
