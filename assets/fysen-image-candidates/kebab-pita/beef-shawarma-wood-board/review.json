@@ -1,0 +1,20 @@
+{
+  "dish_id": "kebab-pita",
+  "slug": "beef-shawarma-wood-board",
+  "source_kind": "pexels",
+  "source_file": 34318137,
+  "source_page": "https://www.pexels.com/photo/34318137/",
+  "source_download_url": "https://images.pexels.com/photos/34318137/pexels-photo-34318137.jpeg",
+  "author_claim": "Bia Metidieri",
+  "license_claim": "Pexels License",
+  "native_width": 2155,
+  "native_height": 2156,
+  "source_sha256": "644e9c01dfd901775c9525e25501ed5b9f900897d6c4c91308065fba1348ddd0",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "reject_if": "Not a single stuffed pita / no identifiable kebab meat / wrong variant, cut-off pita, blurry native detail, intrusive hands, cannot isolate a natural whole serving on black."
+}
