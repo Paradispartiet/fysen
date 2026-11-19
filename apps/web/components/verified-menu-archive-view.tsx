@@ -12,7 +12,7 @@ import { foodTypesForCuisine, matchingCuisineFoodType } from "./cuisine-food-typ
 
 function normalizeSavedArchiveName(value: string): string {
   return value.normalize("NFKC").toLocaleLowerCase("nb-NO")
-    .replace(/[^\\p{L}\\p{N}]+/gu, " ").trim().replace(/\\s+/gu, " ");
+    .replace(/[^\p{L}\p{N}]+/gu, " ").trim().replace(/\s+/gu, " ");
 }
 
 function priceLabel(priceMinor: number | null, priceMaxMinor: number | null, kind: string): string {
