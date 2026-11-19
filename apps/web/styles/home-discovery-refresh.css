@@ -391,3 +391,99 @@
     padding: 14px;
   }
 }
+
+
+/*
+ * "Utforsk matretter" is one native, closed-by-default disclosure.
+ * The main page stays quiet until someone explicitly opens the menu.
+ * Mirrors the existing Matlyst / dish-photo accordion interaction.
+ */
+.cuisineExplorer .cuisineBrowseDisclosure {
+  margin: 20px 0 32px;
+  overflow: hidden;
+  background: #0c0f0d;
+  border: 1px solid rgba(255, 255, 255, .10);
+  border-radius: 11px;
+}
+.cuisineBrowsePreview {
+  display: flex;
+  min-height: 80px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 20px;
+  color: var(--color-ink);
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+.cuisineBrowsePreview::-webkit-details-marker {
+  display: none;
+}
+.cuisineBrowsePreview::marker {
+  content: "";
+}
+.cuisineBrowsePreview:hover {
+  background: rgba(255, 255, 255, .025);
+}
+.cuisineBrowsePreview:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: -3px;
+}
+.cuisineBrowsePreviewCopy {
+  display: grid;
+  justify-items: start;
+  min-width: 0;
+  gap: 4px;
+}
+.cuisineBrowsePreviewCopy .foodSectionEyebrow {
+  margin: 0;
+  color: var(--color-soft);
+  font-size: 10px;
+  letter-spacing: .08em;
+}
+.cuisineBrowsePreviewTitle {
+  display: block;
+  font-size: clamp(19px, 2.6vw, 23px);
+  font-weight: 620;
+  line-height: 1.15;
+  letter-spacing: -.017em;
+}
+.cuisineBrowsePreviewHint {
+  color: var(--color-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+.cuisineBrowsePreviewChevron {
+  display: inline-grid;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  place-items: center;
+  color: var(--color-muted);
+  font-size: 19px;
+  line-height: 1;
+  transition: transform .16s ease;
+}
+.cuisineBrowseDisclosure[open] .cuisineBrowsePreviewChevron {
+  transform: rotate(180deg);
+}
+.cuisineBrowseInside {
+  padding: 16px 16px 20px;
+  border-top: 1px solid rgba(255, 255, 255, .07);
+}
+.cuisineBrowseInside .cuisineGrid {
+  margin: 0;
+}
+@media (max-width: 767px) {
+  .cuisineExplorer .cuisineBrowseDisclosure {
+    margin: 16px 0 26px;
+  }
+  .cuisineBrowsePreview {
+    min-height: 72px;
+    padding: 13px 15px;
+  }
+  .cuisineBrowseInside {
+    padding: 12px 10px 15px;
+  }
+}
