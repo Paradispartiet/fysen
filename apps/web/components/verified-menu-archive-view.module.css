@@ -232,3 +232,103 @@
   font-size: 30px;
   line-height: 1;
 }
+
+
+/* Quiet atlas: narrow unframed choices, original-size flags and food thumbnails. */
+.cuisineList {
+  gap: 5px;
+  margin: 14px 0;
+}
+.cuisineList a {
+  padding: 6px 10px;
+  color: #d5d9d4;
+  font-size: .78rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, .10);
+}
+.cuisineList a[aria-current="page"] {
+  color: #f1f4ef;
+  border-color: rgba(184, 211, 177, .35);
+}
+.italianAtlasSections {
+  gap: 15px;
+  padding: 12px 0 17px;
+}
+.italianAtlasSections h3 {
+  font-size: .94rem;
+  font-weight: 620;
+}
+.italianAtlasTiles {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 100px), 1fr));
+  gap: 4px;
+  margin-top: 8px;
+}
+.italianAtlasTile {
+  min-height: 63px;
+  gap: 5px;
+  padding: 7px 5px;
+  color: #e9eee8 !important;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  font-size: .71rem;
+  font-weight: 560;
+  transition: background-color .14s ease, border-color .14s ease;
+}
+.italianAtlasTile:hover,
+.italianAtlasTile[aria-current="page"] {
+  color: #f7f8f6 !important;
+  background: rgba(255, 255, 255, .035);
+  border-color: rgba(255, 255, 255, .13);
+}
+.italianRegionFlag,
+.atlasCountryFlag {
+  display: block;
+  width: 28px;
+  height: 19px;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 1px;
+  box-shadow: none;
+}
+.italianTypeIllustration {
+  display: block;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  opacity: .78;
+  filter: saturate(.59) contrast(.94);
+}
+.italianFlagSource {
+  color: #a5b4a4 !important;
+  font-size: .70rem;
+}
+.italianAtlasStatus {
+  margin: 5px 0 15px;
+  color: #aab8ac;
+  font-size: .77rem;
+}
+.result,
+.suggestion {
+  padding: 13px 14px;
+  background: #101312;
+  border-color: rgba(255, 255, 255, .09);
+  border-radius: 9px;
+}
+.dishNameWithArtwork {
+  gap: 7px;
+}
+.dishArtwork {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  opacity: .74;
+  filter: saturate(.56) contrast(.94);
+}
+@media (max-width: 430px) {
+  .dishArtwork {
+    width: 20px;
+    height: 20px;
+    flex-basis: 20px;
+  }
+}

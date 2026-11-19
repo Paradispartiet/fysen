@@ -353,3 +353,216 @@
 @media (prefers-reduced-motion: reduce) {
   .dishPhotosOpen > span { transition: none; }
 }
+
+
+/* Final homepage override: keep the food atlas as a quiet index, not icon cards. */
+.cuisineExplorer .cuisineGrid {
+  gap: 10px;
+}
+.cuisineExplorer .cuisineCardInteractive {
+  min-height: 275px;
+  border-color: rgba(255, 255, 255, .09);
+  background: #0c0f0d;
+  border-radius: 11px;
+}
+.cuisineExplorer .cuisineCardTrigger {
+  min-height: 158px;
+  padding: 16px 17px 12px;
+}
+.cuisineExplorer .cuisineCardHeading strong {
+  font-size: 21px;
+  font-weight: 620;
+}
+.cuisineExplorer .cuisineRestaurantPreview {
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top-color: rgba(255, 255, 255, .06);
+}
+.cuisineExplorer .cuisineAreaList {
+  padding: 8px 11px 11px;
+}
+@media (max-width: 767px) {
+  .cuisineExplorer .cuisineCardInteractive {
+    min-width: min(255px, 80vw);
+    min-height: 265px;
+  }
+  .cuisineExplorer .cuisineCardTrigger {
+    min-height: 155px;
+    padding: 14px;
+  }
+}
+
+
+/*
+ * "Utforsk matretter" is one native, closed-by-default disclosure.
+ * The main page stays quiet until someone explicitly opens the menu.
+ * Mirrors the existing Matlyst / dish-photo accordion interaction.
+ */
+.cuisineExplorer .cuisineBrowseDisclosure {
+  margin: 20px 0 32px;
+  overflow: hidden;
+  background: #0c0f0d;
+  border: 1px solid rgba(255, 255, 255, .10);
+  border-radius: 11px;
+}
+.cuisineBrowsePreview {
+  display: flex;
+  min-height: 80px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 20px;
+  color: var(--color-ink);
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+.cuisineBrowsePreview::-webkit-details-marker {
+  display: none;
+}
+.cuisineBrowsePreview::marker {
+  content: "";
+}
+.cuisineBrowsePreview:hover {
+  background: rgba(255, 255, 255, .025);
+}
+.cuisineBrowsePreview:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: -3px;
+}
+.cuisineBrowsePreviewCopy {
+  display: grid;
+  justify-items: start;
+  min-width: 0;
+  gap: 4px;
+}
+.cuisineBrowsePreviewCopy .foodSectionEyebrow {
+  margin: 0;
+  color: var(--color-soft);
+  font-size: 10px;
+  letter-spacing: .08em;
+}
+.cuisineBrowsePreviewTitle {
+  display: block;
+  font-size: clamp(19px, 2.6vw, 23px);
+  font-weight: 620;
+  line-height: 1.15;
+  letter-spacing: -.017em;
+}
+.cuisineBrowsePreviewHint {
+  color: var(--color-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+.cuisineBrowsePreviewChevron {
+  display: inline-grid;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  place-items: center;
+  color: var(--color-muted);
+  font-size: 19px;
+  line-height: 1;
+  transition: transform .16s ease;
+}
+.cuisineBrowseDisclosure[open] .cuisineBrowsePreviewChevron {
+  transform: rotate(180deg);
+}
+.cuisineBrowseInside {
+  padding: 16px 16px 20px;
+  border-top: 1px solid rgba(255, 255, 255, .07);
+}
+.cuisineBrowseInside .cuisineGrid {
+  margin: 0;
+}
+@media (max-width: 767px) {
+  .cuisineExplorer .cuisineBrowseDisclosure {
+    margin: 16px 0 26px;
+  }
+  .cuisineBrowsePreview {
+    min-height: 72px;
+    padding: 13px 15px;
+  }
+  .cuisineBrowseInside {
+    padding: 12px 10px 15px;
+  }
+}
+
+
+/* Opened "Utforsk matretter" is a compact menu, never a grid of restaurant cards. */
+.cuisineBrowseInside .cuisineBrowseList {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 13px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cuisineBrowseList li {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cuisineBrowseChoice {
+  display: flex;
+  width: 100%;
+  min-height: 57px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+  padding: 10px 9px;
+  color: var(--color-ink);
+  font: inherit;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .065);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.cuisineBrowseChoice:hover {
+  background: rgba(255, 255, 255, .032);
+}
+.cuisineBrowseChoice:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: -2px;
+}
+.cuisineBrowseChoiceName {
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 595;
+  line-height: 1.3;
+}
+.cuisineBrowseChoiceCount {
+  flex: 0 0 auto;
+  color: var(--color-muted);
+  font-size: 10px;
+  font-weight: 460;
+  line-height: 1.25;
+}
+@media (max-width: 920px) {
+  .cuisineBrowseInside .cuisineBrowseList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 520px) {
+  .cuisineBrowseInside .cuisineBrowseList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 8px;
+  }
+  .cuisineBrowseChoice {
+    min-height: 58px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 3px;
+    padding: 8px 5px;
+  }
+  .cuisineBrowseChoiceName {
+    font-size: 12px;
+  }
+  .cuisineBrowseChoiceCount {
+    font-size: 10px;
+  }
+}

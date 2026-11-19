@@ -24,6 +24,7 @@ import {
 import { SearchState } from "./search-state";
 import { DishPhotoThumbnail } from "./dish-photo-gallery";
 import { FoodIllustration } from "./food-illustration";
+import { CuisineCountryFlag } from "./cuisine-country-flag";
 import { regionalFlagUrl } from "./cuisine-explorer-taxonomy";
 import { foodTypesForCuisine, matchingCuisineFoodType } from "./cuisine-food-type-data";
 
@@ -325,7 +326,7 @@ export function DishBrowse({
                             className="dishBrowseRegionFlag" alt="" aria-hidden="true"
                             loading="lazy" width="46" height="31" />
                         ) : area?.flag ? (
-                          <span className="dishBrowseCountryFlag" aria-hidden="true">{area.flag}</span>
+                          <CuisineCountryFlag emoji={area.flag} className="dishBrowseCountryFlag" />
                         ) : area?.illustration ? (
                           <FoodIllustration name={area.illustration}
                             className="dishBrowseAreaArtwork" size={38} />

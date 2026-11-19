@@ -95,7 +95,7 @@ test("Midtøsten ligger i hovedatlaset, mens den eldre 19-kjøkkenkatalogen beva
   assert.equal(explorerData.cuisines.length, 19);
 });
 
-test("Matlyst-forsiden beholder de seks opprinnelige kortene foran seks nye", () => {
+test("Matlyst beholder alle tolv kjøkkenene i samme rekkefølge inne i utbrettmenyen", () => {
   assert.deepEqual(explorerData.homeCuisines.slice(0, 6).map((cuisine) => cuisine.name), [
     "Asiatisk",
     "Indisk",
@@ -108,12 +108,15 @@ test("Matlyst-forsiden beholder de seks opprinnelige kortene foran seks nye", ()
     "Afrikansk", "Fransk", "Spansk", "Gresk", "Amerikansk", "Nordisk",
   ]);
   assert.match(explorerSource, /homeCuisines\.map/u);
-  assert.match(explorerSource, /className="cuisineGrid"/u);
-  assert.match(explorerSource, /className="cuisineCard cuisineCardInteractive"/u);
-  assert.match(explorerSource, /className="cuisineCardBrowseLabel"/u);
+  assert.match(explorerSource, /className="cuisineBrowseDisclosure"/u);
+  assert.match(explorerSource, /className="cuisineBrowseList"/u);
+  assert.match(explorerSource, /className="cuisineBrowseChoice"/u);
+  assert.doesNotMatch(explorerSource, /className="cuisineCard cuisineCardInteractive"/u);
+  assert.doesNotMatch(explorerSource, /className="cuisineCardBrowseLabel"/u);
+  assert.match(explorerSource, /<CuisineCountryFlag/u);
   assert.match(explorerSource, /<CuisineAreaTile/u);
   assert.doesNotMatch(explorerSource, /className="cuisineDishPreview"/u);
-  assert.match(explorerSource, /className="cuisineAreaList"/u);
+  assert.doesNotMatch(explorerSource, /className="cuisineAreaList"/u);
   assert.match(explorerSource, /Retter og hvor du kan få dem/u);
   assert.doesNotMatch(explorerSource, /matlystCuisineDirectory/u);
   assert.doesNotMatch(explorerSource, /matlyst-cuisine-filter/u);
@@ -121,8 +124,9 @@ test("Matlyst-forsiden beholder de seks opprinnelige kortene foran seks nye", ()
   assert.doesNotMatch(explorerSource, /matlystMoodBlock/u);
 });
 
-test("Matlyst shows restaurant listings in Pages preview without status banners", () => {
-  assert.match(explorerSource, /Restauranter og retter/u);
+test("Matlyst keeps restaurant coverage behind cuisine selection without status banners", () => {
+  assert.match(explorerSource, /Retter og hvor du kan få dem/u);
+  assert.match(explorerSource, /<DiscoveryDishList/u);
   assert.match(explorerSource, /restaurantExamples/u);
   assert.match(explorerSource, /browseDishesClient/u);
   assert.match(clientBrowseSource, /NEXT_PUBLIC_FYSEN_API_BASE_URL/u);
@@ -132,7 +136,7 @@ test("Matlyst shows restaurant listings in Pages preview without status banners"
   assert.match(previewSearchSource, /clientPreviewApiBaseUrl/u);
   assert.doesNotMatch(previewSearchSource, /const previewApiBaseUrl/u);
   assert.doesNotMatch(previewSearchSource, /function previewBrowseUrl/u);
-  assert.match(explorerSource, /Kunne ikke hente restaurantene akkurat nå/u);
+  assert.doesNotMatch(explorerSource, /Kunne ikke hente restaurantene akkurat nå/u);
   assert.doesNotMatch(explorerSource, /Ferske menytreff først|Sist bekreftede menyer|siste menyarkiv/u);
 
   const coverage = dishDiscovery.discoveryCoverage(
