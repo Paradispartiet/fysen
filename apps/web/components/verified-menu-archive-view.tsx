@@ -3,6 +3,9 @@ import { dishSearchHref, foodKnowledgeHref, withPublicBasePath } from "../lib/pu
 import { browseArchivedMenuDishes, type ArchivedMenuMatch, type PublicMenuArchive } from "../lib/verified-menu-archive";
 import styles from "./verified-menu-archive-view.module.css";
 import { FoodIllustration } from "./food-illustration";
+import { SaveArchivedMinMatButton } from "./save-archived-min-mat-button";
+import { ahaMinMatPilotEnabled } from "../lib/aha-min-mat-pilot";
+import { normalizeArchiveQuery } from "../lib/verified-menu-archive";
 import { illustrationForDishName } from "./food-illustration-match";
 import { regionalFlagUrl } from "./cuisine-explorer-taxonomy";
 import { foodTypesForCuisine, matchingCuisineFoodType } from "./cuisine-food-type-data";
@@ -51,6 +54,15 @@ export function ArchivedMenuResults({
               <a href={result.sourceUrl} target="_blank" rel="noopener noreferrer">
                 Se meny <span aria-hidden="true">↗</span>
               </a>
+              {ahaMinMatPilotEnabled ? <SaveArchivedMinMatButton evidence={{
+                restaurantSlug: result.restaurantSlug,
+                sourceUrl: result.sourceUrl,
+                observedAt: result.observedAt,
+                normalizedName: normalizeArchiveQuery(result.name),
+                priceMinor: result.priceMinor,
+                priceKind: result.priceKind as "exact" | "from" | "multiple",
+                priceMaxMinor: result.priceMaxMinor,
+              }} /> : null}
             </article>
           ))}
         </div>
