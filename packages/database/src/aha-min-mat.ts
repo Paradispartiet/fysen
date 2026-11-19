@@ -1,5 +1,6 @@
 import { createHash, randomBytes } from "node:crypto";
 import type { Pool } from "pg";
+import type { MinMatArchiveSaveInput } from "@fysen/contracts/aha-min-mat";
 
 const SESSION_TTL_DAYS = 30;
 const HANDOFF_TTL_MINUTES = 5;
@@ -214,6 +215,42 @@ export async function listMinMatItems(pool: Pool, sessionToken: string): Promise
     currency: row.currency,
     savedAt: iso(row.saved_at),
   }));
+}
+
+/**
+ * Resolve verified archive evidence to an existing, active canonical menu row.
+ * Null means no unambiguous link: archive items cannot be treated as UUIDs.
+ * Caller must independently verify the input against the signed public index.
+ * No writes are performed here.
+ */
+export async function resolveVerifiedArchiveMenuItem(
+  pool: Pool,
+  evidence: MinMatArchiveSaveInput,
+): Promise<string | null> {
+  const result = await pool.query<{ id: string }>(
+    `SELECT item.id
+       FROM fysen.menu_items AS item
+       JOIN fysen.menu_snapshots AS snapshot ON snapshot.id = item.snapshot_id
+       JOIN fysen.menu_sources AS source ON source.id = snapshot.menu_source_id
+       JOIN fysen.restaurants AS restaurant ON restaurant.id = source.restaurant_id
+      WHERE restaurant.slug = $1
+        AND restaurant.active = true
+        AND source.enabled = true
+        AND source.url = $2
+        AND snapshot.fetched_at = $3::timestamptz
+        AND item.normalized_name = $4
+        AND item.price_minor IS NOT DISTINCT FROM $5::integer
+        AND item.price_kind = $6
+        AND item.price_max_minor IS NOT DISTINCT FROM $7::integer
+      ORDER BY item.id
+      LIMIT 2`,
+    [
+      evidence.restaurantSlug, evidence.sourceUrl, evidence.observedAt,
+      evidence.normalizedName, evidence.priceMinor, evidence.priceKind,
+      evidence.priceMaxMinor,
+    ],
+  );
+  return result.rows.length === 1 ? result.rows[0]?.id ?? null : null;
 }
 
 export async function saveMinMatItem(
