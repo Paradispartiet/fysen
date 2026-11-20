@@ -1,0 +1,18 @@
+{
+  "dish_id": "tacos-al-pastor",
+  "catalog_id": "tacos-al-pastor",
+  "photo_author": "Abner Velázquez / Pexels",
+  "photo_page": "https://www.pexels.com/photo/delicious-tacos-al-pastor-with-fresh-garnish-34289264/",
+  "photo_source_url": "https://images.pexels.com/photos/34289264/pexels-photo-34289264.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "native_width": 7008,
+  "native_height": 4672,
+  "original_sha256": "51994dfd3a610dad3b904ca567a007bf46cebc64746fde619a0c82c67c59acc9",
+  "source_verified": true,
+  "no_upscale": true,
+  "inspection_notes": "Three tacos, onion, coriander and lime on dark plate. Pineapple is not visibly identifiable; plate rim partly out of frame.",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Authentic al pastor pork tacos with complete tortillas, preferably pineapple. No incorrect fillings, cut-off food, unwanted logos, plates or table after black background. Native source detail; no generated food, no upscale, no restaurant-specific implication."
+}
