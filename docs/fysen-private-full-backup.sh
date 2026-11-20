@@ -8,22 +8,38 @@ error() { printf 'Fysen backup refused: %s\n' "$*" >&2; exit 1; }
 
 # Never allow a GitHub runner to turn private rows into CI artifacts or logs.
 [[ "${GITHUB_ACTIONS:-}" != "true" && "${CI:-}" != "true" ]] || error "run only on a trusted local machine, not CI"
-for program in pg_dump age sha256sum date mv; do
+for program in pg_dump age sha256sum date mv stat; do
   command -v "$program" >/dev/null 2>&1 || error "required program missing: $program"
 done
 
 [[ -n "${PGHOST:-}" && -n "${PGUSER:-}" && -n "${PGDATABASE:-}" ]] || error "set PGHOST, PGUSER and PGDATABASE"
 [[ "${PGDATABASE}" == "postgres" ]] || error "PGDATABASE must be postgres"
-# Validate a well-known project ref in either direct DB hostname or Supabase pooler username.
+# libpq may connect to PGHOSTADDR instead of the checked PGHOST, or inherit
+# parameters from a named connection service. Refuse both override mechanisms.
+[[ -z "${PGHOSTADDR:-}" && -z "${PGSERVICE:-}" && -z "${PGSERVICEFILE:-}" ]] || error "PGHOSTADDR and PGSERVICE overrides are forbidden"
+
+# Match complete Supabase endpoints, not just a project-ref substring. The
+# session pooler needs the project suffix on the username as well.
 source_ref="voglczxxtbwcxjrbffbt"
-[[ "${PGHOST,,} ${PGUSER,,}" == *"$source_ref"* ]] || error "connection does not identify the approved Fysen original project"
-[[ "${PGHOST,,} ${PGUSER,,}" != *"txaopscyxjvvmwawsphk"* ]] || error "recovery project connection is forbidden"
+if [[ "${PGHOST,,}" == "db.${source_ref}.supabase.co" ]]; then
+  [[ "${PGUSER,,}" == "postgres" ]] || error "direct connection requires postgres user"
+elif [[ "${PGHOST,,}" =~ ^aws-[0-9]+-[a-z0-9-]+\.pooler\.supabase\.com$ ]]; then
+  [[ "${PGUSER,,}" == "postgres.${source_ref}" ]] || error "pooler connection requires the original project's postgres user"
+else
+  error "host must be the exact original Supabase direct host or an official session-pooler host"
+fi
+[[ "${PGPORT:-5432}" == "5432" ]] || error "use port 5432 (direct or session pooler), not transaction pooling"
 [[ -n "${PGPASSWORD:-}" || -n "${PGPASSFILE:-}" ]] || error "set PGPASSFILE (preferred) or PGPASSWORD securely"
-[[ "${PGSSLMODE:-}" == "require" || "${PGSSLMODE:-}" == "verify-ca" || "${PGSSLMODE:-}" == "verify-full" ]] || error "explicit TLS PGSSLMODE=require, verify-ca or verify-full required"
+
+# Database dumps contain private records: encryption alone is insufficient
+# without authenticating the database server's certificate and hostname.
+[[ "${PGSSLMODE:-}" == "verify-full" ]] || error "PGSSLMODE=verify-full is required"
+[[ "${PGSSLROOTCERT:-}" == /* && -f "${PGSSLROOTCERT:-}" && -r "${PGSSLROOTCERT:-}" ]] || error "PGSSLROOTCERT must be an absolute path to a readable trusted Supabase CA certificate"
 [[ -n "${FYSEN_BACKUP_AGE_RECIPIENT:-}" ]] || error "FYSEN_BACKUP_AGE_RECIPIENT is required"
 [[ "${FYSEN_BACKUP_AGE_RECIPIENT}" == age1* ]] || error "use an age X25519 public recipient (age1...)"
 [[ -n "${FYSEN_BACKUP_DEST:-}" && "${FYSEN_BACKUP_DEST}" == /* ]] || error "FYSEN_BACKUP_DEST must be an existing absolute directory"
 [[ -d "${FYSEN_BACKUP_DEST}" && -w "${FYSEN_BACKUP_DEST}" && ! -L "${FYSEN_BACKUP_DEST}" ]] || error "backup destination must be an existing writable real directory"
+[[ "$(stat -c '%u' -- "$FYSEN_BACKUP_DEST")" == "$EUID" && "$(stat -c '%a' -- "$FYSEN_BACKUP_DEST")" == "700" ]] || error "backup destination must be owned by the current user and have mode 0700"
 
 # Use the PostgreSQL 17 client for the PostgreSQL 17 source. Avoid accidental
 # client-server major incompatibility when restoring into a comparable staging DB.
