@@ -85,6 +85,19 @@ cv2.grabCut(cv2.cvtColor(np.asarray(small),cv2.COLOR_RGB2BGR),
     classes,None,background,foreground,5,cv2.GC_INIT_WITH_MASK)
 extracted=(np.isin(classes,[cv2.GC_FGD,cv2.GC_PR_FGD]).astype(np.uint8)*255)
 extracted=cv2.resize(extracted,(W,H),interpolation=cv2.INTER_LINEAR)
+# Wood and plate are separable by color at the OUTER boundary. The plate
+# is cold blue-gray while table wood is warm brown. Do not remove warm food:
+# conserve the main plate region and both protruding upper dumplings.
+rr=source[:,:,0].astype(np.int16)
+gg=source[:,:,1].astype(np.int16)
+bb=source[:,:,2].astype(np.int16)
+xx=np.arange(W,dtype=np.float32)[None,:]*1100/W
+yy=np.arange(H,dtype=np.float32)[:,None]*816/H
+inner_plate=((xx-438)/361)**2+((yy-415)/348)**2<=1.0
+top_dumpling=(xx>=474)&(xx<=586)&(yy>=15)&(yy<=290)
+right_dumpling=(xx>=548)&(xx<=790)&(yy>=147)&(yy<=349)
+wood=(rr>gg+19)&(gg>bb+8)&(rr>72)
+extracted[wood &~(inner_plate|top_dumpling|right_dumpling)]=0
 grabcut_area=make("black-grabcut",extracted)
 audit={
  "dish_id":"gyoza","source_original_sha256":SHA,
