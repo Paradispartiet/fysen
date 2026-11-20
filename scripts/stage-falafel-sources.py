@@ -22,7 +22,10 @@ SOURCES=[
       author="Nataliya Vaitkevich / Pexels",license="https://www.pexels.com/license/",size=(4160,6240)),
  dict(slug="nataliya-vaitkevich-bowl-pexels",url="https://images.pexels.com/photos/6275220/pexels-photo-6275220.jpeg",
       page="https://www.pexels.com/photo/falafel-in-ceramic-bowl-on-black-surface-6275220/",
-      author="Nataliya Vaitkevich / Pexels",license="https://www.pexels.com/license/",size=(4160,6240))
+      author="Nataliya Vaitkevich / Pexels",license="https://www.pexels.com/license/",size=(4160,6240)),
+ dict(slug="ali-dashti-pexels",url="https://images.pexels.com/photos/29253319/pexels-photo-29253319.jpeg",
+      page="https://www.pexels.com/photo/middle-eastern-cuisine-with-hummus-and-falafel-29253319/",
+      author="Ali Dashti / Pexels",license="https://www.pexels.com/license/",size=(6336,7920))
 ]
 def fetch(url):
   req=Request(url,headers={"User-Agent":"FysenEditorialPhotoReview/1.0 (https://github.com/Paradispartiet/fysen)","Accept":"image/jpeg,image/*;q=0.8"})
