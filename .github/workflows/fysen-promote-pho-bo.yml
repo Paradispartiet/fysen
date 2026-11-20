@@ -58,7 +58,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/fysen-dish-originals/pho-bo.png
+          git add assets/fysen-dish-originals/pho.png
           git add assets/fysen-image-candidates/pho-bo/undo-kim-pexels/review.json
           git add assets/fysen-image-candidates/pho-bo/undo-kim-pexels/black-review.json
           git add apps/web/public/dish-images/pho-bo-master-5472.avif
@@ -68,7 +68,7 @@ jobs:
           git add apps/web/styles/dish-photos.css
           git add apps/web/components/dish-photo-gallery.tsx
           git add apps/web/tests/dish-photo-gallery.test.mjs
-          git add docs/fysen-image-reviews/pho-bo.md
+          git add docs/fysen-image-reviews/pho.md
           git diff --cached --quiet && exit 0
           git commit -m "[pho-promote-bot] Add reviewed native 5472px phở bò and separate 512px mini (draft)"
           git pull --rebase origin "$GITHUB_REF_NAME"
