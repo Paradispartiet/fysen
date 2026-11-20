@@ -1,0 +1,20 @@
+{
+  "dish_id": "pho",
+  "variant": "phở bò",
+  "source_page": "https://www.pexels.com/photo/delicious-bowl-of-traditional-vietnamese-pho-34683316/",
+  "source_sha256": "db5888021b873610a5a9987068008ef6a1d484d5ca0bc7454a9089c78df7b9e9",
+  "source_native_dimensions": [
+    5472,
+    3648
+  ],
+  "photographer": "UNDO KIM / Pexels",
+  "license_url": "https://www.pexels.com/license/",
+  "no_upscale": true,
+  "food_pixels_generated": false,
+  "contour_area_fraction": 0.4612887198464912,
+  "grabcut_area_fraction": 0.4368559717092439,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "gate": "One complete genuine beef pho bowl with beef, broth and rice noodles. No wood, chopsticks, napkin, blue cloth, white halo, clipped rim or image enlargement. Inspect both previews and native 1400px detail."
+}
