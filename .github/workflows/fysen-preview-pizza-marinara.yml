@@ -1,0 +1,66 @@
+name: Fysen inspect pizza marinara black native previews
+on:
+  push:
+    branches: [art/pizza-marinara-source-review-20261120]
+    paths:
+      - ".github/workflows/fysen-preview-pizza-marinara.yml"
+      - "scripts/preview-pizza-marinara-black.py"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: fysen-marinara-black-review
+  cancel-in-progress: false
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install authentic source-pixel preview dependencies
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0 numpy==2.2.6 opencv-python-headless==4.11.0.86
+      - name: Produce black previews, no approval
+        run: python scripts/preview-pizza-marinara-black.py
+      - name: Verify only unapproved previews exist
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          path=Path('assets/fysen-image-candidates/pizza-marinara/classic-van-den-bossche-by-sa')
+          d=json.loads((path/'black-review.json').read_text())
+          assert d['native_dimensions']==[2848,2136]
+          assert d['source_sha256']=='5ba72af9c97fd3fbc7421ca21e48160e4359c623a0350d57dab56754cccecb7f'
+          assert not d['native_pixels_upscaled'] and not d['food_pixels_generated']
+          assert not d['approved_for_fysen'] and not d['published']
+          for name in ['black-contour','black-grabcut']:
+              assert (path/f'{name}-preview.jpg').is_file()
+              assert (path/f'{name}-native-detail-1400.jpg').is_file()
+          print('Two NONAPPROVED image previews ready for editorial inspection')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fysen-pizza-marinara-black-previews
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            assets/fysen-image-candidates/pizza-marinara/classic-van-den-bossche-by-sa/black-*-native.png
+            assets/fysen-image-candidates/pizza-marinara/classic-van-den-bossche-by-sa/black-*-preview.jpg
+            assets/fysen-image-candidates/pizza-marinara/classic-van-den-bossche-by-sa/black-*-native-detail-1400.jpg
+            assets/fysen-image-candidates/pizza-marinara/classic-van-den-bossche-by-sa/black-review.json
+      - name: Commit only lightweight unapproved previews
+        run: |
+          find assets/fysen-image-candidates/pizza-marinara -name 'black-*-native.png' -delete
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-image-candidates/pizza-marinara/classic-van-den-bossche-by-sa/black-review.json
+          git add assets/fysen-image-candidates/pizza-marinara/classic-van-den-bossche-by-sa/black-*-preview.jpg
+          git add assets/fysen-image-candidates/pizza-marinara/classic-van-den-bossche-by-sa/black-*-native-detail-1400.jpg
+          git diff --cached --quiet && exit 0
+          git commit -m "[pizza-marinara-preview-bot] Retain source-native black variants for visual audit"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin HEAD:"$GITHUB_REF_NAME"
