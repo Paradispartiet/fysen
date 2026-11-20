@@ -34,7 +34,18 @@ vertices=np.array([
  (714,922),(629,1000),(521,1067),(415,1096),(291,1083),
  (173,1032),(87,951),(26,835),(0,695),(0,486),
  (22,350),(80,219),(156,116),(260,47)],np.float32)
-v=vertices.copy()
+# Smooth the hand-traced border with a closed Catmull-Rom spline, rather
+# than displaying polygon corners along the dark plate's circular edge.
+def smooth_closed(points,steps=12):
+    result=[]
+    n=len(points)
+    for i in range(n):
+        p0,p1,p2,p3=(points[(i-1)%n],points[i],points[(i+1)%n],points[(i+2)%n])
+        for t in np.linspace(0,1,steps,endpoint=False):
+            q=0.5*((2*p1)+(-p0+p2)*t+(2*p0-5*p1+4*p2-p3)*t*t+(-p0+3*p1-3*p2+p3)*t*t*t)
+            result.append(q)
+    return np.array(result,np.float32)
+v=smooth_closed(vertices)
 v[:,0]*=W/844
 v[:,1]*=H/1100
 outline=np.zeros((H,W),np.uint8)
