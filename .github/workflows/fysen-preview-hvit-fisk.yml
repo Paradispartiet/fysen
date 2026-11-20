@@ -1,0 +1,72 @@
+name: Fysen preview real white-fish photograph on black
+on:
+  push:
+    branches: [art/stekt-hvit-fisk-native-photo-20261120]
+    paths:
+      - ".github/workflows/fysen-preview-hvit-fisk.yml"
+      - "scripts/preview-hvit-fisk-black.py"
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: fysen-white-fish-black-preview
+  cancel-in-progress: false
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 19
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install native image libraries
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0 numpy==2.2.6 opencv-python-headless==4.11.0.86
+      - name: Retrieve archived SHA-verified 5464px original, not Wikimedia
+        uses: actions/download-artifact@v4
+        with:
+          name: fysen-white-fish-originals
+          run-id: 44710362827
+          github-token: ${{ github.token }}
+          path: /tmp/fysen-white-fish-originals
+      - name: Produce original-pixel black plate previews
+        run: python scripts/preview-hvit-fisk-black.py
+      - name: Reject any automatic approval
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("assets/fysen-image-candidates/stekt-hvit-fisk/white-fish-mash-vegetables")
+          d=json.loads((p/"black-review.json").read_text())
+          assert d["original_dimensions"]==[5464,7120]
+          assert not d["original_pixels_upscaled"] and not d["new_food_generated"]
+          assert not d["approved_for_fysen"] and not d["published"]
+          for m in ["black-contour","black-grabcut"]:
+              assert (p/f"{m}-preview.jpg").is_file()
+              assert (p/f"{m}-native-detail-1400.jpg").is_file()
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fysen-white-fish-black-review
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            assets/fysen-image-candidates/stekt-hvit-fisk/white-fish-mash-vegetables/black-*-native.png
+            assets/fysen-image-candidates/stekt-hvit-fisk/white-fish-mash-vegetables/black-*-preview.jpg
+            assets/fysen-image-candidates/stekt-hvit-fisk/white-fish-mash-vegetables/black-*-native-detail-1400.jpg
+            assets/fysen-image-candidates/stekt-hvit-fisk/white-fish-mash-vegetables/black-review.json
+      - name: Save only small review evidence to PR branch
+        run: |
+          rm -f assets/fysen-image-candidates/stekt-hvit-fisk/white-fish-mash-vegetables/black-*-native.png
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-image-candidates/stekt-hvit-fisk/white-fish-mash-vegetables/black-*-preview.jpg
+          git add assets/fysen-image-candidates/stekt-hvit-fisk/white-fish-mash-vegetables/black-*-native-detail-1400.jpg
+          git add assets/fysen-image-candidates/stekt-hvit-fisk/white-fish-mash-vegetables/black-review.json
+          git diff --cached --quiet && exit 0
+          git commit -m "[white-fish-preview-bot] Stage native black previews for visual review"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin HEAD:"$GITHUB_REF_NAME"
