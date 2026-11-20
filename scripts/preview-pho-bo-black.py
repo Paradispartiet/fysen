@@ -90,7 +90,7 @@ seg[blue_textile]=0
 # do not touch brown broth or beef in the bowl interior.
 xx=np.arange(W)[None,:]
 warm_wood=(rr>gg+12)&(gg>=bb+2)&(rr<155)
-wood_outside_left=(xx<W*0.21)&(yy>H*.47)&(yy<H*.78)
+wood_outside_left=(xx<W*.184)&(yy>H*.56)&(yy<H*.78)
 seg[warm_wood&wood_outside_left]=0
 grabcut_area=save("black-grabcut",seg)
 audit=dict(dish_id="pho",variant="phở bò",source_page=meta["source_page"],
