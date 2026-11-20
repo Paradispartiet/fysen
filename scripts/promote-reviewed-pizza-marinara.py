@@ -198,6 +198,20 @@ def main() -> None:
 '''
     tests = tests.replace(anchor,new_test+anchor,1)
     testfile.write_text(tests,encoding="utf-8")
+    quality_tests = WEB / "tests/dish-image-large-view-quality.test.mjs"
+    patch(
+      quality_tests,
+      '    } else if (photo.id === "pizza-prosciutto") {',
+      '''    } else if (photo.id === "pizza-marinara") {
+      assert.match(photo.photoSource, /^https:\\/\\/commons\\.wikimedia\\.org\\/wiki\\/File:/u);
+      assert.match(photo.photoCredit, /Peter Van den Bossche.*CC BY-SA 2\\.0/u);
+      assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by-sa/2.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/pizza-marinara-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "pizza-marinara-LICENSE.txt"), "utf8");
+      assert.match(notice, /Foto: Peter Van den Bossche/u);
+      assert.match(notice, /CC BY-SA 2\\.0/u);
+    } else if (photo.id === "pizza-prosciutto") {'''
+    )
     black["reviewed_variant"] = "black-grabcut"
     black["reviewed_preview_sha256"] = selected_sha
     black["retained_native_sha256"] = native_sha
