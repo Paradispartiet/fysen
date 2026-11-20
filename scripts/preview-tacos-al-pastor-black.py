@@ -61,7 +61,20 @@ fg = np.zeros((1,65),np.float64)
 cv2.grabCut(cv2.cvtColor(small,cv2.COLOR_RGB2BGR),
             classes,None,bg,fg,7,cv2.GC_INIT_WITH_MASK)
 grabcut = (np.isin(classes,(cv2.GC_FGD,cv2.GC_PR_FGD))*255).astype(np.uint8)
-for label, mask in [("black-contour",contour),("black-grabcut",grabcut)]:
+# The dark slate plate overlaps some probable foreground pixels. Remove only
+# low-value, low-chroma blue/grey plate-like areas, retaining warm meat,
+# golden tortillas, green herbs and lime. Review the result before approval.
+rgb = small.astype(np.int16)
+high = rgb.max(axis=2)
+low = rgb.min(axis=2)
+plate_like = ((high < 145) & ((high-low) < 46)
+              & (rgb[:,:,2] >= rgb[:,:,0] - 9)
+              & (rgb[:,:,1] >= rgb[:,:,0] - 9)
+              & (rgb[:,:,2] >= rgb[:,:,1] - 22))
+clean = grabcut.copy()
+clean[plate_like] = 0
+for label, mask in [("black-contour",contour),("black-grabcut",grabcut),
+                    ("black-clean-grabcut",clean)]:
     # Preview is intentionally not a shippable asset.
     alpha = cv2.GaussianBlur(mask, (0,0), 1.1).astype(np.float32) / 255
     review = np.clip(small.astype(np.float32)*alpha[:,:,None],0,255).astype(np.uint8)
@@ -81,7 +94,7 @@ for label, mask in [("black-contour",contour),("black-grabcut",grabcut)]:
 audit = dict(dish_id="tacos-al-pastor", source_original_sha256=SOURCE_SHA,
              source_native_dimensions=[W,H], source_page=meta["photo_page"],
              photo_credit=meta["photo_author"], license_url=meta["photo_license"],
-             review_variants=["black-contour","black-grabcut"],
+             review_variants=["black-contour","black-grabcut","black-clean-grabcut"],
              no_upscale=True, generated_food_pixels=False,
              visual_review_completed=False, approved_for_fysen=False,
              published=False,
