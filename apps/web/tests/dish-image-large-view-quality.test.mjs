@@ -175,6 +175,22 @@ test("Editorial food photos are only large-view enabled with real provenance and
       const notice = readFileSync(path.join(imageRoot, "pasta-bolognese-LICENSE.txt"), "utf8");
       assert.match(notice, /Fotograf: Alex Sirac/u);
       assert.match(notice, /CC BY 4\.0/u);
+    } else if (photo.id === "pizza-marinara") {
+      assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
+      assert.match(photo.photoCredit, /Peter Van den Bossche.*CC BY-SA 2\.0/u);
+      assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by-sa/2.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/pizza-marinara-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "pizza-marinara-LICENSE.txt"), "utf8");
+      assert.match(notice, /Foto: Peter Van den Bossche/u);
+      assert.match(notice, /CC BY-SA 2\.0/u);
+    } else if (photo.id === "pizza-prosciutto") {
+      assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
+      assert.match(photo.photoCredit, /Amin.*CC BY-SA 4\.0/u);
+      assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by-sa/4.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/pizza-prosciutto-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "pizza-prosciutto-LICENSE.txt"), "utf8");
+      assert.match(notice, /Foto: Amin/u);
+      assert.match(notice, /CC BY-SA 4\.0/u);
     } else {
       assert.match(photo.photoSource, /^https:\/\/www\.pexels\.com\/photo\//u);
       assert.match(photo.photoCredit, /Pexels/u);

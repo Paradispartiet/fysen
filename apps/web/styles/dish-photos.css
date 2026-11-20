@@ -215,19 +215,19 @@
 
 /* Gallery-only shrimp pad thai; never use for unknown-variant pad thai restaurant dishes. */
 .dishPhotoThumb.dishPhotoShrimpPadThai {
-  background: #000 url("/dish-images/pad-thai-reker-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/pad-thai-reker-thumb-512.avif") center / contain no-repeat;
 }
 
 /* Dedicated 768px tiramisu gallery image. Not a restaurant photograph. */
 .dishPhotoThumb.dishPhotoTiramisu {
-  background: #000 url("/dish-images/tiramisu-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/tiramisu-thumb-512.avif") center / contain no-repeat;
 }
   
 /* Individuelle 768px illustrasjoner med eksakt rett-ID: marinara uten ost,
    falafel med hummus. Aldri fremstill som bilder av en bestemt restaurant. */
 .dishPhotoThumb.dishPhotoPizzaMarinara,
 .dishPhotoSmall.dishPhotoPizzaMarinara {
-  background: #000 url("/dish-images/pizza-marinara-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/pizza-marinara-thumb-512.avif") center / contain no-repeat;
 }
 .dishPhotoThumb.dishPhotoFalafel,
 .dishPhotoSmall.dishPhotoFalafel {
@@ -244,12 +244,12 @@
 
 /* New gallery-only dish-type artwork (never restaurant photography or generic catalog evidence). */
 .dishPhotoThumb.dishPhotoBolognese { background: #000 url("/dish-images/pasta-bolognese-thumb-512.avif") center / contain no-repeat; }
-.dishPhotoThumb.dishPhotoProsciutto { background: #000 url("/dish-images/pizza-prosciutto-768.avif") center / cover no-repeat; }
+.dishPhotoThumb.dishPhotoProsciutto { background: #000 url("/dish-images/pizza-prosciutto-thumb-512.avif") center / contain no-repeat; }
 .dishPhotoThumb.dishPhotoKebabPita { background: #000 url("/dish-images/kebab-pita-768.avif") center / cover no-repeat; }
 
 /* Nye KI-illustrasjoner: fiskeart/bibimbapvariant er ikke bevis for restaurantretter.
    Al pastor kan kun brukes som redaksjonell illustrasjon med nøyaktig samme rett-ID. */
-.dishPhotoThumb.dishPhotoWhiteFish { background: #000 url("/dish-images/stekt-hvit-fisk-768.avif") center / cover no-repeat; }
+.dishPhotoThumb.dishPhotoWhiteFish { background: #000 url("/dish-images/stekt-hvit-fisk-thumb-512.avif") center / contain no-repeat; }
 .dishPhotoThumb.dishPhotoBibimbap { background: #000 url("/dish-images/bibimbap-768.avif") center / cover no-repeat; }
 .dishPhotoThumb.dishPhotoTacosAlPastor,
 .dishPhotoSmall.dishPhotoTacosAlPastor { background: #000 url("/dish-images/tacos-al-pastor-768.avif") center / cover no-repeat; }
