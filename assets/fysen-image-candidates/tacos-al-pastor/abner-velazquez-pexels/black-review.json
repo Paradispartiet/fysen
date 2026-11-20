@@ -1,0 +1,21 @@
+{
+  "dish_id": "tacos-al-pastor",
+  "source_original_sha256": "51994dfd3a610dad3b904ca567a007bf46cebc64746fde619a0c82c67c59acc9",
+  "source_native_dimensions": [
+    7008,
+    4672
+  ],
+  "source_page": "https://www.pexels.com/photo/delicious-tacos-al-pastor-with-fresh-garnish-34289264/",
+  "photo_credit": "Abner Velázquez / Pexels",
+  "license_url": "https://www.pexels.com/license/",
+  "review_variants": [
+    "black-contour",
+    "black-grabcut"
+  ],
+  "no_upscale": true,
+  "generated_food_pixels": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "warning": "Source has no clearly visible pineapple and a partly clipped plate rim; inspect all tortillas, cilantro and lime at full size. Masked previews are NOT approved."
+}
