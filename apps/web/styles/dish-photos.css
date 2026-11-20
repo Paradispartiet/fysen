@@ -136,10 +136,10 @@
   background: #000 url("/dish-images/grillet-laks-thumb-512.avif") center / contain no-repeat;
 }
 
-/* Dedicated sharp Phở bò image: exact catalog ID only. */
+/* Phở bò: genuine source-verified photographic thumbnail for this exact dish ID. */
 .dishPhotoThumb.dishPhotoPho,
 .dishPhotoSmall.dishPhotoPho {
-  background: #000 url("/dish-images/pho-512.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/pho-bo-thumb-512.avif") center / contain no-repeat;
 }
 
 /* Sharp gỏi cuốn with visible shrimp and peanut dipping sauce.
