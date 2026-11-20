@@ -148,6 +148,25 @@ Originalen har i tillegg `schema_migrations_pkey` på sin egen migrasjonstabell.
 
 Dermed er de **kjente fem indeksforskjellene forklart av dokumenterte migrasjonsforløp**. Dette fritar ikke fra å sammenligne hele katalogen i isolasjon, og tillater ikke sletting/oppretting av noen av indeksene i live prosjekt.
 
+**Kontroll av historiske radantall, 20.11.2026 (aggregater, kun SELECT):** 25 viktige applikasjonstabeller ble telt separat i originalen og recovery. Av disse hadde **12 ulike radantall**, mens 13 hadde samme radantall; likt antall er ikke bevis på identiske rader eller nøkler. Recovery mangler fortsatt følgende registrerte historikk, uten at tabellene ble endret:
+
+| Tabell | Original | Recovery |
+|---|---:|---:|
+| `menu_changes` | 54 472 | 0 |
+| `menu_watch_runs` | 111 963 | 0 |
+| `search_events` | **1 333** | 0 |
+| `search_result_impressions` | 7 261 | 0 |
+| `conversion_events` | 1 | 0 |
+| `menu_source_support_origins` | 14 | 0 |
+| `restaurant_actions` | 41 | 0 |
+| `restaurant_action_verification_runs` | 213 | 0 |
+| `restaurant_hours_sources` | 41 | 0 |
+| `restaurant_hours_snapshots` | 108 | 0 |
+| `restaurant_hours_intervals` | 729 | 0 |
+| `restaurant_hours_watch_runs` | 12 111 | 0 |
+
+Søkehendelsene har økt fra 1 327 (forrige måling 18.11) til 1 333. Det er derfor utilstrekkelig å stole bare på historisk backup fra 2. november eller en eldre eksport ved en eventuell senere overgang. **Fullstendig, privat backup med verifisert restore og siste differanseuttak for alle 29 tabeller er fortsatt en hard sperre.** Ingen private raddata, identifikatorer eller nøkler ble hentet ut i denne kontrollen.
+
 **Presis neste port:**
 1. Sammenlign `pg_catalog` fra en ren, isolert 23-migrasjonsdatabase og recovery, med forklaring for alle avvik (inkludert forskjeller i indekser, extension-skjema og appens ledger); test en *kun lokal* ledger-rekonstruksjon og avvis gjenkjøring av gamle datamigrasjoner.
 2. Verifiser komplette, private SHA-256-kontrollerte backup- og restorebevis for alle historikk-/brukertabeller, uten eksport av persondata til CI-logger eller offentlige artefakter.
