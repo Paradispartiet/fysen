@@ -11,6 +11,7 @@ import { RecentDishes } from "./recent-dishes";
 import { PopularDishes } from "./popular-dishes";
 import { DishPhotoGallery, DishPhotoThumbnail } from "./dish-photo-gallery";
 import { discoveryCoverage } from "../lib/dish-discovery";
+import { menuEvidenceLabel, type MenuEvidenceKind } from "../lib/menu-evidence-label";
 import type { ArchivedMatlystCoverage } from "../lib/archived-matlyst-coverage";
 import { dishSearchHref } from "../lib/public-path";
 import {
@@ -28,6 +29,7 @@ type DishCoverage = {
   readonly dish: DishSuggestion;
   readonly restaurantCount: number;
   readonly restaurantExamples: readonly DishBrowseRestaurantExample[];
+  readonly evidenceKind: MenuEvidenceKind;
 };
 
 function uniqueCandidates(dishes: readonly DishSuggestion[]): readonly DishSuggestion[] {
@@ -103,14 +105,35 @@ function coverageForDish(
   dishes: readonly DishBrowseItem[],
   dish: DishSuggestion,
   archiveCoverage: ArchivedMatlystCoverage | null,
+  hasLiveData: boolean,
 ): DishCoverage {
-  const coverage = archiveCoverage
-    ? archiveCoverage.byDish[dish.id] ?? { restaurantCount: 0, restaurantExamples: [] }
-    : discoveryCoverage(dishes, dish);
+  if (hasLiveData) {
+    const coverage = discoveryCoverage(dishes, dish);
+    return {
+      dish,
+      restaurantCount: coverage.restaurantCount,
+      restaurantExamples: coverage.restaurantExamples,
+      evidenceKind: "live",
+    };
+  }
+
+  if (archiveCoverage) {
+    // Supplemental type examples have no archive identity. A missing byDish
+    // key is unexamined, not evidence that a restaurant doesn't serve it.
+    const coverage = archiveCoverage.byDish[dish.id];
+    return {
+      dish,
+      restaurantCount: coverage?.restaurantCount ?? 0,
+      restaurantExamples: coverage?.restaurantExamples ?? [],
+      evidenceKind: coverage ? "archive" : "unchecked",
+    };
+  }
+
   return {
     dish,
-    restaurantCount: coverage.restaurantCount,
-    restaurantExamples: coverage.restaurantExamples,
+    restaurantCount: 0,
+    restaurantExamples: [],
+    evidenceKind: "unavailable",
   };
 }
 
@@ -136,7 +159,7 @@ function DiscoveryDishList({
 }) {
   return (
     <div className="cuisineExploreDishList">
-      {coverage.map(({ dish, restaurantCount, restaurantExamples }) => (
+      {coverage.map(({ dish, restaurantCount, restaurantExamples, evidenceKind }) => (
         <article
           className="cuisineExploreDish"
           key={dish.id}
@@ -148,9 +171,7 @@ function DiscoveryDishList({
               <div className="cuisineExploreDishCopy">
                 <h4>{dish.label}</h4>
                 <p className="cuisineExploreDishEvidence">
-                  {restaurantCount > 0
-                    ? `Registrert hos ${restaurantCount} ${restaurantCount === 1 ? "restaurant" : "restauranter"} i menyoversikten`
-                    : "Rettforslag · ingen bekreftede treff i menyoversikten"}
+                  {menuEvidenceLabel(evidenceKind, restaurantCount)}
                 </p>
               </div>
             </div>
@@ -161,7 +182,7 @@ function DiscoveryDishList({
                 </button>
               ) : null}
               <a href={dishSearchHref(dish.query)}>
-                {restaurantCount > 0 ? "Se menytreff" : "Søk etter retten"} <span aria-hidden="true">→</span>
+                {restaurantCount > 0 && evidenceKind === "live" ? "Se menytreff" : "Søk etter retten"} <span aria-hidden="true">→</span>
               </a>
             </div>
           </div>
@@ -173,13 +194,18 @@ function DiscoveryDishList({
               <ul>
                 {restaurantExamples.map((restaurant) => (
                   <li key={restaurant.id}>
-                    <a href={dishSearchHref(dish.query)}>
+                    <span className="cuisineExploreRestaurantExample">
                       <strong>{restaurant.name}</strong>
                       <small>{restaurant.address}</small>
-                    </a>
+                    </span>
                   </li>
                 ))}
               </ul>
+              <p className="cuisineExploreRestaurantNote">
+                {evidenceKind === "archive"
+                  ? "Historiske eksempler. Kontroller aktuell meny før du besøker restauranten."
+                  : "Eksempler fra menyoversikten. Bruk «Se menytreff» for å søke etter retten."}
+              </p>
             </details>
           ) : null}
         </article>
@@ -263,9 +289,9 @@ export function CuisineExplorer({
           }))
       : [];
     return rankDishCoverage([...matchingDishes, ...supplementalDishes].map((dish) =>
-      coverageForDish(liveDishes, dish, isArchived ? archiveCoverage : null)
+      coverageForDish(liveDishes, dish, isArchived ? archiveCoverage : null, effectiveBrowseData !== null)
     ));
-  }, [liveDishes, selectedArea, selectedCuisine, selectedFoodType, archiveCoverage, isArchived]);
+  }, [liveDishes, selectedArea, selectedCuisine, selectedFoodType, archiveCoverage, isArchived, effectiveBrowseData]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
