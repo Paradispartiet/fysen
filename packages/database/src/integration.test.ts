@@ -1,8 +1,10 @@
 import { randomUUID } from "node:crypto";
+import { readFile } from "node:fs/promises";
 import type { Pool, QueryResultRow } from "pg";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createDatabasePool } from "./client.js";
-import { runMigrations } from "./migrate.js";
+import { listMigrationFiles, runMigrations } from "./migrate.js";
+import { verifyProductionDatabase } from "./verify-production.js";
 import { ConcurrentMenuUpdateError, MenuIndexRepository } from "./repository.js";
 
 interface DistanceRow extends QueryResultRow {
@@ -243,4 +245,125 @@ integrationDescribe("MenuIndexRepository integration", () => {
     );
     expect(Number(distance.rows[0]?.meters ?? Infinity)).toBeLessThan(0.1);
   });
+});
+
+
+// This rehearsal can run only in GitHub Actions against the ephemeral, loopback
+// PostgreSQL 17/PostGIS database from ci.yml. Never point it at Supabase.
+// The metadata baseline was read from recovery using read-only pg_catalog SQL.
+const expectedRecoveryMetadata = {
+  columns: { entries: 297, md5: "7c906254154ac0c581f9b3f1ea6e717d" },
+  constraints: { entries: 209, md5: "a975cb3f84f68cfdf71349814fc35126" },
+  indexes: { entries: 87, md5: "559201d3dadb6e82f660978436debef2" },
+  tables: { entries: 29, md5: "d591c97597af8656e643cc31dac86c20" },
+} as const;
+
+const metadataFingerprintSql = String.raw`
+WITH
+tab AS (
+  SELECT format('%I.%I|rls=%s|force=%s',n.nspname,c.relname,c.relrowsecurity,c.relforcerowsecurity) AS entry
+  FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+  WHERE n.nspname='fysen' AND c.relkind IN ('r','p') AND c.relname <> 'schema_migrations'
+),
+col AS (
+  SELECT format('%I.%I.%I|type=%s|notnull=%s|default=%s|identity=%s|generated=%s',n.nspname,c.relname,a.attname,pg_catalog.format_type(a.atttypid,a.atttypmod),a.attnotnull,coalesce(pg_catalog.pg_get_expr(d.adbin,d.adrelid),'<none>'),a.attidentity,a.attgenerated) AS entry
+  FROM pg_catalog.pg_attribute a JOIN pg_catalog.pg_class c ON c.oid=a.attrelid JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+  LEFT JOIN pg_catalog.pg_attrdef d ON d.adrelid=a.attrelid AND d.adnum=a.attnum
+  WHERE n.nspname='fysen' AND c.relkind IN ('r','p') AND c.relname <> 'schema_migrations' AND a.attnum>0 AND NOT a.attisdropped
+),
+con AS (
+  SELECT format('%I.%I|%s|%s|validated=%s|deferrable=%s|deferred=%s',n.nspname,c.relname,k.conname,pg_catalog.pg_get_constraintdef(k.oid,true),k.convalidated,k.condeferrable,k.condeferred) AS entry
+  FROM pg_catalog.pg_constraint k JOIN pg_catalog.pg_class c ON c.oid=k.conrelid JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+  WHERE n.nspname='fysen' AND c.relkind IN ('r','p') AND c.relname <> 'schema_migrations'
+),
+idx AS (
+  SELECT format('%s|%s',indexname,indexdef) AS entry
+  FROM pg_catalog.pg_indexes WHERE schemaname='fysen' AND tablename <> 'schema_migrations'
+)
+SELECT kind, count(*)::int AS entries, md5(coalesce(string_agg(entry,E'\\n' ORDER BY entry),'')) AS md5
+FROM (SELECT 'tables' AS kind, entry FROM tab UNION ALL SELECT 'columns',entry FROM col
+      UNION ALL SELECT 'constraints',entry FROM con UNION ALL SELECT 'indexes',entry FROM idx) x
+GROUP BY kind ORDER BY kind
+`;
+
+async function assertRecoveryCatalogMatches(pool: Pool): Promise<void> {
+  const results = await pool.query<{ kind: string; entries: number; md5: string }>(metadataFingerprintSql);
+  const actual = Object.fromEntries(results.rows.map(({ kind, entries, md5 }) => [kind, { entries, md5 }]));
+  expect(actual).toEqual(expectedRecoveryMetadata);
+}
+
+const rehearsalDescribe = databaseUrl && process.env.GITHUB_ACTIONS === "true" ? describe : describe.skip;
+
+rehearsalDescribe("isolated recovery ledger rehearsal", () => {
+  it("recreates the 23-version ledger only after exact catalog verification, without replay", async () => {
+    if (!databaseUrl) throw new Error("DATABASE_URL required");
+    const base = new URL(databaseUrl);
+    if (!["localhost", "127.0.0.1"].includes(base.hostname) || base.pathname !== "/fysen") {
+      throw new Error("FYSEN_REHEARSAL_REQUIRES_EPHEMERAL_LOCALHOST_POSTGRES");
+    }
+
+    const dbName = `fysen_rehearsal_\${randomUUID().replaceAll("-", "")}`;
+    const admin = createDatabasePool({ connectionString: databaseUrl, maxConnections: 1, ssl: false });
+    const sandboxUrl = new URL(base.toString());
+    sandboxUrl.pathname = `/\${dbName}`;
+    let sandbox: Pool | null = null;
+    let created = false;
+
+    try {
+      // The ci.yml service creates the local superuser 'fysen'; there is no
+      // connection to production or recovery, and only synthetic seed data.
+      await admin.query(`CREATE DATABASE "\${dbName}" TEMPLATE template0`);
+      created = true;
+      sandbox = createDatabasePool({ connectionString: sandboxUrl.toString(), maxConnections: 1, ssl: false });
+
+      const expectedVersions = (await listMigrationFiles()).map((file) => file.slice(0, -4));
+      expect(expectedVersions).toHaveLength(23);
+      expect(await runMigrations(sandbox)).toEqual(expectedVersions);
+
+      // This reference schema must exactly match the read-only recovery
+      // metadata before testing any ledger reconstruction.
+      await assertRecoveryCatalogMatches(sandbox);
+
+      const before = await sandbox.query("SELECT count(*)::int AS count FROM fysen.restaurants");
+      await sandbox.query("DROP TABLE fysen.schema_migrations");
+      const missing = await sandbox.query("SELECT to_regclass('fysen.schema_migrations') AS ledger");
+      expect(missing.rows[0]?.ledger).toBeNull();
+      await assertRecoveryCatalogMatches(sandbox);
+
+      // A single missing index must fail closed. Restore it ONLY in sandbox.
+      await sandbox.query("DROP INDEX fysen.menu_changes_added_date_idx");
+      await expect(assertRecoveryCatalogMatches(sandbox)).rejects.toThrow();
+      expect((await sandbox.query("SELECT to_regclass('fysen.schema_migrations') AS ledger")).rows[0]?.ledger).toBeNull();
+      await sandbox.query(await readFile(new URL("../migrations/0023_recent_menu_additions.sql", import.meta.url), "utf8"));
+      await assertRecoveryCatalogMatches(sandbox);
+
+      // Controlled one-off reconstruction in a throwaway DB. Do not expose
+      // this as a live recovery command or use it against Supabase.
+      await sandbox.query("BEGIN");
+      try {
+        await sandbox.query(`
+          CREATE TABLE fysen.schema_migrations (
+            version text PRIMARY KEY,
+            applied_at timestamptz NOT NULL DEFAULT now()
+          )
+        `);
+        for (const version of expectedVersions) {
+          await sandbox.query("INSERT INTO fysen.schema_migrations(version) VALUES ($1)", [version]);
+        }
+        await sandbox.query("COMMIT");
+      } catch (error) {
+        await sandbox.query("ROLLBACK");
+        throw error;
+      }
+      expect(await runMigrations(sandbox)).toEqual([]);
+      await verifyProductionDatabase(sandbox);
+      await assertRecoveryCatalogMatches(sandbox);
+      expect((await sandbox.query("SELECT count(*)::int AS count FROM fysen.restaurants")).rows[0]?.count)
+        .toBe(before.rows[0]?.count);
+    } finally {
+      if (sandbox) await sandbox.end();
+      if (created) await admin.query(`DROP DATABASE "\${dbName}" WITH (FORCE)`);
+      await admin.end();
+    }
+  }, 120_000);
 });
