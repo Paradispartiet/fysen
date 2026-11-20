@@ -215,7 +215,7 @@
 
 /* Gallery-only shrimp pad thai; never use for unknown-variant pad thai restaurant dishes. */
 .dishPhotoThumb.dishPhotoShrimpPadThai {
-  background: #000 url("/dish-images/pad-thai-reker-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/pad-thai-reker-thumb-512.avif") center / contain no-repeat;
 }
 
 /* Dedicated 768px tiramisu gallery image. Not a restaurant photograph. */

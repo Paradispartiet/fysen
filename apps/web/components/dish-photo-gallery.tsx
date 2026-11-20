@@ -187,6 +187,10 @@ export function DishPhotoGallery() {
           <a href="/dish-images/butter-chicken-master-3000.avif" target="_blank" rel="noopener noreferrer">
             Butter chicken <span aria-hidden="true">↗</span>
           </a>
+          <a href="/dish-images/pad-thai-reker-master-5472.avif" target="_blank" rel="noopener noreferrer">
+            Pad thai med reker <span aria-hidden="true">↗</span>
+          </a>
+          <small>Pad thai-foto: UNDO KIM / Pexels, <a href="/dish-images/pad-thai-reker-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
         </nav>
       </div>
     </details>

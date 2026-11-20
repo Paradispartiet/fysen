@@ -1,0 +1,80 @@
+name: Fysen promote reviewed native shrimp pad thai
+on:
+  push:
+    branches: [art/pad-thai-reker-native-photo-20261120]
+    paths:
+      - ".github/workflows/fysen-promote-pad-thai-reker.yml"
+      - "scripts/promote-reviewed-pad-thai-reker.py"
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: fysen-pad-thai-reker-promotion
+  cancel-in-progress: false
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install true native photo and AVIF codecs
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0 pillow-avif-plugin==1.5.2 opencv-python-headless==4.11.0.86 numpy==2.2.6
+      - name: Reuse SHA-locked original from previously successful source-stage job
+        uses: actions/download-artifact@v4
+        with:
+          name: fysen-pad-thai-reker-originals
+          run-id: 44701987558
+          github-token: ${{ github.token }}
+          path: /tmp/fysen-pad-thai-originals
+      - name: Promote only reviewed black photo, 5472px master and 512px mini into PR
+        run: python scripts/promote-reviewed-pad-thai-reker.py
+      - name: Run only the two relevant large-photo and gallery quality tests
+        run: node --test apps/web/tests/dish-photo-gallery.test.mjs apps/web/tests/dish-image-large-view-quality.test.mjs
+      - name: Validate exact source, sizes, licensing and unpublished release state
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          from PIL import Image
+          import pillow_avif
+          root=Path("apps/web/public/dish-images")
+          manifest=json.loads((root/"manifest.json").read_text())
+          assert sum(p.get("largeViewEnabled") is True for p in manifest["images"])==12
+          p=next(p for p in manifest["images"] if p["id"]=="pad-thai-reker")
+          assert p["kind"]=="Redaksjonelt rettfoto" and p["catalogId"] is None
+          assert p["atlas"]=="pad-thai-reker-thumb-512.avif"
+          assert p["largeSource"]=="pad-thai-reker-master-5472.avif"
+          assert "UNDO KIM / Pexels" in p["photoCredit"]
+          assert p["photoLicenseNotice"]=="/dish-images/pad-thai-reker-LICENSE.txt"
+          with Image.open(root/p["atlas"]) as i: assert i.size==(512,512)
+          with Image.open(root/p["largeSource"]) as i: assert i.size==(5472,3648)
+          review=json.loads(Path("assets/fysen-image-candidates/pad-thai-reker/34723306/black-review.json").read_text())
+          assert review["approved_for_fysen"] and review["visual_review_completed"]
+          assert review["published"] is False
+          print("12/44 source-audited PR masters, 10/44 in production main. No Vercel deployment")
+          PY
+      - name: Save only exact reviewed photo, dedicated mini, license and related edits to draft PR
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-dish-originals/pad-thai-reker.png
+          git add assets/fysen-image-candidates/pad-thai-reker/34723306/review.json
+          git add assets/fysen-image-candidates/pad-thai-reker/34723306/black-review.json
+          git add apps/web/public/dish-images/pad-thai-reker-master-5472.avif
+          git add apps/web/public/dish-images/pad-thai-reker-thumb-512.avif
+          git add apps/web/public/dish-images/pad-thai-reker-LICENSE.txt
+          git add apps/web/public/dish-images/manifest.json
+          git add apps/web/styles/dish-photos.css
+          git add apps/web/components/dish-photo-gallery.tsx
+          git add apps/web/tests/dish-photo-gallery.test.mjs
+          git add docs/fysen-image-reviews/pad-thai-reker.md
+          git diff --cached --quiet && exit 0
+          git commit -m "[pad-thai-promote-bot] 5472px verified shrimp pad thai master and 512 mini"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin HEAD:"$GITHUB_REF_NAME"

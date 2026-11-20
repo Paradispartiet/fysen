@@ -1,0 +1,19 @@
+{
+  "dish_id": "pad-thai-reker",
+  "photo_id": 34723308,
+  "photographer_claim": "UNDO KIM",
+  "description": "Delicious Thai Shrimp Pad Thai with Toppings",
+  "source_page": "https://www.pexels.com/photo/34723308/",
+  "source_url": "https://images.pexels.com/photos/34723308/pexels-photo-34723308.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "original_width": 5472,
+  "original_height": 3648,
+  "source_sha256": "12a210a0277527f18b6caf580e16be3bbb1e2b457895136a19a9e8f191c2fbbe",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "approved_for_fysen": false,
+  "visual_review_completed": false,
+  "published": false,
+  "review_criteria": "Entire plate/bowl with real shrimp and flat pad-thai rice noodles, sharp actual source 1:1 details, black background without table/utensils, no inpainted ingredients or upscaling."
+}
