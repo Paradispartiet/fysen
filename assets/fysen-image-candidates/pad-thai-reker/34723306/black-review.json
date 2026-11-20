@@ -11,8 +11,11 @@
   "black_corners": true,
   "upscaled_source_pixels": false,
   "generated_food_pixels": false,
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
-  "review_requirements": "Confirm entire ceramic plate rim retained, no dark wood patches outside rim, real shrimp/noodles clear at 1:1 detail, pure black background. Any failure must stop promotion."
+  "review_requirements": "Confirm entire ceramic plate rim retained, no dark wood patches outside rim, real shrimp/noodles clear at 1:1 detail, pure black background. Any failure must stop promotion.",
+  "retained_native_sha256": "da37aa5a69bd71c70cea3cc63315ca6b652abb1a84f3ef3f7e03f0f859a288af",
+  "full_avif_sha256": "d650db616c3af846d93154b7ef85a78b1438b8b9278b5c71d8cc264e3ebddc00",
+  "reviewed_preview_sha256": "3aef3e59936491898d46722bd4ce36847b38c9337e31938fd9aa417f3b2dc646"
 }

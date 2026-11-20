@@ -10,10 +10,10 @@
   "original_height": 3648,
   "source_sha256": "00831ee288e15f9e273fbc3e0eea5598b74e7c3d1e1fd46ffc48f5665378bd54",
   "source_verified": true,
-  "photographer_verified": false,
-  "license_verified": false,
-  "approved_for_fysen": false,
-  "visual_review_completed": false,
+  "photographer_verified": true,
+  "license_verified": true,
+  "approved_for_fysen": true,
+  "visual_review_completed": true,
   "published": false,
   "review_criteria": "Entire plate/bowl with real shrimp and flat pad-thai rice noodles, sharp actual source 1:1 details, black background without table/utensils, no inpainted ingredients or upscaling."
 }
