@@ -11,8 +11,8 @@
   "source_verified": true,
   "no_upscale": true,
   "inspection_notes": "Three tacos, onion, coriander and lime on dark plate. Pineapple is not visibly identifiable; plate rim partly out of frame.",
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
   "quality_gate": "Authentic al pastor pork tacos with complete tortillas, preferably pineapple. No incorrect fillings, cut-off food, unwanted logos, plates or table after black background. Native source detail; no generated food, no upscale, no restaurant-specific implication."
 }
