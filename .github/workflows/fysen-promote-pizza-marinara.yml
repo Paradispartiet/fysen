@@ -1,0 +1,70 @@
+name: Fysen promote visually approved pizza marinara (draft only)
+on:
+  push:
+    branches: [art/pizza-marinara-source-review-20261120]
+    paths:
+      - ".github/workflows/fysen-promote-pizza-marinara.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: fysen-marinara-draft-promotion
+  cancel-in-progress: false
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 28
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install authentic photo, masking and AVIF libraries
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0 pillow-avif-plugin==1.5.2 numpy==2.2.6 opencv-python-headless==4.11.0.86
+      - name: Reproduce SHA-locked visually checked source and generate independent AVIF pair
+        run: python scripts/promote-reviewed-pizza-marinara.py
+      - name: Run ONLY targeted gallery and large-source quality tests
+        run: node --test apps/web/tests/dish-photo-gallery.test.mjs apps/web/tests/dish-image-large-view-quality.test.mjs
+      - name: Confirm native dimensions, license and unpublished draft
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          import pillow_avif,json
+          root=Path('apps/web/public/dish-images')
+          manifest=json.loads((root/'manifest.json').read_text(encoding='utf-8'))
+          assert sum(x.get('largeViewEnabled') is True for x in manifest['images'])==15
+          p=next(x for x in manifest['images'] if x['id']=='pizza-marinara')
+          assert p['kind']=='Redaksjonelt rettfoto' and p['catalogId']=='pizza-marinara'
+          assert p['atlas']=='pizza-marinara-thumb-512.avif'
+          assert p['largeSource']=='pizza-marinara-master-2848.avif'
+          assert p['photoLicense']=='https://creativecommons.org/licenses/by-sa/2.0/'
+          assert 'CC BY-SA 2.0' in (root/'pizza-marinara-LICENSE.txt').read_text()
+          with Image.open(root/p['atlas']) as im: assert im.size==(512,512)
+          with Image.open(root/p['largeSource']) as im: assert im.size==(2848,2136)
+          black=json.loads(Path('assets/fysen-image-candidates/pizza-marinara/classic-van-den-bossche-by-sa/black-review.json').read_text())
+          assert black['reviewed_variant']=='black-grabcut'
+          assert black['approved_for_fysen'] and black['published'] is False
+          print('15/44 native approved photos in unpublished draft; main remains 10/44')
+          PY
+      - name: Commit ONLY reviewed image assets and gallery integration in draft branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-dish-originals/pizza-marinara.png
+          git add assets/fysen-image-candidates/pizza-marinara/classic-van-den-bossche-by-sa/review.json
+          git add assets/fysen-image-candidates/pizza-marinara/classic-van-den-bossche-by-sa/black-review.json
+          git add apps/web/public/dish-images/pizza-marinara-master-2848.avif
+          git add apps/web/public/dish-images/pizza-marinara-thumb-512.avif
+          git add apps/web/public/dish-images/pizza-marinara-LICENSE.txt
+          git add apps/web/public/dish-images/manifest.json
+          git add apps/web/styles/dish-photos.css
+          git add apps/web/components/dish-photo-gallery.tsx
+          git add apps/web/tests/dish-photo-gallery.test.mjs
+          git add docs/fysen-image-reviews/pizza-marinara.md
+          git diff --cached --quiet && exit 0
+          git commit -m "[pizza-marinara-promote-bot] Add reviewed native 2848px pizza photo and 512 mini to draft"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin HEAD:"$GITHUB_REF_NAME"
