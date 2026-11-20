@@ -93,7 +93,7 @@
    No enlargement from the earlier 128px sprite. */
 .dishPhotoThumb.dishPhotoTomYum,
 .dishPhotoSmall.dishPhotoTomYum {
-  background: #000 url("/dish-images/tom-yum-512.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/tom-yum-thumb-512.avif") center / contain no-repeat;
 }
 
 /* Dedicated 384px Pad kra pao illustration, sharp at 150 CSS px. */
