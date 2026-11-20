@@ -137,9 +137,23 @@ function DiscoveryDishList({
   return (
     <div className="cuisineExploreDishList">
       {coverage.map(({ dish, restaurantCount, restaurantExamples }) => (
-        <article className="cuisineExploreDish" key={dish.id} data-has-coverage={restaurantCount > 0 ? "true" : "false"}>
+        <article
+          className="cuisineExploreDish"
+          key={dish.id}
+          data-has-coverage={restaurantCount > 0 ? "true" : "false"}
+        >
           <div className="cuisineExploreDishHeading">
-            <h4>{dish.label}</h4>
+            <div className="cuisineExploreDishIdentity">
+              <DishPhotoThumbnail dishId={dish.id} label={dish.label} />
+              <div className="cuisineExploreDishCopy">
+                <h4>{dish.label}</h4>
+                <p className="cuisineExploreDishEvidence">
+                  {restaurantCount > 0
+                    ? `Registrert hos ${restaurantCount} ${restaurantCount === 1 ? "restaurant" : "restauranter"} i menyoversikten`
+                    : "Rettforslag · ingen bekreftede treff i menyoversikten"}
+                </p>
+              </div>
+            </div>
             <div className="cuisineExploreDishActions">
               {dish.hasKnowledge ? (
                 <button type="button" onClick={() => onOpenKnowledge(dish.id)}>
@@ -147,29 +161,27 @@ function DiscoveryDishList({
                 </button>
               ) : null}
               <a href={dishSearchHref(dish.query)}>
-                Se alle treff <span aria-hidden="true">→</span>
+                {restaurantCount > 0 ? "Se menytreff" : "Søk etter retten"} <span aria-hidden="true">→</span>
               </a>
             </div>
           </div>
-          <DishPhotoThumbnail dishId={dish.id} label={dish.label} />
-
           {restaurantExamples.length > 0 ? (
-            <ul>
-              {restaurantExamples.map((restaurant) => (
-                <li key={restaurant.id}>
-                  <a href={dishSearchHref(dish.query)}>
-                    <strong>{restaurant.name}</strong>
-                    <span>{dish.label}</span>
-                    <small>{restaurant.address}</small>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          ) : restaurantCount > 0 ? (
-            <p>Finnes hos {restaurantCount} {restaurantCount === 1 ? "restaurant" : "restauranter"} i Oslo.</p>
-          ) : (
-            <p>Ingen treff på denne retten akkurat nå.</p>
-          )}
+            <details className="cuisineExploreRestaurantDetails">
+              <summary>
+                Vis {restaurantExamples.length} {restaurantExamples.length === 1 ? "restauranteksempel" : "restauranteksempler"}
+              </summary>
+              <ul>
+                {restaurantExamples.map((restaurant) => (
+                  <li key={restaurant.id}>
+                    <a href={dishSearchHref(dish.query)}>
+                      <strong>{restaurant.name}</strong>
+                      <small>{restaurant.address}</small>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ) : null}
         </article>
       ))}
     </div>
