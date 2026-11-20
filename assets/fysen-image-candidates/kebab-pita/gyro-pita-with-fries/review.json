@@ -1,0 +1,20 @@
+{
+  "dish_id": "kebab-pita",
+  "slug": "gyro-pita-with-fries",
+  "source_kind": "pexels",
+  "source_file": 6941000,
+  "source_page": "https://www.pexels.com/photo/6941000/",
+  "source_download_url": "https://images.pexels.com/photos/6941000/pexels-photo-6941000.jpeg",
+  "author_claim": "Pexels, verify",
+  "license_claim": "Pexels License",
+  "native_width": 4160,
+  "native_height": 6240,
+  "source_sha256": "962b99ef7ea4d5b92321bb7db3a71cd7ec97089c85fdbb314d49290bca8e1c72",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "reject_if": "Not a single stuffed pita / no identifiable kebab meat / wrong variant, cut-off pita, blurry native detail, intrusive hands, cannot isolate a natural whole serving on black."
+}
