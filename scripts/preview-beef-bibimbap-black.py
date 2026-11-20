@@ -72,6 +72,21 @@ cv2.grabCut(cv2.cvtColor(np.asarray(small),cv2.COLOR_RGB2BGR),
     cls,None,bg,fg,5,cv2.GC_INIT_WITH_MASK)
 grabbed=np.isin(cls,[cv2.GC_FGD,cv2.GC_PR_FGD]).astype(np.uint8)*255
 grabbed=cv2.resize(grabbed,(W,H),interpolation=cv2.INTER_LINEAR)
+# Only the WHITE ceramic bowl should survive outside the interior ellipse.
+# A few small pieces of warm wooden table were captured next to its lower
+# edges. Remove them by color only OUTSIDE the genuine food/plate interior;
+# never alter the beef, egg or vegetables inside the bowl.
+rr=src[:,:,0].astype(np.int16)
+gg=src[:,:,1].astype(np.int16)
+bb=src[:,:,2].astype(np.int16)
+xx=np.arange(W,dtype=np.float32)[None,:]*1100/W
+yy=np.arange(H,dtype=np.float32)[:,None]*828/H
+protect_food=((xx-592)/275)**2+((yy-389)/272)**2<1
+brown_table=(rr>gg+13)&(gg>bb+6)&(rr<195)
+grabbed[brown_table&~protect_food]=0
+# Remove tiny isolated debris without cropping the ceramic outline.
+grabbed=cv2.morphologyEx(grabbed,cv2.MORPH_OPEN,
+    cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(7,7)))
 grabcut_area=save("black-grabcut",grabbed)
 audit=dict(dish_id="bibimbap",catalog_id=None,original_sha256=SHA,
     native_size=[W,H],source_page=meta["page"],
