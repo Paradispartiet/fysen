@@ -14,19 +14,14 @@ from PIL import Image,ImageOps
 
 OUT=Path("assets/fysen-image-candidates/falafel")
 SOURCES=[
- dict(slug="shameel-mukkath-pexels",url="https://images.pexels.com/photos/14883756/pexels-photo-14883756.jpeg",
-      page="https://www.pexels.com/photo/top-view-of-falafel-on-a-plate-with-a-sauce-on-the-side-14883756/",
-      author="Shameel mukkath / Pexels",license="https://www.pexels.com/license/",size=(6720,4480)),
- dict(slug="nataliya-vaitkevich-platter-pexels",url="https://images.pexels.com/photos/6275183/pexels-photo-6275183.jpeg",
-      page="https://www.pexels.com/photo/overhead-shot-of-fried-falafels-beside-pita-bread-6275183/",
-      author="Nataliya Vaitkevich / Pexels",license="https://www.pexels.com/license/",size=(4160,6240)),
- dict(slug="nataliya-vaitkevich-bowl-pexels",url="https://images.pexels.com/photos/6275220/pexels-photo-6275220.jpeg",
-      page="https://www.pexels.com/photo/falafel-in-ceramic-bowl-on-black-surface-6275220/",
-      author="Nataliya Vaitkevich / Pexels",license="https://www.pexels.com/license/",size=(4160,6240)),
- dict(slug="ali-dashti-pexels",url="https://images.pexels.com/photos/29253319/pexels-photo-29253319.jpeg",
-      page="https://www.pexels.com/photo/middle-eastern-cuisine-with-hummus-and-falafel-29253319/",
-      author="Ali Dashti / Pexels",license="https://www.pexels.com/license/",size=(6336,7920))
+ dict(slug="furkanfdemir-bowl-pexels",url="https://images.pexels.com/photos/8286755/pexels-photo-8286755.jpeg",
+      page="https://www.pexels.com/photo/cooked-food-in-the-bowl-8286755/",
+      author="furkanfdemir / Pexels",license="https://www.pexels.com/license/",size=(4160,6240)),
+ dict(slug="saya-p-bowl-pexels",url="https://images.pexels.com/photos/39976633/pexels-photo-39976633.jpeg",
+      page="https://www.pexels.com/nb-no/bilde/deilig-falafelbolle-med-hummus-og-salat-39976633/",
+      author="Saya P / Pexels",license="https://www.pexels.com/license/",size=(4284,5712)),
 ]
+
 def fetch(url):
   req=Request(url,headers={"User-Agent":"FysenEditorialPhotoReview/1.0 (https://github.com/Paradispartiet/fysen)","Accept":"image/jpeg,image/*;q=0.8"})
   for attempt in range(3):
