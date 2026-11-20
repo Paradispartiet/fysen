@@ -132,8 +132,8 @@ def main():
     # Existing joint pad thai/tiramisu format test must account for new 512 mini.
     old='    assert.equal(image.readUInt32BE(ispe + 8), 768);\n    assert.equal(image.readUInt32BE(ispe + 12), 768);'
     # Other tests share this exact block. Patch within only the shrimp/tiramisu test.
-    start=t.indexOf('test("Shrimp pad thai and tiramisu are dedicated Retina-safe')
-    end=t.indexOf('\ntest(',start+2)
+    start=t.index('test("Shrimp pad thai and tiramisu are dedicated Retina-safe')
+    end=t.index('\ntest(',start+2)
     block=t[start:end]
     assert block.count(old)==1
     block=block.replace(old,'    assert.equal(image.readUInt32BE(ispe + 8), index === 12 ? 512 : 768);\n    assert.equal(image.readUInt32BE(ispe + 12), index === 12 ? 512 : 768);',1)
