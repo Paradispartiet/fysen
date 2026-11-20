@@ -91,8 +91,11 @@ rr=src[:,:,0].astype(np.int16)
 gg=src[:,:,1].astype(np.int16)
 bb=src[:,:,2].astype(np.int16)
 yrows=np.arange(H)[:,None]
+xcols=np.arange(W)[None,:]
 pale_plate=(rr>165)&(gg>165)&(bb>155)&(np.abs(rr-gg)<30)&(np.abs(gg-bb)<35)
-pale_plate &= yrows < H*0.34
+# Background plate is confined to the upper-left of this composition. Do not
+# touch the naturally pale bread bubbles in the upper-center/right crust.
+pale_plate &= (yrows < H*0.34) & (xcols < W*0.45)
 seg[pale_plate]=0
 grabcut_area=export("black-grabcut",seg)
 audit={
