@@ -87,6 +87,12 @@ brown_table=(rr>gg+13)&(gg>bb+6)&(rr<195)
 # Never color-key anything above the lower half of the bowl.
 brown_table &= yy > H*.46
 grabbed[brown_table&~protect_food]=0
+# Side-dish fragments remain just outside the LOWER rim at left/right.
+# Clip only the lower exterior to a conservative natural bowl ellipse.
+# The upper curved white rim (and the complete food interior) is untouched.
+lower_exterior=(yy>H*.54)&(
+    ((xx-592)/300)**2+((yy-389)/296)**2>1)
+grabbed[lower_exterior]=0
 # Remove tiny isolated debris without cropping the ceramic outline.
 grabbed=cv2.morphologyEx(grabbed,cv2.MORPH_OPEN,
     cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(7,7)))
