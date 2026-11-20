@@ -1,0 +1,18 @@
+{
+  "dish_id": "falafel",
+  "catalog_id": "falafel",
+  "variant": "falafel with hummus",
+  "photo_author": "Saya P / Pexels",
+  "photo_page": "https://www.pexels.com/nb-no/bilde/deilig-falafelbolle-med-hummus-og-salat-39976633/",
+  "photo_source_url": "https://images.pexels.com/photos/39976633/pexels-photo-39976633.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "native_width": 4284,
+  "native_height": 5712,
+  "original_sha256": "71c3b13a73f29715bb618be69738a2fcca2f2abd1ce7f2f279b2526f8232cfa4",
+  "download_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Whole falafel serving with actual falafel balls and hummus; natural sharp original detail, preferably complete plate. Black backdrop after masking must contain no table, cut off food or spurious objects. No synthetic food, no menu/restaurant-specific claims."
+}
