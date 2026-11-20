@@ -1,0 +1,20 @@
+{
+  "dish_id": "kebab-pita",
+  "slug": "chicken-kebab-fries",
+  "source_kind": "pexels",
+  "source_file": 29306496,
+  "source_page": "https://www.pexels.com/photo/29306496/",
+  "source_download_url": "https://images.pexels.com/photos/29306496/pexels-photo-29306496.jpeg",
+  "author_claim": "Pexels, verify",
+  "license_claim": "Pexels License",
+  "native_width": 3582,
+  "native_height": 6368,
+  "source_sha256": "c8956fc907021ee256ca682a2cf531e3e0c752c6a2ce94e810f6ee4fd8a67022",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "reject_if": "Not a single stuffed pita / no identifiable kebab meat / wrong variant, cut-off pita, blurry native detail, intrusive hands, cannot isolate a natural whole serving on black."
+}

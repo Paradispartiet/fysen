@@ -1,0 +1,20 @@
+{
+  "dish_id": "kebab-pita",
+  "slug": "doner-meat-vegetables",
+  "source_kind": "pexels",
+  "source_file": 18330009,
+  "source_page": "https://www.pexels.com/photo/18330009/",
+  "source_download_url": "https://images.pexels.com/photos/18330009/pexels-photo-18330009.jpeg",
+  "author_claim": "Valeria Boltneva",
+  "license_claim": "Pexels License",
+  "native_width": 5464,
+  "native_height": 8192,
+  "source_sha256": "ded325e29ffc8d806be8c6f797db62a70a2e88ee16058ad216c0c30333c00da6",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "reject_if": "Not a single stuffed pita / no identifiable kebab meat / wrong variant, cut-off pita, blurry native detail, intrusive hands, cannot isolate a natural whole serving on black."
+}

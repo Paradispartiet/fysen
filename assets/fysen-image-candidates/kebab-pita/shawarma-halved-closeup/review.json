@@ -1,0 +1,20 @@
+{
+  "dish_id": "kebab-pita",
+  "slug": "shawarma-halved-closeup",
+  "source_kind": "pexels",
+  "source_file": 5779364,
+  "source_page": "https://www.pexels.com/photo/5779364/",
+  "source_download_url": "https://images.pexels.com/photos/5779364/pexels-photo-5779364.jpeg",
+  "author_claim": "RDNE Stock project",
+  "license_claim": "Pexels License",
+  "native_width": 6013,
+  "native_height": 4009,
+  "source_sha256": "5e1a80c2c1af666a98133753975e2fa416d70a8bc4c13c22f39ba7b55a79d42b",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "reject_if": "Not a single stuffed pita / no identifiable kebab meat / wrong variant, cut-off pita, blurry native detail, intrusive hands, cannot isolate a natural whole serving on black."
+}

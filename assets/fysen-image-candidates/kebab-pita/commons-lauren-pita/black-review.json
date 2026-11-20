@@ -1,0 +1,15 @@
+{
+  "source_sha256": "257d6f340413eff6ca615c65661a75ae7be9834a218077509a32f009b3e89baa",
+  "source_size": [
+    4000,
+    3000
+  ],
+  "food_pixels_upscaled": false,
+  "ingredients_generated": false,
+  "visual_review_completed": false,
+  "paper_removed_verified": false,
+  "full_pita_verified": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "review": "Assess exact edges, intact bread and visible wrapper/plate; reject if masking cuts the food."
+}

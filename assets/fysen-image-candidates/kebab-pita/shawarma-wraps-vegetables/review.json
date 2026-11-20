@@ -1,0 +1,20 @@
+{
+  "dish_id": "kebab-pita",
+  "slug": "shawarma-wraps-vegetables",
+  "source_kind": "pexels",
+  "source_file": 28897047,
+  "source_page": "https://www.pexels.com/photo/28897047/",
+  "source_download_url": "https://images.pexels.com/photos/28897047/pexels-photo-28897047.jpeg",
+  "author_claim": "ahmed kh. jami",
+  "license_claim": "Pexels License",
+  "native_width": 6048,
+  "native_height": 4024,
+  "source_sha256": "49f10136f432a168947363d3298e66b771c8ccb626d857024688739e64e17289",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "reject_if": "Not a single stuffed pita / no identifiable kebab meat / wrong variant, cut-off pita, blurry native detail, intrusive hands, cannot isolate a natural whole serving on black."
+}

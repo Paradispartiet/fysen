@@ -1,0 +1,33 @@
+{
+  "source_sha256": "17b367c89b9ec073b1da27505dae02c3e2641f34db586b66028ee8ac1bc4b750",
+  "source_url": "https://www.pexels.com/photo/delicious-doner-kebab-with-fresh-vegetables-29306504/",
+  "photographer": "Nano Erdozain",
+  "license_claim": "Pexels License",
+  "source_dimensions": [
+    4000,
+    7112
+  ],
+  "contour_native_dimensions": [
+    4000,
+    3840
+  ],
+  "grabcut_native_dimensions": [
+    4000,
+    3840
+  ],
+  "pixel_upscaled": false,
+  "ingredients_generated": false,
+  "published": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": false,
+  "review": "Entire actual stuffed pita? Branded wrapper, paper, dish and fingers must be absent. Correct meat/vegetable variant and true 1:1 sharpness; no clipped bread, no dangling isolated food. Reject if poor.",
+  "photographer_verified": true,
+  "license_verified": true,
+  "license_url": "https://www.pexels.com/license/",
+  "review_decision": "REJECT",
+  "rejection_reasons": [
+    "The food is hanging out of the pita with no visible bottom bread; the entire serving is not preserved.",
+    "Logo-paper/packaging remains at the top and behind the pita after masking.",
+    "A straight, unnatural lower crop removes necessary food/bread support; the result is not a natural isolated whole kebab."
+  ]
+}

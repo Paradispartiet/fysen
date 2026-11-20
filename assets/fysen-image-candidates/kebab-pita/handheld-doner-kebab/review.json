@@ -1,0 +1,20 @@
+{
+  "dish_id": "kebab-pita",
+  "slug": "handheld-doner-kebab",
+  "source_kind": "pexels",
+  "source_file": 24550876,
+  "source_page": "https://www.pexels.com/photo/24550876/",
+  "source_download_url": "https://images.pexels.com/photos/24550876/pexels-photo-24550876.jpeg",
+  "author_claim": "Helena Jankovičová Kováčová",
+  "license_claim": "Pexels License",
+  "native_width": 4480,
+  "native_height": 6720,
+  "source_sha256": "0e337f861692dd01c0323a2a67fecffd3c66ee1703c64ec695950d466ec3d944",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "reject_if": "Not a single stuffed pita / no identifiable kebab meat / wrong variant, cut-off pita, blurry native detail, intrusive hands, cannot isolate a natural whole serving on black."
+}

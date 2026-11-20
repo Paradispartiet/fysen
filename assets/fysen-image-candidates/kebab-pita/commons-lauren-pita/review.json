@@ -1,0 +1,23 @@
+{
+  "dish_id": "kebab-pita",
+  "slug": "commons-lauren-pita",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Doener_Kebab_(9682662957).jpg",
+  "source_download_url": "https://live.staticflickr.com/7408/9682662957_44a612be44_o.jpg",
+  "photographer": "Lauren Travis",
+  "license_claim": "CC BY 2.0",
+  "native_width": 4000,
+  "native_height": 3000,
+  "source_sha256": "257d6f340413eff6ca615c65661a75ae7be9834a218077509a32f009b3e89baa",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "whole_pita_verified": false,
+  "wrapper_free_verified": false,
+  "black_background_created": false,
+  "ingredients_generated": false,
+  "upscaled": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "review_required": "Assess genuine whole kebab in a pita, not a wrap or plated meal; natural sharpness in the 1400px crop; wrapper, fingers and bread cut-off; can the real food be isolated to black without inventing pixels?"
+}

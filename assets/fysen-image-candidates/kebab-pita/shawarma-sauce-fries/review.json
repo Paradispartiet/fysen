@@ -1,0 +1,20 @@
+{
+  "dish_id": "kebab-pita",
+  "slug": "shawarma-sauce-fries",
+  "source_kind": "pexels",
+  "source_file": 18177324,
+  "source_page": "https://www.pexels.com/photo/18177324/",
+  "source_download_url": "https://images.pexels.com/photos/18177324/pexels-photo-18177324.jpeg",
+  "author_claim": "Omar B Shokerat",
+  "license_claim": "Pexels License",
+  "native_width": 6000,
+  "native_height": 4000,
+  "source_sha256": "d713f7f7ac82bdb7a8a6dbd0d12d82f4c46df8bd8d1a295c1899bb0509293eb1",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "reject_if": "Not a single stuffed pita / no identifiable kebab meat / wrong variant, cut-off pita, blurry native detail, intrusive hands, cannot isolate a natural whole serving on black."
+}
