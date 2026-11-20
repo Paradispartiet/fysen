@@ -12,8 +12,12 @@
   "food_pixels_generated": false,
   "black_contour_area_fraction": 0.5169286401373666,
   "black_grabcut_area_fraction": 0.5134320259353649,
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
-  "review_gate": "One full authentic cacio e pepe serving and whole plate. No glass, cutlery, white tabletop or halo retained. Correct pecorino, pasta and pepper; no upscaling."
+  "review_gate": "One full authentic cacio e pepe serving and whole plate. No glass, cutlery, white tabletop or halo retained. Correct pecorino, pasta and pepper; no upscaling.",
+  "reviewed_variant": "black-contour",
+  "reviewed_preview_sha256": "d97efc78269a443eeae90bd5b1276b6b26ee8fb3ddac8fbf576cae2c4034525a",
+  "retained_native_sha256": "1854a6f5b470595620a406d6c78922a09026a317b4b0bb5d2bf833cffa75500a",
+  "full_avif_sha256": "80959cf4569fbbabdd4408c55710ae6ea2fabba19b7358e68b9cfcc7b2037e2c"
 }
