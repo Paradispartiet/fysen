@@ -1,0 +1,24 @@
+{
+  "dish_id": "stekt-hvit-fisk",
+  "photo_id": 29653135,
+  "original_sha256": "140b56c61214db9349e915ac01a6629a3f7a5139e3b8c91e20b44869cccfd3fc",
+  "original_dimensions": [
+    5464,
+    7120
+  ],
+  "photographer": "Valeria Boltneva",
+  "source_page": "https://www.pexels.com/photo/delicious-pan-seared-fish-with-vegetables-29653135/",
+  "license_url": "https://www.pexels.com/license/",
+  "black_contour_area_fraction": 0.8015000637471827,
+  "black_grabcut_area_fraction": 0.8858707967986577,
+  "original_pixels_upscaled": false,
+  "new_food_generated": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
+  "published": false,
+  "review_required": "Entire cooked fish and all sides intact; dark plate blends into pure black with no wood/table fragments, no unnatural cut edge, 1:1 sharpness; do not claim a specific fish species.",
+  "reviewed_variant": "black-contour",
+  "reviewed_preview_sha256": "475c86faac2d48196c8a080955b8e7891f07a02c624f14bb0b9dbe53801fc5e9",
+  "native_png_sha256": "0917b711ff158827bd3bbc99328a44539f8f2a67087f0cc49919fe499d3212a2",
+  "full_avif_sha256": "24821e0dabc476d3bc7f546da8471d11b1505cd92e89b8db76d3c22db713fd27"
+}
