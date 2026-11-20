@@ -1,0 +1,18 @@
+{
+  "dish_id": "bibimbap",
+  "catalog_id": null,
+  "variant": "bibimbap with beef, rice, vegetables and egg",
+  "photographer": "Pauline Verganio / Pexels",
+  "page": "https://www.pexels.com/photo/delicious-korean-bibimbap-in-wooden-bowl-35901111/",
+  "download_url": "https://images.pexels.com/photos/35901111/pexels-photo-35901111.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "original_width": 3024,
+  "original_height": 4032,
+  "original_sha256": "dd1849943e3dc73449a05ea652f24e90c1d98e5c0c6002752c3dc7072fa61243",
+  "native_original_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Clearly identifiable beef bibimbap (not vegetarian or chicken): beef, rice, colorful vegetables, egg. Complete bowl and all food intact; sharp native detail; no invented ingredients, no enlarged pixels; black backdrop without other food or table fragments. Editorial gallery only, never restaurant menu mapping."
+}
