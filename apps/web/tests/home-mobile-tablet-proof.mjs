@@ -69,6 +69,17 @@ try {
       const initialDishCount = await kitchenDialog.locator(".cuisineExploreDish").count();
       assert.ok(initialDishCount > 0 && initialDishCount <= 12,
         "Overview should start with up to twelve suggestions");
+      const restaurantDetails = kitchenDialog.locator("details.cuisineExploreRestaurantDetails").first();
+      if (await restaurantDetails.count()) {
+        assert.equal(await restaurantDetails.getAttribute("open"), null,
+          "Individual restaurant examples must begin collapsed");
+        await restaurantDetails.locator("summary").click();
+        assert.notEqual(await restaurantDetails.getAttribute("open"), null);
+        assert.ok(await restaurantDetails.locator("li a").count() > 0,
+          "Opening restaurant examples must show recorded menu-source candidates");
+        await restaurantDetails.locator("summary").click();
+        assert.equal(await restaurantDetails.getAttribute("open"), null);
+      }
       const expandDishes = kitchenDialog.locator(".cuisineExploreShowMore");
       if (await expandDishes.count()) {
         await expandDishes.click();
