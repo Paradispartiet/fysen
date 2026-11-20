@@ -1,0 +1,62 @@
+name: Fysen stage native shrimp pad thai photo candidates
+on:
+  push:
+    branches: [art/pad-thai-reker-native-photo-20261120]
+    paths:
+      - ".github/workflows/fysen-stage-pad-thai-reker.yml"
+      - "scripts/stage-pad-thai-reker-sources.py"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: fysen-pad-thai-reker-sources
+  cancel-in-progress: false
+jobs:
+  source-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install native image reader
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0
+      - name: Stage five true native photographic source candidates
+        run: python scripts/stage-pad-thai-reker-sources.py
+      - name: Check no candidate can be published automatically
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          sources=list(Path("assets/fysen-image-candidates/pad-thai-reker").glob("*/review.json"))
+          assert len(sources)>=2
+          for p in sources:
+              d=json.loads(p.read_text())
+              assert min(d["original_width"],d["original_height"])>=1800
+              assert d["approved_for_fysen"] is False and d["published"] is False
+              assert (p.parent/"native-detail-1400.jpg").is_file()
+          print(len(sources),"sources staged for visual review; no approval")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fysen-pad-thai-reker-originals
+          if-no-files-found: error
+          retention-days: 7
+          path: |
+            assets/fysen-image-candidates/pad-thai-reker/*/source.jpeg
+            assets/fysen-image-candidates/pad-thai-reker/*/preview.jpg
+            assets/fysen-image-candidates/pad-thai-reker/*/native-detail-1400.jpg
+            assets/fysen-image-candidates/pad-thai-reker/*/review.json
+      - name: Commit only thumbnails and evidence to this PR
+        run: |
+          find assets/fysen-image-candidates/pad-thai-reker -name source.jpeg -delete
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-image-candidates/pad-thai-reker
+          git diff --cached --quiet && exit 0
+          git commit -m "[pad-thai-bot] Native-photo source QA without promotion"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin HEAD:"$GITHUB_REF_NAME"
