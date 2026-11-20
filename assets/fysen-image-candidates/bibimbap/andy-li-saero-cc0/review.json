@@ -1,0 +1,18 @@
+{
+  "dish_id": "bibimbap",
+  "catalog_id": null,
+  "variant": "bibimbap with beef, rice, vegetables and egg",
+  "photographer": "Andy Li / Wikimedia Commons",
+  "page": "https://commons.wikimedia.org/wiki/File:Beef_Bibimbap_-_SAERO_2025-11-06.jpg",
+  "download_url": "https://upload.wikimedia.org/wikipedia/commons/9/90/Beef_Bibimbap_-_SAERO_2025-11-06.jpg",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "original_width": 8160,
+  "original_height": 6144,
+  "original_sha256": "087b46ba6e8c668ac13b6fd37ff7cbd74acc3b54fa003ee82511a4cf11b29c10",
+  "native_original_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Clearly identifiable beef bibimbap (not vegetarian or chicken): beef, rice, colorful vegetables, egg. Complete bowl and all food intact; sharp native detail; no invented ingredients, no enlarged pixels; black backdrop without other food or table fragments. Editorial gallery only, never restaurant menu mapping."
+}

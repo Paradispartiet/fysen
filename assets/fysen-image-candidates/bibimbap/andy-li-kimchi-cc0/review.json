@@ -1,0 +1,18 @@
+{
+  "dish_id": "bibimbap",
+  "catalog_id": null,
+  "variant": "bibimbap with beef, rice, vegetables and egg",
+  "photographer": "Andy Li / Wikimedia Commons",
+  "page": "https://commons.wikimedia.org/wiki/File:Seoul_Bibimbap_(beef)_-_Time_For_Kimchi.jpg",
+  "download_url": "https://upload.wikimedia.org/wikipedia/commons/9/92/Seoul_Bibimbap_%28beef%29_-_Time_For_Kimchi.jpg",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "original_width": 4032,
+  "original_height": 3024,
+  "original_sha256": "a222d6718122f64612b6f6071c584d4d82d4c75387ad23efad50332891146cbe",
+  "native_original_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Clearly identifiable beef bibimbap (not vegetarian or chicken): beef, rice, colorful vegetables, egg. Complete bowl and all food intact; sharp native detail; no invented ingredients, no enlarged pixels; black backdrop without other food or table fragments. Editorial gallery only, never restaurant menu mapping."
+}

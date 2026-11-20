@@ -1,0 +1,18 @@
+{
+  "dish_id": "bibimbap",
+  "catalog_id": null,
+  "variant": "bibimbap with beef, rice, vegetables and egg",
+  "photographer": "Luis Becerra Fotógrafo / Pexels",
+  "page": "https://www.pexels.com/photo/close-up-photo-of-scrumptious-meat-dish-topped-on-rice-5774005/",
+  "download_url": "https://images.pexels.com/photos/5774005/pexels-photo-5774005.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "original_width": 6000,
+  "original_height": 4000,
+  "original_sha256": "f5dc936385f2e85272065ed20391f2ec1e7119ae8d66eeb1a35af0a17b54918a",
+  "native_original_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Clearly identifiable beef bibimbap (not vegetarian or chicken): beef, rice, colorful vegetables, egg. Complete bowl and all food intact; sharp native detail; no invented ingredients, no enlarged pixels; black backdrop without other food or table fragments. Editorial gallery only, never restaurant menu mapping."
+}
