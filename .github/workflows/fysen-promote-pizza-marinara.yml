@@ -4,6 +4,7 @@ on:
     branches: [art/pizza-marinara-source-review-20261120]
     paths:
       - ".github/workflows/fysen-promote-pizza-marinara.yml"
+      - "scripts/promote-reviewed-pizza-marinara.py"
   workflow_dispatch:
 permissions:
   contents: write
@@ -63,6 +64,7 @@ jobs:
           git add apps/web/styles/dish-photos.css
           git add apps/web/components/dish-photo-gallery.tsx
           git add apps/web/tests/dish-photo-gallery.test.mjs
+          git add apps/web/tests/dish-image-large-view-quality.test.mjs
           git add docs/fysen-image-reviews/pizza-marinara.md
           git diff --cached --quiet && exit 0
           git commit -m "[pizza-marinara-promote-bot] Add reviewed native 2848px pizza photo and 512 mini to draft"
