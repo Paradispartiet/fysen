@@ -59,6 +59,18 @@ cv2.fillPoly(mask,[to_native(spline(plate))],255)
 # Fill separately: OpenCV uses even-odd polygon parity for a single multi-ring
 # fill, which otherwise punches a false hole through the overlapping cake.
 cv2.fillPoly(mask,[to_native(spline(cake))],255)
+# The mint stems project above the plate. Behind them the source has a
+# turquoise table. Remove only that visually verified background color in
+# the upper zone; preserve all original food, cocoa and green-leaf pixels.
+r=rgb[:,:,0].astype(np.int16)
+g=rgb[:,:,1].astype(np.int16)
+b=rgb[:,:,2].astype(np.int16)
+upper=np.arange(H)[:,None] < H*250/733
+turquoise=(g>105)&(g>r*1.28)&(b>r*1.38)&(b>g*.73)
+turquoise &= upper
+turquoise=cv2.morphologyEx(turquoise.astype(np.uint8),cv2.MORPH_CLOSE,
+    cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(7,7)))
+mask[turquoise>0]=0
 def export(prefix,foreground):
     alpha=cv2.GaussianBlur(foreground.astype(np.float32),(0,0),1.2)/255.
     pic=np.clip(rgb*alpha[:,:,None],0,255).astype(np.uint8)
