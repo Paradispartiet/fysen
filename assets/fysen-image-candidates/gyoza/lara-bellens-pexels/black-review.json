@@ -1,0 +1,19 @@
+{
+  "dish_id": "gyoza",
+  "source_original_sha256": "413f380af0bf03a2da46effa445cf47b85fed242882a214be2fc6863a5ceb5fc",
+  "source_page": "https://www.pexels.com/photo/delicious-fried-dumplings-with-soy-sauce-dip-35583239/",
+  "original_native_dimensions": [
+    4937,
+    3662
+  ],
+  "photographer": "Lara Bellens / Pexels",
+  "photo_license": "https://www.pexels.com/license/",
+  "unscaled_native": true,
+  "generated_food_pixels": false,
+  "black_contour_area_fraction": 0.5265043535438939,
+  "black_grabcut_area_fraction": 0.48462937767370784,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Six pan-seared dumplings, full blue plate and soy dipping bowl, no wooden table, no clipping, artifacts or artificial food. Always inspect source 1400px center before authorizing approval."
+}
