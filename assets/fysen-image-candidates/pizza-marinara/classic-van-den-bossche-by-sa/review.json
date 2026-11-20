@@ -9,9 +9,10 @@
   "source_sha256": "5ba72af9c97fd3fbc7421ca21e48160e4359c623a0350d57dab56754cccecb7f",
   "native_pixels_upscaled": false,
   "source_download_verified": true,
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
   "preliminary_note": "Entire plain tomato-and-oregano pizza shown, but older photograph: check true native detail sharpness before approval. Modified derivative must preserve CC BY-SA terms.",
-  "quality_gate": "Traditional pizza marinara with tomato, garlic, oregano and oil. NO cheese, olives or other nontraditional toppings. Entire pizza/crust intact. Sharp at native 1400px detail. Preserve ALL real food pixels on black background with no generated additions. Reject if cutting the photographed pizza or incorrect food."
+  "quality_gate": "Traditional pizza marinara with tomato, garlic, oregano and oil. NO cheese, olives or other nontraditional toppings. Entire pizza/crust intact. Sharp at native 1400px detail. Preserve ALL real food pixels on black background with no generated additions. Reject if cutting the photographed pizza or incorrect food.",
+  "license_verified": true
 }

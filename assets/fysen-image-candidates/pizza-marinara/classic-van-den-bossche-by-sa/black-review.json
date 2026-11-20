@@ -13,8 +13,12 @@
   "food_pixels_generated": false,
   "black_contour_area_fraction": 0.49469418712915036,
   "black_grabcut_area_fraction": 0.49019105989353196,
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
-  "review_gate": "Full crust intact, no plate/table/white halo, no invented food, natural black background and native detail sharp. Reject any clipped crust, especially GrabCut right edge."
+  "review_gate": "Full crust intact, no plate/table/white halo, no invented food, natural black background and native detail sharp. Reject any clipped crust, especially GrabCut right edge.",
+  "reviewed_variant": "black-grabcut",
+  "reviewed_preview_sha256": "64c85fa2b08a910b2429ebb63f1568a80c63542865f7df891dde8d6e990643ba",
+  "retained_native_sha256": "797b2c5af78d7860605831a61ad74dd4a2e92cbbdb98edb2bd556b4b0a636dda",
+  "full_avif_sha256": "4d8d8973a829774406a7732abbaa1996352491d42affa9f8cac15c8f83c1222d"
 }
