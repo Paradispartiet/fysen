@@ -10,7 +10,8 @@
   "license_url": "https://www.pexels.com/license/",
   "review_variants": [
     "black-contour",
-    "black-grabcut"
+    "black-grabcut",
+    "black-clean-grabcut"
   ],
   "no_upscale": true,
   "generated_food_pixels": false,
