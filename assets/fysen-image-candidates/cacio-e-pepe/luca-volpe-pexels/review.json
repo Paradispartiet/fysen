@@ -1,0 +1,17 @@
+{
+  "dish_id": "cacio-e-pepe",
+  "source_page": "https://www.pexels.com/photo/cacio-e-pepe-italian-pasta-dish-top-view-34797458/",
+  "source_download_url": "https://images.pexels.com/photos/34797458/pexels-photo-34797458.jpeg",
+  "photographer_claim": "Luca Volpe Productions / Pexels",
+  "license_claim": "https://www.pexels.com/license/",
+  "native_width": 3024,
+  "native_height": 4032,
+  "source_sha256": "74471cbb44f93d2ed7176f28f7fb02e0f21dbbbe107fab799062d4f62936ae23",
+  "source_download_verified": true,
+  "visual_review_completed": false,
+  "attribution_verified": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Cacio e pepe: clearly identifiable spaghetti/tonnarelli with pecorino and black pepper. Whole pasta serving and ideally whole plate visible; clean natural separation against solid black background. No added tomatoes, meat, eggs, cream, or invented food. Native 1400px detail sharp, source at least 1600x1600. No upscaling.",
+  "consideration": "Visually inspect dish fidelity, whole plate, separation difficulty, and native texture. Do not auto-approve."
+}

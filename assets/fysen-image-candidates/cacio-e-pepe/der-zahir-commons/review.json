@@ -1,0 +1,17 @@
+{
+  "dish_id": "cacio-e-pepe",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Spaghetti_cacio_e_pepe_(creamy_as_it_should_be).jpg",
+  "source_download_url": "https://upload.wikimedia.org/wikipedia/commons/0/0d/Spaghetti_cacio_e_pepe_%28creamy_as_it_should_be%29.jpg",
+  "photographer_claim": "Der Zahir / Wikimedia Commons",
+  "license_claim": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "native_width": 3008,
+  "native_height": 2000,
+  "source_sha256": "378924919a727142415633116b88781d0f0c3f4326863ed1c1997eb0eb06f42b",
+  "source_download_verified": true,
+  "visual_review_completed": false,
+  "attribution_verified": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Cacio e pepe: clearly identifiable spaghetti/tonnarelli with pecorino and black pepper. Whole pasta serving and ideally whole plate visible; clean natural separation against solid black background. No added tomatoes, meat, eggs, cream, or invented food. Native 1400px detail sharp, source at least 1600x1600. No upscaling.",
+  "consideration": "Visually inspect dish fidelity, whole plate, separation difficulty, and native texture. Do not auto-approve."
+}
