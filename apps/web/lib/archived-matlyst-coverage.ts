@@ -5,6 +5,7 @@ export interface ArchivedMatlystDishDescriptor {
   readonly label: string;
   readonly query: string;
   readonly aliases: readonly string[];
+  readonly matchLabel?: boolean;
 }
 
 export interface ArchivedMatlystRestaurant {
@@ -59,7 +60,7 @@ export function summarizeArchivedMatlyst(
   const unique = new Map<string, { terms: readonly string[] }>();
   for (const dish of descriptors) {
     if (!dish.id || unique.has(dish.id)) continue;
-    const terms = [...new Set([dish.query, dish.label, ...dish.aliases]
+    const terms = [...new Set([dish.query, dish.matchLabel === false ? "" : dish.label, ...dish.aliases]
       .map(normalizedWords).filter((term) => term.length >= 3))];
     if (terms.length) unique.set(dish.id, { terms });
   }

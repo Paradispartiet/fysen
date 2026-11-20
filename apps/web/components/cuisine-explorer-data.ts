@@ -8,6 +8,7 @@ export type DishSuggestion = {
   readonly label: string;
   readonly query: string;
   readonly aliases: readonly string[];
+  readonly matchLabel?: boolean;
   readonly hasKnowledge: boolean;
   readonly explorerPriority: number;
 };
@@ -362,6 +363,7 @@ function toDishSuggestion(dish: (typeof matlystDiscoveryCatalog)[number]): DishS
     label: dish.name,
     query: dish.query,
     aliases: dish.aliases,
+    matchLabel: dish.matchLabel ?? true,
     hasKnowledge: foodKnowledgeDishIdSet.has(dish.id),
     explorerPriority: dish.explorerPriority,
   };

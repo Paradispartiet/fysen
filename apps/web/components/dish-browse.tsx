@@ -19,7 +19,6 @@ import {
   discoveryDishesForCuisine,
   type Cuisine,
   type CuisineDiscoveryDish,
-  type DishSuggestion,
 } from "./cuisine-explorer-data";
 import { SearchState } from "./search-state";
 import { DishPhotoThumbnail } from "./dish-photo-gallery";
@@ -55,14 +54,6 @@ const matchKnowledgeDish = createDiscoveryMatcher(
     .map((dish) => ({ ...knowledgeDescriptor(dish), dish })),
 );
 
-function suggestionDescriptor(dish: DishSuggestion): DiscoveryDishDescriptor {
-  return {
-    label: dish.label,
-    query: dish.query,
-    aliases: dish.aliases,
-  };
-}
-
 function knowledgeDishForLiveItem(item: DishBrowseItem): KnowledgeDish | null {
   return matchKnowledgeDish(item)?.dish ?? null;
 }
@@ -89,7 +80,7 @@ function discoveryScopeForCuisines(cuisineScope: readonly Cuisine[]): CuisineDis
 
 function liveItemsForDiscoveryScope(items: readonly DishBrowseItem[], scope: readonly CuisineDiscoveryDish[]): DishBrowseItem[] {
   if (scope.length === 0) return [];
-  return items.filter((item) => scope.some(({ dish }) => liveDishMatchesDescriptor(item, suggestionDescriptor(dish))));
+  return items.filter((item) => scope.some(({ dish }) => liveDishMatchesDescriptor(item, dish)));
 }
 
 export function DishBrowse({
@@ -178,7 +169,7 @@ export function DishBrowse({
       .filter(({ dish }) => matchesText([dish.label, dish.query, ...dish.aliases], normalizedFilter))
       .map((entry) => ({
         ...entry,
-        restaurantCount: discoveryCoverage(data.dishes, suggestionDescriptor(entry.dish)).restaurantCount,
+        restaurantCount: discoveryCoverage(data.dishes, entry.dish).restaurantCount,
       }))
       .sort((left, right) => {
         const leftCovered = left.restaurantCount > 0 ? 1 : 0;

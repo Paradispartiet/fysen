@@ -5,6 +5,7 @@ export type FoodDishCatalogEntry = {
   readonly name: string;
   readonly query: string;
   readonly aliases: readonly string[];
+  readonly matchLabel?: boolean;
   readonly cuisine: string;
   readonly region: string;
   readonly explorerPriority: number;

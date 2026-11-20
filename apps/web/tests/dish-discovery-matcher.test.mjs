@@ -37,6 +37,16 @@ test("first descriptor order wins even when a later descriptor matches exactly",
   assert.equal(discovery.createDiscoveryMatcher([])(item), null);
 });
 
+test("a menu can require a qualified name for an ambiguous display label", () => {
+  const descriptor = { label: "Shiro", query: "shiro w salad", aliases: ["shiro meser", "shiro v"], matchLabel: false };
+  const match = discovery.createDiscoveryMatcher([descriptor]);
+  assert.equal(match({ name: "Shiro", query: "shiro" }), null);
+  assert.equal(match({ name: "Shiro (V)", query: "shiro v" }), descriptor);
+  const sushi = { name: "Shiro", query: "shiro", restaurantCount: 5, restaurantExamples: [] };
+  const shiro = { name: "Shiro w/salad", query: "shiro w salad", restaurantCount: 1, restaurantExamples: [] };
+  assert.deepEqual(discovery.discoveryCoverage([sushi, shiro], descriptor).matchedDishes, [shiro]);
+});
+
 // The existing matcher is the compatibility oracle; literals above independently
 // cover the boundary cases that a shared matching regression could otherwise hide.
 test("prepared matching agrees with existing matching for every descriptor and item", () => {
