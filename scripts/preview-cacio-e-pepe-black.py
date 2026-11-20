@@ -66,12 +66,12 @@ fraction1=export("black-contour",mask)
 
 small=photo.copy();small.thumbnail((1100,1100),Image.Resampling.LANCZOS)
 sw,sh=small.size
-m=cv2.resize(mask,(sw,sh),interpolation=cv2.INTER_NEAREST)
-inside=cv2.erode(m,cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(41,41)))
-outside=cv2.dilate(m,cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(35,35)))
+preview_mask=cv2.resize(mask,(sw,sh),interpolation=cv2.INTER_NEAREST)
+inside=cv2.erode(preview_mask,cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(41,41)))
+outside=cv2.dilate(preview_mask,cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(35,35)))
 labels=np.full((sh,sw),cv2.GC_BGD,np.uint8)
 labels[outside>0]=cv2.GC_PR_BGD
-labels[m>0]=cv2.GC_PR_FGD
+labels[preview_mask>0]=cv2.GC_PR_FGD
 labels[inside>0]=cv2.GC_FGD
 bg=np.zeros((1,65),np.float64);fg=np.zeros((1,65),np.float64)
 cv2.grabCut(cv2.cvtColor(np.asarray(small),cv2.COLOR_RGB2BGR),labels,None,bg,fg,5,cv2.GC_INIT_WITH_MASK)
