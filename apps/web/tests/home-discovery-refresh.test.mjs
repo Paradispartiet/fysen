@@ -60,6 +60,23 @@ test("kitchens open with all geography and only twelve proposals before opt-in e
   assert.match(explorer, /seenNames\.has\(name\)/u);
 });
 
+test("kitchen dishes use small imagery and opt-in restaurant examples without inventing availability", () => {
+  const styles = read("styles/cuisine-explorer-v2-3.css");
+  assert.match(explorer, /className="cuisineExploreDishIdentity"/u);
+  assert.match(explorer, /<DishPhotoThumbnail dishId=\{dish\.id\} label=\{dish\.label\} \/>/u);
+  assert.match(explorer, /className="cuisineExploreDishEvidence"/u);
+  assert.match(explorer, /restaurantCount > 0/u);
+  assert.match(explorer, /ingen bekreftede treff i menyoversikten/u);
+  assert.match(explorer, /"Søk etter retten"/u);
+  assert.match(explorer, /className="cuisineExploreRestaurantDetails"/u);
+  assert.match(explorer, /<summary>/u);
+  assert.doesNotMatch(explorer, /<details className="cuisineExploreRestaurantDetails"[^>]*\sopen(?:\s|>)/u);
+  assert.match(styles, /\.cuisineExploreDishIdentity \.dishPhotoSmall/u);
+  assert.match(styles, /width: 38px;\s*height: 38px/u);
+  assert.match(styles, /width: 34px;\s*height: 34px/u);
+  assert.match(styles, /\.cuisineExploreRestaurantDetails ul/u);
+});
+
 test("Matlyst gallery is closed by default and shows all approved images only on request", () => {
   assert.match(gallery, /<details className="dishPhotos" aria-labelledby="dish-photos-title">/u);
   assert.doesNotMatch(gallery, /<details[^>]+\sopen(?:\s|>)/u);
