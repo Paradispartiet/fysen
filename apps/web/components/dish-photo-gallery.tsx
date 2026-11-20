@@ -195,6 +195,10 @@ export function DishPhotoGallery() {
             Stekt hvit fisk <span aria-hidden="true">↗</span>
           </a>
           <small>Hvit fisk-foto: Valeria Boltneva / Pexels, <a href="/dish-images/stekt-hvit-fisk-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/tiramisu-master-6240.avif" target="_blank" rel="noopener noreferrer">
+            Tiramisu <span aria-hidden="true">↗</span>
+          </a>
+          <small>Tiramisu-foto: Arian Fernandez / Pexels, <a href="/dish-images/tiramisu-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
         </nav>
       </div>
     </details>
