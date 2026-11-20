@@ -143,7 +143,7 @@ def main():
       'test("Pad Thai uses the source-verified shrimp photo only for the correct variant", () => {',1)
     t=t.replace(
       '  assert.doesNotMatch(css, /pad-thai\\\\.avif/u);',
-      '  assert.match(css, /pad-thai-reker-thumb-512\\\\.avif/u);\n  assert.equal(manifest.images[12].kind, "Redaksjonelt rettfoto");',1)
+      '  assert.match(css, /pad-thai-reker-thumb-512[.]avif/u);\n  assert.equal(manifest.images[12].kind, "Redaksjonelt rettfoto");',1)
     tests.write_text(t,encoding="utf8")
     # Generic Pexels photo source requirements are already verified in the
     # separate quality test, no changes to its general thresholds.
