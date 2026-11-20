@@ -1,0 +1,25 @@
+{
+  "dish_id": "tom-yum",
+  "source_photo_id": 34699480,
+  "photographer": "UNDO KIM",
+  "description": "Thai Tom yum with shrimp, herbs and broth",
+  "photo_page": "https://www.pexels.com/photo/34699480/",
+  "original_url": "https://images.pexels.com/photos/34699480/pexels-photo-34699480.jpeg",
+  "license": "https://www.pexels.com/license/",
+  "original_dimensions": [
+    3648,
+    5472
+  ],
+  "original_sha256": "d9a46ca92c72dc94a5dff5f27192e595121c12855afd124045248db24ad6ed2c",
+  "photo_is_representative": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "required_checks": [
+    "whole shrimp soup bowl visible, real prawns/mushrooms/lemongrass identifiable",
+    "native 1:1 focus and food texture, no AI pixels or upscaling",
+    "clean matte black background and complete bowl edge after masking",
+    "independent 512px thumbnail and >=1600px original only after explicit approval",
+    "no assertion that this is the serving of a Fysen-listed restaurant"
+  ]
+}
