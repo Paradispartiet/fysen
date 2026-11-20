@@ -183,7 +183,7 @@ def main():
   assert.match(photo.photoCredit, /DocteurCosmos.*CC BY-SA 3\.0/u);
   assert.match(photo.photoSource, /commons\.wikimedia\.org/u);
   assert.match(photo.variantCaution, /pecorino/u);
-  assert.match(photo.variantCaution, /ikke restaurantfoto/u);
+  assert.match(photo.variantCaution, /ikke restaurantfoto/iu);
   const ispe = cacioEPepeImage.indexOf(Buffer.from("ispe"));
   assert.ok(ispe > 0);
   assert.equal(cacioEPepeImage.readUInt32BE(ispe + 8), 512);
