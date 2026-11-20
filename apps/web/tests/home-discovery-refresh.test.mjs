@@ -66,9 +66,16 @@ test("kitchen dishes use small imagery and opt-in restaurant examples without in
   assert.match(explorer, /<DishPhotoThumbnail dishId=\{dish\.id\} label=\{dish\.label\} \/>/u);
   assert.match(explorer, /className="cuisineExploreDishEvidence"/u);
   assert.match(explorer, /restaurantCount > 0/u);
-  assert.match(explorer, /ingen bekreftede treff i menyoversikten/u);
+  assert.match(explorer, /menuEvidenceLabel\(evidenceKind, restaurantCount\)/u);
+  assert.match(explorer, /evidenceKind: "unavailable"/u);
+  assert.match(explorer, /evidenceKind: coverage \? "archive" : "unchecked"/u);
   assert.match(explorer, /"Søk etter retten"/u);
   assert.match(explorer, /className="cuisineExploreRestaurantDetails"/u);
+  assert.match(explorer, /className="cuisineExploreRestaurantExample"/u);
+  assert.match(explorer, /restaurant\.sourceUrl \?/u);
+  assert.match(explorer, /href=\{restaurant\.sourceUrl\}/u);
+  assert.match(explorer, /restaurant\.observedAt\.slice\(0, 10\)/u);
+  assert.doesNotMatch(explorer, /<a href=\{dishSearchHref\(dish\.query\)\}>\s*<strong>\{restaurant\.name\}<\/strong>/u);
   assert.match(explorer, /<summary>/u);
   assert.doesNotMatch(explorer, /<details className="cuisineExploreRestaurantDetails"[^>]*\sopen(?:\s|>)/u);
   assert.match(styles, /\.cuisineExploreDishIdentity \.dishPhotoSmall/u);
