@@ -18,7 +18,7 @@
   "visual_review_completed": true,
   "approved_for_fysen": true,
   "published": false,
-  "warning": "Source has no clearly visible pineapple and a partly clipped plate rim; inspect all tortillas, cilantro and lime at full size. Masked previews are NOT approved.",
+  "warning": "Ingen tydelig synlig ananas i originalfotoet; noe tallerkenkant var avskåret. Kun den visuelt gjennomgåtte black-clean-grabcut-varianten er godkjent. Øvrige forslag er ikke godkjent; ingen publisering.",
   "reviewed_variant": "black-clean-grabcut",
   "reviewed_preview_sha256": "18c0941a33ff6175d7241ab37d5747b6a5bedc38248369407f0069c5d4a7dadf",
   "original_processed_sha256": "a26cd9a549f1cb01cb85a3495ea6070ebb21841d6171dd75f9eea4526e52b04b",
