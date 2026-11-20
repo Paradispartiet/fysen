@@ -241,3 +241,60 @@ Gjenopprettingsprosjektet dekker alle 983 aktive menykilder med minst én menypo
 - [Supabase størrelse, disk og Fair Use](https://supabase.com/docs/guides/platform/database-size)
 
 Dokumentstatus: Gratisdrift valgt. Destruktiv opprydding, databaseoverføring, restart av stoppet full-disk original eller abonnement er **ikke godkjent**.
+
+## Komplett 29-tabells backup-inventar – 20. november 2026
+
+**Read-only, eksakte antall fra én SQL-SELECT-setning per prosjekt**, ikke en transaksjonelt frosset felles backup eller bevis på radparitet. Begge prosjekter ble lest i samme kontrollrunde 20.11.2026. Ingen private ID-er, innhold, e-post, tokens eller søkerader ble hentet. Tall kan fort endres.
+
+| Applikasjonstabell | Original | Recovery |
+|---|---:|---:|
+| `fysen.aha_analysis_handoffs` | 0 | 0 |
+| `fysen.aha_consumer_audit_log` | 0 | 0 |
+| `fysen.aha_consumer_sessions` | 0 | 0 |
+| `fysen.conversion_events` | 1 | 0 |
+| `fysen.dish_aliases` | 7 | 7 |
+| `fysen.dish_concepts` | 3 | 3 |
+| `fysen.menu_changes` | 54 472 | 0 |
+| `fysen.menu_items` | 1 709 517 | 42 000 |
+| `fysen.menu_snapshots` | 34 447 | 3 096 |
+| `fysen.menu_source_support_origins` | 14 | 0 |
+| `fysen.menu_sources` | 1 154 | 1 154 |
+| `fysen.menu_watch_runs` | 111 963 | 0 |
+| `fysen.min_mat_items` | 0 | 0 |
+| `fysen.restaurant_access_grants` | 0 | 0 |
+| `fysen.restaurant_action_verification_runs` | 213 | 0 |
+| `fysen.restaurant_actions` | 41 | 0 |
+| `fysen.restaurant_claim_audit_log` | 0 | 0 |
+| `fysen.restaurant_claims` | 0 | 0 |
+| `fysen.restaurant_hours_intervals` | 729 | 0 |
+| `fysen.restaurant_hours_snapshots` | 108 | 0 |
+| `fysen.restaurant_hours_sources` | 41 | 0 |
+| `fysen.restaurant_hours_watch_runs` | 12 111 | 0 |
+| `fysen.restaurant_owned_profiles` | 0 | 0 |
+| `fysen.restaurant_pro_access_audit_log` | 0 | 0 |
+| `fysen.restaurant_pro_sessions` | 0 | 0 |
+| `fysen.restaurant_pro_setup_tokens` | 0 | 0 |
+| `fysen.restaurants` | 1 116 | 1 116 |
+| `fysen.search_events` | 1 335 | 0 |
+| `fysen.search_result_impressions` | 7 261 | 0 |
+| **Sum (29 tabeller)** | **1 934 533** | **47 376** |
+
+**14 tabeller har ulikt antall:** 12 har rader i originalen og null i recovery, og `menu_items`/`menu_snapshots` finnes med langt færre rader i recovery. **15 tabeller har likt antall**, men dette sier ikke at primærnøkler, innhold, rettigheter eller FK-relasjoner er like. Å summere radantall på tvers av relaterte tabeller betyr ikke at 1,89 millioner unike objekter må kopieres til recovery. Offentlig arkiv kan fortsatt betjene store deler av menyinnholdet uten å legge all historikk i Free-databasen.
+
+**Databasestørrelse og modus, direkte Supabase-kontroll:** Original `pg_database_size()` = **1 667 312 787 byte** (~1,67 GB), recovery = **62 559 923 byte** (~62,6 MB). Begge prosjektstatuser `ACTIVE_HEALTHY` og begge viste `transaction_read_only = off`, `default_transaction_read_only = off` på kontrollsesjonen; Supabase-organisasjonen står på **Free**. Dette **beviser ikke** fungerende app-skriving, opphevet Fair Use-restriksjon eller tilgjengelig budsjett for historisk databaseimport. Supabase-dokumentasjonen per 20. november oppgir 500 MB databasekvote per Free-prosjekt, mens read-only kan være basert på diskandel og Fair Use er en egen kontroll: https://supabase.com/docs/guides/platform/database-size. Ingen betalt oppgradering er godkjent.
+
+**Eksterne avhengigheter i de undersøkte databaseobjektene:** `auth.users=0`, `auth.identities=0`, `storage.objects=0`, `storage.buckets=0` i **begge** prosjektene; `fysen` har 0 fremmednøkler til tabeller utenfor `fysen`. Disse målingene avgrenser database-restore, men utelukker ikke klienttokens, Vercel-konfigurasjon, eksterne AHA-systemer eller edge-funksjoner som avhengigheter.
+
+**Avvik mellom bevart historisk dump og originalen i dag:** Den verifiserte seks-tabellsdumpen fra 2. november har **1 997 348 `menu_items`**, **40 707 `menu_snapshots`** og **100 172 `menu_changes`**, mens dagens original har hhv. **1 709 517**, **34 447** og **54 472**. At historisk dump har flere rader er **ikke i seg selv bevis på hvilken operasjon som fjernet dem**. En lesekontroll av PostgreSQLs statistikk ga ingen pålitelig historisk årsak; sletting, restorer eller annet vedlikehold må ikke tilskrives noen uten separat evidens. **Bevar begge tidslag**; en nyere eksport må aldri erstatte eller overskrive historisk sikkerhetskopi.
+
+**Arkivkildens varighet og direkte referanse:** Den private Drive-mappen som ble dokumentert ved den opprinnelige eksporten er https://drive.google.com/drive/folders/1Ml52aXi2qr_2-smBrEXvgxGhBqgclIUW. Tidligere logg beskriver fire ZIP-deler som ble hentet tilbake, SHA-256-kontrollert og gjenopprettet; dette bekrefter kontrollen den gang, **ikke at de fire delene er til stede og tilgjengelige nå**. Google Drive er ikke tilgjengelig for direkte kontroll i denne sesjonen. GitHub-artifaktene fra 2. november har varslet utløp 2. desember og er **ikke** permanent backup.
+
+**Konkret sikker gjenopprettingsrekkefølge:**
+1. Sikre og kontroller fortsatt privat tilgang til alle fire Drive-delene; verifiser hver dels SHA-256 og dumpens originalhash (`1fd0385d2194ff6bcb80bc10cf04f577b4c970c9524a7c38a5f1382a7fefba0e`). Gjenopprett i beskyttet isolasjon, ikke i recovery.
+2. Lag en **ny kryptert full-export fra originalen av hele `fysen`-skjemaet** (alle 29 applikasjonstabeller, originalens register og tilhørende sekvens-/DDL-metadata), men **ikke** som ukryptert GitHub-artifakt, offentlig repository-fil, CI-logg eller ChatGPT-vedlegg. Backupen skal leveres direkte til kontrollert privat lagringssted. Eksportens kilde, tidspunkt og hash må dokumenteres uten private raddata.
+3. Verifiser `pg_restore --list`, full isolert restore, eksakte tabellantall, FK-integritet, versjonsregisteret og de sist registrerte søkehendelsene. En nylig observert økning fra 1 333 til **1 335** søkehendelser understreker behovet for en eksplisitt frysetids-/differansekontroll.
+4. Behold 2. november-arkivet uendret som egen historisk kilde. Test restaurering sammen med ny fullbackup og eventuelle anonymiserte eller sikkert lagrede historiske koblingsmanifester; **aldri slå sammen på grunnlag av antall alene**.
+5. Før en eventuell separat godkjent overgang: dokumenter privat tilgangsmodell, Free/Fair Use-status, apptester, gjenopprettingsmulighet og rollback. Importer ikke hele ~1,67 GB til et Free-prosjekt med 500 MB kvote.
+
+**HOLD:** Ingen dump er produsert i denne sesjonen fordi korrekt privat langtidsmål og krypterte nøkler ikke er tilgjengelige for direkte, sikker eksport. Ingen SQL-skriving, skyopplasting, offentlig artifakt, merge eller deploy.
+
