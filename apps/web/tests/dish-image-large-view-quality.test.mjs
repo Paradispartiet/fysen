@@ -183,6 +183,14 @@ test("Editorial food photos are only large-view enabled with real provenance and
       const notice = readFileSync(path.join(imageRoot, "pizza-marinara-LICENSE.txt"), "utf8");
       assert.match(notice, /Foto: Peter Van den Bossche/u);
       assert.match(notice, /CC BY-SA 2\.0/u);
+    } else if (photo.id === "cacio-e-pepe") {
+      assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
+      assert.match(photo.photoCredit, /DocteurCosmos.*CC BY-SA 3\.0/u);
+      assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by-sa/3.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/cacio-e-pepe-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "cacio-e-pepe-LICENSE.txt"), "utf8");
+      assert.match(notice, /Foto: DC \(DocteurCosmos\)/u);
+      assert.match(notice, /CC BY-SA 3\.0/u);
     } else if (photo.id === "pizza-prosciutto") {
       assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
       assert.match(photo.photoCredit, /Amin.*CC BY-SA 4\.0/u);
