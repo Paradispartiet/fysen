@@ -1,0 +1,18 @@
+{
+  "dish_id": "pizza-prosciutto",
+  "photo_id": 10875206,
+  "photographer": "Valeria Boltneva",
+  "source_page": "https://www.pexels.com/photo/prosciutto-ham-toppings-on-pizza-10875206/",
+  "source_url": "https://images.pexels.com/photos/10875206/pexels-photo-10875206.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "source_sha256": "423ab94e9c85cbcac1fae1dac594ea4d93901ab8091c17c30cd4cc85fad133dc",
+  "source_width": 4480,
+  "source_height": 6720,
+  "source_verified": true,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "target": "Entire pizza with visible prosciutto, mozzarella and greens; real sharp source pixels and pure black surrounding background without artifacts.",
+  "review_criteria": "Do not approve close-ups with cut-off pizza, weak source detail, unsightly isolation, invented ingredients, or incorrect photo rights. No upscaling and no restaurant-specific claims."
+}

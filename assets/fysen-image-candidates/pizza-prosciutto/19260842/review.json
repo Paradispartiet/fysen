@@ -1,0 +1,18 @@
+{
+  "dish_id": "pizza-prosciutto",
+  "photo_id": 19260842,
+  "photographer": "Giona Mason",
+  "source_page": "https://www.pexels.com/photo/ham-and-cheese-on-pizza-19260842/",
+  "source_url": "https://images.pexels.com/photos/19260842/pexels-photo-19260842.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "source_sha256": "41888005aa77b11500fe13b96e0a50c288743bfa75d3e3c6651c8996bbeeafd4",
+  "source_width": 6000,
+  "source_height": 4000,
+  "source_verified": true,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "target": "Entire pizza with visible prosciutto, mozzarella and greens; real sharp source pixels and pure black surrounding background without artifacts.",
+  "review_criteria": "Do not approve close-ups with cut-off pizza, weak source detail, unsightly isolation, invented ingredients, or incorrect photo rights. No upscaling and no restaurant-specific claims."
+}

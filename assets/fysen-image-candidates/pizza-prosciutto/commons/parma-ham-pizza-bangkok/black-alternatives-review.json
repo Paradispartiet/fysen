@@ -1,0 +1,23 @@
+{
+  "original_page": "https://commons.wikimedia.org/wiki/File:Parma_ham_pizza_Prosciutto_crudo_laliva_restaurant_bangkok.jpg",
+  "original_sha256": "073df3775ede40db4cffb30413023f5ae5616d28f6e68ee8317ec95ed76b8efc",
+  "photographer": "Amin",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "original_dimensions": [
+    3949,
+    2920
+  ],
+  "food_pixels_upscaled": false,
+  "synthetic_food_generated": false,
+  "variant": "Prosciutto crudo pizza with burrata, rocket, cherry tomatoes",
+  "polygon_foreground_fraction": 0.38179433322811046,
+  "grabcut_foreground_fraction": 0.37043087030876554,
+  "review_required": "Inspect both black previews: all original crust intact, no wooden board/paper/cutlery retained, clean edges and natural food details at 1:1. No approval merely from a green technical run.",
+  "approved_for_fysen": true,
+  "visual_review_completed": true,
+  "published": false,
+  "full_avif_sha256": "a70befb567735756f425792a5e0e4089af544c1a78f31f6d51c86e948aa85627",
+  "retained_native_sha256": "f9ea72a0fd7549c119126c640ef86a48695702059d0a61d894a85d50bffc916d",
+  "matched_preview_sha256": "74474bc71e2eaf7657c074b3f0307099048c2c4413bec6edda1447abdb65fce1"
+}

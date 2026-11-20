@@ -1,0 +1,20 @@
+{
+  "dish_id": "pizza-prosciutto",
+  "source_file": "Pizza with eggs and crispy prosciutto - San Francisco.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Pizza_with_eggs_and_crispy_prosciutto_-_San_Francisco.jpg",
+  "source_url": "https://upload.wikimedia.org/wikipedia/commons/8/87/Pizza_with_eggs_and_crispy_prosciutto_-_San_Francisco.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+  "author_claim": "license/author to verify",
+  "license_claim": "CC0 claimed; verify",
+  "source_dimensions": [
+    2494,
+    2246
+  ],
+  "source_sha256": "ae44805a1f8e489e358235904b2a8e6913ec2347735eb03a4530b8b548e3f571",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "required": "Photographic pizza with prosciutto crudo, intact whole serving, good native 1:1 sharpness, black background feasible without masking the food, licensing verified."
+}

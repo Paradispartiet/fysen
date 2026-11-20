@@ -1,0 +1,18 @@
+{
+  "dish_id": "pizza-prosciutto",
+  "photo_id": 18285316,
+  "photographer": "Valeria Boltneva",
+  "source_page": "https://www.pexels.com/photo/delicious-pizza-on-board-on-wooden-table-18285316/",
+  "source_url": "https://images.pexels.com/photos/18285316/pexels-photo-18285316.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "source_sha256": "ff1d08bd7b5b665ae15139a39c80dd0473a0d342338c89b95147df385278003d",
+  "source_width": 5464,
+  "source_height": 8192,
+  "source_verified": true,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "target": "Entire pizza with visible prosciutto, mozzarella and greens; real sharp source pixels and pure black surrounding background without artifacts.",
+  "review_criteria": "Do not approve close-ups with cut-off pizza, weak source detail, unsightly isolation, invented ingredients, or incorrect photo rights. No upscaling and no restaurant-specific claims."
+}

@@ -177,7 +177,11 @@ export function DishPhotoGallery() {
             Tagliatelle bolognese <span aria-hidden="true">↗</span>
           </a>
           <small>Tagliatelle-foto: Alex Sirac, <a href="/dish-images/pasta-bolognese-LICENSE.txt" target="_blank" rel="noopener noreferrer">CC BY 4.0 (bearbeidet, kilde og lisens)</a>.</small>
-          <a href="/dish-images/pasta-carbonara-master-2600.avif" target="_blank" rel="noopener noreferrer">
+          <a href="/dish-images/pizza-prosciutto-master-3949.avif" target="_blank" rel="noopener noreferrer">
+            Pizza med prosciutto <span aria-hidden="true">↗</span>
+          </a>
+          <small>Prosciutto-foto: Amin, <a href="/dish-images/pizza-prosciutto-LICENSE.txt" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0 (bearbeidet, kilde og lisens)</a>.</small>
+          <a href="/dish-images/pasta-carbonara-master-2600.avif" target="_blank" rel="noopener noreferrer>
             Pasta carbonara <span aria-hidden="true">↗</span>
           </a>
           <a href="/dish-images/butter-chicken-master-3000.avif" target="_blank" rel="noopener noreferrer">

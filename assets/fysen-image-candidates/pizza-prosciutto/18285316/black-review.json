@@ -1,0 +1,20 @@
+{
+  "photo_id": 18285316,
+  "source_sha256": "ff1d08bd7b5b665ae15139a39c80dd0473a0d342338c89b95147df385278003d",
+  "native_source_dimensions": [
+    5464,
+    8192
+  ],
+  "native_output_dimensions": [
+    5464,
+    6000
+  ],
+  "original_pixels_upscaled": false,
+  "new_ingredients_generated": false,
+  "mask_method": "cv2 GrabCut at 1500px; native pixels retained; crop background only",
+  "mask_foreground_fraction": 0.6417646666666666,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "review_requirements": "Confirm entire crust is intact, pizza toppings not clipped, no hand/flower or table edges survive, pure black around pizza, native 1:1 sharpness."
+}

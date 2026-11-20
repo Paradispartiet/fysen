@@ -1,0 +1,18 @@
+{
+  "dish_id": "pizza-prosciutto",
+  "photo_id": 16677736,
+  "photographer": "Valeria Boltneva",
+  "source_page": "https://www.pexels.com/photo/delicious-pizza-with-ham-and-cheese-16677736/",
+  "source_url": "https://images.pexels.com/photos/16677736/pexels-photo-16677736.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "source_sha256": "07212e045ac1ea567f1e086dcebd638c119c2ebedccc52d44bb3a8147e36fa4a",
+  "source_width": 8192,
+  "source_height": 5464,
+  "source_verified": true,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "target": "Entire pizza with visible prosciutto, mozzarella and greens; real sharp source pixels and pure black surrounding background without artifacts.",
+  "review_criteria": "Do not approve close-ups with cut-off pizza, weak source detail, unsightly isolation, invented ingredients, or incorrect photo rights. No upscaling and no restaurant-specific claims."
+}

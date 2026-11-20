@@ -1,0 +1,18 @@
+{
+  "dish_id": "pizza-prosciutto",
+  "photo_id": 34413630,
+  "photographer": "Pexels contributor – verify",
+  "source_page": "https://www.pexels.com/photo/delicious-homemade-italian-pizza-on-wooden-table-34413630/",
+  "source_url": "https://images.pexels.com/photos/34413630/pexels-photo-34413630.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "source_sha256": "b1d58ab4d41ce597f1ce1bfc222a8c10ac9af66c6b7e8b87ca9e1f1b9c0eacb5",
+  "source_width": 4000,
+  "source_height": 6000,
+  "source_verified": true,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "target": "Entire pizza with visible prosciutto, mozzarella and greens; real sharp source pixels and pure black surrounding background without artifacts.",
+  "review_criteria": "Do not approve close-ups with cut-off pizza, weak source detail, unsightly isolation, invented ingredients, or incorrect photo rights. No upscaling and no restaurant-specific claims."
+}
