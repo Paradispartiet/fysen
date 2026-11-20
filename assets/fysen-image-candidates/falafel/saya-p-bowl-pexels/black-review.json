@@ -1,0 +1,24 @@
+{
+  "dish_id": "falafel",
+  "catalog_id": "falafel",
+  "source_original_sha256": "71c3b13a73f29715bb618be69738a2fcca2f2abd1ce7f2f279b2526f8232cfa4",
+  "source_native_dimensions": [
+    4284,
+    5712
+  ],
+  "photo_page": "https://www.pexels.com/nb-no/bilde/deilig-falafelbolle-med-hummus-og-salat-39976633/",
+  "photographer": "Saya P / Pexels",
+  "license_url": "https://www.pexels.com/license/",
+  "no_upscale": true,
+  "generated_food_pixels": false,
+  "contour_fraction": 0.37250226888140875,
+  "grabcut_fraction": 0.36099881128922157,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
+  "published": false,
+  "quality_gate": "One complete round bowl of falafel and hummus with intact original ceramic rim; no white extra plate, glass, wood, clipped balls, holes or halos. Native source image only.",
+  "reviewed_variant": "black-grabcut",
+  "reviewed_preview_sha256": "c335369658464fae96f3815cdb99888cbb17218d945f9dce73e6f77ff4b99969",
+  "original_processed_sha256": "bd5a47e833d90a324dd808091e313630924fc1bb293c46016ecb61fff10e72a9",
+  "master_avif_sha256": "a4f40d342e9379f0ccf0a831d616fae2616dfb34d0003309fde55ec188535ea8"
+}

@@ -231,7 +231,7 @@
 }
 .dishPhotoThumb.dishPhotoFalafel,
 .dishPhotoSmall.dishPhotoFalafel {
-  background: #000 url("/dish-images/falafel-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/falafel-thumb-512.avif") center / contain no-repeat;
 }
 
 /* New 768px standalone editorial illustrations. Exact dish IDs only; never restaurant photos. */
