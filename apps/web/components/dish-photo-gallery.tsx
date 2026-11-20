@@ -151,12 +151,32 @@ export function DishPhotoGallery() {
         {/* Only reviewed largeSource assets are linked here. Cards stay compact and keep their menu-search action. */}
         <nav className="dishPhotosLargeLinks" aria-label="Godkjente rettbilder i full størrelse">
           <span>Se skarpe originalbilder:</span>
+          <a href="/dish-images/pizza-margherita-master-3000.avif" target="_blank" rel="noopener noreferrer">
+            Pizza margherita <span aria-hidden="true">↗</span>
+          </a>
+          <a href="/dish-images/cheeseburger-master-2185.avif" target="_blank" rel="noopener noreferrer">
+            Cheeseburger med bacon <span aria-hidden="true">↗</span>
+          </a>
+          <a href="/dish-images/grillet-laks-master-3489.avif" target="_blank" rel="noopener noreferrer">
+            Grillet laks <span aria-hidden="true">↗</span>
+          </a>
+          <a href="/dish-images/grillet-biff-master-6000.avif" target="_blank" rel="noopener noreferrer">
+            Grillet biff <span aria-hidden="true">↗</span>
+          </a>
+          <a href="/dish-images/rekesmorbrod-master-5899.avif" target="_blank" rel="noopener noreferrer">
+            Rekesmørbrød <span aria-hidden="true">↗</span>
+          </a>
+          <small>Rekesmørbrød-foto: Susanne Nilsson, <a href="/dish-images/rekesmorbrod-LICENSE.txt" target="_blank" rel="noopener noreferrer">CC BY-SA 2.0 (bearbeidet, kilde og lisens)</a>.</small>
           <a href="/dish-images/sushi-master-2100.avif" target="_blank" rel="noopener noreferrer">
             Sushi assortert <span aria-hidden="true">↗</span>
           </a>
           <a href="/dish-images/ramen-master-7364.avif" target="_blank" rel="noopener noreferrer">
             Ramen med svin og egg <span aria-hidden="true">↗</span>
           </a>
+          <a href="/dish-images/pasta-bolognese-master-4000.avif" target="_blank" rel="noopener noreferrer">
+            Tagliatelle bolognese <span aria-hidden="true">↗</span>
+          </a>
+          <small>Tagliatelle-foto: Alex Sirac, <a href="/dish-images/pasta-bolognese-LICENSE.txt" target="_blank" rel="noopener noreferrer">CC BY 4.0 (bearbeidet, kilde og lisens)</a>.</small>
           <a href="/dish-images/pasta-carbonara-master-2600.avif" target="_blank" rel="noopener noreferrer">
             Pasta carbonara <span aria-hidden="true">↗</span>
           </a>

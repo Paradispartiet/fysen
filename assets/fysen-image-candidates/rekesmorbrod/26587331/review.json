@@ -1,0 +1,17 @@
+{
+  "dish_id": "rekesmorbrod",
+  "photo_id": 26587331,
+  "photographer": "Luiz Henrique Mendes",
+  "source_page": "https://www.pexels.com/photo/plate-of-french-toast-with-shrimp-in-sauce-26587331/",
+  "source_url": "https://images.pexels.com/photos/26587331/pexels-photo-26587331.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "source_sha256": "3e0d8766787b5f2d57db1c5c7ef8ab1eb43b494057bba5b9fcbe05f7c0aa3ef8",
+  "source_width": 4134,
+  "source_height": 6201,
+  "source_verified": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "required_variant": "open-faced Norwegian shrimp sandwich on visible bread with peeled shrimps and simple garnish",
+  "review_criteria": "Correct dish, crisp shrimp and bread at original 1:1 pixels, intact serving, solid black surrounding background with no missing food or edge artifacts. No fabricated ingredients or restaurant association."
+}

@@ -1,0 +1,23 @@
+{
+  "dish_id": "rekesmorbrod",
+  "photo_id": 40853857,
+  "source_sha256": "de9b42bd81dafda2cabc3551db63162f29119fdb4af61469b9a601cdc289fdf7",
+  "source_original_dimensions": [
+    4284,
+    5712
+  ],
+  "crop_native_dimensions": [
+    3950,
+    3340
+  ],
+  "output_sha256": "6cdc77e642dd99b8a4c55c7040807ceb8fa7336745979191a98b218c5a870eb7",
+  "mask_method": "U2Net foreground segmentation on thumbnail + hand-protected plate and sandwich alpha; only alpha mask was resized",
+  "native_food_pixels_resized": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "source_page": "https://www.pexels.com/photo/elegant-shrimp-sandwich-with-white-wine-40853857/",
+  "license_url": "https://www.pexels.com/license/",
+  "photographer": "Ida Jigfelt / Pexels",
+  "review_required": "Inspect fine dill and lemon edges, entire shrimp and turquoise plate, absence of wine glass, brown wall and other halo before approval."
+}

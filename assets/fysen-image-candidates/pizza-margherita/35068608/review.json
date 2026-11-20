@@ -1,0 +1,24 @@
+{
+  "dish_id": "pizza-margherita",
+  "photo_id": 35068608,
+  "photographer": "Rene Strgar",
+  "source_page": "https://www.pexels.com/photo/classic-margherita-pizza-on-marble-surface-35068608/",
+  "photo_url": "https://images.pexels.com/photos/35068608/pexels-photo-35068608.jpeg",
+  "license": "Pexels License",
+  "license_url": "https://www.pexels.com/license/",
+  "source_original_width": 4300,
+  "source_original_height": 5734,
+  "source_sha256": "989adee99434a80499bb41c807e6857ce901a53e99bad5526e4be21b33877b62",
+  "source_verified": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "criteria": [
+    "one whole margherita pizza with tomato, mozzarella and basil",
+    "crisp natural detail at native 1:1 pixels; no fake enlargement",
+    "single isolated dish; background can be cleanly made pure black",
+    "no extra topping that changes the dish variant",
+    "separate AVIF thumbnail and master after approval"
+  ],
+  "note": "Editorial candidate, not a specific restaurant's serving. Do not activate largeViewEnabled or publish before individual full-size visual review."
+}
