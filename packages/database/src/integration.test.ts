@@ -280,7 +280,7 @@ idx AS (
   SELECT format('%s|%s',indexname,indexdef) AS entry
   FROM pg_catalog.pg_indexes WHERE schemaname='fysen' AND tablename <> 'schema_migrations'
 )
-SELECT kind, count(*)::int AS entries, md5(coalesce(string_agg(entry,E'\\n' ORDER BY entry),'')) AS md5
+SELECT kind, count(*)::int AS entries, md5(coalesce(string_agg(entry,E'\n' ORDER BY entry),'')) AS md5
 FROM (SELECT 'tables' AS kind, entry FROM tab UNION ALL SELECT 'columns',entry FROM col
       UNION ALL SELECT 'constraints',entry FROM con UNION ALL SELECT 'indexes',entry FROM idx) x
 GROUP BY kind ORDER BY kind
@@ -302,17 +302,17 @@ rehearsalDescribe("isolated recovery ledger rehearsal", () => {
       throw new Error("FYSEN_REHEARSAL_REQUIRES_EPHEMERAL_LOCALHOST_POSTGRES");
     }
 
-    const dbName = `fysen_rehearsal_\${randomUUID().replaceAll("-", "")}`;
+    const dbName = `fysen_rehearsal_${randomUUID().replaceAll("-", "")}`;
     const admin = createDatabasePool({ connectionString: databaseUrl, maxConnections: 1, ssl: false });
     const sandboxUrl = new URL(base.toString());
-    sandboxUrl.pathname = `/\${dbName}`;
+    sandboxUrl.pathname = `/${dbName}`;
     let sandbox: Pool | null = null;
     let created = false;
 
     try {
       // The ci.yml service creates the local superuser 'fysen'; there is no
       // connection to production or recovery, and only synthetic seed data.
-      await admin.query(`CREATE DATABASE "\${dbName}" TEMPLATE template0`);
+      await admin.query(`CREATE DATABASE "${dbName}" TEMPLATE template0`);
       created = true;
       sandbox = createDatabasePool({ connectionString: sandboxUrl.toString(), maxConnections: 1, ssl: false });
 
@@ -362,7 +362,7 @@ rehearsalDescribe("isolated recovery ledger rehearsal", () => {
         .toBe(before.rows[0]?.count);
     } finally {
       if (sandbox) await sandbox.end();
-      if (created) await admin.query(`DROP DATABASE "\${dbName}" WITH (FORCE)`);
+      if (created) await admin.query(`DROP DATABASE "${dbName}" WITH (FORCE)`);
       await admin.end();
     }
   }, 120_000);
