@@ -32,6 +32,11 @@ SOURCES=[
  ("pexels",28897047,"shawarma-wraps-vegetables","ahmed kh. jami","Pexels License"),
  ("pexels",34318137,"beef-shawarma-wood-board","Bia Metidieri","Pexels License"),
  ("pexels",5779364,"shawarma-halved-closeup","RDNE Stock project","Pexels License"),
+ ("pexels",5191848,"grilled-kebab-pita","Shameel mukkath","Pexels License"),
+ ("pexels",8946552,"turkish-doner-sandwich","ENESFİLM","Pexels License"),
+ ("pexels",18425525,"beef-pita-fries","Moohsen","Pexels License"),
+ ("pexels",24550876,"handheld-doner-kebab","Helena Jankovičová Kováčová","Pexels License"),
+ ("pexels",18177324,"shawarma-sauce-fries","Omar B Shokerat","Pexels License"),
  ("pexels",6941000,"gyro-pita-with-fries","Pexels, verify","Pexels License"),
  ("pexels",5191848,"grilled-kebab-on-pita","Shameel mukkath","Pexels License"),
 
