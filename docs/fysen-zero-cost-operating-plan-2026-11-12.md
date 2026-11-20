@@ -141,6 +141,13 @@ Originalen har i tillegg `schema_migrations_pkey` på sin egen migrasjonstabell.
 
 **Tolkning:** Recovery ble registrert med *akkurat de samme migrasjons-SQL-filene* som finnes i Fysens repo på denne commiten. Det er sterkt bevis for migrasjonenes proveniens, men ikke alene bevis for at alle SQL-effekter, data, indekser, endringer etter migrering, private tilganger eller historiske nøkler samsvarer. `fysen.schema_migrations` må ikke opprettes eller stemples i den levende recovery-instansen ut fra dette beviset alene.
 
+**Alle fem observerte indeksavvik er nå sporet til konkrete SQL-filer (read-only, 20.11):**
+
+- **Tre indekser kun i originalen** — `menu_changes_current_snapshot_id_idx`, `menu_changes_previous_snapshot_id_idx` og `menu_watch_runs_snapshot_id_idx` — kommer ordrett fra originalens `supabase_migrations`-registrering `20261102213125 / fysen_retention_fk_indexes_20261102`. Indeksdefinisjonene i `pg_catalog` viser de samme tre kolonnene.
+- **To indekser kun i recovery** — `menu_changes_added_date_idx` og `menu_changes_added_source_key_idx` — kommer fra repoets `0023_recent_menu_additions.sql` og er også bekreftet i recovery-katalogen med korrekt kolonneliste og partial-index-predikat.
+
+Dermed er de **kjente fem indeksforskjellene forklart av dokumenterte migrasjonsforløp**. Dette fritar ikke fra å sammenligne hele katalogen i isolasjon, og tillater ikke sletting/oppretting av noen av indeksene i live prosjekt.
+
 **Presis neste port:**
 1. Sammenlign `pg_catalog` fra en ren, isolert 23-migrasjonsdatabase og recovery, med forklaring for alle avvik (inkludert forskjeller i indekser, extension-skjema og appens ledger); test en *kun lokal* ledger-rekonstruksjon og avvis gjenkjøring av gamle datamigrasjoner.
 2. Verifiser komplette, private SHA-256-kontrollerte backup- og restorebevis for alle historikk-/brukertabeller, uten eksport av persondata til CI-logger eller offentlige artefakter.
