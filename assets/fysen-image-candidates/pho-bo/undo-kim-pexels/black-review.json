@@ -13,8 +13,12 @@
   "food_pixels_generated": false,
   "contour_area_fraction": 0.4612887198464912,
   "grabcut_area_fraction": 0.4251146787152457,
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
-  "gate": "One complete genuine beef pho bowl with beef, broth and rice noodles. No wood, chopsticks, napkin, blue cloth, white halo, clipped rim or image enlargement. Inspect both previews and native 1400px detail."
+  "gate": "One complete genuine beef pho bowl with beef, broth and rice noodles. No wood, chopsticks, napkin, blue cloth, white halo, clipped rim or image enlargement. Inspect both previews and native 1400px detail.",
+  "reviewed_variant": "black-grabcut",
+  "visually_inspected_preview_sha256": "870c4a45f6246ebd327699a7a931c70e0005c7528abee4f442febabb15d004d2",
+  "retained_native_sha256": "1aec423a489e680ebabab64571db9fd40dafea1312eb07cbf25f7cdf609bbeb8",
+  "large_avif_sha256": "708f5d206eb8f6724af9d8345473a95d6cb3c56691b0494f4bfc43602ded85b7"
 }
