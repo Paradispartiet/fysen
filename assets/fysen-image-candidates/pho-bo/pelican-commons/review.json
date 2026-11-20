@@ -1,0 +1,17 @@
+{
+  "dish_id": "pho",
+  "variant": "phở bò (Vietnamese beef noodle soup)",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Beef_pho_(14698023972).jpg",
+  "source_url": "https://upload.wikimedia.org/wikipedia/commons/6/64/Beef_pho_%2814698023972%29.jpg",
+  "author": "pelican / Wikimedia Commons",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+  "native_width": 5472,
+  "native_height": 3648,
+  "source_sha256": "9e9e01be5672c77e55eb21ea2b698d69814f8c237d26c6f19be971777bb5994d",
+  "download_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "visual_gate": "Must show genuine beef phở with flat rice noodles, beef and broth, not vegetarian chicken pho or a different soup. Complete serving and ideally complete bowl; sharp native food pixels; no enlargement or invented content, black background natural after masking."
+}

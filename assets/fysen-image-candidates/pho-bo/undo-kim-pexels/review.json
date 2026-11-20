@@ -1,0 +1,17 @@
+{
+  "dish_id": "pho",
+  "variant": "phở bò (Vietnamese beef noodle soup)",
+  "source_page": "https://www.pexels.com/photo/delicious-bowl-of-traditional-vietnamese-pho-34683316/",
+  "source_url": "https://images.pexels.com/photos/34683316/pexels-photo-34683316.jpeg",
+  "author": "UNDO KIM / Pexels",
+  "license_url": "https://www.pexels.com/license/",
+  "native_width": 5472,
+  "native_height": 3648,
+  "source_sha256": "db5888021b873610a5a9987068008ef6a1d484d5ca0bc7454a9089c78df7b9e9",
+  "download_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "visual_gate": "Must show genuine beef phở with flat rice noodles, beef and broth, not vegetarian chicken pho or a different soup. Complete serving and ideally complete bowl; sharp native food pixels; no enlargement or invented content, black background natural after masking."
+}
