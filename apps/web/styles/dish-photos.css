@@ -227,7 +227,7 @@
    falafel med hummus. Aldri fremstill som bilder av en bestemt restaurant. */
 .dishPhotoThumb.dishPhotoPizzaMarinara,
 .dishPhotoSmall.dishPhotoPizzaMarinara {
-  background: #000 url("/dish-images/pizza-marinara-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/pizza-marinara-thumb-512.avif") center / contain no-repeat;
 }
 .dishPhotoThumb.dishPhotoFalafel,
 .dishPhotoSmall.dishPhotoFalafel {

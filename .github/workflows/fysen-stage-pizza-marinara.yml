@@ -1,0 +1,66 @@
+name: Fysen stage pizza marinara originals (review only)
+on:
+  push:
+    branches: [art/pizza-marinara-source-review-20261120]
+    paths:
+      - ".github/workflows/fysen-stage-pizza-marinara.yml"
+      - "scripts/stage-pizza-marinara-sources.py"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: fysen-marinara-source-review
+  cancel-in-progress: false
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install native image decoder
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0
+      - name: Download genuine unscaled source originals
+        run: python scripts/stage-pizza-marinara-sources.py
+      - name: Enforce review-only metadata and native pixel evidence
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          photos=list(Path('assets/fysen-image-candidates/pizza-marinara').glob('*/review.json'))
+          assert photos, 'No valid original candidates'
+          for file in photos:
+              review=json.loads(file.read_text())
+              assert review['source_download_verified']
+              assert not review['native_pixels_upscaled']
+              assert not review['visual_review_completed']
+              assert not review['approved_for_fysen']
+              assert not review['published']
+              assert min(review['native_width'],review['native_height'])>=1600
+              assert (file.parent/'native-detail-1400.jpg').is_file()
+          print(f'{len(photos)} candidates prepared for visual inspection; no promotion')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fysen-pizza-marinara-native-sources
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            assets/fysen-image-candidates/pizza-marinara/*/source.jpeg
+            assets/fysen-image-candidates/pizza-marinara/*/preview.jpg
+            assets/fysen-image-candidates/pizza-marinara/*/native-detail-1400.jpg
+            assets/fysen-image-candidates/pizza-marinara/*/review.json
+      - name: Commit only previews and source evidence to draft branch
+        run: |
+          find assets/fysen-image-candidates/pizza-marinara -name source.jpeg -delete
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-image-candidates/pizza-marinara
+          git diff --cached --quiet && exit 0
+          git commit -m "[pizza-marinara-source-bot] Stage unapproved full-photo candidates"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin HEAD:"$GITHUB_REF_NAME"
