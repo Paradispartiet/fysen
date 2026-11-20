@@ -25,10 +25,16 @@ import { foodTypesForCuisine, matchingCuisineFoodType } from "./cuisine-food-typ
 import { FoodIllustration } from "./food-illustration";
 import { CuisineCountryFlag } from "./cuisine-country-flag";
 
+type RestaurantExample = DishBrowseRestaurantExample & {
+  /** Only archived examples have a verified original-menu URL and observation timestamp. */
+  readonly sourceUrl?: string;
+  readonly observedAt?: string;
+};
+
 type DishCoverage = {
   readonly dish: DishSuggestion;
   readonly restaurantCount: number;
-  readonly restaurantExamples: readonly DishBrowseRestaurantExample[];
+  readonly restaurantExamples: readonly RestaurantExample[];
   readonly evidenceKind: MenuEvidenceKind;
 };
 
@@ -197,13 +203,26 @@ function DiscoveryDishList({
                     <span className="cuisineExploreRestaurantExample">
                       <strong>{restaurant.name}</strong>
                       <small>{restaurant.address}</small>
+                      {restaurant.observedAt ? (
+                        <small>Observert {restaurant.observedAt.slice(0, 10)}</small>
+                      ) : null}
+                      {restaurant.sourceUrl ? (
+                        <a
+                          className="cuisineExploreRestaurantSource"
+                          href={restaurant.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Åpne menykilden <span aria-hidden="true">↗</span>
+                        </a>
+                      ) : null}
                     </span>
                   </li>
                 ))}
               </ul>
               <p className="cuisineExploreRestaurantNote">
                 {evidenceKind === "archive"
-                  ? "Historiske eksempler. Kontroller aktuell meny før du besøker restauranten."
+                  ? "Arkiverte menykilder er historiske. Kontroller gjeldende meny hos restauranten."
                   : "Eksempler fra menyoversikten. Bruk «Se menytreff» for å søke etter retten."}
               </p>
             </details>
