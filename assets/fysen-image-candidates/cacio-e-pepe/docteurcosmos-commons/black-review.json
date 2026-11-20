@@ -1,0 +1,19 @@
+{
+  "dish_id": "cacio-e-pepe",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Spaghetti_cacio_e_pepe.jpg",
+  "source_original_sha256": "0a1052ce8f629790850053aa7be8a52b53ee23a68b6914a8dd3199dba6418965",
+  "source_dimensions": [
+    4577,
+    2498
+  ],
+  "photographer": "DC (DocteurCosmos) / Wikimedia Commons",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+  "native_pixels_upscaled": false,
+  "food_pixels_generated": false,
+  "black_contour_area_fraction": 0.541493977353611,
+  "black_grabcut_area_fraction": 0.522434727331789,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "review_gate": "One full authentic cacio e pepe serving and whole plate. No glass, cutlery, white tabletop or halo retained. Correct pecorino, pasta and pepper; no upscaling."
+}
