@@ -38,13 +38,16 @@ Verktøyet blokkerer GitHub Actions/CI, svak TLS og manglende CA/vertsnavnkontro
 ## Restore-kontroll i isolasjon (ikke på Supabase)
 
 1. Kopier den krypterte filen og .sha256-filen tilbake fra den private lagringsdestinasjonen. Kontroller med 'sha256sum -c' fra katalogen som inneholder filene.
-2. Med din **private** age-identitet, inspiser innholdet uten å skrive ut raddata:
+2. Med din **private** age-identitet og originalens krypterte arkiv, kontroller SHA-256, dekryptering og inventar (alle 29 Fysen-tabeller og migrasjonsregister) uten å skrive ukryptert dump på disk:
 
 ~~~bash
-age -d -i /privat/noekkel/fysen-age-identity.txt \
+chmod 600 /privat/noekkel/fysen-age-identity.txt
+bash docs/fysen-private-backup-inspect.sh \
   /privat/arkiv/fysen-original-YYYYMMDDTHHMMSSZ-XXXX.pgdump.age \
-  | pg_restore --list
+  /privat/noekkel/fysen-age-identity.txt
 ~~~
+
+Dette er **kun en kontroll av kryptert fil, dekryptering og dumpens objektliste**. SHA-256 beviser byteintegritet, og `pg_restore --list` bekrefter at objektregisteret kan leses – **ikke** at alle rader kan gjenopprettes. Verifiser med den opprinnelige private `age`-nøkkelen på en sikker maskin, ikke i CI.
 
 3. Opprett en disponibel, adgangskontrollert PostgreSQL 17 + PostGIS-database. Klargjør 'public' med 'postgis' og 'pg_trgm' og 'extensions' med 'pgcrypto' før restore. Inspiser DDL og dekrypter inn i pg_restore med '--exit-on-error' mot **den isolerte** databasen. Dersom Supabase-rollene mangler i testmiljøet, kan en prøverestaurering bruke '--no-owner --no-acl'; bevar originaldumpen med tilgangsmetadata uendret.
 4. Bekreft samtlige 29 applikasjonstabeller, appens migrasjonsregister, antall, nøkler, FK-er, menyposter og søkeresultatreferanser mot en dokumentert kildeinventar fra eksporttidspunktet. Hvis datakilden fortsetter å endres, bruk eksplisitt cutover/frysetidspunkt og differansekontroll. Et bestått 'pg_restore --list' alene er ikke nok.
