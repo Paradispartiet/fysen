@@ -11,26 +11,29 @@
 
 ## Før den manuelle eksporten
 
-Bruk privat maskin med 'pg_dump' fra PostgreSQL 17, offisiell 'age' og 'sha256sum'. Opprett separat age X25519-nøkkel med 'age-keygen'. **Behold den private identitetsfilen separat og sikkerhetskopier den uavhengig av arkivet; uten nøkkelen kan dumpen ikke gjenopprettes.** Kontroller kostnader, organisasjonskvote og egress for et opptil ~1,7 GB databaseuttak; ingen abonnementsoppgradering er autorisert.
+Bruk en privat Linux-maskin med `pg_dump` fra PostgreSQL 17, offisiell `age`, `sha256sum` og GNU `stat`. Opprett separat age X25519-nøkkel med 'age-keygen'. **Behold den private identitetsfilen separat og sikkerhetskopier den uavhengig av arkivet; uten nøkkelen kan dumpen ikke gjenopprettes.** Kontroller kostnader, organisasjonskvote og egress for et opptil ~1,7 GB databaseuttak; ingen abonnementsoppgradering er autorisert.
 
 Sett PostgreSQL-miljøvariabler fra en allerede verifisert, privat forbindelse til originalen:
-- PGHOST og PGUSER: må peke på originalens direkte host eller originalens pooler-bruker (ikke recovery)
+- `PGHOST`/`PGUSER`: bruk eksakt `db.voglczxxtbwcxjrbffbt.supabase.co` med bruker `postgres`, eller Supabases session-pooler `aws-[indeks]-[region].pooler.supabase.com` med `postgres.voglczxxtbwcxjrbffbt`. Kopier faktisk pooler-host fra Supabase Connect. `PGPORT=5432`; ikke transaction-pooler `6543`.
+- `PGHOSTADDR`, `PGSERVICE` og `PGSERVICEFILE` må være unset, fordi libpq ellers kan overstyre valgt server.
 - PGDATABASE=postgres
-- PGSSLMODE=require, verify-ca eller verify-full
+- `PGSSLMODE=verify-full` er påkrevd. Sett `PGSSLROOTCERT` til en lesbar, absolutt filbane for Supabase-prosjektets nedlastede CA-sertifikat fra Dashboard → Database → SSL Configuration. `require`/`verify-ca` godtas ikke: de verifiserer ikke både CA og vertsnavn. Se [Supabase SSL-dokumentasjon](https://supabase.com/docs/guides/platform/ssl-enforcement).
 - PGPASSFILE: beskyttet privat fil med 0600-tillatelser, heller enn å skrive passord i kommandolinjen
-- FYSEN_BACKUP_AGE_RECIPIENT: offentlig 'age1...'-nøkkel
+- `FYSEN_BACKUP_AGE_RECIPIENT`: offentlig `age1...`-nøkkel.
+- `FYSEN_BACKUP_DEST`: eksisterende katalog eid av operatøren, med nøyaktig tilgang `0700`; ikke en symbolsk lenke.
 
 Eksempel etter at forbindelse og nøkler er konfigurert lokalt:
 
 ~~~bash
 umask 077
 mkdir -p "$HOME/Fysen-private-backups"
+chmod 700 "$HOME/Fysen-private-backups"
 export FYSEN_BACKUP_DEST="$HOME/Fysen-private-backups"
 export FYSEN_BACKUP_AGE_RECIPIENT='age1...erstatt_med_ekte_offentlig_noekkel'
 bash docs/fysen-private-full-backup.sh
 ~~~
 
-Verktøyet blokkerer GitHub Actions/CI, svak TLS, ukjent kilde, recovery-kilde, manglende alder-krypteringsnøkkel, ugyldig backupkatalog og manglende passordmekanisme. Det kjører en read-only session og fjerner ufullstendige krypterte .partial-filer ved feil. Den krypterte filen får SHA-256-manifest; dette beviser kun filens integritet, ikke en vellykket restaurering.
+Verktøyet blokkerer GitHub Actions/CI, svak TLS og manglende CA/vertsnavnkontroll, ukjent eller forfalsket host, `PGHOSTADDR`-/PGSERVICE-overstyring, recovery-kilde, transaction-pooler-port, manglende `age`-nøkkel, ukontrollert backupkatalog og manglende passordmekanisme. Det kjører en read-only session og fjerner ufullstendige krypterte .partial-filer ved feil. Den krypterte filen får SHA-256-manifest; dette beviser kun filens integritet, ikke en vellykket restaurering.
 
 ## Restore-kontroll i isolasjon (ikke på Supabase)
 
@@ -55,4 +58,4 @@ Tidligere dokumentert privat lagringssted: https://drive.google.com/drive/folder
 bash docs/fysen-private-full-backup.test.sh
 ~~~
 
-Testen er offline og bruker erstatninger for pg_dump og age. Den ble kontrollert lokalt 20. november: lykkesti, SHA-256, avvist recovery-kobling, blokkert CI, opprydding ved dumpfeil og avvist svak TLS. Den **tester ikke ekte kryptering, databaseeksport, Google Drive-opplasting eller full gjenoppretting**. Disse må verifiseres separat før en eventuell godkjent produksjonsbeslutning.
+Testen er offline og bruker erstatninger for `pg_dump` og `age`. Den ble kjørt på eksakt GitHub-filinnhold 20. november: lykkesti, SHA-256, eksakt kilde/pooler-bruker, blokkert host spoof, `PGHOSTADDR`, PGSERVICE, transaction-pooler-port, CI, usikker lagringskatalog, opprydding ved både dump- og krypteringsfeil og avvist svak TLS. Den **tester ikke ekte kryptering, databaseeksport, Google Drive-opplasting eller full gjenoppretting**. Disse må verifiseres separat før en eventuell godkjent produksjonsbeslutning.
