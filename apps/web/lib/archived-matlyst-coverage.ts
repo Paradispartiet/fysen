@@ -11,6 +11,10 @@ export interface ArchivedMatlystRestaurant {
   readonly id: string;
   readonly name: string;
   readonly address: string;
+  /** Original licensed menu source, from the verified public archive. */
+  readonly sourceUrl: string;
+  /** Original observation time; never an assertion of current availability. */
+  readonly observedAt: string;
 }
 
 export interface ArchivedMatlystDishCoverage {
@@ -95,6 +99,8 @@ export function summarizeArchivedMatlyst(
         id: restaurant[1],
         name: restaurant[0],
         address: restaurant[2],
+        sourceUrl: source[1],
+        observedAt: source[2],
       });
     }
   }

@@ -75,8 +75,13 @@ try {
           "Individual restaurant examples must begin collapsed");
         await restaurantDetails.locator("summary").click();
         assert.notEqual(await restaurantDetails.getAttribute("open"), null);
-        assert.ok(await restaurantDetails.locator("li a").count() > 0,
-          "Opening restaurant examples must show recorded menu-source candidates");
+        assert.ok(await restaurantDetails.locator("li .cuisineExploreRestaurantExample").count() > 0,
+          "Opening restaurant examples must show documented restaurant names and addresses");
+        for (const link of await restaurantDetails.locator("a.cuisineExploreRestaurantSource").all()) {
+          const href = await link.getAttribute("href");
+          assert.ok(/^https?:\/\//u.test(href ?? ""),
+            "Only actual archive-menu URLs may be linked from restaurant examples");
+        }
         await restaurantDetails.locator("summary").click();
         assert.equal(await restaurantDetails.getAttribute("open"), null);
       }
