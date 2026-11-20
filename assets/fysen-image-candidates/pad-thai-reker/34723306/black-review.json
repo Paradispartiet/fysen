@@ -1,0 +1,18 @@
+{
+  "source_photo_id": 34723306,
+  "source_sha256": "00831ee288e15f9e273fbc3e0eea5598b74e7c3d1e1fd46ffc48f5665378bd54",
+  "source_original_dimensions": [
+    5472,
+    3648
+  ],
+  "candidate_file": "black-native-master.png",
+  "mask_method": "GrabCut 1500px ellipse-supervised, filled whole plate, alpha only interpolated to source",
+  "foreground_fraction": 0.3885173333333334,
+  "black_corners": true,
+  "upscaled_source_pixels": false,
+  "generated_food_pixels": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "review_requirements": "Confirm entire ceramic plate rim retained, no dark wood patches outside rim, real shrimp/noodles clear at 1:1 detail, pure black background. Any failure must stop promotion."
+}
