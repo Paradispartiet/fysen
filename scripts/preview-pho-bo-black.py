@@ -72,6 +72,19 @@ bg=np.zeros((1,65),np.float64);fg=np.zeros((1,65),np.float64)
 cv2.grabCut(cv2.cvtColor(np.asarray(small),cv2.COLOR_RGB2BGR),labels,None,bg,fg,5,cv2.GC_INIT_WITH_MASK)
 seg=(np.isin(labels,[cv2.GC_FGD,cv2.GC_PR_FGD]).astype(np.uint8)*255)
 seg=cv2.resize(seg,(W,H),interpolation=cv2.INTER_LINEAR)
+# A cyan textile is tucked underneath the bowl. It is NOT part of the meal.
+# Remove only cool saturated textile pixels below the soup (not ceramics,
+# broth, green herbs or beef) while preserving full original food pixels.
+rr=src[:,:,0].astype(np.int16)
+gg=src[:,:,1].astype(np.int16)
+bb=src[:,:,2].astype(np.int16)
+yy=np.arange(H)[:,None]
+blue_textile=(bb>rr+15)&(gg>rr+9)&(bb>gg-9)&(rr<180)
+blue_textile &= yy > H*.46
+# Suppress tiny cyan cloth fibers at the edge, without eroding white bowl.
+blue_textile=cv2.dilate(blue_textile.astype(np.uint8),
+   cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(9,9)))>0
+seg[blue_textile]=0
 grabcut_area=save("black-grabcut",seg)
 audit=dict(dish_id="pho",variant="phở bò",source_page=meta["source_page"],
  source_sha256=SHA,source_native_dimensions=[W,H],
