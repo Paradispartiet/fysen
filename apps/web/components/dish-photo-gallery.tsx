@@ -191,6 +191,10 @@ export function DishPhotoGallery() {
             Pad thai med reker <span aria-hidden="true">↗</span>
           </a>
           <small>Pad thai-foto: UNDO KIM / Pexels, <a href="/dish-images/pad-thai-reker-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/stekt-hvit-fisk-master-5464.avif" target="_blank" rel="noopener noreferrer">
+            Stekt hvit fisk <span aria-hidden="true">↗</span>
+          </a>
+          <small>Hvit fisk-foto: Valeria Boltneva / Pexels, <a href="/dish-images/stekt-hvit-fisk-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
         </nav>
       </div>
     </details>

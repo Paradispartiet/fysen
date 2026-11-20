@@ -8,10 +8,10 @@
   "source_sha256": "140b56c61214db9349e915ac01a6629a3f7a5139e3b8c91e20b44869cccfd3fc",
   "native_width": 5464,
   "native_height": 7120,
-  "photographer_verified": false,
-  "license_verified": false,
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "photographer_verified": true,
+  "license_verified": true,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
   "gate": "A single cooked WHITE-fish fillet (not salmon/tuna/whole fish), on a complete plate; attractive native 1:1 sharpness, no upscale; clean black isolation must keep whole meal. Do not claim actual species or specific restaurant."
 }

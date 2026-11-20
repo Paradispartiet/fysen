@@ -13,8 +13,12 @@
   "black_grabcut_area_fraction": 0.8858707967986577,
   "original_pixels_upscaled": false,
   "new_food_generated": false,
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
-  "review_required": "Entire cooked fish and all sides intact; dark plate blends into pure black with no wood/table fragments, no unnatural cut edge, 1:1 sharpness; do not claim a specific fish species."
+  "review_required": "Entire cooked fish and all sides intact; dark plate blends into pure black with no wood/table fragments, no unnatural cut edge, 1:1 sharpness; do not claim a specific fish species.",
+  "reviewed_variant": "black-contour",
+  "reviewed_preview_sha256": "475c86faac2d48196c8a080955b8e7891f07a02c624f14bb0b9dbe53801fc5e9",
+  "native_png_sha256": "0917b711ff158827bd3bbc99328a44539f8f2a67087f0cc49919fe499d3212a2",
+  "full_avif_sha256": "24821e0dabc476d3bc7f546da8471d11b1505cd92e89b8db76d3c22db713fd27"
 }
