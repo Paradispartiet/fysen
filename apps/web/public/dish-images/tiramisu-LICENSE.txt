@@ -1,0 +1,8 @@
+Tiramisu – redaksjonelt fotografi
+Fotograf: Arian Fernandez / Pexels
+Original: https://www.pexels.com/photo/piece-of-cake-on-a-plate-26838689/
+Lisens: Pexels License, https://www.pexels.com/license/
+Endringer: Originalfoto 6240 x 4160 er frilagt mot helsvart bakgrunn med kontur- og GrabCut-maske. Den hele tiramisu-kaken med mascarponekrem, kakaodryss og mynte, samt tallerkenen, er beholdt i native oppløsning. Ingen KI-generert mat eller oppskalering. Egen stor AVIF og separat 512 x 512 AVIF-miniatyr er produsert.
+Illustrerende rettfoto, ikke restaurantmenyfoto i Fysen.
+Original JPEG SHA-256: 33be6223822dcada5fbb335519da2f1ebbf95ca9860e262617330e7cdd9d14fc
+Bearbeidet PNG SHA-256: 9d448a0584cb8f3990eb31c02bf276c0c23a1ed1c1393b0b173dbb70404398e1

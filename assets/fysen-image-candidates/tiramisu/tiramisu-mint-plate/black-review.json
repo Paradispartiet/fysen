@@ -1,0 +1,24 @@
+{
+  "dish_id": "tiramisu",
+  "photo_id": 26838689,
+  "source_original_sha256": "33be6223822dcada5fbb335519da2f1ebbf95ca9860e262617330e7cdd9d14fc",
+  "original_dimensions": [
+    6240,
+    4160
+  ],
+  "source_page": "https://www.pexels.com/photo/piece-of-cake-on-a-plate-26838689/",
+  "photographer": "Arian Fernandez",
+  "license_url": "https://www.pexels.com/license/",
+  "native_pixels_upscaled": false,
+  "food_pixels_generated": false,
+  "black_contour_area_fraction": 0.3707036258012821,
+  "black_grabcut_area_fraction": 0.3447042190581854,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
+  "published": false,
+  "visual_review_check": "A single complete layered tiramisu with mint and cocoa on one intact plate; all table, secondary desserts and extraneous background black; edges smooth and natural, native 1400px detail sharp. Reject any part of cake or mint clipped.",
+  "reviewed_variant": "black-grabcut",
+  "reviewed_preview_sha256": "936006b252eb0b485cfbe91b15ede6c42afb91cb81bd65e27895faaebfe40f0f",
+  "retained_native_sha256": "9d448a0584cb8f3990eb31c02bf276c0c23a1ed1c1393b0b173dbb70404398e1",
+  "full_avif_sha256": "f03e2560a9e6b97e1d31581561b4597bcfaff9ced7e1010b9086d7fac3f3d715"
+}

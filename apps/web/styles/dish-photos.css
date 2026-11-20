@@ -220,7 +220,7 @@
 
 /* Dedicated 768px tiramisu gallery image. Not a restaurant photograph. */
 .dishPhotoThumb.dishPhotoTiramisu {
-  background: #000 url("/dish-images/tiramisu-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/tiramisu-thumb-512.avif") center / contain no-repeat;
 }
   
 /* Individuelle 768px illustrasjoner med eksakt rett-ID: marinara uten ost,
