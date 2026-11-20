@@ -57,7 +57,7 @@ test("live browse supports 57 illustrated food types without duplicating fast fo
 
 test("live cuisine filters only show evidence-backed menu matches", async () => {
   const source = await readFile(new URL("../components/dish-browse.tsx", import.meta.url), "utf8");
-  assert.ok(source.includes("discoveryCoverage(data.dishes, suggestionDescriptor(entry.dish)).restaurantCount"));
+  assert.ok(source.includes("discoveryCoverage(data.dishes, entry.dish).restaurantCount"));
   assert.ok(source.includes("liveItemsForDiscoveryScope(data.dishes, cuisineDiscoveryScope)"));
   assert.ok(source.includes('hasKnowledge: false'));
   assert.ok(source.includes('areaName: "Mattype"'));
