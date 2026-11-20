@@ -12,8 +12,12 @@
   "generated_food_pixels": false,
   "black_contour_area_fraction": 0.4826287464543693,
   "black_grabcut_area_fraction": 0.45880143328605644,
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
-  "quality_gate": "Six pan-seared dumplings, full blue plate and soy dipping bowl, no wooden table, no clipping, artifacts or artificial food. Always inspect source 1400px center before authorizing approval."
+  "quality_gate": "Six pan-seared dumplings, full blue plate and soy dipping bowl, no wooden table, no clipping, artifacts or artificial food. Always inspect source 1400px center before authorizing approval.",
+  "reviewed_variant": "black-grabcut",
+  "preview_sha256": "dec3e59e042ec1e77e72ad7c779135968754c4a9eb29e98bad86b42fec1740f7",
+  "native_processed_sha256": "b2920dba95c36168ab3697cfd8d908052165eed45dc81b2f061844d56811a7b4",
+  "avif_master_sha256": "ac8490f6caa99d809c1f455dddd830b0b8c8b11d569ca48a34ccf09100ca4ab2"
 }

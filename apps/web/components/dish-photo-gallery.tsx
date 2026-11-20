@@ -207,6 +207,10 @@ export function DishPhotoGallery() {
             Cacio e pepe <span aria-hidden="true">↗</span>
           </a>
           <small>Cacio e pepe-foto: DC (DocteurCosmos) / Wikimedia Commons, <a href="/dish-images/cacio-e-pepe-LICENSE.txt" target="_blank" rel="noopener noreferrer">CC BY-SA 3.0 og kilde</a>.</small>
+          <a href="/dish-images/gyoza-master-4937.avif" target="_blank" rel="noopener noreferrer">
+            Gyoza <span aria-hidden="true">↗</span>
+          </a>
+          <small>Gyoza-foto: Lara Bellens / Pexels, <a href="/dish-images/gyoza-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
         </nav>
       </div>
     </details>
@@ -337,7 +341,7 @@ export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: s
   return (
     <span
       role="img"
-      aria-label={isSushi ? "Redaksjonelt foto av sushi assortert, ikke restaurantfoto" : isRamen ? "Redaksjonelt foto av ramen med svin og egg, ikke restaurantfoto" : isCarbonara ? "Redaksjonelt foto av carbonara med bacon og ost, ikke restaurantfoto" : isButterChicken ? "Redaksjonelt foto av butter chicken med kyllinglår i kremet saus, ikke restaurantfoto" : isPizzaMarinara ? "Redaksjonelt foto av pizza marinara uten ost, ikke restaurantfoto" : isCacioEPepe ? "Redaksjonelt foto av cacio e pepe med pecorino og sort pepper, ikke restaurantfoto" : `KI-illustrasjon av ${illustratedVariant}, ikke restaurantfoto`}
+      aria-label={isSushi ? "Redaksjonelt foto av sushi assortert, ikke restaurantfoto" : isRamen ? "Redaksjonelt foto av ramen med svin og egg, ikke restaurantfoto" : isCarbonara ? "Redaksjonelt foto av carbonara med bacon og ost, ikke restaurantfoto" : isButterChicken ? "Redaksjonelt foto av butter chicken med kyllinglår i kremet saus, ikke restaurantfoto" : isPizzaMarinara ? "Redaksjonelt foto av pizza marinara uten ost, ikke restaurantfoto" : isCacioEPepe ? "Redaksjonelt foto av cacio e pepe med pecorino og sort pepper, ikke restaurantfoto" : isGyoza ? "Redaksjonelt foto av seks pannestekte gyoza med soyadipp, ikke restaurantfoto" : `KI-illustrasjon av ${illustratedVariant}, ikke restaurantfoto`}
       className={isPizzaMargherita ? "dishPhotoSmall dishPhotoPizzaMargherita" : isSushi ? "dishPhotoSmall dishPhotoSushi" : isRamen ? "dishPhotoSmall dishPhotoRamen" : isCarbonara ? "dishPhotoSmall dishPhotoCarbonara" : isButterChicken ? "dishPhotoSmall dishPhotoButterChicken" : isPizzaMarinara ? "dishPhotoSmall dishPhotoPizzaMarinara" : isFalafel ? "dishPhotoSmall dishPhotoFalafel" : isTacosAlPastor ? "dishPhotoSmall dishPhotoTacosAlPastor" : isCacioEPepe ? "dishPhotoSmall dishPhotoCacioEPepe" : isChanaMasala ? "dishPhotoSmall dishPhotoChanaMasala" : isMasalaDosa ? "dishPhotoSmall dishPhotoMasalaDosa" : isChickenKatsu ? "dishPhotoSmall dishPhotoChickenKatsu" : isYakitori ? "dishPhotoSmall dishPhotoYakitori" : isUdonTempura ? "dishPhotoSmall dishPhotoUdonTempura" : isBao ? "dishPhotoSmall dishPhotoBao" : isDumplings ? "dishPhotoSmall dishPhotoDumplings" : isMapoTofu ? "dishPhotoSmall dishPhotoMapoTofu" : isPekingDuck ? "dishPhotoSmall dishPhotoPekingDuck" : isDanDanNoodles ? "dishPhotoSmall dishPhotoDanDanNoodles" : isGreenCurry ? "dishPhotoSmall dishPhotoGreenCurry" : isPho ? "dishPhotoSmall dishPhotoPho" : isBunCha ? "dishPhotoSmall dishPhotoBunCha" : isGoiCuon ? "dishPhotoSmall dishPhotoGoiCuon" : isTandoori ? "dishPhotoSmall dishPhotoTandoori" : isNaan ? "dishPhotoSmall dishPhotoNaan" : isDalMakhani ? "dishPhotoSmall dishPhotoDalMakhani" : isIdli ? "dishPhotoSmall dishPhotoIdli" : isSambar ? "dishPhotoSmall dishPhotoSambar" : isVada ? "dishPhotoSmall dishPhotoVada" : isBanhMi ? "dishPhotoSmall dishPhotoBanhMi" : isPadKraPao ? "dishPhotoSmall dishPhotoPadKraPao" : isTomYum ? "dishPhotoSmall dishPhotoTomYum" : isSeries04 ? "dishPhotoSmall dishPhotoSeries04" : "dishPhotoSmall"}
       style={{ backgroundPosition: position }}
     />

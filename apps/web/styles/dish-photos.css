@@ -207,10 +207,10 @@
 .dishPhotoThumb.dishPhotoButterChicken,
 .dishPhotoSmall.dishPhotoButterChicken { background: #000 url("/dish-images/butter-chicken-thumb-512.avif") center / cover no-repeat; }
 
-/* Gyoza: sharp single-dish illustration for its exact editorial ID only. */
+/* Gyoza: real source-verified photo, compact standalone AVIF, exact editorial dish only. */
 .dishPhotoThumb.dishPhotoGyoza,
 .dishPhotoSmall.dishPhotoGyoza {
-  background: #000 url("/dish-images/gyoza-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/gyoza-thumb-512.avif") center / contain no-repeat;
 }
 
 /* Gallery-only shrimp pad thai; never use for unknown-variant pad thai restaurant dishes. */
