@@ -55,7 +55,10 @@ def to_native(p):
     out=p.copy();out[:,0]*=W/1100;out[:,1]*=H/733
     return out.astype(np.int32)
 mask=np.zeros((H,W),np.uint8)
-cv2.fillPoly(mask,[to_native(spline(plate)),to_native(spline(cake))],255)
+cv2.fillPoly(mask,[to_native(spline(plate))],255)
+# Fill separately: OpenCV uses even-odd polygon parity for a single multi-ring
+# fill, which otherwise punches a false hole through the overlapping cake.
+cv2.fillPoly(mask,[to_native(spline(cake))],255)
 def export(prefix,foreground):
     alpha=cv2.GaussianBlur(foreground.astype(np.float32),(0,0),1.2)/255.
     pic=np.clip(rgb*alpha[:,:,None],0,255).astype(np.uint8)
