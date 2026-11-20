@@ -1,0 +1,62 @@
+name: Fysen stage source-verified tiramisu photos
+on:
+  push:
+    branches: [art/tiramisu-native-photo-20261120]
+    paths:
+      - ".github/workflows/fysen-stage-tiramisu.yml"
+      - "scripts/stage-tiramisu-sources.py"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: fysen-tiramisu-source
+  cancel-in-progress: false
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install photo decoder
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0
+      - name: Retrieve full native original photos without upscaling
+        run: python scripts/stage-tiramisu-sources.py
+      - name: Enforce unapproved source-only metadata
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          reviews=list(Path("assets/fysen-image-candidates/tiramisu").glob("*/review.json"))
+          assert len(reviews)>=4
+          for f in reviews:
+              d=json.loads(f.read_text())
+              assert not d["approved_for_fysen"] and not d["published"]
+              assert min(d["native_width"],d["native_height"])>=1600
+              assert (f.parent/"native-detail-1400.jpg").is_file()
+          print(len(reviews),"candidate sources only, not approved")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fysen-tiramisu-originals
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            assets/fysen-image-candidates/tiramisu/*/source.jpeg
+            assets/fysen-image-candidates/tiramisu/*/preview.jpg
+            assets/fysen-image-candidates/tiramisu/*/native-detail-1400.jpg
+            assets/fysen-image-candidates/tiramisu/*/review.json
+      - name: Commit previews and source metadata to draft branch only
+        run: |
+          find assets/fysen-image-candidates/tiramisu -name source.jpeg -delete
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-image-candidates/tiramisu
+          git diff --cached --quiet && exit 0
+          git commit -m "[tiramisu-source-bot] Stage original dessert previews and rights evidence"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin HEAD:"$GITHUB_REF_NAME"
