@@ -1,0 +1,76 @@
+name: Fysen integrate native beef bibimbap photo to draft only
+on:
+  push:
+    branches: [art/beef-bibimbap-native-photo-20261120]
+    paths:
+      - ".github/workflows/fysen-promote-beef-bibimbap.yml"
+      - "scripts/promote-reviewed-beef-bibimbap.py"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: fysen-bibimbap-draft-promotion
+  cancel-in-progress: false
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install source image and AVIF tools
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0 pillow-avif-plugin==1.5.2 numpy==2.2.6 opencv-python-headless==4.11.0.86
+      - name: Regenerate SHA-locked source and create 8160px AVIF and separate 512px mini
+        run: python scripts/promote-reviewed-beef-bibimbap.py
+      - name: ONLY run focused image, gallery and source-quality tests
+        run: node --test apps/web/tests/dish-photo-gallery.test.mjs apps/web/tests/dish-image-large-view-quality.test.mjs
+      - name: Check source, dimensions, CC0 license and no catalog link
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          import pillow_avif
+          import json
+          root=Path("apps/web/public/dish-images")
+          m=json.loads((root/"manifest.json").read_text(encoding="utf8"))
+          assert len(m["images"])==44
+          assert sum(x.get("largeViewEnabled") is True for x in m["images"])==19
+          b=next(x for x in m["images"] if x["id"]=="bibimbap")
+          assert b["catalogId"] is None
+          assert b["kind"]=="Redaksjonelt rettfoto"
+          assert b["atlas"]=="bibimbap-thumb-512.avif"
+          assert b["largeSource"]=="bibimbap-master-8160.avif"
+          assert b["photoLicense"]=="https://creativecommons.org/publicdomain/zero/1.0/"
+          assert "Andy Li" in b["photoCredit"]
+          assert "CC0 1.0" in (root/"bibimbap-LICENSE.txt").read_text(encoding="utf8")
+          with Image.open(root/b["largeSource"]) as im: assert im.size==(8160,6144)
+          with Image.open(root/b["atlas"]) as im: assert im.size==(512,512)
+          a=json.loads(Path("assets/fysen-image-candidates/bibimbap/andy-li-saero-cc0/black-review.json").read_text(encoding="utf8"))
+          assert a["catalog_id"] is None and a["chosen_variant"]=="black-grabcut"
+          assert a["approved_for_fysen"] and a["published"] is False
+          print("19/44 real photos on unpublished draft, editorial bibimbap only; main untouched")
+          PY
+      - name: Commit ONLY reviewed editorial photo and tests to draft branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-dish-originals/bibimbap.png
+          git add assets/fysen-image-candidates/bibimbap/andy-li-saero-cc0/review.json
+          git add assets/fysen-image-candidates/bibimbap/andy-li-saero-cc0/black-review.json
+          git add apps/web/public/dish-images/bibimbap-master-8160.avif
+          git add apps/web/public/dish-images/bibimbap-thumb-512.avif
+          git add apps/web/public/dish-images/bibimbap-LICENSE.txt
+          git add apps/web/public/dish-images/manifest.json
+          git add apps/web/styles/dish-photos.css
+          git add apps/web/components/dish-photo-gallery.tsx
+          git add apps/web/tests/dish-photo-gallery.test.mjs
+          git add apps/web/tests/dish-image-large-view-quality.test.mjs
+          git add docs/fysen-image-reviews/bibimbap.md
+          git diff --cached --quiet && exit 0
+          git commit -m "[bibimbap-photo-bot] Add 8160px CC0 photo and mini to draft Matlyst only"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin HEAD:"$GITHUB_REF_NAME"
