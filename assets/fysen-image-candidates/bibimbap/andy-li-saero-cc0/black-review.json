@@ -1,0 +1,20 @@
+{
+  "dish_id": "bibimbap",
+  "catalog_id": null,
+  "original_sha256": "087b46ba6e8c668ac13b6fd37ff7cbd74acc3b54fa003ee82511a4cf11b29c10",
+  "native_size": [
+    8160,
+    6144
+  ],
+  "source_page": "https://commons.wikimedia.org/wiki/File:Beef_Bibimbap_-_SAERO_2025-11-06.jpg",
+  "photographer": "Andy Li / Wikimedia Commons",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "no_upscale": true,
+  "food_pixels_generated": false,
+  "contour_area_fraction": 0.3117817199308109,
+  "grabcut_area_fraction": 0.29947888742085377,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "gate": "Whole authentic beef bibimbap bowl, beef rice vegetables and egg. No side bowls, plate, sauce dish, soda can or wooden table. Source-native pixels, clean black backdrop, no invention. Never attach bibimbap to catalog dishes."
+}
