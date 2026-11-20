@@ -1228,3 +1228,33 @@
     margin-left: 44px;
   }
 }
+
+
+/* Restaurant names in the compact preview are evidence, not fake deep links:
+   the browse payload exposes IDs and addresses but no source/menu URL. */
+.cuisineExploreRestaurantDetails .cuisineExploreRestaurantExample {
+  display: block;
+  min-height: 0;
+  padding: 8px 9px;
+  color: var(--color-ink);
+  background: #0b0d0b;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 5px;
+}
+.cuisineExploreRestaurantDetails .cuisineExploreRestaurantExample strong {
+  display: block;
+  font-size: 11px;
+}
+.cuisineExploreRestaurantDetails .cuisineExploreRestaurantExample small {
+  display: block;
+  margin-top: 3px;
+  color: var(--color-muted);
+  font-size: 10px;
+  line-height: 1.4;
+}
+.cuisineExploreRestaurantDetails .cuisineExploreRestaurantNote {
+  margin: 8px 0 0;
+  color: var(--color-muted);
+  font-size: 10px;
+  line-height: 1.4;
+}
