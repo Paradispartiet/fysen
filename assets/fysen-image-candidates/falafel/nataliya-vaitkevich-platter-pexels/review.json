@@ -1,0 +1,18 @@
+{
+  "dish_id": "falafel",
+  "catalog_id": "falafel",
+  "variant": "falafel with hummus",
+  "photo_author": "Nataliya Vaitkevich / Pexels",
+  "photo_page": "https://www.pexels.com/photo/overhead-shot-of-fried-falafels-beside-pita-bread-6275183/",
+  "photo_source_url": "https://images.pexels.com/photos/6275183/pexels-photo-6275183.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "native_width": 4160,
+  "native_height": 6240,
+  "original_sha256": "7ea243d9c0ee51ed82611e81747a3ab803e2b27db496e21da2ee1592dea35ff3",
+  "download_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Whole falafel serving with actual falafel balls and hummus; natural sharp original detail, preferably complete plate. Black backdrop after masking must contain no table, cut off food or spurious objects. No synthetic food, no menu/restaurant-specific claims."
+}

@@ -1,0 +1,18 @@
+{
+  "dish_id": "falafel",
+  "catalog_id": "falafel",
+  "variant": "falafel with hummus",
+  "photo_author": "Shameel mukkath / Pexels",
+  "photo_page": "https://www.pexels.com/photo/top-view-of-falafel-on-a-plate-with-a-sauce-on-the-side-14883756/",
+  "photo_source_url": "https://images.pexels.com/photos/14883756/pexels-photo-14883756.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "native_width": 6720,
+  "native_height": 4480,
+  "original_sha256": "9ff504c784f92d891147c115e8778ac33dbbceb53661db467596a1b5b4be45a8",
+  "download_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Whole falafel serving with actual falafel balls and hummus; natural sharp original detail, preferably complete plate. Black backdrop after masking must contain no table, cut off food or spurious objects. No synthetic food, no menu/restaurant-specific claims."
+}
