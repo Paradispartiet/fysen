@@ -77,6 +77,55 @@ Kjøringen rapporterte også 163 589 267 byte i den første størrelsesspørring
 4. **Org- og Free-port:** Bekreft tilgjengelig Free-kvote, organisasjonens Fair Use-status og reell skriverettighet *uten* å endre plan, Spend Cap eller produksjonspekere.
 5. **Utrulling og godkjenning:** Hold den verifiserte offentlige, databaseuavhengige menyindeksen i drift. Krev ny separat beslutning før eventuell databaseflytting, datareduksjon eller avvikling av et gammelt prosjekt. Ikke baser langtidsbevaring på GitHub Actions-artefakter, som utløper.
 
+## Read-only skjemabevis 20. november 2026 – identiske applikasjonsobjekter, ulike indekser
+
+**Gjennomført, kun lesetilgang.** Begge Supabase-prosjektene ble kontrollert direkte med `pg_catalog`-spørringer 20. november. Ingen migrasjoner, DDL, DML, nøkler, prosjektinnstillinger eller betalplaner ble endret. Katalogkontrollen ekskluderer bevisst `fysen.schema_migrations` ved sammenligning av applikasjonsskjemaet.
+
+| Kontroll | Original `fysen` | `fysen-recovery-free` | Vurdering |
+|---|---:|---:|---|
+| Databaseinnhold (`pg_database_size`, avrundet) | 1 590 MB | 60 MB | Ulikt innhold |
+| Fysen-tabeller totalt | 30 | 29 | Forskjellen er migrasjonsregisteret |
+| Applikasjonstabeller ekskl. register | 29 | 29 | Eksakt likt sett |
+| Kolonnedefinisjoner | 297 | 297 | Identisk, inkludert type, NOT NULL og DEFAULT |
+| Tabellbegrensninger | 209 | 209 | Identisk, inkludert `pg_get_constraintdef` |
+| Applikasjonsindekser ekskl. register | 88 | 87 | 85 identiske, 3 vs. 2 ulike |
+| Egendefinerte triggere | 0 | 0 | Lik verdi; ingen utsagn om interne triggere |
+| RLS-aktiverte Fysen-tabeller | 0 | 0 | Sikkerhetsrevisjon gjenstår |
+| Skjematilgang / SELECT til `anon`, `authenticated` | Ingen | Ingen | Ingen dokumentert direkte klienttilgang |
+| `fysen.schema_migrations` | 22 versjoner (`0001`–`0022`) | Mangler | **Blokkerer migrering** |
+| Påkrevde utvidelser (postgis/pgcrypto/pg_trgm) | 3/3 | 3/3 | Bekreftet |
+
+Normaliserte, sorterte `pg_catalog`-fingeravtrykk, eksklusive registeret, stemmer eksakt mellom de to prosjektene:
+
+- Tabeller og RLS-status: `deba6eaddf22639ce0312a285610dd57`.
+- Kolonner, typer, NOT NULL, defaults: `b945d55ab1eac2f7c829f335b9ab1ffe`.
+- Constraint-navn, typer og definisjoner: `b009aded5216f37192c19f3885ca4e45`.
+
+Den eksakte listebaserte sammenligningen av `pg_catalog.pg_indexes` fant **85 felles indekser med identisk `indexdef`** og ingen med samme navn og ulik definisjon.
+
+**Kun i originalen:**
+
+- `menu_changes_current_snapshot_id_idx`
+- `menu_changes_previous_snapshot_id_idx`
+- `menu_watch_runs_snapshot_id_idx`
+
+**Kun i recovery:**
+
+- `menu_changes_added_date_idx`
+- `menu_changes_added_source_key_idx`
+
+Originalen har i tillegg `schema_migrations_pkey` på sin egen migrasjonstabell. De to recovery-indeksene samsvarer navnemessig med repoets `0023_recent_menu_additions.sql`, som ikke er registrert som kjørt i originalen. **Indeksnavn alene beviser ikke** hvilke historiske migrasjoner som faktisk ble brukt til å bygge recovery. Ikke kopier 22 ledger-rader, og ikke stemple `0023`, uten etterprøvbar isolert rekonstruksjon.
+
+**Viktig grense for beviset:** Identisk skjemakatalog er *ikke* identiske rader, søkehistorikk, FK-koblinger eller autentiserings-/tilgangsatferd. De dokumenterte menypost- og loggvolumene er fortsatt ulike. Ingen fullstendig originalhistorikk er gjenopprettet i recovery ved denne kontrollen.
+
+### Neste isolerte beslutningsport
+
+1. Bevar begge live prosjekter uendret. Etabler en disponibel PostgreSQL 17 + PostGIS-prøve, uten prod-credentials. Bygg en ren referansestruktur med repoets `0001`–`0023` og kontroller eksakte `pg_catalog`-objekter (inkl. indekser og migrasjonsregister) mot den observerte recovery-strukturen.
+2. Verifiser separat at privat, komplett og **SHA-256-kontrollert** backup omfatter data utenfor menyarkivet: søkehendelser, søkeresultatreferanser, kildemetadata, åpningstider, menykontroller, restaurantkrav og autorisasjons-/revisjonshistorikk. Bevar opprinnelige nøkler; ikke importer persondata til CI-artifakter eller logger.
+3. Gjør kun isolert ledger-rekonstruksjon dersom hele objektlisten passer, test alle fremmednøkler og en reversibel restore. Valider søkereferansene som tidligere mistet 5 150 direkte koblinger ved prøvebeskjæring. **Ingen reparasjonskommando mot live recovery.**
+4. Før eventuell produksjonsavgjørelse: kontroller organisasjonens faktiske Free-/Fair Use-status, private RLS/grants, appens autentiserte skriverettighet, og separat godkjent rollback. Behold `PR #1241` som utkast.
+
+
 ## Verifisert status 18. november 2026
 
 Den isolerte prøven ble gjentatt med de verifiserte meny- og søkekopiene fra 2. november. Kompaktdataene ble importert i PostgreSQL 17 med PostGIS etter alle 23 Fysen-migrasjonene. De 30 applikasjonstabellene, 151 408 menypostene og den private koblingstabellen for 5 150 gamle søketreff tok **180 221 619 byte**. Ingen direkte søkereferanser pekte til manglende menyposter, og alle 39 databaseintegrasjonstestene bestod. Lokale testdata og søkereferanser ligger utenfor repositoryet.
