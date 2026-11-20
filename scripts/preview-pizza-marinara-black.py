@@ -84,6 +84,16 @@ cv2.grabCut(cv2.cvtColor(np.asarray(small),cv2.COLOR_RGB2BGR),
     labels,None,bg,fg,5,cv2.GC_INIT_WITH_MASK)
 seg=(np.isin(labels,[cv2.GC_PR_FGD,cv2.GC_FGD]).astype(np.uint8)*255)
 seg=cv2.resize(seg,(W,H),interpolation=cv2.INTER_LINEAR)
+# The pale background plate immediately behind the top crust is still picked
+# up by GrabCut due to similar color. Discard ONLY its neutral light-gray
+# pixels in the upper zone, never the warm brown/red bread pixels.
+rr=src[:,:,0].astype(np.int16)
+gg=src[:,:,1].astype(np.int16)
+bb=src[:,:,2].astype(np.int16)
+yrows=np.arange(H)[:,None]
+pale_plate=(rr>165)&(gg>165)&(bb>155)&(np.abs(rr-gg)<30)&(np.abs(gg-bb)<35)
+pale_plate &= yrows < H*0.34
+seg[pale_plate]=0
 grabcut_area=export("black-grabcut",seg)
 audit={
  "dish_id":"pizza-marinara",
