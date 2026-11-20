@@ -64,6 +64,14 @@ test("Matlyst counts distinct restaurants from verified menu rows, not menu vari
   );
   assert.equal(result.byDish["spicy-ramen"].restaurantCount, 1);
   assert.equal(result.byDish.falafel.restaurantCount, 0);
+  assert.deepEqual(
+    result.byDish.ramen.restaurantExamples.map(({ sourceUrl, observedAt }) => ({ sourceUrl, observedAt })),
+    [
+      { sourceUrl: "https://example.org/king", observedAt: "2026-11-02T01:00:00Z" },
+      { sourceUrl: "https://example.org/ramen", observedAt: "2026-11-03T01:00:00Z" },
+    ],
+    "Only source URLs and timestamps from non-quarantined archive entries may be attached",
+  );
 });
 
 test("Matlyst excludes identity quarantines even after source URL changes", () => {
