@@ -1,0 +1,20 @@
+{
+  "dish_id": "kebab-pita",
+  "slug": "turkish-doner-sandwich",
+  "source_kind": "pexels",
+  "source_file": 8946552,
+  "source_page": "https://www.pexels.com/photo/8946552/",
+  "source_download_url": "https://images.pexels.com/photos/8946552/pexels-photo-8946552.jpeg",
+  "author_claim": "ENESFİLM",
+  "license_claim": "Pexels License",
+  "native_width": 3024,
+  "native_height": 4032,
+  "source_sha256": "de05e0aacffcd7d53cfe6efe0661705281623ca8d50aa7f02d3bb41a953f3a31",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "reject_if": "Not a single stuffed pita / no identifiable kebab meat / wrong variant, cut-off pita, blurry native detail, intrusive hands, cannot isolate a natural whole serving on black."
+}
