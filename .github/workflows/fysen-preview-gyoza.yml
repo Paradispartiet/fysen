@@ -1,0 +1,65 @@
+name: Fysen inspect source-locked gyoza black previews
+on:
+  push:
+    branches: [art/gyoza-native-photo-20261120]
+    paths:
+      - ".github/workflows/fysen-preview-gyoza.yml"
+      - "scripts/preview-gyoza-black.py"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: fysen-gyoza-preview
+  cancel-in-progress: false
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install native image and mask utilities
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0 numpy==2.2.6 opencv-python-headless==4.11.0.86
+      - name: Produce two source-locked 4937px previews
+        run: python scripts/preview-gyoza-black.py
+      - name: Confirm only preview status
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          base=Path("assets/fysen-image-candidates/gyoza/lara-bellens-pexels")
+          a=json.loads((base/"black-review.json").read_text())
+          assert a["source_original_sha256"]=="413f380af0bf03a2da46effa445cf47b85fed242882a214be2fc6863a5ceb5fc"
+          assert a["original_native_dimensions"]==[4937,3662] and a["unscaled_native"]
+          assert not a["generated_food_pixels"]
+          assert not a["visual_review_completed"] and not a["approved_for_fysen"] and not a["published"]
+          for variant in ("black-contour","black-grabcut"):
+            assert (base/f"{variant}-preview.jpg").is_file()
+            assert (base/f"{variant}-native-detail-1400.jpg").is_file()
+          print("2 REAL FOOD previews only, 0 approved, 0 public")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fysen-gyoza-source-native-black-previews
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            assets/fysen-image-candidates/gyoza/lara-bellens-pexels/black-*-native.png
+            assets/fysen-image-candidates/gyoza/lara-bellens-pexels/black-*-preview.jpg
+            assets/fysen-image-candidates/gyoza/lara-bellens-pexels/black-*-native-detail-1400.jpg
+            assets/fysen-image-candidates/gyoza/lara-bellens-pexels/black-review.json
+      - name: Commit only unapproved source evidence
+        run: |
+          find assets/fysen-image-candidates/gyoza -name 'black-*-native.png' -delete
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-image-candidates/gyoza/lara-bellens-pexels/black-*.jpg
+          git add assets/fysen-image-candidates/gyoza/lara-bellens-pexels/black-review.json
+          git diff --cached --quiet && exit 0
+          git commit -m "[gyoza-preview-bot] Save unapproved real-photo black previews"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin HEAD:"$GITHUB_REF_NAME"
