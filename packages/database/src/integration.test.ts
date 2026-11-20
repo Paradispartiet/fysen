@@ -316,6 +316,17 @@ rehearsalDescribe("isolated recovery ledger rehearsal", () => {
       created = true;
       sandbox = createDatabasePool({ connectionString: sandboxUrl.toString(), maxConnections: 1, ssl: false });
 
+      // PostgreSQL searches "$user" before public. The migration runner first
+      // creates the fysen schema, so on a completely blank database PostGIS
+      // would otherwise create fysen.spatial_ref_sys (5 columns, 2 constraints,
+      // 1 index). Both real Supabase instances keep PostGIS in public,
+      // pg_trgm in public and pgcrypto in extensions. Mimic that prerequisite
+      // explicitly in this disposable DB before running app migrations.
+      await sandbox.query("CREATE SCHEMA IF NOT EXISTS extensions");
+      await sandbox.query("CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public");
+      await sandbox.query("CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public");
+      await sandbox.query("CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA extensions");
+
       const expectedVersions = (await listMigrationFiles()).map((file) => file.slice(0, -4));
       expect(expectedVersions).toHaveLength(23);
       expect(await runMigrations(sandbox)).toEqual(expectedVersions);
