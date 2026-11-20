@@ -96,8 +96,12 @@ yy=np.arange(H,dtype=np.float32)[:,None]*816/H
 inner_plate=((xx-438)/361)**2+((yy-415)/348)**2<=1.0
 top_dumpling=(xx>=474)&(xx<=586)&(yy>=15)&(yy<=290)
 right_dumpling=(xx>=548)&(xx<=790)&(yy>=147)&(yy<=349)
+# The metallic soy-dip bowl protrudes slightly past the blue plate on the
+# left. Its copper/gold reflections resemble wood, but they are FOOD PRESENTATION,
+# so conserve those source pixels rather than cutting holes into the bowl.
+soy_bowl=(xx>=65)&(xx<=390)&(yy>=178)&(yy<=515)
 wood=(rr>gg+19)&(gg>bb+8)&(rr>72)
-extracted[wood &~(inner_plate|top_dumpling|right_dumpling)]=0
+extracted[wood &~(inner_plate|top_dumpling|right_dumpling|soy_bowl)]=0
 grabcut_area=make("black-grabcut",extracted)
 audit={
  "dish_id":"gyoza","source_original_sha256":SHA,
