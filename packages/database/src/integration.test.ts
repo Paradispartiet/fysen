@@ -289,6 +289,23 @@ GROUP BY kind ORDER BY kind
 async function assertRecoveryCatalogMatches(pool: Pool): Promise<void> {
   const results = await pool.query<{ kind: string; entries: number; md5: string }>(metadataFingerprintSql);
   const actual = Object.fromEntries(results.rows.map(({ kind, entries, md5 }) => [kind, { entries, md5 }]));
+  if (actual.constraints?.entries === expectedRecoveryMetadata.constraints.entries &&
+      actual.constraints?.md5 !== expectedRecoveryMetadata.constraints.md5) {
+    // Schema metadata only: debug text rendering differences across Postgres
+    // patch versions. No data rows, credentials, or production connections.
+    const diagnostic = await pool.query<{ relation: string; name: string; definition: string; validated: boolean; deferrable: boolean; deferred: boolean }>(`
+      SELECT c.relname AS relation, k.conname AS name,
+             pg_catalog.pg_get_constraintdef(k.oid, true) AS definition,
+             k.convalidated AS validated, k.condeferrable AS deferrable, k.condeferred AS deferred
+      FROM pg_catalog.pg_constraint k
+      JOIN pg_catalog.pg_class c ON c.oid=k.conrelid
+      JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+      WHERE n.nspname='fysen' AND c.relkind IN ('r','p')
+        AND c.relname <> 'schema_migrations'
+      ORDER BY c.relname,k.conname
+    `);
+    process.stdout.write(`FYSEN_CONSTRAINT_SCHEMA_DIAGNOSTIC ${JSON.stringify(diagnostic.rows)}\n`);
+  }
   expect(actual).toEqual(expectedRecoveryMetadata);
 }
 
