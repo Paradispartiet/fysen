@@ -200,6 +200,14 @@ test("Editorial food photos are only large-view enabled with real provenance and
       const notice=readFileSync(path.join(imageRoot, "bibimbap-LICENSE.txt"), "utf8");
       assert.match(notice, /Fotograf: Andy Li/u);
       assert.match(notice, /CC0 1\.0/u);
+    } else if (photo.id === "falafel") {
+      assert.equal(photo.catalogId,"falafel");
+      assert.equal(photo.photoLicense,"https://www.pexels.com/license/");
+      assert.equal(photo.photoLicenseNotice,"/dish-images/falafel-LICENSE.txt");
+      assert.match(photo.photoCredit,/Saya P.*Pexels/u);
+      const notice=readFileSync(path.join(imageRoot,"falafel-LICENSE.txt"),"utf8");
+      assert.match(notice,/Fotograf: Saya P/u);
+      assert.match(notice,/Pexels License/u);
     } else if (photo.id === "pizza-prosciutto") {
       assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
       assert.match(photo.photoCredit, /Amin.*CC BY-SA 4\.0/u);

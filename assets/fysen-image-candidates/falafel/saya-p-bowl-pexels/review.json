@@ -11,8 +11,8 @@
   "original_sha256": "71c3b13a73f29715bb618be69738a2fcca2f2abd1ce7f2f279b2526f8232cfa4",
   "download_verified": true,
   "no_upscale": true,
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
   "quality_gate": "Whole falafel serving with actual falafel balls and hummus; natural sharp original detail, preferably complete plate. Black backdrop after masking must contain no table, cut off food or spurious objects. No synthetic food, no menu/restaurant-specific claims."
 }

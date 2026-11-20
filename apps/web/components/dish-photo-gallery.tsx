@@ -219,6 +219,10 @@ export function DishPhotoGallery() {
             Bibimbap med storfekjøtt <span aria-hidden="true">↗</span>
           </a>
           <small>Bibimbap-foto: Andy Li / Wikimedia Commons, <a href="/dish-images/bibimbap-LICENSE.txt" target="_blank" rel="noopener noreferrer">CC0 1.0, kilde</a>.</small>
+          <a href="/dish-images/falafel-master-4284.avif" target="_blank" rel="noopener noreferrer">
+            Falafel med hummus <span aria-hidden="true">↗</span>
+          </a>
+          <small>Falafel-foto: Saya P / Pexels, <a href="/dish-images/falafel-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
         </nav>
       </div>
     </details>
