@@ -81,8 +81,11 @@ gg=src[:,:,1].astype(np.int16)
 bb=src[:,:,2].astype(np.int16)
 xx=np.arange(W,dtype=np.float32)[None,:]*1100/W
 yy=np.arange(H,dtype=np.float32)[:,None]*828/H
-protect_food=((xx-592)/275)**2+((yy-389)/272)**2<1
+protect_food=((xx-592)/300)**2+((yy-389)/296)**2<1
 brown_table=(rr>gg+13)&(gg>bb+6)&(rr<195)
+# Upper ceramic rim is off-white and has brown decorative shadows.
+# Never color-key anything above the lower half of the bowl.
+brown_table &= yy > H*.46
 grabbed[brown_table&~protect_food]=0
 # Remove tiny isolated debris without cropping the ceramic outline.
 grabbed=cv2.morphologyEx(grabbed,cv2.MORPH_OPEN,
