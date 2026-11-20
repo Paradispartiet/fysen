@@ -13,8 +13,12 @@
   "food_pixels_generated": false,
   "contour_area_fraction": 0.3117817199308109,
   "grabcut_area_fraction": 0.299468954248366,
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
-  "gate": "Whole authentic beef bibimbap bowl, beef rice vegetables and egg. No side bowls, plate, sauce dish, soda can or wooden table. Source-native pixels, clean black backdrop, no invention. Never attach bibimbap to catalog dishes."
+  "gate": "Whole authentic beef bibimbap bowl, beef rice vegetables and egg. No side bowls, plate, sauce dish, soda can or wooden table. Source-native pixels, clean black backdrop, no invention. Never attach bibimbap to catalog dishes.",
+  "chosen_variant": "black-grabcut",
+  "inspected_preview_sha256": "231c6c2fdbc6dd7e4b80000abd650240a17060d4ccb3e086ac38b36e373e302b",
+  "reviewed_native_sha256": "f80b33f0c8a9f05fc8d69b564f07d4bc9c4baaaa9c19794cc6f109e3f7555bf1",
+  "large_avif_sha256": "35b55c893aa46524281646c38574627a222a8971b3a77b108f80e1571de06f8d"
 }

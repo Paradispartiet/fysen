@@ -11,8 +11,8 @@
   "original_sha256": "087b46ba6e8c668ac13b6fd37ff7cbd74acc3b54fa003ee82511a4cf11b29c10",
   "native_original_verified": true,
   "no_upscale": true,
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
   "quality_gate": "Clearly identifiable beef bibimbap (not vegetarian or chicken): beef, rice, colorful vegetables, egg. Complete bowl and all food intact; sharp native detail; no invented ingredients, no enlarged pixels; black backdrop without other food or table fragments. Editorial gallery only, never restaurant menu mapping."
 }
