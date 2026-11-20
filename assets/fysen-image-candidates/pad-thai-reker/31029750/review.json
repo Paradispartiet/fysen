@@ -1,0 +1,19 @@
+{
+  "dish_id": "pad-thai-reker",
+  "photo_id": 31029750,
+  "photographer_claim": "Sai Kuen Leung",
+  "description": "Delicious Thai Shrimp Pad Thai with Fresh Ingredients",
+  "source_page": "https://www.pexels.com/photo/31029750/",
+  "source_url": "https://images.pexels.com/photos/31029750/pexels-photo-31029750.jpeg",
+  "license_url": "https://www.pexels.com/license/",
+  "original_width": 6016,
+  "original_height": 4016,
+  "source_sha256": "a0adbca4a85be527a11e741c0161c1b9283b356ff5d3f59a9ece97aa89027137",
+  "source_verified": true,
+  "photographer_verified": false,
+  "license_verified": false,
+  "approved_for_fysen": false,
+  "visual_review_completed": false,
+  "published": false,
+  "review_criteria": "Entire plate/bowl with real shrimp and flat pad-thai rice noodles, sharp actual source 1:1 details, black background without table/utensils, no inpainted ingredients or upscaling."
+}
