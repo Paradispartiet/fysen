@@ -54,11 +54,11 @@ def main() -> None:
     assert digest(preview)==approved_preview_hash,"Regenerated preview differs from inspected candidate."
     source_native=C/f"{selected}-native.png"
 
-    archive=ROOT/"assets/fysen-dish-originals/pho-bo.png"
+    archive=ROOT/"assets/fysen-dish-originals/pho.png"
     full=PUBLIC/"pho-bo-master-5472.avif"
     small=PUBLIC/"pho-bo-thumb-512.avif"
     license_notice=PUBLIC/"pho-bo-LICENSE.txt"
-    review_note=ROOT/"docs/fysen-image-reviews/pho-bo.md"
+    review_note=ROOT/"docs/fysen-image-reviews/pho.md"
     for file in (archive,full,small,license_notice,review_note):
         assert not file.exists(),f"Would overwrite a prior approved asset: {file}"
 
@@ -91,14 +91,14 @@ def main() -> None:
            "risnudler, brun kraft, bønnespirer og grønt i hel hvit skål på sort "
            "bakgrunn. Ikke bruk som kylling- eller vegetarphở og ikke som "
            "dokumentasjon av en bestemt restaurants servering."),
-        "largeSourceOriginalPath":"assets/fysen-dish-originals/pho-bo.png",
+        "largeSourceOriginalPath":"assets/fysen-dish-originals/pho.png",
         "largeSource":full.name,
         "largeSourceNativeWidth":5472,
         "largeSourceNativeHeight":3648,
         "largeSourceMethod":"independent-original",
         "largeSourceSha256":avif_sha,
         "largeSourceOriginalSha256":original_native_sha,
-        "largeSourceReview":"docs/fysen-image-reviews/pho-bo.md",
+        "largeSourceReview":"docs/fysen-image-reviews/pho.md",
         "largeViewEnabled":True,
         "photoCredit":AUTHOR,
         "photoSource":SOURCE_PAGE,
@@ -141,7 +141,7 @@ def main() -> None:
        "Fysisk nettlesertest på iPad er ikke gjennomført.\n\n"
        "Reviewed for full-size display: yes\n"
        "No collage crop or upscale: yes\n"
-       "Correct beef-phở dish and black background: yes\n\n"
+       "Correct dish and black background: yes\n\n"
        "Reviewed source-native PNG SHA-256: "+original_native_sha+"\n"
        "Visually inspected preview SHA-256: "+approved_preview_hash+"\n",
        encoding="utf8")
