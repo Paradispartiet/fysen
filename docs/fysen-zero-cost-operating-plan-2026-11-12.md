@@ -126,6 +126,28 @@ Originalen har i tillegg `schema_migrations_pkey` på sin egen migrasjonstabell.
 4. Før eventuell produksjonsavgjørelse: kontroller organisasjonens faktiske Free-/Fair Use-status, private RLS/grants, appens autentiserte skriverettighet, og separat godkjent rollback. Behold `PR #1241` som utkast.
 
 
+## Dokumentert migrasjonspassasje 20. november – 23/23 SQL-filer identiske
+
+**Status: SQL-opphav bekreftet, live ledger-backfill fortsatt sperret.** En ny, read-only kontroll sammenlignet **alle 23** rader i recovery-prosjektets `supabase_migrations.schema_migrations` direkte med `packages/database/migrations/0001_...sql` til og med `0023_recent_menu_additions.sql` fra Fysen commit `b3b94072a4ff49ea613f7dc235eeabea55a111af`. For hver registrering ble `statements[1]` hentet ut og sammenlignet med den eksakte UTF-8-filen fra GitHub. **23/23 var tegn-for-tegn identiske; ingen normalisering eller omtolkning ble nødvendig.** Hver registrering inneholder ett SQL-statement-felt. Ingen private tabellrader ble hentet eller eksportert.
+
+| Kontroll | Verifisert resultat |
+|---|---|
+| Recovery: Supabase-migrasjonshistorikk | 23 rader navngitt `fysen_recovery_0001_...` til `0023_...` |
+| Lagret SQL mot repoets tilsvarende migrasjonsfil | **23/23 eksakt lik**, ingen avvik |
+| Original: Supabase-migrasjonshistorikk | Egen enkeltstående registrering for indekser fra 2. november |
+| Original: `fysen.schema_migrations` | 22 applikasjonsmigrasjoner til og med `0022` |
+| Recovery: `fysen.schema_migrations` | **Mangler**, selv om Supabases register er komplett |
+| Isolert PostgreSQL 17/PostGIS på Fysen commit `b3b9407` | GitHub CI database-jobb bestått: migrasjoner, `verify:production`, integrasjonstester ([run 44759966802](https://github.com/Paradispartiet/fysen/actions/runs/44759966802)) |
+
+**Tolkning:** Recovery ble registrert med *akkurat de samme migrasjons-SQL-filene* som finnes i Fysens repo på denne commiten. Det er sterkt bevis for migrasjonenes proveniens, men ikke alene bevis for at alle SQL-effekter, data, indekser, endringer etter migrering, private tilganger eller historiske nøkler samsvarer. `fysen.schema_migrations` må ikke opprettes eller stemples i den levende recovery-instansen ut fra dette beviset alene.
+
+**Presis neste port:**
+1. Sammenlign `pg_catalog` fra en ren, isolert 23-migrasjonsdatabase og recovery, med forklaring for alle avvik (inkludert forskjeller i indekser, extension-skjema og appens ledger); test en *kun lokal* ledger-rekonstruksjon og avvis gjenkjøring av gamle datamigrasjoner.
+2. Verifiser komplette, private SHA-256-kontrollerte backup- og restorebevis for alle historikk-/brukertabeller, uten eksport av persondata til CI-logger eller offentlige artefakter.
+3. Verifiser at kvote, skrivekapasitet, private tillatelser og rollback er sikre før noen separat godkjent produksjonsbeslutning.
+
+**Uendret HOLD:** Ingen live SQL-skriving, ledger-stempling, produksjons-merge, tilkoblingsbytte, kostnad eller deploy. PR #1241 forblir Draft.
+
 ## Verifisert status 18. november 2026
 
 Den isolerte prøven ble gjentatt med de verifiserte meny- og søkekopiene fra 2. november. Kompaktdataene ble importert i PostgreSQL 17 med PostGIS etter alle 23 Fysen-migrasjonene. De 30 applikasjonstabellene, 151 408 menypostene og den private koblingstabellen for 5 150 gamle søketreff tok **180 221 619 byte**. Ingen direkte søkereferanser pekte til manglende menyposter, og alle 39 databaseintegrasjonstestene bestod. Lokale testdata og søkereferanser ligger utenfor repositoryet.
