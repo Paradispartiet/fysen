@@ -1,0 +1,23 @@
+{
+  "catalog_id": "udon",
+  "source_original_sha256": "fb863f80379bdaf330b88adbc96193c9d5fa4e19f81988cadc1e56fcf2a05ac3",
+  "source_dimensions": [
+    3024,
+    4032
+  ],
+  "source_page": "https://commons.wikimedia.org/wiki/File:Bukkake_Udon_with_%E3%81%88%E3%81%B3%E5%A4%A9.jpg",
+  "author": "Immanuelle / Wikimedia Commons",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "variants": [
+    "black-contour",
+    "black-grabcut",
+    "black-clean-grabcut"
+  ],
+  "no_upscale": true,
+  "generated_food_pixels": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "caution": "Single bowl of bukkake udon with ebi tempura and other toppings. Actual original photo is of a restaurant meal, but not of any specific Fysen-listed restaurant. Mask must preserve entire prawn, noodles, toppings and whole plate rim."
+}
