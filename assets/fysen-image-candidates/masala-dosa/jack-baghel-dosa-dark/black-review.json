@@ -13,7 +13,8 @@
   "variants": [
     "black-contour",
     "black-grabcut",
-    "black-clean-grabcut"
+    "black-clean-grabcut",
+    "black-food-isolate"
   ],
   "visual_review_completed": false,
   "approved_for_fysen": false,
