@@ -11,8 +11,8 @@
   "notes": "Authentic Japanese Yakitori Skewers on Plate; inspect whether all skewers are chicken, one complete plate.",
   "source_verified": true,
   "no_upscale": true,
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
   "gate": "Verify grilled CHICKEN skewers, not unrelated kebab/pork or mixed skewers. Complete sticks on a single serving; no invented pixels, retain all food against black background."
 }

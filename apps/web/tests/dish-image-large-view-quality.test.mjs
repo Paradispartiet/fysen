@@ -200,6 +200,14 @@ test("Editorial food photos are only large-view enabled with real provenance and
       const notice=readFileSync(path.join(imageRoot, "bibimbap-LICENSE.txt"), "utf8");
       assert.match(notice, /Fotograf: Andy Li/u);
       assert.match(notice, /CC0 1\.0/u);
+    } else if (photo.id === "yakitori") {
+      assert.equal(photo.catalogId, "yakitori");
+      assert.equal(photo.photoLicense, "https://www.pexels.com/license/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/yakitori-LICENSE.txt");
+      assert.match(photo.photoCredit, /Airam Dato-on.*Pexels/u);
+      const notice = readFileSync(path.join(imageRoot,"yakitori-LICENSE.txt"),"utf8");
+      assert.match(notice, /Fotograf: Airam Dato-on/u);
+      assert.match(notice, /Pexels License/u);
     } else if (photo.id === "katsu") {
       assert.equal(photo.catalogId,"katsu");
       assert.equal(photo.photoLicense,"https://www.pexels.com/license/");
