@@ -34,7 +34,9 @@ try {
       hasTouch: true,
     });
     try {
-      await page.goto(base, { waitUntil: "domcontentloaded", timeout: 30_000 });
+      // DOM can be visible before Next/React hydrates button handlers.
+      // Wait for the page to settle so a pre-hydration click cannot vanish.
+      await page.goto(base, { waitUntil: "networkidle", timeout: 45_000 });
       const disclosure = page.locator("details.cuisineBrowseDisclosure");
       await disclosure.waitFor({ state: "visible", timeout: 30_000 });
       assert.equal(await disclosure.getAttribute("open"), null,
