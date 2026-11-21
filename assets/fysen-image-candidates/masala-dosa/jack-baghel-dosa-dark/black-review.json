@@ -1,0 +1,22 @@
+{
+  "dish_id": "dosa",
+  "photo_source_sha256": "f21b2b545b16554ef593474aadeb9f761d3731b3470e26ad4b6c11e1b0f8d20c",
+  "source_native_dimensions": [
+    9504,
+    6336
+  ],
+  "photographer": "Jack Baghel / Pexels",
+  "photo_page": "https://www.pexels.com/photo/food-on-plate-with-bowls-of-sauces-20422129/",
+  "license_url": "https://www.pexels.com/license/",
+  "no_upscale": true,
+  "generated_food_pixels": false,
+  "variants": [
+    "black-contour",
+    "black-grabcut",
+    "black-clean-grabcut"
+  ],
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "warning": "Masala potato curry is clearly present in its OWN bowl; the image does NOT verify a potato-stuffed dosa. Do not label that filling as inside the crepe. Keep full dosa, plate, chutney and sambar. Omit cutlery and grey table."
+}
