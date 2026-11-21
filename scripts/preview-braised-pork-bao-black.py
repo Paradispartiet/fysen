@@ -52,6 +52,13 @@ grab=np.isin(classes,(cv2.GC_FGD,cv2.GC_PR_FGD)).astype(np.uint8)*255
 # remove remote detached pieces with connected-component cleanup.
 clean=grab.copy()
 clean=cv2.bitwise_and(clean,outer)
+# One slim strip of white printed menu survives on the LEFT side of the
+# brown ceramic rim. Reject only neutral off-white in that narrow region.
+rgb=small.astype(np.int16)
+hi=rgb.max(axis=2);lo=rgb.min(axis=2)
+ys,xs=np.mgrid[0:sh,0:sw]
+menu_sliver=(xs<375)&(ys>245)&(ys<675)&(lo>142)&((hi-lo)<24)
+clean[menu_sliver]=0
 cnt,labels,stats,centroids=cv2.connectedComponentsWithStats((clean>0).astype(np.uint8),8)
 if cnt>1:
   best=1+np.argmax(stats[1:,cv2.CC_STAT_AREA])
