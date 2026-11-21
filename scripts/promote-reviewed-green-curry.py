@@ -210,9 +210,9 @@ def main():
   assert.equal(photo.photoLicense, "https://www.pexels.com/license/");
   assert.match(photo.variantCaution, /kylling/iu);
   assert.match(photo.variantCaution, /ikke restaurantfoto/iu);
-  assert.match(gallery, /href="\\/dish-images\\/green-curry-master-3017\\.avif"/u);
+  assert.ok(gallery.includes('href="/dish-images/green-curry-master-3017.avif"'));
   assert.match(gallery, /Redaksjonelt foto av grønn curry med kylling/u);
-  assert.match(css, /green-curry-thumb-512\\.avif/u);
+  assert.ok(css.includes("green-curry-thumb-512.avif"));
 });
 
 '''
