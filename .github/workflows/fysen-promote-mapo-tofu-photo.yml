@@ -1,0 +1,13 @@
+name: Fysen mapo tofu photo verification
+on:
+  push:
+    branches: [art/mapo-tofu-native-photo-20261121]
+permissions:
+  contents: read
+jobs:
+  photos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: node --test apps/web/tests/dish-photo-gallery.test.mjs apps/web/tests/dish-image-large-view-quality.test.mjs

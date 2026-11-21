@@ -200,6 +200,14 @@ test("Editorial food photos are only large-view enabled with real provenance and
       const notice=readFileSync(path.join(imageRoot, "bibimbap-LICENSE.txt"), "utf8");
       assert.match(notice, /Fotograf: Andy Li/u);
       assert.match(notice, /CC0 1\.0/u);
+    } else if (photo.id === "mapo-tofu") {
+      assert.equal(photo.catalogId, "mapo-tofu");
+      assert.equal(photo.photoSource, "https://commons.wikimedia.org/wiki/File:Chen_Mapo_Tofu.jpg");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/mapo-tofu-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "mapo-tofu-LICENSE.txt"), "utf8");
+      assert.match(notice, /Fotograf: ZhengZhou/u);
+      assert.match(notice, /CC BY-SA 4\.0/u);
+      assert.match(notice, /Bearbeidelse:/u);
     } else if (photo.id === "dumplings") {
       assert.equal(photo.catalogId, "dumplings");
       assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
