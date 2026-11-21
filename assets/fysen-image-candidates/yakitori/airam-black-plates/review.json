@@ -1,0 +1,18 @@
+{
+  "dish_id": "yakitori",
+  "catalog_id": "yakitori",
+  "source_photo_author": "Airam Dato-on / Pexels",
+  "photo_page": "https://www.pexels.com/photo/30682902/",
+  "photo_source_url": "https://images.pexels.com/photos/30682902/pexels-photo-30682902.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "native_width": 4000,
+  "native_height": 6000,
+  "source_sha256": "f3323ce49e154718b0dd714a2b16a212df9a2ca5fb364dc4e495a2a2aa8bfabf",
+  "notes": "Yakitori Skewers on Black Plates; inspect for mixed meat, incomplete skewers, redundant plates.",
+  "source_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "gate": "Verify grilled CHICKEN skewers, not unrelated kebab/pork or mixed skewers. Complete sticks on a single serving; no invented pixels, retain all food against black background."
+}

@@ -1,0 +1,18 @@
+{
+  "dish_id": "yakitori",
+  "catalog_id": "yakitori",
+  "source_photo_author": "Airam Dato-on / Pexels",
+  "photo_page": "https://www.pexels.com/photo/30682936/",
+  "photo_source_url": "https://images.pexels.com/photos/30682936/pexels-photo-30682936.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "native_width": 5000,
+  "native_height": 4000,
+  "source_sha256": "82eb64ac56dfd411cb9252b59fdbba69b3aa4016cb1e8f440564a076b4c5bd31",
+  "notes": "Japanese yakitori assortment; check clear chicken, complete sticks and plate.",
+  "source_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "gate": "Verify grilled CHICKEN skewers, not unrelated kebab/pork or mixed skewers. Complete sticks on a single serving; no invented pixels, retain all food against black background."
+}

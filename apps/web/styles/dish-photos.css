@@ -262,7 +262,7 @@
 }
 .dishPhotoThumb.dishPhotoYakitori,
 .dishPhotoSmall.dishPhotoYakitori {
-  background: #000 url("/dish-images/yakitori-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/yakitori-thumb-512.avif") center / contain no-repeat;
 }
 .dishPhotoThumb.dishPhotoUdonTempura,
 .dishPhotoSmall.dishPhotoUdonTempura {

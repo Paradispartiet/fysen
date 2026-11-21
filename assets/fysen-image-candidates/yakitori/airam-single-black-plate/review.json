@@ -1,0 +1,18 @@
+{
+  "dish_id": "yakitori",
+  "catalog_id": "yakitori",
+  "source_photo_author": "Airam Dato-on / Pexels",
+  "photo_page": "https://www.pexels.com/photo/30682903/",
+  "photo_source_url": "https://images.pexels.com/photos/30682903/pexels-photo-30682903.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "native_width": 4000,
+  "native_height": 5000,
+  "source_sha256": "2efaeafc2a0da70b73c3707950d058b2b09126fd2d1f910f29bb55abaee3a401",
+  "notes": "Authentic Japanese Yakitori Skewers on Plate; inspect whether all skewers are chicken, one complete plate.",
+  "source_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
+  "published": false,
+  "gate": "Verify grilled CHICKEN skewers, not unrelated kebab/pork or mixed skewers. Complete sticks on a single serving; no invented pixels, retain all food against black background."
+}
