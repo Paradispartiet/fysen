@@ -1,0 +1,20 @@
+{
+  "dish_id": "dosa",
+  "gallery_id": "dosa",
+  "catalog_id": "dosa",
+  "variant": "masala dosa",
+  "source_photo_author": "Nikhil Bhatia / Pexels",
+  "photo_page": "https://www.pexels.com/photo/traditional-south-indian-masala-dosa-on-banana-leaf-32229637/",
+  "photo_source_url": "https://images.pexels.com/photos/32229637/pexels-photo-32229637.png",
+  "photo_license": "https://www.pexels.com/license/",
+  "native_width": 2400,
+  "native_height": 3200,
+  "original_sha256": "988ab70af01334f56127c20cd1e4105ac1fb10f58f5795a664dba1d95caa77ee",
+  "source_verified": true,
+  "no_upscale": true,
+  "candidate_notes": "Explicitly labelled authentic masala dosa with coconut chutney in Mysuru, on banana leaf.",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Real masala dosa, confirm spiced potato filling if visible, crisp complete crepe and appropriate chutney/sambar; authentic high resolution; a single complete serving on pure black after masking, no false restaurant claim."
+}
