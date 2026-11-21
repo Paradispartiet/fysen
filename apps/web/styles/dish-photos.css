@@ -136,7 +136,7 @@
   background: #000 url("/dish-images/grillet-laks-thumb-512.avif") center / contain no-repeat;
 }
 
-/* Phở bò: source-verified editorial photo, exact catalog dish only. */
+/* Phở bò: genuine source-verified photographic thumbnail for this exact dish ID. */
 .dishPhotoThumb.dishPhotoPho,
 .dishPhotoSmall.dishPhotoPho {
   background: #000 url("/dish-images/pho-bo-thumb-512.avif") center / contain no-repeat;
@@ -207,10 +207,10 @@
 .dishPhotoThumb.dishPhotoButterChicken,
 .dishPhotoSmall.dishPhotoButterChicken { background: #000 url("/dish-images/butter-chicken-thumb-512.avif") center / cover no-repeat; }
 
-/* Gyoza: sharp single-dish illustration for its exact editorial ID only. */
+/* Gyoza: real source-verified photo, compact standalone AVIF, exact editorial dish only. */
 .dishPhotoThumb.dishPhotoGyoza,
 .dishPhotoSmall.dishPhotoGyoza {
-  background: #000 url("/dish-images/gyoza-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/gyoza-thumb-512.avif") center / contain no-repeat;
 }
 
 /* Gallery-only shrimp pad thai; never use for unknown-variant pad thai restaurant dishes. */
@@ -231,16 +231,16 @@
 }
 .dishPhotoThumb.dishPhotoFalafel,
 .dishPhotoSmall.dishPhotoFalafel {
-  background: #000 url("/dish-images/falafel-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/falafel-thumb-512.avif") center / contain no-repeat;
 }
 
 /* New 768px standalone editorial illustrations. Exact dish IDs only; never restaurant photos. */
 .dishPhotoThumb.dishPhotoCacioEPepe,
-.dishPhotoSmall.dishPhotoCacioEPepe { background: #000 url("/dish-images/cacio-e-pepe-768.avif") center / cover no-repeat; }
+.dishPhotoSmall.dishPhotoCacioEPepe { background: #000 url("/dish-images/cacio-e-pepe-thumb-512.avif") center / contain no-repeat; }
 .dishPhotoThumb.dishPhotoChanaMasala,
-.dishPhotoSmall.dishPhotoChanaMasala { background: #000 url("/dish-images/chana-masala-768.avif") center / cover no-repeat; }
+.dishPhotoSmall.dishPhotoChanaMasala { background: #000 url("/dish-images/chana-masala-thumb-512.avif") center / contain no-repeat; }
 .dishPhotoThumb.dishPhotoMasalaDosa,
-.dishPhotoSmall.dishPhotoMasalaDosa { background: #000 url("/dish-images/masala-dosa-768.avif") center / cover no-repeat; }
+.dishPhotoSmall.dishPhotoMasalaDosa { background: #000 url("/dish-images/masala-dosa-thumb-512.avif") center / contain no-repeat; }
 
 /* New gallery-only dish-type artwork (never restaurant photography or generic catalog evidence). */
 .dishPhotoThumb.dishPhotoBolognese { background: #000 url("/dish-images/pasta-bolognese-thumb-512.avif") center / contain no-repeat; }
@@ -250,23 +250,23 @@
 /* Nye KI-illustrasjoner: fiskeart/bibimbapvariant er ikke bevis for restaurantretter.
    Al pastor kan kun brukes som redaksjonell illustrasjon med nøyaktig samme rett-ID. */
 .dishPhotoThumb.dishPhotoWhiteFish { background: #000 url("/dish-images/stekt-hvit-fisk-thumb-512.avif") center / contain no-repeat; }
-.dishPhotoThumb.dishPhotoBibimbap { background: #000 url("/dish-images/bibimbap-768.avif") center / cover no-repeat; }
+.dishPhotoThumb.dishPhotoBibimbap { background: #000 url("/dish-images/bibimbap-thumb-512.avif") center / contain no-repeat; }
 .dishPhotoThumb.dishPhotoTacosAlPastor,
-.dishPhotoSmall.dishPhotoTacosAlPastor { background: #000 url("/dish-images/tacos-al-pastor-768.avif") center / cover no-repeat; }
+.dishPhotoSmall.dishPhotoTacosAlPastor { background: #000 url("/dish-images/tacos-al-pastor-thumb-512.avif") center / contain no-repeat; }
 
 /* Separate 768px AI illustrations for exact Japanese dish IDs only.
    Not photographs of a restaurant serving or proof of menu ingredients. */
 .dishPhotoThumb.dishPhotoChickenKatsu,
 .dishPhotoSmall.dishPhotoChickenKatsu {
-  background: #000 url("/dish-images/chicken-katsu-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/chicken-katsu-thumb-512.avif") center / contain no-repeat;
 }
 .dishPhotoThumb.dishPhotoYakitori,
 .dishPhotoSmall.dishPhotoYakitori {
-  background: #000 url("/dish-images/yakitori-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/yakitori-thumb-512.avif") center / contain no-repeat;
 }
 .dishPhotoThumb.dishPhotoUdonTempura,
 .dishPhotoSmall.dishPhotoUdonTempura {
-  background: #000 url("/dish-images/udon-tempura-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/udon-tempura-thumb-512.avif") center / contain no-repeat;
 }
 
 /* Six remaining Matlyst dishes; editorial illustrations, never restaurant photos. */
