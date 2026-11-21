@@ -1,0 +1,19 @@
+{
+  "dish_id": "banh-mi",
+  "catalog_id": "banh-mi",
+  "photo_page": "https://commons.wikimedia.org/wiki/File:Special_Baguette_(B%C3%A1nh_m%C3%AC)_-_Banh_Mi_Ancient_Saigon_2024-12-20.jpg",
+  "original_url": "https://upload.wikimedia.org/wikipedia/commons/8/89/Special_Baguette_%28B%C3%A1nh_m%C3%AC%29_-_Banh_Mi_Ancient_Saigon_2024-12-20.jpg",
+  "photographer": "Andy Li / Wikimedia Commons",
+  "photo_license": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "claimed_variant": "Bánh mì with pork belly, pork roll and pâté",
+  "review_caution": "CC0 restaurant-origin photo: isolate the baguette only, excluding drinks, table, people and wrappers where possible. Never imply it is served by a Fysen-listed restaurant.",
+  "native_width": 8160,
+  "native_height": 6144,
+  "original_sha256": "a767191b3c4acf116b6dd9ea88d6568225eaaa214b8c09d2414fe37478b2b27a",
+  "source_download_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Whole clearly identifiable single dish; original-native 1400px detail; no false ingredient/variant claims. Isolated full dish on genuine black background without synthetic food, objects or zoomed cropping. Licenses and source credit documented. No restaurant menu/price mapping."
+}
