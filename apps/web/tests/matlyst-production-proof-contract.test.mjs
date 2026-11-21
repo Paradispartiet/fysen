@@ -18,11 +18,11 @@ const releaseSource = await readFile(
 );
 
 test("Matlyst runs on deployed web only, not an automatic no-op release", () => {
-  assert.match(proofSource, /^  workflow_call:/mu);
-  assert.match(proofSource, /^      source_sha:/mu);
+  assert.match(proofSource, /^\s{2}workflow_call:/mu);
+  assert.match(proofSource, /^\s{6}source_sha:/mu);
   assert.match(proofSource, /ref: \$\{\{ inputs\.source_sha \|\| github\.sha \}\}/u);
-  assert.doesNotMatch(proofSource, /^  workflow_run:/mu);
-  assert.match(releaseSource, /^  matlyst_proof:/mu);
+  assert.doesNotMatch(proofSource, /^\s{2}workflow_run:/mu);
+  assert.match(releaseSource, /^\s{2}matlyst_proof:/mu);
   assert.match(releaseSource, /needs\.web\.result == 'success'/u);
   assert.match(releaseSource, /needs\.proof\.result == 'success'/u);
   assert.match(releaseSource, /uses: \.\/\.github\/workflows\/matlyst-production-proof\.yml/u);
