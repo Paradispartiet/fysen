@@ -27,7 +27,8 @@ def fetch(url):
             if n==2:raise
             time.sleep((n+1)*3)
 def stage(x):
-    url=f"https://images.pexels.com/photos/{x['id']}/pexels-photo-{x['id']}.jpeg"
+    ext="png" if x["id"]==32229637 else "jpeg"
+    url=f"https://images.pexels.com/photos/{x['id']}/pexels-photo-{x['id']}.{ext}"
     raw=fetch(url)
     with Image.open(BytesIO(raw)) as original:
         original.load()
