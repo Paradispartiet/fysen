@@ -4,13 +4,11 @@ import re
 from hashlib import sha256
 from io import BytesIO
 from pathlib import Path
-from urllib.request import Request, urlopen
 
 from PIL import Image, ImageDraw, ImageFilter, ImageOps
 
 DISH = "mapo-tofu"
 SOURCE = "https://commons.wikimedia.org/wiki/File:Chen_Mapo_Tofu.jpg"
-DOWNLOAD = "https://upload.wikimedia.org/wikipedia/commons/8/88/Chen_Mapo_Tofu.jpg?utm_campaign=index&utm_content=original&utm_source=commons.wikimedia.org"
 SOURCE_SHA = "988dbc1f8a9daf2f27304fcb401249e461f4badc8affb484f2722e80baea1f52"
 LICENSE = "https://creativecommons.org/licenses/by-sa/4.0/"
 CREDIT = "ZhengZhou / Wikimedia Commons · CC BY-SA 4.0"
@@ -78,9 +76,7 @@ def main():
     assert entry["index"] == 29 and entry["atlas"] == "mapo-tofu-768.avif"
     assert sum(item.get("largeViewEnabled") is True for item in data["images"]) == 28
 
-    request = Request(DOWNLOAD, headers={"User-Agent": "Fysen/1.0 (Paradispartiet/fysen; Wikimedia photo import)"})
-    with urlopen(request, timeout=30) as response:
-        original = response.read(5_000_000)
+    original = (root / "assets/fysen-dish-originals/mapo-tofu-source.jpg").read_bytes()
     assert sha256(original).hexdigest() == SOURCE_SHA
     with Image.open(BytesIO(original)) as source:
         assert source.format == "JPEG" and source.size == DIMENSIONS
