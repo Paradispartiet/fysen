@@ -84,15 +84,15 @@ wrapper_polygon=np.array([
 wrapper_roi=np.zeros_like(foreground)
 cv2.fillPoly(wrapper_roi,[wrapper_polygon],255)
 # Pale, low-chroma paper only, not the tan crust or colored vegetables.
-paper=(hsv[:,:,1]<68)&(hsv[:,:,2]>164)&(wrapper_roi>0)
+paper=(hsv[:,:,1]<78)&(hsv[:,:,2]>118)&(wrapper_roi>0)
 foreground[paper]=0
 # Neutral paper beneath the right baguette's shoulder: suppress ONLY gray
 # light wrapper pixels, retaining tan crust and any green herbs.
 pocket=np.zeros_like(foreground)
 cv2.fillPoly(pocket,[np.array([
-    (499,199),(548,199),(550,236),(537,242),(514,240),(496,219)
+    (499,198),(542,198),(540,236),(530,248),(510,248),(496,219)
 ],dtype=np.int32)],255)
-gray_wrapper=(hsv[:,:,1]<59)&(hsv[:,:,2]>157)&(pocket>0)
+gray_wrapper=(hsv[:,:,1]<85)&(hsv[:,:,2]>109)&(pocket>0)
 foreground[gray_wrapper]=0
 # PAPER-ONLY pocket above the left shoulder of the right baguette. This
 # region is outside the observed upper bread contour and includes no filling.
@@ -111,10 +111,10 @@ crest_y=np.array([217,220,225,236,249],dtype=np.float32)
 for x in range(597,701):
     cutoff=int(np.interp(x,crest_x,crest_y))
     foreground[:cutoff,x]=0
-upper=foreground[:228,555:690].copy()
+upper=foreground[:247,542:692].copy()
 upper=cv2.morphologyEx(upper,cv2.MORPH_OPEN,
-    cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(7,7)),iterations=1)
-foreground[:228,555:690]=upper
+    cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(11,11)),iterations=1
+foreground[:247,542:692]=upper
 foreground=cv2.morphologyEx(foreground,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8),iterations=1)
 # Flatten tiny disconnected noise only; preserve the baguette and its herbs.
 num,lab,stats,_=cv2.connectedComponentsWithStats(foreground,8)
