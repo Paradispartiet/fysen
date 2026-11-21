@@ -1,0 +1,19 @@
+{
+  "dish_id": "banh-mi",
+  "catalog_id": "banh-mi",
+  "photo_page": "https://www.pexels.com/photo/fresh-vietnamese-banh-mi-sandwich-close-up-36156594/",
+  "original_url": "https://images.pexels.com/photos/36156594/pexels-photo-36156594.jpeg",
+  "photographer": "Robby McCullough / Pexels",
+  "photo_license": "https://www.pexels.com/license/",
+  "claimed_variant": "Vietnamese bánh mì sandwich with fresh ingredients",
+  "review_caution": "Full baguette required with clean outline and no paper crossing the visible food; reject if partly out of frame.",
+  "native_width": 3237,
+  "native_height": 2560,
+  "original_sha256": "f37198705b4482c243a3b9d05bf0b88f686f5d836e0f04a7f7833e1004dfd9d3",
+  "source_download_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Whole clearly identifiable single dish; original-native 1400px detail; no false ingredient/variant claims. Isolated full dish on genuine black background without synthetic food, objects or zoomed cropping. Licenses and source credit documented. No restaurant menu/price mapping."
+}
