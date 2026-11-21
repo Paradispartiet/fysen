@@ -55,7 +55,24 @@ grab=(np.isin(classes,[cv2.GC_FGD,cv2.GC_PR_FGD])*255).astype(np.uint8)
 bound=cv2.dilate(outline,cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(23,23)))
 clean=grab.copy()
 clean[bound==0]=0
-for label,mask in [("black-contour",outline),("black-grabcut",grab),("black-clean-grabcut",clean)]:
+# Remove slate-grey table while preserving actual dosa/plate/bowls. Bright
+# porcelain, cooked food and saturated herbs survive; the neutral dark cloth
+# is rejected. Fill only *mask* holes (never invent/replace image pixels).
+pix=small.astype(np.int16)
+peak=pix.max(axis=2)
+chroma=peak-pix.min(axis=2)
+food_or_plate=((peak>=121)|((peak>=78)&(chroma>=43))).astype(np.uint8)*255
+food_or_plate=cv2.bitwise_and(food_or_plate,clean)
+food_or_plate=cv2.morphologyEx(food_or_plate,cv2.MORPH_CLOSE,
+    cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(19,19)))
+contours,_=cv2.findContours(food_or_plate,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+isolate=np.zeros_like(grab)
+for contour in contours:
+    if cv2.contourArea(contour)>=300:
+        cv2.drawContours(isolate,[contour],-1,255,-1)
+isolate=cv2.GaussianBlur(isolate,(0,0),0.6)
+for label,mask in [("black-contour",outline),("black-grabcut",grab),("black-clean-grabcut",clean),
+                    ("black-food-isolate",isolate)]:
     alpha=cv2.GaussianBlur(mask,(0,0),1).astype(np.float32)/255
     preview=np.clip(small.astype(np.float32)*alpha[:,:,None],0,255).astype(np.uint8)
     out=C/f"{label}-preview.jpg"
@@ -71,7 +88,7 @@ for label,mask in [("black-contour",outline),("black-grabcut",grab),("black-clea
 audit=dict(dish_id="dosa",photo_source_sha256=SHA,source_native_dimensions=[W,H],
            photographer=meta["source_photo_author"],photo_page=meta["photo_page"],
            license_url=meta["photo_license"],no_upscale=True,
-           generated_food_pixels=False,variants=["black-contour","black-grabcut","black-clean-grabcut"],
+           generated_food_pixels=False,variants=["black-contour","black-grabcut","black-clean-grabcut","black-food-isolate"],
            visual_review_completed=False,approved_for_fysen=False,published=False,
            warning=("Masala potato curry is clearly present in its OWN bowl; the image does NOT "
                     "verify a potato-stuffed dosa. Do not label that filling as inside the crepe. "
