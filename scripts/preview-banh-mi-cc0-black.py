@@ -70,6 +70,14 @@ bg=np.zeros((1,65),np.float64)
 fg=np.zeros((1,65),np.float64)
 cv2.grabCut(bgr,mask,None,bg,fg,8,cv2.GC_INIT_WITH_MASK)
 foreground=np.where((mask==cv2.GC_FGD)|(mask==cv2.GC_PR_FGD),255,0).astype(np.uint8)
+# Targeted review correction: eliminate small orange basket strands and a
+# paper sliver behind the RIGHT baguette's upper edge. This is outside the
+# bread and filling; no source-food pixels are added or recolored.
+background_sliver=np.array([
+    (524,181),(697,181),(699,216),(688,231),(666,242),
+    (640,232),(621,224),(591,218),(562,224),(530,219)
+],dtype=np.int32)
+cv2.fillPoly(foreground,[background_sliver],0)
 foreground=cv2.morphologyEx(foreground,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8),iterations=1)
 # Flatten tiny disconnected noise only; preserve the baguette and its herbs.
 num,lab,stats,_=cv2.connectedComponentsWithStats(foreground,8)
