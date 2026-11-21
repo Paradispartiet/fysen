@@ -11,8 +11,8 @@
   "photographer_notes": "Complete curry surface, earthenware bowl on embroidered cloth; check upper rim",
   "source_verified": true,
   "no_upscale": true,
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
   "quality_gate": "Authentic chickpeas in spiced curry, preferably intact complete serving bowl with visible rim; no backdrop, bread, unrelated servings, or synthetic food pixels after black background."
 }
