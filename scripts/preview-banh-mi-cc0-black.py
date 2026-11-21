@@ -100,7 +100,7 @@ assert all(candidate.getpixel(p)==(0,0,0) for p in
 native=ROOT/"black-grabcut-native.png"
 preview=ROOT/"black-grabcut-preview.jpg"
 detail=ROOT/"black-grabcut-detail-1400.jpg"
-native.save(native,compress_level=4)
+candidate.save(native,compress_level=4)
 p=candidate.copy()
 p.thumbnail((1100,1100),Image.Resampling.LANCZOS)
 p.save(preview,quality=94,optimize=True)
