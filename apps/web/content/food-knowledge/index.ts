@@ -8,6 +8,7 @@ import { article as cacioEPepe } from "./articles/cacio-e-pepe";
 import { article as carbonara } from "./articles/carbonara";
 import { article as chanaMasala } from "./articles/chana-masala";
 import { article as cochinitaPibil } from "./articles/cochinita-pibil";
+import { article as dalMakhani } from "./articles/dal-makhani";
 import { article as dosa } from "./articles/dosa";
 import { article as falafel } from "./articles/falafel";
 import { article as fishTaco } from "./articles/fish-taco";
@@ -52,6 +53,7 @@ const articles: readonly FoodKnowledgeArticle[] = [
   butterChicken,
   tandoori,
   chanaMasala,
+  dalMakhani,
   dosa,
   biryani,
   carbonara,

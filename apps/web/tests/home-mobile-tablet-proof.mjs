@@ -179,7 +179,25 @@ try {
       await page.locator(".dishPhotosPreview").click();
       assert.equal(await details.getAttribute("open"), null, "Gallery should close again");
       assert.equal(await page.locator(".dishPhotosGrid").isVisible(), false);
-      process.stdout.write(`PASS ${viewport.name} ${viewport.width}x${viewport.height}: search, closed gallery, correct order, 5 sharp AVIFs, no overflow\n`);
+
+      const dishSearch = await page.goto(`${base}/search?q=dal+makhani&city=Oslo`, { timeout: 60_000 });
+      assert.equal(dishSearch?.status(), 200, "The Dal makhani search page must load");
+      const note = page.getByRole("complementary", { name: "Om retten Dal makhani" });
+      await note.waitFor({ state: "visible" });
+      assert.match(await note.innerText(), /Fysen matleksikon[\s\S]*uradbønner/u);
+      const dishImage = note.getByRole("img", { name: /KI-illustrasjon av dal makhani/u });
+      await dishImage.waitFor({ state: "visible" });
+      assert.match(await dishImage.evaluate((node) => getComputedStyle(node).backgroundImage), /dal-makhani-768\.avif/u);
+      assert.equal((await page.request.get(`${base}/dish-images/dal-makhani-768.avif`)).status(), 200);
+      await checkOverflow("Dal makhani search");
+      if (output) await note.screenshot({ path: path.join(output, `${viewport.name}-dish-search.png`), animations: "disabled" });
+
+      await note.getByRole("button", { name: "Lær om retten" }).click();
+      const knowledge = page.getByRole("dialog", { name: "Dal makhani" });
+      await knowledge.getByRole("heading", { name: "Slik lager du dal makhani" }).waitFor({ state: "visible" });
+      await knowledge.getByRole("button", { name: "Lukk kunnskap om Dal makhani" }).click();
+      await knowledge.waitFor({ state: "hidden" });
+      process.stdout.write(`PASS ${viewport.name} ${viewport.width}x${viewport.height}: gallery, Dal makhani image and Matleksikon, no overflow\n`);
     } finally {
       await context.close();
     }
