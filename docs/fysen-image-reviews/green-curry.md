@@ -17,3 +17,7 @@ Status: visuelt vurdert som egnet i draft; produksjonspublisering IKKE utført. 
 Reviewed for full-size display: yes
 No collage crop or upscale: yes
 Correct dish and black background: yes
+
+## Publiseringssperre og integrasjonskontroll
+
+Denne bildeintegrasjonen er isolert i draft-PR #1286, stablet på Masala dosa PR #1282. Målrettede kilde- og bildetestfiler bestod i GitHub Actions før original, AVIF-filer og miniatyr ble committet. Den samlede CI- og mobil-/iPad-testen skal bekreftes på selve PR-grenens nye commit før merge vurderes. Ingen restaurantmeny, pris, database eller produksjonsversjon endres av dette arbeidet.
