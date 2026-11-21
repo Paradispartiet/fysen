@@ -6,7 +6,7 @@ on:
     paths:
       - .github/workflows/matlyst-production-proof.yml
       - apps/web/tests/matlyst-live-browser-proof.mjs
-      - apps/web/tests/oslo-mobile-public-journeys-proof.mjs
+      - apps/web/tests/oslo-readonly-mobile-proof.mjs
   workflow_run:
     workflows: ["Fysen batched Vercel production release"]
     types: [completed]
@@ -126,10 +126,15 @@ jobs:
             "Søk etter en rett og finn restauranter som har den på menyen.",
             "Se alle retter i Oslo",
             "Matlyst",
-            "Restauranter og retter",
+            "Utforsk matretter",
+            "Kjøkken, regioner og mattyper",
             ...homeCuisines,
           );
-          requireOccurrences(home, "cuisineCard cuisineCardInteractive", homeCuisines.length);
+          // The user-approved UI is a native disclosure, not six always-visible cuisine cards.
+          if (!/<details[^>]*class="cuisineBrowseDisclosure"[^>]*>/u.test(home.html)) {
+            throw new Error("Matlyst must expose its native 'Utforsk matretter' disclosure");
+          }
+          requireOccurrences(home, 'class="cuisineBrowseChoice"', 12);
 
           const journeys = [
             ["Japansk", "/search?city=Oslo&cuisine=Japansk", "Ramen"],
@@ -164,10 +169,10 @@ jobs:
           }, null, 2)}\n`);
           NODE
 
-      - name: Verify live restaurant examples in the mobile browser
+      - name: Verify the native cuisine disclosure on mobile and iPad
         if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
         run: pnpm --filter @fysen/web exec node tests/matlyst-live-browser-proof.mjs
 
-      - name: Verify Oslo public journeys in the mobile browser
+      - name: Verify usable public search and archive fallback on mobile
         if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
-        run: pnpm --filter @fysen/web exec node tests/oslo-mobile-public-journeys-proof.mjs
+        run: pnpm --filter @fysen/web exec node tests/oslo-readonly-mobile-proof.mjs
