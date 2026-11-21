@@ -1,0 +1,60 @@
+name: Fysen stage chana masala originals for review only
+on:
+  push:
+    branches: [art/chana-masala-native-photo-20261121]
+    paths: [".github/workflows/fysen-stage-chana-masala.yml","scripts/stage-chana-masala-sources.py"]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: fysen-chana-masala-stage
+  cancel-in-progress: false
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with: {persist-credentials: true}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - name: Install Pillow
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0
+      - name: Download and inspect native photographs
+        run: python scripts/stage-chana-masala-sources.py
+      - name: Only unapproved source previews allowed
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          items=list(Path("assets/fysen-image-candidates/chana-masala").glob("*/review.json"))
+          assert items
+          for p in items:
+              v=json.loads(p.read_text(encoding="utf8"))
+              assert v["source_verified"] and v["no_upscale"]
+              assert v["dish_id"]==v["catalog_id"]=="chana-masala"
+              assert min(v["native_width"],v["native_height"])>=1600
+              assert not v["visual_review_completed"] and not v["approved_for_fysen"] and not v["published"]
+              assert (p.parent/"source.jpeg").is_file() and (p.parent/"preview.jpg").is_file() and (p.parent/"native-detail-1400.jpg").is_file()
+          print(len(items),"verified real photo candidates, 0 approved, 0 published")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fysen-chana-masala-originals-for-review
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            assets/fysen-image-candidates/chana-masala/*/source.jpeg
+            assets/fysen-image-candidates/chana-masala/*/preview.jpg
+            assets/fysen-image-candidates/chana-masala/*/native-detail-1400.jpg
+            assets/fysen-image-candidates/chana-masala/*/review.json
+      - name: Commit only small review previews and source metadata
+        run: |
+          find assets/fysen-image-candidates/chana-masala -name source.jpeg -delete
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-image-candidates/chana-masala
+          git diff --cached --quiet && exit 0
+          git commit -m "[chana-source-bot] Stage real chana photo previews, unapproved"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin HEAD:"$GITHUB_REF_NAME"
