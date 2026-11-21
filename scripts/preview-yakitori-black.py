@@ -52,10 +52,18 @@ cv2.grabCut(cv2.cvtColor(small,cv2.COLOR_RGB2BGR),labels,None,bg,fg,7,cv2.GC_INI
 grab=(np.isin(labels,(cv2.GC_FGD,cv2.GC_PR_FGD))*255).astype(np.uint8)
 # Remove mostly-white paper/table leftovers without altering original food.
 rgb=small.astype(np.int16)
-bright=(rgb.min(axis=2)>185)&((rgb.max(axis=2)-rgb.min(axis=2))<35)
+yy,xx=np.mgrid[0:sh,0:sw]
+# ONLY the white table/menu backdrop immediately above the upper plate rim:
+# the earlier global white filter damaged the original yellow lemon wedge.
+chroma=rgb.max(axis=2)-rgb.min(axis=2)
+upper_backdrop=((yy>=302)&(yy<380)&(xx>180)&(xx<710)&
+                (rgb.min(axis=2)>157)&(chroma<36))
 clean=grab.copy()
-clean[bright]=0
-# Do not remove the lemon: lemon is saturated yellow and not white.
+clean[upper_backdrop]=0
+# Protect the real bamboo skewer tips. The lines set ALPHA only; the
+# photo itself is unchanged. Trace the actual sticks, not white halos.
+cv2.line(clean,(366,254),(348,391),255,8,cv2.LINE_AA)
+cv2.line(clean,(494,267),(472,397),255,8,cv2.LINE_AA)
 clean=cv2.morphologyEx(clean,cv2.MORPH_CLOSE,cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3)))
 for variant,mask in [("black-contour",contour),("black-grabcut",grab),("black-clean-grabcut",clean)]:
   alpha=cv2.GaussianBlur(mask,(0,0),1).astype(np.float32)/255
