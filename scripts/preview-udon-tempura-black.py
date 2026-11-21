@@ -75,6 +75,14 @@ cv2.grabCut(cv2.cvtColor(small,cv2.COLOR_RGB2BGR),labels,None,bg,fg,5,cv2.GC_INI
 grab_tail=(np.isin(labels,(cv2.GC_FGD,cv2.GC_PR_FGD))*255).astype(np.uint8)
 grab=cv2.bitwise_or(bowl,cv2.bitwise_and(grab_tail,upper))
 clean=precise.copy()
+# The photo contains a cream-colored counter just OUTSIDE the upper side rim.
+# Reject its low-chroma beige pixels only in narrow peripheral wedges; keep
+# the blue patterned ceramic, golden tempura and yellow broth untouched.
+yy,xx=np.mgrid[0:sh,0:sw]
+periphery=(((xx<202)&(yy<548))|((xx>829)&(yy<589)))
+warm_neutral=((rr>123)&((rr-gg)<35)&((gg-bb)<33)&((rr-bb)<58))
+desk=periphery&warm_neutral
+clean[desk]=0
 for name,mask in (("black-contour",precise),("black-grabcut",grab),("black-clean-grabcut",clean)):
   alpha=cv2.GaussianBlur(mask,(0,0),1.1).astype(np.float32)/255.
   preview=np.clip(small.astype(np.float32)*alpha[:,:,None],0,255).astype(np.uint8)
