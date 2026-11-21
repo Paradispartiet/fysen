@@ -1,0 +1,20 @@
+{
+  "dish_id": "dosa",
+  "gallery_id": "dosa",
+  "catalog_id": "dosa",
+  "variant": "masala dosa",
+  "source_photo_author": "Jack Baghel / Pexels",
+  "photo_page": "https://www.pexels.com/photo/triangular-bread-on-plate-20422133/",
+  "photo_source_url": "https://images.pexels.com/photos/20422133/pexels-photo-20422133.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "native_width": 9504,
+  "native_height": 6336,
+  "original_sha256": "49cbe8fd6cf8a5a2c2b65c9b3391d36c2e819e4a9e4afd72140eefce7b9477b3",
+  "source_verified": true,
+  "no_upscale": true,
+  "candidate_notes": "Triangular dosa with chutneys and sambar; verify potato filling, full plate and no other meal.",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Real masala dosa, confirm spiced potato filling if visible, crisp complete crepe and appropriate chutney/sambar; authentic high resolution; a single complete serving on pure black after masking, no false restaurant claim."
+}
