@@ -275,7 +275,7 @@
 .dishPhotoThumb.dishPhotoDumplings,
 .dishPhotoSmall.dishPhotoDumplings { background: #000 url("/dish-images/dumplings-thumb-512.avif") center / contain no-repeat; }
 .dishPhotoThumb.dishPhotoMapoTofu,
-.dishPhotoSmall.dishPhotoMapoTofu { background: #000 url("/dish-images/mapo-tofu-768.avif") center / cover no-repeat; }
+.dishPhotoSmall.dishPhotoMapoTofu { background: #000 url("/dish-images/mapo-tofu-thumb-512.avif") center / contain no-repeat; }
 .dishPhotoThumb.dishPhotoPekingDuck,
 .dishPhotoSmall.dishPhotoPekingDuck { background: #000 url("/dish-images/peking-duck-768.avif") center / cover no-repeat; }
 .dishPhotoThumb.dishPhotoDanDanNoodles,
