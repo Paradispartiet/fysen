@@ -107,7 +107,7 @@ test("Matlyst gallery uses compact side thumbnails across desktop, iPad and phon
   assert.match(css, /max-width:\s*50px/u);
   assert.doesNotMatch(css, /image-rendering:\s*pixelated/u);
   assert.ok(layout.indexOf("home-discovery-refresh.css") > layout.indexOf("dish-photos.css"));
-  assert.match(gallery, /<a href=\{dishSearchHref\(dish\.query\)\} key=\{dish\.id\} className="dishPhotoCard">/u);
+  assert.match(gallery, /<a href=\{dishSearchHref\(dish\.query\)\} className="dishPhotoSearch">/u);
 });
 
 test("disclosure uses semantic HTML with no Javascript dependency or fake availability", () => {
