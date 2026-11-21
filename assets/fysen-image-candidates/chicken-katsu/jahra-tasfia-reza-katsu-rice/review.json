@@ -1,0 +1,19 @@
+{
+  "dish_id": "katsu",
+  "catalog_id": "katsu",
+  "variant": "chicken katsu",
+  "source_photo_author": "Jahra Tasfia Reza / Pexels",
+  "photo_page": "https://www.pexels.com/photo/crispy-chicken-katsu-with-steamed-rice-39853089/",
+  "photo_source_url": "https://images.pexels.com/photos/39853089/pexels-photo-39853089.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "native_width": 4000,
+  "native_height": 6000,
+  "original_sha256": "0ef81d28b21bec879bbcdd13eaef7f56214622faa6c4225ca3415fa6f88129ef",
+  "source_verified": true,
+  "no_upscale": true,
+  "inspection_notes": "Top-down breaded chicken katsu with rice and chopsticks, 2026 Pexels source; check full serving and source quality",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "acceptance_gate": "Genuine breaded CHICKEN cutlet, not pork tonkatsu, preferably whole cutlet and complete serving with cabbage/rice and sauce, black-background source detail, no upscale or generated food; no false attribution to a Fysen restaurant."
+}

@@ -1,0 +1,27 @@
+{
+  "dish_id": "katsu",
+  "catalog_id": "katsu",
+  "photo_author": "Cohesion Singapore / Pexels",
+  "photo_page": "https://www.pexels.com/photo/slices-of-katsu-teriyaki-and-white-rice-in-a-bowl-15985538/",
+  "license_url": "https://www.pexels.com/license/",
+  "source_original_sha256": "21ec19e88be0f70f9981dd7deda9cde59714b9d313d16c682c6a4c5fb1fd2269",
+  "source_native_dimensions": [
+    5472,
+    3648
+  ],
+  "variants": [
+    "black-contour",
+    "black-grabcut",
+    "black-clean-grabcut"
+  ],
+  "no_upscale": true,
+  "generated_food_pixels": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
+  "published": false,
+  "warnings": "Den godkjente black-clean-grabcut-varianten viser ekte panert kylling, ris, nori og vårløk i en hel keramikkskål mot helsvart bakgrunn. Ingen synlig strimlet kål; ikke påstå kål eller en bestemt restaurants servering. Ingen oppskalering eller genererte matpiksler.",
+  "reviewed_variant": "black-clean-grabcut",
+  "reviewed_preview_sha256": "3fcb8550614667dc56fbf3954705b6656a73f27b887ed00e3d3a9fe5bb8c5c74",
+  "original_processed_sha256": "7816f639b639b01078dd576b8e2658ba2ed3b027db1d300e66c154548bebedce",
+  "master_avif_sha256": "33e5986cdede4a4d47b0fe2b968e965f8ec9a9a7ebfe56a4b97691af72d55d3d"
+}
