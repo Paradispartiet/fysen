@@ -41,6 +41,7 @@ def main():
     assert audit["source_sha256"]==SOURCE_SHA and audit["license"]=="CC0 1.0"
     assert audit["no_upscale"] and not audit["generated_food_pixels"]
     assert not audit["approved_for_fysen"] and not audit["published"]
+    # Final original-photo variant: verified full wooden bowl and both chopsticks.
     selected="black-clean-grabcut"
     preview=C/f"{selected}-preview.jpg"
     detail=C/f"{selected}-detail-1400.jpg"
