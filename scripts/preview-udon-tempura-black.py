@@ -40,7 +40,10 @@ bowl_pts=np.array([
 ],dtype=np.float32)
 bowl_pts[:,0]*=fX;bowl_pts[:,1]*=fY
 bowl=np.zeros((sh,sw),np.uint8)
-cv2.fillPoly(bowl,[bowl_pts.astype(np.int32)],255)
+# Correct physically oval bowl silhouette. The hand polygon kept beige
+# restaurant-counter triangles above the left/right rim. An ellipse matching
+# the whole ceramic outside edge avoids those background wedges.
+cv2.ellipse(bowl,(460,695),(465,355),0,0,360,255,-1,cv2.LINE_AA)
 # The shrimp tail protrudes above the rim. Source-derived color separation is
 # confined to this one shrimp, rejecting neutral paper. All output RGB values
 # still come from the real source, never reconstructed or synthesized.
@@ -75,17 +78,6 @@ cv2.grabCut(cv2.cvtColor(small,cv2.COLOR_RGB2BGR),labels,None,bg,fg,5,cv2.GC_INI
 grab_tail=(np.isin(labels,(cv2.GC_FGD,cv2.GC_PR_FGD))*255).astype(np.uint8)
 grab=cv2.bitwise_or(bowl,cv2.bitwise_and(grab_tail,upper))
 clean=precise.copy()
-# The photo contains a cream-colored counter just OUTSIDE the upper side rim.
-# Reject its low-chroma beige pixels only in narrow peripheral wedges; keep
-# the blue patterned ceramic, golden tempura and yellow broth untouched.
-yy,xx=np.mgrid[0:sh,0:sw]
-periphery=(((xx<225)&(yy<547))|((xx>818)&(yy<620)))
-# The cream desk is warm beige (R > G > B), unlike the cool white/blue
-# patterned ceramic. Never discard blue/white bowl pixels.
-warm_neutral=((rr>120)&((rr-gg)>7)&((gg-bb)>9)&
-              ((rr-bb)>23)&((rr-bb)<68))
-desk=periphery&warm_neutral
-clean[desk]=0
 for name,mask in (("black-contour",precise),("black-grabcut",grab),("black-clean-grabcut",clean)):
   alpha=cv2.GaussianBlur(mask,(0,0),1.1).astype(np.float32)/255.
   preview=np.clip(small.astype(np.float32)*alpha[:,:,None],0,255).astype(np.uint8)
