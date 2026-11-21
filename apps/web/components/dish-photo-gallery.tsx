@@ -203,10 +203,50 @@ export function DishPhotoGallery() {
             Pizza marinara <span aria-hidden="true">↗</span>
           </a>
           <small>Pizza marinara-foto: Peter Van den Bossche / Wikimedia Commons, <a href="/dish-images/pizza-marinara-LICENSE.txt" target="_blank" rel="noopener noreferrer">CC BY-SA 2.0 og kilde</a>.</small>
+          <a href="/dish-images/cacio-e-pepe-master-4577.avif" target="_blank" rel="noopener noreferrer">
+            Cacio e pepe <span aria-hidden="true">↗</span>
+          </a>
+          <small>Cacio e pepe-foto: DC (DocteurCosmos) / Wikimedia Commons, <a href="/dish-images/cacio-e-pepe-LICENSE.txt" target="_blank" rel="noopener noreferrer">CC BY-SA 3.0 og kilde</a>.</small>
+          <a href="/dish-images/gyoza-master-4937.avif" target="_blank" rel="noopener noreferrer">
+            Gyoza <span aria-hidden="true">↗</span>
+          </a>
+          <small>Gyoza-foto: Lara Bellens / Pexels, <a href="/dish-images/gyoza-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
           <a href="/dish-images/pho-bo-master-5472.avif" target="_blank" rel="noopener noreferrer">
             Phở bò <span aria-hidden="true">↗</span>
           </a>
           <small>Phở bò-foto: UNDO KIM / Pexels, <a href="/dish-images/pho-bo-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/bibimbap-master-8160.avif" target="_blank" rel="noopener noreferrer">
+            Bibimbap med storfekjøtt <span aria-hidden="true">↗</span>
+          </a>
+          <small>Bibimbap-foto: Andy Li / Wikimedia Commons, <a href="/dish-images/bibimbap-LICENSE.txt" target="_blank" rel="noopener noreferrer">CC0 1.0, kilde</a>.</small>
+          <a href="/dish-images/falafel-master-4284.avif" target="_blank" rel="noopener noreferrer">
+            Falafel med hummus <span aria-hidden="true">↗</span>
+          </a>
+          <small>Falafel-foto: Saya P / Pexels, <a href="/dish-images/falafel-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/tacos-al-pastor-master-7008.avif" target="_blank" rel="noopener noreferrer">
+            Tacos al pastor <span aria-hidden="true">↗</span>
+          </a>
+          <small>Tacos al pastor-foto: Abner Velázquez / Pexels, <a href="/dish-images/tacos-al-pastor-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/chana-masala-master-3814.avif" target="_blank" rel="noopener noreferrer">
+            Chana masala <span aria-hidden="true">↗</span>
+          </a>
+          <small>Chana masala-foto: Muhammad Khawar Nazir / Pexels, <a href="/dish-images/chana-masala-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/masala-dosa-master-9504.avif" target="_blank" rel="noopener noreferrer">
+            Masala dosa <span aria-hidden="true">↗</span>
+          </a>
+          <small>Masala dosa-foto: Jack Baghel / Pexels, <a href="/dish-images/masala-dosa-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/chicken-katsu-master-5472.avif" target="_blank" rel="noopener noreferrer">
+            Chicken katsu <span aria-hidden="true">↗</span>
+          </a>
+          <small>Chicken katsu-foto: Cohesion Singapore / Pexels, <a href="/dish-images/chicken-katsu-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/yakitori-master-4000.avif" target="_blank" rel="noopener noreferrer">
+            Yakitori <span aria-hidden="true">↗</span>
+          </a>
+          <small>Yakitori-foto: Airam Dato-on / Pexels, <a href="/dish-images/yakitori-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/udon-tempura-master-2900.avif" target="_blank" rel="noopener noreferrer">
+            Udon med reketempura <span aria-hidden="true">↗</span>
+          </a>
+          <small>Udon-foto: Immanuelle / Wikimedia Commons, CC BY 4.0, <a href="/dish-images/udon-tempura-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og endringer</a>.</small>
           <a href="/dish-images/tom-yum-master-3334.avif" target="_blank" rel="noopener noreferrer">
             Tom yum med reker <span aria-hidden="true">↗</span>
           </a>
@@ -309,6 +349,7 @@ export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: s
   const isButterChicken = index === 11;
   const isPizzaMarinara = index === 15;
   const isCacioEPepe = index === 16;
+  const isGyoza = index === 17;
   const isFalafel = index === 20;
   const isTacosAlPastor = index === 21;
   const isChanaMasala = index === 22;
@@ -345,7 +386,7 @@ export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: s
   return (
     <span
       role="img"
-      aria-label={isSushi ? "Redaksjonelt foto av sushi assortert, ikke restaurantfoto" : isRamen ? "Redaksjonelt foto av ramen med svin og egg, ikke restaurantfoto" : isCarbonara ? "Redaksjonelt foto av carbonara med bacon og ost, ikke restaurantfoto" : isButterChicken ? "Redaksjonelt foto av butter chicken med kyllinglår i kremet saus, ikke restaurantfoto" : isPizzaMarinara ? "Redaksjonelt foto av pizza marinara uten ost, ikke restaurantfoto" : isPho ? "Redaksjonelt foto av phở bò med storfekjøtt, nudler og kraft, ikke restaurantfoto" : isTomYum ? "Redaksjonelt foto av tom yum med reker, sopp og koriander, ikke restaurantfoto" : `KI-illustrasjon av ${illustratedVariant}, ikke restaurantfoto`}
+      aria-label={isSushi ? "Redaksjonelt foto av sushi assortert, ikke restaurantfoto" : isRamen ? "Redaksjonelt foto av ramen med svin og egg, ikke restaurantfoto" : isCarbonara ? "Redaksjonelt foto av carbonara med bacon og ost, ikke restaurantfoto" : isButterChicken ? "Redaksjonelt foto av butter chicken med kyllinglår i kremet saus, ikke restaurantfoto" : isPizzaMarinara ? "Redaksjonelt foto av pizza marinara uten ost, ikke restaurantfoto" : isCacioEPepe ? "Redaksjonelt foto av cacio e pepe med pecorino og sort pepper, ikke restaurantfoto" : isGyoza ? "Redaksjonelt foto av seks pannestekte gyoza med soyadipp, ikke restaurantfoto" : isChickenKatsu ? "Redaksjonelt foto av panert kyllingkatsu med ris og nori, ikke restaurantfoto" : isYakitori ? "Redaksjonelt foto av to grillede yakitori-kyllingspyd med sitron, ikke restaurantfoto" : isUdonTempura ? "Redaksjonelt foto av udon med reketempura i blåhvit skål, ikke restaurantfoto" : isPho ? "Redaksjonelt foto av phở bò med storfekjøtt, nudler og kraft, ikke restaurantfoto" : isTomYum ? "Redaksjonelt foto av tom yum med reker, sopp og koriander, ikke restaurantfoto" : isYakitori ? "Redaksjonelt foto av yakitori med kyllingspyd, ikke restaurantfoto" : isUdonTempura ? "Redaksjonelt foto av udonnudler med reketempura, ikke restaurantfoto" : `KI-illustrasjon av ${illustratedVariant}, ikke restaurantfoto`}
       className={isPizzaMargherita ? "dishPhotoSmall dishPhotoPizzaMargherita" : isSushi ? "dishPhotoSmall dishPhotoSushi" : isRamen ? "dishPhotoSmall dishPhotoRamen" : isCarbonara ? "dishPhotoSmall dishPhotoCarbonara" : isButterChicken ? "dishPhotoSmall dishPhotoButterChicken" : isPizzaMarinara ? "dishPhotoSmall dishPhotoPizzaMarinara" : isFalafel ? "dishPhotoSmall dishPhotoFalafel" : isTacosAlPastor ? "dishPhotoSmall dishPhotoTacosAlPastor" : isCacioEPepe ? "dishPhotoSmall dishPhotoCacioEPepe" : isChanaMasala ? "dishPhotoSmall dishPhotoChanaMasala" : isMasalaDosa ? "dishPhotoSmall dishPhotoMasalaDosa" : isChickenKatsu ? "dishPhotoSmall dishPhotoChickenKatsu" : isYakitori ? "dishPhotoSmall dishPhotoYakitori" : isUdonTempura ? "dishPhotoSmall dishPhotoUdonTempura" : isBao ? "dishPhotoSmall dishPhotoBao" : isDumplings ? "dishPhotoSmall dishPhotoDumplings" : isMapoTofu ? "dishPhotoSmall dishPhotoMapoTofu" : isPekingDuck ? "dishPhotoSmall dishPhotoPekingDuck" : isDanDanNoodles ? "dishPhotoSmall dishPhotoDanDanNoodles" : isGreenCurry ? "dishPhotoSmall dishPhotoGreenCurry" : isPho ? "dishPhotoSmall dishPhotoPho" : isBunCha ? "dishPhotoSmall dishPhotoBunCha" : isGoiCuon ? "dishPhotoSmall dishPhotoGoiCuon" : isTandoori ? "dishPhotoSmall dishPhotoTandoori" : isNaan ? "dishPhotoSmall dishPhotoNaan" : isDalMakhani ? "dishPhotoSmall dishPhotoDalMakhani" : isIdli ? "dishPhotoSmall dishPhotoIdli" : isSambar ? "dishPhotoSmall dishPhotoSambar" : isVada ? "dishPhotoSmall dishPhotoVada" : isBanhMi ? "dishPhotoSmall dishPhotoBanhMi" : isPadKraPao ? "dishPhotoSmall dishPhotoPadKraPao" : isTomYum ? "dishPhotoSmall dishPhotoTomYum" : isSeries04 ? "dishPhotoSmall dishPhotoSeries04" : "dishPhotoSmall"}
       style={{ backgroundPosition: position }}
     />
