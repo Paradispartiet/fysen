@@ -1,0 +1,28 @@
+{
+  "dish_id": "bao",
+  "catalog_id": "bao",
+  "source_original_sha256": "d4221c32c6f554de5984b5c44877e07ebb5d817ec67c2a7a22315aa66d4b55cd",
+  "source_native_dimensions": [
+    8160,
+    6144
+  ],
+  "photo_credit": "Andy Li / Wikimedia Commons",
+  "photo_source": "https://commons.wikimedia.org/wiki/File:Red_Braised_Pork_Belly_Bao_-_Tiger_Bites_Pig_2025-11-20.jpg",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "variants": [
+    "black-contour",
+    "black-grabcut",
+    "black-clean-grabcut"
+  ],
+  "no_upscale": true,
+  "generated_food_pixels": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
+  "published": false,
+  "caution": "Photo is of an actual dish at Tiger Bites Pig in Brighton, not Fysen restaurant. Visible red-braised pork belly, mustard greens, peanuts and coriander in a full gua bao; reject unrelated drink/menu/table outside plate.",
+  "reviewed_variant": "black-clean-grabcut",
+  "reviewed_preview_sha256": "c4b2e9ced50b289bf0a08fbe464e9b9edec9e21ee015c3bea3e9cb5d31491a10",
+  "processed_original_sha256": "bc6dcc85d78837aa76ccc406985362d403fd41b95f0265db82bc30d92af477ae",
+  "master_avif_sha256": "60c0aefea89c6530c0e7d3c61fb79241eca4033546cfd60182a2e36716867519"
+}

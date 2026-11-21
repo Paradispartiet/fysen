@@ -200,6 +200,16 @@ test("Editorial food photos are only large-view enabled with real provenance and
       const notice=readFileSync(path.join(imageRoot, "bibimbap-LICENSE.txt"), "utf8");
       assert.match(notice, /Fotograf: Andy Li/u);
       assert.match(notice, /CC0 1\.0/u);
+    } else if (photo.id === "bao") {
+      assert.equal(photo.catalogId, "bao");
+      assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
+      assert.match(photo.photoCredit, /Andy Li.*CC0 1\.0/u);
+      assert.equal(photo.photoLicense, "https://creativecommons.org/publicdomain/zero/1.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/bao-braised-pork-LICENSE.txt");
+      const notice=readFileSync(path.join(imageRoot,"bao-braised-pork-LICENSE.txt"),"utf8");
+      assert.match(notice,/Fotograf: Andy Li/u);
+      assert.match(notice,/CC0 1\.0/u);
+      assert.match(notice,/Bearbeidelse:/u);
     } else if (photo.id === "udon") {
       assert.equal(photo.catalogId, "udon");
       assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
