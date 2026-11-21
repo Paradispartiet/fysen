@@ -1,0 +1,20 @@
+{
+  "dish_id": "bao",
+  "catalog_id": "bao",
+  "variant": "bao med braisert svinekjøtt",
+  "author": "Andy Li / Wikimedia Commons",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Red_Braised_Pork_Belly_Bao_-_Tiger_Bites_Pig_2025-11-20.jpg",
+  "source_url": "https://upload.wikimedia.org/wikipedia/commons/6/64/Red_Braised_Pork_Belly_Bao_-_Tiger_Bites_Pig_2025-11-20.jpg",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "native_width": 8160,
+  "native_height": 6144,
+  "original_sha256": "d4221c32c6f554de5984b5c44877e07ebb5d817ec67c2a7a22315aa66d4b55cd",
+  "source_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "photo_context": "A real red-braised pork belly bao with picked mustard greens, crushed peanuts and coriander, photographed at Tiger Bites Pig in Brighton. It is NOT a photograph from any restaurant in Fysen.",
+  "note": "Must retain one whole folded bao and full serving plate, remove printed menu, glasses and wood table against black; source ingredients must remain truthful."
+}
