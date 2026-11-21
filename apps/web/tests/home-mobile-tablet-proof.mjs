@@ -176,6 +176,36 @@ try {
       }
       if (output) await page.screenshot({ path: path.join(output, `${viewport.name}-expanded.png`), animations: "disabled" });
 
+      const approved = manifest.images.filter((image) => image.largeViewEnabled === true);
+      const cards = details.locator(".dishPhotosGrid .dishPhotoCard");
+      const fullSizeLinks = cards.getByRole("link", { name: /^Vis stort bilde av /u });
+      assert.deepEqual(
+        await fullSizeLinks.evaluateAll((links) => links.map((link) => link.pathname.split("/").at(-1)).sort()),
+        approved.map((image) => image.largeSource).sort(),
+        "Only cards with an approved master should link directly to a large image",
+      );
+
+      const prosciutto = approved.find((image) => image.id === "pizza-prosciutto");
+      assert.ok(prosciutto, "A reviewed prosciutto master is required for the browser check");
+      const imageLink = page.getByRole("link", { name: "Vis stort bilde av Pizza med prosciutto", exact: true });
+      const card = cards.filter({ has: imageLink });
+      const menuLink = card.getByRole("link", { name: /Pizza med prosciutto.*Se menytreff/u });
+      const menuUrl = new URL(await menuLink.getAttribute("href"), base);
+      assert.equal(menuUrl.pathname, "/search");
+      assert.equal(menuUrl.searchParams.get("q"), "pizza prosciutto");
+      const [popup] = await Promise.all([page.waitForEvent("popup"), imageLink.click()]);
+      try {
+        await popup.waitForURL(`${base}/dish-images/${prosciutto.largeSource}`);
+        const dimensions = await popup.locator("img").evaluate(async (image) => {
+          await image.decode();
+          return [image.naturalWidth, image.naturalHeight];
+        });
+        assert.deepEqual(dimensions, [prosciutto.largeSourceNativeWidth, prosciutto.largeSourceNativeHeight]);
+        assert.equal(page.url(), response.url(), "Opening an image must leave the gallery in its own tab");
+      } finally {
+        await popup.close();
+      }
+
       await page.locator(".dishPhotosPreview").click();
       assert.equal(await details.getAttribute("open"), null, "Gallery should close again");
       assert.equal(await page.locator(".dishPhotosGrid").isVisible(), false);
