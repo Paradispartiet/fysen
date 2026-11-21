@@ -1,13 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { DishSearchResult } from "@fysen/contracts";
-import type { PopularDishItem, RecentlyAddedDishItem } from "@fysen/contracts/dish-browse";
 import {
   ActivityIndicator,
   Alert,
   AppState,
   Keyboard,
   Linking,
-  Platform,
   Pressable,
   RefreshControl,
   ScrollView,
@@ -19,7 +16,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { loadFeatured, searchDishes, type FeaturedResponse } from "./src/api";
+import { loadFeatured, searchDishes, type ArchivedDish, type FeaturedResponse } from "./src/api";
 import { cleanDishName, formatPrice, safeHttpsUrl, validateSearchTerm } from "./src/format";
 import { favoriteKey, readFavorites, writeFavorites, type FavoriteDish } from "./src/favorites";
 import { createFavoritesController, type FavoritesSnapshot } from "./src/favorites-controller";
@@ -27,9 +24,7 @@ import { colors } from "./src/theme";
 import { isWideLayout } from "./src/layout";
 import { shouldRefreshAfterResume } from "./src/freshness";
 import { parseFysenDeepLink } from "./src/deep-link";
-import { descriptionPreview, groupDishMatches } from "./src/search-presentation";
 import { priceProvenanceLabel } from "./src/price-provenance";
-import { restaurantDirectionsUrl } from "./src/directions";
 
 type Tab = "search" | "matlyst" | "favorites";
 
@@ -87,29 +82,22 @@ function SearchResultCard({
   onFavorite,
   favoritesReady,
 }: {
-  result: DishSearchResult;
+  result: ArchivedDish;
   isFavorite: boolean;
   onFavorite: (dish: FavoriteDish) => void;
   favoritesReady: boolean;
 }) {
-  const [descriptionExpanded, setDescriptionExpanded] = useState(false);
-  const query = (result.match.canonicalDish?.name || result.dish.normalizedName || result.dish.name).slice(0, 80).trim();
-  const description = result.dish.description?.replace(/\s+/gu, " ").trim() ?? "";
-  const preview = descriptionPreview(description);
-  const hasLongDescription = description.length > preview.length;
-  const booking = result.actions.booking?.url;
-  const order = result.actions.order?.url;
-  const mapUrl = restaurantDirectionsUrl(Platform.OS, result.restaurant);
-  const lastChecked = new Date(result.menu.lastCheckedAt);
-  const verifiedText = Number.isNaN(lastChecked.getTime())
-    ? "Menykilde oppgitt"
-    : "Meny sjekket " + lastChecked.toLocaleDateString("nb-NO");
+  const query = result.normalizedName.slice(0, 80).trim();
+  const observedAt = new Date(result.menu.observedAt);
+  const observedText = Number.isNaN(observedAt.getTime())
+    ? "Menyens kilde oppgitt"
+    : "Meny observert " + observedAt.toLocaleDateString("nb-NO");
 
   return (
     <View style={styles.card}>
       <View style={styles.rowTop}>
         <View style={styles.flex}>
-          <Text style={styles.dishName}>{result.dish.name}</Text>
+          <Text style={styles.dishName}>{result.name}</Text>
           <Text style={styles.restaurantName}>{result.restaurant.name}</Text>
         </View>
         <Pressable
@@ -117,36 +105,21 @@ function SearchResultCard({
           accessibilityLabel={!favoritesReady ? "Favoritter lastes inn" : isFavorite ? "Fjern rett fra favoritter" : "Lagre retten som favoritt"}
           accessibilityState={{ disabled: !favoritesReady }}
           disabled={!favoritesReady}
-          onPress={() => onFavorite({ name: result.dish.name, query })}
+          onPress={() => onFavorite({ name: result.name, query })}
           style={styles.favoriteButton}>
           <Text style={[styles.star, isFavorite && styles.starSaved]}>{isFavorite ? "★" : "☆"}</Text>
         </Pressable>
       </View>
-      <Text style={styles.price}>{formatPrice(result.dish)}</Text>
-      {result.dish.priceMinor !== null ? (
+      <Text style={styles.price}>{formatPrice(result)}</Text>
+      {result.priceMinor !== null ? (
         <Text style={styles.priceSource}>{priceProvenanceLabel(result.menu.sourceUrl)}</Text>
       ) : null}
-      {description ? (
-        <View>
-          <Text style={styles.description}>{descriptionExpanded ? description : preview}</Text>
-          {hasLongDescription ? (
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel={descriptionExpanded ? "Vis kort beskrivelse" : "Vis hele beskrivelsen"}
-              onPress={() => setDescriptionExpanded((previous) => !previous)}
-              style={styles.descriptionToggle}>
-              <Text style={styles.descriptionToggleText}>{descriptionExpanded ? "Vis mindre ↑" : "Vis mer ↓"}</Text>
-            </Pressable>
-          ) : null}
-        </View>
-      ) : null}
-      <Text style={styles.address}>{result.restaurant.address}</Text>
-      <Text style={styles.freshness}>{verifiedText} · Kontroller alltid meny og pris</Text>
+      <Text style={styles.address}>{result.restaurant.address}, {result.restaurant.city}</Text>
+      <Text style={styles.freshness}>{observedText} · Kontroller alltid meny og pris</Text>
       <View style={styles.actions}>
-        <Pill label="Se meny ↗" onPress={() => void openExternal(result.menu.sourceUrl)} />
-        <Pill label="Veibeskrivelse ↗" onPress={() => void openExternal(mapUrl)} />
-        {order ? <Pill label="Bestill ↗" onPress={() => void openExternal(order)} /> : null}
-        {booking ? <Pill label="Reserver ↗" onPress={() => void openExternal(booking)} /> : null}
+        {safeHttpsUrl(result.menu.sourceUrl) ? (
+          <Pill label="Se meny ↗" onPress={() => void openExternal(result.menu.sourceUrl)} />
+        ) : null}
       </View>
     </View>
   );
@@ -171,7 +144,7 @@ function SearchScreen({
   favoritesReady: boolean;
   onFavorite: (dish: FavoriteDish) => void;
 }) {
-  const [results, setResults] = useState<DishSearchResult[]>([]);
+  const [results, setResults] = useState<readonly ArchivedDish[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -204,7 +177,7 @@ function SearchScreen({
       if (current === lastRequest.current && !controller.signal.aborted) setResults(response.results);
     } catch {
       if (current === lastRequest.current && !controller.signal.aborted) {
-        setError("Kunne ikke hente ferske treff. Kontroller nettet og prøv igjen.");
+        setError("Kunne ikke hente menytreff. Kontroller nettet og prøv igjen.");
       }
     } finally {
       if (current === lastRequest.current && !controller.signal.aborted) setLoading(false);
@@ -222,17 +195,18 @@ function SearchScreen({
 
   useEffect(() => () => { request.current?.abort(); }, []);
 
-  const groupedResults = groupDishMatches(results);
 
-  function cardFor(result: DishSearchResult) {
+  function cardFor(result: ArchivedDish) {
+    const key = [result.restaurant.slug, result.normalizedName, result.menu.sourceUrl,
+      result.menu.observedAt, String(result.priceMinor)].join(":");
     return (
-      <View key={result.menuItemId} style={wide ? styles.tabletGridCell : undefined}>
-      <SearchResultCard
-        result={result}
-        favoritesReady={favoritesReady}
-        isFavorite={favorites.some((item) => favoriteKey(item.query) === favoriteKey((result.match.canonicalDish?.name || result.dish.normalizedName || result.dish.name).slice(0, 80).trim()))}
-        onFavorite={onFavorite}
-      />
+      <View key={key} style={wide ? styles.tabletGridCell : undefined}>
+        <SearchResultCard
+          result={result}
+          favoritesReady={favoritesReady}
+          isFavorite={favorites.some((item) => favoriteKey(item.query) === favoriteKey(result.normalizedName.slice(0, 80).trim()))}
+          onFavorite={onFavorite}
+        />
       </View>
     );
   }
@@ -274,29 +248,17 @@ function SearchScreen({
           </View>
         </View>
       ) : null}
-      {loading ? <View style={styles.center}><ActivityIndicator color={colors.green} size="large" /><Text style={styles.muted}>Søker i ferske menyer …</Text></View> : null}
+      {loading ? <View style={styles.center}><ActivityIndicator color={colors.green} size="large" /><Text style={styles.muted}>Søker i dokumenterte menyer …</Text></View> : null}
       {error ? <View style={styles.notice}><Text style={styles.noticeText}>{error}</Text><Pill label="Prøv igjen" onPress={() => void perform(value)} /></View> : null}
       {searched && !loading && !error ? (
         <>
           <Text style={styles.resultsLabel}>Viser {results.length} menytreff i Oslo</Text>
           {results.length === 0 ? (
-            <Text style={styles.muted}>Ingen ferske treff. Prøv et annet navn på retten.</Text>
+            <Text style={styles.muted}>Ingen treff i de dokumenterte menyene. Prøv et annet rettnavn.</Text>
           ) : (
             <>
               <Text style={styles.searchTrustNote}>Treff bygger på tekst i restaurantens meny, ikke en garanti for at retten er den du søker etter.</Text>
-              {groupedResults.direct.length ? (
-                <>
-                  <Text style={styles.resultGroupHeading}>Beste teksttreff</Text>
-                  <View style={wide ? styles.tabletGrid : undefined}>{groupedResults.direct.map(cardFor)}</View>
-                </>
-              ) : null}
-              {groupedResults.similar.length ? (
-                <>
-                  <Text style={styles.resultGroupHeading}>Lignende treff</Text>
-                  <Text style={styles.muted}>Navnet samsvarer bare delvis. Sjekk retten i menyen.</Text>
-                  <View style={[styles.resultGroupCards, wide && styles.tabletGrid]}>{groupedResults.similar.map(cardFor)}</View>
-                </>
-              ) : null}
+              <View style={wide ? styles.tabletGrid : undefined}>{results.map(cardFor)}</View>
             </>
           )}
         </>
@@ -306,39 +268,15 @@ function SearchScreen({
   );
 }
 
-function RecentDishCard({ dish, onPick }: {
-  dish: RecentlyAddedDishItem;
-  onPick: (query: string) => void;
-}) {
-  return (
-    <View style={styles.card}>
-      <Text style={styles.freshLabel}>NY I FYSEN</Text>
-      <Text style={styles.dishName}>{cleanDishName(dish.name)}</Text>
-      <Text style={styles.restaurantName}>{dish.restaurantName}</Text>
-      <Text style={styles.address}>{dish.restaurantAddress}</Text>
-      <Text style={styles.price}>{formatPrice(dish)}</Text>
-      {dish.priceMinor !== null ? (
-        <Text style={styles.priceSource}>{priceProvenanceLabel(dish.sourceUrl)}</Text>
-      ) : null}
-      <View style={styles.actions}>
-        <Pill label="Finn retten →" onPress={() => onPick(dish.query)} />
-        <Pill label="Se meny ↗" onPress={() => void openExternal(dish.sourceUrl)} />
-      </View>
-    </View>
-  );
-}
-
-function PopularDishCard({ dish, rank, onPick }: {
-  dish: PopularDishItem;
-  rank: number;
+function ArchivedBrowseCard({ dish, onPick }: {
+  dish: FeaturedResponse["dishes"][number];
   onPick: (query: string) => void;
 }) {
   return (
     <Pressable accessibilityRole="button" onPress={() => onPick(dish.query)} style={styles.popularCard}>
-      <Text style={styles.rank}>{rank}</Text>
       <View style={styles.flex}>
         <Text style={styles.popularName}>{cleanDishName(dish.name)}</Text>
-        <Text style={styles.muted}>{dish.restaurantCount} {dish.restaurantCount === 1 ? "restaurant" : "restauranter"} med retten nå</Text>
+        <Text style={styles.muted}>{dish.restaurantCount} {dish.restaurantCount === 1 ? "restaurant" : "restauranter"} registrert med retten</Text>
       </View>
       <Text style={styles.arrow}>→</Text>
     </Pressable>
@@ -358,39 +296,28 @@ function MatlystScreen({
   return (
     <ScrollView contentContainerStyle={[styles.screenContent, wide && styles.wideContent]}
       refreshControl={<RefreshControl refreshing={loading} onRefresh={retry} tintColor={colors.green} colors={[colors.green]} />}>
-      <SectionHeading kicker="OPPDAG NOE NYTT" title="Matlyst"
-        intro="Retter å utforske – med ekte restauranter og sporbare menyer." />
+      <SectionHeading kicker="UTFORSK MENYER" title="Matlyst"
+        intro="Oppdag retter og restauranter i det dokumenterte menyutvalget. Ikke sanntidsdata." />
       {loading ? <View style={styles.center}><ActivityIndicator color={colors.green} size="large" /><Text style={styles.muted}>Henter Matlyst …</Text></View> : null}
       {error ? (
         <View style={styles.notice}>
-          <Text style={styles.noticeText}>Kunne ikke hente oppdatert Matlyst. Vi viser ikke gamle menydata som ferske.</Text>
+          <Text style={styles.noticeText}>Kunne ikke hente Matlyst akkurat nå.</Text>
           <PrimaryButton label="Prøv igjen" onPress={retry} />
         </View>
       ) : null}
       {featured && !loading && !error ? (
         <>
-          <SectionHeading kicker="SISTE 14 DAGER" title="Nye retter"
-            intro="Nylig registrert i Fysen – ikke nødvendigvis nye på restaurantens meny." />
-          {featured.recentDishes.length ? (
+          <SectionHeading kicker="FRA MENYARKIVET" title="Utforsk retter"
+            intro="Antall registrerte restauranter – ikke popularitet eller tilgjengelighet akkurat nå." />
+          {featured.dishes.length ? (
             <View style={wide ? styles.tabletGrid : undefined}>
-              {featured.recentDishes.map((dish) => (
-                <View key={dish.id} style={wide ? styles.tabletGridCell : undefined}>
-                  <RecentDishCard dish={dish} onPick={onPick} />
+              {featured.dishes.map((dish) => (
+                <View key={dish.query} style={wide ? styles.tabletGridCell : undefined}>
+                  <ArchivedBrowseCard dish={dish} onPick={onPick} />
                 </View>
               ))}
             </View>
-          ) : <Text style={styles.muted}>Ingen nylig verifiserte retter akkurat nå.</Text>}
-          <SectionHeading kicker="SISTE 30 DAGER" title="Mest søkt"
-            intro="Rettene folk har søkt mest etter i Oslo, med ferske menytreff." />
-          {featured.popularDishes.length ? (
-            <View style={wide ? styles.tabletGrid : undefined}>
-              {featured.popularDishes.map((dish, index) => (
-                <View key={dish.id} style={wide ? styles.tabletGridCell : undefined}>
-                  <PopularDishCard dish={dish} rank={index + 1} onPick={onPick} />
-                </View>
-              ))}
-            </View>
-          ) : <Text style={styles.muted}>Ingen tilstrekkelig dokumenterte søk ennå.</Text>}
+          ) : <Text style={styles.muted}>Ingen dokumenterte retter i utvalget.</Text>}
         </>
       ) : null}
     </ScrollView>

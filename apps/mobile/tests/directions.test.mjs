@@ -30,9 +30,11 @@ test("missing, bogus and 0,0 coordinates fall back to restaurant name and addres
   }
 });
 
-test("native UI calls the platform-specific directions helper", async () => {
+test("archive-only native cards do not invent coordinates or routes", async () => {
   const { readFileSync } = await import("node:fs");
   const code = readFileSync(new URL("../App.tsx", import.meta.url), "utf8");
-  assert.match(code, /restaurantDirectionsUrl\(Platform\.OS, result\.restaurant\)/);
-  assert.doesNotMatch(code, /maps\/search/);
+  assert.doesNotMatch(code, /restaurantDirectionsUrl\(Platform\.OS, result\.restaurant\)/);
+  assert.doesNotMatch(code, /Gå dit|Veibeskrivelse ↗/u);
+  assert.match(code, /Meny observert /u);
+  assert.match(code, /Se meny ↗/u);
 });

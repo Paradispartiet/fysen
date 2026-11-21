@@ -4,6 +4,7 @@ import {
   parseAhaHandoff,
   parseAhaSessionCreate,
   parseMinMatSave,
+  parseMinMatArchiveSave,
 } from "./aha-min-mat.controller.js";
 
 describe("AHA Min mat request boundaries", () => {
@@ -22,6 +23,23 @@ describe("AHA Min mat request boundaries", () => {
       menuItemId: "11111111-1111-4111-8111-111111111111",
     });
     expect(() => parseMinMatSave({ dishName: "Injected dish" })).toThrow();
+  });
+
+  it("requires complete source-backed archive evidence, not arbitrary UUIDs", () => {
+    const evidence = {
+      restaurantSlug: "ramenhuset-oslo",
+      sourceUrl: "https://example.org/menu",
+      observedAt: "2026-11-02T12:00:00Z",
+      normalizedName: "ramen",
+      priceMinor: 19500,
+      priceKind: "exact",
+      priceMaxMinor: null,
+    };
+    expect(parseMinMatArchiveSave(evidence)).toEqual(evidence);
+    expect(() => parseMinMatArchiveSave({ ...evidence, sourceUrl: "javascript:alert(1)" })).toThrow();
+    expect(() => parseMinMatArchiveSave({ ...evidence, priceMinor: -100 })).toThrow();
+    expect(() => parseMinMatArchiveSave({ ...evidence, menuItemId: "11111111-1111-4111-8111-111111111111" })).toThrow();
+    expect(() => parseMinMatArchiveSave({ ...evidence, observedAt: "yesterday" })).toThrow();
   });
 
   it("keeps consumer and handoff capabilities as separate authorization schemes", () => {

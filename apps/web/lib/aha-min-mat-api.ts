@@ -7,12 +7,14 @@ import {
   minMatItemSchema,
   minMatListSchema,
   minMatSaveInputSchema,
+  minMatArchiveSaveInputSchema,
   type AhaAnalysisHandoffReceipt,
   type AhaConsumerLogoutReceipt,
   type AhaConsumerSessionCreate,
   type AhaConsumerSessionReceipt,
   type FysenFoodCollectionV1,
   type MinMatItem,
+  type MinMatArchiveSaveInput,
   type MinMatList,
 } from "@fysen/contracts/aha-min-mat";
 
@@ -68,6 +70,26 @@ export async function saveMinMat(sessionToken: string, menuItemId: string): Prom
     body: JSON.stringify(body),
   });
   if (!response.ok) throw new Error(`Min mat save failed with HTTP ${response.status}`);
+  return minMatItemSchema.parse(await response.json());
+}
+
+export class ArchivedMinMatSaveError extends Error {
+  constructor(readonly status: number) {
+    super("Archived Min mat save failed with HTTP " + status);
+  }
+}
+
+export async function saveArchivedMinMat(
+  sessionToken: string,
+  evidence: MinMatArchiveSaveInput,
+): Promise<MinMatItem> {
+  const body = minMatArchiveSaveInputSchema.parse(evidence);
+  const response = await request("/v1/min-mat/archive", {
+    method: "POST",
+    headers: { accept: "application/json", authorization: `Bearer ${sessionToken}`, "content-type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw new ArchivedMinMatSaveError(response.status);
   return minMatItemSchema.parse(await response.json());
 }
 

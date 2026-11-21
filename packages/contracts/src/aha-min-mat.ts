@@ -35,6 +35,19 @@ export const ahaConsumerSessionReceiptSchema = z.object({
 export const ahaConsumerLogoutReceiptSchema = z.object({ accepted: z.literal(true) });
 
 export const minMatSaveInputSchema = z.object({ menuItemId: uuid });
+// Archived source evidence is NOT a canonical menuItemId. This input must be
+// checked against the signed public archive and resolved uniquely on the server.
+export const minMatArchiveSaveInputSchema = z.object({
+  restaurantSlug: z.string().trim().min(1).max(160),
+  sourceUrl: z.string().url().max(2048).refine((value) => /^https?:\/\//iu.test(value)),
+  observedAt: isoDateTime,
+  normalizedName: z.string().trim().min(2).max(300),
+  priceMinor: z.number().int().nonnegative().nullable(),
+  priceKind: z.enum(["exact", "from", "multiple"]),
+  priceMaxMinor: z.number().int().nonnegative().nullable(),
+}).strict();
+export type MinMatArchiveSaveInput = z.infer<typeof minMatArchiveSaveInputSchema>;
+
 export const minMatSavedItemIdSchema = uuid;
 
 export const minMatItemSchema = z.object({

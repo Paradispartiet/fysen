@@ -113,8 +113,28 @@ jobs:
           xcrun simctl io "$device" screenshot ios/fysen-iphone-smoke.png
           test -s ios/fysen-iphone-smoke.png
 
+          # CoreSimulator can return NSPOSIXErrorDomain code=60 after the
+          # app has already launched. Retry only that transient host timeout,
+          # once, without weakening the distinct-screen screenshot assertions.
+          open_native_tab() {
+            local url="$1" output="" status=0
+            if output="$(xcrun simctl openurl "$device" "$url" 2>&1)"; then
+              return 0
+            else
+              status=$?
+            fi
+            if [[ "$status" -ne 60 ]] && [[ "$output" != *"Operation timed out"* ]]; then
+              printf '%s\\n' "$output" >&2
+              return "$status"
+            fi
+            echo "::warning::CoreSimulator timed out opening $url; one bounded retry after boot status."
+            xcrun simctl bootstatus "$device" -b
+            sleep 3
+            xcrun simctl openurl "$device" "$url"
+          }
+
           # Open native tabs through the app's own URL scheme; no gesture automation needed.
-          xcrun simctl openurl "$device" "fysen://matlyst"
+          open_native_tab "fysen://matlyst"
           sleep 10
           xcrun simctl io "$device" screenshot ios/fysen-iphone-matlyst.png
           test -s ios/fysen-iphone-matlyst.png
@@ -132,7 +152,7 @@ jobs:
           done
           if cmp -s ios/qa-content/smoke.png ios/qa-content/matlyst.png; then
             echo "::warning::First Matlyst deep link did not change app content; retrying once after simulator warm-up."
-            xcrun simctl openurl "$device" "fysen://matlyst"
+            open_native_tab "fysen://matlyst"
             sleep 10
             xcrun simctl io "$device" screenshot ios/fysen-iphone-matlyst.png
             test -s ios/fysen-iphone-matlyst.png
@@ -145,11 +165,11 @@ jobs:
             exit 1
           fi
 
-          xcrun simctl openurl "$device" "fysen://search?q=ramen"
+          open_native_tab "fysen://search?q=ramen"
           sleep 10
           xcrun simctl io "$device" screenshot ios/fysen-iphone-search-results.png
           test -s ios/fysen-iphone-search-results.png
-          xcrun simctl openurl "$device" "fysen://favorites"
+          open_native_tab "fysen://favorites"
           sleep 5
           xcrun simctl io "$device" screenshot ios/fysen-iphone-favorites.png
           test -s ios/fysen-iphone-favorites.png

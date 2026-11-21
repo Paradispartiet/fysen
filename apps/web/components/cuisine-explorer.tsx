@@ -236,9 +236,11 @@ function DiscoveryDishList({
 export function CuisineExplorer({
   browseData,
   archiveCoverage,
+  archiveOnly = false,
 }: {
   readonly browseData: DishBrowseResponse | null;
   readonly archiveCoverage: ArchivedMatlystCoverage | null;
+  readonly archiveOnly?: boolean;
 }) {
   const [previewBrowseData, setPreviewBrowseData] = useState<DishBrowseResponse | null>(null);
   const [selectedCuisine, setSelectedCuisine] = useState<Cuisine | null>(null);
@@ -252,7 +254,7 @@ export function CuisineExplorer({
   const isArchived = archiveCoverage !== null && effectiveBrowseData === null;
 
   useEffect(() => {
-    if (browseData || archiveCoverage) return;
+    if (archiveOnly || browseData || archiveCoverage) return;
 
     const controller = new AbortController();
     void browseDishesClient("Oslo", { signal: controller.signal })
@@ -266,7 +268,7 @@ export function CuisineExplorer({
       });
 
     return () => controller.abort();
-  }, [browseData, archiveCoverage]);
+  }, [archiveOnly, browseData, archiveCoverage]);
 
   const selectedArea = useMemo<CuisineArea | null>(() => {
     if (!selectedCuisine) return null;

@@ -17,12 +17,16 @@ test("Expo entry points at the real React Native screen", () => {
   assert.doesNotMatch(read("App.tsx"), /WebView/);
 });
 
-test("Native API consumes bounded featured response and live dish search", () => {
+test("Native app uses only the verified archive for public dish discovery", () => {
   const api = read("src/api.ts");
-  assert.match(api, /\/v1\/dishes\/featured\?city=Oslo/);
-  assert.match(api, /\/v1\/dishes\/search\?/);
-  assert.doesNotMatch(api, /\/v1\/dishes\/browse\?/);
+  const app = read("App.tsx");
+  assert.match(api, /\/v1\/dishes\/archive\/browse\?city=Oslo/);
+  assert.match(api, /\/v1\/dishes\/archive\/search\?/);
+  assert.match(api, /source !== "verified-menu-archive" \|\| data.realtime !== false/u);
+  assert.doesNotMatch(api, /getJson\("\/v1\/dishes\/(?:search|featured|browse)[?]/u);
   assert.match(api, /REQUEST_TIMEOUT_MS/);
+  assert.match(app, /Meny observert /u);
+  assert.doesNotMatch(app, /result\.menuItemId|result\.actions|result\.match|Mest søkt|NY I FYSEN/u);
 });
 
 test("Favorites are local and limited, and external URLs are validated", () => {
