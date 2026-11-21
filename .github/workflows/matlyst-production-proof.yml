@@ -7,9 +7,12 @@ on:
       - .github/workflows/matlyst-production-proof.yml
       - apps/web/tests/matlyst-live-browser-proof.mjs
       - apps/web/tests/oslo-readonly-mobile-proof.mjs
-  workflow_run:
-    workflows: ["Fysen batched Vercel production release"]
-    types: [completed]
+  workflow_call:
+    inputs:
+      source_sha:
+        description: Exact main commit deployed to Fysen web production
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -21,55 +24,29 @@ concurrency:
 
 jobs:
   proof:
-    if: >-
-      github.event_name != 'workflow_run' ||
-      github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-latest
     timeout-minutes: 8
     env:
       FYSEN_PUBLIC_WEB_URL: https://fysen.vercel.app
     steps:
-      - name: Check that the upstream release deployed an app
-        if: github.event_name == 'workflow_run'
-        id: upstream
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-          UPSTREAM_RUN_ID: ${{ github.event.workflow_run.id }}
-          GH_REPOSITORY: ${{ github.repository }}
-        run: |
-          set -euo pipefail
-          jobs="$(curl --fail --silent --show-error \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H 'Accept: application/vnd.github+json' \
-            "https://api.github.com/repos/$GH_REPOSITORY/actions/runs/$UPSTREAM_RUN_ID/jobs?per_page=100")"
-          deployed="$(jq -r '[.jobs[] | select(.name == "web" or .name == "api") | select(.conclusion == "success")] | length > 0' <<< "$jobs")"
-          echo "deployed=$deployed" >> "$GITHUB_OUTPUT"
-          if [[ "$deployed" == false ]]; then
-            echo 'Upstream release deployed neither web nor API; Matlyst production proof is NOT verified.' >> "$GITHUB_STEP_SUMMARY"
-            echo '::error::Neither the API nor the web release passed deployment verification. Matlyst production proof cannot be green without running its public journeys.'
-            exit 1
-          fi
-
-      - name: Checkout browser proof
-        if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
+      # This workflow is called only after a successful web deployment. A
+      # release with no web deployment is skipped by the caller, not marked red.
+      - name: Checkout source of deployed web
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          ref: ${{ inputs.source_sha || github.sha }}
+          persist-credentials: false
 
       - name: Setup browser proof workspace
-        if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
         uses: ./.github/actions/setup-node-pnpm
 
       - name: Verify all approved food images are published and visible in Matlyst
-        # A PR cannot yet be live. Check imagery after a real release or on demand.
-        if: >-
-          github.event_name == 'workflow_dispatch' ||
-          (github.event_name == 'workflow_run' && steps.upstream.outputs.deployed == 'true')
+        # PR code is not yet live; do not compare its new image files to prod.
+        # workflow_call is reachable only after a successful web release.
+        if: github.event_name != 'pull_request'
         run: node apps/web/tests/matlyst-live-image-proof.mjs
 
       - name: Verify Matlyst v3 public consumer journeys
-        if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -170,9 +147,7 @@ jobs:
           NODE
 
       - name: Verify the native cuisine disclosure on mobile and iPad
-        if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
         run: pnpm --filter @fysen/web exec node tests/matlyst-live-browser-proof.mjs
 
       - name: Verify usable public search and archive fallback on mobile
-        if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
         run: pnpm --filter @fysen/web exec node tests/oslo-readonly-mobile-proof.mjs

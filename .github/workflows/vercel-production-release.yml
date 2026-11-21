@@ -441,6 +441,19 @@ jobs:
     with:
       source_sha: ${{ needs.prepare.outputs.source_sha }}
 
+  matlyst_proof:
+    needs: [prepare, web, api, proof]
+    if: >-
+      always() &&
+      needs.prepare.result == 'success' &&
+      needs.web.result == 'success' &&
+      needs.proof.result == 'success'
+    # A no-op or daily-cap-blocked release must not produce a red Matlyst
+    # result or a false green. The web job must actually have deployed.
+    uses: ./.github/workflows/matlyst-production-proof.yml
+    with:
+      source_sha: ${{ needs.prepare.outputs.source_sha }}
+
   revenue_proof:
     needs: [prepare, web, api, proof]
     if: >-
