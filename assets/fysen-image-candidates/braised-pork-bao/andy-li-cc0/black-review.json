@@ -17,8 +17,12 @@
   ],
   "no_upscale": true,
   "generated_food_pixels": false,
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
-  "caution": "Photo is of an actual dish at Tiger Bites Pig in Brighton, not Fysen restaurant. Visible red-braised pork belly, mustard greens, peanuts and coriander in a full gua bao; reject unrelated drink/menu/table outside plate."
+  "caution": "Photo is of an actual dish at Tiger Bites Pig in Brighton, not Fysen restaurant. Visible red-braised pork belly, mustard greens, peanuts and coriander in a full gua bao; reject unrelated drink/menu/table outside plate.",
+  "reviewed_variant": "black-clean-grabcut",
+  "reviewed_preview_sha256": "c4b2e9ced50b289bf0a08fbe464e9b9edec9e21ee015c3bea3e9cb5d31491a10",
+  "processed_original_sha256": "bc6dcc85d78837aa76ccc406985362d403fd41b95f0265db82bc30d92af477ae",
+  "master_avif_sha256": "60c0aefea89c6530c0e7d3c61fb79241eca4033546cfd60182a2e36716867519"
 }
