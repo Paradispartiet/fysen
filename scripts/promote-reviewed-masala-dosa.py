@@ -91,7 +91,7 @@ def main():
       "kind":"Redaksjonelt rettfoto",
       "variantCaution":("Lisensiert redaksjonelt foto av sprø dosa på hel hvit tallerken "
         "med potetmasala i egen skål, kokoschutney, sambar og ekstra chutney mot "
-        "helsvart bakgrunn. Potetfyll inne i selve dosaen er ikke dokumentert "
+        "helsvart bakgrunn. Det er ikke dokumentert potetfyll inne i selve dosaen "
         "på fotoet. Ikke restaurantfoto, og ingredienser varierer mellom serveringer."),
       "largeSourceOriginalPath":"assets/fysen-dish-originals/dosa.png",
       "largeSource":large.name,
