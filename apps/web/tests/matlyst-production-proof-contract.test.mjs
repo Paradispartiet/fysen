@@ -11,13 +11,19 @@ const proofSource = await readFile(
   "utf8",
 );
 
-test("Matlyst production proof følger den gjenopprettede sekskorts-forsiden", () => {
-  for (const cuisine of ["Asiatisk", "Indisk", "Fast food", "Italiensk", "Midtøsten", "Mexicansk"]) {
+test("Matlyst production proof følger dagens tolv kjøkken i en lukket utbrettmeny", () => {
+  for (const cuisine of [
+    "Asiatisk", "Indisk", "Fast food", "Italiensk", "Midtøsten", "Mexicansk",
+    "Afrikansk", "Fransk", "Spansk", "Gresk", "Amerikansk", "Nordisk",
+  ]) {
     assert.match(proofSource, new RegExp(cuisine, "u"));
   }
-  assert.match(proofSource, /cuisineCard cuisineCardInteractive/u);
+  assert.match(proofSource, /cuisineBrowseDisclosure/u);
+  assert.match(proofSource, /cuisineBrowseChoice/u);
+  assert.match(proofSource, /Utforsk matretter/u);
   assert.match(proofSource, /matlyst-live-browser-proof\.mjs/u);
-  assert.match(proofSource, /Restauranter og retter/u);
+  assert.doesNotMatch(proofSource, /cuisineCard cuisineCardInteractive/u);
+  assert.doesNotMatch(proofSource, /Restauranter og retter/u);
   assert.doesNotMatch(proofSource, /"På menyen nå"/u);
 });
 
