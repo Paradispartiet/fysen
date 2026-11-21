@@ -224,6 +224,14 @@ test("Editorial food photos are only large-view enabled with real provenance and
       const notice=readFileSync(path.join(imageRoot,"chana-masala-LICENSE.txt"),"utf8");
       assert.match(notice,/Fotograf: Muhammad Khawar Nazir/u);
       assert.match(notice,/Pexels License/u);
+    } else if (photo.id === "banh-mi") {
+      assert.equal(photo.catalogId,"banh-mi");
+      assert.equal(photo.photoCredit,"Andy Li / Wikimedia Commons");
+      assert.equal(photo.photoLicense,"https://creativecommons.org/publicdomain/zero/1.0/");
+      assert.equal(photo.photoLicenseNotice,"/dish-images/banh-mi-LICENSE.txt");
+      const notice=readFileSync(path.join(imageRoot,"banh-mi-LICENSE.txt"),"utf8");
+      assert.match(notice,/Fotograf: Andy Li/u);
+      assert.match(notice,/CC0 1.0/u);
     } else if (photo.id === "green-curry") {
       assert.equal(photo.catalogId,"green-curry");
       assert.equal(photo.photoLicense,"https://www.pexels.com/license/");
