@@ -1,0 +1,31 @@
+{
+  "dish_id": "banh-mi",
+  "catalog_id": "banh-mi",
+  "source_original_sha256": "a767191b3c4acf116b6dd9ea88d6568225eaaa214b8c09d2414fe37478b2b27a",
+  "original_image_size": [
+    8160,
+    6144
+  ],
+  "crop_rect_in_original": [
+    2063,
+    1190,
+    5958,
+    4709
+  ],
+  "processed_native_dimensions": [
+    3895,
+    3519
+  ],
+  "candidate_png_sha256": "5e08db5fd5006e6ab80dfd061fe3aa7d38d40fa00a45f69f9c6290830bd421bf",
+  "preview_sha256": "ee2025bb10ff74008a056637852cf8d85ceab0f6cbdb41d20ddbff995da87dde",
+  "candidate_method": "source-locked-mask-only-grabcut-native-cc0",
+  "photographer": "Andy Li / Wikimedia Commons",
+  "source": "https://commons.wikimedia.org/wiki/File:Special_Baguette_(B%C3%A1nh_m%C3%AC)_-_Banh_Mi_Ancient_Saigon_2024-12-20.jpg",
+  "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "no_upscale": true,
+  "generated_food_pixels": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Visually check both whole bread halves, filling, herb and crust silhouettes, no paper/basket/white background remains; black outside and sharp native 1400px detail. Reject damaged edges or any missing ingredients."
+}
