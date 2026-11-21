@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { Buffer } from "node:buffer";
+import { createHash } from "node:crypto";
 import { readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
@@ -21,7 +22,7 @@ const sushiImage = readFileSync(path.join(web, "public/dish-images/sushi-thumb-5
 const ramenImage = readFileSync(path.join(web, "public/dish-images/ramen-thumb-512.avif"));
 const isBologneseImage = readFileSync(path.join(web, "public/dish-images/pasta-bolognese-thumb-512.avif"));
 const isProsciuttoImage = readFileSync(path.join(web, "public/dish-images/pizza-prosciutto-thumb-512.avif"));
-const isKebabPitaImage = readFileSync(path.join(web, "public/dish-images/kebab-pita-768.avif"));
+const isKebabPitaImage = readFileSync(path.join(web, "public/dish-images/kebab-pita-thumb-512-illustration.avif"));
 const whiteFishImage = readFileSync(path.join(web, "public/dish-images/stekt-hvit-fisk-thumb-512.avif"));
 const bibimbapImage = readFileSync(path.join(web, "public/dish-images/bibimbap-768.avif"));
 const tacosAlPastorImage = readFileSync(path.join(web, "public/dish-images/tacos-al-pastor-768.avif"));
@@ -179,7 +180,7 @@ test("Every generated and approved image is represented in the published Matlyst
   assert.deepEqual(manifest.images.map((entry) => entry.id), entries.map((match) => match[1]));
   for (const [index, image] of manifest.images.entries()) {
     assert.equal(image.index, index);
-    assert.equal(image.atlas, index === 0 ? "pizza-margherita-thumb-512.avif" : index === 1 ? "cheeseburger-thumb-512.avif" : index === 2 ? "grillet-laks-thumb-512.avif" : index === 3 ? "grillet-biff-thumb-512.avif" : index === 4 ? "rekesmorbrod-thumb-512.avif" : index === 5 ? "sushi-thumb-512.avif" : index === 6 ? "ramen-thumb-512.avif" : index === 7 ? "pasta-bolognese-thumb-512.avif" : index === 8 ? "pizza-prosciutto-thumb-512.avif" : index === 9 ? "kebab-pita-768.avif" : index === 10 ? "carbonara-thumb-512.avif" : index === 11 ? "butter-chicken-thumb-512.avif" : index === 12 ? "pad-thai-reker-thumb-512.avif" : index === 13 ? "stekt-hvit-fisk-thumb-512.avif" : index === 14 ? "tiramisu-thumb-512.avif" : index === 15 ? "pizza-marinara-thumb-512.avif" : index === 16 ? "cacio-e-pepe-768.avif" : index === 17 ? "gyoza-768.avif" : index === 18 ? "pho-512.avif" : index === 19 ? "bibimbap-768.avif" : index === 20 ? "falafel-768.avif" : index === 21 ? "tacos-al-pastor-768.avif" : index === 22 ? "chana-masala-768.avif" : index === 23 ? "masala-dosa-768.avif" : index === 24 ? "chicken-katsu-768.avif" : index === 25 ? "yakitori-768.avif" : index === 26 ? "udon-tempura-768.avif" : index === 27 ? "bao-768.avif" : index === 28 ? "dumplings-768.avif" : index === 29 ? "mapo-tofu-768.avif" : index === 30 ? "peking-duck-768.avif" : index === 31 ? "dan-dan-noodles-768.avif" : index === 32 ? "green-curry-768.avif" : index === 33 ? "tom-yum-thumb-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-768.avif");
+    assert.equal(image.atlas, index === 0 ? "pizza-margherita-thumb-512.avif" : index === 1 ? "cheeseburger-thumb-512.avif" : index === 2 ? "grillet-laks-thumb-512.avif" : index === 3 ? "grillet-biff-thumb-512.avif" : index === 4 ? "rekesmorbrod-thumb-512.avif" : index === 5 ? "sushi-thumb-512.avif" : index === 6 ? "ramen-thumb-512.avif" : index === 7 ? "pasta-bolognese-thumb-512.avif" : index === 8 ? "pizza-prosciutto-thumb-512.avif" : index === 9 ? "kebab-pita-thumb-512-illustration.avif" : index === 10 ? "carbonara-thumb-512.avif" : index === 11 ? "butter-chicken-thumb-512.avif" : index === 12 ? "pad-thai-reker-thumb-512.avif" : index === 13 ? "stekt-hvit-fisk-thumb-512.avif" : index === 14 ? "tiramisu-thumb-512.avif" : index === 15 ? "pizza-marinara-thumb-512.avif" : index === 16 ? "cacio-e-pepe-768.avif" : index === 17 ? "gyoza-768.avif" : index === 18 ? "pho-512.avif" : index === 19 ? "bibimbap-768.avif" : index === 20 ? "falafel-768.avif" : index === 21 ? "tacos-al-pastor-768.avif" : index === 22 ? "chana-masala-768.avif" : index === 23 ? "masala-dosa-768.avif" : index === 24 ? "chicken-katsu-768.avif" : index === 25 ? "yakitori-768.avif" : index === 26 ? "udon-tempura-768.avif" : index === 27 ? "bao-768.avif" : index === 28 ? "dumplings-768.avif" : index === 29 ? "mapo-tofu-768.avif" : index === 30 ? "peking-duck-768.avif" : index === 31 ? "dan-dan-noodles-768.avif" : index === 32 ? "green-curry-768.avif" : index === 33 ? "tom-yum-thumb-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-768.avif");
     assert.equal(image.surface, "Matlyst");
     assert.equal(image.kind, [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,33].includes(index) ? "Redaksjonelt rettfoto" : "AI-illustrasjon");
   }
@@ -700,15 +701,25 @@ test("Bolognese, prosciutto and kebab retain distinct correctly sized gallery AV
   const expected = [
     { index: 7, id: "pasta-bolognese", file: "pasta-bolognese-thumb-512.avif", bytes: isBologneseImage, cls: "dishPhotoBolognese", selector: "isBolognese" },
     { index: 8, id: "pizza-prosciutto", file: "pizza-prosciutto-thumb-512.avif", bytes: isProsciuttoImage, cls: "dishPhotoProsciutto", selector: "isProsciutto" },
-    { index: 9, id: "kebab-pita", file: "kebab-pita-768.avif", bytes: isKebabPitaImage, cls: "dishPhotoKebabPita", selector: "isKebabPita" }
+    { index: 9, id: "kebab-pita", file: "kebab-pita-thumb-512-illustration.avif", bytes: isKebabPitaImage, cls: "dishPhotoKebabPita", selector: "isKebabPita" }
   ];
   for (const entry of expected) {
     assert.equal(entry.bytes.toString("ascii", 4, 12), "ftypavif");
-    assert.ok(entry.bytes.length > (entry.index === 7 ? 12000 : 25000));
+    if (entry.index === 9) {
+      // AVIF compresses the standalone illustration well; byte size is not a sharpness proxy.
+      assert.ok(entry.bytes.length > 5000);
+      assert.equal(createHash("sha256").update(entry.bytes).digest("hex"),
+        "8c167b5cfd206d240d4aff647c47f24d4ead3ce5285f70ebe12976ca0fe1a514");
+      assert.equal(manifest.images[9].largeViewEnabled, undefined);
+      assert.equal(manifest.images[9].largeSource, undefined);
+      assert.equal(manifest.images[9].kind, "AI-illustrasjon");
+    } else {
+      assert.ok(entry.bytes.length > (entry.index === 7 ? 12000 : 25000));
+    }
     const ispe = entry.bytes.indexOf(Buffer.from("ispe"));
     assert.ok(ispe > 0);
-    assert.equal(entry.bytes.readUInt32BE(ispe + 8), [7,8].includes(entry.index) ? 512 : 768);
-    assert.equal(entry.bytes.readUInt32BE(ispe + 12), [7,8].includes(entry.index) ? 512 : 768);
+    assert.equal(entry.bytes.readUInt32BE(ispe + 8), [7,8,9].includes(entry.index) ? 512 : 768);
+    assert.equal(entry.bytes.readUInt32BE(ispe + 12), [7,8,9].includes(entry.index) ? 512 : 768);
     const row = manifest.images[entry.index];
     assert.equal(row.id, entry.id);
     assert.equal(row.atlas, entry.file);
