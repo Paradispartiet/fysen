@@ -1,0 +1,27 @@
+{
+  "dish_id": "green-curry",
+  "catalog_id": "green-curry",
+  "source_original_sha256": "105814ed9d3638846610fdc3735327c4bc1530b33a5590ebb84872c1562a5a25",
+  "source_native_dimensions": [
+    3017,
+    3771
+  ],
+  "mask_method": "manual-bowl-boundary-preview",
+  "outline_preview_frame": [
+    880,
+    1100
+  ],
+  "mask_is_approved": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "no_upscale": true,
+  "generated_food_pixels": false,
+  "candidate_dimensions": [
+    3017,
+    3771
+  ],
+  "candidate_sha256": "1d95031531c32f45777b8533846bda81fa2eb79b9f4b827614a76fcc5e661a26",
+  "preview_sha256": "5a16d0e1b716fb179df4e703216f68e1526bc0efd3566a4dbf1517d8e4ad230c",
+  "review_gate": "Verify bowl outline at 1400px native: no cropped rim, no included second bowl, no green-sauce edge removed. Confirm exact chicken green curry; black backdrop. No approval or publication before visual inspection."
+}

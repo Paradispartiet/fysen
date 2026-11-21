@@ -1,0 +1,19 @@
+{
+  "dish_id": "green-curry",
+  "catalog_id": "green-curry",
+  "photo_page": "https://www.pexels.com/photo/delicious-thai-green-curry-with-chicken-38906797/",
+  "original_url": "https://images.pexels.com/photos/38906797/pexels-photo-38906797.jpeg",
+  "photographer": "Max Griss / Pexels",
+  "photo_license": "https://www.pexels.com/license/",
+  "claimed_variant": "Thai green curry with chicken",
+  "review_caution": "Verify that chicken, green curry and an entire suitable bowl are visible. Reject a close-up if food or bowl is cropped.",
+  "native_width": 3017,
+  "native_height": 3771,
+  "original_sha256": "105814ed9d3638846610fdc3735327c4bc1530b33a5590ebb84872c1562a5a25",
+  "source_download_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Whole clearly identifiable single dish; original-native 1400px detail; no false ingredient/variant claims. Isolated full dish on genuine black background without synthetic food, objects or zoomed cropping. Licenses and source credit documented. No restaurant menu/price mapping."
+}
