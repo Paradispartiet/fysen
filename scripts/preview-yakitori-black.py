@@ -56,14 +56,19 @@ yy,xx=np.mgrid[0:sh,0:sw]
 # ONLY the white table/menu backdrop immediately above the upper plate rim:
 # the earlier global white filter damaged the original yellow lemon wedge.
 chroma=rgb.max(axis=2)-rgb.min(axis=2)
-upper_backdrop=((yy>=302)&(yy<380)&(xx>180)&(xx<710)&
-                (rgb.min(axis=2)>157)&(chroma<36))
+# Mask the pale menu/table portion just above the true ceramic rim.
+upper_backdrop=((yy>=304)&(yy<382)&(xx>172)&(xx<718)&
+                (rgb.min(axis=2)>127)&(chroma<64))
 clean=grab.copy()
 clean[upper_backdrop]=0
-# Protect the real bamboo skewer tips. The lines set ALPHA only; the
-# photo itself is unchanged. Trace the actual sticks, not white halos.
-cv2.line(clean,(366,254),(348,391),255,8,cv2.LINE_AA)
-cv2.line(clean,(494,267),(472,397),255,8,cv2.LINE_AA)
+# Bamboo sticks are recognized from warm TAN SOURCE PIXELS within narrow
+# positions; no painted alpha lines that accidentally reveal white paper.
+rr,gg,bb=rgb[:,:,0],rgb[:,:,1],rgb[:,:,2]
+bamboo=(rr>103)&((rr-gg)>12)&((gg-bb)>7)&((rr-bb)>31)&(bb>30)&(rr<245)
+stick_regions=((yy>=246)&(yy<402)&(((xx>341)&(xx<391))|((xx>455)&(xx<511))))
+tips=(bamboo&stick_regions).astype(np.uint8)*255
+tips=cv2.morphologyEx(tips,cv2.MORPH_CLOSE,cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,7)))
+clean=cv2.bitwise_or(clean,tips)
 clean=cv2.morphologyEx(clean,cv2.MORPH_CLOSE,cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3)))
 for variant,mask in [("black-contour",contour),("black-grabcut",grab),("black-clean-grabcut",clean)]:
   alpha=cv2.GaussianBlur(mask,(0,0),1).astype(np.float32)/255
