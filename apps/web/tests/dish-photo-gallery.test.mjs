@@ -35,7 +35,7 @@ const chickenKatsuImage = readFileSync(path.join(web, "public/dish-images/chicke
 const yakitoriImage = readFileSync(path.join(web, "public/dish-images/yakitori-thumb-512.avif"));
 const udonTempuraImage = readFileSync(path.join(web, "public/dish-images/udon-tempura-thumb-512.avif"));
 const baoImage = readFileSync(path.join(web, "public/dish-images/bao-braised-pork-thumb-512.avif"));
-const dumplingsImage = readFileSync(path.join(web, "public/dish-images/dumplings-768.avif"));
+const dumplingsImage = readFileSync(path.join(web, "public/dish-images/dumplings-thumb-512.avif"));
 const mapoTofuImage = readFileSync(path.join(web, "public/dish-images/mapo-tofu-768.avif"));
 const pekingDuckImage = readFileSync(path.join(web, "public/dish-images/peking-duck-768.avif"));
 const danDanNoodlesImage = readFileSync(path.join(web, "public/dish-images/dan-dan-noodles-768.avif"));
@@ -129,7 +129,7 @@ test("Only approved full-size dish masters can be opened separately without enla
   const approved = manifest.images.filter((image) => image.largeViewEnabled === true);
   const linkedMasters = [...gallery.matchAll(/href="\/dish-images\/([^"]+-master-\d+\.avif)"/gu)]
     .map((match) => match[1]);
-  assert.equal(approved.length, 27, "Pizza margherita, cheeseburger, grilled salmon, grilled steak, shrimp sandwich, sushi, ramen, bolognese, prosciutto, carbonara, butter chicken, shrimp pad thai, seared white fish, tiramisu, pizza marinara, cacio e pepe, gyoza, phở bò, bibimbap falafel and tacos al pastor, chana masala, masala dosa, chicken katsu, yakitori, udon med reketempura and braised pork bao need approved full-size masters");
+  assert.equal(approved.length, 28, "Pizza margherita, cheeseburger, grilled salmon, grilled steak, shrimp sandwich, sushi, ramen, bolognese, prosciutto, carbonara, butter chicken, shrimp pad thai, seared white fish, tiramisu, pizza marinara, cacio e pepe, gyoza, phở bò, bibimbap falafel and tacos al pastor, chana masala, masala dosa, chicken katsu, yakitori, udon med reketempura, braised pork bao and steamed dumplings need approved full-size masters");
   assert.deepEqual(linkedMasters, approved.map((image) => image.largeSource));
   assert.match(gallery, /dishPhotosLargeLinks/u);
   assert.match(gallery, /target="_blank" rel="noopener noreferrer"/u);
@@ -179,9 +179,9 @@ test("Every generated and approved image is represented in the published Matlyst
   assert.deepEqual(manifest.images.map((entry) => entry.id), entries.map((match) => match[1]));
   for (const [index, image] of manifest.images.entries()) {
     assert.equal(image.index, index);
-    assert.equal(image.atlas, index === 0 ? "pizza-margherita-thumb-512.avif" : index === 1 ? "cheeseburger-thumb-512.avif" : index === 2 ? "grillet-laks-thumb-512.avif" : index === 3 ? "grillet-biff-thumb-512.avif" : index === 4 ? "rekesmorbrod-thumb-512.avif" : index === 5 ? "sushi-thumb-512.avif" : index === 6 ? "ramen-thumb-512.avif" : index === 7 ? "pasta-bolognese-thumb-512.avif" : index === 8 ? "pizza-prosciutto-thumb-512.avif" : index === 9 ? "kebab-pita-768.avif" : index === 10 ? "carbonara-thumb-512.avif" : index === 11 ? "butter-chicken-thumb-512.avif" : index === 12 ? "pad-thai-reker-thumb-512.avif" : index === 13 ? "stekt-hvit-fisk-thumb-512.avif" : index === 14 ? "tiramisu-thumb-512.avif" : index === 15 ? "pizza-marinara-thumb-512.avif" : index === 16 ? "cacio-e-pepe-thumb-512.avif" : index === 17 ? "gyoza-thumb-512.avif" : index === 18 ? "pho-bo-thumb-512.avif" : index === 19 ? "bibimbap-thumb-512.avif" : index === 20 ? "falafel-thumb-512.avif" : index === 21 ? "tacos-al-pastor-thumb-512.avif" : index === 22 ? "chana-masala-thumb-512.avif" : index === 23 ? "masala-dosa-thumb-512.avif" : index === 24 ? "chicken-katsu-thumb-512.avif" : index === 25 ? "yakitori-thumb-512.avif" : index === 26 ? "udon-tempura-thumb-512.avif" : index === 27 ? "bao-braised-pork-thumb-512.avif" : index === 28 ? "dumplings-768.avif" : index === 29 ? "mapo-tofu-768.avif" : index === 30 ? "peking-duck-768.avif" : index === 31 ? "dan-dan-noodles-768.avif" : index === 32 ? "green-curry-768.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-768.avif");
+    assert.equal(image.atlas, index === 0 ? "pizza-margherita-thumb-512.avif" : index === 1 ? "cheeseburger-thumb-512.avif" : index === 2 ? "grillet-laks-thumb-512.avif" : index === 3 ? "grillet-biff-thumb-512.avif" : index === 4 ? "rekesmorbrod-thumb-512.avif" : index === 5 ? "sushi-thumb-512.avif" : index === 6 ? "ramen-thumb-512.avif" : index === 7 ? "pasta-bolognese-thumb-512.avif" : index === 8 ? "pizza-prosciutto-thumb-512.avif" : index === 9 ? "kebab-pita-768.avif" : index === 10 ? "carbonara-thumb-512.avif" : index === 11 ? "butter-chicken-thumb-512.avif" : index === 12 ? "pad-thai-reker-thumb-512.avif" : index === 13 ? "stekt-hvit-fisk-thumb-512.avif" : index === 14 ? "tiramisu-thumb-512.avif" : index === 15 ? "pizza-marinara-thumb-512.avif" : index === 16 ? "cacio-e-pepe-thumb-512.avif" : index === 17 ? "gyoza-thumb-512.avif" : index === 18 ? "pho-bo-thumb-512.avif" : index === 19 ? "bibimbap-thumb-512.avif" : index === 20 ? "falafel-thumb-512.avif" : index === 21 ? "tacos-al-pastor-thumb-512.avif" : index === 22 ? "chana-masala-thumb-512.avif" : index === 23 ? "masala-dosa-thumb-512.avif" : index === 24 ? "chicken-katsu-thumb-512.avif" : index === 25 ? "yakitori-thumb-512.avif" : index === 26 ? "udon-tempura-thumb-512.avif" : index === 27 ? "bao-braised-pork-thumb-512.avif" : index === 28 ? "dumplings-thumb-512.avif" : index === 29 ? "mapo-tofu-768.avif" : index === 30 ? "peking-duck-768.avif" : index === 31 ? "dan-dan-noodles-768.avif" : index === 32 ? "green-curry-768.avif" : index === 33 ? "tom-yum-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-768.avif");
     assert.equal(image.surface, "Matlyst");
-    assert.equal(image.kind, [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27].includes(index) ? "Redaksjonelt rettfoto" : "AI-illustrasjon");
+    assert.equal(image.kind, [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28].includes(index) ? "Redaksjonelt rettfoto" : "AI-illustrasjon");
   }
   assert.match(explorer, /<DishPhotoGallery \/>/u);
   assert.match(gallery, /dishSearchHref\(dish\.query\)/u);
@@ -932,9 +932,34 @@ test("Bao with braised pork has genuine CC0 original and a separate sharp 512 th
   assert.ok(css.includes("center / contain no-repeat"));
 });
 
-test("Remaining five Asian dishes use their own AVIF images and matching catalog IDs", () => {
+test("Steamed dumplings use verified CC0 full-size photo and distinct 512px mini", () => {
+  const item=manifest.images[28];
+  assert.equal(item.id, "dumplings");
+  assert.equal(item.catalogId, "dumplings");
+  assert.equal(item.kind, "Redaksjonelt rettfoto");
+  assert.equal(item.largeViewEnabled, true);
+  assert.equal(item.atlas, "dumplings-thumb-512.avif");
+  assert.equal(item.largeSource, "dumplings-master-4100.avif");
+  assert.equal(item.largeSourceNativeWidth, 4100);
+  assert.equal(item.largeSourceNativeHeight, 3200);
+  assert.match(item.photoCredit,/Charles Deluvio.*CC0 1\.0/u);
+  assert.match(item.variantCaution,/Fyllet er ikke dokumentert/u);
+  assert.match(item.variantCaution,/ikke restaurantfoto/u);
+  assert.match(item.variantCaution,/ikke chili- eller soyadipp/u);
+  assert.equal(dumplingsImage.toString("ascii",4,12), "ftypavif");
+  assert.ok(dumplingsImage.length>10000, "512px dumplings thumbnail should be sharp, not placeholder");
+  const pos=dumplingsImage.indexOf(Buffer.from("ispe"));
+  assert.ok(pos>0);
+  assert.equal(dumplingsImage.readUInt32BE(pos+8),512);
+  assert.equal(dumplingsImage.readUInt32BE(pos+12),512);
+  assert.match(gallery,/href="\/dish-images\/dumplings-master-4100\.avif"/u);
+  assert.match(gallery,/isDumplings = index === 28/u);
+  assert.ok(css.includes("dumplings-thumb-512.avif"));
+  assert.ok(css.includes("center / contain no-repeat"));
+});
+
+test("Remaining four Asian dishes use their own AVIF images and matching catalog IDs", () => {
   const cases = [
-    { index: 28, id: "dumplings", file: "dumplings-768.avif", bytes: dumplingsImage, cls: "Dumplings", ingredient: /fyllet/iu },
     { index: 29, id: "mapo-tofu", file: "mapo-tofu-768.avif", bytes: mapoTofuImage, cls: "MapoTofu", ingredient: /kjøttdeig/iu },
     { index: 30, id: "peking-duck", file: "peking-duck-768.avif", bytes: pekingDuckImage, cls: "PekingDuck", ingredient: /andekjøtt/iu },
     { index: 31, id: "dan-dan-noodles", file: "dan-dan-noodles-768.avif", bytes: danDanNoodlesImage, cls: "DanDanNoodles", ingredient: /peanøtter/iu },
