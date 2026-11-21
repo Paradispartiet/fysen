@@ -2,7 +2,7 @@ name: Fysen mapo tofu photo (draft only)
 on:
   push:
     branches: [art/mapo-tofu-native-photo-20261121]
-    paths: [".github/workflows/fysen-promote-mapo-tofu-photo.yml", "scripts/promote-reviewed-mapo-tofu.py"]
+    paths: [".github/workflows/fysen-promote-mapo-tofu-photo.yml", "scripts/promote-reviewed-mapo-tofu.py", "apps/web/tests/dish-photo-gallery.test.mjs"]
 permissions:
   contents: write
 concurrency:
