@@ -1,0 +1,23 @@
+{
+  "dish_id": "katsu",
+  "catalog_id": "katsu",
+  "photo_author": "Cohesion Singapore / Pexels",
+  "photo_page": "https://www.pexels.com/photo/slices-of-katsu-teriyaki-and-white-rice-in-a-bowl-15985538/",
+  "license_url": "https://www.pexels.com/license/",
+  "source_original_sha256": "21ec19e88be0f70f9981dd7deda9cde59714b9d313d16c682c6a4c5fb1fd2269",
+  "source_native_dimensions": [
+    5472,
+    3648
+  ],
+  "variants": [
+    "black-contour",
+    "black-grabcut",
+    "black-clean-grabcut"
+  ],
+  "no_upscale": true,
+  "generated_food_pixels": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "warnings": "Panko-breaded chicken slices topped with seaweed and green onion on rice in complete ceramic bowl. No cabbage visible; do not claim cabbage. Verify bowl edge and source-native meat texture before approval."
+}
