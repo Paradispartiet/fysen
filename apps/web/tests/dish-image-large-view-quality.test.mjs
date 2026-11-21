@@ -200,6 +200,16 @@ test("Editorial food photos are only large-view enabled with real provenance and
       const notice=readFileSync(path.join(imageRoot, "bibimbap-LICENSE.txt"), "utf8");
       assert.match(notice, /Fotograf: Andy Li/u);
       assert.match(notice, /CC0 1\.0/u);
+    } else if (photo.id === "udon") {
+      assert.equal(photo.catalogId, "udon");
+      assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
+      assert.match(photo.photoCredit, /Immanuelle.*CC BY 4\.0/u);
+      assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by/4.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/udon-tempura-LICENSE.txt");
+      const notice=readFileSync(path.join(imageRoot,"udon-tempura-LICENSE.txt"),"utf8");
+      assert.match(notice,/Fotograf: Immanuelle/u);
+      assert.match(notice,/CC BY 4\.0/u);
+      assert.match(notice,/Bearbeidelse:/u);
     } else if (photo.id === "yakitori") {
       assert.equal(photo.catalogId, "yakitori");
       assert.equal(photo.photoLicense, "https://www.pexels.com/license/");

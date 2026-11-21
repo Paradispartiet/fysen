@@ -266,7 +266,7 @@
 }
 .dishPhotoThumb.dishPhotoUdonTempura,
 .dishPhotoSmall.dishPhotoUdonTempura {
-  background: #000 url("/dish-images/udon-tempura-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/udon-tempura-thumb-512.avif") center / contain no-repeat;
 }
 
 /* Six remaining Matlyst dishes; editorial illustrations, never restaurant photos. */
