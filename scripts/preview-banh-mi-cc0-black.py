@@ -95,6 +95,22 @@ cv2.fillPoly(paper_pocket,[np.array([
 ],dtype=np.int32)],255)
 paper_extra=(hsv[:,:,1]<169)&(hsv[:,:,2]>155)&(paper_pocket>0)
 foreground[paper_extra]=0
+# Hand-inspected paper triangle beneath the left shoulder of right bread.
+# Only desaturated gray-white wrapper pixels are discarded in this tiny area;
+# the baguette itself is golden/tan and lies to the right of this mask.
+paper_lower=np.zeros_like(foreground)
+cv2.fillPoly(paper_lower,[np.array([
+    (500,208),(546,208),(543,236),(529,245),(510,243),(497,224)
+],dtype=np.int32)],255)
+paper_missing=(hsv[:,:,1]<110)&(hsv[:,:,2]>125)&(paper_lower>0)
+foreground[paper_missing]=0
+# Sparse wicker stems across the top-right edge: the true bread crust remains
+# below this individually traced upper boundary, including both rounded ends.
+stem_x=np.array([548,565,585,607,625,650,675],dtype=np.float32)
+stem_y=np.array([216,218,220,223,226,234,246],dtype=np.float32)
+for x in range(548,676):
+    cutoff=int(np.interp(x,stem_x,stem_y))
+    foreground[:cutoff,x]=0
 # Loose wicker loops protrude visibly above the source's right bread crest.
 # This boundary is several pixels ABOVE the hand-reviewed crust; a tiny 5px
 # opening removes only filaments without straightening/cutting the loaf.
