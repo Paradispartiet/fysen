@@ -21,7 +21,7 @@
     3017,
     3771
   ],
-  "candidate_sha256": "a384054818778ce2aada2483d18d11f85748971d211ff56a54445f382a5c6921",
-  "preview_sha256": "c5857a258dba69e8d70fc6d8ceab1f4c4560846aa1eafa890cec5f9b2fd9b9aa",
+  "candidate_sha256": "dcf76da63ade1552a6319cfec697fc51b8ad425e6179c45bffaa0b06a09c1cb0",
+  "preview_sha256": "d15a46d94e76efc364183b93746d2652e057eaa3c02f21e350115e92bb8831be",
   "review_gate": "Verify bowl outline at 1400px native: no cropped rim, no included second bowl, no green-sauce edge removed. Confirm exact chicken green curry; black backdrop. No approval or publication before visual inspection."
 }
