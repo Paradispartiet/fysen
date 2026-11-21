@@ -40,7 +40,7 @@ def main():
     assert audit["source_original_sha256"]==SHA and audit["source_native_dimensions"]==[5472,3648]
     assert audit["no_upscale"] and not audit["generated_food_pixels"]
     assert not audit["approved_for_fysen"] and not audit["published"]
-    variant="black-grabcut"
+    variant="black-clean-grabcut"
     preview=C/(variant+"-preview.jpg")
     detail=C/(variant+"-native-detail-1400.jpg")
     assert preview.is_file() and detail.is_file()
@@ -51,7 +51,7 @@ def main():
     photo=state["photo"]
     W,H=photo.size
     assert (W,H)==(5472,3648)
-    mask=state["grab"]
+    mask=state["clean"]
     assert mask.shape==(720,1080)
     alpha=cv2.resize(mask,(W,H),interpolation=cv2.INTER_LINEAR)
     alpha=cv2.GaussianBlur(alpha,(0,0),1)
@@ -131,7 +131,7 @@ def main():
        "- To ekte originale fotokandidater bestod kildekontroll. "
        "Cohesion Singapore er valgt fremfor Jahra Tasfia Reza fordi "
        "hele den autentiske skålen er lettere å frilegge.\n"
-       "- GrabCut-masken er gjennomgått visuelt på liten visning og "
+       "- Clean GrabCut-masken er gjennomgått visuelt på liten visning og "
        "på et virkelig originalt 1400 × 1400 detaljutsnitt.\n"
        "- Ingen syntetiske matpiksler, ingen collage eller oppskalering.\n"
        "- Selvstendig master: chicken-katsu-master-5472.avif (5472 × 3648); "
