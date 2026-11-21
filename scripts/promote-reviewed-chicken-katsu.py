@@ -183,6 +183,11 @@ def main():
     section=section.replace(
        "Chicken katsu, yakitori and shrimp tempura udon each use their own 768px AVIF",
        "Chicken katsu has native photo thumb, yakitori and shrimp tempura udon keep distinct AVIF")
+    # A 512px photo thumbnail against black compresses more efficiently than
+    # the former 768px illustration; retain a non-placeholder size gate.
+    section=section.replace(
+       'assert.ok(entry.bytes.length > 20000, entry.file + " is unexpectedly small");',
+       'assert.ok(entry.bytes.length > (entry.index === 24 ? 12000 : 20000), entry.file + " is unexpectedly small");')
     section=section.replace('assert.equal(entry.bytes.readUInt32BE(marker + 8), 768);',
                             'assert.equal(entry.bytes.readUInt32BE(marker + 8), entry.index === 24 ? 512 : 768);')
     section=section.replace('assert.equal(entry.bytes.readUInt32BE(marker + 12), 768);',
