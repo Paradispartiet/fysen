@@ -52,7 +52,7 @@ mx=color.max(axis=2);mn=color.min(axis=2)
 yy,xx=np.mgrid[0:sh,0:sw]
 # A pale triangular piece of studio backdrop remains above the upper-left
 # bowl rim. Restrict additional removal to that backdrop corner, not food.
-neutral_bright=(mn>185)&((mx-mn)<21)&(yy<325)&(xx<530)
+neutral_bright=(mn>185)&((mx-mn)<21)&(((yy<325)&(xx<530))|((yy<405)&(xx<281)))
 clean=grab.copy()
 clean[neutral_bright]=0
 clean=cv2.morphologyEx(clean,cv2.MORPH_CLOSE,
