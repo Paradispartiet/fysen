@@ -1,0 +1,16 @@
+{
+  "purpose": "MANUAL_OFFLINE_PREVIEW_IDENTITY_ONLY",
+  "preview_database": {
+    "name": "paradisdb-fysen-preview",
+    "id": "8b6616b4-11df-4ddc-9817-378f51ee0b69",
+    "jurisdiction": "EU"
+  },
+  "permanent_database": {
+    "name": "paradisdb-fysen-public",
+    "id": "882a3393-71c3-43f9-9dec-efc2bbcab409",
+    "jurisdiction": "EU"
+  },
+  "remote_import_approved": false,
+  "worker_api_enabled": false,
+  "note": "Identity inventory only. Not a deployable Wrangler config and contains no Cloudflare credentials."
+}
