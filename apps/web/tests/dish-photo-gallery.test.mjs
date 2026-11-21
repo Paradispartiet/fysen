@@ -949,3 +949,20 @@ test("Remaining six Asian dishes use their own AVIF images and matching catalog 
   assert.equal(manifest.images.length, 44);
   assert.equal(manifest.images.filter((row) => ["series-04.avif", "collection.avif"].includes(row.atlas)).length, 0);
 });
+
+test("Integrating native photos must preserve approved Tom yum, kebab and the gallery API", () => {
+  const tomYum = manifest.images.find((photo) => photo.id === "tom-yum");
+  assert.ok(tomYum);
+  assert.equal(tomYum.largeSource, "tom-yum-master-3334.avif");
+  assert.equal(tomYum.largeSourceSha256, "724dd7286e4fb7b09f1f0e1a33fdc8ede679becd046fcdd0f6b582dbb07c30ae");
+  assert.equal(tomYum.largeSourceOriginalSha256, "a5a6e255d32995dd9da84b9c7bd899d9107cfd50ddfe2a3809c009e531e686d4");
+  assert.match(gallery, /aria-label="Redaksjonelt foto av tom yum med reker og sopp, ikke restaurantfoto"/u);
+
+  const kebab = manifest.images.find((photo) => photo.id === "kebab-pita");
+  assert.ok(kebab);
+  assert.equal(kebab.atlas, "kebab-pita-thumb-512-illustration.avif");
+  assert.equal(kebab.kind, "AI-illustrasjon");
+  assert.equal(kebab.largeViewEnabled, undefined);
+  assert.match(css, /dishPhotoKebabPita[^\\n]*kebab-pita-thumb-512-illustration\\.avif/u);
+  assert.match(gallery, /export function hasDishPhotoThumbnail\\(dishId: string\\): boolean/u);
+});
