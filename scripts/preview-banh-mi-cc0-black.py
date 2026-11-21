@@ -81,13 +81,13 @@ cv2.fillPoly(foreground,[background_sliver],0)
 # Upper edge of the right bread half (hand-reviewed against the source).
 # Mask ONLY pixels above that ridge: they belong to the wicker basket/paper.
 ridge_x=np.array([515,530,550,575,600,625,650,680],dtype=np.float32)
-ridge_y=np.array([226,230,232,231,236,240,247,266],dtype=np.float32)
+ridge_y=np.array([234,239,241,239,243,247,254,273],dtype=np.float32)
 for x in range(515,681):
     cutoff=int(np.interp(x,ridge_x,ridge_y))
     foreground[:cutoff,x]=0
 # A tiny pale wrapper fold beside the upper baguette must not appear as food.
 hsv=cv2.cvtColor(bgr,cv2.COLOR_BGR2HSV)
-paper=(hsv[:,:,1]<43)&(hsv[:,:,2]>145)
+paper=(hsv[:,:,1]<86)&(hsv[:,:,2]>139)
 paper[:215,:]=False
 paper[247:,:]=False
 paper[:,:511]=False
