@@ -247,6 +247,10 @@ export function DishPhotoGallery() {
             Udon med reketempura <span aria-hidden="true">↗</span>
           </a>
           <small>Udon-foto: Immanuelle / Wikimedia Commons, CC BY 4.0, <a href="/dish-images/udon-tempura-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og endringer</a>.</small>
+          <a href="/dish-images/tom-yum-master-3334.avif" target="_blank" rel="noopener noreferrer">
+            Tom yum med reker <span aria-hidden="true">↗</span>
+          </a>
+          <small>Tom yum-foto: UNDO KIM / Pexels, <a href="/dish-images/tom-yum-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
         </nav>
       </div>
     </details>
