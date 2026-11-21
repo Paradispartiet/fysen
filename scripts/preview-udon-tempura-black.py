@@ -79,8 +79,11 @@ clean=precise.copy()
 # Reject its low-chroma beige pixels only in narrow peripheral wedges; keep
 # the blue patterned ceramic, golden tempura and yellow broth untouched.
 yy,xx=np.mgrid[0:sh,0:sw]
-periphery=(((xx<202)&(yy<548))|((xx>829)&(yy<589)))
-warm_neutral=((rr>123)&((rr-gg)<35)&((gg-bb)<33)&((rr-bb)<58))
+periphery=(((xx<225)&(yy<547))|((xx>818)&(yy<620)))
+# The cream desk is warm beige (R > G > B), unlike the cool white/blue
+# patterned ceramic. Never discard blue/white bowl pixels.
+warm_neutral=((rr>120)&((rr-gg)>7)&((gg-bb)>9)&
+              ((rr-bb)>23)&((rr-bb)<68))
 desk=periphery&warm_neutral
 clean[desk]=0
 for name,mask in (("black-contour",precise),("black-grabcut",grab),("black-clean-grabcut",clean)):
