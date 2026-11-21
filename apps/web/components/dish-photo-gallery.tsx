@@ -227,6 +227,10 @@ export function DishPhotoGallery() {
             Tacos al pastor <span aria-hidden="true">↗</span>
           </a>
           <small>Tacos al pastor-foto: Abner Velázquez / Pexels, <a href="/dish-images/tacos-al-pastor-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/chana-masala-master-3814.avif" target="_blank" rel="noopener noreferrer">
+            Chana masala <span aria-hidden="true">↗</span>
+          </a>
+          <small>Chana masala-foto: Muhammad Khawar Nazir / Pexels, <a href="/dish-images/chana-masala-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
           <a href="/dish-images/tom-yum-master-3334.avif" target="_blank" rel="noopener noreferrer">
             Tom yum med reker <span aria-hidden="true">↗</span>
           </a>
