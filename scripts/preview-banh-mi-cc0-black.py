@@ -70,36 +70,23 @@ bg=np.zeros((1,65),np.float64)
 fg=np.zeros((1,65),np.float64)
 cv2.grabCut(bgr,mask,None,bg,fg,8,cv2.GC_INIT_WITH_MASK)
 foreground=np.where((mask==cv2.GC_FGD)|(mask==cv2.GC_PR_FGD),255,0).astype(np.uint8)
-# Targeted review correction: eliminate small orange basket strands and a
-# paper sliver behind the RIGHT baguette's upper edge. This is outside the
-# bread and filling; no source-food pixels are added or recolored.
-background_sliver=np.array([
-    (524,181),(697,181),(699,216),(688,231),(666,242),
-    (640,232),(621,224),(591,218),(562,224),(530,219)
-],dtype=np.int32)
-cv2.fillPoly(foreground,[background_sliver],0)
-# Upper edge of the right bread half (hand-reviewed against the source).
-# Mask ONLY pixels above that ridge: they belong to the wicker basket/paper.
-ridge_x=np.array([515,530,550,575,600,625,650,680],dtype=np.float32)
-ridge_y=np.array([226,230,232,231,236,240,247,266],dtype=np.float32)
-for x in range(515,681):
-    cutoff=int(np.interp(x,ridge_x,ridge_y))
-    foreground[:cutoff,x]=0
-# A tiny pale wrapper fold beside the upper baguette must not appear as food.
+# REVIEW v6: do not cut the actual upper-right crust with a straight ridge.
+# The bread contour is determined by GrabCut; eliminate only *thin background
+# fibres* in the upper edge by a small morphological opening and very pale
+# wrapper pixels. The darker rounded bread structure must be retained.
 hsv=cv2.cvtColor(bgr,cv2.COLOR_BGR2HSV)
-paper=(hsv[:,:,1]<105)&(hsv[:,:,2]>150)
-paper[:215,:]=False
-paper[247:,:]=False
-paper[:,:511]=False
-paper[:,600:]=False
+paper=(hsv[:,:,1]<35)&(hsv[:,:,2]>165)
+paper[:185,:]=False
+paper[237:,:]=False
+paper[:,:498]=False
+paper[:,634:]=False
 foreground[paper]=0
-# Tiny wicker strands are only a few preview pixels wide. Remove small
-# connected filaments in the upper RIGHT silhouette; keep the real bread's
-# broad curved crust intact, unlike a straight upper-edge crop.
-upper=foreground[:251,515:691].copy()
+# Remove narrow orange wicker strands that protrude well above the bread,
+# while keeping the broader original bread shape and scattered fresh herbs.
+upper=foreground[:228,501:703].copy()
 upper=cv2.morphologyEx(upper,cv2.MORPH_OPEN,
     cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(5,5)),iterations=1)
-foreground[:251,515:691]=upper
+foreground[:228,501:703]=upper
 foreground=cv2.morphologyEx(foreground,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8),iterations=1)
 # Flatten tiny disconnected noise only; preserve the baguette and its herbs.
 num,lab,stats,_=cv2.connectedComponentsWithStats(foreground,8)
