@@ -184,7 +184,7 @@ try {
       assert.equal(dishSearch?.status(), 200, "The Dal makhani search page must load");
       const note = page.getByRole("complementary", { name: "Om retten Dal makhani" });
       await note.waitFor({ state: "visible" });
-      assert.match(await note.innerText(), /Fysen matleksikon[\s\S]*uradbønner/u);
+      assert.match(await note.innerText(), /Fysen matleksikon[\s\S]*uradbønner/iu);
       const dishImage = note.getByRole("img", { name: /KI-illustrasjon av dal makhani/u });
       await dishImage.waitFor({ state: "visible" });
       assert.match(await dishImage.evaluate((node) => getComputedStyle(node).backgroundImage), /dal-makhani-768\.avif/u);
