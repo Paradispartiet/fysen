@@ -85,7 +85,7 @@ def main():
     "kind":"Redaksjonelt rettfoto",
     "variantCaution":("Autentisk redaksjonelt foto av udonnudler i kraft med én tydelig "
         "reketempura og andre toppings i en hel blåhvit keramikkskål. "
-        "Reketempuraen inneholder skalldyr; øvrige ingredienser og allergener "
+        "Reketempuraen inneholder skalldyr, retten er ikke vegansk; øvrige ingredienser og allergener "
         "kan variere. Frilagt og beskåret fra et foto i Japan, ikke restaurantfoto "
         "fra en bestemt restaurant i Fysen."),
     "largeSourceOriginalPath":"assets/fysen-dish-originals/udon.png",
