@@ -77,6 +77,147 @@ Kjøringen rapporterte også 163 589 267 byte i den første størrelsesspørring
 4. **Org- og Free-port:** Bekreft tilgjengelig Free-kvote, organisasjonens Fair Use-status og reell skriverettighet *uten* å endre plan, Spend Cap eller produksjonspekere.
 5. **Utrulling og godkjenning:** Hold den verifiserte offentlige, databaseuavhengige menyindeksen i drift. Krev ny separat beslutning før eventuell databaseflytting, datareduksjon eller avvikling av et gammelt prosjekt. Ikke baser langtidsbevaring på GitHub Actions-artefakter, som utløper.
 
+## Read-only skjemabevis 20. november 2026 – identiske applikasjonsobjekter, ulike indekser
+
+**Gjennomført, kun lesetilgang.** Begge Supabase-prosjektene ble kontrollert direkte med `pg_catalog`-spørringer 20. november. Ingen migrasjoner, DDL, DML, nøkler, prosjektinnstillinger eller betalplaner ble endret. Katalogkontrollen ekskluderer bevisst `fysen.schema_migrations` ved sammenligning av applikasjonsskjemaet.
+
+| Kontroll | Original `fysen` | `fysen-recovery-free` | Vurdering |
+|---|---:|---:|---|
+| Databaseinnhold (`pg_database_size`, avrundet) | 1 590 MB | 60 MB | Ulikt innhold |
+| Fysen-tabeller totalt | 30 | 29 | Forskjellen er migrasjonsregisteret |
+| Applikasjonstabeller ekskl. register | 29 | 29 | Eksakt likt sett |
+| Kolonnedefinisjoner | 297 | 297 | Identisk, inkludert type, NOT NULL og DEFAULT |
+| Tabellbegrensninger | 209 | 209 | Identisk, inkludert `pg_get_constraintdef` |
+| Applikasjonsindekser ekskl. register | 88 | 87 | 85 identiske, 3 vs. 2 ulike |
+| Egendefinerte triggere | 0 | 0 | Lik verdi; ingen utsagn om interne triggere |
+| RLS-aktiverte Fysen-tabeller | 0 | 0 | Sikkerhetsrevisjon gjenstår |
+| Skjematilgang / SELECT til `anon`, `authenticated` | Ingen | Ingen | Ingen dokumentert direkte klienttilgang |
+| `fysen.schema_migrations` | 22 versjoner (`0001`–`0022`) | Mangler | **Blokkerer migrering** |
+| Påkrevde utvidelser (postgis/pgcrypto/pg_trgm) | 3/3 | 3/3 | Bekreftet |
+
+Normaliserte, sorterte `pg_catalog`-fingeravtrykk, eksklusive registeret, stemmer eksakt mellom de to prosjektene:
+
+- Tabeller og RLS-status: `deba6eaddf22639ce0312a285610dd57`.
+- Kolonner, typer, NOT NULL, defaults: `b945d55ab1eac2f7c829f335b9ab1ffe`.
+- Constraint-navn, typer og definisjoner: `b009aded5216f37192c19f3885ca4e45`.
+
+Den eksakte listebaserte sammenligningen av `pg_catalog.pg_indexes` fant **85 felles indekser med identisk `indexdef`** og ingen med samme navn og ulik definisjon.
+
+**Kun i originalen:**
+
+- `menu_changes_current_snapshot_id_idx`
+- `menu_changes_previous_snapshot_id_idx`
+- `menu_watch_runs_snapshot_id_idx`
+
+**Kun i recovery:**
+
+- `menu_changes_added_date_idx`
+- `menu_changes_added_source_key_idx`
+
+Originalen har i tillegg `schema_migrations_pkey` på sin egen migrasjonstabell. De to recovery-indeksene samsvarer navnemessig med repoets `0023_recent_menu_additions.sql`, som ikke er registrert som kjørt i originalen. **Indeksnavn alene beviser ikke** hvilke historiske migrasjoner som faktisk ble brukt til å bygge recovery. Ikke kopier 22 ledger-rader, og ikke stemple `0023`, uten etterprøvbar isolert rekonstruksjon.
+
+**Viktig grense for beviset:** Identisk skjemakatalog er *ikke* identiske rader, søkehistorikk, FK-koblinger eller autentiserings-/tilgangsatferd. De dokumenterte menypost- og loggvolumene er fortsatt ulike. Ingen fullstendig originalhistorikk er gjenopprettet i recovery ved denne kontrollen.
+
+### Neste isolerte beslutningsport
+
+1. Bevar begge live prosjekter uendret. Etabler en disponibel PostgreSQL 17 + PostGIS-prøve, uten prod-credentials. Bygg en ren referansestruktur med repoets `0001`–`0023` og kontroller eksakte `pg_catalog`-objekter (inkl. indekser og migrasjonsregister) mot den observerte recovery-strukturen.
+2. Verifiser separat at privat, komplett og **SHA-256-kontrollert** backup omfatter data utenfor menyarkivet: søkehendelser, søkeresultatreferanser, kildemetadata, åpningstider, menykontroller, restaurantkrav og autorisasjons-/revisjonshistorikk. Bevar opprinnelige nøkler; ikke importer persondata til CI-artifakter eller logger.
+3. Gjør kun isolert ledger-rekonstruksjon dersom hele objektlisten passer, test alle fremmednøkler og en reversibel restore. Valider søkereferansene som tidligere mistet 5 150 direkte koblinger ved prøvebeskjæring. **Ingen reparasjonskommando mot live recovery.**
+4. Før eventuell produksjonsavgjørelse: kontroller organisasjonens faktiske Free-/Fair Use-status, private RLS/grants, appens autentiserte skriverettighet, og separat godkjent rollback. Behold `PR #1241` som utkast.
+
+
+## Dokumentert migrasjonspassasje 20. november – 23/23 SQL-filer identiske
+
+**Status: SQL-opphav bekreftet, live ledger-backfill fortsatt sperret.** En ny, read-only kontroll sammenlignet **alle 23** rader i recovery-prosjektets `supabase_migrations.schema_migrations` direkte med `packages/database/migrations/0001_...sql` til og med `0023_recent_menu_additions.sql` fra Fysen commit `b3b94072a4ff49ea613f7dc235eeabea55a111af`. For hver registrering ble `statements[1]` hentet ut og sammenlignet med den eksakte UTF-8-filen fra GitHub. **23/23 var tegn-for-tegn identiske; ingen normalisering eller omtolkning ble nødvendig.** Hver registrering inneholder ett SQL-statement-felt. Ingen private tabellrader ble hentet eller eksportert.
+
+| Kontroll | Verifisert resultat |
+|---|---|
+| Recovery: Supabase-migrasjonshistorikk | 23 rader navngitt `fysen_recovery_0001_...` til `0023_...` |
+| Lagret SQL mot repoets tilsvarende migrasjonsfil | **23/23 eksakt lik**, ingen avvik |
+| Original: Supabase-migrasjonshistorikk | Egen enkeltstående registrering for indekser fra 2. november |
+| Original: `fysen.schema_migrations` | 22 applikasjonsmigrasjoner til og med `0022` |
+| Recovery: `fysen.schema_migrations` | **Mangler**, selv om Supabases register er komplett |
+| Isolert PostgreSQL 17/PostGIS på Fysen commit `b3b9407` | GitHub CI database-jobb bestått: migrasjoner, `verify:production`, integrasjonstester ([run 44759966802](https://github.com/Paradispartiet/fysen/actions/runs/44759966802)) |
+
+**Tolkning:** Recovery ble registrert med *akkurat de samme migrasjons-SQL-filene* som finnes i Fysens repo på denne commiten. Det er sterkt bevis for migrasjonenes proveniens, men ikke alene bevis for at alle SQL-effekter, data, indekser, endringer etter migrering, private tilganger eller historiske nøkler samsvarer. `fysen.schema_migrations` må ikke opprettes eller stemples i den levende recovery-instansen ut fra dette beviset alene.
+
+**Alle fem observerte indeksavvik er nå sporet til konkrete SQL-filer (read-only, 20.11):**
+
+- **Tre indekser kun i originalen** — `menu_changes_current_snapshot_id_idx`, `menu_changes_previous_snapshot_id_idx` og `menu_watch_runs_snapshot_id_idx` — kommer ordrett fra originalens `supabase_migrations`-registrering `20261102213125 / fysen_retention_fk_indexes_20261102`. Indeksdefinisjonene i `pg_catalog` viser de samme tre kolonnene.
+- **To indekser kun i recovery** — `menu_changes_added_date_idx` og `menu_changes_added_source_key_idx` — kommer fra repoets `0023_recent_menu_additions.sql` og er også bekreftet i recovery-katalogen med korrekt kolonneliste og partial-index-predikat.
+
+Dermed er de **kjente fem indeksforskjellene forklart av dokumenterte migrasjonsforløp**. Dette fritar ikke fra å sammenligne hele katalogen i isolasjon, og tillater ikke sletting/oppretting av noen av indeksene i live prosjekt.
+
+**Kontroll av historiske radantall, 20.11.2026 (aggregater, kun SELECT):** 25 viktige applikasjonstabeller ble telt separat i originalen og recovery. Av disse hadde **12 ulike radantall**, mens 13 hadde samme radantall; likt antall er ikke bevis på identiske rader eller nøkler. Recovery mangler fortsatt følgende registrerte historikk, uten at tabellene ble endret:
+
+| Tabell | Original | Recovery |
+|---|---:|---:|
+| `menu_changes` | 54 472 | 0 |
+| `menu_watch_runs` | 111 963 | 0 |
+| `search_events` | **1 333** | 0 |
+| `search_result_impressions` | 7 261 | 0 |
+| `conversion_events` | 1 | 0 |
+| `menu_source_support_origins` | 14 | 0 |
+| `restaurant_actions` | 41 | 0 |
+| `restaurant_action_verification_runs` | 213 | 0 |
+| `restaurant_hours_sources` | 41 | 0 |
+| `restaurant_hours_snapshots` | 108 | 0 |
+| `restaurant_hours_intervals` | 729 | 0 |
+| `restaurant_hours_watch_runs` | 12 111 | 0 |
+
+Søkehendelsene har økt fra 1 327 (forrige måling 18.11) til 1 333. Det er derfor utilstrekkelig å stole bare på historisk backup fra 2. november eller en eldre eksport ved en eventuell senere overgang. **Fullstendig, privat backup med verifisert restore og siste differanseuttak for alle 29 tabeller er fortsatt en hard sperre.** Ingen private raddata, identifikatorer eller nøkler ble hentet ut i denne kontrollen.
+
+## Historisk restore og nyere data – kontrollert 20. november 2026
+
+**Bevisene gjelder ulike deler av gjenopprettingen.** Den isolerte ledger-rekonstruksjonen i [GitHub Actions #44773853449](https://github.com/Paradispartiet/fysen/actions/runs/44773853449) er **bestått på databasejobben**: 23 versjoner, 29 applikasjonstabeller, 297 kolonner, 209 begrensninger og 87 indekser gir identiske metadata-fingeravtrykk mot recovery. Testen avviser manglende indeks før rekonstruksjon og bekrefter at neste migrasjonskjøring anvender null migrasjoner. **Hele CI-kjøringen er ikke grønn** på grunn av en separat, eksisterende webtest om matfiltrering. Ingenting av dette er bevis for kopierte private rader.
+
+**Historisk sikkerhetskopi fra 2. november:**
+- [Eksport #41507713036](https://github.com/Paradispartiet/fysen/actions/runs/41507713036) bestod, og [isolert restore #41510938739](https://github.com/Paradispartiet/fysen/actions/runs/41510938739) bestod SHA-256 samt eksakt kontroll av **6 tabeller**: 1 116 restauranter, 1 154 menykilder, 40 707 menykopier, 1 997 348 menyposter, 100 172 menyendringer og 111 963 menykontroller. Dette var aldri en fullbackup av hele Fysen.
+- [Isolert tredagersprøve #43174708909](https://github.com/Paradispartiet/fysen/actions/runs/43174708909) kontrollerte begge de eldre GitHub-artifaktene med SHA-256 og gjenopprettet også separat søkeresultatreferansearkiv; 5 150 hypotetisk fjernede koblinger ble kartlagt i isolasjon. **Ingen sletting i originalen.**
+- Metadata per 20. november viser at originalt historikkartefakt (276 273 531 byte) utløper **2. desember 2026 kl. 19:13 UTC**, og søkeresultatreferansearkivet (472 204 byte) utløper **2. desember kl. 20:22 UTC**. De må ikke være eneste langtidskopi. Repoet er offentlig; ikke opprett nye ukrypterte artifakter som inneholder bruker-/restaurant-/søkelogger.
+- Den tidligere dokumenterte private Google Drive-kopien i fire deler har **ikke** kunnet leses, kontrolleres eller gjenopprettes fra den tilgjengelige tilgangen nå. Tidligere SHA-256-bevis og nåværende bevaring i Drive er to forskjellige attestasjoner.
+
+**Ny read-only vurdering av live original (aggregater, ingen private rader):**
+- Per 20. november: **1 335 søkehendelser**, hvorav **69 er opprettet etter 2. november kl. 19:12:03 UTC** (tidspunktet da historisk eksport startet). Maks `created_at` for søkehendelsene: 20. november kl. 16:26 UTC. Disse finnes ikke i seks-tabellsbackupen, og må tas med i en ny privat, verifisert backup.
+- **7 261 søkevisninger** i originalen: 5 595 med `menu_item_id` og 1 666 uten. 0 nyopprettede søkeresultatreferanser etter historikkeksportens start ifølge `created_at`. De gamle 5 150 hypotetiske tapene fra prøvemodellen er **ikke** en beskrivelse av dagens produksjonskoblinger. Beskytt både gamle ID-er og gjeldende relasjoner.
+- Ingen nye `created_at`-rader etter samme cutoff i `menu_changes`, `menu_watch_runs`, `conversion_events`, `restaurant_actions` og `restaurant_hours_watch_runs`; heller ingen nyere `updated_at` i `restaurants`, `menu_sources`, `restaurant_actions`, `restaurant_hours_sources`, `dish_concepts` eller `menu_source_support_origins` ved denne kontrollen. Dette **utelukker ikke** endringer i andre tabeller, slettinger, inkrementelle oppdateringer eller endringer uten korrekte tidsstempler.
+- Originalens `menu_changes` er nå 54 472, mot 100 172 i snapshotet fra 2. november; eldre backup kan inneholde data som senere er borte fra live original. **Ikke erstatt historisk arkiv med en fersk eksport** – bevar begge og sammenlign primærnøkler/fremmednøkler i en privat restore.
+
+**Eksplisitt gjenstående backup-port:** Verifiser fire private Drive-deler med tilhørende SHA-256, restore alle seks historiske tabeller + søkekoblingsarkiv, og sikre en **ny kryptert privat fullbackup av samtlige 29 applikasjonstabeller** og relevante auth-/konfigurasjonsavhengigheter. Kjør en full restore-test med antalls-, referanse- og kontrollsumbevis i isolasjon. Påse at kildebeviset dekker endringer helt frem til avtalt frysetidspunkt, inkludert 69+ nye søkehendelser, uten å publisere persondata i CI-logger, GitHub-artifakter eller PR. Sjekk også faktisk lagringskvote, autentiserte skriverettigheter og rollback før noen produksjonsendring.
+
+**Fortsatt HOLD:** Ingen live backup-eksport med hemmeligheter, dataoverføring, Supabase-ledger-backfill, merge/deploy, oppgradering eller endring av brukerrettigheter er utført i denne kontrollen.
+
+**Presis neste port:**
+1. Sammenlign `pg_catalog` fra en ren, isolert 23-migrasjonsdatabase og recovery, med forklaring for alle avvik (inkludert forskjeller i indekser, extension-skjema og appens ledger); test en *kun lokal* ledger-rekonstruksjon og avvis gjenkjøring av gamle datamigrasjoner.
+2. Verifiser komplette, private SHA-256-kontrollerte backup- og restorebevis for alle historikk-/brukertabeller, uten eksport av persondata til CI-logger eller offentlige artefakter.
+3. Verifiser at kvote, skrivekapasitet, private tillatelser og rollback er sikre før noen separat godkjent produksjonsbeslutning.
+
+**Uendret HOLD:** Ingen live SQL-skriving, ledger-stempling, produksjons-merge, tilkoblingsbytte, kostnad eller deploy. PR #1241 forblir Draft.
+
+## Verifisert status 18. november 2026
+
+Den isolerte prøven ble gjentatt med de verifiserte meny- og søkekopiene fra 2. november. Kompaktdataene ble importert i PostgreSQL 17 med PostGIS etter alle 23 Fysen-migrasjonene. De 30 applikasjonstabellene, 151 408 menypostene og den private koblingstabellen for 5 150 gamle søketreff tok **180 221 619 byte**. Ingen direkte søkereferanser pekte til manglende menyposter, og alle 39 databaseintegrasjonstestene bestod. Lokale testdata og søkereferanser ligger utenfor repositoryet.
+
+| Kontroll | Original Supabase | Gjenopprettingsprosjekt |
+|---|---:|---:|
+| Fysisk databasestørrelse | 1 667 296 403 byte | 62 543 539 byte |
+| Restauranter / menykilder | 1 116 / 1 154 | 1 116 / 1 154 |
+| Menyposter / menyversjoner | 1 709 517 / 34 447 | 42 000 / 3 096 |
+| Menyendringer / menykontroller | 54 472 / 111 963 | 0 / 0 |
+| Søkehendelser / søketreff | 1 327 / 7 261 | 0 / 0 |
+| Åpningstidsintervaller / -kontroller | 729 / 12 111 | 0 / 0 |
+| Restaurantlenker / lenkekontroller | 41 / 213 | 0 / 0 |
+| Registrerte brukere i Supabase Auth / Storage-objekter | 0 / 0 | 0 / 0 |
+
+Gjenopprettingsprosjektet dekker alle 983 aktive menykilder med minst én menypost. En skriveprøve på én rad bestod og ble rullet tilbake. I begge prosjekter mangler `anon` og `authenticated` tilgang til Fysen-skjemaet og tabellene. Gjenopprettingsprosjektet mangler migrasjonsregisteret selv om de fleste appskjemaobjektene finnes.
+
+### Overgang til den kompakte databasen
+
+1. **Ta en oppdatert, privat eksport.** Behold det verifiserte historiearkivet fra 2. november. Ta med tabellene som lå utenfor den første kompakte eksporten, inkludert åpningstider, restaurantlenker og støtteopphav for menykilder. Disse og øvrige applikasjonstabeller utenfor den første meny- og søkekopien utgjorde samlet ca. 5,5 MB i originalen. Fang også nye søke- og konverteringshendelser. Det var 61 søkehendelser etter sikkerhetskopien ved kontrollen 18. november. Ta et siste differanseuttrekk ved en eventuell overgang, siden originalen fortsatt får søkehendelser.
+2. **Verifiser deretter en komplett kandidat.** Bygg databaseskjemaet via Fysens migrasjoner og last inn de verifiserte dataene med opprinnelige nøkler. Kontroller eksakte antall, kildedatoer og søkekoblinger. Oppdater et avgrenset utvalg menykilder i testdatabasen og test søk, åpningstider og restaurantlenker gjennom API-et. Arkivsøk holdes tilgjengelig under prøven; begge Supabase-prosjektene hadde siste menyversjon fra 2. november.
+3. **Kontroller gratiskvoten før et fullt innlastings- eller produksjonsløp.** Begge prosjektene ligger i samme Free-organisasjon. Originalen alene overstiger 500 MB. Supabase måler også gjennomsnittlig bruk gjennom fakturaperioden, så en mindre aktiv database gir først grunnlag for ny verifisering etter at målt bruk har falt. Gjenopprettingsskrivingen på én rad dokumenterer nåværende SQL-tilgang, mens organisasjonens framtidige kapasitet avhenger av kvoten. Se [Supabase sin forklaring av Fair Use](https://supabase.com/docs/guides/platform/database-size#fair-use-database-size-restriction).
+4. **Gjør en reverserbar produksjonsovergang etter godkjent kvote og verifisert eksport.** Pek API-et og GitHub-jobbene mot samme godkjente database. Kjør tilkoblingskontroll, en manuell menyoppdatering og offentlig søkebevis før planlagte jobber aktiveres. Behold den tidligere tilkoblingskonfigurasjonen for tilbakeføring. Avgjørelse om plassering eller avvikling av originalprosjektet tas separat, etter at den private eksporten er verifisert gjenopprettbar.
+
 ---
 
 ## Release- og kvalitetsporter
@@ -100,3 +241,60 @@ Kjøringen rapporterte også 163 589 267 byte i den første størrelsesspørring
 - [Supabase størrelse, disk og Fair Use](https://supabase.com/docs/guides/platform/database-size)
 
 Dokumentstatus: Gratisdrift valgt. Destruktiv opprydding, databaseoverføring, restart av stoppet full-disk original eller abonnement er **ikke godkjent**.
+
+## Komplett 29-tabells backup-inventar – 20. november 2026
+
+**Read-only, eksakte antall fra én SQL-SELECT-setning per prosjekt**, ikke en transaksjonelt frosset felles backup eller bevis på radparitet. Begge prosjekter ble lest i samme kontrollrunde 20.11.2026. Ingen private ID-er, innhold, e-post, tokens eller søkerader ble hentet. Tall kan fort endres.
+
+| Applikasjonstabell | Original | Recovery |
+|---|---:|---:|
+| `fysen.aha_analysis_handoffs` | 0 | 0 |
+| `fysen.aha_consumer_audit_log` | 0 | 0 |
+| `fysen.aha_consumer_sessions` | 0 | 0 |
+| `fysen.conversion_events` | 1 | 0 |
+| `fysen.dish_aliases` | 7 | 7 |
+| `fysen.dish_concepts` | 3 | 3 |
+| `fysen.menu_changes` | 54 472 | 0 |
+| `fysen.menu_items` | 1 709 517 | 42 000 |
+| `fysen.menu_snapshots` | 34 447 | 3 096 |
+| `fysen.menu_source_support_origins` | 14 | 0 |
+| `fysen.menu_sources` | 1 154 | 1 154 |
+| `fysen.menu_watch_runs` | 111 963 | 0 |
+| `fysen.min_mat_items` | 0 | 0 |
+| `fysen.restaurant_access_grants` | 0 | 0 |
+| `fysen.restaurant_action_verification_runs` | 213 | 0 |
+| `fysen.restaurant_actions` | 41 | 0 |
+| `fysen.restaurant_claim_audit_log` | 0 | 0 |
+| `fysen.restaurant_claims` | 0 | 0 |
+| `fysen.restaurant_hours_intervals` | 729 | 0 |
+| `fysen.restaurant_hours_snapshots` | 108 | 0 |
+| `fysen.restaurant_hours_sources` | 41 | 0 |
+| `fysen.restaurant_hours_watch_runs` | 12 111 | 0 |
+| `fysen.restaurant_owned_profiles` | 0 | 0 |
+| `fysen.restaurant_pro_access_audit_log` | 0 | 0 |
+| `fysen.restaurant_pro_sessions` | 0 | 0 |
+| `fysen.restaurant_pro_setup_tokens` | 0 | 0 |
+| `fysen.restaurants` | 1 116 | 1 116 |
+| `fysen.search_events` | 1 335 | 0 |
+| `fysen.search_result_impressions` | 7 261 | 0 |
+| **Sum (29 tabeller)** | **1 934 533** | **47 376** |
+
+**14 tabeller har ulikt antall:** 12 har rader i originalen og null i recovery, og `menu_items`/`menu_snapshots` finnes med langt færre rader i recovery. **15 tabeller har likt antall**, men dette sier ikke at primærnøkler, innhold, rettigheter eller FK-relasjoner er like. Å summere radantall på tvers av relaterte tabeller betyr ikke at 1,89 millioner unike objekter må kopieres til recovery. Offentlig arkiv kan fortsatt betjene store deler av menyinnholdet uten å legge all historikk i Free-databasen.
+
+**Databasestørrelse og modus, direkte Supabase-kontroll:** Original `pg_database_size()` = **1 667 312 787 byte** (~1,67 GB), recovery = **62 559 923 byte** (~62,6 MB). Begge prosjektstatuser `ACTIVE_HEALTHY` og begge viste `transaction_read_only = off`, `default_transaction_read_only = off` på kontrollsesjonen; Supabase-organisasjonen står på **Free**. Dette **beviser ikke** fungerende app-skriving, opphevet Fair Use-restriksjon eller tilgjengelig budsjett for historisk databaseimport. Supabase-dokumentasjonen per 20. november oppgir 500 MB databasekvote per Free-prosjekt, mens read-only kan være basert på diskandel og Fair Use er en egen kontroll: https://supabase.com/docs/guides/platform/database-size. Ingen betalt oppgradering er godkjent.
+
+**Eksterne avhengigheter i de undersøkte databaseobjektene:** `auth.users=0`, `auth.identities=0`, `storage.objects=0`, `storage.buckets=0` i **begge** prosjektene; `fysen` har 0 fremmednøkler til tabeller utenfor `fysen`. Disse målingene avgrenser database-restore, men utelukker ikke klienttokens, Vercel-konfigurasjon, eksterne AHA-systemer eller edge-funksjoner som avhengigheter.
+
+**Avvik mellom bevart historisk dump og originalen i dag:** Den verifiserte seks-tabellsdumpen fra 2. november har **1 997 348 `menu_items`**, **40 707 `menu_snapshots`** og **100 172 `menu_changes`**, mens dagens original har hhv. **1 709 517**, **34 447** og **54 472**. At historisk dump har flere rader er **ikke i seg selv bevis på hvilken operasjon som fjernet dem**. En lesekontroll av PostgreSQLs statistikk ga ingen pålitelig historisk årsak; sletting, restorer eller annet vedlikehold må ikke tilskrives noen uten separat evidens. **Bevar begge tidslag**; en nyere eksport må aldri erstatte eller overskrive historisk sikkerhetskopi.
+
+**Arkivkildens varighet og direkte referanse:** Den private Drive-mappen som ble dokumentert ved den opprinnelige eksporten er https://drive.google.com/drive/folders/1Ml52aXi2qr_2-smBrEXvgxGhBqgclIUW. Tidligere logg beskriver fire ZIP-deler som ble hentet tilbake, SHA-256-kontrollert og gjenopprettet; dette bekrefter kontrollen den gang, **ikke at de fire delene er til stede og tilgjengelige nå**. Google Drive er ikke tilgjengelig for direkte kontroll i denne sesjonen. GitHub-artifaktene fra 2. november har varslet utløp 2. desember og er **ikke** permanent backup.
+
+**Konkret sikker gjenopprettingsrekkefølge:**
+1. Sikre og kontroller fortsatt privat tilgang til alle fire Drive-delene; verifiser hver dels SHA-256 og dumpens originalhash (`1fd0385d2194ff6bcb80bc10cf04f577b4c970c9524a7c38a5f1382a7fefba0e`). Gjenopprett i beskyttet isolasjon, ikke i recovery.
+2. Lag en **ny kryptert full-export fra originalen av hele `fysen`-skjemaet** (alle 29 applikasjonstabeller, originalens register og tilhørende sekvens-/DDL-metadata), men **ikke** som ukryptert GitHub-artifakt, offentlig repository-fil, CI-logg eller ChatGPT-vedlegg. Backupen skal leveres direkte til kontrollert privat lagringssted. Eksportens kilde, tidspunkt og hash må dokumenteres uten private raddata.
+3. Verifiser `pg_restore --list`, full isolert restore, eksakte tabellantall, FK-integritet, versjonsregisteret og de sist registrerte søkehendelsene. En nylig observert økning fra 1 333 til **1 335** søkehendelser understreker behovet for en eksplisitt frysetids-/differansekontroll.
+4. Behold 2. november-arkivet uendret som egen historisk kilde. Test restaurering sammen med ny fullbackup og eventuelle anonymiserte eller sikkert lagrede historiske koblingsmanifester; **aldri slå sammen på grunnlag av antall alene**.
+5. Før en eventuell separat godkjent overgang: dokumenter privat tilgangsmodell, Free/Fair Use-status, apptester, gjenopprettingsmulighet og rollback. Importer ikke hele ~1,67 GB til et Free-prosjekt med 500 MB kvote.
+
+**HOLD:** Ingen dump er produsert i denne sesjonen fordi korrekt privat langtidsmål og krypterte nøkler ikke er tilgjengelige for direkte, sikker eksport. Ingen SQL-skriving, skyopplasting, offentlig artifakt, merge eller deploy.
+

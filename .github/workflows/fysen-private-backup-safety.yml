@@ -1,0 +1,36 @@
+name: Fysen private backup safety (offline)
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/fysen-private-backup-safety.yml"
+      - "docs/fysen-private-full-backup.sh"
+      - "docs/fysen-private-full-backup.test.sh"
+      - "docs/fysen-private-backup-inspect.sh"
+      - "docs/fysen-private-backup-inspect.test.sh"
+  workflow_dispatch:
+
+# No Supabase access, secrets, artifact upload, write permissions or deployment.
+permissions:
+  contents: read
+
+jobs:
+  backup-safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Syntax check
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash -n docs/fysen-private-full-backup.sh
+          bash -n docs/fysen-private-full-backup.test.sh
+          bash -n docs/fysen-private-backup-inspect.sh
+          bash -n docs/fysen-private-backup-inspect.test.sh
+      - name: Test encrypted backup guards with synthetic data only
+        shell: bash
+        run: bash docs/fysen-private-full-backup.test.sh
+      - name: Test encrypted archive inspector with synthetic data only
+        shell: bash
+        run: bash docs/fysen-private-backup-inspect.test.sh
