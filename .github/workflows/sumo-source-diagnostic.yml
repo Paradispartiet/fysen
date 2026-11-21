@@ -1,0 +1,28 @@
+name: Sumo source and recovery diagnostic
+
+on:
+  pull_request:
+    paths:
+      - "apps/menu-worker/src/sumo-source-diagnostic.ts"
+      - ".github/workflows/sumo-source-diagnostic.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare-source-to-output:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact revision
+        uses: actions/checkout@v4
+
+      - name: Set up Fysen workspace
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build menu-worker dependencies
+        run: pnpm --filter @fysen/menu-worker... build
+
+      - name: Compare five bounded first-party responses and recovery families
+        run: pnpm --filter @fysen/menu-worker exec tsx src/sumo-source-diagnostic.ts
