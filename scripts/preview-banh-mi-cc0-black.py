@@ -78,6 +78,21 @@ background_sliver=np.array([
     (640,232),(621,224),(591,218),(562,224),(530,219)
 ],dtype=np.int32)
 cv2.fillPoly(foreground,[background_sliver],0)
+# Upper edge of the right bread half (hand-reviewed against the source).
+# Mask ONLY pixels above that ridge: they belong to the wicker basket/paper.
+ridge_x=np.array([515,530,550,575,600,625,650,680],dtype=np.float32)
+ridge_y=np.array([226,230,232,231,236,240,247,266],dtype=np.float32)
+for x in range(515,681):
+    cutoff=int(np.interp(x,ridge_x,ridge_y))
+    foreground[:cutoff,x]=0
+# A tiny pale wrapper fold beside the upper baguette must not appear as food.
+hsv=cv2.cvtColor(bgr,cv2.COLOR_BGR2HSV)
+paper=(hsv[:,:,1]<43)&(hsv[:,:,2]>145)
+paper[:215,:]=False
+paper[247:,:]=False
+paper[:,:511]=False
+paper[:,600:]=False
+foreground[paper]=0
 foreground=cv2.morphologyEx(foreground,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8),iterations=1)
 # Flatten tiny disconnected noise only; preserve the baguette and its herbs.
 num,lab,stats,_=cv2.connectedComponentsWithStats(foreground,8)
