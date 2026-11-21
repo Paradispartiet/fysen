@@ -1,0 +1,20 @@
+{
+  "dish_id": "dosa",
+  "gallery_id": "dosa",
+  "catalog_id": "dosa",
+  "variant": "masala dosa",
+  "source_photo_author": "Jack Baghel / Pexels",
+  "photo_page": "https://www.pexels.com/photo/food-on-plate-with-bowls-of-sauces-20422129/",
+  "photo_source_url": "https://images.pexels.com/photos/20422129/pexels-photo-20422129.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "native_width": 9504,
+  "native_height": 6336,
+  "original_sha256": "f21b2b545b16554ef593474aadeb9f761d3731b3470e26ad4b6c11e1b0f8d20c",
+  "source_verified": true,
+  "no_upscale": true,
+  "candidate_notes": "Crispy dosa with chutney, vegetable curry and sambar on dark backdrop. Verify potato filling: Pexels does not explicitly confirm it.",
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
+  "published": false,
+  "quality_gate": "Real masala dosa, confirm spiced potato filling if visible, crisp complete crepe and appropriate chutney/sambar; authentic high resolution; a single complete serving on pure black after masking, no false restaurant claim."
+}
