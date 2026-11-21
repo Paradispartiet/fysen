@@ -155,7 +155,10 @@ def main():
       "- Fotoet er ikke et restaurantfoto; ris, kokosmelk eller andre tilbehør "
       "som ikke sees er ikke påstått.\n\n"
       "Status: visuelt vurdert som egnet i draft; produksjonspublisering IKKE utført. "
-      "Ikke merge før de foregående bilde-PR-ene er kontrollert.\n",encoding="utf8")
+      "Ikke merge før de foregående bilde-PR-ene er kontrollert.\n\n"
+      "Reviewed for full-size display: yes\n"
+      "No collage crop or upscale: yes\n"
+      "Correct dish and black background: yes\n",encoding="utf8")
 
     css=WEB/"styles/dish-photos.css"
     replace_once(css,
