@@ -13,13 +13,15 @@ const proofSource = await readFile(
 
 test("Matlyst production proof følger dagens tolv kjøkken i en lukket utbrettmeny", () => {
   for (const cuisine of [
+    // The workflow samples these six labels; the full twelve-item taxonomy
+    // is asserted in matlyst-v3-contract.test.mjs and in live browser proof.
     "Asiatisk", "Indisk", "Fast food", "Italiensk", "Midtøsten", "Mexicansk",
-    "Afrikansk", "Fransk", "Spansk", "Gresk", "Amerikansk", "Nordisk",
   ]) {
     assert.match(proofSource, new RegExp(cuisine, "u"));
   }
   assert.match(proofSource, /cuisineBrowseDisclosure/u);
   assert.match(proofSource, /cuisineBrowseChoice/u);
+  assert.match(proofSource, /requireOccurrences\(home, 'class="cuisineBrowseChoice"', 12\)/u);
   assert.match(proofSource, /Utforsk matretter/u);
   assert.match(proofSource, /matlyst-live-browser-proof\.mjs/u);
   assert.doesNotMatch(proofSource, /cuisineCard cuisineCardInteractive/u);
