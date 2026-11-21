@@ -154,6 +154,10 @@ def main():
        '            Chicken katsu <span aria-hidden="true">↗</span>\n'
        '          </a>\n'
        '          <small>Chicken katsu-foto: Cohesion Singapore / Pexels, <a href="/dish-images/chicken-katsu-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>')
+    # Make screen readers describe the photo as a photograph, never an AI illustration.
+    replace_once(gallery,
+       'isGyoza ? "Redaksjonelt foto av seks pannestekte gyoza med soyadipp, ikke restaurantfoto" : isPho ?',
+       'isGyoza ? "Redaksjonelt foto av seks pannestekte gyoza med soyadipp, ikke restaurantfoto" : isChickenKatsu ? "Redaksjonelt foto av panert kyllingkatsu med ris og nori, ikke restaurantfoto" : isPho ?')
     testpath=WEB/"tests/dish-photo-gallery.test.mjs"
     ts=testpath.read_text(encoding="utf8")
     def edit(old,new,count=1):
