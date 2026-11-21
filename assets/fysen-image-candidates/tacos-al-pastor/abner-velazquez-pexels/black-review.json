@@ -1,0 +1,26 @@
+{
+  "dish_id": "tacos-al-pastor",
+  "source_original_sha256": "51994dfd3a610dad3b904ca567a007bf46cebc64746fde619a0c82c67c59acc9",
+  "source_native_dimensions": [
+    7008,
+    4672
+  ],
+  "source_page": "https://www.pexels.com/photo/delicious-tacos-al-pastor-with-fresh-garnish-34289264/",
+  "photo_credit": "Abner Velázquez / Pexels",
+  "license_url": "https://www.pexels.com/license/",
+  "review_variants": [
+    "black-contour",
+    "black-grabcut",
+    "black-clean-grabcut"
+  ],
+  "no_upscale": true,
+  "generated_food_pixels": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
+  "published": false,
+  "warning": "Ingen tydelig synlig ananas i originalfotoet; noe tallerkenkant var avskåret. Kun den visuelt gjennomgåtte black-clean-grabcut-varianten er godkjent. Øvrige forslag er ikke godkjent; ingen publisering.",
+  "reviewed_variant": "black-clean-grabcut",
+  "reviewed_preview_sha256": "18c0941a33ff6175d7241ab37d5747b6a5bedc38248369407f0069c5d4a7dadf",
+  "original_processed_sha256": "a26cd9a549f1cb01cb85a3495ea6070ebb21841d6171dd75f9eea4526e52b04b",
+  "master_avif_sha256": "dbc5a95ba7f5db13817bdd13ec74cec09be317777907a87f8f46c4f9cbb61657"
+}

@@ -1,0 +1,18 @@
+{
+  "dish_id": "tacos-al-pastor",
+  "catalog_id": "tacos-al-pastor",
+  "photo_author": "Davis Arenas / Pexels",
+  "photo_page": "https://www.pexels.com/photo/tacos-al-pastor-on-paper-plate-14006131/",
+  "photo_source_url": "https://images.pexels.com/photos/14006131/pexels-photo-14006131.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "native_width": 2102,
+  "native_height": 3552,
+  "original_sha256": "62bbe0d8db3786a23ddb9f061a74899328310df6e7e1d02e341431eaa868a754",
+  "source_verified": true,
+  "no_upscale": true,
+  "inspection_notes": "Five tacos with pineapple and coriander on patterned plate; check whether tacos are all the same filling.",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Authentic al pastor pork tacos with complete tortillas, preferably pineapple. No incorrect fillings, cut-off food, unwanted logos, plates or table after black background. Native source detail; no generated food, no upscale, no restaurant-specific implication."
+}

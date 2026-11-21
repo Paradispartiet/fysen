@@ -181,7 +181,7 @@ export function DishPhotoGallery() {
             Pizza med prosciutto <span aria-hidden="true">↗</span>
           </a>
           <small>Prosciutto-foto: Amin, <a href="/dish-images/pizza-prosciutto-LICENSE.txt" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0 (bearbeidet, kilde og lisens)</a>.</small>
-          <a href="/dish-images/pasta-carbonara-master-2600.avif" target="_blank" rel="noopener noreferrer>
+          <a href="/dish-images/pasta-carbonara-master-2600.avif" target="_blank" rel="noopener noreferrer">
             Pasta carbonara <span aria-hidden="true">↗</span>
           </a>
           <a href="/dish-images/butter-chicken-master-3000.avif" target="_blank" rel="noopener noreferrer">
@@ -223,6 +223,10 @@ export function DishPhotoGallery() {
             Falafel med hummus <span aria-hidden="true">↗</span>
           </a>
           <small>Falafel-foto: Saya P / Pexels, <a href="/dish-images/falafel-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/tacos-al-pastor-master-7008.avif" target="_blank" rel="noopener noreferrer">
+            Tacos al pastor <span aria-hidden="true">↗</span>
+          </a>
+          <small>Tacos al pastor-foto: Abner Velázquez / Pexels, <a href="/dish-images/tacos-al-pastor-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
         </nav>
       </div>
     </details>
@@ -317,6 +321,7 @@ export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: s
   const isButterChicken = index === 11;
   const isPizzaMarinara = index === 15;
   const isCacioEPepe = index === 16;
+  const isGyoza = index === 17;
   const isFalafel = index === 20;
   const isTacosAlPastor = index === 21;
   const isChanaMasala = index === 22;
