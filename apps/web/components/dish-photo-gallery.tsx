@@ -295,6 +295,10 @@ const illustratedVariants: Readonly<Record<string, string>> = {
   vada: "sprø medu vada av linser servert med sambar, kokoschutney og rød chutney",
 };
 
+export function hasDishPhotoThumbnail(dishId: string): boolean {
+  return Object.hasOwn(editorialPhotoIndex, dishId);
+}
+
 export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: string }) {
   const index = editorialPhotoIndex[dishId];
   if (index === undefined) return null;
