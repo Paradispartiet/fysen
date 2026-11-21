@@ -84,8 +84,16 @@ wrapper_polygon=np.array([
 wrapper_roi=np.zeros_like(foreground)
 cv2.fillPoly(wrapper_roi,[wrapper_polygon],255)
 # Pale, low-chroma paper only, not the tan crust or colored vegetables.
-paper=(hsv[:,:,1]<145)&(hsv[:,:,2]>139)&(wrapper_roi>0)
+paper=(hsv[:,:,1]<68)&(hsv[:,:,2]>164)&(wrapper_roi>0)
 foreground[paper]=0
+# Neutral paper beneath the right baguette's shoulder: suppress ONLY gray
+# light wrapper pixels, retaining tan crust and any green herbs.
+pocket=np.zeros_like(foreground)
+cv2.fillPoly(pocket,[np.array([
+    (499,199),(548,199),(550,236),(537,242),(514,240),(496,219)
+],dtype=np.int32)],255)
+gray_wrapper=(hsv[:,:,1]<59)&(hsv[:,:,2]>157)&(pocket>0)
+foreground[gray_wrapper]=0
 # PAPER-ONLY pocket above the left shoulder of the right baguette. This
 # region is outside the observed upper bread contour and includes no filling.
 # Select light low-texture wrapper pixels, not brown crust or green herbs.
@@ -95,22 +103,6 @@ cv2.fillPoly(paper_pocket,[np.array([
 ],dtype=np.int32)],255)
 paper_extra=(hsv[:,:,1]<169)&(hsv[:,:,2]>155)&(paper_pocket>0)
 foreground[paper_extra]=0
-# Hand-inspected paper triangle beneath the left shoulder of right bread.
-# Only desaturated gray-white wrapper pixels are discarded in this tiny area;
-# the baguette itself is golden/tan and lies to the right of this mask.
-paper_lower=np.zeros_like(foreground)
-cv2.fillPoly(paper_lower,[np.array([
-    (500,208),(546,208),(543,236),(529,245),(510,243),(497,224)
-],dtype=np.int32)],255)
-paper_missing=(hsv[:,:,1]<110)&(hsv[:,:,2]>125)&(paper_lower>0)
-foreground[paper_missing]=0
-# Sparse wicker stems across the top-right edge: the true bread crust remains
-# below this individually traced upper boundary, including both rounded ends.
-stem_x=np.array([548,565,585,607,625,650,675],dtype=np.float32)
-stem_y=np.array([216,218,220,223,226,234,246],dtype=np.float32)
-for x in range(548,676):
-    cutoff=int(np.interp(x,stem_x,stem_y))
-    foreground[:cutoff,x]=0
 # Loose wicker loops protrude visibly above the source's right bread crest.
 # This boundary is several pixels ABOVE the hand-reviewed crust; a tiny 5px
 # opening removes only filaments without straightening/cutting the loaf.
@@ -119,10 +111,10 @@ crest_y=np.array([217,220,225,236,249],dtype=np.float32)
 for x in range(597,701):
     cutoff=int(np.interp(x,crest_x,crest_y))
     foreground[:cutoff,x]=0
-upper=foreground[:233,515:706].copy()
+upper=foreground[:228,555:690].copy()
 upper=cv2.morphologyEx(upper,cv2.MORPH_OPEN,
-    cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(5,5)),iterations=1)
-foreground[:233,515:706]=upper
+    cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(7,7)),iterations=1)
+foreground[:228,555:690]=upper
 foreground=cv2.morphologyEx(foreground,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8),iterations=1)
 # Flatten tiny disconnected noise only; preserve the baguette and its herbs.
 num,lab,stats,_=cv2.connectedComponentsWithStats(foreground,8)
