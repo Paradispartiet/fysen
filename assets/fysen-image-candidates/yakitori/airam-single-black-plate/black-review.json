@@ -1,0 +1,22 @@
+{
+  "catalog_id": "yakitori",
+  "selected_source": "https://www.pexels.com/photo/30682903/",
+  "original_sha256": "2efaeafc2a0da70b73c3707950d058b2b09126fd2d1f910f29bb55abaee3a401",
+  "native_dimensions": [
+    4000,
+    5000
+  ],
+  "photo_author": "Airam Dato-on / Pexels",
+  "photo_license": "https://www.pexels.com/license/",
+  "variants": [
+    "black-contour",
+    "black-grabcut",
+    "black-clean-grabcut"
+  ],
+  "no_upscale": true,
+  "generated_food_pixels": false,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "notes": "Review a single central black plate containing two grilled Japanese yakitori skewers and lemon. Other plates in original intentionally excluded. Chicken type sourced from photo description but exact cut cannot be inferred from image. Visually check full skewer sticks, black plate rim and nonempty small preview."
+}
