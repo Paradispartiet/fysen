@@ -239,6 +239,10 @@ export function DishPhotoGallery() {
             Chicken katsu <span aria-hidden="true">↗</span>
           </a>
           <small>Chicken katsu-foto: Cohesion Singapore / Pexels, <a href="/dish-images/chicken-katsu-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/tom-yum-master-3334.avif" target="_blank" rel="noopener noreferrer">
+            Tom yum med reker <span aria-hidden="true">↗</span>
+          </a>
+          <small>Tom yum-foto: UNDO KIM / Pexels, <a href="/dish-images/tom-yum-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
         </nav>
       </div>
     </details>
