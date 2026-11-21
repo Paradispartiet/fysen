@@ -78,26 +78,43 @@ yy,xx=np.indices(foreground.shape)
 # The creamy wrapper fold is behind the RIGHT baguette (x 505-614,
 # y 183-229 in the original 1000x753 review frame).
 wrapper_polygon=np.array([
-    (501,181),(615,181),(617,206),(595,218),(564,221),
-    (535,218),(512,220),(499,207)
+    (496,180),(615,180),(618,206),(601,218),(570,222),
+    (546,229),(520,230),(500,219)
 ],dtype=np.int32)
 wrapper_roi=np.zeros_like(foreground)
 cv2.fillPoly(wrapper_roi,[wrapper_polygon],255)
 # Pale, low-chroma paper only, not the tan crust or colored vegetables.
-paper=(hsv[:,:,1]<100)&(hsv[:,:,2]>153)&(wrapper_roi>0)
+paper=(hsv[:,:,1]<78)&(hsv[:,:,2]>118)&(wrapper_roi>0)
 foreground[paper]=0
+# Neutral paper beneath the right baguette's shoulder: suppress ONLY gray
+# light wrapper pixels, retaining tan crust and any green herbs.
+pocket=np.zeros_like(foreground)
+cv2.fillPoly(pocket,[np.array([
+    (499,198),(542,198),(540,236),(530,248),(510,248),(496,219)
+],dtype=np.int32)],255)
+gray_wrapper=(hsv[:,:,1]<85)&(hsv[:,:,2]>109)&(pocket>0)
+foreground[gray_wrapper]=0
+# PAPER-ONLY pocket above the left shoulder of the right baguette. This
+# region is outside the observed upper bread contour and includes no filling.
+# Select light low-texture wrapper pixels, not brown crust or green herbs.
+paper_pocket=np.zeros_like(foreground)
+cv2.fillPoly(paper_pocket,[np.array([
+    (500,179),(568,179),(570,206),(547,219),(520,221),(498,211)
+],dtype=np.int32)],255)
+paper_extra=(hsv[:,:,1]<169)&(hsv[:,:,2]>155)&(paper_pocket>0)
+foreground[paper_extra]=0
 # Loose wicker loops protrude visibly above the source's right bread crest.
 # This boundary is several pixels ABOVE the hand-reviewed crust; a tiny 5px
 # opening removes only filaments without straightening/cutting the loaf.
 crest_x=np.array([597,622,647,674,700],dtype=np.float32)
-crest_y=np.array([207,211,217,232,249],dtype=np.float32)
+crest_y=np.array([217,220,225,236,249],dtype=np.float32)
 for x in range(597,701):
     cutoff=int(np.interp(x,crest_x,crest_y))
     foreground[:cutoff,x]=0
-upper=foreground[:233,515:706].copy()
+upper=foreground[:247,542:692].copy()
 upper=cv2.morphologyEx(upper,cv2.MORPH_OPEN,
-    cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(5,5)),iterations=1)
-foreground[:233,515:706]=upper
+    cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(11,11)),iterations=1)
+foreground[:247,542:692]=upper
 foreground=cv2.morphologyEx(foreground,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8),iterations=1)
 # Flatten tiny disconnected noise only; preserve the baguette and its herbs.
 num,lab,stats,_=cv2.connectedComponentsWithStats(foreground,8)
