@@ -1,0 +1,75 @@
+name: Fysen integrate CC0 Banh mi native photo into draft (no deploy)
+on:
+  push:
+    branches: [art/fysen-banh-mi-clean-20261121]
+    paths:
+      - ".github/workflows/fysen-promote-banh-mi-clean.yml"
+      - "scripts/promote-reviewed-banh-mi-clean.py"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: fysen-banh-mi-draft-source-locked
+  cancel-in-progress: false
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: art/fysen-banh-mi-clean-20261121
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install pinned source-native photography libraries
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0 pillow-avif-plugin==1.5.2 numpy==2.2.6 opencv-python-headless==4.11.0.86
+      - name: Regenerate source-verified CC0 original and isolated draft image
+        run: python scripts/promote-reviewed-banh-mi-clean.py
+      - name: Run only two photo contract tests before draft commit
+        run: node --test apps/web/tests/dish-photo-gallery.test.mjs apps/web/tests/dish-image-large-view-quality.test.mjs
+      - name: Verify native image size, credit and draft-only integrity
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from hashlib import sha256
+          import json
+          from PIL import Image
+          import pillow_avif
+          root=Path("apps/web/public/dish-images")
+          manifest=json.loads((root/"manifest.json").read_text(encoding="utf8"))
+          assert len(manifest["images"])==44
+          assert sum(p.get("largeViewEnabled") is True for p in manifest["images"])==26
+          p=manifest["images"][35]
+          assert p["id"]==p["catalogId"]=="banh-mi"
+          assert p["kind"]=="Redaksjonelt rettfoto"
+          assert p["atlas"]=="banh-mi-thumb-512.avif"
+          assert p["largeSource"]=="banh-mi-master-3895.avif"
+          assert p["photoCredit"]=="Andy Li / Wikimedia Commons"
+          assert p["photoLicense"]=="https://creativecommons.org/publicdomain/zero/1.0/"
+          assert p["largeSourceOriginalSha256"]=="baa302be3c9fce99b83aa2aec105a4a234c846dac3b7963e92333b8a78d1c114"
+          assert p["largeSourceSha256"]==sha256((root/p["largeSource"]).read_bytes()).hexdigest()
+          with Image.open(root/p["largeSource"]) as i: assert i.size==(3895,3519)
+          with Image.open(root/p["atlas"]) as i: assert i.size==(512,512)
+          assert next(x for x in manifest["images"] if x["id"]=="tom-yum")["largeViewEnabled"]
+          print("26/44 source-native photo candidates only in unpublished draft")
+          PY
+      - name: Commit only Banh mi public image source, license, gallery and tests in draft
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-dish-originals/banh-mi.png
+          git add apps/web/public/dish-images/banh-mi-master-3895.avif
+          git add apps/web/public/dish-images/banh-mi-thumb-512.avif
+          git add apps/web/public/dish-images/banh-mi-LICENSE.txt
+          git add apps/web/public/dish-images/manifest.json
+          git add apps/web/styles/dish-photos.css
+          git add apps/web/components/dish-photo-gallery.tsx
+          git add apps/web/tests/dish-photo-gallery.test.mjs
+          git add apps/web/tests/dish-image-large-view-quality.test.mjs
+          git add docs/fysen-image-reviews/banh-mi.md
+          git diff --cached --quiet && exit 0
+          git commit -m "[banh-mi-photo-bot] Add CC0 native Banh mi 3895px source and 512px mini to draft"
+          git pull --rebase origin art/fysen-banh-mi-clean-20261121
+          git push origin HEAD:art/fysen-banh-mi-clean-20261121
