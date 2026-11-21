@@ -963,6 +963,6 @@ test("Integrating native photos must preserve approved Tom yum, kebab and the ga
   assert.equal(kebab.atlas, "kebab-pita-thumb-512-illustration.avif");
   assert.equal(kebab.kind, "AI-illustrasjon");
   assert.equal(kebab.largeViewEnabled, undefined);
-  assert.match(css, /dishPhotoKebabPita[^\\n]*kebab-pita-thumb-512-illustration\\.avif/u);
-  assert.match(gallery, /export function hasDishPhotoThumbnail\\(dishId: string\\): boolean/u);
+  assert.match(css, /dishPhotoKebabPita[^\n]*kebab-pita-thumb-512-illustration\.avif/u);
+  assert.match(gallery, /export function hasDishPhotoThumbnail\(dishId: string\): boolean/u);
 });
