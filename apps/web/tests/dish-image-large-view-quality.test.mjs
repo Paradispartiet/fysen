@@ -191,6 +191,23 @@ test("Editorial food photos are only large-view enabled with real provenance and
       const notice = readFileSync(path.join(imageRoot, "cacio-e-pepe-LICENSE.txt"), "utf8");
       assert.match(notice, /Foto: DC \(DocteurCosmos\)/u);
       assert.match(notice, /CC BY-SA 3\.0/u);
+    } else if (photo.id === "bibimbap") {
+      assert.equal(photo.catalogId, null);
+      assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
+      assert.match(photo.photoCredit, /Andy Li.*CC0 1\.0/u);
+      assert.equal(photo.photoLicense, "https://creativecommons.org/publicdomain/zero/1.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/bibimbap-LICENSE.txt");
+      const notice=readFileSync(path.join(imageRoot, "bibimbap-LICENSE.txt"), "utf8");
+      assert.match(notice, /Fotograf: Andy Li/u);
+      assert.match(notice, /CC0 1\.0/u);
+    } else if (photo.id === "falafel") {
+      assert.equal(photo.catalogId,"falafel");
+      assert.equal(photo.photoLicense,"https://www.pexels.com/license/");
+      assert.equal(photo.photoLicenseNotice,"/dish-images/falafel-LICENSE.txt");
+      assert.match(photo.photoCredit,/Saya P.*Pexels/u);
+      const notice=readFileSync(path.join(imageRoot,"falafel-LICENSE.txt"),"utf8");
+      assert.match(notice,/Fotograf: Saya P/u);
+      assert.match(notice,/Pexels License/u);
     } else if (photo.id === "pizza-prosciutto") {
       assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
       assert.match(photo.photoCredit, /Amin.*CC BY-SA 4\.0/u);

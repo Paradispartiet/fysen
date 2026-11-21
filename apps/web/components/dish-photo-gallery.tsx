@@ -215,6 +215,14 @@ export function DishPhotoGallery() {
             Phở bò <span aria-hidden="true">↗</span>
           </a>
           <small>Phở bò-foto: UNDO KIM / Pexels, <a href="/dish-images/pho-bo-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/bibimbap-master-8160.avif" target="_blank" rel="noopener noreferrer">
+            Bibimbap med storfekjøtt <span aria-hidden="true">↗</span>
+          </a>
+          <small>Bibimbap-foto: Andy Li / Wikimedia Commons, <a href="/dish-images/bibimbap-LICENSE.txt" target="_blank" rel="noopener noreferrer">CC0 1.0, kilde</a>.</small>
+          <a href="/dish-images/falafel-master-4284.avif" target="_blank" rel="noopener noreferrer">
+            Falafel med hummus <span aria-hidden="true">↗</span>
+          </a>
+          <small>Falafel-foto: Saya P / Pexels, <a href="/dish-images/falafel-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
           <a href="/dish-images/tom-yum-master-3334.avif" target="_blank" rel="noopener noreferrer">
             Tom yum med reker <span aria-hidden="true">↗</span>
           </a>
