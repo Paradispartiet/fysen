@@ -1,0 +1,19 @@
+{
+  "dish_id": "chana-masala",
+  "source_original_sha256": "3acb2c0e55258b84b83ea37488282bd67b873f710b4afdff5b0a1d39afabf7ca",
+  "native_width": 3814,
+  "native_height": 3024,
+  "photo_author": "Muhammad Khawar Nazir / Pexels",
+  "photo_page": "https://www.pexels.com/photo/9287039/",
+  "license_url": "https://www.pexels.com/license/",
+  "no_upscale": true,
+  "generated_food_pixels": false,
+  "variants": [
+    "black-contour",
+    "black-grabcut"
+  ],
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "warning": "Curry is golden yellow, not red; upper bowl edge appears partly close to source photo frame. Verify visible bowl rim and absence of cloth before final approval."
+}
