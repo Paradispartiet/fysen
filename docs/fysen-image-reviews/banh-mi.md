@@ -14,3 +14,7 @@ No collage crop or upscale: yes
 Correct dish and black background: yes
 
 MERGE/PRODUKSJON: HOLD. Bildet er bare integrert i utkast-PR. Alle CI- og mobilkontroller, samt visuell sluttgodkjenning, må være fullført før publisering.
+
+## Sluttkontroll på faktisk bildecommit
+
+Det kildeverifiserte bildet er nå integrert i draft-PR #1293, med 26/44 native AVIF-storbilder i denne grenen og Tom yum bevart. Integreringsjobben bestod de målrettede fotokontraktene før filene ble committet. GitHubs separate full-CI og mobil-/iPad-test må nå gjennomføres mot den nye bildecommiten. Produksjon og merge er fortsatt blokkert. Det er fortsatt en liten visuell restvurdering av emballasjekanten øverst til høyre; dette må ikke fremstilles som godkjent før sluttkontroll.
