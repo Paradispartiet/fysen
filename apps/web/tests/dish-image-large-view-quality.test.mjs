@@ -224,6 +224,14 @@ test("Editorial food photos are only large-view enabled with real provenance and
       const notice=readFileSync(path.join(imageRoot,"chana-masala-LICENSE.txt"),"utf8");
       assert.match(notice,/Fotograf: Muhammad Khawar Nazir/u);
       assert.match(notice,/Pexels License/u);
+    } else if (photo.id === "green-curry") {
+      assert.equal(photo.catalogId,"green-curry");
+      assert.equal(photo.photoLicense,"https://www.pexels.com/license/");
+      assert.equal(photo.photoLicenseNotice,"/dish-images/green-curry-LICENSE.txt");
+      assert.match(photo.photoCredit,/Max Griss.*Pexels/u);
+      const notice=readFileSync(path.join(imageRoot,"green-curry-LICENSE.txt"),"utf8");
+      assert.match(notice,/Fotograf: Max Griss/u);
+      assert.match(notice,/Pexels License/u);
     } else if (photo.id === "falafel") {
       assert.equal(photo.catalogId,"falafel");
       assert.equal(photo.photoLicense,"https://www.pexels.com/license/");
