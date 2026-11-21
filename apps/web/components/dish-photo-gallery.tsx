@@ -181,7 +181,7 @@ export function DishPhotoGallery() {
             Pizza med prosciutto <span aria-hidden="true">↗</span>
           </a>
           <small>Prosciutto-foto: Amin, <a href="/dish-images/pizza-prosciutto-LICENSE.txt" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0 (bearbeidet, kilde og lisens)</a>.</small>
-          <a href="/dish-images/pasta-carbonara-master-2600.avif" target="_blank" rel="noopener noreferrer>
+          <a href="/dish-images/pasta-carbonara-master-2600.avif" target="_blank" rel="noopener noreferrer">
             Pasta carbonara <span aria-hidden="true">↗</span>
           </a>
           <a href="/dish-images/butter-chicken-master-3000.avif" target="_blank" rel="noopener noreferrer">
