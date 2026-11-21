@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageOps
 
 DISH = "mapo-tofu"
 SOURCE = "https://commons.wikimedia.org/wiki/File:Chen_Mapo_Tofu.jpg"
-DOWNLOAD = "https://upload.wikimedia.org/wikipedia/commons/8/88/Chen_Mapo_Tofu.jpg"
+DOWNLOAD = "https://upload.wikimedia.org/wikipedia/commons/8/88/Chen_Mapo_Tofu.jpg?utm_campaign=index&utm_content=original&utm_source=commons.wikimedia.org"
 SOURCE_SHA = "988dbc1f8a9daf2f27304fcb401249e461f4badc8affb484f2722e80baea1f52"
 LICENSE = "https://creativecommons.org/licenses/by-sa/4.0/"
 CREDIT = "ZhengZhou / Wikimedia Commons · CC BY-SA 4.0"
