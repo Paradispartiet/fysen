@@ -96,7 +96,7 @@ test("Matlyst gallery is closed by default and shows all approved images only on
 
 test("Matlyst gallery uses compact side thumbnails across desktop, iPad and phone", () => {
   assert.match(css, /dishPhotosCover/u);
-  assert.match(css, /tom-yum-512\.avif/u);
+  assert.match(css, /tom-yum-thumb-512\.avif/u);
   assert.match(css, /\.dishPhotos \.dishPhotoCard \.dishPhotoThumb/u);
   assert.match(css, /grid-template-columns:\s*68px\s+minmax\(0,\s*1fr\)/u);
   assert.match(css, /grid-row:\s*1\s*\/\s*span\s*2/u);

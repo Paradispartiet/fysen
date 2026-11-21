@@ -152,7 +152,7 @@
   width: 132px;
   height: 132px;
   justify-self: end;
-  background: #000 url("/dish-images/tom-yum-512.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/tom-yum-thumb-512.avif") center / contain no-repeat;
   border-radius: 16px;
 }
 .dishPhotosInside {
