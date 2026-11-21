@@ -26,10 +26,10 @@ const isKebabPitaImage = readFileSync(path.join(web, "public/dish-images/kebab-p
 const whiteFishImage = readFileSync(path.join(web, "public/dish-images/stekt-hvit-fisk-thumb-512.avif"));
 const bibimbapImage = readFileSync(path.join(web, "public/dish-images/bibimbap-768.avif"));
 const tacosAlPastorImage = readFileSync(path.join(web, "public/dish-images/tacos-al-pastor-768.avif"));
-const gyozaImage = readFileSync(path.join(web, "public/dish-images/gyoza-768.avif"));
+const gyozaImage = readFileSync(path.join(web, "public/dish-images/gyoza-thumb-512.avif"));
 const marinaraImage = readFileSync(path.join(web, "public/dish-images/pizza-marinara-thumb-512.avif"));
 const falafelImage = readFileSync(path.join(web, "public/dish-images/falafel-768.avif"));
-const cacioEPepeImage = readFileSync(path.join(web, "public/dish-images/cacio-e-pepe-768.avif"));
+const cacioEPepeImage = readFileSync(path.join(web, "public/dish-images/cacio-e-pepe-thumb-512.avif"));
 const chanaMasalaImage = readFileSync(path.join(web, "public/dish-images/chana-masala-768.avif"));
 const masalaDosaImage = readFileSync(path.join(web, "public/dish-images/masala-dosa-768.avif"));
 const chickenKatsuImage = readFileSync(path.join(web, "public/dish-images/chicken-katsu-768.avif"));
@@ -130,7 +130,7 @@ test("Only approved full-size dish masters can be opened separately without enla
   const approved = manifest.images.filter((image) => image.largeViewEnabled === true);
   const linkedMasters = [...gallery.matchAll(/href="\/dish-images\/([^"]+-master-\d+\.avif)"/gu)]
     .map((match) => match[1]);
-  assert.equal(approved.length, 17, "Pizza margherita, cheeseburger, grilled salmon, grilled steak, shrimp sandwich, sushi, ramen, bolognese, prosciutto, carbonara, butter chicken, shrimp pad thai, seared white fish, tiramisu, pizza marinara and phở bò and tom yum need approved full-size masters");
+  assert.equal(approved.length, 19, "Pizza margherita, cheeseburger, grilled salmon, grilled steak, shrimp sandwich, sushi, ramen, bolognese, prosciutto, carbonara, butter chicken, shrimp pad thai, seared white fish, tiramisu, pizza marinara, cacio e pepe, gyoza, phở bò and tom yum need approved full-size masters");
   assert.deepEqual(linkedMasters, approved.map((image) => image.largeSource));
   assert.match(gallery, /dishPhotosLargeLinks/u);
   assert.match(gallery, /target="_blank" rel="noopener noreferrer"/u);
@@ -180,9 +180,9 @@ test("Every generated and approved image is represented in the published Matlyst
   assert.deepEqual(manifest.images.map((entry) => entry.id), entries.map((match) => match[1]));
   for (const [index, image] of manifest.images.entries()) {
     assert.equal(image.index, index);
-    assert.equal(image.atlas, index === 0 ? "pizza-margherita-thumb-512.avif" : index === 1 ? "cheeseburger-thumb-512.avif" : index === 2 ? "grillet-laks-thumb-512.avif" : index === 3 ? "grillet-biff-thumb-512.avif" : index === 4 ? "rekesmorbrod-thumb-512.avif" : index === 5 ? "sushi-thumb-512.avif" : index === 6 ? "ramen-thumb-512.avif" : index === 7 ? "pasta-bolognese-thumb-512.avif" : index === 8 ? "pizza-prosciutto-thumb-512.avif" : index === 9 ? "kebab-pita-thumb-512-illustration.avif" : index === 10 ? "carbonara-thumb-512.avif" : index === 11 ? "butter-chicken-thumb-512.avif" : index === 12 ? "pad-thai-reker-thumb-512.avif" : index === 13 ? "stekt-hvit-fisk-thumb-512.avif" : index === 14 ? "tiramisu-thumb-512.avif" : index === 15 ? "pizza-marinara-thumb-512.avif" : index === 16 ? "cacio-e-pepe-768.avif" : index === 17 ? "gyoza-768.avif" : index === 18 ? "pho-bo-thumb-512.avif" : index === 19 ? "bibimbap-768.avif" : index === 20 ? "falafel-768.avif" : index === 21 ? "tacos-al-pastor-768.avif" : index === 22 ? "chana-masala-768.avif" : index === 23 ? "masala-dosa-768.avif" : index === 24 ? "chicken-katsu-768.avif" : index === 25 ? "yakitori-768.avif" : index === 26 ? "udon-tempura-768.avif" : index === 27 ? "bao-768.avif" : index === 28 ? "dumplings-768.avif" : index === 29 ? "mapo-tofu-768.avif" : index === 30 ? "peking-duck-768.avif" : index === 31 ? "dan-dan-noodles-768.avif" : index === 32 ? "green-curry-768.avif" : index === 33 ? "tom-yum-thumb-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-768.avif");
+    assert.equal(image.atlas, index === 0 ? "pizza-margherita-thumb-512.avif" : index === 1 ? "cheeseburger-thumb-512.avif" : index === 2 ? "grillet-laks-thumb-512.avif" : index === 3 ? "grillet-biff-thumb-512.avif" : index === 4 ? "rekesmorbrod-thumb-512.avif" : index === 5 ? "sushi-thumb-512.avif" : index === 6 ? "ramen-thumb-512.avif" : index === 7 ? "pasta-bolognese-thumb-512.avif" : index === 8 ? "pizza-prosciutto-thumb-512.avif" : index === 9 ? "kebab-pita-thumb-512-illustration.avif" : index === 10 ? "carbonara-thumb-512.avif" : index === 11 ? "butter-chicken-thumb-512.avif" : index === 12 ? "pad-thai-reker-thumb-512.avif" : index === 13 ? "stekt-hvit-fisk-thumb-512.avif" : index === 14 ? "tiramisu-thumb-512.avif" : index === 15 ? "pizza-marinara-thumb-512.avif" : index === 16 ? "cacio-e-pepe-thumb-512.avif" : index === 17 ? "gyoza-thumb-512.avif" : index === 18 ? "pho-bo-thumb-512.avif" : index === 19 ? "bibimbap-768.avif" : index === 20 ? "falafel-768.avif" : index === 21 ? "tacos-al-pastor-768.avif" : index === 22 ? "chana-masala-768.avif" : index === 23 ? "masala-dosa-768.avif" : index === 24 ? "chicken-katsu-768.avif" : index === 25 ? "yakitori-768.avif" : index === 26 ? "udon-tempura-768.avif" : index === 27 ? "bao-768.avif" : index === 28 ? "dumplings-768.avif" : index === 29 ? "mapo-tofu-768.avif" : index === 30 ? "peking-duck-768.avif" : index === 31 ? "dan-dan-noodles-768.avif" : index === 32 ? "green-curry-768.avif" : index === 33 ? "tom-yum-thumb-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-768.avif");
     assert.equal(image.surface, "Matlyst");
-    assert.equal(image.kind, [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,18,33].includes(index) ? "Redaksjonelt rettfoto" : "AI-illustrasjon");
+    assert.equal(image.kind, [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,33].includes(index) ? "Redaksjonelt rettfoto" : "AI-illustrasjon");
   }
   assert.match(explorer, /<DishPhotoGallery \/>/u);
   assert.match(gallery, /dishSearchHref\(dish\.query\)/u);
@@ -579,23 +579,31 @@ test("Four standalone dish photos preserve exact variants and suitable native th
   assert.match(gallery, /spaghetti carbonara med bacon, egg, ost og pepper/u);
 });
 
-test("Gyoza illustration is a full standalone 768px image with exact dish ID and no invented filling", () => {
+test("Gyoza is a real source-verified 4937px photo with 512px mini and no invented filling", () => {
   assert.equal(gyozaImage.toString("ascii", 4, 12), "ftypavif");
   assert.ok(gyozaImage.length > 18000);
   const ispe = gyozaImage.indexOf(Buffer.from("ispe"));
   assert.ok(ispe > 0);
-  assert.equal(gyozaImage.readUInt32BE(ispe + 8), 768);
-  assert.equal(gyozaImage.readUInt32BE(ispe + 12), 768);
+  assert.equal(gyozaImage.readUInt32BE(ispe + 8), 512);
+  assert.equal(gyozaImage.readUInt32BE(ispe + 12), 512);
   const item = manifest.images[17];
   assert.equal(item.id, "gyoza");
   assert.equal(item.catalogId, "gyoza");
-  assert.equal(item.atlas, "gyoza-768.avif");
+  assert.equal(item.atlas, "gyoza-thumb-512.avif");
+  assert.equal(item.kind, "Redaksjonelt rettfoto");
+  assert.equal(item.largeViewEnabled, true);
+  assert.equal(item.largeSource, "gyoza-master-4937.avif");
+  assert.equal(item.largeSourceNativeWidth, 4937);
+  assert.equal(item.largeSourceNativeHeight, 3662);
+  assert.match(item.photoCredit, /Lara Bellens.*Pexels/u);
+  assert.match(item.photoSource, /^https:\/\/www\.pexels\.com\/photo\//u);
+  assert.match(gallery, /href="\/dish-images\/gyoza-master-4937\.avif"/u);
   assert.match(item.variantCaution, /fyllet er ikke dokumentert/iu);
   assert.match(item.variantCaution, /ikke.*restaurantfoto/iu);
   assert.match(gallery, /isGyoza = index === 17/u);
   assert.match(gallery, /dishPhotoThumb dishPhotoGyoza/u);
   assert.ok(css.includes(".dishPhotoThumb.dishPhotoGyoza"));
-  assert.ok(css.includes("gyoza-768.avif"));
+  assert.ok(css.includes("gyoza-thumb-512.avif"));
 });
 
 test("Shrimp pad thai and tiramisu are dedicated Retina-safe gallery images with accurate variants", () => {
@@ -678,9 +686,30 @@ test("Falafel keeps its own dedicated 768px illustration", () => {
   assert.match(gallery, /falafel med kikerter/u);
 });
 
-test("Three exact editorial 768px images preserve cuisine identity and original file quality", () => {
+test("Cacio e pepe has verified 4577px native master, genuine credit, and a separate 512px thumbnail", () => {
+  const photo = manifest.images[16];
+  assert.equal(photo.id, "cacio-e-pepe");
+  assert.equal(photo.kind, "Redaksjonelt rettfoto");
+  assert.equal(photo.catalogId, "cacio-e-pepe");
+  assert.equal(photo.atlas, "cacio-e-pepe-thumb-512.avif");
+  assert.equal(photo.largeSource, "cacio-e-pepe-master-4577.avif");
+  assert.equal(photo.largeSourceNativeWidth, 4577);
+  assert.equal(photo.largeSourceNativeHeight, 2498);
+  assert.equal(photo.largeViewEnabled, true);
+  assert.match(photo.photoCredit, /DocteurCosmos.*CC BY-SA 3\.0/u);
+  assert.match(photo.photoSource, /commons\.wikimedia\.org/u);
+  assert.match(photo.variantCaution, /pecorino/u);
+  assert.match(photo.variantCaution, /ikke restaurantfoto/iu);
+  const ispe = cacioEPepeImage.indexOf(Buffer.from("ispe"));
+  assert.ok(ispe > 0);
+  assert.equal(cacioEPepeImage.readUInt32BE(ispe + 8), 512);
+  assert.equal(cacioEPepeImage.readUInt32BE(ispe + 12), 512);
+  assert.match(gallery, /href="\/dish-images\/cacio-e-pepe-master-4577\.avif"/u);
+  assert.match(css, /cacio-e-pepe-thumb-512\.avif/u);
+});
+
+test("Two exact editorial 768px images preserve cuisine identity and original file quality", () => {
   for (const { index, id, file, bytes, cssClass, keyword } of [
-    { index: 16, id: "cacio-e-pepe", file: "cacio-e-pepe-768.avif", bytes: cacioEPepeImage, cssClass: "CacioEPepe", keyword: /pecorino|ost/u },
     { index: 22, id: "chana-masala", file: "chana-masala-768.avif", bytes: chanaMasalaImage, cssClass: "ChanaMasala", keyword: /kikerter/u },
     { index: 23, id: "dosa", file: "masala-dosa-768.avif", bytes: masalaDosaImage, cssClass: "MasalaDosa", keyword: /potetfyll/u },
   ]) {
