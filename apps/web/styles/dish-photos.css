@@ -258,7 +258,7 @@
    Not photographs of a restaurant serving or proof of menu ingredients. */
 .dishPhotoThumb.dishPhotoChickenKatsu,
 .dishPhotoSmall.dishPhotoChickenKatsu {
-  background: #000 url("/dish-images/chicken-katsu-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/chicken-katsu-thumb-512.avif") center / contain no-repeat;
 }
 .dishPhotoThumb.dishPhotoYakitori,
 .dishPhotoSmall.dishPhotoYakitori {

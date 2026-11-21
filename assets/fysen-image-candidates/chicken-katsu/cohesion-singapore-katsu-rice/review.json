@@ -12,8 +12,8 @@
   "source_verified": true,
   "no_upscale": true,
   "inspection_notes": "Pexels describes chicken katsu with white rice and savory topping; verify clear chicken cutlet and completeness",
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
   "acceptance_gate": "Genuine breaded CHICKEN cutlet, not pork tonkatsu, preferably whole cutlet and complete serving with cabbage/rice and sauce, black-background source detail, no upscale or generated food; no false attribution to a Fysen restaurant."
 }
