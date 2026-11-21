@@ -61,7 +61,7 @@ clean[bound==0]=0
 pix=small.astype(np.int16)
 peak=pix.max(axis=2)
 chroma=peak-pix.min(axis=2)
-food_or_plate=((peak>=121)|((peak>=78)&(chroma>=43))).astype(np.uint8)*255
+food_or_plate=((peak>=163)|((peak>=78)&(chroma>=43))).astype(np.uint8)*255
 food_or_plate=cv2.bitwise_and(food_or_plate,clean)
 food_or_plate=cv2.morphologyEx(food_or_plate,cv2.MORPH_CLOSE,
     cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(19,19)))
