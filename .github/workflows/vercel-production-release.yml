@@ -434,10 +434,12 @@ jobs:
       (needs.prepare.outputs.web_needed == 'true' || needs.prepare.outputs.api_needed == 'true') &&
       (needs.web.result == 'success' || needs.web.result == 'skipped') &&
       (needs.api.result == 'success' || needs.api.result == 'skipped')
-    uses: ./.github/workflows/production-pilot-proof.yml
+    # Free is the supported consumer path: verify real public archive API,
+    # mobile search and archive fallback. Keep strict legacy DB/catalog
+    # materialization proof separate and manual-only.
+    uses: ./.github/workflows/verify-fysen-mobile-readonly.yml
     with:
       source_sha: ${{ needs.prepare.outputs.source_sha }}
-    secrets: inherit
 
   revenue_proof:
     needs: [prepare, web, api, proof]
@@ -447,7 +449,9 @@ jobs:
       (needs.prepare.outputs.web_needed == 'true' || needs.prepare.outputs.api_needed == 'true') &&
       (needs.web.result == 'success' || needs.web.result == 'skipped') &&
       (needs.api.result == 'success' || needs.api.result == 'skipped') &&
-      needs.proof.result == 'success'
+      needs.proof.result == 'success' &&
+      needs.prepare.outputs.api_needed == 'true'
+    # Legacy revenue validation is relevant only when the API itself changed.
     uses: ./.github/workflows/revenue-production-proof.yml
     with:
       source_sha: ${{ needs.prepare.outputs.source_sha }}
