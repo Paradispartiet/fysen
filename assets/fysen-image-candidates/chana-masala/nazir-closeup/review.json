@@ -1,0 +1,18 @@
+{
+  "dish_id": "chana-masala",
+  "catalog_id": "chana-masala",
+  "photo_author": "Muhammad Khawar Nazir / Pexels",
+  "photo_page": "https://www.pexels.com/photo/9287035/",
+  "photo_source_url": "https://images.pexels.com/photos/9287035/pexels-photo-9287035.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "native_width": 4032,
+  "native_height": 3024,
+  "original_sha256": "3fa9edf6168b791f762264a9be66b9fdfab6ca794d05b5e109346b1fcfcb73da",
+  "photographer_notes": "Chana masala closeup; bowl cropped at edges",
+  "source_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Authentic chickpeas in spiced curry, preferably intact complete serving bowl with visible rim; no backdrop, bread, unrelated servings, or synthetic food pixels after black background."
+}

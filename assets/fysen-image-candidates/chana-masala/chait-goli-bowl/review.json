@@ -1,0 +1,18 @@
+{
+  "dish_id": "chana-masala",
+  "catalog_id": "chana-masala",
+  "photo_author": "Chait Goli / Pexels",
+  "photo_page": "https://www.pexels.com/photo/4149256/",
+  "photo_source_url": "https://images.pexels.com/photos/4149256/pexels-photo-4149256.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "native_width": 4000,
+  "native_height": 5000,
+  "original_sha256": "4635f4436fc03a867fdb7211cffff33e10a37dd5a0455278dffeb3bc3e6cc0ff",
+  "photographer_notes": "Tomato-red chickpea curry with onion and parsley, closeup with bread",
+  "source_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Authentic chickpeas in spiced curry, preferably intact complete serving bowl with visible rim; no backdrop, bread, unrelated servings, or synthetic food pixels after black background."
+}
