@@ -38,6 +38,7 @@ def main():
   assert audit["source_original_sha256"]==SHA and audit["license"]=="CC BY 4.0"
   assert audit["no_upscale"] and not audit["generated_food_pixels"]
   assert not audit["approved_for_fysen"] and not audit["published"]
+  # Reviewed final full-bowl contour, complete original shrimp and full ceramic rim.
   variant="black-clean-grabcut"
   preview=C/(variant+"-preview.jpg");detail=C/(variant+"-detail-1400.jpg")
   assert preview.is_file() and detail.is_file()
