@@ -231,6 +231,10 @@ export function DishPhotoGallery() {
             Chana masala <span aria-hidden="true">↗</span>
           </a>
           <small>Chana masala-foto: Muhammad Khawar Nazir / Pexels, <a href="/dish-images/chana-masala-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/masala-dosa-master-9504.avif" target="_blank" rel="noopener noreferrer">
+            Masala dosa <span aria-hidden="true">↗</span>
+          </a>
+          <small>Masala dosa-foto: Jack Baghel / Pexels, <a href="/dish-images/masala-dosa-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
           <a href="/dish-images/tom-yum-master-3334.avif" target="_blank" rel="noopener noreferrer">
             Tom yum med reker <span aria-hidden="true">↗</span>
           </a>
@@ -299,7 +303,7 @@ const illustratedVariants: Readonly<Record<string, string>> = {
   carbonara: "spaghetti carbonara med bacon, egg, ost og pepper",
   "cacio-e-pepe": "cacio e pepe med pecorino og sort pepper",
   "chana-masala": "chana masala med kikerter og tomat",
-  dosa: "masala dosa med potetfyll, sambar og kokoschutney",
+  dosa: "dosa med potetmasala ved siden av, sambar og kokoschutney",
   "butter-chicken": "butter chicken med kyllinglår i kremet tomatsaus",
   "pizza-marinara": "pizza marinara uten ost, med tomat, hvitløk og oregano",
   falafel: "falafel med kikerter, hummus, grønnsaker og urter",
