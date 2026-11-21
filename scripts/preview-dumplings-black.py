@@ -65,7 +65,7 @@ clean=grab.copy()
 ys,xs=np.mgrid[0:sh,0:sw]
 hi=rgb.max(axis=2)
 lo=rgb.min(axis=2)
-paper_arc=(ys<217)&(xs>388)&(xs<876)&(lo>198)&((hi-lo)<33)
+paper_arc=(ys<217)&(xs>388)&(xs<876)&(lo>198)&((hi-lo)<33)&(sticks_corridor==0)
 clean[paper_arc]=0
 # Avoid disconnected background scraps without altering any original food RGB.
 n,lab,stats,_=cv2.connectedComponentsWithStats((clean>0).astype(np.uint8),8)
