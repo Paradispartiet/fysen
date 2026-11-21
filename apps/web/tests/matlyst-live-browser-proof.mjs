@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { chromium } from "playwright-core";
 import process from "node:process";
+import { URL } from "node:url";
 
 const base = (process.env.FYSEN_PUBLIC_WEB_URL || "https://fysen.vercel.app").replace(/\/$/, "");
 const expectedCuisines = [
@@ -14,8 +15,8 @@ const devices = [
 
 async function assertNoHorizontalOverflow(page, context) {
   const sizes = await page.evaluate(() => ({
-    viewport: window.innerWidth,
-    document: document.documentElement.scrollWidth,
+    viewport: globalThis.innerWidth,
+    document: globalThis.document.documentElement.scrollWidth,
   }));
   assert.ok(
     sizes.document <= sizes.viewport + 2,
@@ -39,7 +40,7 @@ try {
       assert.equal(await disclosure.getAttribute("open"), null,
         device.label + ": cuisine list must be closed by default");
       await disclosure.locator("summary").click();
-      await page.waitForFunction(() => document.querySelector("details.cuisineBrowseDisclosure")?.open === true);
+      await page.waitForFunction(() => globalThis.document.querySelector("details.cuisineBrowseDisclosure")?.open === true);
 
       const buttons = disclosure.locator(".cuisineBrowseChoice");
       assert.equal(await buttons.count(), expectedCuisines.length,
@@ -60,7 +61,7 @@ try {
 
       await dialog.getByRole("button", { name: "Lukk Asiatisk" }).click();
       await dialog.waitFor({ state: "hidden" });
-      assert.equal(await trigger.evaluate((button) => button === document.activeElement), true,
+      assert.equal(await trigger.evaluate((button) => button === globalThis.document.activeElement), true,
         device.label + ": focus not restored after closing cuisine");
 
       await trigger.click();
