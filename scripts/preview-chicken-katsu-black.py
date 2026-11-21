@@ -49,7 +49,10 @@ grab=(np.isin(classes,(cv2.GC_FGD,cv2.GC_PR_FGD))*255).astype(np.uint8)
 # ceramic beige bowl (chroma/brightness differences) and all crisp chicken.
 color=small.astype(np.int16)
 mx=color.max(axis=2);mn=color.min(axis=2)
-neutral_bright=(mn>230)&((mx-mn)<11)
+yy,xx=np.mgrid[0:sh,0:sw]
+# A pale triangular piece of studio backdrop remains above the upper-left
+# bowl rim. Restrict additional removal to that backdrop corner, not food.
+neutral_bright=(mn>185)&((mx-mn)<21)&(yy<325)&(xx<530)
 clean=grab.copy()
 clean[neutral_bright]=0
 clean=cv2.morphologyEx(clean,cv2.MORPH_CLOSE,
