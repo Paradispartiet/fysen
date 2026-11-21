@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "outputDirectory": "candidates/oslo-michelin-fyr-reproof-20260919",
+  "concurrency": 1,
+  "restaurants": [
+    {
+      "version": 1,
+      "restaurant": {
+        "slug": "fyr-bistronomi-bar-oslo",
+        "name": "FYR Bistronomi & Bar",
+        "websiteUrl": "https://www.fyrbistronomi.no/",
+        "address": "Underhaugsveien 28, 0354 Oslo",
+        "city": "Oslo",
+        "countryCode": "NO"
+      },
+      "menuSource": {
+        "url": "https://www.fyrbistronomi.no/sommermeny",
+        "sourceType": "html",
+        "fetchMode": "http",
+        "userAgent": "FysenMenuBot/0.1",
+        "checkIntervalMinutes": 720
+      },
+      "verification": {
+        "hours": {
+          "status": "unverified",
+          "checkedAt": "2026-09-19",
+          "note": "Exact-head Oslo MICHELIN coverage reproof after a generic inline HTML price recovery fix. The current first-party seasonal page uses direct rows such as title – description – price, with some prices followed by allergen metadata or /stk. Reproof the unchanged source under trailing-price-card-v19 without restaurant-specific exceptions, source substitution or floor weakening."
+        }
+      },
+      "actions": [],
+      "assertionCount": 8,
+      "forbiddenDishNames": [
+        "SNACKS",
+        "KALDE FORRETTER",
+        "VARME FORRETTER",
+        "HOVEDRETTER",
+        "DESSERT",
+        "SELSKAPSMENY",
+        "ALLERGIER"
+      ]
+    }
+  ]
+}
