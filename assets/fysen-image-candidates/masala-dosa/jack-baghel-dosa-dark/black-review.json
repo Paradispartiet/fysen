@@ -16,8 +16,12 @@
     "black-clean-grabcut",
     "black-food-isolate"
   ],
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
-  "warning": "Masala potato curry is clearly present in its OWN bowl; the image does NOT verify a potato-stuffed dosa. Do not label that filling as inside the crepe. Keep full dosa, plate, chutney and sambar. Omit cutlery and grey table."
+  "warning": "Masala potato curry is clearly present in its OWN bowl; the image does NOT verify a potato-stuffed dosa. Do not label that filling as inside the crepe. Keep full dosa, plate, chutney and sambar. Omit cutlery and grey table.",
+  "reviewed_variant": "black-food-isolate",
+  "reviewed_preview_sha256": "5b6b75a46b884499410c9e923843348e57268b4041225d5cb227e08211859437",
+  "original_processed_sha256": "ba17923e664db3a3d381fb5f82e649c0ce78fc7808e0428745a7b89708d9c453",
+  "master_avif_sha256": "01410b134d6cd8d70dd2708e154642f004c59d865e1b1a1150beedde00dba49c"
 }

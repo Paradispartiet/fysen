@@ -13,8 +13,8 @@
   "source_verified": true,
   "no_upscale": true,
   "candidate_notes": "Crispy dosa with chutney, vegetable curry and sambar on dark backdrop. Verify potato filling: Pexels does not explicitly confirm it.",
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
   "quality_gate": "Real masala dosa, confirm spiced potato filling if visible, crisp complete crepe and appropriate chutney/sambar; authentic high resolution; a single complete serving on pure black after masking, no false restaurant claim."
 }

@@ -231,6 +231,10 @@ export function DishPhotoGallery() {
             Chana masala <span aria-hidden="true">↗</span>
           </a>
           <small>Chana masala-foto: Muhammad Khawar Nazir / Pexels, <a href="/dish-images/chana-masala-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/masala-dosa-master-9504.avif" target="_blank" rel="noopener noreferrer">
+            Masala dosa <span aria-hidden="true">↗</span>
+          </a>
+          <small>Masala dosa-foto: Jack Baghel / Pexels, <a href="/dish-images/masala-dosa-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
         </nav>
       </div>
     </details>
