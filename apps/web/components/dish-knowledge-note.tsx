@@ -7,15 +7,17 @@ import {
   type FoodKnowledgeDish,
 } from "../content/food-knowledge";
 import { DishKnowledgeDialog } from "./dish-knowledge-dialog";
+import { DishPhotoThumbnail, hasDishPhotoThumbnail } from "./dish-photo-gallery";
 
 type DishKnowledge = {
   readonly name: string;
   readonly origin: string;
-  readonly summary: string;
+  readonly summary: string | null;
   readonly dish: FoodKnowledgeDish | null;
+  readonly imageDishId: string | null;
 };
 
-const legacyKnowledge: Readonly<Record<string, Omit<DishKnowledge, "dish">>> = {
+const legacyKnowledge: Readonly<Record<string, Omit<DishKnowledge, "dish" | "imageDishId">>> = {
   tartar: {
     name: "Tartar",
     origin: "Europeisk restauranttradisjon",
@@ -41,18 +43,20 @@ function findKnowledge(query: string): DishKnowledge | null {
   const canonical = findFoodDishByQuery(query);
   if (canonical) {
     const dish = getFoodKnowledgeDish(canonical.id);
-    if (dish) {
+    const hasImage = hasDishPhotoThumbnail(canonical.id);
+    if (dish || hasImage) {
       return {
-        name: dish.name,
-        origin: `${dish.region} · ${dish.cuisine}`,
-        summary: dish.summary,
+        name: canonical.name,
+        origin: `${canonical.region} · ${canonical.cuisine}`,
+        summary: dish?.summary ?? null,
         dish,
+        imageDishId: hasImage ? canonical.id : null,
       };
     }
   }
 
   const legacy = legacyKnowledge[normalize(query)];
-  return legacy ? { ...legacy, dish: null } : null;
+  return legacy ? { ...legacy, dish: null, imageDishId: null } : null;
 }
 
 export function DishKnowledgeNote({ query }: { query: string }) {
@@ -63,20 +67,26 @@ export function DishKnowledgeNote({ query }: { query: string }) {
 
   return (
     <>
-      <aside className="dishKnowledgeNote" aria-label={`Om retten ${knowledge.name}`}>
-        <div className="dishKnowledgeTopline">
-          <span>Om retten</span>
-          <span>{knowledge.origin}</span>
-        </div>
-        <h2>{knowledge.name}</h2>
-        <p>{knowledge.summary}</p>
-        <div className="dishKnowledgeNoteBottomline">
-          <small>Generell matkunnskap · ikke menybevis</small>
-          {knowledge.dish ? (
-            <button type="button" onClick={() => setSelectedDish(knowledge.dish)}>
-              Lær om retten <span aria-hidden="true">↗</span>
-            </button>
-          ) : null}
+      <aside
+        className={knowledge.imageDishId ? "dishKnowledgeNote dishKnowledgeNoteWithImage" : "dishKnowledgeNote"}
+        aria-label={`Om retten ${knowledge.name}`}
+      >
+        {knowledge.imageDishId ? <DishPhotoThumbnail dishId={knowledge.imageDishId} label={knowledge.name} /> : null}
+        <div className="dishKnowledgeNoteContent">
+          <div className="dishKnowledgeTopline">
+            <span>{knowledge.dish ? "Fysen matleksikon" : "Om retten"}</span>
+            <span>{knowledge.origin}</span>
+          </div>
+          <h2>{knowledge.name}</h2>
+          {knowledge.summary ? <p>{knowledge.summary}</p> : null}
+          <div className="dishKnowledgeNoteBottomline">
+            <small>{knowledge.imageDishId ? "Rettbilde og generell matkunnskap" : "Generell matkunnskap"} · ikke menybevis</small>
+            {knowledge.dish ? (
+              <button type="button" onClick={() => setSelectedDish(knowledge.dish)}>
+                Lær om retten <span aria-hidden="true">↗</span>
+              </button>
+            ) : null}
+          </div>
         </div>
       </aside>
 

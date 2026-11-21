@@ -1,6 +1,13 @@
 name: Fysen mobile public search resilience proof
 
 on:
+  workflow_call:
+    inputs:
+      source_sha:
+        description: Exact revision deployed by the production release caller
+        required: false
+        type: string
+        default: ""
   pull_request:
     paths:
       - "apps/web/tests/oslo-readonly-mobile-proof.mjs"
@@ -55,7 +62,7 @@ jobs:
         if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          ref: ${{ inputs.source_sha || github.event.workflow_run.head_sha || github.sha }}
 
       - name: Setup Fysen test workspace
         if: github.event_name != 'workflow_run' || steps.upstream.outputs.deployed == 'true'
@@ -79,5 +86,5 @@ jobs:
             echo '- Validates archived source URLs when archive fallback is active'
             echo '- Independently validates the public, verified non-realtime archive API'
             echo '- DOES NOT certify live PostgreSQL, current menu freshness, or booking availability'
-            echo '- The stricter production pilot and full live/booking proofs remain separate'
+            echo '- The stricter production pilot and full live/booking proofs remain separate and are NOT implied by this Free fallback proof'
           } >> "$GITHUB_STEP_SUMMARY"

@@ -14,6 +14,7 @@ export const foodKnowledgeDishIds = [
   "butter-chicken",
   "tandoori",
   "chana-masala",
+  "dal-makhani",
   "dosa",
   "biryani",
   "carbonara",

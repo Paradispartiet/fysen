@@ -11,13 +11,39 @@ const proofSource = await readFile(
   "utf8",
 );
 
-test("Matlyst production proof følger den gjenopprettede sekskorts-forsiden", () => {
-  for (const cuisine of ["Asiatisk", "Indisk", "Fast food", "Italiensk", "Midtøsten", "Mexicansk"]) {
+
+const releaseSource = await readFile(
+  path.join(repositoryRoot, ".github/workflows/vercel-production-release.yml"),
+  "utf8",
+);
+
+test("Matlyst runs on deployed web only, not an automatic no-op release", () => {
+  assert.match(proofSource, /^\s{2}workflow_call:/mu);
+  assert.match(proofSource, /^\s{6}source_sha:/mu);
+  assert.match(proofSource, /ref: \$\{\{ inputs\.source_sha \|\| github\.sha \}\}/u);
+  assert.doesNotMatch(proofSource, /^\s{2}workflow_run:/mu);
+  assert.match(releaseSource, /^\s{2}matlyst_proof:/mu);
+  assert.match(releaseSource, /needs\.web\.result == 'success'/u);
+  assert.match(releaseSource, /needs\.proof\.result == 'success'/u);
+  assert.match(releaseSource, /uses: \.\/\.github\/workflows\/matlyst-production-proof\.yml/u);
+  assert.match(releaseSource, /source_sha: \$\{\{ needs\.prepare\.outputs\.source_sha \}\}/u);
+});
+
+test("Matlyst production proof følger dagens tolv kjøkken i en lukket utbrettmeny", () => {
+  for (const cuisine of [
+    // The workflow samples these six labels; the full twelve-item taxonomy
+    // is asserted in matlyst-v3-contract.test.mjs and in live browser proof.
+    "Asiatisk", "Indisk", "Fast food", "Italiensk", "Midtøsten", "Mexicansk",
+  ]) {
     assert.match(proofSource, new RegExp(cuisine, "u"));
   }
-  assert.match(proofSource, /cuisineCard cuisineCardInteractive/u);
+  assert.match(proofSource, /cuisineBrowseDisclosure/u);
+  assert.match(proofSource, /cuisineBrowseChoice/u);
+  assert.match(proofSource, /requireOccurrences\(home, 'class="cuisineBrowseChoice"', 12\)/u);
+  assert.match(proofSource, /Utforsk matretter/u);
   assert.match(proofSource, /matlyst-live-browser-proof\.mjs/u);
-  assert.match(proofSource, /Restauranter og retter/u);
+  assert.doesNotMatch(proofSource, /cuisineCard cuisineCardInteractive/u);
+  assert.doesNotMatch(proofSource, /Restauranter og retter/u);
   assert.doesNotMatch(proofSource, /"På menyen nå"/u);
 });
 

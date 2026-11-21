@@ -73,9 +73,20 @@ grep -F 'workflow_dispatch:' "$proof_workflow" >/dev/null
 grep -F 'Materialize Fysen production catalog' "$proof_workflow" >/dev/null
 grep -F 'workflow_call:' "$proof_workflow" >/dev/null
 grep -F 'source_sha:' "$proof_workflow" >/dev/null
-grep -F 'uses: ./.github/workflows/production-pilot-proof.yml' "$workflow" >/dev/null
+# The automatic Free release gate must check the real public archive/mobile app.
+# The old DB materialization proof remains strict, but is NOT the Free release gate.
+free_proof_workflow=.github/workflows/verify-fysen-mobile-readonly.yml
+test -f "$free_proof_workflow"
+grep -F 'workflow_call:' "$free_proof_workflow" >/dev/null
+grep -F 'source_sha:' "$free_proof_workflow" >/dev/null
+grep -F 'uses: ./.github/workflows/verify-fysen-mobile-readonly.yml' "$workflow" >/dev/null
+if grep -F 'uses: ./.github/workflows/production-pilot-proof.yml' "$workflow" >/dev/null; then
+  echo "Free release must not require legacy full-catalog activation" >&2
+  exit 1
+fi
 grep -F 'source_sha: ${{ needs.prepare.outputs.source_sha }}' "$workflow" >/dev/null
 grep -F 'secrets: inherit' "$workflow" >/dev/null
+grep -F "needs.prepare.outputs.api_needed == 'true'" "$workflow" >/dev/null
 grep -F 'github.event.workflow_run.head_sha' "$proof_workflow" >/dev/null
 grep -F 'FYSEN_PUBLIC_WEB_URL: https://fysen.vercel.app' "$proof_workflow" >/dev/null
 if grep -Eq '^  push:' "$proof_workflow"; then
@@ -98,4 +109,4 @@ for obsolete in \
   fi
 done
 
-echo "Verified-PR-merge or on-demand, maximum-three-daily Vercel production release contract passed"
+echo "Verified-PR-merge or on-demand, maximum-three-daily Vercel Free public release contract passed"
