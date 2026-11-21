@@ -153,12 +153,8 @@ def main():
         'background: #000 url("/dish-images/banh-mi-thumb-512.avif") center / contain no-repeat;')
     gallery=WEB/"components/dish-photo-gallery.tsx"
     edit_once(gallery,
-        '          <a href="/dish-images/tom-yum-master-3334.avif"',
-        '          <a href="/dish-images/banh-mi-master-3895.avif" target="_blank" rel="noopener noreferrer">\n'
-        '            Bánh mì med kjøtt og syltede grønnsaker <span aria-hidden="true">↗</span>\n'
-        '          </a>\n'
-        '          <small>Bánh mì-foto: Andy Li / Wikimedia Commons, <a href="/dish-images/banh-mi-LICENSE.txt" target="_blank" rel="noopener noreferrer">CC0 1.0 og kilde</a>.</small>\n'
-        '          <a href="/dish-images/tom-yum-master-3334.avif"')
+        "          <small>Tom yum-foto: UNDO KIM / Pexels, <a href=\"/dish-images/tom-yum-LICENSE.txt\" target=\"_blank\" rel=\"noopener noreferrer\">lisens og kilde</a>.</small>",
+        "          <small>Tom yum-foto: UNDO KIM / Pexels, <a href=\"/dish-images/tom-yum-LICENSE.txt\" target=\"_blank\" rel=\"noopener noreferrer\">lisens og kilde</a>.</small>\\n          <a href=\"/dish-images/banh-mi-master-3895.avif\" target=\"_blank\" rel=\"noopener noreferrer\">\\n            Bánh mì med kjøtt og syltede grønnsaker <span aria-hidden=\"true\">↗</span>\\n          </a>\\n          <small>Bánh mì-foto: Andy Li / Wikimedia Commons, <a href=\"/dish-images/banh-mi-LICENSE.txt\" target=\"_blank\" rel=\"noopener noreferrer\">CC0 1.0 og kilde</a>.</small>")
     edit_once(gallery,
         ' : isGreenCurry ? "Redaksjonelt foto av grønn curry med kylling og thaibasilikum, ikke restaurantfoto" : ',
         ' : isGreenCurry ? "Redaksjonelt foto av grønn curry med kylling og thaibasilikum, ikke restaurantfoto" : isBanhMi ? "Redaksjonelt foto av bánh mì med kjøtt, chili og koriander, ikke restaurantfoto" : ')
