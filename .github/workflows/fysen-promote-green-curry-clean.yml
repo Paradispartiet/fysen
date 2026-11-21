@@ -1,0 +1,76 @@
+name: Fysen integrate reviewed green curry photo into draft (no deploy)
+on:
+  push:
+    branches: [art/fysen-green-curry-clean-20261121]
+    paths:
+      - ".github/workflows/fysen-promote-green-curry-clean.yml"
+      - "scripts/promote-reviewed-green-curry.py"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: fysen-green-curry-clean-native-promotion
+  cancel-in-progress: false
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install image processing libraries
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0 pillow-avif-plugin==1.5.2
+      - name: Restore source-locked native curry image and add to UNPUBLISHED draft
+        run: python scripts/promote-reviewed-green-curry.py
+      - name: Run exactly the two relevant Matlyst photo test files
+        run: node --test apps/web/tests/dish-photo-gallery.test.mjs apps/web/tests/dish-image-large-view-quality.test.mjs
+      - name: Verify photo license, true native dimensions and draft-only status
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from hashlib import sha256
+          from PIL import Image
+          import pillow_avif
+          root=Path("apps/web/public/dish-images")
+          m=json.loads((root/"manifest.json").read_text(encoding="utf8"))
+          assert len(m["images"])==44
+          assert sum(p.get("largeViewEnabled") is True for p in m["images"])==25
+          photo=m["images"][32]
+          assert photo["id"]==photo["catalogId"]=="green-curry"
+          assert photo["kind"]=="Redaksjonelt rettfoto"
+          assert photo["largeSource"]=="green-curry-master-3017.avif"
+          assert photo["atlas"]=="green-curry-thumb-512.avif"
+          assert photo["photoCredit"]=="Max Griss / Pexels"
+          assert photo["photoLicense"]=="https://www.pexels.com/license/"
+          assert "Pexels License" in (root/"green-curry-LICENSE.txt").read_text(encoding="utf8")
+          with Image.open(root/photo["largeSource"]) as pic: assert pic.size==(3017,3771)
+          with Image.open(root/photo["atlas"]) as pic: assert pic.size==(512,512)
+          assert photo["largeSourceSha256"]==sha256((root/photo["largeSource"]).read_bytes()).hexdigest()
+          origin=Path("assets/fysen-dish-originals/green-curry.png")
+          assert photo["largeSourceOriginalSha256"]==sha256(origin.read_bytes()).hexdigest()
+          with Image.open(origin) as pic: assert pic.size==(3017,3771)
+          print("25/44 exact-size native photo candidates on draft; NO PRODUCTION DEPLOY")
+          PY
+      - name: Commit ONLY green curry assets and gallery/test changes onto draft
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-dish-originals/green-curry.png
+          git add apps/web/public/dish-images/green-curry-master-3017.avif
+          git add apps/web/public/dish-images/green-curry-thumb-512.avif
+          git add apps/web/public/dish-images/green-curry-LICENSE.txt
+          git add apps/web/public/dish-images/manifest.json
+          git add apps/web/styles/dish-photos.css
+          git add apps/web/components/dish-photo-gallery.tsx
+          git add apps/web/tests/dish-photo-gallery.test.mjs
+          git add apps/web/tests/dish-image-large-view-quality.test.mjs
+          git add docs/fysen-image-reviews/green-curry.md
+          git diff --cached --quiet && exit 0
+          git commit -m "[green-curry-photo-bot] Add source-verified native green curry draft photo"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin HEAD:"$GITHUB_REF_NAME"
