@@ -17,8 +17,12 @@
   ],
   "no_upscale": true,
   "generated_food_pixels": false,
-  "visual_review_completed": false,
-  "approved_for_fysen": false,
+  "visual_review_completed": true,
+  "approved_for_fysen": true,
   "published": false,
-  "note": "Three steamed dumplings on a whole wooden dish with black sesame and chopsticks. No dip in photo, no verified filling; do not confuse with pan-fried gyoza. Inspect bowl/chopstick contours."
+  "note": "Three steamed dumplings on a whole wooden dish with black sesame and chopsticks. No dip in photo, no verified filling; do not confuse with pan-fried gyoza. Inspect bowl/chopstick contours.",
+  "reviewed_variant": "black-clean-grabcut",
+  "reviewed_preview_sha256": "8dcdcdda77535ece6f357e687cd0401720d1029afef708e4667b16252417d78a",
+  "processed_original_sha256": "7895fa9213f253d10bc9538724c024623d1ea19147b2b87c34255eb9c1a08b6c",
+  "master_avif_sha256": "9b8b25920dfe230ac55f314bd21b84f68ce95f7ee76918007f6ab00241031a4d"
 }

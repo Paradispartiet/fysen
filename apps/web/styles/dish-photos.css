@@ -273,7 +273,7 @@
 .dishPhotoThumb.dishPhotoBao,
 .dishPhotoSmall.dishPhotoBao { background: #000 url("/dish-images/bao-braised-pork-thumb-512.avif") center / contain no-repeat; }
 .dishPhotoThumb.dishPhotoDumplings,
-.dishPhotoSmall.dishPhotoDumplings { background: #000 url("/dish-images/dumplings-768.avif") center / cover no-repeat; }
+.dishPhotoSmall.dishPhotoDumplings { background: #000 url("/dish-images/dumplings-thumb-512.avif") center / contain no-repeat; }
 .dishPhotoThumb.dishPhotoMapoTofu,
 .dishPhotoSmall.dishPhotoMapoTofu { background: #000 url("/dish-images/mapo-tofu-768.avif") center / cover no-repeat; }
 .dishPhotoThumb.dishPhotoPekingDuck,
