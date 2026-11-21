@@ -113,7 +113,7 @@ for x in range(597,701):
     foreground[:cutoff,x]=0
 upper=foreground[:247,542:692].copy()
 upper=cv2.morphologyEx(upper,cv2.MORPH_OPEN,
-    cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(11,11)),iterations=1
+    cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(11,11)),iterations=1)
 foreground[:247,542:692]=upper
 foreground=cv2.morphologyEx(foreground,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8),iterations=1)
 # Flatten tiny disconnected noise only; preserve the baguette and its herbs.
