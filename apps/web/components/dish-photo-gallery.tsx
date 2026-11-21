@@ -223,6 +223,10 @@ export function DishPhotoGallery() {
             Falafel med hummus <span aria-hidden="true">↗</span>
           </a>
           <small>Falafel-foto: Saya P / Pexels, <a href="/dish-images/falafel-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/tacos-al-pastor-master-7008.avif" target="_blank" rel="noopener noreferrer">
+            Tacos al pastor <span aria-hidden="true">↗</span>
+          </a>
+          <small>Tacos al pastor-foto: Abner Velázquez / Pexels, <a href="/dish-images/tacos-al-pastor-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
           <a href="/dish-images/tom-yum-master-3334.avif" target="_blank" rel="noopener noreferrer">
             Tom yum med reker <span aria-hidden="true">↗</span>
           </a>
@@ -295,7 +299,7 @@ const illustratedVariants: Readonly<Record<string, string>> = {
   "butter-chicken": "butter chicken med kyllinglår i kremet tomatsaus",
   "pizza-marinara": "pizza marinara uten ost, med tomat, hvitløk og oregano",
   falafel: "falafel med kikerter, hummus, grønnsaker og urter",
-  "tacos-al-pastor": "tacos al pastor med marinert svinekjøtt, ananas, løk, koriander og maislefser",
+  "tacos-al-pastor": "tacos al pastor med marinert svinekjøtt, løk, koriander og lime; ananas er ikke synlig på fotoet",
   pho: "phở bò med storfekjøtt, risnudler, urter og lime",
   "pad-thai": "pad thai med reker",
   "tom-yum": "tom yum med reker, sopp og sitrongress",
