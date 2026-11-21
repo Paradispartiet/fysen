@@ -1,0 +1,75 @@
+name: Fysen – integrate reviewed yakitori original photo (draft only)
+on:
+  push:
+    branches: [art/yakitori-native-photo-20261121]
+    paths:
+      - ".github/workflows/fysen-promote-yakitori.yml"
+      - "scripts/promote-reviewed-yakitori.py"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: fysen-yakitori-native-draft-integration
+  cancel-in-progress: false
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 32
+    steps:
+      - uses: actions/checkout@v4
+        with: {persist-credentials: true}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - name: Install native photo/AVIF libraries
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0 pillow-avif-plugin==1.5.2 numpy==2.2.6 opencv-python-headless==4.11.0.86
+      - name: Build source-locked full-size yakitori, 512 mini and exact gallery patch
+        run: python scripts/promote-reviewed-yakitori.py
+      - name: Run ONLY two targeted Fysen photo tests
+        run: node --test apps/web/tests/dish-photo-gallery.test.mjs apps/web/tests/dish-image-large-view-quality.test.mjs
+      - name: Verify native pixels, photo provenance and no publication
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from PIL import Image
+          import pillow_avif
+          root=Path("apps/web/public/dish-images")
+          data=json.loads((root/"manifest.json").read_text(encoding="utf8"))
+          assert len(data["images"])==44
+          assert sum(v.get("largeViewEnabled") is True for v in data["images"])==25
+          a=data["images"][25]
+          assert a["id"]==a["catalogId"]=="yakitori"
+          assert a["kind"]=="Redaksjonelt rettfoto"
+          assert a["atlas"]=="yakitori-thumb-512.avif"
+          assert a["largeSource"]=="yakitori-master-4000.avif"
+          assert a["photoCredit"]=="Airam Dato-on / Pexels"
+          assert a["photoLicense"]=="https://www.pexels.com/license/"
+          assert "Pexels License" in (root/"yakitori-LICENSE.txt").read_text(encoding="utf8")
+          with Image.open(root/a["atlas"]) as img:assert img.size==(512,512)
+          with Image.open(root/a["largeSource"]) as img:assert img.size==(4000,5000)
+          audit=json.loads(Path("assets/fysen-image-candidates/yakitori/airam-single-black-plate/black-review.json").read_text(encoding="utf8"))
+          assert audit["reviewed_variant"]=="black-clean-grabcut"
+          assert audit["approved_for_fysen"] and audit["published"] is False
+          assert audit["no_upscale"] and not audit["generated_food_pixels"]
+          print("YAKITORI 25/44 approved full-size originals in UNPUBLISHED PR chain")
+          PY
+      - name: Commit only yakitori photo, metadata, gallery and focused tests
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-dish-originals/yakitori.png
+          git add assets/fysen-image-candidates/yakitori/airam-single-black-plate/review.json
+          git add assets/fysen-image-candidates/yakitori/airam-single-black-plate/black-review.json
+          git add apps/web/public/dish-images/yakitori-master-4000.avif
+          git add apps/web/public/dish-images/yakitori-thumb-512.avif
+          git add apps/web/public/dish-images/yakitori-LICENSE.txt
+          git add apps/web/public/dish-images/manifest.json
+          git add apps/web/styles/dish-photos.css
+          git add apps/web/components/dish-photo-gallery.tsx
+          git add apps/web/tests/dish-photo-gallery.test.mjs
+          git add apps/web/tests/dish-image-large-view-quality.test.mjs
+          git add docs/fysen-image-reviews/yakitori.md
+          git diff --cached --quiet && exit 0
+          git commit -m "[yakitori-photo-bot] Add 4000px authentic yakitori and 512 AVIF mini, draft only"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin HEAD:"$GITHUB_REF_NAME"
