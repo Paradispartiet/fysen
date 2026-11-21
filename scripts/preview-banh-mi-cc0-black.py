@@ -70,23 +70,34 @@ bg=np.zeros((1,65),np.float64)
 fg=np.zeros((1,65),np.float64)
 cv2.grabCut(bgr,mask,None,bg,fg,8,cv2.GC_INIT_WITH_MASK)
 foreground=np.where((mask==cv2.GC_FGD)|(mask==cv2.GC_PR_FGD),255,0).astype(np.uint8)
-# REVIEW v6: do not cut the actual upper-right crust with a straight ridge.
-# The bread contour is determined by GrabCut; eliminate only *thin background
-# fibres* in the upper edge by a small morphological opening and very pale
-# wrapper pixels. The darker rounded bread structure must be retained.
+# REVIEW v7: keep the whole natural right-baguette crust. Remove ONLY
+# source-paper pixels around the left shoulder and the thin wicker above it.
+# Never replace original food pixels, and never use a hard cut across bread.
 hsv=cv2.cvtColor(bgr,cv2.COLOR_BGR2HSV)
-paper=(hsv[:,:,1]<35)&(hsv[:,:,2]>165)
-paper[:185,:]=False
-paper[237:,:]=False
-paper[:,:498]=False
-paper[:,634:]=False
+yy,xx=np.indices(foreground.shape)
+# The creamy wrapper fold is behind the RIGHT baguette (x 505-614,
+# y 183-229 in the original 1000x753 review frame).
+wrapper_polygon=np.array([
+    (501,181),(615,181),(617,206),(595,218),(564,221),
+    (535,218),(512,220),(499,207)
+],dtype=np.int32)
+wrapper_roi=np.zeros_like(foreground)
+cv2.fillPoly(wrapper_roi,[wrapper_polygon],255)
+# Pale, low-chroma paper only, not the tan crust or colored vegetables.
+paper=(hsv[:,:,1]<100)&(hsv[:,:,2]>153)&(wrapper_roi>0)
 foreground[paper]=0
-# Remove narrow orange wicker strands that protrude well above the bread,
-# while keeping the broader original bread shape and scattered fresh herbs.
-upper=foreground[:228,501:703].copy()
+# Loose wicker loops protrude visibly above the source's right bread crest.
+# This boundary is several pixels ABOVE the hand-reviewed crust; a tiny 5px
+# opening removes only filaments without straightening/cutting the loaf.
+crest_x=np.array([597,622,647,674,700],dtype=np.float32)
+crest_y=np.array([207,211,217,232,249],dtype=np.float32)
+for x in range(597,701):
+    cutoff=int(np.interp(x,crest_x,crest_y))
+    foreground[:cutoff,x]=0
+upper=foreground[:233,515:706].copy()
 upper=cv2.morphologyEx(upper,cv2.MORPH_OPEN,
     cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(5,5)),iterations=1)
-foreground[:228,501:703]=upper
+foreground[:233,515:706]=upper
 foreground=cv2.morphologyEx(foreground,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8),iterations=1)
 # Flatten tiny disconnected noise only; preserve the baguette and its herbs.
 num,lab,stats,_=cv2.connectedComponentsWithStats(foreground,8)
