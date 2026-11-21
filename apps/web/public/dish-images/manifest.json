@@ -219,11 +219,11 @@
       "label": "Kebab i pita",
       "query": "kebab pita",
       "index": 9,
-      "atlas": "kebab-pita-768.avif",
+      "atlas": "kebab-pita-thumb-512-illustration.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": null,
-      "variantCaution": "KI-illustrasjon av kebab i pita med grillet kjøtt, salat, tomat, løk og hvit dressing. Ikke restaurantfoto; kjøttype, saus og allergener varierer."
+      "variantCaution": "KI-illustrasjon av kebab i pita med grillet kjøtt, salat, tomat, agurk, rødløk, kål og hvit urtedressing. Ikke restaurantfoto; kjøttype, saus og allergener varierer. Ikke bildebevis for noen restaurants meny."
     },
     {
       "id": "pasta-carbonara",
