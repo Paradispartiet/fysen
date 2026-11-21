@@ -11,6 +11,24 @@ const proofSource = await readFile(
   "utf8",
 );
 
+
+const releaseSource = await readFile(
+  path.join(repositoryRoot, ".github/workflows/vercel-production-release.yml"),
+  "utf8",
+);
+
+test("Matlyst runs on deployed web only, not an automatic no-op release", () => {
+  assert.match(proofSource, /^  workflow_call:/mu);
+  assert.match(proofSource, /^      source_sha:/mu);
+  assert.match(proofSource, /ref: \$\{\{ inputs\.source_sha \|\| github\.sha \}\}/u);
+  assert.doesNotMatch(proofSource, /^  workflow_run:/mu);
+  assert.match(releaseSource, /^  matlyst_proof:/mu);
+  assert.match(releaseSource, /needs\.web\.result == 'success'/u);
+  assert.match(releaseSource, /needs\.proof\.result == 'success'/u);
+  assert.match(releaseSource, /uses: \.\/\.github\/workflows\/matlyst-production-proof\.yml/u);
+  assert.match(releaseSource, /source_sha: \$\{\{ needs\.prepare\.outputs\.source_sha \}\}/u);
+});
+
 test("Matlyst production proof følger dagens tolv kjøkken i en lukket utbrettmeny", () => {
   for (const cuisine of [
     // The workflow samples these six labels; the full twelve-item taxonomy
