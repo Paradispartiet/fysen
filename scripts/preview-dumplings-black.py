@@ -58,10 +58,16 @@ classes[inner>0]=cv2.GC_FGD
 bg=np.zeros((1,65),np.float64);fg=np.zeros((1,65),np.float64)
 cv2.grabCut(cv2.cvtColor(small,cv2.COLOR_RGB2BGR),classes,None,bg,fg,6,cv2.GC_INIT_WITH_MASK)
 grab=np.isin(classes,[cv2.GC_FGD,cv2.GC_PR_FGD]).astype(np.uint8)*255
-# Final variant: keep full bowl as source-colored, refine rim via GrabCut and
-# keep only the true wood pixels of both chopsticks.
-clean=cv2.bitwise_or(cv2.bitwise_and(grab,outer),sticks)
-# Do not leave disconnected background scraps outside this dish.
+# Final variant: GrabCut keeps both chopsticks complete. Remove ONLY the
+# thin off-white paper arc above the wooden bowl, safely above the dumplings.
+# The chopstick wood is yellow and high-chroma; do not make black holes in it.
+clean=grab.copy()
+ys,xs=np.mgrid[0:sh,0:sw]
+hi=rgb.max(axis=2)
+lo=rgb.min(axis=2)
+paper_arc=(ys<217)&(xs>388)&(xs<876)&(lo>198)&((hi-lo)<33)
+clean[paper_arc]=0
+# Avoid disconnected background scraps without altering any original food RGB.
 n,lab,stats,_=cv2.connectedComponentsWithStats((clean>0).astype(np.uint8),8)
 for component in range(1,n):
     if stats[component,cv2.CC_STAT_AREA]<18: clean[lab==component]=0
