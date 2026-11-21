@@ -27,40 +27,55 @@ W,H=photo.size
 assert (W,H)==(3024,4032)
 sw,sh=960,1280
 small=np.asarray(photo.resize((sw,sh),Image.Resampling.LANCZOS))
-# Outer ring of the udon bowl. Precise polygon avoids the background menus,
-# restaurant counter, drink and napkin.
-bowl=np.array([
- (82,466),(104,399),(149,345),(205,311),(270,285),
- (345,274),(439,267),(535,275),(625,293),(712,323),
- (790,363),(851,417),(883,473),(899,542),(891,620),
- (849,690),(792,745),(710,782),(612,802),(520,807),
- (429,803),(351,785),(272,760),(197,719),(134,670),
- (96,613),(69,541)],dtype=np.int32)
-contour=np.zeros((sh,sw),np.uint8)
-cv2.fillPoly(contour,[bowl],255)
-# One ebi prawn extends upward from the bowl rim, from x160..315.
-shrimp=np.array([(145,399),(143,340),(146,267),(165,183),(189,119),
-                 (207,99),(237,113),(255,153),(273,223),
-                 (300,306),(320,397),(324,498),(211,544),(139,492)],dtype=np.int32)
-cv2.fillPoly(contour,[shrimp],255)
-near=cv2.dilate(contour,cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(39,39)))
-inner=cv2.erode(contour,cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(45,45)))
+# The source preview is 788×1050. Manually follow the actual outer bowl rim,
+# NOT the paper/menu behind it, and keep all of the bottom ceramic outline.
+fX,fY=sw/788,sh/1050
+bowl_pts=np.array([
+ (11,500),(22,458),(42,418),(70,387),(105,354),
+ (151,328),(207,307),(271,290),(337,285),(398,287),
+ (470,298),(546,319),(618,350),(681,392),(721,451),
+ (741,517),(741,589),(724,658),(696,719),(646,776),
+ (586,815),(508,846),(430,858),(348,855),(265,842),
+ (186,814),(119,772),(61,708),(28,640),(12,573)
+],dtype=np.float32)
+bowl_pts[:,0]*=fX;bowl_pts[:,1]*=fY
+bowl=np.zeros((sh,sw),np.uint8)
+cv2.fillPoly(bowl,[bowl_pts.astype(np.int32)],255)
+# The shrimp tail protrudes above the rim. Source-derived color separation is
+# confined to this one shrimp, rejecting neutral paper. All output RGB values
+# still come from the real source, never reconstructed or synthesized.
+upper=np.zeros((sh,sw),np.uint8)
+shrimp_poly=np.array([
+ (132,322),(128,287),(130,239),(143,195),(157,152),
+ (177,108),(201,98),(226,110),(249,148),(266,190),
+ (276,244),(293,291),(310,340),(300,371),(243,393),
+ (175,381)
+],dtype=np.float32)
+shrimp_poly[:,0]*=fX;shrimp_poly[:,1]*=fY
+cv2.fillPoly(upper,[shrimp_poly.astype(np.int32)],255)
+rgb=small.astype(np.int16)
+rr,gg,bb=rgb[:,:,0],rgb[:,:,1],rgb[:,:,2]
+gold=((rr>135)&(gg>85)&(rr-gg>10)&(rr-bb>40)&(gg-bb>14))
+shrimp=((upper>0)&gold).astype(np.uint8)*255
+shrimp=cv2.morphologyEx(shrimp,cv2.MORPH_CLOSE,
+                         cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(13,13)))
+# Keep the bowl complete, with an additional source-colored shrimp contour.
+precise=cv2.bitwise_or(bowl,shrimp)
+precise=cv2.GaussianBlur(precise,(0,0),.65)
+# A second proposal refines the shrimp with GrabCut, but has the entire
+# manually verified bowl as a hard keep-region to avoid food loss.
+near=cv2.dilate(upper,cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(23,23)))
 labels=np.full((sh,sw),cv2.GC_BGD,np.uint8)
 labels[near>0]=cv2.GC_PR_BGD
-labels[contour>0]=cv2.GC_PR_FGD
-labels[inner>0]=cv2.GC_FGD
-bg=np.zeros((1,65),np.float64)
-fg=np.zeros((1,65),np.float64)
-cv2.grabCut(cv2.cvtColor(small,cv2.COLOR_RGB2BGR),labels,None,bg,fg,7,cv2.GC_INIT_WITH_MASK)
-grab=(np.isin(labels,(cv2.GC_FGD,cv2.GC_PR_FGD))*255).astype(np.uint8)
-# Keep original ceramic and tempura pixels. Avoid bright paper/menu if grabbed.
-bright=(small.min(axis=2)>196)&((small.max(axis=2).astype(np.int16)-small.min(axis=2))<24)
-clean=grab.copy()
-# Restrict paper removal to ABOVE the actual bowl and outside the prawn.
-yy,xx=np.mgrid[0:sh,0:sw]
-paper=bright&(yy<353)&((xx<140)|(xx>325))
-clean[paper]=0
-for name,mask in (("black-contour",contour),("black-grabcut",grab),("black-clean-grabcut",clean)):
+labels[upper>0]=cv2.GC_PR_FGD
+seed=cv2.erode(shrimp,cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(7,7)))
+labels[seed>0]=cv2.GC_FGD
+bg=np.zeros((1,65),np.float64);fg=np.zeros((1,65),np.float64)
+cv2.grabCut(cv2.cvtColor(small,cv2.COLOR_RGB2BGR),labels,None,bg,fg,5,cv2.GC_INIT_WITH_MASK)
+grab_tail=(np.isin(labels,(cv2.GC_FGD,cv2.GC_PR_FGD))*255).astype(np.uint8)
+grab=cv2.bitwise_or(bowl,cv2.bitwise_and(grab_tail,upper))
+clean=precise.copy()
+for name,mask in (("black-contour",precise),("black-grabcut",grab),("black-clean-grabcut",clean)):
   alpha=cv2.GaussianBlur(mask,(0,0),1.1).astype(np.float32)/255.
   preview=np.clip(small.astype(np.float32)*alpha[:,:,None],0,255).astype(np.uint8)
   out=C/(name+"-preview.jpg")
