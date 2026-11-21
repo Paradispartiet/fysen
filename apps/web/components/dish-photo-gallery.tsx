@@ -243,6 +243,10 @@ export function DishPhotoGallery() {
             Yakitori <span aria-hidden="true">↗</span>
           </a>
           <small>Yakitori-foto: Airam Dato-on / Pexels, <a href="/dish-images/yakitori-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
+          <a href="/dish-images/tom-yum-master-3334.avif" target="_blank" rel="noopener noreferrer">
+            Tom yum med reker <span aria-hidden="true">↗</span>
+          </a>
+          <small>Tom yum-foto: UNDO KIM / Pexels, <a href="/dish-images/tom-yum-LICENSE.txt" target="_blank" rel="noopener noreferrer">lisens og kilde</a>.</small>
         </nav>
       </div>
     </details>
