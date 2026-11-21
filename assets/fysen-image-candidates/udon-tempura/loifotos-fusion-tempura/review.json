@@ -1,0 +1,19 @@
+{
+  "dish_id": "udon",
+  "catalog_id": "udon",
+  "variant": "udon med reketempura",
+  "source_photo_author": "Loifotos / Pexels",
+  "photo_source_page": "https://www.pexels.com/photo/35588670/",
+  "photo_source_url": "https://images.pexels.com/photos/35588670/pexels-photo-35588670.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "original_sha256": "d4aaaa0502b1665440e556f537f8747f097f5aa3ad178b2c009bc9ee06340889",
+  "native_width": 6000,
+  "native_height": 4000,
+  "source_verified": true,
+  "no_upscale": true,
+  "notes": "Tempura shrimp and udon in Japanese-Vietnamese assortment; verify whole serving and no unrelated dishes.",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "review_gate": "Must visually confirm thick UDON noodles and breaded shrimp TEMPURA, not plain shrimp soup/soba. Must retain complete serving against black background, without generated ingredients, composite collage, upscaling or false restaurant attribution."
+}

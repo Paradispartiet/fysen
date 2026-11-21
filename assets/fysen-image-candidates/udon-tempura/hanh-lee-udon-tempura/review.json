@@ -1,0 +1,19 @@
+{
+  "dish_id": "udon",
+  "catalog_id": "udon",
+  "variant": "udon med reketempura",
+  "source_photo_author": "Hanh lee 02 / Pexels",
+  "photo_source_page": "https://www.pexels.com/photo/41057285/",
+  "photo_source_url": "https://images.pexels.com/photos/41057285/pexels-photo-41057285.jpeg",
+  "photo_license": "https://www.pexels.com/license/",
+  "original_sha256": "6e33c9ba63836c5d0ef850994604da8ff935748ede1ba88de2f45ca63f1fb991",
+  "native_width": 3024,
+  "native_height": 4032,
+  "source_verified": true,
+  "no_upscale": true,
+  "notes": "Asian meal with udon noodles, tempura and sides; verify whole udon serving and ebi tempura.",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "review_gate": "Must visually confirm thick UDON noodles and breaded shrimp TEMPURA, not plain shrimp soup/soba. Must retain complete serving against black background, without generated ingredients, composite collage, upscaling or false restaurant attribution."
+}
