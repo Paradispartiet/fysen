@@ -210,7 +210,7 @@
 /* Gyoza: sharp single-dish illustration for its exact editorial ID only. */
 .dishPhotoThumb.dishPhotoGyoza,
 .dishPhotoSmall.dishPhotoGyoza {
-  background: #000 url("/dish-images/gyoza-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/gyoza-thumb-512.avif") center / contain no-repeat;
 }
 
 /* Gallery-only shrimp pad thai; never use for unknown-variant pad thai restaurant dishes. */
@@ -236,7 +236,7 @@
 
 /* New 768px standalone editorial illustrations. Exact dish IDs only; never restaurant photos. */
 .dishPhotoThumb.dishPhotoCacioEPepe,
-.dishPhotoSmall.dishPhotoCacioEPepe { background: #000 url("/dish-images/cacio-e-pepe-768.avif") center / cover no-repeat; }
+.dishPhotoSmall.dishPhotoCacioEPepe { background: #000 url("/dish-images/cacio-e-pepe-thumb-512.avif") center / contain no-repeat; }
 .dishPhotoThumb.dishPhotoChanaMasala,
 .dishPhotoSmall.dishPhotoChanaMasala { background: #000 url("/dish-images/chana-masala-768.avif") center / cover no-repeat; }
 .dishPhotoThumb.dishPhotoMasalaDosa,
