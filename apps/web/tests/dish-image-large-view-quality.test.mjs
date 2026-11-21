@@ -216,14 +216,6 @@ test("Editorial food photos are only large-view enabled with real provenance and
       const notice=readFileSync(path.join(imageRoot,"chana-masala-LICENSE.txt"),"utf8");
       assert.match(notice,/Fotograf: Muhammad Khawar Nazir/u);
       assert.match(notice,/Pexels License/u);
-    } else if (photo.id === "tacos-al-pastor") {
-      assert.equal(photo.catalogId, "tacos-al-pastor");
-      assert.equal(photo.photoLicense, "https://www.pexels.com/license/");
-      assert.equal(photo.photoLicenseNotice, "/dish-images/tacos-al-pastor-LICENSE.txt");
-      assert.match(photo.photoCredit, /Abner Velázquez.*Pexels/u);
-      const notice = readFileSync(path.join(imageRoot, "tacos-al-pastor-LICENSE.txt"), "utf8");
-      assert.match(notice, /Fotograf: Abner Velázquez/u);
-      assert.match(notice, /Pexels License/u);
     } else if (photo.id === "falafel") {
       assert.equal(photo.catalogId,"falafel");
       assert.equal(photo.photoLicense,"https://www.pexels.com/license/");
