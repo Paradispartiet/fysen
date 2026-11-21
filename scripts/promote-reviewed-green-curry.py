@@ -63,8 +63,10 @@ def main():
     w,h=src.size
     assert (w,h)==(3017,3771)
     mask=Image.new("L",(w,h),0)
+    scale_x=w/880
+    scale_y=h/1100
     ImageDraw.Draw(mask).polygon(
-        [(round(x*w/880),round(y*h/1100)) for x,y in OUTLINE],fill=255)
+        [(round(x*scale_x),round(y*scale_y)) for x,y in OUTLINE],fill=255)
     mask=mask.filter(ImageFilter.GaussianBlur(radius=2.8))
     native=Image.composite(src,Image.new("RGB",(w,h),(0,0,0)),mask)
     with tempfile.TemporaryDirectory(prefix="fysen-green-curry-") as temp:
