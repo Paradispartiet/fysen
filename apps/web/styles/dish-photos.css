@@ -99,7 +99,7 @@
 /* Dedicated 384px Pad kra pao illustration, sharp at 150 CSS px. */
 .dishPhotoThumb.dishPhotoPadKraPao,
 .dishPhotoSmall.dishPhotoPadKraPao {
-  background: #000 url("/dish-images/pad-kra-pao-384.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/pad-kra-pao-thumb-512.avif") center / contain no-repeat;
 }
 
 /* Dedicated 512px meat-filled banh mi, never a restaurant photo or vegetarian variant. */
