@@ -227,6 +227,15 @@ test("Editorial food photos are only large-view enabled with real provenance and
       assert.match(notice, /Fotograf: Zheng Zhou/u);
       assert.match(notice, /CC BY-SA 4\.0/u);
       assert.match(notice, /Bearbeidelse:/u);
+    } else if (photo.id === "pad-kra-pao") {
+      assert.equal(photo.catalogId, "pad-kra-pao");
+      assert.equal(photo.photoSource, "https://commons.wikimedia.org/wiki/File:%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A3%E0%B8%B2%E0%B8%94%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%81%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%94%E0%B8%B2%E0%B8%A7.jpg");
+      assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by/4.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/pad-kra-pao-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "pad-kra-pao-LICENSE.txt"), "utf8");
+      assert.match(notice, /Fotograf: Vee Satayamas/u);
+      assert.match(notice, /CC BY 4\.0/u);
+      assert.match(notice, /Bearbeidelse:/u);
     } else if (photo.id === "peking-duck") {
       assert.equal(photo.catalogId, "peking-duck");
       assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:Peking_Duck/u);
