@@ -281,5 +281,5 @@
 .dishPhotoThumb.dishPhotoDanDanNoodles,
 .dishPhotoSmall.dishPhotoDanDanNoodles { background: #000 url("/dish-images/dan-dan-noodles-thumb-512.avif") center / contain no-repeat; }
 .dishPhotoThumb.dishPhotoGreenCurry,
-.dishPhotoSmall.dishPhotoGreenCurry { background: #000 url("/dish-images/green-curry-768.avif") center / cover no-repeat; }
+.dishPhotoSmall.dishPhotoGreenCurry { background: #000 url("/dish-images/green-curry-thumb-512.avif") center / contain no-repeat; }
 
