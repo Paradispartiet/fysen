@@ -218,6 +218,15 @@ test("Editorial food photos are only large-view enabled with real provenance and
       assert.match(notice, /Fotograf: Acabashi/u);
       assert.match(notice, /CC BY-SA 4\.0/u);
       assert.match(notice, /Bearbeidelse:/u);
+    } else if (photo.id === "tom-yum") {
+      assert.equal(photo.catalogId, "tom-yum");
+      assert.equal(photo.photoSource, "https://commons.wikimedia.org/wiki/File:Tom_Yum_Koong_Soup_with_Prawn_and_Straw_Mushroom.jpg");
+      assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by-sa/4.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/tom-yum-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "tom-yum-LICENSE.txt"), "utf8");
+      assert.match(notice, /Fotograf: Zheng Zhou/u);
+      assert.match(notice, /CC BY-SA 4\.0/u);
+      assert.match(notice, /Bearbeidelse:/u);
     } else if (photo.id === "peking-duck") {
       assert.equal(photo.catalogId, "peking-duck");
       assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:Peking_Duck/u);
