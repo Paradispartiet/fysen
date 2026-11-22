@@ -304,3 +304,95 @@ jobs:
           done <<< "$table_sizes"
 
           echo "Measured compacted staging database: $compacted_bytes bytes (not production approval)"
+
+  full_schema_baseline:
+    name: Full application schema footprint (empty, isolated)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    services:
+      postgres:
+        image: postgis/postgis:17-3.5
+        env:
+          POSTGRES_USER: fysen
+          POSTGRES_PASSWORD: fysen
+          POSTGRES_DB: fysen
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U fysen -d fysen"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://fysen:fysen@localhost:5432/fysen
+      DATABASE_SSL: "0"
+    steps:
+      - name: Checkout migration source
+        uses: actions/checkout@v4
+      - name: Setup existing Node and pnpm workspace
+        uses: ./.github/actions/setup-node-pnpm
+      - name: Build database dependency graph
+        run: pnpm --filter @fysen/database... build
+      - name: Apply all migrations to clean temporary PostgreSQL
+        run: pnpm --filter @fysen/database migrate
+      - name: Audit empty schema footprint and missing backup tables
+        shell: bash
+        run: |
+          set -euo pipefail
+          # No production host or credentials. Empty schema only.
+          pnpm --filter @fysen/database exec node --input-type=module <<'NODE'
+          import { appendFileSync } from "node:fs";
+          import pg from "pg";
+
+          const client = new pg.Client({ connectionString: process.env.DATABASE_URL, ssl: false });
+          await client.connect();
+          try {
+            const tables = (await client.query(
+              "SELECT cls.relname AS name, pg_total_relation_size(cls.oid)::bigint AS bytes " +
+              "FROM pg_class cls JOIN pg_namespace ns ON ns.oid = cls.relnamespace " +
+              "WHERE ns.nspname = 'fysen' AND cls.relkind = 'r' ORDER BY cls.relname"
+            )).rows;
+            const dbSize = Number((await client.query(
+              "SELECT pg_database_size(current_database())::bigint AS bytes"
+            )).rows[0].bytes);
+            const archiveTables = [
+              "restaurants", "menu_sources", "menu_snapshots", "menu_items",
+              "menu_changes", "menu_watch_runs", "search_events",
+              "search_result_impressions"
+            ];
+            const present = new Set(tables.map((table) => table.name));
+            const missingExpected = archiveTables.filter((name) => !present.has(name));
+            if (missingExpected.length) {
+              throw new Error("Required archive table missing from current schema: " + missingExpected.join(", "));
+            }
+            if (tables.length <= archiveTables.length) {
+              throw new Error("Expected additional application tables beyond archived data");
+            }
+            const absentFromBackup = tables.filter((table) => !archiveTables.includes(table.name));
+            const human = (n) => Number(n).toLocaleString("en-US");
+            const mdTick = String.fromCharCode(96);
+            const output = [
+              "## Fysen: full empty application schema in isolated PostGIS",
+              "",
+              "This job applied all repository migrations to a fresh temporary PostgreSQL 17 database. No Supabase connection, historical rows, private data or backup artifacts were used.",
+              "",
+              "- Empty full-schema database size (includes database overhead): **" + human(dbSize) + " bytes**",
+              "- Current application tables: **" + tables.length + "**",
+              "- Tables represented by the existing historical archive exports: **" + archiveTables.length + "**",
+              "- Current application tables with no row-level backup in those exports: **" + absentFromBackup.length + "**",
+              "",
+              "This empty-schema size is not a measurement of the full production database, and must not simply be added to the earlier compact history test because shared schema and overhead would be double-counted. Coverage is a table-name comparison only; empty tables here do not prove the production ones have no rows. Full app data, authentication, RLS, policies, storage and writes remain unverified.",
+              "",
+              "| Current app table not covered by the existing archive exports | Empty table/index bytes |",
+              "| --- | ---: |",
+              ...absentFromBackup.map((table) => "| " + mdTick + table.name + mdTick + " | " + human(table.bytes) + " |"),
+              ""
+            ].join("\n");
+            appendFileSync(process.env.GITHUB_STEP_SUMMARY, output);
+            process.stdout.write("Isolated full schema: " + tables.length + " tables, " + absentFromBackup.length + " outside existing archive scope, empty database " + dbSize + " bytes\n");
+          } finally {
+            await client.end();
+          }
+          NODE
