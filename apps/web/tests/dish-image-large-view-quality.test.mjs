@@ -200,6 +200,15 @@ test("Editorial food photos are only large-view enabled with real provenance and
       const notice=readFileSync(path.join(imageRoot, "bibimbap-LICENSE.txt"), "utf8");
       assert.match(notice, /Fotograf: Andy Li/u);
       assert.match(notice, /CC0 1\.0/u);
+    } else if (photo.id === "dan-dan-noodles") {
+      assert.equal(photo.catalogId, "dan-dan-noodles");
+      assert.equal(photo.photoSource, "https://commons.wikimedia.org/wiki/File:Dandan_Noodles.jpg");
+      assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by-sa/4.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/dan-dan-noodles-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "dan-dan-noodles-LICENSE.txt"), "utf8");
+      assert.match(notice, /Fotograf: ZhengZhou/u);
+      assert.match(notice, /CC BY-SA 4\.0/u);
+      assert.match(notice, /Bearbeidelse:/u);
     } else if (photo.id === "peking-duck") {
       assert.equal(photo.catalogId, "peking-duck");
       assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:Peking_Duck/u);

@@ -279,7 +279,7 @@
 .dishPhotoThumb.dishPhotoPekingDuck,
 .dishPhotoSmall.dishPhotoPekingDuck { background: #000 url("/dish-images/peking-duck-thumb-512.avif") center / contain no-repeat; }
 .dishPhotoThumb.dishPhotoDanDanNoodles,
-.dishPhotoSmall.dishPhotoDanDanNoodles { background: #000 url("/dish-images/dan-dan-noodles-768.avif") center / cover no-repeat; }
+.dishPhotoSmall.dishPhotoDanDanNoodles { background: #000 url("/dish-images/dan-dan-noodles-thumb-512.avif") center / contain no-repeat; }
 .dishPhotoThumb.dishPhotoGreenCurry,
 .dishPhotoSmall.dishPhotoGreenCurry { background: #000 url("/dish-images/green-curry-768.avif") center / cover no-repeat; }
 
