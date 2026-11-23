@@ -102,10 +102,10 @@
   background: #000 url("/dish-images/pad-kra-pao-thumb-512.avif") center / contain no-repeat;
 }
 
-/* Dedicated 512px meat-filled banh mi, never a restaurant photo or vegetarian variant. */
+/* Dedicated 512px photo of bánh mì with roast pork. */
 .dishPhotoThumb.dishPhotoBanhMi,
 .dishPhotoSmall.dishPhotoBanhMi {
-  background: #000 url("/dish-images/banh-mi-512.avif?v=ba2f55f4") center / cover no-repeat;
+  background: #000 url("/dish-images/banh-mi-thumb-512.avif") center / contain no-repeat;
 }
 
 
