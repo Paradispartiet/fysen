@@ -236,6 +236,15 @@ test("Editorial food photos are only large-view enabled with real provenance and
       assert.match(notice, /Fotograf: Vee Satayamas/u);
       assert.match(notice, /CC BY 4\.0/u);
       assert.match(notice, /Bearbeidelse:/u);
+    } else if (photo.id === "banh-mi") {
+      assert.equal(photo.catalogId, "banh-mi");
+      assert.equal(photo.photoSource, "https://commons.wikimedia.org/wiki/File:20240704_%E8%B6%8A%E5%BC%8F%E7%83%A4%E8%B1%AC%E8%82%89%E6%B3%95%E5%9C%8B%E9%BA%B5%E5%8C%85.jpg");
+      assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by-sa/4.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/banh-mi-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "banh-mi-LICENSE.txt"), "utf8");
+      assert.match(notice, /Fotograf: Junyu-K/u);
+      assert.match(notice, /CC BY-SA 4\.0/u);
+      assert.match(notice, /Bearbeidelse:/u);
     } else if (photo.id === "peking-duck") {
       assert.equal(photo.catalogId, "peking-duck");
       assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:Peking_Duck/u);
