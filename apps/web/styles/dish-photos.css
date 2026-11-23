@@ -109,10 +109,10 @@
 }
 
 
-/* Single-dish 512px Bun cha illustration, retained at retina-quality resolution. */
+/* Dedicated 512px photo of bún chả. */
 .dishPhotoThumb.dishPhotoBunCha,
 .dishPhotoSmall.dishPhotoBunCha {
-  background: #000 url("/dish-images/bun-cha-512.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/bun-cha-thumb-512.avif") center / contain no-repeat;
 }
 
 
