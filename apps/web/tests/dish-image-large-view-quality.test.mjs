@@ -245,6 +245,15 @@ test("Editorial food photos are only large-view enabled with real provenance and
       assert.match(notice, /Fotograf: Junyu-K/u);
       assert.match(notice, /CC BY-SA 4\.0/u);
       assert.match(notice, /Bearbeidelse:/u);
+    } else if (photo.id === "bun-cha") {
+      assert.equal(photo.catalogId, "bun-cha");
+      assert.equal(photo.photoSource, "https://commons.wikimedia.org/wiki/File:B%C3%BAn_ch%E1%BA%A3_with_chili_peppers_and_fresh_garlic.jpg");
+      assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by-sa/4.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/bun-cha-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "bun-cha-LICENSE.txt"), "utf8");
+      assert.match(notice, /Fotograf: Kiraface/u);
+      assert.match(notice, /CC BY-SA 4\.0/u);
+      assert.match(notice, /Bearbeidelse:/u);
     } else if (photo.id === "peking-duck") {
       assert.equal(photo.catalogId, "peking-duck");
       assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:Peking_Duck/u);
