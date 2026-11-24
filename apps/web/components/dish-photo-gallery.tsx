@@ -1,4 +1,9 @@
-import { dishSearchHref } from "../lib/public-path";
+import { dishSearchHref, withPublicBasePath } from "../lib/public-path";
+import dishImageManifest from "../public/dish-images/manifest.json";
+
+const approvedLargeSources = new Map(dishImageManifest.images
+  .filter((image) => image.largeViewEnabled === true && image.largeSource)
+  .map(({ id, largeSource }) => [id, largeSource]));
 
 const illustratedDishes = [
   { id: "pizza-margherita", label: "Pizza margherita", query: "pizza margherita" },
@@ -135,20 +140,36 @@ export function DishPhotoGallery() {
             : isSeries04
               ? `${column * 50}% ${row * 50}%`
               : `${column * 20}% ${(row * 100) / 3}%`;
+          const largeSource = approvedLargeSources.get(dish.id);
           return (
-            <a href={dishSearchHref(dish.query)} key={dish.id} className="dishPhotoCard">
+            <div key={dish.id} className="dishPhotoCard">
               <span
                 className={isPizzaMargherita ? "dishPhotoThumb dishPhotoPizzaMargherita" : isCheeseburger ? "dishPhotoThumb dishPhotoCheeseburger" : isGrilledSalmon ? "dishPhotoThumb dishPhotoGrilledSalmon" : isGrilledSteak ? "dishPhotoThumb dishPhotoGrilledSteak" : isShrimpOpenSandwich ? "dishPhotoThumb dishPhotoShrimpOpenSandwich" : isSushi ? "dishPhotoThumb dishPhotoSushi" : isRamen ? "dishPhotoThumb dishPhotoRamen" : isBolognese ? "dishPhotoThumb dishPhotoBolognese" : isProsciutto ? "dishPhotoThumb dishPhotoProsciutto" : isKebabPita ? "dishPhotoThumb dishPhotoKebabPita" : isCarbonara ? "dishPhotoThumb dishPhotoCarbonara" : isShrimpPadThai ? "dishPhotoThumb dishPhotoShrimpPadThai" : isWhiteFish ? "dishPhotoThumb dishPhotoWhiteFish" : isTiramisu ? "dishPhotoThumb dishPhotoTiramisu" : isGyoza ? "dishPhotoThumb dishPhotoGyoza" : isPizzaMarinara ? "dishPhotoThumb dishPhotoPizzaMarinara" : isFalafel ? "dishPhotoThumb dishPhotoFalafel" : isBibimbap ? "dishPhotoThumb dishPhotoBibimbap" : isTacosAlPastor ? "dishPhotoThumb dishPhotoTacosAlPastor" : isCacioEPepe ? "dishPhotoThumb dishPhotoCacioEPepe" : isChanaMasala ? "dishPhotoThumb dishPhotoChanaMasala" : isMasalaDosa ? "dishPhotoThumb dishPhotoMasalaDosa" : isChickenKatsu ? "dishPhotoThumb dishPhotoChickenKatsu" : isYakitori ? "dishPhotoThumb dishPhotoYakitori" : isUdonTempura ? "dishPhotoThumb dishPhotoUdonTempura" : isBao ? "dishPhotoThumb dishPhotoBao" : isDumplings ? "dishPhotoThumb dishPhotoDumplings" : isMapoTofu ? "dishPhotoThumb dishPhotoMapoTofu" : isPekingDuck ? "dishPhotoThumb dishPhotoPekingDuck" : isDanDanNoodles ? "dishPhotoThumb dishPhotoDanDanNoodles" : isGreenCurry ? "dishPhotoThumb dishPhotoGreenCurry" : isButterChicken ? "dishPhotoThumb dishPhotoButterChicken" : isPho ? "dishPhotoThumb dishPhotoPho" : isBunCha ? "dishPhotoThumb dishPhotoBunCha" : isGoiCuon ? "dishPhotoThumb dishPhotoGoiCuon" : isTandoori ? "dishPhotoThumb dishPhotoTandoori" : isNaan ? "dishPhotoThumb dishPhotoNaan" : isDalMakhani ? "dishPhotoThumb dishPhotoDalMakhani" : isIdli ? "dishPhotoThumb dishPhotoIdli" : isSambar ? "dishPhotoThumb dishPhotoSambar" : isVada ? "dishPhotoThumb dishPhotoVada" : isBanhMi ? "dishPhotoThumb dishPhotoBanhMi" : isPadKraPao ? "dishPhotoThumb dishPhotoPadKraPao" : isTomYum ? "dishPhotoThumb dishPhotoTomYum" : isSeries04 ? "dishPhotoThumb dishPhotoSeries04" : "dishPhotoThumb"}
                 aria-hidden="true"
                 style={{ backgroundPosition: position }}
               />
-              <strong>{dish.label}</strong>
-              <span className="dishPhotoAction">Se menytreff <span aria-hidden="true">→</span></span>
-            </a>
+              <div className="dishPhotoCardContent">
+                <a href={dishSearchHref(dish.query)} className="dishPhotoSearch">
+                  <strong>{dish.label}</strong>
+                  <span className="dishPhotoAction">Se menytreff <span aria-hidden="true">→</span></span>
+                </a>
+                {largeSource && (
+                  <a
+                    className="dishPhotoLargeAction"
+                    href={withPublicBasePath(`/dish-images/${largeSource}`)}
+                    aria-label={`Vis stort bilde av ${dish.label}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Vis stort bilde
+                  </a>
+                )}
+              </div>
+            </div>
           );
           })}
         </div>
-        {/* Only reviewed largeSource assets are linked here. Cards stay compact and keep their menu-search action. */}
+        {/* Keep the index of reviewed originals together with their photo credits. */}
         <nav className="dishPhotosLargeLinks" aria-label="Godkjente rettbilder i full størrelse">
           <span>Se skarpe originalbilder:</span>
           <a href="/dish-images/pizza-margherita-master-3000.avif" target="_blank" rel="noopener noreferrer">
