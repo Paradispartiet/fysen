@@ -254,6 +254,15 @@ test("Editorial food photos are only large-view enabled with real provenance and
       assert.match(notice, /Fotograf: Kiraface/u);
       assert.match(notice, /CC BY-SA 4\.0/u);
       assert.match(notice, /Bearbeidelse:/u);
+    } else if (photo.id === "vietnamese-spring-rolls") {
+      assert.equal(photo.catalogId, "vietnamese-spring-rolls");
+      assert.equal(photo.photoSource, "https://commons.wikimedia.org/wiki/File:G%E1%BB%8Fi_cu%E1%BB%91n,_Hai_Duong_restaurant,_Eden_Center.jpg");
+      assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by-sa/4.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/goi-cuon-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "goi-cuon-LICENSE.txt"), "utf8");
+      assert.match(notice, /Fotograf: Ser Amantio di Nicolao/u);
+      assert.match(notice, /CC BY-SA 4\.0/u);
+      assert.match(notice, /Bearbeidelse:/u);
     } else if (photo.id === "peking-duck") {
       assert.equal(photo.catalogId, "peking-duck");
       assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:Peking_Duck/u);
